@@ -138,9 +138,120 @@ the schema simply records it, which is what should happen.
 
 ---
 
+## R-06 — A source can pre-declare that its own claims are proposals for testing, and nothing marks it
+
+**Status:** OBSERVED · **Layer:** source fidelity · **Books: 1**
+
+**What it is.** Before making any of its hundred recommendations, *Master Shots* tells the reader to
+test them against the opposite choice: "try it, and then try it with a short lens and see whether
+you think I was right or not. What you learn from that is more important than anything I could put
+in words."
+
+**Why it matters.** That sentence changes what every later claim in the book *is*. They are
+proposals offered for testing, not assertions insisted on — and the author says so first, in his own
+voice, unprompted. Nothing in SPEC-03 records the difference: `claim_type` reads
+`explicit_source_claim` for a claim its author has invited you to disprove exactly as it does for
+one he insists on.
+
+**What I did instead.** Recorded the stance as its own SourceKnowledge object and as an
+`epistemic_stance` member of the method system, which preserves it. But a later reader has to notice
+that one object among twenty to know that it conditions the other nineteen, and nothing links them.
+
+**Consequence if unchanged.** Sources that are candid about their own confidence are recorded
+identically to sources that are not, so the candour is lost precisely where it should count in the
+source's favour.
+
+**Proposed (not applied):** a source-level field for a declared epistemic stance, or a way for one
+object to scope a qualification over others in the same source. Post-batch revision only.
+
+---
+
+## R-07 — A source can contain a claim its own production cannot illustrate, undetectably
+
+**Status:** OBSERVED · **Layer:** visual completeness · **Books: 1**
+
+**What it is.** Technique 8.6 of *Master Shots*, "Color Guides", argues that a strongly coloured
+jacket keeps a character identifiable when blurred and distant, in a frame graded almost entirely to
+one other hue. Its illustration is greyscale, and in it the background figure is a grey smudge — the
+outcome the technique says colour prevents. Measurement: all 124 images in the package, roughly
+2,000 samples each, **zero coloured pixels**.
+
+INFERRED, not verified: this is the printed book's own condition rather than a digitisation
+artefact. The book's diagram notation distinguishes camera from actor by white against black, which
+only a monochrome book needs; "About the Images" speaks of clarity "when printed" and never mentions
+colour; and the greyscale is uniform rather than patchy.
+
+**Why it matters, and why it is not the same as the greyscale problems already known.** Nothing here
+is damaged. The text is clean, the image is a legitimate greyscale photograph, and the extraction
+ran without difficulty. **The loss exists only in the relation between what the section claims and
+what its illustration can show.** It is invisible to any check on the file, on the text, or on the
+image — it is visible only to a reader holding both at once and asking whether the picture supports
+the sentence. That question is not part of the frozen visual-pass method; it happened here because
+the technique's title made the mismatch conspicuous.
+
+**Consequence if unchanged.** Claims will be recorded as `visually_demonstrated` on the strength of
+a figure existing and being legible, when the figure cannot in fact carry the claim. The evidence
+characteristic then overstates the support in exactly the direction that matters.
+
+**Proposed (not applied):** during the visual pass, for each figure, ask not only "is it legible"
+but "could this figure, as reproduced, discriminate the claim it illustrates from its negation".
+Post-batch only.
+
+---
+
+## R-08 — Counter-evidence: a notation designed for the reproduction survives everything
+
+**Status:** OBSERVED · **Layer:** visual completeness · **Evidence *for* careful source design** ·
+**Books: 1**
+
+**What it is.** The same book that contains R-07 defines its diagram notation as white arrows for
+camera movement and black arrows for actor movement. Because the distinction is tonal rather than
+chromatic, it survives greyscale printing, low-resolution reproduction in an EPUB, and a reader with
+no colour vision. The overhead for technique 8.2 carries the entire mechanism — two crossing actor
+paths and one retreating camera — in a single legible picture.
+
+**Why it matters.** Within one book, a visual convention built to survive monochrome sits a few
+pages from a technique monochrome destroys. Both were the same author's choices. **The loss is
+therefore not a property of the format or of the digitisation, but of the fit between an argument
+and its carrier** — which is a sharper statement than "EPUB loses visual evidence", and it points at
+a different remedy: ask what a source's argument depends on, not what its file format is.
+
+---
+
+## R-09 — Two sources at the extremes of the same schema field, days apart
+
+**Status:** INFERRED · **Layer:** other (evidence characteristics) · **Books: 2**
+
+**What it is.** The two books in this lane sit at opposite ends of several fields without any
+adjustment to the method:
+
+| | Book 8 — Alton | Book 11 — Kenworthy |
+|---|---|---|
+| Objects | 27 | 20 |
+| `argued` | 10 | **3** |
+| `controlled_comparison` | **2** | 0 |
+| `historical_claim` | **9** | 0 |
+| `claim_type: source_interpretation` | **0** | **3** |
+
+Alton explains and demonstrates, sometimes with genuine minimal pairs, and is heavily time-bound.
+Kenworthy instructs and repeats, warrants each technique by naming a released film, and states no
+thesis at all — which is why reading his chapter as a system required three interpretation objects
+where Alton required none.
+
+**Why it matters.** Both are practitioner craft books about moving-image production, written for
+directors, and the schema separated them cleanly on the fields that matter without either being
+forced. That is evidence the evidence-characteristics vocabulary discriminates within a domain and
+not only across domains.
+
+**Status is INFERRED deliberately.** Two books, one extractor, one day. The pattern is what the
+fields are supposed to do; whether they do it consistently across extractors is the integrator's
+question.
+
+---
+
 ## Book status — rebalance lane
 
 | Book | Status | Fresh checkpoint | Historical comparator |
 |---|---|---|---|
 | 8 — Alton, *Painting With Light* ch.2 | **complete, validated, pushed** | `ab2a833` | no extraction comparator; two pre-batch coverage-map judgements confirmed, one contradicted |
-| 11 — Kenworthy, *Master Shots* | not started | — | — |
+| 11 — Kenworthy, *Master Shots* frame + ch.8 | **complete, validated, pushed** | `2d3da5d` | no extraction comparator; coverage-map judgements confirmed on shot grammar and camera movement, contradicted on composition, and the ledger's EPUB concern refined — see R-08 |
