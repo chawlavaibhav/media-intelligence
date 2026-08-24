@@ -2,25 +2,27 @@
 
 **Task:** CANON-006, adjudicate and integrate the two deferred reserve sources
 **Date:** 25 Aug 2026 · **Branch:** `work/canon-006-reserves` · **Task-base:** `main` at `57fccaf`
-**Status:** adjudication complete · **needs_controller_review**
-**Severity:** `LOCAL`, with one method-change proposal returned for decision.
+**Status:** adjudication complete, plus the Controller correction pass applied · **needs_controller_review**
+**Severity:** `LOCAL`. The approved lineage relation is applied; nothing further is pending.
 
 ---
 
 ## Bottom line
 
-**One reserve in, one reserve blocked. Live Canon is 17 accepted, not 18.**
+**Both reserves in. Live Canon is 18 accepted, with 18 active v0.2 audit records.**
 
-*Master Shots* passed the authoritative Audit Gate and is accepted downstream knowledge.
+Both recovered extractions were complete and passed every mechanical check unmodified. *Master
+Shots* passed the gate directly. *The Conversations* was initially blocked — not by any defect, but
+because it is Walter Murch talking, the corpus already held Murch's own book, and none of the seven
+lineage relations could say that truthfully. The Controller approved a new dependence relation,
+`shared_primary_informant`, which this pass applied. The source now holds an audit record that
+states the relationship instead of hiding it.
 
-*The Conversations* is **blocked** — and it is blocked by a limit in our method, not by any defect in
-the extraction. Its recovered record is complete and passes every mechanical check with zero errors.
-The problem is that it is Walter Murch talking, the live corpus already contains Murch's own book,
-and **none of Audit Gate v0.2's seven lineage relations can say that truthfully.** Rather than pick
-the least-wrong label, I wrote no audit record, held the source as source evidence, and returned the
-exact minimum method change for your decision.
+**No reserve remains blocked merely because the vocabulary was missing a truthful relation.**
 
-A live Canon of 17 is better than a dishonest 18.
+**The durable finding stands: different bibliographic authorship does not prove independent
+intellectual origin.** The pair still cannot count as independent convergence with each other — and,
+because independence is pairwise, each remains a good independent origin against everything else.
 
 **Historical numbers are untouched.** CANON-003 accepted 16. CANON-004 tested 16. The historical
 validator is byte-identical to `main` and still reports 16 books / 505 objects / 111 bindings.
@@ -137,7 +139,7 @@ independently of the equipment that executes them.
 
 ---
 
-## 3. Reserve 12 — *The Conversations* · **BLOCKED — source evidence only**
+## 3. Reserve 12 — *The Conversations* · **ACCEPTED**, after the approved lineage relation
 
 Michael Ondaatje, *The Conversations: Walter Murch and the Art of Editing Film*, Knopf, 2002. Third
 Conversation, complete.
@@ -149,7 +151,10 @@ Conversation, complete.
 (0 replacement characters across 92,199 words), hedges preserved, speaker register recorded on every
 object because SPEC-03 has no speaker field, and contamination disclosed on the object itself.
 
-### Why it is blocked
+**Audit record:** `canon/audit/records/ondaatje-conversations-ch3.audit.yaml`,
+`audit_record_version: v0.2`, snapshot computed after the source layer was frozen at `d57ac75`.
+
+### The lineage question, and why it needed a new relation
 
 The live corpus contains `murch-blink-p1-25`, written by Walter Murch. *The Conversations* is
 substantially Murch speaking, under Ondaatje's authorship. The legacy extraction established two
@@ -172,51 +177,100 @@ I tested all seven relations against the evidence. None is truthful:
 | `shares_publisher_only` | **false** |
 | `no_known_relation` | **false** — the relationship is documented and concrete |
 
-Writing any of them into an authoritative record would be a false statement. So I wrote none.
+Writing any of them would have been a false statement, so none was written and the source was held
+pending your decision.
 
 **This is harder than the case the rule already catches.** The Grammar books share authors, publisher
 and series — visible on a title page. Here **the author field itself differs**, and no metadata
 anywhere records that a book consists largely of another person's words. This pair passes every check
 built on author, publisher or source id.
 
-**Verdict: source evidence only.** Present, valid, documented, and blocked from cross-source
-promotion, downstream product use and Canon-consumption/retrieval. No audit record was written, which
-is what makes the block real rather than advisory.
+### Resolved — `shared_primary_informant`, approved and applied
 
-**Proposal returned:** `canon/PROPOSED-METHOD-CHANGE-CANON-006-LINEAGE.md` — one new lineage relation
-`shared_primary_informant`, one sentence of SPEC-05 Governance rule 5, two validator constants, one
-test, and reciprocal entries on exactly one pair of records. Migration surface is that one pair;
-nothing else changes. Rejected alternatives are listed with reasons.
+The Controller approved the proposed relation and tightened its meaning to:
+
+> The same practitioner's own claims constitute a primary or substantial knowledge source in both
+> works despite different bibliographic authorship — for example, one work written by that
+> practitioner and another substantially recording them in interview or conversation.
+
+**Incidental quotation of the same person is not sufficient.** *Art & Fear* quotes Joan Didion and
+Charles Eames in passing; that would not qualify. The relation applies where the practitioner's
+claims are load-bearing in both, which the Egyptian-painting passage and `planarity` demonstrate
+here.
+
+The record now states the relationship instead of hiding it, and the record's evidence field explains
+why. **Verdict: accepted downstream knowledge**, with the Murch pairing blocked from counting as
+independent convergence.
+
+### Other audit areas
+
+**Representation integrity** contributes a loss shape the corpus had not seen. This is a *plate
+book*: photographs grouped across facing pages, captions written to address several plates at once by
+position. Reflowing destroyed that arrangement. Four caption blocks use "Overleaf:", "Above:",
+"Right:", "center", "far right" to say which plate each clause describes, and in an EPUB those words
+point at nothing. The worked case: a caption naming three films sits beside an image containing two
+of them plus a black rectangle where a third plate was. **Neither the text nor the picture is
+missing — the correspondence between them is gone**, and it is unrecoverable in an EPUB by
+construction rather than by fault.
+
+**Evidence origin** is the most consequential in the corpus, and it is a *speaker* gap rather than
+the measurement gap Lane C found. The source has no single voice: a statement can be Murch asserting;
+Ondaatje proposing and Murch assenting; Ondaatje asserting unchallenged; or the producer Rick
+Schmidlin recalling in an inset. SPEC-03 has no speaker field, so the frozen extraction named the
+speaker in each claim and quoted the source's own `O:`/`M:` markers. The audit records this without
+proposing a new field — one source of this shape is not enough evidence to change SPEC-03.
+
+**Application fit:** three consumers bound — `creative_ir` (2), `evaluation` (2), `governance` (2) —
+plus a `human_workflow` candidate. Six bindings against 27 objects is correct rather than thin: much
+of the chapter is testimony about one film under one set of constraints, true as testimony and never
+a claim about films in general. The frozen extraction refused to promote those into principles Murch
+did not state, and the audit does not undo that refusal.
+
+**Technology contingency:** not applicable. Two objects carry `historical_claim` and one
+`culturally_bounded`, all about past practice rather than surviving equipment.
 
 ---
 
-## 4. New infrastructure — the live-corpus register
+## 4. The authoritative changes, and one thing withdrawn
 
-The Audit Gate created a state the repository could not express: a source that is real, valid and
-worth keeping, but not cleared for downstream use. Before CANON-006 the audit validator assumed every
-source directory must hold a record, so a deliberately-blocked source was indistinguishable from an
-oversight.
+### Applied — the approved lineage relation
 
-Added, as the smallest thing that closes it:
+| Artifact | Change |
+|---|---|
+| `canon/audit/AUDIT-GATE-v0.2.md` | `shared_primary_informant` added to the relation vocabulary and the dependence set, with the tightened definition and the explicit statement that incidental quotation does not qualify |
+| `canon/knowledge/SPEC-05-knowledge-ontology.md` | Governance rule 5's dependence list goes from four relations to five. **The only authoritative spec change.** No other SPEC-05 semantics touched |
+| `canon/validation/validate_audit_gate_v02.py` | one member added to `LINEAGE_RELATIONS`, one to `DEPENDENT_RELATIONS`. **No special code path** — symmetry enforcement, fail-closed verdicts and `independent_origins_ok()` all work unchanged, because the relation is symmetric like the existing four |
+| `canon/audit/records/ondaatje-conversations-ch3.audit.yaml` | written, declaring the dependence |
+| `canon/audit/records/murch-blink-p1-25.audit.yaml` | reciprocal entry added; verdict becomes `not_independent_of_named_sources`. **Its frozen source artifacts and snapshot are untouched** — the snapshot fingerprints source files, not the audit record |
 
-- **`canon/audit/LIVE-CORPUS.yaml`** — declares every live source as `accepted` or
-  `source_evidence_only`, the latter requiring a `blocked_reason`. It also pins
-  `historical_method_test_corpus: 16` so that number cannot drift with the live one.
-- **`canon/validation/validate_live_corpus.py`** — validates the current corpus: every source on disk
-  is declared, every `accepted` has exactly one active v0.2 audit record, every
-  `source_evidence_only` has none and states why, every source is mechanically valid whether accepted
-  or not, and ids are unique across everything present.
-- The audit validator's coverage check now consults the register instead of assuming. **An undeclared
-  source is still an error** — a decision must be recorded, not merely implied by absence.
+SPEC-01, SPEC-03 and SPEC-04 are unchanged.
 
-**The historical validator was not touched.** `validate_canon003_integrated.py` is byte-identical to
-`main`, its `ACCEPTED_BOOK_DIRS` still holds exactly 16 entries, neither reserve appears in it, and
-its output is unchanged.
+### Withdrawn — the live-corpus register
 
-Two existing tests hard-coded `16` for the live record count. They now count from the register and
-additionally assert the live corpus never *loses* accepted sources. That is a correction, not a
-weakening: those tests conflated the historical method-test corpus with the live corpus, which is the
-exact distinction this task exists to draw.
+An earlier version of this branch added `canon/audit/LIVE-CORPUS.yaml`, a matching validator and its
+tests, so a source could be recorded as present-but-not-cleared. **The Controller rejected it and it
+has been removed**, together with the change that made audit coverage depend on it.
+
+The objection is correct and worth recording: Audit Gate v0.2 already defines
+`audit_status: evidence_insufficient` as a legitimate *written* audit outcome. A general rule that a
+non-cleared source must have **no** record would contradict that existing contract — two mechanisms
+for the same idea, disagreeing. And once the lineage relation existed, both reserves satisfied the
+simple invariant anyway, so the registry solved a problem that had stopped existing.
+
+Restored invariant: **every source directory holds exactly one active Audit Gate record.** No
+replacement registry was designed. If a future task genuinely needs persistent source-evidence-only
+state beyond the existing audit statuses, that is a separate design job.
+
+### The historical validator was not touched
+
+`validate_canon003_integrated.py` is byte-identical to `main`, its `ACCEPTED_BOOK_DIRS` still holds
+exactly 16 entries, neither reserve appears in it, and its output is unchanged.
+
+Two existing tests hard-coded `16` for the live record count. They now derive the invariant from the
+source directories actually present, and no test asserts a floor on the live count. That is a
+correction: those tests conflated the historical method-test corpus with the live corpus, which is
+the exact distinction this task exists to draw. **The historical 16 belongs only to the historical
+CANON-003/004 instrumentation.**
 
 ---
 
@@ -225,9 +279,8 @@ exact distinction this task exists to draw.
 | # | Command | Exit | Result |
 |---|---|---|---|
 | 1 | `python canon/validation/validate_canon003_integrated.py --root .` | **0** | `error_count = 0` · **16 books**, 505 objects, 54 systems, 417 terms, 53 concepts, 111 bindings — *unchanged from `main`* |
-| 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count = 0` · `record_count = 17` · `records_path = canon/audit/records` |
-| 3 | `python -m pytest tests/ -q` | **0** | **73 passed, 78 subtests passed** |
-| 4 | `python canon/validation/validate_live_corpus.py --root .` | **0** | `error_count = 0` · 18 on disk · **17 accepted** · 1 source-evidence-only |
+| 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count = 0` · **`record_count = 18`**, covering all 18 source directories |
+| 3 | `python -m pytest tests/ -q` | **0** | **63 passed, 85 subtests passed** |
 
 Live corpus totals across all 18 directories: 552 SourceKnowledge · 60 systems · 450 terms ·
 59 concepts · 123 bindings.
@@ -236,19 +289,19 @@ Live corpus totals across all 18 directories: 552 SourceKnowledge · 60 systems 
 
 | Check | Result |
 |---|---|
-| no whole legacy lane branch merged | ✅ no merge commit; every artifact taken by path |
-| no unrelated legacy source directory imported | ✅ only the two named directories and their two findings files |
-| no historical 16-source decision or synthesis rewritten | ✅ `git diff` vs `main` touches no CANON-003/004 synthesis, decision or lane-checkpoint file |
-| historical validator meaning preserved | ✅ byte-identical; 16 entries; output unchanged |
-| every accepted live source has exactly one active v0.2 record | ✅ 17 accepted, 17 records, all `v0.2` |
-| no accepted audit is stale | ✅ all 17 snapshots recompute clean |
-| ids unique across the live corpus | ✅ 0 collisions over 552 / 60 / 450 / 59 / 123 |
-| no source book, page or image committed | ✅ only `.md` and `.yaml`; no binary added |
+| both imported reserve directories tree-identical to their legacy source outputs | ✅ `git diff` against **both** the lane tip and the fresh checkpoint returns empty, for both directories |
+| no legacy branch merged | ✅ no merge commit on the branch; every artifact taken by path |
+| no unrelated legacy source imported | ✅ only the two named directories and their two findings files |
+| no source book, page or image committed | ✅ every changed path is `.md`, `.yaml` or `.py`; no binary |
+| no source re-opened | ✅ every adjudication made from committed evidence; the re-opening stop condition never fired |
+| no source snapshot stale | ✅ all 18 recompute clean; Murch's snapshot untouched because only its audit record changed |
+| no id collisions across the 18-source live corpus | ✅ 0 over 552 / 60 / 450 / 59 / 123 |
+| SPEC-01, SPEC-02, SPEC-03, SPEC-04 unchanged | ✅ `git diff --stat` empty; SPEC-05 is the only spec changed |
+| historical CANON-003/004 decisions and synthesis unchanged | ✅ no decision, synthesis, controller-brief or lane-checkpoint file touched |
+| historical validator meaning preserved | ✅ byte-identical; 16 entries; neither reserve present; output unchanged |
+| every source directory has exactly one active v0.2 record | ✅ 18 directories, 18 records, all `v0.2` |
 | no GitHub Actions workflow | ✅ no `.github` directory |
-| no model/API/generation spend | ✅ none; no source was re-opened |
-
-**No source was re-opened.** Every adjudication was made from committed repository evidence, so the
-task's re-opening stop condition never fired.
+| no model/API/generation spend | ✅ none |
 
 ---
 
@@ -259,17 +312,24 @@ task's re-opening stop condition never fired.
 | CANON-003 accepted books | **16** | forever |
 | CANON-004 method-test corpus | **16** | forever |
 | Source directories in the repository | **18** | current |
-| **Live accepted Canon after CANON-006** | **17** | current |
-| Held as source evidence, blocked downstream | **1** | pending your decision |
+| **Live accepted Canon after CANON-006** | **18** | current |
+| Active authoritative v0.2 audit records | **18** | current |
+| Reserves still blocked for want of a truthful relation | **0** | — |
 
 ---
 
-## 7. Decision needed
+## 7. For review
 
-1. **Approve or decline** `shared_primary_informant` (the proposal document). If approved, a small
-   follow-on task writes *The Conversations*' audit record and takes the live Canon to 18. If
-   declined, nothing breaks and it stays at 17.
-2. **Review the live-corpus register and validator** as the new home for gate status.
+The approved lineage relation is applied and nothing is pending a decision. What is worth your
+attention on merge:
+
+1. **The tightened definition of `shared_primary_informant`** as written into
+   `canon/audit/AUDIT-GATE-v0.2.md` and SPEC-05, including the explicit statement that incidental
+   quotation does not qualify.
+2. **The withdrawal of the live-corpus register** (§4), and the reasoning that the existing
+   `audit_status: evidence_insufficient` already covers the case a registry would have duplicated.
+3. **The finding this task exists to preserve:** different bibliographic authorship does not prove
+   independent intellectual origin. Both sources are accepted; only the pairing is blocked.
 
 Not started and not self-assigned: Wave 1, any Work-discovered source, RAG/retrieval, cross-source
 concepts, Production IR.

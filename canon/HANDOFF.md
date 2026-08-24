@@ -19,9 +19,7 @@ them.
 | What | Where |
 |---|---|
 | Normative procedure and schema | `canon/audit/AUDIT-GATE-v0.2.md` |
-| Active records — exactly one per accepted source | `canon/audit/records/*.audit.yaml` (17), all `audit_record_version: v0.2` |
-| Live-corpus register — gate status per source | `canon/audit/LIVE-CORPUS.yaml` |
-| Live-corpus validator | `canon/validation/validate_live_corpus.py` |
+| Active records — exactly one per source directory | `canon/audit/records/*.audit.yaml` (18), all `audit_record_version: v0.2` |
 | Validator | `canon/validation/validate_audit_gate_v02.py` |
 | Tests | `tests/test_validate_audit_gate_v02.py` |
 | Experiment history — pointer only, nothing active | `canon/experiments/audit-gate-v0.2/README.md` |
@@ -33,26 +31,27 @@ validator passes. **Until then — and again if its audit goes stale — it may 
 cross-source promotion, downstream product/application use, or Canon-consumption/retrieval.** It
 remains in the repository as source evidence throughout; the gate governs use, not worth.
 
-**Live corpus after CANON-006: 18 source directories, 17 accepted, 1 held as source evidence.**
+**Live corpus after CANON-006: 18 source directories, all 18 accepted, 18 active audit records.**
 
 Two numbers that used to coincide are now distinct and must not be confused:
 
 | Number | Value |
 |---|---|
 | CANON-003 accepted books / CANON-004 method-test corpus | **16 — fixed forever** |
-| Live accepted Canon (passed the Audit Gate) | **17** |
-| Held as source evidence, blocked from downstream use | **1** — `ondaatje-conversations-ch3` |
+| Live accepted Canon | **18** |
 
-Gate status for every live source is declared in `canon/audit/LIVE-CORPUS.yaml` and checked by
-`canon/validation/validate_live_corpus.py`. `canon/validation/validate_canon003_integrated.py`
-remains a **historical** instrument for the frozen 16 and its meaning must never change.
+`canon/validation/validate_canon003_integrated.py` remains a **historical** instrument for the frozen
+16 and its meaning must never change. The live invariant is simple and needs no registry: **every
+source directory holds exactly one active Audit Gate record.** A source whose audit cannot be
+completed says so in the record itself, via `audit_status: evidence_insufficient`.
 
-**`ondaatje-conversations-ch3` is blocked on a method limit, not a defect.** Its extraction is
-complete and passes every mechanical check. It is Walter Murch speaking under Ondaatje's authorship,
-the corpus already holds Murch's own *In the Blink of an Eye*, and none of Audit Gate v0.2's seven
-lineage relations states that truthfully. It therefore holds no audit record. The minimum method
-change is proposed at `canon/PROPOSED-METHOD-CHANGE-CANON-006-LINEAGE.md` and awaits a Controller
-decision.
+**CANON-006's durable finding: different bibliographic authorship does not prove independent
+intellectual origin.** *The Conversations* is Michael Ondaatje's book substantially recording Walter
+Murch, and the corpus already held Murch's own *In the Blink of an Eye*. Different author, publisher
+and year, and the same load-bearing claims in both — the Egyptian-painting argument and `planarity`.
+That pair would pass any check built on bibliographic metadata. The Controller therefore approved a
+new dependence relation, `shared_primary_informant`, now applied. Both sources are accepted, and the
+pair is blocked from counting as independent convergence with each other only.
 
 **One adopted record version: `v0.2`.** The validator fails closed on anything else, including the
 pre-adoption `v0.2-experimental`. There is no migration or version-negotiation machinery, and adding
@@ -69,10 +68,11 @@ Conversations*) are deferred reserves, not failures. *Thinking with Type* remain
 structural column interleaving.
 
 **LAST COMPLETED TASK:** `tasks/CANON-006.md` — adjudicated the two deferred reserves under the
-authoritative gate. *Master Shots* recovered from `work/canon-003-rebalance-d` and **accepted**;
-*The Conversations* recovered from `work/canon-003-b` and **blocked as source evidence** on a lineage
-limit. Added the live-corpus register and validator. No legacy branch merged, no source re-opened, no
-new source ingested, and the historical 16-source validator left byte-identical.
+authoritative gate. *Master Shots* recovered from `work/canon-003-rebalance-d` and *The
+Conversations* from `work/canon-003-b`; both **accepted**. The Controller approved and this task
+applied one new lineage dependence relation, `shared_primary_informant`, amending SPEC-05 Governance
+rule 5's dependence list from four relations to five. No legacy branch merged, no source re-opened,
+no new source ingested, and the historical 16-source validator left byte-identical.
 
 Preceding: `tasks/CANON-005.md` — applied the adopted Audit Gate. Amended SPEC-05
 Governance rule 5 so independence for a `cross_source_concept` comes from the Audit Gate lineage
@@ -84,8 +84,7 @@ Preceding: `tasks/CANON-004.md` — designed and tested the gate, plus a Control
 25 Aug (retain `deterministic_composition`; close the stale-audit hole with an enforced
 `source_snapshot` content fingerprint; correct the independence test fixtures).
 
-**CURRENT TASK / QUEUE:** none. CANON-006 is `needs_controller_review`, with one method-change
-proposal returned for decision. **Next work is
+**CURRENT TASK / QUEUE:** none. CANON-006 is `needs_controller_review`. **Next work is
 Controller-assigned only** — do not self-assign reserve-book integration, Canon expansion,
 cross-source promotion, RAG/retrieval or Production IR.
 
@@ -98,7 +97,8 @@ cross-source promotion, RAG/retrieval or Production IR.
   4 Creative IR bindings from 18 objects) has its weakest support. Never rank by binding count.
 - **A different author field is not independence either.** *The Conversations* and *In the Blink of
   an Eye* have different authors, publishers and years, and are the same practitioner speaking. No
-  metadata field records that. This is the sharper sibling of the finding below.
+  metadata field records that. Now expressed by `shared_primary_informant`; incidental quotation of
+  the same person does not qualify. This is the sharper sibling of the finding below.
 - **A source id is not an independent origin.** *Grammar of the Shot* and *Grammar of the Edit* are
   companion volumes by the same authors and must not count as convergence. This is now enforced by
   SPEC-05 Governance rule 5 and by `independent_origins_ok()`, which fails closed. Independence is
@@ -114,9 +114,8 @@ cross-source promotion, RAG/retrieval or Production IR.
   `pyyaml` and `pytest` before running either validator.
 
 **DEFERRED RESERVE SOURCES — resolved by CANON-006.** Both remain **outside** the frozen 16-book
-CANON-003/004 method-test set, which is a historical fact and does not change. *Master Shots* now
-holds an active audit record and is live accepted knowledge. *The Conversations* is recovered,
-validated and held as source evidence pending the lineage decision.
+CANON-003/004 method-test set, which is a historical fact and does not change. Both now hold active
+audit records and are live accepted knowledge, taking the live Canon to 18.
 
 **OPEN QUESTIONS:** Ontology naming convention. Runtime Canon consumption shape. Whether evidence
 lineage and source lineage need joining (one source is not enough to say). Whether a different worker

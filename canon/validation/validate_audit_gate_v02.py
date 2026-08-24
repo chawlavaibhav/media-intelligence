@@ -31,8 +31,6 @@ import yaml
 # experimental directory is a historical pointer only (CANON-005).
 RECORDS_SUBPATH = Path("canon/audit/records")
 RETIRED_RECORDS_SUBPATH = Path("canon/experiments/audit-gate-v0.2/records")
-# Which live sources are meant to hold an audit record. See canon/validation/validate_live_corpus.py.
-LIVE_CORPUS_REGISTER = Path("canon/audit/LIVE-CORPUS.yaml")
 KNOWLEDGE_SUBPATH = Path("canon/knowledge/current")
 
 # ── the source snapshot ─────────────────────────────────────────────────────────────────────
@@ -123,11 +121,15 @@ APPLICATION_OUTCOMES = {
 }
 
 LINEAGE_RELATIONS = {
-    "shared_author", "same_series", "companion_volume", "derivative_of", "cites_source",
-    "shares_publisher_only", "no_known_relation",
+    "shared_author", "same_series", "companion_volume", "derivative_of", "shared_primary_informant",
+    "cites_source", "shares_publisher_only", "no_known_relation",
 }
-# Relations that defeat independence for cross-source promotion.
-DEPENDENT_RELATIONS = {"shared_author", "same_series", "companion_volume", "derivative_of"}
+# Relations that defeat independence for cross-source promotion. `shared_primary_informant` joined
+# them under the CANON-006 Controller decision: bibliographic authorship is not intellectual origin,
+# and two works can record the same practitioner's own claims under different author fields.
+DEPENDENT_RELATIONS = {
+    "shared_author", "same_series", "companion_volume", "derivative_of", "shared_primary_informant",
+}
 INDEPENDENCE_VERDICTS = {
     "independent_origin", "not_independent_of_named_sources", "independence_not_established",
 }
@@ -669,31 +671,16 @@ def validate_repository(root: Path) -> dict[str, Any]:
 
     errors.extend(validate_record_set(records))
 
-    # Coverage. Before CANON-006 every source directory was expected to hold an audit record. That
-    # became wrong the moment adjudication could legitimately conclude "keep this as source evidence,
-    # do not clear it for downstream use". The live-corpus register is now the authority on which
-    # sources are meant to be audited; a source missing from the register is still an error, because
-    # an undeclared source is an oversight rather than a decision.
+    # Coverage. Every source directory in the live Canon holds exactly one active audit record.
+    # A source whose audit could not be completed is expressed by the record itself - Audit Gate
+    # v0.2 already defines `audit_status: evidence_insufficient` as a legitimate written outcome -
+    # not by the absence of a record.
     covered = {r.get("knowledge_dir") for r in records.values()}
-    register_path = root / LIVE_CORPUS_REGISTER
-    expected: set[str] | None = None
-    if register_path.is_file():
-        try:
-            register = _load_yaml(register_path) or {}
-            expected = {
-                str(e.get("dir"))
-                for e in _list(register.get("sources"))
-                if isinstance(e, dict) and e.get("gate_status") == "accepted"
-            }
-        except ValueError as exc:
-            errors.append(str(exc))
     if knowledge_root.is_dir():
         for book in sorted(p for p in knowledge_root.iterdir() if p.is_dir()):
             rel = str(KNOWLEDGE_SUBPATH / book.name)
-            if rel in covered:
-                continue
-            if expected is None or book.name in expected:
-                errors.append(f"coverage: no audit record for accepted source {book.name}")
+            if rel not in covered:
+                errors.append(f"coverage: no audit record for source {book.name}")
 
     # Exactly one active copy. A duplicate under the retired experimental path would let the two
     # drift and leave downstream tooling without an unambiguous source of truth.

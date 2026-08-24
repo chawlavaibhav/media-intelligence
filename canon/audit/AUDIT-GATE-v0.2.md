@@ -398,8 +398,30 @@ lineage:
     evidence: >
 ```
 
-`relation`: `shared_author` · `same_series` · `companion_volume` · `derivative_of` · `cites_source` ·
-`shares_publisher_only` · `no_known_relation`
+`relation`: `shared_author` · `same_series` · `companion_volume` · `derivative_of` ·
+`shared_primary_informant` · `cites_source` · `shares_publisher_only` · `no_known_relation`
+
+#### `shared_primary_informant`
+
+> The same practitioner's own claims constitute a primary or substantial knowledge source in both
+> works despite different bibliographic authorship — for example, one work written by that
+> practitioner and another substantially recording them in interview or conversation.
+
+**Incidental quotation of the same person is not sufficient.** A work that quotes a practitioner once
+in passing does not share a primary informant with that practitioner's own book; the relation applies
+only where their claims are load-bearing in both. *Art & Fear* quotes Joan Didion, Stanley Kunitz and
+Charles Eames — that is incidental quotation and would not qualify even if the corpus held their
+books.
+
+It is a **symmetric pairwise dependence relation** and defeats independent convergence **only for
+that pair**. Both sources remain independent origins against every other source.
+
+Added by the Controller decision on CANON-006. The case that forced it: `murch-blink-p1-25` is
+written by Walter Murch, and *The Conversations* is Michael Ondaatje's book substantially recording
+Murch speaking. The Egyptian-painting argument appears in both, as does `planarity`. Different
+author, publisher and year — so the pair passes every check built on bibliographic metadata, and none
+of the other seven relations states the truth. **Different bibliographic authorship does not prove
+independent intellectual origin.**
 
 `independence_verdict`: `independent_origin` · `not_independent_of_named_sources` ·
 `independence_not_established`
@@ -417,8 +439,8 @@ that as two sources agreeing. It is one authorial position stated twice.
 The candidate rule, mechanically checkable from the audit records alone:
 
 > Two sources count as independent origins for a `cross_source_concept` **only if** neither one's
-> audit record declares the other with relation `shared_author`, `same_series`, `companion_volume`
-> or `derivative_of`.
+> audit record declares the other with relation `shared_author`, `same_series`, `companion_volume`,
+> `derivative_of` or `shared_primary_informant`.
 >
 > `shares_publisher_only` and `cites_source` do **not** by themselves defeat independence.
 > `independence_not_established` blocks promotion against everything until resolved; it does not
@@ -510,7 +532,8 @@ Implemented in `canon/validation/validate_audit_gate_v02.py`.
 
 12. `audit_id` and `source_id` unique.
 13. **Dependence** relations are symmetric: if A declares `shared_author`, `same_series`,
-    `companion_volume` or `derivative_of` with B, B must declare a dependence back. Relations that
+    `companion_volume`, `derivative_of` or `shared_primary_informant` with B, B must declare a
+    dependence back. Relations that
     do not defeat independence are deliberately not symmetric - `shares_publisher_only` is
     uninformative to mirror and `cites_source` is genuinely one-directional.
 14. `independent_origins_ok(a, b)` implements the promotion rule and is exposed for use by any later

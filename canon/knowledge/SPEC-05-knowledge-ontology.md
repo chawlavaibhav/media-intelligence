@@ -194,9 +194,19 @@ Adapted from the *Light: Science & Magic* precedent.
    Two origins may be counted as independent only when:
 
    - neither source's audit record declares the other with a **dependence relation**:
-     `shared_author`, `same_series`, `companion_volume` or `derivative_of`; and
+     `shared_author`, `same_series`, `companion_volume`, `derivative_of` or
+     `shared_primary_informant`; and
    - neither carries `independence_not_established`, which blocks promotion until resolved rather
      than silently passing.
+
+   `shared_primary_informant` covers the case where the same practitioner's own claims are a
+   primary or substantial knowledge source in both works despite different bibliographic
+   authorship — one work written by that practitioner, another substantially recording them in
+   interview or conversation. Incidental quotation of the same person is not sufficient. It was
+   added by the CANON-006 Controller decision, after *The Conversations* (Ondaatje, recording Walter
+   Murch) was found to share load-bearing claims with Murch's own *In the Blink of an Eye* while
+   differing in author, publisher and year. **Different bibliographic authorship does not prove
+   independent intellectual origin.**
 
    A shared publisher (`shares_publisher_only`) or a citation (`cites_source`) **does not** by
    itself defeat independence. A source citing an unrelated source is ordinary scholarly behaviour,

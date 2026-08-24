@@ -2,11 +2,23 @@
 
 **From:** Canon worker, CANON-006 · **To:** Controller · **Date:** 25 Aug 2026
 **Severity:** `LOCAL` — one Audit Gate vocabulary member and one sentence of SPEC-05.
-**Status:** proposal only. Nothing authoritative was changed. The Audit Gate controlled vocabulary
-and SPEC-05 are untouched on this branch.
+**Status: CONTROLLER-APPROVED AND APPLIED**, 25 Aug 2026, within PR #9.
 
-**This is the stop condition CANON-006 anticipated.** *The Conversations* is blocked as accepted
-downstream knowledge until the Controller decides. It remains in the repository as source evidence.
+> **Decision.** The Controller approved `shared_primary_informant` and tightened its normative
+> meaning to: *the same practitioner's own claims constitute a primary or substantial knowledge
+> source in both works despite different bibliographic authorship — for example, one work written by
+> that practitioner and another substantially recording them in interview or conversation.*
+> **Incidental quotation of the same person is not sufficient.** It is a symmetric pairwise
+> dependence relation and defeats independent convergence only for that pair.
+>
+> Applied in `canon/audit/AUDIT-GATE-v0.2.md`, `canon/knowledge/SPEC-05-knowledge-ontology.md`
+> Governance rule 5 (four dependence relations to five) and
+> `canon/validation/validate_audit_gate_v02.py`. *The Conversations* now holds an active v0.2 audit
+> record and is accepted; the live Canon is **18**.
+
+This document is retained as decision history. It records the reasoning as it stood when the block
+was raised — the text below is unedited and still speaks of the source as blocked, which is what was
+true at the time of writing.
 
 ---
 
@@ -100,7 +112,7 @@ knowledge, system, ontology entry or binding changes anywhere.
 **Snapshots are unaffected.** They fingerprint the frozen source artifacts, not the audit records, so
 editing *Blink*'s audit record cannot invalidate its snapshot.
 
-## 5. What happens if the Controller declines
+## 5. What would have happened if the Controller had declined
 
 Nothing breaks. *The Conversations* stays `source_evidence_only`: present, mechanically valid, fully
 documented, and blocked from cross-source promotion, downstream product use and Canon-consumption.
