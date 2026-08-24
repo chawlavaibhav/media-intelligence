@@ -1,22 +1,3 @@
-# Control State
-
-**Purpose:** enough to bootstrap a fresh Controller conversation without replaying history.  
-**Not a diary** — see `coordination/DECISION-LOG.md` for history.  
-**Snapshot refreshed:** 24 Aug 2026.
-
-## Product thesis
-An intelligence layer above image/video/audio models, optimizing Cost per Accepted Outcome by combining explicit creative knowledge (Canon) with empirically measured current capability (Capability Lab) to plan, route, generate, evaluate and repair.
-
-## Current accepted architecture
-Normalized Request → Creative IR (Canon-informed) → Production IR (does not exist yet) + Capability Registry (does not exist yet) → Planner → Execute → Evaluate (technical + creative) → Repair → Empirical Memory.
-
-Object-level separations remain locked in `PROJECT-CONTRACT.md`. Canon-consumption / planning experiments remain paused unless the Controller explicitly reopens them.
-
-## Workstream boundaries
-Canon = durable creative expertise. Eval / Capability Lab = measurement design + empirical current-model behaviour. Resources = independent media/data. Full definitions: each stream's `CHARTER.md`.
-
-## Current versions / approvals
-- Creative IR: **SPEC-01 v0.1**, locked for the current phase.
 - Source Knowledge: **SPEC-03 v0**.
 - Operational Bindings: **SPEC-04 v0**.
 - Knowledge Ontology: **SPEC-05 v0**.
@@ -31,13 +12,15 @@ CANON-003 is the current Canon stress batch under the frozen SPEC-03/04/05 extra
 
 The authoritative pre-parallel checkpoint on `work/canon` records **5 usable books complete** with no partially extracted book: *Grammar of the Shot*, *Ogilvy on Advertising*, *Light: Science & Magic*, *Interaction of Color*, and *The Vignelli Canon*. *Thinking with Type* was blocked by source-structure corruption and is not counted.
 
-Controller approved `canon/tasks/CANON-003-PARALLEL-EXECUTION.md` to finish the remaining fixed assignments through a preferred total of **18 usable books**. Four isolated branches exist: `work/canon-003-a`, `work/canon-003-b`, `work/canon-003-c`, and `work/canon-003-d`.
+Controller approved `canon/tasks/CANON-003-PARALLEL-EXECUTION.md` to finish the remaining fixed assignments through a preferred total of **18 usable books**. Four isolated branches were created from the same common base. Lane D is Controller-audited complete and contributes three usable books: Books 16–18, bringing the currently confirmed usable count to **8** pending audit of other returned books and final integration validation.
 
-Current branch audit: lanes A/B/C remain at the common parallel base. Lane D is one commit ahead with the six Book 16 (*Creativity, Inc.*, chapter 5) knowledge/provenance files. The content is provisionally architecture-disciplined: converted-EPUB provenance weakness is explicit; the no-evidentiary-figure result is recorded rather than invented around; synthesized source systems are marked as extractor synthesis; Creative IR is not forced; and Production IR implications are parked rather than translated.
+On 24 Aug 2026 the Controller approved `canon/tasks/CANON-003-REBALANCE-01.md` to reduce idle time **without changing the selected 18-book source set**. At the audit point, A had Book 6 complete with Books 7–8 explicitly not started; B had Book 9 complete with Books 10–12 explicitly not started; C had Books 13–14 complete with Book 15 not started; D had finished Books 16–18. The rebalance therefore moves only two preselected, not-yet-started books: **Book 8 _Painting With Light_** from A and **Book 11 _Master Shots_** from B to a fresh worker branch `work/canon-003-rebalance-d` created from the original common parallel base.
 
-**Book 16 is not yet counted as a completed usable post-split book.** The Lane D issue file and lane checkpoint required by the parallel contract are not present on GitHub yet. The provenance file says historical material was searched “after this checkpoint,” while the branch currently has only one reachable post-base commit. Until the lane preserves/reconciles the required fresh-before-historical checkpoint evidence, treat it as provisional. Do not redo the extraction merely for cleanliness; record a method deviation if the sealed checkpoint was amended/squashed and enforce the rule on subsequent books.
+Remaining execution ownership is now: A → Book 7; B → Books 10 and 12; C → Book 15; rebalance worker → Books 8 and 11. Lane D's accepted branch remains frozen and untouched. Book 12 deliberately stays with B because Lane D had already predicted that an interview-shaped source such as *The Conversations* might expose its claim-attribution issue, making reassignment of that particular source less clean.
 
-Lanes must remain isolated during fresh extraction. Shared batch synthesis files are locked until one fresh integration session merges/reconciles the lanes and produces the end-of-batch synthesis. Parallel lanes do not change schemas or run Canon-consumption experiments.
+The rebalance is an execution-only amendment: no source was added or removed; no schema, granularity rule, visual-pass method, ontology vocabulary, or synthesis question changed. The rebalance worker must use fresh book-specific checkpoints before historical comparison and must not read A/B/C fresh findings or use D's issue file as an extraction checklist.
+
+Lanes remain isolated during fresh extraction. Shared batch synthesis files stay locked until one fresh integration session merges/reconciles the reviewed lanes and produces the end-of-batch synthesis. Parallel/rebalance workers do not change schemas or run Canon-consumption experiments.
 
 ## Eval status — EVAL-003 finalization pass active
 **EVAL-001 and EVAL-002 are closed and merged to `main`.**
@@ -71,6 +54,7 @@ Eval may propose factual corrections through an Eval-owned `PROPOSED-INTEGRATION
 ## Current approved work
 - `canon/tasks/CANON-003.md`
 - `canon/tasks/CANON-003-PARALLEL-EXECUTION.md`
+- `canon/tasks/CANON-003-REBALANCE-01.md`
 - `eval/tasks/EVAL-003.md`
 - `eval/tasks/EVAL-003-CORRECTION-PASS.md`
 - `eval/tasks/EVAL-003-FINALIZATION-PASS.md`
@@ -81,7 +65,7 @@ There is **no active Resources task** and no approved EVAL-004.
 The assumptions register remains authoritative. Important unresolved items still include whether the Source Knowledge / Binding split earns its complexity over time, whether explicit Canon materially improves planning/evaluation, whether Canon-derived requirements improve routing once a Registry exists, whether Empirical Memory predicts later failures, and whether CpAO is the right operating objective. None should be promoted to fact without the register's evidence bar.
 
 ## Current integration gates
-1. **Canon:** audit each lane return against the frozen method as it lands. Lane D Book 16 is provisional for checkpoint-integrity reasons. Do not merge/synthesise the parallel lanes until assigned work is reviewed, then use one fresh integration session for synthesis.
+1. **Canon:** audit returned books against the frozen method. Rebalanced ownership is A→7, B→10+12, C→15, rebalance worker→8+11; accepted Lane D remains untouched. Do not merge/synthesise until all assigned work is reviewed, then use one fresh integration session.
 2. **Eval:** wait for the EVAL-003 finalization return. Human readers, checker roster, API spend and calibration remain blocked. The primary V0 calibration pack is Controller-directed to be Hindi-focused with unique photograph hashes.
 3. **Resources:** closed; act only on a Controller-approved cross-stream correction or a new sourcing task.
 4. **Architecture:** no Capability Registry, Production IR, routing system, or Canon-consumption experiment is authorized by the current work.
