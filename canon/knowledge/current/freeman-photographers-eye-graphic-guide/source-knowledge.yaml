@@ -1,0 +1,1722 @@
+# CANON-003 book 7 (Lane A) — Michael Freeman, "The Photographer's Eye: A Graphic Guide"
+# (Focal Press / Ilex Press, 2013). Parts 1-3: Framing, Placing, Dividing.
+# Fresh SPEC-03 extraction. Granularity: CANON-001 V0 rule, unchanged.
+# Visual completeness: partial_reflowed_layout (calibre conversion — figures survive, page does not).
+#
+# PROVENANCE WARNING CARRIED INTO EVERY OBJECT: the numbers on these pages are the CONVERTED file's
+# pagination, not the printed book's. Proved by the book's own cross-references, all five of which
+# point elsewhere in this copy. Every object therefore has page_start: null and cites a locator of
+# the form "converted-PDF page NN, CASE NAME". Nothing here should be read as a printed page.
+#
+# NOTE ON THIS SOURCE'S SHAPE: the book is organised as ~80 "cases", each one photograph the author
+# made, with a first-person account of the decisions behind it. Claims are therefore embedded in
+# single recounted instances, and the evidence profile is dominated by `anecdotal` and
+# `visually_demonstrated` — a different profile from any book this lane has processed. The author
+# states in his introduction that the words are deliberately minimal and the visuals carry the
+# story, so text-only extraction of this source is known to be partial by the source's own account.
+
+source_id: freeman_photographers_eye_graphic_guide_parts1_3
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# PART 1 — FRAMING
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_fre_c003_0001
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Framing the shot usually comes before anything else—the first decision."
+    - "Composition (or design if you like) covers the whole range of organizing the image, while framing concentrates on enclosing the scene, even before thinking about the relationship between elements inside the picture."
+  concept_label: framing_precedes_composition_and_is_about_enclosure_only
+  label_origin: extractor_assigned
+  claim: >
+    Framing and composition are different acts. Framing concentrates on enclosing the scene and
+    comes before anything else, prior even to thinking about relationships between the elements
+    inside the picture; composition covers the whole range of organising the image. The source
+    notes the term comes from filmmaking, where a scene is enclosed and the action then plays out
+    within it, and concedes the separation is less sharp in still photography, where the image is
+    singular rather than multiple. Even so, the decisions about where to cut into a landscape,
+    figure or object, and what to include and leave out, rank as the most important in defining
+    the shot.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      In film the enclosure is fixed first and the action happens inside it, which is what makes
+      framing logically prior. The source imports that ordering into still photography while
+      acknowledging it fits less cleanly.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "any photograph"
+  caveats:
+    - text: "the source states directly that the separation may not hold to the same degree in still photography"
+      origin: source_stated
+    - text: "the claim that framing decisions are the most important in defining the shot is asserted and is not revisited or tested anywhere in the three parts"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_fre_c003_0015, note: "placing is treated as the next decision after framing"}
+    - {relation: qualified_by, target: sk_fre_c003_0015, note: "the source says the two are inseparably linked"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Part introduction"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 13, PART 1 introduction"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0002
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Framing can be as rigorous and precise as you have the time or energy for."
+    - "The cuts and the gaps were proportionate to the angle at which the various curves of the shell interacted with the frame edges."
+  concept_label: cut_the_frame_proportionate_to_how_the_subjects_curves_meet_the_edges
+  label_origin: extractor_assigned
+  claim: >
+    Framing can be made as rigorous as time allows, and studio still-life is the extreme case
+    because there is full control and, in the source's words, an absolute obligation to bring
+    things into some kind of order. In the worked case the decisions were: how much of the subject
+    to include, where exactly to cut, how close to bring its curved outline to the frame edges, and
+    how to divide the proportions between the subject, the background and its coloured interior.
+    The rule the source gives is that the cuts and gaps were proportionate to the angle at which
+    the subject's various curves met the frame edges.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [studio_still_life_photography]
+    conditions: "full control over subject, set and lighting"
+  caveats:
+    - text: "the source notes the proportions of the three colours present were also taken into account, so the geometric rule was not the only input"
+      origin: source_stated
+    - text: "\"proportionate to the angle\" is not defined further and no measurement is given; the accompanying diagram shows which distances were measured but not what the proportion was"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "cowrie shell on black acrylic under a softbox, with an analytic diagram measuring the gaps between the shell's curve and each frame edge", figure_ref: vis_fre_deconstruction_of_a_cut}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0001, note: "framing at its most rigorous"}
+    - {relation: trades_off_with, target: sk_fre_c003_0005, note: "the deliberate opposite of loose framing"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Exact"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 14-16, EXACT"
+    figure_refs: [pdf_p14, pdf_p15, pdf_p16]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [pdf_p14, pdf_p15]}
+
+- sk_id: sk_fre_c003_0003
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "If there’s a straight edge in the subject, and it’s close to one edge of the frame, it suddenly acquires a new relationship."
+    - "The closer you position it, the stronger this feels, like a kind of magnetism."
+  concept_label: a_straight_subject_edge_near_a_frame_edge_reads_as_magnetic
+  label_origin: extractor_assigned
+  claim: >
+    A straight edge within the subject, positioned close to an edge of the frame, acquires a new
+    relationship with it, and the closer it is placed the stronger that relationship feels — the
+    source describes it as a kind of magnetism. In the worked case high contrast encouraged the
+    photographer to shave the distance between the subject and the top and left edges to the
+    absolute minimum.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a subject containing a straight edge, positionable relative to the frame"
+  caveats:
+    - text: "\"like a kind of magnetism\" is offered as a description of how it feels rather than as an account of why it happens; no cause is given"
+      origin: extractor_observed
+    - text: "the source notes the alignment in its example was rectilinear and squared up and was hard to avoid given where the photographer was standing, so the case is partly circumstance rather than choice"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "position a straight subject edge as close to the frame edge as the contrast will bear"
+  examples:
+    positive:
+      - {description: "riverboat side aligned to the frame edges, Mandalay-Bhamo public boat", figure_ref: pdf_p17}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_fre_c003_0004, note: "a bright framing element must be thinned"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Edge-align"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 17-18, EDGE-ALIGN"
+    figure_refs: [pdf_p17, pdf_p18]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0004
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "The side of the boat already created the frame, but at this brightness it needed to be thinner in the image to avoid dominating the subject."
+  concept_label: a_bright_framing_element_must_be_made_thinner_or_it_takes_over
+  label_origin: extractor_assigned
+  claim: >
+    Where an element within the scene is acting as a frame, its brightness determines how much of
+    the picture it may occupy. At high brightness it has to be made thinner in the image, or it
+    dominates the subject it was supposed to enclose.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "an in-scene element used as a frame, under strong lighting"
+  caveats:
+    - text: "stated in a single caption about one photograph; the trade-off between an element's brightness and its permitted area is not generalised anywhere by the source"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a framing element dominating the subject"
+  source_stated_remedies:
+    - "make a bright framing element occupy less of the image"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_fre_c003_0003, note: "a limit on how much edge you may show"}
+    - {relation: qualifies, target: sk_fre_c003_0022, note: "the same trade-off applies to a frame within the scene"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Edge-align"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 18, EDGE-ALIGN caption"
+    figure_refs: [pdf_p18]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0005
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Loose framing doesn’t (or shouldn’t) mean ill-considered and sloppy."
+    - "In a busy scene like this, the edges and corners of the frame will be less noticeable."
+  concept_label: a_busy_scene_makes_the_frame_edges_stop_mattering
+  label_origin: extractor_assigned
+  claim: >
+    Loose framing means not being preoccupied with how things fit the frame, how objects intersect
+    edges and corners, or whether the frame breaks into a person. The source is explicit that it is
+    not the same as sloppiness: it is partly an attitude, and it suits situations where the action
+    takes precedence over the finer points of the frame. The reason it works is that in a busy
+    scene the viewer's attention centres on the activity and gestures and is unlikely to be
+    distracted by the borders, so the edges and corners become less noticeable.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attention is finite and goes to the activity, so the frame's edges recede from notice. Where
+      the interest is dense enough, precision at the borders buys nothing.
+  scope:
+    domain_discussed_by_source: [reportage_photography]
+    conditions: "scenes busy with action, shot close with a wide lens"
+  caveats:
+    - text: "the source reduces its own busy example to an interaction of just three elements, so the scene is loose at the edges and tightly organised at the centre — the looseness is bounded and not stated to be"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "tea picking, Assam — three elements organised at the centre with the frame breaking figures at the edges", figure_ref: pdf_p19}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_fre_c003_0002, note: "the deliberate opposite of exact framing"}
+    - {relation: contradicts, target: sk_fre_c003_0006, note: "and of frame-fit"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Loose"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 19-21, LOOSE"
+    figure_refs: [pdf_p19, pdf_p20, pdf_p21]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0006
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "there’s the possibility of being clever with the edges and corners to make everything just fit. Emphasis on “just,” because this is a tricky procedure. One slip and it all falls apart if anything important actually breaks out and crosses the edge."
+    - "The slight gap at the top, above the cross, is deliberate—any less would look too tight."
+  concept_label: frame_fit_is_fragile_and_needs_a_deliberate_slight_gap
+  label_origin: extractor_assigned
+  claim: >
+    When the subject's shape resembles the picture frame, or can be made to, the edges and corners
+    can be used to make everything just fit. The source stresses that this is fragile: one slip and
+    it falls apart if anything important breaks out across the edge. To be satisfying the subject
+    has to match the frame, and a slight deliberate gap is needed — any less would look too tight.
+    Cropping in afterwards to make it appear to work is rejected as missing the point.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a subject whose outline is close to the frame's proportions"
+  caveats:
+    - text: "the source concedes it can waste a lot of time moving around and changing lenses to make this happen"
+      origin: source_stated
+    - text: "the rejection of later cropping is a claim about the photographer's practice, not about the resulting image, which would be identical"
+      origin: extractor_observed
+  source_stated_problems:
+    - "something important breaking out across the frame edge"
+    - "a fit so exact it looks too tight"
+  source_stated_remedies:
+    - "leave a slight deliberate gap"
+    - "find the camera position rather than crop afterwards"
+  examples:
+    positive:
+      - {description: "picket-fenced church, Stykkishólmur, with exactly equal gaps in the lower third", figure_ref: pdf_p22}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_fre_c003_0007, note: "the source presents frame break as its opposite"}
+    - {relation: specialises, target: sk_fre_c003_0002, note: "rigorous framing applied to the outline as a whole"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Frame-fit"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 22-23, FRAME-FIT"
+    figure_refs: [pdf_p22, pdf_p23]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0007
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Far from carefully fitting things inside, we carefully break them in half, and for a good reason."
+    - "In one case, the eyes move to the center; in this case, they are pulled apart."
+  concept_label: halving_symmetrical_subjects_produces_symmetry_that_pulls_the_eye_apart
+  label_origin: extractor_assigned
+  claim: >
+    The opposite of frame-fit: deliberately breaking subjects in half at the frame edge. The source
+    says showing half of each of two subjects is more interesting than showing both whole because
+    it is not quite expected, and that it works because the subjects are virtually symmetrical, as
+    faces are. The resulting image is symmetrical, but in the opposite way from a centred
+    symmetrical composition — where centred symmetry moves the eyes to the middle, this pulls them
+    apart.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Two half-subjects placed at opposite sides create two centres of interest rather than one, so
+      the symmetry works outward instead of inward.
+  scope:
+    domain_discussed_by_source: [studio_photography]
+    conditions: "two near-symmetrical subjects that need to be shown together"
+  caveats:
+    - text: "the source shows the alternative of merging the two into a single composite and reports it as less successful because the visors differ in height — a reason specific to these two objects"
+      origin: source_stated
+    - text: "the source's cross-reference for the contrasting centred case points to a page this copy does not have"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a side-by-side framing that is too wide and shows more than we need to see"
+  source_stated_remedies:
+    - "crop left-right so each symmetrical subject is divided exactly in half"
+  examples:
+    positive:
+      - {description: "two space helmets, each halved at the frame's centre line", figure_ref: pdf_p24}
+    counter:
+      - {description: "the same two helmets simply side by side, described as too wide and pedestrian", figure_ref: pdf_p25}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_fre_c003_0006, note: "stated by the source as the opposite of the previous image"}
+    - {relation: contradicts, target: sk_fre_c003_0030, note: "the eye moves outward here and inward in centred symmetry"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Frame break"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 24-25, FRAME BREAK"
+    figure_refs: [pdf_p24, pdf_p25]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0008
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Horizontal is the default because of the way cameras are designed to be held, but vertical offers different possibilities."
+    - "matching a vertical frame to a tall subject is one obvious approach. But if we want a sense of tallness, there’s a little more to it."
+  concept_label: a_vertical_frame_is_not_the_same_as_a_sense_of_tallness
+  label_origin: extractor_assigned
+  claim: >
+    Horizontal is the default orientation only because of how cameras are designed to be held.
+    Matching a vertical frame to a tall subject is the obvious move, but it does not by itself
+    produce a sense of tallness. In the worked case that sense came from opposing two elements at
+    the frame's extremes — a dark peak and a flaring sun at opposite ends of a double curve — which
+    emphasised the frame's vertical length.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Two strongly contrasting elements placed at opposite ends of the long axis make the distance
+      between them legible, which is what registers as tallness rather than the frame shape alone.
+  scope:
+    domain_discussed_by_source: [landscape_photography]
+    conditions: "a subject whose main features are vertical"
+  caveats:
+    - text: "the source notes the most striking feature of its subject was rejected as too obvious in favour of a harder-to-catch alternative, so the choice was as much about avoiding the expected as about tallness"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "oppose contrasting elements at the two ends of the long axis"
+  examples:
+    positive:
+      - {description: "Bear and Rabbit Rocks, Monument Valley — peak and sunrise at opposite ends of a double U-curve", figure_ref: pdf_p26}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0009, note: "adjacent treatments of frame shape"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Tall"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 26-28, TALL"
+    figure_refs: [pdf_p26, pdf_p27, pdf_p28]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0009
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "A square format was never seen in the visual arts as a natural frame, and was used just occasionally, often to make a point about rigor and severity."
+    - "The equal sides give a sense of strictness, formality, even constraint."
+  concept_label: the_square_frame_reads_as_strict_and_formal
+  label_origin: extractor_assigned
+  claim: >
+    The square was never treated in the visual arts as a natural frame and was used only
+    occasionally, often to make a point about rigour and severity. Its equal sides give a sense of
+    strictness, formality, even constraint. Photography was different, because for decades
+    medium-format 6x6cm film pushed photographers into finding square compositions, and they found
+    that square could be good.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography, visual_arts]
+    conditions: "square-format images"
+  caveats:
+    - text: "a claim about how the square has been read across the history of the visual arts, asserted without citation"
+      origin: extractor_observed
+    - text: "the source's own account undercuts the connotation: photographers used the square because their film was that shape, not to signify severity"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_fre_c003_0010, note: "the geometric account of the same frame"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Square"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 29, SQUARE"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0010
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Because the square frame has no bias and no direction, it tends to draw the eye inward."
+    - "The square’s lack of bias—all sides equal—makes it easily divisible into equal parts, and also gives it a definite center, like a circle."
+  concept_label: a_square_has_no_direction_so_it_draws_the_eye_inward
+  label_origin: extractor_assigned
+  claim: >
+    Because a square has equal sides it has no bias and no direction, and three things follow: it
+    tends to draw the eye inward, it is easily divisible into equal parts, and it has a definite
+    centre in the way a circle does. The source lists the occasions this suits — dividing things
+    equally, centring, a uniform field, a symmetrical subject, and enclosing another shape within
+    the frame.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A rectangle's unequal sides give it a direction along the longer axis. Removing that
+      inequality removes the direction, leaving nowhere for the eye to travel except inward.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "square-format images"
+  caveats:
+    - text: "the source's worked example uses the square to enclose a triangle formed by a group of children, and attributes the shape's legibility partly to counter-shading, which is a tonal effect rather than a property of the frame"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "children, Cartagena — a central triangle with two outlying wedges enclosed by the neutral square", figure_ref: pdf_p30}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_fre_c003_0009, note: "a geometric account beside the historical one"}
+    - {relation: depends_on, target: sk_fre_c003_0019, note: "the source cites the square's inward pull when arguing for centring"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Square"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 29-30, SQUARE"
+    figure_refs: [pdf_p29, pdf_p30]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0011
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Sometimes, the shapes and lines in a scene just want to take the frame wide"
+    - "There’s a set of parabolic curves here, which makes the image cohere, together with the implied curve of the out-of-frame part of the boat."
+  concept_label: a_scenes_shapes_can_call_for_a_wide_frame_and_an_implied_offframe_curve_can_cohere_it
+  label_origin: extractor_assigned
+  claim: >
+    Wide is an attractive format to compose in, and the shapes and lines in a scene can themselves
+    call for it. The source's worked case coheres through a set of matching parabolic curves — a
+    canoe on its side, a fisherman's cap — including the implied continuation of a curve whose
+    subject is outside the frame. Digital shooting and content-recognition stitching make going
+    wide cheap: swing the camera to one side for a second frame that will stitch with the first,
+    and some cameras do it internally.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "scenes with repeated or continuing shapes across a wide field"
+  caveats:
+    - text: "the source reports realising the widescreen possibility about halfway through a five-minute shoot, so the format followed from working the scene rather than preceding it"
+      origin: source_stated
+    - text: "that a curve continuing outside the frame contributes to coherence is asserted; it is the section's clearest claim about something the viewer cannot see, and no support is offered"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "fisherman, Billiton Island — matching parabolic curves plus an assumed off-frame counterpart", figure_ref: pdf_p31}
+  intra_source_relations:
+    - {relation: generalises, target: sk_fre_c003_0012, note: "the panorama continues the same move further"}
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0014, note: "both concern what sits outside the frame"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Wide"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 31-32, WIDE"
+    figure_refs: [pdf_p31, pdf_p32]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0012
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Not all scenes deserve it, however, so the discipline in photographing panoramas is in imagining clearly how the final frame will look."
+    - "More important is where you stop panning and what you choose to close the frame at left and right."
+  concept_label: the_panoramas_discipline_is_deciding_where_to_stop
+  label_origin: extractor_assigned
+  claim: >
+    A pan can be continued as far as wanted to construct a true panorama, but not all scenes
+    deserve one. The discipline is imagining clearly how the final frame will look before shooting
+    it, and the most important decision is where to stop panning and what closes the frame at left
+    and right. The source's own worked case was cropped after stitching to balance the mountain and
+    rainbows off-centre left against the sunlit slope and contrasting clouds at right.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [landscape_photography]
+    conditions: "stitched panoramic images"
+  caveats:
+    - text: "the source notes in passing that the main rainbow in its example falls at the Golden Ratio point and marks this explicitly as coincidence — a rare instance of a source declining a proportional explanation that was available to it"
+      origin: source_stated
+    - text: "the discipline of imagining the final frame is asserted immediately before an example whose final frame was decided by cropping afterwards"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Yala Shan and rainbows, western Sichuan — stitched panorama cropped to balance left and right", figure_ref: pdf_p33}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0011, note: "the wide frame taken further"}
+    - {relation: qualified_by, target: sk_fre_c003_0013, note: "the shooting technique it depends on"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Panoramic"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 33, PANORAMIC"
+    figure_refs: [pdf_p33]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0013
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Shooting the series level and consistently is important, otherwise the shot may not work at all"
+    - "If you drop even slightly from frame to frame, as can easily happen if you shoot handheld, you would need to crop so severely that you could lose the skyline."
+    - "For safety, overlap each frame by about a half."
+  concept_label: pan_level_and_overlap_by_half_or_the_crop_eats_the_skyline
+  label_origin: extractor_assigned
+  claim: >
+    The panorama sequence must be shot level and consistently. Dropping even slightly between
+    frames, which happens easily handheld, forces a crop severe enough to lose the skyline
+    altogether. Frames should overlap by about a half for safety; a simple method is to note
+    something on the leading edge of one frame and put it in the middle of the next. Stitching
+    software's content recognition is now good enough that a tripod is not required, provided the
+    levelling is attended to.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A drifting sequence produces a stitched image whose usable rectangle is the intersection of
+      all the frames, so any vertical drift is subtracted from the final height everywhere.
+  scope:
+    domain_discussed_by_source: [landscape_photography]
+    conditions: "handheld multi-frame stitched panoramas"
+  caveats:
+    - text: "the claim about stitching software's capability is dated to 2013 by construction"
+      origin: extractor_observed
+    - text: "the mechanism recorded here is the extractor's statement of why severe cropping follows; the source states the consequence and shows it in a figure without naming the cause"
+      origin: extractor_observed
+  source_stated_problems:
+    - "dropping between frames, forcing a crop so severe the skyline is lost"
+  source_stated_remedies:
+    - "shoot the series level and consistently"
+    - "overlap each frame by about half, using a leading-edge landmark as the next frame's centre"
+  examples:
+    positive:
+      - {description: "the sequence of overlapping frames for stitching", figure_ref: pdf_p33}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_fre_c003_0012, note: "what makes the panorama possible at all"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Panoramic"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 33, PANORAMIC"
+    figure_refs: [pdf_p33]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0014
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "When you frame a shot, you leave out more than you include."
+    - "the suggestion of what might be happening out of frame can be intriguing"
+    - "The word to stress here is occasional, because of the risk of being simply annoying."
+  concept_label: referring_to_what_is_offstage_works_only_because_it_is_rare
+  label_origin: extractor_assigned
+  claim: >
+    Framing leaves out more than it includes, which is the point — it establishes the
+    photographer's view and no one else's. The accepted convention in photography, as in painting,
+    is to gather into the frame what is to be shown, and it is that convention which gives value to
+    the occasional image referring to something deliberately off-stage. The source stresses
+    "occasional", because of the risk of being simply annoying. The mechanism it gives is a
+    question mark: the viewer does not immediately know what is being looked at, and for a moment
+    that makes the image more engaging.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The effect depends on the surrounding convention. Because nearly every photograph contains
+      what it is about, one that does not poses a question, and the engagement is the brief interval
+      before the viewer answers it.
+  scope:
+    domain_discussed_by_source: [photography, painting]
+    conditions: "images referring to an event outside the frame"
+  caveats:
+    - text: "the source states the effect lasts only a moment — \"we soon realize the answer\" — so the engagement it buys is explicitly brief"
+      origin: source_stated
+    - text: "the value is said to derive from the convention being general, which means the device would lose its force if it were widely adopted; the source does not draw that consequence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "being simply annoying by referring off-frame too often"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Adam's Peak, Sri Lanka — a pointing hand and turned faces extending the sense of the image to the right", figure_ref: pdf_p34}
+    counter:
+      - {description: "the same sequence with the pointing hand absent", figure_ref: pdf_p35}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0011, note: "both rely on something outside the frame"}
+    - {relation: generalises, target: sk_fre_c003_0025, note: "the reveal works on the same delay-then-resolve mechanism"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, anecdotal, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Offstage"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 34-35, OFFSTAGE"
+    figure_refs: [pdf_p34, pdf_p35]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# PART 2 — PLACING
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_fre_c003_0015
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Placement assumes two things, both quite common. One is that there is a subject that is concrete—a single, identifiable unit, rather than a concept, pattern, or some overall generality. The second is that this subject is small enough in the frame that you do actually have a choice of where to put it."
+    - "the decisions are generally to do with where in the rectangular frame, and how close to other things"
+  concept_label: placement_has_two_preconditions_and_only_two_variables
+  label_origin: extractor_assigned
+  claim: >
+    Placing and framing are different though inseparably linked. Placement presupposes two
+    conditions, both common: that there is a concrete subject — a single identifiable unit rather
+    than a concept, a pattern or a generality — and that it is small enough in the frame that there
+    is actually a choice of where to put it. Given those, the decisions reduce to two: where in the
+    rectangular frame, and how close to other things. The source says it is no more complicated
+    than that, while noting that because every picture situation is unique, doing it for any one
+    photograph can be anything but simple.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a concrete subject occupying less than the whole frame"
+  caveats:
+    - text: "the source states the conditions are quite easily met, so the restriction is presented as light; a picture of a pattern or a generality falls outside the whole of Part 2 by this definition"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0001, note: "the decision after enclosure"}
+    - {relation: generalises, target: sk_fre_c003_0017, note: "the three zones are the answer to 'where in the frame'"}
+    - {relation: qualified_by, target: sk_fre_c003_0016, note: "the source's refusal of rules for making this decision"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Part introduction"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 37, PART 2 introduction"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0016
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Some people favor rules for doing this, but that takes all the fun and imagination out of it."
+    - "if there is such a thing as a rule of thirds, it can only be approximate"
+  concept_label: placement_rules_are_rejected_outright
+  label_origin: extractor_assigned
+  claim: >
+    The source rejects rules for placement. It states that people who favour them take all the fun
+    and imagination out of the decision, and elsewhere doubts the existence of the best-known one —
+    saying that if there is such a thing as a rule of thirds it can only be approximate. Its own
+    substitute is a choice between three general positions with no precision required.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "deciding where to place a subject"
+  caveats:
+    - text: "the objection given is to the cost in enjoyment and imagination, not to the rules being wrong; the source offers no evidence that rule-following produces worse photographs"
+      origin: extractor_observed
+    - text: "the source nonetheless supplies its own three-zone scheme, a named classical proportion, and a numeric aspect ratio, so what is rejected is precision rather than structure"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_fre_c003_0017, note: "why the zones are given as approximate regions"}
+    - {relation: contradicts, target: sk_fre_c003_0028, note: "the source elsewhere endorses classical proportion as innately satisfying"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Part introduction; Off-center"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 37-38, PART 2 introduction and OFF-CENTER"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0017
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "There’s usually no need for precision when thinking about this, just a choice of three general positions: around the center, near an edge or corner, or this in-between position."
+    - "Off-center may sound a little vague, which is good."
+  concept_label: three_approximate_zones_not_positions
+  label_origin: extractor_assigned
+  claim: >
+    Placement within the frame is a choice between three general positions rather than a
+    coordinate: around the centre, near an edge or corner, and the in-between position the source
+    calls off-centre. Precision is not usually needed, and the vagueness of "off-centre" is
+    presented as a virtue — it could be called a third of the way in or a third of the way out, but
+    any rule of thirds can only be approximate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a concrete subject in a standard 3:2 frame"
+  caveats:
+    - text: "the accompanying diagram draws all three zones with soft graded edges wide enough that adjacent zones visibly overlap; the text says only 'approximate', so how approximate exists solely in the picture"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "three frame diagrams showing the edge-and-corner band, the off-centre ring and the central blob, each with soft graded boundaries", figure_ref: vis_fre_three_zones_are_soft}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0015, note: "the answer to 'where in the frame'"}
+    - {relation: generalises, target: sk_fre_c003_0018, note: "off-centre"}
+    - {relation: generalises, target: sk_fre_c003_0019, note: "centred"}
+    - {relation: generalises, target: sk_fre_c003_0021, note: "extreme"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Off-center"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 38-39, OFF-CENTER"
+    figure_refs: [pdf_p39]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [pdf_p39]}
+
+- sk_id: sk_fre_c003_0018
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "First, it’s natural rather than forced or exact. Second, it makes for an easy, but definite relationship between the subject and the background."
+    - "Whereas centered divides any background and diminishes it, while an extreme position near a corner makes the viewer wonder why that placing was used, off-center gently shows us both the thing and the setting together."
+  concept_label: offcentre_shows_subject_and_setting_together
+  label_origin: extractor_assigned
+  claim: >
+    Off-centre has two things going for it: it is natural rather than forced or exact, and it makes
+    an easy but definite relationship between the subject and its background. The source defines it
+    against the other two zones — a centred subject divides the background and diminishes it, and
+    an extreme position near a corner makes the viewer wonder why that placing was used, whereas
+    off-centre gently shows both the thing and the setting together.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A centred subject splits the ground into symmetric leftovers; a subject at the edge makes its
+      own position the question. Only an intermediate position leaves the ground whole enough to
+      read as a setting.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a clear well-defined subject in a simple even setting"
+  caveats:
+    - text: "the case for off-centre is made entirely by contrast with the other two options, both of which the source goes on to endorse in the following sections"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "rice farmer in a field of green rice, placed off-centre to relate the subject to the setting", figure_ref: pdf_p38}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0017, note: "one of the three zones"}
+    - {relation: trades_off_with, target: sk_fre_c003_0019, note: "background as setting versus subject as sole statement"}
+    - {relation: trades_off_with, target: sk_fre_c003_0021, note: "and against background dominance"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Off-center"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 38-39, OFF-CENTER"
+    figure_refs: [pdf_p38]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0019
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "don’t let the accompanying criticism of dead-centered, bull’s-eye positioning make you believe it has no use"
+    - "there are any number of situations in which centering the main subject makes a firm and strong statement"
+  concept_label: centring_is_justified_when_the_scene_already_points_inward
+  label_origin: extractor_assigned
+  claim: >
+    Off-centre is the most popular idea and comes naturally to practised photographers, but the
+    criticism of dead-centred, bull's-eye positioning should not be taken to mean centring has no
+    use: there are many situations in which centring the main subject makes a firm and strong
+    statement. The source's worked case shows what those situations have in common — the subject
+    had strong intrinsic pull, being both colourful and circular, it sat within a fairly flat
+    surrounding area, and the surrounding structure was arranged in concentric curves around it, so
+    everything pointed to the centre.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Centring succeeds where the scene's own structure already converges on the subject, so the
+      placement agrees with the picture rather than being imposed on it.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a subject with strong intrinsic attraction, surrounded by structure that converges on it"
+  caveats:
+    - text: "the source argues in the same passage for cropping this 3:2 image to square, on the grounds that a square concentrates attention further toward the centre — so its strongest centring case is one it proposes to improve by changing the frame"
+      origin: source_stated
+    - text: "\"any number of situations\" is asserted and exactly one is shown"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "crop to square to make more of a centred subject"
+  examples:
+    positive:
+      - {description: "elephant's eye, Thailand — a bright orange circular eye reinforced by concentric skin folds", figure_ref: pdf_p41}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0017, note: "one of the three zones"}
+    - {relation: depends_on, target: sk_fre_c003_0010, note: "the source cites the square's inward pull to support the crop"}
+    - {relation: depends_on, target: sk_fre_c003_0020, note: "the subject's pull is attributed to its being an eye"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Centered"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 41-42, CENTERED"
+    figure_refs: [pdf_p41, pdf_p42]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0020
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Eyes attract attention more strongly than probably any other kind of subject"
+  concept_label: eyes_attract_attention_more_strongly_than_any_other_subject
+  label_origin: extractor_assigned
+  claim: >
+    Eyes attract attention more strongly than probably any other kind of subject.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "unrestricted — stated as a general property of viewers"
+  caveats:
+    - text: "the source hedges with \"probably\" and gives no evidence, no source and no mechanism; it is the broadest perceptual claim in the three parts and the least supported"
+      origin: extractor_observed
+    - text: "the worked case immediately qualifies it — the source notes the eye in question is unusually bright orange and that a more normal elephant eye is not so insistent, so the general claim and its instance do not sit comfortably together"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_fre_c003_0019, note: "the reason the centred subject works in that case"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Centered"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 41, CENTERED"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0021
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "As the frame is meant to enclose, there needs to be a reason for doing something like this, otherwise it just looks perverse."
+    - "as long as there’s some logic, the viewer is likely to accept it, although not necessarily agree"
+  concept_label: extreme_placement_needs_a_visible_reason_or_reads_as_perverse
+  label_origin: extractor_assigned
+  claim: >
+    Placing a subject right at an edge or in a corner is the most extreme option and the least
+    likely. Because the frame is meant to enclose, there has to be a reason, or it simply looks
+    perverse. The reasons depend on the scene and on what the photographer is trying to show, and
+    the source's test is weak but explicit: as long as there is some logic, the viewer is likely to
+    accept it, though not necessarily to agree. The reason that arises most often is to make the
+    background dominate the subject, most commonly with a human figure in a specific setting.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: true, text: "The frame's purpose is enclosure, so a subject pushed against its boundary works against the frame's function and must be given a reason that overrides it."}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a subject at the frame's edge or corner"
+  caveats:
+    - text: "in the worked case the extreme placement was forced by geometry rather than chosen — filling the frame with columns without gaps required an acute angle, which left only a small triangle of space at the bottom right for the figure"
+      origin: source_stated
+    - text: "the source's acceptance test — the viewer accepts it if there is some logic — is not operationalised and would be satisfied by almost any stated reason"
+      origin: extractor_observed
+  source_stated_problems:
+    - "an extreme placement that just looks perverse"
+    - "visible gaps between background elements making the shot less simple"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "stockbroker and the Bank of England — a figure in the lower corner with columns filling the frame", figure_ref: pdf_p43}
+    counter:
+      - {description: "the same subject from an angle where gaps between the columns show, described as less successful or at least less simple", figure_ref: pdf_p45}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0017, note: "one of the three zones"}
+    - {relation: trades_off_with, target: sk_fre_c003_0018, note: "background dominance against subject-and-setting together"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Extreme"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 43-45, EXTREME"
+    figure_refs: [pdf_p43, pdf_p44, pdf_p45]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0022
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Windows, doors, and other man-made openings are frames onto another picture within the picture"
+    - "if something is passing behind a window of some kind, the near-universal reaction is to shoot at the moment when that subject is cleanly within it, not breaking any of the edges"
+  concept_label: a_frame_within_the_scene_creates_a_near_universal_timing_reflex
+  label_origin: extractor_assigned
+  claim: >
+    Openings within the scene — windows, doors and other man-made gaps — act as frames onto a
+    picture within the picture. There is no compulsion to use them, but when something passes
+    behind one, the near-universal reaction is to shoot at the moment the subject sits cleanly
+    inside it, breaking none of its edges. The source observes that so natural a reaction is worth
+    challenging, then declines to challenge it: in its own case, doing it any other way would look
+    like bad camera work and would probably be just that.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "a moving subject passing behind an opening in the scene"
+  caveats:
+    - text: "the source attributes its own successful case to luck — eight seconds of transit with no guarantee the subject would fly neatly into the gaps — and concludes that timing is everything"
+      origin: source_stated
+    - text: "the source raises the possibility of breaking the convention and then argues against doing so, which leaves the challenge it identified untested"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "B-2 bomber transiting behind a Golden Gate Bridge pillar, shot cleanly within the gap", figure_ref: pdf_p46}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_fre_c003_0004, note: "a bright framing element must be thinned"}
+    - {relation: specialises, target: sk_fre_c003_0015, note: "placement relative to another thing in the scene"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Framed"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 46-47, FRAMED"
+    figure_refs: [pdf_p46, pdf_p47]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0023
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Graphically, it means “almost touching.”"
+    - "the viewer’s eye is drawn to this uncertain area simply because it’s unresolved, and gauging the exact size of the gap is something to think about"
+    - "Through the camera, the “just” moment does not need to be real. It needs simply to be apparent."
+  concept_label: an_almost_touching_gap_holds_the_eye_because_it_is_unresolved
+  label_origin: extractor_assigned
+  claim: >
+    "Just" means almost touching — a foot about to reach the ground, a door about to close, a bird
+    about to land. It holds both the exact and the not-quite at once, hovering between complete and
+    incomplete. The source's mechanism is that the viewer's eye is drawn to the uncertain area
+    precisely because it is unresolved, and gauging the exact size of the gap is something to think
+    about, so such pictures hold extra interest: you look at them and want to complete them.
+    Critically, the moment does not have to be real — it only has to be apparent through the
+    camera, so a viewpoint that creates the graphic possibility is enough.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unresolved relationship is a question the viewer cannot answer at a glance, so attention
+      stays at the gap while it is being judged.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "two elements in near-contact, actually or apparently"
+  caveats:
+    - text: "the source presents this as \"just a personal idea of mine\", which is the most explicit ownership marker in the three parts"
+      origin: source_stated
+    - text: "the source anticipates that some would think the unresolved state needs resolving and simply disagrees; no ground is offered for preferring the unresolved version"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "find a viewpoint that makes the near-contact apparent even where it is not real"
+  examples:
+    positive:
+      - {description: "shopkeeper, Bogotá — a profile between two walls, the nose apparently almost touching", figure_ref: pdf_p48}
+    counter:
+      - {description: "the preceding shots, taken before the photographer realised a precise position mattered", figure_ref: pdf_p50}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0014, note: "both hold attention by leaving something unanswered"}
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0025, note: "and both trade on a delay in the viewer"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Just"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 48-50, JUST"
+    figure_refs: [pdf_p48, pdf_p49, pdf_p50]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0024
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Seen alone as a landscape image, they don’t impress as much as the real thing because they lack comparison—the trees could be almost any size."
+    - "there was the question of whether horizontal or vertical, and how small the figure could be in the image and still be seen. Too small and the point would be wasted."
+    - "It has to be printed big."
+  concept_label: a_figure_supplies_scale_but_only_above_a_size_that_depends_on_the_print
+  label_origin: extractor_assigned
+  claim: >
+    A landscape seen alone can fail to convey its size because it lacks comparison — the source's
+    falls do not impress as much as the real thing because the trees could be almost any size. A
+    small human figure supplies that comparison. But the figure has a lower limit: too small and
+    the point is wasted, and whether it registers at all depends on the print size, so one of the
+    source's two versions works only on condition that it is printed big. The type is old — the
+    source dates "figure in a landscape" to at least the sixteenth century.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Scale is read by comparison against something of known size, so a figure of known size
+      supplies the missing term. If the figure falls below the threshold of being noticed, the
+      comparison is not made and no scale is conveyed.
+  scope:
+    domain_discussed_by_source: [landscape_photography]
+    conditions: "landscapes containing no object of familiar size"
+  caveats:
+    - text: "the condition is external to the image — the same file succeeds or fails depending on how large it is reproduced. This is the only claim in the three parts whose truth depends on the output medium"
+      origin: extractor_observed
+    - text: "the source also chose the moment of the figure's action, saying the chosen frame has more energy than the others, which is a separate judgement from the scale argument"
+      origin: source_stated
+  source_stated_problems:
+    - "a landscape that lacks comparison, so its size does not read"
+    - "a figure too small to be seen, wasting the point"
+  source_stated_remedies:
+    - "include a figure of known size, scaled as small as possible but still noticeable"
+  examples:
+    positive:
+      - {description: "Khone Phapheng Falls, Mekong — a fisherman throwing a net at lower right of a panorama", figure_ref: pdf_p51}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0025, note: "both depend on a small element being findable"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Figure in a landscape"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 51-52, FIGURE IN A LANDSCAPE"
+    figure_refs: [pdf_p51, pdf_p52]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0025
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "The only way to come close to this in a still image is to arrange the framing, composition or lighting so that all the attention immediately goes to one place, but the eye lingers long enough on the frame to start to wander, and then discovers something else."
+    - "It’s an uncertain balancing act, because if you hide the thing-to-be-revealed too well, such as by making it too small or poorly lit, chances are the viewer will get bored and move on before noticing it."
+  concept_label: a_still_reveal_is_a_balancing_act_between_delay_and_abandonment
+  label_origin: extractor_assigned
+  claim: >
+    The reveal is a cinematic device — the camera shows one thing, then moves or zooms to disclose
+    something else, effective through surprise — and the source says it is difficult and perhaps
+    impossible to achieve in a single still. The only approach is to arrange framing, composition
+    or lighting so that attention goes immediately to one place, but the eye lingers long enough to
+    start wandering and then discovers something else. It is an uncertain balancing act: hide the
+    thing to be revealed too well — too small, too poorly lit — and the viewer will get bored and
+    move on before noticing it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      In film the disclosure is controlled by the camera's movement. In a still it must be produced
+      by the viewer's own scanning, so the photographer controls only how long the first subject
+      holds and how findable the second is.
+  scope:
+    domain_discussed_by_source: [photography, cinema]
+    conditions: "a still image with a secondary subject intended to be found late"
+  caveats:
+    - text: "the source states the technique may be impossible in a still and then attempts it anyway — \"But let's try anyway\" — so the case is offered as an attempt rather than a demonstration"
+      origin: source_stated
+    - text: "success and failure are described only in terms of the viewer's patience, and no way of testing whether the balance was struck is given"
+      origin: extractor_observed
+  source_stated_problems:
+    - "hiding the thing-to-be-revealed so well the viewer moves on before noticing it"
+  source_stated_remedies:
+    - "arrange framing, composition or lighting so attention goes to one place and then wanders"
+  examples:
+    positive:
+      - {description: "Sufi qbas, Sudan, from a helicopter — bright mausoleums dominating, with a tiny white-clad figure in the lower corner", figure_ref: vis_fre_reveal_is_self_demonstrating}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0014, note: "the same delay-then-resolve mechanism as the off-stage reference"}
+    - {relation: depends_on, target: sk_fre_c003_0024, note: "requires a small element to remain findable"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Reveal"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 53-54, REVEAL"
+    figure_refs: [pdf_p53, pdf_p54]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [pdf_p53]}
+
+- sk_id: sk_fre_c003_0026
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "One of the points of a two shot is that there’s a relationship between the subjects, and it’s often good to manage the composition so that the viewer’s eye moves back and forth between them—in other words, the shot is active rather than static."
+    - "The attention plays ping-pong between the two subjects."
+  concept_label: a_two_shot_should_be_made_active_by_moving_the_eye_between_the_pair
+  label_origin: extractor_assigned
+  claim: >
+    The two shot — two people framed tight to medium so their faces dominate — is a classic of
+    cinema and television, and widescreen suits it because it allows the pair to sit side by side
+    with breathing space. Its point is the relationship between the subjects, so the composition
+    should be managed to move the viewer's eye back and forth between them, making the shot active
+    rather than static. The source's case achieves this with three devices working in sequence:
+    selective focus and lighting put the eye on the foreground figure first, contrasting
+    backgrounds — dark on one side, light and colourful on the other — carry it to the blurred but
+    recognisable second figure, and the more dominant first figure brings it back.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each subject is given a different reason to be looked at — sharpness and light for one,
+      background contrast for the other — so neither settles the attention and it oscillates.
+  scope:
+    domain_discussed_by_source: [photography, cinema, television]
+    conditions: "two related subjects framed together"
+  caveats:
+    - text: "the source names its technical settings, ƒ/1.4 with an 85mm lens, which is the only place in the three parts where a claim is tied to specific equipment values"
+      origin: source_stated
+    - text: "\"active rather than static\" is offered as the goal without a reason why an active reading is better here"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "give each subject a different claim on attention so neither settles it"
+  examples:
+    positive:
+      - {description: "Chinese opera, Singapore — focused lit foreground actor and blurred actress against contrasting backgrounds", figure_ref: pdf_p55}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0015, note: "placement of two subjects relative to each other"}
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0007, note: "both produce a reading that moves between two centres"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Two shot"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 55-56, TWO SHOT"
+    figure_refs: [pdf_p55, pdf_p56]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# PART 3 — DIVIDING
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_fre_c003_0027
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "There is not always something to divide in an image."
+    - "At its crudest, you need lines to divide a frame, and the straighter they are, the cleaner the partition."
+    - "there are other lines that may sneak up on you and insist on splitting up the frame, particularly if they are edges of things or areas, and even more so if what goes on either side is very different"
+  concept_label: division_requires_a_line_and_a_difference_across_it
+  label_origin: extractor_assigned
+  claim: >
+    Not every image has anything to divide — many are too complex, or too simple, to lend
+    themselves to any useful division. Division needs lines, and the straighter the line the
+    cleaner the partition. A horizon is the cleanest and clearest case: it is known and expected,
+    and like a single subject on a plain background it simply has to be put somewhere — high,
+    middle or low. Other lines can impose themselves without being chosen, particularly the edges
+    of things or areas, and the more so when what lies either side differs strongly — dark against
+    light, one colour against another, different textures, or anything else that creates a contrast.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A line divides only where it separates two regions that read as different, so the contrast
+      across the line is what makes the division exist rather than the line itself.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "images containing a continuous edge between differing areas"
+  caveats:
+    - text: "the source's own cross-reference to the section it compares this with points to a page this copy does not have"
+      origin: extractor_observed
+    - text: "\"insist on splitting up the frame\" treats the division as something that happens to the photographer, which sits against the rest of the part, where every division is a decision"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_fre_c003_0028, note: "classical division"}
+    - {relation: generalises, target: sk_fre_c003_0031, note: "eccentric division"}
+    - {relation: generalises, target: sk_fre_c003_0033, note: "angular division"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Part introduction"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF page 58, PART 3 introduction"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0028
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "the kind of approach to composition that is well accepted, comfortable on the eye, and is what any well trained photographer would do to produce a generally satisfying image"
+    - "It may or may not involve dividing the frame according to the Golden Section, more or less, and that doesn’t really matter; above all, it’s about innately satisfying proportions that balance larger against smaller, and darker against lighter."
+    - "this is all about satisfying the eye rather than challenging it"
+  concept_label: classical_division_balances_size_and_tone_and_is_not_a_named_ratio
+  label_origin: extractor_assigned
+  claim: >
+    "Classical" here means the approach to composition that is well accepted, comfortable on the
+    eye, and what any well-trained photographer would do to produce a generally satisfying image.
+    The source is explicit that it may or may not involve dividing the frame by the Golden Section
+    and that this does not really matter: what matters is innately satisfying proportions that
+    balance larger against smaller and darker against lighter. The aim is satisfying the eye rather
+    than challenging it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photography, painting]
+    conditions: "images with a clear division into zones"
+  caveats:
+    - text: "the source concedes it may be stretching or even misusing the term \"classical\" by suggesting a connection to classical painting"
+      origin: source_stated
+    - text: "\"innately satisfying\" is asserted without support and is the section's strongest unevidenced claim about viewers; the source's own preference for satisfying over challenging is stated as a fact about the approach rather than as a choice"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Sierra Nevada de Santa Marta — three depth zones of foreground slope, grey middle distance, pre-dawn sky", figure_ref: vis_fre_golden_section_counterfactual}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_fre_c003_0029, note: "geometry alone is not enough; tone must be weighed"}
+    - {relation: contradicts, target: sk_fre_c003_0016, note: "the source elsewhere rejects rules and here endorses a well-accepted approach as innately satisfying"}
+    - {relation: contradicts, target: sk_fre_c003_0032, note: "satisfying the eye against deliberately not letting it rest"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent, historical_claim]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Classical"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 59-60, CLASSICAL"
+    figure_refs: [pdf_p59, pdf_p60]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [pdf_p60]}
+
+- sk_id: sk_fre_c003_0029
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Our eyes are drawn to the light, and brighter usually gets more attention, so classical proportions take this into account."
+    - "see what happens if we manipulate this image to divide darker and lighter along the Golden Section. It doesn’t work well, and the bright sky over-dominates, although if we made the tones more equal, it would be more comfortable."
+  concept_label: a_geometric_division_fails_if_it_ignores_tonal_weight
+  label_origin: extractor_assigned
+  claim: >
+    Because the eye is drawn to the light and brighter areas usually get more attention, a division
+    of the frame has to weigh tone as well as size. The source demonstrates this against the Golden
+    Section directly: it manipulated its own image so the darker and lighter areas divided on that
+    proportion, and the result does not work — the bright sky over-dominates. It then states the
+    condition under which the same geometric division would work: if the tones were made more
+    equal. So the named proportion is not wrong, it is incomplete, because it takes no account of
+    the relative weight of what falls on either side of the line.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A bright area attracts more attention than a dark one of equal size, so equal areas are not
+      equal weights. A proportion defined only on area therefore misstates the balance whenever the
+      tones differ.
+  scope:
+    domain_discussed_by_source: [photography]
+    conditions: "images divided into zones of differing brightness"
+  caveats:
+    - text: "the demonstration is a manipulation of one photograph by its own author, who is also the person judging that it does not work well; the judgement and the evidence come from the same source"
+      origin: extractor_observed
+    - text: "the source shows the corrected version — tones equalised — as an illustration and does not claim to have shot it that way"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a bright area over-dominating a composition divided by proportion alone"
+  source_stated_remedies:
+    - "take tonal weight into account when setting the proportions"
+    - "or equalise the tones if the geometric division is to be kept"
+  examples:
+    positive:
+      - {description: "the same scene reduced to schematic tone bands, then recomposed to the Golden Section, then with tones equalised", figure_ref: vis_fre_golden_section_counterfactual}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_fre_c003_0028, note: "the tonal condition on classical proportion"}
+    - {relation: qualifies, target: sk_fre_c003_0016, note: "a specific, tested reason a named rule is insufficient"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Classical"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 59-60, CLASSICAL"
+    figure_refs: [pdf_p60]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [pdf_p60]}
+
+- sk_id: sk_fre_c003_0030
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "For some reason, symmetry often gets criticized, generally on the grounds that it shows lack of imagination. Like other things in composition, it has a time and a place."
+    - "One occasion for using it is when you seriously need to bring order to a scene or subject that has none whatsoever."
+  concept_label: symmetry_is_for_imposing_order_on_a_subject_that_has_none
+  label_origin: extractor_assigned
+  claim: >
+    Symmetry is often criticised as showing a lack of imagination, but like other things in
+    composition it has a time and a place. One occasion for it is when order seriously has to be
+    brought to a scene or subject that has none at all. In the source's case — twenty-three loose
+    pearls of different sizes that had to be arranged somehow — the solution was not only symmetry
+    but a constructed background: blackened river pebbles chosen for contrast and texture, whose
+    gaps gave the pearls resting places, so the composition's basic unit became a pearl nested in a
+    gap.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [still_life_photography]
+    conditions: "subjects with no inherent arrangement"
+  caveats:
+    - text: "the source reports trying a number of arrangements, all attempting some sort of pattern, and presents the published one as simply \"one\" of them — an unusually explicit admission that the result was not derived"
+      origin: source_stated
+    - text: "the ordering was achieved as much by constructing a background with resting places as by symmetry, so the case does not isolate symmetry as the cause"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a large number of units of different sizes posing a problem in organisation"
+  source_stated_remedies:
+    - "build a background whose structure gives each unit a place"
+  examples:
+    positive:
+      - {description: "23 orange pearls arranged on blackened river pebbles, each nested in a gap", figure_ref: pdf_p61}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_fre_c003_0007, note: "centred symmetry moves the eye inward where a broken symmetry pulls it apart"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Symmetrical"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 61-62, SYMMETRICAL"
+    figure_refs: [pdf_p61, pdf_p62]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0031
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "The eye will naturally go to the one sharp strong element—the tree line—but with it so low in the frame, the eye then wanders elsewhere, and there’s only one place to go: up."
+    - "The initial subject is a detailed dark line of trees that we pay extra attention to, but the ultimate subject is the swirl of storm clouds."
+  concept_label: push_the_sharp_element_to_the_edge_to_send_the_eye_to_the_real_subject
+  label_origin: extractor_assigned
+  claim: >
+    An eccentric division puts the only sharp, strong element close to the frame's edge. The eye
+    goes to it first, because it is the sole point of precision in the picture; but being so far to
+    one side, the eye then has nowhere to wander except toward the true subject — in this case a
+    pale, subtle storm above. The initial subject and the ultimate subject are deliberately
+    different. The source adds that aligning the strong element exactly to the frame edge adds
+    interest, and notes this was shot on film with no easy digital straightening afterwards.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A subtle subject cannot hold attention on its own, so it is keyed to a sharp one that can.
+      Placing the sharp element at the edge means the only direction available afterwards is toward
+      the subtle one.
+  scope:
+    domain_discussed_by_source: [landscape_photography]
+    conditions: "a scene whose real subject is too subtle to command attention alone"
+  caveats:
+    - text: "the source gives a practical reason alongside the compositional one — there was nothing of interest in the water — so the division was partly determined by what could be excluded"
+      origin: source_stated
+    - text: "the claim that the eye has 'only one place to go' assumes a scanning order the source does not evidence"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "key a subtle subject to a sharp one and place the sharp one at the frame's edge"
+  examples:
+    positive:
+      - {description: "afternoon storm over the Amazon — a treeline aligned to the frame edge below a pale storm", figure_ref: pdf_p63}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0021, note: "an extreme placement with a stated reason"}
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0025, note: "both move the eye from a first subject to a second"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Eccentric"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 63-64, ECCENTRIC"
+    figure_refs: [pdf_p63, pdf_p64]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0032
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Remembering that one of the prime jobs of composition is to keep the interest going, there are times when it may be a better idea to go against the expected ways of focusing attention clearly on one subject."
+    - "it seemed more fun to frame and angle the shot to divide it in a way that doesn’t let the eye rest anywhere for long"
+    - "The result, visually, is deliberate disruption, but that makes the image more energetic."
+  concept_label: refusing_the_eye_a_resting_place_makes_the_image_energetic
+  label_origin: extractor_assigned
+  claim: >
+    One of composition's prime jobs is keeping the interest going, so there are times when it is
+    better to go against the expected practice of focusing attention clearly on one subject.
+    Dividing the frame so the eye cannot rest anywhere for long produces deliberate disruption,
+    and that makes the image more energetic. In the source's case the underlying division is still
+    rectilinear, but set at an angle, with four faces of different sizes each in a squared-off
+    segment keying the composition.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [reportage_photography]
+    conditions: "scenes with several competing points of interest"
+  caveats:
+    - text: "the source's stated reason for choosing this treatment is that it \"seemed more fun\", which is the frankest statement of motive in the three parts"
+      origin: source_stated
+    - text: "it directly opposes the classical section's aim of satisfying the eye rather than challenging it, and the source does not acknowledge the opposition"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "politicians' faces on a poultry cart, Chennai — a rectilinear division set at an angle, four faces in squared-off segments", figure_ref: pdf_p65}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_fre_c003_0028, note: "challenging the eye rather than satisfying it"}
+    - {relation: generalises, target: sk_fre_c003_0033, note: "the source names this as the angled framing the next case builds on"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Disruptive"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 65-66, DISRUPTIVE"
+    figure_refs: [pdf_p65, pdf_p66]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0033
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "The last image used an angled framing to energize the scene... but here I’m using them to make a clean and definite division."
+    - "Note also the value of a head-on, flat viewpoint... which sets the diagonals off against the strict horizontals and verticals of everything else."
+  concept_label: diagonals_divide_cleanly_only_against_strict_horizontals_and_verticals
+  label_origin: extractor_assigned
+  claim: >
+    The same angled treatment that energises a scene can instead make a clean and definite
+    division. The source's case uses converging diagonal shadows, doubled by their reflections in
+    still water so they meet like chevrons, pointing at a bright target; the waterline supplies a
+    second, horizontal division and is deliberately not centred because the reflections are softer
+    and weaker than the shadows. Crucially, the diagonals are set off by a head-on flat viewpoint
+    that keeps everything else strictly horizontal and vertical — the division reads as clean
+    because of what surrounds it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A diagonal is only legible as a diagonal against orthogonals. A flat frontal viewpoint
+      removes perspective convergence from everything else, so the deliberate diagonals are the
+      only obliques in the frame.
+  scope:
+    domain_discussed_by_source: [architectural_photography]
+    conditions: "scenes containing both strong obliques and rectilinear structure"
+  caveats:
+    - text: "the source's decision to place the waterline off-centre is justified by the reflections being weaker than the shadows, which is the tonal-weight argument from the classical section applied without being named as such"
+      origin: extractor_observed
+    - text: "the source's cross-reference to its own treatment of the flat viewpoint points to pages this copy does not have"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "use a head-on flat viewpoint so the deliberate diagonals are the only obliques"
+    - "offset a division when what falls either side differs in strength"
+  examples:
+    positive:
+      - {description: "villa, Algarve — diagonal shadows converging with their reflections like chevrons, pointing at yellow chairs", figure_ref: pdf_p67}
+  intra_source_relations:
+    - {relation: specialises, target: sk_fre_c003_0027, note: "a line dividing where what falls either side differs"}
+    - {relation: depends_on, target: sk_fre_c003_0029, note: "the off-centre waterline is decided by tonal weight"}
+    - {relation: contradicts, target: sk_fre_c003_0034, note: "the source's two adjacent cases take opposite positions on rectilinear treatment"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Angular"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 67-68, ANGULAR"
+    figure_refs: [pdf_p67, pdf_p68]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_fre_c003_0034
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  source_terms:
+    - "Many man-made things, especially buildings, cupboards, boxes, and so on, are rectilinear—constructed of verticals and horizontals; so you could rightly say that there’s no great imagination involved in shooting them that way."
+    - "But in this case, for a book on the Shakers, it was more a matter of treating the subject in its own spirit."
+  concept_label: matching_a_rectilinear_subject_is_unimaginative_unless_it_matches_the_subjects_spirit
+  label_origin: extractor_assigned
+  claim: >
+    Many man-made things are built of verticals and horizontals, and the source concedes that
+    shooting them that way — camera level, normal-to-long lens, facing them exactly — involves no
+    great imagination. Its justification is not compositional but interpretive: the subject was a
+    Shaker pantry, and the Shaker communities were highly ordered places with simplicity and
+    plainness a practised virtue, so treating the subject rectilinearly was treating it in its own
+    spirit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [interior_photography, architectural_photography]
+    conditions: "man-made rectilinear subjects with a known cultural character"
+  caveats:
+    - text: "this is the only case in the three parts where the justification for a compositional choice is the subject's culture rather than the picture's effect, and it is offered explicitly in place of a compositional reason the source admits it lacks"
+      origin: extractor_observed
+    - text: "no test is given for when a subject's spirit licenses an otherwise unimaginative treatment, so the argument would justify almost any match between subject and handling"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Shaker pantry, Fruitlands — everything resolving into ordered rectangular shapes, wall rails and pegs setting the tone", figure_ref: pdf_p69}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_fre_c003_0033, note: "adjacent cases taking opposite positions on rectilinear treatment"}
+    - {relation: demonstrated_together_with, target: sk_fre_c003_0009, note: "both attach a cultural reading to a geometric form"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "Rectilinear"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 69-70, RECTILINEAR"
+    figure_refs: [pdf_p69, pdf_p70]
+    source_support: text
+    inspected: {text: true, figures: []}
