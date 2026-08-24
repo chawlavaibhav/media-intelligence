@@ -1,0 +1,204 @@
+# CANON-003 book 8 (rebalance lane) — "Painting With Light" ch.2. SourceConceptSystems under SPEC-03.
+# Three systems. The first is a vocabulary the source declares under its own heading; the second is
+# the working sequence of a shooting day, which the source demonstrates in order but never names as
+# a procedure; the third is what lighting is for, which the source states and then partly undercuts.
+source_id: alton_painting_with_light_ch2_motion_picture_illumination
+source_concept_systems:
+
+- scs_id: scs_alt_c003_001
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  label: the_named_light_functions
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    The studio's vocabulary of lights, given by the source under one heading: key or principal,
+    clothes, front, cross, top, cross back or kicker, back, eye, and fill. Each is defined by where
+    it comes from, what it acts on, or what job it does, and the chapter's central correction — key
+    plus filler, kicker and backlight — is stated entirely in these terms.
+  whole_system_claim:
+    text: >
+      The lights are not a list of options but a division of one job into parts. The source's own
+      demonstration shows why: a single source renders a round object flat, and roundness comes back
+      only when three further lights with different positions and different purposes are added. Each
+      name marks a contribution to modelling, separation or exposure that the others do not make.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source lists the designations under a heading without saying they form a system, and
+      separately states the four-light correction. Reading the list as a decomposition of one job,
+      and treating the sphere demonstration as the argument for that reading, is ours. The evidence
+      for it is that the correction is stated using exactly these names and no others.
+    source_ref: null
+  members:
+    - {sk_ref: sk_alt_c003_0007, role_in_system: vocabulary, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0008, role_in_system: organising_analogy, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0009, role_in_system: demonstration, order: 3, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_alt_c003_0009, to: sk_alt_c003_0007, nature: "the correction is stated in the named roles — filler, kicker, backlight added to the key", origin: source_stated}
+      - {from: sk_alt_c003_0008, to: sk_alt_c003_0009, nature: "the source presents the daylight analogy immediately before the flat-object problem, as its justification", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The vocabulary, its heading and the four-light correction are the source's. What is ours is
+      the claim that the names constitute a decomposition rather than an inventory. A reader could
+      take them as a glossary of positions with no systematic relation; the sphere pair is the
+      evidence against that reading, and it is evidence we are interpreting, not a statement the
+      source makes.
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    locator: "EPUB index_split_001.html, anchors page0127 and page0149"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_alt_c003_002
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  label: the_working_order_of_lighting_a_scene
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: extractor_inferred
+  description: >
+    The order in which the chapter's second half proceeds, and in which the work is actually done:
+    choose the camera angle that shows the most surfaces; decide what the light is supposed to be
+    coming from and place the key so it agrees; meter the key and the overall balance for the mood
+    wanted; add broads and place the filler near the camera to avoid multiple shadows; rough in the
+    background and non-acting areas, crosslighting the walls by a stated order of preference;
+    rehearse; light the faces individually; shoot, with seven things checked during the take. The
+    hour recipes and the window cases are then variations executed inside this order.
+  whole_system_claim:
+    text: >
+      Lighting is treated as a sequence of commitments in which each step constrains the next, and
+      the order is not arbitrary: the angle decides what surfaces exist to be lit, the fictional
+      source decides where the key may go, the key decides what the filler has to correct, and the
+      rehearsal is what reveals that the rough lighting was insufficient for the faces. The recipes
+      later in the chapter are edits within this order rather than alternatives to it.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source presents these as consecutive sections of instruction and never names them as a
+      procedure or numbers them. Two of the dependencies are the source's own — it says the key
+      position must satisfy the established source, and it shows the rehearsal exposing underlit
+      faces. Reading the whole as one ordered procedure with each step constraining the next is
+      ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_alt_c003_0010, role_in_system: step, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_alt_c003_0011, role_in_system: step, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0012, role_in_system: step, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0019, role_in_system: step, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0020, role_in_system: step, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0015, role_in_system: constraint, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_alt_c003_0024, role_in_system: variation, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_alt_c003_0026, role_in_system: variation, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_alt_c003_0027, role_in_system: variation, order: 9, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: procedural, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_alt_c003_0011, to: sk_alt_c003_0010, nature: "the light source is established for a scene already framed from a chosen angle", origin: extractor_inferred}
+      - {from: sk_alt_c003_0012, to: sk_alt_c003_0011, nature: "the source states the balance is measured after the key position is found", origin: source_stated}
+      - {from: sk_alt_c003_0020, to: sk_alt_c003_0019, nature: "the source shows the rehearsal exposing faces the rough lighting left muddy", origin: source_stated}
+      - {from: sk_alt_c003_0024, to: sk_alt_c003_0011, nature: "each hour recipe begins by naming the source it imitates", origin: source_stated}
+    tradeoffs:
+      - between: [sk_alt_c003_0011, sk_alt_c003_0012]
+        nature: >
+          The key must both expose the scene correctly and appear to come from the established
+          source. The source states both requirements and never says what to do when the position
+          that satisfies one fails the other.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every step is stated by the source, and the section order is the source's own. The claim that
+      they form a procedure with binding order — rather than a set of topics presented in a
+      reasonable sequence — is ours, and it is a fairly strong reading. The recorded trade-off
+      between correct exposure and plausible source direction is entirely ours; the source never
+      raises it.
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    locator: "EPUB index_split_001.html, anchor page0149"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_alt_c003_003
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  label: what_illumination_is_for
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: source_stated
+  description: >
+    The source's own statement of purpose — quantity, meaning correct exposure everywhere, and
+    quality, meaning four numbered values: orientation, mood, pictorial beauty and depth — together
+    with what it goes on to say about each: the camera as the audience's eye under orientation, the
+    genre key and the dramatic contour under mood, and the dark-to-light progression under depth.
+  whole_system_claim:
+    text: >
+      Quantity and quality are stated as separable, and the source sharpens the separation later by
+      insisting that a daylight feeling cannot be produced by overexposing: mood comes from the
+      character of the light, not its level. The four quality values are numbered but never ranked,
+      and the chapter's own material shows them competing — the genre key can override the
+      requirement that light agree with its source, and the two depth rules pull in different
+      directions.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "The Purpose of Illumination, anchor page0149"}
+  members:
+    - {sk_ref: sk_alt_c003_0013, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0014, role_in_system: value_orientation, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0018, role_in_system: value_mood, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0022, role_in_system: value_mood, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0023, role_in_system: value_mood, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0017, role_in_system: value_depth, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_alt_c003_0025, role_in_system: separating_claim, order: 7, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_alt_c003_0022, to: sk_alt_c003_0018, nature: "the dramatic contour is what the drama key means in practice", origin: source_stated}
+      - {from: sk_alt_c003_0025, to: sk_alt_c003_0013, nature: "the claim that mood comes from quality rather than quantity sharpens the twofold purpose", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_alt_c003_0018, sk_alt_c003_0011]
+        nature: >
+          The chapter requires the key to appear to come from an established source, then exempts
+          musical comedy entirely — for that genre, it says, light sources and logic in lighting
+          mean nothing. The source states both approvingly and does not address the exemption.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_alt_c003_0015, sk_alt_c003_0017]
+        nature: >
+          Two depth rules in the same section. One is symmetrical: separate foreground from
+          background in tone, in either direction. The other has a preferred direction: the most
+          distant spot should be the lightest. A dark distant background satisfies the first and
+          violates the second, and the source does not reconcile them.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The twofold purpose, the four numbered values and their order are the source's own, stated
+      under its own heading, so the frame is reported rather than synthesised. Both recorded
+      conflicts are ours: the source does not notice either, and a reader who treated the genre key
+      as simply overriding the source-agreement rule would find no contradiction at all.
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    locator: "EPUB index_split_001.html, anchor page0149"
+    page_start: null
+    page_end: null
+    source_support: text

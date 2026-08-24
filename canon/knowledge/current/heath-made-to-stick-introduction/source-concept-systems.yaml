@@ -1,0 +1,226 @@
+# CANON-003 Lane C, book 14 — Heath & Heath, "Made to Stick", Introduction.
+# SourceConceptSystems under SPEC-03. Existing system_type vocabulary only.
+#
+# This book is the batch's clearest case of knowledge that exists in the relationships between
+# principles rather than in the principles themselves. The six principles are individually
+# unremarkable — the source says so itself, "many of the principles have a commonsense ring to
+# them". What is not commonsense is that they are one checklist, aimed at one named obstacle, and
+# explicitly not a formula. Extracting six rules and discarding that would leave the book's actual
+# contribution behind, so the systems below carry it.
+source_id: heath_made_to_stick_introduction
+source_concept_systems:
+
+- scs_id: scs_hea_mts_001
+  source_id: heath_made_to_stick_introduction
+  label: the_success_checklist
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >
+    Six principles — Simple, Unexpected, Concrete, Credible, Emotional, Story — each stated as the
+    answer to one question about the audience, presented together as a checklist to run against a
+    specific idea, and explicitly qualified as a common set of traits rather than a formula.
+  whole_system_claim:
+    text: >
+      Sticky ideas draw from a common set of six traits which make them more likely to succeed.
+      There is no formula: you do not need all of them to succeed and having all of them does not
+      guarantee success. Used as a checklist against an idea you already have, they show you which
+      of the six it fails.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Six Principles of Sticky Ideas", locator: "Introduction, 'Six Principles of Sticky Ideas' and the SUCCESs summary"}
+  members:
+    - {sk_ref: sk_hea_mts_0009, role_in_system: principle, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0010, role_in_system: principle, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0012, role_in_system: principle, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0013, role_in_system: principle, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0015, role_in_system: principle, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0018, role_in_system: principle, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0006, role_in_system: derivation, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0019, role_in_system: strength_limit, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0020, role_in_system: use_procedure, order: 9, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_hea_mts_0020, to: sk_hea_mts_0019, nature: "the checklist is usable as a prompt only because the traits are not a formula to be passed", origin: source_stated}
+      - {from: sk_hea_mts_0010, to: sk_hea_mts_0009, nature: "attention is worth winning only for an idea whose core has been found; the source's ordering puts simplicity first", origin: extractor_inferred}
+      - {from: sk_hea_mts_0013, to: sk_hea_mts_0012, nature: "belief is asked for after the idea has been made clear", origin: extractor_inferred}
+      - {from: sk_hea_mts_0018, to: sk_hea_mts_0015, nature: "action is asked for after the audience has been made to care", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_hea_mts_0009, sk_hea_mts_0012]
+        nature: >
+          Simplicity requires exclusion and relentless prioritisation; concreteness requires human
+          actions and sensory detail, which is added material. The source does not set these against
+          each other and gives no rule for what to do when stripping an idea to its core removes the
+          concrete detail that made it comprehensible. Naming the tension is ours.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_hea_mts_0010, sk_hea_mts_0013]
+        nature: >
+          Unexpectedness requires violating the audience's expectations; credibility requires the
+          audience to be able to test the claim against what they already believe. An idea can be
+          counterintuitive or self-verifying more easily than both at once. The source does not
+          raise it.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership, ordering and the whole-system claim are all the source's own; this is the rare
+      case where the system layer records something the source itself built rather than something
+      we assembled. What is ours is the causal reading of the ordering and both conflicts.
+
+      The causal reading, marked `extractor_inferred` on three dependencies, is this: the six
+      questions the source attaches to its principles describe a sequence of audience states —
+      pay attention, understand, believe, care, act — with simplicity as the prior step of deciding
+      what to say at all. The source numbers the principles and states the six questions, but never
+      says they form a progression. Read as a progression, a failure at an early principle makes
+      the later ones unreachable, which would change how the checklist should be acted on. That is
+      a hypothesis about this framework, not a report of it.
+
+      One field is worth flagging because its recorded value is misleading.
+      `source_warns_against_isolated_use: false` is correct but understates the position: this
+      source does not merely fail to warn against using members in isolation, it explicitly
+      licenses partial use — "you don't need all of these traits in order to be great". The field
+      cannot distinguish silence from permission. Logged in the Lane C issue file.
+  provenance:
+    section: "Six Principles of Sticky Ideas"
+    locator: "Introduction, 'Six Principles of Sticky Ideas' through the SUCCESs summary"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_hea_mts_002
+  source_id: heath_made_to_stick_introduction
+  label: the_curse_of_knowledge_and_the_only_available_escape
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    The source's explanation of why a set of near-commonsense principles is not already in general
+    use, and of why the remedy has to take the form it does. Existing communication advice leaves the
+    message undesigned; the Curse of Knowledge makes an expert unable to see what a listener is
+    missing; the Curse cannot be reversed; therefore the only remaining variable is the form of the
+    idea, and the checklist is the instrument for changing it.
+  whole_system_claim:
+    text: >
+      Knowing something makes it impossible to imagine not knowing it, and that tendency — not lack
+      of skill or effort — is what consistently defeats good communication. Because it cannot be
+      unlearned, the only reliable remedy is to transform the idea, and the six principles are the
+      instrument for that transformation.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Tappers and Listeners", locator: "Introduction, 'Sadly, there is a villain in our story' through 'take your ideas and transform them'"}
+  members:
+    - {sk_ref: sk_hea_mts_0005, role_in_system: what_existing_advice_leaves_undone, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_hea_mts_0022, role_in_system: root_cause, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0023, role_in_system: measurement_of_the_root_cause, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0024, role_in_system: why_the_remedy_must_take_this_form, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0020, role_in_system: the_instrument, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+      - {from: sk_hea_mts_0023, to: sk_hea_mts_0022, nature: "the tapper/listener result is offered as the demonstration of the Curse", origin: source_stated}
+      - {from: sk_hea_mts_0024, to: sk_hea_mts_0022, nature: "the remedy is constrained by the Curse being irreversible", origin: source_stated}
+      - {from: sk_hea_mts_0020, to: sk_hea_mts_0024, nature: "'the six principles presented earlier are your best weapons' immediately follows the two-ways statement", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, controlled_comparison, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The chain is the source's own and is stated in order across two consecutive sections. Only
+      one membership is ours: placing the critique of existing communication advice at the head of
+      it. The source makes that critique early, before the Curse is named, and does not connect
+      them.
+
+      The system-level property worth recording is that this is the load-bearing structure of the
+      whole book, and it is a single-cause explanation. Every failure of communication the source
+      discusses is attributed to one tendency, and the remedy space is then declared to contain
+      exactly two options. Both the diagnosis and the closure of the remedy space are asserted;
+      only the existence of the effect is measured, by a cited third-party study.
+  provenance:
+    section: "On Stickiness; Six Principles of Sticky Ideas; Tappers and Listeners"
+    locator: "Introduction"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_hea_mts_003
+  source_id: heath_made_to_stick_introduction
+  label: stickiness_as_a_learnable_design_skill
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The argument that entitles the book to teach anything at all: stickiness is a property of design
+    rather than of subject matter or of the designer's talent; successful creative work turns out to
+    be more pattern-bound than unsuccessful work; two hours of pattern training measurably raised
+    novices' output; therefore constraints beat a blank canvas, the skill can be used to select ideas
+    as well as to build them, and the promise the authors make is bounded accordingly.
+  whole_system_claim:
+    text: >
+      Because successful creative work follows a small number of patterns, and because teaching
+      those patterns measurably improves novices' output, stickiness is a skill that can be taught
+      rather than a talent that must be possessed.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each link separately and in different sections — the nurture claim in the
+      opening, the classification and training results under "Systematic Creativity", the
+      constraints-beat-blank-canvas argument immediately after, the spotting skill back under "Six
+      Principles", and the bounded promise in the closing paragraph. It never draws them together as
+      one chain. Reading them as the warrant for the book's own existence is ours. The strongest
+      textual support is that "What this Israeli research team did for advertisements is what this
+      book does for your ideas" explicitly makes the template study the model for the method.
+    source_ref: null
+  members:
+    - {sk_ref: sk_hea_mts_0002, role_in_system: claim_to_be_warranted, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0025, role_in_system: observational_evidence, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0026, role_in_system: experimental_evidence, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0027, role_in_system: derived_position, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hea_mts_0021, role_in_system: second_application, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_hea_mts_0028, role_in_system: stated_limit, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_hea_mts_0026, to: sk_hea_mts_0025, nature: "the training experiment tests what the classification finding suggested", origin: source_stated}
+      - {from: sk_hea_mts_0027, to: sk_hea_mts_0026, nature: "the constraints-beat-blank-canvas position rests entirely on the training result", origin: source_stated}
+      - {from: sk_hea_mts_0002, to: sk_hea_mts_0026, nature: "the nurture claim is warranted by the training result rather than by argument", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, controlled_comparison, outcome_claimed]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The chain is ours; the source states the links separately and never assembles them. Two of
+      the six memberships are also ours.
+
+      This is the most consequential system in the extraction and the least visible in the book,
+      because it is the argument that entitles the book to teach anything. If it fails, the six
+      principles survive as observations about ideas that stuck and lose their status as
+      instructions. It rests on one cited third-party experiment whose group sizes and significance
+      are not reported, and whose outcome measure is consumer ratings of creativity rather than
+      anything the book's own framework is about.
+  provenance:
+    section: "What Sticks?; Six Principles of Sticky Ideas; Systematic Creativity"
+    locator: "Introduction"
+    page_start: null
+    page_end: null
+    source_support: text

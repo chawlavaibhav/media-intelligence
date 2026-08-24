@@ -1,0 +1,879 @@
+# CANON-003 book 9 (Lane B) — Grammar of the Edit, ch.3-5. SPEC-05 ontology, source-local.
+# Existing relation types and term kinds only. distinct_from permitted in this layer per Controller
+# decision 3 (CANON-001), which grants it here and explicitly not inside SPEC-03 intra_source_relations.
+#
+# No cross_source_concept appears here. That kind requires two or more independent origins and this
+# file records one source, so its absence is correct rather than incomplete.
+
+source_id: grammar_of_the_edit_ch3_5_editing_decisions
+extraction_date: 2026-08-24
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 1 — TERMS (the source's own words, never altered)
+# ═════════════════════════════════════════════════════════════
+terms:
+
+# ── the four transitions ────────────────────────────────────
+- term_id: t_gote_c003_0001
+  term: cut
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    An instantaneous change from one shot to another. The most frequent transition, transparent when
+    well made, and the one the audience accepts as a form of visual reality. Also called a straight
+    cut or, when picture and sound change together, a butt-cut.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Cut", page_start: 76}
+  arising_from: [sk_gote_c003_0025]
+
+- term_id: t_gote_c003_0002
+  term: dissolve
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A gradual change from the ending pictures of one shot into the beginning pictures of the next,
+    made by superimposing both while ramping opacity down and up over a duration. Attracts attention
+    on purpose. Also called a lap dissolve, a lap, or a video mix.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Dissolve", page_start: 80}
+  arising_from: [sk_gote_c003_0029]
+
+- term_id: t_gote_c003_0003
+  term: wipe
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A transition with a duration in which both images are on screen at once but usually without
+    superimposition; one image is replaced by the other along a moving boundary. Meant to be noticed.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Wipe", page_start: 84}
+  arising_from: [sk_gote_c003_0033]
+
+- term_id: t_gote_c003_0004
+  term: fade
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A gradual transition between a fully opaque field of colour, usually black, and the image.
+    A fade in reveals the picture and signals a beginning; a fade out returns to the colour and
+    signals an ending. Also called a fade up and a fade down.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Fade", page_start: 86}
+  arising_from: [sk_gote_c003_0037]
+
+# ── the five edit categories ────────────────────────────────
+- term_id: t_gote_c003_0005
+  term: action_edit
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    An edit between shots depicting continuous action or movement, with unbroken time and different
+    framings, so the movement runs smoothly across the cut. Also called a movement edit or a
+    continuity edit.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Action Edit", page_start: 88}
+  arising_from: [sk_gote_c003_0040]
+
+- term_id: t_gote_c003_0006
+  term: screen_position_edit
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    An edit that uses the placement of subjects in two shots to move the viewer's eyes around the
+    screen: attention is cast toward one side and the incoming shot puts its object there. Also
+    called a directional edit or a placement edit.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Screen Position Edit", page_start: 90}
+  arising_from: [sk_gote_c003_0041]
+
+- term_id: t_gote_c003_0007
+  term: form_edit
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A transition from a shot with a pronounced shape, colour, dimension or sound to another whose
+    shape, colour, dimension or sound matches it. Usually executed as a dissolve.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Form Edit", page_start: 91}
+  arising_from: [sk_gote_c003_0042]
+
+- term_id: t_gote_c003_0008
+  term: concept_edit
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    An edit joining two shots of unrelated content so their juxtaposition at that point in the story
+    generates an implied meaning the story never states. Also called a dynamic edit or an idea edit.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Concept Edit", page_start: 93}
+  arising_from: [sk_gote_c003_0043]
+
+- term_id: t_gote_c003_0009
+  term: combined_edit
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    One transition satisfying two or more of the other four edit categories at once. Requires
+    pre-production planning and is rarely achievable by the editor alone.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Combined Edit", page_start: 94}
+  arising_from: [sk_gote_c003_0045]
+
+# ── named devices ───────────────────────────────────────────
+- term_id: t_gote_c003_0010
+  term: sound_bridge
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A sound whose source is not visible or known, begun under the outgoing shot, which motivates the
+    transition and is explained by the incoming shot revealing its origin.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Motivation", page_start: 61}
+  arising_from: [sk_gote_c003_0007]
+
+- term_id: t_gote_c003_0011
+  term: split_edit
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    An edit in which picture and sound do not change at the same instant — one starts early or ends
+    late. Also called an L-cut or lapping.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Sound", page_start: 71}
+  arising_from: [sk_gote_c003_0022]
+
+- term_id: t_gote_c003_0012
+  term: butt_cut
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A cut where picture and sound end and begin at the same point in time. Also called a straight
+    cut. Assemble and rough cuts are normally built entirely from these.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Sound", page_start: 71}
+  arising_from: [sk_gote_c003_0022]
+
+- term_id: t_gote_c003_0013
+  term: match_dissolve
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A dissolve between two shots whose compositions are very similar but whose subject matter
+    differs — the usual execution of a form edit.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Dissolve; The Form Edit", page_start: 80}
+  arising_from: [sk_gote_c003_0030, sk_gote_c003_0042]
+
+- term_id: t_gote_c003_0014
+  term: natural_wipe
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    An object within the outgoing action appearing to push, pull or wipe across the screen, used as
+    the transition itself. The source says it may be executed as either a cut or a wipe.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Wipe", page_start: 84}
+  arising_from: [sk_gote_c003_0036]
+
+- term_id: t_gote_c003_0015
+  term: cut_away
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Any brief shot inserted to provide distraction and elapsed time, so the audience accepts an
+    object or action change that happened off screen.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "Continuity of Content", page_start: 67}
+  arising_from: [sk_gote_c003_0016]
+
+- term_id: t_gote_c003_0016
+  term: insert_shot
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    A logical shot placed between two shots that reverse screen direction, to continue the narrative
+    and break the audience's attention on the direction of movement.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "Continuity of Movement", page_start: 68}
+  arising_from: [sk_gote_c003_0016, sk_gote_c003_0017]
+
+- term_id: t_gote_c003_0017
+  term: reaction_shot
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    A shot of a listening character cut into a long monologue, to break up continuous speech and
+    supply new information about the listener.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "There Should Be a Reason for Every Edit", page_start: 100}
+  arising_from: [sk_gote_c003_0051]
+
+# ── properties ──────────────────────────────────────────────
+- term_id: t_gote_c003_0018
+  term: screen_direction
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The movement of talent or objects toward frame right or frame left, which must be maintained
+    across a cut whenever the next shot continues the same movement.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Continuity of Movement", page_start: 68}
+  arising_from: [sk_gote_c003_0017]
+
+- term_id: t_gote_c003_0019
+  term: action_line
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The imaginary line cutting through the area of action along the talent's sight lines or in the
+    direction of an object's movement, establishing the 180 degree arc from which the camera may
+    shoot. Also called the axis of action, and labelled "THE LINE" in the source's own diagram.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Observe the Action Line", page_start: 102}
+  arising_from: [sk_gote_c003_0054]
+
+- term_id: t_gote_c003_0020
+  term: look_room
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The open screen space across the frame in the direction a character's attention is directed,
+    established together with screen direction by the two-shot.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Shot Composition; Observe the Action Line", page_start: 62}
+  arising_from: [sk_gote_c003_0010, sk_gote_c003_0056]
+
+- term_id: t_gote_c003_0021
+  term: eye_trace
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The viewer's gaze travelling across the empty look room at a cut and landing on the new face or
+    object placed where the trace ended. Also called eye-line match.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Shot Composition", page_start: 62}
+  arising_from: [sk_gote_c003_0010]
+
+- term_id: t_gote_c003_0022
+  term: beat
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    A gut-feeling unit of time, not counted in seconds or frames, by which an experienced editor
+    senses that it is now time to cut. The source calls it unknowable yet knowable.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Cut", page_start: 77}
+  arising_from: [sk_gote_c003_0009]
+
+- term_id: t_gote_c003_0023
+  term: ambience
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The ever-present background sound level of a space, forming a bed of consistent tone under
+    dialogue and effects. Also called atmosphere or natural sound, abbreviated nats.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Continuity of Sound", page_start: 70}
+  arising_from: [sk_gote_c003_0020]
+
+- term_id: t_gote_c003_0024
+  term: room_tone
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    Ambience lifted from the production audio recordings, as distinct from ambience generated by an
+    editor or sound designer from other sources.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Continuity of Sound", page_start: 70}
+  arising_from: [sk_gote_c003_0020]
+
+- term_id: t_gote_c003_0025
+  term: sound_leading_picture
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The condition where the sound of the next shot is heard before its picture appears.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Sound", page_start: 71}
+  arising_from: [sk_gote_c003_0022]
+
+- term_id: t_gote_c003_0026
+  term: picture_leading_sound
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The condition where the sound of the outgoing shot continues under the picture of the next.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Sound", page_start: 71}
+  arising_from: [sk_gote_c003_0022]
+
+- term_id: t_gote_c003_0027
+  term: new_information
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    Visual or aural content in the incoming shot that the viewer did not already have. The source
+    calls it basic to all editing choices.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Information", page_start: 58}
+  arising_from: [sk_gote_c003_0004]
+
+- term_id: t_gote_c003_0028
+  term: motivation
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    A visual or aural element in the outgoing shot that supplies the reason to leave it, and to
+    leave it at that moment.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Motivation", page_start: 60}
+  arising_from: [sk_gote_c003_0006]
+
+- term_id: t_gote_c003_0029
+  term: transparency
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The property of a well-made cut of not being consciously noticed by the viewer.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Cut", page_start: 76}
+  arising_from: [sk_gote_c003_0025]
+
+- term_id: t_gote_c003_0030
+  term: invisible_technique
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    Cutting that does not purposefully draw attention to itself, named by the source as the standard
+    of a well-edited programme.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Better the Edit, the Less It Is Noticed", page_start: 106}
+  arising_from: [sk_gote_c003_0058]
+
+# ── problems, in the source's own words ─────────────────────
+- term_id: t_gote_c003_0031
+  term: jump_cut
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    A jump, glitch or extremely brief interruption the viewer perceives when successive images are
+    too alike. Its defining property is that the viewer notices it consciously and is pulled out of
+    the viewing experience.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Camera Angle", page_start: 65}
+  arising_from: [sk_gote_c003_0013]
+
+- term_id: t_gote_c003_0032
+  term: crossing_the_line
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    Cutting together shots taken from opposite sides of the action line, which flip-flops the
+    orientation of left and right within the film space and presents the audience with a
+    contradicting viewpoint.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Observe the Action Line", page_start: 102}
+  arising_from: [sk_gote_c003_0055]
+
+- term_id: t_gote_c003_0033
+  term: discontinuity_of_movement
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    A shot that contradicts the screen direction already established for a movement in progress.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Continuity of Movement", page_start: 68}
+  arising_from: [sk_gote_c003_0017]
+
+- term_id: t_gote_c003_0034
+  term: subject_jumps_from_one_side_of_the_screen_to_the_other
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    A subject or object occupying opposite sides of the frame in two shots of one scene without
+    having moved, which distracts the viewer and breaks the illusion of smooth editing.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Continuity of Position", page_start: 69}
+  arising_from: [sk_gote_c003_0018]
+
+- term_id: t_gote_c003_0035
+  term: visual_incongruity
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    A mismatch of actions or objects between shots of one scene — a dog present in the wide and
+    absent from the tight, a telephone changing hands — which risks breaking the audience's belief
+    in the filmed illusion.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Continuity of Content", page_start: 66}
+  arising_from: [sk_gote_c003_0015]
+
+- term_id: t_gote_c003_0036
+  term: sound_fighting_the_picture
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    Sound that conflicts with the visuals unintentionally, producing confusion and rivalry in the
+    viewer's mind.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Sound and Vision are Partners and not Rivals", page_start: 98}
+  arising_from: [sk_gote_c003_0047]
+
+- term_id: t_gote_c003_0037
+  term: pulled_out_of_the_viewing_experience
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    The viewer's attention leaving the story because something registered as not-quite-right. The
+    source states the effect persists: the mind keeps trying to justify the anomaly, impairing
+    absorption of information presented after it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Camera Angle; The Better the Edit, the Less It Is Noticed", page_start: 65}
+  arising_from: [sk_gote_c003_0013, sk_gote_c003_0059]
+
+- term_id: t_gote_c003_0038
+  term: illegitimate_cut
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    A cut that fails because of the shots themselves — wrong angle, wrong continuity, no new
+    information, no motivation, wrong composition, or a combination. The source states it cannot be
+    rescued by changing the transition, and that there is very little an editor can do about it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Select the Appropriate Form of Edit", page_start: 104}
+  arising_from: [sk_gote_c003_0057]
+
+- term_id: t_gote_c003_0039
+  term: searching_too_hard_for_the_next_bit_of_information
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    An eye trace made too elaborate by a busy or multi-layered incoming composition, which confuses
+    rather than engages the viewer.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Shot Composition", page_start: 63}
+  arising_from: [sk_gote_c003_0011]
+
+- term_id: t_gote_c003_0040
+  term: uneven_or_poorly_timed_fade
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    A fade whose action appears uneven because large areas of light and dark in the frame create an
+    imbalance in brightness as opacity fills in or removes the image.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Fade", page_start: 86}
+  arising_from: [sk_gote_c003_0038]
+
+# ── remedies ────────────────────────────────────────────────
+- term_id: t_gote_c003_0041
+  term: place_shots_more_than_thirty_degrees_apart
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Selecting, from the coverage supplied, successive shots whose horizontal camera angles differ by
+    more than 30 degrees around the 180 degree arc.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "Camera Angle", page_start: 64}
+  arising_from: [sk_gote_c003_0012]
+
+- term_id: t_gote_c003_0042
+  term: select_shots_from_one_side_of_the_line
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Using only coverage recorded from a single side of the established action line, unless the line
+    is seen to change on screen.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "Observe the Action Line", page_start: 102}
+  arising_from: [sk_gote_c003_0054, sk_gote_c003_0056]
+
+- term_id: t_gote_c003_0043
+  term: lay_a_continuous_ambience_bed
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Running an uninterrupted layer of background tone under the cuts within a scene, to smooth the
+    audio transitions.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "Continuity of Sound", page_start: 70}
+  arising_from: [sk_gote_c003_0020]
+
+- term_id: t_gote_c003_0044
+  term: use_a_low_contrast_frame_at_the_fade_point
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Choosing a shot that begins or ends with a low contrast image where a fade occurs, so the fading
+    action appears even.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "The Fade", page_start: 86}
+  arising_from: [sk_gote_c003_0038]
+
+- term_id: t_gote_c003_0045
+  term: describe_the_shot_to_set_its_length
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Silently describing the content of a shot; the time the description takes is the length the shot
+    should run, on the assumption that most viewers comprehend at about the same rate.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "There Should Be a Reason for Every Edit", page_start: 101}
+  arising_from: [sk_gote_c003_0053]
+
+- term_id: t_gote_c003_0046
+  term: time_the_shots_entrance_and_exit_instead_of_cutting_into_it
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Leaving a shot that is complete in itself uncut, and placing it in the sequence by choosing when
+    it enters and leaves.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "There Should Be a Reason for Every Edit", page_start: 100}
+  arising_from: [sk_gote_c003_0050]
+
+- term_id: t_gote_c003_0047
+  term: raise_the_objects_level_when_cutting_closer
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Increasing the volume of a sound-producing object's audio when a cut magnifies its visual size
+    and importance in frame.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {section: "Motivation", page_start: 60}
+  arising_from: [sk_gote_c003_0008]
+
+- term_id: t_gote_c003_0048
+  term: compose_directional_movement_for_a_natural_wipe
+  origin: source
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Conceiving strong vertical or horizontal movement within a shot at the shooting stage, so an
+    object in the action can later serve as the wiping element.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [physical_production]
+  source_ref: {section: "The Wipe", page_start: 84}
+  arising_from: [sk_gote_c003_0036]
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 2 — RELATIONSHIPS (existing SPEC-05 vocabulary only)
+# ═════════════════════════════════════════════════════════════
+relationships:
+
+- from: t_gote_c003_0015
+  to: t_gote_c003_0016
+  relation: same_mechanism
+  confidence_basis: source_stated
+  note: >
+    The source describes the same action — insert any brief logical shot — with the same stated
+    mechanism — break the audience's continuous attention and supply elapsed time — under two names,
+    cut-away for a content mismatch and insert shot for a direction reversal. Recorded as one
+    mechanism under two source terms rather than merged, because the source keeps both words.
+
+- from: t_gote_c003_0029
+  to: t_gote_c003_0030
+  relation: same_observed_effect
+  confidence_basis: extractor_judgement
+  note: >
+    Transparency is stated of the cut in Chapter Four; invisible technique is stated as a general
+    standard in Chapter Five. Both name the edit going unnoticed. Related rather than merged because
+    the first is a property of one transition and the second a standard for a whole programme, and
+    the source never equates them.
+
+- from: t_gote_c003_0023
+  to: t_gote_c003_0024
+  relation: broader_than
+  confidence_basis: source_stated
+  note: >
+    The source states room tone is ambience lifted from the production recordings, as against
+    ambience built by an editor from other sources. Ambience is therefore the broader term and room
+    tone one of its two origins.
+
+- from: t_gote_c003_0025
+  to: t_gote_c003_0026
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Both are split edits and the source presents them as opposites — which track leads. Recorded as
+    a checked distinction so that a later pass does not collapse them into one lapping concept.
+
+- from: t_gote_c003_0010
+  to: t_gote_c003_0025
+  relation: narrower_than
+  confidence_basis: source_stated
+  note: >
+    A sound bridge is one form of sound leading picture — the case where the leading sound's origin
+    is unknown to the audience until the incoming shot reveals it.
+
+- from: t_gote_c003_0031
+  to: t_gote_c003_0037
+  relation: same_observed_effect
+  confidence_basis: source_stated
+  note: >
+    The source defines the jump cut by the viewer consciously noticing it and being pulled out of
+    the experience, so the two terms name the same event from the screen side and the viewer side.
+
+- from: t_gote_c003_0033
+  to: t_gote_c003_0032
+  relation: same_mechanism
+  confidence_basis: source_stated
+  note: >
+    A discontinuity of movement is what crossing the line produces for a moving subject. Chapter
+    Three names the symptom; Chapter Five supplies the geometry that causes it.
+
+- from: t_gote_c003_0034
+  to: t_gote_c003_0032
+  relation: same_mechanism
+  confidence_basis: extractor_judgement
+  note: >
+    A subject apparently jumping across the screen is the same reversal applied to a static
+    subject's frame position. The source states the causal link explicitly for movement and not for
+    position, so this direction is our inference from its own geometry.
+
+- from: t_gote_c003_0006
+  to: t_gote_c003_0034
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    A negative finding worth recording. Both concern which side of the frame a subject occupies, and
+    both use the word position. They are not the same concept: the screen position edit is a device
+    that deliberately moves the viewer's eye by placing subjects on opposite sides, while a subject
+    jumping across the screen is a failure of a subject to stay put. Examined and rejected as a
+    match so that a later pass does not merge them on the shared word.
+
+- from: t_gote_c003_0014
+  to: t_gote_c003_0003
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    A second negative finding. Despite its name, the source says a natural wipe may be executed as
+    either a cut or a wipe, so it is a way of concealing a transition inside in-frame movement
+    rather than a variety of the wipe transition. Checked against the source's own wording rather
+    than assumed from the name.
+
+- from: t_gote_c003_0013
+  to: t_gote_c003_0007
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source says the term match dissolve is often used to describe a form edit. Recorded as
+    related_to rather than as an equivalence because a match dissolve is the execution and a form
+    edit is the relation between the shots, and the source uses each word in the other's section
+    without stating they are the same thing.
+
+- from: t_gote_c003_0021
+  to: t_gote_c003_0020
+  relation: same_mechanism
+  confidence_basis: source_stated
+  note: >
+    Eye trace works by the viewer crossing the empty look room; the source presents the two as one
+    device seen from the viewer's side and the frame's side.
+
+- from: t_gote_c003_0019
+  to: t_gote_c003_0018
+  relation: broader_than
+  confidence_basis: source_stated
+  note: >
+    The action line establishes screen direction. Direction is one of the things the line fixes,
+    along with look room and the lines of attention in a two-shot.
+
+- from: t_gote_c003_0022
+  to: t_gote_c003_0045
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    A third negative finding. Both answer how long a shot should run, and it would be easy to treat
+    them as one timing concept. They are not: the beat is explicitly unquantified and acquired with
+    experience, while describing the shot is a repeatable procedure available to a beginner. The
+    source offers both and never relates them, so the distinction is recorded rather than resolved.
+
+- from: t_gote_c003_0038
+  to: t_gote_c003_0031
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: >
+    The illegitimate cut names any of six causes making two shots unjoinable; the jump cut is the
+    perceptual result of one family of those causes. Our reading of the source's own two lists.
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 3 — CONCEPTS
+# ═════════════════════════════════════════════════════════════
+concepts:
+
+- concept_id: sc_gote_transition_taxonomy
+  kind: source_specific_concept
+  label: the_four_transitions
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  origin: source_stated
+  definition: >
+    The source's own grouping of cut, dissolve, wipe and fade as the four major transition types,
+    each carrying its own learned meaning.
+  children_terms: [t_gote_c003_0001, t_gote_c003_0002, t_gote_c003_0003, t_gote_c003_0004]
+
+- concept_id: sc_gote_edit_category_taxonomy
+  kind: source_specific_concept
+  label: the_five_edit_categories
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  origin: source_stated
+  definition: >
+    The source's own grouping of action, screen position, form, concept and combined edits as five
+    categories classifying the relation between two shots. The source states the list is not
+    exhaustive and that there may be no industry standard for the terminology.
+  children_terms: [t_gote_c003_0005, t_gote_c003_0006, t_gote_c003_0007, t_gote_c003_0008, t_gote_c003_0009]
+
+- concept_id: sc_gote_edit_decision_criteria
+  kind: source_specific_concept
+  label: the_six_elements_of_a_good_edit
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  origin: source_stated
+  definition: >
+    The source's own generalisation over its criteria for a transition: new information, motivation,
+    shot composition, camera angle, continuity and sound. Represented here by the terms that name
+    the properties themselves; composition, camera angle and continuity have no single source noun
+    and appear through their associated failure and remedy terms.
+  children_terms: [t_gote_c003_0027, t_gote_c003_0028, t_gote_c003_0018, t_gote_c003_0023, t_gote_c003_0041]
+
+- concept_id: sc_gote_line_geometry
+  kind: source_specific_concept
+  label: the_geometry_of_the_action_line
+  origin_ref: grammar_of_the_edit_ch3_5_editing_decisions
+  origin: source_stated
+  definition: >
+    The source's own treatment of the action line, screen direction, look room, the 180 degree arc
+    and the 30 degree rule as one geometry from which its continuity rules follow. The source states
+    that the line establishes screen direction, look room and lines of attention together.
+  children_terms: [t_gote_c003_0019, t_gote_c003_0018, t_gote_c003_0020, t_gote_c003_0032, t_gote_c003_0042]
+
+- concept_id: cc_perceived_break_at_a_transition
+  kind: canonical_concept
+  label: perceived_break_at_a_transition
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  definition: >
+    Ours, for retrieval. Groups the failures in which the viewer notices something wrong at a
+    transition. They arise differently — insufficient angle difference, similar composition, a
+    reversed line, a subject changing frame side, a mismatched object, sound vanishing, a fade
+    filling unevenly — and the repair follows the mechanism, not the appearance. Grouping them is
+    useful; claiming they are one failure would be a stronger act this concept does not perform.
+  children_terms: [t_gote_c003_0031, t_gote_c003_0032, t_gote_c003_0033, t_gote_c003_0034,
+                   t_gote_c003_0035, t_gote_c003_0037, t_gote_c003_0040]
+
+- concept_id: cc_attention_break_as_repair
+  kind: canonical_concept
+  label: attention_break_as_repair
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  definition: >
+    Ours, for retrieval. Groups the source's remedies that work by interrupting what the viewer is
+    attending to and supplying elapsed time — the cut-away, the insert shot and the reaction shot.
+    The source gives the first two an identical mechanism and the third a different justification,
+    so the grouping is a convenience and not a claim that all three are the same device.
+  children_terms: [t_gote_c003_0015, t_gote_c003_0016, t_gote_c003_0017]

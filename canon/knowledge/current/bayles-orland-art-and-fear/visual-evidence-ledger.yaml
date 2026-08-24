@@ -1,0 +1,86 @@
+# CANON-003 book 17 (Lane D) — David Bayles & Ted Orland, "Art & Fear" (1993/2010 printing).
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Art & Fear.pdf"
+#   /Creator  Adobe Acrobat 9.0 · /Producer Adobe Acrobat 9.0 PAPER CAPTURE PLUG-IN
+#   136 pages · 328.32 x 513.6 pt (a small-format book, roughly 4.6 x 7.1 inches)
+#   The producer string is the important one: Paper Capture is Adobe's OCR tool, so this file is a
+#   SCAN with a machine-read text layer over the page images, not a native digital PDF.
+#   Pages were rendered ephemerally to the session scratchpad and inspected; nothing committed.
+
+source_id: bayles_orland_art_and_fear_part_one_opening
+pass: independent_visual_evidence
+visual_completeness: verified_page_level
+pages_measured: [1, 136]        # every page, by ink coverage — see method
+pages_rendered_and_read: [21, 26]
+pages_rendered_total: 3
+
+method:
+  ink_coverage_sweep: >
+    Every one of the 136 pages was rendered at 40 dpi in greyscale and its proportion of dark
+    pixels measured, to find any page carrying a picture rather than text. A page of body text in
+    this book runs about 8% dark. Exactly one page departs from that: page 1, the cover, at 41%.
+    Twelve pages fall below 0.5% and are the blank versos at chapter breaks — including PDF 20 and
+    PDF 34, which bracket the section processed and confirm its boundaries independently of the
+    contents page.
+  visual_reading: >
+    Three pages were rendered at 110 dpi and read as images: PDF 21 (printed 9) and PDF 26
+    (printed 14) inside the processed section, plus the cover. Both interior pages are unbroken
+    body text with a chapter number, a title, an epigraph and a drop cap. No figure, diagram,
+    table or illustration appears on either.
+  what_could_not_be_checked: >
+    Nothing material. This is a scanned book, so the printed page is exactly what is available.
+
+findings:
+
+- ref: vis_af_no_illustrations_anywhere
+  what_happened: >
+    The ink-coverage sweep found no illustration page anywhere in the book, and the two interior
+    pages read as images contain none.
+  what_it_means: >
+    A book about the psychology of making art, written by two working artists — a painter and a
+    photographer — contains no pictures of art. The argument is carried entirely by prose. Like
+    book 16, this source has no visual evidence to lose in text extraction; unlike book 16, that
+    conclusion here rests on having looked at the actual printed pages rather than on measuring
+    files in a package.
+  status: inspected_and_dismissed
+
+- ref: vis_af_page_furniture_is_the_ocr_damage
+  what_happened: >
+    Rendering revealed where this file's OCR errors live. The running head reads "ART & FEAR" in
+    small caps with a rule beneath it; the text layer renders it variously as "ART& FEAR" and, on
+    one page, as "7 HE NATURE OF THE PROBLEM". The publisher's logotype on the title page, set in
+    a decorative face, comes out as unreadable punctuation.
+  what_it_means: >
+    The damage is confined to display type — running heads, logotypes, the drop-cap initial that
+    starts each chapter and leaves the first word looking like "AKING ART IS DIFFICULT" with its
+    M stranded on the line below. Body text at ordinary size is clean: across the 4,695 words of
+    the processed section, zero words came out without a vowel, which is the standard cheap test
+    for character-level OCR garbling.
+  status: recorded_as_extraction_hazard
+  detectability_note: >
+    Both defects are visible without rendering, because they produce obviously wrong words. The
+    reason to record them is the opposite: they are the harmless kind. A count of OCR errors on
+    this file would be dominated by page furniture and would badly overstate the damage to the
+    argument.
+
+- ref: vis_af_epigraph_structure
+  what_happened: >
+    Each chapter opens with a quotation from a named person, set in italic above the text — the
+    processed section opens on Hippocrates and on the sculptor Stephen DeStaebler.
+  what_it_means: >
+    Typography is doing attribution work here. In the text layer the epigraph arrives as three
+    short lines followed by a name, indistinguishable in kind from the body text around it, and
+    only the rendered page shows that it is set apart as someone else's words framing the
+    chapter. It is a small case of the general problem this book raises for the schema: a large
+    part of its argument is quoted from other people. See the Lane D issue file, D-02.
+  status: recorded_as_source_shape
+
+visual_only_observations: []
+
+summary:
+  demonstrations_recorded: 0
+  visual_only_observations: 0
+  figures_supporting_any_claim: 0
+  illustration_pages_in_book: 0

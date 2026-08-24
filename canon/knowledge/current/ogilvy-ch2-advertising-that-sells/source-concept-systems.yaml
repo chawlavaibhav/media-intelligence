@@ -1,0 +1,188 @@
+# CANON-003 book 2 — Ogilvy on Advertising ch.2. SourceConceptSystems under SPEC-03.
+source_id: ogilvy_on_advertising_ch2
+source_concept_systems:
+
+- scs_id: scs_ogl_c003_001
+  source_id: ogilvy_on_advertising_ch2
+  label: preparation_sequence_before_writing
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The chapter opens with an ordered preparation routine: study the product, then study competitors'
+    advertising and how well it worked, then research consumers, then decide the position, then decide
+    the image. Each step is presented as feeding the next, and the whole sequence is presented as
+    preceding any creative work.
+  whole_system_claim:
+    text: >
+      Advertising begins with an ordered preparation routine, not with invention. Product study feeds
+      competitor study feeds consumer research feeds positioning feeds image, and the big idea is said
+      to arise only from an unconscious already loaded by that work.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Do your homework; Positioning; Brand image", locator: "Do your homework through Brand image"}
+  members:
+    - {sk_ref: sk_ogl_c003_0004, role_in_system: step, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0005, role_in_system: step, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0006, role_in_system: step, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0007, role_in_system: step, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0008, role_in_system: default_direction, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0011, role_in_system: dependent_outcome, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+      - {from: sk_ogl_c003_0006, to: sk_ogl_c003_0005, nature: "positioning follows from knowing the consumer", origin: source_stated}
+      - {from: sk_ogl_c003_0007, to: sk_ogl_c003_0006, nature: "the source says 'you now have to decide' the image, after position", origin: source_stated}
+      - {from: sk_ogl_c003_0011, to: sk_ogl_c003_0004, nature: "the unconscious must be well informed, which the homework supplies", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The ordering is the source's own, signalled by its section order and by phrases such as "your
+      next chore" and "now consider". What is ours is including the informed-unconscious claim as the
+      sequence's dependent outcome rather than as a separate topic.
+  provenance:
+    section: "Do your homework; Positioning; Brand image"
+    locator: "first half of the chapter"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ogl_c003_002
+  source_id: ogilvy_on_advertising_ch2
+  label: the_measurement_argument
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    One argument recurs through the chapter in five places: nobody in the chain is paid to find out
+    whether advertising works, so it is not measured; because it is not measured, the field does not
+    accumulate knowledge; because it does not accumulate knowledge, agencies repeat known mistakes;
+    and the remedy is to imitate the one branch of the trade that does close the loop.
+  whole_system_claim:
+    text: >
+      The chapter's criticisms of the industry are one causal chain, not separate complaints. Absent
+      measurement is the root; uncodified experience, repeated mistakes, committee process and the
+      cult of creativity are its consequences; direct response is the proposed corrective because it
+      alone attributes sales to advertisements.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each link separately and in different sections — the vested interest in not
+      testing, the failure to codify, the reverse-type example, the committee incentive, the direct
+      response argument, the attack on creativity — and never draws them together. Reading them as one
+      chain is ours. The strongest textual support is that the same vested-interest mechanism is used
+      twice, once about testing and once about committee process.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ogl_c003_0003, role_in_system: root_cause, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0019, role_in_system: consequence, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0018, role_in_system: consequence, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogl_c003_0021, role_in_system: consequence, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogl_c003_0020, role_in_system: proposed_corrective, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0017, role_in_system: proposed_corrective, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_ogl_c003_0019, to: sk_ogl_c003_0003, nature: "nothing is codified because nothing is tested", origin: source_stated}
+      - {from: sk_ogl_c003_0020, to: sk_ogl_c003_0019, nature: "direct response is offered as the branch that kept measuring", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_ogl_c003_0020, sk_ogl_c003_0005]
+        nature: >
+          The chapter argues that measured practice should override unmeasured judgement, then
+          recommends informal conversations with half a dozen housewives over formal surveys the
+          copywriter did not participate in. Both are stated approvingly and the source does not
+          reconcile them.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_ogl_c003_0020, sk_ogl_c003_0012]
+        nature: >
+          The measurement argument sits against a five-question test for big ideas whose first two
+          questions are the practitioner's own gasp and envy, and the source states outright that
+          research cannot help judge an idea. The chapter therefore recommends measurement for
+          formats and personal reaction for ideas, without addressing the tension.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, historical_claim, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Two of the five links are source-stated and three are our inference. Both recorded conflicts are
+      ours to name — the source states each side approvingly and never sets them against each other.
+      This system is the most interpretive object in this extraction and would be the first to
+      dissolve on review; every member stands independently if it does.
+  provenance:
+    section: "chapter-wide"
+    locator: "opening through The cult of 'creativity'"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ogl_c003_003
+  source_id: ogilvy_on_advertising_ch2
+  label: image_as_the_thing_actually_bought
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    A connected account of why image rather than product is what advertising sells: products in a
+    category are often materially alike, consumers experience the name's associations as properties of
+    the thing, so image becomes the differentiator, is built by consistency over decades, and defaults
+    to quality for products consumed in public.
+  whole_system_claim:
+    text: >
+      Where products are alike, what the consumer buys is the image, and the image is the advertiser's
+      actual product. It is built only by projecting the same personality year after year, it defaults
+      to an impression of quality for anything consumed visibly, and for parity products it is the
+      only remaining ground of difference.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Brand image; Make the product the hero", locator: "Brand image through 'The positively good'"}
+  members:
+    - {sk_ref: sk_ogl_c003_0007, role_in_system: core_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0009, role_in_system: evidence, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0008, role_in_system: default_rule, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0015, role_in_system: application, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_ogl_c003_0016, role_in_system: alternative_strategy, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_ogl_c003_0015, to: sk_ogl_c003_0009, nature: "differentiating parity products by style rests on image being what is experienced", origin: source_stated}
+    tradeoffs:
+      - between: [sk_ogl_c003_0015, sk_ogl_c003_0016]
+        nature: "differentiate by advertising style, or drop comparison entirely and simply establish that the product is positively good; the source offers both for the same situation"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_ogl_c003_0009, sk_ogl_c003_0014]
+        nature: >
+          The chapter holds that consumers buy the image rather than the product, and separately that
+          the product itself should be made the hero and that there are no dull products. Both are
+          stated firmly. The source does not say which governs when they point different ways.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, anecdotal, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership and the core claim are source-stated; the chapter treats image as a single connected
+      subject across consecutive sections. The trade-off and the conflict are ours. The conflict is the
+      more interesting of the two, because it sets two of the chapter's best-known prescriptions
+      against each other.
+  provenance:
+    section: "Brand image; Make the product the hero; 'The positively good'"
+    locator: "middle of the chapter"
+    page_start: null
+    page_end: null
+    source_support: text

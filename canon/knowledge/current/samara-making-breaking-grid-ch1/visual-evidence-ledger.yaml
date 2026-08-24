@@ -1,0 +1,252 @@
+# CANON-003 book 6 (Lane A) — Timothy Samara, "Making and Breaking the Grid: A Graphic Design
+# Layout Workshop", Second Edition, Updated and Expanded. Chapter 1 "Making the Grid",
+# instructional core: printed pages 20-76.
+#
+# Independent visual-evidence pass, completed before any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Making and Breaking the Grid_ A Graphic Design Layout Workshop.epub"
+#   OPF metadata: dc:title "Making and Breaking the Grid" · dc:creator "Timothy Samara"
+#                 dc:publisher "Rockport Publishers" · dc:date 2017 · dc:identifier 9781631594090
+#                 dc:format "240 Pages" · dcterms:modified 2017-07-14
+#   The book's own contents page names it "Making and Breaking the Grid, Second Edition,
+#   Updated and Expanded", which agrees with the 2017 Rockport ISBN.
+#   EPUB 3.0 with real printed-page anchors (epub:type="pagebreak" id="page_N"), so every
+#   citation below is a PRINTED page number taken from the publisher's own anchors, not an
+#   inferred position.
+#   442 embedded images in the EPUB; 120 figure references fall within printed pages 20-76.
+#   Images were opened ephemerally from the unzipped EPUB in the session scratchpad;
+#   NOTHING was committed.
+
+source_id: samara_making_breaking_grid_ch1
+pass: independent_visual_evidence
+section: "Chapter 1 'Making the Grid' — 'Grid Basics', 'Building a Grid', 'Using a Grid'; printed pp.20-76"
+
+figures_available: 120
+figures_inspected: [f0021-01, f0024-01, f0028-01, f0032-01, f0034-01, f0034-02]
+visual_completeness: partial_figures_only
+visual_completeness_reason: >
+  This source is an EPUB. Every figure is present, at usable resolution (median 1030 x 828 px)
+  and in full colour, so the CONTENT of the illustrations is fully inspectable. What does not
+  exist is the PAGE. An EPUB reflows: there is no printed page to render, so the pass cannot
+  see where a figure sat relative to the prose, how the spread was composed, or what the book's
+  own layout looked like. Recorded as `partial_figures_only` rather than `verified_page_level`,
+  which is the strongest honest description available for this format.
+
+colour_check:
+  method: "saturation sampled on 20 randomly selected figures from pp.20-76 (60x60 downsample, 3600 px each)"
+  result: >
+    Colour is present and intact. 17 of the 20 sampled figures carry coloured pixels, up to
+    3,148 of 3,600 sampled. Three are genuinely monochrome artwork rather than stripped colour.
+    This is a colour-bearing source, unlike the Albers digitisation, and the grid diagrams in
+    particular use colour as a load-bearing device (see vis_sam_compound_grid_varieties).
+
+# ═════════════════════════════════════════════════════════════
+# WHAT THE VISUAL PASS FOUND
+# ═════════════════════════════════════════════════════════════
+
+demonstrations:
+
+- ref: vis_sam_structure_from_content
+  figure: f0021-01
+  printed_page: 21
+  kind: controlled_comparison
+  isolation: one_variable_changed
+  status: fully_legible_in_colour
+  visible_content: >
+    Four panels in two rows. Left of each row, a poster for the same event — a Hear-Say reading
+    by Henry Magaziner at a Philadelphia bookshop, with the same date, time and address. Right of
+    each row, the alignment structure that composition implies, drawn as teal rules.
+    Top row: the information is set as one flush-right stack, and the derived structure is two
+    fields divided by a single vertical axis. Bottom row: the same information is broken into
+    several differently-weighted groups scattered across the format, and the derived structure is
+    a multi-field grid of roughly five vertical and five horizontal divisions.
+  what_the_visual_supports: >
+    That a grid is READ OFF a composition rather than imposed on it. The content is held constant
+    and only the grouping changes, and the structure changes with it. It also supports the
+    source's narrower claim that a large variety of layouts is reachable inside strict limits:
+    both posters use one type family and a small set of sizes.
+  requires_prose: >
+    That like information is grouped and disparate information separated, and that changes in
+    weight and scale are what introduce hierarchy. The picture shows the outcome; the caption
+    supplies the rule that produced it.
+  lost_in_plain_text: partially
+  colour_dependent: false
+  extractor_note: >
+    This is the clearest minimal pair in the section — same content, one variable (grouping)
+    changed, both results shown with their derived structures. The caption states the claim, so
+    a text-only extraction keeps the claim and loses the proof.
+
+- ref: vis_sam_image_alignment_rule_and_error
+  figure: [f0034-01, f0034-02]
+  printed_page: 34
+  kind: rule_and_counterexample
+  isolation: one_variable_changed
+  status: fully_legible_in_colour
+  visible_content: >
+    f0034-01 shows a spread with a fine column-and-row grid and roughly twenty image blocks. Every
+    block begins and ends on a column edge and a row edge. Blocks overlap each other, run across
+    the page gutter, and bleed off all four format edges, while still landing on guides wherever
+    they cross the body.
+    f0034-02 shows the counter-case: a single block on the same kind of grid whose four edges all
+    fall in the middle of columns and rows, aligning with nothing.
+  what_the_visual_supports: >
+    The stated rule — image edges align with column edges left-to-right and row edges
+    top-to-bottom — and, more importantly, its permissiveness. Overlapping and bleeding are shown
+    to be compatible with the rule, which the sentence alone would not settle.
+  requires_prose: >
+    The remedy attached to the error. The source does not say "don't do it"; it says if the
+    misaligned position looks better, add columns or rows until that position becomes an
+    alignment. Nothing in the picture carries that.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    f0034-01 has NO caption of its own in the text stream — the only caption on the page belongs
+    to f0034-02 and describes the error. A text-only extraction therefore receives the counter-
+    example described and the positive demonstration not described at all.
+
+- ref: vis_sam_compound_grid_varieties
+  figure: f0032-01
+  printed_page: 32
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible_in_colour
+  visible_content: >
+    A three-by-three arrangement of spread diagrams. Two or more grids are superimposed in each
+    cell and told apart by colour: teal, red and black rules. Reading by row: top row, two grids
+    sharing the same outer margins; middle row, two grids each with its own margins; bottom row,
+    two grids separated spatially, one occupying the upper portion of the format and one the lower.
+  what_the_visual_supports: >
+    That the three compound-grid options the prose lists are geometrically distinct, and what each
+    actually looks like. Nine specific cases are shown for three stated options.
+  requires_prose: "The names of the three options and the purpose each serves."
+  lost_in_plain_text: true
+  colour_dependent: true
+  extractor_note: >
+    Colour is doing the work here. Which rule belongs to which of the superimposed grids is carried
+    ONLY by hue. In a greyscale reproduction this figure would still show a dense set of rules but
+    would stop demonstrating the thing it exists to demonstrate. Worth recording because the Albers
+    book in this same batch failed in exactly that way; this source would have failed the same way
+    had the digitisation been greyscale, and it does not.
+
+- ref: vis_sam_modular_notation_specimens
+  figure: f0028-01
+  printed_page: 28
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible_in_colour
+  visible_content: >
+    Six labelled spread diagrams: 3x4, 3x6, 5x8, 5x12, 6x12 and 9x14 modular grids, each label set
+    in small caps beneath its pair of pages, each diagram drawn to the stated column and row count.
+  what_the_visual_supports: >
+    The C# x R# notation the caption states, by instantiating it six times across a range from very
+    coarse to very fine, and by showing what "smaller modules give more precision" means in practice.
+  requires_prose: "The notation rule itself, and the trade-off between precision and confusion."
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The six labels are TEXT BAKED INTO THE IMAGE. They are not in the EPUB text layer at all. A
+    text-only extraction of this page receives the notation rule stated abstractly and none of the
+    six worked instances of it — including the fact that the notation's range in practice runs from
+    3x4 to 9x14. See the loss pattern recorded below.
+
+- ref: vis_sam_manuscript_grid_range
+  figure: f0024-01
+  printed_page: 24
+  kind: worked_example
+  isolation: one_variable_changed
+  status: fully_legible_in_colour
+  visible_content: >
+    Six spread diagrams of the same simplest grid. They vary block size relative to page, margin
+    depth (blocks sitting high, low, near the gutter, near the foredges), symmetry versus asymmetry
+    across the gutter, and the presence of one or two flowlines cutting the block.
+  what_the_visual_supports: >
+    The caption's claim that a single-block structure still permits a wide range of content
+    distribution. Each variation named in the caption has a panel showing it.
+  requires_prose: "Nothing essential — this is one of the few figures whose caption enumerates what the picture shows."
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    A useful control case. Here the caption is nearly a complete verbal description of the figure,
+    so text-only loss is low. Compare f0034-01, where the caption is absent entirely. Loss varies
+    enormously between figures inside ONE book.
+
+# ═════════════════════════════════════════════════════════════
+# VISUAL-ONLY OBSERVATIONS
+# ═════════════════════════════════════════════════════════════
+
+visual_only_observations:
+
+- ref: vis_obs_sam_epub_destroys_the_self_demonstration
+  figure: null
+  observation: >
+    This book argues for page structure and its own printed pages are built on a rigorous grid —
+    the source says so directly, twice, citing itself: "the baselines of text positioned in
+    adjacent columns should align horizontally with each other (as they do in this book)" and
+    "the leading measures of the text styles used in this book are multiples of 2.1". A caption on
+    printed page 21 analyses one of the book's OWN spreads as a worked example.
+    In the EPUB none of that is inspectable. There is no page, no baseline grid, no spread. The
+    self-demonstration is not degraded — it is absent.
+  strength: clearly_visible
+  why_it_matters: >
+    This is a different loss mechanism from the ones seen earlier in this batch. Albers lost colour
+    because the SCAN was greyscale; Vignelli lost a section because the text-layer ORDER was wrong.
+    Here nothing was scanned or mis-ordered: the publisher's own digital format has no page, so a
+    book that is partly evidence for itself stops being able to present that evidence. The loss is
+    caused by the delivery format, upstream of any extraction we perform, and no extraction method
+    can recover it.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_sam_labels_baked_into_images
+  figure: [f0028-01, f0032-01]
+  observation: >
+    Diagram labels are rendered inside the image files rather than set as text. The six modular-grid
+    notations on printed page 28 (3x4 through 9x14) exist only as pixels. On printed page 32 the
+    caption's "Top / Middle / Bottom" refer to rows within a single image, so the three named
+    compound-grid options are verbally listed but visually unresolvable without opening the file.
+  strength: clearly_visible
+  why_it_matters: >
+    A text-only pass over this book does not merely lose pictures; it loses WORDS that the reader
+    sees, because those words were typeset into artwork. Nothing in the text stream signals that
+    anything is missing. This is silent loss, and it is detectable only by opening the figures.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_sam_uncaptioned_figures
+  figure: null
+  observation: >
+    Of the 120 figure references in pp.20-76, 11 are followed by no prose line at all and so carry no
+    caption in the text stream: f0027-03, f0030-02, f0033-02, f0034-01, f0036-01, f0038-03,
+    f0043-01, f0058-01, f0064-02, f0066-03, f0076-01. Counted mechanically. Some are second halves
+    of a caption written for the figure before; f0076-01 and f0076-02 share one credit line covering
+    "all images in this section".
+  strength: clearly_visible
+  why_it_matters: >
+    Caption coverage is uneven within one book, so the amount of a figure recoverable from text
+    varies figure by figure. f0024-01 is almost fully described in words; f0034-01, the positive
+    demonstration of the book's central image rule, is described not at all. An extraction that
+    treats "captioned" as "recovered" would over-report completeness on this source.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_sam_spatial_deixis_survives_reflow
+  figure: null
+  observation: >
+    78 of 544 sentences in the section (14%) contain spatial deixis — "shown below", "the example
+    at top", "diagrammed here", "at left", "opposite". Most still resolve, because the EPUB keeps
+    figures in reading order, so "below" reliably means "the next image". The ones that do not
+    resolve are those pointing WITHIN a single composite figure ("Top / Middle / Bottom" on p.32)
+    or across a printed spread ("as shown in the page structure diagram opposite" on p.22).
+  strength: clearly_visible
+  why_it_matters: >
+    Refines a concern rather than confirming it. Spatial language in a reflowed source is not
+    uniformly broken; it breaks specifically where the referent is a position on a printed page or
+    a region inside one image. That is a narrower and more checkable failure than "the source is
+    spatially argued, therefore text is unreliable".
+  promoted_to_source_claim: false
+
+summary:
+  demonstrations_recorded: 5
+  visual_only_observations: 4
+  figures_available: 120
+  figures_inspected: 6
+  colour_bearing: true
+  page_level_inspection_possible: false

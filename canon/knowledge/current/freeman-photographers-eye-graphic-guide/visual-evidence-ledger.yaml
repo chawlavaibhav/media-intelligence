@@ -1,0 +1,251 @@
+# CANON-003 book 7 (Lane A) — Michael Freeman, "The Photographer's Eye: A Graphic Guide"
+# (Focal Press / Ilex, 2013). Parts 1-3: Framing, Placing, Dividing.
+#
+# Independent visual-evidence pass, completed before any SourceKnowledge object was written.
+#
+# ═════════════════════════════════════════════════════════════
+# PROVENANCE — TWO CORRECTIONS TO THE BATCH INVENTORY
+# ═════════════════════════════════════════════════════════════
+# 1. IDENTITY. The file is named "The Photographer's Eye_ Graphic Guide_ Composition and Design for
+#    Better Digital Photos.pdf" and the CANON-003 source inventory recorded it as "The
+#    Photographer's Eye". Its own title page, PDF metadata and copyright page all say otherwise:
+#      Title (metadata): "The Photographer's Eye: Graphic Guide (100 Cases)"
+#      Title page:       "MICHAEL FREEMAN / THE PHOTOGRAPHER'S EYE: A GRAPHIC GUIDE"
+#      Imprint:          "First published in the USA 2013 by Focal Press ... Copyright (c) 2013
+#                         The Ilex Press Ltd."  ISBN 978-0-240-82426-0 (pbk)
+#    This is NOT Freeman's 2007 "The Photographer's Eye: Composition and Design for Better Digital
+#    Photos". The book says so itself in its introduction: "This book takes as it's starting point
+#    my earlier The Photographer's Eye". It is a later, different title by the same author on the
+#    same theme. The filename has fused the two.
+#    CONSEQUENCE: the domain selection still holds — this is composition for photography, which is
+#    what the photography quota required — but the inventory's identification is wrong and is
+#    corrected here rather than silently.
+#
+# 2. THIS PDF IS A CALIBRE CONVERSION, NOT THE PUBLISHER'S PAGE.
+#      /Creator and /Producer: "calibre 3.40.1"   CreationDate: 2019
+#      214 pages, every one A4 (595.276 x 841.89 pt)
+#    The inventory classed this source as "PDF with a page-image render", i.e. a source where a
+#    visual pass can see the actual printed page. It cannot. Rendering a page here shows calibre's
+#    single-column A4 reflow — running text in Minion with the photographs dropped in beneath it at
+#    small size — not Freeman's designed spread. See the note below on why this matters more for
+#    this book than it would for most.
+
+source_id: freeman_photographers_eye_graphic_guide_parts1_3
+pass: independent_visual_evidence
+section: "Parts 1-3 — Framing, Placing, Dividing; converted-PDF pages 12-70, 24 cases"
+
+figures_available: 87
+figures_inspected: [pdf_p14, pdf_p15, pdf_p39, pdf_p53, pdf_p60]
+visual_completeness: partial_reflowed_layout
+visual_completeness_reason: >
+  Every image is present and every graphic deconstruction survives — this copy has not lost
+  Freeman's diagrams, which was the real risk. What it has lost is the page. The converted PDF
+  stacks photograph, deconstruction and caption vertically down an A4 column at whatever size
+  calibre chose; in the printed book they are composed together on a designed spread. Resolution is
+  also modest: embedded images run 222 to 975 px wide, median 500. For a book whose method is
+  overlaying analytic diagrams on photographs, a 225 px diagram is at the edge of legibility.
+  Recorded as `partial_reflowed_layout` rather than `verified_page_level`, which is what the
+  inventory's classification would have implied.
+
+# ═════════════════════════════════════════════════════════════
+# WHY THIS BOOK IS THE BATCH'S SHARPEST TEST OF VISUAL LOSS
+# ═════════════════════════════════════════════════════════════
+# The author states the book's method outright in his introduction, and it is a method built to
+# defeat text extraction:
+#   "often it would have been simpler in explaining a point about composition or color to have
+#    bypassed words and instead relied more on a purely visual explanation. That's the premise
+#    here. Words to a necessary minimum, with visuals carrying the story."
+# So this is not a case where we suspect text loses something. The author says in advance that the
+# words are deliberately insufficient. Every finding below should be read against that.
+
+demonstrations:
+
+- ref: vis_fre_three_zones_are_soft
+  figure: pdf_p39
+  printed_page: null
+  locator: "converted-PDF page 39, OFF-CENTER"
+  kind: diagram
+  isolation: not_applicable
+  status: fully_legible_in_colour
+  visible_content: >
+    Below a diagram showing a subject on crosshairs within a frame, three small frame diagrams
+    stacked vertically. Each carries one blue region: a broad band hugging the whole perimeter; a
+    ring set in from the edges; and a small blob at the centre. Every region has a SOFT, graded
+    edge fading into white over a considerable distance. The caption is seven words: "The three
+    approximate zones of a standard 3:2 frame."
+  what_the_visual_supports: >
+    That the three placement zones — near an edge or corner, off-centre, around the centre — are
+    genuinely fuzzy regions rather than positions, and roughly how fuzzy. The gradients are wide
+    enough that adjacent zones visibly overlap.
+  requires_prose: "The names of the three zones and what each is good for."
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    THIS IS THE CLEAREST CASE IN THE SECTION OF A VISUAL CARRYING WHAT THE TEXT ONLY ASSERTS. The
+    prose says "there's usually no need for precision" and "if there is such a thing as a rule of
+    thirds, it can only be approximate". The word "approximate" is an adjective; the diagram is a
+    measurement of it. A text-only extraction records that the zones are approximate and cannot
+    record how approximate, which is the only thing that makes the claim usable.
+
+- ref: vis_fre_golden_section_counterfactual
+  figure: pdf_p60
+  printed_page: null
+  locator: "converted-PDF page 60, CLASSICAL"
+  kind: controlled_comparison
+  isolation: one_variable_changed
+  status: fully_legible_in_colour
+  visible_content: >
+    Three stages down one page. First, the photograph exploded into three separated depth planes —
+    foreground slope, grey middle distance of mountains and cloud, pre-dawn sky — drawn as
+    overlapping tilted rectangles so the layering is literal. Second, the same three zones reduced
+    to flat horizontal bands of their average tone, shown twice at different proportions. Third,
+    two versions of the photograph side by side: the scene recomposed so the tonal divisions fall
+    on the Golden Section, and the same composition with the tones equalised.
+  what_the_visual_supports: >
+    A genuine counterfactual. The source did not merely assert that Golden Section division would
+    have been worse here — it manipulated the image to show it, then manipulated it again to show
+    what would have made it work. The schematic tone bands isolate the variable by stripping
+    everything except proportion and value.
+  requires_prose: >
+    Which version is the original and which the manipulation, and the claim that the eye is drawn to
+    the light so brighter areas get more attention.
+  lost_in_plain_text: true
+  colour_dependent: true
+  extractor_note: >
+    The strongest piece of evidence in the section and the only place the source argues against a
+    named compositional rule by testing it. In text it survives as one sentence — "It doesn't work
+    well, and the bright sky over-dominates" — which is the conclusion with the experiment removed.
+    The exploded depth-plane rendering has no verbal equivalent at all.
+
+- ref: vis_fre_reveal_is_self_demonstrating
+  figure: pdf_p53
+  printed_page: null
+  locator: "converted-PDF page 53, REVEAL"
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible_in_colour
+  visible_content: >
+    An aerial photograph of Sudanese mausoleums: three domed and conical structures, brightly lit
+    against dark ground, filling the upper half; a field of small graves below. In the lower right
+    corner, at perhaps one per cent of the frame's width, a single white-clad figure with a long
+    shadow.
+  what_the_visual_supports: >
+    The claim itself, by enactment. The source says "it takes the eye a moment to slip down to the
+    corner to notice it". Looking at the image, that is exactly what happens — the mausoleums take
+    the attention and the figure has to be found. The demonstration is the delay in the viewer's
+    own looking.
+  requires_prose: >
+    That the effect is intentional, that it is borrowed from cinema, and the warning that hiding
+    the subject too well makes the viewer give up before finding it.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    A category of evidence worth naming: the demonstration is not a diagram OF the claim, it is an
+    instance that PERFORMS the claim on whoever looks. Text can report that the effect exists. It
+    cannot produce it. This is different from the other losses in this batch, which were of
+    information; here what is lost is an experience that constitutes the evidence.
+
+- ref: vis_fre_deconstruction_of_a_cut
+  figure: pdf_p15
+  printed_page: null
+  locator: "converted-PDF page 15, EXACT"
+  kind: diagram
+  isolation: not_applicable
+  status: legible_at_reduced_size
+  visible_content: >
+    Three images. The subject as lit — a cowrie shell on black acrylic under a softbox, held by a
+    hand. The same shell on the ground-glass screen of a 4x5-inch view camera, gridded. Then the
+    analytic diagram: the shell's silhouette with dimension arrows measuring the gaps between the
+    curve and each frame edge, and the divisions between shell, black ground and red interior.
+  what_the_visual_supports: >
+    The section's only quantitative claim — that "the cuts and the gaps were proportionate to the
+    angle at which the various curves of the shell interacted with the frame edges" — by showing
+    which distances were measured against which.
+  requires_prose: "The proportionality claim itself; the diagram shows the measurements, not the rule."
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    Reproduced here at 225 x 245 px. The dimension arrows are readable but the numbers of the
+    proportions, if any were printed, are not resolvable. This is where the ebook resolution starts
+    to cost something rather than merely being small.
+
+visual_only_observations:
+
+- ref: vis_obs_fre_cross_references_are_all_wrong_in_this_copy
+  figure: null
+  observation: >
+    The section contains five internal cross-references. Every one points to a printed page number
+    that does not correspond to anything in this copy. Verified mechanically:
+      text "square format (page 22)"        -> SQUARE is at converted-PDF page 29; page 22 is FRAME-FIT
+      text "Symmetrical on page_52"          -> SYMMETRICAL is at page 61; page 52 is FIGURE IN A LANDSCAPE
+      text "opened the last chapter (page 30)" -> OFF-CENTER is at page 38; page 30 is part of SQUARE
+      text "Four-square on pages 82-83"      -> FOUR-SQUARE is at page 95
+    One of the five, "page_52", is a broken hyperlink anchor left in the text as a literal string
+    with its underscore intact.
+  strength: clearly_visible
+  why_it_matters: >
+    Two separate things. First, a reader or an extractor following a cross-reference inside this
+    copy lands on the wrong content, and nothing signals it — the numbers look like ordinary page
+    references. Second, and more importantly for provenance: this proves the numbers running down
+    these pages are the CONVERTED file's pagination, not the book's. Citing them as printed pages
+    would be a fabrication. Every provenance record in this extraction therefore cites the
+    converted-PDF page AND the case name, and marks `page_start` null.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_fre_the_argument_is_carried_by_pictures_by_design
+  figure: null
+  observation: >
+    The author states the book's method in the introduction: "Words to a necessary minimum, with
+    visuals carrying the story", and explains the reason — that text and imagery are processed
+    differently, so an illustrated book forces "a kind of jump in the reader's mind", and he wants
+    "less mental jumping by keeping most of the information on the purely visual, graphic plane".
+  strength: clearly_visible
+  why_it_matters: >
+    This makes the book an unusually clean test rather than an unusually difficult source. Elsewhere
+    in this batch, visual loss has had to be inferred by comparing what a figure shows against what
+    its caption says. Here the author declares in advance that the words are deliberately
+    insufficient, so any claim extracted from text alone is known to be partial before it is
+    written. It is the strongest available check on whether the frozen visual-pass method actually
+    catches loss, because the source has told us the loss is there.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_fre_text_density_is_a_poor_proxy_for_content
+  figure: null
+  observation: >
+    The section runs 59 converted pages and 5,748 words — about 97 words per page. Within it the
+    distribution is bimodal: each case opens with one page of 150-280 words, followed by one or two
+    pages carrying 4 to 65 words, which are almost entirely image with short captions. Eight pages
+    in the whole book carry no text at all.
+  strength: clearly_visible
+  why_it_matters: >
+    A page with nine words on it is not a low-content page here; it is a page where the content is
+    a picture. Any triage that samples or weights by text volume would discard exactly the pages
+    this book puts its argument on. Worth recording because such triage is an obvious efficiency
+    for a large ingestion and would be quietly wrong on this class of source.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_fre_reflow_separates_what_was_composed_together
+  figure: null
+  observation: >
+    In this conversion, the photograph, its graphic deconstruction and their captions are stacked
+    down an A4 column at unrelated sizes — on page 15 the shell is 500 px wide and its analytic
+    diagram 225 px, one above the other with a caption between. In the printed book these are
+    composed together on a spread, at sizes the designer chose, so the analysis can be read against
+    the photograph.
+  strength: clearly_visible
+  why_it_matters: >
+    Distinct from the EPUB case seen elsewhere in this lane, where there is no page at all. Here
+    there IS a page and it can be rendered — which makes it more dangerous, because the render looks
+    like page-level evidence and is not. The inventory classified this source as page-renderable on
+    exactly that appearance. A visual pass that trusts "it is a PDF, so I can see the page" would
+    record verified completeness for a layout the author never made.
+  promoted_to_source_claim: false
+
+summary:
+  demonstrations_recorded: 4
+  visual_only_observations: 4
+  figures_available: 87
+  pages_inspected: 5
+  colour_bearing: true
+  page_level_inspection_possible: false
+  page_level_inspection_APPEARS_possible: true

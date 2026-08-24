@@ -1,0 +1,241 @@
+# CANON-003 book 7 (Lane A) — Freeman, "The Photographer's Eye: A Graphic Guide", Parts 1-3.
+# SPEC-04 bindings against SPEC-01 v0.1. Written only after the source representation was stable.
+#
+# 8 bindings against 34 SourceKnowledge objects. This source is about decisions a photographer makes
+# with a camera before the exposure, so most of it has no product consumer and is left unbound —
+# which SPEC-04 says is the normal state and is information about the product, not the knowledge.
+source_id: freeman_photographers_eye_graphic_guide_parts1_3
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_fre_c003_0001
+  source_knowledge_refs: [sk_fre_c003_0017, sk_fre_c003_0018, sk_fre_c003_0019, sk_fre_c003_0021]
+  source_system_refs: [scs_fre_c003_001]
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.composition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, constrains]
+  rationale: >
+    SPEC-01's composition field names framing and figure-ground. This source supplies a small,
+    closed vocabulary for the figure-ground part of it: a concrete subject sits in one of three
+    approximate zones, and each zone determines the relationship between subject and background —
+    off-centre shows both together, centred divides and diminishes the background, extreme
+    subordinates the subject to the setting.
+  applicability:
+    when: "specifying or reading where a single concrete subject sits within a still frame"
+    limits: >
+      The zones are regions with soft, overlapping boundaries, not coordinates — the source's own
+      diagram draws them with gradients wide enough to overlap, and the source doubts any rule of
+      thirds can be more than approximate. A specification recording a zone is therefore recording
+      an intent, not a position, and must not be read back as a measurement. The scheme also
+      presupposes a subject small enough in the frame that there is a choice, and says nothing about
+      images of patterns, fields or generalities.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_fre_c003_0028]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_fre_c003_0002
+  source_knowledge_refs: [sk_fre_c003_0008, sk_fre_c003_0010, sk_fre_c003_0011, sk_fre_c003_0012]
+  source_system_refs: [scs_fre_c003_003]
+  target_type: creative_ir
+  target_path: delivery.aspect_ratios
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, derives]
+  rationale: >
+    SPEC-01 carries aspect ratios as a flat list of delivery requirements. This source treats the
+    frame's proportion as a compositional decision with consequences: a square has no direction and
+    pulls the eye inward, a vertical does not by itself produce a sense of tallness, a wide frame is
+    called for by shapes that continue across it. That gives a reason a ratio might be chosen rather
+    than merely required, and a reason a given subject may fail in a required ratio.
+  applicability:
+    when: "a delivery ratio is being chosen, or a subject is being assessed against a required ratio"
+    limits: >
+      Where the ratio is externally mandated the causal direction reverses and this supplies only a
+      warning, not a choice. The square's claimed connotation is undercut by the source's own
+      history — photographers used the square because their film was that shape — so the geometric
+      claims here are better supported than the cultural one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_fre_c003_0038, t_fre_c003_0039]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_fre_c003_0003
+  source_knowledge_refs: [sk_fre_c003_0029]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    One of the few claims in this batch that is both non-obvious and mechanically measurable. The
+    source demonstrates that a frame divided on area alone can fail because a bright zone commands
+    more attention than a dark zone of the same size. Zone areas and mean luminance are both
+    computable from a rendered image, so "the division is geometrically balanced and tonally
+    unbalanced" is a detectable condition rather than a judgement.
+  applicability:
+    when: "a still image resolves into a small number of zones of distinctly different brightness"
+    limits: >
+      The source gives no weighting function — it shows that brightness must be taken into account
+      and not how much. So this supports flagging a case for attention, not scoring it. The
+      demonstration is also one image manipulated and judged by its own author, so the direction of
+      the effect is better supported than its size.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_fre_c003_0032]
+  repair_ontology_refs: [t_fre_c003_0044]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_fre_c003_0004
+  source_knowledge_refs: [sk_fre_c003_0024, sk_fre_c003_0025]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [flags]
+  observation_unit: whole_asset
+  rationale: >
+    Two claims share one failure: an element the image depends on being noticed is too small or too
+    poorly lit to be found, so the picture's point is lost without anything looking wrong. Flagging
+    "this asset's argument rests on an element below the size at which it will be seen" is a real
+    check.
+  applicability:
+    when: "an image's stated intent depends on a small or low-contrast element being found"
+    limits: >
+      SPEC-04's observation_unit vocabulary cannot express this claim's actual condition. The source
+      states plainly that whether the element registers depends on the PRINT SIZE — one of its two
+      versions "works under one condition: It has to be printed big". The same file passes or fails
+      depending on how large it is reproduced, and the available units (frame, shot, shot_pair,
+      sequence, whole_asset, asset_set_over_time) all describe how many assets are observed, not at
+      what size. `whole_asset` is recorded as the nearest available value and is not accurate.
+      Logged in the Lane A issue file; no vocabulary was added, per the freeze.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_fre_c003_0029, t_fre_c003_0030]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; observation_unit is approximate — see limits"
+
+- binding_id: bnd_fre_c003_0005
+  source_knowledge_refs: [sk_fre_c003_0026, sk_fre_c003_0025, sk_fre_c003_0031]
+  source_system_refs: [scs_fre_c003_004]
+  target_type: creative_ir
+  target_path: creative.hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [flags]
+  rationale: >
+    Recorded because it does NOT fit, and the misfit is informative. SPEC-01 expresses hierarchy as
+    a ranked list — rank 1, rank 2, rank 3 — which states which element matters most. Three of this
+    source's claims are not about rank at all but about a TRAVERSAL: in the two shot "the attention
+    plays ping-pong between the two subjects", returning to where it began; in the reveal attention
+    goes to one place, lingers, wanders and discovers a second; in the eccentric division the eye
+    arrives at a sharp element and is then sent to the real subject. A ranked list can record that
+    the actor outranks the actress. It cannot record that the eye is meant to go there and come back,
+    which is the whole of what the source claims.
+  applicability:
+    when: "source knowledge describes the order and return path of a viewer's attention rather than its priority"
+    limits: >
+      This binding asserts a gap, not a use. No field currently holds an ordered traversal with a
+      return, and none was added. Two of the three claims also concern moving images by origin — the
+      two shot and the reveal are both borrowed from cinema — so the misfit may be a still-image
+      schema meeting a moving-image idea rather than a defect in the field.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "recorded as a schema gap; no change proposed or made during CANON-003"
+
+- binding_id: bnd_fre_c003_0006
+  source_knowledge_refs: [sk_fre_c003_0004, sk_fre_c003_0006, sk_fre_c003_0008, sk_fre_c003_0013, sk_fre_c003_0026, sk_fre_c003_0030, sk_fre_c003_0031, sk_fre_c003_0033]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The bulk of this source. Nearly every remedy it gives is an action taken with a camera before
+    the shutter opens — thin a bright framing element, wait for the transit, oppose two elements at
+    the frame's extremes, pan level and overlap by half, shoot head-on so the intended diagonals are
+    the only obliques, build a background that gives each unit a place, focus at ƒ/1.4 so one figure
+    holds and the other releases. Production IR does not exist, so these are recorded in the source's
+    own frame and parked.
+  applicability:
+    when: "a photograph is actually being made"
+    limits: >
+      PHYSICAL PRODUCTION ACTIONS, NOT TRANSLATED. "Shoot head-on so the diagonals are the only
+      obliques" does not become "prompt for a frontal viewpoint with diagonal shadows". That
+      translation is a generative-media hypothesis, it is not supported by anything this source
+      says, and this binding does not make it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [cc_fre_c003_physical_camera_repairs]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked, not translated"
+
+- binding_id: bnd_fre_c003_0007
+  source_knowledge_refs: [sk_fre_c003_0020, sk_fre_c003_0028, sk_fre_c003_0030]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A distinct evidence profile that this batch has not previously had to weigh. Thirty of this
+    source's thirty-four claims are supported by exactly one photograph, which the author made,
+    selected and is also judging to have succeeded. There is no independent case, no comparison the
+    author did not construct, and in several places the author reports having tried several
+    arrangements and published one. Two claims go further and assert general facts about viewers —
+    that eyes attract attention more strongly than probably any other subject, that classical
+    proportions are innately satisfying — with no support of any kind.
+    Weighing this is a different problem from weighing a source that asserts from long practice
+    without cases (Ogilvy) or one that argues from stated physical mechanism (Light: Science & Magic).
+    Here there ARE cases, one per claim, and their existence makes the claims look better evidenced
+    than they are.
+  applicability:
+    when: "weighing a source whose every claim comes with a single self-made, self-judged example"
+    limits: >
+      One source. It establishes that the profile exists and that a per-claim worked example is not
+      the same as evidence; it says nothing about how common the profile is or how such claims should
+      be scored. Note also that the examples are not worthless — several are genuine minimal pairs
+      showing the alternative the author rejected.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_fre_c003_0008
+  source_knowledge_refs: [sk_fre_c003_0029]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source supplies a complete test case with a stated expected outcome: one scene, divided as
+    shot; the same scene recomposed so its tonal boundaries fall on the Golden Section; and the same
+    composition again with the tones equalised. The claim under test — that the second fails and the
+    third recovers — is stated, and both manipulated images are provided. That is a minimal pair with
+    its answer key, which is rare in this corpus.
+  applicability:
+    when: "constructing test cases for whether a system weighs tonal mass as well as area when judging a division"
+    limits: >
+      The expected outcome is the author's own judgement of his own manipulation, so the benchmark
+      tests agreement with him rather than correctness. It is a single scene, and the effect's size
+      is not stated — only its direction.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_fre_c003_0032]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"

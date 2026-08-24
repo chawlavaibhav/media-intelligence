@@ -1,0 +1,79 @@
+# CANON-003 Lane C, book 14 — Chip Heath & Dan Heath, "Made to Stick", Introduction ("What Sticks?").
+# Independent visual-evidence pass, run BEFORE any claim was written, per the frozen CANON-002-era
+# method.
+
+source_id: heath_made_to_stick_introduction
+pass: performed
+visual_completeness: not_verified_page_layout    # figures inspected; page layout does not exist in EPUB
+
+what_was_inspected:
+  method: >
+    The source is an EPUB. Every image referenced anywhere in the book was enumerated from the
+    package and the section markup, and every distinct image was opened and looked at. The
+    Introduction's markup was also read directly for tables, lists, block quotes and headings.
+  images_in_the_whole_book: 19
+  distinct_images_inspected: 4
+  images_referenced_by_the_processed_section: 1
+  renders_committed: false
+
+# ── The finding: there are no figures, in this section or in the book ───────
+observed:
+  figures_in_section: 0
+  tables_in_section: 0
+  diagrams_in_section: 0
+  charts_in_section: 0
+  what_the_19_images_actually_are:
+    - {file: "001–006", role: 'chapter and section title graphics — the words "INTRODUCTION", "SIMPLE", "UNEXPECTED" and so on set as pictures', count: 6}
+    - {file: "L01", role: "a small tick mark, used as an ornament beside checklist items in later chapters", count: 1}
+    - {file: "L02", role: "a second ornament of the same kind", count: 1}
+    - {file: "cvi, cvt, tp, 007–014", role: "cover, title page and further title graphics", count: 11}
+  consequence: >
+    The book argues entirely in words. Nothing in the processed section is shown rather than said,
+    so nothing in it can be lost by taking the text alone.
+
+# ── One real, if mild, extraction hazard, found by looking ──────────────────
+heading_as_image:
+  what_was_found: >
+    The section's own title, the single word "INTRODUCTION", exists only as a picture
+    (`Heat_9781588365965_epub_001_r1.jpg`, a 238×39 greyscale JPEG of the word). It carries no alt
+    text. A text-only extraction of this file therefore produces a section with no title on it.
+  scope: >
+    The pattern holds throughout the book: all six chapter titles are images of words in exactly the
+    same way. It is a house convention of this EPUB, not an accident in one file.
+  why_it_matters: >
+    It is the mildest member of the family in which the text layer does not carry everything the
+    reader sees. Nothing is corrupted and no sentence is lost — only the label of the unit. The
+    fourteen sub-headings inside the section ("Six Principles of Sticky Ideas", "Tappers and
+    Listeners", and so on) are all real text and all extract correctly, so the structure below the
+    top level survives intact.
+  how_it_was_handled: >
+    The title was recovered by opening the image. Provenance locators in this extraction use the
+    real text sub-headings, which are reliable.
+
+# ── The structural limit of an EPUB, recorded rather than glossed ───────────
+page_layout:
+  status: does_not_exist
+  explanation: >
+    An EPUB reflows to the reader's screen, so there is no page to inspect and no printed page
+    number to cite. This is why `visual_completeness` is recorded as `not_verified_page_layout`
+    rather than `verified_page_level`: the figures were checked and there are none, but the claim
+    "nothing was lost from the page" cannot be made about a file that has no pages.
+  practical_consequence_for_this_book: >
+    Low. A source that argues in continuous prose and shows nothing has little for a page to carry.
+    The same limitation on a spatially argued source would be serious.
+  provenance_consequence: >
+    Every object in this extraction locates itself by section heading rather than by page number.
+    That is weaker than a page range and is stated rather than disguised.
+
+demonstrations: []
+visual_only_observations:
+  - what: "the section title 'INTRODUCTION' rendered as an image of the word"
+    where: "top of the Introduction file"
+    recovered: true
+    note: "recovered by inspecting the image; not present in the text layer at all"
+
+summary:
+  demonstrations_recorded: 0
+  visual_only_observations_recorded: 1
+  reason: the source argues in prose and contains no figures
+  all_claims_rest_on: text_only

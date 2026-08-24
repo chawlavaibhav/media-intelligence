@@ -1,0 +1,414 @@
+# CANON-003 book 18 (Lane D) — "Building a StoryBrand" ch.1-3. SPEC-05 ontology, source-local.
+# Existing term kinds and relation types only.
+#
+# NOTE on executable_by: unlike books 16 and 17, several remedies here ARE asset changes — cut copy
+# that does not serve the story, name the resolved state, put a direct call to action on the page.
+# Those carry real values. Only the two that are practice changes rather than asset changes fall
+# back to `unknown`. The Lane D issue D-01 is about the second kind, not the first.
+
+source_id: miller_storybrand_sb7_framework_ch1_3
+extraction_date: 2026-08-24
+
+terms:
+- term_id: t_sb_c003_0001
+  term: noise
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: problem
+  definition_in_origin_frame: >
+    Clutter and confusion in a company's own marketing — information the customer did not ask for
+    and cannot use. The source names it as the enemy of a business and says it has killed more
+    ideas and products than recessions or inferior design.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.1, Business Has an Enemy"}
+  arising_from: [sk_sb_c003_0001, sk_sb_c003_0003]
+
+- term_id: t_sb_c003_0002
+  term: burning_calories
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: problem
+  definition_in_origin_frame: >
+    The processing effort a message demands of its audience. The source's claim is that too much of
+    it triggers a survival mechanism that tunes the source of the message out.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.1, Mistake Number Two"}
+  arising_from: [sk_sb_c003_0003]
+
+- term_id: t_sb_c003_0003
+  term: survival_relevance
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: property
+  definition_in_origin_frame: >
+    Whether a message bears on the audience's ability to survive and thrive — eat, be safe, be
+    accepted, find love, build a tribe, or reach a sense of meaning. The source's stated filter for
+    what gets attention at all.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.1, Mistake Number One"}
+  arising_from: [sk_sb_c003_0002]
+
+- term_id: t_sb_c003_0004
+  term: brand_as_hero
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: problem
+  definition_in_origin_frame: >
+    A brand positioning itself in the role the customer already occupies, which the source says
+    makes it a competitor for the customer's attention rather than a resource.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, And Meets a Guide"}
+  arising_from: [sk_sb_c003_0008]
+
+- term_id: t_sb_c003_0005
+  term: customer_as_hero_brand_as_guide
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Assign the customer the hero role and the brand the guide role, so the brand's function in the
+    message is to supply a plan and a tool rather than to be admired.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principles one and three"}
+  arising_from: [sk_sb_c003_0008]
+  executable_by: [human_edit, generative_respecification]
+
+- term_id: t_sb_c003_0006
+  term: external_problem
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: property
+  definition_in_origin_frame: >
+    The tangible obstacle a customer faces — the source's example from Star Wars is defeating the
+    Empire. The level the source says companies usually sell against.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "figures on printed pp.21-22; ch.3, Has a Problem"}
+  arising_from: [sk_sb_c003_0007]
+
+- term_id: t_sb_c003_0007
+  term: internal_problem
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: property
+  definition_in_origin_frame: >
+    The frustration or self-doubt the external problem produces — the source's Star Wars example is
+    "Is he a Jedi?". The level the source says customers actually buy against.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "figures on printed pp.21-22; ch.3, Has a Problem"}
+  arising_from: [sk_sb_c003_0007]
+
+- term_id: t_sb_c003_0008
+  term: philosophical_problem
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: property
+  definition_in_origin_frame: >
+    Why the matter ought to matter — the source's examples are good versus evil, and tyranny versus
+    democracy. The broadest of the three levels.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "figures on printed pp.21-22; ch.3, Has a Problem"}
+  arising_from: [sk_sb_c003_0007]
+
+- term_id: t_sb_c003_0009
+  term: selling_only_to_the_external_problem
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: problem
+  definition_in_origin_frame: >
+    Addressing the tangible obstacle while leaving the frustration it causes unnamed, which the
+    source states is the common failure and the reason messages do not motivate.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principle two"}
+  arising_from: [sk_sb_c003_0007]
+
+- term_id: t_sb_c003_0010
+  term: name_the_internal_problem
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    State the frustration the customer feels, not only the tangible obstacle, on the source's claim
+    that the inner frustration is what motivates a purchase.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principle two"}
+  arising_from: [sk_sb_c003_0007]
+  executable_by: [human_edit, generative_respecification]
+
+- term_id: t_sb_c003_0011
+  term: direct_call_to_action
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    An explicit ask — buy, or schedule an appointment. The source states customers do not act
+    unless challenged to act.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.3, principle five; BrandScript template, printed p.38"}
+  arising_from: [sk_sb_c003_0011]
+  executable_by: [human_edit, deterministic_composite]
+
+- term_id: t_sb_c003_0012
+  term: transitional_call_to_action
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    An ask that continues the relationship without requesting the sale, used alongside the direct
+    one.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.3, principle five; BrandScript template, printed p.38"}
+  arising_from: [sk_sb_c003_0011]
+  executable_by: [human_edit, deterministic_composite]
+
+- term_id: t_sb_c003_0013
+  term: missing_call_to_action
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: problem
+  definition_in_origin_frame: >
+    Material that never states what the customer should do, which the source says leaves people
+    watching the brand rather than engaging it.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principle five"}
+  arising_from: [sk_sb_c003_0011]
+
+- term_id: t_sb_c003_0014
+  term: no_stakes
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: problem
+  definition_in_origin_frame: >
+    A message in which nothing can be gained or lost, which the source says gives the audience no
+    reason to care and the customer no reason to buy.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principle six"}
+  arising_from: [sk_sb_c003_0012]
+
+- term_id: t_sb_c003_0015
+  term: name_the_cost_of_inaction
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Show what the customer stands to lose by not acting — dosed, in the source's analogy, like salt
+    in a recipe: too much ruins it, none leaves it bland.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principle six"}
+  arising_from: [sk_sb_c003_0012]
+  executable_by: [human_edit, generative_respecification]
+
+- term_id: t_sb_c003_0016
+  term: state_the_resolved_state
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Say explicitly what the customer's life looks like after engaging the product, rather than
+    assuming they will work it out.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.3, principle seven"}
+  arising_from: [sk_sb_c003_0013]
+  executable_by: [human_edit, generative_respecification]
+
+- term_id: t_sb_c003_0017
+  term: grunt_test
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    A five-second acceptance test on a page: can a viewer say what you offer, how it will make
+    their life better, and what to do to buy it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.2, Does Your Marketing Pass the Grunt Test?"}
+  arising_from: [sk_sb_c003_0015]
+  executable_by: [human_edit]
+
+- term_id: t_sb_c003_0018
+  term: cut_what_does_not_serve_the_story
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Remove any element — a tagline, an image, a link — that does not serve the customer's story,
+    on the film-editing principle that anything not serving the plot has to go.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.2, We Need a Filter"}
+  arising_from: [sk_sb_c003_0005]
+  executable_by: [human_edit, deterministic_composite]
+
+- term_id: t_sb_c003_0019
+  term: brandscript
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: entity
+  definition_in_origin_frame: >
+    A one-page artefact holding a brand's whole message in a named field per framework element,
+    created in the source's web tool and built once per brand, per division and per product.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.3; template on printed p.38"}
+  arising_from: [sk_sb_c003_0016]
+
+- term_id: t_sb_c003_0020
+  term: sb7_framework
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: entity
+  definition_in_origin_frame: >
+    The source's seven-element structure — character, problem, guide, plan, call to action, failure
+    avoided, success — offered both as the structure of stories and as the categories of a brand
+    message.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "ch.2-3"}
+  arising_from: [sk_sb_c003_0006]
+
+- term_id: t_sb_c003_0021
+  term: clarify_the_message_before_spending_on_design
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Settle what the offer says before commissioning the material that carries it, on the source's
+    claim that production value cannot rescue an unclear message.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ch.1, opening"}
+  arising_from: [sk_sb_c003_0001]
+  executable_by: [unknown]
+
+- term_id: t_sb_c003_0022
+  term: character_transformation
+  origin: source
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  kind: property
+  definition_in_origin_frame: >
+    A from-state and a to-state for the customer, present as its own field on the BrandScript
+    template. Within the processed section it appears only in the template image; the framework is
+    named for seven elements and this is an eighth field.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "BrandScript template, printed p.38"}
+  arising_from: [sk_sb_c003_0016]
+
+relationships:
+- from: t_sb_c003_0006
+  to: t_sb_c003_0007
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source's central commercial claim depends on keeping these apart: companies sell against
+    the external problem and customers buy against the internal one. Merging them would erase the
+    claim entirely.
+
+- from: t_sb_c003_0007
+  to: t_sb_c003_0008
+  relation: narrower_than
+  confidence_basis: extractor_judgement
+  note: >
+    In the source's own worked examples the philosophical problem states why the matter ought to
+    matter at all — good versus evil, tyranny versus democracy — while the internal problem is one
+    person's frustration inside that frame. The source lists the three levels without ordering
+    them by scope; the subsumption is ours.
+
+- from: t_sb_c003_0011
+  to: t_sb_c003_0012
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Named as two kinds of call to action with different jobs — one asks for the sale, the other
+    continues the relationship — and given separate fields on the artefact.
+
+- from: t_sb_c003_0004
+  to: t_sb_c003_0005
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The role error and the role assignment the source offers in its place."
+
+- from: t_sb_c003_0001
+  to: t_sb_c003_0002
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Noise is the source's name for the material, processing cost is its name for what the material
+    does to the audience. Stated as cause and effect across two chapters.
+
+- from: t_sb_c003_0017
+  to: t_sb_c003_0018
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    One is a test on a finished page and the other is the editing rule that gets it to pass. The
+    source presents them in adjacent sections without connecting them.
+
+- from: t_sb_c003_0014
+  to: t_sb_c003_0013
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both are things a page fails to contain and both end in the customer not
+    acting. They are different absences: no stakes means no reason to act, no call to action means
+    no stated way to. A page can fail either separately.
+
+- from: t_sb_c003_0003
+  to: t_sb_c003_0007
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    The survival-needs list in chapter 1 — acceptance, love, tribe, meaning — and the internal
+    problem in chapter 3 are the same territory reached by two routes. The source does not connect
+    them, and the connection is ours.
+
+concepts:
+- concept_id: sc_sb_c003_sb7
+  kind: source_specific_concept
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  label: the_sb7_framework
+  children_terms: [t_sb_c003_0020, t_sb_c003_0019, t_sb_c003_0005, t_sb_c003_0011, t_sb_c003_0012, t_sb_c003_0015, t_sb_c003_0016, t_sb_c003_0022]
+  origin: source_stated
+  basis: >
+    The framework, its named elements and its artefact are the source's own, stated under its own
+    headings and numbered. The grouping is the book's.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_sb_c003_three_problem_levels
+  kind: source_specific_concept
+  origin_ref: miller_storybrand_sb7_framework_ch1_3
+  label: three_levels_of_problem
+  children_terms: [t_sb_c003_0006, t_sb_c003_0007, t_sb_c003_0008]
+  origin: source_stated
+  basis: >
+    The source names the three levels together as a set and labels all three in both worked
+    examples. The grouping is the book's, though within this section the instances exist only in
+    the figures.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_sb_c003_message_omissions
+  kind: canonical_concept
+  label: things_a_message_fails_to_contain
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_sb_c003_0009, t_sb_c003_0013, t_sb_c003_0014, t_sb_c003_0001]
+  basis: >
+    A retrieval grouping, ours, over this source's named failures. It asserts no equivalence:
+    addressing the wrong level of problem, omitting an instruction, omitting stakes and adding
+    clutter are four different defects that happen to share a consequence in this source's account.

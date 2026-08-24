@@ -1,0 +1,234 @@
+# CANON-003 Lane C, book 15 — Sutherland, "Alchemy", Introduction. SourceConceptSystems under
+# SPEC-03. Existing system_type vocabulary only.
+#
+# A note on this source's shape, because it governs how conservatively these systems are drawn. This
+# is an avowedly heuristic, anti-rational commercial text that describes itself as a provocation. It
+# is discursive rather than structured: it names one framework (the Four S-es) and immediately defers
+# it, and otherwise makes its case by accumulation of anecdote and analogy. The systems below record
+# the arguments the source actually assembles. They do not tidy a deliberately untidy book into a
+# method it does not claim to offer.
+source_id: sutherland_alchemy_introduction
+source_concept_systems:
+
+- scs_id: scs_sut_alc_001
+  source_id: sutherland_alchemy_introduction
+  label: the_case_against_logical_overreach
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    The source's central argument. Requiring a convincing rationale before anything may be tried
+    filters the search space down to effects someone can already explain; the easy problems have
+    already been removed by the methods that solve them, so what remains is disproportionately
+    logic-proof; explaining and discovering are separate enquiries that can run in either order;
+    status accrues to people who explain the past and is mistaken for an ability to predict; and
+    organisational incentives reward defensible reasoning over results. The conclusion is not that
+    logic is wrong but that logical overreach is.
+  whole_system_claim:
+    text: >
+      This is not an attack on the healthy uses of logic or reason, but on a dangerous kind of
+      logical overreach which demands that every solution have a convincing rationale before it can
+      even be considered or attempted. It is perfectly possible to be both rational and wrong.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Some Things Are Dishwasher-Proof, Others Are Reason-Proof", locator: "Introduction, 'This book is not an attack on the many healthy uses of logic'"}
+  members:
+    - {sk_ref: sk_sut_alc_0032, role_in_system: scope_statement, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0004, role_in_system: core_mechanism, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0003, role_in_system: supporting_evidence, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0006, role_in_system: consequence, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0007, role_in_system: consequence, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0009, role_in_system: supporting_argument, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0010, role_in_system: supporting_argument, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0012, role_in_system: supporting_argument, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0014, role_in_system: supporting_case, order: 9, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0015, role_in_system: supporting_case, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0016, role_in_system: why_it_persists, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0030, role_in_system: supporting_case, order: 12, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sut_alc_0004, to: sk_sut_alc_0003, nature: "the envelope test is offered as the demonstration that the rationale filter hides working options", origin: source_stated}
+      - {from: sk_sut_alc_0006, to: sk_sut_alc_0004, nature: "if only explicable options are tried, the residue of problems is defined by that method's failures", origin: extractor_inferred}
+      - {from: sk_sut_alc_0016, to: sk_sut_alc_0004, nature: "the incentive to be defensibly logical is why the filter persists in organisations", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_sut_alc_0010, sk_sut_alc_0015]
+        nature: >
+          The source warns that skill at explaining the past is mistaken for skill at predicting the
+          future, and that what looks linear in hindsight was messy in real time. It then reconstructs
+          a lost election in hindsight, attributes it to an overreliance on models, and treats that
+          reconstruction as evidence. The conflict is ours to name; the source does not notice it.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_sut_alc_0012, sk_sut_alc_0018]
+        nature: >
+          The source argues that universal laws about human affairs are doomed because context
+          dominates, and separately asserts that no big business idea makes sense at first — itself a
+          universal law about human affairs, offered with six selected survivors and no denominator.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, controlled_comparison, practitioner_assertion, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The core of this system is the source's own and is stated as such; the scope statement is
+      verbatim. Four memberships and the causal ordering are ours, as are both conflicts.
+
+      The property worth recording is the evidence profile, because it is the whole point of this
+      book being in the batch. One member rests on the author's own randomised field test with
+      roughly 400,000 treated units. Every other member rests on assertion, analogy or a selected
+      anecdote. The argument is nonetheless coherent and, in form, sound — a filter on what gets
+      tested does bound what can be found. This is a source whose reasoning is worth keeping and
+      whose evidence would not survive being described as established. Both facts are recorded and
+      neither has been allowed to override the other.
+
+- scs_id: scs_sut_alc_002
+  source_id: sutherland_alchemy_introduction
+  label: psycho_logic_as_a_second_operating_system
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    The source's model of how people actually decide. A parallel, largely unconscious system evolved
+    to be useful rather than optimal; its outputs look irrational only because we judge the motive
+    wrongly, which is what the nonsense / non-sense distinction separates; we cannot report its
+    reasons because self-deception is what makes deceiving others convincing; feelings therefore
+    arrive without explanations; context determines the reading; and logic's certainty is bought by
+    narrowing its inputs, which is exactly what makes it fail outside its frame.
+  whole_system_claim:
+    text: >
+      The world runs on two operating systems. One achieves an unambiguously right answer by
+      limiting the data points it considers, and is hopelessly wrong outside that frame. The other
+      considers far more and reaches a not-perfect-but-rarely-stupid conclusion. Neither is the
+      correct one; which deserves credibility depends on the context.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Context Is Everything; Why We Should Ignore Our GPS", locator: "Introduction, 'the world runs on two operating systems' and the GPS passage"}
+  members:
+    - {sk_ref: sk_sut_alc_0002, role_in_system: core_concept, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0026, role_in_system: the_two_kinds_of_problem, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0027, role_in_system: how_the_two_differ, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0028, role_in_system: worked_case, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0008, role_in_system: classification_of_apparent_irrationality, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0029, role_in_system: worked_case, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0019, role_in_system: worked_case, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0005, role_in_system: consequence, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0021, role_in_system: proposed_cause_of_the_consequence, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0023, role_in_system: consequence, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0022, role_in_system: practical_consequence, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0011, role_in_system: interpretive_rule, order: 12, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0012, role_in_system: interpretive_rule, order: 13, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sut_alc_0005, to: sk_sut_alc_0021, nature: "the stated reason differs from the real one because self-deception evolved to conceal the real one", origin: source_stated}
+      - {from: sk_sut_alc_0022, to: sk_sut_alc_0023, nature: "asking people fails because feelings arrive without their explanations", origin: source_stated}
+      - {from: sk_sut_alc_0027, to: sk_sut_alc_0026, nature: "the GPS case is the two-operating-systems claim inside a single decision", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sut_alc_0027, sk_sut_alc_0002]
+        nature: >
+          Certainty against coverage. Narrowing the inputs buys an unambiguous answer and loses
+          everything outside the frame; widening them keeps the context and gives up the certainty.
+          The source states this as the defining difference between the two systems.
+        origin: source_stated
+        source_ref: {section: "Why We Should Ignore Our GPS", locator: "'certainty is achieved by limiting the number of data points considered'"}
+    conflicts:
+      - between: [sk_sut_alc_0022, sk_sut_alc_0028]
+        nature: >
+          The source argues that people cannot report their own reasons and that self-reports are
+          therefore worthless, then explains its own airport route choice by introspecting on
+          reasoning it says was unconscious at the time. The same instrument is rejected for others
+          and used on himself.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The whole-system claim is verbatim the source's, and most memberships are too. The causal
+      ordering, two memberships and the recorded conflict are ours.
+
+      Two things are worth flagging at system level rather than per object. First, the model is
+      almost entirely a naming exercise: psycho-logic, non-sense and the two operating systems are
+      labels for phenomena, and none of them predicts anything or can be tested as stated. The source
+      is candid about this, comparing psycho-logic to gravity before it was named. Second, the
+      supporting mechanism — Trivers and Kurzban on self-deception — is a cited third-party theory
+      that the source endorses partly because it is convenient for its own trade, and says so.
+
+- scs_id: scs_sut_alc_003
+  source_id: sutherland_alchemy_introduction
+  label: the_working_method_implied_by_the_argument
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    A set of operating instructions the source issues across the section but never assembles: test
+    counterintuitive things because no one else does; do not require a why before trying a what; ask
+    questions whose answers seem obvious; expect the opposite approach to work too and let context
+    decide; watch what people do rather than what they say; and attend to the peripheral details
+    people can judge rather than the substance they cannot.
+  whole_system_claim:
+    text: >
+      The practical content of this book is a way of looking for options that a rationale-first
+      method would never generate: suspend the demand for justification, ask the obvious questions
+      nobody asks, try the counterintuitive version, and read behaviour rather than statements.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source issues each of these instructions separately and in different sections, and states
+      an intention to "give them permission to act and speak more freely" rather than to supply a
+      method. It offers no procedure, no ordering and no stopping rule, and the one framework it does
+      name — the Four S-es — is deferred outside this section. Assembling the instructions into a
+      method is therefore ours, and it is recorded as a system precisely so that it is visible as our
+      construction rather than smuggled in as the book's. A reader who wants the book's own shape
+      should read `scs_sut_alc_001` and `scs_sut_alc_002`, both of which the source built.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sut_alc_0017, role_in_system: instruction, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0009, role_in_system: instruction, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0024, role_in_system: instruction, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0013, role_in_system: instruction, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0022, role_in_system: instruction, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sut_alc_0020, role_in_system: where_to_look, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0031, role_in_system: worked_case, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0018, role_in_system: encouragement, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sut_alc_0004, role_in_system: warrant, order: 9, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sut_alc_0017, to: sk_sut_alc_0004, nature: "testing the counterintuitive is acting on the search-space argument", origin: source_stated}
+      - {from: sk_sut_alc_0024, to: sk_sut_alc_0022, nature: "the naive question is productive because direct questions cannot recover reasons", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_sut_alc_0009, sk_sut_alc_0016]
+        nature: >
+          Trying things without a rationale is what the argument recommends and what the individual
+          decision maker is punished for. The source states both sides — the method and the career
+          incentive against it — and offers no way to resolve them beyond permission.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, outcome_claimed]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      This is the most interpretive object in the extraction and would be the first to dissolve on
+      review; every member stands independently if it does.
+
+      It is recorded because the alternative was worse. A source like this one invites being
+      summarised as a method — "six things to do differently" — and doing that silently would convert
+      a book that explicitly refuses to offer a recipe into one that does. Recording the method as an
+      `extractor_synthesis` system, with the refusal stated in the interpretation basis, keeps both
+      the usefulness and the honesty.
+
+      The system also has a real internal problem that the source leaves open: it recommends a
+      behaviour that its own account of organisational incentives says will be punished, and offers
+      permission rather than a resolution.

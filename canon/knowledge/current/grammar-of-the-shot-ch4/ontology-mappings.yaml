@@ -1,0 +1,319 @@
+# CANON-003 book 1 — Grammar of the Shot ch.4. SPEC-05 ontology, source-local.
+# Existing relation types only. distinct_from permitted in this layer per Controller decision 3
+# (24 Aug 2026); NOT used inside SPEC-03 intra_source_relations.
+# No canonical_concept and no cross_source_concept created.
+
+source_id: grammar_of_the_shot_ch4_continuity
+extraction_date: 2026-08-24
+
+terms:
+
+- term_id: t_gos_c003_0001
+  term: jumping_the_line
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: problem
+  definition_in_origin_frame: >
+    Placing the camera on the opposite side of the action line and shooting coverage from the wrong
+    side of the 180 degree arc, reversing the established directions of left and right and inverting
+    the film space for the viewer. Also called crossing the line.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 104, page_end: 105}
+  arising_from: [sk_gos_c003_0012]
+
+- term_id: t_gos_c003_0002
+  term: jump_cut
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: problem
+  definition_in_origin_frame: >
+    Two shots with similar framing of the same object cut together, causing a visual jump in either
+    space or time within the film's world.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 106, page_end: 106}
+  arising_from: [sk_gos_c003_0014]
+
+- term_id: t_gos_c003_0003
+  term: mismatched_reciprocal_framing
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: problem
+  definition_in_origin_frame: >
+    Coverage in which the corresponding shots of two characters differ in subject size, composition,
+    camera height or angle on action without a storytelling reason. The source says the difference is
+    very apparent when the shots are cut together and produces an unfavourable audience reaction,
+    perhaps only subconsciously.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 108, page_end: 110}
+  arising_from: [sk_gos_c003_0015]
+
+- term_id: t_gos_c003_0004
+  term: reversed_screen_direction
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: problem
+  definition_in_origin_frame: >
+    A subject's established left or right movement or direction of attention not being maintained
+    across a cut, so the film space appears to invert.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 97, page_end: 105}
+  arising_from: [sk_gos_c003_0007, sk_gos_c003_0012]
+
+- term_id: t_gos_c003_0005
+  term: spatial_confusion_of_the_audience
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: problem
+  definition_in_origin_frame: >
+    The state the chapter's rules exist to prevent: the viewer losing track of the film world's
+    constant directions of up, down, left, right, near and far.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 97, page_end: 97}
+  arising_from: [sk_gos_c003_0006]
+
+- term_id: t_gos_c003_0006
+  term: stay_within_the_180_degree_arc
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: remedy
+  definition_in_origin_frame: >
+    Set up all coverage cameras for a scene within the same 180 degree arc on the near side of the
+    established action line.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {page_start: 102, page_end: 103}
+  arising_from: [sk_gos_c003_0010]
+
+- term_id: t_gos_c003_0007
+  term: move_camera_at_least_thirty_degrees
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: remedy
+  definition_in_origin_frame: >
+    Move the camera at least 30 degrees around the shooting arc, and change focal length, before
+    framing a new coverage shot of the same subject.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {page_start: 106, page_end: 106}
+  arising_from: [sk_gos_c003_0014]
+
+- term_id: t_gos_c003_0008
+  term: shoot_the_reciprocal_frame
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: remedy
+  definition_in_origin_frame: >
+    For every coverage frame of one character, shoot the corresponding frame of the other from the
+    mirrored position on the arc, keeping camera height and focal length the same.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {page_start: 108, page_end: 110}
+  arising_from: [sk_gos_c003_0015]
+
+- term_id: t_gos_c003_0009
+  term: enter_from_the_opposite_edge
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: remedy
+  definition_in_origin_frame: >
+    Have a subject who exited one frame edge enter the following shot from the opposite edge, so
+    their direction of travel is maintained.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production, human_edit]
+  source_ref: {page_start: 99, page_end: 99}
+  arising_from: [sk_gos_c003_0007]
+
+- term_id: t_gos_c003_0010
+  term: reveal_from_the_matching_vantage
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: remedy
+  definition_in_origin_frame: >
+    Show the object a character is looking at from a direction, angle and height corresponding to
+    that character's vantage, so the eye-line established in the first shot is respected.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {page_start: 111, page_end: 112}
+  arising_from: [sk_gos_c003_0016]
+
+- term_id: t_gos_c003_0011
+  term: sight_line
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: property
+  definition_in_origin_frame: >
+    The line of direction created when a subject in the film space directs attention at another
+    subject or object. Also called a line of direction or line of attention.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 100, page_end: 101}
+  arising_from: [sk_gos_c003_0008]
+
+- term_id: t_gos_c003_0012
+  term: axis_of_action
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: entity
+  definition_in_origin_frame: >
+    An imaginary line drawn through the shooting location roughly where the main action occurs,
+    established by tracing the talent's sight line. The source gives four names for it: 180 degree
+    line, imaginary line, action line, axis of action.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 102, page_end: 102}
+  arising_from: [sk_gos_c003_0009]
+
+- term_id: t_gos_c003_0013
+  term: screen_direction
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: property
+  definition_in_origin_frame: "The left or right movement of a subject relative to the frame edges."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 97, page_end: 97}
+  arising_from: [sk_gos_c003_0007]
+
+- term_id: t_gos_c003_0014
+  term: reciprocating_imagery
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: property
+  definition_in_origin_frame: >
+    The property of coverage in which each character's shot has an exactly corresponding frame for
+    the other character. The source also calls these matching shots.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 108, page_end: 108}
+  arising_from: [sk_gos_c003_0015]
+
+- term_id: t_gos_c003_0015
+  term: eye_line_match
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: property
+  definition_in_origin_frame: >
+    The tie between a character's off-frame look in one shot and the object revealed in the next,
+    where the second shot is taken from a correspondingly angled vantage. The source describes it as
+    a setup-and-payoff.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 111, page_end: 112}
+  arising_from: [sk_gos_c003_0016]
+
+- term_id: t_gos_c003_0016
+  term: coverage
+  origin: source
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  kind: property
+  definition_in_origin_frame: >
+    The set of shots recording the main action from several angles and framings, so the editor can
+    show the whole action from preferred positions.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 93, page_end: 96}
+  arising_from: [sk_gos_c003_0001]
+
+relationships:
+
+- from: t_gos_c003_0001
+  to: t_gos_c003_0004
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Jumping the line is one cause of reversed screen direction; the source presents the reversal as
+    what crossing the line produces, and reversal can also arise from a simple entry-edge error
+    without the camera crossing anything. That asymmetry is a broader_than relation, but the Canon
+    Charter grants this worker only related_to and potentially_equivalent_to, and Controller decision
+    3 of 24 Aug 2026 added distinct_from alone. Recorded at the weaker relation the worker is
+    authorised to assert, with the intended stronger reading noted here. Logged in the batch ledger.
+
+- from: t_gos_c003_0001
+  to: t_gos_c003_0006
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The problem and the source's stated remedy for it, given in the same section."
+
+- from: t_gos_c003_0002
+  to: t_gos_c003_0007
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The jump cut and the 30 degree move the source gives to avoid it."
+
+- from: t_gos_c003_0003
+  to: t_gos_c003_0008
+  relation: related_to
+  confidence_basis: source_stated
+  note: "Mismatched reciprocal framing and its stated repair."
+
+- from: t_gos_c003_0011
+  to: t_gos_c003_0012
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source states the axis of action is established by tracing a sight line, so the sight line is
+    the specific observation from which the more general construct is derived — a narrower_than
+    relation. Downgraded to related_to for the same authority reason recorded above.
+
+- from: t_gos_c003_0011
+  to: t_gos_c003_0015
+  relation: related_to
+  confidence_basis: source_stated
+  note: "Eye-line match is the sight line carried across a cut."
+
+- from: t_gos_c003_0001
+  to: t_gos_c003_0002
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both are cutting-room failures caused by where the camera was placed, and both are invisible in a
+    single frame, so they invite merging. They are different faults with different repairs. Jumping
+    the line is a camera on the WRONG SIDE of the axis, reversing direction, repaired by returning to
+    the correct half. A jump cut is a camera too CLOSE to its previous position on the correct side,
+    repaired by moving further around the same arc. One is about which half, the other about how far.
+
+- from: t_gos_c003_0003
+  to: t_gos_c003_0002
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both concern similarity between shots. They are opposites. A jump cut is two
+    shots too SIMILAR to each other of the same subject. Mismatched reciprocal framing is two shots
+    insufficiently similar to each other of different subjects. Merging them would produce a rule
+    with no consistent direction.
+
+concepts:
+
+- concept_id: sc_gos_c003_continuity_geometry
+  kind: source_specific_concept
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  label: continuity_geometry
+  children_terms: [t_gos_c003_0011, t_gos_c003_0012, t_gos_c003_0013, t_gos_c003_0006, t_gos_c003_0007, t_gos_c003_0001]
+  origin: source_stated
+  basis: >
+    The chapter derives sight line, axis of action, the 180 degree arc, the 30 degree increment and
+    the line-crossing failure from one another in an explicit chain, and treats them as one body of
+    craft under the heading of continuity. The grouping is the source's organising move.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_gos_c003_matched_coverage
+  kind: source_specific_concept
+  origin_ref: grammar_of_the_shot_ch4_continuity
+  label: matched_coverage
+  children_terms: [t_gos_c003_0014, t_gos_c003_0008, t_gos_c003_0003, t_gos_c003_0016]
+  origin: source_stated
+  basis: >
+    The source names reciprocating imagery as a single practice covering shot size, camera height,
+    lens angle and angle on action, gives one remedy for it and one named failure of it, and ties it
+    to the coverage the editor receives. Its own section heading groups these.
+  asserts_agreement_between_sources: false

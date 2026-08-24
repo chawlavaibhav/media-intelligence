@@ -1,0 +1,200 @@
+# CANON-003 book 18 (Lane D) — "Building a StoryBrand" ch.1-3. SPEC-04 bindings against SPEC-01 v0.1.
+# Written only after the source representation was stable.
+#
+# READ THIS FIRST: seven bindings from eighteen objects, four of them against the Creative IR. That
+# is a complete reversal from books 16 and 17, which produced zero Creative IR bindings between
+# them. The reason is not that this source is better — its evidence is markedly weaker — but that
+# it is about the same object our product is about: what a commercial message should contain.
+#
+# The bindings are kept honest about that gap. Where a claim is operationally usable and
+# evidentially thin, the binding says so in `limits` rather than borrowing the source's confidence.
+
+source_id: miller_storybrand_sb7_framework_ch1_3
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_sb_c003_0001
+  source_knowledge_refs: [sk_sb_c003_0008]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: entities.role
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, diagnoses]
+  rationale: >
+    SPEC-01 already assigns each entity a role, with `hero` among the permitted values. This source
+    supplies a rule for filling that field in commercial work: the customer occupies the hero role
+    and the brand occupies a supporting one. A brief that marks the product or the brand as hero
+    and also claims to be customer-centric is a detectable conflict between two fields we already
+    hold.
+  applicability:
+    when: "assigning entity roles for a brand asset intended to persuade a customer"
+    limits: >
+      SPEC-01's `hero` marks the primary visual subject of an asset, while this source's hero is
+      the protagonist of a narrative the customer is living. Those are not the same thing, and a
+      product can be the visual subject of a shot in which the customer is still the protagonist.
+      The rule is usable as a check on the message; it must not be read as forbidding product-led
+      imagery.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sb_c003_0004]
+  repair_ontology_refs: [t_sb_c003_0005]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sb_c003_0002
+  source_knowledge_refs: [sk_sb_c003_0007]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: message.proposition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, diagnoses]
+  rationale: >
+    The three-level problem taxonomy — external, internal, philosophical — gives a structure for
+    what a proposition is answering, and a specific diagnostic: a proposition that names only the
+    tangible obstacle is, on this source's account, addressing the level customers do not buy on.
+    It is directly usable because it decomposes a field we already have into parts that can be
+    checked separately.
+  applicability:
+    when: "specifying or auditing the central proposition of a persuasive asset"
+    limits: >
+      The claim that internal problems drive purchase is asserted in this section and its support
+      deferred to a later chapter outside the processed span. The taxonomy is usable as structure;
+      the ranking between the levels is not established here. Within this section the taxonomy is
+      demonstrated only in two figures.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sb_c003_0009]
+  repair_ontology_refs: [t_sb_c003_0010]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sb_c003_0003
+  source_knowledge_refs: [sk_sb_c003_0011]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: copy.cta
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01 holds a single `cta`. This source distinguishes two kinds that do different jobs — a
+    direct ask for the purchase, and a transitional ask that continues the relationship without
+    requesting the sale — and treats both as normally present in a message. That is a candidate
+    structural gap in our own schema rather than only a claim about copy.
+  applicability:
+    when: "specifying the call to action for a commercial asset"
+    limits: >
+      The distinction is named in this section and explained in a later chapter outside it. The
+      claim that both types work is supported by an uncontrolled statement about thousands of
+      clients. Whether a single-asset schema should carry two calls to action is our design
+      question, not the source's.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sb_c003_0013]
+  repair_ontology_refs: [t_sb_c003_0011, t_sb_c003_0012]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sb_c003_0004
+  source_knowledge_refs: [sk_sb_c003_0013, sk_sb_c003_0012]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: message.emotional_target
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills]
+  rationale: >
+    Two of the framework's elements are states rather than statements: the resolved state the
+    customer reaches, and the loss they avoid. Both are emotional targets in SPEC-01's sense, and
+    the source's contribution is that they are a **pair** — a message carries a desired state and
+    an avoided one, and the avoided one is dosed rather than maximised.
+  applicability:
+    when: "specifying the emotional target of a persuasive asset"
+    limits: >
+      The dosing rule is given only as an analogy to salt in a recipe, with no criterion for the
+      amount. A system can record that both poles are present; it cannot use this source to judge
+      the balance.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sb_c003_0014]
+  repair_ontology_refs: [t_sb_c003_0015, t_sb_c003_0016]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sb_c003_0005
+  source_knowledge_refs: [sk_sb_c003_0015]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [evaluates, diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The grunt test is a ready-made acceptance check on a finished asset: can a viewer say what is
+    offered, how it improves their life, and what to do next. Three binary presence questions on
+    one asset, which is the shape an automated evaluator can actually take.
+  applicability:
+    when: "checking whether a produced asset communicates an offer, a benefit and an action"
+    limits: >
+      The five-second threshold is asserted with nothing behind it and should not be encoded as a
+      measured constant. The test also checks only that the three answers are present, not that
+      they are good ones, so it can pass a clear message for a worthless offer.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sb_c003_0001, t_sb_c003_0013]
+  repair_ontology_refs: [t_sb_c003_0017]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sb_c003_0006
+  source_knowledge_refs: [sk_sb_c003_0016]
+  source_system_refs: [scs_sb_c003_002]
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The BrandScript is a filled-in message specification with a named field per element, and the
+    source instructs that one be made per brand, per division and per product. That is a
+    ready-made shape for brief-category test cases: a set of assets generated from the same overall
+    message but different product-level fields, which is exactly the consistency-across-a-set
+    problem our evaluators will face.
+  applicability:
+    when: "constructing brief categories or minimal-pair test sets for commercial messaging"
+    limits: >
+      The artefact is a commercial product of the source's company. Its field structure is taken
+      from the template image, which is the only place in this section where the sub-fields appear.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sb_c003_0007
+  source_knowledge_refs: [sk_sb_c003_0002, sk_sb_c003_0003, sk_sb_c003_0018, sk_sb_c003_0017]
+  source_system_refs: [scs_sb_c003_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A worked case of a source that is highly operational and evidentially thin at the same time,
+    and the Canon has to be able to hold both facts about one book. Its foundational mechanism is
+    delivered as reported conversation with a friend and rests partly on a mid-century motivation
+    model; its results are revenue figures with no controls and no failed cases; its closing
+    position — that the rules cannot be broken, and that successes which appear to break them are
+    using the formula invisibly — is unfalsifiable as stated. Yet its field structure binds to our
+    Creative IR more readily than any other source in this lane.
+  applicability:
+    when: "weighing a source whose operational usefulness and evidential support diverge sharply"
+    limits: >
+      One source. It shows the shape; it says nothing about how such sources should be scored
+      against mechanism-bearing ones, and nothing about whether the framework works.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"

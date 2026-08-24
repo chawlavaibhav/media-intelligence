@@ -1,0 +1,165 @@
+# CANON-003 book 1 — Grammar of the Shot ch.4. SourceConceptSystem objects under SPEC-03.
+# Written before the historical GOS material was opened.
+
+source_id: grammar_of_the_shot_ch4_continuity
+
+source_concept_systems:
+
+- scs_id: scs_gos_c003_001
+  source_id: grammar_of_the_shot_ch4_continuity
+  label: continuity_geometry_of_the_action_line
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    A single geometric construction generates most of this chapter's rules. Attention between
+    subjects creates a sight line; tracing that sight line fixes the action line; the action line
+    cuts the circle of possible camera positions into two halves; staying in one half preserves
+    screen direction; crossing it reverses direction; and reciprocal coverage positions are computed
+    by mirroring across the same line. The rules are consequences of one plan drawing, not a list.
+  whole_system_claim:
+    text: >
+      Screen direction, the 180 degree rule, jumping the line, the 30 degree rule and reciprocating
+      imagery are all derived from a single imaginary line established by the talent's own sight
+      line. Once that line is fixed, the permitted camera positions, the mirrored positions for
+      matched coverage and the failure mode of crossing it all follow geometrically.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "The Imaginary Line—The 180 Degree Rule; The 30 Degree Rule", page_start: 102, page_end: 107}
+  members:
+    - {sk_ref: sk_gos_c003_0008, role_in_system: generating_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0009, role_in_system: construction, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0010, role_in_system: permitted_region, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0011, role_in_system: consequence, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0012, role_in_system: failure_mode, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0014, role_in_system: sub_rule, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0015, role_in_system: derived_procedure, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0007, role_in_system: preserved_property, order: null, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_gos_c003_0009, to: sk_gos_c003_0008, nature: "the line is established by tracing a sight line", origin: source_stated}
+      - {from: sk_gos_c003_0010, to: sk_gos_c003_0009, nature: "the arc is defined by the line", origin: source_stated}
+      - {from: sk_gos_c003_0014, to: sk_gos_c003_0010, nature: "the 30 degree increments are measured within the arc", origin: source_stated}
+      - {from: sk_gos_c003_0015, to: sk_gos_c003_0010, nature: "reciprocal positions are mirrored across the same arc", origin: source_stated}
+      - {from: sk_gos_c003_0012, to: sk_gos_c003_0010, nature: "the failure is defined as leaving the arc", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The derivation chain is the source's own: it states that the line is traced from the sight
+      line, that the arc follows from the line, that the 30 degree slices sit within the arc, and
+      that reciprocal setups mirror across it. What is ours is treating maintained screen direction
+      as a property the system preserves rather than as a further member.
+  provenance:
+    section: "The Line; The Imaginary Line; Jumping the Line; The 30 Degree Rule; Reciprocating Imagery"
+    page_start: 100
+    page_end: 110
+    source_support: text_and_visual
+
+- scs_id: scs_gos_c003_002
+  source_id: grammar_of_the_shot_ch4_continuity
+  label: defects_with_no_within_frame_signature
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Several of this chapter's failures share an unusual property: each individual frame is correct,
+    and the fault exists only in the relation between frames. A crossed line, a jump cut, a
+    mismatched over-the-shoulder pair and a broken eye-line are all invisible in any single image.
+  whole_system_claim:
+    text: >
+      A distinct class of defect in this chapter cannot be detected by inspecting one frame, because
+      no frame contains it. The defect is a property of a pair or sequence of shots. Any process that
+      examines frames independently will report these scenes as clean.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the invisibility only for jumping the line — that the mistake is not apparent
+      until the shots are edited together, and that most filmmakers do not notice it until the edit.
+      It does not generalise. Observing that the jump cut, the over-the-shoulder mismatch and the
+      eye-line break share the same property, and grouping them as one class, is ours. The visual
+      pass is what made it visible: in Figure 4.13 the erroneous close-up is an unremarkable image,
+      and in Figure 4.20 each mismatched frame is individually fine.
+    source_ref: null
+  members:
+    - {sk_ref: sk_gos_c003_0012, role_in_system: canonical_case, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0014, role_in_system: instance, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gos_c003_0015, role_in_system: instance, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gos_c003_0016, role_in_system: instance, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gos_c003_0007, role_in_system: instance, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies: []
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      One member is source-stated as invisible-in-frame; the other four are our classification. The
+      grouping is the single most consequential inference in this extraction, because it names a
+      requirement on any evaluation instrument rather than a fact about pictures. If it is wrong,
+      every member still stands independently.
+  provenance:
+    section: "Jumping the Line; The 30 Degree Rule; Reciprocating Imagery; Eye-Line Match"
+    page_start: 97
+    page_end: 112
+    source_support: text_and_visual
+
+- scs_id: scs_gos_c003_003
+  source_id: grammar_of_the_shot_ch4_continuity
+  label: rules_held_defeasible_by_creative_intent
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: source_stated
+  description: >
+    The chapter states its rules and then states, repeatedly, that they are not absolutes. Every
+    named guideline carries an explicit permission to depart from it for a creative reason, and the
+    hardest rule in the chapter is given a worked exception.
+  whole_system_claim:
+    text: >
+      The guidelines in this chapter are defaults, not constraints. The authors state directly that
+      there are very few absolutes among them and that a creative reason is sufficient warrant to
+      depart from any of them. The exception is not a footnote to the rules; it is stated as their
+      governing condition.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "\"Jumping the Line\"; Reciprocating Imagery", page_start: 105, page_end: 110}
+  members:
+    - {sk_ref: sk_gos_c003_0013, role_in_system: governing_condition, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0010, role_in_system: governed_rule, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0012, role_in_system: governed_rule, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0015, role_in_system: governed_rule, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_gos_c003_0017, role_in_system: governed_rule, order: null, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies: []
+    tradeoffs:
+      - between: [sk_gos_c003_0013, sk_gos_c003_0012]
+        nature: "the same act — crossing the line — is a defect when unintended and a legitimate choice when motivated; only intent distinguishes them"
+        origin: source_stated
+        source_ref: {section: "\"Jumping the Line\"", page_start: 105}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: {section: "\"Jumping the Line\"", page_start: 105, quote_paraphrase: "there are very few absolutes when it comes to the guidelines and rules presented in this text"}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The governing condition and its application to line crossing and to matched framing are all
+      source-stated. Extending it to the outside-in cutting convention is our inference, though the
+      source's own hedging of that convention as tradition points the same way.
+  provenance:
+    section: "chapter-wide"
+    page_start: 105
+    page_end: 110
+    source_support: text

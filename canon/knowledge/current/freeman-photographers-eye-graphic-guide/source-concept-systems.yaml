@@ -1,0 +1,351 @@
+# CANON-003 book 7 (Lane A) — Freeman, "The Photographer's Eye: A Graphic Guide", Parts 1-3.
+# SourceConceptSystems under SPEC-03. Existing system types only.
+source_id: freeman_photographers_eye_graphic_guide_parts1_3
+source_concept_systems:
+
+- scs_id: scs_fre_c003_001
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  label: three_placement_zones_and_the_refusal_of_a_rule
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >
+    The source's answer to "where in the frame": a choice between three general positions — around
+    the centre, near an edge or corner, and the in-between position it calls off-centre — each
+    given its own case, together with an explicit refusal to make the choice by rule.
+  whole_system_claim:
+    text: >
+      Placement is a choice between three approximate regions, not a coordinate. Each region is
+      defined by what it does to the relationship between subject and background: off-centre shows
+      both together, centring makes a single strong statement and diminishes the background, an
+      extreme position subordinates the subject to the setting and demands a reason. The source
+      states directly that rules for making this choice take the fun and imagination out of it, and
+      doubts the rule of thirds can be more than approximate.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "converted-PDF pages 37-45, PART 2 introduction through EXTREME"}
+  members:
+    - {sk_ref: sk_fre_c003_0015, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0017, role_in_system: option_set, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0018, role_in_system: option, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0019, role_in_system: option, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0021, role_in_system: option, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0016, role_in_system: governing_constraint, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: source_stated}
+    dependencies:
+      - {from: sk_fre_c003_0017, to: sk_fre_c003_0015, nature: "the zones are the answer to the 'where in the frame' variable the introduction names", origin: source_stated}
+    tradeoffs:
+      - between: [sk_fre_c003_0018, sk_fre_c003_0019]
+        nature: "showing subject and setting together against making a single firm statement; the source says centring divides and diminishes the background"
+        origin: source_stated
+        source_ref: {locator: "converted-PDF page 38, OFF-CENTER"}
+      - between: [sk_fre_c003_0018, sk_fre_c003_0021]
+        nature: "an easy definite subject-to-setting relationship against letting the background dominate the subject"
+        origin: source_stated
+        source_ref: {locator: "converted-PDF pages 38 and 43"}
+    conflicts:
+      - between: [sk_fre_c003_0016, sk_fre_c003_0017]
+        nature: >
+          The source rejects rules for placement and then supplies a three-zone scheme, a named
+          classical proportion elsewhere, and a numeric aspect ratio. What it actually rejects is
+          precision rather than structure, but it does not say so.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The three zones, their names and the refusal of rules are all the source's own, stated in its
+      own words, so the system type and the whole-system claim are source-stated. What is ours is
+      pulling the rules refusal in as a governing constraint on the option set rather than treating
+      it as a stray remark, and the recorded conflict between rejecting rules and supplying a scheme.
+  provenance:
+    chapter: "Part 2 — Placing"
+    section: "Part introduction through Extreme"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 37-45"
+    source_support: text_and_visual
+
+- scs_id: scs_fre_c003_002
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  label: how_tightly_the_frame_holds_the_subject
+  label_origin: extractor_assigned
+  system_type: trade_off_set
+  system_type_origin: source_stated
+  description: >
+    Four treatments of the same variable — how exactly the frame is made to meet the subject.
+    Exact framing cuts to measured proportions; frame-fit makes the subject just fit the frame;
+    frame break deliberately halves it at the edge; loose framing stops attending to the edges at
+    all.
+  whole_system_claim:
+    text: >
+      Attention to the frame's edges is a dial, not a standard. Its correct setting depends on what
+      is happening inside: where the picture's interest is dense and active, the edges cease to be
+      noticed and precision buys nothing; where the subject is isolated and controlled, the edges
+      carry the picture. The source never states this as a principle, but it pairs the cases
+      explicitly — "this is the opposite of the previous image" — and its justification for loose
+      framing is exactly that the edges stop mattering.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source presents four adjacent cases and explicitly pairs two of them as opposites. It
+      never generalises the variable or says what determines its setting. The reading that they are
+      four settings of one dial, and that the setting is determined by the density of interest
+      inside the frame, is ours — assembled from the loose case's own stated mechanism.
+    source_ref: null
+  members:
+    - {sk_ref: sk_fre_c003_0002, role_in_system: extreme_setting, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0006, role_in_system: setting, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0007, role_in_system: setting, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0005, role_in_system: opposite_extreme, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0003, role_in_system: dimension, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0004, role_in_system: qualifier, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies: []
+    tradeoffs:
+      - between: [sk_fre_c003_0006, sk_fre_c003_0007]
+        nature: "fitting the subject inside the frame against deliberately breaking it at the edge; the source names them as opposites"
+        origin: source_stated
+        source_ref: {locator: "converted-PDF page 24, FRAME BREAK"}
+      - between: [sk_fre_c003_0002, sk_fre_c003_0005]
+        nature: "rigour that the subject and time permit against an attitude that declines the question; the source calls loose framing partly an attitude"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The source pairs two of the four cases as opposites in its own words, which is why the system
+      type is source-stated. Everything else is ours: that all four are settings of one variable,
+      that the variable is how much attention the frame edges receive, and that its correct setting
+      is governed by how dense the interest inside the frame is. That last is assembled from the
+      loose case's stated mechanism and generalised by us to the other three.
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Exact, Edge-align, Loose, Frame-fit, Frame break"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 14-25"
+    source_support: text_and_visual
+
+- scs_id: scs_fre_c003_003
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  label: choosing_the_frames_proportion
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    The four aspect-ratio cases that close Part 1 — tall, square, wide, panoramic — each with the
+    condition that calls for it and, for two of them, a claim about what the shape itself does to
+    the viewer.
+  whole_system_claim:
+    text: >
+      The frame's proportion is a separate decision from what goes in it, and each proportion
+      carries its own behaviour: a square has no direction and pulls the eye inward, a vertical
+      needs opposed elements at its extremes before it reads as tall, a wide frame is called for by
+      shapes that continue across it, and a panorama's real decision is where to stop.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source gives each proportion a case and states each one's condition, but never groups
+      them or says that proportion is a decision of its own kind. Collecting the four, and the
+      observation that two of them (square, tall) make claims about the shape's effect on the eye
+      while two (wide, panoramic) are argued from the scene's content, are both ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_fre_c003_0008, role_in_system: option, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0010, role_in_system: option, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0011, role_in_system: option, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0012, role_in_system: option, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0009, role_in_system: connotation, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0013, role_in_system: enabling_technique, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_fre_c003_0012, to: sk_fre_c003_0013, nature: "the panorama is only available if the sequence is shot level and overlapped", origin: source_stated}
+      - {from: sk_fre_c003_0012, to: sk_fre_c003_0011, nature: "the source presents the panorama as continuing the two-frame wide pan", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_fre_c003_0009, sk_fre_c003_0010]
+        nature: >
+          The square is said to signify rigour and severity because artists chose it rarely and
+          deliberately, and in the same passage to have become common in photography because the
+          film happened to be that shape. If the shape's use was determined by the medium, the
+          connotation cannot have been carried by the choice.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, practitioner_assertion, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Entirely an extractor grouping. The source gives each proportion a case with a condition and
+      never suggests that frame proportion is a decision of its own kind. The recorded conflict —
+      that the square cannot both signify deliberate severity and have become common because the
+      film was that shape — is ours and is recorded against the source rather than reported by it.
+  provenance:
+    chapter: "Part 1 — Framing"
+    section: "Tall, Square, Wide, Panoramic"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 26-33"
+    source_support: text_and_visual
+
+- scs_id: scs_fre_c003_004
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  label: devices_that_work_by_delaying_the_viewer
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    Five cases the source treats as unrelated, spread across two parts, that all operate on the
+    same mechanism: the picture withholds something, the viewer's attention is held during the
+    interval before it is found or resolved, and that interval is the effect being sought.
+  whole_system_claim:
+    text: >
+      A recurring mechanism runs under a fifth of these cases and the source never names it. In each
+      one, engagement is produced by a delay in the viewer rather than by anything visible: the
+      moment before an off-frame question is answered; the moment spent gauging an unresolved gap;
+      the moment before a hidden figure is found; the moment the eye takes to travel from a sharp
+      element at the edge to the real subject; the threshold below which a scale figure stops being
+      noticed at all. All five therefore share one failure mode — if the delay is too long the
+      viewer leaves, and if it is too short there is no effect — and the source states that failure
+      mode explicitly only once.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source describes each case independently and connects none of them. Every element of the
+      grouping is ours: that these five share a mechanism, that the mechanism is a temporal one
+      operating on the viewer rather than a spatial one operating on the frame, and that they
+      therefore share a failure mode. The evidence for it is that the source's own explanations all
+      reduce to a duration — "for a moment it makes the image more engaging", "the eye lingers long
+      enough to start to wander", "it takes the eye a moment to slip down to the corner", "the eye
+      then wanders elsewhere", "too small and the point would be wasted". It is a hypothesis about
+      the book, and each member stands alone if it is rejected.
+    source_ref: null
+  members:
+    - {sk_ref: sk_fre_c003_0014, role_in_system: instance, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0023, role_in_system: instance, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0025, role_in_system: instance, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0031, role_in_system: instance, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0024, role_in_system: boundary_condition, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_fre_c003_0025, to: sk_fre_c003_0024, nature: "the reveal needs its hidden element to remain above the threshold of being noticed at all", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_fre_c003_0025, sk_fre_c003_0024]
+        nature: >
+          The shared failure mode, stated across two cases rather than one: the withheld element
+          must be small or hidden enough to produce the delay, and large or findable enough that the
+          viewer does not give up first. The source states the upper bound in the reveal case and
+          the lower bound in the scale case, and never puts them together.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, anecdotal, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      This is the most speculative system in the extraction and is marked as such. Every member is
+      individually well supported and each is the source's own claim. The system is entirely ours:
+      the source connects none of these five cases, and the shared mechanism was inferred from the
+      fact that all five of its explanations reduce to a duration in the viewer. If the inference is
+      wrong, nothing is lost — each member stands alone. If it is right, it is the most useful thing
+      in the book, because it identifies one failure mode governing five apparently unrelated
+      techniques. It is a hypothesis about the source, not a report of one.
+  provenance:
+    chapter: "Parts 1-3"
+    section: "Offstage, Just, Reveal, Eccentric, Figure in a landscape"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 34, 48, 51, 53, 63"
+    source_support: text_and_visual
+
+- scs_id: scs_fre_c003_005
+  source_id: freeman_photographers_eye_graphic_guide_parts1_3
+  label: dividing_to_satisfy_the_eye_or_to_refuse_it_rest
+  label_origin: extractor_assigned
+  system_type: trade_off_set
+  system_type_origin: extractor_inferred
+  description: >
+    Part 3's six cases fall into two opposed groups. Classical division aims at proportions that
+    are comfortable and innately satisfying; disruptive division deliberately prevents the eye
+    resting anywhere. Between them sit the tonal-weight correction, the eccentric division that
+    moves the eye deliberately, the angular division that reads as clean only against orthogonals,
+    and the rectilinear case justified by the subject's culture rather than by any effect.
+  whole_system_claim:
+    text: >
+      Part 3 contains a straight contradiction the source does not acknowledge. Classical division
+      is presented as "all about satisfying the eye rather than challenging it"; four pages later,
+      disruption is justified because "one of the prime jobs of composition is to keep the interest
+      going" and it is better to divide so the eye cannot rest. Both are endorsed. What the source
+      does supply, in the classical case, is the one correction that applies to every division
+      regardless of which aim is chosen: geometry alone is insufficient because a bright area
+      outweighs a dark one of equal size.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The two positions are stated four pages apart in the source's own words, but it never places
+      them together or notices that they conflict. Grouping Part 3's cases by which aim they serve,
+      and identifying the tonal-weight claim as the one principle common to both, are ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_fre_c003_0027, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0028, role_in_system: pole, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0032, role_in_system: opposite_pole, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0029, role_in_system: cross_cutting_constraint, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_fre_c003_0030, role_in_system: instance, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0031, role_in_system: instance, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0033, role_in_system: instance, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_fre_c003_0034, role_in_system: instance, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_fre_c003_0033, to: sk_fre_c003_0029, nature: "the decision to set the waterline off-centre is made on tonal weight, though the source does not name it as the same principle", origin: extractor_inferred}
+      - {from: sk_fre_c003_0032, to: sk_fre_c003_0033, nature: "the source presents the angular case as reusing the previous case's angled framing for a different purpose", origin: source_stated}
+    tradeoffs:
+      - between: [sk_fre_c003_0028, sk_fre_c003_0032]
+        nature: >
+          Satisfying the eye against keeping the interest going by refusing it rest. Both are stated
+          as aims of composition, four pages apart, and neither is qualified by the other.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_fre_c003_0033, sk_fre_c003_0034]
+        nature: >
+          Adjacent cases take opposite positions on the same treatment. The angular case values a
+          flat frontal viewpoint because it makes deliberate diagonals legible; the rectilinear case
+          concedes that shooting a rectilinear subject squarely shows no great imagination, and
+          justifies it on the subject's culture instead.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Both poles are the source's own words, four pages apart. The grouping, the identification of
+      the tonal-weight claim as the constraint common to both aims, and both recorded conflicts are
+      ours. The contradiction is genuine and is recorded rather than resolved: the source endorses
+      satisfying the eye and refusing it rest without acknowledging that it has done both.
+  provenance:
+    chapter: "Part 3 — Dividing"
+    section: "complete"
+    page_start: null
+    page_end: null
+    locator: "converted-PDF pages 58-70"
+    source_support: text_and_visual

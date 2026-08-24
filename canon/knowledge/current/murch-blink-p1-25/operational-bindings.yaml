@@ -1,0 +1,227 @@
+# CANON-003 book 10 (Lane B) — Murch, "In the Blink of an Eye" pp.1-25. SPEC-04 bindings, SPEC-01 v0.1.
+# Written after the 39 objects and 4 systems were stable.
+#
+# Eight bindings against thirty-nine objects. This source binds differently from book 9 in the same
+# lane, and the difference is instructive: Grammar of the Edit produced mostly evaluation bindings
+# because it teaches checkable relations between shots. Murch produces mostly GOVERNANCE bindings,
+# because what he teaches is how to WEIGH considerations against one another — which is a question
+# about how our own conflict-resolution and evidence-interpretation should work, not about a property
+# of an asset.
+
+source_id: murch_blink_p1_25_editing_decisions
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+# ── governance ──────────────────────────────────────────────
+- binding_id: bnd_murch_c003_0001
+  source_knowledge_refs: [sk_murch_c003_0019, sk_murch_c003_0027, sk_murch_c003_0029]
+  source_system_refs: [scs_murch_c003_001]
+  target_type: governance
+  target_path: null
+  role: [constrains]
+  governance_consumer: conflict_resolution
+  rationale: >
+    The Canon will accumulate principles that conflict, and it has no rule for which yields. This
+    source supplies a fully worked instance of exactly that problem: six criteria, an explicit rank,
+    a stated procedure for which to abandon first, and a justification for the order. It is directly
+    applicable as a precedent for how a conflict between two pieces of Canon knowledge might be
+    settled — by a stated priority with a stated reason, rather than by recency or by whichever was
+    retrieved first.
+  applicability:
+    when: "designing how contradictions between two pieces of retrieved knowledge are resolved"
+    limits: >
+      The precedent is the SHAPE of the resolution, not its content. Murch's ordering is scoped by
+      the source to itself — "An ideal cut (for me)" — and its weights are marked slightly
+      tongue-in-cheek. It should not be imported as a ranking of anything in our system.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_murch_c003_0017]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_murch_c003_0002
+  source_knowledge_refs: [sk_murch_c003_0028]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [constrains]
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source claims an asymmetry: satisfying a higher-order criterion tends to obscure problems
+    with lower-order ones, and not the reverse. If that generalises at all, it bears directly on how
+    evaluation evidence should be weighted — a defect on a low-order dimension observed alongside a
+    high-order success may be genuinely invisible to a viewer, and scoring the two independently
+    would overstate the defect.
+  applicability:
+    when: "weighting per-dimension evaluation results against each other"
+    limits: >
+      The source hedges the generalisation itself — "the general principle seems to be" — and offers
+      no evidence for it beyond one worked example between adjacent ranks. It also conflates a
+      preference order with a perceptual masking order, which are different claims. This should
+      inform how a weighting scheme is DESIGNED and must not be used as a measured masking effect.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed — the underlying asymmetry is asserted, hedged and untested"
+
+- binding_id: bnd_murch_c003_0003
+  source_knowledge_refs: [sk_murch_c003_0011, sk_murch_c003_0012]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [constrains]
+  governance_consumer: rule_application
+  rationale: >
+    The source states that what counts as a fault is specific to the work being made — what is bad in
+    one film may be good in another — and that a fault may only be removed if removing it does not
+    disrupt the structure of what remains. Both are constraints on applying any general rule to a
+    particular piece, and this source holds them alongside its own general ranked list, which makes
+    it a precedent for a framework that is offered and simultaneously bounded.
+  applicability:
+    when: "deciding whether a Canon principle may be applied to a specific asset as a rule"
+    limits: >
+      The source supplies no method for discovering what is film-specific, so this constrains
+      confidence rather than supplying a test.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_murch_c003_0011]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_murch_c003_0004
+  source_knowledge_refs: [sk_murch_c003_0035, sk_murch_c003_0036, sk_murch_c003_0037]
+  source_system_refs: [scs_murch_c003_004]
+  target_type: governance
+  target_path: null
+  role: [flags]
+  governance_consumer: evidence_interpretation
+  rationale: >
+    A named bias with a named remedy: whoever produced the material cannot judge it as its audience
+    will, because they see past the frame and because what a shot cost distorts what they think of
+    it. This applies with unusual directness to a generation pipeline, where the party assessing an
+    output routinely knows the prompt, the cost and the number of retries behind it — all
+    beyond-the-frame information no viewer has.
+  applicability:
+    when: "designing who or what assesses a generated asset, and what they are shown"
+    limits: >
+      The source describes human editors and directors. Whether an automated evaluator has an
+      analogous bias is not something this source can settle; the transferable part is that
+      assessment context should be controlled, not that a particular distortion has been measured.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_murch_c003_0013]
+  repair_ontology_refs: [t_murch_c003_0021]
+  status: proposed
+  status_reason: "not reviewed — the application to generated media is our extension, not the source's claim"
+
+- binding_id: bnd_murch_c003_0005
+  source_knowledge_refs: [sk_murch_c003_0015, sk_murch_c003_0016]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [constrains]
+  governance_consumer: evidence_interpretation
+  rationale: >
+    "You can never judge the quality of a sound mix simply by counting the number of tracks it took
+    to produce it." The claim is that component count is not a quality signal, and it is stated
+    against exactly the kind of proxy an automated system reaches for first — number of elements,
+    number of cuts, amount of detail. The source goes further and asserts a direction: past a point,
+    more detail is worse.
+  applicability:
+    when: "choosing proxies for creative quality in an automated assessment"
+    limits: >
+      The source rules out a bad measure without supplying a good one. The criterion it offers —
+      how capable the blend was of exciting emotions hidden in the hearts of the audience — is not
+      observable, and "past a certain point" is never located.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_murch_c003_0014]
+  repair_ontology_refs: [t_murch_c003_0018]
+  status: proposed
+  status_reason: "not reviewed"
+
+# ── evaluation ──────────────────────────────────────────────
+- binding_id: bnd_murch_c003_0006
+  source_knowledge_refs: [sk_murch_c003_0007, sk_murch_c003_0006]
+  source_system_refs: [scs_murch_c003_002]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot_pair
+  rationale: >
+    The displacement model makes a specific, checkable prediction that most claims in this batch do
+    not: the failure case is INTERMEDIATE change, not large change. Two shots that differ a great
+    deal are fine; two that differ slightly are fine; two that differ moderately produce a jump. That
+    is a non-monotonic relation between image difference and perceived quality, and it is directly
+    relevant to any similarity measure applied across a cut, which would ordinarily assume more
+    difference is more disruptive.
+  applicability:
+    when: "assessing whether two consecutive shots will read as a clean cut"
+    limits: >
+      The source names two thresholds and locates neither, so the model explains a failure after the
+      fact rather than predicting one. Turning it into a check would require calibrating both
+      boundaries, which is empirical work this source cannot supply.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_murch_c003_0012]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed — non-monotonic and uncalibrated, so it constrains the shape of a measure rather than supplying one"
+
+# ── creative IR ─────────────────────────────────────────────
+- binding_id: bnd_murch_c003_0007
+  source_knowledge_refs: [sk_murch_c003_0020, sk_murch_c003_0032]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: message.emotional_target
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01 carries an emotional_target field. This source makes it the highest-weighted criterion in
+    its whole framework and reduces it to a specifiable question — "How do you want the audience to
+    feel?" — asked at each moment rather than once for the asset. That is a constraint on how the
+    field should be read for time-based work: a single emotional_target for a whole video is a
+    coarser thing than what this source is asking for.
+  applicability:
+    when: "specifying emotional intent for a video creative with more than one beat"
+    limits: >
+      The source concedes emotion is the hardest of its six to define and deal with, and supplies no
+      vocabulary for stating one. It argues for the field's primacy without helping fill it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_murch_c003_0008
+  source_knowledge_refs: [sk_murch_c003_0034]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [constrains]
+  observation_unit: whole_asset
+  rationale: >
+    Judgement is made against an implied viewing scale, and the source states that judging on a
+    miniature systematically distorts it. Its remedy is to reconstruct the delivery conditions
+    artificially — a thousand-seat theatre, a thirty-foot screen, no possibility of further change.
+    The transferable constraint is that an asset should be assessed at its delivery scale, which for
+    this product is a phone in a feed rather than a cinema.
+  applicability:
+    when: "deciding the conditions under which a generated asset is reviewed"
+    limits: >
+      The source's specific scale is theatrical and its remedy is a physical prop. Only the principle
+      transfers, and this product's delivery scale is smaller than the review scale rather than
+      larger, so the distortion may run the opposite way.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_murch_c003_0019]
+  status: proposed
+  status_reason: "not reviewed — the inversion of the scale relation for feed-native work is our observation and is untested"

@@ -1,0 +1,371 @@
+# CANON-003 Lane C, book 13 — Hopkins, "Scientific Advertising" ch.1-7. SourceConceptSystems
+# under SPEC-03. Existing system_type vocabulary only.
+source_id: hopkins_scientific_advertising_ch1_7
+source_concept_systems:
+
+- scs_id: scs_hop_sa_001
+  source_id: hopkins_scientific_advertising_ch1_7
+  label: how_advertising_knowledge_is_established
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    The book's account of where its own authority comes from. Advertising has become a science
+    because agencies run keyed advertisements, trace the returns, compare methods and record the
+    results; what invariably wins becomes a fixed principle; mail order is the setting where this
+    works most exactly, because cost and result are attributable there; what remains uncertain is
+    people and products, not method. Two claims about the tester attach to it: the practitioner's
+    own judgement is unreliable, which is why the apparatus is needed, and the appeals a
+    practitioner prefers rarely prove best.
+  whole_system_claim:
+    text: >
+      Advertising principles are known, not opined, because they were selected by measured
+      comparison; the measurement is most exact in mail order; and the practitioner's judgement is
+      the thing the measurement is there to overrule.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "1 and 4", section: "How Advertising Laws Are Established; Mail Order Advertising—What It Teaches", page_start: 1, page_end: 14}
+  members:
+    - {sk_ref: sk_hop_sa_0001, role_in_system: headline_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0002, role_in_system: method, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0003, role_in_system: measure, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0004, role_in_system: fallback_method, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0006, role_in_system: institutional_precondition, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0007, role_in_system: scope_rule, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0005, role_in_system: residual_uncertainty, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0021, role_in_system: strongest_setting, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0022, role_in_system: reason_the_method_is_needed, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0036, role_in_system: reason_the_method_is_needed, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_hop_sa_0023, role_in_system: supporting_case, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0033, role_in_system: supporting_case, order: 12, membership_origin: extractor_inferred}
+    - {sk_ref: sk_hop_sa_0034, role_in_system: qualification, order: 13, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_hop_sa_0001, to: sk_hop_sa_0002, nature: "the science claim rests on the keyed-return method and on nothing else offered here", origin: source_stated}
+      - {from: sk_hop_sa_0002, to: sk_hop_sa_0006, nature: "comparison only accumulates into principles if an institution records and retains it", origin: source_stated}
+      - {from: sk_hop_sa_0021, to: sk_hop_sa_0002, nature: "mail order is named as where the method first established the basic laws", origin: source_stated}
+      - {from: sk_hop_sa_0002, to: sk_hop_sa_0022, nature: "the method exists because unaided judgement is stated to be wrong most of the time", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_hop_sa_0003, sk_hop_sa_0023]
+        nature: >
+          Chapter 1 rules that cost per reply is not a final measure and that conclusions must rest
+          on cost per customer or per dollar of sale. Chapter 4's headline evidence — 85 cents,
+          $14.20, 41 cents — is stated entirely in cost per reply. The source does not notice.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_hop_sa_0007, sk_hop_sa_0024]
+        nature: >
+          Chapter 1 rules that some findings apply only to particular lines and only some are
+          universal. Chapter 4 then generalises mail order copy practice to all advertising without
+          applying that test to any of it.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_hop_sa_0002, sk_hop_sa_0049]
+        nature: >
+          Chapter 6 states that most psychological methods are learned by noting down a winning
+          method when it is seen. That is accumulation of observed practice, which is the thing
+          chapter 1 says the traced-return method replaced.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The system itself is the source's own — chapter 1 exists to state it, and chapter 4 is
+      explicitly cross-referenced from it. What is ours is the inclusion of the headline record and
+      the multi-appeal qualification as members, and all three recorded conflicts. The conflicts
+      matter more than the membership: this is the system the book's authority rests on, and its
+      own measurement rule, its own generalisation rule and its own method of discovery are each
+      contradicted elsewhere in the same seven chapters.
+  provenance:
+    chapter: "1, 4, 5"
+    section: "How Advertising Laws Are Established; Mail Order Advertising—What It Teaches; Headlines"
+    page_start: 1
+    page_end: 17
+    source_support: text
+
+- scs_id: scs_hop_sa_002
+  source_id: hopkins_scientific_advertising_ch1_7
+  label: the_salesmanship_test_as_a_decision_procedure
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >
+    A single question — would this help a salesman sell the goods, or help me sell them face to
+    face with the buyer — offered as the way to settle any advertising question, together with the
+    answers the source derives from it: advertising exists only to sell, its errors are multiplied,
+    literary style and visible selling effort create resistance, imposed brevity is wrong, enlarged
+    type is waste, write to one typical buyer, learn the buyer's reactions in person, never write
+    to please the seller, offer service rather than ask for the order, and take the order by
+    removing the buyer's risk. Chapter 5 then names the one place the analogy does not hold — the
+    salesman cannot be ignored and the advertisement can — and treats the headline as the repair.
+  whole_system_claim:
+    text: >
+      Almost every question about how an advertisement should be written can be answered by asking
+      what a good salesman would do in front of one buyer; the answers the book gives are that
+      derivation, not separate findings.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "2", section: "Just Salesmanship", page_start: 5, page_end: 8}
+  members:
+    - {sk_ref: sk_hop_sa_0008, role_in_system: governing_test, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0009, role_in_system: derived_rule, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0010, role_in_system: derived_rule, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0011, role_in_system: derived_rule, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0012, role_in_system: derived_rule, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0013, role_in_system: derived_rule, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0014, role_in_system: derived_rule, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0015, role_in_system: derived_rule, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0016, role_in_system: named_failure, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0017, role_in_system: derived_rule, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0018, role_in_system: derived_rule, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0019, role_in_system: derived_rule, order: 12, membership_origin: extractor_inferred}
+    - {sk_ref: sk_hop_sa_0020, role_in_system: derived_rule, order: 13, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0031, role_in_system: stated_limit_of_the_analogy, order: 14, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0032, role_in_system: derived_rule, order: 15, membership_origin: extractor_inferred}
+    - {sk_ref: sk_hop_sa_0035, role_in_system: stated_limit_of_the_analogy, order: 16, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_hop_sa_0011, to: sk_hop_sa_0008, nature: "the style rules are stated as consequences of the analogy", origin: source_stated}
+      - {from: sk_hop_sa_0012, to: sk_hop_sa_0008, nature: "the anti-brevity argument is put as a question about a salesman", origin: source_stated}
+      - {from: sk_hop_sa_0013, to: sk_hop_sa_0008, nature: "the type-size argument is put as a question about a salesman's volume", origin: source_stated}
+      - {from: sk_hop_sa_0017, to: sk_hop_sa_0008, nature: "'Here again is salesmanship' introduces the service rule", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_hop_sa_0012, sk_hop_sa_0035]
+        nature: >
+          Chapter 2 argues against imposed brevity on the premise that only already-interested
+          people read advertisements. Chapter 5 argues that readers are hurried, skip three-quarters
+          of what they pay for, and decide by a glance. Interest is presupposed in the first and
+          created or lost at the glance in the second.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_hop_sa_0018, sk_hop_sa_0025]
+        nature: >
+          "The best ads ask no one to buy" against the coupon, which is an explicit request for a
+          specific action and which chapter 4 treats as near-mandatory. The source presents both
+          approvingly and never sets them side by side.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The framework and most of the membership are the source's own; chapter 2 states the test in
+      the imperative and then works through the questions it answers. The system-level property
+      worth recording is structural rather than uncertain: because these rules are derived from one
+      analogy rather than each from its own evidence, they share a single point of failure. If the
+      analogy is wrong for a given medium, every rule under it loses its support at once, and
+      retrieving any one of them alone hides that.
+  provenance:
+    chapter: "2, 3, 5"
+    section: "Just Salesmanship; Offer Service; Headlines"
+    page_start: 5
+    page_end: 17
+    source_support: text
+
+- scs_id: scs_hop_sa_003
+  source_id: hopkins_scientific_advertising_ch1_7
+  label: the_mail_order_copy_prescriptions
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The concrete copy rules chapter 4 draws from mail order practice: small type, every line
+    utilised, no borders, no palaver or entertainment, a coupon because readers forget, pictures
+    that earn their space, the complete story, returns that scale with fully used space, and the
+    long-running unchanged advertisement as the model — closed by the concession that advertisers
+    routinely depart from all of it for pride, and should at least price the departure.
+  whole_system_claim:
+    text: >
+      These are not independent craft preferences. Every one of them is warranted by the same
+      argument — that mail order advertising is continuously measured, so whatever mail order
+      advertisers do universally has been selected by results — and each is therefore only as sound
+      as that argument is.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each prescription separately and repeats the phrase "in mail order
+      advertising" at the head of most of them, and it states the warrant once at the start of the
+      chapter. It never says that the prescriptions stand or fall together. Grouping them by their
+      shared warrant is ours, and it is the property that matters, because the warrant is inference
+      from observed practice rather than a reported comparison — only the incubator picture case
+      carries an actual before-and-after result.
+    source_ref: null
+  members:
+    - {sk_ref: sk_hop_sa_0024, role_in_system: prescription_and_warrant, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0025, role_in_system: prescription, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0026, role_in_system: prescription, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0027, role_in_system: prescription, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0028, role_in_system: prescription, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0029, role_in_system: model_case, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0030, role_in_system: concession, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_hop_sa_0024, to: sk_hop_sa_0021, nature: "the whole set is warranted by mail order being measured", origin: source_stated}
+      - {from: sk_hop_sa_0028, to: sk_hop_sa_0024, nature: "the scaling claim restates the space-utilisation prescription", origin: source_stated}
+    tradeoffs:
+      - between: [sk_hop_sa_0024, sk_hop_sa_0030]
+        nature: "follow the proved form and lose the advertiser's pride, or depart from it and pay a known premium in selling cost"
+        origin: source_stated
+        source_ref: {chapter: "4", locator: "chapter close, 'let us know the cost of our pride'"}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, controlled_comparison, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership is the source's own. The claim that the set shares one warrant and therefore one
+      failure mode is ours. A schema note belongs here: what unifies these members is neither
+      interaction, nor ordering, nor causation, but a common evidential warrant. `interacting_set`
+      is the least assumptive available system_type and it is not an accurate description. Recorded
+      here and in the lane issue file rather than resolved, because the schema is frozen.
+  provenance:
+    chapter: "4"
+    section: "Mail Order Advertising—What It Teaches"
+    page_start: 12
+    page_end: 14
+    source_support: text
+
+- scs_id: scs_hop_sa_004
+  source_id: hopkins_scientific_advertising_ch1_7
+  label: levers_that_change_response_without_changing_the_offer
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Chapter 6's collection of devices that alter how an offer is received while the offer's
+    substance stays the same: curiosity, the price signal, the visible acceptance of risk by the
+    seller, personalisation, restriction to a class, inviting comparison, whether a sample is free
+    or bought at retail, whether the user asked for it, directed attention, and personifying the
+    seller.
+  whole_system_claim:
+    text: >
+      An identical offer made in a different way may bring multiplied returns.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "6", section: "chapter close", page_start: 21, page_end: 21}
+  members:
+    - {sk_ref: sk_hop_sa_0037, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0038, role_in_system: lever, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0039, role_in_system: lever, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0040, role_in_system: lever, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0041, role_in_system: lever, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0042, role_in_system: lever, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0043, role_in_system: lever, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0044, role_in_system: lever, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0045, role_in_system: lever, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0046, role_in_system: lever, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0047, role_in_system: lever, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0048, role_in_system: lever, order: 12, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0049, role_in_system: whole_system_statement, order: 13, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: source_stated}
+    dependencies:
+      - {from: sk_hop_sa_0046, to: sk_hop_sa_0047, nature: "the requested sample works because expectation directs perception", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_hop_sa_0039, sk_hop_sa_0040]
+        nature: "an appeal to cheapness works against the price signal that carries perceived quality"
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_hop_sa_0043, sk_hop_sa_0034]
+        nature: "restricting an offer to a class raises its force on that class and forgoes everyone else"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_hop_sa_0045, sk_hop_sa_0019]
+        nature: >
+          Chapter 3 recommends free samples and free trials without qualification and reports a
+          brush maker who gives a brush away outright. Chapter 6 reports that giving a package away
+          cheapened the product and cost the advertiser part of his existing trade. Both are stated
+          approvingly and the source does not reconcile them.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership and the whole-system claim are the source's own — the chapter collects these under
+      one heading and closes by stating the claim. The trade-offs and the conflict are ours. The
+      evidence profile is worth stating plainly: twelve levers, twelve anecdotes, no figures, no
+      named firm in most cases, and one nearly-matched pair that is in fact two different
+      companies. The chapter that opens by calling psychology fixed and enduring is the least
+      evidenced part of the section.
+  provenance:
+    chapter: "6"
+    section: "Psychology"
+    page_start: 18
+    page_end: 21
+    source_support: text
+
+- scs_id: scs_hop_sa_005
+  source_id: hopkins_scientific_advertising_ch1_7
+  label: specificity_as_a_credibility_mechanism
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    Chapter 7's chain: readers grant selling talk a licence, so generalities and superlatives carry
+    no weight and also discredit everything beside them; a specific claim removes the licence
+    because it is either true or a lie and the advertiser is assumed not to be able to lie; a
+    definite figure additionally makes the reader infer that tests were made; therefore stating an
+    ordinary shared attribute in specific detail claims it for whoever states it first; and none of
+    this costs additional space.
+  whole_system_claim:
+    text: >
+      Belief in an advertising claim is produced by its checkability rather than by its content, so
+      the same argument gains or loses most of its force according to how definitely it is stated.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "7", section: "Being Specific", page_start: 22, page_end: 24}
+  members:
+    - {sk_ref: sk_hop_sa_0050, role_in_system: negative_half, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0051, role_in_system: positive_half_and_mechanism, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0052, role_in_system: secondary_inference, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0053, role_in_system: application, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_hop_sa_0054, role_in_system: economic_corollary, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_hop_sa_0051, to: sk_hop_sa_0050, nature: "specificity works by removing the licence that makes generalities worthless", origin: source_stated}
+      - {from: sk_hop_sa_0052, to: sk_hop_sa_0051, nature: "the inference that tests were made is a further effect of definiteness", origin: source_stated}
+      - {from: sk_hop_sa_0053, to: sk_hop_sa_0052, nature: "the brewer's process detail works because it reads as knowledge nobody else supplied", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The chain is the source's own and is stated in order. One system-level observation is ours and
+      is the most consequential thing in this extraction: this system says that a definite figure
+      makes a reader infer that measurement happened, and that the impression of testing is what
+      does the persuasive work. The book itself is written to that rule. Its own specific figures —
+      85 cents, $14.20, 41 cents, 250,000, nine times in ten, two thousand headlines, five to ten
+      times, exactly 50 per cent — are supplied without the measurements behind them. The source
+      therefore describes, as a technique, the exact mechanism by which its own evidential
+      authority is produced. That is an observation about the text, not an accusation that the
+      measurements were not made; whether they were is NOT VERIFIED and cannot be settled from
+      chapters 1-7.
+  provenance:
+    chapter: "7"
+    section: "Being Specific"
+    page_start: 22
+    page_end: 24
+    source_support: text

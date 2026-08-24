@@ -1,0 +1,145 @@
+# CANON-003 book 18 (Lane D) — Donald Miller, "Building a StoryBrand" (2017), chapters 1-3.
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Building a StoryBrand.epub"
+#   dc:title "Building a StoryBrand" · dc:creator Donald Miller
+#   publisher HarperCollins Leadership · dc:date 2017-09-08 · ISBN 9780718033330
+#   dc:contributor "calibre (6.25.0)" and a "calibre:20611" identifier — the package was handled by
+#   Calibre. Unlike book 16 there is no Kindle ASIN, and the internal structure (OEBPS/, ISBN-named
+#   files, image filenames carrying printed page numbers) is a publisher-style EPUB, so this looks
+#   like a re-packaged publisher file rather than a format conversion. NOT VERIFIED either way.
+#   36 images. No page renders exist and none were made: an EPUB reflows.
+
+source_id: miller_storybrand_sb7_framework_ch1_3
+pass: independent_visual_evidence
+visual_completeness: verified_figure_level
+
+method:
+  images_in_book: 36
+  images_in_processed_section: 12
+  images_inspected: 6
+  what_was_checked: >
+    Every image reference in chapters 1-3 was listed, and six were opened and read: the framework
+    diagram, the two worked examples, one of the seven inline icons, the BrandScript template and
+    the nesting diagram. The remaining six are the other inline icons, which are the same small
+    circular glyphs repeated for each framework element.
+  what_could_not_be_checked: >
+    Page layout, which does not exist in a reflowable EPUB. The image filenames carry printed page
+    numbers (f0021-01 is a figure from printed page 21), so figures can be cited to a printed page
+    even though prose cannot.
+
+# ═════════════════════════════════════════════════════════════
+# THE FINDING: this is the first source in Lane D where plain text
+# loses a substantial part of the argument
+# ═════════════════════════════════════════════════════════════
+findings:
+
+- ref: vis_sb_alt_text_is_useless
+  what_happened: >
+    Every figure in the book carries `alt="image"`. There is not one descriptive alternative text
+    anywhere.
+  what_it_means: >
+    A text-only extraction of this book recovers **nothing at all** from its figures — not a
+    caption, not a label, not a hint that something was there. Books 16 and 17 had no visual
+    argument to lose. This one does, and the text layer gives no warning that it is missing.
+  status: recorded_as_extraction_hazard
+
+- ref: vis_sb_template_carries_the_field_schema
+  what_happened: >
+    The BrandScript template (printed p.38) is a screenshot of the author's software tool. It
+    contains sub-fields that the processed chapters never state in prose: under HAS A PROBLEM,
+    the four labels VILLAIN / INTERNAL / EXTERNAL / PHILOSOPHICAL; under AND MEETS A GUIDE,
+    EMPATHY and AUTHORITY; under WHO GIVES THEM A PLAN, PROCESS and AGREEMENT; under AND CALLS
+    THEM TO ACTION, DIRECT and TRANSITIONAL; and a whole box labelled CHARACTER TRANSFORMATION
+    with FROM and TO.
+  what_it_means: >
+    This is the most operationally useful thing in the section — a field-by-field schema for a
+    brand message, which is exactly the kind of structure our Creative IR is made of — and in the
+    text it exists only as forward references ("in the fourth part we'll look at two kinds of
+    plans"). The chapters name the pairs in passing; the picture is what shows them as **named
+    slots in a form**, with an arrow order between the boxes.
+  extractor_note: >
+    The CHARACTER TRANSFORMATION box is an eighth element in a framework the book calls SB7. The
+    book addresses transformation in a later chapter, outside this section, so within the processed
+    span that eighth slot exists **only in the image**.
+  lost_in_plain_text: true
+  status: recovered_by_visual_pass
+
+- ref: vis_sb_framework_diagram_shape
+  spread: null
+  printed_page: 21
+  kind: schematic
+  what_happened: >
+    The framework diagram draws the seven elements as circles on a rising and falling line, and
+    the final two do not sit in sequence: after the call to action the line reaches a small open
+    junction and **forks**, one branch rising to "That Ends in a Success" and the other falling to
+    "That Helps Them Avoid Failure".
+  what_it_means: >
+    The prose presents seven elements as an ordered list, elements 6 and 7 one after another. The
+    picture says something different and more precise: success and failure are two outcomes of the
+    same decision point, not two consecutive steps. Anyone rebuilding the framework from the text
+    alone would encode a straight sequence and lose the branch.
+  lost_in_plain_text: true
+  status: recovered_by_visual_pass
+
+- ref: vis_sb_worked_examples_carry_a_taxonomy
+  printed_page: [21, 22]
+  kind: worked_example
+  what_happened: >
+    Two diagrams fill the framework in with The Hunger Games and Star Wars. Each labels the
+    problem node with three lines the prose of chapter 2 never gives: External / Internal /
+    Philosophical, with a filled-in value for each — for Star Wars, "Must defeat the Empire",
+    "Is he a Jedi?", "Good vs. evil".
+  what_it_means: >
+    The three-level problem taxonomy is stated in chapter 3 as a claim ("there are three levels of
+    problems") without examples. The chapter 2 diagrams supply the worked instances, several pages
+    earlier, in a place the text never points to. The demonstration and the claim are separated
+    across chapters and only the picture carries the demonstration.
+  requires_prose: >
+    The claim that customers buy solutions to internal problems, which the diagrams illustrate but
+    do not assert.
+  lost_in_plain_text: true
+  status: recovered_by_visual_pass
+
+- ref: vis_sb_nesting_diagram
+  printed_page: 39
+  kind: schematic
+  what_happened: >
+    A diagram shows one BrandScript labelled OVERALL BRAND branching down to two DIVISION scripts,
+    which branch again to three PRODUCT scripts.
+  what_it_means: >
+    A structural claim — that the framework nests across a brand hierarchy and that each level gets
+    its own message — carried by a picture. The prose does say to create a BrandScript for the
+    overall brand, then each division, then each product, so here the text and the image agree.
+    Recorded because it is the one case in this section where the picture is redundant rather than
+    load-bearing, which is itself worth knowing: the loss is not uniform across a source's figures.
+  lost_in_plain_text: false
+  status: inspected_and_dismissed
+
+visual_only_observations:
+
+- ref: vis_obs_sb_icons_as_a_notation
+  printed_page: [29, 30, 32, 33, 34, 35, 36]
+  observation: >
+    Each of the seven framework elements has a small circular black-and-white icon — a head in
+    profile, a flag with an exclamation mark, an open book, a mountain sunrise, a storm cloud —
+    and the same icons reappear as the node markers in the framework diagram, in both worked
+    examples, and as the headings inside the BrandScript template.
+  strength: clearly_visible
+  why_it_matters: >
+    The icons are a small consistent notation carrying element identity across four different
+    figures, so a reader recognises "the problem node" wherever it appears. In the text layer they
+    are seven identical `alt="image"` references. Nothing about the argument depends on them, but
+    they are why the diagrams read as one system rather than as separate pictures.
+  promoted_to_source_claim: false
+
+summary:
+  demonstrations_recorded: 3
+  visual_only_observations: 1
+  figures_supporting_a_claim: 4
+  figures_carrying_content_absent_from_the_processed_text: 2
+  note: >
+    Contrast with books 16 and 17, which recorded zero on every line of this summary. The
+    difference is not that this author is more visual by temperament — it is that a framework with
+    named slots and an order is a spatial object, and prose is a poor container for it.

@@ -1,0 +1,87 @@
+# CANON-003 book 16 (Lane D) — Ed Catmull with Amy Wallace, "Creativity, Inc.", chapter 5
+# "Honesty and Candor". Independent visual-evidence pass, completed BEFORE any SourceKnowledge
+# object was written, per the frozen CANON-002-era method.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Creativity, Inc.epub"
+#   dc:title   "Creativity, Inc.: Overcoming the Unseen Forces That Stand in the Way of True Inspiration"
+#   dc:creator Catmull, Ed · Wallace, Amy · publisher Random House Publishing Group · date 2014-04-08
+#   ISBN 9780679644507 · MOBI-ASIN B00FUZQYBO
+#   dc:contributor "calibre (1.31.0)" — this EPUB was CONVERTED by Calibre, and the MOBI-ASIN
+#   indicates the conversion source was a Kindle file. Recorded because a converted file is one
+#   generation further from the publisher's own EPUB than the other EPUBs in this library.
+#   No page renders exist and none were made: an EPUB reflows, so there is no page to inspect.
+
+source_id: catmull_creativity_inc_ch5_honesty_and_candor
+pass: independent_visual_evidence
+visual_completeness: verified_figure_level
+
+# ═════════════════════════════════════════════════════════════
+# WHAT THE PASS ACTUALLY COVERED
+# ═════════════════════════════════════════════════════════════
+method:
+  images_in_book: 33
+  images_measured: 33          # every image in the EPUB had its pixel dimensions read
+  images_referenced_by_chapter_5: 1
+  what_was_checked: >
+    Every image file in the package was measured, and every image reference in every chapter file
+    was counted, to establish whether the processed section carries any figure the text extraction
+    would have dropped.
+  what_could_not_be_checked: >
+    Page layout. This is a reflowable EPUB converted from a Kindle file; printed pages do not exist
+    inside it. If this source argued through the arrangement of a page, that argument would be
+    invisible here. It does not — see below.
+
+# ═════════════════════════════════════════════════════════════
+# THE FINDING: the source makes no visual argument, and its one
+# in-chapter "figure" is a decorative rule
+# ═════════════════════════════════════════════════════════════
+findings:
+
+- ref: vis_cat_chapter_image_is_a_rule
+  what_happened: >
+    Chapter 5 contains exactly one image reference, `images/00006.jpeg`. Measured, that file is
+    525 x 1 pixels — a single-pixel-high horizontal line. It is referenced 28 times across the
+    book, once under each chapter title.
+  what_it_means: >
+    The chapter's only image is a typographic ornament, not evidence. A visual pass that counted
+    figure references without measuring them would have reported one figure in this chapter and
+    then either gone looking for an argument that is not there, or recorded the chapter as
+    visually incomplete because that "figure" was never inspected.
+  status: inspected_and_dismissed
+
+- ref: vis_cat_photo_insert_is_biographical
+  what_happened: >
+    Twenty-one of the book's images sit in a single "Photo Insert" section, separate from every
+    chapter. Their captions were read: the Luxo Jr. sculpture outside the Emeryville building,
+    the headquarters entryway, Catmull as a toddler with his parents, Catmull at the Lucasfilm
+    offices circa 1979, and similar.
+  what_it_means: >
+    These are photographs of people and places, credited to named photographers and to the Ed
+    Catmull Collection. None of them demonstrates a claim, and none is referenced from the
+    argument. The book's evidence is anecdote told in prose, not images.
+  status: inspected_and_dismissed
+
+- ref: vis_cat_no_diagram_for_a_described_process
+  what_happened: >
+    The chapter describes a repeating production loop — storyboards, cut together with temporary
+    voices and music into "reels", screened for the Braintrust, revised, and regenerated every
+    three to six months — entirely in sentences. No diagram, table or figure accompanies it.
+  what_it_means: >
+    This is the opposite failure mode from the visual-design books in this batch. There, the
+    argument lived in pictures the text could lose. Here there is nothing to lose: a process with
+    a cycle, a cadence and a repeated ordering is carried only in prose, and any structure it has
+    must be reconstructed by the reader. The risk in this source class is not lost visual
+    evidence, it is structure the source never made explicit in any form.
+  status: recorded_as_source_shape
+
+visual_only_observations: []
+
+summary:
+  demonstrations_recorded: 0
+  visual_only_observations: 0
+  figures_supporting_any_claim: 0
+  note: >
+    Zero is the correct and expected result for this source, not a gap. Every SourceKnowledge
+    object in this extraction therefore carries `source_support: text` and an empty
+    `inspected.figures`, which SPEC-03 rule 4 permits and treats as informative.

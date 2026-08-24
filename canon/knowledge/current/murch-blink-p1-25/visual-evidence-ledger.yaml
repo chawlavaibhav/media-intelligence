@@ -1,0 +1,183 @@
+# CANON-003 book 10 (Lane B) — Walter Murch, "In the Blink of an Eye", revised 2nd ed.
+# Printed pages 1-25 (PDF spreads 7 right through 19 right).
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"In the Blink of an Eye Revised 2nd Edition.pdf"
+#   No /Title, /Author, /Creator or /Producer metadata at all. Created 21 Jun 2012, modified
+#   11 Feb 2013 — both long after the 2001 edition, consistent with a later scan of a printed copy.
+#   81 PDF pages at 774 x 611.76 pts (landscape). Each PDF page is a TWO-PAGE SPREAD.
+#   Identity confirmed from the book's own front matter, not from metadata: copyright Walter Murch
+#   1995/2001, ISBN 1-879505-62-2, Silman-James Press, LoC 2001042949.
+#   Rendered ephemerally at 100 dpi to session scratchpad; NOT committed.
+
+source_id: murch_blink_p1_25_editing_decisions
+pass: independent_visual_evidence
+spreads_rendered: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+spreads_inspected: [11, 15, 16]
+visual_completeness: verified_page_level
+
+# ═════════════════════════════════════════════════════════════
+# 1. THE RESULT: THIS SECTION HAS NO VISUAL ARGUMENT AT ALL
+# ═════════════════════════════════════════════════════════════
+figure_inventory:
+  figures_in_section: 0
+  diagrams: 0
+  photographs: 0
+  tables: 1
+  note: >
+    Twenty-five printed pages of continuous prose with footnotes. Not one figure, diagram,
+    illustration or photograph. The single piece of non-prose typography is the Rule of Six list on
+    printed page 18 — six numbered criteria with a percentage against each — and it is set as plain
+    text, not as an image, so it extracts intact.
+  verification: >
+    Confirmed two ways. First, the extracted text of the whole section contains no figure reference
+    of any kind — no "figure", "see p.", "illustrated", "diagram" or "photo" pointing at an
+    illustration. Second, three spreads were rendered and read directly, including both spreads
+    carrying the section's central argument.
+
+visual_completeness_reasoning: >
+  Recorded as `verified_page_level` rather than `not_verified`, and the distinction matters. The
+  pages were rendered and looked at; the finding is that there is nothing visual to lose. That is a
+  positive result about the source, not an absence of work. A source can be fully visually verified
+  and contribute zero visual evidence.
+
+why_this_is_worth_recording: >
+  This book is the opposite pole from book 9 in the same lane. Grammar of the Edit carries 23 figures
+  across 55 pages, three of them controlled comparisons, and loses all of them to text extraction.
+  In the Blink of an Eye argues the same subject — when and why to cut — entirely in words, and loses
+  nothing. Two books, one domain, one batch, and the visual-loss risk is total in one and zero in the
+  other. Domain does not predict visual dependence; the author's mode of argument does.
+
+demonstrations: []
+
+# ═════════════════════════════════════════════════════════════
+# 2. WHAT IS ACTUALLY LOST — TYPOGRAPHIC EMPHASIS
+# ═════════════════════════════════════════════════════════════
+visual_only_observations:
+
+- ref: vis_murch_italic_emphasis_loss
+  printed_page: 19
+  pdf_spread: 16
+  what_is_visible: >
+    On the rendered page, the sentence describing an ideal cut sets four words in italic:
+    "...gives the right emotion *and* moves the story forward, *and* is rhythmically satisfying,
+    *and* respects eye-trace and planarity, *but* it fails to preserve the continuity of
+    three-dimensional space..."
+  why_it_matters: >
+    The italicised conjunctions are doing argumentative work. They mark the sentence as a cumulative
+    tally — each *and* adds a satisfied criterion, the *but* names the one sacrificed — which is the
+    concrete illustration of the whole sacrifice rule. In the extracted plain text the words survive
+    and the emphasis does not, so the sentence reads as an ordinary list rather than as a count.
+  status: source_supported
+  extractor_note: >
+    This is a mild and recoverable loss: the argument is stated in prose immediately around it, so
+    nothing is unrecoverable. Recorded because it is a THIRD kind of visual loss, distinct from the
+    two book 9 produced. Book 9 lost pictures and lost words baked into pictures. This source loses
+    neither — it loses the *weighting of words that are present*. A plain-text extractor sees every
+    word and cannot see which ones the author leaned on. The same applies to the italicised
+    "How do you want the audience to feel?" on printed page 18, which is a rhetorical hinge set apart
+    typographically and flat in text.
+
+- ref: vis_murch_rule_of_six_table
+  printed_page: 18
+  pdf_spread: 16
+  what_is_visible: >
+    The six criteria set as a numbered list with a right-aligned percentage column: Emotion 51%,
+    Story 23%, Rhythm 10%, Eye-trace 7%, Two-dimensional plane of screen 5%, Three-dimensional space
+    of action 4%.
+  why_it_matters: >
+    This is the single most quoted structure in the book and the reason the book was selected for
+    this lane. It survives text extraction completely — numbers, order and alignment all intact —
+    because it is set as text rather than as an image.
+  status: source_supported
+  extractor_note: >
+    Worth stating plainly as a counter-case to the batch's accumulating visual-loss findings. A
+    ranked quantitative structure, the kind most vulnerable to being flattened, came through
+    undamaged here for a purely mechanical reason: the publisher set it as type. Whether a structure
+    survives has more to do with how it was typeset than with how important it is.
+
+# ═════════════════════════════════════════════════════════════
+# 3. SOURCE INTEGRITY — A SCAN, AND A STRUCTURAL HAZARD THAT WAS REMOVABLE
+# ═════════════════════════════════════════════════════════════
+text_integrity:
+  source_type: >
+    Scanned, not native. Every one of the 81 PDF pages carries exactly one full-page greyscale image
+    and there are 81 greyscale images in the file, which is the signature of a page-image scan with
+    an OCR text layer laid over it.
+  extraction_tool: "pdftotext -layout (poppler 26.08.0), applied to cropped half-spreads"
+
+  structural_hazard:
+    what_it_was: >
+      Each PDF page is a two-page spread, so a naive full-page extraction reads lines across BOTH
+      printed pages by vertical position. The result interleaves the left page and the right page
+      line by line — the same failure that blocked the Lupton anchor.
+    evidence: >
+      On spread 15, naive extraction emitted "and over here we have the Mona Lisa, and, by the" from
+      the left page, then a line of the right page's "The Rule of Six" opening, then "way, look at
+      these floor tiles" back on the left page. Two unrelated arguments spliced into one stream.
+    how_it_was_resolved: >
+      By cropping each spread into its two halves before extracting — `-x 0 -W 387` for the left
+      printed page and `-x 387 -W 387` for the right, against a 774 pt page width — and processing
+      each half as its own page. Every half then reads as continuous single-column prose.
+    what_this_is_and_is_not: >
+      This is a mechanical extraction choice that respects the physical geometry of the artifact. It
+      is the same class of care as decoding HTML entities before comparing text, which this batch has
+      already found necessary once. It is NOT reading through corruption and NOT reconstructing
+      damaged text: no character was altered, nothing was inferred, and the same words appear in both
+      extractions — only their order differs.
+    scope_of_the_observation: >
+      Recorded strictly about this book. Whether any other blocked source in this batch would respond
+      to the same treatment has NOT been checked by this lane and is not implied. What this case
+      establishes is narrower and still useful: interleaving is a property of an extraction as well
+      as of a file, so "interleaved" is not by itself a verdict.
+
+  ocr_damage:
+    words_in_section: 6493
+    letter_digit_confusions: 2
+    share: "0.03%"
+    examples: ["000feet (for 1,250,000 feet)", "7Visual (footnote marker fused to the first word)"]
+    vowel_less_words_over_3_chars: 0
+    non_ascii_characters: 1
+    other_artifacts:
+      - "em-dashes rendered as single or double hyphens throughout"
+      - "a stray capital I on printed p.17, an artifact of the drop-cap T of 'The' being read twice"
+      - "'Apocal'se Now' and '-ualifies' on printed p.1 — two words damaged where the scan clipped"
+      - "'undOing' on p.21 and 'may to forcing' on p.23 — case and word-level slips"
+    verdict: usable
+    reasoning: >
+      Character-level damage at 0.03% of words, with no structural damage once page geometry is
+      respected. Every damaged instance is locally obvious and none falls inside a claim this
+      extraction records. Comparable to the Albers case, which the batch found usable, rather than to
+      the Lupton case, which it blocked. The load-bearing content — the Rule of Six list, its
+      percentages, the sacrifice rule and the footnotes — extracts cleanly and was verified against
+      the rendered page.
+
+  section_completeness_check:
+    method: >
+      Every section title listed in the book's contents page for printed pages 1-25 was searched for
+      in the extracted half-spread text: Cuts and Shadow Cuts (1), Why Do Cuts Work? (5), "Cut Out
+      the Bad Bits" (10), Most with the Least (15), The Rule of Six (17), Misdirection (21), Seeing
+      Around the Edge of the Frame (23).
+    result: "All seven present, each starting on the printed page the contents page names."
+
+# ═════════════════════════════════════════════════════════════
+# 4. A SOURCE-SHAPE OBSERVATION MADE DURING THE PASS
+# ═════════════════════════════════════════════════════════════
+deferred_question:
+  what: >
+    On printed page 9 the source poses its central question — "the central fact of all this is that
+    cuts do work. But the question still remains: Why?" — and answers it with "We will get back to
+    this mystery in a few moments."
+  where_it_is_actually_answered: >
+    Printed pages 58-64, where John Huston's remark about blinking is quoted and developed. That is
+    the passage the book is named after, and it is thirty-three pages outside the processed span.
+  why_it_is_recorded_here: >
+    Because it is a property of the source's form rather than a gap in the extraction. This is a
+    transcribed lecture, and a lecturer can raise a question, spend fifty minutes elsewhere, and
+    return to it. Any windowed extraction of a source shaped like this can therefore capture a
+    question without its answer, through no fault of the window.
+  how_the_extraction_handles_it: >
+    The question is recorded as the source's own open question, with `source_uncertainty:
+    source_asks_open_question`, and the provenance record states where the answer lies. It is NOT
+    recorded as unanswered, and no answer has been imported from outside the span.
