@@ -22,7 +22,7 @@ files" — separate working directories on separate branches, not just a convent
 
 Every new worker session, and every active session after the communication standard changes, must read `shared/COMMUNICATION-STANDARD.md` and confirm once in chat:
 
-> **Communication check:** I will use plain English without reducing substance; use minimum sufficient wording; separate evidence from inference; and never invent facts. I have read `shared/COMMUNICATION-STANDARD.md`.
+> **Communication check:** I will explain technical ideas in plain English, including what they mean, why they matter, and their practical consequence; use minimum sufficient wording without sacrificing understandability; separate evidence from inference; and never invent facts. I have read `shared/COMMUNICATION-STANDARD.md`.
 
 If the file cannot be found or read, STOP. Do not claim compliance.
 
@@ -59,14 +59,14 @@ continue.
 ## Controller-review checkpoints — chat for the human, GitHub for the record
 A worker must report the same important checkpoint in **both places**:
 
-1. **Chat:** give the human operator a plain-English, minimum-sufficient summary of what happened, what failed or surprised the worker, what remains uncertain, and what decisions/questions need attention. Do not reduce the chat response to only a task ID or commit SHA.
+1. **Chat:** explain in plain English what happened, what the important technical terms/numbers mean, why the result matters, what changed, what failed or surprised the worker, what remains uncertain, and what decisions/questions need attention. Do not reduce the chat response to only labels, task IDs, metrics, acronyms or commit SHAs.
 2. **GitHub:** write the authoritative status, observations, questions, failures, surprises and decisions needed into the task's existing Controller Brief, or into `<stream>/tasks/<TASK-ID>-CHECKPOINT.md` if the Controller Brief does not yet exist.
 3. Commit the checkpoint on `work/<stream>`.
 4. Push `work/<stream>` to GitHub.
 5. End the chat report with the task ID and commit SHA so the Controller can inspect the exact branch state.
 
 The two surfaces have different purposes:
-- **Chat is for immediate human visibility.** The human should understand the important learning without opening GitHub.
+- **Chat is for immediate human understanding.** The human should understand the important learning and its consequence without opening GitHub or remembering internal jargon.
 - **GitHub is the durable source of truth for Controller review.** The Controller reads the branch directly and should not rely on pasted chat text when the repository record is available.
 
 The human operator therefore does not need to copy/paste normal worker reports between Claude and the Controller. They may simply tell the Controller to review `<TASK-ID>` on `work/<stream>`. The human may also open the same Controller Brief in GitHub whenever they want the full record.
@@ -81,10 +81,10 @@ interpretation. `RECOMMENDED NEXT STEP` is a suggestion only. Approve, amend, or
 worker's suggestion becomes real only once written as a new task.
 
 For meaningful tasks, the Controller should return two layers:
-- **Founder view:** plain-English summary of what worked, what failed, what surprised us, what changed our understanding, and which evidence is worth the human inspecting personally.
-- **Controller view:** scope compliance, evidence quality, technical correctness, merge recommendation, and proposed next task.
+- **Founder view:** explain what worked, what failed, what surprised us, what changed our understanding, what the important technical result means in practice, and which evidence is worth the human inspecting personally. Internal labels should be translated into plain language rather than merely repeated.
+- **Controller view:** scope compliance, evidence quality, technical correctness, merge recommendation, and proposed next task. Technical detail is welcome, but unfamiliar terms and consequential numbers must still be explained.
 
-Both layers follow `shared/COMMUNICATION-STANDARD.md`: complete and correct, but no longer than needed.
+Both layers follow `shared/COMMUNICATION-STANDARD.md`: complete, explanatory and correct, but no longer than needed.
 Routine mechanical details may stay in the Controller layer. Learning-bearing findings, belief changes, repeated failures and directional implications must be surfaced in the Founder view rather than silently converted into the next task.
 
 ## How cross-stream findings are escalated
