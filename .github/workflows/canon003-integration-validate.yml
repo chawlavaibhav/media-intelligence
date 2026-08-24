@@ -1,0 +1,24 @@
+name: CANON-003 integration validation
+
+on:
+  push:
+    branches:
+      - work/canon-003-integration-16
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install YAML parser
+        run: python -m pip install --disable-pip-version-check pyyaml
+      - name: Unit tests
+        run: python -m unittest tests.test_validate_canon003_integrated -v
+      - name: Validate integrated 16-book set
+        run: python canon/validation/validate_canon003_integrated.py --root . --json-report /tmp/canon003-validation.json
+      - name: Print validation report
+        if: always()
+        run: test -f /tmp/canon003-validation.json && cat /tmp/canon003-validation.json || true
