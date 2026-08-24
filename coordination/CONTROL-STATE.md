@@ -38,7 +38,11 @@ Controller approved `canon/tasks/CANON-003-PARALLEL-EXECUTION.md` to finish the 
 - `work/canon-003-c`
 - `work/canon-003-d`
 
-All four were verified at the same parallel-base SHA when this snapshot was refreshed; **no lane has returned a post-split book commit yet**. Lanes must remain isolated during fresh extraction. Shared batch synthesis files are locked until one fresh integration session merges/reconciles the lanes and produces the end-of-batch synthesis. Parallel lanes do not change schemas or run Canon-consumption experiments.
+Current branch audit: lanes A/B/C remain identical to the common parallel base. Lane D is **one commit ahead** with the six Book 16 (*Creativity, Inc.*, chapter 5) knowledge/provenance files. The content is provisionally architecture-disciplined: converted-EPUB provenance weakness is explicit; the no-evidentiary-figure result is recorded rather than invented around; synthesized source systems are marked as extractor synthesis; Creative IR is not forced; and Production IR implications are parked rather than translated.
+
+**Book 16 is not yet counted as a completed usable post-split book.** The Lane D issue file and lane checkpoint required by the parallel contract are not present on GitHub yet. In addition, the provenance file says historical material was searched “after this checkpoint,” while the branch currently has only one reachable post-base commit. Until the lane preserves/reconciles the required fresh-before-historical checkpoint evidence, treat this as a provisional worker checkpoint, not an accepted completed book. Do not redo the extraction merely for cleanliness; record the method deviation if the sealed checkpoint was amended/squashed and enforce the rule on subsequent books.
+
+Lanes must remain isolated during fresh extraction. Shared batch synthesis files are locked until one fresh integration session merges/reconciles the lanes and produces the end-of-batch synthesis. Parallel lanes do not change schemas or run Canon-consumption experiments.
 
 ## Eval status — EVAL-003 correction pass active
 **EVAL-001 and EVAL-002 are closed and merged to `main`.**
@@ -73,7 +77,7 @@ There is **no active Resources task** and no approved EVAL-004.
 The assumptions register remains authoritative. Important unresolved items still include whether the Source Knowledge / Binding split earns its complexity over time, whether explicit Canon materially improves planning/evaluation, whether Canon-derived requirements improve routing once a Registry exists, whether Empirical Memory predicts later failures, and whether CpAO is the right operating objective. None should be promoted to fact without the register's evidence bar.
 
 ## Current integration gates
-1. **Canon:** audit each lane return against the frozen method as it lands. Do not merge/synthesise the parallel lanes until all usable assigned work is reviewed or a documented source block requires a Controller decision. Then use one fresh integration session for CANON-003 synthesis.
+1. **Canon:** audit each lane return against the frozen method as it lands. Lane D Book 16 is currently provisional for the checkpoint-integrity reason above. Do not merge/synthesise the parallel lanes until all usable assigned work is reviewed or a documented source block requires a Controller decision. Then use one fresh integration session for CANON-003 synthesis.
 2. **Eval:** wait for the bounded EVAL-003 correction return. Do not approve human readers, checker roster, API spend, or calibration until the corrected package passes Controller review.
 3. **Resources:** closed; only reopen if a Controller-approved cross-stream correction or new sourcing need warrants a new task.
 4. **Architecture:** no Capability Registry, Production IR, routing system, or Canon-consumption experiment is authorized by the current work.
