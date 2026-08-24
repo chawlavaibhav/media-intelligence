@@ -1,0 +1,379 @@
+# CANON-001 — Molly Bang, "Picture This", pp.42-91
+# Operational Bindings created under SPEC-04, derived against SPEC-01 v0.1.
+#
+# SEQUENCING: this file was written last, after source-knowledge.yaml, source-concept-systems.yaml
+# and ontology-mappings.yaml were complete on disk, so that no binding pressure could shape the
+# source-faithful passes. See the CANON-001 findings for one disclosed exception: SPEC-01's opening
+# section and field names were read during the Phase 0 governance review, before extraction began.
+#
+# These are OUR interpretations, recorded as ours. None is a claim about what Molly Bang specified.
+# All carry status: proposed — nothing here has been reviewed.
+#
+# ONTOLOGY REFS: SPEC-04's worked examples use `fo_` and `ro_` identifier prefixes that SPEC-05
+# does not define. SPEC-05's Layer-1 identifiers are `t_`. This file uses `t_` identifiers from
+# ontology-mappings.yaml; the discrepancy is recorded in the CANON-001 findings.
+
+source_id: molly_bang_picture_this
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+# ═════════════════════════════════════════════════════════════
+# creative_ir
+# ═════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mb_c001_0001
+  source_knowledge_refs: [sk_mb_c001_0021, sk_mb_c001_0015, sk_mb_c001_0037, sk_mb_c001_0055]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [diagnoses]
+  rationale: >
+    The source names four independent determinants of what a viewer notices first and treats as
+    important: centre placement, height on the page, relative size, and value contrast against the
+    ground. A stated ranking of elements can therefore be checked against where those four
+    determinants actually point, and a disagreement between them is detectable rather than a
+    matter of taste.
+  applicability:
+    when: "a Creative IR that declares a ranked hierarchy over resolvable elements, for a still or a frame"
+    limits: >
+      The source discusses picture-book illustration, where the viewer chooses their own dwell
+      time. Whether these determinants hold at the crop, scale and viewing duration of a feed
+      creative is untested here. The source also does not say how the four combine when they
+      disagree, so this supports flagging a conflict, not resolving one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mb_c001_0010]
+  repair_ontology_refs: [t_mb_c001_0017, t_mb_c001_0018, t_mb_c001_0019, t_mb_c001_0020]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0002
+  source_knowledge_refs: [sk_mb_c001_0050, sk_mb_c001_0028, sk_mb_c001_0010, sk_mb_c001_0049]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.composition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, diagnoses]
+  rationale: >
+    SPEC-01's composition field names depth and figure-ground as things it records. The source
+    supplies four concrete constructions bearing on both: raising the bases of receding objects,
+    letting an element cross the frame boundary, attaching or withholding a baseline, and
+    overlapping two objects so they fuse into one unit.
+  applicability:
+    when: "a still creative, or any single frame, where depth or figure-ground is specified or in question"
+    limits: >
+      All four are compositional constructions described for hand-made pictures. Whether a
+      generative model can be directed to satisfy any of them is a Capability Lab question and is
+      not asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mb_c001_0011, t_mb_c001_0012]
+  repair_ontology_refs: [t_mb_c001_0022, t_mb_c001_0023]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0003
+  source_knowledge_refs: []
+  source_system_refs: [scs_mb_c001_001, scs_mb_c001_003, scs_mb_c001_004]
+  target_type: creative_ir
+  target_path: message.emotional_target
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, constrains]
+  rationale: >
+    Where a Creative IR states an emotional target, three of the source's systems say which
+    structural choices support it and which fight it: the orientation and placement register, the
+    association account behind shape and size, and the competing readings of ground value. This
+    binding references the systems rather than their members, because the source states that the
+    principles operate only in combination and that a single added element can change the reading
+    entirely — a binding to any one member would assert something the source explicitly denies.
+  applicability:
+    when: "message.emotional_target is populated and a still or frame composition is being specified"
+    limits: >
+      The systems tell you which choices push in which direction; they do not quantify how far, and
+      the source states the whole structural reading is subservient to context and content. Any use
+      of this must remain advisory under SPEC-01's authority tiers, where canon heuristic is tier 6.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_mb_c001_0025]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0004
+  source_knowledge_refs: [sk_mb_c001_0040, sk_mb_c001_0041, sk_mb_c001_0034, sk_mb_c001_0033]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.visual_language
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, flags]
+  rationale: >
+    The source's account of colour — association with natural referents, the false but effective
+    secondary generalisation, the value-contrast behaviour of bright colours, and the culturally
+    variable death associations of black and white — bears on palette selection and, more usefully,
+    on flagging when a palette choice will carry a reading nobody asked for.
+  applicability:
+    when: "a palette is being chosen or reviewed against a stated emotional target or audience"
+    limits: >
+      The source states the mourning-colour association varies by culture and gives European versus
+      Indian and Korean practice as its example, so any use of this against a specified audience
+      locale must treat the association as locale-dependent rather than fixed. The source also
+      states these secondary associations are factually false while being effective, which limits
+      this to predicting viewer response, never to claiming a property of the thing depicted.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mb_c001_0014]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0005
+  source_knowledge_refs: [sk_mb_c001_0021, sk_mb_c001_0023, sk_mb_c001_0027, sk_mb_c001_0047, sk_mb_c001_0048]
+  source_system_refs: [scs_mb_c001_002]
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.spatial_hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, constrains]
+  rationale: >
+    Placement within the frame is the field this source addresses most directly. The frame-centre-
+    edge system says that a single placement decision simultaneously sets how strongly the eye is
+    held, how far it travels, how much tension the placement carries, and how isolated a figure
+    reads. Spatial hierarchy is where those consequences are specified rather than discovered.
+  applicability:
+    when: "spatial arrangement is being specified for a still or a frame"
+    limits: >
+      The source's own trade-off assumes exploration is a goal. Where it is not — the source names
+      images intended as objects of meditation as its exception — the trade-off inverts. Nothing
+      here says which of the two a given brief wants.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mb_c001_0010]
+  repair_ontology_refs: [t_mb_c001_0017, t_mb_c001_0026]
+  status: proposed
+  status_reason: "not reviewed"
+
+# ═════════════════════════════════════════════════════════════
+# evaluation
+# ═════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mb_c001_0006
+  source_knowledge_refs: [sk_mb_c001_0021, sk_mb_c001_0015, sk_mb_c001_0037, sk_mb_c001_0055, sk_mb_c001_0034]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses, evaluates]
+  observation_unit: whole_asset
+  rationale: >
+    Supports asking whether the element a brief declared most important is in fact the one a viewer
+    reaches first. The source supplies four separable determinants to inspect, and one worked case
+    in which two small pale elements are noticed before the picture's content is understood at all,
+    which is evidence that this can be judged before comprehension rather than after it.
+  applicability:
+    when: "evaluating a still creative, or a single frame, against a declared hierarchy"
+    limits: >
+      Requires the whole asset: three of the four determinants are relative properties and cannot
+      be assessed from a crop. The source gives no method for combining determinants that disagree.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mb_c001_0010]
+  repair_ontology_refs: [t_mb_c001_0017, t_mb_c001_0018, t_mb_c001_0019]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0007
+  source_knowledge_refs: [sk_mb_c001_0042, sk_mb_c001_0043, sk_mb_c001_0054]
+  source_system_refs: [scs_mb_c001_005]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source states that shared colour groups elements more strongly than shared shape, and that
+    the viewer then reads a meaning into whatever has been grouped. This makes an unintended
+    relationship between two same-coloured elements a detectable creative defect rather than a
+    matter of opinion. The source's closing illustration is a worked case in which colour grouping
+    beats a competing shape similarity.
+  applicability:
+    when: "evaluating whether the relationships a viewer will infer match the relationships the brief intended"
+    limits: >
+      Requires the whole asset, since grouping is a property of the set. The source notes the
+      colour-over-shape dominance is not necessarily the case for small children, so an audience of
+      young children is outside the stated scope.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0008
+  source_knowledge_refs: [sk_mb_c001_0010, sk_mb_c001_0028]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses, repairs]
+  observation_unit: frame
+  rationale: >
+    Gives a mechanism-level account of an element reading as detached from its scene: a shape with
+    no defined ground or baseline attached to it is read as floating. Because the account names the
+    cause rather than the symptom, it also names the correction — attach a baseline — rather than
+    only reporting that something looks wrong.
+  applicability:
+    when: "an element is reported as looking detached, pasted on, or not sitting in the scene"
+    limits: >
+      Assessable within a single frame, unlike most bindings from this source. The source states
+      this about a geometric shape in an empty field and does not test it on a photographic or
+      rendered scene.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mb_c001_0012, t_mb_c001_0011]
+  repair_ontology_refs: [t_mb_c001_0022]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0009
+  source_knowledge_refs: []
+  source_system_refs: [scs_mb_c001_001, scs_mb_c001_003, scs_mb_c001_004]
+  target_type: evaluation
+  target_path: null
+  role: [evaluates]
+  observation_unit: whole_asset
+  rationale: >
+    Supports judging whether a creative's structure supports its stated emotional target, by giving
+    the dimensions to inspect — orientation register, vertical placement, shape contour, relative
+    size, ground value — and by stating that these combine rather than sum.
+  applicability:
+    when: "message.emotional_target is stated and creative fitness rather than technical fidelity is being judged"
+    limits: >
+      The source states the structural reading is subservient to context and content, so a verdict
+      from these dimensions alone cannot be treated as decisive. Directed at creative fitness only;
+      nothing here bears on hard-fidelity checks.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_mb_c001_0025]
+  status: proposed
+  status_reason: "not reviewed"
+
+# ═════════════════════════════════════════════════════════════
+# benchmark
+# ═════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mb_c001_0010
+  source_knowledge_refs: [sk_mb_c001_0013, sk_mb_c001_0014, sk_mb_c001_0021, sk_mb_c001_0023, sk_mb_c001_0035, sk_mb_c001_0036, sk_mb_c001_0042]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source constructs four near-minimal pairs with a stated expected reading for each: the same
+    triangle high versus low in the frame; the same burst centred versus displaced; the same
+    landform silhouette pointed versus curved; and the same shape set in one colour versus two.
+    Each is a controlled comparison with a predicted viewer response, which is the shape a
+    creative-fitness benchmark item needs.
+  applicability:
+    when: "constructing benchmark items for creative-fitness instruments, or calibrating an evaluator on comparisons with a known expected answer"
+    limits: >
+      Two of the four pairs are not strictly isolated: the centred-versus-displaced pair also
+      changes edge contact and introduces a second focus, and the colour-versus-shape pair does not
+      hold shape positions constant. Both are usable as benchmark items only if that is recorded.
+      The source's stated expected readings are its own judgements, not measured responses, so they
+      are candidate expected answers requiring independent validation — not ground truth.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; flagged CROSS_STREAM in the CANON-001 Controller Brief"
+
+# ═════════════════════════════════════════════════════════════
+# governance
+# ═════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mb_c001_0011
+  source_knowledge_refs: [sk_mb_c001_0016, sk_mb_c001_0017]
+  source_system_refs: [scs_mb_c001_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    The source interrupts its own sequence of principles to state that they are used never one by
+    one but always in combination and always in some context, that each added element can modify or
+    completely change the effect of the others, and that the whole is subservient to content. That
+    is an explicit, in-source instruction about whether a principle may be applied in isolation,
+    from an author describing their own material — a worked precedent for the question SPEC-04's
+    rule_application consumer exists to settle.
+  applicability:
+    when: "deciding whether a single piece of source knowledge from this source may be applied or retrieved alone"
+    limits: >
+      The source states this about its own principles. Whether it generalises to other sources is
+      not asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_mb_c001_0012
+  source_knowledge_refs: [sk_mb_c001_0041]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [constrains]
+  rationale: >
+    The source states that colour symbolism rests on a generalisation that is completely false, and
+    in the same passage that it works very, very well and is heavily relied on in advertising. It
+    holds both without treating the falseness as a defect. That is a precedent for weighting
+    evidence: whether a mechanism is factually true and whether it reliably predicts viewer
+    response are separate judgements, and a piece of knowledge may fail the first and pass the
+    second. Relevant wherever evidence characteristics are being weighed.
+  applicability:
+    when: "weighing how much a piece of source knowledge should count, where its stated mechanism is doubtful but its predicted effect is reliable"
+    limits: >
+      A single worked instance from one author about one phenomenon. It shows the distinction is
+      real, not how often it applies.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+# ═════════════════════════════════════════════════════════════
+# production — parked, deliberately untranslated
+# ═════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mb_c001_0013
+  source_knowledge_refs: [sk_mb_c001_0050]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The recession construction is the one place where this source gives a procedure precise enough
+    to execute rather than a quality to aim at: raise the bases of progressively smaller, thinner
+    or lighter objects, and let the spaces between them shrink geometrically rather than by a fixed
+    amount. It is recorded here as a construction procedure only.
+  applicability:
+    when: "Production IR exists and a deterministic compositing path is being specified"
+    limits: >
+      NOT translated into a generation instruction. The source describes a hand-composed picture in
+      which the author places each element. Whether a generative model can be prompted to satisfy a
+      geometric spacing progression is a Capability Lab question and is not asserted here. Per the
+      Project Contract, a construction action from a source is not rewritten as a generation action.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_mb_c001_0022, t_mb_c001_0023]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked, not translated"

@@ -1,0 +1,505 @@
+# CANON-001 — Molly Bang, "Picture This", pp.42-91
+# SPEC-05 ontology material, deliberately source-local per Controller ruling 3 for this task.
+#
+# PERMITTED HERE:  Layer-1 terms arising from this source; Layer-2 relations between those terms
+#                  using existing relation types only; source_specific_concept objects where the
+#                  source itself supports the grouping.
+# NOT CREATED HERE: canonical_concept, cross_source_concept, relations to other sources, new
+#                  relation types. Empty relation sets are recorded as empty rather than padded.
+#
+# RELATION AUTHORITY: canon/CHARTER.md grants this worker `related_to` and
+# `potentially_equivalent_to` as local decisions. `distinct_from` is not on that list, so
+# candidate negative findings are recorded in the CANON-001 findings rather than written here.
+
+source_id: molly_bang_picture_this
+extraction_date: 2026-08-24
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 1 — TERMS
+# The source is almost entirely a book of principles rather than of named failures and repairs.
+# The terms below are the points where it does name a problem, a remedy, a property or an entity.
+# Terms marked verbatim: true use the source's own words; the rest are extractor labels formed
+# under the Controller naming convention (noun/state phrases for problems, properties and
+# entities; verb-first phrases for remedies).
+# ═════════════════════════════════════════════════════════════
+
+terms:
+
+# ── properties and entities the source itself names ──────────
+
+- term_id: t_mb_c001_0001
+  term: pictorial_weight
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    How much attention an object draws and how important it feels. The source states that an object
+    placed higher on the page has greater pictorial weight than the same object placed lower.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 56, page_end: 56}
+  arising_from: [sk_mb_c001_0015]
+
+- term_id: t_mb_c001_0002
+  term: center_of_attention
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    The point in a framed picture that attracts the eye most strongly. The source states the centre
+    of the page is the most effective centre of attention and the point of greatest attraction.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 62, page_end: 62}
+  arising_from: [sk_mb_c001_0021]
+
+- term_id: t_mb_c001_0003
+  term: picture_world
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: entity
+  definition_in_origin_frame: >
+    The separate world formed inside the picture frame, whose edges and corners are read as the
+    edges and corners of that world rather than as the boundary of a flat object.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 62, page_end: 66}
+  arising_from: [sk_mb_c001_0020, sk_mb_c001_0026]
+
+- term_id: t_mb_c001_0004
+  term: radial_force
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    The centre-versus-frame visual conflict, described as lines radiating inward from the frame to
+    the midpoint, with the centre also radiating energy outward to a much lesser degree.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 62, page_end: 62}
+  arising_from: [sk_mb_c001_0020]
+
+- term_id: t_mb_c001_0005
+  term: invisible_emotional_horizon_line
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: entity
+  definition_in_origin_frame: >
+    An unmarked line read as stretching across the middle of a picture, dividing it into a top and
+    a bottom half that carry different emotional readings.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 54, page_end: 54}
+  arising_from: [sk_mb_c001_0012]
+
+- term_id: t_mb_c001_0006
+  term: natural_constants
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: entity
+  definition_in_origin_frame: >
+    The source's own coined name for the natural objects that colours are associated with — blood
+    and fire for red, light and snow and bones for white, darkness for black, the sun for yellow,
+    the sea and sky for blue.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 74, page_end: 74}
+  arising_from: [sk_mb_c001_0040]
+
+- term_id: t_mb_c001_0007
+  term: emotions_attached_to_remembered_experiences
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    The feelings called up when a picture element resembles something the viewer has experienced in
+    the real world. The source states these are what largely determine the viewer's present
+    response to a picture.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 73, page_end: 73}
+  arising_from: [sk_mb_c001_0038]
+
+- term_id: t_mb_c001_0008
+  term: noncolors
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    The source's term for black and white together, on the grounds that both stand outside colour
+    and both carry associations with death.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 69, page_end: 69}
+  arising_from: [sk_mb_c001_0033]
+
+- term_id: t_mb_c001_0009
+  term: islands_of_calm
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    Smaller horizontal or horizontally oriented shapes inside a picture, which are felt as local
+    pockets of the stability the whole picture would have if it were horizontally structured.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 42, page_end: 42}
+  arising_from: [sk_mb_c001_0001]
+
+# ── problems the source names ────────────────────────────────
+
+- term_id: t_mb_c001_0010
+  term: eyes_trapped_at_centre
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: problem
+  definition_in_origin_frame: >
+    The state the source describes as the eyes being trapped and pinned to the centre, so that it
+    is difficult to take them from the centre and move them around the page.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 62, page_end: 62}
+  arising_from: [sk_mb_c001_0021]
+
+- term_id: t_mb_c001_0011
+  term: space_reads_as_flat
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: problem
+  definition_in_origin_frame: >
+    The condition the source reports on covering the one frame-breaking element in a picture: the
+    space becomes much flatter.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 66, page_end: 66}
+  arising_from: [sk_mb_c001_0028]
+
+- term_id: t_mb_c001_0012
+  term: reads_as_floating
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: property
+  definition_in_origin_frame: >
+    The reading produced when a shape has no defined ground or baseline attached to it. The source
+    presents this as an observation rather than as a fault.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 51, page_end: 51}
+  arising_from: [sk_mb_c001_0010]
+
+- term_id: t_mb_c001_0013
+  term: boring_and_heavy
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: problem
+  definition_in_origin_frame: >
+    The source's own verdict on its first attempt at the diagonal series, in which the shapes were
+    all cut the same size and set more nearly parallel: they still felt as though they were moving,
+    but the result was quite boring and heavy.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 52, page_end: 52}
+  arising_from: [sk_mb_c001_0011]
+
+- term_id: t_mb_c001_0014
+  term: colour_washed_out_against_light_ground
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: problem
+  definition_in_origin_frame: >
+    Bright colours losing their intensity when placed against white or pale backgrounds, which the
+    source attributes to all the eye's colour receptors being activated and bleached out by white.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 69, page_end: 69}
+  arising_from: [sk_mb_c001_0034]
+
+- term_id: t_mb_c001_0015
+  term: disoriented
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: problem
+  definition_in_origin_frame: >
+    The source's word for how confusion in a picture makes most viewers feel; it presents the word
+    as the one we ourselves reach for.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 78, page_end: 78}
+  arising_from: [sk_mb_c001_0044]
+
+- term_id: t_mb_c001_0016
+  term: monotony_of_relentless_repetition
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: problem
+  definition_in_origin_frame: >
+    Continual, relentless repetition, which the source suggests is perhaps even more horrifying in
+    its monotony than confusion, because it implies a cold, unfeeling, mechanical mind and does not
+    occur in nature.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 78, page_end: 78}
+  arising_from: [sk_mb_c001_0044]
+
+# ── remedies the source names (verb-first per Controller ruling 1) ──
+
+- term_id: t_mb_c001_0017
+  term: move_emphasis_off_centre
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Keep the main emphasis away from the centre, which the source gives as what to do if a picture
+    is meant to be explored.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, generative_respecification, deterministic_composite]
+  source_ref: {page_start: 62, page_end: 62}
+  arising_from: [sk_mb_c001_0021, sk_mb_c001_0023]
+
+- term_id: t_mb_c001_0018
+  term: raise_object_on_page
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Place an object in the upper half of the page to put more emphasis on it — the source scopes
+    this with all other things being equal.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, generative_respecification, deterministic_composite]
+  source_ref: {page_start: 56, page_end: 56}
+  arising_from: [sk_mb_c001_0015]
+
+- term_id: t_mb_c001_0019
+  term: increase_relative_size
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Make a protagonist or a threat very large in order to make it appear strong.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, generative_respecification, deterministic_composite]
+  source_ref: {page_start: 72, page_end: 72}
+  arising_from: [sk_mb_c001_0037]
+
+- term_id: t_mb_c001_0020
+  term: reduce_relative_size
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Make a figure very small in order to make it appear vulnerable.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, generative_respecification, deterministic_composite]
+  source_ref: {page_start: 72, page_end: 72}
+  arising_from: [sk_mb_c001_0037]
+
+- term_id: t_mb_c001_0021
+  term: taper_repeated_shapes_along_diagonal
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Make the shapes sleeker, decrease them in size along the diagonal, and shape the outline of the
+    whole group as a triangle or arrow, which the source offers as its correction to an earlier
+    arrangement it judged boring and heavy.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite]
+  source_ref: {page_start: 52, page_end: 52}
+  arising_from: [sk_mb_c001_0011]
+
+- term_id: t_mb_c001_0022
+  term: raise_bases_of_receding_objects
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Place the bases of progressively smaller, thinner or lighter objects gradually higher on the
+    page in order to create a sense of depth.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite, generative_respecification]
+  source_ref: {page_start: 87, page_end: 87}
+  arising_from: [sk_mb_c001_0050]
+
+- term_id: t_mb_c001_0023
+  term: decrease_recession_spacing_geometrically
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Let the spaces between receding objects decrease in a regular geometric progression rather than
+    by a consistent fixed amount, which the source says strengthens the depth effect.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite]
+  source_ref: {page_start: 87, page_end: 87}
+  arising_from: [sk_mb_c001_0050]
+
+- term_id: t_mb_c001_0024
+  term: increase_separation_between_threat_and_victim
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Space an attacker and a victim far apart so that the viewer has time to be afraid; the source
+    reports that a threat placed right next to its victim forecloses that time.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite, generative_respecification]
+  source_ref: {page_start: 88, page_end: 89}
+  arising_from: [sk_mb_c001_0051]
+
+- term_id: t_mb_c001_0025
+  term: match_structure_to_content
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Choose figure size, pose, ground shape and colour to suit the intended meaning-content, since
+    the source holds the structural principles to be subservient to context and content.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, unknown]
+  source_ref: {page_start: 58, page_end: 60}
+  arising_from: [sk_mb_c001_0017]
+
+- term_id: t_mb_c001_0026
+  term: centre_object_of_meditation
+  origin: source
+  origin_ref: molly_bang_picture_this
+  kind: remedy
+  definition_in_origin_frame: >
+    Place the object of meditation at the centre of the page so as to better enable the viewer to
+    centre the mind — the one case in which the source recommends exact centring.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, generative_respecification, deterministic_composite]
+  source_ref: {page_start: 67, page_end: 67}
+  arising_from: [sk_mb_c001_0029]
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 2 — RELATIONSHIPS
+# Source-local only. Restricted to the two relation types canon/CHARTER.md places within this
+# worker's local authority: related_to and potentially_equivalent_to.
+#
+# potentially_equivalent_to: none written. Within a single source the author does not use two
+# different terms for one thing often enough to justify any, and manufacturing one to fill the
+# section would assert a similarity nobody established. Recorded as genuinely empty.
+# ═════════════════════════════════════════════════════════════
+
+relationships:
+
+- from: t_mb_c001_0010
+  to: t_mb_c001_0017
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source names the trapped-eye condition and the move-emphasis-off-centre action in the same
+    passage, the second offered as what to do about the first.
+
+- from: t_mb_c001_0011
+  to: t_mb_c001_0012
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Both describe a failure of the picture to read as spatially deep — one where the whole space
+    goes flat for want of a frame-breaking element, the other where a single shape detaches for
+    want of a baseline. The source states them fifteen pages apart and does not connect them.
+
+- from: t_mb_c001_0013
+  to: t_mb_c001_0016
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Both name a deadening produced by too much sameness — equal-sized parallel shapes in one case,
+    relentless perfect repetition in the other. The source arrives at them independently, twenty-six
+    pages apart, and does not link them.
+
+- from: t_mb_c001_0015
+  to: t_mb_c001_0016
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source presents disorientation and the monotony of relentless repetition as the two
+    extremes of one unnamed dimension, stating that either extreme is terrifying and that life
+    needs a mixture.
+
+- from: t_mb_c001_0022
+  to: t_mb_c001_0023
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source gives both as parts of one construction for depth, the second described as making
+    the effect of the first stronger.
+
+- from: t_mb_c001_0019
+  to: t_mb_c001_0020
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Two directions of the same adjustment, given together: enlarging to signal strength and
+    shrinking to signal vulnerability.
+
+- from: t_mb_c001_0006
+  to: t_mb_c001_0007
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Both belong to the source's single account of association: natural constants are the referent
+    objects, and emotions attached to remembered experiences are what association with them
+    produces.
+
+- from: t_mb_c001_0002
+  to: t_mb_c001_0004
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source attributes the centre's status as centre of attention directly to the radial force
+    the frame generates.
+
+- from: t_mb_c001_0001
+  to: t_mb_c001_0018
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Pictorial weight is the property; raising an object on the page is the action the source gives
+    for increasing it.
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 3 — CONCEPTS
+# Only source_specific_concept objects, and only where the source itself generalises over its own
+# vocabulary. No canonical_concept and no cross_source_concept created under CANON-001.
+# ═════════════════════════════════════════════════════════════
+
+concepts:
+
+- concept_id: sc_mb_c001_association_account
+  kind: source_specific_concept
+  origin_ref: molly_bang_picture_this
+  label: association_account_of_pictorial_emotion
+  children_terms: [t_mb_c001_0006, t_mb_c001_0007]
+  origin: source_stated
+  basis: >
+    The source states on page 73 that the word associate is the key to the whole process of how
+    picture structure affects our emotions, then names natural constants on page 74 as the objects
+    colour associations run through. Both terms are the source's own coinages inside one stated
+    account, which is why this concept is source_stated rather than inferred.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_mb_c001_picture_world_vocabulary
+  kind: source_specific_concept
+  origin_ref: molly_bang_picture_this
+  label: the_framed_picture_as_a_world_with_its_own_forces
+  children_terms: [t_mb_c001_0003, t_mb_c001_0002, t_mb_c001_0004, t_mb_c001_0005]
+  origin: source_stated
+  basis: >
+    The source introduces the picture as a world of its own as an explicit section framing on page
+    60, then names the picture-world, its centre of attention, the radial force running inward from
+    the frame, and the invisible emotional horizon line as its parts. The grouping is the source's
+    own organising move, not ours.
+  asserts_agreement_between_sources: false

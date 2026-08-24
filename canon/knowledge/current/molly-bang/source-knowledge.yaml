@@ -1,0 +1,2804 @@
+# CANON-001 — Molly Bang, "Picture This", pp.42-91
+# Fresh SourceKnowledge extraction created directly under SPEC-03.
+#
+# Independence: produced WITHOUT consulting canon/knowledge/migration/AUDIT-molly-bang.md,
+# canon/knowledge/atoms-v1-superseded/molly-bang-principles-atoms.yaml, FINDINGS-02 or FINDINGS-03.
+# IDs are task-scoped per Controller ruling 2 and carry no semantic meaning.
+#
+# Naming convention (Controller ruling 1): extractor-assigned labels for problems/properties/
+# entities are concise snake_case noun or state phrases; remedies are verb-first snake_case.
+# Where Molly Bang supplies her own term it is preserved and label_origin is source_verbatim.
+#
+# OCR note (Controller ruling 6): the source text file is visibly OCR-degraded. Verbatim
+# source_terms are used ONLY where a rendered page image carries legible typeset text confirming
+# the wording. Elsewhere the claim is paraphrased and extraction_uncertainty records ocr_degraded.
+
+source_id: molly_bang_picture_this
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# GRAVITY FAMILY — principles 1-4 (pp.42-59)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_mb_c001_0001
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Smooth, flat, horizontal shapes give us a sense of stability and calm."
+    - "islands of calm"
+  concept_label: horizontal_emphasis_reads_as_stable_and_calm
+  label_origin: extractor_assigned
+  claim: >
+    Shapes that lie flat and horizontal are read as stable and calm. A picture whose overall
+    structure emphasises the horizontal generally reads as stable and calm; smaller horizontally
+    oriented shapes inside a picture act as local pockets of the same quality.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source attributes this to gravity and to bodily association: horizontal shapes are
+      associated with the surface of the earth and the horizon line, humans are most stable when
+      horizontal because they cannot fall down, and shapes that lie horizontal look secure because
+      they will not fall on the viewer either.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "pictures whose structure emphasises horizontal shapes; also smaller horizontal shapes within any picture"
+  caveats:
+    - text: "the source presents this as the first of a family of gravity-derived principles, not as an isolated rule"
+      origin: source_stated
+    - text: "the supporting example (Little Red Riding Hood as a triangle with a wide flat base) refers back to material outside the extracted page range and was not inspected"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "white field above a solid dark horizontal band occupying the lower portion of the frame", figure_ref: p43}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0002, note: "the source presents horizontal and vertical emphasis as opposite emotional registers"}
+    - {relation: qualified_by, target: sk_mb_c001_0003, note: "a horizontal placed across verticals restores the stable reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 1"
+    page_start: 42
+    page_end: 43
+    figure_refs: [p43]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p43]
+
+- sk_id: sk_mb_c001_0002
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Vertical shapes are more exciting and more active."
+  concept_label: vertical_emphasis_reads_as_active_and_exciting
+  label_origin: extractor_assigned
+  claim: >
+    Vertical shapes are read as more exciting and more active than horizontal ones. They are felt
+    to imply energy and a reaching upward.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Verticals are described as rebelling against gravity. The source reasons from things that
+      grow or are built vertically (trees, churches, skyscrapers), which require great energy to
+      become vertical and would release great energy if they fell, and calls vertical structures
+      monuments to kinetic energy of the past and future and to potential energy of the present.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "pictures whose structure emphasises vertical shapes"
+  caveats:
+    - text: "the source links the excitement of verticality to the possibility of falling, using the analogy of a toddler rising off the floor"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0001, note: "presented as the opposite emotional register to horizontal emphasis"}
+    - {relation: qualified_by, target: sk_mb_c001_0003, note: "a horizontal bar across a row of verticals checks the vertical reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "The Principles — principle 2"
+    page_start: 44
+    page_end: 45
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0003
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "If a horizontal bar is placed across the top of a row of verticals, stability reigns again, as in a Greek temple."
+  concept_label: horizontal_across_verticals_restores_stability
+  label_origin: extractor_assigned
+  claim: >
+    Placing a horizontal bar across the top of a row of vertical shapes restores the stable
+    reading and checks the vertical sense of vitality and reaching upward. The verticals in turn
+    lend the horizontal a quality the source calls regal, producing order and stability together
+    with the pride associated with height.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a composition combining a row of verticals with a horizontal across the top"
+  caveats:
+    - text: "this is a claim about the interaction of two other principles rather than about a single structural element, and the source states it inside the discussion of principle 2 rather than as a principle of its own"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a Greek temple, cited verbally rather than shown", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0001, note: "specifies a combination in which the stable reading is recovered"}
+    - {relation: qualifies, target: sk_mb_c001_0002, note: "specifies a combination in which the active vertical reading is checked"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "The Principles — principle 2"
+    page_start: 45
+    page_end: 45
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0004
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Diagonal shapes are dynamic because they imply motion or tension."
+  concept_label: diagonal_emphasis_reads_as_dynamic
+  label_origin: extractor_assigned
+  claim: >
+    Shapes on a diagonal are read as dynamic, because they are felt to be in movement or in
+    tension. The source later widens this from shapes to any structural element, stating that any
+    picture emphasising the diagonal — whether by shape, colour, light or any other structural
+    element — is dynamic.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Objects in nature that sit on a diagonal are either in movement or in tension, so diagonal
+      shapes in a picture are felt the same way.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any picture emphasising the diagonal, by any structural element"
+  caveats:
+    - text: "the source offers several competing readings of the same diagonal bars (falling pillars, roof beams, growing branches) and treats the dynamic reading as common to all of them"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "frame divided corner to corner by a single diagonal edge between a light and a dark field", figure_ref: p49}
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0009, note: "the triangle on a diagonal is a specific case"}
+    - {relation: contradicts, target: sk_mb_c001_0001, note: "presented as an emotional register opposed to horizontal stability"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - mechanism_given
+      - repeated_within_source
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 46
+    page_end: 52
+    figure_refs: [p49]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p49]
+
+- sk_id: sk_mb_c001_0005
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "In an asymmetrical frame, diagonals give a sense of depth."
+  concept_label: diagonals_read_as_depth_in_asymmetrical_frame
+  label_origin: extractor_assigned
+  claim: >
+    Diagonal elements can be read as leading the eye into the picture and back into space, and in
+    an asymmetrical frame they give a sense of depth.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "asymmetrical frames containing diagonal elements"
+  caveats:
+    - text: "the source hedges the reading itself, saying the bars can also be seen this way rather than that they must be"
+      origin: source_stated
+    - text: "the source does not define what makes a frame asymmetrical"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0004, note: "an additional reading of the same diagonal element"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - mechanism_absent
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 46
+    page_end: 46
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0006
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "A diagonal strut holding in place a vertical stud and a horizontal beam is in tension, supporting the one, restraining the other, and tying the two securely together as a much more stable unit."
+    - "Diagonals in pictures often perform exactly the same function."
+  concept_label: diagonal_binds_vertical_and_horizontal_into_stable_unit
+  label_origin: extractor_assigned
+  claim: >
+    A diagonal placed between a vertical and a horizontal is in tension and ties the two into a
+    more stable unit, supporting one and restraining the other. Diagonals in pictures often
+    perform the same function.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The diagonal is under tension, and that tension is what binds the vertical and horizontal
+      members together into a single more stable structure.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "compositions combining diagonal, vertical and horizontal elements"
+  caveats:
+    - text: "the source hedges the transfer from structure to picture with the word often"
+      origin: source_stated
+    - text: "the supporting cases are architectural (a stud-and-beam joint, a Gothic flying buttress) and the transfer to pictures is asserted rather than demonstrated"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a dark horizontal beam and vertical stud joined by a diagonal strut", figure_ref: p47}
+      - {description: "the flying buttress of a Gothic cathedral, described verbally", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0004, note: "a case in which a diagonal produces stability rather than movement"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - mechanism_given
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 47
+    page_end: 48
+    figure_refs: [p47]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p47]
+
+- sk_id: sk_mb_c001_0007
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Notice how we tend to read diagonals from left to right, as though they are going up or descending."
+  concept_label: diagonals_are_read_left_to_right
+  label_origin: extractor_assigned
+  claim: >
+    Diagonals tend to be read from left to right, so that the same diagonal is understood as either
+    ascending or descending depending on which way it runs.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any diagonal element"
+  caveats:
+    - text: "the source states this as a general perceptual tendency and does not scope it to any reading culture, although left-to-right scanning is not universal"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a diagonal edge running corner to corner, described by the source as something the eye cannot help moving down and up", figure_ref: p49}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0004, note: "specifies the direction in which a diagonal is read"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 49
+    page_end: 49
+    figure_refs: [p49]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p49]
+
+- sk_id: sk_mb_c001_0008
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "A triangle placed on a flat base gives a feeling of stability."
+  concept_label: triangle_on_flat_base_reads_as_stable
+  label_origin: extractor_assigned
+  claim: >
+    A triangle resting on a flat base is read as stable.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a triangular shape resting on one flat side"
+  caveats:
+    - text: "the page carrying this statement is a near-empty caption page whose accompanying figure was not available for inspection, so only the text supports the claim"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0009, note: "the source presents the two as the same triangle in two orientations"}
+    - {relation: specialises, target: sk_mb_c001_0001, note: "a specific case of horizontal basing producing stability"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 50
+    page_end: 50
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0009
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The same triangle placed on a diagonal gives a sense of movement"
+  concept_label: triangle_on_diagonal_reads_as_moving
+  label_origin: extractor_assigned
+  claim: >
+    The same triangle placed on a diagonal is read as moving, whether as a shape teetering on one
+    point and about to fall back flat, or as a missile shooting up toward a corner of the page.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a triangular shape tilted off its flat base"
+  caveats:
+    - text: "the source offers two opposite readings of the same shape (about to fall back, or shooting upward) without resolving between them"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a dark triangle tilted off its base in an otherwise empty white field", figure_ref: p51}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0008, note: "same shape, one variable changed"}
+    - {relation: specialises, target: sk_mb_c001_0004, note: "a specific case of diagonal placement reading as dynamic"}
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0010, note: "the same figure carries both the movement reading and the floating reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 51
+    page_end: 51
+    figure_refs: [p51]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p51]
+
+- sk_id: sk_mb_c001_0010
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Notice how it feels as though it is floating, because there isn't any defined ground or baseline attached to it."
+  concept_label: absent_baseline_reads_as_floating
+  label_origin: extractor_assigned
+  claim: >
+    A shape with no defined ground or baseline attached to it is read as floating.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The floating reading is attributed directly to the absence of a defined ground or baseline
+      for the shape to rest on.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a shape presented without an attached ground plane or baseline"
+  caveats:
+    - text: "stated about the tilted triangle specifically; the source does not restate it as a general rule, although nothing in the wording limits it to triangles"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it feels as though it is floating"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a tilted dark triangle with no ground plane, in an empty white field", figure_ref: p51}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0009, note: "same figure, separate observation"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 51
+    page_end: 51
+    figure_refs: [p51]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p51]
+
+- sk_id: sk_mb_c001_0011
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "a slew of arrows, bullets, rocks, or unprogrammed missiles, following a diagonal trajectory"
+  concept_label: diminishing_repeated_diagonals_intensify_motion
+  label_origin: extractor_assigned
+  claim: >
+    Repeating a diagonal shape as a series that decreases in size along the diagonal, with the
+    outline of the whole group itself triangular or arrow-shaped, produces a stronger sense of
+    movement than the same shapes repeated at equal size and more nearly parallel.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source attributes the increased movement to two things: the shapes getting progressively
+      smaller, and the outline of the whole group being triangular or arrow-shaped.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a repeated series of similar shapes arranged along a diagonal"
+  caveats:
+    - text: "the source reports its own earlier attempt as a counter-case: equal-sized, more nearly parallel shapes still felt as though they were moving, but the result was boring and heavy"
+      origin: source_stated
+    - text: "the counter-case is described in words only; neither the final nor the earlier arrangement was available as a rendered figure, so no visual comparison was made"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the result was quite boring and heavy"
+  source_stated_remedies:
+    - "make the shapes sleeker, decrease them in size along the diagonal, and shape the outline of the whole group as a triangle or arrow"
+  examples:
+    positive: []
+    counter:
+      - {description: "the author's first attempt: shapes all cut the same size and more nearly parallel to each other", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_mb_c001_0004, note: "a specific arrangement that intensifies the diagonal reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - anecdotal
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "The Principles — principle 3"
+    page_start: 52
+    page_end: 53
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0012
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "an invisible, emotional horizon line stretching across the middle of the space and dividing it into top and bottom"
+  concept_label: invisible_emotional_horizon_divides_picture
+  label_origin: extractor_assigned
+  claim: >
+    Pictures are usually read as though an invisible emotional horizon line runs across the middle
+    of the space, dividing it into a top half and a bottom half.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "pictures generally"
+  caveats:
+    - text: "stated as a premise for the upper-half and lower-half principles rather than argued in its own right"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0013, note: "the division this claim describes is what makes the upper-half reading possible"}
+    - {relation: generalises, target: sk_mb_c001_0014, note: "the same division underlies the lower-half reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - mechanism_absent
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 4 preamble"
+    page_start: 54
+    page_end: 54
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0013
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The upper half of a picture is a place of freedom, happiness, and triumph; objects placed in the top half often feel more spiritual."
+  concept_label: upper_half_reads_as_free_happy_triumphant
+  label_origin: extractor_assigned
+  claim: >
+    Objects placed in the upper half of a picture are read as freer, happier and more triumphant,
+    and often as more spiritual. A viewer identifying with an object in the upper half tends to
+    feel lighter and gayer.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Two mechanisms are given. Tactically, being high up is a stronger position: the viewer can
+      see enemies and throw things down on them, whereas down low one cannot see far and things
+      might fall and crush. Gravitationally, objects higher up give a sense of floating, flying or
+      otherwise escaping the pull of the earth.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "objects placed above the invisible mid-height division of the frame"
+  caveats:
+    - text: "the source notes that when people are said to be high it implies they may eventually have a terrible downer when they come back to earth"
+      origin: source_stated
+    - text: "the corroborating evidence is a list of English idioms (top of the charts, top dog, top-drawer, things are looking up), so the support offered is specific to English usage even though the claim is stated generally"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a small red triangle placed in the upper left area of an otherwise empty white field", figure_ref: p55}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0014, note: "presented as opposite halves of one division"}
+    - {relation: qualified_by, target: sk_mb_c001_0017, note: "the source states the high-low reading is subservient to context and content"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - argued
+      - mechanism_given
+      - culturally_bounded
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 4"
+    page_start: 54
+    page_end: 55
+    figure_refs: [p55]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p55]
+
+- sk_id: sk_mb_c001_0014
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The bottom half of a picture feels more threatened, heavier, sadder, or constrained; objects placed in the bottom half also feel more grounded."
+  concept_label: lower_half_reads_as_threatened_heavy_and_grounded
+  label_origin: extractor_assigned
+  claim: >
+    Objects placed in the lower half of a picture are read as more threatened, heavier, sadder or
+    constrained, and at the same time as more grounded — more attached to the earth and less mobile.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source attributes the grounded reading to our tendency to see pictures as extensions of
+      our world, treating the top half as sky and the bottom half as ground.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "objects placed below the invisible mid-height division of the frame"
+  caveats:
+    - text: "the two readings the source gives are not the same in valence — threatened and sad on one hand, securely grounded on the other — and the source does not say which dominates"
+      origin: extractor_observed
+    - text: "the corroborating evidence is again a list of English idioms (down in the dumps, feeling low, living the low life)"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the same small red triangle placed in the lower left area of the same empty white field", figure_ref: p57}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0013, note: "same variable, opposite position; the two figures form a minimal pair"}
+    - {relation: contradicts, target: sk_mb_c001_0015, note: "the source itself calls the pictorial-weight corollary contradictory to the low-placement reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - argued
+      - mechanism_given
+      - culturally_bounded
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 4"
+    page_start: 56
+    page_end: 57
+    figure_refs: [p57]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p57]
+
+- sk_id: sk_mb_c001_0015
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "an object placed higher up on the page has greater pictorial weight"
+    - "greater pictorial weight"
+  concept_label: higher_placement_increases_pictorial_weight
+  label_origin: source_verbatim
+  claim: >
+    An object placed higher up the page draws more attention and feels more important than the same
+    object placed lower down. The source calls this greater pictorial weight and presents it as an
+    odd corollary that at first seems to contradict the reading of the upper half as free and light.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Offered tentatively: we must feel that most things truly belong on the ground, and we are
+      perturbed when this is not the case.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "all other things being equal"
+  caveats:
+    - text: "the source explicitly flags this as an odd corollary which at first seems contradictory"
+      origin: source_stated
+    - text: "the source scopes the remedy with all other things being equal, which is not further defined"
+      origin: source_stated
+    - text: "the mechanism is offered in hedged language (we must feel) rather than asserted"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "place an object in the upper half of the page to put more emphasis on it"
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0014, note: "the source names the tension itself"}
+    - {relation: qualifies, target: sk_mb_c001_0013, note: "adds an attention effect to the emotional reading of the upper half"}
+    - {relation: trades_off_with, target: sk_mb_c001_0037, note: "size and height both govern how strong or important an object feels"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — principle 4"
+    page_start: 56
+    page_end: 56
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0016
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "these principles are used not one by one, but always in combination and always in some context"
+    - "The addition of each new element can modify the effect of the other elements or even change them completely."
+  concept_label: principles_operate_only_in_combination
+  label_origin: extractor_assigned
+  claim: >
+    The principles are never used one at a time. Every picture uses a combination of them, and the
+    addition of each new element can modify the effect of the other elements or change them
+    completely. Each principle looks clear considered individually, but the interactions of the
+    parts and the resulting overall effect are more complex.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any picture using more than one structural element"
+  caveats:
+    - text: "the source pauses the sequence of principles specifically to state this, describing it as something to remember before leaving the effects of gravity"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0001, note: "warns against reading any single principle in isolation"}
+    - {relation: qualifies, target: sk_mb_c001_0013, note: "same warning"}
+    - {relation: generalises, target: sk_mb_c001_0003, note: "the horizontal-across-verticals case is an instance of principles modifying one another"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — interlude before the picture-world principles"
+    page_start: 58
+    page_end: 58
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0017
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "the principles work in conjunction with each other, and they are subservient to context and content — to the picture's meaning"
+  concept_label: structural_reading_is_subservient_to_content
+  label_origin: extractor_assigned
+  claim: >
+    The structural principles hold, but they are subordinate to the picture's context and content.
+    The same configuration can support several different meanings, and the appropriate structural
+    choices follow from which meaning is intended.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any picture carrying meaning-content"
+  caveats:
+    - text: "the source demonstrates this by reading one configuration three ways (a person about to jump, a general surveying territory, a climber at a summit) and then reworking the picture for each reading"
+      origin: source_stated
+    - text: "only the configuration the source judges most appropriate (the general) was available as a rendered figure; the reworked climber and suicide variants are described in text but their figure page was not available for inspection, so the comparison the argument rests on was not seen"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "match structural choices (figure size, pose, ground shape, colour) to the intended meaning-content"
+  examples:
+    positive:
+      - {description: "a small red triangular figure on top of a large dark cliff form with a stable horizontal base, read by the source as a general surveying territory", figure_ref: p59}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0013, note: "the high-means-happier reading holds but is subordinate to content"}
+    - {relation: qualifies, target: sk_mb_c001_0016, note: "extends combination to include content as well as structure"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - argued
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "The Principles — worked example following principle 4"
+    page_start: 58
+    page_end: 60
+    figure_refs: [p59]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p59]
+
+# ─────────────────────────────────────────────────────────────
+# THE PICTURE AS A WORLD OF ITS OWN — principle 5 and surrounds (pp.60-67)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_mb_c001_0018
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "we read it as though gravity existed inside the picture as well as outside"
+  concept_label: gravity_is_read_as_acting_inside_the_picture
+  label_origin: extractor_assigned
+  claim: >
+    Pictures are seen as extensions of reality and read as though gravity operated inside them as
+    well as outside. Most pictures are rectangular, and their horizontal and vertical edges
+    accentuate the sense of gravity's force.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The rectangular frame's own horizontal and vertical edges are what accentuate the viewer's
+      sense of gravitational force inside the picture.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "rectangular pictures"
+  caveats:
+    - text: "the source presents this as a restatement of something said earlier in the book, outside the extracted range"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0001, note: "the gravity-derived principles depend on this reading"}
+    - {relation: contradicts, target: sk_mb_c001_0019, note: "circular frames are given as the case where this does not hold in the same way"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — the picture as a world of its own"
+    page_start: 60
+    page_end: 60
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0019
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "When pictures are circular, they give the impression of floating, as complete circles within a picture seem to be floating or rolling."
+  concept_label: circular_frames_read_as_floating
+  label_origin: extractor_assigned
+  claim: >
+    A circular picture gives the impression of floating, in the same way that complete circles
+    inside a picture seem to be floating or rolling.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source relates it back to gravity and to our experience with round objects.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "circular picture frames, and complete circles within a picture"
+  caveats:
+    - text: "stated parenthetically as an aside rather than developed"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0018, note: "the case where the rectangular frame's gravitational cue is absent"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — the picture as a world of its own"
+    page_start: 60
+    page_end: 60
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0020
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The rectangular frame of the picture forms a separate world inside itself."
+    - "a radial force, mainly radiating lines inward from the frame to the midpoint"
+  concept_label: frame_generates_inward_radial_force
+  label_origin: extractor_assigned
+  claim: >
+    The rectangular frame creates a separate world whose edges enclose the viewer's attention and
+    force it toward the centre. The source describes this as a centre-versus-frame visual conflict
+    acting as a radial force, mainly radiating inward from the frame to the midpoint, with the
+    centre also radiating energy outward to a much lesser degree.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The enclosing edges push attention inward toward the midpoint; the centre both receives that
+      force and, to a lesser extent, radiates energy back out.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any framed picture; the effect is stronger for square and round frames"
+  caveats:
+    - text: "the source states the effect is sensed even more strongly when the frame is square or round, so that the centre is much harder for the eyes to leave"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0021, note: "the radial force is the stated basis for the centre being the point of greatest attraction"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — principle 5 preamble"
+    page_start: 62
+    page_end: 62
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0021
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The center of the page is the most effective center of attention. It is the point of greatest attraction."
+    - "They are trapped, pinned to the center."
+  concept_label: centre_is_strongest_point_of_attraction
+  label_origin: extractor_assigned
+  claim: >
+    The centre of the page is the most effective centre of attention and the point of greatest
+    attraction. An element placed there holds the eye, making it difficult to move away and
+    explore the rest of the page.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attributed to the frame's inward radial force: the edges enclose attention and drive it to
+      the midpoint, and a square or round frame intensifies this to the point where the eyes find
+      it much harder to get away.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any framed picture with a centred element"
+  caveats:
+    - text: "square and round frames intensify the effect"
+      origin: source_stated
+    - text: "the source notes that the emotional reading of the same centred figure depends on context — a jewel radiating light, a heroine radiating triumph, or a figure surrounded by attackers — while the attentional effect remains constant"
+      origin: source_stated
+    - text: "the demonstration figure varies more than position: the centred burst is white on black with a red centre, and the displaced version also breaks the left edge and introduces a competing dark area, so the pair is not a strictly isolated comparison"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it is difficult to take our eyes from the center and move them around the page"
+    - "they are trapped, pinned to the center"
+  source_stated_remedies:
+    - "keep the main emphasis away from the center if the picture is meant to be explored"
+  examples:
+    positive:
+      - {description: "a red triangle centred inside a white star-burst on a black ground", figure_ref: p63}
+    counter:
+      - {description: "the same burst and triangle displaced to the upper left, with the white reaching the left edge", figure_ref: p65}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_mb_c001_0023, note: "holding the eye at the centre versus releasing it to explore the page"}
+    - {relation: qualified_by, target: sk_mb_c001_0027, note: "proximity to the centre and to the edge both raise tension"}
+    - {relation: qualified_by, target: sk_mb_c001_0029, note: "exact centring is described as appropriate for objects of meditation"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 5"
+    page_start: 62
+    page_end: 63
+    figure_refs: [p63, p65]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p63, p65]
+
+- sk_id: sk_mb_c001_0022
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "one of the goals behind most pictures is precisely that: to encourage the viewer to wander around inside this framed world and explore it all over"
+  concept_label: exploration_is_a_common_goal_of_pictures
+  label_origin: extractor_assigned
+  claim: >
+    One of the goals behind most pictures is to encourage the viewer to wander around inside the
+    framed world and explore all of it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "most pictures, per the source"
+  caveats:
+    - text: "this is a claim about intent rather than about perception, and it is what makes the centring effect a problem rather than a neutral fact; the source asserts it without argument"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0021, note: "supplies the goal against which the trapped-eye reading counts as a problem"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 5 preamble"
+    page_start: 62
+    page_end: 62
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0023
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "the picture is more dynamic"
+    - "This sense of movement comes about because our eyes are now encouraged to move."
+  concept_label: off_centre_emphasis_releases_eye_movement
+  label_origin: extractor_assigned
+  claim: >
+    Shifting the focus of attention away from the centre makes the picture more dynamic, because
+    the eyes are then encouraged to move — travelling between the displaced element and other
+    areas that become foci of their own.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Once the emphasis is off centre, the eye is encouraged to move between it and other areas,
+      and that movement is what is felt as the picture's dynamism.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a framed picture whose main emphasis is displaced from the centre"
+  caveats:
+    - text: "the displaced version also breaks the frame at the left edge and creates a second dark focus at the right, so more than one variable differs from the centred version"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "shift the focus of attention away from the centre of the page"
+  examples:
+    positive:
+      - {description: "the burst and red triangle displaced toward the upper left, with a dark area at the right becoming a second focus", figure_ref: p65}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_mb_c001_0021, note: "releasing the eye versus holding it"}
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0024, note: "the same figure carries the edge-breaking observation"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — principle 5"
+    page_start: 64
+    page_end: 65
+    figure_refs: [p65]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p65]
+
+- sk_id: sk_mb_c001_0024
+  source_id: molly_bang_picture_this
+  concept_label: element_reaching_the_edge_implies_space_beyond
+  label_origin: extractor_assigned
+  claim: >
+    When an area of the picture extends all the way to the edge of the frame, the picture implies
+    space outside itself and is felt to break out into the world beyond.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "an area of the picture reaching the frame edge"
+  caveats:
+    - text: "the sentence carrying this claim is corrupted in the available scan; the wording has been paraphrased rather than quoted, and no verbatim source_terms are recorded"
+      origin: extractor_observed
+    - text: "the rendered figure independently confirms that the white area does reach the left edge, which is what the surviving text describes"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "white burst area running off the left edge of the frame", figure_ref: p65}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0023, note: "same figure"}
+    - {relation: qualified_by, target: sk_mb_c001_0028, note: "the frame-breaking observation extends this from implying space beyond to activating depth across the whole picture"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — principle 5"
+    page_start: 64
+    page_end: 65
+    figure_refs: [p65]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p65]
+
+- sk_id: sk_mb_c001_0025
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "But whatever we do with the center, our eyes are drawn to it and our feelings are strongly affected by it."
+  concept_label: centre_remains_active_even_when_unoccupied
+  label_origin: extractor_assigned
+  claim: >
+    The centre stays perceptually active whatever is done with it. It can serve as the hub where
+    more intense action takes place, as an empty area of calm or incompleteness, as a divider of
+    left from right, or as the place where two equal elements join — but in every case the eyes are
+    drawn to it and feeling is strongly affected by it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any framed picture, whether or not the centre is occupied"
+  caveats:
+    - text: "the source adds that the invisible lines of force remain present during all this movement, and that the viewer is aware of them whether or not consciously"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0023, note: "moving the emphasis off centre does not deactivate the centre"}
+    - {relation: qualifies, target: sk_mb_c001_0021, note: "widens the centre's role beyond holding a placed element"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — principle 5"
+    page_start: 64
+    page_end: 64
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0026
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The edges and corners of the picture are the edges and corners of the picture-world."
+  concept_label: frame_edges_are_the_boundary_of_the_picture_world
+  label_origin: extractor_assigned
+  claim: >
+    The edges and corners of the picture are read as the edges and corners of the world inside it,
+    carrying the same meanings that the corresponding verbal expressions carry.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any framed picture"
+  caveats:
+    - text: "the support offered is a set of English idioms (cornered, in a tight corner, on edge, nerves are on edge, pushing him over the edge), so the evidence is specific to English usage"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a pale circle high left, a red quadrilateral breaking the lower right edge, and a small outlined triangle in the lower left corner, on a dark ground", figure_ref: p66}
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0027, note: "the tension near edges follows from reading edges as world boundaries"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - culturally_bounded
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — edges and corners"
+    page_start: 66
+    page_end: 66
+    figure_refs: [p66]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p66]
+
+- sk_id: sk_mb_c001_0027
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The closer an object is to the edge or to the center, the greater the tension."
+  concept_label: proximity_to_edge_or_centre_increases_tension
+  label_origin: extractor_assigned
+  claim: >
+    Tension increases as an object approaches either the edge of the frame or its centre.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Illustrated by analogy with a golf ball on a green: far from the hole it reads as a plain
+      white ball, but the closer it gets, the more the viewer wants to push it over the edge and in.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "an object approaching either the frame edge or the frame centre"
+  caveats:
+    - text: "this pairs the edge and the centre as sources of tension, whereas principle 5 describes the centre as a place where the eye is trapped and held; the source does not reconcile the two descriptions"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a red quadrilateral crossing the lower right frame edge", figure_ref: p66}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0021, note: "adds a tension reading to the centre alongside the attraction reading"}
+    - {relation: specialises, target: sk_mb_c001_0026, note: "a specific consequence of edges being world boundaries"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — edges and corners"
+    page_start: 66
+    page_end: 66
+    figure_refs: [p66]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p66]
+
+- sk_id: sk_mb_c001_0028
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "I find that when I cover up the red shape in this picture, the space becomes much flatter."
+    - "It's only when I see the red box break out of the frame that I'm aware that the other two objects can escape it, too."
+  concept_label: one_frame_breaking_element_activates_depth_for_the_whole_picture
+  label_origin: extractor_assigned
+  claim: >
+    A single element that breaks out of the frame makes the whole picture space read as less flat,
+    because it establishes that the other objects could escape the frame as well. Covering that
+    element flattens the space again.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Seeing one object break the frame makes the viewer aware that the other objects can escape
+      it too, and it is that awareness that gives the space its depth.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a picture containing at least one element that crosses the frame boundary"
+  caveats:
+    - text: "the source reports this as its own act of covering the shape and observing the change, in the first person"
+      origin: source_stated
+    - text: "the covered state is described but not shown; only the uncovered picture was available for inspection, so the comparison could not be verified visually"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the space becomes much flatter"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "red quadrilateral crossing the lower right frame edge, with a pale circle and outlined triangle not crossing it", figure_ref: p66}
+    counter:
+      - {description: "the same picture with the red shape covered, described but not shown", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0024, note: "extends reaching the edge from implying space beyond to activating depth across the whole picture"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — edges and corners"
+    page_start: 66
+    page_end: 66
+    figure_refs: [p66]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p66]
+
+- sk_id: sk_mb_c001_0029
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Artists seldom place their figures in the exact center of the page unless that figure is meant to be an object of meditation."
+    - "center the mind"
+  concept_label: exact_centring_suits_objects_of_meditation
+  label_origin: extractor_assigned
+  claim: >
+    Artists seldom place a figure in the exact centre of the page unless it is meant to be an
+    object of meditation. Visual aids to meditation — Tantric, Christian or nonspecifically
+    religious — tend to centre the object so as to help the viewer centre the mind. With an object
+    or a hole centred, it is difficult to move away from the centre.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "figures placed at the exact centre of the page"
+  caveats:
+    - text: "the claim about what artists seldom do is a claim about practice, offered without citation or counted evidence"
+      origin: extractor_observed
+    - text: "the meditation examples span several traditions and are named rather than shown"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "centre the object of meditation to help the viewer centre the mind"
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0021, note: "names the case where the trapping effect of the centre is the desired outcome"}
+    - {relation: contradicts, target: sk_mb_c001_0022, note: "meditation images do not aim to make the viewer explore the page"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - historical_claim
+      - culturally_bounded
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — edges and corners"
+    page_start: 67
+    page_end: 67
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0030
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "a third invisible force we read into pictures is the force of movement and of life"
+    - "they are no longer subject to constricting principles"
+  concept_label: living_elements_are_read_as_self_willed
+  label_origin: extractor_assigned
+  claim: >
+    A third invisible force read into pictures is movement and life. Elements understood as alive
+    are imbued with wills of their own, and at that point they are no longer subject to the
+    constricting principles: they may begin their movements on cue from the artist, but they move
+    as the viewer wills them to.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "elements the viewer reads as alive or capable of movement"
+  caveats:
+    - text: "this states a limit on the reach of the source's own principles, and the source offers no demonstration or argument for where that limit falls"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0016, note: "bounds the range over which the combined principles govern the reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — edges and corners"
+    page_start: 67
+    page_end: 67
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────
+# LIGHT, DARK, SHAPE, SIZE, COLOUR — principles 6-10 (pp.68-80)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_mb_c001_0031
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "We read light backgrounds as day and dark backgrounds as night, twilight, or storm."
+  concept_label: background_value_is_read_as_time_of_day
+  label_origin: extractor_assigned
+  claim: >
+    Light backgrounds are read as day; dark backgrounds are read as night, twilight or storm.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "the overall value of a picture's background"
+  caveats: []
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0032, note: "the day and night reading is what the safety reading is built on"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 6 preamble"
+    page_start: 68
+    page_end: 68
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0032
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "White or light backgrounds feel safer to us than dark backgrounds because we can see well during the day and only poorly at night."
+  concept_label: light_backgrounds_read_as_safer_than_dark
+  label_origin: extractor_assigned
+  claim: >
+    Light backgrounds feel safer than dark ones. Because we cannot see in the dark, black often
+    symbolises the unknown and the fears attached to it, while white signifies brightness and hope.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      We see well during the day and only poorly at night, so our inability to see in the dark
+      attaches the unknown and its associated fears to black.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "background value in a picture"
+  caveats:
+    - text: "the source gives two exceptions of its own, both attributed to context: we would feel safer escaping danger under cover of darkness, and terrified if deserted on a limitless expanse of ice"
+      origin: source_stated
+    - text: "the source frames the exceptions as an instance of a general rule that there are exceptions to every rule, usually due to context"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_mb_c001_0033, note: "the death association cuts across the safety reading in both directions"}
+    - {relation: qualified_by, target: sk_mb_c001_0017, note: "the source's own exceptions are context-driven"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 6"
+    page_start: 68
+    page_end: 68
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0033
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "both black and white are noncolors, and both represent death"
+  concept_label: black_and_white_both_carry_death_associations
+  label_origin: extractor_assigned
+  claim: >
+    Black and white are both noncolours and both represent death, but which one does so is
+    culturally variable: Europeans wear black to mourn, while mourners in India and Korea wear
+    white. Many things in nature that are black or white are lifeless.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The association is traced to things in nature that are black or white and lifeless — black
+      night, white bones, black coal, white sea foam and clouds, black pitch or charred wood,
+      white pearls, white snow.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "black and white as picture elements"
+  caveats:
+    - text: "the source itself names the cultural variation, contrasting European mourning dress with mourning dress in India and Korea"
+      origin: source_stated
+    - text: "the supporting idioms (black as death, milk-white, snow-white, dead-white) are English"
+      origin: extractor_observed
+    - text: "this cuts across the source's own safety reading, since white is described as both hope and death within two pages"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a red triangle on a black ground", figure_ref: p69}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0032, note: "complicates the light-is-safe reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - culturally_bounded
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 6"
+    page_start: 69
+    page_end: 69
+    figure_refs: [p69]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p69]
+
+- sk_id: sk_mb_c001_0034
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Bright and pale colors glow like jewels against dark backgrounds. Against white or pale backgrounds, bright colors often look washed out."
+  concept_label: bright_colours_glow_on_dark_and_wash_out_on_light
+  label_origin: extractor_assigned
+  claim: >
+    Bright and pale colours glow like jewels against dark backgrounds, and often look washed out
+    against white or pale ones.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A physiological explanation is offered: white light is made of all the colours, so all the
+      colour receptors in the eye are activated and become bleached out when we see white; a black
+      background lets the receptors rest, except in the area of the coloured shape itself.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a bright or pale colour placed against a background of contrasting value"
+  caveats:
+    - text: "the source hedges the washed-out direction with often"
+      origin: source_stated
+    - text: "the physiological account is asserted without citation, and bleached out is used in quotation marks rather than as a defined term"
+      origin: extractor_observed
+  source_stated_problems:
+    - "bright colors often look washed out"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a saturated red triangle glowing against a large black field", figure_ref: p69}
+  intra_source_relations:
+    - {relation: specialises, target: sk_mb_c001_0045, note: "a specific case of contrast enabling something to be seen"}
+    - {relation: generalises, target: sk_mb_c001_0055, note: "the Sue Jensen illustration is a specific instance of a pale element glowing against a dark ground"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 6"
+    page_start: 69
+    page_end: 69
+    figure_refs: [p69]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p69]
+
+- sk_id: sk_mb_c001_0035
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "We feel more scared looking at pointed shapes; we feel more secure or comforted looking at rounded shapes or curves."
+  concept_label: pointed_shapes_read_as_threatening
+  label_origin: extractor_assigned
+  claim: >
+    Pointed shapes make a viewer feel more scared.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Our skin is thin and pointed objects can pierce through to our innards and kill us. The
+      source lists pointed things from experience — knives, arrows, spears, missiles, rockets,
+      rocky mountains, the bows of boats, scissors and saw blades, bee stingers, teeth.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "pictures whose shapes are predominantly pointed"
+  caveats:
+    - text: "the source states plainly that the picture cannot actually make the viewer any less safe, and that the viewer knows this; the effect is attributed to association rather than to threat"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a jagged black silhouette of sharp peaks against a white sky", figure_ref: p70}
+    counter:
+      - {description: "the same black-on-white landform composition with rolling curved contours instead of peaks", figure_ref: p71}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0036, note: "the two are presented as a matched pair, one variable changed"}
+    - {relation: specialises, target: sk_mb_c001_0038, note: "an instance of the association mechanism"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 7"
+    page_start: 70
+    page_end: 70
+    figure_refs: [p70, p71]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p70, p71]
+
+- sk_id: sk_mb_c001_0036
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Curved shapes embrace us and protect us."
+  concept_label: curved_shapes_read_as_secure_and_comforting
+  label_origin: extractor_assigned
+  claim: >
+    Rounded shapes and curves make a viewer feel more secure and comforted than pointed ones.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attributed to association with curved things from experience — rolling hills and seas,
+      boulders, rivers — and, the source says, most strongly with bodies, especially mothers'
+      bodies, which in infancy were the most secure and comforting place there was.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "pictures whose shapes are predominantly curved"
+  caveats:
+    - text: "the source is explicit that the curved picture cannot make the viewer any safer than the pointed one, and that we know this; the difference is entirely one of association"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a black silhouette of rolling curved landforms against a white sky", figure_ref: p71}
+    counter:
+      - {description: "the same composition rendered with sharp peaks", figure_ref: p70}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_mb_c001_0035, note: "matched pair"}
+    - {relation: specialises, target: sk_mb_c001_0038, note: "an instance of the association mechanism"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 7"
+    page_start: 71
+    page_end: 71
+    figure_refs: [p70, p71]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p70, p71]
+
+- sk_id: sk_mb_c001_0037
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The larger an object is in a picture, the stronger it feels."
+    - "We associate size with strength - strength of any sort."
+  concept_label: larger_objects_read_as_stronger
+  label_origin: extractor_assigned
+  claim: >
+    The larger an object is in a picture, the stronger it feels. The same figure appears much more
+    vulnerable when made very small, so a danger reads as more threatening when it is huge and the
+    protagonist very small.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      We generally feel more secure physically when we are big than when we are little, because we
+      are more capable of physically overpowering an enemy, and we associate size with strength of
+      any sort.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "relative size of objects within a picture"
+  caveats:
+    - text: "the pages carrying this principle and its demonstration pictures were not available as rendered figures, so nothing about this claim was verified visually"
+      origin: extractor_observed
+    - text: "the source later notes, of the Sue Jensen illustration, that two small white pieces immediately catch attention small though they are, which limits the reach of size as a determinant of notice"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "make a protagonist or a threat very large to make it appear strong"
+    - "make a figure very small to make it appear vulnerable"
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_mb_c001_0015, note: "size and height both govern felt strength or importance"}
+    - {relation: qualified_by, target: sk_mb_c001_0055, note: "small elements of high value contrast are still noticed first"}
+    - {relation: specialises, target: sk_mb_c001_0038, note: "an instance of the association mechanism"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "The Principles — principle 8"
+    page_start: 72
+    page_end: 72
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0038
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "This word associate is the key to the whole process of how picture structure affects our emotions."
+    - "emotions attached to remembered experiences"
+  concept_label: association_with_remembered_experience_is_the_underlying_mechanism
+  label_origin: source_verbatim
+  claim: >
+    The whole process by which picture structure affects emotion runs through association. Viewers
+    know a picture is not the real thing but suspend disbelief, and specific elements — points,
+    colour, size — call up the emotions felt when actual sharp points, colours or noticeably large
+    or small things were experienced. Those emotions attached to remembered experiences are what
+    largely determine the present response.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Association between picture elements and objects experienced in the real world outside the
+      picture, combined with a momentary suspension of disbelief in which the picture is treated
+      as real.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "all of the source's structural principles"
+  caveats:
+    - text: "the source hedges the strength of the claim, saying these emotions seem largely to determine our present responses rather than that they do"
+      origin: source_stated
+    - text: "the source states this as the key to the whole process, which makes it a claim about all the other principles rather than a principle alongside them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0035, note: "pointed shapes work by association"}
+    - {relation: generalises, target: sk_mb_c001_0036, note: "curved shapes work by association"}
+    - {relation: generalises, target: sk_mb_c001_0037, note: "size works by association"}
+    - {relation: generalises, target: sk_mb_c001_0040, note: "colour works by association with natural constants"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - argued
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — following principle 8"
+    page_start: 73
+    page_end: 73
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0039
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Color's effect on us is very strong - stronger than that of other picture elements."
+  concept_label: colour_has_stronger_effect_than_other_picture_elements
+  label_origin: extractor_assigned
+  claim: >
+    Colour's effect on the viewer is stronger than that of the other picture elements.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "colour compared against other structural elements"
+  caveats:
+    - text: "a ranking claim across all the source's other principles, stated without measurement or a comparison procedure"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0042, note: "the strength of colour is what the grouping claim rests on"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — colour"
+    page_start: 74
+    page_end: 74
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0040
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "natural constants"
+  concept_label: natural_constants
+  label_origin: source_verbatim
+  claim: >
+    Much of our reaction to colour comes from associating colours with certain natural objects,
+    which the source names natural constants: red with blood and fire, white with light, snow and
+    bones, black with darkness, yellow with the sun, blue with the sea and sky.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The associations are learned from nature and, the source suggests, may in many cases have
+      helped us stay alive.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "colours with strong natural referents"
+  caveats:
+    - text: "the source explicitly coins the term natural constants for these referent objects"
+      origin: source_stated
+    - text: "the source hedges the survival explanation with might have"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_mb_c001_0038, note: "colour association is a case of the general association mechanism"}
+    - {relation: generalises, target: sk_mb_c001_0041, note: "the false generalisation is built on these associations"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_given
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — colour"
+    page_start: 74
+    page_end: 74
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0041
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "These secondary associations are completely false, but we make them all the time."
+    - "Color symbolism is based on a false generalization. It also works - very, very well."
+  concept_label: colour_symbolism_is_a_false_generalisation_that_still_works
+  label_origin: extractor_assigned
+  claim: >
+    Beyond associating a colour with its natural referent, we further assume that anything sharing
+    that colour also has the referent's inherent qualities — a white swan seeming purer than a
+    mallard, a red rose more expressive of love than a pink one, a black crow nastier than a
+    cuckoo. The source states these secondary associations are completely false, that we make them
+    constantly, and that colour symbolism, though based on a false generalisation, works very well
+    and is heavily used in advertising, propaganda and visual fabrication.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An over-extension of the natural-constant associations: just as we assume all pointed shapes
+      are sharp, we assume everything of a given colour carries that colour's referent qualities.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any use of colour symbolism"
+  caveats:
+    - text: "the source names advertising, propaganda and all visual fabrications as the fields where this is most powerfully used, and does not treat the falseness as a reason not to use it"
+      origin: source_stated
+    - text: "this is one of the few places where the source marks one of its own mechanisms as factually false while affirming that it works"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_mb_c001_0040, note: "an over-extension of the natural-constant associations"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — colour"
+    page_start: 74
+    page_end: 74
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0042
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "We associate the same or similar colors much more strongly than we associate the same or similar shapes."
+  concept_label: shared_colour_groups_more_strongly_than_shared_shape
+  label_origin: extractor_assigned
+  claim: >
+    When elements differ in both shape and colour, the eye groups them by colour rather than by
+    shape. Grouping by shape remains possible but has to be forced. When all elements share one
+    colour, they are grouped by shape instead.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a set of elements varying in shape, colour, or both"
+  caveats:
+    - text: "the source states this is not necessarily the case for small children, who tend to make a stronger association with shape"
+      origin: source_stated
+    - text: "the two demonstration sets are not a strict minimal pair: the shapes and their positions differ between the all-red set and the mixed red-and-black set, so colour is not the only variable changed"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "triangles and circles all in the same red, which the viewer divides by shape", figure_ref: p75}
+      - {description: "triangles and circles in red and black, which the viewer divides by colour regardless of shape", figure_ref: p77}
+  intra_source_relations:
+    - {relation: specialises, target: sk_mb_c001_0039, note: "a specific consequence of colour being the stronger element"}
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0054, note: "the Sue Jensen illustration is the source's worked case of this claim"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 9"
+    page_start: 74
+    page_end: 77
+    figure_refs: [p75, p77]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p75, p77]
+
+- sk_id: sk_mb_c001_0043
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "in both cases we associate entities of the same color, and we read a meaning into their association"
+  concept_label: colour_grouping_is_read_as_meaningful_relationship
+  label_origin: extractor_assigned
+  claim: >
+    Grouping by colour is not neutral: the viewer reads a meaning into the association. The
+    association may be positive, as with team players in the same uniform, or negative, as with
+    Little Red Riding Hood and the wolf's eye and tongue, but in both cases a relationship is
+    inferred from the shared colour.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "two or more elements sharing a colour within one picture"
+  caveats:
+    - text: "the Little Red Riding Hood example refers back to material outside the extracted page range and was not inspected"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0042, note: "adds the consequence that colour grouping carries inferred meaning"}
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0054, note: "the Sue Jensen illustration shows both the grouping and the meaning read into it"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - anecdotal
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 9"
+    page_start: 76
+    page_end: 76
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0044
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "This page represents a situation that I'm not clear enough about to give a name to or call a principle, but that I can see working."
+    - "Life needs a mixture."
+  concept_label: both_perfect_regularity_and_confusion_are_distressing
+  label_origin: extractor_assigned
+  claim: >
+    The eye searches for repetitive patterns in order to make sense of what it sees, and notices
+    both repetition amid confusion and breaks in a repetitive pattern. Some repetition gives a
+    sense of security; confusion is frightening for most viewers. But perfect, relentless
+    repetition is perhaps even more horrifying in its monotony than confusion, because it implies
+    a cold, unfeeling, mechanical mind, and such patterns do not exist in nature. Either extreme
+    is terrifying, and feeling seems to be elicited by the proportion of regularity to irregularity.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Perfect regularity implies a cold, unfeeling, mechanical mind, and does not occur in nature
+      because there are too many forces working against each other.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "patterns formed by other picture elements, at either extreme of regularity"
+  caveats:
+    - text: "the source explicitly declines to name this or call it a principle, saying it is not clear enough about the situation, while stating that it can see it working"
+      origin: source_stated
+    - text: "the source says its own question is hampered by the ideas of perfect regularity and perfect chaos, and poses the alternative framings regularity and irregularity, order and disorder as open"
+      origin: source_stated
+    - text: "the supporting case is literary rather than pictorial: a remark by the novelist Ryunosuke Akutagawa that the worst hell would be an unending forest of cherry trees in full bloom"
+      origin: extractor_observed
+    - text: "the regular-pattern demonstration referenced by the text survives in the available scan only as a row of bullet characters, which reads as a printed regular dot grid but was not available as a rendered figure; only the irregular composition was inspected"
+      origin: extractor_observed
+  source_stated_problems:
+    - "confusion is more frightening for most of us; we say we are disoriented"
+    - "continual, relentless repetition is perhaps even more horrifying in its monotony than confusion"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a densely irregular black-and-white composition of broken dashes and jagged forms", figure_ref: p79}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_mb_c001_0045, note: "the source states it is contrast that enables us to see both patterns and elements, so perceiving pattern at all presupposes it"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - anecdotal
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: null
+    section: "The Principles — unnamed situation between principles 9 and 10"
+    page_start: 78
+    page_end: 79
+    figure_refs: [p79]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p79]
+
+- sk_id: sk_mb_c001_0045
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "We notice contrasts, or, put another way, contrast enables us to see."
+    - "Pictures - and human perceptions - are based on contrasts."
+  concept_label: contrast_enables_perception
+  label_origin: extractor_assigned
+  claim: >
+    Contrast is what enables us to see. It may be contrast between colours, shapes, sizes,
+    placement or combinations of these, and it is the contrast that allows both patterns and
+    individual elements to be perceived at all. The source presents this as the last principle,
+    involving combinations of all the others and perhaps the most basic to survival and to our way
+    of understanding the world and pictures.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any picture, and human perception generally"
+  caveats:
+    - text: "the source describes this principle as involving combinations of all the others, which places it above them rather than beside them"
+      origin: source_stated
+    - text: "the claim is extended from pictures to human perception generally without further argument"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "four panels contrasting a regular grid of squares, regularly spaced dark circles, overlapping circles of differing value, and a tilted panel, together with an eye form, on a black ground", figure_ref: p80}
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0034, note: "value contrast is one case of contrast enabling perception"}
+    - {relation: generalises, target: sk_mb_c001_0042, note: "colour difference is one case"}
+    - {relation: generalises, target: sk_mb_c001_0044, note: "pattern and its breaks are perceived through contrast"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "The Principles — principle 10"
+    page_start: 80
+    page_end: 80
+    figure_refs: [p80]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p80]
+
+# ─────────────────────────────────────────────────────────────
+# SOME REMARKS ABOUT SPACE (pp.81-91)
+# The source opens this section by stating it is "not trying to find principles anymore, just
+# noticing some things that happen." That epistemic downgrade is recorded as a source_stated
+# caveat on every object below and at system level in source-concept-systems.yaml.
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_mb_c001_0046
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The picture contains a space all its own."
+  concept_label: picture_space_captures_and_holds_the_viewer
+  label_origin: extractor_assigned
+  claim: >
+    The picture contains a space of its own. The viewer exists outside it until the eye fixes on
+    and captures an object inside it — and that object in turn draws the viewer into the picture
+    space.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any picture"
+  caveats:
+    - text: "the source opens this section by saying it is not trying to find principles anymore, just noticing some things that happen"
+      origin: source_stated
+    - text: "the statement is split across two facing pages in the available scan and reads as a single sentence interrupted by a page break; neither page was available as a rendered figure"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations: []   # no relation in SPEC-03 listed vocabulary fits this claim; see CANON-001 findings
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 82
+    page_end: 83
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0047
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Space isolates a figure, makes that figure alone, free, and vulnerable."
+  concept_label: surrounding_space_isolates_a_figure
+  label_origin: extractor_assigned
+  claim: >
+    Surrounding a figure with space isolates it and makes it read as alone, free and vulnerable.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a figure separated from a group by open space"
+  caveats:
+    - text: "the source immediately poses an unresolved question about this claim: the figure would stand out even more if it had a different shape, size and/or colour, but would it feel more isolated?"
+      origin: source_stated
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a cluster of dark triangles at lower left and one identical triangle alone at upper right, separated by empty white space", figure_ref: p84}
+  intra_source_relations: []   # no relation in SPEC-03 listed vocabulary fits this claim; see CANON-001 findings
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - mechanism_absent
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 84
+    page_end: 84
+    figure_refs: [p84]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p84]
+
+- sk_id: sk_mb_c001_0048
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "The movement of the picture is determined as much by the spaces between the shapes as by the shapes themselves."
+  concept_label: gaps_between_shapes_determine_pictorial_movement
+  label_origin: extractor_assigned
+  claim: >
+    The movement of a picture is determined as much by the spaces between its shapes as by the
+    shapes themselves.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a picture filled with objects of different shapes and sizes"
+  caveats:
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+    - text: "the accompanying picture was not available as a rendered figure, so the claim rests on the text alone"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_mb_c001_0053, note: "names the gaps between shapes as the specific carrier of the movement the closing statement attributes to space in general"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 85
+    page_end: 85
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0049
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "As soon as two objects overlap, the overlapping object takes the space of the covered one."
+    - "The overlapping object pierces or violates the space of the other, but this also joins them together into a single unit."
+  concept_label: overlap_takes_space_and_fuses_objects_into_one_unit
+  label_origin: extractor_assigned
+  claim: >
+    When two objects overlap, the overlapping one takes the space of the covered one. The overlap
+    is felt as piercing or violating the other's space, and at the same time it joins the two into
+    a single unit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "two objects whose outlines overlap"
+  caveats:
+    - text: "the source adds that beginners feel this strongly and find it hard to make one object overlap another, wanting to leave each element unbroken and inviolate with space around it"
+      origin: source_stated
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a red triangle overlapping a black triangle of similar size, the red taking the space where they cross", figure_ref: p86}
+  intra_source_relations: []   # no relation in SPEC-03 listed vocabulary fits this claim; see CANON-001 findings
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 86
+    page_end: 86
+    figure_refs: [p86]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p86]
+
+- sk_id: sk_mb_c001_0050
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "A sense of depth in space is created by placing the bases of progressively smaller/thinner/lighter objects gradually higher on the page."
+  concept_label: depth_from_raised_bases_and_geometric_spacing
+  label_origin: extractor_assigned
+  claim: >
+    Depth is created by placing the bases of progressively smaller, thinner or lighter objects
+    gradually higher on the page. The effect is stronger when the spaces between the receding
+    objects decrease in a regular geometric progression rather than an arithmetic one — each space
+    a fraction of the preceding one rather than smaller by a fixed amount.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a series of receding objects with visible bases"
+  caveats:
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+    - text: "the source expresses the geometric progression loosely, as each space being one-half or one-third smaller than the preceding one, which describes a ratio in the language of subtraction; the intended construction is clear from the contrast with a consistent fixed amount but the wording is imprecise"
+      origin: extractor_observed
+    - text: "the rendered figure shows three vertical bars differing in width, value and base height, consistent with the text; the spacing progression itself was not measured"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "raise the bases of progressively smaller, thinner or lighter objects up the page"
+    - "decrease the spaces between receding objects geometrically rather than by a fixed amount"
+  examples:
+    positive:
+      - {description: "three vertical bars of decreasing width and differing value, their bases set at progressively different heights against a light ground beside a dark field", figure_ref: p87}
+  intra_source_relations: []   # no relation in SPEC-03 listed vocabulary fits this claim; see CANON-001 findings
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 87
+    page_end: 87
+    figure_refs: [p87]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p87]
+
+- sk_id: sk_mb_c001_0051
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Space implies time."
+  concept_label: spatial_separation_reads_as_elapsed_time
+  label_origin: extractor_assigned
+  claim: >
+    Distance between two objects is read as time between them. A threat placed right next to its
+    victim is less frightening because there is no time for the victim to move and no time for the
+    viewer to be scared; the same threat placed far away gives the viewer time to be afraid.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The gap between two objects is read as the interval available before one reaches the other,
+      so a wide gap supplies time for fear and a narrow one forecloses it.
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "two objects in a threatening relationship, at varying separation"
+  caveats:
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+    - text: "the source reports its own reading in the first person and immediately concedes an alternative — that part of it wonders whether the two figures are just having a jolly old chat"
+      origin: source_stated
+    - text: "the supporting case is literary: a Jack London story in which a dying man realises the nearby wolf looks friendly because there is no reason for it to be aggressive"
+      origin: extractor_observed
+    - text: "neither the close-spacing nor the wide-spacing picture was available as a rendered figure, so the comparison the claim rests on was not seen"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "increase the distance between threat and victim to give the viewer time to feel fear"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_mb_c001_0052, note: "the source extends the tension effect to the opposite extreme of separation"}
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0043, note: "the source describes one picture as carrying both the space-time tension and a colour association drawing the separated objects together"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - anecdotal
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: source_hedges
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 88
+    page_end: 89
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0052
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "Wide space can create tension between the divided objects, but so can a sliver of space."
+  concept_label: both_wide_and_narrow_gaps_create_tension
+  label_origin: extractor_assigned
+  claim: >
+    Tension between two divided objects can be created by a wide space between them, and equally
+    by a sliver of space.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "two objects divided by space, at either extreme of separation"
+  caveats:
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+    - text: "the source does not say what happens at intermediate separations, so the claim as stated describes two extremes without describing the range between them"
+      origin: extractor_observed
+    - text: "the sliver-of-space picture was not available as a rendered figure"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0051, note: "extends the tension effect to the opposite extreme of separation"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 89
+    page_end: 90
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0053
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "As space enables us to move, so space gives movement and life to a picture."
+  concept_label: space_gives_movement_and_life_to_a_picture
+  label_origin: extractor_assigned
+  claim: >
+    Space gives a picture movement and life, in the same way that space is what enables us to move.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "any picture containing open space"
+  caveats:
+    - text: "the source opens this section by saying it is not trying to find principles anymore"
+      origin: source_stated
+    - text: "stated as a closing analogy rather than developed; no demonstration accompanies it and the page carried no rendered figure"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_mb_c001_0048, note: "the closing statement of what the spaces in a picture do"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - argued
+      - mechanism_absent
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space"
+    page_start: 90
+    page_end: 90
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_mb_c001_0054
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "the girl is associated with her three brothers because they are all the same color, even though the shape of the brothers is almost the same as that of the sorcerer"
+  concept_label: shared_colour_overrides_shared_shape_in_a_worked_illustration
+  label_origin: extractor_assigned
+  claim: >
+    In a real illustration, shared colour determines which elements are read as belonging together
+    even when a different pair shares a shape. The girl reads as associated with her three
+    brothers because they are all the same colour, although the brothers' shape is almost the same
+    as the sorcerer's; and the sorcerer reads as associated by colour with the prison bars and the
+    walls of the rock cave he lives in.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "a picture in which colour grouping and shape grouping point to different sets"
+  caveats:
+    - text: "the source credits the observation about the brothers and the sorcerer sharing a shape to a student, made about a year after the illustration had been shown to classes"
+      origin: source_stated
+    - text: "the illustration is by an eighth-grade student, Sue Jensen, and is presented as a found example rather than a constructed demonstration, so the variables are not controlled"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "pale figures behind red prison bars and a pale figure at left, against a dark cave form and a sharp red central sorcerer whose colour matches the bars and the cave walls", figure_ref: p91}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0055, note: "the source draws both observations from the same illustration"}
+    - {relation: specialises, target: sk_mb_c001_0042, note: "a worked instance of colour grouping beating shape grouping"}
+    - {relation: specialises, target: sk_mb_c001_0043, note: "the association is read as a meaningful relationship between the girl and her brothers"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - anecdotal
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space — closing illustration"
+    page_start: 91
+    page_end: 91
+    figure_refs: [p91]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p91]
+
+- sk_id: sk_mb_c001_0055
+  source_id: molly_bang_picture_this
+  source_terms:
+    - "before we even have any idea of what the picture is about, the white objects jump out at us from the rich background"
+    - "Notice how the two white pieces immediately catch our attention, small though they are"
+  concept_label: high_value_contrast_elements_are_noticed_before_content_is_understood
+  label_origin: extractor_assigned
+  claim: >
+    Elements of high value contrast against their ground are noticed before the viewer has any
+    idea what the picture is about, and are noticed despite being small. Their whiteness also
+    lends them a jewel-like quality.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [picture_book_illustration]
+    conditions: "small light elements against a dark, richly coloured ground"
+  caveats:
+    - text: "the source notes the elements catch attention small though they are, which stands against its own principle that larger objects feel stronger; the source does not reconcile the two"
+      origin: extractor_observed
+    - text: "presented as a found example rather than a controlled comparison; no version of the illustration with the contrast removed is offered"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "two small pale objects reading first against a dark and red ground", figure_ref: p91}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_mb_c001_0037, note: "value contrast overrides size in determining what is noticed first"}
+    - {relation: specialises, target: sk_mb_c001_0034, note: "an instance of a light element glowing against a dark ground"}
+    - {relation: specialises, target: sk_mb_c001_0045, note: "an instance of contrast enabling perception"}
+    - {relation: demonstrated_together_with, target: sk_mb_c001_0054, note: "same illustration"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: null
+    section: "Some Remarks about Space — closing illustration"
+    page_start: 91
+    page_end: 91
+    figure_refs: [p91]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [p91]

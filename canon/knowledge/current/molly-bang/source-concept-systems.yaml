@@ -1,0 +1,466 @@
+# CANON-001 — Molly Bang, "Picture This", pp.42-91
+# SourceConceptSystem objects created directly under SPEC-03.
+#
+# Admission test applied: a system is written only where the knowledge exists in the relationships
+# between claims and would be destroyed by atomising. Origin is marked at every structural level
+# per SPEC-03; where the structure is ours, whole_system_claim.origin is extractor_synthesis and
+# interpretation_basis is supplied.
+#
+# Independence: produced without consulting the historical audit or the superseded atom files.
+
+source_id: molly_bang_picture_this
+
+source_concept_systems:
+
+- scs_id: scs_mb_c001_001
+  source_id: molly_bang_picture_this
+  label: gravity_derived_emotional_register_of_structure
+  label_origin: extractor_assigned
+
+  system_type: interacting_set
+  system_type_origin: source_stated
+
+  description: >
+    The orientation and vertical placement of shapes — horizontal, vertical, diagonal, upper half,
+    lower half — jointly determine a picture's emotional register. The source groups these
+    explicitly as the principles arising from gravity and treats them as operating together rather
+    than singly.
+
+  whole_system_claim:
+    text: >
+      The principles in this group are never used one at a time. Every picture uses a combination
+      of them, and the addition of each new element can modify the effect of the other elements or
+      change them completely. Each principle looks clear considered on its own, but the
+      interactions of the parts make the overall effect more complex. The combined structural
+      reading is in turn subservient to the picture's context and content.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "The Principles — interlude before the picture-world principles", page_start: 58, page_end: 60}
+
+  members:
+    - {sk_ref: sk_mb_c001_0001, role_in_system: dimension, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0002, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0004, role_in_system: dimension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0013, role_in_system: dimension, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0014, role_in_system: dimension, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0003, role_in_system: interaction, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0012, role_in_system: enabling_premise, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0015, role_in_system: qualifying_corollary, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0016, role_in_system: whole_system_statement, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0017, role_in_system: whole_system_statement, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0018, role_in_system: enabling_premise, order: null, membership_origin: source_stated}
+
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_mb_c001_0013, to: sk_mb_c001_0012, nature: "the upper-half reading presupposes the invisible mid-height division", origin: source_stated}
+      - {from: sk_mb_c001_0014, to: sk_mb_c001_0012, nature: "the lower-half reading presupposes the same division", origin: source_stated}
+      - {from: sk_mb_c001_0001, to: sk_mb_c001_0018, nature: "the gravity-derived readings presuppose that gravity is read as acting inside the picture", origin: source_stated}
+    tradeoffs:
+      - between: [sk_mb_c001_0013, sk_mb_c001_0015]
+        nature: "the upper half reads as free, light and escaping gravity, and simultaneously carries greater pictorial weight and importance"
+        origin: source_stated
+        source_ref: {section: "The Principles — principle 4", page_start: 56}
+      - between: [sk_mb_c001_0001, sk_mb_c001_0002]
+        nature: "stability and calm versus energy and excitement; emphasising one register suppresses the other"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_mb_c001_0014, sk_mb_c001_0015]
+        nature: "low placement reads as heavier, yet high placement is said to carry greater pictorial weight; the source names the appearance of contradiction but does not resolve it"
+        origin: source_stated
+        source_ref: {section: "The Principles — principle 4", page_start: 56}
+
+  source_warns_against_isolated_use: true
+  source_warning_ref: {section: "The Principles — interlude", page_start: 58, quote_paraphrase: "the principles are used not one by one, but always in combination and always in some context"}
+
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, repeated_within_source, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      Membership and the whole-system claim are both source-stated: the source numbers these
+      principles in one series, introduces them as the ones arising from gravity, and states
+      directly that they operate only in combination. What is ours is the decision to treat the
+      invisible-horizon premise and the gravity-inside-the-picture premise as members rather than
+      as background, and the horizontal-versus-vertical trade-off, which the source implies but
+      does not state as a trade-off.
+
+  provenance:
+    section: "The Principles — principles 1 to 4 and the interlude following them"
+    page_start: 42
+    page_end: 60
+    source_support: text_and_visual
+
+- scs_id: scs_mb_c001_002
+  source_id: molly_bang_picture_this
+  label: frame_centre_and_edge_force_field
+  label_origin: extractor_assigned
+
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+
+  description: >
+    The frame, its centre and its edges act as one field of forces. Where emphasis is placed
+    determines simultaneously how strongly the eye is held, how far it travels, whether the picture
+    reads as opening into space beyond itself, and how much tension the placement carries. No
+    member of this group can be applied without the others also changing.
+
+  whole_system_claim:
+    text: >
+      Placement within the frame is a single decision with several simultaneous consequences.
+      Centring maximises attraction and minimises exploration; displacing emphasis releases eye
+      movement but leaves the centre perceptually active; approaching either the centre or the edge
+      raises tension; and an element that reaches or crosses the boundary changes how the whole
+      picture's depth reads. The source states the central trade-off and the individual effects
+      directly, but does not state that they form one field.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the centre-versus-exploration trade-off explicitly on page 62, states that
+      the centre remains perceptually active whatever is done with it on page 64, states the
+      edge-and-centre tension claim on page 66, and states on page 66 that covering the single
+      frame-breaking element flattens the whole space. Each is stated separately. The claim that
+      these constitute one force field with a single placement decision at its centre is ours,
+      inferred from the fact that the source's own remedy for one member (move emphasis off centre)
+      immediately triggers the others.
+    source_ref: null
+
+  members:
+    - {sk_ref: sk_mb_c001_0020, role_in_system: causal_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0021, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0022, role_in_system: stated_goal, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0023, role_in_system: dimension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0024, role_in_system: dimension, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0025, role_in_system: qualifying_corollary, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0026, role_in_system: causal_premise, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0027, role_in_system: dimension, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0028, role_in_system: dimension, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0029, role_in_system: exception_case, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0019, role_in_system: exception_case, order: null, membership_origin: extractor_inferred}
+
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_mb_c001_0021, to: sk_mb_c001_0020, nature: "the centre's attraction is attributed to the frame's inward radial force", origin: source_stated}
+      - {from: sk_mb_c001_0027, to: sk_mb_c001_0026, nature: "edge tension follows from reading edges as the boundary of the picture-world", origin: source_stated}
+      - {from: sk_mb_c001_0021, to: sk_mb_c001_0022, nature: "the trapped eye counts as a problem only against the stated goal of exploration", origin: source_stated}
+    tradeoffs:
+      - between: [sk_mb_c001_0021, sk_mb_c001_0023]
+        nature: "holding the eye at the centre versus releasing it to explore the framed world"
+        origin: source_stated
+        source_ref: {section: "The Principles — principle 5 preamble", page_start: 62}
+    conflicts:
+      - between: [sk_mb_c001_0021, sk_mb_c001_0027]
+        nature: "the centre is described as the point of greatest attraction where the eye is trapped and held, and separately as a place where proximity raises tension; the source states both and reconciles neither"
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_mb_c001_0022, sk_mb_c001_0029]
+        nature: "exploration is named as the goal behind most pictures, yet meditation images are said to be centred precisely to prevent the eye moving away"
+        origin: extractor_inferred
+        source_ref: null
+
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+    system_level_uncertainty: >
+      Members are individually well supported and the central trade-off is source-stated. The claim
+      that all eleven members form one field of forces is ours. Both recorded conflicts are ours to
+      name: the source states each side without acknowledging the tension. A reader who disagreed
+      that these are one system would still find every member and the trade-off intact.
+
+  provenance:
+    section: "The Principles — the picture as a world of its own, principle 5, edges and corners"
+    page_start: 60
+    page_end: 67
+    source_support: text_and_visual
+
+- scs_id: scs_mb_c001_003
+  source_id: molly_bang_picture_this
+  label: association_with_remembered_experience_as_causal_model
+  label_origin: extractor_assigned
+
+  system_type: causal_model
+  system_type_origin: source_stated
+
+  description: >
+    A causal account of why picture structure moves a viewer at all: elements in a picture are
+    associated with objects experienced in the world, and the emotions attached to those remembered
+    experiences are what the viewer feels. Pointed shapes, curved shapes, size and colour are the
+    source's worked instances of one mechanism rather than four independent effects.
+
+  whole_system_claim:
+    text: >
+      Association is the key to the whole process by which picture structure affects emotion. The
+      viewer knows the picture is not real but suspends disbelief, and specific elements call up
+      the emotions felt when the corresponding real things were experienced. The individual
+      shape, size and colour principles are consequences of this one mechanism.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "The Principles — following principle 8", page_start: 73, page_end: 74}
+
+  members:
+    - {sk_ref: sk_mb_c001_0038, role_in_system: mechanism, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0035, role_in_system: instance, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0036, role_in_system: instance, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0037, role_in_system: instance, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0040, role_in_system: instance, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0041, role_in_system: derived_consequence, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0032, role_in_system: instance, order: null, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0033, role_in_system: instance, order: null, membership_origin: extractor_inferred}
+
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+      - {from: sk_mb_c001_0035, to: sk_mb_c001_0038, nature: "the fear of points is an instance of remembered-experience association", origin: source_stated}
+      - {from: sk_mb_c001_0036, to: sk_mb_c001_0038, nature: "the comfort of curves is the same", origin: source_stated}
+      - {from: sk_mb_c001_0037, to: sk_mb_c001_0038, nature: "size-as-strength is named as one of the elements that call up remembered emotion", origin: source_stated}
+      - {from: sk_mb_c001_0041, to: sk_mb_c001_0040, nature: "the false secondary generalisation extends the natural-constant associations", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_mb_c001_0041, sk_mb_c001_0038]
+        nature: "the mechanism is presented as explaining genuine responses, while one of its own products — colour symbolism — is stated to be completely false and yet to work very well; the source affirms both without treating the falseness as a problem for the mechanism"
+        origin: extractor_inferred
+        source_ref: null
+
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The mechanism and its status as the key to the whole process are stated by the source, which
+      is why system_type_origin and whole_system_claim.origin are both source-level rather than
+      ours. The source names points, curves, size and colour as its instances. Including the two
+      light-and-dark claims as further instances is our inference: the source explains them by the
+      same appeal to real-world experience but does not list them under the association discussion,
+      which appears five pages later. The source hedges the mechanism itself with the word seem.
+
+  provenance:
+    section: "The Principles — principles 6 to 9 and the association passage following principle 8"
+    page_start: 68
+    page_end: 77
+    source_support: text_and_visual
+
+- scs_id: scs_mb_c001_004
+  source_id: molly_bang_picture_this
+  label: ground_value_and_its_competing_readings
+  label_origin: extractor_assigned
+
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+
+  description: >
+    The value of a picture's ground carries three readings at once — time of day, relative safety,
+    and mortality — and additionally governs whether a colour placed on it glows or washes out.
+    The readings do not agree, and choosing a ground value means accepting all of them together.
+
+  whole_system_claim:
+    text: >
+      A single decision about ground value simultaneously sets the reading of time of day, the
+      sense of safety or threat, an association with death that attaches to light and dark alike,
+      and the visibility of every colour placed against it. These consequences pull in different
+      directions and the source does not rank them.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each reading separately across pages 68 and 69 and does not present them as
+      one decision. That they conflict is visible in the source's own text — white signifies
+      brightness and hope on page 68, and represents death on page 69, with the culturally variable
+      mourning example given in between — but the source never remarks on the tension. Treating
+      these as one mutually qualifying set is ours.
+    source_ref: null
+
+  members:
+    - {sk_ref: sk_mb_c001_0031, role_in_system: dimension, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0032, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0033, role_in_system: dimension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0034, role_in_system: dimension, order: 4, membership_origin: extractor_inferred}
+
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_mb_c001_0032, to: sk_mb_c001_0031, nature: "the safety reading is built on the day-and-night reading", origin: source_stated}
+    tradeoffs:
+      - between: [sk_mb_c001_0032, sk_mb_c001_0034]
+        nature: "a dark ground reads as less safe but makes bright colours glow; a light ground reads as safer but washes them out"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_mb_c001_0032, sk_mb_c001_0033]
+        nature: "white signifies brightness and hope in one passage and represents death in the next; the source states both and does not reconcile them"
+        origin: extractor_inferred
+        source_ref: null
+
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, culturally_bounded, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is individually source-stated and well supported. The grouping, the trade-off
+      and the conflict are all ours. This system is closer to a hypothesis about the source than a
+      report of it, and would be the first candidate to dissolve if the whole book, rather than
+      pages 42 to 91, were extracted and the source turned out to reconcile the readings elsewhere.
+
+  provenance:
+    section: "The Principles — principle 6 and surrounds"
+    page_start: 68
+    page_end: 69
+    source_support: text_and_visual
+
+- scs_id: scs_mb_c001_005
+  source_id: molly_bang_picture_this
+  label: colour_as_grouping_and_attention_system
+  label_origin: extractor_assigned
+
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+
+  description: >
+    Colour operates not only as emotional association but as the dominant cue for what the viewer
+    groups together and what the viewer notices first. Shared colour binds elements into a set,
+    that set is read as meaningful, and the resulting grouping can override both shape similarity
+    and size.
+
+  whole_system_claim:
+    text: >
+      Shared colour groups elements more strongly than shared shape; the viewer then reads a
+      relationship into whatever has been grouped; and a small element of strong value contrast is
+      noticed before the picture's content is understood at all. Together these mean colour decides
+      both what is seen first and what is understood to belong with what.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the grouping claim as principle 9, states separately that a meaning is read
+      into the association, and makes the attention observation only in the closing analysis of the
+      Sue Jensen illustration on page 91. That page is the one place where the source applies all
+      three at once to a single real picture, which is what suggested treating them as a set. The
+      claim that they form one system is ours.
+    source_ref: null
+
+  members:
+    - {sk_ref: sk_mb_c001_0039, role_in_system: enabling_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0042, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0043, role_in_system: derived_consequence, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0054, role_in_system: worked_case, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_mb_c001_0055, role_in_system: qualifying_case, order: 5, membership_origin: extractor_inferred}
+
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_mb_c001_0042, to: sk_mb_c001_0039, nature: "colour grouping dominance rests on colour being the strongest element", origin: source_stated}
+      - {from: sk_mb_c001_0043, to: sk_mb_c001_0042, nature: "meaning is read into a grouping only once the grouping has formed", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_mb_c001_0055, sk_mb_c001_0037]
+        nature: "two small pale elements are said to catch attention first, small though they are, while principle 8 holds that larger objects feel stronger; the source notes the smallness without addressing the tension"
+        origin: extractor_inferred
+        source_ref: null
+
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, anecdotal, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The grouping claim and its meaning consequence are source-stated and demonstrated with a
+      near-minimal pair. The attention claim comes from a found illustration rather than a
+      constructed comparison, and its inclusion as a member of this system, along with the recorded
+      conflict against the size principle, is ours. The one member that reaches outside the
+      principles section (the Sue Jensen analysis) is also the only place the source tests the
+      system against a picture it did not build itself.
+
+  provenance:
+    section: "The Principles — principle 9, and the closing illustration analysis"
+    page_start: 74
+    page_end: 91
+    source_support: text_and_visual
+
+- scs_id: scs_mb_c001_006
+  source_id: molly_bang_picture_this
+  label: space_between_elements_as_carrier_of_movement_time_and_tension
+  label_origin: extractor_assigned
+
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+
+  description: >
+    The observations the source gathers under "Some Remarks about Space" all concern what the gaps
+    between elements do rather than what the elements do: gaps carry movement, isolation, elapsed
+    time, tension and depth, and closing a gap to zero by overlapping fuses two objects into one.
+
+  whole_system_claim:
+    text: >
+      The space between elements is itself a working element. Its size governs how much the picture
+      moves, how isolated a figure feels, how much time is understood to pass between two objects,
+      and how much tension exists between them; and removing it altogether fuses separate objects
+      into a single unit.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source explicitly declines to systematise this material, opening the section by saying it
+      is not trying to find principles anymore, just noticing some things that happen. It offers
+      the observations in sequence without stating any relation between them. Grouping them as one
+      interacting set is entirely ours, and rests only on the observation that every member is a
+      claim about gaps rather than about objects. This system is a hypothesis about the source and
+      is presented as one; the source's own position is that these are not principles.
+    source_ref: null
+
+  members:
+    - {sk_ref: sk_mb_c001_0046, role_in_system: enabling_premise, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0047, role_in_system: dimension, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0048, role_in_system: dimension, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0049, role_in_system: limiting_case, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0050, role_in_system: dimension, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0051, role_in_system: dimension, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0052, role_in_system: dimension, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mb_c001_0053, role_in_system: whole_system_statement, order: 8, membership_origin: extractor_inferred}
+
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies: []
+    tradeoffs: []
+    conflicts:
+      - between: [sk_mb_c001_0051, sk_mb_c001_0052]
+        nature: "wide separation is said to create tension by supplying time to be afraid, and a sliver of space is said to create tension as well; the source asserts both without describing what happens between the extremes"
+        origin: extractor_inferred
+        source_ref: null
+
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      This is the weakest system in the set and is fully extractor-inferred at every structural
+      level except page order. The source explicitly refuses to treat this material as principles.
+      Four of the eight members had no rendered figure available, so half the group rests on text
+      alone. If any system here should be dissolved on review, it is this one, and dissolving it
+      would cost nothing: every member stands independently as SourceKnowledge.
+
+  provenance:
+    section: "Some Remarks about Space"
+    page_start: 81
+    page_end: 90
+    source_support: text_and_visual
