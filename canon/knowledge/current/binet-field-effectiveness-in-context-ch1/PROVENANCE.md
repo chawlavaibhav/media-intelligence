@@ -135,9 +135,9 @@ Recorded here because it qualifies every number in the extraction.
 
 ## What the second pass changed
 
-Four figures confirmed their claims outright (05, 06, 10, 11), one strengthened a claim the first
-pass had under-credited (08), one is relied on by no object (15), and **one materially qualified an
-existing claim (09)**.
+**Five** figures confirmed their claims outright (**02, 05, 06, 10, 11**), one strengthened a claim
+the first pass had under-credited (08), two are relied on by no SourceKnowledge object (01 and 15),
+and **one materially qualified an existing claim (09)**.
 
 **Figure 09 is why the correction was warranted.** Every value in its rational panel (1.11, 0.43,
 0.36) exceeds every value in its emotional panel (0.11, 0.18, 0.19). `sk_eic_0013` had read that

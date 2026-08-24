@@ -3,7 +3,8 @@
 **Task:** CANON-007, Wave 1 pilot — *Effectiveness in Context*
 **Date:** 25 Aug 2026 · **Branch:** `work/canon-007-effectiveness-context` · **Task-base:** `main` at `161a14a`
 **Status:** ingestion complete plus a Controller merge-gate correction · **needs_controller_review**
-**Severity:** `LOCAL`. No stop condition fired. No spec changed.
+**Severity:** `LOCAL`. No stop condition fired. No SPEC changed; one approved Audit Gate
+vocabulary addition (§13).
 
 ---
 
@@ -13,7 +14,10 @@
 
 The first genuinely new source since the method was frozen went through the full sequence —
 extraction → systems/ontology → bindings → fresh checkpoint → Audit Gate → validators — and passed
-without needing any method change. Historical CANON-003/004 remain fixed at 16.
+with **no stop condition**. Historical CANON-003/004 remain fixed at 16.
+
+**No SPEC changed. One minimal Controller-approved Audit Gate v0.2 vocabulary addition was made: `figure_semantic_binding_lost`. No new Audit Gate version or migration machinery was introduced.** That addition is described in §13; it exists because the report exhibited a
+representation failure the existing vocabulary could not state truthfully.
 
 The pilot's real result is that **the gate caught things a text-only ingestion would have shipped
 wrong** — and then a Controller correction caught something the first pass had shipped wrong itself.
@@ -311,10 +315,10 @@ Figure 08 is a clean crossover on a shared axis: price effects fall as rational 
 the figure showed only price effects by consideration type and not the emotional route itself. That
 understated it — the caveat is withdrawn and the object now carries `visually_demonstrated`.
 
-### Four confirmed outright, two relied on by no object
+### Five confirmed outright, two relied on by no object
 
-Figures 02, 05, 06, 10 and 11 confirm their claims and add precision the prose does not give — most
-usefully that Figures 10 and 11 rank high-brand-with-low-activation *above*
+Figures **02, 05, 06, 10 and 11** confirm their claims and add precision the prose does not give —
+most usefully that Figures 10 and 11 rank high-brand-with-low-activation *above*
 low-brand-with-high-activation, supporting the source's asymmetric phrasing.
 
 Figures 01 and 15 are cited by no object. Figure 15 shows the source's framing is careful rather

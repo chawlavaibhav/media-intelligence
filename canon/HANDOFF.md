@@ -70,8 +70,9 @@ structural column interleaving.
 **LAST COMPLETED TASK:** `tasks/CANON-007.md` — Wave 1 pilot, one source. Ingested Binet & Field,
 *Effectiveness in Context* (Chapter 1.0 plus Introduction and the methodology Appendix) from the
 official Thinkbox route; both the file size and SHA-256 matched the Work acquisition fingerprint
-exactly. Accepted through the full sequence with no method change and no stop condition. Live Canon
-18 → 19.
+exactly. Accepted through the full sequence with no stop condition. Live Canon 18 → 19.
+No SPEC changed; one minimal Controller-approved Audit Gate v0.2 vocabulary addition was made,
+`figure_semantic_binding_lost`, with no new Audit Gate version and no migration machinery.
 
 Preceding: `tasks/CANON-006.md` — adjudicated the two deferred reserves under the
 authoritative gate. *Master Shots* recovered from `work/canon-003-rebalance-d` and *The

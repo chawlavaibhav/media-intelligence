@@ -249,8 +249,9 @@ severities. There is deliberately no aggregate risk value.
 | `announced_loss_placeholder` | 1 | the file contains literal placeholders where evidence was |
 | `caption_coverage_uneven` | 1 | captions exist for some figures, and the uncaptioned ones are not random |
 
-Counts are distinct books out of 16, from the committed records. They are an inventory, not a
-severity ordering.
+Legacy pattern counts are the frozen CANON-004 16-source inventory. `figure_semantic_binding_lost`
+is a post-adoption addition, first observed in CANON-007. Counts are inventories, not severity
+rankings, and the historical counts are not recomputed when a source is added.
 
 #### `figure_semantic_binding_lost`
 
