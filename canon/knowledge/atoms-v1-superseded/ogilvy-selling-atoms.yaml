@@ -1,0 +1,303 @@
+# Canon atoms — David Ogilvy, Ogilvy on Advertising (1983), ch.2
+# "How to produce advertising that sells"
+# Pass 1, source-only, extracted in isolation from all other sources.
+source_manifest:
+  source_id: ogilvy_on_advertising
+  edition: "Vintage Books, 1985 (text 1983)"
+  chapter: 2
+  chapter_title: "How to produce advertising that sells"
+  extraction: "EPUB OEBPS/Ogil_9780804170055_epub_c02_r1.htm, single column, clean"
+  evidence_profile_warning: >
+    IMPORTANT and different from the design sources in this batch. Ogilvy's support is
+    practitioner assertion plus anecdote plus uncontrolled sales figures — "sales rose from
+    10,000 to 40,000", "still running 25 years later". These are outcome claims without
+    controls, not demonstrated mechanisms. The source is also explicit about its own register:
+    "forgive me for oversimplifying... and for the dogmatism of my style."
+    Most atoms below are therefore evidence_class: supported_extrapolation with confidence
+    at or below 0.7, even where the claim is famous. Definitional atoms are the exception.
+  figure_note: >
+    Advertisements are reproduced as plates with captions. Captions extract; the ads themselves
+    do not. No atom below depends on reading an ad.
+
+atoms:
+
+- atom_id: og_001
+  concept: positioning_is_what_it_does_and_who_it_is_for
+  informs: [intent.objective, audience.who, message.proposition]
+  role: [fills, diagnoses]
+  principle: >
+    A product's position is defined by two things together: what the product does, and who it is
+    for. The same product supports many positions — the source's soap could have been positioned
+    as a detergent bar for men with dirty hands, and was instead positioned as a toilet bar for
+    women with dry skin.
+  mechanism: "Position is a choice among available markets and uses, not a property of the product."
+  applicability:
+    media: [static, video]
+    when: "any commercial brief where the market or use is not already fixed"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Can you state what this product does and who it is for, in one sentence, without hedging?"
+  failure_modes: []
+  proposed_failure_modes: [position_unstated]
+  repairs: []
+  proposed_repairs: [state_position_explicitly]
+  retrieval_keys: {ir_fields: [intent.objective, audience.who, message.proposition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: Positioning, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+- atom_id: og_002
+  concept: proposition_grounded_in_specific_product_fact
+  informs: [message.proposition, message.support]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    A selling proposition should come from a specific, concrete fact discovered about the product,
+    not from a generic claim. The source's method is extended study of the product before any
+    writing — the famous headline about the electric clock at sixty miles an hour was found by
+    reading, not invented.
+  mechanism: "A specific verifiable fact is both more credible and more distinctive than a category claim."
+  applicability:
+    media: [static, video]
+    when: "the proposition is being chosen"
+    exceptions: ["the source concedes that with genuine parity products no differentiating fact may exist — see og_006"]
+    exceptions_status: source_supported
+  diagnostic: "Is the proposition traceable to a specific fact about this product, or is it a category generality?"
+  failure_modes: []
+  proposed_failure_modes: [generic_claim_without_product_fact]
+  repairs: []
+  proposed_repairs: [ground_proposition_in_product_fact]
+  retrieval_keys: {ir_fields: [message.proposition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "Do your homework", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.7
+  status: pending_vocabulary
+
+- atom_id: og_003
+  concept: audience_language_precedes_copy
+  informs: [audience.who, audience.context, message.proposition]
+  role: [fills, diagnoses]
+  principle: >
+    Before writing, establish how the audience thinks about this kind of product, what language
+    they use when discussing it, which attributes matter to them, and what promise would most
+    likely make them buy.
+  mechanism: "Not stated. Asserted as method."
+  applicability:
+    media: [static, video]
+    when: "audience is unspecified or assumed"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Is the copy in the audience's vocabulary or the advertiser's?"
+  failure_modes: []
+  proposed_failure_modes: [advertiser_vocabulary_not_audience_vocabulary]
+  repairs: []
+  proposed_repairs: [restate_in_audience_language]
+  retrieval_keys: {ir_fields: [audience.who, message.proposition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "Do your homework", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.7
+  status: pending_vocabulary
+
+- atom_id: og_004
+  concept: every_asset_contributes_to_one_brand_image
+  informs: [brand.palette, brand.type, creative.visual_language, intent.objective]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    A brand has a personality assembled from its name, packaging, price, the style of its
+    advertising and the product itself. Every individual advertisement is a contribution to that
+    personality, so advertising should project the same image consistently, year after year.
+  mechanism: "Image accumulates across exposures; inconsistent exposures accumulate into nothing."
+  applicability:
+    media: [static, video]
+    when: "a brand has any prior body of work"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Would this asset be recognised as belonging to the same brand as last year's?"
+  failure_modes: []
+  proposed_failure_modes: [inconsistent_brand_image]
+  repairs: []
+  proposed_repairs: [align_to_established_brand_image]
+  retrieval_keys: {ir_fields: [brand, creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "Brand image", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.75
+  status: pending_vocabulary
+
+- atom_id: og_005
+  concept: production_quality_register_transfers_to_product
+  informs: [creative.visual_language]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Cheap or shoddy-looking advertising transfers its quality to the product. This matters most
+    for products whose brand is visible to other people — the source's examples are beer,
+    cigarettes and cars, "products you wear."
+  mechanism: "The advertisement is treated as evidence about the product's quality."
+  applicability:
+    media: [static, video]
+    when: "the product is consumed or displayed publicly"
+    exceptions: ["the source scopes the strongest form of the claim to publicly visible products"]
+    exceptions_status: source_supported
+  diagnostic: "Does the execution's quality register match the price and positioning claimed?"
+  failure_modes: []
+  proposed_failure_modes: [image_quality_mismatch]
+  repairs: []
+  proposed_repairs: [raise_production_quality_register]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "Brand image", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.7
+  status: pending_vocabulary
+
+- atom_id: og_006
+  concept: positively_good_beats_comparative_superiority
+  informs: [message.proposition]
+  role: [fills, repairs]
+  principle: >
+    Where competing products are genuinely equivalent, do not claim superiority. It is enough to
+    convince the audience that this product is positively good — a buyer certain about yours and
+    uncertain about the competitor's will choose yours.
+  mechanism: "Certainty about one option beats an unverifiable comparison between two."
+  applicability:
+    media: [static, video]
+    when: "the product has no defensible functional advantage over competitors"
+    exceptions: ["does not apply where a genuine differentiating fact exists — see og_002"]
+    exceptions_status: source_supported
+  diagnostic: "Is the proposition comparative, and is the comparison actually defensible?"
+  failure_modes: []
+  proposed_failure_modes: [superiority_claim_on_parity_product]
+  repairs: []
+  proposed_repairs: [restate_as_positive_claim]
+  retrieval_keys: {ir_fields: [message.proposition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "'The positively good'", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: hypothesis
+  confidence: 0.6
+  status: pending_vocabulary
+
+- atom_id: og_007
+  concept: make_the_product_the_hero
+  informs: [entities, creative.hierarchy]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    Wherever possible the product itself should be the hero of the advertisement. The source
+    rejects the premise that some products are too dull — "there are no dull products, only dull
+    writers" — and notes that showing the product with utter simplicity is often the best idea
+    and takes courage, because it invites the accusation of not being creative.
+  mechanism: "Not stated."
+  applicability:
+    media: [static, video]
+    when: "assigning entity roles and hierarchy rank"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Is the product the hero entity, and does the hierarchy rank it accordingly?"
+  failure_modes: []
+  proposed_failure_modes: [product_not_hero]
+  repairs: []
+  proposed_repairs: [promote_product_to_hero]
+  retrieval_keys: {ir_fields: [entities, creative.hierarchy], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "Make the product the hero", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.7
+  status: pending_vocabulary
+
+- atom_id: og_008
+  concept: multiple_objectives_achieve_nothing
+  informs: [intent.objective, message.proposition]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Campaigns that reflect a long list of objectives, reconciling the divergent views of many
+    stakeholders, achieve nothing by attempting to cover too many things. The source's phrase is
+    that such work "looks like the minutes of a committee."
+  mechanism: "Attention and memory are limited; every added objective reduces the delivery of the others."
+  applicability:
+    media: [static, video]
+    when: "the brief carries more than one objective or proposition"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "How many objectives does this brief carry, and how many propositions does the asset attempt?"
+  failure_modes: []
+  proposed_failure_modes: [objective_overload]
+  repairs: []
+  proposed_repairs: [reduce_to_single_objective]
+  retrieval_keys: {ir_fields: [intent.objective, message.proposition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "Down with committees", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.75
+  status: pending_vocabulary
+
+- atom_id: og_009
+  concept: big_idea_five_question_test
+  informs: [creative.concept]
+  role: [diagnoses]
+  principle: >
+    A concept can be tested against five questions: did it make you gasp on first sight; do you
+    wish you had thought of it; is it unique; does it fit the strategy to perfection; could it be
+    used for thirty years?
+  mechanism: "Not stated. Offered as a heuristic checklist."
+  applicability:
+    media: [static, video]
+    when: "a creative concept has been proposed and must be judged"
+    exceptions: ["the source concedes recognising a good idea is 'horribly difficult' and that research cannot predict an idea's cumulative value"]
+    exceptions_status: source_supported
+  diagnostic: "Run the five questions against the proposed concept."
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [creative.concept], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: ogilvy_on_advertising, chapter: 2, section: "What's the big idea?", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: hypothesis
+  confidence: 0.55
+  status: operational
+
+human_notes:
+
+- concept: advertising_can_reduce_sales
+  statement: "The source cites cases where advertised groups bought less than unadvertised groups, and argues the difference between one advertisement and another can be very large."
+  informs: []
+  reason_not_operational: "A commercial-outcome claim about the category, with no IR field to fill. Motivates the enterprise; does not guide a decision."
+  source_ref: {chapter: 2, section: opening}
+
+- concept: big_ideas_come_from_the_informed_unconscious
+  statement: "Stuff the conscious mind with information, then unhook rational thought — walk, bathe, drink half a pint of claret."
+  informs: []
+  reason_not_operational: "Advice on a human creative process. No property of the output and no consumer."
+  source_ref: {chapter: 2, section: "What's the big idea?"}
+
+- concept: repeat_winners_moving_parade
+  statement: "Repeat a good advertisement until it stops selling; you advertise to a moving parade, not a standing army."
+  informs: []
+  reason_not_operational: "Media scheduling across a campaign. SPEC-01 v0.1 explicitly excludes multi-asset campaign scope."
+  source_ref: {chapter: 2, section: "Repeat your winners"}
+
+- concept: committees_cannot_create
+  statement: "Committees can criticise but cannot create; agency campaigns average 117 days of gestation."
+  informs: []
+  reason_not_operational: "Organisational critique. Notable only as an argument for automating the specification step."
+  source_ref: {chapter: 2, section: "Down with committees"}
+
+- concept: style_as_added_value_for_parity_products
+  statement: "Where products are undifferentiated, the style of the advertising is itself the differentiation — the 'added value' advertising contributes."
+  informs: []
+  reason_not_operational: >
+    Borderline. Arguably informs creative.visual_language and overlaps og_005 and og_006.
+    Held out because as stated it is an economic argument about what advertising does, not a
+    rule for what any given asset should be. Flagged for review — this one may deserve promotion.
+  source_ref: {chapter: 2, section: "Make the product the hero"}

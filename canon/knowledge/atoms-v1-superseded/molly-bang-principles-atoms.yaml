@@ -1,0 +1,495 @@
+# Pass 1 output — source_principle atoms only
+# Source: Molly Bang, Picture This: How Pictures Work (2000), "The Principles", pp. 42–91
+# Rule: nothing here references generation, models, prompts, or advertising beyond what
+#       the source itself states. Implications for generated media are Pass 2's job.
+
+# ─────────────────────────────────────────────────────────────
+# GROUP A — attention and pictorial weight
+# ─────────────────────────────────────────────────────────────
+
+- atom_id: mb_001
+  concept: pictorial_weight_of_vertical_position
+  informs: [creative.hierarchy, static.spatial_hierarchy]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    An element placed higher in the frame draws more attention and reads as more
+    important than the same element placed lower, independent of its size.
+  mechanism: >
+    Read as escaping the ground plane; the viewer registers the departure from where
+    things are expected to rest.
+  applicability:
+    media: [static, video_frame]
+    when: "vertical placement of a subject is a free or soft decision"
+    exceptions: ["subject must also read as grounded; the same placement makes it feel less attached to the earth"]
+    exceptions_status: source_supported
+  diagnostic: "Compare intended priority order against the vertical placement order of the competing elements."
+  failure_modes: [wrong_element_dominates]
+  proposed_failure_modes: []
+  repairs: [alter_position]
+  proposed_repairs: [alter_vertical_placement]
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 4 corollary", page_start: 56, page_end: 56, figure_refs: [p55, p57], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: mb_002
+  concept: centre_as_strongest_attractor
+  informs: [creative.hierarchy, static.composition]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    The centre of the frame is the single strongest point of attraction. An element
+    placed there holds the eye and resists the viewer moving away from it.
+  mechanism: "The enclosing edges push attention inward; the centre both receives and radiates that force."
+  applicability:
+    media: [static, video_frame]
+    when: "any framed composition"
+    exceptions: ["square and circular frames intensify the effect further"]
+    exceptions_status: source_supported
+  diagnostic: "Is the rank-1 element at or near centre, and is holding the eye what this creative wants?"
+  failure_modes: [wrong_element_dominates]
+  proposed_failure_modes: [unintended_centre_lock]
+  repairs: [alter_position]
+  proposed_repairs: [move_off_centre]
+  retrieval_keys: {ir_fields: [creative.hierarchy, static.composition], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 5", page_start: 62, page_end: 67, figure_refs: [p63, p65], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: mb_003
+  concept: centre_avoidance_for_exploration
+  informs: [static.composition, creative.hierarchy]
+  role: [fills, constrains]
+  principle: >
+    If the picture is meant to be explored rather than fixed upon, the main emphasis
+    should be kept away from the centre.
+  mechanism: "A centred subject traps the eye; off-centre emphasis licenses movement across the frame."
+  applicability:
+    media: [static, video_frame]
+    when: "the creative intends the viewer to read multiple elements rather than one"
+    exceptions: ["an object intended for meditation or single fixation belongs at centre"]
+    exceptions_status: source_supported
+  diagnostic: "Does the number of elements the viewer is meant to read match how strongly the composition centres one of them?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_centre_lock]
+  repairs: []
+  proposed_repairs: [move_off_centre]
+  retrieval_keys: {ir_fields: [static.composition], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 5 preamble", page_start: 62, page_end: 67, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+- atom_id: mb_004
+  concept: size_as_strength
+  informs: [creative.hierarchy, entities.role]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    The larger an element is within the frame, the stronger and more capable it reads.
+    The same element made small reads as vulnerable.
+  mechanism: "Association with physical scale and the capacity to overpower."
+  applicability:
+    media: [static, video_frame]
+    when: "relative dominance between two or more elements must be established"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Compare relative area of the competing elements against their intended rank."
+  failure_modes: [wrong_element_dominates]
+  proposed_failure_modes: []
+  repairs: [alter_relative_scale]
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 8", page_start: 72, page_end: 72, figure_refs: [], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: operational
+
+- atom_id: mb_005
+  concept: contrast_enables_perception
+  informs: [creative.hierarchy, static.composition]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    Contrast — of colour, shape, size, or placement — is what makes any element or
+    pattern visible at all. Without contrast against its surroundings, an element
+    cannot hold a rank in the hierarchy.
+  mechanism: "Perception is comparative; difference is the signal."
+  applicability:
+    media: [static, video_frame]
+    when: "always"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "For each ranked element, on which dimension does it differ from its surroundings?"
+  failure_modes: [wrong_element_dominates, competing_focal_points]
+  proposed_failure_modes: [salience_lost_to_background]
+  repairs: [alter_contrast]
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [creative.hierarchy, static.composition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 10", page_start: 80, page_end: 80, figure_refs: [p79, p80], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: operational
+
+- atom_id: mb_006
+  concept: value_contrast_against_ground
+  informs: [creative.hierarchy, creative.visual_language, static.composition]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    Bright and pale elements read as luminous against dark grounds and wash out against
+    light grounds. Small pale elements on a dark ground can outrank much larger elements.
+  mechanism: >
+    Stated physiologically in the source: a white field activates all colour receptors and
+    bleaches them, while a dark ground lets them rest, so the coloured area reads stronger.
+  applicability:
+    media: [static, video_frame]
+    when: "an element must hold rank 1 or 2 despite being small"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Compare the value of each ranked element against the value of the ground behind it."
+  failure_modes: []
+  proposed_failure_modes: [salience_lost_to_background]
+  repairs: [alter_contrast]
+  proposed_repairs: [alter_background_value]
+  retrieval_keys: {ir_fields: [creative.hierarchy, creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 6 discussion; Sue Jensen illustration", page_start: 69, page_end: 91, figure_refs: [p69, p91], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+# ─────────────────────────────────────────────────────────────
+# GROUP B — emotional register produced by form
+# All six inform creative.visual_language given message.emotional_target.
+# Granularity question flagged in FINDINGS-02.
+# ─────────────────────────────────────────────────────────────
+
+- atom_id: mb_007
+  concept: horizontal_reads_as_calm
+  informs: [creative.visual_language, static.composition]
+  role: [fills, diagnoses]
+  principle: "Emphasised horizontal structure reads as stability and calm. Smaller horizontal shapes act as local islands of calm within a busier frame."
+  mechanism: "Association with the ground plane and the horizon; what lies flat cannot fall."
+  applicability:
+    media: [static, video_frame]
+    when: "emotional_target includes calm, stability, security, or reassurance"
+    exceptions: ["operates in combination with other principles and is subordinate to content", "the source demonstration is not a clean isolation: its horizontal division also carries strong light/dark value contrast"]
+    exceptions_status: source_supported
+  diagnostic: "Does the dominant structural direction match the intended emotional register?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_structural_direction]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 1", page_start: 42, page_end: 43, figure_refs: [p43], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.7
+  status: pending_vocabulary
+
+- atom_id: mb_008
+  concept: vertical_reads_as_energy
+  informs: [creative.visual_language, static.composition]
+  role: [fills, diagnoses]
+  principle: "Emphasised vertical structure reads as excitement, energy, aspiration and pride. A horizontal placed across verticals restores order and stability while retaining that pride."
+  mechanism: "Association with what must resist gravity to exist, and with the energy released if it falls."
+  applicability:
+    media: [static, video_frame]
+    when: "emotional_target includes energy, aspiration, or grandeur"
+    exceptions: ["capping verticals with a horizontal checks the sense of reaching"]
+    exceptions_status: source_supported
+  diagnostic: "Does the dominant structural direction match the intended emotional register?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_structural_direction]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 2", page_start: 44, page_end: 45, figure_refs: [], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+- atom_id: mb_009
+  concept: diagonal_reads_as_motion_or_tension
+  informs: [creative.visual_language, static.composition]
+  role: [fills, diagnoses]
+  principle: >
+    Any picture emphasising the diagonal — through shape, colour, or light — reads as
+    dynamic, because a diagonal implies either movement or tension. Diagonals also
+    create depth by leading the eye into the frame.
+  mechanism: "In the physical world, objects on a diagonal are either falling, moving, or under load."
+  applicability:
+    media: [static, video_frame]
+    when: "emotional_target includes energy, urgency, instability, or tension"
+    exceptions: ["a diagonal bracing a vertical and a horizontal reads as stabilising rather than unstable"]
+    exceptions_status: source_supported
+  diagnostic: "Is the diagonal emphasis consistent with the intended register, and does it imply the intended direction of travel?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_structural_direction]
+  retrieval_keys: {ir_fields: [creative.visual_language, static.composition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 3", page_start: 46, page_end: 52, figure_refs: [p47, p49, p51], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: mb_010
+  concept: vertical_half_emotional_register
+  informs: [creative.visual_language, static.composition]
+  role: [fills, diagnoses]
+  principle: >
+    The upper half of the frame reads as freedom, happiness, triumph and the spiritual;
+    the lower half reads as heavier, sadder, more constrained — but also more grounded
+    and more attached to the world.
+  mechanism: "Association with height as advantage and with the ground as where things belong."
+  applicability:
+    media: [static, video_frame]
+    when: "vertical placement of the emotional subject is a free or soft decision"
+    exceptions: ["subordinate to content and meaning; the same placement can read three different ways depending on what the subject is"]
+    exceptions_status: source_supported
+  diagnostic: "Which half holds the emotional subject, and does that match the intended register?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_vertical_placement]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 4", page_start: 54, page_end: 60, figure_refs: [p55, p57, p59], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: mb_011
+  concept: point_versus_curve_register
+  informs: [creative.visual_language]
+  role: [fills, diagnoses, repairs]
+  principle: "Pointed shapes read as threatening; rounded shapes and curves read as secure and comforting. The source demonstrates this at the level of the dominant contour of a mass, not only of individual objects."
+  mechanism: "Association with what can pierce, versus association with bodies — in the source, specifically the mother's body."
+  applicability:
+    media: [static, video_frame]
+    when: "emotional_target sits on a safety/threat axis"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Does the dominant shape language of the frame sit on the intended side of the safety/threat axis?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_shape_language]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 7", page_start: 70, page_end: 71, figure_refs: [p70, p71], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: mb_012
+  concept: ground_value_safety_register
+  informs: [creative.visual_language]
+  role: [fills, diagnoses, repairs]
+  principle: "Light grounds read as day and as safety; dark grounds read as night, storm, and the unknown."
+  mechanism: "Association with our ability to see, and with what we fear when we cannot."
+  applicability:
+    media: [static, video_frame]
+    when: "emotional_target sits on a safety/threat axis"
+    exceptions: ["concealment under darkness reads as safety; unbounded white expanse reads as exposure — both stated in the source"]
+    exceptions_status: source_supported
+  diagnostic: "Does ground value match the intended safety register, and does the context invert it?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_background_value]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 6", page_start: 68, page_end: 69, figure_refs: [], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+# ─────────────────────────────────────────────────────────────
+# GROUP C — grouping and association
+# ─────────────────────────────────────────────────────────────
+
+- atom_id: mb_013
+  concept: colour_association_dominates_shape_association
+  informs: [creative.hierarchy, static.composition, relationships]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    When colour varies across a set of elements, shared colour dominates grouping and
+    overrides shared shape. Shape grouping is what remains available when colour is
+    uniform. Two unrelated elements sharing a colour will be read as belonging together.
+  mechanism: "Colour association is immediate and pre-attentive; shape grouping requires effort to override it."
+  applicability:
+    media: [static, video_frame]
+    when: "more than one element shares a colour, or a palette is being chosen"
+    exceptions: ["young children group by shape more strongly than by colour"]
+    exceptions_status: source_supported
+  diagnostic: "Which elements share a colour, and is the association that creates one the creative intends?"
+  failure_modes: []
+  proposed_failure_modes: [false_grouping_by_colour]
+  repairs: []
+  proposed_repairs: [break_colour_association]
+  retrieval_keys: {ir_fields: [creative.hierarchy, static.composition], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 9", page_start: 74, page_end: 77, figure_refs: [p75, p77], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: mb_014
+  concept: colour_carries_borrowed_qualities
+  informs: [creative.visual_language, message.emotional_target]
+  role: [fills, diagnoses]
+  principle: >
+    Colour affects viewers more strongly than any other pictorial element. Meanings are
+    borrowed from natural constants — red from blood and fire, white from snow and bone,
+    black from darkness — and then transferred to anything sharing that colour, even
+    though the transfer is not logically valid.
+  mechanism: "A generalisation from remembered experience; the source notes it is false and that it works reliably anyway."
+  applicability:
+    media: [static, video_frame]
+    when: "palette is a free or soft decision"
+    exceptions: ["mourning colour is culturally opposite between Europe and India/Korea — stated in the source"]
+    exceptions_status: source_supported
+  diagnostic: "What does each dominant colour borrow, and does the borrowing serve the intended register?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 9 preamble", page_start: 74, page_end: 74, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+# ─────────────────────────────────────────────────────────────
+# GROUP D — space, depth, and separation
+# From "Some Remarks about Space", which the source explicitly does not call principles.
+# Recorded at lower confidence for that reason.
+# ─────────────────────────────────────────────────────────────
+
+- atom_id: mb_015
+  concept: depth_via_size_and_base_height_progression
+  informs: [static.composition]
+  role: [fills, repairs]
+  principle: >
+    Depth is created by placing the bases of progressively smaller, thinner or lighter
+    elements progressively higher in the frame. The effect is stronger when the spacing
+    between them reduces geometrically rather than by a fixed amount.
+  mechanism: "Reproduces how receding objects behave in a perspective view."
+  applicability:
+    media: [static, video_frame]
+    when: "the composition requires depth and the arrangement is a free decision"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Do element size, base height, and inter-element spacing progress together?"
+  failure_modes: []
+  proposed_failure_modes: [flat_depth]
+  repairs: []
+  proposed_repairs: [alter_size_progression]
+  retrieval_keys: {ir_fields: [static.composition], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Some Remarks about Space", page_start: 87, page_end: 87, figure_refs: [p87], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.75
+  status: pending_vocabulary
+
+- atom_id: mb_016
+  concept: overlap_joins_elements_into_a_unit
+  informs: [static.composition, relationships]
+  role: [fills, diagnoses]
+  principle: >
+    When one element overlaps another it takes the covered element's space — violating it,
+    and simultaneously binding the two into a single perceived unit.
+  mechanism: "Occlusion is read as contact, and contact is read as relationship."
+  applicability:
+    media: [static, video_frame]
+    when: "two entities must read as related, or must read as separate"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Which elements overlap, and does each overlap assert a relationship the brief intends?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: [introduce_overlap, remove_overlap]
+  retrieval_keys: {ir_fields: [static.composition, relationships], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Some Remarks about Space", page_start: 86, page_end: 86, figure_refs: [p86], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.8
+  status: pending_vocabulary
+
+- atom_id: mb_017
+  concept: isolation_by_surrounding_space
+  informs: [static.composition, creative.hierarchy]
+  role: [fills, repairs]
+  principle: >
+    Surrounding an element with empty space isolates it — making it read as alone, free,
+    and vulnerable, and raising its prominence.
+  mechanism: "Separation removes competing signal adjacent to the element."
+  applicability:
+    media: [static, video_frame]
+    when: "an element must gain rank without gaining size"
+    exceptions: ["the source explicitly leaves open whether differing shape, size or colour would increase or reduce the sense of isolation", "the source demonstration confounds isolation with vertical position: the isolated element also sits higher in the frame"]
+    exceptions_status: source_supported
+  diagnostic: "How much clear space surrounds the rank-1 element relative to the others?"
+  failure_modes: [competing_focal_points]
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: [increase_surrounding_space]
+  retrieval_keys: {ir_fields: [static.composition, creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Some Remarks about Space", page_start: 84, page_end: 85, figure_refs: [p84], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.6
+  status: pending_vocabulary
+
+- atom_id: mb_018
+  concept: proximity_to_edge_or_centre_raises_tension
+  informs: [static.composition, creative.visual_language]
+  role: [fills, diagnoses]
+  principle: >
+    The closer an element sits to the frame edge or to the exact centre, the greater the
+    tension it carries. An element breaking the frame implies space continuing beyond it.
+  mechanism: "The edge is the boundary of the picture-world; approaching it threatens departure from that world."
+  applicability:
+    media: [static, video_frame]
+    when: "emotional_target includes tension, or the composition should imply a world beyond the frame"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "How near the edge or centre does each significant element sit, and is the resulting tension intended?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_emotional_register]
+  repairs: []
+  proposed_repairs: [alter_position]
+  retrieval_keys: {ir_fields: [static.composition], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: molly_bang_picture_this, section: "Principle 5 discussion", page_start: 66, page_end: 66, figure_refs: [p66], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary

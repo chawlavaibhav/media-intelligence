@@ -1,0 +1,273 @@
+# Canon atoms — Ellen Lupton, Thinking with Type (2010), TEXT part, "Hierarchy"
+# Pass 1, source-only, extracted in isolation from all other sources.
+source_manifest:
+  source_id: lupton_thinking_with_type
+  edition: "Princeton Architectural Press, 2010 (2nd ed.)"
+  part: TEXT
+  section: Hierarchy
+  book_pages: 131-133
+  extraction: "EPUB index_split_001.html, chars 93052-97355"
+  extraction_quality_warning: >
+    CRITICAL. The source is set in two columns and the EPUB extraction INTERLEAVES them
+    sentence by sentence. Example of raw output: "A typographic hierarchy expresses the
+    organization Emphasizing a word or phrase within a body of of content, emphasizing some
+    elements and text usually requires only one signal." Two independent sentences are woven
+    together. Every atom below required de-interleaving by the extractor, which is an
+    inference step, not a reading step. Confidence is capped at 0.8 throughout for this
+    reason and all atoms should be checked against the printed page before promotion.
+  figure_note: >
+    The section's central demonstration is a four-column table showing one logical hierarchy
+    (angels / clergy / parts of a text) rendered four different ways. The table survives
+    extraction structurally but its typographic distinctions — which are the entire point —
+    do not. Treated as text-only evidence.
+
+atoms:
+
+- atom_id: lu_001
+  concept: hierarchy_expresses_content_organisation
+  informs: [creative.hierarchy]
+  role: [fills, diagnoses]
+  principle: >
+    A hierarchy is the visual expression of the organisation of the content — emphasising some
+    elements and subordinating others. It is relational: a level exists only relative to others.
+  mechanism: "Rank is perceived comparatively, so no element carries a hierarchy level in isolation."
+  applicability:
+    media: [static]
+    when: "content has more than one level of importance"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Does the visual ranking match the content's actual organisation?"
+  failure_modes: []
+  proposed_failure_modes: [hierarchy_contradicts_content_structure]
+  repairs: []
+  proposed_repairs: [restate_level_cues]
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary
+
+- atom_id: lu_002
+  concept: hierarchy_supports_scanning_entry_and_exit
+  informs: [creative.hierarchy]
+  role: [fills, diagnoses]
+  principle: >
+    A visual hierarchy lets readers scan — knowing where to enter, where to exit, and how to
+    pick and choose among the content's offerings rather than reading linearly.
+  mechanism: "Ranked cues let the reader sample the content without processing all of it."
+  applicability:
+    media: [static]
+    when: "the viewer is expected to scan rather than read continuously"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Can a scanning reader find an entry point, an exit point, and a way to choose between parts?"
+  failure_modes: []
+  proposed_failure_modes: [no_scan_entry_point]
+  repairs: []
+  proposed_repairs: [strengthen_level_contrast]
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary
+
+- atom_id: lu_003
+  concept: level_cues_must_be_applied_consistently
+  informs: [static.typography_layout, creative.hierarchy]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Each level of a hierarchy is signalled by one or more cues, and those cues must be applied
+    consistently across the whole body of content.
+  mechanism: "Inconsistent cueing breaks the mapping between visual treatment and rank."
+  applicability:
+    media: [static]
+    when: "a hierarchy level recurs more than once"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Is every instance of a given level treated identically?"
+  failure_modes: []
+  proposed_failure_modes: [inconsistent_level_cueing]
+  repairs: []
+  proposed_repairs: [normalise_level_cues]
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary
+
+- atom_id: lu_004
+  concept: hierarchy_cues_are_spatial_or_graphic
+  informs: [static.typography_layout]
+  role: [fills]
+  principle: >
+    The available cues divide into spatial — indent, line spacing, placement — and graphic —
+    size, style, colour. Infinite variations are possible within those two classes.
+  mechanism: "Not stated by the source."
+  applicability:
+    media: [static]
+    when: "choosing how to express a hierarchy level"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Which cue class is carrying each level?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: operational
+
+- atom_id: lu_005
+  concept: inline_emphasis_needs_only_one_signal
+  informs: [static.typography_layout, copy.body]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Emphasising a word or phrase within running text usually requires only one signal.
+    Italic is the standard form; boldface, small caps, colour or a font change are alternatives.
+  mechanism: "One shift is sufficient to break the pattern; further shifts add no information."
+  applicability:
+    media: [static]
+    when: "emphasising within a body of text"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "How many simultaneous signals mark this emphasis?"
+  failure_modes: []
+  proposed_failure_modes: [signal_overload]
+  repairs: []
+  proposed_repairs: [reduce_to_single_signal]
+  retrieval_keys: {ir_fields: [static.typography_layout, copy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary
+
+- atom_id: lu_006
+  concept: limited_redundancy_reinforces_a_break
+  informs: [static.typography_layout]
+  role: [fills, constrains]
+  principle: >
+    Some redundancy between cues is acceptable and even recommended — a paragraph traditionally
+    carries both a line break and an indent, each signal backing up the other.
+  mechanism: "Duplicated cues survive contexts where one of them is lost or weakened."
+  applicability:
+    media: [static]
+    when: "marking a structural break rather than inline emphasis"
+    exceptions: ["directly qualified by the source's three-cue ceiling; and inline emphasis takes only one signal"]
+    exceptions_status: source_supported
+  diagnostic: "Is the redundancy deliberate backup, or accumulated decoration?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.75
+  status: operational
+
+- atom_id: lu_007
+  concept: three_cue_ceiling_per_level
+  informs: [static.typography_layout, creative.hierarchy]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Use no more than three cues to mark any one level or break. Beyond that the signals compete
+    rather than reinforce — the source labels the overloaded case "too many signals."
+  mechanism: "Redundant cues stop adding information and start reading as emphasis for its own sake."
+  applicability:
+    media: [static]
+    when: "any hierarchy level is being marked"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Count the cues carrying each level. Is any above three?"
+  failure_modes: []
+  proposed_failure_modes: [signal_overload]
+  repairs: []
+  proposed_repairs: [reduce_cue_count]
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 132, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary
+
+- atom_id: lu_008
+  concept: one_hierarchy_has_many_valid_encodings
+  informs: [creative.hierarchy, static.typography_layout]
+  role: [fills]
+  principle: >
+    A single logical hierarchy can be expressed in endlessly many visual ways — the source
+    demonstrates one identical structure rendered with symbols plus indents plus line breaks;
+    indents and line breaks only; font change plus indents plus line breaks; and alignment plus
+    font change plus line breaks. All are correct.
+  mechanism: "The ranking is a property of the content; the cue set is a separate design choice."
+  applicability:
+    media: [static]
+    when: "a hierarchy has been specified and must be rendered"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Is the specified ranking preserved, independent of which cues were chosen?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 132, page_end: 132, figure_refs: [], visual_context_required: true}
+  source_support: text_and_visual
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.75
+  status: operational
+
+- atom_id: lu_009
+  concept: align_x_heights_when_mixing_families
+  informs: [static.typography_layout]
+  role: [constrains, repairs]
+  principle: >
+    When mixing type families, adjust the sizes so their x-heights align.
+  mechanism: "Not stated by the source."
+  applicability:
+    media: [static]
+    when: "more than one type family appears in the same composition"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Do the mixed families share an x-height?"
+  failure_modes: []
+  proposed_failure_modes: [mismatched_x_heights]
+  repairs: []
+  proposed_repairs: [align_x_heights]
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: lupton_thinking_with_type, section: Hierarchy, page_start: 131, page_end: 131, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.75
+  status: pending_vocabulary
+
+human_notes:
+
+- concept: common_typographic_diseases
+  statement: "A satirical taxonomy — typophilia, typophobia, typochondria, typothermia — used as specimen text for the hierarchy demonstration."
+  informs: []
+  reason_not_operational: "Specimen content and humour, not knowledge. Included in the section only to have something to rank."
+  source_ref: {section: Hierarchy, page_start: 132}
+
+- concept: named_family_recommendations
+  statement: "Scala is cited as a full-range family; Scala with Futura as a mixing example."
+  informs: []
+  reason_not_operational: "Specific product recommendations, not a principle. Would date, and would belong to brand.type assets rather than to Canon."
+  source_ref: {section: Hierarchy, page_start: 131}

@@ -1,0 +1,318 @@
+# Canon atoms — Thompson & Bowen, Grammar of the Shot, 2nd ed. (2009), ch.4
+# "Putting Your Shots Together: Prethinking the Editing Process"
+# Pass 1, source-only, extracted in isolation from all other sources.
+source_manifest:
+  source_id: grammar_of_the_shot
+  edition: "Focal Press, 2nd ed., 2009"
+  chapter: 4
+  chapter_title: "Putting Your Shots Together: Prethinking the Editing Process"
+  book_pages: 93-112
+  pdf_pages_extracted: 106-125
+  structure_note: >
+    Chapter ends with an eight-point numbered review authored by the source, which functions
+    as a compact restatement of its own principles. Diagrams (4.1-4.21) are overhead geometry
+    plus paired shot examples.
+  global_exception_note: >
+    The chapter states explicitly (book p105): "there are very few absolutes when it comes to
+    the guidelines and 'rules' presented in this text. Remember, if you have creative reasons
+    to execute a certain shot or group of shots a certain way, then do it, even if it flies in
+    the face of convention." This is a source-level exception clause and is why most atoms
+    below carry exceptions_status: source_supported.
+  figure_note: >
+    Text extraction preserves figure captions and the prose is self-contained — the 180-degree
+    geometry is described in words as well as drawn. Figures were not rendered; no atom depends
+    solely on a diagram.
+
+atoms:
+
+- atom_id: gos_001
+  concept: frame_edges_are_directional_references
+  informs: [video.continuity_requirements, static.composition]
+  role: [fills]
+  principle: >
+    The four edges of the frame become the audience's references of direction. A subject exits
+    frame left, a character looks off frame right — viewers map the film world's geography onto
+    those edges and assume a world continuing beyond them.
+  mechanism: "The frame is the audience's only window onto the film space, so its edges stand in for real directions."
+  applicability:
+    media: [video]
+    when: "any shot that will be cut with another"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Which frame edge does each subject's motion or attention address?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [video.continuity_requirements], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "Continuity of Screen Direction", page_start: 97, page_end: 98, figure_refs: [fig_4_2], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: operational
+
+- atom_id: gos_002
+  concept: continuity_of_screen_direction
+  informs: [video.continuity_requirements, video.temporal_structure]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Left-right movement must be maintained across a cut. A subject exiting frame left must
+    enter the next shot from frame right to continue travelling leftward in the film's space.
+  mechanism: "The audience continues the motion vector across the cut unless shown a change."
+  applicability:
+    media: [video]
+    when: "a moving subject continues across a cut"
+    exceptions: ["source-level: creative motivation overrides convention (p105)"]
+    exceptions_status: source_supported
+  diagnostic: "Does the subject's direction of travel read as continuous across the cut?"
+  failure_modes: []
+  proposed_failure_modes: [reversed_screen_direction]
+  repairs: []
+  proposed_repairs: [restore_screen_direction]
+  retrieval_keys: {ir_fields: [video.continuity_requirements], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "Continuity of Screen Direction", page_start: 97, page_end: 99, figure_refs: [fig_4_3, fig_4_4, fig_4_5], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: pending_vocabulary
+
+- atom_id: gos_003
+  concept: lines_of_attention_establish_spatial_relations
+  informs: [relationships, video.continuity_requirements]
+  role: [fills, diagnoses]
+  principle: >
+    Each subject's attention to another subject or object creates a sight line. The audience
+    actively traces these lines and uses them to establish who is related to what, and where
+    things sit relative to each other in space.
+  mechanism: "Attention is read as a directed connection, which the viewer converts into spatial layout."
+  applicability:
+    media: [video, static]
+    when: "a frame contains a subject attending to something"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "What is each subject looking at, and does the resulting set of connections match the intended relationships?"
+  failure_modes: []
+  proposed_failure_modes: [contradictory_sight_lines]
+  repairs: []
+  proposed_repairs: [redirect_subject_attention]
+  retrieval_keys: {ir_fields: [relationships, video.continuity_requirements], media_types: [video, static], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "The Line—Basis for Screen Direction", page_start: 100, page_end: 101, figure_refs: [fig_4_6, fig_4_7, fig_4_8], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: gos_004
+  concept: axis_of_action_180_degree_rule
+  informs: [video.continuity_requirements]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    The first shot establishes an imaginary line through the action, traced along the talent's
+    sight line. All subsequent camera positions must stay within the 180-degree arc on one side
+    of that line, or established left and right invert.
+  mechanism: "The line fixes the mapping between film-world geography and frame edges; crossing it re-maps them."
+  applicability:
+    media: [video]
+    when: "a scene is covered from more than one camera position"
+    exceptions: ["source-level: creative motivation overrides convention (p105)", "the source notes crossing is legitimate when the subjects face opposite directions along the axis, e.g. two people dancing cheek to cheek"]
+    exceptions_status: source_supported
+  diagnostic: "Do all setups in this scene sit on the same side of the established axis?"
+  failure_modes: []
+  proposed_failure_modes: [crossed_action_line]
+  repairs: []
+  proposed_repairs: [reframe_within_180_arc]
+  retrieval_keys: {ir_fields: [video.continuity_requirements], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "The Imaginary Line—The 180 Degree Rule", page_start: 102, page_end: 105, figure_refs: [fig_4_9, fig_4_10, fig_4_11, fig_4_12, fig_4_13], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: pending_vocabulary
+
+- atom_id: gos_005
+  concept: line_violation_is_invisible_until_assembly
+  informs: [video.continuity_requirements]
+  role: [diagnoses]
+  principle: >
+    A crossed action line is not detectable in any single shot. The error appears only once the
+    shots are cut together, when both characters appear to look the same way instead of at
+    each other.
+  mechanism: "The fault is a relation between shots, not a property of any one of them."
+  applicability:
+    media: [video]
+    when: "evaluating coverage before assembly"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Evaluate screen direction across the assembled sequence, never shot by shot."
+  failure_modes: []
+  proposed_failure_modes: [crossed_action_line]
+  repairs: []
+  proposed_repairs: [reframe_within_180_arc]
+  retrieval_keys: {ir_fields: [video.continuity_requirements], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "Jumping the Line", page_start: 104, page_end: 105, figure_refs: [fig_4_13], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: gos_006
+  concept: thirty_degree_rule
+  informs: [video.temporal_structure, video.continuity_requirements]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Between two shots of the same subject, move the camera at least 30 degrees around the arc,
+    and change focal length. Below that the perspective is not "different enough" and the cut
+    reads as a jump in space or time rather than as new information.
+  mechanism: "Every cut is expected to deliver new information; too small a change delivers none and reads as an error."
+  applicability:
+    media: [video]
+    when: "cutting between two shots of the same subject"
+    exceptions: ["source-level: creative motivation overrides convention (p105)"]
+    exceptions_status: source_supported
+  diagnostic: "How far apart in angle and focal length are consecutive shots of the same subject?"
+  failure_modes: []
+  proposed_failure_modes: [jump_cut]
+  repairs: []
+  proposed_repairs: [increase_angle_change, change_focal_length]
+  retrieval_keys: {ir_fields: [video.temporal_structure], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "The 30 Degree Rule", page_start: 106, page_end: 107, figure_refs: [fig_4_14, fig_4_15], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: gos_007
+  concept: reciprocating_imagery
+  informs: [video.continuity_requirements, video.temporal_structure]
+  role: [constrains, diagnoses, repairs]
+  principle: >
+    Shots covering different characters in one scene must match each other — subject size,
+    subject placement, camera height, lens angle and angle on action. A medium close-up of one
+    character paired with a big close-up of the other is a mismatch.
+  mechanism: "Unmatched reciprocal framing is read as a break in the scene's consistency, often below conscious notice."
+  applicability:
+    media: [video]
+    when: "two or more characters are covered in single or over-the-shoulder shots"
+    exceptions: ["source-level: creative motivation overrides convention (p105)", "allowances for actual subject size, hairstyle or accessories"]
+    exceptions_status: source_supported
+  diagnostic: "Do the reciprocal shots match on size, placement, height, lens angle and angle on action?"
+  failure_modes: []
+  proposed_failure_modes: [mismatched_reciprocal_framing]
+  repairs: []
+  proposed_repairs: [match_reciprocal_framing]
+  retrieval_keys: {ir_fields: [video.continuity_requirements], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "Reciprocating Imagery", page_start: 108, page_end: 110, figure_refs: [fig_4_16, fig_4_17, fig_4_18, fig_4_19, fig_4_20], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: gos_008
+  concept: outside_in_shot_progression
+  informs: [video.temporal_structure, video.temporal_hierarchy]
+  role: [fills]
+  principle: >
+    Conventionally a scene progresses from outside in — opening wider to establish environment
+    and characters, then cutting tighter as the action develops to deliver intimacy and detail.
+  mechanism: "Establishing context first lets later close framing be read as detail rather than disorientation."
+  applicability:
+    media: [video]
+    when: "structuring the shot order within a scene"
+    exceptions: ["described by the source as tradition rather than rule"]
+    exceptions_status: source_supported
+  diagnostic: "Does shot size tighten as the scene progresses, and is context established before detail?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [video.temporal_structure, video.temporal_hierarchy], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "Reciprocating Imagery", page_start: 108, page_end: 108, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: supported_extrapolation
+  confidence: 0.75
+  status: operational
+
+- atom_id: gos_009
+  concept: eyeline_match_setup_and_payoff
+  informs: [video.temporal_structure, video.continuity_requirements, relationships]
+  role: [fills, constrains, diagnoses, repairs]
+  principle: >
+    When a character looks off-frame, the audience traces the line and expects the next shot to
+    reveal what they are looking at — framed from a corresponding direction, angle and height.
+    The first shot sets up an expectation; the second must pay it off.
+  mechanism: "An established sight line creates an unfulfilled expectation the audience holds across the cut."
+  applicability:
+    media: [video]
+    when: "a subject's attention is directed outside the frame"
+    exceptions: ["need not be a strict subjective POV shot, only a corresponding vantage point"]
+    exceptions_status: source_supported
+  diagnostic: "For each off-frame look, is there a following shot revealing the object from a corresponding vantage?"
+  failure_modes: []
+  proposed_failure_modes: [unresolved_eyeline]
+  repairs: []
+  proposed_repairs: [add_payoff_shot, match_payoff_vantage]
+  retrieval_keys: {ir_fields: [video.temporal_structure, relationships], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: "Eye-Line Match", page_start: 111, page_end: 112, figure_refs: [fig_4_21], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: gos_010
+  concept: continuity_of_action_across_takes
+  informs: [video.continuity_requirements]
+  role: [constrains, diagnoses]
+  principle: >
+    Movement, action and dialogue must be repeated consistently from one camera setup to the
+    next, so that material recorded across hours or weeks reads as one continuous moment.
+  mechanism: "The audience assumes a single continuous event; inconsistency between setups contradicts that assumption."
+  applicability:
+    media: [video]
+    when: "one action is covered from more than one setup"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Does the same action occur identically in every shot that covers it?"
+  failure_modes: []
+  proposed_failure_modes: [continuity_of_action_break]
+  repairs: []
+  proposed_repairs: [reshoot_matching_action]
+  retrieval_keys: {ir_fields: [video.continuity_requirements], media_types: [video], objective_classes: [any]}
+  source_ref: {source_id: grammar_of_the_shot, chapter: 4, section: Continuity, page_start: 96, page_end: 96, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+human_notes:
+
+- concept: shoot_coverage_to_give_the_editor_choices
+  statement: "Record the action from several angles and framings so the editor can decide later when to cut and what to show."
+  informs: []
+  reason_not_operational: >
+    A production strategy about generating options for a downstream chooser. In this
+    architecture that is a Production IR decision (how many variants to generate), not a
+    property of the intended outcome. Notable as a second clear Production IR candidate.
+  source_ref: {chapter: 4, section: Continuity, page_start: 96}
+
+- concept: minimise_take_count_for_cost
+  statement: "Record as few takes as possible to get the action usable, saving time and money."
+  informs: []
+  reason_not_operational: "Production economics. Real, but belongs to cost modelling rather than to creative knowledge."
+  source_ref: {chapter: 4, section: Continuity, page_start: 96}
+
+- concept: shot_type_information_roles
+  statement: "The long shot shows full action and environment, the medium shot gives immediately discernible information, the close-up highlights detail."
+  informs: []
+  reason_not_operational: >
+    Restated from Chapter One and used here only as background. Would need extraction from its
+    own chapter to be attributed properly, and would likely inform video.temporal_structure.purpose.
+  source_ref: {chapter: 4, section: opening, page_start: 93}

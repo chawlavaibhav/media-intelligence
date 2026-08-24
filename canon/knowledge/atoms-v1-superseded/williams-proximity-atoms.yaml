@@ -1,0 +1,292 @@
+# Canon atoms — Robin Williams, The Non-Designer's Design Book (2008), ch.2 "Proximity"
+# Pass 1, source-only. Extracted in isolation: no vocabulary or atoms from any other source.
+# Registry is empty, so every atom proposing a term is pending_vocabulary by SPEC-02 rule 3.
+source_manifest:
+  source_id: williams_non_designers_design_book
+  edition: "4th ed., Peachpit Press, 2008"
+  pdf_pages: 217
+  chapter: 2
+  chapter_title: Proximity
+  book_pages: 15-32
+  pdf_pages_extracted: 16-33
+  structure_note: >
+    Each principle chapter ends with four named sections — Summary, The basic purpose,
+    How to get it, What to avoid. "How to get it" is a diagnostic-plus-repair list and
+    "What to avoid" is a failure list, both authored by the source rather than inferred.
+  figure_note: >
+    Argues through before/after redesign pairs. Layout is legible in extracted text for
+    most examples; the dance-postcard example (p24) loses its scattered arrangement in
+    text extraction and was treated as text-only evidence.
+
+atoms:
+
+- atom_id: rw_001
+  concept: proximity_implies_relationship
+  informs: [static.composition, creative.hierarchy]
+  role: [fills, diagnoses, repairs]
+  principle: >
+    Physical closeness implies relationship. Items placed close together are read as one
+    visual unit; items placed apart are read as unrelated. The rule runs in both directions —
+    unrelated items must be moved apart, not merely related items moved together.
+  mechanism: "Spatial grouping is read pre-attentively, before content is understood."
+  applicability:
+    media: [static, video_frame]
+    when: "a frame contains more than one informational element"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Which elements read as belonging together, and is that the intended set?"
+  failure_modes: []
+  proposed_failure_modes: [false_grouping_by_proximity, ambiguous_element_association]
+  repairs: []
+  proposed_repairs: [group_related_elements, separate_unrelated_elements]
+  retrieval_keys: {ir_fields: [static.composition, creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "Summary of proximity", page_start: 15, page_end: 32, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: pending_vocabulary
+
+- atom_id: rw_002
+  concept: eye_stop_count_threshold
+  informs: [static.composition]
+  role: [diagnoses, repairs]
+  principle: >
+    Count the number of times the eye stops when scanning the frame. More than three to five
+    separate visual elements indicates the frame needs grouping.
+  mechanism: "Each ungrouped element costs a fixation; too many fixations prevent a readable order."
+  applicability:
+    media: [static, video_frame]
+    when: "assessing whether a composition is organised"
+    exceptions: ["the source states the threshold depends on the piece"]
+    exceptions_status: source_supported
+  diagnostic: "How many separate visual units does the frame resolve into?"
+  failure_modes: []
+  proposed_failure_modes: [excessive_separate_elements]
+  repairs: []
+  proposed_repairs: [group_related_elements, reduce_element_count]
+  retrieval_keys: {ir_fields: [static.composition], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "How to get it", page_start: 32, page_end: 32, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: rw_003
+  concept: reading_path_requires_definite_start_and_end
+  informs: [creative.hierarchy]
+  role: [fills, diagnoses]
+  principle: >
+    A composition must support a logical progression with a definite beginning and a definite
+    end. The viewer should know where to start, what path to follow, and when they are finished.
+  mechanism: "Without a terminating point the eye continues searching the frame for missed content."
+  applicability:
+    media: [static, video_frame]
+    when: "any composition carrying more than one piece of information"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Where does the eye start, what path does it follow, and does it know when it is finished?"
+  failure_modes: []
+  proposed_failure_modes: [no_clear_entry_point, no_clear_exit_point]
+  repairs: []
+  proposed_repairs: [establish_single_entry_point, group_related_elements]
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "Summary of proximity", page_start: 32, page_end: 32, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: rw_004
+  concept: competing_emphasis_destroys_entry_point
+  informs: [creative.hierarchy]
+  role: [diagnoses, repairs]
+  principle: >
+    Two elements carrying equal emphasis create two competing entry points. The viewer
+    bounces between them instead of reading in an intended order.
+  mechanism: "An entry point is established by being unambiguously strongest; two equals cancel."
+  applicability:
+    media: [static, video_frame]
+    when: "more than one element carries strong emphasis"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Is there exactly one unambiguously strongest element?"
+  failure_modes: []
+  proposed_failure_modes: [competing_entry_points]
+  repairs: []
+  proposed_repairs: [demote_competing_emphasis, establish_single_entry_point]
+  retrieval_keys: {ir_fields: [creative.hierarchy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "business card demonstration", page_start: 17, page_end: 17, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: rw_005
+  concept: trapped_white_space_separates_related_elements
+  informs: [static.typography_layout, static.composition]
+  role: [diagnoses, repairs]
+  principle: >
+    White space left between elements that belong together pushes them visually apart.
+    Space must be removed from within a group and added between groups, not distributed evenly.
+  mechanism: "Perceived grouping tracks relative spacing, so equal spacing destroys group boundaries."
+  applicability:
+    media: [static]
+    when: "text elements have a hierarchical relationship, such as headline and body"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Is the space within each group smaller than the space between groups?"
+  failure_modes: []
+  proposed_failure_modes: [trapped_white_space]
+  repairs: []
+  proposed_repairs: [reduce_space_within_group, increase_space_between_groups]
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "mini-poster demonstration", page_start: 25, page_end: 26, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: pending_vocabulary
+
+- atom_id: rw_006
+  concept: equal_spacing_signals_equal_relationship
+  informs: [static.typography_layout, static.composition]
+  role: [diagnoses, repairs]
+  principle: >
+    Equal white space between elements signals that they are peers. If a headline sits the same
+    distance from the text above and below it, its ownership is genuinely ambiguous.
+  mechanism: "Relative spacing is the grouping cue; equality removes the cue entirely."
+  applicability:
+    media: [static]
+    when: "three or more elements are stacked"
+    exceptions: ["legitimate when every element is genuinely a peer within one subset"]
+    exceptions_status: source_supported
+  diagnostic: "For each element, is it closer to the thing it belongs to than to anything else?"
+  failure_modes: []
+  proposed_failure_modes: [ambiguous_element_association]
+  repairs: []
+  proposed_repairs: [reduce_space_within_group, increase_space_between_groups]
+  retrieval_keys: {ir_fields: [static.typography_layout], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "What to avoid", page_start: 32, page_end: 32, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: rw_007
+  concept: do_not_fill_space_for_its_own_sake
+  informs: [static.composition]
+  role: [diagnoses, repairs]
+  principle: >
+    Elements must not be placed in corners or in the centre merely because that space is empty.
+    Emptiness is not a defect to be corrected.
+  mechanism: "Placement driven by vacancy rather than relationship produces false groupings."
+  applicability:
+    media: [static, video_frame]
+    when: "elements are distributed across a frame"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Does every element's position express a relationship, or does any merely fill a gap?"
+  failure_modes: []
+  proposed_failure_modes: [space_filling_placement]
+  repairs: []
+  proposed_repairs: [remove_corner_filling, group_related_elements]
+  retrieval_keys: {ir_fields: [static.composition], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "What to avoid", page_start: 32, page_end: 32, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: rw_008
+  concept: all_caps_reduces_legibility
+  informs: [static.typography_layout, copy.headline]
+  role: [constrains, diagnoses, repairs]
+  principle: "Extended text set in all capitals is substantially harder to read and should almost never be used."
+  mechanism: "Not stated by the source."
+  applicability:
+    media: [static]
+    when: "any text of more than a few words"
+    exceptions: ["the source says 'almost never', implying short display uses may survive"]
+    exceptions_status: source_supported
+  diagnostic: "Is any extended text set entirely in capitals?"
+  failure_modes: []
+  proposed_failure_modes: [illegible_all_caps]
+  repairs: []
+  proposed_repairs: [convert_caps_to_mixed_case]
+  retrieval_keys: {ir_fields: [static.typography_layout, copy], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "menu demonstration", page_start: 28, page_end: 28, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+- atom_id: rw_009
+  concept: clarity_outranks_thematic_expression
+  informs: [creative.concept, creative.visual_language]
+  role: [constrains, diagnoses]
+  principle: >
+    When expressing the subject thematically conflicts with communicating the information,
+    clarity wins. A design need not enact its topic.
+  mechanism: "Thematic treatment that degrades legibility costs the reader the message."
+  applicability:
+    media: [static, video_frame]
+    when: "a concept proposes treating type or layout as an expression of the subject"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Does the thematic treatment cost any information its legibility?"
+  failure_modes: []
+  proposed_failure_modes: [decoration_obscures_information]
+  repairs: []
+  proposed_repairs: [subordinate_theme_to_clarity]
+  retrieval_keys: {ir_fields: [creative.concept], media_types: [static], objective_classes: [any]}
+  source_ref: {source_id: williams_non_designers_design_book, chapter: 2, section: "dance postcard demonstration", page_start: 24, page_end: 24, figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.8
+  status: pending_vocabulary
+
+human_notes:
+
+- concept: organisation_increases_readership_and_recall
+  statement: "The source asserts that organised information is more likely to be read and remembered."
+  informs: []
+  reason_not_operational: "A commercial-outcome claim, asserted without evidence and with no IR field to fill."
+  source_ref: {chapter: 2, section: "The basic purpose", page_start: 32}
+
+- concept: group_information_before_designing
+  statement: "Write out which pieces of information belong together before attempting any layout."
+  informs: []
+  reason_not_operational: >
+    A procedure for the designer, not a property of the output. Describes producing a
+    specification before execution — arguably a statement about our own pipeline rather
+    than knowledge the pipeline consumes.
+  source_ref: {chapter: 2, section: "menu demonstration", page_start: 27}
+
+- concept: overlap_graphic_past_the_edge
+  statement: "Enlarging a graphic so it overlaps a boundary strengthens the piece. 'Don't be a wimp.'"
+  informs: []
+  reason_not_operational: "Stated as an aside about a single redesign, with no general principle given."
+  source_ref: {chapter: 2, section: "newsletter flag demonstration", page_start: 19}
+
+- concept: straight_corners_read_stronger_than_rounded
+  statement: "Changing rounded corners to straight gave the piece a cleaner, stronger look."
+  informs: []
+  reason_not_operational: "Single-instance aesthetic claim, no mechanism or scope stated."
+  source_ref: {chapter: 2, section: "newsletter flag demonstration", page_start: 19}
+
+- concept: reversed_type_needs_a_robust_face
+  statement: "Small type dropping out of a dark background needs a face that will not fall apart when printed."
+  informs: []
+  reason_not_operational: >
+    A render-method-dependent production constraint. Would belong to Production IR, which
+    does not exist yet. Notable as the first extracted item that clearly lands outside the
+    Creative IR by design rather than by omission.
+  source_ref: {chapter: 2, section: "newsletter flag demonstration", page_start: 19}

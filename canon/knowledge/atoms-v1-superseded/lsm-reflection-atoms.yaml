@@ -1,0 +1,234 @@
+# Canon atoms — Hunter, Biver, Fuqua & Reid, Light: Science & Magic, 5th ed., ch.3
+# "The Management of Reflection and the Family of Angles"
+# Pass 1, source-only, extracted in isolation from all other sources.
+source_manifest:
+  source_id: light_science_and_magic
+  edition: "Focal Press, 5th ed."
+  chapter: 3
+  chapter_title: "The Management of Reflection and the Family of Angles"
+  extraction: "EPUB OEBPS/12_Chapter03.xhtml, single column, clean"
+  yield_warning: >
+    LOW CREATIVE-IR YIELD BY DESIGN. This is the highest-content chapter processed in this batch
+    and produced the fewest atoms. Most of it is physical mechanism (inverse square law,
+    polarisation, angle of incidence) and lighting technique (where to place a source). In this
+    architecture that is Production IR, which does not exist yet. Only the parts describing
+    what a surface will LOOK like — as opposed to how to make it look that way — could inform
+    the Creative IR.
+  repair_vocabulary_warning: >
+    The repairs this source implies are physical camera actions: enlarge the source, move the
+    light out of the family of angles, raise the camera. None of those is executable against a
+    generative model, where the only repair is to respecify and regenerate. The proposed repair
+    terms below are recorded in the source's own frame and are NOT translated — translating them
+    would be a generative-media hypothesis and belongs to Pass 2.
+  figure_note: >
+    Diagrams 3.1-3.12 are ray-path schematics. Captions extract and are self-describing; the
+    prose states the geometry in words. No atom depends on reading a diagram.
+
+atoms:
+
+- atom_id: lsm_001
+  concept: surface_identity_is_a_reflection_mixture
+  informs: [entities, creative.visual_language]
+  role: [fills, diagnoses]
+  principle: >
+    Light reflects as diffuse reflection, direct reflection, or polarised direct reflection, and
+    most surfaces produce some of each. It is the proportion of the three in the mix that makes
+    one surface look different from another. Three objects of identical colour and identical
+    absorption — paper, pewter, glazed ceramic — are instantly distinguishable by that mixture
+    alone.
+  mechanism: "Transmission and absorption being equal, only the reflection distribution differs, and the eye reads that distribution as material."
+  applicability:
+    media: [static, video]
+    when: "a material must read as the material it is"
+    exceptions: ["the source notes no real surface produces a perfect example of any single type"]
+    exceptions_status: source_supported
+  diagnostic: "Does the surface's reflection mixture read as the intended material?"
+  failure_modes: []
+  proposed_failure_modes: [material_reads_as_wrong_substance]
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [entities, creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: light_science_and_magic, chapter: 3, section: "Types of Reflections", figure_refs: [], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: pending_vocabulary
+
+- atom_id: lsm_002
+  concept: diffuse_reflection_is_viewpoint_independent
+  informs: [entities, creative.visual_language]
+  role: [fills, constrains]
+  principle: >
+    Diffuse reflection is the same brightness from every viewing angle, because the surface
+    scatters light equally in all directions. Neither the angle of the source nor the angle of
+    view changes it. Matte and white surfaces approximate this.
+  mechanism: "Equal scattering in all directions makes recorded brightness independent of viewpoint."
+  applicability:
+    media: [static, video]
+    when: "a matte subject will be seen from more than one angle"
+    exceptions: ["distance from source to subject does still change brightness"]
+    exceptions_status: source_supported
+  diagnostic: "Does this surface hold the same brightness across the angles it will be seen from?"
+  failure_modes: []
+  proposed_failure_modes: []
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [entities, creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: light_science_and_magic, chapter: 3, section: "Diffuse Reflections", figure_refs: [fig_3_1, fig_3_2, fig_3_3], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: operational
+
+- atom_id: lsm_003
+  concept: direct_reflection_is_viewpoint_dependent
+  informs: [entities, creative.visual_language]
+  role: [fills, constrains, diagnoses]
+  principle: >
+    Direct reflection is a mirror image of the light source and is visible from exactly one
+    angle — the angle of incidence equals the angle of reflectance. From every other viewpoint
+    the same polished surface reads dark. Polished metal, glass and water approximate this.
+  mechanism: "Smooth surfaces reflect rays at the incident angle, so only one viewpoint intercepts them."
+  applicability:
+    media: [static, video]
+    when: "a polished or glossy subject appears, especially if the viewpoint moves"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "For a glossy subject seen from several angles, does its appearance change as it should?"
+  failure_modes: []
+  proposed_failure_modes: [glossy_surface_reads_flat]
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [entities, creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: light_science_and_magic, chapter: 3, section: "Direct Reflections", figure_refs: [fig_3_4, fig_3_5], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.95
+  status: pending_vocabulary
+
+- atom_id: lsm_004
+  concept: material_class_determines_allowed_viewing_angle_variation
+  informs: [entities]
+  role: [fills, constrains]
+  principle: >
+    Whether a subject's appearance may vary with viewing angle is a property of its surface, not
+    a free choice. A matte subject holds its appearance across angles; a polished one does not,
+    and will read bright from one angle and dark from another.
+  mechanism: "Follows directly from the viewpoint independence of diffuse reflection and the viewpoint dependence of direct reflection."
+  applicability:
+    media: [static, video]
+    when: "declaring what may vary about a subject's appearance"
+    exceptions: ["real surfaces mix reflection types, so the distinction is a spectrum rather than two classes"]
+    exceptions_status: source_supported
+  diagnostic: "Is the permitted appearance variation consistent with the subject's surface type?"
+  failure_modes: []
+  proposed_failure_modes: [implausible_material_behaviour_across_angles]
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [entities], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: light_science_and_magic, chapter: 3, section: "Types of Reflections", figure_refs: [fig_3_1, fig_3_4], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.85
+  status: pending_vocabulary
+
+- atom_id: lsm_005
+  concept: source_size_governs_shadow_and_highlight_extent
+  informs: [creative.visual_language]
+  role: [fills, diagnoses]
+  principle: >
+    A small source produces hard shadows and a small highlight on a glossy surface. A large
+    source produces soft shadows and a highlight that can cover the whole surface. Both are
+    readable from the image itself — hard shadows and a small reflection are evidence that the
+    source was small.
+  mechanism: "The reflected image of the source is the source; its size in the image is its angular size."
+  applicability:
+    media: [static, video]
+    when: "specifying a lighting register"
+    exceptions: []
+    exceptions_status: not_identified
+  diagnostic: "Do shadow hardness and highlight extent agree with each other about the source size?"
+  failure_modes: []
+  proposed_failure_modes: [inconsistent_lighting_evidence]
+  repairs: []
+  proposed_repairs: [respecify_source_size]
+  retrieval_keys: {ir_fields: [creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: light_science_and_magic, chapter: 3, section: "The Family of Angles", figure_refs: [fig_3_5, fig_3_6], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+- atom_id: lsm_006
+  concept: glare_is_strongest_on_dark_and_transparent_subjects
+  informs: [entities, creative.visual_language]
+  role: [fills, diagnoses]
+  principle: >
+    Polarised direct reflection — glare — is always dimmer than ordinary direct reflection, but
+    is most visible on black or transparent subjects. Lakes, painted metal, glossy wood and
+    plastic all produce it; even matte surfaces produce some.
+  mechanism: "Dark and transparent subjects return little competing diffuse reflection, so the dimmer polarised component dominates."
+  applicability:
+    media: [static, video]
+    when: "the subject is dark, glossy, or transparent"
+    exceptions: ["polarisation is never perfect; some diffuse and un-polarised direct reflection is always mixed in"]
+    exceptions_status: source_supported
+  diagnostic: "On a dark or transparent subject, is glare present and is it intended?"
+  failure_modes: []
+  proposed_failure_modes: [unintended_glare]
+  repairs: []
+  proposed_repairs: []
+  retrieval_keys: {ir_fields: [entities, creative.visual_language], media_types: [static, video], objective_classes: [any]}
+  source_ref: {source_id: light_science_and_magic, chapter: 3, section: "Polarized Direct Reflection", figure_refs: [fig_3_8], visual_context_required: false}
+  source_support: text
+  knowledge_type: source_principle
+  evidence_class: established
+  confidence: 0.9
+  status: pending_vocabulary
+
+human_notes:
+
+- concept: the_family_of_angles
+  statement: >
+    Every point on a surface is seen at a slightly different angle; together those angles form
+    the family of angles that produces direct reflection. A source inside it produces a direct
+    reflection; a source outside it does not light a mirror-like subject at all as far as the
+    camera is concerned. A source large enough to fill the family covers the whole surface.
+  informs: []
+  reason_not_operational: >
+    The book's central concept, and it is a rule for WHERE TO PUT A LIGHT. It has no Creative IR
+    consumer — it is Production IR, and specifically Production IR for a physical camera. Its
+    generative-media equivalent, if one exists, would be a Pass 2 hypothesis.
+  source_ref: {chapter: 3, section: "The Family of Angles"}
+
+- concept: direct_reflection_brightness_ignores_distance
+  statement: "The brightness of a direct reflection is independent of source distance; moving the source closer changes the reflection's size, not its brightness, preserving the inverse square law."
+  informs: []
+  reason_not_operational: "Physical mechanism. Explains a behaviour rather than specifying an outcome."
+  source_ref: {chapter: 3, section: "Breaking the Inverse Square Law?"}
+
+- concept: lighting_is_reflection_management
+  statement: "Photographic lighting is primarily an exercise in reflection management; understanding and managing reflection for the result you want is what constitutes good lighting."
+  informs: []
+  reason_not_operational: "Framing statement for the book. True and useful to a human; no field to fill."
+  source_ref: {chapter: 3, section: opening}
+
+- concept: source_refuses_an_ambiguous_term
+  statement: >
+    The source explicitly declines to use the word "specular" anywhere in the book, because
+    practitioners use it to mean at least three different things — direct reflection, small
+    bright highlights within a larger one, and highlights from a small source — and because
+    "specular light" has drifted to mean hard light, which is a property of the source rather
+    than of the reflection.
+  informs: []
+  reason_not_operational: >
+    Not creative knowledge at all. It is a worked example of controlled-vocabulary governance:
+    a technical field identifying a near-synonym with divergent meanings and resolving it by
+    refusing the term and naming the two concepts separately. Directly relevant to the Canon's
+    own registry problem. Flagged prominently.
+  source_ref: {chapter: 3, section: "Specular Reflection and Specular Light"}
