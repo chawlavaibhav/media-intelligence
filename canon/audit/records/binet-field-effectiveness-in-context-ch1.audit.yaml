@@ -2,7 +2,7 @@ audit_record_version: v0.2
 audit_id: aud_binet_field_effectiveness_in_context_ch1
 source_id: binet_field_effectiveness_in_context_ch1_consideration
 knowledge_dir: canon/knowledge/current/binet-field-effectiveness-in-context-ch1
-recorded_at_commit: bf65c22cb4bece9e50084e154de78bb741abad84
+recorded_at_commit: 59be26676675f81885cb9ca6b58762d837404bf2
 audit_status: complete
 source_snapshot:
   algorithm: sha256-of-sorted-path-and-content
@@ -14,11 +14,11 @@ source_snapshot:
     - path: source-concept-systems.yaml
       digest: a628e11f65eca6385447b676aea70b26240b9dcd4bf0c8e9605f2bdf81df92f1
     - path: source-knowledge.yaml
-      digest: 967a05b6ba5005df8474bceaaab91e03bbc2a6e6bf81b35729ef6190e28f5349
+      digest: fff8a90cbd0a0f8e0cfcfb3912a92996fe79c5c63f7f951f6879d152914e277d
     - path: visual-evidence-ledger.yaml
-      digest: d3f06a68d00b14f84bf3e784643c4ec72abd98266a4f343fcc0f1a63e0682cad
-  combined_digest: f99b1f97f0b558cdc02caeba0ee81c543e5ce32a5889323b64e12e7a67bfea6b
-source_reopened: false
+      digest: 920d4771244bde1f37c9e38514003c078ec71112c304144828e2988cdf88bd11
+  combined_digest: 2e8459c02b7ed329a704b2552d525582bd196a360281a4bf690776af5e11bbf9
+source_reopened: true   # same already-verified copy, identity re-checked; see representation_integrity
 evidence_basis_for_this_audit:
   - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/PROVENANCE.md
   - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/visual-evidence-ledger.yaml
@@ -37,6 +37,11 @@ representation_integrity:
     established from the running page numbers. Every object in the extraction carries a printed page
     range. File size and SHA-256 both matched the Work acquisition fingerprint exactly on first
     download, so version identity was established rather than assumed.
+
+    The Controller correction pass re-opened this SAME copy to inspect the seven remaining
+    claim-referenced figures. Identity was re-checked before re-opening - 24,726,437 bytes and the
+    same SHA-256 - and nothing was reacquired, so source_reopened: true refers to re-reading the
+    verified copy already in hand, not to a second acquisition.
   inspection_state: inspected_page_level
   visual_argument_role: figure_carries_content
   observed_loss_patterns:
@@ -79,12 +84,48 @@ representation_integrity:
         layer that the page does not show. The value was not stretched silently - the mismatch is
         recorded here, in the visual ledger and in PROVENANCE. No method change is proposed because
         no extracted claim is affected; if a later task processes those pages the gap becomes live.
+    - pattern: figure_inspected_claim_underdetermined
+      affects: >
+        Figure 09, printed page 16, and through it sk_eic_0013 - the only object in this extraction
+        whose meaning the Controller correction pass changed.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The figure's two panels carry DIFFERENT Y-AXIS SCALES: 0.00 to 0.20 for emotional
+        consideration and 0.0 to 1.2 for rational, a factor of six. Side by side the bars look
+        comparable in height while the numbers are not - every rational value (1.11, 0.43, 0.36)
+        exceeds every emotional value (0.11, 0.18, 0.19).
+
+        The first pass had not rendered this page and recorded the claim from the prose as "ESOV
+        Efficiency is higher where consumers are emotionally involved and lower where they consider
+        the purchase rationally". At the absolute level the printed magnitudes contradict that
+        reading. The claim is now narrowed to the within-type direction the figure supports - rising
+        with emotional consideration, falling with rational consideration - which is also all the
+        source's own text asserts.
+
+        Recorded under this pattern because inspecting the figure did not by itself settle what the
+        claim should say: it took reading the axis maxima, which are two more numbers in the text
+        layer and carry no signal. The value fits - the figure was inspected and the claim was
+        underdetermined until the scales were read - and the resolution is recorded rather than the
+        difficulty being left open.
+
   claim_resolution_after_inspection: all_resolved
   consequence: >
     The report is a chart-argued empirical document whose text layer is complete and, taken alone,
     actively misleading. It is the first source in the corpus where the danger is not absence but
     plausible mis-association, and the first where the text layer contains content the page does not
     show. Both were caught only by rendering pages and reading them.
+
+    claim_resolution_after_inspection is recorded as all_resolved, and it is worth saying plainly
+    why that is now truthful when it was not before. The first pass inspected seven claim-bearing
+    figures and left seven uninspected while declaring all_resolved - an overclaim, and exactly the
+    failure this source's own methodological lesson describes. The Controller correction pass
+    re-opened the same already-verified copy and inspected all seven remaining figures. All fourteen
+    claim-referenced figures in the processed span are now inspected, every figure_ref on every
+    object resolves to an inspected figure, no object carries visually_demonstrated on an uninspected
+    figure, and no extraction_uncertainty of figure_not_inspected remains. One claim was narrowed and
+    one was strengthened as a result. There is no remaining claim-relevant visual uncertainty in the
+    processed scope, which is the only condition under which this value may be used.
 
 evidence_origin:
   audit_scope: all_objects
