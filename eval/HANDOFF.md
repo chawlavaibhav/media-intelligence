@@ -19,21 +19,25 @@ clips); each sample was run once, so checker consistency is unmeasured; and no a
 repository supports the Tesseract 0/14 line. Detail in
 `findings/EVAL-001-battery-design-findings.md` §5.
 
-A V0 battery specification, Registry schema and instrument-calibration plan exist **as drafts
-pending final Controller review** (EVAL-001, revision 3). Seven dimensions are defined.
-`exact_text_latin` and `text_stability_across_frames` are Controller-approved for V0 (24 Aug 2026);
-`object_count` and `spatial_relationship` were split apart at Controller direction. The battery as a
-whole, the workflow roster, the human-time budget and the Registry cross-stream fields remain
-**unapproved**. No Capability Registry exists. No provider benchmarking has run.
+**EVAL-001 is closed and Controller-approved (24 Aug 2026).** The V0 battery specification and the
+instrument-calibration specification are approved, covering seven dimensions: `exact_text_devanagari`,
+`exact_text_latin`, `person_identity_across_prompts`, `object_count`, `spatial_relationship`,
+`text_stability_across_frames` and `operational_behaviour`.
+
+**Approved does not mean runnable.** Still unapproved and required before any run: the
+workflow/model roster, the human-time budget (≈ 11–15.5 hours, 2–4 of them a Hindi first-language
+reader), and the Registry's cross-stream field proposals, which the Controller has deferred. No
+Capability Registry exists. No provider benchmarking has run. No instrument has been calibrated.
 
 **CURRENT APPROVED DECISIONS:** Technical hard-fidelity and creative-fitness evaluation are
 separate instruments. An evaluator must be calibrated against human judgement on the specific task
 before being trusted. Capability claims must name the measuring instrument and conditions.
 
-**LAST COMPLETED TASK:** EVAL-001 — battery design. Deliverables committed on `work/eval`;
-Controller Brief at `tasks/EVAL-001-CONTROLLER-BRIEF.md`, status `needs_controller_review`.
+**LAST COMPLETED TASK:** EVAL-001 — Capability Battery V0 design. **Completed and
+Controller-approved 24 Aug 2026.** Controller Brief at `tasks/EVAL-001-CONTROLLER-BRIEF.md`.
 
-**CURRENT TASK / QUEUE:** none approved beyond EVAL-001. Do not start EVAL-002.
+**CURRENT TASK / QUEUE:** none. EVAL-002 has not been opened and must not be started without an
+approved task file.
 
 **IMPORTANT OBSERVATIONS**
 
@@ -49,7 +53,8 @@ Controller Brief at `tasks/EVAL-001-CONTROLLER-BRIEF.md`, status `needs_controll
   *generative* model correctly renders Devanagari it was told to produce. Reading and drawing are
   different capabilities — do not cite an OCR benchmark as evidence about a generator.
   Those recognition resources are, however, candidate material for calibrating our *reading*
-  instrument, conditional on Resources verifying licensing.
+  instrument, conditional on Resources clearing the material for bounded internal evaluation under
+  the current Resources policy.
 - **Clean synthetic Devanagari renders do not discriminate between checkers** (all ten systems in
   arXiv:2606.29213v1 cluster at chrF++ 91–98). Any calibration set must include degraded and real
   material.
@@ -79,7 +84,9 @@ time being budgeted: **≈ 11–15.5 hours, of which 2–4 must be a Hindi first
 
 **PROPOSED CROSS-STREAM CHANGES:** three identified in the EVAL-001 brief (to Canon, to Empirical
 Memory/Planner, to Resources). **None filed as `PROPOSED-INTEGRATION-CHANGE` files** — awaiting
-Controller direction on which to formalise.
+Controller direction on which to formalise. The Registry cross-stream fields are explicitly deferred.
 
-**NEXT APPROVED TASK:** none. After Controller review of EVAL-001, stop; do not start benchmarking
-or spend on generation without a new approved task.
+**NEXT APPROVED TASK:** none. Do not start benchmarking or spend on generation without a new
+approved task. The likely first step, when the Controller opens one, is the Resources clearance
+decision on M1a followed by assembling M1b and running the I1/I2 calibrations — but that is a
+recommendation in the EVAL-001 brief, not an approved next action.

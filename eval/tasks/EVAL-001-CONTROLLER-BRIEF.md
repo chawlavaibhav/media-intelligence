@@ -1,9 +1,14 @@
 # Controller Brief — EVAL-001
 
 **TASK:** EVAL-001 — Capability Lab V0 battery design
-**STATUS:** needs_controller_review — **revision 3, 24 Aug 2026.** D2 and D5 remain approved.
-Workflow roster, human-time budget and Registry cross-stream architecture remain unapproved.
-Revision history is in findings §10.
+**STATUS:** **completed — Controller-approved, 24 Aug 2026** (revision 3, substantively approved;
+revision 4 was housekeeping only). EVAL-001 is closed.
+
+**Approved:** the V0 battery specification, its seven dimensions including D2 and D5, the calibration
+specification and its qualification-gate framing.
+**Still unapproved / deferred:** the workflow-model roster, the human-time budget (≈ 11–15.5 hours),
+and the Registry's cross-stream field proposals. **No benchmark run is authorised.** Revision history
+is in findings §10.
 
 **HUMAN SUMMARY**
 

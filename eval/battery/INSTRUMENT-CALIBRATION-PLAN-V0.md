@@ -1,6 +1,11 @@
-# Instrument Calibration Plan V0 — DRAFT
+# Instrument Calibration Plan V0
 
-**Task:** EVAL-001 · **Date:** 24 Aug 2026 · **Status: PROPOSAL. Not approved.**
+**Task:** EVAL-001 (revision 3) · **Date:** 24 Aug 2026
+**Status: CONTROLLER-APPROVED as the V0 calibration specification.** EVAL-001 is closed.
+
+The thresholds below are **qualification gates, not error-rate claims** — see §2b. The human-time
+budget they imply (≈ 11–15.5 hours, 2–4 of them a Hindi first-language reader) is **not approved**
+and requires a separate Controller decision before any calibration is performed.
 
 **No calibration was performed in this task.** Per Controller clarification 4, EVAL-001 performs
 no new human calibration; it specifies what would be required. Zero generations, zero API calls,

@@ -116,7 +116,8 @@ not a Registry entry.
 The gap is **narrower and cheaper to close** than the first version of this finding implied.
 
 - **Instrument calibration material** can partly be reused from existing Devanagari OCR/scene-text
-  resources, subject to Resources verifying licensing.
+  resources, subject to Resources clearing the material for bounded internal evaluation under the
+  current Resources policy.
 - **Capability items** — prompt/target-string pairs to feed generators — still have to be built,
   because no public resource contains them.
 
@@ -338,7 +339,7 @@ Per clarification 11. All accessed **24 Aug 2026**. No paid access was used.
 | **HYPE-EDIT-1** | arXiv:2602.00105 · 25 Jan 2026 · Chan & Allen | v1 | pass@k with retry cap; effective cost per success including human review time; 10 outputs per task; binary pass/fail; 50 public / 50 private split (noted as V1) | its task set (marketing edits, but not our constraints) |
 | **Can OCR-VLMs Read Devanagari? A Stress-Test Benchmark and Post-Correction Study** | arXiv:2606.29213v1 · 28 Jun 2026 · A. P. Singh | v1 | calibration-set design (clean synthetic renders do not discriminate: all 10 systems chrF++ 91–98; real scans spread 76 points); instrument evidence (Gemini 2.5 Flash 86.3, Qwen3-VL-8B 75.2, GPT-5.5 58.5); "strong English OCR does not predict Indic OCR"; catastrophic-repetition screening; chrF++ as graded diagnostic | its scores as our capability numbers — it measures *reading*, not *generation*; licence not verified by Eval |
 | **OneIG-Bench released dataset** | HF `OneIG-Bench/OneIG-Bench`, configs `OneIG-Bench` / `OneIG-Bench-ZH` · NeurIPS 2025 D&B (arXiv:2506.07977) | released files as published, accessed 24 Aug 2026 | resolved the open Multilingualism question from the files themselves: two configs only (EN 1,120 rows, ZH 1,320), `Multilingualism` present only in ZH and Chinese in content (§1.2) | its text-rendering dimension as Devanagari evidence — EN/ZH only |
-| Devanagari recognition resources surveyed | IIIT-ILST arXiv:2104.04437 · IndicSTR12 (CVIT 2023) · BSTD arXiv:2511.23071 · IndicVisionBench arXiv:2511.04727 · MLT-17/19 · DohaScript arXiv:2602.18089 | as cited | candidate reusable calibration material for the *reading* instrument, pending Resources licence verification | as generative-rendering evidence — none measures it |
+| Devanagari recognition resources surveyed | IIIT-ILST arXiv:2104.04437 · IndicSTR12 (CVIT 2023) · BSTD arXiv:2511.23071 · IndicVisionBench arXiv:2511.04727 · MLT-17/19 · DohaScript arXiv:2602.18089 | as cited | candidate reusable calibration material for the *reading* instrument, pending Resources clearing the material for bounded internal evaluation under the current Resources policy | as generative-rendering evidence — none measures it |
 | **fal.ai public pricing page** | https://fal.ai/pricing | accessed 24 Aug 2026 | Seedream V4 $0.03/image; Nano Banana $0.0398/image; Wan 2.5 $0.05/s; Veo 3 $0.40/s, normalised to 1MP | ⚠️ Nano Banana **Pro** priced separately and **not confirmed** on the vendor page; the plan's observed ~$0.15 corresponds to the Pro variant |
 
 Generative text-rendering benchmarks surveyed and found not to cover Devanagari: CVTG-2K,

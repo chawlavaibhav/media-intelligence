@@ -1,11 +1,16 @@
-# Capability Battery V0 — DRAFT
+# Capability Battery V0
 
-**Task:** EVAL-001 · **Date:** 24 Aug 2026 · **Status: PROPOSAL. Not approved. Not in force.**
+**Task:** EVAL-001 (revision 3) · **Date:** 24 Aug 2026
+**Status: CONTROLLER-APPROVED as the V0 battery specification.** EVAL-001 is closed.
 
-Per Controller clarification 1 (24 Aug 2026), battery design is not worker-autonomous. Every
-dimension, level, pass criterion, instrument and cost figure below is a recommendation awaiting
-Controller review. Nothing here may be cited as a project decision, and no run may be started
-from this file alone.
+The dimensions, difficulty levels, observation units, trial definitions, pass criteria and required
+instruments below are approved as the V0 design. Changing any of them after results are seen is an
+EXPERIMENT MUTATION stop under `shared/AUTONOMY-POLICY.md`.
+
+**Still unapproved and out of scope of this approval:** the workflow/model roster, the human-time
+budget, and the Registry's cross-stream field proposals. **No benchmark run is authorised by this
+document** — a run requires a separate approved task, and the instrument calibrations in
+`INSTRUMENT-CALIBRATION-PLAN-V0.md` must pass first.
 
 **Zero generations were made in producing this document. No model was benchmarked. ₹0 spent.**
 
@@ -511,9 +516,13 @@ TextAtlasEval, LongText-Bench, ChineseWord, OneIG-Bench EN/ZH). MULTITEXTEDIT co
 including Bengali — not Devanagari. **Reading and drawing are different capabilities.** Our observed
 failures are drawing failures, and nothing public scores them.
 
-**NOT VERIFIED:** OneIG-Bench's 200-prompt Multilingualism set — language list could not be
-confirmed from the repository README or the OpenReview PDF. If it includes Devanagari, this claim
-narrows further.
+**OneIG-Bench: resolved, does not affect the claim.** Checked against the released dataset
+(findings §1.2). Exactly two configs are published — English (1,120 rows, **no Multilingualism
+category**) and Chinese (1,320 rows, including 200 `Multilingualism` rows). Sampled Multilingualism
+rows are Simplified Chinese prompts about Chinese cultural subjects, consistent with the paper's own
+description of the set as culture- and portrait-related and with its text-rendering score defining a
+constant only for English and Chinese. **No Devanagari, no Indic script.** The structural evidence is
+decisive; the content evidence is a 6-of-200 sample and is not extrapolated.
 
 **Bengali as the nearest published generative proxy.** In MULTITEXTEDIT, Bengali — Brahmic, with
 conjuncts and a headline stroke — is third-worst of twelve (∆Sem 0.697, ∆TA 0.960, ∆LSF 1.172),
@@ -638,7 +647,7 @@ vendor page during this task. Any approved run must re-read the exact model page
 Settings: `N = 12` items, `R = 2` repeats, `V = 0.20`, `Ce = $0.011` (≈₹0.90),
 `Ch = $6.00` per verified trial (≈15 min at a nominal ₹2,000/hr; **not a budget approval**).
 
-**Image cells** (D1, D2, D3, D4 — levels 1–3), per workflow, `U = 1`, `O = 1`:
+**Image cells** (D1, D2, D3, D4, D4b — levels 1–3), per workflow, `U = 1`, `O = 1`:
 
 | Cell | trials | gen (Seedream $0.03) | eval | human | cell total |
 |---|---:|---:|---:|---:|---:|
@@ -673,7 +682,7 @@ design:
    `person_identity_across_prompts` the way an image model is, and an image model cannot exhibit
    `text_stability_across_frames`. The real design is **ragged**, not a cube.
 
-Proposed shape — **image workflows** run D1–D4 (levels 1–3); **video workflows** run D5
+Proposed shape — **image workflows** run D1, D2, D3, D4 and D4b (levels 1–3); **video workflows** run D5
 (levels 1–3) plus D1 at frame level on extracted frames; **all** workflows accumulate D6 for free.
 
 | Workflow type | Generating dimensions × levels | Cells | Trials at N=12, R=2 |
