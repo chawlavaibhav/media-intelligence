@@ -13,9 +13,12 @@ knowledge/bindings split behaved as designed for the first time — more than ha
 knowledge carries no product use at all, where the old migrated version had roughly one binding per
 object. Two things went wrong on my side: I missed a claim the old audit found in a figure, and I
 deliberately did not back-fill it, because patching it would hide a real limitation in how I read
-figures. Five decisions are waiting on you; the granularity one matters most, because two defensible
-conventions produced 19 objects and 55 objects from the same fifty pages, and that gap multiplies
-across every future book.
+figures, and the Controller agreed to leave it missing. All five decisions this brief asked for have
+since been made. The one with the longest reach was granularity: two defensible conventions produced
+19 objects and 55 objects from the same fifty pages, and the Controller has now fixed the rule —
+split a claim out when it can be retrieved, supported, contradicted or qualified on its own, not
+merely because the author gives another example. That rule is to be tested on the next source, and
+this extraction has not been re-audited against it.
 
 ---
 
@@ -121,8 +124,11 @@ Entry **2** further weakened (`sk_mb_c001_0003` is a relationship that had to be
 Entry **1b** weakly supported in shape only — its stated falsifier is untouched, since no binding has
 yet been revised. Entry **14** untouched.
 
-**LOCAL IMPLICATIONS:** A granularity convention should be settled before a second source. The ten
-missing figure pages should be rendered before this source is called complete.
+**LOCAL IMPLICATIONS:** The granularity convention is settled (decision 4) and applies from the next
+source onward; whether this extraction's 55 objects satisfy it is NOT VERIFIED and no re-audit was
+performed. The ten missing figure pages (53, 61, 72, 73, 82, 83, 85, 88, 89, 90) remain unrendered,
+so half this extraction still rests on text alone; the Controller has scheduled a separate
+visual-completeness task, which also covers the page-87 claim left missing under decision 2.
 
 **CROSS-STREAM IMPLICATIONS:** Tagged **CROSS_STREAM**. Filed as
 `canon/PROPOSED-INTEGRATION-CHANGE-CANON-001.md`. Bang builds four near-minimal pairs with stated
@@ -161,11 +167,14 @@ inconsistencies in files I do not own are recorded in the findings and left unre
 `member_of_system`, SPEC-04's `fo_`/`ro_` identifier examples, the curriculum's stale ✓ on this
 source, and a broken link in `coordination/DECISION-LOG.md`.
 
-**RECOMMENDED NEXT STEP:** A recommendation, not an action taken. Settle the granularity convention
-and correct the SPEC-03 example before scaling ingestion, since both compound across every future
-source. Then a second extraction under the settled convention — Williams is the cheapest test, being
-short and authoring its own failure and repair lists — would show whether the thin ontology yield
-here is a property of this source or of the layer.
+**RECOMMENDED NEXT STEP:** A recommendation, not an action taken. The two items this brief originally
+wanted settled first are settled: the granularity rule is fixed (decision 4) and the SPEC-03
+correction is approved and belongs to the Controller (decision 1). The natural next task is therefore
+a second extraction under the new rule, reporting whether the rule held and where it was hard to
+apply. Williams is the cheapest test — short, and it authors its own failure and repair lists, so it
+would also show whether the thin ontology yield here is a property of this source or of the ontology
+layer. Sequencing note: the SPEC-03 correction is worth landing before that extraction starts, so the
+next worker does not learn the origin-marking convention from the uncorrected example.
 
 **EPISTEMIC CHECK:** Counts, page numbers and file states in OBSERVED were produced by script or by
 direct inspection and are reproducible from the named files. Interpretations are confined to
