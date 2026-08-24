@@ -58,6 +58,15 @@ Archives were deleted only after all five conditions held. Every archive was fin
 
 Full fingerprints are retained in `resources/corpus/raw/<source_id>/_archive.sha256`.
 
+### Non-media file removed — approved privacy deletion
+
+`src_konvid1k/KoNViD_1k_subjective.csv` (17,852,162 bytes, 98,384 rating rows, sha256
+`7c0a0d412451a4eb365682ea4c7bd0bf7ff8331f9fd7810302a891c279f025e3`) was deleted on 24 Aug 2026 under
+explicit Controller approval. It contained crowdworker IP addresses, worker IDs and city/region/
+country — third-party personal data this project has no use for. The aggregate mean-opinion-score
+file and per-video technical attributes are retained and contain no personal data. Full reasoning:
+`resources/reports/RES-002-privacy-deletion-log.md`.
+
 ### Media removed
 
 One file, `src_youtube_ugc/Animation_360P-188f.mkv` (207,046,293 bytes, sha256

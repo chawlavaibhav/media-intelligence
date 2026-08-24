@@ -3,10 +3,18 @@
 **PURPOSE:** Discover, licence-check, sample and validate independent media/data, keeping
 evaluation media separate from the knowledge being tested.
 
-**CURRENT STATE:** No external dataset has been downloaded yet. A research plan exists at
-`corpus/CORPUS-SOURCING-PLAN.md`; all previously listed licences remain unverified until checked at
-official sources. Two small internal pools exist: `corpus/finding-01-samples/` and a larger
-64-image human-scored set that remains in the `media-factory` repo.
+**CURRENT STATE:** An external corpus **has** been acquired. RES-001 retained 4,776 items / 4.58 GB
+across four sources: KoNViD-1k (1,200 real videos), YouTube-UGC (5 real clips, explicit CC BY 4.0),
+ImageRewardDB (2,584 generated images), VideoFeedback (987 generated videos). All decode-validated;
+4,771 unique fingerprints (5 byte-identical duplicate pairs inside ImageRewardDB, retained and
+reported). Five candidate sources are blocked — none for licence silence. Rights were verified at
+official sources; `corpus/CORPUS-SOURCING-PLAN.md` remains unverified research context, not evidence.
+
+**KNOWN GAP:** the corpus contains **no known Devanagari/Indic material**, so it does not unblock
+Eval's Hindi-text checker. RES-002 Work Package A exists to close this.
+
+Two small internal pools also exist: `corpus/finding-01-samples/` and a 64-image human-scored set
+that remains in the `media-factory` repo.
 
 **CURRENT APPROVED DECISIONS:** External labels are source observations, not Canon/Eval ground
 truth. Evaluation media must stay independent of the knowledge under test. Rights must be separated

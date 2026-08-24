@@ -31,7 +31,7 @@
 
 ## Terms / access notes
 
-Acquired under RES-001 clarification 6/7: public, ungated, no explicit term prohibiting download, internal research/evaluation only. flickr_id is present, so a future rights review could resolve per-video CC status against Flickr if a use beyond internal evaluation is ever proposed. PRIVACY NOTE: KoNViD_1k_subjective.csv ships crowdworker IP addresses, worker IDs and city/country - see Controller Brief.
+Acquired under RES-001 clarification 6/7: public, ungated, no explicit term prohibiting download, internal research/evaluation only. flickr_id is present, so a future rights review could resolve per-video CC status against Flickr if a use beyond internal evaluation is ever proposed. PRIVACY: the distributor's KoNViD_1k_subjective.csv shipped crowdworker IP addresses, worker IDs and city/region/country. DELETED 24 Aug 2026 under explicit Controller approval (RES-002 finalization item 5); no redacted copy kept. Aggregate MOS (KoNViD_1k_mos.csv) and per-video technical attributes are retained and contain no personal data. See resources/reports/RES-002-privacy-deletion-log.md.
 
 ## Determination
 

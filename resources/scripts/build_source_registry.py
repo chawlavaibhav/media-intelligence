@@ -27,7 +27,7 @@ S = [
   underlying_media_rights="not_verified. Official page describes sources as Creative Commons video from YFCC100M but names no variant. The distributed metadata contains flickr_id but NO per-video licence field — checked directly. Per-item CC status therefore unresolved.",
   redistribution_status="not_stated - treat as NOT permitted",
   commercial_use_status_if_explicit="not_stated",
-  terms_access_notes="Acquired under RES-001 clarification 6/7: public, ungated, no explicit term prohibiting download, internal research/evaluation only. flickr_id is present, so a future rights review could resolve per-video CC status against Flickr if a use beyond internal evaluation is ever proposed. PRIVACY NOTE: KoNViD_1k_subjective.csv ships crowdworker IP addresses, worker IDs and city/country - see Controller Brief.",
+  terms_access_notes="Acquired under RES-001 clarification 6/7: public, ungated, no explicit term prohibiting download, internal research/evaluation only. flickr_id is present, so a future rights review could resolve per-video CC status against Flickr if a use beyond internal evaluation is ever proposed. PRIVACY: the distributor's KoNViD_1k_subjective.csv shipped crowdworker IP addresses, worker IDs and city/region/country. DELETED 24 Aug 2026 under explicit Controller approval (RES-002 finalization item 5); no redacted copy kept. Aggregate MOS (KoNViD_1k_mos.csv) and per-video technical attributes are retained and contain no personal data. See resources/reports/RES-002-privacy-deletion-log.md.",
   version="full public release", status="downloaded",
   reason="Public, ungated, no explicit prohibition. Rights not_stated and recorded as such. Provides the only large real human-made media in the pilot."),
 

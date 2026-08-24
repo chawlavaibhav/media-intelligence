@@ -42,7 +42,18 @@ evading controls. Explicit restrictions, gates and paywalls remain hard blocks.
 | `src_imagerewarddb` | Generated images, expert preference | 2,584 | 1.13 GB | apache-2.0 stated |
 | `src_videofeedback` | Generated video, 5-aspect human scores | 987 | 0.18 GB | apache-2.0 stated |
 
-Validation: **4,776 / 4,776 decode cleanly. 0 zero-byte, 0 undecodable, 0 exact duplicates.**
+Validation: **4,776 / 4,776 decode cleanly. 0 zero-byte, 0 undecodable.**
+
+**Duplicates — correcting an error in the original version of this brief.** It previously said "0
+exact duplicates". That was wrong: it carried forward a figure measured on KoNViD-1k alone before
+the other sources were added. The correct figure, which the auto-generated integrity report had
+right all along, is **4,771 unique file fingerprints across 4,776 items — 5 hashes appear twice, so
+5 items are byte-identical copies of another item.**
+
+All five pairs are inside ImageRewardDB: the same generated image stored under two different
+filenames. That is expected in a preference dataset, where one image can appear in more than one
+human comparison. **The duplicates are retained, not removed** — RES-001 requires reporting them,
+and how often a source reuses an image is itself information Eval may need when sampling.
 
 **Blocked — five, none of them for licence silence**
 
@@ -103,10 +114,20 @@ distributor-defined category; VideoFeedback takes every addressable file; KoNViD
 
 ## CROSS-STREAM IMPLICATIONS — `CROSS_STREAM`, proposed only
 
-The corpus supports evaluator and instrument calibration on **real** video, which was impossible a
-day ago. It still supports **no** comparison against real professional or commercial creative, no
-Indic-script work, and no audio work. EVAL-001 is designing the battery now and should know both
-halves. No `PROPOSED-INTEGRATION-CHANGE` filed — say if you want one.
+The corpus supports **some** of Eval's work and explicitly not all of it.
+
+**It does unblock:** calibrating a judge against real video — checking whether an automated evaluator
+agrees with humans on material that was filmed rather than generated. That was impossible before this
+task.
+
+**It does not unblock the Hindi-text checker.** The corpus contains **no known Devanagari or Indic
+material at all.** Devanagari text rendering is recorded elsewhere in this project as our worst
+observed failure area, so this is a live gap, not a theoretical one. Anyone reading "the corpus
+supports evaluator calibration" should not conclude Hindi-text evaluation is covered — it is not.
+(RES-002 exists to close this.)
+
+**It also does not support:** comparison against real professional or commercial creative, or any
+audio work.
 
 ## ARCHITECTURAL IMPLICATIONS
 
@@ -137,9 +158,10 @@ Raw media in `resources/corpus/raw/` — git-ignored, never committed.
 ## RECOMMENDED NEXT STEP
 
 *A recommendation, not an action taken.* Answer decision 1 first — it is the only one with a
-personal-data dimension. Then treat this corpus as sufficient for EVAL-001's instrument-calibration
-work and open a separate task if a real *creative* media family is wanted, since that is a new
-source family rather than more of this one.
+personal-data dimension. Then treat this corpus as sufficient for the **real-video** part of
+EVAL-001's instrument-calibration work only — it does **not** cover Hindi/Devanagari checking, which
+needs separate material. Open a separate task if a real *creative* media family is wanted, since
+that is a new source family rather than more of this one.
 
 ## CONFIRMATION
 
