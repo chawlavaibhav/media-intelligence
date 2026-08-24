@@ -1,12 +1,26 @@
 # Proposed Integration Change — CANON-001
 
 **Filed by:** Canon · **Date:** 24 Aug 2026 · **Severity:** CROSS_STREAM
-**Affects:** Eval / Capability Lab · **Status:** PROPOSED — not an approved decision
+**Affects:** Eval / Capability Lab
+**Status:** **APPROVED by Controller, 24 Aug 2026** (CANON-001 review, decision 5)
 **Source evidence:** `canon/findings/CANON-001-current-schema-extraction-findings.md` §4;
 `canon/knowledge/current/molly-bang/operational-bindings.yaml` → `bnd_mb_c001_0010`
 
 Filed because the Runbook requires a worker tagging `CROSS_STREAM` to also file this file.
 Canon proposes; it does not act on another stream.
+
+## Controller decision — 24 Aug 2026
+
+> Bang's visual minimal-pair candidates may be passed to Eval's deferred creative-evaluation list,
+> clearly marked as source-asserted expected readings rather than validated human ground truth.
+
+**Mandatory marking.** Any use of these four pairs must carry, alongside the pair itself:
+`expected reading: source-asserted by Molly Bang; NOT validated human ground truth`.
+The two isolation confounds recorded below travel with the pairs and must not be dropped.
+
+Approval covers passing the candidates to Eval's **deferred** creative-evaluation list. It does not
+place them in Capability Battery V0, does not create a benchmark dimension, and does not make the
+expected readings evidence of anything about a model.
 
 ---
 

@@ -1,7 +1,7 @@
 # Controller Brief — CANON-001
 
 **TASK:** CANON-001
-**STATUS:** completed
+**STATUS:** completed — **APPROVED by Controller, 24 Aug 2026**
 
 **HUMAN SUMMARY:**
 The first clean extraction under the new schema worked, and it produced a result worth acting on:
@@ -16,6 +16,38 @@ deliberately did not back-fill it, because patching it would hide a real limitat
 figures. Five decisions are waiting on you; the granularity one matters most, because two defensible
 conventions produced 19 objects and 55 objects from the same fifty pages, and that gap multiplies
 across every future book.
+
+---
+
+## Controller decisions — 24 Aug 2026
+
+All five questions raised in this brief are answered. Recorded verbatim in substance; none required
+a change to the extraction, and none was made.
+
+| # | Decision | Effect on Canon |
+|---|---|---|
+| 1 | SPEC-03's Molly Bang worked example is **confirmed incorrect** and will be corrected by the Controller. | Canon does not edit it. Finding stands as filed. |
+| 2 | **Do not back-fill** the missed page-87 figure-only claim. Preserve CANON-001 as evidence of the miss. A later visual-completeness task will handle it explicitly. | The gap stays open on purpose. Do not treat it as an outstanding defect. |
+| 3 | `distinct_from` **is permitted** in the SPEC-05 ontology layer, being already part of that relation vocabulary. **Not** permission to use it inside SPEC-03 `intra_source_relations`. | Grants the authority this brief asked for, and closes the door I was worried about. |
+| 4 | **V0 granularity rule:** split into a separate SourceKnowledge object when a claim can meaningfully be **retrieved, supported, contradicted or qualified independently**. Do not split merely because there is another example, explanation or restatement. Test the rule on the next source rather than targeting an object count. | Standing rule for the next extraction. |
+| 5 | Bang's visual minimal-pair candidates **may** be passed to Eval's deferred creative-evaluation list, clearly marked as source-asserted expected readings rather than validated human ground truth. | `PROPOSED-INTEGRATION-CHANGE-CANON-001.md` moved to APPROVED with the marking requirement recorded. |
+
+### What was deliberately not done in response
+
+**Decision 3 was not applied retroactively.** It makes the two negative findings in
+`findings/CANON-001-current-schema-extraction-findings.md` §8 writable —
+`space_reads_as_flat` vs `reads_as_floating` (both depth failures, unrelated mechanisms) and
+`monotony_of_relentless_repetition` vs `boring_and_heavy` (currently recorded as `related_to`).
+Neither was written. CANON-001 is approved, and adding ontology content to an approved artifact was
+not part of the instruction. Both remain available as a small follow-up if wanted.
+
+**Decision 4 was not applied retroactively either, and compliance is NOT VERIFIED.** The rule was
+issued after this extraction was frozen. The convention actually used was "one object per distinct
+claim", which is close to the rule but not identical, and the 55 objects have **not** been re-audited
+against the rule's four-part test. The Controller directed that the rule be tested on the next
+source, so no re-audit was performed. Do not read this brief as claiming the 55 objects satisfy it.
+
+---
 
 **WHAT I DID:** Extracted Molly Bang, *Picture This* pp.42–91 directly under SPEC-03/04/05 without
 consulting the historical audit or the superseded atom files. Inspected all 21 rendered figures
@@ -104,18 +136,9 @@ source produced, including its uncertainties. Two representational gaps are repo
 stops, because SPEC-03 could record the material honestly in both cases: no relation type for claims
 that are adjacent but not logically related, and no Layer-1 term kind for a principle.
 
-**DECISIONS NEEDED FROM CONTROLLER:**
-1. **Correct SPEC-03's `scs_mb_001` worked example.** It teaches the origin-marking convention from a
-   case that reverses this source. Every future extraction learns the convention from it. I may not
-   edit a frozen spec.
-2. **Add or omit the missed `source_interpretation` object.** Matters because it is the only evidence
-   on record about how this extraction method treats figures; back-filling it silently would erase
-   that signal.
-3. **Is `distinct_from` a local decision?** Two negative findings are sitting unwritten because the
-   Charter grants me only `related_to` and `potentially_equivalent_to`.
-4. **Settle the granularity convention before the next source.** Two defensible conventions produced
-   19 and 55 objects from the same fifty pages; the gap compounds across every future book.
-5. **Whether EVAL may cite the benchmark pairs** for its deferred creative list.
+**DECISIONS NEEDED FROM CONTROLLER:** None outstanding. All five were answered on 24 Aug 2026 — see
+the Controller decisions table above. One optional follow-up remains open, not blocking: whether to
+write the two `distinct_from` relations that decision 3 now permits.
 
 **EVIDENCE WORTH HUMAN INSPECTION:**
 - `canon/knowledge/SPEC-03-source-knowledge.md` lines 189–201 against page 58 of
