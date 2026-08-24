@@ -43,6 +43,40 @@ This policy is permission to **acquire for bounded internal evaluation**, not a 
 or commercial-use rights exist. If a later use needs redistribution, training, customer delivery or
 production use, rights must be reviewed again.
 
+## Large public archives — transient acquisition is the default
+
+**Approved by Controller, 24 Aug 2026, following RES-002.**
+
+Some valuable public datasets ship as one very large file. Downloading 13 GB to keep 1 GB wastes
+bandwidth and puts the disk floor at risk. For a large public archive that stays **reliably
+reacquirable** from its official source, the default is:
+
+1. **Prefer range / member-level / streaming access.** A zip keeps its index at the end of the file;
+   a host that answers HTTP 206 lets you read that index and then fetch only the members you want.
+   Transfer becomes index + selection instead of the whole archive.
+   **Always test for a real 206 first** — a host that ignores Range replies 200 with the entire body,
+   which defeats the purpose and can blow the disk floor.
+2. **If range access is unavailable,** a full temporary download is allowed only when the free-disk
+   floor holds at every point, including extraction. The floor is never relaxed implicitly.
+3. **If neither is possible,** stop and report the exact technical constraint and disk requirement.
+
+**Retain:** the bounded useful subset, item hashes, the complete remote member list, the selection
+rule, the official URL, the remote archive size and the retrieval script — enough to reproduce the
+selection exactly.
+
+**Do not retain** the full archive once bounded extraction and validation have succeeded. Log every
+deletion. Re-download later if an approved task needs more.
+
+**Hashes must not be invented.** If the full archive was downloaded, fingerprint it before deleting
+it. If range access meant it was never downloaded, record **no** full-archive hash — a hash of a
+file we never held would be fabricated evidence. Remote metadata plus per-member hashes are the
+record instead.
+
+**This changes storage method only.** It grants nothing about rights: material acquired this way
+remains internal research and evaluation only, under the same terms as any other acquisition, and
+rights-unstated material still may not be redistributed, used as training data, delivered to
+customers, or treated as production-cleared.
+
 ## Decisions requiring Controller review
 Any materially new dataset family before download. Any explicit licence/terms conflict, gated access,
 or legal ambiguity not covered by the public-data rule above. Any decision that would make an
