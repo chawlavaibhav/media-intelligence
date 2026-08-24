@@ -176,12 +176,158 @@ test whether the schema handles time-based craft knowledge — a gap the synthes
 - **Consequence if unchanged:** the synthesis cannot speak to time-based creative knowledge
 - **Proposed fix (NOT APPLIED):** documented as a gap; acquiring a source is out of scope
 
+### B-07 — The historical binding layer over-binds, in every book so far *(recurrence, 3 books)*
+
+**Plain English.** Every historical migration audit attaches roughly one Creative IR binding to every
+knowledge object. Bang: 21 bindings for 19 objects. Williams: 12 for 14. Grammar of the Shot: 13 for
+13. The fresh passes under the current method produce 5, 2 and 2 respectively, leaving most objects
+attached to nothing.
+
+**Why it matters.** SPEC-04 was written on the principle that zero bindings is a normal, healthy state
+— it tells you something about the product, not about the knowledge. A near-1:1 ratio is the signature
+of the *old* rule, which required every atom to name a Creative IR field and so manufactured bindings
+to satisfy it. Seeing it in all three migrated books suggests the migration carried the old rule's
+shape forward even though the rule itself was removed.
+
+**What changes.** Nothing during the batch. But this is now the most consistently reproduced
+difference between old and new work, and it is direct evidence that the separation SPEC-04 introduced
+is doing something rather than merely being asserted.
+
+**Uncertainty.** Three books, all migrated by the same process. This is evidence about that migration,
+not proof about binding layers in general.
+
+- **Books:** Bang, Williams, Grammar of the Shot · **Distinct books: 3** · **Status: OBSERVED**
+- **Layer:** bindings
+- **New / recurrence:** recurrence across all books processed to date
+- **Consequence if unchanged:** historical bindings read as product requirements when many were rule artifacts
+- **Proposed fix (NOT APPLIED):** none needed for the fresh method; relevant to whether historical bindings should be trusted when the two representations are eventually reconciled
+
+### B-08 — The fresh method finds governance knowledge the historical passes missed *(recurrence, 2 books)*
+
+**Plain English.** "Governance" here means knowledge about how the system should handle its own
+knowledge — for example, whether a rule may be applied on its own or must be used with others.
+
+Both historical audits report zero governance findings. The Williams audit explicitly considered one
+and rejected it. Both fresh passes found one, and in both cases from the same kind of statement: the
+author telling the reader how their own rules should be treated. Williams says take the principles one
+at a time and start with proximity. Grammar of the Shot says there are very few absolutes and a
+creative reason justifies breaking any rule in the book.
+
+**Why it matters.** This is a class of knowledge that authors state plainly and that the older method
+consistently dropped. It bears directly on whether Canon knowledge should ever be enforced as a
+constraint rather than offered as a default.
+
+**Uncertainty.** Two books. Whether it recurs in sources that do not editorialise about their own
+rules is unknown — Bang, notably, produced governance material too but of a different kind.
+
+- **Books:** Williams, Grammar of the Shot · **Distinct books: 2** · **Status: OBSERVED**
+- **Layer:** bindings, Creative IR fit
+- **New / recurrence:** recurrence first seen inside this batch
+- **Consequence if unchanged:** the project keeps rediscovering that its craft sources have opinions about their own authority
+- **Proposed fix (NOT APPLIED):** none; the fresh method already captures it
+
+### B-09 — The historical passes keep catching product-schema fit points the fresh passes miss *(recurrence, 2 books)*
+
+**Plain English.** Twice now, the older work has noticed something about how craft knowledge does or
+does not fit the product's Creative IR schema, and the fresh pass has walked straight past it while
+holding the same evidence.
+
+- **Williams:** the historical audit noticed that `creative.hierarchy` is a ranked list and therefore
+  cannot express "the reader knows when they are finished". I extracted that exact claim and bound it
+  to that exact field without noticing the mismatch.
+- **Grammar of the Shot:** the historical audit binds sight lines to the `relationships` field,
+  correctly, because a sight line is literally one entity looking at another — SPEC-01's own example
+  for that field. I bound sight lines only to continuity requirements and never considered it.
+
+**Why it matters.** This is the reverse of what the batch was expected to show. The fresh method is
+better at source fidelity — it finds more of what the author actually said. The historical method
+appears better at product fit. If that holds, the two passes are good at different things and the
+weakness is specific: **the fresh method is under-attentive to how knowledge meets the product
+schema, precisely because it was designed to stop the product schema distorting extraction.**
+
+**Uncertainty.** Two books. It may be that the historical passes had an advantage here because they
+were *required* to name a Creative IR field, which forced the question. That would make this a
+side-effect of the very rule that caused the distortions SPEC-03 was written to fix — a genuine
+trade-off rather than a simple defect. **Not established.**
+
+- **Books:** Williams, Grammar of the Shot · **Distinct books: 2** · **Status: OBSERVED, interpretation INFERRED**
+- **Layer:** Creative IR fit
+- **New / recurrence:** recurrence first seen inside this batch; extends H-04
+- **Consequence if unchanged:** the fresh Canon is more faithful and less usable than it could be
+- **Proposed fix (NOT APPLIED):** possibly a separate binding-review step that asks, per object, which SPEC-01 fields it touches — deliberately after the source pass, so it cannot contaminate it
+
+### B-10 — A third distinct kind of visual dependence *(extends H-01, 3 books)*
+
+**Plain English.** How figures matter differs by book, and the difference decides what text extraction
+destroys.
+
+- **Bang:** figures corroborate prose that already carries the argument. Little is lost.
+- **Williams:** the evidence *is* the spacing. Everything is lost, and lost silently — the two
+  demonstration lists become identical.
+- **Grammar of the Shot:** figures pair an overhead plan of the camera with the resulting image. What
+  is lost is the *correspondence between the two halves*. But the text names each figure and says what
+  it shows, so a text-only reader can tell they are missing something.
+
+**Why it matters.** The dangerous case is not "figures matter". It is "figures matter and the text does
+not admit it." Williams is dangerous; Grammar of the Shot is merely incomplete.
+
+- **Books:** Bang, Williams, Grammar of the Shot · **Distinct books: 3** · **Status: OBSERVED**
+- **Layer:** visual completeness
+- **New / recurrence:** extends H-01 with a third pattern
+- **Consequence if unchanged:** visual loss is treated as one problem when it is at least three, with different severities
+- **Proposed fix (NOT APPLIED):** record a visual-dependence class per book rather than a yes/no completeness flag
+
+### B-11 — The relation vocabulary a worker may use is narrower than the schema's *(new)*
+
+**Plain English.** SPEC-05 defines ten relation types for connecting terms. The Canon Charter grants a
+worker two of them (`related_to`, `potentially_equivalent_to`), and the Controller added a third
+(`distinct_from`) on 24 Aug 2026.
+
+In this book two relations genuinely wanted `broader_than` and `narrower_than`: jumping the line is one
+cause of reversed screen direction, and a sight line is the specific thing an axis of action is traced
+from. Both are ordinary, low-risk structural facts. I recorded them as `related_to` and put the
+intended stronger reading in the note.
+
+**Why it matters.** The information is preserved but downgraded, so the ontology understates what is
+known. The Controller's stated reason for permitting `distinct_from` — that it is already part of the
+vocabulary — would apply equally to these two. This looks like an unintended gap rather than a
+deliberate restriction, but assuming that mid-batch would be inventing policy, which CANON-003 forbids.
+
+- **Books:** Grammar of the Shot · **Distinct books: 1** · **Status: OBSERVED**
+- **Layer:** ontology
+- **New / recurrence:** new in this batch
+- **Consequence if unchanged:** relations recorded weaker than the evidence supports; later aggregation sees a flatter graph than it should
+- **Proposed fix (NOT APPLIED):** Controller ruling on whether the purely structural relation types are within worker authority
+
+### B-12 — A source copy carried a previous reader's highlighting *(new, minor)*
+
+**Plain English.** The local Grammar of the Shot PDF has yellow highlighter on printed page 110, over
+one phrase and two figure captions, applied by whoever owned the file before.
+
+It does not corrupt anything — extracted text matched the repository file exactly. But highlighting
+directs the eye, so a visual pass over an annotated copy risks inheriting a previous reader's sense of
+what mattered.
+
+**Uncertainty.** Whether this influenced my reading of that page is unknown and unknowable from here.
+
+- **Books:** Grammar of the Shot · **Distinct books: 1** · **Status: OBSERVED**
+- **Layer:** provenance, visual completeness
+- **Consequence if unchanged:** small, hard-to-detect attention bias in visual passes
+- **Proposed fix (NOT APPLIED):** record artifact condition in the per-book provenance file, which was done here
+
 ---
 
 ## C. Evidence *against* earlier concerns
 
-Nothing yet. This section exists so that a concern failing to recur is recorded as a result rather
-than quietly forgotten.
+**H-01 partially answered, and the answer is reassuring.** Grammar of the Shot depends heavily on its
+figures, but the text names every figure and states what it shows. The silent, undetectable loss seen
+in Williams did **not** recur. One book is not enough to conclude that Williams was exceptional, but
+it is the first evidence that catastrophic silent visual loss is not universal. See B-10.
+
+**H-02 did not recur.** Grammar of the Shot narrates changes between its own before-and-after figures,
+but those changes are the subject of the demonstration rather than incidental confounds, so the
+classification trap that lost three Williams claims did not arise. Not yet evidence that it was
+source-specific — this source simply does not have the shape that triggers it.
 
 ---
 
@@ -189,7 +335,12 @@ than quietly forgotten.
 
 | | Count |
 |---|---|
-| Books completed under the frozen method | 0 |
+| Books completed under the frozen method | **1** (Grammar of the Shot ch.4) |
 | Books blocked before extraction | 5 (Lupton + 4 image-only/format) |
-| Issues logged | 6 new, 5 carried forward |
-| Issues seen in 2+ distinct books | 0 so far |
+| Issues logged | 12 new, 5 carried forward |
+| **Issues seen in 2+ distinct books** | **4** (B-07 ×3, B-08 ×2, B-09 ×2, B-10 ×3) |
+
+### Book 1 method-integrity note
+The frozen method held. No schema, granularity rule, visual-pass method or ontology vocabulary was
+changed. Two errors of mine were caught and corrected **before** the checkpoint: an unauthorised
+relation type, and a validator regex that wrongly rejected a digit in a source-derived term.
