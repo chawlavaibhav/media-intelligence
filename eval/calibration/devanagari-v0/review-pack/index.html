@@ -1,0 +1,93 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Devanagari calibration — blind transcription pass</title>
+<style>
+ body{font:15px/1.5 system-ui,sans-serif;margin:0;background:#111;color:#eee}
+ header{padding:12px 20px;background:#1c1c1c;border-bottom:1px solid #333;position:sticky;top:0}
+ .wrap{max-width:900px;margin:0 auto;padding:20px}
+ .crop{background:#000;border:1px solid #444;overflow:hidden;margin:14px 0;
+       display:flex;align-items:center;justify-content:center;min-height:220px}
+ .crop img{image-rendering:auto;display:block}
+ label{display:block;margin:10px 0 4px;color:#bbb;font-size:13px}
+ input[type=text]{width:100%;padding:10px;font-size:20px;background:#000;color:#fff;
+                  border:1px solid #555;border-radius:4px}
+ .row{display:flex;gap:16px;align-items:center;margin:10px 0}
+ button{padding:9px 16px;font-size:14px;background:#2b6;color:#000;border:0;border-radius:4px;cursor:pointer}
+ button.sec{background:#444;color:#eee}
+ .meta{color:#888;font-size:12px}
+ .warn{background:#3a2a00;border:1px solid #764;padding:10px;border-radius:4px;margin:12px 0}
+</style>
+<header>
+  <b>Blind transcription pass</b> &nbsp;<span class=meta id=pos></span>
+  <span style="float:right"><button class=sec onclick=exportCsv()>Export CSV</button></span>
+</header>
+<div class=wrap>
+ <div class=warn>
+  Write <b>exactly what you can see drawn</b> — letter for letter. Do <b>not</b> correct spelling and
+  do <b>not</b> write what you think the sign was meant to say. If it is not readable, use
+  <b>cannot read</b>. If it could genuinely be read more than one way, use <b>ambiguous</b> and say
+  why. There is no expected answer shown anywhere in this page, and that is deliberate.
+ </div>
+ <div class=meta id=itemid></div>
+ <div class=crop id=crop></div>
+ <label>What is visibly written?</label>
+ <input type=text id=txt autocomplete=off spellcheck=false>
+ <div class=row>
+   <label><input type=radio name=st value=transcribed checked> transcribed</label>
+   <label><input type=radio name=st value=cannot_read> cannot read</label>
+   <label><input type=radio name=st value=ambiguous> ambiguous</label>
+ </div>
+ <label>Notes (optional)</label>
+ <input type=text id=note autocomplete=off>
+ <div class=row>
+   <button onclick=prev()>&larr; back</button>
+   <button onclick=next()>save &amp; next &rarr;</button>
+   <span class=meta id=saved></span>
+ </div>
+</div>
+<script>
+const ITEMS = [{"item_id": "dev-v0-12fde5ea77d8", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__196.jpeg", "crop_box_xyxy": [1169, 2691, 2018, 3067]}, {"item_id": "dev-v0-00442cac73a1", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__101.jpeg", "crop_box_xyxy": [165, 210, 697, 311]}, {"item_id": "dev-v0-16ac51435f85", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__191.jpeg", "crop_box_xyxy": [6, 284, 476, 488]}, {"item_id": "dev-v0-01c9d46eaf5c", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__182.jpeg", "crop_box_xyxy": [363, 240, 599, 392]}, {"item_id": "dev-v0-0373ce23c567", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__164.jpeg", "crop_box_xyxy": [366, 179, 579, 295]}, {"item_id": "dev-v0-010f340bbfab", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__81.jpeg", "crop_box_xyxy": [209, 208, 323, 334]}, {"item_id": "dev-v0-15adb1cfd32b", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__197.jpeg", "crop_box_xyxy": [80, 151, 240, 194]}, {"item_id": "dev-v0-1dffdede59ce", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__0.jpeg", "crop_box_xyxy": [146, 86, 233, 118]}, {"item_id": "dev-v0-01de36784755", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__92.jpeg", "crop_box_xyxy": [309, 364, 417, 418]}, {"item_id": "dev-v0-2325512d6e60", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__176.jpeg", "crop_box_xyxy": [162, 261, 205, 293]}, {"item_id": "dev-v0-62d2a7a67700", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__167.jpeg", "crop_box_xyxy": [229, 256, 274, 271]}, {"item_id": "dev-v0-01376529220d", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__14.jpeg", "crop_box_xyxy": [271, 26, 316, 50]}, {"item_id": "dev-v0-1dd597947c12", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__49.jpeg", "crop_box_xyxy": [0, 36, 526, 283]}, {"item_id": "dev-v0-092b87d0c3b7", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__12.jpeg", "crop_box_xyxy": [21, 6, 915, 222]}, {"item_id": "dev-v0-3f2d5a7d8149", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__66.jpeg", "crop_box_xyxy": [667, 54, 1497, 266]}, {"item_id": "dev-v0-17eeadd58382", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__108.jpeg", "crop_box_xyxy": [362, 260, 652, 384]}, {"item_id": "dev-v0-05ae4fb080eb", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__58.jpeg", "crop_box_xyxy": [221, 0, 466, 185]}, {"item_id": "dev-v0-0495683549e0", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__90.jpeg", "crop_box_xyxy": [40, 11, 206, 193]}, {"item_id": "dev-v0-1aaedf0273f7", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__121.jpeg", "crop_box_xyxy": [458, 65, 598, 113]}, {"item_id": "dev-v0-3cdcfff97fb9", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__13.jpeg", "crop_box_xyxy": [141, 48, 254, 104]}, {"item_id": "dev-v0-0caef38f508e", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__2.jpeg", "crop_box_xyxy": [804, 473, 881, 523]}, {"item_id": "dev-v0-7646b5f28de1", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__31.jpeg", "crop_box_xyxy": [121, 30, 167, 52]}, {"item_id": "dev-v0-cd2f64ebd0d2", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__168.jpeg", "crop_box_xyxy": [36, 154, 96, 172]}, {"item_id": "dev-v0-093b6b2ab150", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__22.jpeg", "crop_box_xyxy": [421, 186, 489, 212]}, {"item_id": "dev-v0-2c8f52e5e887", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__124.jpeg", "crop_box_xyxy": [712, 103, 1099, 317]}, {"item_id": "dev-v0-0c2634e37067", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__126.jpeg", "crop_box_xyxy": [56, 182, 466, 349]}, {"item_id": "dev-v0-77e7e0e6e5c5", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__192.jpeg", "crop_box_xyxy": [548, 219, 959, 459]}, {"item_id": "dev-v0-265f5059d2bd", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__48.jpeg", "crop_box_xyxy": [230, 383, 724, 483]}, {"item_id": "dev-v0-0966b97f7266", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__97.jpeg", "crop_box_xyxy": [284, 161, 609, 289]}, {"item_id": "dev-v0-07ecae9afe58", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__28.jpeg", "crop_box_xyxy": [37, 359, 277, 490]}, {"item_id": "dev-v0-24a9990ba7f4", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__83.jpeg", "crop_box_xyxy": [360, 133, 424, 168]}, {"item_id": "dev-v0-4fe032c07c7f", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__18.jpeg", "crop_box_xyxy": [94, 82, 185, 132]}, {"item_id": "dev-v0-1e14aba905d3", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__193.jpeg", "crop_box_xyxy": [209, 179, 280, 256]}, {"item_id": "dev-v0-9118ca2348d3", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__161.jpeg", "crop_box_xyxy": [147, 87, 202, 101]}, {"item_id": "dev-v0-dbb31dba928d", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__184.jpeg", "crop_box_xyxy": [294, 145, 322, 189]}, {"item_id": "dev-v0-166caef6d101", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__143.jpeg", "crop_box_xyxy": [426, 35, 481, 56]}, {"item_id": "dev-v0-34f271587235", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__203.jpeg", "crop_box_xyxy": [289, 446, 1089, 606]}, {"item_id": "dev-v0-1a2c567ccaaf", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__194.jpeg", "crop_box_xyxy": [335, 458, 673, 729]}, {"item_id": "dev-v0-7c2fff4d8f31", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__156.jpeg", "crop_box_xyxy": [181, 319, 1395, 639]}, {"item_id": "dev-v0-2b7bf105cb8f", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__122.jpeg", "crop_box_xyxy": [248, 268, 412, 347]}, {"item_id": "dev-v0-1b4c7c57577f", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__87.jpeg", "crop_box_xyxy": [142, 182, 551, 282]}, {"item_id": "dev-v0-1096cf3efbdf", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__77.jpeg", "crop_box_xyxy": [129, 276, 330, 360]}, {"item_id": "dev-v0-27d2daaeb678", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__63.jpeg", "crop_box_xyxy": [346, 277, 458, 332]}, {"item_id": "dev-v0-59080208d10d", "source_image_relpath": "src_iiit_ilst_devanagari/IIIT-ILST__Devanagari__188.jpg", "crop_box_xyxy": [122, 172, 277, 220]}, {"item_id": "dev-v0-2f0c231e0111", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__30.jpeg", "crop_box_xyxy": [1105, 698, 1241, 748]}, {"item_id": "dev-v0-9dc7e063453e", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__98.jpeg", "crop_box_xyxy": [30, 39, 103, 59]}, {"item_id": "dev-v0-1d6bc66d8437", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__1.jpeg", "crop_box_xyxy": [212, 151, 245, 167]}, {"item_id": "dev-v0-458236007f63", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__40.jpeg", "crop_box_xyxy": [829, 247, 1648, 607]}, {"item_id": "dev-v0-2e9460178876", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__175.jpeg", "crop_box_xyxy": [182, 118, 616, 246]}, {"item_id": "dev-v0-87a18ab9a36a", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__140.jpeg", "crop_box_xyxy": [160, 194, 693, 442]}, {"item_id": "dev-v0-391e81725469", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__134.jpeg", "crop_box_xyxy": [348, 509, 468, 599]}, {"item_id": "dev-v0-24f59bc03e5d", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__5.jpeg", "crop_box_xyxy": [149, 191, 331, 303]}, {"item_id": "dev-v0-18864e83a945", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__33.jpeg", "crop_box_xyxy": [214, 123, 441, 246]}, {"item_id": "dev-v0-2b4d5405bc9d", "source_image_relpath": "src_indicstr12_devanagari/verified_twice__marathi__55.jpeg", "crop_box_xyxy": [242, 175, 382, 235]}];
+const ROOT  = "../../../../resources/resources/corpus/raw";
+let i = 0, R = JSON.parse(localStorage.getItem("dev_v0_reviews") || "{}");
+function show(){
+  const it = ITEMS[i];
+  document.getElementById("pos").textContent = `item ${i+1} of ${ITEMS.length}`;
+  document.getElementById("itemid").textContent = it.item_id;
+  const [x0,y0,x1,y1] = it.crop_box_xyxy, w = x1-x0, h = y1-y0;
+  const scale = Math.min(3, Math.max(1, 420/Math.max(w,h)));
+  document.getElementById("crop").innerHTML =
+    `<div style="width:${w*scale}px;height:${h*scale}px;overflow:hidden;position:relative">
+       <img src="${ROOT}/${it.source_image_relpath}"
+            style="position:absolute;left:${-x0*scale}px;top:${-y0*scale}px;
+                   transform-origin:0 0;transform:scale(${scale})">
+     </div>`;
+  const r = R[it.item_id] || {};
+  document.getElementById("txt").value  = r.human_transcription || "";
+  document.getElementById("note").value = r.notes || "";
+  for (const el of document.getElementsByName("st")) el.checked = (el.value === (r.status || "transcribed"));
+  document.getElementById("saved").textContent = Object.keys(R).length + " saved";
+}
+function save(){
+  const it = ITEMS[i];
+  R[it.item_id] = {
+    item_id: it.item_id,
+    human_transcription: document.getElementById("txt").value,
+    status: [...document.getElementsByName("st")].find(e=>e.checked).value,
+    notes: document.getElementById("note").value,
+  };
+  localStorage.setItem("dev_v0_reviews", JSON.stringify(R));
+}
+function next(){ save(); if(i<ITEMS.length-1){i++; show();} else { show(); alert("End of pack. Use Export CSV."); } }
+function prev(){ save(); if(i>0){i--; show();} }
+function exportCsv(){
+  save();
+  const rows = [["item_id","human_transcription","status","notes"]];
+  for (const it of ITEMS){ const r=R[it.item_id]||{};
+    rows.push([it.item_id, r.human_transcription||"", r.status||"", (r.notes||"").replace(/"/g,'""')]); }
+  const csv = rows.map(r=>r.map(c=>`"${c}"`).join(",")).join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download="human-responses-devanagari-v0.csv"; a.click();
+}
+show();
+</script>

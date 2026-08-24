@@ -1,0 +1,11 @@
+{
+  "description": "Response format for the blind Devanagari transcription pass (EVAL-003).",
+  "one_row_per": "candidate item",
+  "fields": {
+    "item_id": "must match a candidate_id in candidate-manifest.jsonl",
+    "human_transcription": "exactly what is visibly drawn, letter for letter, Unicode preserved. Empty if status is cannot_read.",
+    "status": "transcribed | cannot_read | ambiguous",
+    "notes": "free text; required when status is ambiguous"
+  },
+  "IMPORTANT": "These readings become the reference for scoring checkers. They do NOT become project ground truth about what the sign 'really' says — see HUMAN-REVIEW-GUIDE.md."
+}
