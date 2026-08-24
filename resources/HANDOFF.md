@@ -10,8 +10,8 @@ evaluation media separate from the knowledge being tested.
 | source | what | items |
 |---|---|---:|
 | `src_bstd_devanagari` | Real Devanagari scene text + transcriptions | 25,246 |
-| `src_indicstr12_devanagari` | 375 scene photos (1–98 regions each) + 2,711 word crops | 3,086 |
-| `src_iiit_ilst_devanagari` | 176 scene photos (1–64 regions each) + 1,214 word crops | 1,390 |
+| `src_indicstr12_devanagari` | 375 scene photos (1–98 regions each) + 2,711 word crops = 3,086 | 3,086 |
+| `src_iiit_ilst_devanagari` | 176 scene photos (1–64 regions each) + 1,214 word crops = 1,390 | 1,390 |
 | `src_imagerewarddb` | Generated images, expert dimensional preference | 2,584 |
 | `src_konvid1k` | Real natural video, quality MOS | 1,200 |
 | `src_videofeedback` | Generated video, 5-aspect human scores | 987 |
@@ -72,18 +72,28 @@ corpus, a cross-lineage reserve, controlled generated-text failure material — 
 that. A specific request gets a better answer than a larger pile.
 
 **IMPORTANT OBSERVATIONS:**
-- **"Media acquired" is not "usable annotated records".** Of 4,476 Devanagari images across the two
-  CVIT sources, only **551** are photographs with their own sidecar annotation file. The other 3,925
-  are single-word crops. Always state which count is meant — reading one as the other oversizes a
-  task roughly eightfold.
-- **The crops are not unlabelled.** A crop's filename encodes its parent photograph and coordinates,
-  which map to exactly one annotation line: 2,711/2,713 IndicSTR12 crops and 1,210/1,215 IIIT-ILST
-  crops resolve to a transcription. So the usable pool is **3,921 single-word items** or **551
+- **Media categories must partition, and are now asserted to.** Each Devanagari source's media splits
+  into exactly two mutually exclusive categories that sum to the acquired total:
+  IndicSTR12 **375 scene + 2,711 crops = 3,086**; IIIT-ILST **176 scene + 1,214 crops = 1,390**.
+  Annotation files are **not media** and are counted separately.
+- **"Media acquired" is not "usable annotated records".** Of 4,476 Devanagari images, only **551** are
+  photographs with their own annotation file; the other **3,925** are single-word crops. Always say
+  which count is meant — reading one as the other oversizes a task roughly eightfold.
+- **The crops are not unlabelled, and there are two routes.** (a) Each source ships a dedicated
+  crop-level label file — `word_image_gt.txt` for IndicSTR12 (100% coverage), `WordImagesList.txt` for
+  IIIT-ILST (94.7%). (b) The crop filename encodes parent + coordinates, matching one line of the
+  parent scene annotation (100% / 99.7%). Union: **3,924 of 3,925 crops** resolve; exactly **1** does
+  not and is named in the verifier output. So the usable pool is **3,924 single-word items** or **551
   multi-region photographs**, depending on the task.
 - **A description can be wrong for months while every integrity check passes.** Our validation proves
   files decode and hash correctly — it proves nothing about whether our prose describes them. Eval
-  caught this one. Reproducible checks beat prose: see
-  `scripts/verify_devanagari_composition.py`.
+  caught this one.
+- **Counting by filename pattern without filtering to media extensions is a real trap.** Both CVIT
+  sources store their crop-level ground-truth file *inside* the crop directory, so a name-pattern
+  detector counted three annotation `.txt` files as images. That is exactly why the first correction's
+  categories summed to more media than existed. **Check the partition, not just the counts** — see
+  `scripts/verify_devanagari_composition.py`, which now asserts disjointness and exhaustiveness rather
+  than only comparing each number to an expected value.
 - **Hash-based deduplication cannot see content reuse.** No crop is byte-identical across the two
   CVIT sources, yet **1,205 of IIIT-ILST's 1,214 crops (99.3%) come from photographs shared with
   IndicSTR12**. Different tooling, different bytes, same content. No fingerprint check will warn you.

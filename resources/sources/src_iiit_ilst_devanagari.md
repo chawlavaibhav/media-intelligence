@@ -15,7 +15,7 @@
 
 ## Labels — source observations, never project ground truth
 
-- **Provided labels:** Same two-part structure as IndicSTR12. (a) 176 FULL SCENE PHOTOGRAPHS with a per-image PASCAL-VOC style .xml carrying one <object> per text region - bounding box plus Unicode transcription. 1-64 regions each (median 8, 1,788 regions total). (b) 1,214 pre-cropped single-word images whose filenames encode parent photo + region index + bounding box; 1,210 of 1,215 (99.6%) resolve to exactly one XML transcription. The original wording 'bounding boxes and transcriptions' was accurate but did not distinguish scene photographs from crops.
+- **Provided labels:** Same two-part structure as IndicSTR12. (a) 176 FULL SCENE PHOTOGRAPHS with a per-image PASCAL-VOC style .xml carrying one <object> per text region - bounding box plus Unicode transcription. 1-64 regions each (median 8, 1,788 regions total). (b) 1,214 pre-cropped single-word images. A distributor-supplied list, IIIT-ILST__Devanagari__cropped__Devanagari__WordImagesList.txt, maps 1,150 of them to a transcription; independently, 1,210 resolve by matching the bounding box in the crop filename against the parent scene XML. The union covers 1,213 of 1,214 (99.9%); exactly one crop resolves by neither route and is named in the verifier output. The original wording 'bounding boxes and transcriptions' was accurate but did not distinguish scene photographs from crops.
 - **Annotation type:** manual annotation
 
 ## Rights — six separate facts
@@ -44,7 +44,19 @@ OVERLAPS IndicSTR12 - TWO VALID DENOMINATORS, both true, same numerator: (1) 173
 - **Media files acquired:** 1390
 - **Locally paired image + sidecar annotation records:** 176
 
-MEDIA ACQUIRED (1,390) is not the same as LOCALLY PAIRED IMAGE+ANNOTATION RECORDS (176, 12.7%). The other 1,214 files are crops that carry no sidecar .xml but resolve to a transcription via the bounding box in their filename.
+MUTUALLY EXCLUSIVE MEDIA CATEGORIES, exhaustive over acquired media: 176 scene_photograph + 1,214 crop_image = 1,390 media files acquired. Asserted disjoint and exhaustive by resources/scripts/verify_devanagari_composition.py. A scene_photograph is a full photograph with its own PASCAL-VOC .xml (equivalently a 'locally paired image + annotation record') - 176 of 1,390 = 12.7%. Annotation files are NOT media and are counted separately (176 .xml). SEPARATE STATISTIC, not a media category: 1,213 of 1,214 crop images (99.9%) resolve to a transcription; 1 resolves by neither available route.
+
+| media category | count |
+|---|---:|
+| scene_photograph | 176 |
+| crop_image | 1,214 |
+| **total = media files acquired** | **1,390** |
+
+These two categories are mutually exclusive and exhaustive over acquired media.
+Annotation files are not media and are counted separately.
+
+
+COUNT CORRECTION, 25 Aug 2026. An earlier version reported 1,215 crop images, which did not reconcile with 1,390 acquired media (176+1,215=1,391). Root cause: the crop detector matched on filename pattern without filtering to media extensions, so it also counted the annotation file IIIT-ILST__Devanagari__cropped__Devanagari__WordImagesList.txt. The true crop_image count is 1,214 and the partition now reconciles exactly. No media changed; only the classification of one text file.
 
 - downloaded_item_count (media files): **1390**
 - downloaded_bytes: **52,769,595**

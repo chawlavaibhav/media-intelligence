@@ -2,10 +2,14 @@
 
 **Date:** 25 Aug 2026 · **Trigger:** `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md`,
 treated as Controller-approved for correction.
-**Scope:** descriptions only. **No file was reacquired, no hash recomputed, no integrity or rights
-conclusion changed.**
+**Scope:** metadata/documentation plus a reproducible verifier. **No file was reacquired, no hash
+recomputed, no integrity or rights conclusion changed.**
 **Reproduce every number below:** `python3 resources/scripts/verify_devanagari_composition.py`
-(20 checks, all passing, reads only files already on disk).
+(44 checks, all passing, reads only files already on disk).
+
+> **Revision 2, 25 Aug 2026 — count correction.** Revision 1 of this report gave crop counts that did
+> not add up to the acquired media totals. Root cause and fix are in *"A second defect: the categories
+> did not add up"* below. The substantive findings are unchanged; one of them got stronger.
 
 ---
 
@@ -35,7 +39,7 @@ same photographs.
 | — median size | 700×488 | 640×480 |
 | — regions per photo | 1–98 (median 4, mean 7.2) | 1–64 (median 8) |
 | — total annotated regions | 2,711 | 1,788 |
-| **Single-word crops** | 2,713 | 1,215 |
+| **Single-word crops** | 2,711 | 1,214 |
 | — median size | 68×41 | 65×44 |
 | **Total media acquired** | **3,086** | **1,390** |
 
@@ -71,25 +75,86 @@ annotation parses to at least one region. These figures reproduce Eval's exactly
 
 ### But the crops are not unlabelled — and this matters for sizing
 
-**A crop's filename encodes its parent photograph and its coordinates**, which map to exactly one
-line of the parent's annotation.
+There are **two independent routes** to a crop's transcription.
 
-- IndicSTR12: **2,711 of 2,713 crops (99.9%)** resolve to a transcription by polygon match.
-- IIIT-ILST: **1,210 of 1,215 crops (99.6%)** resolve by bounding-box match.
+**Route A — the distributor ships a crop-level label file.** This was missed in revision 1 precisely
+because the flawed detector counted it as an image:
 
-Worked example — crop `verified_twice__hindi__cropped_images__185_11_305_294_401_294_401_394_305_394.jpeg`
-carries parent `185`, region `11`, and 8 coordinates that match one line of `185_gt.txt` → `सोफा`.
+- IndicSTR12: `verified_twice__<lang>__cropped_images__word_image_gt.txt`, tab-separated
+  crop-filename → transcription. **2,711 entries covering 100% of the 2,711 crops.**
+- IIIT-ILST: `...__cropped__Devanagari__WordImagesList.txt`. **1,150 of 1,214 crops (94.7%).**
+
+**Route B — the filename encodes the coordinates.** A crop filename carries its parent photograph,
+region index and coordinates, which match exactly one line of the parent's scene annotation.
+
+- IndicSTR12: **2,711 of 2,711 (100%)** by polygon match.
+- IIIT-ILST: **1,210 of 1,214 (99.7%)** by bounding-box match.
+
+Worked example — `verified_twice__hindi__cropped_images__185_11_305_294_401_294_401_394_305_394.jpeg`
+carries parent `185`, region `11`, and 8 coordinates matching one line of `185_gt.txt` → `सोफा`.
+
+**Union of both routes:**
+
+| | crops | resolvable | unresolved |
+|---|---:|---:|---:|
+| IndicSTR12 | 2,711 | **2,711 (100%)** | 0 |
+| IIIT-ILST | 1,214 | **1,213 (99.9%)** | 1 |
+| **Total** | **3,925** | **3,924** | **1** |
+
+The single unresolved file is named in the verifier output
+(`IIIT-ILST__..._178_1_1_154_132_207_167.jpg`); its filename carries an extra token, so neither route
+parses it. It is **reported, not hidden and not quietly reclassified.**
 
 **So "usable pool = 551" understates it, and the right number depends on the task:**
 
 | Task shape | Usable items |
 |---|---:|
-| Transcribe one word (unambiguous) | **3,921 crops** |
+| Transcribe one word (unambiguous) | **3,924 crops** |
 | Read a whole scene (multi-region) | **551 photographs** |
 
 For checker calibration — *can this model read Devanagari at all* — the crops are the more directly
 usable form, and there are seven times as many. **This is an observation for Eval to act on or not.
 Resources does not decide what Eval measures.**
+
+## A second defect: the categories did not add up
+
+**Revision 1 of this report reported counts that could not all be true at once.** It gave IndicSTR12
+as 375 scene photographs and 2,713 crop images, against 3,086 acquired media files — but
+375 + 2,713 = **3,088**. IIIT-ILST had the same shape of error: 176 + 1,215 = **1,391** against 1,390
+acquired.
+
+**Root cause.** The crop detector matched on filename pattern alone, with no filter on file type. The
+distributor stores each source's crop-level ground-truth file *inside the crop directory*, so those
+annotation files matched the pattern and were counted as crop images:
+
+| Source | Files wrongly counted as crop images | Bytes |
+|---|---|---:|
+| IndicSTR12 | `verified_twice__hindi__cropped_images__word_image_gt.txt` | 61,457 |
+| IndicSTR12 | `verified_twice__marathi__cropped_images__word_image_gt.txt` | 98,590 |
+| IIIT-ILST | `..._cropped__Devanagari__WordImagesList.txt` | 45,478 |
+
+Two extra for IndicSTR12, one for IIIT-ILST — matching the discrepancies exactly.
+
+**No media file was miscounted, gained or lost.** Three text files were misclassified as images. The
+acquired-media totals of 3,086 and 1,390 were correct throughout and are unchanged.
+
+**Why revision 1's verifier did not catch it.** It checked each count against an expected value, and
+each count was individually defensible. Nothing checked that the categories formed a *partition* — that
+they were disjoint and summed to the whole. The verifier now asserts exactly that, per source:
+
+```
+scene photographs + crop images == media files acquired    (exhaustive)
+scene photographs & crop images == empty                   (disjoint)
+every media file lands in exactly one category             (total)
+```
+
+**Resolvability is now reported separately and is explicitly not a media category.** "How many crops
+exist" and "how many crops can be tied to a transcription" are different questions; collapsing them is
+what produced the defect. They differ by exactly one file.
+
+**The silver lining.** Chasing the two extra IndicSTR12 files is what surfaced the dedicated
+crop-level label files — which turn out to be a cleaner and more authoritative route to crop
+transcriptions than the coordinate inference of revision 1.
 
 ## Overlap — two denominators, both correct
 

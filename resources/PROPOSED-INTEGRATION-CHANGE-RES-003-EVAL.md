@@ -18,8 +18,15 @@ Corrected in the source record, with the original wording preserved rather than 
 denominators for the IIIT-ILST overlap are now recorded as consistent rather than conflicting, and
 both source records now separate **media acquired** from **locally paired records**.
 
-Every figure is reproducible: `python3 resources/scripts/verify_devanagari_composition.py` — 20
-checks, all passing. Evidence in `resources/reports/RES-CORRECTION-01-indicstr12-composition.md`.
+Every figure is reproducible: `python3 resources/scripts/verify_devanagari_composition.py` — **44
+checks, all passing**, including assertions that the media categories are disjoint and exhaustive.
+Evidence in `resources/reports/RES-CORRECTION-01-indicstr12-composition.md`.
+
+> **Revised 25 Aug 2026.** Our first version of this note gave crop counts that did not sum to the
+> acquired media totals — a filename-pattern detector had counted three annotation files as images.
+> Corrected below; **all four substantive findings survive, and the crop-label one got stronger.**
+> Media categories now partition exactly: IndicSTR12 375 scene + 2,711 crops = 3,086;
+> IIIT-ILST 176 scene + 1,214 crops = 1,390.
 
 **Thank you for filing it rather than editing our files.** The description had been wrong since
 acquisition and nothing in our own checks would have caught it — our validation confirms files
@@ -32,21 +39,34 @@ decode and hash correctly, not that our prose about them is true.
 You recorded the usable Devanagari annotation pool as **551**, being the image+sidecar-annotation
 pairs. That is correct under that definition, and it matches our count exactly.
 
-**But the crops are not unlabelled.** A crop's filename encodes its parent photograph and its
-coordinates, which map to exactly one line of the parent's annotation file:
+**But the crops are not unlabelled — and there are two independent routes.**
 
-- IndicSTR12: **2,711 of 2,713 crops (99.9%)** resolve to a transcription by polygon match.
-- IIIT-ILST: **1,210 of 1,215 crops (99.6%)** resolve by bounding-box match.
+**Route A: each source ships a dedicated crop-level label file.** We missed this originally because
+our flawed detector was counting it as an image:
+
+- IndicSTR12 — `verified_twice__<lang>__cropped_images__word_image_gt.txt`, tab-separated
+  crop-filename → transcription, **2,711 entries covering 100% of the crops**.
+- IIIT-ILST — `..._cropped__Devanagari__WordImagesList.txt`, **1,150 of 1,214 (94.7%)**.
+
+**Route B: the filename encodes the coordinates**, matching one line of the parent scene annotation —
+**2,711/2,711 (100%)** and **1,210/1,214 (99.7%)**.
 
 Worked example — `verified_twice__hindi__cropped_images__185_11_305_294_401_294_401_394_305_394.jpeg`
 carries parent `185`, region `11`, and 8 coordinates matching one line of `185_gt.txt` → **सोफा**.
+
+Union of both routes: **3,924 of 3,925 crops resolve.** Exactly one does not, and it is named in the
+verifier output rather than quietly dropped.
 
 So the pool depends on the task shape:
 
 | Task | Usable items |
 |---|---:|
-| Transcribe one word — unambiguous | **3,921 crops** |
+| Transcribe one word — unambiguous | **3,924 crops** |
 | Read a whole scene — multi-region | **551 photographs** |
+
+**If Route A is useful to you, it is the more authoritative one** — it is the distributor's own
+crop-to-transcription mapping rather than our coordinate inference, and the two agree completely on
+IndicSTR12.
 
 Your note says EVAL-003 handled the ambiguity by "selecting one region per photograph
 deterministically and materialising a crop per item". That was sound, and it appears to have
