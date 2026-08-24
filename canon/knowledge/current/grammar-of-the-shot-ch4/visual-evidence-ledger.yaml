@@ -1,0 +1,239 @@
+# CANON-003 book 1 — Thompson & Bowen, "Grammar of the Shot", 2nd ed., ch.4, printed pp.93-112
+# Independent visual-evidence pass, completed before any SourceKnowledge object was written.
+# Sealed during this pass: FINDINGS-06, AUDIT-grammar-of-the-shot, gos-continuity-atoms.yaml.
+#
+# PROVENANCE (Phase 0 + this pass):
+#   local file: ~/Downloads/Books/"Grammar of the Shot, .pdf" — PDF /Title "Grammar of the Shot,
+#     Second Edition", 232 pages
+#   offset: PDF page = printed page + 13. Printed 93-112 = PDF 106-125.
+#   boundary: PDF 126 begins "Chapter Five Dynamic Shots", confirming the chapter ends at printed 112
+#   text match: repo text and pdftotext of PDF 106-125 have IDENTICAL normalised character counts
+#     (23,263) and 135 of 135 sentences over 70 characters match verbatim. The repository file is
+#     exactly this chapter, nothing more or less.
+#   rendered ephemerally at 105 dpi to session scratchpad; NOT committed.
+
+source_id: grammar_of_the_shot_ch4_continuity
+pass: independent_visual_evidence
+pages_inspected: [104, 105, 110]     # printed page numbers spot-inspected in detail
+pages_rendered: [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112]
+visual_completeness: verified_page_level
+
+plain_text_extraction_damage:
+  severity: partial_but_structural
+  finding: >
+    Unlike the CANON-002 source, this chapter's prose survives text extraction intact and every
+    figure is introduced by a numbered caption that the text file preserves. A text-only extractor
+    can therefore see THAT a figure exists and what it is said to show. What it cannot see is the
+    thing several figures actually teach, which is a MAPPING between a camera position drawn as an
+    overhead plan and the resulting image in the frame.
+  worked_case:
+    figure: "4.13"
+    printed_page: 104
+    what_the_page_shows: >
+      Three rows. Each row pairs an overhead diagram of the camera's position relative to the action
+      line with the resulting frame beside it. Row 1: a two-shot, character A frame left looking
+      right, B frame right looking left. Row 2: a close-up of A, still looking frame right. Row 3
+      is labelled WRONG SIDE OF LINE, and the resulting close-up of B has her also looking frame
+      right.
+    what_the_text_file_shows: >
+      The caption and a prose description of the same error.
+    consequence: >
+      The text can state that screen direction reverses. The figure demonstrates why, by showing
+      camera geometry and screen result side by side, and it makes the defect's key property
+      visible: each of the three frames is individually correct. Nothing is wrong with row 3 as an
+      image. The fault exists only in the relation between rows 2 and 3.
+  implication_for_method: >
+    This is a third kind of visual dependence, distinct from the two seen so far. CANON-001's source
+    used figures to corroborate prose. CANON-002's source hid its evidence entirely in spacing that
+    text destroyed. Here the figures carry a cause-and-effect mapping that prose can assert but not
+    exhibit.
+
+demonstrations:
+
+- ref: vis_gos_screen_direction
+  pages: [98, 99]
+  figures: ["4.3", "4.4", "4.5"]
+  kind: sequence_three_state
+  isolation: strict
+  visible_difference: >
+    A person walks toward and exits frame left; the frame is then held empty; a new shot picks the
+    same person up entering from frame right.
+  what_the_visual_supports: >
+    That continuous movement across a cut requires the entry edge to be the opposite of the exit
+    edge. Shown as three states so the reversal is legible as a sequence rather than asserted.
+  requires_prose: >
+    Why the empty frame is held. The image shows the pause; only the text frames it as a deliberate
+    editorial choice.
+  lost_in_plain_text: partial
+  uncertainty: none
+
+- ref: vis_gos_lines_of_attention
+  pages: [100, 101]
+  figures: ["4.6", "4.7", "4.8"]
+  kind: parallel_instances
+  isolation: not_applicable
+  visible_difference: >
+    Three unrelated situations — a child watching an ascending balloon, a dog looking toward an
+    intruder, a hungry man eyeing a pie in a window — each drawn with the implied line of attention.
+  what_the_visual_supports: >
+    That the same abstract structure, a line drawn from an observer to an object of attention,
+    recurs across quite different content. Three instances of one form.
+  requires_prose: >
+    The term "sight line" and the claim that audiences actively seek these connections.
+  lost_in_plain_text: partial
+  uncertainty: none
+
+- ref: vis_gos_180_geometry
+  pages: [102, 103]
+  figures: ["4.9", "4.10", "4.11", "4.12"]
+  kind: diagram_to_result_mapping
+  isolation: not_applicable
+  visible_difference: >
+    Overhead plans showing the action line drawn through the subjects, the circle of possible camera
+    positions, and the 180 degree arc on one side of it; then a series pairing camera setups with
+    the frames they produce.
+  what_the_visual_supports: >
+    That the rule is geometric rather than aesthetic. The permitted region is a definite area on a
+    plan, and each position in it yields a predictable screen direction.
+  requires_prose: >
+    That the line is established by the talent's sight line rather than chosen by the crew.
+  lost_in_plain_text: true
+  uncertainty: none
+
+- ref: vis_gos_jumping_the_line
+  pages: [104]
+  figures: ["4.13"]
+  kind: diagram_to_result_mapping
+  isolation: strict
+  visible_difference: >
+    Rows 1 and 2 are shot from within the arc. Row 3 is shot from the far side, marked WRONG SIDE OF
+    LINE, and character B's gaze now points the same way as A's.
+  what_the_visual_supports: >
+    That the error is invisible within any single frame and exists only between shots. Row 3 is a
+    perfectly good close-up.
+  requires_prose: null
+  lost_in_plain_text: true
+  uncertainty: none
+  extractor_note: >
+    The single most important figure in the chapter, and the clearest available demonstration that
+    some defects have no within-frame signature at all.
+
+- ref: vis_gos_30_degree
+  pages: [106, 107]
+  figures: ["4.14", "4.15"]
+  kind: diagram_to_result_mapping
+  isolation: near_strict
+  visible_difference: >
+    The 180 degree arc divided into 30 degree slices, then the same two subjects photographed from
+    five successive slice positions.
+  what_the_visual_supports: >
+    That a 30 degree move produces a visibly different image of identical subjects, so the threshold
+    is a claim about perceptible difference rather than an arbitrary number.
+  requires_prose: >
+    The consequence of ignoring it, namely a jump cut.
+  lost_in_plain_text: true
+  uncertainty: >
+    The figure shows that the five views differ. It does not establish that 30 degrees is the
+    minimum at which they would, since no smaller increment is shown for comparison.
+
+- ref: vis_gos_matching_shot_types
+  pages: [108]
+  figures: ["4.16"]
+  kind: before_after
+  isolation: strict
+  visible_difference: >
+    A medium close-up of one character paired with a big close-up of the other, against the matched
+    pair.
+  what_the_visual_supports: >
+    That a mismatch in shot size between reciprocal coverage is directly visible when the two frames
+    are placed together.
+  requires_prose: >
+    That this creates a problem during editing rather than merely looking different.
+  lost_in_plain_text: true
+  uncertainty: none
+
+- ref: vis_gos_ots_match_mismatch
+  pages: [110]
+  figures: ["4.19", "4.20"]
+  kind: minimal_pair
+  isolation: near_strict
+  visible_difference: >
+    Figure 4.19 shows two over-the-shoulder frames with comparable foreground shoulder size, subject
+    size and camera height. Figure 4.20 shows the same two characters with the foreground shoulder
+    much larger in one frame and the subject smaller and further off, at a different height.
+  what_the_visual_supports: >
+    That an over-the-shoulder mismatch is plainly legible when the two frames are seen together, and
+    that the mismatched frames are individually unremarkable.
+  requires_prose: >
+    The claim that the audience reacts unfavourably, and that they may do so subconsciously. The
+    image cannot show a viewer's reaction.
+  lost_in_plain_text: true
+  uncertainty: none
+  extractor_note: >
+    Photographs of real people, unlike the line-drawn figures elsewhere in the chapter. The two pairs
+    use the same two performers and locations, so the comparison is near-strict.
+
+- ref: vis_gos_eyeline_match
+  pages: [112]
+  figures: ["4.21"]
+  kind: sequence_two_state
+  isolation: not_applicable
+  visible_difference: >
+    A framed subject looking off-frame, followed by the object of interest shown from a
+    correspondingly angled viewpoint.
+  what_the_visual_supports: >
+    That the second frame's angle, not merely its content, is what completes the connection.
+  requires_prose: >
+    The setup-and-payoff framing and the requirement that the second vantage correspond to the
+    observer's position.
+  lost_in_plain_text: true
+  uncertainty: none
+
+visual_only_observations:
+
+- ref: vis_obs_gos_dual_representation
+  pages: [102, 103, 104, 106, 107]
+  observation: >
+    The chapter's characteristic teaching device is a paired representation: an overhead plan of
+    where the camera stands, set beside the image that camera produces. Roughly half the figures use
+    it.
+  strength: clearly_visible
+  why_it_matters: >
+    The knowledge being taught is a correspondence between a physical arrangement and a perceptual
+    result. Neither half of the pair carries it alone. A text extraction preserves the captions and
+    loses the correspondence.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_gos_prior_reader_highlighting
+  pages: [110]
+  observation: >
+    The local PDF carries yellow highlighter annotation applied by a previous reader — on printed
+    page 110 it covers the phrase "unless you are providing purposefully altered framing for
+    storytelling reasons" and both figure captions.
+  strength: clearly_visible
+  why_it_matters: >
+    Two consequences. First, provenance: this copy is an annotated artifact, not a clean one, though
+    the annotation does not affect extractable text, which matched the repository file exactly.
+    Second, and more relevant to method: highlighting directs attention, so a visual pass over an
+    annotated copy risks inheriting a previous reader's emphasis. Logged in the batch ledger.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_gos_illustration_not_photography
+  pages: [98, 99, 100, 101, 102, 103, 104]
+  observation: >
+    Most figures are line drawings rather than photographs. The two photographic figures are the
+    over-the-shoulder pair on printed page 110.
+  strength: clearly_visible
+  why_it_matters: >
+    Drawings let the author remove everything irrelevant, so the demonstrations are cleaner than
+    real footage would be. That strengthens them as teaching devices and weakens them as evidence
+    about what happens with real images, where the effects compete with lighting, motion and
+    performance.
+  promoted_to_source_claim: false
+
+summary:
+  demonstrations_recorded: 8
+  strict_or_near_strict_pairs: 4
+  diagram_to_result_mappings: 3
+  demonstrations_wholly_lost_in_plain_text: 6
+  visual_only_observations: 3
