@@ -250,11 +250,13 @@ A 2018 report whose data window closes in 2016, read in 2026, about an environme
 
 ## 10. Verification — fresh from the final branch head
 
+Re-run at head `f249722` after the documentation cleanup; these are that run's actual outputs.
+
 | # | Command | Exit | Result |
 |---|---|---|---|
 | 1 | `python canon/validation/validate_canon003_integrated.py --root .` | **0** | `error_count = 0` · **16 books**, 505 objects, 54 systems, 417 terms, 53 concepts, 111 bindings — *identical to `main`* |
 | 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count = 0` · **`record_count = 19`** over 19 source directories |
-| 3 | `python -m pytest tests/ -q` | **0** | **63 passed, 89 subtests passed** |
+| 3 | `python -m pytest tests/ -q` | **0** | **65 passed, 93 subtests passed** |
 | 4 | figure-coverage sweep over printed pp.5–25 and 132–134 | — | **16 claim-referenced figures · 16 inspected · 0 uninspected** · 80 numeric values from renders, 0 from the text layer |
 
 | Confirmation | Result |
