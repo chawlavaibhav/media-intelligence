@@ -14,11 +14,17 @@
 
 | # | Book | Status |
 |---|---|---|
-| 11 | Christopher Kenworthy — *Master Shots* | not started |
-| 12 | Michael Ondaatje — *The Conversations* | not started |
+| 11 | Christopher Kenworthy — *Master Shots* | **reassigned out of Lane B** — moved to `work/canon-003-rebalance-d` by Controller update, 24 Aug 2026. Not started here; no artifact of any kind was created for it in this branch. |
+| 12 | Michael Ondaatje — *The Conversations* | in progress |
 
-Nothing has been created for books 11 or 12 — no directory, no files, no provenance work. A fresh
-session can pick up from this checkpoint without inspecting or undoing anything.
+**Lane B's assignment is now three books, not four.** Book 11 was reassigned to
+`work/canon-003-rebalance-d` by Controller update on 24 Aug 2026. Nothing had been created for it on
+this branch — no directory, no files, no provenance work — so there is nothing for the receiving lane
+to reconcile or undo. Lane B did open the Master Shots EPUB to read its front matter before the
+reassignment arrived; no claim was extracted and no file was written.
+
+Nothing has been created for book 12 yet. A fresh session can pick up from this checkpoint without
+inspecting or undoing anything.
 
 ## Latest SHA
 
@@ -47,6 +53,8 @@ checkpoint for its book; post-checkpoint comparison and findings follow in the n
   still.
 - **A cross-source concept candidate is flagged for the integrator**, not created: Murch's
   `eye_trace` and *Grammar of the Edit*'s `eye trace` are genuinely independent origins.
+- **Book 11 is out of scope for this lane** as of the Controller update. Lane B's usable-book
+  contribution to the batch is therefore three, not four.
 - No blocked books. No stop condition fired.
 
 ## Isolation state
