@@ -1,0 +1,226 @@
+audit_record_version: v0.2
+audit_id: aud_ondaatje_conversations_ch3
+source_id: ondaatje_conversations_third_conversation
+knowledge_dir: canon/knowledge/current/ondaatje-conversations-ch3
+recorded_at_commit: d57ac7538b97b7979b6cdabe700463f8d5d4138f
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 60b1199ce9862841038183084575555f2d539980018de403d46b8ab9b1705069
+    - path: operational-bindings.yaml
+      digest: 990cfb2f20d8bc760780e8de9cf68c9b5b32d63445880768111a091ec2811721
+    - path: source-concept-systems.yaml
+      digest: 1019e16f97e8e1487d8b89a4a3079f21c5d298c52d7809c89363ee2c5f5ef8d2
+    - path: source-knowledge.yaml
+      digest: 12a1ae96037a7c2b9ad181a757eff7c78b15f6dd2d49ef60edf9fb704b7a5971
+    - path: visual-evidence-ledger.yaml
+      digest: 2f888d1b0cee6d3e8e2cb209e273d6497690cffcbddb4088c415e25dd9812c62
+  combined_digest: afdb43b8e4867300c9a04f582f1d9d23c7b0d36c867c15a1e1a1d8a81c70f611
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/ondaatje-conversations-ch3/PROVENANCE.md
+  - canon/knowledge/current/ondaatje-conversations-ch3/visual-evidence-ledger.yaml
+  - canon/knowledge/current/ondaatje-conversations-ch3/source-knowledge.yaml
+  - canon/knowledge/current/ondaatje-conversations-ch3/operational-bindings.yaml
+  - canon/findings/CANON-003-book12-conversations-findings.md
+  - canon/audit/records/murch-blink-p1-25.audit.yaml
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Knopf EPUB, ISBN 978-0-307-51817-0, converted by calibre 0.9.12 in January 2013. An EPUB reflows,
+    so there is no page. Encoding was positively verified rather than merely un-flagged: 0
+    replacement characters across the chapter's 13,774 words and across all five conversations plus
+    the introduction, 92,199 words in total, with 155 em-dashes, 45 pairs of curly quotes, 23
+    ellipses and correctly decoded accents in Almasy, fete and d'echafaud.
+  inspection_state: inspected_no_page_available
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: >
+        The whole extraction, and unusually severely, because this is a PLATE BOOK. Its photographs
+        were grouped across facing pages in print, and its captions were written to address several
+        plates at once by position.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        Recorded as not_verified_page_level rather than blocked_visual_validation, and the
+        distinction is exact: the images are present and were inspected. What cannot be verified is
+        how they were ORGANISED. Reflowing destroyed the arrangement the captions describe.
+    - pattern: in_figure_text_absent
+      affects: >
+        Four caption blocks use print-relative position words - "Overleaf:", "Above:", "Right:",
+        "center", "far right" - to say which plate each clause describes. In a reflowable EPUB those
+        words point at nothing. The caption survives, the image survives, and the BINDING between
+        them does not.
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The worked case: one caption names three films. The image beside it, 076, contains two of
+        them - In the Mood for Love across the top, Rear Window at the lower right - plus a black
+        rectangle where a third plate sat in the printed book. The film named by "Overleaf" is not in
+        the image at all. This is a loss shape the corpus had not previously recorded: neither the
+        text nor the picture is missing, only the correspondence between them.
+    - pattern: text_layer_order_damage
+      affects: >
+        Section-heading discovery, not the prose. A first sweep using a plain uppercase pattern found
+        five of the seven section headings and silently missed the two whose titles contain an
+        apostrophe or a quotation mark.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Both missing headings were found by reading the chapter, and the original worker recorded the
+        method lesson explicitly: a completeness check built on a naive pattern can under-report and
+        still look like it passed. No prose was lost or reordered.
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    The caption-to-plate binding loss is the finding this source contributes to area A, and it is
+    genuinely new: every visual loss the corpus had recorded before was a missing thing. Here nothing
+    is missing and the relationship between two present things is gone. It is unrecoverable in an
+    EPUB by construction, not by fault.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 27 objects reviewed. This source has no single voice, which is the reason its origin audit is
+    the most consequential in the corpus. A statement can be Murch asserting; Ondaatje proposing and
+    Murch assenting ("Mm-hm", "Right"); Ondaatje asserting unchallenged; or a named third party
+    recalling. Those are different evidential situations and SPEC-03 has no field for a speaker.
+  categories:
+    - category: source_quotes_named_third_party
+      sk_refs: []
+      evidence: >
+        The chapter interleaves four kinds of text carrying different evidential weight: Ondaatje's
+        third-person editorial frame; the transcribed dialogue marked O: and M:; an inset first-person
+        contribution from the producer Rick Schmidlin, roughly 400 words, "As if Orson was sending us
+        notes"; and photograph captions, some carrying substantive content. Under the frozen method
+        the speaker was named in each claim's text and quoted with the source's own O:/M: markers in
+        source_terms rather than being given a field. Recorded as LB-15 and deliberately not solved
+        by adding a field. No sk_refs are listed because the attribution is per-statement inside
+        objects rather than a property of whole objects; enumerating them would assert a precision
+        the frozen record does not carry.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 27 objects carry explicitly_stated and practitioner_assertion, and 21 carry anecdotal -
+        the highest proportion in the corpus. Murch is a practitioner recounting his own work. The
+        source reports no measurement and none carries empirical_within_source or outcome_claimed.
+    - category: origin_unresolved
+      sk_refs: []
+      evidence: >
+        Recorded as present-and-unenumerated for the same reason as the first category. Where
+        Ondaatje proposes and Murch merely assents, whose claim it is cannot be settled from the
+        transcript, and the frozen extraction preserved the exchange rather than deciding. Hedges and
+        abandonments were kept for the same reason - "I don't know whether love is the right word",
+        "It is and it isn't" - because in a transcript the hedge is often the most accurate part of
+        the claim.
+  relation_to_evidence_characteristics: >
+    The gap here is not the measurement gap Lane C found; it is a SPEAKER gap, and it is adjacent to
+    but distinct from the voice problem Lane D found in Catmull and Art & Fear. There the author
+    quotes a named colleague inside a work that is otherwise his own. Here the work is a transcript
+    in which the bibliographic author is mostly the interviewer. evidence.characteristics cannot
+    express either, and the audit records this one without proposing a new field, because one source
+    of this shape is not enough evidence to change SPEC-03.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_conv_c003_0001, bnd_conv_c003_0003]
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_conv_c003_0002, bnd_conv_c003_0006]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_conv_c003_0004, bnd_conv_c003_0005]
+    - consumer: benchmark
+      outcome: no_current_binding
+      note: testimony about one film under one set of constraints yields no minimal pair.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        sk_conv_c003_0026 records that the editor receives lens decisions already made and can only
+        request a remedy. That is a claim about how roles are arranged in a production, not about an
+        asset, and it has no consumer.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_conv_c003_0001, sk_conv_c003_0002, sk_conv_c003_0005]
+      observation: >
+        Six bindings against 27 objects, and that ratio is correct rather than thin. Much of this
+        chapter is testimony about one film under one set of constraints - true and well evidenced AS
+        testimony, and never a claim about films in general. The frozen extraction refused to promote
+        those into principles Murch did not state, and the audit does not undo that refusal.
+  conclusion: >
+    Three consumers bound. Sixteen terms against Grammar of the Edit's 48 is source shape, not thin
+    work: a textbook names things because naming is how it teaches, and a conversation reaches for a
+    figure of speech instead.
+
+lineage:
+  authors: [Michael Ondaatje]
+  publisher: Knopf
+  series: null
+  first_published: 2002
+  copy_edition: >
+    EPUB, ISBN 978-0-307-51817-0. dc:creator "Michael Ondaatje" with opf:role="aut"; dc:rights
+    "Copyright (c) 2002 by Michael Ondaatje". The source states its own origin: "talks that took
+    place during our meetings over the next year, starting in July 2000".
+  related_sources_in_corpus:
+    - source_id: murch_blink_p1_25_editing_decisions
+      relation: shared_primary_informant
+      evidence: >
+        Walter Murch's own practitioner claims are a primary knowledge source in both works despite
+        different bibliographic authorship. In the Blink of an Eye is written by Murch. This book is
+        Ondaatje's, and its Third Conversation is substantially Murch speaking - the transcript is
+        marked O: and M:, and the claims this extraction records are overwhelmingly his.
+
+        This is not incidental quotation. Two load-bearing items were extracted independently from
+        both sources. The Egyptian-painting argument is a footnote in Blink - each part of the body
+        drawn from its most characteristic angle, with the speculation that "in some remote future,
+        our films will look just as comic and twisted" - and a full passage here, sk_conv_c003_0027,
+        ending "five hundred years from now, when people see films from our era, they'll seem
+        'Egyptian' in a strange way". And `planarity` is a named criterion of the Rule of Six in
+        Blink, appearing here as `planarity_of_the_face` applied to lens choice, sk_conv_c003_0025.
+
+        Contamination was disclosed at extraction time rather than discovered later:
+        sk_conv_c003_0027 carries an extractor-observed caveat recording that the argument was
+        recognised on sight, because the same lane had extracted it from Blink earlier. Nothing was
+        imported - the object is written from the wording in front of the extractor, which is
+        substantially longer and differently developed.
+
+        Recorded as LB-20. Different author, different publisher, different year: this pair would
+        pass any independence check built on author, publisher or source id, and no metadata field
+        anywhere records that a book consists largely of another person's words.
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not independent of murch_blink_p1_25_editing_decisions specifically. Against every other source
+    in the corpus this is an independent origin - no shared author, series, publisher or derivation
+    with any of them, and Knopf appears nowhere else. Independence is pairwise: agreement between
+    this source and, say, Grammar of the Edit or Alton remains genuine convergence, and only the
+    Murch pairing is blocked from cross-source promotion.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      Not quoted in SPEC-03, SPEC-04 or SPEC-05. The relevant exposure here is not spec contamination
+      but lane contamination, and it is disclosed above and in the lineage entry rather than left to
+      memory: assigning two books by or about one person to a single lane means the second extraction
+      is performed by someone who has read the first.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2002 book of conversations recorded in 2000-2001, about why edits work perceptually and how a
+    film is assembled. Two objects carry historical_claim - sk_conv_c003_0021 and sk_conv_c003_0027 -
+    and both are claims about past practice or about how the future will read our era, not claims
+    that depend on surviving equipment. One object carries culturally_bounded. The chapter discusses
+    films cut on systems that no longer exist, but the claims recorded are about attention, character
+    and structure rather than about the apparatus.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

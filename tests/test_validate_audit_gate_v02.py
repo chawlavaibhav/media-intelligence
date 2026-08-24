@@ -450,16 +450,23 @@ class RealCorpusTests(unittest.TestCase):
         for path in sorted((REPO_ROOT / validator.RECORDS_SUBPATH).glob("*.audit.yaml")):
             cls.records[path.name] = yaml.safe_load(path.read_text(encoding="utf-8"))
 
-    def test_all_sixteen_accepted_books_have_a_record(self):
-        self.assertEqual(len(self.records), 16)
+    def test_every_source_directory_has_exactly_one_record(self):
+        # The invariant is derived from what is actually in the repository, never hard-coded. The
+        # historical 16 belongs to the CANON-003/004 instrumentation alone; the live corpus is
+        # whatever currently exists, and each source directory holds exactly one active record.
+        on_disk = sorted(
+            p.name for p in (REPO_ROOT / "canon" / "knowledge" / "current").iterdir() if p.is_dir())
+        audited = sorted(Path(r["knowledge_dir"]).name for r in self.records.values())
+        self.assertEqual(audited, on_disk)
+        self.assertEqual(len(self.records), len(on_disk))
 
     def test_committed_corpus_validates_clean(self):
         report = validator.validate_repository(REPO_ROOT)
         self.assertEqual(report["errors"], [])
 
     # ── CANON-005 promotion: one authoritative home, no second active copy ───────────────────
-    def test_all_sixteen_committed_records_declare_the_adopted_version(self):
-        self.assertEqual(len(self.records), 16)
+    def test_every_committed_record_declares_the_adopted_version(self):
+        self.assertTrue(self.records)
         for name, record in self.records.items():
             with self.subTest(record=name):
                 self.assertEqual(
@@ -570,6 +577,58 @@ class RealCorpusTests(unittest.TestCase):
             self.records,
         )
         self.assertTrue(ok)
+
+    # ── shared_primary_informant: bibliographic authorship is not intellectual origin ────────
+    def test_murch_and_the_conversations_cannot_be_two_independent_origins(self):
+        ok, reason = validator.independent_origins_ok(
+            "murch_blink_p1_25_editing_decisions",
+            "ondaatje_conversations_third_conversation",
+            self.records,
+        )
+        self.assertFalse(
+            ok,
+            "one practitioner recorded in two works must not count as independent convergence",
+        )
+        self.assertIn("shared_primary_informant", reason)
+
+    def test_the_informant_dependence_is_declared_from_both_sides(self):
+        def relation(a, b):
+            record = next(r for r in self.records.values() if r["source_id"] == a)
+            entry = next(
+                e for e in record["lineage"]["related_sources_in_corpus"] if e["source_id"] == b)
+            return entry["relation"]
+
+        self.assertEqual(
+            relation("murch_blink_p1_25_editing_decisions",
+                     "ondaatje_conversations_third_conversation"),
+            "shared_primary_informant")
+        self.assertEqual(
+            relation("ondaatje_conversations_third_conversation",
+                     "murch_blink_p1_25_editing_decisions"),
+            "shared_primary_informant")
+
+    def test_murch_remains_an_independent_origin_against_unrelated_sources(self):
+        # The dependence is pairwise. Blocking it globally would throw away the corpus's clearest
+        # genuine convergence in order to catch one false one.
+        for other in ("grammar_of_the_edit_ch3_5_editing_decisions",
+                      "samara_making_breaking_grid_ch1",
+                      "albers_interaction_of_color_ch1_5"):
+            with self.subTest(other=other):
+                ok, _ = validator.independent_origins_ok(
+                    "murch_blink_p1_25_editing_decisions", other, self.records)
+                self.assertTrue(ok)
+
+    def test_the_conversations_remains_an_independent_origin_against_unrelated_sources(self):
+        ok, _ = validator.independent_origins_ok(
+            "ondaatje_conversations_third_conversation",
+            "samara_making_breaking_grid_ch1",
+            self.records,
+        )
+        self.assertTrue(ok)
+
+    def test_shared_primary_informant_is_a_dependence_relation(self):
+        self.assertIn("shared_primary_informant", validator.LINEAGE_RELATIONS)
+        self.assertIn("shared_primary_informant", validator.DEPENDENT_RELATIONS)
 
     def test_shared_publisher_pair_in_the_real_corpus_stays_promotable(self):
         ok, _ = validator.independent_origins_ok(

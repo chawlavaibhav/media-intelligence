@@ -1,0 +1,213 @@
+# CANON-003 book 12 (Lane B) — The Conversations, Third Conversation. SourceConceptSystems.
+#
+# THREE systems, and the small number is the finding rather than a shortfall.
+#
+# Books 9 and 10 in this lane produced five and four systems, because both authors build frameworks:
+# named sets, numbered criteria, ranked lists. This source builds none. It is a recorded
+# conversation, and a speaker answering questions does not construct taxonomies — he returns to
+# preoccupations. What structure exists here is either a metaphor the speaker himself extends across
+# several subjects, or a set of claims that share a mechanism he states once and relies on
+# afterwards. Anything more would be structure imposed by the extraction, and the task explicitly
+# forbids forcing this source into textbook shape.
+#
+# Origin marking is therefore doing heavy work below. Two of the three systems are largely
+# extractor_inferred, and they are labelled as hypotheses about the source rather than reports of it.
+
+source_id: ondaatje_conversations_third_conversation
+
+source_concept_systems:
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_conv_c003_001
+  source_id: ondaatje_conversations_third_conversation
+  label: the_attention_economy_of_the_soundtrack
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    A set of claims about sound that all turn on where a finite audience attention is directed and
+    what the audience believes about where a sound came from: that music works best channelling an
+    emotion the film has already created; that music with a visible in-scene origin evades the
+    listener's sense of being manipulated while a score does not; that withdrawing dialogue makes the
+    audience search the remaining sound for meaning; and that acoustic perspective can therefore
+    carry plot.
+  whole_system_claim:
+    text: >
+      Sound in this source is governed by two variables, and every claim in the group is a
+      consequence of one of them. The first is ATTENTION, which is finite and competitive: "You pay
+      attention to the stars on nights when there is no moon… Dialogue is the moon, and stars are the
+      sound effects." Remove dialogue and unchanged effects acquire significance. The second is
+      ATTRIBUTION: a sound the audience can assign to the world of the scene is not experienced as
+      authored, so it passes without resistance, while a sound with no in-world origin registers as a
+      new voice and the viewer repositions. Together they explain why the strongest sound effects in
+      this chapter are subtractive — dropping dialogue, dropping a score, an echo that does not match
+      its space — rather than additive.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Each member claim is stated explicitly, with its own mechanism, in its own part of the
+      conversation. The attention claim and the attribution claim are both the source's own words.
+      What is OURS is the assertion that these two variables organise the whole of what he says about
+      sound here, and the further observation that the resulting techniques are consistently
+      subtractive. Murch never groups these claims or names a governing principle; in a conversation
+      he had no occasion to.
+    source_ref: null
+  members:
+    - {sk_ref: sk_conv_c003_0007, role_in_system: governing_claim, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_conv_c003_0009, role_in_system: attribution_mechanism, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0019, role_in_system: attention_mechanism, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0022, role_in_system: consequence, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_conv_c003_0010, role_in_system: failure_case, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_conv_c003_0011, role_in_system: bound, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_conv_c003_0022, to: sk_conv_c003_0019, nature: "sound can only carry plot if the audience is already listening to it", origin: extractor_inferred}
+      - {from: sk_conv_c003_0009, to: sk_conv_c003_0011, nature: "the source itself bounds source music by the overuse rule", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_conv_c003_0010, sk_conv_c003_0007]
+        nature: >
+          Music written independently of a film, with no direct connection to it, nonetheless read as
+          commenting on the action wherever it was placed. That is music failing to channel an
+          existing emotion and failing for reasons the source cannot state — "there was something
+          about that music". The governing claim does not account for the failure case.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are individually explicit and each carries its own stated mechanism. The claim that
+      they constitute one model is entirely ours, and it is the kind of tidying a transcript invites
+      and does not license. A weaker and equally defensible reading is that a sound editor returned
+      several times to sound over one morning and said different things about it. The system is
+      recorded as a hypothesis about the source for that reason, and its members remain individually
+      retrievable and individually true whether or not the grouping holds.
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Invisible Partner; What's Under the Hands?; The Wrong Echo"
+    page_start: null
+    page_end: null
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_conv_c003_002
+  source_id: ondaatje_conversations_third_conversation
+  label: the_hat_as_the_sources_own_extended_metaphor
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    A metaphor the speaker introduces, names as a metaphor, and then extends himself: a hat's angle
+    sends a message the wearer may not intend, and by extension so does any look, aspect, attitude or
+    gesture — and so does the camera, which is normally a neutral hat and can be made an aggressive
+    presence.
+  whole_system_claim:
+    text: >
+      The metaphor's work is to make one point across several scales at once: meaning in film is
+      carried by small adjustable details that are found rather than designed, and the editor's craft
+      is selecting among them. The speaker states the generalisation explicitly — "I'm using 'hat' as
+      a metaphor" — and then applies it upward to the camera itself, which is the move that turns a
+      remark about costume into a claim about the apparatus. The word "fortuitously" is what holds it
+      together: the details are accidents, correct or incorrect, and the editor chooses among them.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "The Minor Key", locator: "Third Conversation, 'The Minor Key'"}
+  members:
+    - {sk_ref: sk_conv_c003_0014, role_in_system: framing_metaphor, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0013, role_in_system: the_selection_it_governs, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0015, role_in_system: extension_to_the_camera, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0016, role_in_system: worked_instance, order: 4, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_conv_c003_0015, to: sk_conv_c003_0014, nature: "the camera claim is stated as an extension of the hat metaphor and does not stand without it", origin: source_stated}
+      - {from: sk_conv_c003_0016, to: sk_conv_c003_0014, nature: "the mobile is the metaphor's worked instance", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Unusually for this source, the grouping is the speaker's own: he names the metaphor as a
+      metaphor and extends it himself within a few exchanges. What is ours is only the decision to
+      treat the extension as constituting a set rather than as two separate remarks. This is the one
+      structure in the chapter that would exist whether or not anyone extracted it.
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Minor Key"
+    page_start: null
+    page_end: null
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_conv_c003_003
+  source_id: ondaatje_conversations_third_conversation
+  label: making_a_film_from_material_that_is_missing
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    A connected account, told as one story, of how a film was assembled when about fifteen script
+    pages were never shot: restructuring away from the original intent, reclassifying an unconnectable
+    scene as a dream, exploiting costume consistency so scenes could be moved, and splitting a scene
+    in two to make the plot legible.
+  whole_system_claim:
+    text: >
+      The four moves are not independent techniques; they are what one constraint made necessary, and
+      three of them are only available because of decisions taken earlier by other departments. The
+      restructuring is possible because the costumes are consistent. The dream reframing is available
+      because the film already tolerates a non-literal register. The split scene is validated by test
+      screenings rather than by principle. Taken together they describe editing as working the degrees
+      of freedom that production happened to leave open — which is a different picture of the craft
+      from the one in which an editor applies criteria to material.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The four claims are told consecutively, in one stretch of conversation, as a single narrative
+      about one film, prompted by one question about whether it was a difficult edit. That much is
+      the source's. What is OURS is reading them as illustrating a dependency between production
+      decisions and editorial freedom, and the further characterisation of the craft that follows.
+      Murch states the dependency for costume explicitly and does not generalise it.
+    source_ref: null
+  members:
+    - {sk_ref: sk_conv_c003_0001, role_in_system: governing_constraint, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0002, role_in_system: move, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0003, role_in_system: enabling_condition, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0005, role_in_system: move, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_conv_c003_0006, role_in_system: residual_problem, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_conv_c003_0001, to: sk_conv_c003_0003, nature: "scenes could be repositioned because the costumes did not pin them to a timeline", origin: source_stated}
+      - {from: sk_conv_c003_0002, to: sk_conv_c003_0001, nature: "the dream reframing is one instance of the forced restructuring", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership follows the source's own narrative sequence, which is a weaker basis than a stated
+      grouping — things said one after another in a conversation are not thereby a set. The
+      characterisation of editing as working production's leftover degrees of freedom is ours and is
+      a reading, not a report. Recorded because the dependency it describes is the one genuinely
+      general thing in an otherwise wholly film-specific stretch.
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    source_support: text

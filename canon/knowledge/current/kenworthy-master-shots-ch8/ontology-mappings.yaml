@@ -1,0 +1,348 @@
+# CANON-003 book 11 (rebalance lane) — "Master Shots" frame material and ch.8.
+# SPEC-05 ontology, source-local. Existing term kinds and relation types only.
+#
+# On executable_by: every remedy here is a staging or camera action performed while shooting, so
+# `physical_production` is the honest primary value. Two also admit `generative_respecification`,
+# because what they specify is a property of the resulting image — an established colour, a
+# reflection carrying two subjects — rather than a movement of physical equipment. No physical
+# camera action has been rewritten as a generation instruction.
+
+source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+extraction_date: 2026-08-24
+
+terms:
+- term_id: t_ms_c003_0001
+  term: unmotivated_camera_move
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: problem
+  definition_in_origin_frame: >
+    Moving the camera because the equipment allows it, or because a moving or wobbling camera is
+    thought to look exciting. The source pairs it with its opposite — leaving the camera on a tripod
+    out of laziness — as the same failure to decide.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Introduction"}
+  arising_from: [sk_ms_c003_0002]
+
+- term_id: t_ms_c003_0002
+  term: camouflage_the_move_behind_an_action
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    Giving the camera a reason to travel by attaching its movement to something happening in the
+    scene, so the move reads as following the action rather than as the camera relocating.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.1 Object Guide"}
+  arising_from: [sk_ms_c003_0011, sk_ms_c003_0002]
+  executable_by: [physical_production]
+
+- term_id: t_ms_c003_0003
+  term: object_guide
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    A minor object passed between characters, used to motivate a camera move from one part of a
+    location to another. The object must be neither insignificant nor the focus of the scene.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "8.1 Object Guide"}
+  arising_from: [sk_ms_c003_0011]
+  executable_by: [physical_production]
+
+- term_id: t_ms_c003_0004
+  term: handing_off_motion
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    A backward dolly timed to an advancing character, which opens space that brings a second
+    character into focus — switching subject within one shot instead of cutting.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "8.2 Handing Off Motion"}
+  arising_from: [sk_ms_c003_0012]
+  executable_by: [physical_production]
+
+- term_id: t_ms_c003_0005
+  term: rest_point
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    A camera move that ignores the action and proceeds at constant pace to a predetermined close-up,
+    with the actor timed to come to rest on a mark with the camera or a beat earlier. The source
+    calls the resulting sensation magnetic.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "8.5 Rest Point"}
+  arising_from: [sk_ms_c003_0015]
+  executable_by: [physical_production]
+
+- term_id: t_ms_c003_0006
+  term: colour_guide
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    A strongly contrasting colour attached to a character in an earlier close shot, which then
+    identifies that character when they appear blurred and distant in a frame graded down to a
+    single dominant hue.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.6 Color Guides"}
+  arising_from: [sk_ms_c003_0016]
+  executable_by: [physical_production, generative_respecification]
+
+- term_id: t_ms_c003_0007
+  term: reflection_as_two_shot
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    Using a mirror or other reflective surface to hold a subject and the person reacting to it in
+    one frame, in place of cutting to a point-of-view shot.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.4 Reflections"}
+  arising_from: [sk_ms_c003_0014]
+  executable_by: [physical_production, generative_respecification]
+
+- term_id: t_ms_c003_0008
+  term: static_master_with_moving_actors
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: remedy
+  definition_in_origin_frame: >
+    Holding a wide camera almost still and blocking the actors so that whoever dominates the scene
+    faces the camera, capturing an argument's movement without any camera move.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.7 Reverse Angles"}
+  arising_from: [sk_ms_c003_0017]
+  executable_by: [physical_production]
+
+- term_id: t_ms_c003_0009
+  term: cheated_eyeline_in_a_reflection
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: problem
+  definition_in_origin_frame: >
+    An actor looking somewhere other than at the subject they are meant to be looking at, which the
+    source says is normal practice generally but registers with some viewers as wrong when a
+    reflection is involved.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.4 Reflections"}
+  arising_from: [sk_ms_c003_0014]
+
+- term_id: t_ms_c003_0010
+  term: focus_shifting_between_planes
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: problem
+  definition_in_origin_frame: >
+    Racking focus repeatedly between foreground and background, which the source says does not guide
+    attention but confuses the viewer.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.4 Reflections"}
+  arising_from: [sk_ms_c003_0019]
+
+- term_id: t_ms_c003_0011
+  term: actor_stopping_on_the_offered_object
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: problem
+  definition_in_origin_frame: >
+    The actor halting when the object is offered instead of ignoring it and moving off, which the
+    source states destroys the effect of the rest-point move entirely.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.5 Rest Point"}
+  arising_from: [sk_ms_c003_0015]
+
+- term_id: t_ms_c003_0012
+  term: actor_facing_away_from_camera
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: problem
+  definition_in_origin_frame: >
+    The standing cost of a static two-person master: one actor always has their back to the lens.
+    The source's answer is body acting, and its fallback is non-facial coverage that enables a cut.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.7 Reverse Angles"}
+  arising_from: [sk_ms_c003_0017]
+
+- term_id: t_ms_c003_0013
+  term: audience_senses_the_camera_move
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: problem
+  definition_in_origin_frame: >
+    The viewer registering the technique instead of the scene. The source's recurring test of
+    whether a move worked, stated as an outcome to avoid.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.2, 8.3"}
+  arising_from: [sk_ms_c003_0018]
+
+- term_id: t_ms_c003_0014
+  term: overhead_diagram
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: entity
+  definition_in_origin_frame: >
+    A plan view of a technique showing where the camera and the actors move, under a stated
+    notation: white arrows for camera movement, black arrows for actor movement.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "About the Images"}
+  arising_from: [sk_ms_c003_0009]
+
+- term_id: t_ms_c003_0015
+  term: rendered_recreation
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: entity
+  definition_in_origin_frame: >
+    A computer-graphics restaging of each technique, stated by the source to differ deliberately
+    from the film frames it accompanies, to show that small changes of setup extend the technique.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "About the Images"}
+  arising_from: [sk_ms_c003_0009]
+
+- term_id: t_ms_c003_0016
+  term: motivated_actor_movement
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: property
+  definition_in_origin_frame: >
+    Actors moving for a reason of their own — fetching a file, running for a bus — rather than
+    because the camera needs them to. The source requires it in three of the chapter's techniques.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.2, 8.3"}
+  arising_from: [sk_ms_c003_0012, sk_ms_c003_0013]
+
+- term_id: t_ms_c003_0017
+  term: proximity_exaggerates_speed
+  origin: source
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  kind: property
+  definition_in_origin_frame: >
+    An actor crossing close to the lens reads as faster than the same actor moving away from it,
+    which is why the source stages the run across the other actor's path.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "8.3 Change of Direction"}
+  arising_from: [sk_ms_c003_0013]
+
+relationships:
+- from: t_ms_c003_0002
+  to: t_ms_c003_0001
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The failure the source names in its introduction, and the general remedy the chapter applies to it."
+
+- from: t_ms_c003_0003
+  to: t_ms_c003_0002
+  relation: narrower_than
+  confidence_basis: extractor_judgement
+  note: >
+    Camouflaging a move behind an action is the general move; the object guide is that move with a
+    handed prop as the specific carrier. The source states the general principle inside the specific
+    technique and never separates them.
+
+- from: t_ms_c003_0007
+  to: t_ms_c003_0006
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both put two subjects in one frame without cutting. They work differently: a
+    reflection duplicates a subject into the frame optically, while a colour guide makes an already
+    present but unreadable subject identifiable. The repairs do not substitute for each other.
+
+- from: t_ms_c003_0006
+  to: t_ms_c003_0010
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both concern directing attention between foreground and background. One does it with a single
+    static cue and no lens change; the other is the source's named failure of trying to do it by
+    moving focus back and forth. The source recommends the first and warns against the second.
+
+- from: t_ms_c003_0013
+  to: t_ms_c003_0001
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    The source treats an audience noticing the move as the sign that it was not properly motivated.
+    The two are stated in different places and the link is ours.
+
+- from: t_ms_c003_0016
+  to: t_ms_c003_0002
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The camera's motivation is borrowed from the actor's, so a move camouflaged behind an
+    unmotivated action is not camouflaged at all. The source states the requirement inside two
+    techniques.
+
+- from: t_ms_c003_0011
+  to: t_ms_c003_0005
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The technique and the one actor behaviour the source says destroys it."
+
+- from: t_ms_c003_0014
+  to: t_ms_c003_0015
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Both are pictures the source made rather than found, and they do different jobs: the diagram
+    states the geometry to be reproduced, while the rendering is deliberately different from the
+    filmed example to show the technique's tolerance. Treating them as the same kind of illustration
+    would misread both.
+
+concepts:
+- concept_id: sc_ms_c003_directing_attention
+  kind: source_specific_concept
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  label: directing_attention
+  children_terms: [t_ms_c003_0003, t_ms_c003_0004, t_ms_c003_0005, t_ms_c003_0006, t_ms_c003_0007, t_ms_c003_0008]
+  origin: source_stated
+  basis: >
+    "Directing Attention" is the source's own chapter title and these six are the techniques it
+    collects under it. The grouping is the book's; the claim that they are alternatives to a cut is
+    ours and lives on the concept system, not here.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_ms_c003_image_apparatus
+  kind: source_specific_concept
+  origin_ref: kenworthy_master_shots_frame_and_ch8_directing_attention
+  label: the_books_image_apparatus
+  children_terms: [t_ms_c003_0014, t_ms_c003_0015]
+  origin: source_stated
+  basis: >
+    The source defines its own illustration types and their purposes in a front-matter section
+    written for that job. The grouping is explicit.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_ms_c003_attention_failures
+  kind: canonical_concept
+  label: ways_a_shot_fails_to_direct_attention
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_ms_c003_0001, t_ms_c003_0010, t_ms_c003_0011, t_ms_c003_0012, t_ms_c003_0013]
+  basis: >
+    A retrieval grouping, ours, over this source's named failures. It asserts no equivalence: a move
+    with no reason, focus racking between planes, an actor stopping too early, an actor's back to the
+    lens, and an audience noticing the camera are five different things that happen to share the
+    consequence of attention going to the wrong place.
