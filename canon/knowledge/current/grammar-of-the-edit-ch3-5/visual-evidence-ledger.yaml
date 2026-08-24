@@ -1,0 +1,374 @@
+# CANON-003 book 9 (Lane B) — Thompson & Bowen, "Grammar of the Edit", 2nd ed.
+# Chapters Three, Four and Five (printed pp.55-109 = PDF pp.68-122).
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Grammar of the Edit, .pdf"
+#   /Title: "Grammar of the Edit, Second Edition" · /Author: "Roy Thompson and Christopher J. Bowen"
+#   /Creator: Adobe Acrobat 7.0 · /Producer: Acrobat Distiller 7.0 (Windows) · created 6 Feb 2009
+#   225 pages, single pages (not spreads). Page offset: PDF page = printed page + 13.
+#   NOT a scan: native digital PDF with a real text layer.
+#   Rendered ephemerally at 105 dpi (and 200 dpi for two crops) to session scratchpad; NOT committed.
+#
+# ISOLATION NOTE: this pass, and the whole fresh extraction, was performed from the source PDF only.
+# No Canon knowledge file for "Grammar of the Shot" was opened while extracting this book, despite
+# the two titles sharing authors and subject matter. Overlap between the two is discussed only in
+# the post-checkpoint findings.
+
+source_id: grammar_of_the_edit_ch3_5_editing_decisions
+pass: independent_visual_evidence
+pages_rendered: [68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
+                 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
+                 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122]
+pages_inspected: [74, 76, 77, 82, 96, 106, 114, 116, 118]
+visual_completeness: verified_page_level
+
+# ═════════════════════════════════════════════════════════════
+# 1. WHAT THE SECTION CONTAINS VISUALLY
+# ═════════════════════════════════════════════════════════════
+figure_inventory:
+  figures_in_section: 23        # 3.1-3.8, 4.1-4.9, 5.1-5.6
+  captions_recovered_in_text: 23
+  caption_recovery_rate: "23 of 23 (100%)"
+  embedded_images_in_span: 90
+  note: >
+    Every figure caption survived text extraction intact, and every figure's sub-frame labels
+    (A, B, C ...) survived as bare letters stranded in the text flow. None of the 90 images
+    themselves survived, and neither did any text drawn INSIDE the artwork. So the text layer
+    reports that figures exist and what the authors say they show, while carrying none of what
+    they actually show.
+
+visual_register_split:
+  observation: >
+    This source argues in two visual registers, and they are not interchangeable.
+  registers:
+    - kind: line_art_illustration
+      examples: [fig_3_2, fig_3_3, fig_4_7, fig_5_2, "fig_5_3 (diagram)", "fig_5_5 A-C (overhead diagrams)"]
+      what_it_does: >
+        Drawn scenes and overhead geometry diagrams. Used where the point is a schematic relation —
+        where the camera sits relative to the action line, which direction a subject looks — that a
+        photograph cannot show because the geometry is off-camera by definition.
+    - kind: photographic_frame_grab
+      examples: [fig_3_1, fig_3_4, fig_3_7, fig_4_2, "fig_5_4 D-F", "fig_5_5 D-F", fig_5_6]
+      what_it_does: >
+        Real frames from footage the authors shot themselves (the Acknowledgments name the on-camera
+        talent and state all photographs are by the author). Used where the point is what the error
+        LOOKS like on screen, which a drawing would beg the question of.
+  why_it_matters: >
+    Figure 5.4 and Figure 5.5 pair the two registers on facing arguments: an overhead diagram of
+    where the camera stood, next to the frame that camera produced. The claim being taught lives in
+    the correspondence between the two panels, not in either alone. A text extraction loses the
+    correspondence completely and gives no signal that a correspondence was ever there.
+
+# ═════════════════════════════════════════════════════════════
+# 2. CONTROLLED COMPARISONS VISIBLE ONLY IN THE FIGURES
+# ═════════════════════════════════════════════════════════════
+demonstrations:
+
+- ref: vis_gote_fig_5_4_vs_5_5_line_crossing
+  printed_pages: [103, 105]
+  pdf_pages: [116, 118]
+  kind: controlled_comparison
+  isolation: single_variable
+  status: fully_legible
+  visible_content: >
+    Two figures, two pages apart, shot at the same waterfront location with the same two actors in
+    the same wardrobe and the same framing scale. Figure 5.4 (correct) pairs three overhead diagrams
+    with three frames: D a wide two-shot, E character A at frame left looking frame right, F
+    character B right of centre looking frame LEFT. Figure 5.5 (incorrect) reuses frames D and E
+    unchanged and replaces F with the same actor now placed at frame LEFT looking frame RIGHT. The
+    third diagram in 5.5 carries the drawn label "WRONG SIDE OF LINE".
+  what_the_visual_supports: >
+    That crossing the action line for one shot of a dialogue pair makes both characters appear to
+    look the same way, so they read as addressing an unseen third person. The pair holds location,
+    talent, wardrobe, scale and shot A constant and changes only which side of the line the camera
+    sat on for character B.
+  requires_prose: >
+    The naming of the line as the axis of action, the 180-degree arc it establishes, and the rule
+    that all coverage must come from one side of it.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    This is a genuine minimal pair — one variable changed, the rest held — and it is the strongest
+    piece of evidence in the section. In the extracted text it is reduced to two nearly identical
+    caption sentences and a scatter of the letters A through F. Nothing in the text indicates that
+    5.4 and 5.5 are the same setup photographed twice, which is the entire point.
+
+- ref: vis_gote_fig_3_4_similar_angles
+  printed_page: 64
+  pdf_page: 77
+  kind: controlled_comparison
+  isolation: single_variable
+  status: fully_legible
+  visible_content: >
+    Three photographic frames of the same woman walking on the same park path. A and B are wide
+    shots from very nearly the same camera position and the same focal length — the difference
+    between them is small enough that they read as one image slightly displaced. C is a close-up
+    from a markedly different angle, roughly three-quarter profile.
+  what_the_visual_supports: >
+    That two shots taken from angles less than about 30 degrees apart look like a glitch when cut
+    together, and that a real change of angle and framing removes the problem. A and B are the
+    failure case; C is the shot that repairs it.
+  requires_prose: >
+    The 30-degree threshold, the connection to the 180-degree arc, and the name "jump cut" for what
+    the viewer perceives.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The caption states the principle but does not say which frames are the bad pair. A reader with
+    the text alone cannot tell that A and B are the near-duplicate and C is the fix, so the
+    demonstration reduces to a restatement of the prose.
+
+- ref: vis_gote_fig_3_7_position_jump
+  printed_page: 69
+  pdf_page: 82
+  kind: controlled_comparison
+  isolation: single_variable
+  status: fully_legible
+  visible_content: >
+    Three photographic frames in the same coastal location. A: a woman in a dark top at frame left.
+    B: a second woman at frame centre-right. C: the first woman again, now at frame RIGHT.
+  what_the_visual_supports: >
+    That a subject who occupies one side of the frame must stay on that side across the cut. The
+    figure shows the violation happening rather than describing it — the same person occupies
+    opposite sides of the screen in two shots of one scene.
+  requires_prose: >
+    That the shots belong to one continuous scene and that the subject did not physically move,
+    which is what makes the position change an error rather than a legitimate re-staging.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The caption is unusually informative here — it names the failure ("This woman appears to jump
+    from screen left to screen right"). This is the one continuity demonstration in the section
+    whose caption alone would let a text-only extractor state the claim correctly, though not
+    verify it.
+
+- ref: vis_gote_fig_4_2_dissolve_progression
+  printed_page: 83
+  pdf_page: 96
+  kind: process_demonstration
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    Five photographic frames showing one dissolve in sequence: A a stone gateway, B, C and D the
+    gateway and a building superimposed at progressively shifting opacity, E the building alone.
+  what_the_visual_supports: >
+    That a dissolve is a duration in which both images are simultaneously present, not an
+    instantaneous swap. The middle frames make "you get to see the images overlapping" observable.
+  requires_prose: >
+    The ramping of opacity, the naming of the transition, and everything about what dissolves MEAN.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The caption — "Frames that represent a dissolve from one shot to another" — is close to
+    contentless, so this figure is the clearest case in the section of a visual carrying meaning
+    the text does not restate anywhere. A time-based process is being shown as a spatial strip;
+    plain text has no equivalent.
+
+- ref: vis_gote_fig_4_7_form_edit_match
+  printed_page: 93
+  pdf_page: 106
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    Seven drawn frames. A-D: a jet tyre, a car tyre, a bicycle wheel and a wagon wheel, each round,
+    each framed at close to the same size and centred in the same position. E-G: cigarette packs
+    standing in a white field, then a superimposed midpoint in which packs and headstones occupy the
+    same positions, then a cemetery of headstones.
+  what_the_visual_supports: >
+    That a form edit works by matching shape, size and screen position across the cut, and that the
+    meaning of the cigarette-to-headstone edit is manufactured by the exact positional
+    correspondence. Frame F — the mid-dissolve — shows the two sets of objects occupying identical
+    positions, which is the mechanism the prose calls the "imagery union".
+  requires_prose: >
+    The narrative purpose (condensing a journey; an anti-smoking message) and the term "match
+    dissolve".
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The prose asserts "the compositions match exactly" and "each cigarette package was standing in
+    the exact spot where a grave marker is standing". The figure is the only evidence for those
+    claims. Without it, a reader has the assertion but nothing to check it against.
+
+- ref: vis_gote_fig_3_3_eyeline_arrows
+  printed_page: 63
+  pdf_page: 76
+  kind: annotated_demonstration
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    Three drawn frames. A: a wide two-shot of a couple at a dinner table. B: the man at frame left
+    with a large drawn ARROW pointing across the empty right side of the frame. C: the woman at
+    frame right with a drawn arrow pointing across the empty left side.
+  what_the_visual_supports: >
+    That eye-line match works by leaving empty look room in the direction of attention, so the
+    viewer's gaze travels across the frame and is rewarded by finding the other character there
+    after the cut.
+  requires_prose: >
+    The tennis-ball analogy, the term "eye trace", and the warning against making the search too
+    hard.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The arrows are an ANNOTATION layer drawn onto the illustration — not part of the depicted scene,
+    but the authors' own diagram of the mechanism. This is a third visual register beyond photograph
+    and diagram: an argument drawn on top of an image. It is invisible in text and there is no
+    caption cue that any annotation exists.
+
+# ═════════════════════════════════════════════════════════════
+# 3. A COUNTER-CASE — A FIGURE THAT SURVIVES TEXT COMPLETELY
+# ═════════════════════════════════════════════════════════════
+visual_only_observations:
+
+- ref: vis_gote_fig_5_2_text_redundant_by_design
+  printed_page: 101
+  pdf_page: 114
+  what_is_visible: >
+    A single drawn frame: a house on a hillside with smoke rising from the chimney, a man walking
+    up the path toward it, the sun low behind the hills.
+  why_it_matters: >
+    The prose beside it reads: "There is a house in the hills, there is smoke coming out of the
+    chimney, a man is walking to the house, it is evening because the sun is setting. Cut!" Every
+    element of the picture is enumerated in the sentence, because the method being taught IS
+    describing the shot aloud to time it. The figure is fully recoverable from the text.
+  status: source_supported
+  extractor_note: >
+    Worth recording as a counter-case. Visual loss in this batch is usually treated as a property of
+    figure-bearing sources; here a source made one figure text-redundant on purpose, because the
+    pedagogy required the description to exist in words. Not every figure in a visually-argued book
+    is at risk, and the ones that are safe are safe for a reason that can be stated.
+
+# ═════════════════════════════════════════════════════════════
+# 4. TEXT LOST INSIDE ARTWORK — SILENT
+# ═════════════════════════════════════════════════════════════
+in_graphic_text_loss:
+  severity: moderate_and_silent
+  what_happened: >
+    Labels typeset inside the diagrams do not exist anywhere in the extracted text.
+  instances_verified:
+    - label: "WRONG SIDE OF LINE"
+      figure: fig_5_5
+      pdf_page: 118
+      grep_result: "0 occurrences in the extracted section text and 0 in the whole book text"
+      consequence: >
+        This label is what marks the third diagram in Figure 5.5 as the error case. Without it the
+        figure's own polarity — which arrangement is wrong — is carried only by the caption.
+    - label: "THE LINE"
+      figure: fig_5_3
+      pdf_page: 116
+      grep_result: "0 occurrences in the extracted section text"
+      consequence: >
+        The naming of the axis inside the diagram is lost; the concept survives only because the
+        prose also names it.
+  why_it_matters: >
+    This loss is SILENT. Unlike the Vignelli case, where a contents page revealed that a named
+    section was missing, nothing in the extracted text indicates that words were removed. A
+    text-only extractor sees a caption, sees stray letters, and has no signal that the artwork also
+    contained language. The only way this was found was rendering the pages and reading them.
+  detectability_note: >
+    There is no cheap independent index of in-graphic text equivalent to the contents-page check.
+    Detecting it required the visual pass itself.
+
+# ═════════════════════════════════════════════════════════════
+# 5. AN ERROR IN THE SOURCE, FOUND ONLY BY LOOKING
+# ═════════════════════════════════════════════════════════════
+source_internal_error:
+  kind: incorrect_figure_cross_reference
+  location: "printed p.61 (PDF 74), end of the sound-bridge paragraph"
+  what_the_source_says: >
+    "...the new visuals of the train whistling give them information to process and it follows a
+    knowable logic (see Figure 3.4E and F)."
+  what_is_actually_true: >
+    Figure 3.4 is on printed p.64 and has three panels, A, B and C — photographs of a woman on a
+    path illustrating similar camera angles. It has no E or F. The train-whistle sound bridge is
+    Figure 3.2E and F, on the same page as the sentence.
+  status: OBSERVED
+  why_it_matters: >
+    The source is wrong, in a small and harmless way, and the error is undetectable from text alone.
+    A text-only extractor reading "see Figure 3.4E and F" beside a claim about sound bridges would
+    have no way to know the pointer is broken, and could reasonably attach the claim to the wrong
+    demonstration. The visual pass caught it in one step by counting the panels of Figure 3.4.
+  consequence_for_this_extraction: >
+    The sound-bridge object cites Figure 3.2E-F, which is what the source actually shows, and
+    records the source's own misdirection as an extractor-observed caveat rather than silently
+    correcting or silently repeating it.
+
+figure_prose_divergence:
+  ref: fig_3_2_A_B
+  status: OBSERVED
+  what_the_prose_describes: >
+    A character in close-up moves his eyes slightly to the left as if looking at something
+    off-screen; the editor cuts to the object of his interest, "let us say ... a cat".
+  what_the_figure_shows: >
+    A man reading a book titled "The Three Little Pigs", cut to a pig standing in a room.
+  extractor_note: >
+    The caption's claim — "(A-B) Motivation for the cut comes from the movement of the man's eyes" —
+    is consistent with the principle, but the illustration does not depict the worked example the
+    prose sets up. This is a mild mismatch, not an error, and it is recorded because a visual pass
+    that assumed figure and prose always correspond would mis-describe what the source demonstrates.
+    No claim in this extraction rests on the figure matching the prose here.
+
+# ═════════════════════════════════════════════════════════════
+# 6. COLOUR CONTROL
+# ═════════════════════════════════════════════════════════════
+colour_check:
+  method: >
+    Colour space of every embedded image in the PDF listed with pdfimages, rather than sampling
+    saturation from renders.
+  result: >
+    Of 291 embedded images in the whole book, 276 are 'sep' (single separation — one ink), 11 are
+    'gray', and exactly one is 'rgb'. That single RGB image is on PDF page 1: the cover. Across the
+    extracted span, PDF pages 68-122, every embedded image is 'sep'.
+  interpretation: >
+    This book is natively monochrome — a black-and-white printed Focal Press paperback — not a
+    colour book digitised in greyscale. Nothing is being hidden by the absence of colour, and no
+    claim in the section depends on hue. The one form-edit passage that mentions colour ("a shot
+    that has a pronounced shape, color, dimension or sound") names colour as one option among four
+    and demonstrates only shape, so the monochrome reproduction costs nothing.
+  why_this_check_matters: >
+    The distinction is the one this batch has already been caught by once: a greyscale digitisation
+    of a colour argument survives a visual pass and produces confidently wrong extraction. Reading
+    the colour space directly from the file settles the question at the source rather than inferring
+    it from what the renders happen to look like, and it separates "printed in black and white" from
+    "colour removed in digitisation".
+
+# ═════════════════════════════════════════════════════════════
+# 7. TEXT INTEGRITY
+# ═════════════════════════════════════════════════════════════
+text_integrity:
+  extraction_tool: "pdftotext -layout (poppler 26.08.0)"
+  words_in_section: 15755
+  garbling: none_detected
+  character_substitutions:
+    - glyph: "ﬁ / ﬂ ligatures"
+      count: 129
+      share_of_words: "0.81%"
+      reversible: true
+      note: >
+        Typographic ligatures emitted as single Unicode characters. Meaning is unaffected, but naive
+        verbatim string matching against an ASCII transcript would fail on every affected word.
+    - glyph: "⫽ (U+2AFD) standing in for '='"
+      count: 2
+      location: "printed p.81, the opposing-composition dissolve example"
+      reversible: true
+      note: "Recoverable from context. A character-level artifact, not structural damage."
+  structural_damage: none
+  section_completeness_check:
+    method: >
+      Every section name listed in the book's contents page for Chapters Three, Four and Five was
+      searched for in the extracted section text — the contents-page control.
+    result: "All named sections present. Nothing buried, nothing missing."
+  ordering_anomalies:
+    - location: "printed p.103 (PDF 116), Figure 5.3 caption"
+      what: >
+        The Figure 5.3 caption is emitted in the middle of the running prose rather than after it,
+        because the figure sits in the right-hand column beside the text.
+      severity: cosmetic
+      note: >
+        Reading order is disturbed for a few lines; no words are lost or spliced into sentences the
+        authors did not write. This is the mildest end of the same ordering family that blocked
+        Lupton, and it did not require repair.
+  verdict: >
+    Usable without reservation. This is the cleanest source text encountered in this lane: a native
+    digital PDF, no OCR, complete sections, and only reversible character-level artifacts.
