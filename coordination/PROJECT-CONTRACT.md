@@ -1,7 +1,20 @@
 # Project Contract
 
-**Read this first, every session, every stream.** Not autonomously rewritten by workers —
-proposals go through `PROPOSED-INTEGRATION-CHANGE-<ID>.md` in the proposing stream's folder.
+**Read this first, every session, every stream.** Then read `shared/COMMUNICATION-STANDARD.md`.
+Not autonomously rewritten by workers — proposals go through `PROPOSED-INTEGRATION-CHANGE-<ID>.md` in the proposing stream's folder.
+
+## Communication and epistemic standard
+
+`shared/COMMUNICATION-STANDARD.md` applies to every worker, every stream, the Controller, reports and chat.
+
+Core rules:
+- explain in plain English without removing technical substance;
+- use the minimum wording needed to stay complete and correct;
+- avoid wall-of-text responses when structure would make them easier to read;
+- never invent facts, evidence, repository state, licences, costs, capabilities or decisions;
+- keep observed/source-supported facts separate from inference, recommendation and unknowns.
+
+A worker must acknowledge this standard once at the start of a new session or after the standard changes. If it cannot read the standard, it must stop rather than claim compliance.
 
 ## Product goal
 
