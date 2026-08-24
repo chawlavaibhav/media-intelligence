@@ -11,7 +11,7 @@ The first EVAL-003 return contains useful work: deterministic CVIT candidate sel
 
 It is **not yet approved for merge or for human/API calibration**. Several claims and protocol details would make the later calibration harder to interpret than the evidence supports. Correct those issues without redesigning the approved EVAL-001/002 battery or expanding scope.
 
-Before editing, fetch `origin/main` and merge current `origin/main` into `work/eval` normally. Do not rewrite history. The only main-branch change currently missing from the worker branch is unrelated Canon control work; the branch still needs to be current before the next review.
+Before editing, fetch `origin/main` and merge current `origin/main` into `work/eval` normally. Do not rewrite history. Main has received Controller control commits since the worker started, including this correction contract, so the worker branch must be current before the next review.
 
 ## Preserve these parts unless a correction below requires a local change
 
