@@ -2,22 +2,25 @@
 
 **Snapshot, updated at integration checkpoints.** Detail lives in each stream's `HANDOFF.md`.
 
-| Stream | Status | Blocking item | Next milestone (proposed, not approved) |
+| Stream | Status | Current approved task | Blocking item / next gate |
 |---|---|---|---|
-| Canon | Schemas locked (SPEC-01–05). Curriculum + Coverage Map designed, awaiting approval. | Controller sign-off on `canon/experiments/CANON-CURRICULUM-V0.md` | Ingest V0 curriculum → run Experiment A |
-| Eval | One calibration study done (Devanagari checker). No battery, no Registry. | Battery design not started | EVAL-001: Devanagari benchmark research |
-| Resources | Research plan only, nothing downloaded. | Every dataset licence unverified | RES-001: verify Pitt Ads + Devanagari gap |
+| Canon | Schemas locked (SPEC-01–05). Six historical probes re-audited; no fresh current-schema extraction yet. | `CANON-001` — first fresh SPEC-03/04/05 extraction from Molly Bang | Controller review of CANON-001 output before scaling ingestion |
+| Eval | One checker-calibration study done. No battery, no Registry. | `EVAL-001` — design Capability Battery V0; no generation spend | Controller review of battery/instrument plan before any benchmarking |
+| Resources | Research plan exists; no external dataset acquired yet. | `RES-001` — bounded corpus acquisition pilot | Stop on legal/access ambiguity or 20 GB hard cap |
 
 ## Cross-stream dependency chain
 
 ```
-Canon curriculum approval ──► Experiment A (planning) ──► Experiment B (evaluation)
-                                                                  ▲
-Resources: corpus sourcing ──────────────────────────────────────┘
+CANON-001 current-schema extraction ──► validate ingestion shape ──► later bounded curriculum ingestion
 
-Eval: battery design ──► Capability Registry ──► hypothesis 15 (routing), blocked on both
-                                                   Canon (requirements) and Eval (Registry)
+EVAL-001 battery design ──► Controller approval ──► Capability Lab runs ──► Capability Registry
+                                   ▲
+                                   │
+RES-001 corpus acquisition ────────┘
+
+Canon-consumption experiments are intentionally paused for now. No worker should run or extend
+`canon/experiments/CANON-EXPERIMENT-V0.md` unless the Controller explicitly opens a new task for it.
 ```
 
-Nothing is currently running. All three streams are at the same gate: Controller review of this
-setup and of the Canon Curriculum/Coverage Map.
+Three approved starter tasks are now active in the operating model. Workers must use their own
+worktrees/branches, produce Controller Briefs, and stop at the gates in `shared/AUTONOMY-POLICY.md`.
