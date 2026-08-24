@@ -1,5 +1,23 @@
 # Runbook
 
+## Parallel work: worktrees, one per stream
+
+Three worktrees exist so Canon, Eval and Resources can run simultaneously without one overwriting
+another:
+
+```
+media-intelligence/                              main branch — Controller's view, merge target
+media-intelligence-worktrees/canon/      work/canon branch — Canon sessions work here
+media-intelligence-worktrees/eval/       work/eval branch — Eval sessions work here
+media-intelligence-worktrees/resources/  work/resources branch — Resources sessions work here
+```
+
+**A worker session `cd`s into its own worktree directory and stays there for the whole session.**
+It never edits files inside another stream's worktree. When a task is done, the worker commits on
+its branch; the Controller reviews the Controller Brief and merges `work/<stream>` into `main`
+(or opens a PR). This is the enforcement mechanism behind "a stream never edits another stream's
+files" — separate working directories on separate branches, not just a convention.
+
 ## Starting a new Canon session
 Read, in order: `coordination/PROJECT-CONTRACT.md` → `canon/CHARTER.md` → `canon/HANDOFF.md` →
 the assigned task file → only the source material the task names. Do not replay full project
