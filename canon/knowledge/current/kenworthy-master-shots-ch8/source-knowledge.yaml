@@ -1,0 +1,987 @@
+# CANON-003 book 11 (rebalance lane) — Christopher Kenworthy, "Master Shots" vol.1, 2nd ed.
+# Processed span: the book's frame — Introduction, "How to Use this Book", "About the Images" and
+# the Conclusion — together with chapter 8, "Directing Attention", complete (techniques 8.1-8.7).
+# Fresh SPEC-03 extraction under the frozen CANON-002-era method. V0 granularity rule, unchanged.
+# Visual completeness: verified_figure_level.
+#
+# SECTION RATIONALE: this book is a hundred numbered recipes. A chapter on its own would expose the
+# recipe FORM but not the reasoning that governs it — what the recipes are for, how the author
+# intends them to be read, what evidential status the pictures have, and what he claims knowing a
+# hundred of them does to a director. All of that is in the frame material, and the frame material
+# alone would expose the reasoning with no instance of it. The two together are the coherent
+# section: about 4,200 words, one complete chapter of seven techniques, and the book's own account
+# of how to use them.
+#
+# NOTE ON THIS SOURCE'S SHAPE, recorded rather than smoothed over:
+# this is procedural craft knowledge. Almost every claim is an instruction with a stated condition
+# and often a stated failure mode, supported by naming a released film in which the technique was
+# used. It contains no measurement, no controlled comparison and no argument from mechanism beyond
+# what an audience is said to notice. Its unusual feature is epistemic: the author twice tells the
+# reader to test his recommendations against their own experiment and decide whether he was right.
+
+source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+
+source_knowledge:
+
+- sk_id: sk_ms_c003_0001
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "every single shot in this book can be achieved on the cheap, with a handheld camera"
+    - "I don't waste any time suggesting what sort of dolly or crane you should use, because you may end up improvising"
+  concept_label: techniques_are_stated_independently_of_the_equipment_that_executes_them
+  label_origin: extractor_assigned
+  claim: >
+    The examples are drawn from large-budget features, and the source states that every shot in the
+    book can nonetheless be achieved cheaply with a handheld camera. It therefore deliberately omits
+    equipment specifications, on the grounds that the reader may be improvising. What is specified
+    is the geometry and the timing of the move, not the hardware that produces it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing, camera_movement]
+    conditions: "any production, at any budget, per the source"
+  caveats:
+    - text: "asserted for all hundred techniques without any being demonstrated on cheap equipment; the illustrations are all from studio features"
+      origin: extractor_observed
+    - text: "the claim is what makes the knowledge portable, and it is also the least supported claim in the book"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ms_c003_0010, note: "every recipe is stated as a move rather than as a rig"}
+    - {relation: member_of_system, target: scs_ms_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "Introduction"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0005.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0002
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "Never move the camera for the sake of it, but never sit it on a tripod because you're too lazy to think of something more interesting."
+    - "people often move the camera just because they can"
+  concept_label: camera_movement_must_be_motivated_and_stillness_must_be_chosen
+  label_origin: extractor_assigned
+  claim: >
+    The book's governing rule, stated in the introduction and applied throughout: a camera move must
+    have a reason, and so must the absence of one. The source names two opposite failures — moving
+    because the equipment allows it, or because a wobbling camera is thought to look exciting, and
+    leaving the camera on a tripod out of laziness — and treats both as the same error of not having
+    decided.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing, television]
+    conditions: "any shot"
+  caveats:
+    - text: "no test is offered for whether a move is motivated; the hundred techniques function as the source's worked answer to that question"
+      origin: extractor_observed
+    - text: "the source repeats the point in the conclusion, where it says a lack of vision is often hidden behind shaky camerawork and fast edits"
+      origin: source_stated
+  source_stated_problems:
+    - "moving the camera just because they can"
+    - "sitting it on a tripod because you're too lazy to think of something more interesting"
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_ms_c003_0011, note: "every recipe supplies a motivation for the move it describes"}
+    - {relation: member_of_system, target: scs_ms_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "Introduction"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0005.html; restated in the Conclusion, text/part0020.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0003
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "a random lens choice leads to a random shot and a potentially meaningless scene"
+    - "Don't leave the lens choice to your Director of Photography."
+  concept_label: the_director_must_own_lens_choice_because_it_determines_the_shot
+  label_origin: extractor_assigned
+  claim: >
+    Lens choice belongs to the director, not to the cinematographer, because shots cannot be planned
+    — or invented on set — without understanding what lenses do. The source states the consequence
+    of not owning it directly: a random lens choice produces a random shot and a potentially
+    meaningless scene. It says an afternoon with a stills camera or a zoom is enough to acquire the
+    basic grasp, and that an actors' director cannot do performances justice without it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing, cinematography]
+    conditions: "planning or improvising shots"
+  caveats:
+    - text: "an argument about the division of labour on a set, offered as craft advice; no case of a scene failing for this reason is given"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a random lens choice"
+  source_stated_remedies:
+    - "spend an afternoon with a stills camera or a zoom to see what different lenses do"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_ms_c003_001}
+    - {relation: qualifies, target: sk_ms_c003_0014, note: "several recipes turn on a lens decision"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "Introduction"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0005.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0004
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "If, in any given chapter, I suggest that a long lens works better, try it, and then try it with a short lens and see whether you think I was right or not."
+    - "What you learn from that is more important than anything I could put in words."
+  concept_label: the_source_ranks_the_readers_own_test_above_its_own_recommendations
+  label_origin: extractor_assigned
+  claim: >
+    The source explicitly invites the reader to test its recommendations against the opposite choice
+    and decide whether it was right, and states that what the reader learns from doing so matters
+    more than anything it could write. It says there is no substitute for going out with a camera.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [learning_craft, film_directing]
+    conditions: "a reader with access to any camera"
+  caveats:
+    - text: "the invitation is genuine and it is also unfalsifiable in the source's favour: a reader who disagrees is doing exactly what the book told them to do"
+      origin: extractor_observed
+    - text: "it changes how the book's other claims should be read — they are proposals for testing rather than assertions of fact, and the source says so before making any of them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "shoot the same setup both ways and judge for yourself"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ms_c003_0010, note: "conditions the status of every recipe in the book"}
+    - {relation: member_of_system, target: scs_ms_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "Introduction"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0005.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0005
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "The more techniques you know, the sooner you will be able to forget them and come up with your own."
+    - "When you know something well enough to \"unlearn\" it, you are on the path to greatness."
+  concept_label: fluency_in_technique_is_what_makes_invention_possible_under_pressure
+  label_origin: extractor_assigned
+  claim: >
+    The stated purpose of learning a hundred recipes is not to execute them but to be able to stop
+    needing them. The source's argument is about conditions of work: a film set gives a director
+    moments to solve a problem after months of thinking, and technique that has become second nature
+    is what makes an original choice possible in those moments. It states the negative case too —
+    directors who dismiss technique end up "getting the coverage" because they could not think of a
+    solution in time.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Time on set is the binding constraint, so the limit on creativity under pressure is how much
+      is already internalised rather than how much can be worked out.
+  scope:
+    domain_discussed_by_source: [film_directing, craft_learning]
+    conditions: "production conditions with severe time pressure"
+  caveats:
+    - text: "the claim that technique enables rather than constrains invention is asserted from the author's experience and from reader correspondence, not demonstrated"
+      origin: extractor_observed
+    - text: "the source states that the techniques cannot make you a good director, which limits its own claim"
+      origin: source_stated
+  source_stated_problems:
+    - "filmmakers on set just getting the coverage because they couldn't think of a new solution in time"
+  source_stated_remedies:
+    - "learn the techniques until they are second nature, then adapt and improve on them"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_ms_c003_001}
+    - {relation: qualifies, target: sk_ms_c003_0006, note: "the reason for reading the whole book rather than looking up one shot"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction / Conclusion"
+    section: "Introduction and Conclusion"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0005.html and text/part0020.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0006
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "you should already have read Master Shots when your film is in preproduction"
+    - "Once you've planned your shots, have the book nearby on set, so that you can find alternative ideas"
+  concept_label: the_book_is_used_at_two_distinct_moments_with_two_different_purposes
+  label_origin: extractor_assigned
+  claim: >
+    The source distinguishes two uses of its own material. Before production, the whole book is read
+    so the techniques become familiar. On set, it is a lookup for alternatives when a planned shot
+    needs changing or a scene needs something extra. It advises against using it only in the second
+    way, though it permits dipping into any chapter at any time.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_production, preproduction]
+    conditions: "a production with a planning phase and a shoot"
+  caveats:
+    - text: "the two uses imply different retrieval needs — sequential reading versus lookup by problem — and the book's own organisation, by scene type, serves the second better than the first"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "read the whole book before preproduction; keep it on set for alternatives"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_ms_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "How to Use this Book"
+    section: "How to Use this Book"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0006.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0007
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "you should try to imagine the technique by looking at the frame grabs and the overhead diagrams first"
+    - "It's far more important for you to practice this skill than it is for you to see the films that have been used."
+  concept_label: the_pictures_are_the_primary_carrier_and_visualisation_is_the_skill_being_trained
+  label_origin: extractor_assigned
+  claim: >
+    The source instructs readers to reconstruct each technique from the frame grabs and the overhead
+    diagrams before, or instead of, watching the film it comes from — and states plainly that
+    practising that reconstruction matters more than seeing the source films. Understanding a
+    chapter is defined as three acts together: reading the text, studying the images, and imagining
+    using the shot yourself.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The skill being trained is visualising a scene that does not exist yet, which is what a
+      director must do on set; watching a finished film exercises recognition instead.
+  scope:
+    domain_discussed_by_source: [film_directing, craft_learning]
+    conditions: "reading this book"
+  caveats:
+    - text: "this makes the images load-bearing by the source's own instruction, so any reproduction that degrades them degrades the teaching directly"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "read the text, study the images, and imagine how you could use the shot yourself"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_ms_c003_0009, note: "what the images are and what each type is for"}
+    - {relation: member_of_system, target: scs_ms_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "How to Use this Book"
+    section: "How to Use this Book"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0006.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0008
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "One of the best things you can do is combine several techniques in one scene, to create something completely new."
+  concept_label: the_techniques_are_meant_to_be_combined_not_selected
+  label_origin: extractor_assigned
+  claim: >
+    The source states that combining several techniques within one scene is among the best things a
+    director can do with the book, and that this is how something new is produced from a fixed
+    catalogue.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing]
+    conditions: "a scene complex enough to carry more than one technique"
+  caveats:
+    - text: "no guidance is given on which combinations work, which conflict, or how many a scene can carry — and several techniques in the processed chapter are mutually exclusive within one shot"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "combine several techniques in one scene"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_ms_c003_001}
+    - {relation: qualified_by, target: sk_ms_c003_0016, note: "at least one technique in this chapter forbids combining two attention cues at once"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "How to Use this Book"
+    section: "How to Use this Book"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0006.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0009
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "The white arrows show camera movement. The black arrows show actor movement."
+    - "These rendered frames are all subtly different from the movie frame grabs, showing that slight adjustments to your setup enhance and expand on the core techniques."
+  concept_label: each_technique_carries_three_image_types_with_different_evidential_jobs
+  label_origin: extractor_assigned
+  claim: >
+    The source states its own visual apparatus. Frame grabs from named films show that the technique
+    has been used successfully before. Overhead diagrams show where the camera and the actors move,
+    under a stated notation: white arrows for camera movement, black for actor movement. A
+    computer-graphics recreation closes each section, and the source states that these are
+    deliberately not copies of the film frames — the differences exist to show that small changes to
+    a setup extend the technique rather than break it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [instructional_illustration]
+    conditions: "every technique in the book"
+  caveats:
+    - text: "the evidential status of a picture in this book cannot be read off the picture; it depends on this note in the front matter, which is why the front matter was processed with the chapter"
+      origin: extractor_observed
+    - text: "the notation is tonal rather than chromatic — white against black — which is what allows it to survive a monochrome book"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "an overhead with two black arrows crossing for the actors and one white arrow for the backward dolly", figure_ref: "technique 8.2 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_ms_c003_0007, note: "what the reader is told to reconstruct the technique from"}
+    - {relation: member_of_system, target: scs_ms_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "About the Images"
+    section: "About the Images"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0007.html"
+    figure_refs: ["technique 8.1 composite", "technique 8.2 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["00073", "00074"]}
+
+- sk_id: sk_ms_c003_0010
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "how do you move from one place to the other without it seeming forced?"
+    - "a choreographed shot that camouflages the movement behind an action"
+  concept_label: attention_can_be_moved_within_one_continuous_shot_instead_of_by_cutting
+  label_origin: extractor_assigned
+  claim: >
+    The chapter's organising problem, stated in its first technique and recurring in every one
+    after it: how to move the audience's attention from one part of a scene to another without
+    cutting and without the move seeming arbitrary. The source's general answer is to hide the
+    camera's movement behind something happening in the scene, and it treats the cut as the default
+    that the techniques exist to improve on.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source never states a chapter-level thesis. Each of the seven techniques poses its own
+    problem and gives its own solution. Reading them as seven answers to one question — how to
+    redirect attention without a cut — is ours, and the evidence for it is that six of the seven
+    explicitly contrast their method with cutting or panning, and the chapter is titled Directing
+    Attention.
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing, scene_staging]
+    conditions: "scenes with more than one point of interest"
+  caveats:
+    - text: "the source does not argue that continuous shots are better than cutting in general; it says cutting is fine but less flowing, and one technique ends by recommending a cut"
+      origin: source_stated
+  source_stated_problems:
+    - "moving from one place to the other with it seeming forced"
+  source_stated_remedies:
+    - "camouflage the camera movement behind an action"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_ms_c003_0011, note: "the seven techniques are instances"}
+    - {relation: member_of_system, target: scs_ms_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.1 Object Guide and passim"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0011
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "The piece of paper is not insignificant, but neither is it the focus of the scene. It merely gives us a reason to move"
+    - "It is a transition, rather than a journey."
+  concept_label: an_object_in_transit_licenses_a_move_across_a_location
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.1. A minor object handed between characters — the example is a sheet of paper —
+    gives the camera a reason to travel from one side of a location to the other. The object must be
+    calibrated: not insignificant, but not the focus of the scene either. Both the start and the end
+    of the move should be composed as though each were a finished shot in its own right, and the
+    passage between them, where the actor moves past the camera, should be brief because it is not
+    interesting enough to hold attention.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A move that follows something the audience is already attending to reads as motivated, where
+      the same move performed on its own reads as the camera swinging across without reason.
+  scope:
+    domain_discussed_by_source: [film_directing, blocking]
+    conditions: "a continuous shot linking two areas of one location"
+  caveats:
+    - text: "the calibration of the object — significant but not the focus — is given without a test for it"
+      origin: extractor_observed
+    - text: "the source notes the technique works whether or not the two areas are in communication with each other, which widens its scope beyond the example shown"
+      origin: source_stated
+  source_stated_problems:
+    - "cutting from one place to another, or just panning"
+  source_stated_remedies:
+    - "give the camera a motivation to move by following a handed object"
+  examples:
+    positive:
+      - {description: "a sheet of paper carried across a café, the camera panning with the carrier from one conversation to another", figure_ref: "technique 8.1 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_ms_c003_0010, note: "one answer to the chapter's problem"}
+    - {relation: member_of_system, target: scs_ms_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.1 Object Guide"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.1 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["00073"]}
+
+- sk_id: sk_ms_c003_0012
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "The move itself is nothing more than a backward dolly, timed to coincide with a character's movement."
+    - "To the audience there is no sense of a camera move, only the sense that we're first with one character, and then with another"
+  concept_label: a_retreating_camera_hands_the_scene_from_one_subject_to_another
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.2. In a busy scene the camera backs off as one character advances, as if making room
+    for her, and the space this opens brings a second character into focus. The whole scene plays in
+    one shot. The stated requirements are that the characters be moving and that their movement be
+    motivated — fetching a file, not wandering — and the stated result is that the audience feels no
+    camera move at all, only a change of subject.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Letting a busy scene play out in one frame lets the viewer see the story threads
+      simultaneously, which the source says enhances urgency, where cutting would fragment it.
+  scope:
+    domain_discussed_by_source: [film_directing, blocking]
+    conditions: "a crowded scene with several simultaneous actions"
+  caveats:
+    - text: "the source frames this against a trend of rapid cutting to imply speed, and asserts the opposite achieves more, without evidence either way"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a trend in recent years to cut-cut-cut in order to imply that things are moving fast"
+    - "don't just have them wander around"
+  source_stated_remedies:
+    - "time a backward dolly to coincide with a character's move"
+  examples:
+    positive:
+      - {description: "a newsroom in which the camera retreats before one advancing character, opening space that reveals a second", figure_ref: "technique 8.2 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_ms_c003_0010, note: "one answer to the chapter's problem"}
+    - {relation: member_of_system, target: scs_ms_c003_002}
+    - {relation: member_of_system, target: scs_ms_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.2 Handing Off Motion"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.2 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["00074"]}
+
+- sk_id: sk_ms_c003_0013
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "Rather than having her run straight forward, have her run across the other actor's path. This brings her much closer to the camera, which adds to the sense of speed."
+    - "A face is usually more interesting than the back of somebody's head."
+  concept_label: differential_actor_speed_across_the_lens_carries_a_move_and_reveals_a_space
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.3. To show a space and move within it, dolly backward with two actors and have one
+    move faster than the other, crossing the slower actor's path so she passes close to the camera;
+    pan with her and let the move slow to rest. The source gives three conditions: the faster actor
+    should start behind the other so the acceleration registers; the run must be motivated rather
+    than convenient for the camera; and using a single runner is preferable because she can look
+    back at the off-screen character, which shows her face.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Proximity to the lens exaggerates apparent speed, so crossing close to camera does the work
+      that running straight away from it cannot; and the audience is meant to watch a character
+      leave rather than to notice a camera move.
+  scope:
+    domain_discussed_by_source: [film_directing, blocking, landscape]
+    conditions: "a scene where the surrounding space matters to the story"
+  caveats:
+    - text: "the source concedes the audience does not in fact see the whole space, because the crew are behind the camera, and says it feels as though they have"
+      origin: source_stated
+  source_stated_problems:
+    - "just pointing the camera at the actor and panning lacks any sense of dynamic motion or flow"
+  source_stated_remedies:
+    - "have one actor cross the other's path close to the lens, and pan to rest"
+  examples:
+    positive:
+      - {description: "two characters walking, one accelerating across the other's path and past the camera into open landscape", figure_ref: "technique 8.3 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_ms_c003_0010, note: "one answer to the chapter's problem"}
+    - {relation: member_of_system, target: scs_ms_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.3 Change of Direction"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.3 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0014
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "Reflections enable you to show two things at once."
+    - "when using reflections a cheated eyeline can register with some viewers as being somehow wrong"
+  concept_label: a_reflection_shows_a_subject_and_its_reaction_in_one_frame
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.4. A reflective surface puts a subject and the person reacting to it in the same
+    frame, which the source calls more elegant than cutting to a point-of-view shot, and which can
+    also direct attention to a background by having actors look off-screen towards the reflection.
+    Four conditions are stated: a larger mirror gives more freedom in placing the shot; the actor
+    should genuinely look at what they are meant to be looking at, because a cheated eyeline
+    registers as wrong here even though cheating is normal elsewhere; the lens is a trade-off, since
+    too wide makes the reflected subject distant while a long lens leaves the reflection blurred
+    unless focus is pulled; and glossy tables and walls work as well as mirrors.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing, staging]
+    conditions: "a location containing a reflective surface"
+  caveats:
+    - text: "the claim that a cheated eyeline reads as wrong specifically in reflections is asserted, hedged to 'some viewers', and given no explanation"
+      origin: extractor_observed
+    - text: "the source names a director whose use of reflections it calls almost a trademark and points the reader at a specific film to study, which is evidence by citation rather than by demonstration"
+      origin: extractor_observed
+  source_stated_problems:
+    - "cutting from a shot of her to a Point of View shot"
+  source_stated_remedies:
+    - "stage the subject and the reaction in one frame using a reflection"
+  examples:
+    positive:
+      - {description: "a character's reaction to a choir visible at the same time as the choir itself", figure_ref: "technique 8.4 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_ms_c003_0010, note: "one answer to the chapter's problem"}
+    - {relation: trades_off_with, target: sk_ms_c003_0016, note: "both turn on a lens choice that decides what the background does"}
+    - {relation: member_of_system, target: scs_ms_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.4 Reflections"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.4 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0015
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "This camera move doesn't follow any of the objects or characters directly, but is always heading for a close-up with the main character"
+    - "It's vital that your actor initially ignores the letter — or other object — so that she moves off into the background. If she simply stops when the object is offered, the effect is destroyed."
+  concept_label: a_camera_that_ignores_the_action_and_arrives_anyway_reads_as_inevitability
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.5. The camera moves at a constant pace towards a close-up of one character,
+    disregarding the objects and people moving in and out of shot, so that arriving there reads as
+    inevitable — the source calls the sensation magnetic, with everything drawn into the moment.
+    Two timing conditions are stated: the actor must end on a mark just in front of the camera's
+    resting point, coming to rest with the camera or a beat or two earlier; and the actor must at
+    first ignore the object entirely, because stopping when it is offered destroys the effect.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The camera's indifference to everything except its destination is what makes the destination
+      feel predetermined rather than chosen.
+  scope:
+    domain_discussed_by_source: [film_directing, blocking]
+    conditions: "a scene turning on one character receiving something"
+  caveats:
+    - text: "this is the clearest stated failure condition in the chapter — one actor behaviour that destroys the effect — and it is the kind of detail the rest of the chapter mostly leaves out"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if she simply stops when the object is offered, the effect is destroyed"
+  source_stated_remedies:
+    - "have the actor ignore the object and move off, and time both rests together"
+  examples:
+    positive:
+      - {description: "a camera continuing past a mother holding a letter, coming to rest on the daughter who turns back", figure_ref: "technique 8.5 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_ms_c003_0010, note: "one answer to the chapter's problem"}
+    - {relation: member_of_system, target: scs_ms_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.5 Rest Point"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.5 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0016
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "Color can be used to direct the audience's attention just as effectively as any camera move."
+    - "There should be no slow dawning for the audience; we need to know in a beat who that is in the background."
+  concept_label: a_colour_established_earlier_identifies_a_figure_the_frame_cannot_resolve
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.6. A character given a strongly contrasting colour can be identified even when
+    blurred and distant, provided the association between the colour and the character was made in
+    an earlier, closer shot. The source's example is an orange jacket in a frame graded almost
+    entirely to blue, with a long lens close to the foreground actor letting the background blur.
+    It states two constraints: an actor cannot be given a colour that does not suit the character,
+    though contrast can always be introduced some other way; and the identification must be
+    immediate, with no slow dawning.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience expects a shot composed this way to concern only the foreground, so a splash of
+      established colour overrides that expectation and pulls attention to the background before the
+      foreground actor reacts.
+  scope:
+    domain_discussed_by_source: [film_directing, colour, grading, costume]
+    conditions: "a background figure whose identity must register while out of focus"
+  caveats:
+    - text: "the effect depends on the rest of the frame being graded down so that one hue is nearly the only colour present, which makes it a grading and costume decision as much as a staging one"
+      origin: extractor_observed
+    - text: "the illustration accompanying this section is greyscale, as is every image in the book, so the demonstration cannot show the effect and in fact shows a background figure that is hard to pick out — see the visual evidence ledger"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if she was wearing an indistinct color, then her blurred appearance in the background would not be so obvious"
+  source_stated_remedies:
+    - "establish the colour-to-character link in an earlier closer shot, then let the background blur"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_ms_c003_0010, note: "one answer to the chapter's problem, and the only one using no camera move"}
+    - {relation: member_of_system, target: scs_ms_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.6 Color Guides"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.6 composite"]
+    source_support: text
+    inspected: {text: true, figures: ["00078 — inspected and found to be greyscale, so it cannot support this claim"]}
+
+- sk_id: sk_ms_c003_0017
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "By keeping the camera essentially in the same place, and moving the actors, you can capture all the motion and emotion of the scene without any complex moves."
+    - "you need to block the actors' movements so that the character who is doing most of the talking faces the camera"
+  concept_label: blocking_alone_can_direct_attention_with_a_static_wide_camera
+  label_origin: extractor_assigned
+  claim: >
+    Technique 8.7. For an argument, hold a wide master with almost no camera movement and let the
+    actors circle and pace, blocked so that whoever is dominating the scene faces the camera and the
+    turn has already happened before the other begins to dominate. The source states the standing
+    problem — one actor is always facing away — and requires that actor to be given enough body
+    acting to keep a presence. It also gives a fallback: if no take is perfect, shoot coverage that
+    need not be faces, since hands and feet will enable a cut while keeping the focus on the
+    argument's energy.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      People arguing circle and pace, so the movement the scene needs is already there; making the
+      actors carry it keeps the audience oriented in a way a moving camera would not.
+  scope:
+    domain_discussed_by_source: [film_directing, blocking, dialogue]
+    conditions: "arguments and other scenes with continuous movement between two people"
+  caveats:
+    - text: "the only technique in the chapter that solves the chapter's problem without moving the camera at all, and the only one that ends by planning for a cut"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the audience losing track of where they are in the shot"
+    - "there is always one actor facing away from the camera"
+  source_stated_remedies:
+    - "block so that the dominant speaker faces camera"
+    - "shoot non-face coverage of hands and feet to enable a cut"
+  examples:
+    positive:
+      - {description: "a two-person argument covered in a wide static master with the actors circling", figure_ref: "technique 8.7 composite"}
+    counter: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_ms_c003_0010, note: "solves the chapter's problem without a camera move, and accepts a cut as the fallback"}
+    - {relation: member_of_system, target: scs_ms_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.7 Reverse Angles"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: ["technique 8.7 composite"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0018
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "This is important for the camera move to be carried off without drawing attention to itself."
+    - "To the audience there is no sense of a camera move"
+  concept_label: the_shared_success_criterion_is_that_the_audience_does_not_notice_the_technique
+  label_origin: extractor_assigned
+  claim: >
+    Across the chapter the same test is applied to different techniques: the work succeeds when the
+    audience registers the scene and not the method. The source states it for the hand-off, for the
+    change of direction, and implicitly for the object guide, whose whole purpose is to camouflage a
+    move behind an action.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source states the criterion separately inside three techniques and never generalises it.
+    Collecting it as a shared standard is ours. The evidence is the repetition of the same wording —
+    no sense of a camera move, without drawing attention to itself, camouflage the movement — across
+    techniques with otherwise unrelated mechanics.
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing]
+    conditions: "techniques involving camera movement"
+  caveats:
+    - text: "it does not apply to the whole chapter: the colour technique and the static-master technique are not about concealing anything, so the criterion covers the moves and not the chapter"
+      origin: extractor_observed
+    - text: "as a success test it is unmeasurable — it describes what an audience does not do"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the audience sensing a big camera move"
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ms_c003_0002, note: "the motivation rule and the invisibility criterion are two sides of the same standard"}
+    - {relation: member_of_system, target: scs_ms_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.1, 8.2, 8.3"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0019
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "You certainly don't want to keep focusing backward and forward between foreground and background, as that doesn't guide attention so much as confuse the viewer."
+  concept_label: two_competing_attention_cues_confuse_rather_than_direct
+  label_origin: extractor_assigned
+  claim: >
+    Stated inside the reflection technique and applying beyond it: repeatedly shifting focus between
+    foreground and background does not guide attention, it confuses. The source's alternative for
+    the case that provokes it — a sudden revelation in a reflection — is to cut shortly after the
+    moment of shock to a close-up.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing, focus]
+    conditions: "a frame carrying two planes of interest"
+  caveats:
+    - text: "this is the one place the chapter limits its own advice about combining effects, and it sits against the front matter's encouragement to combine several techniques in one scene"
+      origin: extractor_observed
+  source_stated_problems:
+    - "focusing backward and forward between foreground and background"
+  source_stated_remedies:
+    - "cut shortly after the moment of shock to a close-up"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ms_c003_0008, note: "a stated limit on combining techniques"}
+    - {relation: qualifies, target: sk_ms_c003_0014, note: "arises inside the reflection technique"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "8 — Directing Attention"
+    section: "8.4 Reflections"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0015.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ms_c003_0020
+  source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+  source_terms:
+    - "The examples shown are generally from feature films with big budgets"
+    - "State and Main. Directed by David Mamet. Twentieth Century Fox Home Entertainment, 2000. All Rights Reserved."
+  concept_label: each_technique_is_warranted_by_naming_a_released_film_that_used_it
+  label_origin: extractor_assigned
+  claim: >
+    Every technique closes by naming the film, director and distributor of the scene illustrated.
+    That citation is the entire evidential support offered for the technique: it has been used in a
+    released feature, and the frame grabs show it working there.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source never says the citation is its evidence. Reading it that way is ours, and the basis
+    is that no other support is offered anywhere in the chapter — no measurement, no comparison, no
+    counterexample — and the front matter describes the frame grabs as showing "how successfully the
+    technique has been used before".
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_directing]
+    conditions: "every technique in the book"
+  caveats:
+    - text: "a technique appearing in a successful film is evidence that it can be executed, not that it caused anything; the source does not claim more, and does not claim less either"
+      origin: extractor_observed
+    - text: "one technique in the processed chapter — the reflection — cites no film for its own example and instead points the reader at another film to study"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ms_c003_0009, note: "what the frame grabs are for"}
+    - {relation: member_of_system, target: scs_ms_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction / 8 — Directing Attention"
+    section: "technique credits"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0005.html and text/part0015.html"
+    figure_refs: []
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["00073", "00074"]}
