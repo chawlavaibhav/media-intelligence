@@ -29,8 +29,8 @@ measured ability rather than on marketing claims or guesswork.
 > |---|---|
 > | **EVAL-003** | closed and merged. A 54-item photographed-Hindi calibration pack exists and is untouched. |
 > | **EVAL-004** | **STOPPED by the Controller on 24 Aug 2026**, after one 54-item Reader-A pilot. There is **no Reader B and no two-reader reference**. Reader A is **exploratory evidence only** — not ground truth. **No checker may be qualified, disqualified, ranked or entered in the Registry from it, and it must not be resumed.** See `decisions/EVAL-004-STOP-2026-08-24.md`. |
-> | **EVAL-005** | open, and **design hardening only**. A Devanagari *exactness* battery has been designed, implemented, built and tested locally. **No checker/model/API qualification run and no human validation have occurred** — only deterministic local construction, rendering and test verification. See `tasks/EVAL-005.md`. |
-> | **Authorised spend** | **₹0 API/model · ₹0 generation · 0 human specialist hours · 0 Registry entries · BSTD and the Marathi reserve untouched.** None of this may be started without a new approved task. |
+> | **EVAL-005** | open. Battery designed, built and tested locally, and **human validation is now COMPLETE** — one Hindi-competent reviewer, 98 of 98 answered, 0 unanswered, 0 UNSURE. 5 of 53 base words were rejected, excluding 10 items. The authoritative battery is now the **96-item validated view** (48/48, 33 hard opportunities, 48 human-accepted base words, 20/20 classes, 5/5 groups). **No checker/model/API qualification run has occurred and no checker has been selected.** See `tasks/EVAL-005.md` and `battery/devanagari-exactness/human-validation/HUMAN-VALIDATION-RECORD.md`. |
+> | **Authorised spend** | **₹0 API/model · ₹0 generation · 0 Registry entries · BSTD and the Marathi reserve untouched.** The authorised human validation is spent and complete. Nothing else may be started without a new approved task — a checker roster and API budget in particular are **not** approved. |
 >
 > **Why EVAL-004 was stopped, and what replaced the question.** Reading an ordinary Hindi sign
 > turned out to be a weak proxy for the failure that costs money. The real failure is: we ask a
@@ -153,7 +153,7 @@ What exists, in `eval/battery/devanagari-exactness/`:
 - **Prepared but blank native-validation sheets** for ~1.5 hours of one Hindi reader.
 
 ⚠ **No checker/model/API qualification run has occurred and no checker is qualified.** ⚠ **Bringing the reference figure below 5%
-needs 84–90 base words; the repository holds 53.** Resources PR #5 (merged) establishes that 3,924
+needs 84–90 base words; after human validation the repository holds 48.** Resources PR #5 (merged) establishes that 3,924
 single-word crops are transcription-resolvable, but those strings live in the git-ignored corpus and
 their distinct-word yield is unknown — so `tasks/EVAL-005-RESOURCES-REQUEST.md` asks Resources to
 **check existing local material first**, not to acquire anything.
@@ -472,8 +472,9 @@ to formalise. The Registry field proposals are explicitly deferred.
 The next decisions belong to the Controller and are listed in `tasks/EVAL-005-CONTROLLER-BRIEF.md`.
 In rough order of what each unblocks:
 
-1. **Approve or reject the hardened EVAL-005 design.** Blocks everything downstream.
-2. **Approve ~1.5 hours of one Hindi-competent reader** against the prepared sheets. Blocks the run.
+1. ~~Approve or reject the hardened EVAL-005 design.~~ **Done** — approved and merged.
+2. ~~Approve ~1.5 hours of one Hindi-competent reader.~~ **Done** — validation complete; 5 words
+   rejected, 10 items excluded, battery frozen at 96.
 3. **Approve a checker roster and API budget** — order of ₹600–2,100 for a first run across both
    shapes, on an old price that must be re-verified. Blocks the run.
 4. **Decide whether to ask Resources to check for ~31–37 more Hindi words** in material it already
