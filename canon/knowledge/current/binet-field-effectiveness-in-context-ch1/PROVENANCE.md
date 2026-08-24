@@ -65,8 +65,8 @@ fragments and the report's own abbreviations — VL, ESOV, ROMI, SOV), one near-
 cover), no missing page and no dropped section. Every contents-page section title in the processed
 span was found at the page the contents page names.
 
-`visual_completeness: verified_page_level`. Two findings matter, and both are in the visual ledger
-in full.
+`visual_completeness: verified_page_level`, with **all fourteen claim-referenced figures in the
+processed span inspected**. Three findings matter, and all are in the visual ledger in full.
 
 **Chart values survive and their bindings do not.** Axis labels, series names, category names and
 every printed data value extract cleanly. What linearised text destroys is which number belongs to
@@ -75,6 +75,12 @@ category names with nothing connecting them, and would bind them by guess with n
 anything was uncertain. On printed page 15 a chart value, `1.5`, appears mid-sentence inside the
 extracted prose. **Every numeric value in this extraction was therefore read from a render, and
 none from the text layer.**
+
+**The first pass left seven figures uninspected and that was not good enough.** It inspected the
+seven that carried printed magnitudes into claims and left seven that supported only directional
+ones — while the audit declared `all_resolved`. A Controller correction pass re-opened the same
+already-verified copy (identity re-checked, nothing reacquired) and rendered the remaining six
+pages. What it found is in "What the second pass changed" below, and it changed one claim.
 
 **The forewords contain phantom text.** The text layer of printed pages 1–3 carries sentences that
 are printed nowhere on those pages — they belong to *In a nutshell* on page 5 — interleaved line by
@@ -88,6 +94,12 @@ That second finding is a shape the Audit Gate's loss-pattern vocabulary has no v
 values all describe information *lost* from the page, and here information is *added* to the text
 layer. No pattern was stretched to cover it, and since no extracted claim is affected, no method
 change is proposed. If a later task processes those pages the gap becomes live.
+
+**Two panels of one figure carry different Y-axis scales, and that inverted a reading.** Figure 09's
+emotional panel runs 0.00 to 0.20 and its rational panel 0.0 to 1.2 — a factor of six. Side by side
+the bars look comparable in height while the numbers are not. This is invisible to any text-only
+pass, because axis maxima are just two more numbers in the layer, and it is the reason the second
+pass changed a claim.
 
 ## Evidence base, as the source describes it
 
@@ -120,6 +132,44 @@ Recorded here because it qualifies every number in the extraction.
   party's. Recorded as `mixed_own_and_third_party` in the audit rather than as the authors' own
   measurement.
 
+## What the second pass changed
+
+Four figures confirmed their claims outright (05, 06, 10, 11), one strengthened a claim the first
+pass had under-credited (08), one is relied on by no object (15), and **one materially qualified an
+existing claim (09)**.
+
+**Figure 09 is why the correction was warranted.** Every value in its rational panel (1.11, 0.43,
+0.36) exceeds every value in its emotional panel (0.11, 0.18, 0.19). `sk_eic_0013` had read that
+efficiency is "higher where consumers are emotionally involved and lower where they consider the
+purchase rationally". At the absolute level the printed magnitudes contradict that. **The claim is
+now narrowed to the within-type direction the figure actually supports** — rising with emotional
+consideration, falling with rational consideration — which is also all the source's own text
+asserts. It is the only object whose meaning changed.
+
+That is this report's own methodological lesson turning back on the report: a chart whose visual
+pattern points one way and whose printed values point the other.
+
+**Figure 08 went the other way.** `sk_eic_0012` had carried a caveat saying the figure showed only
+price effects by consideration type and not the emotional route itself. Seeing it, that understated
+it: the figure is a clean crossover on a shared axis, price effects falling as rational
+consideration rises (8, 6, 5) and rising as emotional consideration rises (4, 7, 8). The caveat is
+withdrawn and the object now carries `visually_demonstrated`.
+
+**A source-internal cross-reference error was found**, detectable only by looking at both figures.
+The prose supporting the price-premium claim points to "Fig 04, page 11", which is the ESOV
+Efficiency and ROMI table and holds no price data; the price figure is Figure 08 on the same page.
+The extraction cites Figure 08 and records the source's own pointer rather than silently correcting
+or silently repeating it.
+
+**Figure 15 is relied on by no object** and was inspected because it is claim-referenced. It shows
+the source's framing is careful rather than sweeping: loyalty (13→12) and price sensitivity (7→6)
+move the *other* way in high-research categories, and the source correspondingly says "many business
+effects, especially shorter-term effects" rather than all. Its page also declares that the Databank
+may over-represent high-research categories, now a caveat on `sk_eic_0021`.
+
+**No `figure_not_inspected` uncertainty remains**, and no object carries `visually_demonstrated` on
+an uninspected figure.
+
 ## What the extraction refused to do
 
 The report repeatedly states findings in stronger language than its charts carry. Three cases were
@@ -141,7 +191,9 @@ read as universal rules and instructs readers to flex them to context.
 All five files pass SPEC-03 rules 1–7, SPEC-04 rules 1–9 and the SPEC-05 layer constraints:
 **28 SourceKnowledge objects · 3 SourceConceptSystems · 20 ontology terms · 7 relationships ·
 3 concepts** (2 source-specific, 1 canonical, 0 cross-source — correct for a single-source file) ·
-**4 operational bindings**.
+**4 operational bindings**. Counts are unchanged by the correction pass: it altered one claim's
+wording, one object's evidence characteristics and several provenance fields, and created and
+deleted nothing.
 
 Four bindings against 28 objects is the expected shape. This source is about how to allocate a
 budget across a campaign measured over a year; it says almost nothing about the contents of any

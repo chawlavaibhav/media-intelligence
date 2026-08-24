@@ -14,8 +14,14 @@ method:
   tooling: pdftotext -layout and pdftoppm at 110-130 dpi, poppler
   renders_committed: false
   renders_ephemeral: true
-  pages_rendered: [3, 13, 16, 20, 22, 24]
-  pages_read_as_images: [3, 13, 16, 20, 22, 24]
+  pages_rendered: [3, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24]
+  pages_read_as_images: [3, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24]
+  correction_pass_note: >
+    PDF pages 14, 15, 17, 18, 19 and 23 - printed 12, 13, 15, 16, 17 and 21 - were rendered and read
+    in the CANON-007 correction pass, from the SAME already-verified copy. Its identity was
+    re-checked before re-opening: 24,726,437 bytes and SHA-256
+    e589a4222f5ce06db52384c5cc002dbd4e96f4156530be60d19bdf73e70ae91e, both unchanged. Nothing was
+    reacquired.
   page_offset: PDF page = printed page + 2, established from the running page numbers and stable
     across the whole file
 
@@ -180,19 +186,202 @@ figures_inspected:
       in the prose only and carry the source's own hedge, "around".
     supports: [sk_eic_0022, sk_eic_0023]
 
-figures_not_inspected:
-  - figures: [FIGURE 05, FIGURE 06, FIGURE 08, FIGURE 09, FIGURE 10, FIGURE 11, FIGURE 15]
-    printed_pages: [12, 13, 15, 16, 17, 21]
-    why: >
-      These figures support claims that the extraction records at the direction the prose states
-      rather than at a numeric magnitude. Their pages were not rendered.
-    consequence: >
-      sk_eic_0013 carries extraction_uncertainty: figure_not_inspected for exactly this reason, and
-      no numeric value from any of these figures appears anywhere in this extraction. Objects
-      sk_eic_0005, 0006, 0007 and 0014 are recorded from the prose, which states each claim in
-      words, and carry visually_demonstrated only where the source itself points at the figure as
-      the demonstration. This is a bounded, stated limit of the pilot rather than a claim of
-      completeness.
+  - figure: FIGURE 05
+    title: BOTH KINDS OF CONSIDERATION INCREASE EFFECTIVENESS
+    printed_page: 12
+    inspected_in: CANON-007 correction pass
+    kind: two_panel_bar_chart
+    panels: [EMOTIONAL CONSIDERATION, RATIONAL CONSIDERATION]
+    y_axis: {label: AVERAGE NO. VL BUSINESS EFFECTS, scale: 0.0 to 2.0, units: average count of effects}
+    x_axis: {categories: [LOW, MEDIUM, HIGH]}
+    values_printed_on_chart: true
+    values:
+      EMOTIONAL CONSIDERATION: {LOW: 1.4, MEDIUM: 1.5, HIGH: 1.7}
+      RATIONAL CONSIDERATION: {LOW: 1.4, MEDIUM: 1.5, HIGH: 1.9}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "Marketing tends to be most effective when people are highly engaged, at either a rational or
+      an emotional level."
+    verdict: confirms_existing_claim
+    what_the_figure_adds: >
+      Two things the linear text does not carry. The metric is an AVERAGE COUNT of very large
+      business effects, not the percentage of campaigns used in Figure 03, so the two figures are
+      not on the same scale. And the rational series ends higher than the emotional one, 1.9 against
+      1.7, so "both kinds help" is accurate while "equally" would not be.
+    supports: [sk_eic_0005]
+
+  - figure: FIGURE 06
+    title: DIFFERENT DECISION PROCESS, DIFFERENT MARKETING EFFECTS
+    printed_page: 13
+    inspected_in: CANON-007 correction pass
+    kind: two_panel_bar_chart
+    panels: [ACTIVATION EFFECTS, BRAND EFFECTS]
+    y_axis_left: {label: '% CAMPAIGNS WITH VL ACTIVATION EFFECTS', scale: 0 to 40 per cent}
+    y_axis_right: {label: AVERAGE NO. VL BRAND EFFECTS, scale: 0.0 to 2.0}
+    x_axis: {label: PRIMARY NATURE OF DECISION PROCESS, categories: [RATIONAL, EQUAL, EMOTIONAL]}
+    values_printed_on_chart: true
+    values:
+      ACTIVATION EFFECTS: {RATIONAL: 38, EQUAL: 36, EMOTIONAL: 27}
+      BRAND EFFECTS: {RATIONAL: 1.6, EQUAL: 1.7, EMOTIONAL: 1.8}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "Activation works particularly well when the buying decision involves a lot of conscious,
+      rational thought"; "in very rational categories it is slightly harder (although still
+      important) to build strong brands"; "For emotional purchases, the reverse is true."
+    verdict: confirms_existing_claims
+    what_the_figure_adds: >
+      An asymmetry that supports the source's own hedging. The activation series swings eleven
+      points across the axis while the brand series moves 0.2 on a 2.0 scale - which is why the
+      source calls brand building only SLIGHTLY harder in rational categories rather than hard. The
+      two panels also use different metrics, a percentage of campaigns against an average count, so
+      they are not a like-for-like comparison of the two effect types.
+    supports: [sk_eic_0006, sk_eic_0007]
+
+  - figure: FIGURE 08
+    title: EFFECT ON PRICE SENSITIVITY
+    printed_page: 15
+    inspected_in: CANON-007 correction pass
+    kind: two_panel_bar_chart
+    panels: [RATIONAL CONSIDERATION, EMOTIONAL CONSIDERATION]
+    y_axis: {label: '% CAMPAIGNS WITH VL PRICE EFFECTS', scale: 0 to 9 per cent}
+    x_axis: {categories: [LOW, MEDIUM, HIGH]}
+    values_printed_on_chart: true
+    values:
+      RATIONAL CONSIDERATION: {LOW: 8, MEDIUM: 6, HIGH: 5}
+      EMOTIONAL CONSIDERATION: {LOW: 4, MEDIUM: 7, HIGH: 8}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "If you want to make people less price sensitive, you need to engage them emotionally"; "In
+      rational categories, where brand building is harder, it is more difficult to justify higher
+      prices. In emotional categories, it is easier to build strong brands that can command a price
+      premium."
+    verdict: strengthens_existing_claim
+    what_the_figure_adds: >
+      A clean crossover, and more than the extraction previously credited. Price effects fall as
+      rational consideration rises and rise as emotional consideration rises, on a shared axis and
+      with both series monotonic. sk_eic_0012 previously carried a caveat saying the figure showed
+      only price effects by consideration type and not the emotional route itself; that understated
+      it, the caveat is withdrawn, and the object now carries visually_demonstrated.
+    source_internal_cross_reference_error: >
+      OBSERVED, and detectable only by looking at both figures. The prose supporting the price-
+      premium claim points the reader to "Fig 04, page 11", which is the ESOV Efficiency and ROMI
+      table and contains no price data. The price figure is Figure 08, on the same page as the
+      claim. The extraction cites Figure 08, which is what the source actually shows, and records
+      the source's own pointer as an extractor-observed caveat rather than silently correcting or
+      silently repeating it.
+    supports: [sk_eic_0012]
+
+  - figure: FIGURE 09
+    title: DECISION PROCESS AFFECTS ESOV EFFICIENCY
+    printed_page: 16
+    inspected_in: CANON-007 correction pass
+    kind: two_panel_bar_chart
+    panels: [EMOTIONAL CONSIDERATION, RATIONAL CONSIDERATION]
+    y_axis_left: {label: ESOV EFFICIENCY, scale: 0.00 to 0.20}
+    y_axis_right: {label: ESOV EFFICIENCY, scale: 0.0 to 1.2}
+    axes_share_a_scale: false
+    x_axis: {categories: [LOW, MEDIUM, HIGH]}
+    values_printed_on_chart: true
+    values:
+      EMOTIONAL CONSIDERATION: {LOW: 0.11, MEDIUM: 0.18, HIGH: 0.19}
+      RATIONAL CONSIDERATION: {LOW: 1.11, MEDIUM: 0.43, HIGH: 0.36}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "When consumers are very emotionally involved, advertising works harder, increasing ESOV
+      Efficiency. But rational consideration actually inhibits the effects of advertising." A
+      footnote adds that this does not mean all advertising is ineffective in rational categories.
+    verdict: MATERIALLY_QUALIFIES_EXISTING_CLAIM
+    what_the_figure_adds: >
+      The single most consequential result of the correction pass, and the reason the pass was
+      warranted. The two panels carry DIFFERENT Y-AXIS SCALES - 0.00 to 0.20 for emotional and 0.0
+      to 1.2 for rational, a factor of six. Side by side the bars look comparable in height while
+      the numbers are not: every value in the rational panel (1.11, 0.43, 0.36) exceeds every value
+      in the emotional panel (0.11, 0.18, 0.19).
+
+      sk_eic_0013 previously read that ESOV Efficiency is "higher where consumers are emotionally
+      involved and lower where they consider the purchase rationally". At the absolute level the
+      printed magnitudes contradict that. What the figure supports is the WITHIN-TYPE direction -
+      rising with emotional consideration, falling with rational consideration - and the claim has
+      been narrowed to exactly that. extraction_uncertainty: figure_not_inspected is removed because
+      it is now resolved.
+
+      Recorded as an observation about the figure's presentation, not as a criticism of the authors'
+      text, which states only the within-type direction and does not compare the panels.
+    supports: [sk_eic_0013]
+
+  - figure: FIGURE 10
+    title: POWERFUL BRAND AND ACTIVATION EFFECTS FOR MAXIMUM EFFECTIVENESS
+    printed_page: 17
+    inspected_in: CANON-007 correction pass
+    kind: bar_chart
+    y_axis: {label: NUMBER OF VL BUSINESS EFFECTS, scale: 0.0 to 2.5}
+    x_axis:
+      label: BALANCE OF BRAND AND ACTIVATION EFFECTS
+      categories: [LOW BRAND LOW ACTIVATION, LOW BRAND HIGH ACTIVATION, HIGH BRAND LOW ACTIVATION, HIGH BRAND HIGH ACTIVATION]
+    values_printed_on_chart: true
+    values: {LOW BRAND LOW ACTIVATION: 0.8, LOW BRAND HIGH ACTIVATION: 1.5, HIGH BRAND LOW ACTIVATION: 2.0, HIGH BRAND HIGH ACTIVATION: 2.4}
+    base_note: 'Sources: IPA Databank, 1998-2016 for-profit cases, based on scale of activation effects and number of brand effects'
+    verdict: confirms_existing_claim
+    what_the_figure_adds: >
+      Precision the prose does not give, and an ordering that supports the source's asymmetric
+      phrasing: high brand with low activation (2.0) outranks low brand with high activation (1.5),
+      so brand building is the larger term and activation adds on top. The peak is at high/high,
+      which is the claim.
+    supports: [sk_eic_0014]
+
+  - figure: FIGURE 11
+    title: POWERFUL BRAND AND ACTIVATION EFFECTS FOR MAXIMUM ESOV EFFICIENCY
+    printed_page: 17
+    inspected_in: CANON-007 correction pass
+    kind: bar_chart
+    y_axis: {label: ESOV EFFICIENCY, scale: 0.0 to 1.4}
+    x_axis:
+      label: BALANCE OF BRAND AND ACTIVATION EFFECTS
+      categories: [LOW BRAND LOW ACTIVATION, LOW BRAND HIGH ACTIVATION, HIGH BRAND LOW ACTIVATION, HIGH BRAND HIGH ACTIVATION]
+    values_printed_on_chart: true
+    values: {LOW BRAND LOW ACTIVATION: 0.2, LOW BRAND HIGH ACTIVATION: 0.6, HIGH BRAND LOW ACTIVATION: 1.0, HIGH BRAND HIGH ACTIVATION: 1.3}
+    base_note: 'Sources: IPA Databank, 1998-2016 for-profit cases, based on scale of activation effects and number of brand effects'
+    verdict: confirms_existing_claim
+    what_the_figure_adds: >
+      The same four-cell ordering on the efficiency measure, peaking at high/high and ranking
+      high-brand-low-activation above low-brand-high-activation. The two figures agree.
+    supports: [sk_eic_0014]
+
+  - figure: FIGURE 15
+    title: SHORTER-TERM EFFECTS ARE STRONGER IN HIGH RESEARCH CATEGORIES
+    printed_page: 21
+    inspected_in: CANON-007 correction pass
+    kind: grouped_bar_chart
+    y_axis: {label: '% REPORTING VERY LARGE EFFECTS', scale: 0 to 60 per cent}
+    x_axis: {label: BUSINESS EFFECTS, categories: [ACTIVATION, SALES, CUSTOMER ACQUISITION, MARKET SHARE, LOYALTY, PRICE SENSITIVITY, PROFIT]}
+    series: [LOW RESEARCH CATEGORIES, HIGH RESEARCH CATEGORIES]
+    values_printed_on_chart: true
+    values:
+      ACTIVATION: {low_research: 27, high_research: 32}
+      SALES: {low_research: 46, high_research: 53}
+      CUSTOMER ACQUISITION: {low_research: 26, high_research: 37}
+      MARKET SHARE: {low_research: 30, high_research: 31}
+      LOYALTY: {low_research: 13, high_research: 12}
+      PRICE SENSITIVITY: {low_research: 7, high_research: 6}
+      PROFIT: {low_research: 24, high_research: 27}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "Many business effects, especially shorter-term effects (the first three pairs of bars on the
+      left of Figure 15) are greater in high research categories"; "whilst long-term outcomes are
+      similar, shorter-term effects are boosted in high research categories."
+    verdict: no_object_relies_on_it_and_it_contradicts_nothing
+    what_the_figure_adds: >
+      No SourceKnowledge object cites this figure, so nothing in the extraction depends on it. It
+      was inspected because it is claim-referenced in the processed span. It confirms that the
+      source's framing is careful rather than sweeping: two of the seven effects move the OTHER way
+      in high research categories - loyalty 13 to 12 and price sensitivity 7 to 6 - and the source
+      correspondingly says "many business effects, especially shorter-term effects" rather than all.
+    sampling_caveat_on_the_same_page: >
+      The source declares that the share of high-research categories among IPA cases grew from 29 to
+      37 per cent in recent years and that the Databank "may over represent high research categories
+      compared to the universe of all advertised brands". Added as a caveat to sk_eic_0021, which
+      every high-research claim in this extraction inherits.
+    supports: []
 
 representation_findings:
   - ref: vis_eic_phantom_text_in_forewords
@@ -238,6 +427,24 @@ representation_findings:
       Every numeric value recorded in any SourceKnowledge object in this extraction was read from a
       render, not from the text layer.
 
+  - ref: vis_eic_differing_axis_scales_invert_a_reading
+    status: OBSERVED
+    printed_page: 16
+    what_happened: >
+      Figure 09's two panels carry different Y-axis scales, 0.00 to 0.20 and 0.0 to 1.2, a factor of
+      six. The bars look comparable in height and the numbers are not: every rational value exceeds
+      every emotional value.
+    why_it_matters: >
+      A reader taking the visual pattern rather than the printed values draws the opposite
+      conclusion from the one the values support. This is the "chart's visual pattern to a stronger
+      numeric claim" hazard in its sharpest form, and it is invisible to any text-only pass because
+      the axis maxima are just two more numbers in the layer.
+    detectability: detected_by_independent_check
+    consequence_for_this_extraction: >
+      It changed one claim. sk_eic_0013 was narrowed from an absolute comparison between the two
+      kinds of consideration to the within-type direction the figure actually supports. This is the
+      only object in the extraction whose meaning the correction pass altered.
+
   - ref: vis_eic_text_integrity_otherwise_clean
     status: OBSERVED
     measurements:
@@ -257,10 +464,19 @@ representation_findings:
       extracted text at the printed page the contents page names.
 
 summary:
-  figures_inspected: 7
-  figures_carrying_a_recorded_numeric_value: 7
-  numeric_values_recorded_from_renders: 34
+  figures_claim_referenced_in_the_processed_scope: 14
+  figures_inspected: 14
+  figures_not_inspected: 0
+  numeric_values_recorded_from_renders: 76
   numeric_values_recorded_from_the_text_layer: 0
-  figures_referenced_but_not_inspected: 7
-  claims_recorded_as_visually_demonstrated: 11
-  representation_findings: 3
+  claims_recorded_as_visually_demonstrated: 13
+  representation_findings: 4
+  correction_pass:
+    figures_added: [FIGURE 05, FIGURE 06, FIGURE 08, FIGURE 09, FIGURE 10, FIGURE 11, FIGURE 15]
+    confirmed_existing_claim: [FIGURE 05, FIGURE 06, FIGURE 10, FIGURE 11]
+    strengthened_existing_claim: [FIGURE 08]
+    materially_qualified_existing_claim: [FIGURE 09]
+    relied_on_by_no_object: [FIGURE 15]
+    objects_whose_meaning_changed: [sk_eic_0013]
+    objects_whose_evidence_grade_changed: [sk_eic_0012]
+    figure_not_inspected_uncertainties_remaining: 0
