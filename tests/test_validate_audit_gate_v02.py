@@ -430,6 +430,60 @@ class RealCorpusTests(unittest.TestCase):
         report = validator.validate_repository(REPO_ROOT)
         self.assertEqual(report["errors"], [])
 
+    # ── CANON-005 promotion: one authoritative home, no second active copy ───────────────────
+    def test_active_records_live_at_the_authoritative_path(self):
+        self.assertEqual(validator.RECORDS_SUBPATH, Path("canon/audit/records"))
+        self.assertTrue((REPO_ROOT / validator.RECORDS_SUBPATH).is_dir())
+
+    def test_no_duplicate_active_records_under_the_retired_experimental_path(self):
+        retired = REPO_ROOT / validator.RETIRED_RECORDS_SUBPATH
+        leftovers = sorted(p.name for p in retired.glob("*.audit.yaml")) if retired.is_dir() else []
+        self.assertEqual(
+            leftovers, [],
+            "audit records must exist in exactly one active location; downstream tooling cannot "
+            "have two independently editable copies",
+        )
+
+    def test_a_reappearing_duplicate_copy_is_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            active = root / validator.RECORDS_SUBPATH
+            active.mkdir(parents=True)
+            retired = root / validator.RETIRED_RECORDS_SUBPATH
+            retired.mkdir(parents=True)
+            (retired / "stray.audit.yaml").write_text("audit_id: aud_stray\n", encoding="utf-8")
+            report = validator.validate_repository(root)
+            self.assertTrue(
+                any("duplicate active records" in e for e in report["errors"]), report["errors"]
+            )
+
+    def test_the_adopted_method_document_exists_and_is_authoritative(self):
+        doc = REPO_ROOT / "canon" / "audit" / "AUDIT-GATE-v0.2.md"
+        self.assertTrue(doc.is_file())
+        text = doc.read_text(encoding="utf-8")
+        self.assertIn("Status: AUTHORITATIVE", text)
+
+    def test_every_record_still_carries_a_snapshot_after_promotion(self):
+        for name, record in self.records.items():
+            with self.subTest(record=name):
+                snapshot = record.get("source_snapshot")
+                self.assertIsInstance(snapshot, dict, f"{name} lost its source_snapshot")
+                self.assertEqual(snapshot.get("algorithm"), validator.SNAPSHOT_ALGORITHM)
+                self.assertEqual(
+                    sorted(f["path"] for f in snapshot["files"]),
+                    sorted(validator.SNAPSHOT_FILES),
+                    f"{name} does not cover the adopted artifact set",
+                )
+
+    def test_all_seven_application_fit_consumers_survive_promotion(self):
+        self.assertIn("deterministic_composition", validator.APPLICATION_CONSUMERS)
+        self.assertIn("human_workflow", validator.APPLICATION_CONSUMERS)
+        self.assertEqual(len(validator.APPLICATION_CONSUMERS), 7)
+        for name, record in self.records.items():
+            with self.subTest(record=name):
+                covered = [f["consumer"] for f in record["application_fit"]["findings"]]
+                self.assertEqual(sorted(covered), sorted(validator.APPLICATION_CONSUMERS))
+
     def test_the_two_grammar_books_cannot_count_as_independent_convergence(self):
         ok, reason = validator.independent_origins_ok(
             "grammar_of_the_shot_ch4_continuity",

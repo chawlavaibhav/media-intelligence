@@ -1,17 +1,49 @@
-# Audit Record v0.2 — candidate schema
+# Audit Gate v0.2 — adopted Canon method
 
-**Experimental.** Normative for the records in this directory and for
-`canon/validation/validate_audit_gate_v02.py`. Not normative for SPEC-03/04/05, which are unchanged.
+**Status: AUTHORITATIVE.** Adopted by the Controller on 25 Aug 2026
+(`canon/decisions/CANON-004-ADOPT-AUDIT-GATE-2026-08-25.md`) and applied by CANON-005.
 
-## Where this sits
+This document is the normative procedure and schema for the Post-Extraction Audit Gate. It is a
+**Canon method layer**, not a new authoritative spec — CANON-004 concluded that no `SPEC-06` was
+required. The only authoritative spec change it carries is the independence rule in SPEC-05
+Governance rule 5.
+
+| | |
+|---|---|
+| Active records | `canon/audit/records/*.audit.yaml` — exactly one per accepted source |
+| Validator | `canon/validation/validate_audit_gate_v02.py` |
+| Tests | `tests/test_validate_audit_gate_v02.py` |
+| Design evidence | `canon/findings/CANON-004-audit-gate-design.md` |
+| Experiment history | `canon/experiments/audit-gate-v0.2/README.md` (pointer only — nothing active) |
+
+Unchanged by adoption: SPEC-01, SPEC-03 and SPEC-04.
+
+## The gate — required order
+
+A source becomes **accepted downstream knowledge** only by passing through these steps in order.
+This ordering is authoritative.
 
 ```
-1. source extraction becomes stable          SPEC-03   (frozen, untouched by this layer)
-2. source systems / ontology become stable    SPEC-05   (frozen, untouched by this layer)
-3. the source record is FROZEN for the audit
-4. → AUDIT GATE RUNS ←                        this document
-5. cross-source promotion, product use, Canon-consumption may proceed
+1. source extraction stabilises                       SPEC-03
+2. source systems / ontology stabilise                SPEC-05
+3. OperationalBindings stabilise                      SPEC-04
+4. fresh checkpoint is committed
+5. Audit Gate record is written against those exact bytes    ── this document
+6. Audit Gate validator passes
+   ─────────────────── THE GATE ───────────────────
+7. only now may any of the following treat the source as accepted knowledge:
+      · cross-source promotion (SPEC-05 cross_source_concept)
+      · downstream product / application use
+      · Canon-consumption / retrieval work
 ```
+
+**An unaudited or stale source may remain in the repository as source evidence.** It is not
+deleted, hidden or devalued. It simply may not pass the three gates in step 7. That distinction
+matters: the gate governs *downstream consumption*, not whether knowledge is worth keeping.
+
+**Bindings are still not mandatory.** Nothing in this order reintroduces the retired rule that every
+object must name a Creative IR field. Step 3 stabilises whatever bindings exist, and zero is a
+normal count.
 
 The Audit Gate reads the frozen record and writes a **new, separate file**. It never writes into
 `source-knowledge.yaml`, `source-concept-systems.yaml`, `ontology-mappings.yaml` or
@@ -37,7 +69,8 @@ rather than pretended away.
 
 ## The record
 
-One file per accepted source, at `records/<knowledge-dir-name>.audit.yaml`.
+One file per accepted source, at `canon/audit/records/<knowledge-dir-name>.audit.yaml`.
+Exactly one active record per accepted source; there is no second editable copy anywhere.
 
 ```yaml
 audit_record_version: v0.2-experimental

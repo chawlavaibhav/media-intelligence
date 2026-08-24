@@ -1,49 +1,46 @@
-# Audit Gate v0.2 — experimental, NOT authoritative
+# Audit Gate v0.2 — experiment history (nothing here is active)
 
-**Task:** CANON-004 · **Status:** candidate design under test · **Do not consume downstream.**
+**This directory is a historical pointer. It contains no active records, no active schema and no
+tooling. Do not edit anything here expecting it to take effect.**
 
-Everything in this directory is an experiment. Nothing here changes SPEC-03, SPEC-04 or SPEC-05,
-and nothing here has been approved by the Controller.
+The Post-Extraction Audit Gate was designed and tested here under CANON-004, against the frozen
+16-book CANON-003 corpus. The Controller adopted it on 25 Aug 2026 and CANON-005 promoted it out of
+experimental status.
 
-## What this is
+## Where everything went
 
-CANON-003 concluded that the three-layer Canon architecture (SourceKnowledge → source
-systems/ontology → OperationalBindings) should be kept, but that the extraction *procedure* stopped
-forcing five useful questions once source truth was cleanly separated from product use:
-
-1. what the available copy of the source hid, distorted or destroyed;
-2. where each claim's evidence actually came from;
-3. whether anything in today's product can use the knowledge;
-4. whether two sources that appear to agree are actually independent;
-5. whether an old technical claim is still true.
-
-This directory holds a candidate **post-extraction Audit Gate**: a separate record, written after a
-book's source knowledge is frozen, that asks those five questions and records the answers in a form
-a machine can read.
-
-## Layout
-
-| Path | What it is |
+| Was here | Now lives at |
 |---|---|
-| `SCHEMA-audit-record-v0.2.md` | the candidate data model and its controlled vocabularies |
-| `records/*.audit.yaml` | one experimental audit record per accepted CANON-003 book (16) |
-| `../../validation/validate_audit_gate_v02.py` | the mechanical validator for these records |
-| `../../../tests/test_validate_audit_gate_v02.py` | its regression tests |
+| `SCHEMA-audit-record-v0.2.md` | `canon/audit/AUDIT-GATE-v0.2.md` — the adopted normative procedure and schema |
+| `records/*.audit.yaml` (16) | `canon/audit/records/*.audit.yaml` — the one active record per accepted source |
 
-The findings and the Controller decision brief live in `canon/findings/`:
-`CANON-004-audit-gate-design.md` and `CANON-004-CONTROLLER-BRIEF.md`.
+Both were moved with `git mv`, so `git log --follow` on either path reaches the original
+experimental history.
 
-## Rules that held while these records were written
+There is deliberately **one** active copy of the 16 records. A second editable copy under an
+experimental path would let the two drift, and downstream tooling would have no unambiguous source
+of truth. The validator reads only `canon/audit/records/`, and a test asserts that no duplicate
+copy reappears here.
 
-- **No source book was re-opened.** Every record is built from committed repository evidence —
-  `source-knowledge.yaml`, `visual-evidence-ledger.yaml`, `operational-bindings.yaml`,
-  `ontology-mappings.yaml`, `PROVENANCE.md`, and the CANON-003 lane issue files. Where the
-  repository record could not settle a question, the record says so rather than guessing.
-- **No accepted source claim was reinterpreted or rewritten.** The audit sits beside the frozen
-  source record and points at it by `sk_id`. It never edits it.
-- **The audit is not a quality score.** There is no rank, rating, grade or confidence number
-  anywhere in the model, and the validator refuses a record that introduces one.
-- **An audit cannot outlive the thing it describes.** Each record carries a `source_snapshot` — a
-  content fingerprint of the exact frozen artifacts it was written against. The validator recomputes
-  it every run, so a source edited after its audit makes that audit fail rather than quietly keep
-  passing. See `SCHEMA-audit-record-v0.2.md`.
+## Where the experiment's reasoning is recorded
+
+The design evidence was never stored in this directory — it lives in the findings, which are
+unchanged and remain the record of why the gate has the shape it has:
+
+- `canon/findings/CANON-004-audit-gate-design.md` — field-by-field rationale tied to CANON-003
+  observations, burden assessment, rejected alternatives, and the two revisions the corpus forced
+- `canon/findings/CANON-004-CONTROLLER-BRIEF.md` — the decision brief
+- `canon/decisions/CANON-004-ADOPT-AUDIT-GATE-2026-08-25.md` — the Controller's adoption decision
+  and the exact list of what it did and did not authorise
+- `canon/tasks/CANON-004.md`, `canon/tasks/CANON-005.md` — the task definitions
+
+## What the experiment was
+
+Five questions, asked once per book after its source record is frozen, recorded in a form a machine
+can read: what the available copy hid, whose evidence a claim is, what the product can use (with
+`no_current_binding` a valid answer), whether two agreeing sources are genuinely two, and whether an
+old technical claim is still true.
+
+It was tested by writing a record for all 16 accepted books from committed repository evidence,
+without re-opening a single source book, and by checking that the resulting rule rejects the
+*Grammar of the Shot* / *Grammar of the Edit* companion pair while accepting genuine convergences.

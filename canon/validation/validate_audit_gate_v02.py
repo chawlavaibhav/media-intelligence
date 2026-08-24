@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""Mechanical validator for the CANON-004 experimental Audit Gate v0.2 records.
+"""Mechanical validator for the adopted Audit Gate v0.2 records.
+
+Authoritative method: canon/audit/AUDIT-GATE-v0.2.md
+Active records:       canon/audit/records/*.audit.yaml
+Adopted by:           canon/decisions/CANON-004-ADOPT-AUDIT-GATE-2026-08-25.md (applied by CANON-005)
 
 The Audit Gate is a POST-EXTRACTION layer. This validator reads the frozen SPEC-03/04/05 artifacts
 under canon/knowledge/current/ but never writes to them, and never re-judges source meaning.
 
-It checks four things the design document claims:
+It checks five things the adopted method claims:
   - the audit's references actually resolve into the frozen record;
   - the controlled vocabularies are respected;
   - no field acts as a credibility score;
-  - two sources cannot count as independent origins when lineage says otherwise.
+  - two sources cannot count as independent origins when lineage says otherwise;
+  - the audited source artifacts are still byte-identical to the ones on disk now.
 """
 
 from __future__ import annotations
@@ -22,7 +27,10 @@ from typing import Any, Iterable
 
 import yaml
 
-RECORDS_SUBPATH = Path("canon/experiments/audit-gate-v0.2/records")
+# The single active location. There is deliberately no second editable copy; the former
+# experimental directory is a historical pointer only (CANON-005).
+RECORDS_SUBPATH = Path("canon/audit/records")
+RETIRED_RECORDS_SUBPATH = Path("canon/experiments/audit-gate-v0.2/records")
 KNOWLEDGE_SUBPATH = Path("canon/knowledge/current")
 
 # ── the source snapshot ─────────────────────────────────────────────────────────────────────
@@ -31,7 +39,7 @@ KNOWLEDGE_SUBPATH = Path("canon/knowledge/current")
 # promotion and product use, so a stale pass is worse than no gate.
 #
 # The snapshot is the ONLY enforced version mechanism. `recorded_at_commit` is informational
-# provenance and is deliberately not read by this validator; see SCHEMA-audit-record-v0.2.md.
+# provenance and is deliberately not read by this validator; see canon/audit/AUDIT-GATE-v0.2.md.
 #
 # Membership rule: a file is in the snapshot when the audit's assertions are falsified by a change
 # to it. Each of the five below is justified individually; PROVENANCE.md is excluded because it is
@@ -53,7 +61,7 @@ SNAPSHOT_FILES = (
 )
 SNAPSHOT_ALGORITHM = "sha256-of-sorted-path-and-content"
 
-# ── controlled vocabularies (see SCHEMA-audit-record-v0.2.md) ────────────────────────────────
+# ── controlled vocabularies (see canon/audit/AUDIT-GATE-v0.2.md) ─────────────────────────────
 AUDIT_STATUS = {"complete", "evidence_insufficient"}
 
 DELIVERY_FORMATS = {
@@ -653,7 +661,19 @@ def validate_repository(root: Path) -> dict[str, Any]:
             if rel not in covered:
                 errors.append(f"coverage: no audit record for accepted book {book.name}")
 
+    # Exactly one active copy. A duplicate under the retired experimental path would let the two
+    # drift and leave downstream tooling without an unambiguous source of truth.
+    retired = root / RETIRED_RECORDS_SUBPATH
+    if retired.is_dir():
+        duplicates = sorted(p.name for p in retired.glob("*.audit.yaml"))
+        if duplicates:
+            errors.append(
+                f"duplicate active records: {len(duplicates)} audit record(s) still present under "
+                f"{RETIRED_RECORDS_SUBPATH}; the only active location is {RECORDS_SUBPATH}"
+            )
+
     return {
+        "records_path": str(RECORDS_SUBPATH),
         "record_count": len(records),
         "records": sorted(records),
         "error_count": len(errors),
