@@ -1,0 +1,112 @@
+# CANON-003 book 17 (Lane D) — "Art & Fear", printed pp.1-21. SPEC-04 bindings against SPEC-01 v0.1.
+# Written only after the source representation was stable.
+#
+# READ THIS FIRST: three bindings from twenty-three knowledge objects, and again ZERO against the
+# Creative IR. This book is about the psychology of the person making the work. It says nothing
+# about what an asset should contain, and almost nothing that a system can act on.
+#
+# A binding I considered and REFUSED is recorded at the bottom, because SPEC-05's governance
+# principle 4 says negative findings are written down rather than discarded, and because the refusal
+# is more informative than the two marginal bindings it would have produced.
+
+source_id: bayles_orland_art_and_fear_part_one_opening
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_af_c003_0001
+  source_knowledge_refs: [sk_af_c003_0003, sk_af_c003_0004, sk_af_c003_0005, sk_af_c003_0009]
+  source_system_refs: [scs_af_c003_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A source that labels its own foundations "assumptions", states that it chose them because they
+    place responsibility in the maker's hands, and explicitly declines to argue whether the rival
+    view is true — rejecting it instead for being useless to act on. That is a different kind of
+    claim from anything else the Canon has ingested: not a finding, not a practitioner report of
+    what works, but a premise adopted for its effect on the person holding it. Anything weighing
+    Canon knowledge needs to be able to see that difference, because a chosen premise cannot be
+    contradicted by evidence in the way a factual claim can.
+  applicability:
+    when: "weighing a source whose foundations are declared working assumptions rather than findings"
+    limits: >
+      One source. It shows the shape clearly because the source is unusually honest about it. It
+      says nothing about how common the shape is, and nothing about how such premises should be
+      weighed against evidence-bearing claims.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_af_c003_0010]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_af_c003_0002
+  source_knowledge_refs: [sk_af_c003_0006, sk_af_c003_0007]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    The source's sharpest structural claim is that the maker and the viewer are assessing different
+    objects — the maker the process and the gap between intention and result, the viewer the
+    finished product — and that the maker's information is unavailable to anyone judging the
+    product. Applied to us, it marks a boundary on what any output-only judgement can establish:
+    a system that sees only finished assets is in the viewer's position by construction, and
+    knowledge drawn from the maker's position should not be applied as though it were.
+  applicability:
+    when: "deciding whether a claim about how work is made can be turned into a check on finished work"
+    limits: >
+      The source is describing human self-assessment and says nothing about automated judgement.
+      The boundary it draws is real; the extension to our evaluators is ours.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_af_c003_0017]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_af_c003_0003
+  source_knowledge_refs: [sk_af_c003_0008, sk_af_c003_0023]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    Two process claims with no current consumer: that the overwhelming majority of a maker's output
+    exists to teach them how to make the small fraction that succeeds, and that a finished work
+    which looks inevitable was often close to collapse. Recorded as a parked candidate. No
+    generative equivalent is asserted — the claim is about a person learning across a body of work,
+    not about sampling many outputs from a model, and the two are not the same thing however
+    similar the arithmetic looks.
+  applicability:
+    when: "a production process for creative work is eventually specified"
+    limits: >
+      Human artistic practice over years. The source gives no ratio, only 'overwhelming majority'
+      and 'small fraction', and its supporting cases are recounted anecdotes about named artists.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_af_c003_0016]
+  status: production_candidate
+  status_reason: "Production IR does not exist"
+
+# ─────────────────────────────────────────────────────────────
+# REFUSED BINDING — recorded, not created
+# ─────────────────────────────────────────────────────────────
+# Candidate: bind sk_af_c003_0018 ("vision is always ahead of execution, and it should be") to
+# evaluation, as an argument that an evaluator scoring how faithfully a produced asset matches its
+# brief should not treat any residual gap as a defect.
+#
+# Why it was refused: the source's claim is about a human maker's subjective experience of their
+# own skill lagging their conception, and the reason it says the gap "should" persist is that the
+# gap is what pulls the maker forward. A machine generating an asset from a specification has no
+# conception of its own and nothing is pulled forward. The resemblance is verbal. Building the
+# binding would have imported a psychological claim into a scoring rule and dressed our own
+# tolerance decision in a source's authority.
+#
+# This is recorded because the refusal is itself a finding: the strongest-sounding sentence in the
+# chapter is the one that binds least honestly. Lane D issue file, D-08.
