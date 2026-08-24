@@ -1,7 +1,16 @@
 # Controller Brief — RES-002
 
 **TASK:** RES-002 · Devanagari calibration material + transient large-source acquisition
-**STATUS:** completed · **Date:** 24 Aug 2026
+**STATUS:** **CONTROLLER-APPROVED — CLOSED** · **Date:** 24 Aug 2026
+**Closed:** 24 Aug 2026 by Controller sign-off. Substantive work and the consistency cleanup are
+approved. All three decisions below are resolved; none remains open.
+
+> **Standing rights limitation, carried past closure.** Everything acquired under RES-001 and
+> RES-002 is for **internal research and evaluation only**. It may **not** be redistributed, used as
+> training data, delivered to customers, or treated as production-cleared. Closing this task does not
+> relax that. If results built on this material are ever to be published or shown outside the
+> company, **the rights position must be revisited first** — several sources state no licence at all,
+> and were acquired under the licence-silence policy precisely on the basis that use stays internal.
 
 ---
 
@@ -167,25 +176,46 @@ Apache-2.0 and ungated the whole time. Only the container defeated us.
   the reading, which issued dozens of tiny range requests per file: 41 files in 10 minutes. Rewritten
   to fetch each member in one request from its byte offset.
 
-## DECISIONS NEEDED FROM CONTROLLER
+## DECISIONS — ALL RESOLVED AT CLOSURE
 
-**1. One judgement call I made, for review.** BSTD's creators publish their data via Google Drive.
-An anonymous request gets Google's standard large-file **"Virus scan warning"** page. I treated that
-as *not* an access gate and proceeded, because it asks for no account, no credential and no
-agreement, and any anonymous visitor can continue past it — unlike a login or a terms checkbox.
-**If you read that differently, say so and I will mark BSTD `blocked_access` and remove it.** It is
-21% of the retained RES-002 material and the largest Devanagari pool.
+**1. BSTD's Google Drive interstitial — RESOLVED: accepted. BSTD remains.**
 
-**2. Rights on the Devanagari material are thin, and that limits use.** BSTD's *images* are
-cc-by-sa-4.0 but its *annotations* say nothing; IndicSTR12 and IIIT-ILST state nothing at all. All
-were acquired under the licence-silence policy for internal research and evaluation only. **They may
-not be redistributed, used as training data, shipped to customers, or treated as production-cleared.**
-If Eval's calibration results are ever to be published or shown to a customer, the rights question
-must be reopened first.
+I had flagged a judgement call: BSTD's creators publish via Google Drive, and an anonymous request
+gets Google's standard large-file **"Virus scan warning"** page. I treated that as *not* an access
+gate and proceeded, because it asks for no account, no credential and no agreement, and any anonymous
+visitor can continue past it — unlike a login or a terms checkbox.
 
-**3. Should the transient method become standard?** It worked on three of four sources and reduces
-both bandwidth and storage substantially. Making it the default for large public archives is a
-Resources-policy change, so it is yours to make, not mine.
+**The Controller accepted that reading.** The interstitial is an **advisory on an anonymous download,
+not an access gate** under current policy. BSTD stays in the corpus: 25,246 images, the largest
+Devanagari pool, and the only Devanagari source independent of the other two.
+
+*Scope of this ruling:* it covers an advisory interstitial that any anonymous visitor can pass. It
+does **not** extend to logins, account creation, click-through terms, request forms or API keys —
+those remain hard blocks, and are why `src_pvp`, `src_pitt_ads` and `src_lsvq` are still blocked.
+
+**2. Rights on the Devanagari material — RESOLVED: limitation stands, unchanged.**
+
+BSTD's *images* are cc-by-sa-4.0 but its *annotations* say nothing; IndicSTR12 and IIIT-ILST state
+nothing at all. All were acquired under the licence-silence policy, which permits exactly one thing:
+**internal research and evaluation.**
+
+**This limitation is not lifted by closing the task.** The material may not be redistributed, used as
+training data, shipped to customers, or treated as production-cleared. If Eval's calibration results
+are ever to be published or shown to a customer, **the rights question must be reopened before that
+happens, not after.** Closure records the work as complete; it does not grant any wider permission.
+
+**3. Transient acquisition as the default — RESOLVED: approved and codified.**
+
+The Controller approved making it the default for large, reliably reacquirable public archives. It is
+now written into `resources/CHARTER.md` under *"Large public archives — transient acquisition is the
+default"*: prefer range/member/stream access, **verify a real HTTP 206 before relying on it** (a host
+that ignores Range replies 200 with the entire file, which defeats the purpose and can breach the
+disk floor), retain the bounded subset plus reproduction metadata, do not keep the full archive once
+extraction and validation succeed, and **never record a hash for an archive that was never
+downloaded.**
+
+That Charter section states explicitly that it changes **storage method only** and grants nothing
+about rights — decision 2 above continues to govern.
 
 ## CROSS-STREAM — `CROSS_STREAM`, proposed only
 
@@ -205,10 +235,19 @@ Raw media git-ignored throughout.
 
 ## RECOMMENDED NEXT STEP
 
-*A recommendation, not an action taken.* Answer decision 1 first, since it determines whether 21% of
-this material stays. Then let Eval consume the Devanagari pool under EVAL-001/002. Do **not** treat
-the transcriptions as ground truth until a human Hindi reader has checked a sample — RES-002 kept
-Resources out of that deliberately.
+*A recommendation, not an action taken. Decisions 1–3 are resolved; nothing here is blocking.*
+
+Let Eval consume the Devanagari pool under EVAL-001/002. Two carry-forwards that closure does not
+settle:
+
+- **Do not treat the transcriptions as ground truth until a human Hindi reader has checked a sample.**
+  RES-002 kept Resources out of that deliberately — they are other people's annotations, made for
+  other purposes, and remain candidate calibration material until validated.
+- **If a held-out Devanagari set is wanted, use BSTD.** IndicSTR12 and IIIT-ILST share 173
+  byte-identical files, so holding out IIIT-ILST would leave roughly one image in eight not actually
+  unseen.
+
+Both are Eval's calls to make, not Resources'.
 
 ## CONFIRMATION
 
