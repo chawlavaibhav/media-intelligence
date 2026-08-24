@@ -10,7 +10,9 @@ remains uncertain.
 were **materially wrong** in the first pass and were corrected in the first Controller review. §5.8
 and §7 were corrected again in the **second** review pass — the visibility gate was still comparing
 encoded file bytes rather than decoded pixels, and the statistical language still claimed an
-independence the design does not establish. §6 and §9–10 are updated.
+independence the design does not establish. §§5.10–5.12 record the **third** pass: the PNG decoder
+built in pass two was itself only partly faithful, one phrase had quietly reinstated the removed
+bound claim, and "nothing has been run" was imprecise. §6 and §9–10 are updated.
 
 ---
 
@@ -78,9 +80,10 @@ on the easy direction would otherwise conceal blindness on the hard one.
 
 ## 5 · What the Controller reviews found, and what they changed
 
-The **first** review required seven fixes; five of them found something the code actually did wrong
-rather than prose that read badly. The **second** review found two more — one of them a defect
-introduced by the first review's own fix. Each is pinned by a regression test.
+Three review passes. The **first** required seven fixes; five found something the code actually did
+wrong rather than prose that read badly. The **second** found two more — one of them a defect
+introduced by the first pass's own fix. The **third** found a third instance of the same class: the
+component built in pass two was itself only partly faithful. Each is pinned by a regression test.
 
 ### 5.1 · The blind checker shape was not blind — **contract defect**
 
@@ -171,7 +174,7 @@ contain).
 
 **Why it matters.** A dotted circle is unmistakable; any checker rejects it on sight. Counting such
 an item as an autocorrection opportunity inflates the hard stratum with items that test nothing.
-Both were in the hard stratum, which is the only stratum a bound is quoted on.
+Both were in the hard stratum, which is the only stratum the iid reference figure is quoted on.
 
 **What was done.** Two rules, with the shaper having the final word: the string rule now requires a
 virama to sit *between* consonants, and **any string the shaper draws with a dotted circle is
@@ -286,6 +289,69 @@ proof of a sub-5% real-world rate.
 A test now greps every EVAL-005 source and document for independence language and fails if any of it
 returns. The Checker Contract's line about execution isolation was also corrected: keeping items from
 seeing each other prevents **context leakage**; it does not make outcomes "statistically independent".
+
+### 5.10 · The PNG decoder was only partly faithful — **third review pass**
+
+**OBSERVED.** `pngraster.py` parsed the PNG `tRNS` transparency chunk but applied it **only to
+indexed-colour images**. For grayscale (colour type 0) and truecolour (colour type 2), `tRNS` marks
+one sample value fully transparent and materially changes the RGBA raster — and it was being
+ignored. Two further paths were also only partly faithful:
+
+- **16-bit samples** were truncated to their high byte, so two 16-bit images differing only in their
+  low bytes would produce the **same** pixel fingerprint;
+- **colour-management chunks** (`gAMA`, `sRGB`, `iCCP`, `cHRM`) were skipped silently, and `acTL`
+  (APNG) would have been decoded as its default frame with the rest dropped.
+
+**Why it matters.** The decoder's whole contract is *fail closed* — the module docstring said so.
+Silently fingerprinting a transparent image as opaque is the one failure mode it exists to prevent,
+and it would be invisible: the number would simply be wrong. This is the same class of error as the
+glyph gate and the file-hash gate, arriving a third time through the component built to fix them.
+
+**What was done — narrowed, not expanded.** The battery's own images are 8-bit grayscale,
+non-interlaced, with `bKGD` and no `tRNS`, so the smallest safe fix was to make the supported
+contract explicit and refuse everything outside it rather than grow a general-purpose PNG library:
+
+| | |
+|---|---|
+| **Accepted** | non-interlaced; bit depths 1/2/4/8 in spec-legal colour-type combinations; colour types 0/2/3/4/6; **`tRNS` for indexed images only**, faithfully applied per index; ancillary chunks that cannot change a decoded raster (`bKGD`, `tEXt`, `pHYs`, …) |
+| **Refused** | `tRNS` on grayscale or truecolour (changes alpha, not implemented); `tRNS` on types 4/6 (spec forbids it, so the file is not what it claims); **bit depth 16** (would be truncated); illegal depth/colour combinations; indexed without a palette; `gAMA`/`sRGB`/`iCCP`/`cHRM`/`acTL`; any unrecognised **critical** chunk |
+
+Unrecognised *ancillary* chunks are still skipped — that is exactly what the PNG specification's
+ancillary bit exists to permit, and `hb-view` relies on it.
+
+**Regression coverage proves the disjunction the Controller asked for**: a PNG carrying a
+visual-affecting transparency feature is either **decoded correctly** or **refused**, never
+fingerprinted as if transparency did not exist. Indexed + `tRNS` decodes with alpha applied and
+produces a **different** fingerprint from the same image without it; grayscale + `tRNS`, truecolour
++ `tRNS` and RGBA + `tRNS` are all refused.
+
+**Impact on the battery: none.** All 90 images still decode, and every count is unchanged. What
+changed is that the decoder now refuses the cases it was previously getting quietly wrong.
+
+### 5.11 · "A qualification at a stated bound" — **third review pass**
+
+The qualification rule said passing means *"admitted for further evaluation at a stated bound"*. But
+EVAL-005 explicitly does not establish that the Clopper-Pearson value is an inferential bound on a
+checker (§5.9), so that phrasing quietly reinstated the claim §5.9 had removed.
+
+Now: **passing means the checker satisfied the deterministic qualification gates on this battery.**
+The iid reference calculation is reported separately, under its stated modelling assumption, and is
+never part of what "passing" means. Every other document was swept for the same slippage — "the only
+stratum a bound is quoted on", "to support a ≤5% bound", "the bound-bearing one" — and each rewritten
+to name the reference figure rather than a bound.
+
+### 5.12 · "Nothing has been run" was imprecise — **third review pass**
+
+Several documents said the battery had not been run. That is wrong as written: the deterministic
+local build, the rendering and the test suite **have** been run, repeatedly, and this document quotes
+their results. What has not happened is a checker/model/API qualification run or any human
+validation.
+
+All active EVAL-005 documents now say exactly that: *no checker/model/API qualification run and no
+human validation have occurred; only deterministic local construction, rendering and test
+verification have been run.* The distinction matters because the local results are real evidence
+about the battery's construction, and describing them as "nothing" would understate what is
+verified while doing nothing to clarify what is not.
 
 ---
 
@@ -432,8 +498,8 @@ autocorrects *well-formed* wrong text, the easier case. A checker that passes ha
   invites autocorrection. Both shapes are now genuinely different experiments, which is what makes
   the comparison meaningful; the outcome is still a hypothesis.
 - **Whether passing predicts anything about malformed generated glyphs.** Untested by construction.
-- **How many distinct Hindi words Resources can actually supply**, and whether the ≤5% bound is
-  worth the effort at all.
+- **How many distinct Hindi words Resources can actually supply**, and whether tightening the iid
+  reference figure below 5% is worth the effort at all.
 - **Whether the proposed thresholds are right.** 0.95 repeat consistency, ≤10% false fail, ≤5%
   refusal are judgement calls with no empirical backing in this repository.
 - **Real per-call pricing.** The cost estimate rests on an old recorded figure that must be

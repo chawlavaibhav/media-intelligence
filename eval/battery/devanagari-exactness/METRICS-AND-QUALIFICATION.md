@@ -1,8 +1,9 @@
 # Metrics and proposed qualification rule
 
-**Status: PROPOSED, revised after Controller review. Nothing has been run; no checker is
-qualified, ranked or entered anywhere. Every threshold below is a proposal, not an approved
-standard.**
+**Status: PROPOSED, revised after Controller review.**
+**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
+local construction, rendering and test verification have been run. No checker is qualified, ranked or
+entered anywhere. Every threshold below is a proposal, not an approved standard.
 
 ---
 
@@ -162,7 +163,10 @@ existing local material rather than any new acquisition.
 
 ## Proposed qualification rule
 
-**Passing means "admitted for further evaluation at a stated bound" — never "accurate".**
+**Passing means the checker satisfied the deterministic qualification gates below, on this
+battery.** The associated iid reference calculation is reported separately, under its stated
+modelling assumption, and is never part of what "passing" means. It certainly does not mean
+"accurate".
 
 ### Rule 1 — false passes · **disqualifying**
 
@@ -171,7 +175,7 @@ existing local material rather than any new acquisition.
 There is one rule, not two, because the two strata are not independent: the hard stratum is a
 subset of all mismatches, so "zero across all" already contains "zero on the hard subset".
 Presenting them as separate statistical gates would double-count one piece of evidence. They are
-distinguished by **what a failure in each one means**, and by **which one carries the bound**:
+distinguished by **what a failure in each one means**, and by **which one the iid reference figure is quoted on**:
 
 | Stratum | n | Role |
 |---|---:|---|
@@ -199,7 +203,7 @@ someone else's stability. It cannot.
 | Stage | What it may produce |
 |---|---|
 | **Screening pass** — one pass, any number of candidates | a ranking, a shortlist, a decision about which checkers are worth repeating. **No qualification status of any kind.** |
-| **Qualification pass** — ≥3 full repeats, both shapes, per checker | a qualification at a stated bound, for **that** checker only |
+| **Qualification pass** — ≥3 full repeats, both shapes, per checker | a qualification on this battery's deterministic gates, for **that** checker only. The iid reference figure is reported alongside it, not as part of it |
 
 A checker that completed only the screening pass is recorded as **"screened, not qualified"**. It
 may not be described as passing, may not be entered in the Capability Registry, and may not be

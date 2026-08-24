@@ -3,9 +3,11 @@
 **COMMUNICATION STANDARD:** `shared/COMMUNICATION-STANDARD.md` applies.
 
 **TASK:** EVAL-005 — design hardening after Controller review of the inherited `work/eval-005`
-proposal. **Updated after a second Controller review pass** (decoded pixels, independence language,
-merged Resources state).
-**STATUS:** complete; **awaiting Controller review**. Design only — nothing has been run.
+proposal. **Updated after a second review pass** (decoded pixels, independence language, merged
+Resources state) and a **third merge-gate pass** (fail-closed PNG contract, two wording corrections).
+**STATUS:** complete; **awaiting Controller review**. Design only — **no checker/model/API
+qualification run and no human validation have occurred.** Only deterministic local construction,
+rendering and test verification have been run (see *Fresh verification*).
 **BRANCH:** `work/eval-005-controller-review` (based on `work/eval-005`, which is untouched;
 `origin/main` merged in before final verification)
 **SEVERITY:** `LOCAL`, with one `CROSS_STREAM` request to Resources.
@@ -92,6 +94,31 @@ single-word crops are transcription-resolvable — but that means the *labels ar
 that the words are in git; the raw strings may still sit only in Resources' local corpus. So the
 request now asks Resources to **check what it already has** before anyone considers acquiring
 anything.
+
+**What the third pass corrected.**
+
+*The PNG decoder I built in pass two was itself only partly faithful.* It read the chunk that marks
+pixels transparent, but only acted on it for one kind of image. For the other kinds it would have
+recorded a see-through picture **as if it were solid** — silently, with no error, producing a wrong
+answer that looks like a right one. Same class of mistake as the two it was built to fix, arriving a
+third time through the component built to fix them. Two smaller versions of the same problem were
+alongside it: 16-bit images were being quietly rounded down, and colour-profile information was being
+ignored.
+
+The fix is deliberately *narrower*, not bigger. The decoder now states exactly what it handles and
+**refuses everything else** rather than approximating it — because the battery's own images are
+plain 8-bit grayscale and need none of it. Transparency is now either applied correctly or the file
+is rejected; never ignored. **No battery item, count or hash changed** — the manifest is byte-for-byte
+what it was.
+
+*Two phrases also needed correcting.* The qualification rule still said passing means "admitted for
+further evaluation **at a stated bound**", which quietly reinstated the very claim the second pass
+removed — that the 7.8% is a bound on a checker. Passing now means the checker **satisfied the
+deterministic gates on this battery**, with the reference calculation reported separately under its
+assumption. And several documents said "nothing has been run", which is simply not true: the build,
+the rendering and the tests have all been run many times, and this brief quotes their results. What
+has **not** happened is any checker/model/API qualification run or human validation, and every active
+document now says that precisely.
 
 ---
 
@@ -212,6 +239,14 @@ in git. How many *distinct* Hindi words they yield is **unknown**, and none of t
   a real correlation problem and I then oversold the fix. Worth noting because it is the failure mode
   this stream exists to catch: a correction that goes one step further than the evidence supports is
   harder to see than the original error.
+- **Three passes, three instances of one pattern — and each fix introduced the next.** The glyph gate
+  was too weak; the file-hash gate that replaced it was too strong; the decoder written to settle it
+  was itself partly unfaithful. Nothing here was careless in isolation. **A component built to
+  enforce a guarantee is not exempt from needing the same scrutiny as the thing it guards**, and on
+  this evidence it is where the next defect is most likely to be.
+- **Narrowing beat implementing.** Faithfully implementing `tRNS` for every colour type was the
+  alternative. Refusing what the battery does not need is smaller, has fewer paths that can be
+  wrong, and fails loudly instead of quietly if the renderer ever changes.
 - **The corrected figure is slightly *tighter*, not looser** (7.8% at n=37 vs the claimed 8.2% at
   n=35), because the one-per-base rule happens to yield more hard items at this pool size. The
   earlier figure was not comparable in the first place, since it mixed correlated items.
@@ -293,6 +328,9 @@ test.
 - **Real per-call pricing.** The cost estimate rests on an old recorded figure.
 - **Whether the proposed thresholds are right.** 0.95 repeat consistency, ≤10% false fail, ≤5%
   refusal have no empirical backing in this repository.
+- **Whether the decoder is faithful on paths the battery never exercises.** It is tested on what
+  `hb-view` emits plus hand-built edge cases; the accepted contract is narrow precisely because
+  everything outside it is refused rather than trusted.
 
 ---
 
@@ -305,7 +343,7 @@ test.
 | 3 | Verify visible difference on final pixels | Gate moved off glyph sequences; reasons `canonical_equal` / `raster_identical` / `rendering_error`; glyph comparison retained as a diagnostic and recorded on rejections; screening renders to a process-lifetime scratch dir deleted on exit. **Superseded in part by fix 8 below** — the first version compared encoded PNG bytes | 5 tests, incl. the nukta pair, the ZWNJ pair, and सुबह/सुवह accepted |
 | 4 | Make normalisation semantics true | `nfc()` is NFC only; `strip_outer_whitespace()` is a separate named transport rule (ingest + response parsing); `canonical_equal()` is the predicate and does not strip; docs say *canonical* exactness, not codepoint identity | 3 tests, incl. internal whitespace being a real difference |
 | 5 | Fix the independence claim | One mismatch item per distinct base word; deterministic maximum bipartite matching preserves all 20 classes; both counts reported; figure derived from the opportunity count; sample-size target recomputed; epistemic limit stored **in the build summary**, not only in prose. **Extended by fix 9 below** — the result was then over-described as independence | 5 tests, incl. `hard_items == distinct_hard_base_words` and the figure being derived |
-| 6 | Qualification / repeat logic | Screening pass produces **no status**; any checker given a status completes ≥3 full passes in both shapes itself; "screened, not qualified" is an explicit outcome; gates 1 and 2 merged into one rule with the hard stratum named as the primary disqualifying subset and the bound-bearing one; thresholds marked proposed; cost estimate raised accordingly | doc-level |
+| 6 | Qualification / repeat logic | Screening pass produces **no status**; any checker given a status completes ≥3 full passes in both shapes itself; "screened, not qualified" is an explicit outcome; gates 1 and 2 merged into one rule with the hard stratum named as the primary disqualifying subset and the one the reference figure is quoted on; thresholds marked proposed; cost estimate raised accordingly | doc-level |
 | 7 | Formalise and prepare | `eval/tasks/EVAL-005.md`; `make_validation_sheets.py` + `native-validation/` with 53/25/20 blank rows and stable ids; `EVAL-005-RESOURCES-REQUEST.md`; findings, HANDOFF and this brief updated; inherited `PROPOSED-*` files kept and banner-marked superseded | 1 test (sheets exist, ids stable) |
 
 ### Second review pass
@@ -316,7 +354,15 @@ test.
 | 9 | Correct the independence claim | "Genuinely independent" and equivalents removed everywhere; wording is now "distinct hard base-word opportunities"; **zero false passes** stated as the deterministic gate; Clopper-Pearson kept as an explicit iid **reference** calculation; fields renamed `iid_reference_upper_bound_…`, `…_for_5pct_iid_reference`, `…_planning_target_…`; `independence_status: "NOT ESTABLISHED. …"` added to the build summary; the Checker Contract's "each item is independent" corrected to execution isolation ≠ statistical independence | 2 tests: every statistical field names its assumption, and a grep over **all** EVAL-005 sources and documents fails on independence language |
 | 10 | Update Resources state | `origin/main` merged in; every "PR #5 open/not merged" statement removed; merged composition facts recorded (2,711/2,711 · 1,213/1,214 · 3,924 resolvable · one lineage · BSTD the reserve); the request reordered so **step 1 is a check of existing local material** and no acquisition is requested; explicit that recoverable labels ≠ lexical strings in git, and that crop labels are candidates needing validation, not validated words; BSTD/Marathi explicitly excluded from count-filling | doc-level |
 
-**Additional defect found while fixing #3, not in either required list:** the plausibility rule let
+### Third review pass — merge gate
+
+| # | Required fix | What changed | Pinned by |
+|---|---|---|---|
+| 11 | PNG decoder must fail closed on features it does not faithfully decode | `tRNS` was parsed but applied to indexed images only, so grayscale/truecolour transparency was silently decoded as opaque. The supported contract is now explicit and narrow — accepted: non-interlaced, bit depths 1/2/4/8 in spec-legal colour-type combinations, colour types 0/2/3/4/6, **`tRNS` for indexed only** (faithfully applied), and ancillary chunks that cannot alter a raster (`bKGD` — which is what `hb-view` emits — `tEXt`, `pHYs`, …). Refused: `tRNS` on grayscale/truecolour (changes alpha, not implemented), `tRNS` on types 4/6 (spec forbids it), **bit depth 16** (was truncated to the high byte, so two images could collide), illegal depth/colour combinations, indexed without a palette, `gAMA`/`sRGB`/`iCCP`/`cHRM`/`acTL`, and any unrecognised **critical** chunk. Unrecognised *ancillary* chunks are still skipped — what the spec's ancillary bit is for. **Not expanded into a general PNG library** | 3 tests / 34 checks: indexed + `tRNS` decodes with alpha applied and yields a **different** fingerprint from the same image without it; grayscale/truecolour/RGBA + `tRNS` all refused; every narrowed case refused; every accepted case still decodes with an unchanged fingerprint; all 90 real battery images decode |
+| 12 | Statistical wording | *"admitted for further evaluation at a stated bound"* removed — passing now means **the checker satisfied the deterministic qualification gates on this battery**, with the iid reference calculation reported separately under its stated assumption. All EVAL-005 docs swept for the same slippage (*"the only stratum a bound is quoted on"*, *"to support a ≤5% bound"*, *"the bound-bearing one"*) and rewritten to name the reference figure | doc-level + the independence guard, now also allowing code spans |
+| 13 | "Nothing has been run" | Replaced everywhere with: **no checker/model/API qualification run and no human validation have occurred; only deterministic local construction, rendering and test verification have been run.** Applied to the README, taxonomy, contract, metrics, task file, HANDOFF, this brief and the PR description | doc-level |
+
+**Additional defect found while fixing #3, not in any required list:** the plausibility rule let
 two shaper-invalid strings into the hard stratum. Now decided by the shaper's dotted circle plus a
 tightened virama rule. 2 tests.
 
@@ -363,21 +409,16 @@ below.
 
 | Stream | Status | Current approved work | Blocking item / next gate |
 |---|---|---|---|
-| Eval | **EVAL-004 remains stopped. EVAL-005 opened as design hardening only and is complete after two review passes, awaiting review.** A constructed-Devanagari exactness battery exists, is tested locally, and **has not been run**; no checker is qualified. Its qualification gate is deterministic (zero false passes); the Clopper-Pearson figure is an explicitly-labelled iid reference calculation, not a demonstrated bound. | EVAL-005 design hardening on `work/eval-005-controller-review`. | Controller decisions on: (a) approve/reject the hardened design; (b) ~1.5 h of one Hindi reader; (c) checker roster + API budget; (d) whether to ask Resources to **check existing local material** for ~31–37 more Hindi words, tightening the reference figure from 7.8% to <5%; (e) the proposed qualification thresholds. No run without all of (a)–(c). |
+| Eval | **EVAL-004 remains stopped. EVAL-005 opened as design hardening only and is complete after two review passes, awaiting review.** A constructed-Devanagari exactness battery exists and has been built and tested locally; **no checker/model/API qualification run and no human validation have occurred**, and no checker is qualified. Its qualification gate is deterministic (zero false passes); the Clopper-Pearson figure is an explicitly-labelled iid reference calculation, not a demonstrated bound. | EVAL-005 design hardening on `work/eval-005-controller-review`. | Controller decisions on: (a) approve/reject the hardened design; (b) ~1.5 h of one Hindi reader; (c) checker roster + API budget; (d) whether to ask Resources to **check existing local material** for ~31–37 more Hindi words, tightening the reference figure from 7.8% to <5%; (e) the proposed qualification thresholds. No run without all of (a)–(c). |
 
 ---
 
 ## FRESH VERIFICATION — commands, exit codes, results
 
-Run from the final PR head, after `git merge origin/main` and `rm -rf build __pycache__`. No prior
-session's claim was relied on: the inherited suite was re-run first and did pass (36 checks) before
-being replaced, and the first-pass suite (121 checks) was likewise re-run before this pass extended
-it.
+Run from the final PR head after `rm -rf build __pycache__`. No prior session's or prior pass's claim
+was relied on: each pass re-ran the full suite from scratch (inherited 36 checks → 121 → 141 → 165).
 
 ```
-$ git merge origin/main                       exit 0 — clean merge, no conflict
-                                                       (Resources PR #5, CANON-004/005 now in base)
-
 $ python3 build_items.py --total 120
 exit 0 — 106 items (53 match / 53 mismatch), 53 base words, 20 classes across 5 groups,
          37 hard items / 37 distinct hard base words,
@@ -389,8 +430,8 @@ exit 0 — 106 items (53 match / 53 mismatch), 53 base words, 20 classes across 
 
 $ python3 test_devanagari_exactness.py
 exit 0 — ALL CHECKS PASSED
-         141 checks across 41 test functions, 0 failures
-         (was 121 / 37 before this pass; +4 tests, +20 checks)
+         165 checks across 43 test functions, 0 failures
+         (121/37 after pass 1 · 141/41 after pass 2 · +2 tests, +24 checks in pass 3)
 
 $ python3 make_validation_sheets.py --from-build build
 exit 0 — word-validation-sheet.csv 53 rows · perceptibility-sheet.csv 25 rows
@@ -402,24 +443,60 @@ $ python3 build_items.py --total 120 --out-dir <tmp>      # determinism
 $ verify_blind on both written checker-input files
    transcribe  n=106  violations=0
    verdict     n=106  violations=0
-
-$ encoded-PNG vs decoded-pixel regression, on build/images/img-0000.png
-   3 encodings (hb-view original; RGBA8 re-encode zlib 1; RGBA8 re-encode zlib 9 + tEXt)
-   -> 3 distinct file SHA-256      (encoded artifact identity)
-   -> 1 distinct pixel fingerprint (visual identity, 123x104 RGBA8)
-   battery-wide: 90 image files / 90 file hashes / 90 pixel fingerprints
 ```
+
+### Did the narrower PNG contract change the battery?
+
+**No — and this is the measured result, not an assumption the fix was constrained to produce.**
+
+| | Before narrowing | After narrowing |
+|---|---|---|
+| `items.jsonl` sha256 | `9c69cac2…fea6d09d` | `9c69cac2…fea6d09d` — **byte-identical** |
+| Items / match / mismatch | 106 / 53 / 53 | 106 / 53 / 53 |
+| Hard items / distinct hard base words | 37 / 37 | 37 / 37 |
+| Classes / groups | 20 / 5 | 20 / 5 |
+| Image files / file hashes / pixel fingerprints | 90 / 90 / 90 | 90 / 90 / 90 |
+| Candidate screening | 1,834 valid; 2 `canonical_equal`; 0 `raster_identical` | unchanged |
+| Battery images decoding under the contract | — | **90 of 90** |
+
+The reason is that `hb-view` emits 8-bit grayscale, non-interlaced, with `bKGD` and **no** `tRNS` —
+comfortably inside the accepted contract. Everything the narrowing now refuses is something the
+battery never produced; what changed is that a file which *did* carry it would now stop the build
+instead of being fingerprinted wrongly.
+
+### Transparency regression — the disjunction, demonstrated
+
+| Case | Result |
+|---|---|
+| Indexed + `tRNS` | **decoded correctly** — index 0 alpha 0, index 1 alpha 255, and a **different** fingerprint from the same image without `tRNS` |
+| Grayscale + `tRNS` | **refused** (`UnsupportedPNG`) |
+| Truecolour + `tRNS` | **refused** |
+| RGBA + `tRNS` (spec-forbidden) | **refused** |
+| 16-bit · illegal depth/colour · indexed without palette · unknown **critical** chunk · `gAMA` / `sRGB` / `cHRM` / `acTL` | **refused** |
+| `bKGD` (what `hb-view` emits) · `tEXt` · unknown **ancillary** chunk | **accepted, fingerprint unchanged** |
+
+Never fingerprinted as if transparency did not exist.
+
+### Preserved through the narrowing
+
+- different PNG encodings / same decoded pixels → **same pixel fingerprint** (3 file hashes, 1
+  fingerprint, from a real battery render);
+- ZWNJ visually-identical pair → **rejected**;
+- `सुबह` / `सुवह` → **accepted**;
+- `image_file_sha256` retained **separately** as encoded-artifact identity.
 
 ### Stale-claim grep
 
 Every EVAL-005-owned source and document was grepped for `PR #5 open`, `open, not merged`,
 `genuinely independent`, `independent chances`, `independent trials`, `statistically independent`,
 `final PNG bytes`, `raster_sha256`, `image_sha256`, `hard_bound_if_zero`,
-`zero_failure_upper_bound`.
+`zero_failure_upper_bound`, `admitted for further evaluation`, `at a stated bound`,
+`Nothing has been run`.
 
-**No live claim survives.** The only remaining occurrences are inside quotation marks, citing the
-wording that was removed — and a committed test enforces exactly that rule: the phrase may appear
-only inside a quotation, never in bare prose, in either direction.
+**No live claim survives.** Remaining occurrences sit inside quotation marks or code spans, citing
+the wording that was removed — and a committed test enforces exactly that rule for the independence
+language: it may appear only inside a quotation or a code span, never in bare prose, in either
+direction.
 
 ### Environment and rendering provenance
 
@@ -428,6 +505,7 @@ only inside a quotation, never in bare prose, in either direction.
 | Python | 3.14.6 (`/opt/homebrew/bin/python3`) |
 | Shaper | `hb-shape (HarfBuzz) 14.2.1` |
 | Renderer | `hb-view (HarfBuzz) 14.2.1` — same library, takes a font file, no fontconfig |
+| PNG output from `hb-view` | 8-bit grayscale, non-interlaced, `bKGD`, no `tRNS` |
 | PNG decoding | `pngraster.py` — stdlib `zlib` only. **Pillow and numpy are not installed**, and no image library was added |
 | Font file | `/System/Library/Fonts/Kohinoor.ttc`, face index 0 |
 | **Font SHA-256** | `8b508b160d4573963c064e951af48c33c6381901253ec6ae0feb86d80fde1f31` |
@@ -529,8 +607,13 @@ The one stop condition that fired is reported rather than resolved.
 
 ## CONFIRMATION
 
+**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
+local construction, rendering and test verification have been run — the commands above, none of which
+makes a network call, and a test asserts that no module in the battery references a network client, a
+URL or an API key.
+
 No paid checker call. No free checker call. No model API call of any kind. No image or video
-generation. No network request to any model. No human specialist time consumed — every answer column
-in every prepared sheet is blank. No Capability Registry entry. No BSTD or Marathi reserve use.
+generation. No human specialist time consumed — every answer column in every prepared sheet is blank.
+No Capability Registry entry. No BSTD or Marathi reserve use. No Canon or Resources file edited.
 EVAL-004 not resumed, its Reader-A pilot not promoted to ground truth, and no checker qualified,
-disqualified or ranked from it or from anything else.
+disqualified or ranked from it or from anything else. EVAL-006 not started.

@@ -1,6 +1,8 @@
 # Failure taxonomy — Devanagari exactness battery
 
-**Status: PROPOSED design, revised after Controller review. Not approved, not run. No model has been called.**
+**Status: PROPOSED design, revised after Controller review. Not approved.**
+**No checker/model/API qualification run and no human validation have occurred** — only
+deterministic local construction, rendering and test verification. No model has been called.
 
 ---
 
@@ -187,7 +189,7 @@ of this kind, and the hard stratum of 37 is entirely plausible with clean shapin
 
 | Direction | Construction | What it measures |
 |---|---|---|
-| **`corrupt_image`** | render the **perturbed** string, ask about the **real word** | The model sees malformed text and is handed a plausible word. Every pull of its language prior says "yes, that's it." **This is where silent autocorrection happens** — the primary stratum, 70% of mismatches (37 of 53 on the current build), and the only one a statistical bound is quoted on. |
+| **`corrupt_image`** | render the **perturbed** string, ask about the **real word** | The model sees malformed text and is handed a plausible word. Every pull of its language prior says "yes, that's it." **This is where silent autocorrection happens** — the primary stratum, 70% of mismatches (37 of 53 on the current build), and the only stratum the iid reference figure is quoted on. |
 | `corrupt_target` | render the **real word**, ask about the **perturbed** string | Clean image, odd target. Much easier. A control: failing here is failing basic comparison. |
 
 Reported separately. Collapsing them would let a good score on the easy direction conceal

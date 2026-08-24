@@ -29,7 +29,7 @@ measured ability rather than on marketing claims or guesswork.
 > |---|---|
 > | **EVAL-003** | closed and merged. A 54-item photographed-Hindi calibration pack exists and is untouched. |
 > | **EVAL-004** | **STOPPED by the Controller on 24 Aug 2026**, after one 54-item Reader-A pilot. There is **no Reader B and no two-reader reference**. Reader A is **exploratory evidence only** — not ground truth. **No checker may be qualified, disqualified, ranked or entered in the Registry from it, and it must not be resumed.** See `decisions/EVAL-004-STOP-2026-08-24.md`. |
-> | **EVAL-005** | open, and **design hardening only**. A Devanagari *exactness* battery has been designed, implemented and tested locally. **It has not been run.** See `tasks/EVAL-005.md`. |
+> | **EVAL-005** | open, and **design hardening only**. A Devanagari *exactness* battery has been designed, implemented, built and tested locally. **No checker/model/API qualification run and no human validation have occurred** — only deterministic local construction, rendering and test verification. See `tasks/EVAL-005.md`. |
 > | **Authorised spend** | **₹0 API/model · ₹0 generation · 0 human specialist hours · 0 Registry entries · BSTD and the Marathi reserve untouched.** None of this may be started without a new approved task. |
 >
 > **Why EVAL-004 was stopped, and what replaced the question.** Reading an ordinary Hindi sign
@@ -128,7 +128,7 @@ we currently have no instrument we are entitled to trust.
 A replacement for the stopped signage screen. It asks whether a checker reports "matches" when the
 picture is subtly wrong, and it removes the annotator entirely by **rendering the images itself**.
 
-**Built, tested locally, and not run.** ₹0 API, ₹0 generation, 0 human hours, 0 Registry entries.
+**Built and tested locally; no qualification run.** No checker/model/API call and no human validation have occurred. ₹0 API, ₹0 generation, 0 human hours, 0 Registry entries.
 Full record: `tasks/EVAL-005.md` and `tasks/EVAL-005-CONTROLLER-BRIEF.md`; design findings in
 `findings/devanagari-exactness-design-findings.md`.
 
@@ -152,7 +152,7 @@ What exists, in `eval/battery/devanagari-exactness/`:
   reference upper bound of **7.8%**. The actual gate is deterministic: zero false passes.
 - **Prepared but blank native-validation sheets** for ~1.5 hours of one Hindi reader.
 
-⚠ **It has not been run and no checker is qualified.** ⚠ **Bringing the reference figure below 5%
+⚠ **No checker/model/API qualification run has occurred and no checker is qualified.** ⚠ **Bringing the reference figure below 5%
 needs 84–90 base words; the repository holds 53.** Resources PR #5 (merged) establishes that 3,924
 single-word crops are transcription-resolvable, but those strings live in the git-ignored corpus and
 their distinct-word yield is unknown — so `tasks/EVAL-005-RESOURCES-REQUEST.md` asks Resources to

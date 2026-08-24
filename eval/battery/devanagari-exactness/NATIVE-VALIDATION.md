@@ -60,7 +60,9 @@ stable `word_id` per row and the answer column blank. `no` and `unsure` words ar
 pool and the battery rebuilt — deterministically, at zero cost.
 
 **This is also the moment to expand the list.** `METRICS-AND-QUALIFICATION.md` shows the hard
-stratum needs **84–90 words** to support a ≤5% bound instead of 53. That figure was recomputed
+stratum needs **84–90 words** to bring the iid reference calculation below 5%, instead of 53. That
+is a planning target for a sizing figure, not a threshold that would demonstrate anything about a
+checker's real error rate. It was recomputed
 after the corrected one-item-per-base-word construction, not carried over from the earlier draft.
 Validating ~90 words costs barely more than validating 53, and it is the single highest-value
 input to the battery.

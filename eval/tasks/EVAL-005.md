@@ -1,8 +1,9 @@
 # Task EVAL-005: Devanagari exactness checker qualification — design hardening
 
 **TASK ID:** EVAL-005 *(Controller-assigned)*
-**STATUS:** **Controller-authorised DESIGN HARDENING ONLY.** Not a run. No checker has been called,
-qualified, ranked or entered anywhere.
+**STATUS:** **Controller-authorised DESIGN HARDENING ONLY.** No checker/model/API qualification run
+and no human validation have occurred; only deterministic local construction, rendering and test
+verification have been run. No checker has been called, qualified, ranked or entered anywhere.
 **OPENED:** 25 Aug 2026 · **BRANCH:** `work/eval-005-controller-review`
 
 **OBJECTIVE:** Fix the defects the Controller identified in the inherited `work/eval-005` proposal,
@@ -60,6 +61,14 @@ Design, local implementation and local testing only:
 11. Reflect merged Resources state (PR #5) and reorder the Resources ask so the first step is a
     check of existing local material rather than any acquisition.
 
+**Third Controller review pass — merge gate** added three bounded corrections:
+
+12. Make the PNG decoder **fail closed** on any feature it does not faithfully decode — transparency
+    above all — by narrowing and stating its supported contract, not by growing a general-purpose
+    PNG library.
+13. Remove wording that turns the iid reference calculation into a demonstrated bound on a checker.
+14. Replace "nothing has been run" with the precise statement of what has and has not happened.
+
 ## OUT OF SCOPE — and each is independently blocking
 
 - **Any checker/model/API call.** No Qwen, Claude, GPT, Gemini, web OCR or external VLM.
@@ -84,7 +93,7 @@ Design, local implementation and local testing only:
 | `eval/tasks/EVAL-005-RESOURCES-REQUEST.md` | the precise cross-stream ask, if the pool is short |
 | `eval/battery/devanagari-exactness/checker_input.py` | per-shape projections + blind check |
 | `eval/battery/devanagari-exactness/devtext.py` | one pinned font asset; pixel-level screen |
-| `eval/battery/devanagari-exactness/pngraster.py` | stdlib PNG decoder; pixel fingerprint vs file hash |
+| `eval/battery/devanagari-exactness/pngraster.py` | stdlib PNG decoder with an explicit, narrow, fail-closed contract; pixel fingerprint vs file hash |
 | `eval/battery/devanagari-exactness/build_items.py` | one-item-per-base construction + statistics |
 | `eval/battery/devanagari-exactness/make_validation_sheets.py` | sheet generator |
 | `eval/battery/devanagari-exactness/native-validation/` | prepared, blank sheets + plan |
@@ -142,7 +151,7 @@ Beyond the eight in `shared/AUTONOMY-POLICY.md`, stop and return to the Controll
 
 - fixing the rendering would require committing or licensing a font asset;
 - no available local renderer can pin the exact font used for shaping;
-- a defensible statistical bound cannot be supported without changing the approved evaluation
+- a defensible sizing calculation cannot be supported without changing the approved evaluation
   architecture;
 - the corrected sample-size requirement needs new external lexical material *(this fired — see
   `EVAL-005-RESOURCES-REQUEST.md`; it is reported, not resolved)*;
@@ -157,7 +166,8 @@ Each of these is a decision only the Controller can make, and each blocks a diff
 1. **Approve or reject the hardened design.** Blocks everything downstream.
 2. **Approve ~1.5 hours of one Hindi-competent reader** for the prepared sheets. Blocks the run.
 3. **Approve the sourcing request to Resources** for ~31–37 more Hindi lexical items. Blocks the
-   ≤5% bound, not the run itself — a run at 53 words is possible, it just carries a 7.8% bound.
+   sub-5% iid reference figure, not the run itself — a run at 53 words is possible, it just reports
+   the figure at 37 opportunities (7.8%).
 4. **Approve a checker roster and API budget.** Blocks the run. No roster is selected here.
 5. **Approve the proposed qualification thresholds** (0.95 repeat consistency, ≤10% false fail,
    ≤5% refusal). They are judgement calls with no empirical backing in this repository.
@@ -192,9 +202,11 @@ This task is complete when **all** of the following hold, each verified by a com
 9. The full test suite passes from a clean run, with commands, exit code and counts recorded in the
    Controller Brief.
 
-**Status: all nine met, after both review passes.** `python3 test_devanagari_exactness.py` → exit 0,
-149 checks across 41 tests. See `EVAL-005-CONTROLLER-BRIEF.md` for the recorded run and environment
-provenance.
+**Status: all nine met, after three review passes.** `python3 test_devanagari_exactness.py` → exit 0,
+**165 checks across 43 tests**. Criterion 3 additionally requires that the PNG decoder fail closed on
+any feature it does not faithfully decode — transparency in particular is applied correctly or the
+file is refused, never ignored. See `EVAL-005-CONTROLLER-BRIEF.md` for the recorded run and
+environment provenance.
 
 ## RESULT LOCATION
 

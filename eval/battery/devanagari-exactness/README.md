@@ -1,6 +1,9 @@
 # Devanagari exactness battery — design
 
-**Status: PROPOSED DESIGN, revised after Controller review. Not approved, not run.**
+**Status: PROPOSED DESIGN, revised after Controller review. Not approved.**
+**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
+local construction, rendering and test verification have been run — the build and the test suite in
+*Reproducing* below are exactly that, and they make no network call.
 **No paid checker call · no image/video model spend · no Capability Registry entry · no human time.**
 
 Authoritative task file: [`eval/tasks/EVAL-005.md`](../../tasks/EVAL-005.md).

@@ -1,6 +1,8 @@
 # Checker input/output contract
 
-**Status: PROPOSED, revised after Controller review. No checker has been run.**
+**Status: PROPOSED, revised after Controller review.**
+**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
+local construction, rendering and test verification have been run.
 
 ---
 

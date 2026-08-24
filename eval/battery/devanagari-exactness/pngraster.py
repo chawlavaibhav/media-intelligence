@@ -28,9 +28,41 @@ WHY A DECODER RATHER THAN A LIBRARY
     we need are small: parse chunks, inflate with `zlib` (stdlib), reverse the per-scanline filters,
     expand to RGBA8.
 
-    The decoder is deliberately strict. Anything it does not fully support — interlacing in
-    particular — raises `UnsupportedPNG` rather than returning a guess. A wrong raster here would
-    silently corrupt every visibility decision the battery makes.
+    This is NOT a general-purpose PNG library and must not become one. It decodes exactly the
+    narrow contract below and **rejects everything else** rather than returning a guess. A wrong
+    raster here would silently corrupt every visibility decision the battery makes, with no visible
+    symptom — the exact failure mode the battery exists to catch, one level down.
+
+THE SUPPORTED CONTRACT — narrow, explicit, and fail-closed
+    Accepted:
+      * non-interlaced only;
+      * bit depths 1, 2, 4, 8 — and only in the combinations the PNG spec permits per colour type;
+      * colour types 0 (grayscale), 2 (truecolour), 3 (indexed), 4 (gray+alpha), 6 (RGBA);
+      * `tRNS` for **indexed images only**, where it is faithfully applied per-index;
+      * ancillary chunks that cannot change a decoded raster in any accepted combination — see
+        `_IGNORE_CHUNKS`. `hb-view` emits `bKGD`, which is a *suggested* compositing background and
+        is advisory only: with `tRNS` rejected on grayscale and truecolour, no accepted image has
+        transparency for it to composite against, so it cannot alter a pixel.
+
+    Rejected with `UnsupportedPNG`:
+      * interlaced images;
+      * **bit depth 16** — the sample unpacking here keeps the high byte only, so two 16-bit images
+        differing in their low bytes would fingerprint identically. That is exactly the silent
+        collision this module exists to prevent, so 16-bit is refused rather than truncated;
+      * colour-type / bit-depth combinations the spec does not allow;
+      * **`tRNS` on grayscale or truecolour** — it makes one sample value fully transparent and
+        materially changes the RGBA raster. It is not implemented, so a file carrying it is refused
+        rather than fingerprinted as though transparency did not exist;
+      * `tRNS` on colour types 4 or 6, where the spec forbids it — its presence means the file is
+        not what its header claims;
+      * chunks that change how an image is meant to look and that this decoder does not implement:
+        `gAMA`, `sRGB`, `iCCP`, `cHRM` (colour management) and `acTL` (APNG animation, where
+        decoding only the default image would silently drop the rest);
+      * any unrecognised **critical** chunk. Unrecognised *ancillary* chunks are skipped, which is
+        what the PNG specification's ancillary bit exists to permit.
+
+    The battery's own images sit well inside this: `hb-view` emits 8-bit grayscale, non-interlaced,
+    with `bKGD` and no `tRNS`.
 
 No network, no model, no spend.
 """
@@ -46,6 +78,36 @@ PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
 # Channels per pixel, by PNG colour type.
 _CHANNELS = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}
+
+# Bit depths this decoder implements faithfully. 16 is deliberately absent: see the module
+# docstring — truncating to the high byte would let two different images collide.
+_SUPPORTED_BIT_DEPTHS = (1, 2, 4, 8)
+
+# Bit depths the PNG specification permits per colour type. Checked so an illegal combination is
+# refused rather than decoded into something plausible.
+_LEGAL_BIT_DEPTHS = {0: (1, 2, 4, 8, 16), 2: (8, 16), 3: (1, 2, 4, 8),
+                     4: (8, 16), 6: (8, 16)}
+
+# Chunks that change how an image is meant to look and that this decoder does not implement.
+# Ignoring any of these would mean fingerprinting a raster that is not what the file describes.
+_REJECT_CHUNKS = {
+    b"gAMA": "gamma correction",
+    b"sRGB": "sRGB colour space rendering intent",
+    b"iCCP": "embedded ICC colour profile",
+    b"cHRM": "chromaticity / white point",
+    b"acTL": "APNG animation (decoding only the default image would drop frames silently)",
+}
+
+# Ancillary chunks that cannot change a decoded raster under the supported contract, and are
+# therefore skipped deliberately rather than by omission.
+_IGNORE_CHUNKS = {
+    b"bKGD",   # suggested compositing background; advisory, and no accepted image has alpha to
+               # composite (tRNS is rejected on grayscale/truecolour). hb-view emits this one.
+    b"pHYs",   # physical pixel size; the fingerprint already carries pixel dimensions
+    b"sBIT",   # significant-bits hint; advisory
+    b"tEXt", b"zTXt", b"iTXt", b"tIME",   # metadata; cannot touch pixels
+    b"hIST", b"sPLT",                     # palette hints for quantising displays; advisory
+}
 
 
 class UnsupportedPNG(RuntimeError):
@@ -77,6 +139,15 @@ class Raster:
         h.update(f"{self.pixel_format}:{self.width}x{self.height}:".encode("ascii"))
         h.update(self.rgba)
         return h.hexdigest()
+
+
+def _is_critical(ctype: bytes) -> bool:
+    """PNG's critical/ancillary bit: an uppercase first letter means the chunk is critical.
+
+    A decoder may safely skip an ancillary chunk it does not recognise — that is what the bit is
+    for. It may not skip an unrecognised critical one, so we refuse instead.
+    """
+    return not (ctype[0] & 0x20)
 
 
 def _iter_chunks(data: bytes):
@@ -142,8 +213,6 @@ def _unpack_samples(row: bytes, bit_depth: int, count: int) -> list[int]:
     """Expand sub-byte or 16-bit samples to a flat list of integers, one per sample."""
     if bit_depth == 8:
         return list(row[:count])
-    if bit_depth == 16:
-        return [row[2 * i] for i in range(count)]          # keep the high byte: 16->8 bit
     if bit_depth in (1, 2, 4):
         per_byte = 8 // bit_depth
         mask = (1 << bit_depth) - 1
@@ -161,9 +230,14 @@ def decode(path: Path | str) -> Raster:
     data = Path(path).read_bytes()
     ihdr = None
     palette = b""
-    trns = b""
+    trns = None
     idat = bytearray()
     for ctype, body in _iter_chunks(data):
+        if ctype in _REJECT_CHUNKS:
+            raise UnsupportedPNG(
+                f"PNG carries a {ctype.decode('ascii', 'replace')} chunk "
+                f"({_REJECT_CHUNKS[ctype]}), which this decoder does not implement. "
+                f"Refusing rather than fingerprinting a raster that is not what the file describes.")
         if ctype == b"IHDR":
             ihdr = struct.unpack(">IIBBBBB", body[:13])
         elif ctype == b"PLTE":
@@ -174,6 +248,14 @@ def decode(path: Path | str) -> Raster:
             idat += body
         elif ctype == b"IEND":
             break
+        elif ctype in _IGNORE_CHUNKS:
+            continue
+        elif _is_critical(ctype):
+            raise UnsupportedPNG(
+                f"unrecognised CRITICAL PNG chunk {ctype.decode('ascii', 'replace')}; "
+                f"refusing rather than decoding an image we may not understand")
+        # else: an unrecognised ancillary chunk, which the spec allows a decoder to skip.
+
     if ihdr is None:
         raise UnsupportedPNG("PNG has no IHDR chunk")
 
@@ -184,6 +266,32 @@ def decode(path: Path | str) -> Raster:
         raise UnsupportedPNG("interlaced PNG is not supported by this decoder")
     if colour not in _CHANNELS:
         raise UnsupportedPNG(f"unsupported PNG colour type {colour}")
+    if bit_depth not in _LEGAL_BIT_DEPTHS[colour]:
+        raise UnsupportedPNG(
+            f"bit depth {bit_depth} is not legal for PNG colour type {colour}")
+    if bit_depth not in _SUPPORTED_BIT_DEPTHS:
+        raise UnsupportedPNG(
+            f"bit depth {bit_depth} is not supported by this decoder. 16-bit samples would be "
+            f"truncated to their high byte here, so two different images could produce the same "
+            f"pixel fingerprint — refusing instead.")
+
+    # tRNS is implemented for indexed images only. On grayscale and truecolour it makes one sample
+    # value fully transparent, which materially changes the RGBA raster; on colour types 4 and 6
+    # the spec forbids it outright. Either way, decoding as though it were absent would fingerprint
+    # a picture with transparency as if it had none — precisely the silent error this gate exists
+    # to prevent.
+    if trns is not None and colour != 3:
+        raise UnsupportedPNG(
+            f"PNG carries a tRNS transparency chunk with colour type {colour}. "
+            + ("The specification forbids tRNS for this colour type."
+               if colour in (4, 6) else
+               "tRNS on grayscale/truecolour changes the visible alpha and is not implemented "
+               "here.")
+            + " Refusing rather than decoding as if the image were opaque.")
+    if colour == 3 and not palette:
+        raise UnsupportedPNG("indexed PNG has no PLTE chunk")
+    if trns is None:
+        trns = b""
 
     channels = _CHANNELS[colour]
     stride = (width * channels * bit_depth + 7) // 8

@@ -37,9 +37,11 @@ from __future__ import annotations
 import json
 import math
 import re
+import struct
 import subprocess
 import sys
 import tempfile
+import zlib
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -323,10 +325,92 @@ def test_pixel_fingerprint_separates_dimensions_from_payload():
     check("same payload, same shape -> same fingerprint", wide.fingerprint() == same.fingerprint())
 
 
-def test_decoder_refuses_what_it_cannot_decode():
-    """A wrong raster would corrupt every visibility decision without any visible symptom."""
+def _png_chunk(ctype: bytes, body: bytes) -> bytes:
+    return (struct.pack(">I", len(body)) + ctype + body
+            + struct.pack(">I", zlib.crc32(ctype + body) & 0xFFFFFFFF))
+
+
+def _make_png(width, height, bit_depth, colour, raw, before_idat=(), after_idat=(), interlace=0):
+    """Hand-build a PNG so the decoder's contract can be probed at its edges."""
+    out = bytearray(pngraster.PNG_SIGNATURE)
+    out += _png_chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, bit_depth, colour,
+                                           0, 0, interlace))
+    for c, b in before_idat:
+        out += _png_chunk(c, b)
+    out += _png_chunk(b"IDAT", zlib.compress(bytes(raw)))
+    for c, b in after_idat:
+        out += _png_chunk(c, b)
+    out += _png_chunk(b"IEND", b"")
+    return bytes(out)
+
+
+def _decode_or_reject(tmp: Path, name: str, data: bytes):
+    """Return the decoded Raster, or None if the decoder refused it."""
+    safe = "".join(c if c.isalnum() else "_" for c in name)
+    p = tmp / f"{safe}.png"
+    p.write_bytes(data)
+    try:
+        return pngraster.decode(p)
+    except pngraster.UnsupportedPNG:
+        return None
+
+
+# 2x1 grayscale, one black pixel and one white one. Filter byte 0, then the two samples.
+_GRAY_2x1 = b"\x00" + bytes([0, 255])
+
+
+def test_transparency_is_applied_or_refused_never_ignored():
+    """A visual-affecting transparency feature must change the fingerprint, or be rejected.
+
+    Controller review, final pass. `tRNS` makes pixels transparent. Parsing it but applying it only
+    to indexed images would mean a grayscale or truecolour PNG with transparency got fingerprinted
+    **as if it were opaque** — a silent wrong raster, which is the one failure mode this decoder
+    exists to prevent.
+    """
     with tempfile.TemporaryDirectory() as t:
-        bad = Path(t) / "notapng.png"
+        t = Path(t)
+
+        # --- indexed: tRNS IS implemented, and must actually change the raster ---------------
+        palette = bytes([255, 0, 0,  0, 0, 255])          # index 0 red, index 1 blue
+        idx_raw = b"\x00" + bytes([0x01])                 # 4-bit: pixel0=index0, pixel1=index1
+        opaque = _decode_or_reject(t, "idx", _make_png(
+            2, 1, 4, 3, idx_raw, before_idat=[(b"PLTE", palette)]))
+        transp = _decode_or_reject(t, "idx_trns", _make_png(
+            2, 1, 4, 3, idx_raw, before_idat=[(b"PLTE", palette), (b"tRNS", bytes([0]))]))
+
+        check("an indexed PNG decodes", opaque is not None)
+        check("an indexed PNG with tRNS decodes rather than being refused", transp is not None)
+        if opaque and transp:
+            check("without tRNS every pixel is opaque", list(opaque.rgba[3::4]) == [255, 255],
+                  str(list(opaque.rgba[3::4])))
+            check("tRNS makes index 0 transparent and leaves index 1 alone",
+                  list(transp.rgba[3::4]) == [0, 255], str(list(transp.rgba[3::4])))
+            check("transparency therefore CHANGES the pixel fingerprint",
+                  opaque.fingerprint() != transp.fingerprint())
+
+        # --- grayscale and truecolour: tRNS is NOT implemented, so it must be refused ---------
+        gray_plain = _decode_or_reject(t, "g", _make_png(2, 1, 8, 0, _GRAY_2x1))
+        gray_trns = _decode_or_reject(t, "g_trns", _make_png(
+            2, 1, 8, 0, _GRAY_2x1, before_idat=[(b"tRNS", struct.pack(">H", 0))]))
+        check("a plain grayscale PNG still decodes", gray_plain is not None)
+        check("grayscale + tRNS is REFUSED, not fingerprinted as opaque", gray_trns is None)
+
+        true_trns = _decode_or_reject(t, "t_trns", _make_png(
+            1, 1, 8, 2, b"\x00" + bytes([1, 2, 3]),
+            before_idat=[(b"tRNS", bytes([0, 1, 0, 2, 0, 3]))]))
+        check("truecolour + tRNS is REFUSED", true_trns is None)
+
+        # --- tRNS where the spec forbids it means the file is not what it claims -------------
+        rgba_trns = _decode_or_reject(t, "r_trns", _make_png(
+            1, 1, 8, 6, b"\x00" + bytes([1, 2, 3, 255]), before_idat=[(b"tRNS", b"\x00")]))
+        check("tRNS on an RGBA image is REFUSED (the spec forbids it)", rgba_trns is None)
+
+
+def test_decoder_contract_is_narrow_and_fails_closed():
+    """Everything outside the stated contract is refused rather than approximated."""
+    with tempfile.TemporaryDirectory() as t:
+        t = Path(t)
+        bad = t / "notapng.png"
         bad.write_bytes(b"this is not a png")
         try:
             pngraster.decode(bad)
@@ -334,20 +418,62 @@ def test_decoder_refuses_what_it_cannot_decode():
         except pngraster.UnsupportedPNG:
             check("a non-PNG raises UnsupportedPNG", True)
 
-        # An interlaced header must be refused rather than guessed at.
-        import struct, zlib as _z
-        def chunk(ct, body):
-            return (struct.pack(">I", len(body)) + ct + body
-                    + struct.pack(">I", _z.crc32(ct + body) & 0xFFFFFFFF))
-        il = Path(t) / "interlaced.png"
-        il.write_bytes(pngraster.PNG_SIGNATURE
-                       + chunk(b"IHDR", struct.pack(">IIBBBBB", 2, 2, 8, 6, 0, 0, 1))
-                       + chunk(b"IDAT", _z.compress(b"\x00" * 18)) + chunk(b"IEND", b""))
+        cases = {
+            "interlaced": _make_png(2, 2, 8, 6, b"\x00" * 18, interlace=1),
+            # 16-bit would be truncated to the high byte here, so two different images could
+            # collide on one fingerprint. Refused rather than truncated.
+            "16-bit grayscale": _make_png(2, 1, 16, 0, b"\x00" + bytes([0, 0, 255, 255])),
+            # Bit depth 4 is not legal for truecolour.
+            "illegal depth/colour combination": _make_png(1, 1, 4, 2, b"\x00\x00"),
+            "indexed with no palette": _make_png(2, 1, 4, 3, b"\x00" + bytes([0x01])),
+            "unrecognised CRITICAL chunk": _make_png(
+                2, 1, 8, 0, _GRAY_2x1, after_idat=[(b"ZZZZ", b"x")]),
+        }
+        for name, data in cases.items():
+            check(f"refused: {name}", _decode_or_reject(t, name, data) is None)
+
+        # Chunks that change how an image is meant to look are refused, one per reason.
+        for ctype, body in ((b"gAMA", struct.pack(">I", 45455)), (b"sRGB", b"\x00"),
+                            (b"cHRM", b"\x00" * 32), (b"acTL", b"\x00" * 8)):
+            data = _make_png(2, 1, 8, 0, _GRAY_2x1, before_idat=[(ctype, body)])
+            check(f"refused: {ctype.decode()} (appearance-affecting)",
+                  _decode_or_reject(t, "c" + ctype.decode(), data) is None)
+
+        # And what the contract DOES accept keeps working.
+        accepted = {
+            # bKGD is what hb-view actually emits: advisory, and no accepted image has alpha for
+            # it to composite against, so it cannot alter a pixel.
+            "bKGD (emitted by hb-view)": _make_png(
+                2, 1, 8, 0, _GRAY_2x1, before_idat=[(b"bKGD", struct.pack(">H", 0))]),
+            "tEXt metadata": _make_png(2, 1, 8, 0, _GRAY_2x1, after_idat=[(b"tEXt", b"k\x00v")]),
+            # An unrecognised ANCILLARY chunk may be skipped — that is what the spec's
+            # ancillary bit is for.
+            "unrecognised ancillary chunk": _make_png(
+                2, 1, 8, 0, _GRAY_2x1, after_idat=[(b"zzZz", b"x")]),
+        }
+        plain = _decode_or_reject(t, "plain", _make_png(2, 1, 8, 0, _GRAY_2x1))
+        for name, data in accepted.items():
+            r = _decode_or_reject(t, "ok_" + name.split()[0], data)
+            check(f"accepted: {name}", r is not None)
+            if r and plain:
+                check(f"  and it does not change the fingerprint: {name}",
+                      r.fingerprint() == plain.fingerprint())
+
+
+def test_real_battery_images_decode_under_the_narrow_contract():
+    """The battery's own hb-view output must sit inside the contract, not just near it."""
+    items, _, d = build_battery()
+    files = sorted({d / i["image_file"] for i in items})
+    bad = []
+    for f in files:
         try:
-            pngraster.decode(il)
-            check("an interlaced PNG raises rather than being guessed at", False)
-        except pngraster.UnsupportedPNG:
-            check("an interlaced PNG raises rather than being guessed at", True)
+            r = pngraster.decode(f)
+            if r.width <= 0 or r.height <= 0:
+                bad.append(f.name)
+        except pngraster.UnsupportedPNG as e:
+            bad.append(f"{f.name}: {e}")
+    check(f"all {len(files)} battery images decode under the narrow contract",
+          not bad, str(bad[:3]))
 
 
 def test_visible_difference_is_accepted():
@@ -511,11 +637,12 @@ def test_no_eval005_file_claims_statistical_independence():
         "tasks/EVAL-005-RESOURCES-REQUEST.md",
         "findings/devanagari-exactness-design-findings.md",
     )]
-    # The phrase may appear ONLY inside a quotation — i.e. when a document is citing the wording
-    # that was removed, as §5.9 of the findings does. Quote parity on the line decides: an odd
-    # number of double quotes before the match means the phrase sits inside a quoted span. Bare
-    # prose asserting it, in either direction, is a failure: even a negation invites being read
-    # back as the claim once it is quoted out of context.
+    # The phrase may appear ONLY inside a quotation or a code span — i.e. when a document is citing
+    # the wording that was removed (as §5.9 of the findings does) or listing it as a search pattern.
+    # Delimiter parity on the line decides: an odd number of double quotes or backticks before the
+    # match means the phrase sits inside a quoted/code span. Bare prose asserting it, in either
+    # direction, is a failure — even a negation invites being read back as the claim once it is
+    # quoted out of context.
     offenders = []
     for f in targets:
         if not f.exists():
@@ -525,8 +652,11 @@ def test_no_eval005_file_claims_statistical_independence():
             for phrase in banned:
                 i = low.find(phrase)
                 while i != -1:
-                    if line[:i].count('"') % 2 == 0:          # not inside a quotation
-                        offenders.append(f"{f.name}:{ln}: {phrase!r} outside a quotation")
+                    before = line[:i]
+                    quoted = before.count('"') % 2 == 1 or before.count("`") % 2 == 1
+                    if not quoted:
+                        offenders.append(
+                            f"{f.name}:{ln}: {phrase!r} outside a quotation or code span")
                     i = low.find(phrase, i + 1)
     check("no EVAL-005 file asserts the opportunities are iid or exchangeable, "
           "outside a quotation of the removed wording",
