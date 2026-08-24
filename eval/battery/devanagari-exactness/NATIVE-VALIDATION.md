@@ -1,6 +1,8 @@
 # Which cases actually need a Hindi speaker — and which do not
 
-**Status: PROPOSED. No human time has been requested or consumed.**
+**Status: PROPOSED, revised after Controller review. No human time has been requested or
+consumed. The sheets are prepared and blank in [`native-validation/`](native-validation/) — see
+that directory's README for how each is filled.**
 
 ---
 
@@ -53,19 +55,30 @@ The reader is asked, per word, one question:
 
 > Is this a real, well-formed Hindi word as written? **yes / no / unsure**
 
-No transcription. No images. A flat list. `no` and `unsure` words are dropped from the pool and the
-battery rebuilt — deterministically, at zero cost.
+No transcription. No images. A flat list — `native-validation/word-validation-sheet.csv`, with a
+stable `word_id` per row and the answer column blank. `no` and `unsure` words are dropped from the
+pool and the battery rebuilt — deterministically, at zero cost.
 
 **This is also the moment to expand the list.** `METRICS-AND-QUALIFICATION.md` shows the hard
-stratum needs ~85–90 words to support a ≤5% bound instead of 53. Validating ~90 words costs
-barely more than validating 53, and it is the single highest-value input to the battery.
+stratum needs **84–90 words** to support a ≤5% bound instead of 53. That figure was recomputed
+after the corrected one-item-per-base-word construction, not carried over from the earlier draft.
+Validating ~90 words costs barely more than validating 53, and it is the single highest-value
+input to the battery.
+
+⚠️ **The repository cannot currently supply them.** Merged repo-local material yields **53**
+distinct Hindi lexical items. Closing the gap needs roughly **31–37 more**, which is a request to
+Resources rather than something Eval should go and find:
+[`eval/tasks/EVAL-005-RESOURCES-REQUEST.md`](../../tasks/EVAL-005-RESOURCES-REQUEST.md). Sheet ids
+are stable across pool changes, so validation done now is not wasted when the list grows.
 
 ### 2 · Confirm perceptibility on a sample · **recommended · ~20 min once**
 
 The shaper proves two strings produce different glyphs. It does **not** prove a human can *see* the
 difference at the rendered size — a nukta dot or an anusvara at 40pt is small.
 
-The reader is shown ~25 rendered image pairs and asked:
+The reader is shown ~25 rendered image pairs — `native-validation/perceptibility-sheet.csv`,
+sampled deterministically round-robin across the five failure groups, hard opportunities first —
+and asked:
 
 > Can you see a difference between these two images? **yes / no / only when I look closely**
 
@@ -78,7 +91,8 @@ way the invisible-nukta item would have been.
 
 ### 3 · Sanity-check the rendering · **required · ~10 min once**
 
-Confirm a sample of rendered images shows well-formed Devanagari — no tofu boxes, no broken
+`native-validation/rendering-sanity-sheet.csv`, 20 clean renders. Confirm the sample shows
+well-formed Devanagari — no tofu boxes, no broken
 conjuncts, no missing marks — so we are not testing checkers against a broken font. Purely a
 "does this look like normal Hindi text?" pass.
 

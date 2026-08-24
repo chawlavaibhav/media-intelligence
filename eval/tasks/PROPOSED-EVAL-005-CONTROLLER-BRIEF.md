@@ -1,3 +1,15 @@
+> ⚠️ **SUPERSEDED, 25 Aug 2026.** The Controller reviewed this proposal and required seven fixes
+> before the design could be approved. The authoritative record is now
+> [`eval/tasks/EVAL-005.md`](EVAL-005.md) and
+> [`eval/tasks/EVAL-005-CONTROLLER-BRIEF.md`](EVAL-005-CONTROLLER-BRIEF.md). This file is retained
+> unedited below so the two can be compared; **where it disagrees with those, they govern.**
+>
+> Specifically superseded here: the item/opportunity counts, the 8.2% and 5.5% bounds, the "85–90
+> words" derivation, the claim that the battery is reproducible from `hb-shape` + `pango-view`, and
+> the resource-budget figures.
+
+---
+
 # Controller Brief — Devanagari exactness battery design
 
 **COMMUNICATION STANDARD:** `shared/COMMUNICATION-STANDARD.md` applies.

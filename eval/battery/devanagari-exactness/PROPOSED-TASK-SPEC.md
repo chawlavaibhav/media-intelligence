@@ -1,3 +1,11 @@
+> ⚠️ **SUPERSEDED, 25 Aug 2026.** The Controller assigned the real task ID and required seven
+> design fixes. The authoritative task file is [`../../tasks/EVAL-005.md`](../../tasks/EVAL-005.md).
+> This file is retained unedited below for comparison; where the two disagree, EVAL-005.md governs.
+> Superseded here in particular: the item counts, the statistical claim, the human/API budget
+> figures, and the "already done" list.
+
+---
+
 # PROPOSED TASK — Devanagari exactness checker qualification
 
 **Provisional ID: EVAL-005.** Per `coordination/RUNBOOK.md` a task is not approved until it exists

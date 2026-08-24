@@ -1,6 +1,6 @@
 # Failure taxonomy — Devanagari exactness battery
 
-**Status: PROPOSED design. Not approved, not run. No model has been called.**
+**Status: PROPOSED design, revised after Controller review. Not approved, not run. No model has been called.**
 
 ---
 
@@ -96,47 +96,84 @@ positional form produces a visibly different word from the same underlying lette
 
 ---
 
-## Validity: two conditions, both required
+## Validity: the difference must be textual AND actually drawn
 
-A candidate becomes an item **only if**:
+A candidate becomes an item **only if** it clears three gates, in order:
 
-1. **the normalised strings differ** (NFC) — it is a real textual difference; and
-2. **the shaped glyph sequences differ** (HarfBuzz) — the difference is actually drawn.
+| # | Gate | Rejection reason if it fails |
+|---|---|---|
+| 1 | the **NFC-canonical strings differ** — it is a real textual difference | `canonical_equal` |
+| 2 | shaping and rasterising both succeed — the pair can be judged at all | `rendering_error` |
+| 3 | the **final PNG bytes differ** — the difference is actually on the page | `raster_identical` |
 
 Rejection reasons are recorded in `build/rejected-candidates.jsonl`, never silently dropped.
 
-| Reason | Meaning |
-|---|---|
-| `normalised_equal` | not a textual difference at all after NFC |
-| `glyphs_identical` | a textual difference the renderer does not draw — asking a checker to see it would penalise correct observation |
+### Why gate 3 is the pixels and not the glyph sequence
 
-On the current base pool, 1,834 candidates pass and **2 are rejected as `normalised_equal`** — both
-the nukta pair above.
+The previous draft gated on HarfBuzz glyph sequences. That is good *evidence* that two strings
+look different, but it is not the same claim, and the difference is not theoretical. Measured on
+the pinned font:
 
----
+```
+सुबह        -> [uni0938=0+680|uni0941=0+0|uni092C=2+567|uni0939=3+507]
+सु‌बह  (ZWNJ) -> [uni0938=0+680|uni0941=0+0|space=2+0|uni092C=3+567|uni0939=4+507]
+```
 
-## Plausibility: a difficulty axis, not a filter
+Different strings after NFC. **Different glyph sequences** — there is an extra zero-advance glyph.
+**Byte-identical PNGs.** The glyph-only gate would have admitted this as a valid mismatch and then
+scored a checker wrong for correctly reporting that the two pictures are the same.
 
-Some perturbations produce strings that are *visibly broken* rather than plausibly misspelled — a
-word opening with a vowel sign, or ending on a bare virama. These are kept, but tagged and capped
-at **15%** of the mismatch stratum, because:
+The glyph comparison is retained as a diagnostic and recorded on every rejection, so we can see
+when the two disagree. On the current 53-word pool they never did: 1,834 candidates pass, 2 are
+rejected as `canonical_equal` (both the nukta pair below), and **0** were rejected as
+`raster_identical`. The gate is nonetheless the raster, because that is the claim the battery
+actually makes.
 
-- a checker that misses them is unusable, so they are a useful floor; but
-- rejecting them demonstrates nothing about resisting autocorrection, so they must not dilute the
-  stratum that does.
+## Plausibility: what may enter the hard stratum
 
-Results are reported split by plausibility.
+Some perturbations produce strings that are *visibly broken* rather than plausibly misspelled.
+Silent autocorrection happens only when corrupted text still looks like it could be a word — a
+model cannot read toward a plausible reading that is not there. A checker that rejects an obviously
+broken string has demonstrated nothing about resisting autocorrection.
 
-*(The plausibility rule initially mis-flagged `तोड़ा` — an ordinary Hindi word — because it treated
-a vowel sign after a nukta as illegal. Corrected, and pinned by a regression test.)*
+**Plausibility is decided by two rules, and the shaper has the final word.**
 
----
+1. **A string rule** — no cluster may open with a vowel sign or other combining mark; a virama
+   must sit *between* two consonants; a nukta must follow a consonant.
+2. **The shaper** — any string HarfBuzz draws with a **dotted circle (U+25CC)** is visibly broken.
+   That glyph is the writing system's own "this cluster is invalid" marker and is unmistakable on
+   the page.
+
+The second rule caught two items the first had let into the hard stratum. Deleting the first
+consonant of `इंग्लीश` leaves `इं्लीश`, whose virama hangs off an anusvara; deleting the first
+consonant of `बॉम्बे` leaves `ॉम्बे`, which opens with U+0949 — a vowel sign the string rule's list
+did not contain. Both shape with a dotted circle. Asking the shaper what it actually drew is a
+better test than asking us what we think is legal, and it is now the authoritative one.
+
+*(The string rule also once mis-flagged `तोड़ा` — an ordinary Hindi word — because it treated a
+vowel sign after a nukta as illegal. Corrected, and pinned by a regression test. Widening the
+vowel-sign set to catch `ॉम्बे` briefly reintroduced that same bug, because U+093C NUKTA sits
+inside the numeric run of vowel signs; the regression test caught it immediately.)*
+
+⚠️ **What "plausible" does and does not mean here.** Both rules test whether the string is a
+**well-formed Devanagari cluster** — something the script permits and the shaper draws cleanly.
+Neither tests whether it is a *lexically* likely misspelling. `ककालका` (a doubled initial
+consonant, from `कालका`) is well-formed and passes, though no Hindi word looks like that. That is
+defensible for this battery — duplicated letters are a real generator failure, and the checker is
+being asked about *drawing*, not about the lexicon — but it means the hard stratum is "well-formed
+and visually subtle", not "a mistake a human would plausibly make". The perceptibility sample in
+`NATIVE-VALIDATION.md` is where a reader can tell us if any of them are too easy.
+
+**Visibly-broken strings are kept, but never in the hard stratum.** They are capped at 15% of the
+mismatch stratum and are always assigned the `corrupt_target` direction, so the malformation sits
+in the *string we ask about* and never in the image. On the current build 2 of 53 mismatches are
+of this kind, and the hard stratum of 37 is entirely plausible with clean shaping.
 
 ## Direction: the axis that decides what is being measured
 
 | Direction | Construction | What it measures |
 |---|---|---|
-| **`corrupt_image`** | render the **perturbed** string, ask about the **real word** | The model sees malformed text and is handed a plausible word. Every pull of its language prior says "yes, that's it." **This is where silent autocorrection happens** — the primary stratum, 70% of mismatches. |
+| **`corrupt_image`** | render the **perturbed** string, ask about the **real word** | The model sees malformed text and is handed a plausible word. Every pull of its language prior says "yes, that's it." **This is where silent autocorrection happens** — the primary stratum, 70% of mismatches (37 of 53 on the current build), and the only one a statistical bound is quoted on. |
 | `corrupt_target` | render the **real word**, ask about the **perturbed** string | Clean image, odd target. Much easier. A control: failing here is failing basic comparison. |
 
 Reported separately. Collapsing them would let a good score on the easy direction conceal

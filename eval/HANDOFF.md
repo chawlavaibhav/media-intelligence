@@ -20,6 +20,26 @@ measured ability rather than on marketing claims or guesswork.
 
 ## CURRENT STATE
 
+> ### ⚠ Read this first — state as of 25 Aug 2026
+>
+> **No checker has been qualified. No checker has ever been run against a reference.** Nothing in
+> this stream currently licenses trusting any evaluator's numbers.
+>
+> | | |
+> |---|---|
+> | **EVAL-003** | closed and merged. A 54-item photographed-Hindi calibration pack exists and is untouched. |
+> | **EVAL-004** | **STOPPED by the Controller on 24 Aug 2026**, after one 54-item Reader-A pilot. There is **no Reader B and no two-reader reference**. Reader A is **exploratory evidence only** — not ground truth. **No checker may be qualified, disqualified, ranked or entered in the Registry from it, and it must not be resumed.** See `decisions/EVAL-004-STOP-2026-08-24.md`. |
+> | **EVAL-005** | open, and **design hardening only**. A Devanagari *exactness* battery has been designed, implemented and tested locally. **It has not been run.** See `tasks/EVAL-005.md`. |
+> | **Authorised spend** | **₹0 API/model · ₹0 generation · 0 human specialist hours · 0 Registry entries · BSTD and the Marathi reserve untouched.** None of this may be started without a new approved task. |
+>
+> **Why EVAL-004 was stopped, and what replaced the question.** Reading an ordinary Hindi sign
+> turned out to be a weak proxy for the failure that costs money. The real failure is: we ask a
+> generator for a specific string, it produces something *subtly* wrong, and the checker says
+> *matches* — shipping a defect with a passing grade attached. EVAL-005 asks that question directly,
+> and gets its answers without any annotator by **rendering the images itself** from strings we
+> chose. What the picture contains is then known by construction.
+
+
 ### The one measurement we have, and why it is not settled
 
 `findings/FINDINGS-01-can-we-check.md` recorded a **checker-calibration study**. *Calibration* here
@@ -101,10 +121,55 @@ we currently have no instrument we are entitled to trust.
 
 ---
 
-## LAST COMPLETED TASK
+## TASK HISTORY — most recent first
 
-**EVAL-003 — Devanagari checker calibration pack readiness.** Completed 24 Aug 2026, **awaiting
-Controller review**. Full record: `tasks/EVAL-003-CONTROLLER-BRIEF.md`.
+### EVAL-005 — Devanagari exactness battery, design hardening · **open, design only**
+
+A replacement for the stopped signage screen. It asks whether a checker reports "matches" when the
+picture is subtly wrong, and it removes the annotator entirely by **rendering the images itself**.
+
+**Built, tested locally, and not run.** ₹0 API, ₹0 generation, 0 human hours, 0 Registry entries.
+Full record: `tasks/EVAL-005.md` and `tasks/EVAL-005-CONTROLLER-BRIEF.md`; design findings in
+`findings/devanagari-exactness-design-findings.md`.
+
+What exists, in `eval/battery/devanagari-exactness/`:
+
+- **106 items — 53 match, 53 mismatch**, from 53 base words, covering 20 failure classes in 5
+  groups. Ground truth by construction; no reader, no dataset label.
+- **Two checker shapes that receive different inputs.** `transcribe` never sees the target (our code
+  does the comparison); `verdict` does see it. Comparing them measures how much a checker's false
+  passes are caused by showing it the answer we hope for. A mechanical pre-run check refuses to
+  write a blind payload containing a target — or any Devanagari at all.
+- **One pinned font file, by SHA-256**, used for both shaping and rendering. A missing font stops
+  the build rather than falling back. The font itself is a proprietary system asset and is **not
+  committed**; provenance is recorded instead.
+- **Visibility gated on the final PNG bytes**, not on glyph sequences. Measured: `सु‌बह` with a
+  zero-width non-joiner shapes *differently* from `सुबह` and renders *identically*.
+- **37 distinct hard opportunities, one per base word** — so the statistical bound is not computed
+  over four correlated perturbations of the same word. Zero false passes there would give a 95%
+  upper bound of **7.8%**, on this battery's material only.
+- **Prepared but blank native-validation sheets** for ~1.5 hours of one Hindi reader.
+
+⚠ **It has not been run and no checker is qualified.** ⚠ **Reaching a ≤5% bound needs 84–90 base
+words; the repository holds 53.** See `tasks/EVAL-005-RESOURCES-REQUEST.md`.
+
+### EVAL-004 — two-reader Hindi reference · **STOPPED by the Controller, 24 Aug 2026**
+
+One complete 54-item Reader-A pass was collected. A second person looked at the material informally
+but did **not** perform the frozen independent blind pass, so **there is no Reader B and no
+two-reader reference**. The Controller judged the photographed-signage items too weak a proxy and
+chose not to spend further human time.
+
+**Consequences, which bind every future session:** Reader A is exploratory evidence only and is not
+ground truth; no checker may be qualified, disqualified, ranked or entered into the Registry from
+this run; no accuracy, false-pass or Hindi-reading claim may be made from it; and it must not be
+resumed without a new approved task. Full record: `decisions/EVAL-004-STOP-2026-08-24.md`.
+
+### EVAL-003 — Devanagari checker calibration pack readiness · **merged**
+
+Completed 24 Aug 2026, Controller-reviewed and merged. Full record:
+`tasks/EVAL-003-CONTROLLER-BRIEF.md`. The pack, its crops and its two-reader protocol are untouched
+and remain available if the photographed-signage screen is ever wanted.
 
 Readiness only: ₹0 API, 0 hours human specialist time, no external call, no generator, no capability
 result. What it produced, in `eval/calibration/devanagari-v0/`:
@@ -116,6 +181,7 @@ result. What it produced, in `eval/calibration/devanagari-v0/`:
   Hindi-competent readers** (≈ 3.5–4.5 h total); a single reader's transcription would silently have
   become the answer key. After both passes are frozen, **either reader** may run the short
   altered-target check — the reference is frozen by then, so that check cannot alter it.
+  **That protocol was attempted as EVAL-004 and stopped after Reader A; it was never completed.**
 - **Materialised crops with proven geometry.** Reviewer and checker read the **same files**, verified
   by hash. A self-test on a coordinate-encoded synthetic image proves crop geometry and found that
   `sips --cropOffset 0 0` silently centre-crops; a verified workaround handles it.
@@ -147,8 +213,7 @@ A result from it speaks to **reading Hindi from photographed signage**. It does 
 automatically to Marathi or to Devanagari-language use generally. The Marathi stress subset is
 **deferred, not rejected**, and would need Marathi-competent readers and a separate report.
 
-Earlier: **EVAL-002** (completed, Controller-approved, closed) and **EVAL-001** (completed,
-Controller-approved).
+### EVAL-002 — evaluation plumbing · **completed, Controller-approved, closed**
 
 It built plumbing only — no generation, no network call, no calibration, no spend. What it produced:
 
@@ -174,15 +239,18 @@ It built plumbing only — no generation, no network call, no calibration, no sp
   Hindi phrase has been selected or authored; no first-language reader has checked anything. The
   fields, ladder and coverage categories are fixed at V0.
 
-Earlier: **EVAL-001 — Capability Battery V0 design**, completed and Controller-approved 24 Aug 2026
-(`tasks/EVAL-001-CONTROLLER-BRIEF.md`).
+### EVAL-001 — Capability Battery V0 design · **completed, Controller-approved 24 Aug 2026**
+
+Record: `tasks/EVAL-001-CONTROLLER-BRIEF.md`. Summarised under *CURRENT STATE* above.
 
 ## CURRENT TASK / QUEUE
 
-**None.** The EVAL-003 **finalization pass** is complete and awaiting Controller review. The
-composition question is now decided (Hindi-primary). **Do not start the human calibration** — it still
-needs reader approval and a checker roster. EVAL-004 has not been opened and must not be started
-without an approved task file.
+**EVAL-005, design hardening only** — awaiting Controller review on
+`work/eval-005-controller-review`. Nothing else is open.
+
+**Do not**, without a new approved task: call any checker or model API; generate any image; ask any
+person to validate the word list; create a Capability Registry entry; touch BSTD or the Marathi
+reserve; or resume EVAL-004.
 
 ---
 
@@ -276,6 +344,38 @@ certify a consistently *wrong* result. Any consistency test needs a fidelity tes
 
 ---
 
+**Different glyphs are not proof of different pixels.** Measured in EVAL-005 on the pinned font:
+`सुबह` and `सु‌बह` (with a zero-width non-joiner) shape to **different** HarfBuzz glyph sequences
+and render to **byte-identical** PNGs. A visibility screen built on glyph comparison would admit
+such a pair and then score a checker wrong for correctly saying the two pictures look the same.
+**If an item claims a difference is visible, verify it on the final raster.**
+
+**A font family name is not a pinned font.** `pango-view --font="Kohinoor Devanagari"` renders
+happily even when the family does not exist, resolving through fontconfig with no error. Passing an
+exact font **file** — and recording its SHA-256 — is the only thing that makes "the same
+experiment" checkable later. `hb-view` does this and shares HarfBuzz's shaping, so the pixels and
+the measurement come from one asset.
+
+**A statistical bound over correlated items is not a bound.** EVAL-005's first draft built up to
+four mismatch items from one base word and then quoted a binomial zero-failure upper bound over the
+item count. A checker that reads one word toward its plausible spelling will do it for every
+perturbation of that word, so those are not separate chances to catch it. **Count opportunities,
+not items**, and make the construction enforce it rather than caveating it.
+
+**Even a correct bound is conditional.** A zero-failure upper bound computed over a battery's own
+opportunities says what *that battery* could have missed. Our words come from one dataset lineage
+and our error operators are a taxonomy we wrote; neither is a probability sample of future generated
+Hindi. **Never quote such a figure as a checker's "true error rate".**
+
+**A blind evaluation must be verified mechanically, and before the run.** EVAL-003 proved its
+reader pack contained no Devanagari; EVAL-005 does the same for its blind checker payload, using an
+allow-list that fails closed plus a sweep for any Devanagari character at all. A leak cannot be
+detected afterwards from the responses — by then the experiment is simply gone.
+
+**Screening rank is not qualification.** A single pass may shortlist candidates; only a checker that
+itself completes the full repeat requirement may be given a status. Stability is a property of the
+instrument and is not inherited from whichever checker happened to lead.
+
 ## OPEN QUESTIONS
 
 - Which additional checkers could be calibrated cheaply enough to be worth adding to V0.
@@ -287,11 +387,23 @@ certify a consistently *wrong* result. Any consistency test needs a fidelity tes
 
 ## DEPENDENCIES — what this stream is waiting on
 
-**M1a is now satisfied.** Resources delivered the Devanagari reading material and EVAL-003 built a
-calibration pack from it. What blocks the first real calibration is **human time and a roster**:
-**≈ 3.5–4.5 hours across two independent Hindi-competent readers** — 1.5–2 h each for the blind
-transcription pass, plus 20–30 minutes for one of them to confirm the altered targets afterwards —
-then a checker roster and API spend. **None is approved.**
+**M1a is satisfied for the photographed route, and the human cost has since fallen sharply.**
+Resources delivered the Devanagari reading material and EVAL-003 built a calibration pack from it.
+
+Two different human figures are now in play and must not be confused:
+
+| Route | Human time | Status |
+|---|---|---|
+| EVAL-003/004 photographed-signage screen | ≈ **3.5–4.5 h across two** independent Hindi readers | **stopped**, and the Controller judged the items too weak a proxy |
+| **EVAL-005 constructed-exactness battery** | ≈ **1.5 h, one** reader, and **none of it establishes ground truth** | prepared, blank, unauthorised |
+| All V0 instruments (EVAL-001 estimate) | ≈ 11–15.5 h | unchanged, unbudgeted |
+
+The reason the EVAL-005 figure is so much smaller is structural rather than a shortcut: the images
+are rendered from strings we chose, so establishing what an image says, resolving reader
+disagreement, adjudication and the second reader all have nothing left to do.
+
+**What blocks a first checker run is now: the design approval, ~1.5 h of one reader, and a checker
+roster with API spend. None is approved.**
 
 
 **Material needed from Resources.** The Hindi test material splits in two, and the two cannot
@@ -330,7 +442,18 @@ to formalise. The Registry field proposals are explicitly deferred.
 
 **None.** Do not benchmark and do not spend on generation without a new approved task.
 
-When the Controller opens one, the likely first step is the Resources clearance decision on M1a,
-then assembling M1b and calibrating the two text checkers — because calibration is a gate that comes
-*before* measurement. **That is a recommendation recorded in the EVAL-001 brief, not an approved
-next action.**
+The next decisions belong to the Controller and are listed in `tasks/EVAL-005-CONTROLLER-BRIEF.md`.
+In rough order of what each unblocks:
+
+1. **Approve or reject the hardened EVAL-005 design.** Blocks everything downstream.
+2. **Approve ~1.5 hours of one Hindi-competent reader** against the prepared sheets. Blocks the run.
+3. **Approve a checker roster and API budget** — order of ₹600–2,100 for a first run across both
+   shapes, on an old price that must be re-verified. Blocks the run.
+4. **Decide whether to ask Resources for ~31–37 more Hindi words.** Optional: it moves the bound
+   from 7.8% to below 5%, and does not block a run at 53 words.
+5. **Approve the proposed thresholds** (0.95 repeat consistency, ≤10% false fail, ≤5% refusal).
+   They are judgement calls with no empirical backing here.
+6. **Decide separately on the Class B generated-glyph layer.** Specified, not built, needs
+   generation spend.
+
+**These are the worker's recommendations, not approved actions.**
