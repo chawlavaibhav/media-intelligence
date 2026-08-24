@@ -50,21 +50,20 @@ Any of the 8 triggers in `shared/AUTONOMY-POLICY.md`. On a stop: freeze evidence
 Controller Brief with `STATUS: needs_controller_review`, do not attempt to resolve the trigger and
 continue.
 
-## Controller-review checkpoints — GitHub is the handoff
-A worker must not leave important questions or state only inside its chat transcript. Before any
-planned Controller review or STOP:
+## Controller-review checkpoints — chat for the human, GitHub for the record
+A worker must report the same important checkpoint in **both places**:
 
-1. Write the current status, observations, questions and decisions needed into the task's existing
-   Controller Brief, or into `<stream>/tasks/<TASK-ID>-CHECKPOINT.md` if the Controller Brief does
-   not yet exist.
-2. Commit the checkpoint on `work/<stream>`.
-3. Push `work/<stream>` to GitHub.
-4. Then stop and report only the task ID plus commit SHA to the human operator.
+1. **Chat:** give the human operator a plain-English summary of what happened, what failed or surprised the worker, what remains uncertain, and what decisions/questions need attention. Do not reduce the chat response to only a task ID or commit SHA.
+2. **GitHub:** write the authoritative status, observations, questions, failures, surprises and decisions needed into the task's existing Controller Brief, or into `<stream>/tasks/<TASK-ID>-CHECKPOINT.md` if the Controller Brief does not yet exist.
+3. Commit the checkpoint on `work/<stream>`.
+4. Push `work/<stream>` to GitHub.
+5. End the chat report with the task ID and commit SHA so the Controller can inspect the exact branch state.
 
-The Controller reads the branch directly from GitHub. The human operator therefore does **not** need
-to copy/paste normal worker reports between Claude and the Controller. Copy/paste is only a fallback
-when the worker cannot write/push the checkpoint or when the question exists before repository
-access is available.
+The two surfaces have different purposes:
+- **Chat is for immediate human visibility.** The human should be able to understand the important learning without opening GitHub.
+- **GitHub is the durable source of truth for Controller review.** The Controller reads the branch directly and should not rely on pasted chat text when the repository record is available.
+
+The human operator therefore does not need to copy/paste normal worker reports between Claude and the Controller. They may simply tell the Controller to review `<TASK-ID>` on `work/<stream>`. The human may also open the same Controller Brief in GitHub whenever they want the full record.
 
 A worker may update its own `HANDOFF.md` when useful, but the task checkpoint / Controller Brief is
 the authoritative review surface. Do not use `HANDOFF.md` as a substitute for recording the actual
@@ -74,6 +73,12 @@ question and evidence.
 Read `OBSERVED` and `INFERRED` as separate claims — the first is evidence, the second is
 interpretation. `RECOMMENDED NEXT STEP` is a suggestion only. Approve, amend, or reject; the
 worker's suggestion becomes real only once written as a new task.
+
+For meaningful tasks, the Controller should return two layers:
+- **Founder view:** plain-English summary of what worked, what failed, what surprised us, what changed our understanding, and which evidence is worth the human inspecting personally.
+- **Controller view:** scope compliance, evidence quality, technical correctness, merge recommendation, and proposed next task.
+
+Routine mechanical details may stay in the Controller layer. Learning-bearing findings, belief changes, repeated failures and directional implications must be surfaced in the Founder view rather than silently converted into the next task.
 
 ## How cross-stream findings are escalated
 Worker tags severity (`LOCAL` / `CROSS_STREAM` / `ARCHITECTURAL`) in its Controller Brief.
