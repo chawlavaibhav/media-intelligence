@@ -184,6 +184,33 @@ Adapted from the *Light: Science & Magic* precedent.
    generalising its own vocabulary is a `source_specific_concept`; a grouping we create for
    retrieval is a `canonical_concept` with `asserts_equivalence: false`. Neither may be presented
    as agreement between sources.
+
+   **Independence is established from the active Audit Gate lineage records, never from a count of
+   distinct `origin_ref` values.** Two source identifiers can share an author, a publisher, a
+   series and a decade — *Grammar of the Shot* and *Grammar of the Edit* are Thompson & Bowen,
+   Focal Press, same series, a year apart, each citing the other — so counting ids would report one
+   authorial position stated twice as two sources agreeing.
+
+   Two origins may be counted as independent only when:
+
+   - neither source's audit record declares the other with a **dependence relation**:
+     `shared_author`, `same_series`, `companion_volume` or `derivative_of`; and
+   - neither carries `independence_not_established`, which blocks promotion until resolved rather
+     than silently passing.
+
+   A shared publisher (`shares_publisher_only`) or a citation (`cites_source`) **does not** by
+   itself defeat independence. A source citing an unrelated source is ordinary scholarly behaviour,
+   and treating a shared imprint as shared origin would refuse legitimate convergence.
+
+   **Independence is pairwise, not a permanent global property of a source.** A source may be
+   non-independent of one corpus source and a perfectly good independent origin against every
+   other. A record therefore carries `not_independent_of_named_sources`, which points at the
+   pairwise entries; it does not block that source everywhere.
+
+   The mechanical form of this rule is `independent_origins_ok()` in
+   `canon/validation/validate_audit_gate_v02.py`, which fails closed on an unrecognised verdict.
+   The audit record schema is `canon/audit/AUDIT-GATE-v0.2.md`. Adopted by
+   `canon/decisions/CANON-004-ADOPT-AUDIT-GATE-2026-08-25.md`; applied by CANON-005.
 6. **Naming convention, to be decided before seeding:** the probes produced noun phrases
    (`trapped_white_space`, `jump_cut`) and sentences (`glossy_surface_reads_flat`,
    `advertiser_vocabulary_not_audience_vocabulary`) side by side. Repairs were consistently
