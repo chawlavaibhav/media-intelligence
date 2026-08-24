@@ -1,0 +1,256 @@
+# CANON-003 Lane C, book 14 — Heath & Heath, "Made to Stick", Introduction. SPEC-04 bindings
+# against SPEC-01 v0.1. Written after the source representation was complete. All proposed.
+#
+# 28 objects produce 9 bindings — a higher rate than this lane's previous book, and for a reason
+# worth stating: this source is about designing a message for an audience, which is what a Creative
+# IR is for, whereas the previous book was largely print-medium craft our schemas do not model.
+source_id: heath_made_to_stick_introduction
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_hea_mts_0001
+  source_knowledge_refs: [sk_hea_mts_0020, sk_hea_mts_0019]
+  source_system_refs: [scs_hea_mts_001]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source supplies a six-question diagnostic and demonstrates it twice on worked examples. It
+    is the most directly operational thing in this lane: given a finished asset, ask whether its
+    central idea is simple, unexpected, concrete, credible, emotional and carried by a story, and
+    the answers name what to repair. The unit is the whole asset because five of the six questions
+    are about the idea rather than about any element of it.
+  applicability:
+    when: "reviewing a generated asset whose purpose is to be remembered or acted on"
+    limits: >
+      The source gives no test for any of the six questions, so the checklist's outputs depend
+      entirely on the judgement of whoever runs it — which is exactly the judgement the source
+      elsewhere says is unreliable. It also states plainly that the traits are neither necessary nor
+      sufficient, so a score is not a verdict. Anything built on this must report which questions
+      failed, never a total.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_hea_mts_0003, t_hea_mts_0004, t_hea_mts_0005]
+  repair_ontology_refs: [t_hea_mts_0017]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0002
+  source_knowledge_refs: [sk_hea_mts_0012, sk_hea_mts_0007]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: message.proposition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, diagnoses]
+  rationale: >
+    Concreteness is a checkable property of a proposition: is it stated in human actions and sensory
+    information, or in abstractions. The source names the failure class precisely — mission
+    statements, synergies, strategies, visions — and supplies the strong version of the rule, that
+    concreteness is the only way to ensure the proposition means the same thing to everyone who
+    reads it. That is directly a constraint on a field whose whole job is to be interpreted
+    identically by a generator and by a reviewer.
+  applicability:
+    when: "a proposition is being written or reviewed"
+    limits: >
+      The "only way" claim is asserted rather than argued, and the memory mechanism behind it is
+      cited generically. The constraint is well founded as a preference and overstated as an
+      exclusivity.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_hea_mts_0003]
+  repair_ontology_refs: [t_hea_mts_0010]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0003
+  source_knowledge_refs: [sk_hea_mts_0010, sk_hea_mts_0011]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.hook
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, constrains]
+  rationale: >
+    SPEC-01 carries a hook field and says nothing about what makes one work. This source supplies a
+    content rule — a hook earns attention by violating an expectation — and, more usefully, a
+    distinction the field does not currently make: seizing attention and holding it are different
+    problems with different devices, because surprise decays. An asset that must sustain attention
+    past its opening needs the second device and not more of the first.
+  applicability:
+    when: "specifying or reviewing the opening of an asset that runs longer than a few seconds"
+    limits: >
+      The source is writing about ideas in speech and print. Whether surprise decays on the same
+      timescale in a scrolled video feed is not addressed by it and is not asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_hea_mts_0009, t_hea_mts_0014]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0004
+  source_knowledge_refs: [sk_hea_mts_0015, sk_hea_mts_0016, sk_hea_mts_0017]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: message.emotional_target
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, flags]
+  rationale: >
+    Two constraints on a field that currently accepts any value. First, an emotional target aimed at
+    a category or a population has nothing for feeling to attach to; the source's claim is that
+    people feel for individuals, not abstractions, so an emotional target should resolve to a person.
+    Second, the source flags that the obvious emotion is often not the effective one — fear of health
+    consequences against resentment at being deceived — which means the field's value deserves to be
+    treated as a choice with alternatives rather than as a given.
+  applicability:
+    when: "an emotional target is being specified for an audience that must be moved to act"
+    limits: >
+      The individual-versus-abstraction finding is cited without a study, and it concerns charitable
+      giving to strangers. Extending it to all emotional response is the source's generalisation, not
+      the research's.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_hea_mts_0004]
+  repair_ontology_refs: [t_hea_mts_0012]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0005
+  source_knowledge_refs: [sk_hea_mts_0009]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01's hierarchy is a rank ordering of what the creative prioritises. This source supplies
+    the reason the ordering has to be acted on rather than merely recorded: an audience given many
+    good points retains none, so ranking without exclusion does not help. It argues for treating a
+    low-ranked element as a candidate for removal rather than for smaller placement.
+  applicability:
+    when: "a hierarchy has been specified and the asset carries every ranked element"
+    limits: >
+      The source's support is one quoted practitioner remark about juries. The claim that exclusion
+      beats de-emphasis is a reading of that remark, not something the source states about visual
+      composition, and it is recorded as ours.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_hea_mts_0005]
+  repair_ontology_refs: [t_hea_mts_0008]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0006
+  source_knowledge_refs: [sk_hea_mts_0019, sk_hea_mts_0028]
+  source_system_refs: [scs_hea_mts_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    This source states, in its own words, how its framework may and may not be applied: the traits
+    are neither necessary nor sufficient, you do not need all of them, having all of them guarantees
+    nothing, and the authors cannot offer a foolproof recipe. That is a source-authored instruction
+    about the use of its own knowledge, which is exactly what this consumer exists for. It is the
+    first thing lost when a framework is extracted as six loose rules, and it is the difference
+    between a checklist and a scoring rubric.
+  applicability:
+    when: "any retrieval or application of this source's six principles"
+    limits: >
+      The permission is unusually explicit here. It should not be read as a general licence to apply
+      other sources' frameworks partially — most sources say nothing either way, and silence is not
+      permission.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0007
+  source_knowledge_refs: [sk_hea_mts_0022, sk_hea_mts_0023, sk_hea_mts_0024]
+  source_system_refs: [scs_hea_mts_002]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A measured reason to distrust an expert's own judgement of whether a brief, a prompt or an
+    instruction is clear. The tapper/listener result is that knowledgeable senders communicated once
+    in forty while believing they were communicating once in two. Applied to this project: whoever
+    writes a specification is the tapper, and their confidence that it is unambiguous is precisely
+    the quantity the study says is inflated. The consequence is that clarity should be established
+    by a naive reader, never by the author's judgement.
+  applicability:
+    when: "judging whether a specification, brief or instruction is clear enough to act on"
+    limits: >
+      A single cited study on an extreme task — transmitting a tune by knocking. The overconfidence
+      finding is the transferable part; the 2.5 per cent success rate is not, and no number from this
+      study should be carried into any estimate.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_hea_mts_0001, t_hea_mts_0002]
+  repair_ontology_refs: [t_hea_mts_0016]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hea_mts_0008
+  source_knowledge_refs: [sk_hea_mts_0020]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source supplies a clean matched pair on one dimension: "maximize shareholder value" against
+    "put a man on the moon and return him safely by the end of the decade" — two statements of
+    organisational intent, one scored as failing five of six questions and one as passing all six.
+    It is a candidate item for testing whether any measure of message quality separates them, and it
+    is unusually good for the purpose because both are real, both are famous, and the source has
+    already published its expected answer.
+  applicability:
+    when: "assembling candidate items for a message-quality measure"
+    limits: >
+      A source-asserted expected outcome, not validated ground truth — the same labelling condition
+      the Controller set for the CANON-001 and CANON-002 stimuli. Both examples were chosen by the
+      source to demonstrate its own checklist and score at the two extremes, so an instrument that
+      separates them has cleared a low bar.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; source-asserted expected outcome, not ground truth"
+
+- binding_id: bnd_hea_mts_0009
+  source_knowledge_refs: [sk_hea_mts_0025, sk_hea_mts_0026, sk_hea_mts_0027]
+  source_system_refs: [scs_hea_mts_003]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [derives]
+  rationale: >
+    The most directly relevant claim in this lane to what this project is attempting. The cited
+    Israeli work found that award-winning advertisements were far more classifiable into six
+    patterns than ordinary ones, and that two hours of pattern training raised novices' rated output
+    where two hours of brainstorming training did not. The transferable claim is that giving a
+    producer explicit structural patterns can outperform giving it open-ended ideation instructions.
+    Recorded as a hypothesis about how compiled knowledge might be delivered, not as a finding about
+    any model.
+  applicability:
+    when: "deciding whether retrieved knowledge should be delivered as explicit patterns or as open guidance"
+    limits: >
+      One cited study, human novices, print advertising, 1999, with no group sizes and no
+      significance test, and an outcome measure of consumer creativity ratings. Nothing in it is
+      about generative models, and this binding asserts nothing about them. Whether the finding
+      transfers is exactly the kind of question this project would have to test rather than assume.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_hea_mts_0021]
+  status: proposed
+  status_reason: "not reviewed; recorded as a hypothesis for testing, not as an established result"

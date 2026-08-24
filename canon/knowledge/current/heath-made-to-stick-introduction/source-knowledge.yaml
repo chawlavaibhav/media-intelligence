@@ -1,0 +1,1533 @@
+# CANON-003 Lane C, book 14 — Chip Heath & Dan Heath, "Made to Stick", the complete Introduction
+# ("What Sticks?"). Fresh SPEC-03 extraction. Historical material for this book, if any exists, is
+# sealed until this book's checkpoint commit.
+# Granularity: CANON-001 V0 rule, unchanged.
+# Visual completeness: not_verified_page_layout — figures inspected and there are none; an EPUB has
+# no page to inspect. See visual-evidence-ledger.yaml. No claim is recorded as visually demonstrated.
+#
+# Section rationale: the Introduction is where this book's framework exists as a system. It states
+# all six principles with their definitions, names the single obstacle they are all aimed at, states
+# how they are meant to be used together and how they are not, and carries most of the book's
+# evidence. Chapters 1-6 develop one principle each; the epilogue was not processed. Each principle
+# object below therefore records what the Introduction says and supports, NOT the book's full case
+# for that principle. That scope limit is stated in PROVENANCE.md rather than left implicit.
+#
+# EXTRACTION NOTE — read this before reading the evidence fields. This source's support is
+# overwhelmingly **published research by named third parties**: Elizabeth Newton's 1990 Stanford
+# dissertation, Joel Best and Gerald Horiuchi's Halloween study, a 1999 Israeli advertising-template
+# study, an ABC News poll. SPEC-03's `empirical_within_source` is defined as "the source reports its
+# own measurement", and the fixed characteristic list has no value for cited external research. The
+# least assumptive faithful choice was made: `empirical_within_source` is applied ONLY where the
+# measurement is the authors' own (Chip Heath's forty experiments), and every cited third-party
+# study is recorded in full — researcher, design and numbers — in a caveat marked
+# `extractor_observed`. The consequence is that this book's structured evidence profile reads
+# weaker than the book actually is. That is a gap in the vocabulary, not a judgement about the
+# source, and it is logged in the Lane C issue file.
+
+source_id: heath_made_to_stick_introduction
+
+source_knowledge:
+
+- sk_id: sk_hea_mts_0001
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "By \"stick,\" we mean that your ideas are understood and remembered, and have a lasting impact—they change your audience's opinions or behavior."
+  concept_label: stickiness_is_understood_remembered_and_acted_on
+  label_origin: source_verbatim
+  claim: >
+    An idea "sticks" when it is understood, remembered, and has a lasting impact — meaning it changes
+    the audience's opinions or behaviour. The source adopts the word from Malcolm Gladwell's *The
+    Tipping Point* and states the difference in scope: Gladwell asked what makes social epidemics
+    epidemic, while this book asks how an effective idea is constructed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "any idea intended to persuade, teach or change behaviour"
+  caveats:
+    - text: >
+        The definition bundles three separable outcomes — comprehension, recall and behaviour change
+        — into one word and offers no way to have some without the others. Every later claim in the
+        book is stated against this compound target.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0002, note: "the definition is what the nurture claim is about"}
+  evidence:
+    characteristics: [explicitly_stated, argued, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "On Stickiness; What Led to Made to Stick"
+    page_start: null
+    page_end: null
+    locator: "Introduction, sections 'On Stickiness' and 'What Led to Made to Stick'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0002
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "It's the nature versus nurture debate applied to ideas: Are ideas born interesting or made interesting?"
+    - "Well, this is a nurture book."
+    - "We can create ideas with an eye to maximizing their stickiness."
+  concept_label: stickiness_is_a_property_of_design_not_of_subject_matter
+  label_origin: extractor_assigned
+  claim: >
+    Whether an idea sticks is a property of how it is built, not of how inherently interesting its
+    subject is. The source poses the question directly — are ideas born interesting or made
+    interesting — and answers that this is a nurture book. It concedes the basketball analogy breaks
+    down at exactly this point: unlike players, ideas can be engineered.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Sticky ideas share identifiable traits, and those traits can be deliberately built into an
+      idea rather than waited for.
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "ideas that are interesting but not sensational, truthful but not mind-blowing"
+  caveats:
+    - text: >
+        The source explicitly acknowledges the comparison it opens with is unfair — an urban legend
+        against a cherry-picked bad passage — and reframes the two as poles of a spectrum rather
+        than as a test.
+      origin: source_stated
+    - text: >
+        The nature side is never actually argued against. Subject-matter interest is set aside by
+        assertion and the book proceeds on the nurture side.
+      origin: extractor_observed
+  source_stated_problems:
+    - "some ideas are inherently interesting and some are inherently uninteresting"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the Kidney Heist urban legend, retellable almost perfectly after one reading, against a nonprofit paper on 'comprehensive community building'", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hea_mts_0006, note: "rests on sticky ideas sharing identifiable traits"}
+    - {relation: member_of_system, target: scs_hea_mts_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "What Sticks?"
+    page_start: null
+    page_end: null
+    locator: "Introduction, opening section"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0003
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "the ridiculous Kidney Heist tale keeps circulating, with no resources whatsoever to support it"
+    - "Good ideas often have a hard time succeeding in the world."
+    - "How could a false idea displace a true one?"
+  concept_label: sticky_false_ideas_outcompete_true_ideas_that_have_resources
+  label_origin: extractor_assigned
+  claim: >
+    Stickiness is independent of truth and of the resources behind an idea. False ideas — urban
+    legends, conspiracy theories, wartime rumours — circulate indefinitely with no support at all,
+    while good ideas backed by effort routinely fail: a biology teacher spends an hour on mitosis
+    and three children remember it a week later; a manager unveils a strategy to enthusiastic nods
+    and the next day the old one is still being implemented.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, idea_design, folklore]
+    conditions: "ideas competing for attention and retransmission"
+  caveats:
+    - text: >
+        The mitosis and strategy-memo examples are illustrative and carry no figures or sources; the
+        "three kids" is offered as an image, not a measurement.
+      origin: extractor_observed
+    - text: >
+        The claim that stickiness and truth are independent is what makes the book's method
+        dual-use, and the source is aware of this — it stresses that the popcorn case is "a
+        truthful idea success story" — but it does not treat the dual-use property as a problem.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Good ideas often have a hard time succeeding in the world."
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "The Kentucky Fried Rat; Coca-Cola rots your bones; the Great Wall visible from space; the 10-percent-of-your-brain claim", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0006, note: "the puzzle the six traits are offered to solve"}
+    - {relation: demonstrated_together_with, target: sk_hea_mts_0007, note: "the false and the true success case are set against each other"}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "What Sticks?; What Led to Made to Stick"
+    page_start: null
+    page_end: null
+    locator: "Introduction"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0004
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "So not every idea is stick-worthy. When we ask people how often they need to make an idea stick, they tell us that the need arises between once a month and once a week, twelve to fifty-two times per year."
+    - "\"Pass the gravy\" doesn't have to be memorable."
+  concept_label: the_need_for_stickiness_is_occasional_not_constant
+  label_origin: extractor_assigned
+  claim: >
+    Most communication does not need to be sticky and should not be treated as though it does. The
+    source states that when it asks people how often they need to make an idea stick, they report
+    between once a month and once a week — twelve to fifty-two times a year — and lists the
+    occasions: managers announcing strategic direction, teachers conveying themes that outlast the
+    facts, columnists changing opinions, religious leaders, nonprofits recruiting volunteers and
+    donors.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication]
+    conditions: "professional communication"
+  caveats:
+    - text: >
+        The twelve-to-fifty-two figure comes from asking people to estimate their own frequency. No
+        sample, method or population is given, and self-reported frequency is not the same as
+        observed need.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hea_mts_0001, note: "limits when the whole framework is worth applying"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "On Stickiness"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Stickiness'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0005
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "When we get advice on communicating, it often concerns our delivery... Sometimes we get advice about structure... Another genre concerns knowing your audience... and, finally... Use repetition, repetition, repetition."
+    - "But this set of advice has one glaring shortcoming: It doesn't help Art Silverman as he tries to figure out the best way to explain that movie popcorn is really unhealthful."
+    - "If you have to tell someone the same thing ten times, the idea probably wasn't very well designed. No urban legend has to be repeated ten times."
+  concept_label: existing_communication_advice_addresses_everything_except_the_message
+  label_origin: extractor_assigned
+  claim: >
+    The four standard genres of communication advice — delivery, structure, knowing your audience,
+    and repetition — all leave the message itself undesigned. The source's test case is a
+    communicator who already knows his goal, his audience and his format and still does not know
+    what to say. It allows that the advice has obvious merit, except for the emphasis on repetition,
+    which it doubts directly: an idea needing ten tellings was probably badly designed, and no urban
+    legend needs repeating ten times.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Delivery, structure and audience analysis are all about how a message is transmitted; none of
+      them selects the content, so a communicator can satisfy all of them and still have nothing
+      worth transmitting.
+  scope:
+    domain_discussed_by_source: [communication]
+    conditions: "advice given to people who must communicate professionally"
+  caveats:
+    - text: >
+        The argument against repetition is made by analogy to urban legends, which are retransmitted
+        by many people rather than repeated by one. Whether the comparison holds is not examined.
+      origin: extractor_observed
+  source_stated_problems:
+    - "It doesn't help Art Silverman as he tries to figure out the best way to explain that movie popcorn is really unhealthful."
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the elementary-school teacher who knows her goal, her audience and her craft, and still faces an infinite number of ways to teach mitosis", figure_ref: null}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_hea_mts_002}
+    - {relation: generalises, target: sk_hea_mts_0020, note: "the gap the checklist is offered to fill"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "On Stickiness"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Stickiness'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0006
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "The Halloween-candy story is, in a sense, the evil twin of the CSPI story."
+    - "Both stories highlighted an unexpected danger in a common activity... Both stories called for simple action... Both made use of vivid, concrete images... And both stories tapped into emotion."
+    - "We began to see the same themes, the same attributes, reflected in a wide range of successful ideas."
+  concept_label: sticky_ideas_share_the_same_traits_whether_they_are_true_or_false
+  label_origin: extractor_assigned
+  claim: >
+    Ideas that stick share a common set of traits regardless of whether they are true, deliberate or
+    beneficial. The source derives this by laying three cases side by side: the Halloween
+    candy-tampering myth, the movie-popcorn campaign, and the Kidney Heist legend. Each combines an
+    unexpected danger in a common activity, a simple action to take, a vivid concrete image, and an
+    emotion. It reports that the same themes recur across a wide range of successful ideas, drawn
+    from its own research and from reviewing the work of folklorists, psychologists, educational
+    researchers, political scientists and proverb-hunters.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, idea_design, folklore]
+    conditions: "ideas that have demonstrably spread"
+  caveats:
+    - text: >
+        The Halloween case is supported by named research: sociologists Joel Best and Gerald
+        Horiuchi studied every reported Halloween incident from 1958 and found no instance of a
+        stranger causing a child life-threatening harm by tampering with candy; the two child deaths
+        found were caused by relatives. A 1985 ABC News poll is cited for 60 per cent of parents
+        worrying. This is cited third-party research, not the source's own measurement, so it is
+        recorded here rather than as `empirical_within_source` — see the file header.
+      origin: extractor_observed
+    - text: >
+        The three cases were selected because they stuck. Nothing is said about ideas carrying the
+        same four traits that failed to spread, so the traits are established as common to
+        successes, not as sufficient for success. The source says as much two paragraphs later.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Halloween candy-tampering myth — false, changed the behaviour of millions of parents for thirty years, and changed the law in California and New Jersey", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0009, note: "the six principles are the worked-out form of these traits"}
+    - {relation: qualified_by, target: sk_hea_mts_0019, note: "the traits are common, not necessary or sufficient"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Who Spoiled Halloween?; Six Principles of Sticky Ideas"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Who Spoiled Halloween?' into 'Six Principles of Sticky Ideas'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0007
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "\"A medium-sized 'butter' popcorn at a typical neighborhood movie theater contains more artery-clogging fat than a bacon-and-eggs breakfast, a Big Mac and fries for lunch, and a steak dinner with all the trimmings—combined!\""
+    - "\"Saturated fat has zero appeal,\" Silverman says. \"It's dry, it's academic, who cares?\""
+    - "But that was too scientific somehow. Too rational."
+  concept_label: an_inert_true_fact_can_be_made_to_spread_by_reframing_it_alone
+  label_origin: extractor_assigned
+  claim: >
+    A true and important fact that nobody acts on can be made to spread by changing only how it is
+    expressed, with no additional resources. The source's case is the Center for Science in the
+    Public Interest and movie popcorn: laboratory analysis found the typical bag carried 37 grams of
+    saturated fat against a recommended daily maximum of 20. The number by itself meant nothing to
+    people, and a bar chart was rejected as too rational for a fact that was not rational but
+    ludicrous. The claim was restated as a comparison against a whole day of unhealthy meals and
+    staged with the actual food laid out for cameras. It was carried by CBS, NBC, ABC, CNN, *USA
+    Today*, the *Los Angeles Times* and the *Washington Post*, popcorn sales fell, and United
+    Artists, AMC and Loews stopped using coconut oil.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The underlying fact was abstract and gave the audience no way to judge whether 37 grams was
+      bad; the comparison expressed the same fact in terms the audience could already evaluate.
+  scope:
+    domain_discussed_by_source: [public_communication, advocacy]
+    conditions: "a true but abstract claim that an audience cannot evaluate"
+  caveats:
+    - text: >
+        The message and its staging changed together — the wording, the visual buffet and a press
+        conference — so the case does not isolate the reframing from the production around it.
+      origin: extractor_observed
+    - text: >
+        The outcome is reported as coverage, falling sales and chains switching oil, with no figures
+        for any of the three and no comparison against what a conventional announcement would have
+        achieved.
+      origin: extractor_observed
+  source_stated_problems:
+    - "few people know what \"37 grams of saturated fat\" means"
+  source_stated_remedies:
+    - "shape the message in a way that fully communicated this ludicrousness"
+  examples:
+    positive:
+      - {description: "CSPI press conference, 27 September 1992, with a day's worth of fatty meals laid out beside a single bag of popcorn", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0002, note: "the worked case for design over subject matter"}
+    - {relation: demonstrated_together_with, target: sk_hea_mts_0006, note: "paired with the Halloween myth as true and false twins"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "The Truth About Movie Popcorn"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'The Truth About Movie Popcorn'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0008
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "perhaps the oldest class of naturally sticky ideas is the proverb—a nugget of wisdom that often endures over centuries and across cultures"
+    - "versions of the proverb \"Where there's smoke there's fire\" have appeared in more than fifty-five different languages"
+    - "Saying something short is not the mission—sound bites are not the ideal. Proverbs are the ideal."
+  concept_label: the_proverb_is_the_model_of_a_durable_idea
+  label_origin: extractor_assigned
+  claim: >
+    The proverb is the oldest and the best model of a sticky idea, because it survives centuries and
+    crosses cultures while remaining both compact and profound. The source names it as the standard
+    to aim at, explicitly against the sound bite, and observes that proverbs also encode abstract
+    truths in concrete language — "a bird in hand is worth two in the bush".
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, folklore]
+    conditions: "ideas intended to endure"
+  caveats:
+    - text: >
+        The fifty-five-languages figure is given without a source. It is the strongest durability
+        evidence offered and it is a single example.
+      origin: extractor_observed
+    - text: >
+        Recorded as its own object rather than folded into simplicity because the source uses the
+        proverb in two different arguments — as the model for simplicity, and as evidence for
+        concreteness — and because "compact and profound" is independently contradictable as a
+        standard.
+      origin: extractor_observed
+  source_stated_problems:
+    - "sound bites are not the ideal"
+  source_stated_remedies:
+    - "Proverbs are the ideal."
+  examples:
+    positive:
+      - {description: "the Golden Rule, described as a one-sentence statement so profound that a person could spend a lifetime learning to follow it", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hea_mts_0009, note: "supplies the standard simplicity is measured against"}
+    - {relation: qualifies, target: sk_hea_mts_0012, note: "also offered as evidence for concreteness"}
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "What Led to Made to Stick; PRINCIPLE 1: SIMPLICITY; PRINCIPLE 3: CONCRETENESS"
+    page_start: null
+    page_end: null
+    locator: "Introduction"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ───────────────── The six principles ─────────────────
+# One object per principle, because the principle is the unit the framework operates on: the
+# checklist has six entries, each answering one stated question. Sub-claims that carry their own
+# distinct mechanism and their own support are recorded as separate objects that `specialise` their
+# principle, which satisfies the V0 granularity rule without fragmenting the framework.
+
+- sk_id: sk_hea_mts_0009
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "How do we find the essential core of our ideas?"
+    - "To strip an idea down to its core, we must be masters of exclusion. We must relentlessly prioritize."
+    - "We must create ideas that are both simple and profound."
+  concept_label: simplicity_is_finding_the_essential_core_by_exclusion
+  label_origin: extractor_assigned
+  claim: >
+    The first principle answers the question of how to find the essential core of an idea. It
+    requires mastery of exclusion and relentless prioritisation, and the source is explicit that
+    brevity is not the goal: saying something short is not the mission, sound bites are not the
+    ideal, proverbs are. The target is an idea that is simple and profound at once.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An audience that receives many points retains none. The source quotes a defence lawyer: argue
+      ten points, each of them good, and the jury will remember none of them.
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "any idea being prepared for an audience"
+  caveats:
+    - text: >
+        The supporting evidence in the Introduction is one quoted practitioner remark and one
+        exemplar, the Golden Rule. The principle's own chapter was not processed.
+      origin: extractor_observed
+    - text: >
+        "Simple and profound" is a target, not a test. Nothing here says how to tell whether an idea
+        has reached its core or has merely been cut down.
+      origin: extractor_observed
+  source_stated_problems:
+    - "if you argue ten points, even if each is a good point, when they get back to the jury room they won't remember any"
+  source_stated_remedies:
+    - "we must be masters of exclusion"
+  examples:
+    positive:
+      - {description: "the Golden Rule as the ultimate model of simplicity", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_hea_mts_0008, note: "the proverb is the standard it is measured against"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 1: SIMPLICITY"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 1: SIMPLICITY'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0010
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "How do we get our audience to pay attention to our ideas, and how do we maintain their interest when we need time to get the ideas across?"
+    - "We need to violate people's expectations. We need to be counterintuitive."
+  concept_label: unexpectedness_is_violating_the_audiences_expectations
+  label_origin: extractor_assigned
+  claim: >
+    The second principle answers how to get an audience to pay attention and how to hold that
+    attention long enough to deliver the idea. The answer is to violate people's expectations and to
+    be counterintuitive — the source's own example being that a bag of popcorn is as unhealthy as a
+    whole day of fatty food.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Surprise is an emotion whose function is to increase alertness and cause focus, so violating
+      an expectation produces attention directly.
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "an audience whose attention has not been secured"
+  caveats:
+    - text: >
+        The function attributed to surprise — increasing alertness and causing focus — is stated as
+        established without a citation in this section.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "We need to violate people's expectations."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0011, note: "attention and sustained interest are handled by different devices"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 2: UNEXPECTEDNESS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 2: UNEXPECTEDNESS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0011
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "But surprise doesn't last. For our idea to endure, we must generate interest and curiosity."
+    - "We can engage people's curiosity over a long period of time by systematically \"opening gaps\" in their knowledge—and then filling those gaps."
+  concept_label: grabbing_attention_and_holding_interest_are_different_problems
+  label_origin: extractor_assigned
+  claim: >
+    Getting attention and keeping it are two problems needing two devices. Surprise seizes attention
+    but decays, so an idea that must be delivered over time requires curiosity instead, generated by
+    systematically opening gaps in what the audience knows and then filling them. The source's test
+    case is holding students through the forty-eighth history class of the year.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An opened gap in knowledge is itself uncomfortable and motivates the audience to stay for the
+      closing of it, which surprise cannot do because it is momentary.
+  scope:
+    domain_discussed_by_source: [communication, teaching]
+    conditions: "ideas that take time to deliver"
+  caveats:
+    - text: >
+        Recorded separately from the unexpectedness principle because it names a different problem,
+        supplies a different device and a different mechanism, and could be true while the surprise
+        claim is false. It remains a member of the same checklist entry, which is why it specialises
+        rather than replaces it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "But surprise doesn't last."
+  source_stated_remedies:
+    - "systematically \"opening gaps\" in their knowledge—and then filling those gaps"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0010, note: "the sustained-interest half of the same principle"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 2: UNEXPECTEDNESS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 2: UNEXPECTEDNESS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0012
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "How do we make our ideas clear? We must explain our ideas in terms of human actions, in terms of sensory information."
+    - "Mission statements, synergies, strategies, visions—they are often ambiguous to the point of being meaningless."
+    - "Speaking concretely is the only way to ensure that our idea will mean the same thing to everyone in our audience."
+  concept_label: concreteness_is_expressing_an_idea_in_actions_and_sensory_detail
+  label_origin: extractor_assigned
+  claim: >
+    The third principle answers how to make an idea clear. It requires explaining the idea in terms
+    of human actions and sensory information. The source identifies abstraction as where business
+    communication characteristically fails — mission statements, synergies, strategies and visions
+    ambiguous to the point of meaninglessness — and makes an unusually strong claim for the remedy:
+    speaking concretely is the *only* way to ensure an idea means the same thing to everyone in the
+    audience.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Human memory is described as wired to retain concrete data, which is why naturally sticky
+      ideas are full of concrete images — ice-filled bathtubs, apples with razors.
+  scope:
+    domain_discussed_by_source: [communication, business_communication]
+    conditions: "any idea that must be understood identically by more than one person"
+  caveats:
+    - text: >
+        "The only way" is the strongest claim made for any of the six principles and no argument is
+        given for the exclusivity, only for the benefit.
+      origin: extractor_observed
+    - text: >
+        The memory mechanism — that brains are wired to remember concrete data — is asserted without
+        a citation in this section.
+      origin: extractor_observed
+  source_stated_problems:
+    - "ambiguous to the point of being meaningless"
+  source_stated_remedies:
+    - "explain our ideas in terms of human actions, in terms of sensory information"
+  examples:
+    positive:
+      - {description: "\"A bird in hand is worth two in the bush\" — an abstract truth encoded in concrete language", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_hea_mts_0008, note: "proverbs are offered as its evidence too"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 3: CONCRETENESS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 3: CONCRETENESS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0013
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "How do we make people believe our ideas?"
+    - "Sticky ideas have to carry their own credentials."
+    - "We need ways to help people test our ideas for themselves—a \"try before you buy\" philosophy for the world of ideas."
+  concept_label: credibility_is_the_idea_carrying_its_own_credentials
+  label_origin: extractor_assigned
+  claim: >
+    The fourth principle answers how to make people believe an idea. Borrowed authority is normally
+    unavailable — the source contrasts a former surgeon general, whose statements are accepted
+    without scepticism, with everyday communicators who have no such standing — so a sticky idea has
+    to carry its own credentials, and the reliable way to supply them is to give the audience a way
+    to test the claim for themselves.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, persuasion]
+    conditions: "communicators without recognised authority"
+  caveats:
+    - text: >
+        The mechanism is not stated. Why a self-administered test produces belief more reliably than
+        an assertion is left implicit.
+      origin: extractor_observed
+  source_stated_problems:
+    - "in most day-to-day situations we don't enjoy this authority"
+  source_stated_remedies:
+    - "help people test our ideas for themselves"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0014, note: "the counterintuitive half of the same principle"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 4: CREDIBILITY"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 4: CREDIBILITY'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0014
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "When we're trying to build a case for something, most of us instinctively grasp for hard numbers. But in many cases this is exactly the wrong approach."
+    - "Instead, he asked a simple question that allowed voters to test for themselves: \"Before you vote, ask yourself if you are better off today than you were four years ago.\""
+  concept_label: statistics_are_often_the_wrong_instrument_for_producing_belief
+  label_origin: extractor_assigned
+  claim: >
+    Reaching for hard numbers to build a case is the common instinct and in many cases exactly the
+    wrong approach. The source's case is the 1980 Reagan–Carter presidential debate: Reagan could
+    have cited any number of statistics showing a sluggish economy, and instead asked voters a
+    question they could answer from their own experience.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [persuasion]
+    conditions: "audiences who can check a claim against their own situation"
+  caveats:
+    - text: >
+        One historical case, with the outcome left implicit. No comparison against the
+        statistics-based version of the same argument is possible, and the election had many other
+        causes.
+      origin: extractor_observed
+    - text: >
+        The reframing works because the audience's own experience happened to support the speaker.
+        The source does not address what the device does when it does not.
+      origin: extractor_observed
+    - text: >
+        Recorded separately from the credibility principle because it is a claim about what *fails*,
+        it is counterintuitive, and it could be false while the credibility principle holds.
+      origin: extractor_observed
+  source_stated_problems:
+    - "most of us instinctively grasp for hard numbers"
+  source_stated_remedies:
+    - "a simple question that allowed voters to test for themselves"
+  examples:
+    positive:
+      - {description: "Reagan's 1980 debate question, \"are you better off today than you were four years ago\"", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0013, note: "names the instrument that fails and the one that works"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, argued, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 4: CREDIBILITY"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 4: CREDIBILITY'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0015
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "How do we get people to care about our ideas? We make them feel something."
+    - "The statistic \"37 grams\" doesn't elicit any emotions."
+  concept_label: emotion_is_what_makes_an_audience_care
+  label_origin: extractor_assigned
+  claim: >
+    The fifth principle answers how to make an audience care, and the answer is to make them feel
+    something. The source uses its own popcorn case as the demonstration: the statistic "37 grams"
+    elicits nothing, while the comparison that made people feel disgust produced the response.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, persuasion]
+    conditions: "ideas requiring the audience to care enough to act"
+  caveats:
+    - text: >
+        Caring and feeling are treated as the same thing without argument. The mechanism connecting
+        an elicited emotion to sustained concern is not given here.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "We make them feel something."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0016, note: "the mechanism half of the same principle"}
+    - {relation: generalises, target: sk_hea_mts_0017, note: "the selection half of the same principle"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 5: EMOTIONS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 5: EMOTIONS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0016
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "Research shows that people are more likely to make a charitable gift to a single needy individual than to an entire impoverished region."
+    - "We are wired to feel things for people, not for abstractions."
+  concept_label: people_feel_for_individuals_and_not_for_abstractions
+  label_origin: extractor_assigned
+  claim: >
+    Feeling attaches to a person and not to a category. The source states that research shows people
+    are more likely to give to a single named needy individual than to a whole impoverished region,
+    and generalises it: we are wired to feel things for people, not for abstractions.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Emotional response is directed at persons; an abstraction offers nothing for it to attach to."
+  scope:
+    domain_discussed_by_source: [communication, persuasion, charitable_giving]
+    conditions: "appeals asking an audience to care about a group"
+  caveats:
+    - text: >
+        "Research shows" with no researcher, study or figure attached in this section. This is a
+        cited third-party finding, so it is not recorded as the source's own measurement — see the
+        file header — but it is also the least identifiable of the source's citations.
+      origin: extractor_observed
+    - text: >
+        The finding is about donation behaviour toward strangers in need. Generalising it to all
+        emotional response to any abstraction is the source's step, not the research's.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0015, note: "why emotion works, and on what"}
+    - {relation: qualifies, target: sk_hea_mts_0012, note: "gives a second reason concreteness matters"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 5: EMOTIONS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 5: EMOTIONS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0017
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "Sometimes the hard part is finding the right emotion to harness."
+    - "it's difficult to get teenagers to quit smoking by instilling in them a fear of the consequences, but it's easier to get them to quit by tapping into their resentment of the duplicity of Big Tobacco"
+  concept_label: the_effective_emotion_is_often_not_the_obvious_one
+  label_origin: extractor_assigned
+  claim: >
+    Choosing which emotion to use is the difficult part, and the obvious one is often not the
+    effective one. The source's case is teenage smoking: fear of the health consequences works
+    poorly, while resentment at being deceived by the tobacco industry works better.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [public_health_communication, persuasion]
+    conditions: "audiences for whom the obvious appeal has failed"
+  caveats:
+    - text: >
+        Stated as known — "it's difficult", "it's easier" — with no study, campaign or figure named
+        in this section.
+      origin: extractor_observed
+    - text: >
+        Recorded separately from the emotions principle because it is a claim about the *selection*
+        of an emotion rather than about emotion working at all, and because it is the one part of
+        this principle that gives the practitioner something to do differently.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Sometimes the hard part is finding the right emotion to harness."
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0015, note: "which emotion, not whether emotion"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 5: EMOTIONS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 5: EMOTIONS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0018
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "How do we get people to act on our ideas? We tell stories."
+    - "hearing stories acts as a kind of mental flight simulator, preparing us to respond more quickly and effectively"
+    - "Research shows that mentally rehearsing a situation helps us perform better when we encounter that situation in the physical environment."
+  concept_label: stories_prepare_an_audience_to_act
+  label_origin: extractor_assigned
+  claim: >
+    The sixth principle answers how to get people to act, and the answer is to tell stories. The
+    source's case is firefighters, who swap stories after every fire and thereby multiply their
+    experience: after years of hearing them they hold a richer catalogue of critical situations and
+    the appropriate responses. It states that research shows mentally rehearsing a situation
+    improves performance when the situation is actually met, and calls hearing a story a kind of
+    mental flight simulator.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A story is a rehearsal. Hearing one builds the same readiness that having been through the
+      situation would, so the listener responds faster and better when it occurs.
+  scope:
+    domain_discussed_by_source: [communication, professional_learning]
+    conditions: "audiences who must act in situations they have not yet met"
+  caveats:
+    - text: >
+        "Research shows" with no researcher or figure in this section. The mental-rehearsal
+        literature is cited generically and is the load-bearing support for the flight-simulator
+        mechanism.
+      origin: extractor_observed
+    - text: >
+        The firefighter case is an observation about a profession, not a comparison; nothing is said
+        about firefighters who do not swap stories.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "We tell stories."
+  examples:
+    positive:
+      - {description: "firefighters swapping stories after every fire and so multiplying their experience", figure_ref: null}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "PRINCIPLE 6: STORIES"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'PRINCIPLE 6: STORIES'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ───────────────── Framework-level claims ─────────────────
+
+- sk_id: sk_hea_mts_0019
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "There is no \"formula\" for a sticky idea—we don't want to overstate the case. But sticky ideas do draw from a common set of traits, which make them more likely to succeed."
+    - "you don't need all of these traits in order to be great... And having all the traits doesn't guarantee greatness"
+  concept_label: the_six_traits_are_a_common_set_not_a_formula
+  label_origin: extractor_assigned
+  claim: >
+    The six traits are neither necessary nor sufficient. The source states outright that there is no
+    formula and that it does not want to overstate the case: sticky ideas draw from a common set of
+    traits that make success more likely. Its analogy is a great basketball player, who has some
+    subset of height, speed, agility, power and court sense — some great guards are five feet ten
+    and scrawny, and there are plenty of slow, clumsy seven-footers — but if you are picking a team
+    from strangers you should still take the gamble on the seven-footer.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The traits raise the probability of success rather than determining it, so partial possession
+      is normal and full possession is no guarantee.
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "any application of the six principles"
+  caveats:
+    - text: >
+        The probabilistic framing is stated and never quantified anywhere in this section. "More
+        likely to succeed" has no base rate, no effect size and no way to be checked.
+      origin: extractor_observed
+    - text: >
+        This claim does real work in the framework: it makes the framework unfalsifiable by any
+        individual counter-example, since a sticky idea missing traits and an unsticky idea having
+        them are both permitted outcomes.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hea_mts_0006, note: "limits how strongly the shared traits may be read"}
+    - {relation: qualifies, target: sk_hea_mts_0020, note: "the checklist is a prompt, not a test to be passed"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Six Principles of Sticky Ideas"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Six Principles of Sticky Ideas'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0020
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "here's our checklist for creating a successful idea: a Simple Unexpected Concrete Credentialed Emotional Story"
+    - "They can be used as a kind of checklist."
+    - "Is this idea simple? Yes, in the sense that it's short, but it lacks the useful simplicity of a proverb. Is it unexpected? No. Concrete? Not at all."
+  concept_label: the_six_principles_are_used_as_a_diagnostic_checklist
+  label_origin: extractor_assigned
+  claim: >
+    The six principles are meant to be run as a checklist against a specific idea, one question at a
+    time, and the source demonstrates the procedure twice on the same page. "Maximize shareholder
+    value" is scored: simple only in the sense of being short, not unexpected, not concrete, credible
+    only because the CEO said it, not emotional, not a story. John F. Kennedy's 1961 call to put a
+    man on the moon and return him safely by the end of the decade is scored on the same six
+    questions and passes each. The source names the acronym SUCCESs and admits it is a little corny.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Asking the six questions of an existing idea exposes which of them it fails, which is what a
+      communicator otherwise has no way to see.
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "an idea already drafted, being evaluated or repaired"
+  caveats:
+    - text: >
+        The two worked examples were chosen for the demonstration and score six-for-six and
+        zero-for-six respectively. No idea with a mixed score is worked, which is where a checklist
+        would actually be difficult to apply.
+      origin: extractor_observed
+    - text: >
+        Every question is answered yes or no by the authors' judgement. No test is given for any of
+        the six, so the checklist's outputs depend entirely on who is running it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "opaque, abstract missions don't captivate and inspire people"
+  source_stated_remedies:
+    - "The six principles presented earlier are your best weapons. They can be used as a kind of checklist."
+  examples:
+    positive:
+      - {description: "JFK's 1961 moon-shot call, scored simple, unexpected, concrete, credible, emotional and a story in miniature", figure_ref: null}
+    counter:
+      - {description: "\"maximize shareholder value\", scored as failing five of the six", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hea_mts_0019, note: "usable only because the traits are a prompt rather than a formula"}
+    - {relation: member_of_system, target: scs_hea_mts_001}
+    - {relation: member_of_system, target: scs_hea_mts_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Six Principles of Sticky Ideas; Tappers and Listeners"
+    page_start: null
+    page_end: null
+    locator: "Introduction, checklist statement and the worked comparison"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0021
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "One skill we can learn is the ability to spot ideas that have \"natural talent,\" like the seven-foot stranger."
+    - "it wasn't created by a Madison Avenue advertising agency; it started with a single store owner who had the good sense to spot an amazing story"
+  concept_label: recognising_an_idea_that_already_has_the_traits_is_a_separate_usable_skill
+  label_origin: extractor_assigned
+  claim: >
+    Besides building stickiness into an idea, there is a second and separate skill: recognising an
+    idea that already has it. The source's case is Subway's Jared campaign, built around an obese
+    college student who lost more than two hundred pounds eating Subway sandwiches — a campaign the
+    source calls a huge success, which came not from an advertising agency but from a single store
+    owner who noticed the story.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, advertising]
+    conditions: "settings where candidate ideas already exist to be chosen between"
+  caveats:
+    - text: >
+        The Jared campaign is described as a huge success with no figures, and it is a single
+        selected case.
+      origin: extractor_observed
+    - text: >
+        Spotting and engineering are presented as two applications of the same knowledge, but only
+        engineering is what the rest of the book teaches.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Subway's Jared campaign, spotted by a single store owner", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0020, note: "the checklist used to select rather than to repair"}
+    - {relation: member_of_system, target: scs_hea_mts_003}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Six Principles of Sticky Ideas"
+    page_start: null
+    page_end: null
+    locator: "Introduction, the basketball analogy"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ───────────────── The Curse of Knowledge ─────────────────
+
+- sk_id: sk_hea_mts_0022
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "Sadly, there is a villain in our story. The villain is a natural psychological tendency that consistently confounds our ability to create ideas using these principles. It's called the Curse of Knowledge."
+    - "Once we know something, we find it hard to imagine what it was like not to know it. Our knowledge has \"cursed\" us."
+  concept_label: the_curse_of_knowledge_is_why_obvious_principles_are_not_followed
+  label_origin: source_verbatim
+  claim: >
+    The reason the six principles are not already in general use, despite most of them sounding like
+    common sense, is a single psychological tendency the source names the Curse of Knowledge: once a
+    person knows something they find it hard to imagine not knowing it, and so cannot re-create the
+    listener's state of mind. The source states that this is reenacted daily between CEOs and
+    frontline employees, teachers and students, politicians and voters, marketers and customers,
+    writers and readers — all of them separated by an information imbalance. When a chief executive
+    discusses "unlocking shareholder value" there is a tune playing in her head that the employees
+    cannot hear.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Knowledge cannot be set aside on demand, so the knower's own understanding fills in what the
+      listener is missing and the gap becomes invisible to the person who has to close it.
+  scope:
+    domain_discussed_by_source: [communication]
+    conditions: "any communication across an information imbalance"
+  caveats:
+    - text: >
+        The Curse is offered as the single explanation for a large and varied failure — everything
+        from process memos to strategy announcements. Other causes, such as incentives to be vague
+        or simple lack of effort, are not considered.
+      origin: extractor_observed
+  source_stated_problems:
+    - "the Curse of Knowledge"
+    - "we can't readily re-create our listeners' state of mind"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a CEO with thirty years of daily immersion in business logic and conventions, for whom reversing the process is as impossible as un-ringing a bell", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_hea_mts_0023, note: "the measured demonstration of the effect"}
+    - {relation: generalises, target: sk_hea_mts_0024, note: "what follows from the Curse being irreversible"}
+    - {relation: member_of_system, target: scs_hea_mts_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Six Principles of Sticky Ideas; Tappers and Listeners"
+    page_start: null
+    page_end: null
+    locator: "Introduction, end of 'Six Principles' into 'Tappers and Listeners'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0023
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "In 1990, Elizabeth Newton earned a Ph.D. in psychology at Stanford by studying a simple game in which she assigned people to one of two roles: \"tappers\" or \"listeners.\""
+    - "Over the course of Newton's experiment, 120 songs were tapped out. Listeners guessed only 2.5 percent of the songs: 3 out of 120."
+    - "The tappers got their message across 1 time in 40, but they thought they were getting their message across 1 time in 2."
+  concept_label: the_gap_between_felt_and_actual_communication_is_measurable_and_very_large
+  label_origin: extractor_assigned
+  claim: >
+    The Curse of Knowledge produces a large, measurable overestimate of how well one has
+    communicated. Elizabeth Newton's 1990 Stanford doctoral study assigned people to be tappers or
+    listeners; tappers chose from twenty-five well-known songs and knocked out the rhythm on a table,
+    and listeners tried to name the song. Across 120 songs, listeners identified 3 — 2.5 per cent.
+    Before the guesses, tappers were asked to predict the odds of success and said 50 per cent. They
+    communicated once in forty and believed they were communicating once in two.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The tapper hears the tune in her head while tapping and cannot suppress it; the listener hears
+      only disconnected knocks. The tapper's own knowledge supplies the missing signal and she
+      cannot tell that it is missing for anyone else.
+  scope:
+    domain_discussed_by_source: [communication, psychology]
+    conditions: "a knowledgeable sender estimating whether a naive receiver has understood"
+  caveats:
+    - text: >
+        This is a named, published third-party study with a design and figures, reported by the
+        source rather than conducted by it. Per the file header it is therefore not recorded as
+        `empirical_within_source`; the vocabulary has no value for cited external research. This
+        object is the strongest evidence in the section and its structured fields do not show that.
+      origin: extractor_observed
+    - text: >
+        The study measures transmission of a tune by tapping, which is an extreme information
+        bottleneck. That it also measures the sender's overconfidence is the robust part; the
+        2.5-per-cent success rate is specific to the task and does not transfer.
+      origin: extractor_observed
+  source_stated_problems:
+    - "they suffer from enormous information imbalances"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "\"Happy Birthday to You\" and \"The Star-Spangled Banner\" among the twenty-five songs; a listener guessing the first for the second", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hea_mts_0022, note: "the measurement behind the Curse"}
+    - {relation: member_of_system, target: scs_hea_mts_002}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Tappers and Listeners"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Tappers and Listeners'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0024
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "You can't unlearn what you already know."
+    - "There are, in fact, only two ways to beat the Curse of Knowledge reliably. The first is not to learn anything. The second is to take your ideas and transform them."
+  concept_label: the_curse_cannot_be_removed_only_routed_around_by_transforming_the_idea
+  label_origin: extractor_assigned
+  claim: >
+    The Curse of Knowledge cannot be undone. Reversing thirty years of immersion is described as
+    impossible as un-ringing a bell, and one cannot unlearn what one already knows. The source states
+    that there are therefore only two reliable ways to beat it: learn nothing, or transform the idea.
+    Since the first is not available, the whole method reduces to the second, and the six principles
+    are named as the weapons for it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because the sender's state cannot be changed, the only remaining variable is the form of the
+      message.
+  scope:
+    domain_discussed_by_source: [communication]
+    conditions: "any expert communicating to a non-expert"
+  caveats:
+    - text: >
+        "Only two ways" is a completeness claim about the space of remedies and is asserted rather
+        than argued. Alternatives that do not require unlearning — testing the message on a naive
+        reader, having a non-expert write it — are not considered here.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Reversing the process is as impossible as un-ringing a bell."
+  source_stated_remedies:
+    - "take your ideas and transform them"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0022, note: "what follows from the Curse being irreversible"}
+    - {relation: depends_on, target: sk_hea_mts_0020, note: "the checklist is the transformation instrument"}
+    - {relation: member_of_system, target: scs_hea_mts_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Tappers and Listeners"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Tappers and Listeners'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ───────────────── Creativity as a systematic skill ─────────────────
+
+- sk_id: sk_hea_mts_0025
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "In 1999, an Israeli research team assembled a group of 200 highly regarded ads... They found that 89 percent of the award-winning ads could be classified into six basic categories, or templates."
+    - "when the researchers tried to classify these \"less successful\" ads, they could classify only 2 percent of them"
+    - "Highly creative ads are more predictable than uncreative ones."
+  concept_label: successful_creative_work_is_more_pattern_bound_than_unsuccessful_work
+  label_origin: extractor_assigned
+  claim: >
+    Work regarded as highly creative conforms to a small number of patterns more often than ordinary
+    work does. The source reports a 1999 Israeli study of 200 award-winning and finalist
+    advertisements, of which 89 per cent fell into six templates, against 200 non-award
+    advertisements from the same publications for the same product types, of which only 2 per cent
+    could be classified at all. The source draws the counterintuitive conclusion that highly creative
+    advertisements are more predictable than uncreative ones, and quotes Tolstoy: all happy families
+    resemble each other, but each unhappy family is unhappy in its own way.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising, creativity]
+    conditions: "print advertising judged by industry competitions in the late 1990s"
+  caveats:
+    - text: >
+        A named third-party study with a comparison group, a matched control for publication and
+        product type, and figures on both arms. Not recorded as `empirical_within_source` because it
+        is not the source's own measurement — see the file header.
+      origin: extractor_observed
+    - text: >
+        The templates were derived from the award-winning set and then applied to the control set,
+        so a high fit on the first and a low fit on the second is partly what the derivation
+        guarantees. The source does not raise this.
+      origin: extractor_observed
+    - text: >
+        "Highly regarded" means award-winning, which is judgement by the advertising industry, not
+        evidence that the advertisements sold anything.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the Extreme Consequences template — a car stereo that shakes a bridge; \"Loose Lips Sink Ships\"; \"This is your brain on drugs\"; the legend of Newton's apple", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hea_mts_0026, note: "the classification result is what motivated the training experiment"}
+    - {relation: member_of_system, target: scs_hea_mts_003}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, argued, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Systematic Creativity"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Systematic Creativity'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0026
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "The final group was trained for two hours on how to use the six creative templates... Their ads were rated as 50 percent more creative and produced a 55 percent more positive attitude toward the products advertised."
+    - "This group's ads were rated as less annoying than those of the untrained group but no more creative."
+  concept_label: two_hours_of_template_training_beat_both_no_training_and_brainstorming_training
+  label_origin: extractor_assigned
+  claim: >
+    Creativity can be taught, and teaching patterns works better than teaching ideation technique.
+    The source reports the same Israeli researchers running three groups of novices on the same three
+    products — a shampoo, a diet food and a sneaker. The untrained group's advertisements were rated
+    by consumers as annoying. A group given two hours of standard free-association brainstorming
+    training produced advertisements rated less annoying but no more creative. A group given two
+    hours on the six templates produced advertisements rated 50 per cent more creative and generating
+    a 55 per cent more positive attitude toward the products. In every arm the fifteen best
+    advertisements were chosen by the same experienced creative director, who did not know how each
+    group had been trained.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising, creativity, training]
+    conditions: "novices producing print advertising concepts"
+  caveats:
+    - text: >
+        A named third-party experiment with three arms, a shared task, a blinded selector and
+        consumer-rated outcomes. It is the best-designed evidence in the section and the strongest
+        support for the book's central premise. Not recorded as `empirical_within_source` because it
+        is not the source's own measurement — see the file header.
+      origin: extractor_observed
+    - text: >
+        No group size, no significance test, and no baseline for what "50 per cent more creative"
+        is 50 per cent of. The brainstorming arm establishes that the effect is not simply from
+        being trained at all, which is the design's most valuable feature.
+      origin: extractor_observed
+    - text: >
+        The outcome is consumer ratings of creativity and product attitude, not sales or recall,
+        and the source's own framework is about stickiness rather than about creativity ratings.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "trained for two hours on how to use the six creative templates"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hea_mts_0025, note: "the experimental test of the classification finding"}
+    - {relation: qualifies, target: sk_hea_mts_0002, note: "the book's strongest support for design over natural talent"}
+    - {relation: member_of_system, target: scs_hea_mts_003}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, argued, outcome_claimed]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Systematic Creativity"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Systematic Creativity'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0027
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "But isn't the use of a template or a checklist confining? Surely we're not arguing that a \"color by numbers\" approach will yield more creative work than a blank-canvas approach? Actually, yes, that's exactly what we're saying."
+    - "You want to invent new ideas, not new rules."
+  concept_label: working_inside_proven_constraints_produces_more_creative_output_than_a_blank_canvas
+  label_origin: extractor_assigned
+  claim: >
+    Working within the constraints that have let ideas succeed over time produces more creative
+    output than starting from a blank canvas. The source raises the objection against itself and
+    accepts it directly, then states the division: invent new ideas, not new rules.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [creativity, communication]
+    conditions: "people trying to spread an idea rather than to make art"
+  caveats:
+    - text: >
+        The only support is the template study, which compared template training against
+        brainstorming training and against nothing — not against a blank-canvas approach by
+        experienced practitioners.
+      origin: extractor_observed
+    - text: >
+        The claim is scoped by the source to spreading ideas to other people. Read outside that
+        scope it becomes a general claim about creative work that the evidence does not reach.
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "work within the confines of the rules that have allowed other ideas to succeed over time"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hea_mts_0026, note: "rests entirely on the template training result"}
+    - {relation: member_of_system, target: scs_hea_mts_003}
+  evidence:
+    characteristics: [explicitly_stated, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Systematic Creativity"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Systematic Creativity'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hea_mts_0028
+  source_id: heath_made_to_stick_introduction
+  source_terms:
+    - "This book can't offer a foolproof recipe. We'll admit it up front."
+    - "But we can promise you this: Regardless of your level of \"natural creativity,\" we will show you how a little focused effort can make almost any idea stickier"
+    - "No special expertise is needed to apply these principles. There are no licensed stickologists."
+  concept_label: the_authors_state_the_limits_of_what_the_method_delivers
+  label_origin: extractor_assigned
+  claim: >
+    The source states its own limits before making its promise. It says it cannot offer a foolproof
+    recipe, that it will not show anyone how to get twelve-year-olds to gossip about mitosis, and
+    that a process-improvement memo will not become a proverb in another culture. What it promises
+    instead is bounded: regardless of natural creativity, a little focused effort can make almost any
+    idea stickier, and a stickier idea is more likely to make a difference. It adds that no special
+    expertise is needed and that there are no licensed stickologists.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [communication, idea_design]
+    conditions: "the book's own method"
+  caveats:
+    - text: >
+        The stated promise — "stickier" and "more likely to make a difference" — is comparative with
+        no baseline, so it cannot be checked in either direction.
+      origin: extractor_observed
+    - text: >
+        Recorded as its own object because a source's explicit statement of what it does not claim
+        is exactly what a later reader needs and is the first thing lost when a framework is
+        extracted as six loose rules.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hea_mts_0019, note: "restates the no-formula limit as a promise"}
+    - {relation: member_of_system, target: scs_hea_mts_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — What Sticks?"
+    section: "Six Principles of Sticky Ideas; Systematic Creativity"
+    page_start: null
+    page_end: null
+    locator: "Introduction, closing paragraphs"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
