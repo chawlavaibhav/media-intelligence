@@ -103,15 +103,57 @@ def load(sheet_dir: Path, build_dir: Path) -> dict:
     return out
 
 
+# Sheets are always folded into the fingerprint in this order, whatever order SHEETS iterates in.
+_FINGERPRINT_SHEET_ORDER = ("words", "pairs", "sanity")
+
+
 def packet_fingerprint(data: dict) -> str:
-    """Identifies this exact packet, so saved progress is never reused across a rebuild."""
-    h = hashlib.sha256()
-    for key in ("words", "pairs", "sanity"):
+    """Identify this exact packet by **its whole reviewable content**.
+
+    The fingerprint keys the reviewer's browser-local saved answers. Its job is therefore narrow and
+    absolute: **if anything the reviewer would actually see changes, the fingerprint must change**,
+    so stale answers can never be silently re-attached to a different packet.
+
+    An earlier version hashed only the sheet filenames and the stable ids, which did not honour
+    that. Two ways it could go wrong, both real:
+
+      * a row's text could change while its id did not — a `pair_id` is `dx-0007` regardless of
+        which strings that item now compares;
+      * an image's *bytes* could change while its path did not — `images/img-0037.png` is the same
+        path whatever is drawn in it.
+
+    In either case the reviewer would be shown different material and their old answers would be
+    silently reused. So the hash now covers, in a fixed order:
+
+      * each sheet's filename, its full header, and every row's field values in header order;
+      * every referenced image, by path **and by the exact content embedded in the packet**.
+
+    Deterministic by construction: fixed sheet order, header order for fields, sorted image paths,
+    and a canonical JSON encoding. Nothing time-, path- or environment-dependent is included, so a
+    clean rebuild of the same battery reproduces the same fingerprint.
+
+    Stable ids are untouched by this — they still identify items across packets and across a later
+    expansion of the word list. This governs only when saved *browser state* must be discarded.
+    """
+    canonical: list = []
+    for key in _FINGERPRINT_SHEET_ORDER:
         s = data["sheets"][key]
-        h.update(s["file"].encode())
-        for r in s["rows"]:
-            h.update(r[s["id_col"]].encode("utf-8"))
-    return h.hexdigest()[:16]
+        canonical.append([
+            "sheet", key, s["file"], list(s["header"]),
+            # Row values in header order, so a reordered dict cannot change the hash and a changed
+            # value always does.
+            [[r.get(h, "") for h in s["header"]] for r in s["rows"]],
+        ])
+    canonical.append([
+        "images",
+        # Sorted by path so filesystem or insertion order cannot affect the result. The second
+        # element is the image content exactly as embedded, hashed so the fingerprint input stays
+        # small.
+        [[path, hashlib.sha256(uri.encode("utf-8")).hexdigest()]
+         for path, uri in sorted(data["images"].items())],
+    ])
+    blob = json.dumps(canonical, ensure_ascii=False, separators=(",", ":"), sort_keys=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:16]
 
 
 # --------------------------------------------------------------------------------------------
@@ -395,7 +437,7 @@ const CHOICES = {json.dumps(choices, ensure_ascii=False)};
 # --------------------------------------------------------------------------------------------
 # Verification
 # --------------------------------------------------------------------------------------------
-def verify(packet: Path, sheet_dir: Path, data: dict) -> int:
+def verify(packet: Path, sheet_dir: Path, build_dir: Path, data: dict) -> int:
     """Prove the packet is faithful to the sheets and carries no answers. Returns a failure count."""
     doc = packet.read_text(encoding="utf-8")
     start = doc.index("const DATA = ") + len("const DATA = ")
@@ -475,6 +517,7 @@ def verify(packet: Path, sheet_dir: Path, data: dict) -> int:
                       for h in src_header if h not in (answer_col, "reader_note"))
                   for i in range(len(src_rows))))
 
+    verify_fingerprint(sheet_dir, build_dir, check)
     verify_js(packet, sheet_dir, check)
     return fails
 
@@ -532,6 +575,81 @@ try {
 } catch (e) { result.errors.push({ stage: "export", message: String(e && e.message || e) }); }
 process.stdout.write(JSON.stringify(result));
 """
+
+
+def _stage(sheet_dir: Path, build_dir: Path, dest: Path) -> tuple[Path, Path]:
+    """Copy the sheets and every referenced image into `dest`, so a variant can be mutated safely."""
+    sd, bd = dest / "sheets", dest / "build"
+    sd.mkdir(parents=True, exist_ok=True)
+    for name, _, _ in SHEETS.values():
+        shutil.copyfile(sheet_dir / name, sd / name)
+    data = load(sheet_dir, build_dir)
+    for rel in data["images"]:
+        target = bd / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(build_dir / rel, target)
+    return sd, bd
+
+
+def verify_fingerprint(sheet_dir: Path, build_dir: Path, check) -> None:
+    """The fingerprint must change whenever anything the reviewer would see changes.
+
+    It keys the reviewer's browser-local answers, so a fingerprint that survives a content change
+    would silently re-attach stale answers to different material. These checks pin the invariant in
+    both directions: identical content must reproduce it, and each kind of content change must
+    break it.
+    """
+    base = packet_fingerprint(load(sheet_dir, build_dir))
+    check("a deterministic rebuild reproduces the same fingerprint",
+          packet_fingerprint(load(sheet_dir, build_dir)) == base, base)
+
+    with tempfile.TemporaryDirectory() as t:
+        t = Path(t)
+
+        # 1. Same ids, one TEXT field changed. word_id is held fixed on purpose: the point is that
+        #    an unchanged id must not be able to carry changed content.
+        sd, bd = _stage(sheet_dir, build_dir, t / "text")
+        wname = SHEETS["words"][0]
+        header, rows = read_sheet(sd / wname)
+        original_id, original_word = rows[0]["word_id"], rows[0]["word"]
+        rows[0]["word"] = original_word + "क"
+        with open(sd / wname, "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=header)
+            w.writeheader()
+            w.writerows(rows)
+        after_text = packet_fingerprint(load(sd, bd))
+        check("changing a row's text changes the fingerprint, even with the id unchanged",
+              after_text != base, f"{after_text} == {base}")
+        check("  and the stable id itself is untouched by that change",
+              read_sheet(sd / wname)[1][0]["word_id"] == original_id)
+
+        # 2. Same ids and same paths, different image BYTES.
+        sd2, bd2 = _stage(sheet_dir, build_dir, t / "pixels")
+        images = sorted(load(sd2, bd2)["images"])
+        victim, donor = images[0], images[1]
+        check("the two images used for the pixel test really differ",
+              (bd2 / victim).read_bytes() != (bd2 / donor).read_bytes())
+        shutil.copyfile(bd2 / donor, bd2 / victim)          # same path, different picture
+        after_pixels = packet_fingerprint(load(sd2, bd2))
+        check("changing a referenced image's bytes changes the fingerprint, with the path unchanged",
+              after_pixels != base, f"{after_pixels} == {base}")
+        check("  and the image path itself is unchanged",
+              victim in load(sd2, bd2)["images"])
+
+        # 3. A changed header must also break it — the reviewer's export shape would differ.
+        sd3, bd3 = _stage(sheet_dir, build_dir, t / "header")
+        sname = SHEETS["sanity"][0]
+        text = (sd3 / sname).read_text(encoding="utf-8").split("\n")
+        text[0] = text[0].replace("reader_note", "reviewer_note")
+        (sd3 / sname).write_text("\n".join(text), encoding="utf-8")
+        check("changing a sheet header changes the fingerprint",
+              packet_fingerprint(load(sd3, bd3)) != base)
+
+        # 4. Copying everything unchanged must reproduce it — the hash must depend on content,
+        #    not on where the files happen to live.
+        sd4, bd4 = _stage(sheet_dir, build_dir, t / "copy")
+        check("an unchanged copy at a different path reproduces the fingerprint",
+              packet_fingerprint(load(sd4, bd4)) == base)
 
 
 def verify_js(packet: Path, sheet_dir: Path, check) -> None:
@@ -625,7 +743,7 @@ def main():
     if not packet.exists():
         sys.exit(f"no packet at {packet}; run without --verify first")
     print(f"Verifying {packet}\n")
-    fails = verify(packet, a.sheet_dir, data)
+    fails = verify(packet, a.sheet_dir, a.from_build, data)
     print()
     if fails:
         print(f"FAILED: {fails} check(s)")
