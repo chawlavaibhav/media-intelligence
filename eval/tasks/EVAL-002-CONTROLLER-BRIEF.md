@@ -4,8 +4,21 @@
 explained where they carry a decision.
 
 **TASK:** EVAL-002 — Calibration & benchmark readiness
-**STATUS:** **completed.** Substantively approved; three post-approval corrections applied
-24 Aug 2026 (see *Correction pass* below and findings §8).
+**STATUS:** **completed and Controller-approved — CLOSED, 24 Aug 2026.**
+
+Three post-approval corrections were applied (see *Correction pass* below and findings §8), followed
+by a documentation-only closure pass:
+
+- **Identity rubric frozen at V0** — fixed so it can be tested. **Not validated, not calibrated,
+  never used on real media.** The two-question structure (reference fidelity *and* cross-output
+  consistency, both required) is part of what is frozen.
+- **M1b item structure approved as V0 design** — **not populated, not linguistically validated, not
+  ready to score models.** Zero items exist.
+- **EVAL-001 findings §1.2 corrected**, dated, with the original wording retained in place and
+  marked superseded: our bounded search did not identify a suitable public generative-Devanagari
+  benchmark; it did not establish that none exists.
+
+No battery, ladder, threshold, observation-unit or Registry change in any of the above.
 
 ---
 
@@ -193,9 +206,9 @@ without change.
    determines both how much must be built and the native-reader hours. **RES-002 is now open on
    Devanagari acquisition**; if it surfaces a suitable public generative-Devanagari set, the M1b
    design says to revisit before items are built.
-4. **Whether to amend the closed EVAL-001 findings** so its categorical phrasing matches the
-   corrected wording, or to leave the correction recorded only in EVAL-002. Your call; I did not
-   touch an approved artifact.
+4. ~~Whether to amend the closed EVAL-001 findings~~ — **RESOLVED 24 Aug 2026: amend.** Applied as
+   a dated Controller correction in §1.2, with the original wording retained and marked superseded
+   so the reasoning trail stays intact.
 5. **Nothing else has changed.** The model roster, the human-time budget (≈ 11–15.5 hours, 2–4 of
    them a Hindi first-language reader) and the Registry cross-stream fields remain unapproved.
 

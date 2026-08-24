@@ -103,8 +103,8 @@ we currently have no instrument we are entitled to trust.
 
 ## LAST COMPLETED TASK
 
-**EVAL-002 — Calibration & benchmark readiness.** Completed 24 Aug 2026, **awaiting Controller
-review**. Full record: `tasks/EVAL-002-CONTROLLER-BRIEF.md`.
+**EVAL-002 — Calibration & benchmark readiness.** **Completed and Controller-approved, 24 Aug
+2026; fully closed.** Full record: `tasks/EVAL-002-CONTROLLER-BRIEF.md`.
 
 It built plumbing only — no generation, no network call, no calibration, no spend. What it produced:
 
@@ -119,17 +119,24 @@ It built plumbing only — no generation, no network call, no calibration, no sp
   generated person is the right person and stays that person. Each declared identity feature is
   judged on **two** questions: does it match the reference, and is it consistent across the
   generated set. **Both must hold** — a consistently-produced *wrong* person is a failure, not a
-  pass. **Draft. Never used. Not calibrated.**
+  pass. **V0 FROZEN 24 Aug 2026 — but not validated and not calibrated, and never used on real
+  media.** Frozen means the standard is fixed so it can be tested; it does not mean it works.
+  It may not be edited during or after calibration — a case it cannot decide is logged as
+  `not_reviewable` and raised as a V1. *(The filename keeps `-DRAFT` because the approved task file
+  names that exact path; the status inside the document governs.)*
 - **`battery/M1B-DEVANAGARI-GENERATION-ITEM-DESIGN-V0.md`** — the structure and coverage plan for
-  the Hindi generation-test prompts. **Design only: no item exists and no Hindi phrase was selected
-  or authored.**
+  the Hindi generation-test prompts. **Controller-approved V0 design, 24 Aug 2026 — but not
+  populated, not linguistically validated, and not ready to score models.** Zero items exist; no
+  Hindi phrase has been selected or authored; no first-language reader has checked anything. The
+  fields, ladder and coverage categories are fixed at V0.
 
 Earlier: **EVAL-001 — Capability Battery V0 design**, completed and Controller-approved 24 Aug 2026
 (`tasks/EVAL-001-CONTROLLER-BRIEF.md`).
 
 ## CURRENT TASK / QUEUE
 
-**None.** EVAL-003 has not been opened and must not be started without an approved task file.
+**None.** EVAL-003 has not been opened and **must not be started yet**. Resources is being
+finalised and its output becomes EVAL-003's input; the Controller will review before opening it.
 
 ---
 

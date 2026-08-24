@@ -1,11 +1,33 @@
-# Identity Consistency Review Rubric — V0 DRAFT
+# Identity Consistency Review Rubric — V0
 
-**Task:** EVAL-002 · **Date:** 24 Aug 2026
-**Status: DRAFT for Controller review. Not frozen. Not a calibrated instrument. No human has used
-it on real media.**
+**Task:** EVAL-002 · **Frozen:** 24 Aug 2026 · **Version: V0 (frozen)**
 
-Freezing this rubric requires Controller approval (EVAL-002 human-approval triggers). Until then it
-is a proposal about *how* we would judge, not a standard anyone has judged by.
+## Status: FROZEN FOR CALIBRATION — not validated, not calibrated
+
+Controller-approved and frozen on 24 Aug 2026. Two things are true at once and both matter:
+
+**What "frozen" means.** The rules below are now fixed. They are the standard a calibration
+exercise will be run *against*, and **they may not be edited during or after that exercise.**
+Changing a rubric after seeing the results it produced is an EXPERIMENT MUTATION stop under
+`shared/AUTONOMY-POLICY.md` — it turns a measurement into a description of what we hoped to find.
+If a case arises that this rubric cannot decide, log it, mark the item `not_reviewable`, finish the
+batch, and raise a **V1** afterwards. Do not amend V0.
+
+**What "frozen" does NOT mean.** It is **not** validated, **not** calibrated, and **no human has
+ever used it on real media.** Whether two reviewers applying it actually agree is unmeasured.
+Freezing fixes the standard so it can be tested; it does not assert that the standard works.
+Until calibration runs, no number produced with this rubric may be treated as reliable.
+
+**What is frozen includes the two-question structure.** §4 requires every declared invariant to be
+judged on **reference fidelity** (does it match the reference?) *and* **cross-output consistency**
+(is it the same across the generated set?), recorded separately, with both required to pass. That
+separation is part of V0, not an implementation detail. Collapsing the two into a single
+"consistency" judgement would restore the hole this rubric was corrected to close: a generator that
+ignores the reference and produces the same **wrong** person throughout would pass.
+
+*(Filename note: this file retains its `-DRAFT` suffix because
+`eval/tasks/EVAL-002.md` — a Controller-authored task file — names that exact path as the
+deliverable. The status above governs, not the filename. Renaming is a Controller decision.)*
 
 ---
 
@@ -226,18 +248,20 @@ Stated so these limits are visible before use rather than discovered during it.
 
 ## 9 · Status and what would have to happen next
 
-**Draft.** Not frozen, not calibrated, never used on real media.
+**V0 frozen 24 Aug 2026.** Not validated, not calibrated, never used on real media.
 
-Before it can produce a number anyone may rely on:
+| Step | Status |
+|---|---|
+| 1. Controller approval to freeze | ✅ **done — 24 Aug 2026** |
+| 2. Reference image sets, with declared invariants and allowed-variation lists | ❌ do not exist; acquiring them is Resources' work |
+| 3. A calibration exercise measuring whether two reviewers using this rubric agree, and whether an automated judge tracks them | ❌ not performed |
+| 4. A clear-eyed reading of what that calibration can support | ❌ pending step 3 |
 
-1. Controller approval to freeze it.
-2. Reference image sets with declared invariants and allowed-variation lists — these do not exist,
-   and acquiring them is Resources' work.
-3. A calibration exercise measuring whether two reviewers using it agree, and whether an automated
-   judge tracks them.
-4. **A clear-eyed reading of what that calibration can support.** At the sample size the approved
-   calibration plan proposes, a clean result is a *qualification gate*, not an accuracy figure — it
-   would be consistent with a true error rate around 26%. See
-   `eval/battery/INSTRUMENT-CALIBRATION-PLAN-V0.md` §2b.
+**On step 4, so the expectation is set before the exercise rather than after.** At the sample size
+the approved calibration plan proposes — roughly ten opportunities to catch a wrong pass — a clean
+result is a **qualification gate**, not an accuracy figure. It would be consistent with a true error
+rate around **26%**. See `eval/battery/INSTRUMENT-CALIBRATION-PLAN-V0.md` §2b. Passing calibration
+will justify *using* this rubric; it will not justify calling it accurate.
 
-None of steps 1–4 was performed in EVAL-002, and none may be started without a new approved task.
+**Steps 2–4 were not performed in EVAL-002 and none may be started without a new approved task.**
+Reference material is expected to arrive via Resources; EVAL-003 is deliberately not open yet.

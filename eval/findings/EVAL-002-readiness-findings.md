@@ -279,3 +279,48 @@ The seven approved dimensions, their difficulty ladders, pass criteria and obser
 calibration thresholds and their published bounds; and the Registry architecture, which remains a
 proposal with deferred cross-stream fields. No generation, network call, calibration, spend or
 specialist time.
+
+---
+
+## 9 · Closure pass — 24 Aug 2026, documentation only
+
+Applied after Controller approval of the correction pass. **No code, no design, no threshold and no
+architecture changed** — status statements only.
+
+**9.1 · The identity rubric is frozen at V0.** Frozen means the standard is now fixed so a
+calibration exercise can be run *against* it, and it may not be edited during or after that exercise
+— amending a rubric after seeing its results converts a measurement into a description of what we
+hoped to find. A case it cannot decide is logged, the item marked `not_reviewable`, and a **V1**
+raised afterwards.
+
+**Frozen is not validated.** No human has used it on real media; whether two reviewers applying it
+agree is unmeasured. The two-question structure — reference fidelity *and* cross-output consistency,
+recorded separately, both required — is explicitly part of what is frozen, because collapsing them
+would restore the hole §8.1 closed.
+
+**9.2 · The M1b item structure is Controller-approved as a V0 design.** Approved: the item fields,
+the inherited difficulty ladder, and the coverage categories. Not approved and not done: **zero items
+exist**, nothing has been linguistically validated by a Hindi first-language reader, and it is
+therefore **not ready to score any model** — a generator's output cannot be judged against a target
+nobody has confirmed is correct.
+
+**9.3 · EVAL-001 findings §1.2 corrected, with traceability preserved.** §8.4 flagged that the
+categorical phrasing survived in the closed, approved EVAL-001 findings and left the decision to the
+Controller. The decision was to amend. Applied as a **dated Controller correction**: the original
+wording is **retained in place and marked superseded** rather than deleted, with the supported
+statement — *our bounded search did not identify a suitable public generative-Devanagari benchmark;
+it did not establish that none exists* — recorded beneath it along with what changed, what did not,
+and what follows. The correction is also listed in that file's revision history so it is discoverable
+from either end.
+
+**Why retained rather than replaced.** Anyone who cited the original line needs to be able to see
+exactly what it said and why it changed. Silently rewriting history would leave a citation pointing
+at text that no longer exists.
+
+**9.4 · One cosmetic mismatch, deliberately not fixed.** The frozen rubric's filename still ends
+`-DRAFT`, because `eval/tasks/EVAL-002.md` — a Controller-authored task file — names that exact path
+as the deliverable. Renaming would either invalidate that reference or require editing an approved
+task file. The status block inside the document governs and says FROZEN unambiguously. **Renaming is
+a Controller decision.**
+
+**EVAL-002 is closed.** EVAL-003 is not open; Resources is being finalised and becomes its input.

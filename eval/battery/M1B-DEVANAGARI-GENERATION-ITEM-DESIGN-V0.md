@@ -1,10 +1,29 @@
 # M1b — Devanagari generation-test item set: structure and coverage design
 
-**Task:** EVAL-002 · **Date:** 24 Aug 2026
-**Status: DESIGN ONLY, for Controller review. No items were created. No Hindi phrase was authored
-or selected. No linguistic judgement was made.**
+**Task:** EVAL-002 · **Approved:** 24 Aug 2026 · **Version: V0 design**
 
-Populating or freezing this set requires Controller approval (EVAL-002 human-approval triggers).
+## Status: CONTROLLER-APPROVED V0 DESIGN — not populated, not linguistically validated, not ready to score models
+
+Approved on 24 Aug 2026 as the **structure and coverage plan** for the Hindi generation-test items.
+Three separate things are approved, and three are explicitly not.
+
+**Approved:** the item fields (§2), the inherited difficulty ladder (§3), and the coverage categories
+this set must deliberately exercise (§4).
+
+**NOT approved, and not done — each independently blocks using this to score any model:**
+
+| Not done | What it means in practice |
+|---|---|
+| **Not populated** | **Zero items exist.** No prompt and no target phrase has been created or selected. This is a plan for items, not items. |
+| **Not linguistically validated** | No Hindi first-language reader has checked anything here. When items do exist, every target string and its reference rendering must be verified before it can serve as ground truth (§7). Until then a "correct" answer is not established. |
+| **Not ready to score models** | Follows from the two above. A generator's output cannot be judged right or wrong against a target nobody has confirmed is right. |
+
+**Populating this set remains a Controller decision** (EVAL-002 human-approval triggers). So does any
+change to the approved fields, ladder or coverage categories — those are now fixed at V0, and a
+revision is a V1.
+
+**Expected input.** Resources is being finalised and will feed this. If it surfaces a suitable public
+generative-Devanagari set, §1 requires revisiting this design **before** items are built, not after.
 
 ---
 

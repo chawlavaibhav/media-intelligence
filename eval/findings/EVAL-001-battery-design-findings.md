@@ -32,8 +32,48 @@ Public Devanagari benchmarks exist and several are recent and substantial:
 
 ### 1.2 The narrowed claim, re-checked and still supported
 
+> ⚠️ **SUPERSEDED WORDING — retained for traceability. See the Controller correction immediately
+> below before citing this line.**
+>
 > **OBSERVED (as of 24 Aug 2026): no public benchmark measures whether a generative image or video
 > model correctly renders Devanagari text it was instructed to produce.**
+
+---
+
+#### ⚑ Controller correction — 24 Aug 2026
+
+**The wording above overstates what our evidence supports, and is corrected here rather than
+deleted.** The original line is preserved above so the reasoning trail stays intact and so anyone
+who cited it can see exactly what changed.
+
+**Supported statement, which replaces it for all future citation:**
+
+> **Our bounded search did not identify a suitable public benchmark measuring whether a generative
+> image or video model correctly renders Devanagari text it was instructed to produce.**
+
+**What changed and why.** The original phrasing asserts that no such benchmark *exists*. What we
+actually performed was a **bounded review during EVAL-001** — a set of searches and a specific list
+of candidate benchmarks checked, not an exhaustive survey of everything published. **Not finding
+something in a search is not proof it is absent.** The distinction matters because the original
+wording invites a later reader to treat the question as permanently settled and stop looking.
+
+**What does NOT change:**
+
+- **The evidence itself.** Every benchmark named in §1.1 and §1.2 was checked and none covers
+  generative Devanagari rendering. Those observations stand exactly as recorded.
+- **The distinction between reading and drawing** (below). That is a statement about what different
+  benchmarks measure, not about what exists, and it is unaffected.
+- **The practical conclusion.** We still have to build our own item set either way. See
+  `eval/battery/M1B-DEVANAGARI-GENERATION-ITEM-DESIGN-V0.md`.
+
+**What follows from the correction.** The question is **open, not closed.** If a suitable public set
+is later identified — including anything Resources surfaces under RES-002 — the M1b design must be
+revisited **before** items are built, not after.
+
+**Scope of this correction.** Wording only. No dimension, difficulty ladder, calibration threshold,
+observation unit or Registry architecture is affected, and no other finding in this file is amended.
+
+---
 
 The generative text-rendering benchmarks are English and Chinese: CVTG-2K, MARIO-Eval, AnyText /
 AnyWord-3M, TextAtlasEval, LongText-Bench, ChineseWord, and OneIG-Bench's Text Rendering dimension
@@ -44,7 +84,7 @@ languages including Bengali but not Devanagari (§1.4).
 capabilities measured on different objects. An OCR benchmark tells you how well a model *reads*
 Devanagari; it says nothing about whether a diffusion model can *draw* it. Our observed failures —
 `still_seedream_headline` (gibberish), `frame_wan_*` (character substitution) — are drawing
-failures. No public benchmark scores them.
+failures, and **our search identified no public benchmark that scores them.**
 
 **RESOLVED 24 Aug 2026 — OneIG-Bench does not affect the claim.** The earlier draft left this open.
 Checked against the **released public dataset** rather than the paper prose:
@@ -65,7 +105,8 @@ a constant φ defined only for English (100) and Chinese (50).
 exist, the category is absent from the English config entirely, and there is no config in any third
 script. **No Devanagari, no Indic script.** The *content* evidence is a sample — 6 of 200 rows — so
 I do not claim to have read every prompt, and nothing here is inferred beyond what the released
-files show. The claim in §1.2 stands unchanged.
+files show. This resolves the OneIG-Bench question and does not disturb §1.2 as corrected above —
+OneIG-Bench is not the suitable public set our search failed to identify.
 
 ### 1.3 What the recognition benchmarks give us instead — and it is a lot
 
@@ -412,6 +453,15 @@ Three evidence corrections plus a version pin.
 | 5 | **M1b narrowed:** the *item set* must be built, but target strings may be sourced from existing permissible Hindi text rather than authored | battery §9/§9.1; calibration §3.1 |
 | 6 | **OneIG-Bench resolved from its released dataset** rather than left open. Two configs only; `Multilingualism` exists only in the Chinese config and is Chinese in content. Structural evidence decisive; content evidence is a 6-of-200 sample, not extrapolated | findings §1.2, §7 |
 | 7 | D2 and D5 remain approved. Workflow roster, human-time budget and Registry cross-stream architecture remain unapproved/deferred | battery §12; Brief |
+
+### Controller correction — 24 Aug 2026 (post-approval, applied during EVAL-002 closure)
+
+| # | Change | Location |
+|---|---|---|
+| 1 | §1.2's categorical claim that no public generative-Devanagari benchmark **exists** is superseded by the supported claim that **our bounded search did not identify one**. Original wording retained in place and marked superseded; correction added beneath it with its reasoning | §1.2 |
+
+This is the only post-approval amendment to this file. It is wording only: no dimension, ladder,
+threshold, observation unit or Registry architecture is affected, and no other finding is changed.
 
 **Standing across all revisions:** no benchmark run, no generation call, no money spent, no dataset
 acquired, and no historical finding, script or result file altered.
