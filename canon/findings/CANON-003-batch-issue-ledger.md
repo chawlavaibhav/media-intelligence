@@ -428,6 +428,43 @@ performed under the new schema.
 - **Consequence if unchanged:** migrated objects carry admission decisions the current schema does not authorise
 - **Proposed fix (NOT APPLIED):** none for the fresh method, which handled it correctly
 
+### B-17 — The isolation rule has a hole: the frozen specs quote the books *(new, method integrity)*
+
+**Plain English.** CANON-002 and CANON-003 both seal a book's own historical extraction until a fresh
+checkpoint exists, so the fresh pass cannot be influenced by the old one. That rule works.
+
+But it only covers the historical *extractions*. It does not cover **SPEC-04 and SPEC-05**, which every
+worker must read before extracting anything — and which quote several of the books in this batch as
+worked examples.
+
+**The concrete instance.** Light: Science & Magic refuses the word *specular* because practitioners
+use it for at least three incompatible things. I extracted that claim and bound it to
+`taxonomy_governance`. The historical audit records the same binding and calls it the only governance
+binding in its batch.
+
+That looks like two independent passes agreeing. **It is not.** SPEC-04's worked governance example is
+literally this passage, and SPEC-05's opening argument uses it as the precedent for refusing ambiguous
+terms. I read both in full during CANON-001. I arrived at this chapter already knowing this passage
+was a governance precedent and roughly what consumer it was assigned.
+
+**Why it matters.** Convergence between an old and a new pass is one of the batch's strongest quality
+signals — it is how book 1 and book 2 produced their most convincing results. This instance has to be
+struck from that column, and any future convergence involving a spec-quoted example has to be checked
+before it is counted.
+
+**What is not affected:** the other nineteen objects from this book, all three of its systems, and its
+other four bindings. None appears in the specs.
+
+**Uncertainty.** Which other passages are quoted in SPEC-01 through SPEC-05 has **not** been
+systematically checked. Molly Bang and Williams are both quoted in SPEC-03 and SPEC-05, so CANON-001
+and CANON-002 may carry the same contamination in places neither noticed.
+
+- **Books:** Light: Science & Magic confirmed; Bang and Williams suspected · **Distinct books: 1 confirmed, 2 suspected** · **Status: OBSERVED (confirmed instance), SUSPECTED (others)**
+- **Layer:** method integrity
+- **New / recurrence:** new
+- **Consequence if unchanged:** contaminated convergence counted as independent corroboration
+- **Proposed fix (NOT APPLIED):** before counting any old-versus-new agreement as independent, check whether the passage appears in a frozen spec; and record which sources the specs quote, once, in one place
+
 ---
 
 ## C. Evidence *against* earlier concerns
@@ -447,6 +484,13 @@ is not yet evidence that the problem was source-specific.
 decision hard has not reappeared in either book since. Grammar of the Shot separates its claims by
 section heading; Ogilvy does the same.
 
+**The schema absorbed two opposite evidence profiles days apart, without modification.** Ogilvy is
+20/22 practitioner assertion, 14/22 anecdotal, 5/22 uncontrolled outcome claims and 0/22 controlled
+comparison. Light: Science & Magic is 14/20 mechanism-given, 17/20 argued, 0/20 anecdotal and 0/20
+outcome-claimed. Two books at opposite ends of the evidential spectrum, one unchanged instrument,
+nothing forced or excluded in either. This is the clearest positive result of the batch so far and it
+is evidence FOR the current design rather than against it.
+
 **The schema absorbed an evidence profile unlike anything before it.** Ogilvy is 20/22 practitioner
 assertion, 14/22 anecdotal, 5/22 uncontrolled outcome claims and 0/22 controlled comparison — the
 opposite of every earlier book. Nothing had to be forced, excluded or invented, and the weakness is
@@ -459,12 +503,19 @@ design, which replaced the uncalibrated decimal confidences the historical passe
 
 | | Count |
 |---|---|
-| Books completed under the frozen method | **2** (Grammar of the Shot ch.4; Ogilvy ch.2) |
+| Books completed under the frozen method | **3** (Grammar of the Shot ch.4; Ogilvy ch.2; Light: Science & Magic ch.3) |
 | Books blocked before extraction | 5 (Lupton + 4 image-only/format) |
 | Books now unreachable | **29** (see B-13) |
-| Issues logged | 16 new, 5 carried forward |
-| **Issues seen in 2+ distinct books** | **4** (B-07 ×4, B-08 ×3, B-14 ×3, B-15 ×4) |
-| **Batch feasibility** | **AT RISK — 3 of 15 reachable, see B-13** |
+| Issues logged | 17 new, 5 carried forward |
+| **Issues seen in 2+ distinct books** | **4** (B-07 ×5, B-08 ×3, B-14 ×**4 of 4 possible**, B-15 ×5) |
+| **Batch feasibility** | 3 of 15 done; access being restored, see B-13 |
+
+### B-14 is now the batch's strongest signal
+Four books have a historical comparator. In **all four**, the older pass caught a product-schema fit
+point the fresh pass missed while holding identical evidence: `creative.hierarchy` cannot express an
+ending (Williams); sight lines belong in `relationships` (Grammar of the Shot); the whole `message.*`
+family (Ogilvy); and `entities.allowed_variation` is constrained by physics rather than freely chosen
+(Light: Science & Magic). Four out of four is no longer a tendency.
 
 ### Book 1 method-integrity note
 The frozen method held. No schema, granularity rule, visual-pass method or ontology vocabulary was
