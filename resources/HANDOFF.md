@@ -15,10 +15,14 @@ redistribution status.
 
 **LAST COMPLETED TASK:** none — this stream has not executed yet.
 
-**CURRENT TASK / QUEUE:** `tasks/RES-001.md` — bounded corpus acquisition pilot. Target 10–15 GB,
-hard stop at 20 GB, no paid APIs, prioritize at least three distinct usable source/domain families
-if legitimately accessible. Raw media must remain out of git; manifests/reports/scripts belong in
-the repo.
+**CURRENT TASK / QUEUE:** `tasks/RES-001.md` — bounded corpus acquisition pilot. **Storage budget
+amended by Controller on 24 Aug 2026 (Amendment 01, recorded in
+`tasks/RES-001-CONTROLLER-BRIEF.md`): target 4–6 GB retained, hard stop 8 GB, maintain 10–12 GB
+free disk at all times, sources processed sequentially, archives deleted after successful
+extraction and validation under five stated conditions, no cloud/object storage in RES-001.** The
+figures printed in `tasks/RES-001.md` (10–15 GB / 20 GB) are superseded. No paid APIs; prioritize
+at least three distinct usable source/domain families if legitimately accessible. Raw media must
+remain out of git; manifests/reports/scripts belong in the repo.
 
 **IMPORTANT OBSERVATIONS:**
 - Do not infer media rights from a code licence.
