@@ -593,31 +593,292 @@ This is the first case in this lane where one could be checked, and it was direc
 materially overstated. That is a caution about reading those ratings as findings, not a defect in
 them; they were written as planning documents.
 
-## Lane C running tally after book 14
+---
+
+## Book 15 — Rory Sutherland, *Alchemy*, Introduction
+
+Fresh checkpoint: `f992d69`. Historical comparison: **no prior extraction exists** (see C-30).
+
+---
+
+### C-22 — `source_uncertainty` finally carried real load, and the pattern across the lane is the opposite of what you would expect
+
+**Status:** OBSERVED · **Layer:** evidence · **Evidence for the frozen design** ·
+**Distinct books compared: 3**
+
+In books 13 and 14 almost every object recorded `source_uncertainty: none`. It would have been easy
+to read that as a dead field. It is not. In this book it carries `source_concedes_difficulty`,
+`source_hedges` and `source_asks_open_question` across a substantial share of objects, because this
+author repeatedly says he does not know:
+
+- of the strongest result in his own field experiment: *"I'll be honest with you – I have no idea
+  why this should be."*
+- of his own worked design example: *"We could find out"*, *"We don't know yet."*
+- of the extension of his own thesis: *"I strongly suspect."*
+
+**The cross-book pattern is worth stating plainly, because it is counterintuitive.** Ranked by how
+confident the prose sounds, the lane runs Hopkins → Heath & Heath → Sutherland. Ranked by how much
+evidence is actually supplied, it runs roughly the other way. And ranked by how often the author
+admits ignorance, it is Sutherland by a wide margin — the source that presents itself as a
+provocation rather than as science.
+
+**Why this matters for the field.** `source_uncertainty` measures the author's stated confidence,
+not the strength of the support. Those two are not correlated in this lane, and may be inversely
+related. Anything that later weights knowledge should not treat a hedge as a weakness signal.
+
+---
+
+### C-23 — The cited-external-research gap recurs for the third time, in all three books of this lane
+
+**Status:** OBSERVED · **Layer:** source fidelity / evidence characteristics ·
+**Recurrence of C-13** · **Distinct books: 3 of 3**
+
+This source cites Trivers and Kurzban on self-deception, Parker and Bollinger at Duke on the
+appendix with an effect size, and a 1996 Heritage Institute survey on religious practice. As in book
+14, `empirical_within_source` — "the source reports its **own** measurement" — does not apply, and
+the fixed list has no value for cited external research, so each was recorded in an
+`extractor_observed` caveat.
+
+**Every book in this lane hit the same gap, in a different way each time:**
+
+| Book | What the source does | Why the vocabulary fails |
+|---|---|---|
+| 13 — Hopkins | asserts measurement, reports almost none | risks crediting evidence never supplied |
+| 14 — Heath & Heath | reports measurement constantly, almost none of it his own | cannot credit evidence that was supplied |
+| 15 — Sutherland | mixes his own field test with cited third-party research | needs both values in the same source, and has one |
+
+Book 15 is the sharpest of the three, because within a single extraction the same characteristic is
+correctly applied to the author's own envelope experiment and correctly withheld from the Duke
+appendix research — so the file itself contains the distinction the vocabulary cannot express.
+
+**Practical consequence.** Three books in one domain, three failures, one field. Whether this is a
+domain artefact or general is precisely what the other lanes decide. Within Lane C it is the single
+strongest recurring signal.
+
+---
+
+### C-24 — The first figure in this lane that actually argues, and almost all of its content is only in the figure
+
+**Status:** OBSERVED · **Layer:** visual completeness · **New in Lane C** · **Distinct books: 1**
+
+Books 13 and 14 had no figures at all — 24 rendered pages and a whole EPUB, nothing shown rather
+than said. It would have been reasonable, after two such results, to treat a visual pass on an
+advertising/persuasion source as a formality.
+
+This book has two figures and one of them is the thesis. A two-axis chart runs FAILS↔WORKS against
+MAKES SENSE↔SEEMS WEIRD with roughly two dozen items placed in the quadrants. The prose beside it
+names only the top-right quadrant and one item, the bicycle. **Every other placement exists solely
+in the image** — Marxism, flossing, economies of scale, management consultancy and economics in
+makes-sense-and-fails; placebos, marketing, heuristics, evolution, constitutional monarchy and Red
+Bull in seems-weird-and-works. Several of these are the strongest claims on the page, and they are
+made by position on a chart rather than by argument.
+
+**Loss pattern, named `named_loss_with_unstated_content`.** The text points at the figure, so the
+absence is announced and an extractor would not miss it silently. What a text-only pass produces is
+the claim with none of the content that makes it contentful.
+
+**The finding is really about the method, not the book.** The mandatory visual pass earned its cost
+here precisely because the two preceding books in the same lane and the same domain had returned
+nothing. A pass that is skipped once a source class "looks textual" would have missed this.
+
+---
+
+### C-25 — An internal inconsistency in a source is indistinguishable from extraction damage until you check
+
+**Status:** OBSERVED · **Layer:** provenance / source integrity · **New in Lane C** ·
+**Distinct books: 1**
+
+The section headed **"The Four S-es"** says *"There are **five** main reasons... and they
+conveniently all begin with the letter S"* and then lists **four** items, one of which begins with P.
+Heading, count and list all disagree.
+
+Read from a text extraction alone, this looks exactly like a dropped item.
+
+**What was done.** The section was read in the raw source file — it is 78 words — and its single
+footnote was resolved, reading *"Except for the one that begins with a P."* Nothing is missing. The
+inconsistency is in the published text and has **not** been silently repaired; the object records the
+source's wording, the discrepancy, and the fact that completeness was verified.
+
+**The generalisable point.** Any enumerative or numeric mismatch — a heading that says four, a
+sentence that says five, a list of four — must be treated as an integrity question before it can be
+attributed to the author. The check is cheap. Attributing an author's error to our extraction, or
+our loss to the author, are both silent corruptions of the record, and they look identical from the
+text alone.
+
+---
+
+### C-26 — Evidence *for* the current design: an avowedly anti-rational source went in without distortion
+
+**Status:** OBSERVED · **Layer:** source fidelity, systems · **Evidence for the frozen design** ·
+**Distinct books: 1**
+
+This was the hardest test of the frozen schema in the lane, and the schema passed.
+
+The source declares itself *"a provocation, and only accidentally a work of philosophy"*. It argues
+that things can work without a known reason, that requiring a rationale before trying something is
+itself the failure mode, and that the opposite of a good idea can be a good idea. A schema with any
+field that rewarded rigour, or that required a mechanism, or that assumed a source's claims resolve
+into non-contradictory rules, would have had to either exclude this material or dress it up.
+
+Nothing had to be excluded and nothing had to be dressed up:
+
+- `mechanism.stated_by_source: false` is a normal value, so claims with no mechanism were recorded
+  as claims with no mechanism.
+- `evidence.characteristics` are factual descriptions rather than a quality score, so a page of
+  `practitioner_assertion` and `anecdotal` reads as a description of the source rather than as a
+  verdict on it.
+- `source_uncertainty` had somewhere to put the author's repeated admissions of ignorance.
+- `whole_system_claim.origin: extractor_synthesis` with a required `interpretation_basis` was
+  exactly the instrument needed for the hardest judgement in the extraction — see below.
+
+**The hardest judgement, and why the schema made it recordable.** A source like this invites being
+summarised into a method: six things to do differently. Doing that silently would convert a book that
+explicitly declines to offer a recipe into one that offers a recipe. The instructions are genuinely
+there and genuinely useful, so discarding them would also be wrong. They were recorded as a system
+whose whole-system claim is marked `extractor_synthesis`, with the source's refusal written into the
+interpretation basis. The usefulness is preserved and the authorship of the structure is visible.
+
+**Also recorded rather than smoothed: this source contradicts itself three times inside the processed
+section** — it warns against reasoning from hindsight and then reconstructs an election in hindsight;
+it argues that universal claims about human affairs are doomed and then makes two; it rejects
+self-report as evidence and then explains its own behaviour by introspection. All three were
+expressible with existing vocabulary. See C-29.
+
+---
+
+### C-27 — The lane's first `distinct_from` that the source itself asserts
+
+**Status:** OBSERVED · **Layer:** ontology · **Evidence for the frozen design** ·
+**Distinct books: 1**
+
+Every `distinct_from` recorded in books 13 and 14 was our judgement — a similarity examined and
+rejected. This one is the author's. Sutherland introduces a hyphen specifically to hold two things
+apart: **nonsense** is behaviour that genuinely serves nothing; **non-sense** is behaviour that is
+useful or effective while defying conventional logic. The whole argument of the section depends on
+their being different.
+
+**Why it is worth recording separately.** The two terms differ by one punctuation mark. Any
+normalisation that stripped punctuation, or any near-synonym merge based on string similarity, would
+collapse them into one and destroy the distinction the source built. SPEC-05's rule that a term is
+never edited to fit a concept is what protects this, and this is the clearest instance in the lane of
+that rule doing real work.
+
+It also demonstrates that `confidence_basis: source_stated` is meaningful on a `distinct_from`, which
+none of the earlier instances showed.
+
+---
+
+### C-28 — Source shape predicts which *layer* a source binds to, not only how much it binds
+
+**Status:** OBSERVED (the counts) / INFERRED (the cause) · **Layer:** bindings ·
+**Extends C-20** · **Distinct books: 3**
+
+| Book | Objects | Bindings | Creative IR | Evaluation | Governance | Benchmark |
+|---|---|---|---|---|---|---|
+| 13 — Hopkins | 54 | 8 | 2 | 2 | 3 | 1 |
+| 14 — Heath & Heath | 28 | 9 | 4 | 1 | 3 | 1 |
+| 15 — Sutherland | 32 | 7 | 1 | 2 | 3 | 1 |
+
+Three books, one domain, three distinct profiles. Made to Stick is about designing a message, so it
+lands on Creative IR fields that already exist. Hopkins is largely print craft for a medium the
+schema does not model, so it lands mostly elsewhere. Alchemy is about *how to think about* problems
+rather than about any artefact, so six of its seven bindings are governance or evaluation and only
+one touches a Creative IR field.
+
+**Why it matters.** A low Creative IR binding count has a plausible-sounding reading — that a source
+is not very useful — which is wrong. Alchemy binds least to Creative IR and produced the lane's most
+directly applicable governance content: how to weigh a claim with no mechanism, how to treat two
+sources recommending opposite things, and what a human evaluator can and cannot learn by asking
+people. Binding counts measure schema coverage of a subject, and reading them as source quality would
+invert the answer.
+
+---
+
+### C-29 — Sources in this domain contradict themselves inside a single processed section, routinely, and the schema records it
+
+**Status:** OBSERVED · **Layer:** systems, source fidelity · **Evidence for the frozen design** ·
+**Distinct books: 3 of 3**
+
+| Book | Self-contradictions recorded within the processed section |
+|---|---|
+| 13 — Hopkins | 3 (its own measurement rule; its own generalisation rule; its own method of discovery) |
+| 14 — Heath & Heath | 2 (simplicity against concreteness; unexpectedness against credibility) |
+| 15 — Sutherland | 3 (hindsight; universal claims; self-report) |
+
+Eight contradictions across three books, every one expressible with existing vocabulary —
+`contradicts` in `intra_source_relations` at object level, `conflicts` with an origin marker at system
+level. Nothing had to be invented and nothing had to be smoothed over.
+
+**Two observations.** First, this is strong evidence *for* the current design: the moment a schema is
+most tempted to tidy is when a source disagrees with itself, and this one does not. Second, it is a
+source-shape finding in its own right — commercial and practitioner sources appear to contradict
+themselves within a few thousand words as a matter of course, which means any consumer retrieving
+two objects from the same book cannot assume they are consistent.
+
+---
+
+### C-30 — No historical comparator exists for this book either
+
+**Status:** OBSERVED · **Layer:** provenance · **Distinct books: 1**
+
+Searched after the fresh checkpoint was committed and pushed. No prior extraction, audit, findings
+file or superseded atom set exists for *Alchemy*. The only mentions are planning references:
+`CANON-CURRICULUM-V0.md` lists it among titles explicitly deferred for V0, and
+`CANON-COVERAGE-MAP-V0.md` cites it as an owned but unprocessed source for audience understanding,
+persuasion and emotional target.
+
+Recorded as **`no historical comparator`**. None was manufactured.
+
+**All three books in Lane C have no historical comparator.** This is worth flagging for the
+integrator: the pre-parallel books 1–3 each had one and the comparison produced the batch's strongest
+signal to date. Lane C contributes no evidence on that question at all, in either direction.
+
+## Lane C final tally — all three assigned books complete
 
 | | |
 |---|---|
-| Books complete | 2 of 3 |
+| Books complete | **3 of 3** — Hopkins, Heath & Heath, Sutherland |
 | Books blocked | 0 |
-| New issues raised, book 13 | C-01, C-02, C-03, C-05(b), C-08, C-09, C-11 |
-| New issues raised, book 14 | C-13, C-14, C-15, C-18, C-19, C-21 |
-| Evidence *for* the frozen design | C-04, C-06, C-07, C-10 (book 13); C-16, C-17 (book 14) |
-| Recurring **within this lane**, across 2 distinct books | the evidence-characteristic gap (C-01 / C-13, failing in opposite directions); relation-type under-use (C-05(a) / C-15); a recorded granularity judgement call (C-06 / C-17) |
-| Possible recurrence of a pre-parallel item, flagged not counted | C-05(a), C-19 |
+| Books with a historical comparator | **0 of 3** |
+| Total objects | 114 SourceKnowledge · 11 systems · 81 terms · 29 relationships · 10 concepts · 24 bindings |
+| Issues raised | C-01 to C-30 |
 | Schema/method changes made | **none** |
 
-### The one thing to read first, if reading only one
+### Recurrence within Lane C, counted by distinct books
 
-Two books in this lane, from the same domain, broke the **same** SPEC-03 field in **opposite**
-directions. Hopkins claims measurement and supplies almost none; the Heaths supply measurement
-constantly and almost none of it is their own. `empirical_within_source` — "the source reports its
-own measurement" — cannot record either honestly, and the fixed characteristic list has no
-neighbouring value that can. Both were handled by writing the truth into prose caveats, which is
-faithful and unaggregatable.
+| Issue | Books | What it is |
+|---|---|---|
+| **Evidence-characteristic gap** (C-01, C-13, C-23) | **3 of 3** | one field, `empirical_within_source`, cannot record claimed-but-unreported measurement, cited external research, or a source that does both |
+| **Relation-type under-use** (C-05a, C-15) | **3 of 3** | `broader_than` / `narrower_than` / `same_mechanism` all downgraded to `related_to`; SPEC-05 governance and the Canon charter disagree about which a worker may set |
+| **Self-contradiction inside one section** (C-29) | **3 of 3** | eight instances, all expressible — evidence *for* the design |
+| **A recorded granularity judgement** (C-06, C-17) | 2 of 3 | V0 held both times without a new rule, but needed a judgement call and it is written down |
+| **Binding profile varies by source shape** (C-20, C-28) | 3 of 3 | rate *and* target layer both track the source's subject, not its quality |
 
-This is the strongest signal Lane C has produced. Whether it is a general problem or an artefact of
-one domain is exactly what the other lanes will settle.
+### Issues that appeared once and did not recur
 
-## Book 15 — Rory Sutherland, *Alchemy*
+C-02 (no `system_type` for a shared-warrant set), C-03 (unfalsifiable-but-unhedged claims), C-08
+(OCR damage clustering by typographic class), C-09 (no numeric verification step in the visual pass),
+C-14 (`source_warns_against_isolated_use` cannot tell silence from permission), C-18 (EPUB books are
+less locatable), C-19 and C-24 (two different figure-related patterns), C-25 (source error versus
+extraction damage). Each is one book. None should be read as a pattern on this evidence.
 
-Not started.
+### Evidence *for* the frozen design, gathered
+
+C-04, C-06, C-07, C-10, C-16, C-17, C-22, C-26, C-27, C-29. The strongest are C-16 — Made to Stick's
+whole contribution lives above its individual claims and the system layer held all of it — and C-26 —
+an avowedly anti-rational source went in without anything being excluded or dressed up.
+
+### The one finding this lane would put in front of the Controller
+
+**One SPEC-03 field broke in all three books, in three different ways.**
+`empirical_within_source` means "the source reports its own measurement", and the fixed
+characteristic list has no neighbour for anything else. Hopkins claims measurement and supplies
+almost none. Heath & Heath supply it constantly and almost none is theirs. Sutherland does both
+inside one book, so a single extraction contains the distinction the vocabulary cannot express.
+
+All three were handled by writing the truth into prose caveats. That is faithful and completely
+unaggregatable: nothing can later count how many sources claim an empirical basis, how many supply
+one, and how many are relying on someone else's.
+
+Whether this is general or an artefact of one domain is exactly what the other three lanes settle.
+Lane C asserts the pattern within advertising and persuasion, and asserts nothing beyond it.

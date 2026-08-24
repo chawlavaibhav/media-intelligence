@@ -2,131 +2,135 @@
 
 **Lane:** C — advertising / persuasion · **Branch:** `work/canon-003-c` ·
 **Worktree:** `media-intelligence-canon-c`
-**Method:** frozen. No schema, granularity rule, visual-pass method or ontology vocabulary has been
-changed. **Updated after each completed book.**
+**Status:** **all three assigned books complete.** Lane stopped as instructed.
+**Method:** frozen throughout. No schema, granularity rule, visual-pass method or ontology
+vocabulary was changed. Shared CANON-003 ledger, synthesis, Controller Brief and `canon/HANDOFF.md`
+were not touched.
 
 ---
 
 ## Status
 
-| Book | Title | State | Fresh checkpoint | Historical comparison |
-|---|---|---|---|---|
-| 13 | Claude C. Hopkins, *Scientific Advertising* | **complete** | `1222919` | **none exists** — verified by search after the checkpoint; recorded as `no historical comparator` |
-| 14 | Chip Heath & Dan Heath, *Made to Stick* | **complete** | `a699a49` | **no prior extraction exists** — verified by search after the checkpoint. One prior *prediction* in `CANON-CURRICULUM-V0.md` was compared instead; see C-21 |
-| 15 | Rory Sutherland, *Alchemy* | not started | — | — |
+| Book | Title | Section processed | State | Fresh checkpoint | Historical comparison |
+|---|---|---|---|---|---|
+| 13 | Claude C. Hopkins, *Scientific Advertising* | ch.1–7, printed pp.1–24 of 21 chapters | **complete** | `1222919` | **none exists** |
+| 14 | Chip Heath & Dan Heath, *Made to Stick* | the complete Introduction, "What Sticks?" | **complete** | `a699a49` | **none exists**; one prior *prediction* was compared instead — see C-21 |
+| 15 | Rory Sutherland, *Alchemy* | the complete Introduction, "Cracking the (Human) Code" | **complete** | `f992d69` | **none exists** |
 
-**Books blocked:** none.
-**Partially extracted books:** none. Book 13 is finished, validated, committed and pushed.
+**Books blocked:** none. **Partially extracted books:** none. Every book is finished, validated,
+committed and pushed, and each fresh checkpoint was pushed **before** any historical material was
+searched for.
 
-## Latest commits
+## Commits on `work/canon-003-c`
 
 | What | SHA |
 |---|---|
-| Book 13 fresh pre-history checkpoint (knowledge files + provenance) | `1222919` |
-| Book 13 lane issues + lane checkpoint | `df1a490` |
-| Book 14 fresh pre-history checkpoint (knowledge files + provenance) | `a699a49` |
-| Book 14 lane issues + this checkpoint update | see `git log -1` on `work/canon-003-c` |
+| Book 13 fresh pre-history checkpoint | `1222919` |
+| Book 13 historical search, lane issues, lane checkpoint | `df1a490` |
+| Book 14 fresh pre-history checkpoint | `a699a49` |
+| Book 14 historical search, lane issues, lane checkpoint | `31e3249` |
+| Book 15 fresh pre-history checkpoint | `f992d69` |
+| Book 15 historical search, lane issues, this final checkpoint | see `git log -1` |
 
-## What book 13 produced
+## What the lane produced
 
-`canon/knowledge/current/hopkins-scientific-advertising-ch1-7/`
+Three directories under `canon/knowledge/current/`:
+`hopkins-scientific-advertising-ch1-7`, `heath-made-to-stick-introduction`,
+`sutherland-alchemy-introduction` — each with the five knowledge files and a `PROVENANCE.md`.
 
-| File | Contents |
-|---|---|
-| `visual-evidence-ledger.yaml` | pass performed, `verified_page_level`, 0 demonstrations — the source has no visual layer |
-| `source-knowledge.yaml` | 54 objects |
-| `source-concept-systems.yaml` | 5 systems |
-| `ontology-mappings.yaml` | 37 terms (15 problems, 16 remedies, 6 properties), 10 relationships including 3 `distinct_from`, 4 source-specific concepts |
-| `operational-bindings.yaml` | 8 bindings, all `proposed` |
-| `PROVENANCE.md` | identity, integrity, OCR profile, visual result, scope limits, rights |
+| | Objects | Systems | Terms | Relationships | Concepts | Bindings |
+|---|---|---|---|---|---|---|
+| Book 13 — Hopkins | 54 | 5 | 37 | 10 | 4 | 8 |
+| Book 14 — Heath & Heath | 28 | 3 | 22 | 9 | 3 | 9 |
+| Book 15 — Sutherland | 32 | 3 | 22 | 10 | 3 | 7 |
+| **Total** | **114** | **11** | **81** | **29** | **10** | **24** |
 
-**Section processed:** chapters 1–7, printed pp.1–24 of 21 chapters. Chapters 8–21 not processed;
-chapter 15 "Test Campaigns" is the notable exclusion and is stated in `PROVENANCE.md`.
-
-## What book 14 produced
-
-`canon/knowledge/current/heath-made-to-stick-introduction/`
-
-| File | Contents |
-|---|---|
-| `visual-evidence-ledger.yaml` | pass performed, `not_verified_page_layout`, 0 figures in the whole book, 1 visual-only observation — the section title exists only as an image of the word |
-| `source-knowledge.yaml` | 28 objects |
-| `source-concept-systems.yaml` | 3 systems, two of them with `whole_system_claim.origin: source_explicit` |
-| `ontology-mappings.yaml` | 22 terms (7 problems, 10 remedies, 5 properties), 9 relationships including 1 `distinct_from`, 3 source-specific concepts |
-| `operational-bindings.yaml` | 9 bindings, all `proposed` |
-| `PROVENANCE.md` | identity, integrity, visual result, the EPUB locator limitation, the evidence-vocabulary note, scope limits, rights |
-
-**Section processed:** the complete Introduction, "What Sticks?". Chapters 1–6 and the epilogue not
-processed, so each principle object records what the Introduction supports rather than the book's
-full case. Stated in `PROVENANCE.md`.
-
-**Framework preservation, which was the specific instruction for this book.** The six principles are
-one object each because the principle is the unit the checklist operates on; sub-claims with their
-own mechanism and their own support are separate objects that `specialise` their principle. Three
-systems carry the parts that live above the objects — the checklist, the Curse of Knowledge and the
-only escape from it, and the argument that stickiness is learnable at all. Without that layer the
-extraction would have been six commonsense rules; see C-16.
-
-**Mechanical validation:** passes SPEC-03 rules 1–7, SPEC-04 rules 1–9 and the SPEC-05 layer
+**Mechanical validation:** all three pass SPEC-03 rules 1–7, SPEC-04 rules 1–9 and the SPEC-05 layer
 constraints. The same validator was run against all five pre-parallel books and passes on each, so
-this extraction is being held to the same rules they were.
+this lane is being held to the same rules those were.
+
+**Visual passes:** performed on all three, before any claim was written in each case.
+
+- Book 13 — `verified_page_level`. 24 pages rendered and inspected; **zero** figures. Text
+  extraction loses nothing. Load-bearing digits re-read from the page image against the text layer.
+- Book 14 — `not_verified_page_layout`. Every image in the book enumerated and each distinct one
+  opened; no figures anywhere. The section's own title exists only as an image of the word.
+- Book 15 — `not_verified_page_layout`. Two figures, one of which carries the book's thesis and
+  whose ~two dozen quadrant placements exist **only** in the image; transcribed in full in the ledger.
 
 ## Unresolved local issues
 
-None blocking. Thirteen new issues and six pieces of evidence *for* the frozen design are recorded
-in `canon/findings/CANON-003-lane-C-issues.md`. All proposed fixes are proposals only; nothing has
-been applied.
+None blocking. Thirty issues are recorded in `canon/findings/CANON-003-lane-C-issues.md`, including
+ten pieces of evidence *for* the frozen design. **Every proposed fix is a proposal. Nothing was
+applied.**
 
-### The finding this lane would most want read
+### The finding this lane would put in front of the Controller first
 
-**Two books, same domain, broke the same field in opposite directions.** SPEC-03 has one evidence
-characteristic for measurement, `empirical_within_source`, defined as "the source reports its own
-measurement". Hopkins claims measurement constantly and supplies almost none. The Heaths supply
-measurement constantly and almost none of it is their own — it is Newton's Stanford study, Best and
-Horiuchi's, a 1999 Israeli experiment. Neither can be recorded honestly, and there is no
-neighbouring value in the fixed list that would work. Both were handled by writing the truth into
-prose caveats, which is faithful and cannot be counted. Issues C-01 and C-13.
+**One SPEC-03 field broke in all three books, in three different ways.**
+`empirical_within_source` is defined as "the source reports its **own** measurement", and the fixed
+characteristic list has no neighbouring value for anything else.
 
-### Also consequential
+- **Hopkins** claims measurement constantly — "we prove them by repeated tests", "never failed to
+  prove out in any test we know" — and across seven chapters supplies three unattributed
+  cost-per-reply figures, one before-and-after picture test, and a described record of ~2,000 keyed
+  headlines from which no result is given.
+- **Heath & Heath** report measurement constantly and almost none of it is theirs: Newton's 1990
+  Stanford study, Best and Horiuchi's Halloween research, a 1999 Israeli advertising experiment.
+- **Sutherland** does both inside one book — his own randomised envelope test alongside cited work
+  from Duke, Trivers and Kurzban — so a single extraction contains the distinction the vocabulary
+  cannot express.
 
-- **C-01** — the evidence vocabulary has one slot for two different facts: a source that *reports* a
-  measurement, and a source that *says* one was made. Hopkins is almost entirely the second kind.
-  Handled by applying `empirical_within_source` only where a result is reported, and writing every
-  asserted-but-unreported measurement into a caveat. Nothing is lost for a human reader, but nothing
-  can count it either.
-- **C-02** — the mail-order copy rules are held together by one shared evidential warrant, and no
-  available `system_type` means that. `interacting_set` was used as the least assumptive option and
-  the mismatch recorded rather than resolved.
-- **C-15** — SPEC-05's governance section and the Canon charter give different answers about which
-  relationship types a worker may set without review. The narrower reading was followed, and the
-  cost is that a relation the source states outright — the tapper/listener gap *is* the Curse of
-  Knowledge — is recorded in the structured layer as an unspecified connection. The cheapest fix
-  needs no schema change, only a decision about which document governs.
-- **C-16**, on the other side of the ledger, is the strongest evidence in this lane *for* the
-  current design. Made to Stick's contribution lives almost entirely above its individual claims,
-  and the system layer held all of it.
+All three were handled by writing the truth into `extractor_observed` caveats. That is faithful and
+completely unaggregatable: nothing can later count how many sources claim an empirical basis, how
+many supply one, and how many are relying on someone else's.
+
+Whether this is general or an artefact of the advertising and persuasion domain is exactly what the
+other three lanes settle. Lane C asserts the pattern within its own domain and asserts nothing
+beyond it.
+
+### Also worth the Controller's attention
+
+- **C-15 — two governing documents disagree, and the conservative reading cost fidelity.** SPEC-05's
+  governance section singles out only `same_failure_family` as needing review, which would permit
+  `same_mechanism` and `broader_than`. The Canon charter lists exactly two relations a worker may set
+  locally. The narrower reading was followed in all three books, so relations the sources state
+  outright — one of them an identity Sutherland and the Heaths each assert directly — are recorded in
+  the structured layer as unspecified connections. **The cheapest fix needs no schema change at all:
+  a decision about which document governs.**
+- **C-16 and C-26 are the counterweight**, and are the strongest positive evidence in this lane. Made
+  to Stick's entire contribution lives above its individual claims — six commonsense rules at object
+  level, one checklist explicitly not a formula aimed at one named obstacle at system level — and the
+  system layer held all of it. Alchemy, an avowedly anti-rational provocation, went in with nothing
+  excluded and nothing dressed up.
+- **C-29 — every book in this lane contradicts itself inside the processed section**, eight instances
+  across three books, all expressible with existing vocabulary. Evidence for the design, and a
+  source-shape finding: a consumer retrieving two objects from the same commercial source cannot
+  assume they are consistent.
+- **All three Lane C books have no historical comparator.** The pre-parallel books 1–3 each had one
+  and the comparison produced the batch's strongest signal to date. **Lane C contributes no evidence
+  on that question at all, in either direction.** The integrator should not read Lane C's silence as
+  agreement or disagreement.
 
 ## Open questions this lane cannot settle
 
-- Whether C-05(a) — using `related_to` where `broader_than`/`narrower_than` was meant — is a genuine
-  recurrence of a pre-parallel item or a separate observation of the same shape. This lane has not
-  read the earlier book's working files and does not assert a count.
+- Whether the evidence-characteristic gap (C-01 / C-13 / C-23) is general or specific to sources that
+  argue about persuasion. Three books, one domain.
+- Whether the relation-type under-use (C-05a / C-15) is a genuine recurrence of a pre-parallel item
+  or a separate observation of the same shape. This lane has not read the earlier books' working
+  files and does not assert a count.
+- Whether C-19 (a heading that exists only as an image) is a recurrence of the pre-parallel finding
+  about a graphic disturbing a named section, or a separate pattern.
 - Whether *Scientific Advertising* chapter 15, "Test Campaigns", supplies the measurement detail
   chapters 1–7 do not. Outside the processed section. **NOT VERIFIED.**
-- Whether C-19 — a heading that exists only as an image — is a recurrence of the pre-parallel
-  finding about a graphic disturbing a named section, or a separate pattern. Not asserted.
-- Whether the coverage map's and curriculum's confidence ratings elsewhere are similarly
-  directionally right and materially overstated. One was checked here (C-21); the rest are not
-  this lane's to audit.
 - Rights status of the local library files, carried forward unresolved from the batch inventory.
 
-## Remaining assignments
+## Handover
 
-Book 15 — Rory Sutherland, *Alchemy* — under the same frozen method: fresh extraction → mechanical validation →
-commit and push the fresh checkpoint → only then search for and compare historical material → update
-the lane issue file and this checkpoint.
+Lane C is finished and does not merge itself, does not perform synthesis, and did not read any other
+lane's fresh findings. The three book directories, the issue file and this checkpoint are the lane's
+complete output and are pushed to `origin/work/canon-003-c`.
 
-Per the amendment's context-window rule, the lane stops at a completed-book boundary if context
-becomes crowded and resumes from this branch in a fresh session. Lane C does not merge itself, does
-not touch the shared batch ledger, synthesis, Controller Brief or `canon/HANDOFF.md`, and does not
-read other lanes' fresh findings.
+The integrator will need to combine this file's issue list with the other lanes and the preserved
+pre-parallel batch ledger, count recurrence by **distinct books rather than by mentions**, and decide
+the two questions this lane deliberately left open: whether C-05a/C-15 and C-19 are recurrences of
+pre-parallel items or separate observations.
