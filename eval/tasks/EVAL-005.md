@@ -39,14 +39,26 @@ Design, local implementation and local testing only:
 
 1. Remove target leakage from the `transcribe` checker shape, mechanically rather than in prose.
 2. Pin shaping and rendering to the **same font asset**, and record enough provenance to audit it.
-3. Gate mismatch visibility on the **final raster**, not on glyph sequences.
+3. Gate mismatch visibility on the **decoded pixel raster** — not on glyph sequences, and not on
+   encoded PNG bytes.
 4. Make canonicalisation semantics true to their documentation.
-5. Rebuild the statistical claim on **distinct base-word opportunities**, and recompute the
-   sample-size requirement rather than inheriting it.
+5. Rebuild the sizing claim on **distinct base-word opportunities**, recompute the target rather
+   than inheriting it, and state plainly that distinct words do **not** establish iid or
+   exchangeable trials.
 6. Correct the qualification/repeat rule and remove the false redundancy between gates.
 7. Formalise this task; prepare the native-validation sheets **without executing them**; state
    precisely what Resources would need to supply.
 8. Update Eval-owned handoff/findings so a fresh session does not re-derive the state.
+
+**Second Controller review pass (same task, same branch)** added three bounded corrections:
+
+9. Compare **decoded pixels**, not encoded PNG bytes — and keep the two hashes distinct in name and
+   purpose.
+10. Remove every claim that distinct base words make the opportunities "statistically independent";
+    keep zero-false-passes as the deterministic gate and the Clopper-Pearson figure as an explicitly
+    labelled iid **reference** calculation.
+11. Reflect merged Resources state (PR #5) and reorder the Resources ask so the first step is a
+    check of existing local material rather than any acquisition.
 
 ## OUT OF SCOPE — and each is independently blocking
 
@@ -71,7 +83,8 @@ Design, local implementation and local testing only:
 | `eval/tasks/EVAL-005-CONTROLLER-BRIEF.md` | the review surface |
 | `eval/tasks/EVAL-005-RESOURCES-REQUEST.md` | the precise cross-stream ask, if the pool is short |
 | `eval/battery/devanagari-exactness/checker_input.py` | per-shape projections + blind check |
-| `eval/battery/devanagari-exactness/devtext.py` | one pinned font asset; raster-level screen |
+| `eval/battery/devanagari-exactness/devtext.py` | one pinned font asset; pixel-level screen |
+| `eval/battery/devanagari-exactness/pngraster.py` | stdlib PNG decoder; pixel fingerprint vs file hash |
 | `eval/battery/devanagari-exactness/build_items.py` | one-item-per-base construction + statistics |
 | `eval/battery/devanagari-exactness/make_validation_sheets.py` | sheet generator |
 | `eval/battery/devanagari-exactness/native-validation/` | prepared, blank sheets + plan |
@@ -108,10 +121,20 @@ scope and is a stop, not a judgement call.
   because the image is rendered from the string rather than described by it.
 - The EVAL-004 stop decision, `eval/decisions/EVAL-004-STOP-2026-08-24.md`. Unchanged.
 
-**Not depended on:** Resources PR #5 (IndicSTR12 / IIIT-ILST composition and recoverable crop
-transcriptions) was **open, not merged**, when this task ran. No claim here rests on it. If it
-merges, its records may change how many Hindi lexical items are available and should be re-checked
-against `EVAL-005-RESOURCES-REQUEST.md`.
+**Resources PR #5 is merged**, and `origin/main` was merged into this branch before final
+verification. Its records establish that **3,924 of 3,925 single-word crops are
+transcription-resolvable** (IndicSTR12 2,711/2,711; IIIT-ILST 1,213/1,214), and that IndicSTR12 and
+IIIT-ILST remain **one evaluation lineage** — with BSTD the only genuine cross-lineage reserve.
+
+Two things follow, and the second is easy to get wrong:
+
+- The battery's base words are unaffected: it still builds from the 53 distinct Hindi strings in the
+  EVAL-003 candidate manifest, reused **as lexical items only**.
+- Those merged records establish that **recoverable labels exist**, not that the lexical strings are
+  in git. The raw strings may still live only in the git-ignored Resources corpus, so how many
+  *distinct* Hindi words they yield is **unknown** — which is why
+  `EVAL-005-RESOURCES-REQUEST.md` asks Resources to check existing local material first rather than
+  acquire anything.
 
 ## STOP CONDITIONS
 
@@ -150,13 +173,18 @@ This task is complete when **all** of the following hold, each verified by a com
 2. Shaping and rendering demonstrably use the same pinned font **file** and face index; a missing
    font raises rather than falling back; no font binary is committed; provenance records the font
    SHA-256, the tool versions and every pixel-affecting setting.
-3. A mismatch ships only if the NFC-canonical strings differ **and** the final PNG bytes differ.
-   The known canonically-equivalent nukta pair is rejected; a pair whose glyph sequences differ but
-   whose pixels are identical is rejected; a genuinely visible pair (सुबह / सुवह) is accepted.
+3. A mismatch ships only if the NFC-canonical strings differ **and** the **decoded pixels** differ
+   — dimensions plus RGBA8 pixel data, not encoded PNG bytes. The known canonically-equivalent nukta
+   pair is rejected; a pair whose glyph sequences differ but whose pixels are identical is rejected;
+   three encodings of one picture are shown to have three file hashes and one pixel fingerprint and
+   are treated as visually identical; a genuinely visible pair (सुबह / सुवह) is accepted; the decoder
+   raises rather than guessing on anything it cannot decode.
 4. `nfc()` performs NFC and nothing else; whitespace handling is a separately named, separately
    tested rule; the comparison predicate does not strip.
 5. Every mismatch item sits on a distinct base word; `hard items == distinct hard base words`; the
-   quoted bound is derived from that count; the epistemic limit ships with it.
+   quoted figure is derived from that count; every machine-readable statistical field names its iid
+   assumption; `independence_status` records **NOT ESTABLISHED**; and no EVAL-005 file asserts the
+   opportunities are "statistically independent".
 6. The battery remains deterministic, 50/50 balanced, non-trivial to game, and covers all 20
    failure classes across all 5 groups.
 7. No module in the battery references a network client, a URL or an API key.
@@ -164,8 +192,9 @@ This task is complete when **all** of the following hold, each verified by a com
 9. The full test suite passes from a clean run, with commands, exit code and counts recorded in the
    Controller Brief.
 
-**Status: all nine met.** `python3 test_devanagari_exactness.py` → exit 0, 121 checks across 37
-tests. See `EVAL-005-CONTROLLER-BRIEF.md` for the recorded run and environment provenance.
+**Status: all nine met, after both review passes.** `python3 test_devanagari_exactness.py` → exit 0,
+149 checks across 41 tests. See `EVAL-005-CONTROLLER-BRIEF.md` for the recorded run and environment
+provenance.
 
 ## RESULT LOCATION
 

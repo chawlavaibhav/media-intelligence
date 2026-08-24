@@ -24,25 +24,33 @@ DIRECTION MATTERS MORE THAN IT LOOKS
                      failing basic comparison, not resisting autocorrection.
 
 ONE HARD OPPORTUNITY PER BASE WORD  (Controller review fix 5)
-    An earlier version let one base word back up to four mismatch items and then quoted a
-    binomial zero-failure upper bound over the resulting count. That is not honest: four
-    deterministic perturbations of the same word are not four independent chances to catch a
-    checker out. The bound was being computed over correlated trials.
+    An earlier version let one base word back up to four mismatch items and then quoted a binomial
+    zero-failure upper bound over the resulting count. Four deterministic perturbations of the same
+    word are plainly not four separate chances to catch a checker out: a model that reads `सुबह`
+    toward its plausible spelling will do it for every perturbation of `सुबह`.
 
     The rule is now structural rather than a caveat: **every mismatch item uses a distinct base
     word**, so the number of hard opportunities equals the number of distinct hard base words by
     construction, and the invariant is asserted in the test suite. Class coverage is preserved by
-    solving the allocation deterministically (a maximum bipartite matching between failure
-    classes and base words) instead of by relaxing the independence rule.
+    solving the allocation deterministically (a maximum bipartite matching between failure classes
+    and base words) rather than by weakening the rule.
 
-    Even so, the resulting figure is a **binomial/opportunity-model bound conditional on this
-    battery's construction**. The words and operators are not a probability sample of all future
-    generated Hindi, so it is not an estimate of any checker's universal true error rate.
+    WHAT THIS DOES NOT ESTABLISH — and the distinction matters
+    Distinct base words remove the most obvious *within-word* correlation. They do **not** make the
+    opportunities independent and identically distributed. A checker's errors may still be
+    correlated across words, across diacritics, across failure classes and across lexical patterns;
+    nothing here demonstrates otherwise, and the 53 words come from one dataset lineage.
+
+    So the qualification gate is the **deterministic** one — zero false passes — which needs no
+    probability model. The Clopper-Pearson figure is retained only as an explicitly-labelled **iid
+    Bernoulli reference calculation** for sizing the battery, and its field name says so.
 
 NO ITEM SHIPS UNVERIFIED
-    Every mismatch passes devtext.is_valid_mismatch(): the strings must differ after NFC *and*
-    the FINAL RASTER OUTPUT must differ. Rejections are written to the manifest with their
-    reason, not silently dropped.
+    Every mismatch passes devtext.is_valid_mismatch(): the strings must differ after NFC *and* the
+    DECODED PIXELS must differ. Pixels, not encoded PNG bytes: the same picture can be written as
+    many different byte streams, so a file-hash test would call visually identical images different
+    and then score a checker wrong for correctly saying they match. Rejections are written to the
+    manifest with their reason, not silently dropped.
 
 No network. No model. No spend. Rendering is local.
 """
@@ -60,7 +68,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import perturb  # noqa: E402
 from checker_input import write_checker_inputs  # noqa: E402
 from devtext import (RenderSpec, canonical_equal, environment_provenance,  # noqa: E402
-                     has_devanagari, is_valid_mismatch, nfc, raster_sha256, render,
+                     has_devanagari, is_valid_mismatch, nfc, pixel_fingerprint, render,
                      sha256_file, shape, shapes_with_dotted_circle, strip_outer_whitespace)
 
 # Fraction of mismatch items built in the hard direction (see module docstring).
@@ -79,12 +87,22 @@ IMPLAUSIBLE_SHARE = 0.15
 # --------------------------------------------------------------------------------------------
 # Statistics
 # --------------------------------------------------------------------------------------------
-def zero_failure_upper_bound(n: int, confidence: float = 0.95) -> float:
-    """One-sided Clopper-Pearson upper bound on the failure rate when 0 failures are seen in n.
+def iid_reference_upper_bound(n: int, confidence: float = 0.95) -> float:
+    """One-sided Clopper-Pearson upper bound for 0 failures in n trials, **under an iid Bernoulli
+    model that this battery does not establish.**
 
-    Plain English: if a checker gets n independent chances to wave a broken image through and
-    never does, this is the highest true failure rate still consistent with that result at the
-    stated confidence. It is a *ceiling on our ignorance*, not a measurement of accuracy.
+    Read this as a *planning and reference* calculation, not as an inference about a checker.
+
+    Plain English: IF a checker's outcomes on these opportunities were independent and identically
+    distributed coin flips, then never failing any of n of them would be consistent with a true
+    failure probability as high as this. That "if" is a modelling assumption, not something we have
+    demonstrated. A checker's errors may well be correlated across words, diacritics, failure
+    classes and lexical patterns, and one mismatch item per base word removes only the most obvious
+    within-word correlation.
+
+    The **deterministic** qualification gate is "zero false passes", which needs no probability
+    model at all. This number exists to size the battery and to state plainly how little a clean
+    sweep would prove.
     """
     if n <= 0:
         return 1.0
@@ -92,7 +110,11 @@ def zero_failure_upper_bound(n: int, confidence: float = 0.95) -> float:
 
 
 def opportunities_required(target_bound: float, confidence: float = 0.95) -> int:
-    """Smallest number of zero-failure opportunities whose upper bound is <= target_bound."""
+    """Opportunities needed to bring the iid *reference* calculation to <= target_bound.
+
+    A planning target for battery size. It is not, and must not be reported as, the number of
+    opportunities that would prove a real-world error rate below `target_bound`.
+    """
     return int(math.ceil(math.log(1.0 - confidence) / math.log(1.0 - target_bound)))
 
 
@@ -347,10 +369,13 @@ def build(base_strings, spec: RenderSpec, target_total: int, seed: int, out_dir:
             "target_string": target,          # what the checker is asked about
             "expected_verdict": expected,     # match | mismatch — known by construction
             "image_file": f"images/{png.name}",
-            "image_sha256": sha256_file(png),
-            # Authoritative visibility evidence: the final rasters, compared as bytes.
-            "rendered_raster_sha256": raster_sha256(rendered, spec),
-            "target_raster_sha256": raster_sha256(target, spec),
+            # ENCODED ARTIFACT identity: proves a checker read the exact file we shipped. It is
+            # deliberately NOT the visibility test — the same picture has many valid encodings.
+            "image_file_sha256": sha256_file(png),
+            # VISUAL identity: sha256 over the decoded raster (dimensions + RGBA8 pixels). This is
+            # what "these two look different" means, and what the validity gate decides on.
+            "rendered_pixel_sha256": pixel_fingerprint(rendered, spec),
+            "target_pixel_sha256": pixel_fingerprint(target, spec),
             # Diagnostic only — a different glyph sequence is evidence of, not proof of, a
             # different picture.
             "rendered_shape": shape(rendered, spec),
@@ -400,7 +425,7 @@ def summarise(items, chosen, rejected, valid, cap, spec, seed) -> dict:
     hard_n = len(hard)
     need_5 = opportunities_required(0.05)
     # Hard opportunities are CORRUPT_IMAGE_SHARE of the mismatch stratum, and one mismatch item
-    # per base word, so the base-word requirement follows directly.
+    # per base word, so the base-word planning target follows directly.
     words_for_5 = int(math.ceil(need_5 / CORRUPT_IMAGE_SHARE))
 
     return {
@@ -419,22 +444,34 @@ def summarise(items, chosen, rejected, valid, cap, spec, seed) -> dict:
         },
         "opportunity_model": {
             "rule": "every mismatch item uses a distinct base word, so item count and distinct "
-                    "opportunity count are equal by construction",
+                    "base-word opportunity count are equal by construction",
+            "qualification_gate": "zero false passes on every mismatch item. Deterministic; it "
+                                  "assumes no probability model.",
             "mismatch_items": len(mismatches),
             "distinct_mismatch_base_words": len(all_mismatch_bases),
             "hard_items": hard_n,
             "distinct_hard_base_words": len(hard_bases),
-            "hard_bound_if_zero_false_passes_95pct": round(zero_failure_upper_bound(hard_n), 4),
-            "all_mismatch_bound_if_zero_false_passes_95pct":
-                round(zero_failure_upper_bound(len(mismatches)), 4),
-            "hard_opportunities_required_for_5pct": need_5,
-            "validated_base_words_required_for_5pct": words_for_5,
+            # Field names carry the assumption deliberately, so a value lifted out of this JSON
+            # cannot be mistaken for a demonstrated bound on a checker's real error rate.
+            "iid_reference_upper_bound_if_zero_false_passes_95pct":
+                round(iid_reference_upper_bound(hard_n), 4),
+            "iid_reference_upper_bound_all_mismatches_95pct":
+                round(iid_reference_upper_bound(len(mismatches)), 4),
+            "hard_opportunities_for_5pct_iid_reference": need_5,
+            "validated_base_words_planning_target_for_5pct_iid_reference": words_for_5,
+            "independence_status": "NOT ESTABLISHED. One mismatch item per distinct base word "
+                                   "removes obvious within-word correlation. It does not make the "
+                                   "opportunities iid or exchangeable: checker errors may remain "
+                                   "correlated across words, diacritics, failure classes and "
+                                   "lexical patterns, and the words come from one dataset lineage.",
             "epistemic_limit":
-                "This is a binomial upper bound over the opportunities this battery constructs, "
-                "conditional on its word list, its operators and its font. The words and "
-                "operators are NOT a probability sample of future generated Hindi, so it is not "
-                "an estimate of any checker's universal true error rate. It bounds what this "
-                "battery could have failed to detect, nothing wider.",
+                "The Clopper-Pearson figures above are an iid Bernoulli REFERENCE calculation used "
+                "to size the battery. EVAL-005 does not establish iid or exchangeability, so they "
+                "are not universal checker error bounds and not an estimate of any checker's real "
+                "error rate. The base words and perturbation operators are also not a probability "
+                f"sample of future generated Hindi. The planning target of {words_for_5} words is "
+                "what would bring the reference calculation below 5%; it is not proof of a "
+                "real-world rate below 5%.",
         },
         "mismatch_by_direction": dict(collections.Counter(r["direction"] for r in mismatches)),
         "mismatch_by_class": dict(collections.Counter(r["failure_class"] for r in mismatches)),
@@ -452,10 +489,13 @@ def summarise(items, chosen, rejected, valid, cap, spec, seed) -> dict:
             "rejected_despite_differing_glyphs": sum(
                 1 for r in rejected
                 if r["rejection_reason"] == "raster_identical" and r["glyph_sequences_differed"]),
-            "rule": "a mismatch ships only if NFC-canonical strings differ AND the final PNG "
-                    "bytes differ; the glyph-sequence comparison is a diagnostic, not the gate",
+            "rule": "a mismatch ships only if NFC-canonical strings differ AND the DECODED "
+                    "rasters differ (dimensions + RGBA8 pixels). Neither the glyph sequence nor "
+                    "the encoded PNG bytes is the gate: glyph sequences can differ for identical "
+                    "pictures, and PNG byte streams can differ for identical pictures.",
         },
-        "distinct_image_hashes": len({r["image_sha256"] for r in items}),
+        "distinct_image_file_hashes": len({r["image_file_sha256"] for r in items}),
+        "distinct_image_pixel_hashes": len({r["rendered_pixel_sha256"] for r in items}),
         "distinct_image_files": len({r["image_file"] for r in items}),
         "paired_items": {
             "count": sum(1 for r in items if r["items_sharing_this_image"] > 1),
@@ -523,9 +563,11 @@ def main():
     print("opportunity model:", json.dumps(
         {k: summary["opportunity_model"][k] for k in
          ("mismatch_items", "distinct_mismatch_base_words", "hard_items",
-          "distinct_hard_base_words", "hard_bound_if_zero_false_passes_95pct",
-          "hard_opportunities_required_for_5pct", "validated_base_words_required_for_5pct")},
+          "distinct_hard_base_words", "iid_reference_upper_bound_if_zero_false_passes_95pct",
+          "hard_opportunities_for_5pct_iid_reference",
+          "validated_base_words_planning_target_for_5pct_iid_reference")},
         indent=2))
+    print("independence:", summary["opportunity_model"]["independence_status"][:64] + "...")
     print("by direction:", summary["mismatch_by_direction"])
     print("by group    :", summary["mismatch_by_group"])
     print(f"classes     : {len(summary['mismatch_by_class'])}")

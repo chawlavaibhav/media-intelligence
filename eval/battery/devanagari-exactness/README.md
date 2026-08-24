@@ -39,12 +39,19 @@ says "yes, that's it". That is precisely where silent autocorrection lives.
 
 ## Four guards that make it a fair test
 
-**1 · A difference must actually be on the page — checked on the pixels.** Different Unicode does
-not guarantee different pixels, and neither does a different glyph sequence. Measured here:
-precomposed क़ (U+0958) and क + nukta are canonically equal and render identically; and `सु‌बह`
-(with a zero-width non-joiner) shapes to a **different glyph sequence** from `सुबह` yet produces a
-**byte-identical PNG**. Every mismatch must therefore differ **after NFC** *and* **in its final
-raster output**. Glyph comparison is kept as a diagnostic, not as the gate. Rejections are
+**1 · A difference must actually be on the page — checked on the decoded pixels.** Three candidate
+tests exist and two of them are wrong, in opposite directions. Measured here:
+
+- *Unicode difference is too weak* — precomposed क़ (U+0958) and क + nukta are canonically equal and
+  draw the same picture.
+- *Glyph-sequence difference is too weak* — `सु‌बह` (zero-width non-joiner) shapes to a **different
+  glyph sequence** from `सुबह` and draws **identical pixels**.
+- *Encoded PNG difference is too strong* — one picture written three ways (an `hb-view` render plus
+  two re-encodings of its own pixels) gives **three different file hashes** and **one picture**.
+
+So every mismatch must differ **after NFC** *and* **in its decoded raster** — dimensions plus RGBA8
+pixel data. Glyph comparison is kept as a diagnostic. Two hashes are kept and named apart:
+`image_file_sha256` is artifact identity, the pixel fingerprint is visual identity. Rejections are
 recorded, not dropped.
 
 **2 · The blind shape is actually blind.** Shape 1 (`transcribe`) never sees the target — it is
@@ -53,10 +60,12 @@ target field or any Devanagari character at all. Shape 2 (`verdict`) does see th
 design. Comparing the two measures how much of a checker's false-pass behaviour is caused by
 showing it the answer we hope for.
 
-**3 · One hard opportunity per base word.** Every mismatch item sits on a distinct base word, so
-the statistical bound is computed over opportunities that are genuinely separate rather than over
-four deterministic perturbations of the same word. Class coverage is preserved by solving the
-allocation as a bipartite matching, not by relaxing the rule.
+**3 · One hard opportunity per base word — and no overclaim about it.** Every mismatch item sits on
+a distinct base word, so the sizing figure is computed over distinct base-word opportunities rather
+than over four deterministic perturbations of the same word. Class coverage is preserved by solving
+the allocation as a bipartite matching, not by relaxing the rule. **Distinct words are not iid
+trials, and nothing here says they are:** the qualification gate is the deterministic *zero false
+passes*, and the Clopper-Pearson figure is an explicitly labelled reference calculation for sizing.
 
 **4 · Neither trivial strategy works.** The battery is **50/50 match/mismatch**, so "always match"
 and "always mismatch" both score exactly 50%. Every base word appears in **both** strata, so word
@@ -70,11 +79,12 @@ ignoring it.
 
 | File | What it is |
 |---|---|
-| `devtext.py` | shaping + rendering on one pinned font asset; the pixel-level validity screen |
+| `devtext.py` | shaping + rendering on one pinned font asset; the validity screen |
+| `pngraster.py` | stdlib PNG decoder — pixel fingerprint (visual identity) vs file hash (artifact identity) |
 | `perturb.py` | the failure taxonomy as deterministic operators, with cluster-plausibility tagging |
 | `checker_input.py` | per-shape checker projections, frozen prompts, and the blind check |
 | `build_items.py` | balanced, deterministic item construction and the opportunity model |
-| `test_devanagari_exactness.py` | 121 checks across 37 tests, including five regressions for defects found while building |
+| `test_devanagari_exactness.py` | 149 checks across 41 tests, including regressions for every defect found while building |
 | `FAILURE-TAXONOMY.md` | the exact taxonomy and the deterministic/generative boundary |
 | `GENERATED-GLYPH-STRESS-LAYER.md` | Class B — what Unicode **cannot** fake, and how to test it later |
 | `CHECKER-CONTRACT.md` | input/output contract, per shape, and the comparison predicate |
@@ -100,6 +110,7 @@ This battery is **not portable as-is**, and the previous draft overstated that i
 | Requirement | Value used for the recorded build |
 |---|---|
 | `hb-shape` and `hb-view` | HarfBuzz 14.2.1 |
+| PNG decoding | `pngraster.py`, stdlib `zlib` only — no Pillow, no numpy, no image library |
 | Font **file** (not a family name) | `/System/Library/Fonts/Kohinoor.ttc`, face index 0 |
 | Font SHA-256 | `8b508b160d4573963c064e951af48c33c6381901253ec6ae0feb86d80fde1f31` |
 | Point size / margin | 40 / 24 |
@@ -131,6 +142,7 @@ network client, a URL or an API key.
 | Mismatch items / distinct mismatch base words | **53 / 53** |
 | **Hard opportunities / distinct hard base words** | **37 / 37** |
 | Candidates screened | 1,834 valid; 2 rejected `canonical_equal`; 0 rejected `raster_identical` |
+| Distinct image files / file hashes / **pixel fingerprints** | 90 / 90 / **90** |
 
 ### Two limits, stated plainly
 
@@ -138,15 +150,19 @@ network client, a URL or an API key.
 sit on a *distinct* base word. So the battery caps at the number of validated base words. 120 was
 requested; 106 was built, and the cap is recorded rather than padded.
 
-**The bound that matters is weaker than the headline.** Zero false passes across all 53 mismatches
-gives a 95% upper bound of 5.5% — but that figure *contains* the hard stratum and is not separate
-evidence. On the 37 distinct hard opportunities the bound is **7.8%**. Reaching ≤5% there needs
-**84–85 validated base words**, which the repository cannot currently supply: merged repo-local
-material yields 53. See `METRICS-AND-QUALIFICATION.md` and
-[`EVAL-005-RESOURCES-REQUEST.md`](../../tasks/EVAL-005-RESOURCES-REQUEST.md).
+**The sizing figure is weaker than the headline, and it is a sizing figure.** Under an iid /
+exchangeable Bernoulli model — which **this battery does not establish** — zero false passes across
+37 distinct hard opportunities corresponds to a one-sided 95% reference upper bound of **7.8%**. The
+all-mismatch figure of 5.5% *contains* the hard stratum and is not separate evidence.
 
-And whatever the size: the bound is conditional on this battery's words, operators and font. It is
-**not** an estimate of a checker's universal true error rate.
+Bringing the reference figure below 5% needs **84–85 validated base words**; merged repo-local
+material yields 53. See `METRICS-AND-QUALIFICATION.md` and
+[`EVAL-005-RESOURCES-REQUEST.md`](../../tasks/EVAL-005-RESOURCES-REQUEST.md), whose first step is a
+check of existing Resources material rather than any acquisition.
+
+**More words tighten the calculation; they do not supply the assumption.** The figure is not a
+universal checker error bound and not an estimate of real-world error at any word count. The actual
+qualification gate is deterministic — *zero false passes* — and needs no probability model.
 
 ---
 

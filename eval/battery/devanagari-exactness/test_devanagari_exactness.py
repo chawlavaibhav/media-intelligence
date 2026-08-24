@@ -10,9 +10,13 @@ they now guard:
     correctly reporting what it saw.
 
   * `test_raster_identical_is_rejected_even_when_glyphs_differ` — `सु‌बह` (with a zero-width
-    non-joiner) and `सुबह` shape to DIFFERENT glyph sequences and render to IDENTICAL pixels.
-    The earlier glyph-only gate would have admitted it. This is why the gate is now the final
-    raster.
+    non-joiner) and `सुबह` shape to DIFFERENT glyph sequences and draw IDENTICAL pixels.
+    The earlier glyph-only gate would have admitted it.
+
+  * `test_encoded_png_bytes_are_not_the_visibility_test` — the same defect from the other side.
+    One picture written as three different PNG byte streams has three different FILE hashes and one
+    pixel fingerprint. Gating on the file hash would call visually identical images different.
+    Between them, these two tests are why the gate is the DECODED raster and nothing else.
 
   * `test_plausibility_allows_matra_after_nukta` — an early plausibility rule flagged तोड़ा (an
     ordinary Hindi word) as malformed. It would have thrown away valid hard items.
@@ -44,13 +48,14 @@ sys.path.insert(0, str(HERE))
 import checker_input  # noqa: E402
 import devtext  # noqa: E402
 import perturb  # noqa: E402
-from build_items import (CORRUPT_IMAGE_SHARE, opportunities_required,  # noqa: E402
-                         zero_failure_upper_bound)
+import pngraster  # noqa: E402
+from build_items import (CORRUPT_IMAGE_SHARE, iid_reference_upper_bound,  # noqa: E402
+                         opportunities_required)
 from checker_input import (GROUND_TRUTH_FIELDS, project_transcribe,  # noqa: E402
                            project_verdict, scoring_record, verify_blind)
 from devtext import (FontMissing, NUKTA, RenderSpec, VIRAMA,  # noqa: E402
                      canonical_equal, environment_provenance, glyphs_differ,
-                     has_devanagari, is_valid_mismatch, nfc, raster_sha256, render,
+                     has_devanagari, is_valid_mismatch, nfc, pixel_fingerprint, render,
                      shape, shapes_with_dotted_circle, sha256_file, strip_outer_whitespace)
 
 # The nukta pair, built from explicit codepoints. Written as ordinary source literals the two
@@ -170,7 +175,7 @@ def test_shaping_and_rendering_use_the_same_pinned_font_asset():
         with tempfile.TemporaryDirectory() as t:
             # bypass the caches so the underlying commands are actually issued
             devtext._shape_cached.cache_clear()
-            devtext._raster_sha256_cached.cache_clear()
+            devtext._pixel_fingerprint_cached.cache_clear()
             shape("सुबह", spec)
             render("सुबह", Path(t) / "x.png", spec)
     finally:
@@ -242,7 +247,7 @@ def test_invisible_difference_is_rejected():
     check("the nukta pair is canonically equal", canonical_equal(precomposed, decomposed))
     check("the nukta pair shapes identically", not glyphs_differ(precomposed, decomposed))
     check("the nukta pair renders to identical pixels",
-          raster_sha256(precomposed) == raster_sha256(decomposed))
+          pixel_fingerprint(precomposed) == pixel_fingerprint(decomposed))
     v = is_valid_mismatch(precomposed, decomposed)
     check("the nukta pair is rejected as an item", not v.valid, f"reason={v.reason}")
     check("rejected for the right reason", v.reason == "canonical_equal", v.reason)
@@ -259,8 +264,8 @@ def test_raster_identical_is_rejected_even_when_glyphs_differ():
     clean, zwnj = "सुबह", "सु‌बह"
     check("the ZWNJ pair is NOT canonically equal", not canonical_equal(clean, zwnj))
     check("the ZWNJ pair DOES shape to different glyph sequences", glyphs_differ(clean, zwnj))
-    check("the ZWNJ pair renders to IDENTICAL pixels",
-          raster_sha256(clean) == raster_sha256(zwnj))
+    check("the ZWNJ pair decodes to IDENTICAL pixels",
+          pixel_fingerprint(clean) == pixel_fingerprint(zwnj))
     v = is_valid_mismatch(zwnj, clean)
     check("the ZWNJ pair is rejected as an item", not v.valid)
     check("rejected as raster_identical, not as a glyph question",
@@ -268,11 +273,88 @@ def test_raster_identical_is_rejected_even_when_glyphs_differ():
     check("the rejection record still notes that glyphs differed", v.glyphs_differ)
 
 
+def test_encoded_png_bytes_are_not_the_visibility_test():
+    """Different PNG byte streams, identical decoded pixels — the file hash must not be the gate.
+
+    Controller review, second pass. PNG is a container: the same picture can be written many ways.
+    Gating visibility on the file hash would call two visually identical images "different", admit
+    the pair as an item, and mark a checker WRONG for correctly saying the pictures match.
+
+    Built from a real battery render, not a synthetic fixture: `hb-view` writes 8-bit grayscale, and
+    the re-encodings below are RGBA8 at two compression levels, one carrying an extra tEXt chunk.
+    Three different byte streams, one picture.
+    """
+    with tempfile.TemporaryDirectory() as t:
+        t = Path(t)
+        original = render("सुबह", t / "orig.png", RenderSpec())
+        raster = pngraster.decode(original)
+
+        a, b = t / "reenc-a.png", t / "reenc-b.png"
+        a.write_bytes(pngraster.encode(raster, compression_level=1))
+        b.write_bytes(pngraster.encode(raster, compression_level=9,
+                                       extra_text=b"Comment\x00re-encoded"))
+
+        files = [original, a, b]
+        hashes = {pngraster.file_sha256(f) for f in files}
+        fps = {pngraster.pixel_fingerprint(f) for f in files}
+
+        check("three encodings of one picture have three different FILE hashes",
+              len(hashes) == 3, f"{len(hashes)} distinct file hashes")
+        check("they all have the SAME pixel fingerprint",
+              len(fps) == 1, f"{len(fps)} distinct pixel fingerprints")
+        check("the pixel fingerprint records dimensions and format, not just bytes",
+              raster.pixel_format == "RGBA8" and raster.width > 0 and raster.height > 0,
+              f"{raster.width}x{raster.height} {raster.pixel_format}")
+
+        # And the consequence: the gate treats them as visually identical.
+        check("devtext's raster fingerprint agrees with the decoded-pixel fingerprint",
+              pixel_fingerprint("सुबह", RenderSpec()) == raster.fingerprint())
+        check("a same-picture pair is therefore NOT a valid mismatch",
+              not is_valid_mismatch("सुबह", "सुबह").valid)
+
+
+def test_pixel_fingerprint_separates_dimensions_from_payload():
+    """Two rasters with the same pixel bytes but different shapes are different pictures."""
+    wide = pngraster.Raster(4, 2, bytes(4 * 2 * 4))
+    tall = pngraster.Raster(2, 4, bytes(2 * 4 * 4))
+    check("same payload, different shape -> different fingerprint",
+          wide.fingerprint() != tall.fingerprint())
+    same = pngraster.Raster(4, 2, bytes(4 * 2 * 4))
+    check("same payload, same shape -> same fingerprint", wide.fingerprint() == same.fingerprint())
+
+
+def test_decoder_refuses_what_it_cannot_decode():
+    """A wrong raster would corrupt every visibility decision without any visible symptom."""
+    with tempfile.TemporaryDirectory() as t:
+        bad = Path(t) / "notapng.png"
+        bad.write_bytes(b"this is not a png")
+        try:
+            pngraster.decode(bad)
+            check("a non-PNG raises UnsupportedPNG", False, "decode() returned a raster")
+        except pngraster.UnsupportedPNG:
+            check("a non-PNG raises UnsupportedPNG", True)
+
+        # An interlaced header must be refused rather than guessed at.
+        import struct, zlib as _z
+        def chunk(ct, body):
+            return (struct.pack(">I", len(body)) + ct + body
+                    + struct.pack(">I", _z.crc32(ct + body) & 0xFFFFFFFF))
+        il = Path(t) / "interlaced.png"
+        il.write_bytes(pngraster.PNG_SIGNATURE
+                       + chunk(b"IHDR", struct.pack(">IIBBBBB", 2, 2, 8, 6, 0, 0, 1))
+                       + chunk(b"IDAT", _z.compress(b"\x00" * 18)) + chunk(b"IEND", b""))
+        try:
+            pngraster.decode(il)
+            check("an interlaced PNG raises rather than being guessed at", False)
+        except pngraster.UnsupportedPNG:
+            check("an interlaced PNG raises rather than being guessed at", True)
+
+
 def test_visible_difference_is_accepted():
     v = is_valid_mismatch("सुवह", "सुबह")
     check("visible ब/व difference is accepted", v.valid, v.reason)
     check("accepted pair really has different final pixels",
-          v.rendered_raster_sha256 != v.target_raster_sha256)
+          v.rendered_pixel_sha256 != v.target_pixel_sha256)
     check("accepted pair also has different glyphs (diagnostic agrees)", v.glyphs_differ)
 
 
@@ -317,7 +399,7 @@ def test_comparison_predicate_is_canonical_not_codepoint_identity():
     check("but they ARE canonically equal, which is what the battery compares",
           canonical_equal(a, b))
     check("and they render identically, so canonical equality agrees with the pixels",
-          raster_sha256(a) == raster_sha256(b))
+          pixel_fingerprint(a) == pixel_fingerprint(b))
 
 
 # ============================================================================================
@@ -359,26 +441,96 @@ def test_hard_stratum_contains_no_implausible_items():
 def test_bound_is_computed_from_the_opportunity_count():
     items, summary, _ = build_battery()
     om = summary["opportunity_model"]
-    expected = round(zero_failure_upper_bound(om["distinct_hard_base_words"]), 4)
-    check("the quoted hard bound is derived from distinct base-word opportunities",
-          abs(om["hard_bound_if_zero_false_passes_95pct"] - expected) < 1e-9,
-          f"{om['hard_bound_if_zero_false_passes_95pct']} vs {expected}")
-    check("a 5% bound needs 59 zero-failure opportunities",
+    expected = round(iid_reference_upper_bound(om["distinct_hard_base_words"]), 4)
+    check("the reference figure is derived from distinct base-word opportunities",
+          abs(om["iid_reference_upper_bound_if_zero_false_passes_95pct"] - expected) < 1e-9,
+          f"{om['iid_reference_upper_bound_if_zero_false_passes_95pct']} vs {expected}")
+    check("a 5% reference calculation needs 59 zero-failure opportunities",
           opportunities_required(0.05) == 59, str(opportunities_required(0.05)))
-    need = om["hard_opportunities_required_for_5pct"]
-    check("the required word count follows from the hard-direction share, not a stored guess",
-          om["validated_base_words_required_for_5pct"] == math.ceil(need / CORRUPT_IMAGE_SHARE),
-          f"{om['validated_base_words_required_for_5pct']} vs "
+    need = om["hard_opportunities_for_5pct_iid_reference"]
+    check("the word planning target follows from the hard-direction share, not a stored guess",
+          om["validated_base_words_planning_target_for_5pct_iid_reference"]
+          == math.ceil(need / CORRUPT_IMAGE_SHARE),
+          f"{om['validated_base_words_planning_target_for_5pct_iid_reference']} vs "
           f"{math.ceil(need / CORRUPT_IMAGE_SHARE)}")
 
 
-def test_epistemic_limit_is_recorded_with_the_bound():
+def test_statistical_figures_are_labelled_as_an_iid_reference_only():
+    """The figure must not be presentable as a demonstrated bound on a checker's real error rate.
+
+    Controller review, second pass: distinct base words remove obvious within-word correlation but
+    do NOT establish iid or exchangeable Bernoulli trials. The field names carry the assumption so
+    a value lifted out of the JSON cannot be misread.
+    """
     _, summary, _ = build_battery()
-    text = " ".join(summary["opportunity_model"]["epistemic_limit"].lower().split())
-    check("the bound ships with its epistemic limit",
-          "not a probability sample" in text, text[:140])
-    check("the limit says it is not a universal true error rate",
-          "true error rate" in text, text[:140])
+    om = summary["opportunity_model"]
+    for k in ("iid_reference_upper_bound_if_zero_false_passes_95pct",
+              "iid_reference_upper_bound_all_mismatches_95pct",
+              "hard_opportunities_for_5pct_iid_reference",
+              "validated_base_words_planning_target_for_5pct_iid_reference"):
+        check(f"field {k} names its modelling assumption", k in om)
+    check("no field claims a bound without naming the iid assumption",
+          not [k for k in om if ("bound" in k or "5pct" in k) and "iid" not in k],
+          str([k for k in om if ("bound" in k or "5pct" in k) and "iid" not in k]))
+
+    status = " ".join(om["independence_status"].lower().split())
+    check("independence is recorded as NOT ESTABLISHED", "not established" in status, status[:120])
+    check("the record says errors may remain correlated", "correlated" in status, status[:120])
+
+    limit = " ".join(om["epistemic_limit"].lower().split())
+    check("the limit calls the figure a reference calculation", "reference calculation" in limit)
+    check("the limit denies iid/exchangeability was established",
+          "does not establish iid" in limit, limit[:160])
+    check("the limit denies it is a universal error bound",
+          "not universal checker error bounds" in limit, limit[:160])
+    check("the limit calls the word count a planning target, not proof",
+          "planning target" in limit and "not proof" in limit, limit[:200])
+
+    check("the deterministic gate is recorded separately from the reference figure",
+          "zero false passes" in om["qualification_gate"].lower()
+          and "no probability model" in om["qualification_gate"].lower(),
+          om["qualification_gate"])
+
+
+def test_no_eval005_file_claims_statistical_independence():
+    """Grep every EVAL-005-owned source and document for the language the review removed.
+
+    Distinct base words reduce within-word correlation. They do not establish iid or exchangeable
+    trials, and no EVAL-005 file may say or imply that they do.
+    """
+    # Assembled from fragments so this scanner does not match its own literals.
+    ind = "indep" + "endent"
+    banned = tuple(f"{w} {ind}" for w in ("genuinely", "truly", "statistically")) + \
+             tuple(f"{ind} {w}" for w in ("trials", "chances", "opportunities", "samples"))
+
+    eval_root = HERE.parents[1]
+    targets = sorted(list(HERE.glob("*.py")) + list(HERE.glob("*.md")))
+    targets += [eval_root / p for p in (
+        "tasks/EVAL-005.md",
+        "tasks/EVAL-005-CONTROLLER-BRIEF.md",
+        "tasks/EVAL-005-RESOURCES-REQUEST.md",
+        "findings/devanagari-exactness-design-findings.md",
+    )]
+    # The phrase may appear ONLY inside a quotation — i.e. when a document is citing the wording
+    # that was removed, as §5.9 of the findings does. Quote parity on the line decides: an odd
+    # number of double quotes before the match means the phrase sits inside a quoted span. Bare
+    # prose asserting it, in either direction, is a failure: even a negation invites being read
+    # back as the claim once it is quoted out of context.
+    offenders = []
+    for f in targets:
+        if not f.exists():
+            continue
+        for ln, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
+            low = line.lower()
+            for phrase in banned:
+                i = low.find(phrase)
+                while i != -1:
+                    if line[:i].count('"') % 2 == 0:          # not inside a quotation
+                        offenders.append(f"{f.name}:{ln}: {phrase!r} outside a quotation")
+                    i = low.find(phrase, i + 1)
+    check("no EVAL-005 file asserts the opportunities are iid or exchangeable, "
+          "outside a quotation of the removed wording",
+          not offenders, "; ".join(offenders[:5]))
 
 
 # ============================================================================================
@@ -432,14 +584,15 @@ def test_battery_is_balanced_and_trivial_strategies_fail():
     check("every paired image carries opposite expected verdicts",
           all(len({x["expected_verdict"] for x in v}) > 1 for v in pairs))
     check("no duplicate image bytes across distinct files",
-          summary["distinct_image_files"] == summary["distinct_image_hashes"])
+          summary["distinct_image_files"] == summary["distinct_image_pixel_hashes"]
+          == summary["distinct_image_file_hashes"])
 
 
 def test_battery_content_invariants():
     items, summary, _ = build_battery()
     mismatches = [i for i in items if i["expected_verdict"] == "mismatch"]
     check("no mismatch item is invisible on the page",
-          all(i["rendered_raster_sha256"] != i["target_raster_sha256"] for i in mismatches))
+          all(i["rendered_pixel_sha256"] != i["target_pixel_sha256"] for i in mismatches))
     check("every match item is truly canonically identical",
           all(canonical_equal(i["rendered_string"], i["target_string"])
               for i in items if i["expected_verdict"] == "match"))
@@ -547,7 +700,7 @@ def test_conjunct_split_is_visible():
     joined, split = "क" + VIRAMA + "ष", "कष"
     check("conjunct split changes the glyph sequence", glyphs_differ(joined, split))
     check("conjunct split changes the final pixels",
-          raster_sha256(joined) != raster_sha256(split))
+          pixel_fingerprint(joined) != pixel_fingerprint(split))
 
 
 def test_every_class_has_at_least_one_visible_instance():

@@ -7,7 +7,10 @@ What was built, what was learned building it, what the Controller review correct
 remains uncertain.
 
 **Revision note.** §§1–4 and §8 carry forward from the first design pass and still hold. §5 and §7
-were **materially wrong** in the first pass and are corrected here. §6 and §9–10 are updated.
+were **materially wrong** in the first pass and were corrected in the first Controller review. §5.8
+and §7 were corrected again in the **second** review pass — the visibility gate was still comparing
+encoded file bytes rather than decoded pixels, and the statistical language still claimed an
+independence the design does not establish. §6 and §9–10 are updated.
 
 ---
 
@@ -73,10 +76,11 @@ on the easy direction would otherwise conceal blindness on the hard one.
 
 ---
 
-## 5 · What the Controller review found, and what it changed
+## 5 · What the Controller reviews found, and what they changed
 
-Seven fixes were required. Five of them found something the code actually did wrong, not merely
-prose that read badly. Each is now pinned by a regression test.
+The **first** review required seven fixes; five of them found something the code actually did wrong
+rather than prose that read badly. The **second** review found two more — one of them a defect
+introduced by the first review's own fix. Each is pinned by a regression test.
 
 ### 5.1 · The blind checker shape was not blind — **contract defect**
 
@@ -145,14 +149,17 @@ Genuinely different after NFC. **Different glyph sequences** — there is an ext
 scored a checker wrong for correctly reporting that the two pictures are the same — the same defect
 the nukta screen was built to prevent, arriving through the door that was supposed to prevent it.
 
-**What was done.** The gate is now the final PNG bytes. Rejection reasons are `canonical_equal`,
+**What was done.** The gate moved off glyph sequences. Rejection reasons are `canonical_equal`,
 `raster_identical` and `rendering_error`. Glyph comparison is retained and recorded as a diagnostic,
 so disagreements between the two are visible. Screening renders into a process-lifetime scratch
 directory that is deleted on exit, so no temporary image reaches the repository.
 
-**Honest note on impact:** on the current 53-word pool the two criteria never disagreed —
-1,834 candidates pass, 2 are rejected `canonical_equal`, **0** `raster_identical`. The built
-battery would have been the same either way. What changed is that the claim the battery makes is
+**The first fix went one step too far, and §5.8 corrects it.** It compared the SHA-256 of the
+encoded PNG file, which is a different question again.
+
+**Honest note on impact:** on the current 53-word pool the criteria never disagreed — 1,834
+candidates pass, 2 are rejected `canonical_equal`, **0** `raster_identical`. The built battery would
+have been the same under any of the three tests. What changed is that the claim the battery makes is
 now the claim it verifies.
 
 ### 5.4 · A plausibility hole put broken strings in the hard stratum — **found while fixing 5.3**
@@ -211,6 +218,75 @@ battery in both shapes. A checker that was only screened is recorded as **"scree
 qualified"**. The cost estimate rose accordingly (§ METRICS), because repeats now attach to every
 qualifying checker rather than to one leader.
 
+### 5.8 · The visibility gate compared file bytes, not pixels — **second review pass**
+
+**OBSERVED.** Fix 5.3 replaced the glyph gate with `sha256(encoded PNG)`. But PNG is a container:
+the same picture can be written as many byte streams. Measured, starting from a real battery render:
+
+```
+hb-view render of सुबह                       file hash A
+re-encode of its own decoded pixels, zlib 1  file hash B
+re-encode, zlib 9, plus a tEXt chunk         file hash C
+                                             -> one pixel fingerprint for all three
+```
+
+**Why it matters.** It is the same error as the glyph gate, from the other side. A glyph gate calls
+identical pictures different because an invisible character changed the glyph run; a file-hash gate
+calls identical pictures different because the encoder changed. Both would admit a pair as a test
+item and then mark a checker **wrong** for correctly reporting that the two pictures match.
+
+**What was done.** A new `pngraster.py` decodes PNG to a canonical RGBA8 raster using stdlib `zlib`
+only — neither Pillow nor numpy is present on this machine, and adding an image library to a battery
+whose point is pinned local tooling would be a poor trade. `pixel_fingerprint()` hashes dimensions,
+pixel format and pixel data together, and `is_valid_mismatch()` decides `raster_identical` on that.
+
+Two hashes are now kept and named so they cannot be confused:
+
+| | Question it answers |
+|---|---|
+| `image_file_sha256` | **artifact identity** — did a checker read the exact file we shipped? |
+| pixel fingerprint | **visual identity** — do these two pictures look different? |
+
+The decoder is deliberately strict: interlaced PNGs and anything else it does not fully implement
+raise `UnsupportedPNG` rather than returning a guess, because a wrong raster would corrupt every
+visibility decision with no visible symptom. Its dimensions were cross-checked against `sips`.
+
+**Impact on the battery: none.** Item-for-item, the build is identical to the file-hash build — all
+90 distinct image files have 90 distinct file hashes *and* 90 distinct pixel fingerprints. What
+changed is, again, that the claim now matches the check.
+
+### 5.9 · "Genuinely independent" was an overclaim — **second review pass**
+
+**OBSERVED.** After fix 5.5, the design said 37 distinct base words gave "37 genuinely independent
+hard chances", and quoted a Clopper-Pearson bound over them.
+
+**Why it matters.** One item per word removes the most obvious *within-word* correlation. It does
+not establish independent, identically distributed Bernoulli trials. A checker blind to anusvara is
+blind to it on every word carrying one; errors may remain correlated across words, diacritics,
+failure classes and lexical patterns, and the 53 words come from a single dataset lineage. Presented
+as independence, the figure reads as an inference about a checker when it is a modelling assumption
+we simply adopted.
+
+**What was done.** The claim is separated into two things that were being conflated:
+
+- **The qualification gate is deterministic** — *zero false passes*. It needs no probability model
+  and is what a checker is actually judged on.
+- **The Clopper-Pearson figure is a reference calculation** used to size the battery, carrying its
+  assumption in every field name: `iid_reference_upper_bound_if_zero_false_passes_95pct`,
+  `hard_opportunities_for_5pct_iid_reference`,
+  `validated_base_words_planning_target_for_5pct_iid_reference`, plus an explicit
+  `independence_status: "NOT ESTABLISHED. …"`.
+
+The sanctioned wording is now: *under an iid / exchangeable Bernoulli opportunity model, zero false
+passes in 37 hard opportunities corresponds to a one-sided 95% reference upper bound of ~7.8%* —
+followed by the statement that EVAL-005 does not establish that model, that 7.8% is not a universal
+checker error bound, and that 84–90 words is a **planning target** for the calculation rather than
+proof of a sub-5% real-world rate.
+
+A test now greps every EVAL-005 source and document for independence language and fails if any of it
+returns. The Checker Contract's line about execution isolation was also corrected: keeping items from
+seeing each other prevents **context leakage**; it does not make outcomes "statistically independent".
+
 ---
 
 ## 6 · The human requirement, and why it is small
@@ -238,74 +314,81 @@ list being expanded — which it will need to be (§7).
 
 ---
 
-## 7 · What the battery can support statistically — **corrected**
+## 7 · What the battery can support statistically — **corrected twice**
 
-### The error in the first pass
+### Error 1 — the bound was computed over correlated items
 
 The builder allowed **up to four mismatch items from one base word** (`MAX_ITEMS_PER_BASE = 4`) and
-then quoted a binomial zero-failure upper bound over the item count. **That bound was computed over
-correlated trials.** Four deterministic perturbations of `सुबह` are not four independent chances to
-catch a checker out: a model that reads toward the plausible word will do it for all four. The
-sample looked larger than the evidence was.
+then quoted a binomial zero-failure upper bound over the item count. Four deterministic
+perturbations of `सुबह` are not four separate chances to catch a checker out: a model that reads
+toward the plausible word will do it for all four.
 
-### The rule now, and it is structural
+**Fixed structurally:** every mismatch item sits on a distinct base word, and a test asserts that
+hard items and distinct hard base words are equal. Class coverage was **not** sacrificed — the
+allocation is a deterministic maximum bipartite matching between failure classes and base words, so
+scarce classes claim a word before common ones crowd them out. All **20 classes across 5 groups**
+remain represented at 53 words.
 
-> **Every mismatch item sits on a distinct base word.**
+### Error 2 — distinct words were then described as "independent trials"
 
-So hard items and distinct hard base words are equal by construction, and a test asserts it. Class
-coverage was **not** sacrificed to get there: the allocation is solved as a deterministic maximum
-bipartite matching between failure classes and base words, so scarce classes claim a word before
-common ones crowd them out. All **20 classes across 5 groups** remain represented at 53 words.
+Removing within-word correlation is not the same as establishing iid or exchangeable Bernoulli
+trials, and the design briefly claimed it was. See §5.9. The claim is now split:
 
-### The corrected numbers
+| | |
+|---|---|
+| **Qualification gate** | *Zero false passes.* Deterministic; assumes no probability model. |
+| **Clopper-Pearson figure** | An **iid reference calculation** for sizing the battery. Not an inference about any checker. |
+
+### The numbers
 
 | | Value |
 |---|---:|
 | Items | 106 (53 match / 53 mismatch) |
 | Mismatch items / **distinct mismatch base words** | 53 / **53** |
 | Hard items / **distinct hard base-word opportunities** | 37 / **37** |
-| 95% upper bound, zero false passes, hard stratum | **7.8%** |
-| 95% upper bound, all mismatches — *contains the above, not separate evidence* | 5.5% |
-| Distinct opportunities needed for ≤5% | **59** |
-| Validated base words needed for ≤5% | **84–85** |
+| iid reference upper bound, zero false passes, hard stratum | **7.8%** |
+| Same, all mismatches — *contains the above, not separate evidence* | 5.5% |
+| Opportunities for a sub-5% reference figure | **59** |
+| Base-word planning target | **84–85** |
 
 **The earlier "~85–90 words" recommendation survives recomputation.** It was not carried over: 84 is
-the arithmetic minimum, 85 is what the builder derives (`ceil(59 / 0.7)`), and 90 buys margin
-against words being rejected during validation. It now rests on an opportunity count that is
-genuinely one-per-word.
+the arithmetic minimum, 85 is what the builder derives (`ceil(59 / 0.7)`), and 90 buys margin against
+words being rejected during validation. Neither the 7.8% nor the 84–90 figure changed in the second
+review pass; what changed is what they are said to mean.
 
-### ⚠ The epistemic limit, which must travel with the number
+### ⚠ What the figure is not
 
-This is a **binomial upper bound over the opportunities this battery constructs**, conditional on
-its word list, its operators and its font. The words are 53 lexical items from one dataset lineage;
-the operators are a taxonomy we wrote. Neither is a probability sample of the Hindi a generator will
-be asked to draw.
+- **Not a demonstrated bound.** It assumes iid / exchangeable opportunities, which EVAL-005 does not
+  establish.
+- **Not a universal checker error bound**, and not an estimate of real-world error.
+- **Not made true by more words.** A larger battery tightens the calculation; it does not supply the
+  assumption.
+- **Not a per-class rate.** At ~2.6 items per class, one miss moves a "rate" by 30–50 points. Those
+  are diagnostic signals only.
 
-**It is therefore not an estimate of any checker's universal true error rate**, and no number of
-extra words makes it one. "No false pass in 37 distinct opportunities, 95% upper bound 7.8% on this
-material" is legitimate. "The checker's true error rate is ≤5%" is not.
-
-**Per-class figures are not rates.** At ~2.6 items per class, one miss moves a "rate" by 30–50
-points. They are diagnostic signals only.
-
-### The pool cannot supply what the bound needs — **new finding**
+### The pool cannot supply the planning target — **updated for merged Resources state**
 
 **OBSERVED.** Merged repository-local material yields **53** distinct Hindi lexical items, all from
-the EVAL-003 candidate manifest. The corpus manifest's 34,786 records all carry
-`source_labels_ref: null` and hold no transcriptions; the raw `*_gt.txt` label files are git-ignored
-and absent from merged state. The only other committed Devanagari of any volume is the
-annotator-disagreement file (~50 strings) — and those are *specifically the contested ones*, where
-at least one member of every pair is wrong by construction and several are Marathi. Using them would
-put non-words at the base of items whose premise is that the base is a real word.
+the EVAL-003 candidate manifest. The corpus manifest's 34,786 records carry `source_labels_ref:
+null`. The only other committed Devanagari of volume is the annotator-disagreement file (~50
+strings) — *specifically the contested ones*, where at least one member of each pair is wrong by
+construction and several are Marathi.
 
-**Consequence.** Reaching ≤5% needs roughly **31–37 more Hindi lexical items**, which is a request
-to Resources rather than something Eval should go and find. Filed as
-`eval/tasks/EVAL-005-RESOURCES-REQUEST.md`, with a note that Resources may already hold them
-uncommitted: 173 Hindi-labelled photographs were eligible in EVAL-003 and only 54 were selected, so
-119 transcriptions were enumerated and never committed. How many *distinct* words that yields is
-**unknown** and is Resources' to check.
+**Resources PR #5 is merged**, and it changes what we know: **3,924 of 3,925 single-word crops are
+transcription-resolvable** (IndicSTR12 2,711/2,711; IIIT-ILST 1,213/1,214), by two independent
+routes. Stated precisely: that establishes the **labels are recoverable**, not that the strings are
+in git — the raw lexical material may still live only in the git-ignored Resources corpus, and how
+many *distinct* Hindi words it yields is **unknown**.
 
-This is optional, not blocking. A run at 53 words is possible; it simply carries 7.8%.
+Nor would they be validated words. They have exactly the status of the 53 already in use: one
+annotation team's observation reused as a lexicon, each still needing the Hindi lexical validation.
+
+**Consequence.** `eval/tasks/EVAL-005-RESOURCES-REQUEST.md` now asks for a **check of existing local
+material first**, and requests no acquisition. IndicSTR12 and IIIT-ILST remain one evaluation
+lineage; BSTD stays the genuine cross-lineage reserve and is not to be spent on a word list.
+
+This is optional, not blocking. A run at 53 words is possible; it reports the figure at 37
+opportunities.
 
 ---
 
@@ -340,6 +423,11 @@ autocorrects *well-formed* wrong text, the easier case. A checker that passes ha
   some items are too easy.
 - **Whether font choice changes results.** One font, pinned by hash. A different face could make a
   difference easier or harder to see; unmeasured, and now at least auditable.
+- **How correlated a checker's errors actually are** across words, diacritics and failure classes.
+  Unmeasured, and it is precisely what would have to be understood before any figure from this
+  battery could be turned into a real-world error estimate.
+- **How many distinct Hindi words the resolvable crop labels actually yield.** 3,924 crops are
+  transcription-resolvable, but the strings are not in git and may repeat one another.
 - **Whether the shape-1 / shape-2 comparison behaves as hypothesised** — that showing the target
   invites autocorrection. Both shapes are now genuinely different experiments, which is what makes
   the comparison meaningful; the outcome is still a hypothesis.
@@ -362,5 +450,6 @@ EVAL-001/002/003 artifact.
 EVAL-004 remains stopped: its Reader-A pilot is not promoted to ground truth, and no checker is
 qualified, ranked or entered from it.
 
-One stop condition fired and is **reported, not resolved**: the corrected sample-size requirement
-needs lexical material the repository does not hold. Eval did not go looking for it.
+One stop condition fired and is **reported, not resolved**: the corrected battery-size planning
+target needs lexical material the repository does not hold. Eval did not go looking for it, and the
+request to Resources now asks for a check of existing local material rather than any acquisition.

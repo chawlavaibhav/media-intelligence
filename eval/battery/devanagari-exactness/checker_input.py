@@ -68,8 +68,8 @@ def prompt_sha256(p: str) -> str:
 # An allow-list, not a deny-list. A deny-list silently ships any field added later; an allow-list
 # fails closed.
 
-TRANSCRIBE_FIELDS = ("item_id", "image_file", "image_sha256", "checker_shape", "prompt")
-VERDICT_FIELDS = ("item_id", "image_file", "image_sha256", "checker_shape", "target_string",
+TRANSCRIBE_FIELDS = ("item_id", "image_file", "image_file_sha256", "checker_shape", "prompt")
+VERDICT_FIELDS = ("item_id", "image_file", "image_file_sha256", "checker_shape", "target_string",
                   "prompt")
 
 # Fields in the build manifest that reveal, or help infer, the expected answer. None of these may
@@ -77,7 +77,7 @@ VERDICT_FIELDS = ("item_id", "image_file", "image_sha256", "checker_shape", "tar
 GROUND_TRUTH_FIELDS = frozenset({
     "rendered_string", "expected_verdict", "failure_class", "failure_group", "direction",
     "plausibility", "edit_detail", "base_word", "base_provenance", "rendered_shape",
-    "target_shape", "rendered_raster_sha256", "target_raster_sha256", "hard_opportunity",
+    "target_shape", "rendered_pixel_sha256", "target_pixel_sha256", "hard_opportunity",
     "items_sharing_this_image", "render_spec", "glyphs_differ",
 })
 
@@ -94,7 +94,7 @@ def project_transcribe(item: dict) -> dict:
     return {
         "item_id": item["item_id"],
         "image_file": item["image_file"],
-        "image_sha256": item["image_sha256"],
+        "image_file_sha256": item["image_file_sha256"],
         "checker_shape": "transcribe",
         "prompt": PROMPT_TRANSCRIBE,
     }
@@ -105,7 +105,7 @@ def project_verdict(item: dict) -> dict:
     return {
         "item_id": item["item_id"],
         "image_file": item["image_file"],
-        "image_sha256": item["image_sha256"],
+        "image_file_sha256": item["image_file_sha256"],
         "checker_shape": "verdict",
         "target_string": item["target_string"],
         "prompt": PROMPT_VERDICT.format(target=item["target_string"]),

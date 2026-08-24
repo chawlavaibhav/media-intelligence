@@ -104,15 +104,17 @@ A candidate becomes an item **only if** it clears three gates, in order:
 |---|---|---|
 | 1 | the **NFC-canonical strings differ** — it is a real textual difference | `canonical_equal` |
 | 2 | shaping and rasterising both succeed — the pair can be judged at all | `rendering_error` |
-| 3 | the **final PNG bytes differ** — the difference is actually on the page | `raster_identical` |
+| 3 | the **decoded pixels differ** — the difference is actually on the page | `raster_identical` |
 
 Rejection reasons are recorded in `build/rejected-candidates.jsonl`, never silently dropped.
 
-### Why gate 3 is the pixels and not the glyph sequence
+### Why gate 3 is the decoded pixels — and neither of the two obvious alternatives
 
-The previous draft gated on HarfBuzz glyph sequences. That is good *evidence* that two strings
-look different, but it is not the same claim, and the difference is not theoretical. Measured on
-the pinned font:
+Gate 3 compares **decoded rasters**: image dimensions plus RGBA8 pixel data, fingerprinted with
+SHA-256. Both of the tempting shortcuts are wrong, in opposite directions.
+
+**Too weak — HarfBuzz glyph sequences.** A different glyph sequence is good *evidence* that two
+strings look different, but it is not the same claim. Measured on the pinned font:
 
 ```
 सुबह        -> [uni0938=0+680|uni0941=0+0|uni092C=2+567|uni0939=3+507]
@@ -120,14 +122,26 @@ the pinned font:
 ```
 
 Different strings after NFC. **Different glyph sequences** — there is an extra zero-advance glyph.
-**Byte-identical PNGs.** The glyph-only gate would have admitted this as a valid mismatch and then
-scored a checker wrong for correctly reporting that the two pictures are the same.
+**Identical pixels.** A glyph-only gate would have admitted this as a valid mismatch and then scored
+a checker wrong for correctly reporting that the two pictures are the same.
 
-The glyph comparison is retained as a diagnostic and recorded on every rejection, so we can see
-when the two disagree. On the current 53-word pool they never did: 1,834 candidates pass, 2 are
-rejected as `canonical_equal` (both the nukta pair below), and **0** were rejected as
-`raster_identical`. The gate is nonetheless the raster, because that is the claim the battery
-actually makes.
+**Too strong — encoded PNG bytes.** A file hash answers "is this the same file", not "is this the
+same picture". PNG is a container: the same raster can be written as many byte streams — a different
+zlib level, a different chunk split, an extra ancillary chunk. Measured, from a real battery render:
+an `hb-view` PNG and two re-encodings of its own decoded pixels give **three different file hashes**
+and **one pixel fingerprint**. A file-hash gate would call visually identical images different, and
+mark a checker wrong for correctly saying they match.
+
+So two hashes are kept and they answer different questions: `image_file_sha256` is **artifact**
+identity (did a checker read the file we shipped?), and the pixel fingerprint is **visual** identity.
+Only the second decides `raster_identical`.
+
+The glyph comparison is retained as a diagnostic and recorded on every rejection, so we can see when
+the two disagree. On the current 53-word pool they never did: 1,834 candidates pass, 2 are rejected
+as `canonical_equal` (both the nukta pair below), and **0** as `raster_identical`. Switching from
+file bytes to decoded pixels also changed **no item** — every image in the battery has a distinct
+picture as well as distinct bytes. The gate is nonetheless the decoded raster, because that is the
+claim the battery actually makes.
 
 ## Plausibility: what may enter the hard stratum
 

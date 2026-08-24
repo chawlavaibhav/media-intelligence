@@ -143,15 +143,20 @@ What exists, in `eval/battery/devanagari-exactness/`:
 - **One pinned font file, by SHA-256**, used for both shaping and rendering. A missing font stops
   the build rather than falling back. The font itself is a proprietary system asset and is **not
   committed**; provenance is recorded instead.
-- **Visibility gated on the final PNG bytes**, not on glyph sequences. Measured: `सु‌बह` with a
-  zero-width non-joiner shapes *differently* from `सुबह` and renders *identically*.
-- **37 distinct hard opportunities, one per base word** — so the statistical bound is not computed
-  over four correlated perturbations of the same word. Zero false passes there would give a 95%
-  upper bound of **7.8%**, on this battery's material only.
+- **Visibility gated on decoded pixels** — not glyph sequences, not encoded PNG bytes. Measured
+  both ways: `सु‌बह` shapes *differently* from `सुबह` and draws *identically*; and one picture
+  written three ways has three file hashes.
+- **37 distinct hard opportunities, one per base word** — so the sizing figure is not computed over
+  four correlated perturbations of the same word. Under an iid Bernoulli **reference** model that
+  the battery explicitly does **not** establish, zero false passes there corresponds to a 95%
+  reference upper bound of **7.8%**. The actual gate is deterministic: zero false passes.
 - **Prepared but blank native-validation sheets** for ~1.5 hours of one Hindi reader.
 
-⚠ **It has not been run and no checker is qualified.** ⚠ **Reaching a ≤5% bound needs 84–90 base
-words; the repository holds 53.** See `tasks/EVAL-005-RESOURCES-REQUEST.md`.
+⚠ **It has not been run and no checker is qualified.** ⚠ **Bringing the reference figure below 5%
+needs 84–90 base words; the repository holds 53.** Resources PR #5 (merged) establishes that 3,924
+single-word crops are transcription-resolvable, but those strings live in the git-ignored corpus and
+their distinct-word yield is unknown — so `tasks/EVAL-005-RESOURCES-REQUEST.md` asks Resources to
+**check existing local material first**, not to acquire anything.
 
 ### EVAL-004 — two-reader Hindi reference · **STOPPED by the Controller, 24 Aug 2026**
 
@@ -344,11 +349,20 @@ certify a consistently *wrong* result. Any consistency test needs a fidelity tes
 
 ---
 
-**Different glyphs are not proof of different pixels.** Measured in EVAL-005 on the pinned font:
-`सुबह` and `सु‌बह` (with a zero-width non-joiner) shape to **different** HarfBuzz glyph sequences
-and render to **byte-identical** PNGs. A visibility screen built on glyph comparison would admit
-such a pair and then score a checker wrong for correctly saying the two pictures look the same.
-**If an item claims a difference is visible, verify it on the final raster.**
+**"Do these two images look different" has exactly one correct test, and two tempting wrong ones.**
+Measured in EVAL-005 on the pinned font:
+
+- *Glyph sequences are too weak a test.* `सुबह` and `सु‌बह` (zero-width non-joiner) shape to
+  **different** HarfBuzz glyph sequences and draw **identical** pixels. A glyph-based screen would
+  admit that pair and then score a checker wrong for correctly saying the pictures match.
+- *Encoded file bytes are too strong a test.* One picture written three ways — an `hb-view` render
+  plus two re-encodings of its own decoded pixels — gives **three different file hashes** and one
+  picture. A file-hash screen makes the same mistake from the other side.
+
+**Compare the decoded raster: dimensions plus a canonical pixel format.** And keep the two hashes
+named apart — a file hash answers "did the checker read the file we shipped", a pixel fingerprint
+answers "do these look different". Decoding needs no image library; stdlib `zlib` is enough
+(`eval/battery/devanagari-exactness/pngraster.py`).
 
 **A font family name is not a pinned font.** `pango-view --font="Kohinoor Devanagari"` renders
 happily even when the family does not exist, resolving through fontconfig with no error. Passing an
@@ -356,16 +370,29 @@ exact font **file** — and recording its SHA-256 — is the only thing that mak
 experiment" checkable later. `hb-view` does this and shares HarfBuzz's shaping, so the pixels and
 the measurement come from one asset.
 
-**A statistical bound over correlated items is not a bound.** EVAL-005's first draft built up to
-four mismatch items from one base word and then quoted a binomial zero-failure upper bound over the
-item count. A checker that reads one word toward its plausible spelling will do it for every
-perturbation of that word, so those are not separate chances to catch it. **Count opportunities,
-not items**, and make the construction enforce it rather than caveating it.
+**A statistical bound over correlated items is not a bound — and de-correlating items does not make
+them independent.** Two separate lessons, and EVAL-005 got each wrong in turn.
 
-**Even a correct bound is conditional.** A zero-failure upper bound computed over a battery's own
-opportunities says what *that battery* could have missed. Our words come from one dataset lineage
-and our error operators are a taxonomy we wrote; neither is a probability sample of future generated
-Hindi. **Never quote such a figure as a checker's "true error rate".**
+First: its draft built up to four mismatch items from one base word and quoted a binomial
+zero-failure upper bound over the item count. A checker that reads one word toward its plausible
+spelling does it for every perturbation of that word. **Count opportunities, not items**, and make
+the construction enforce it rather than caveating it.
+
+Second, and subtler: having fixed that, the design then called 37 distinct base words "37 genuinely
+independent chances". They are not. One item per word removes obvious *within-word* correlation; it
+does not establish independent, identically distributed trials. A checker blind to anusvara is blind
+to it on every word carrying one, and our words come from a single dataset lineage.
+
+**So separate the two things a battery produces.** The *gate* should be deterministic — zero false
+passes — needing no probability model at all. Any Clopper-Pearson figure is a **reference
+calculation for sizing**, and should say so in its own field name
+(`iid_reference_upper_bound_…`), alongside an explicit `independence_status: NOT ESTABLISHED`.
+**Never quote such a figure as a checker's real-world error rate**, and note that a bigger battery
+tightens the calculation without supplying the assumption.
+
+**Execution isolation is not statistical independence.** Running items so that no response can see
+another prevents *context leakage*. It says nothing about whether the checker's errors are
+correlated across those items. Do not let a run-discipline rule be read as a statistical claim.
 
 **A blind evaluation must be verified mechanically, and before the run.** EVAL-003 proved its
 reader pack contained no Devanagari; EVAL-005 does the same for its blind checker payload, using an
@@ -449,8 +476,9 @@ In rough order of what each unblocks:
 2. **Approve ~1.5 hours of one Hindi-competent reader** against the prepared sheets. Blocks the run.
 3. **Approve a checker roster and API budget** — order of ₹600–2,100 for a first run across both
    shapes, on an old price that must be re-verified. Blocks the run.
-4. **Decide whether to ask Resources for ~31–37 more Hindi words.** Optional: it moves the bound
-   from 7.8% to below 5%, and does not block a run at 53 words.
+4. **Decide whether to ask Resources to check for ~31–37 more Hindi words** in material it already
+   holds. Optional: it tightens the reference figure from 7.8% to below 5%, and does not block a run
+   at 53 words. New acquisition is a separate decision and is not being requested.
 5. **Approve the proposed thresholds** (0.95 repeat consistency, ≤10% false fail, ≤5% refusal).
    They are judgement calls with no empirical backing here.
 6. **Decide separately on the Class B generated-glyph layer.** Specified, not built, needs

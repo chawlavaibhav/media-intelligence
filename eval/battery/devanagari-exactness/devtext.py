@@ -40,15 +40,25 @@ THE TRAP THIS MODULE EXISTS TO PREVENT
 
     Every mismatch item must therefore satisfy BOTH:
       1. the NFC-canonical strings differ  (it is a real textual difference), and
-      2. the FINAL RASTER OUTPUT differs   (the difference is actually drawn)
+      2. the DECODED PIXELS differ         (the difference is actually drawn)
 
-    Condition 2 is checked on the actual PNG bytes, not on the glyph sequence. Differing glyph
-    sequences are useful evidence but are not logically the same claim as differing pixels; the
-    glyph comparison is retained as a *diagnostic* only.  (Controller review fix 3)
+    Condition 2 is checked on the **decoded** raster — dimensions plus RGBA8 pixel data — not on the
+    glyph sequence and not on the encoded PNG bytes.
+
+      * Glyph sequences are useful evidence but not the same claim as differing pixels. Measured:
+        `सुबह` and `सु‌बह` (ZWNJ) shape differently and draw identically.
+      * Encoded PNG bytes are too strong a test in the other direction: the same picture can be
+        written as many different byte streams. Measured: an `hb-view` PNG and a re-encoding of its
+        own decoded pixels have different file hashes and identical pixel fingerprints.
+
+    So two hashes are kept and they answer different questions — `sha256_file` is artifact identity,
+    `pixel_fingerprint` is visual identity. The gate uses the second.
+    (Controller review fix 3, refined in the second review pass.)
 
 EXTERNAL TOOLS (all local, no network, no model, no spend)
     hb-shape     HarfBuzz shaping -> glyph sequence.  Diagnostic.
-    hb-view      HarfBuzz rasteriser -> deterministic PNG.  Authoritative.
+    hb-view      HarfBuzz rasteriser -> deterministic PNG.  Authoritative, once decoded.
+    (PNG decoding is done by the local `pngraster` module: stdlib zlib only, no image library.)
 """
 from __future__ import annotations
 
@@ -61,6 +71,8 @@ import tempfile
 import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
+
+import pngraster
 
 # --- Devanagari block constants used across the battery -------------------------------------
 DEV_START, DEV_END = 0x0900, 0x097F
@@ -219,11 +231,12 @@ def _tool_version(name: str) -> str:
 
 
 def sha256_file(p: Path) -> str:
-    h = hashlib.sha256()
-    with open(p, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
+    """SHA-256 of a file's bytes. **Encoded artifact identity, not visual identity.**
+
+    Use this to prove a checker read the exact file we shipped. Do NOT use it to decide whether two
+    images look different — see `pixel_fingerprint`.
+    """
+    return pngraster.file_sha256(p)
 
 
 def environment_provenance(spec: RenderSpec) -> dict:
@@ -280,8 +293,8 @@ def shape(text: str, spec: RenderSpec = RenderSpec()) -> str:
     """HarfBuzz's shaped glyph sequence for `text`, as a stable string.
 
     **Diagnostic only.** A different glyph sequence is strong evidence that two strings look
-    different, but it is not the same claim as "the final PNGs differ" — which is what the
-    battery actually asserts. `raster_sha256` settles that question.
+    different, but it is not the same claim as "the drawn pixels differ" — which is what the
+    battery actually asserts. `pixel_fingerprint` settles that question.
     """
     return _shape_cached(text, spec.font_file, spec.face_index)
 
@@ -350,19 +363,23 @@ atexit.register(lambda: shutil.rmtree(_SCRATCH, ignore_errors=True))
 
 
 @functools.lru_cache(maxsize=8192)
-def _raster_sha256_cached(text: str, spec_key: tuple) -> str:
+def _pixel_fingerprint_cached(text: str, spec_key: tuple) -> str:
     spec = RenderSpec(*spec_key)
     out = Path(_SCRATCH) / (hashlib.sha256(text.encode("utf-8")).hexdigest()[:24] + ".png")
     render(text, out, spec)
-    digest = sha256_file(out)
+    fp = pngraster.pixel_fingerprint(out)
     out.unlink(missing_ok=True)
-    return digest
+    return fp
 
 
-def raster_sha256(text: str, spec: RenderSpec = RenderSpec()) -> str:
-    """SHA-256 of the FINAL PNG for `text`. The authoritative 'what is on the page' value."""
-    return _raster_sha256_cached(text, (spec.font_file, spec.face_index, spec.point_size,
-                                        spec.margin, spec.background, spec.foreground))
+def pixel_fingerprint(text: str, spec: RenderSpec = RenderSpec()) -> str:
+    """SHA-256 of the DECODED raster for `text` — dimensions, RGBA8 pixel format, pixel data.
+
+    The authoritative "what is on the page" value. Two strings with the same fingerprint produce
+    the same picture, whatever their PNG encodings happen to be.
+    """
+    return _pixel_fingerprint_cached(text, (spec.font_file, spec.face_index, spec.point_size,
+                                            spec.margin, spec.background, spec.foreground))
 
 
 # --------------------------------------------------------------------------------------------
@@ -374,9 +391,9 @@ class MismatchValidity:
     reason: str
     rendered_shape: str
     target_shape: str
-    glyphs_differ: bool          # diagnostic only
-    rendered_raster_sha256: str  # "" when not reached
-    target_raster_sha256: str
+    glyphs_differ: bool           # diagnostic only
+    rendered_pixel_sha256: str    # decoded-raster fingerprint; "" when not reached
+    target_pixel_sha256: str
 
 
 def is_valid_mismatch(rendered: str, target: str,
@@ -388,12 +405,14 @@ def is_valid_mismatch(rendered: str, target: str,
       1. `canonical_equal`  — the strings are the same after NFC, so there is no textual
                               difference at all.
       2. `rendering_error`  — shaping or rasterising failed; the pair cannot be judged.
-      3. `raster_identical` — the FINAL PNGs are byte-identical. Asking a checker to report a
+      3. `raster_identical` — the DECODED PIXELS are identical. Asking a checker to report a
                               difference that is not on the page would penalise correct
-                              observation. This is decided on pixels, not on glyph ids.
+                              observation.
 
-    The glyph-sequence comparison is recorded as a diagnostic. It is not the gate, because
-    "different glyph sequence" and "different pixels" are different claims.
+    Gate 3 compares decoded rasters — dimensions and RGBA8 pixel data — not encoded PNG bytes and
+    not glyph ids. Both of the alternatives are wrong in opposite directions: glyph sequences can
+    differ for pictures that are identical, and PNG byte streams can differ for pictures that are
+    identical. The glyph-sequence comparison is recorded as a diagnostic only.
     """
     try:
         rs, ts = shape(rendered, spec), shape(target, spec)
@@ -404,8 +423,8 @@ def is_valid_mismatch(rendered: str, target: str,
         return MismatchValidity(False, "canonical_equal", rs, ts, rs != ts, "", "")
 
     try:
-        rr, tr = raster_sha256(rendered, spec), raster_sha256(target, spec)
-    except (RuntimeError, ToolMissing, FontMissing):
+        rr, tr = pixel_fingerprint(rendered, spec), pixel_fingerprint(target, spec)
+    except (RuntimeError, ToolMissing, FontMissing, pngraster.UnsupportedPNG):
         return MismatchValidity(False, "rendering_error", rs, ts, rs != ts, "", "")
 
     if rr == tr:

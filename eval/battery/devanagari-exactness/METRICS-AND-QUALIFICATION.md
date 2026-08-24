@@ -39,29 +39,54 @@ every vowel-sign error — look fine because it handled the letter errors.
 
 ## The opportunity model — what may and may not be counted
 
-This section was wrong in the previous draft and is the most important correction in this review.
+This section was wrong in the first draft and was corrected twice. Both corrections matter, and the
+second is subtler than the first.
 
-The earlier build allowed **up to four mismatch items from the same base word** and then quoted a
-binomial zero-failure upper bound over the resulting item count. That is not a defensible bound.
-Four deterministic perturbations of one word are not four independent chances to catch a checker
-out: a model that reads `सुबह` toward the plausible word will do it for every perturbation of
-`सुबह`. Counting them as separate trials makes the sample look larger than the evidence is.
+### Correction 1 — one mismatch item per base word
 
-### The rule now, and it is structural rather than a caveat
+The earlier build allowed **up to four mismatch items from the same base word** and then computed a
+binomial zero-failure upper bound over the resulting item count. Four deterministic perturbations of
+one word are plainly not four separate chances to catch a checker out: a model that reads `सुबह`
+toward the plausible word will do it for every perturbation of `सुबह`. Counting them separately made
+the sample look larger than the evidence was.
 
-> **Every mismatch item sits on a distinct base word.**
+> **Every mismatch item now sits on a distinct base word.**
 
-So `hard items == distinct hard base words`, by construction, and the test suite asserts it
-(`test_hard_opportunities_use_distinct_base_words`). The bound is computed from the opportunity
-count, and since the two numbers are equal there is no gap between what is quoted and what is
-defensible.
+So `hard items == distinct hard base words`, by construction, and the test suite asserts it. Class
+coverage was not sacrificed to achieve it: the allocation is solved deterministically — a maximum
+bipartite matching between failure classes and base words, so scarce classes claim a word before
+common ones can crowd them out. All **20 failure classes across all 5 groups** remain represented at
+53 base words.
 
-Class coverage was not sacrificed to achieve this. The allocation is solved deterministically —
-a maximum bipartite matching between failure classes and base words, so scarce classes claim a
-word before common ones can crowd them out — rather than by relaxing the independence rule. All
-**20 failure classes across all 5 groups** remain represented at 53 base words.
+### Correction 2 — distinct words do not make the opportunities iid
 
-### Both numbers are always reported
+Distinct base words remove the most obvious *within-word* correlation. **They do not establish
+independent, identically distributed Bernoulli trials, and this battery does not claim they do.**
+
+A checker's errors may remain correlated across words, across diacritics, across failure classes and
+across lexical patterns — a model blind to anusvara is blind to it on every word carrying one. Our
+53 words also come from a single dataset lineage. Nothing here demonstrates exchangeability, and
+one-item-per-word does not create it.
+
+Two consequences, and they are the shape of the whole section:
+
+| | |
+|---|---|
+| **The qualification gate is deterministic** | *Zero false passes.* It needs no probability model at all, and it is what a checker is actually judged on. |
+| **The Clopper-Pearson figure is a reference calculation** | It sizes the battery and states how little a clean sweep would prove. It is **not** an inference about a checker. |
+
+The machine-readable fields carry the assumption in their names, so a value lifted out of
+`build-summary.json` cannot be mistaken for a demonstrated bound:
+
+```
+iid_reference_upper_bound_if_zero_false_passes_95pct
+iid_reference_upper_bound_all_mismatches_95pct
+hard_opportunities_for_5pct_iid_reference
+validated_base_words_planning_target_for_5pct_iid_reference
+independence_status: "NOT ESTABLISHED. …"
+```
+
+### Both counts are always reported
 
 | | Value at the current 53-word pool |
 |---|---:|
@@ -70,30 +95,27 @@ word before common ones can crowd them out — rather than by relaxing the indep
 | Hard items (plausible ∧ `corrupt_image`) | 37 |
 | **Distinct hard base-word opportunities** | **37** |
 
-### The bound, and what it is a bound on
+### The reference calculation, stated correctly
 
-Zero false passes across **37 distinct hard opportunities** gives a one-sided 95% upper bound of
-**7.8%**.
+> **Under an iid / exchangeable Bernoulli opportunity model, zero false passes in 37 hard
+> opportunities corresponds to a one-sided 95% reference upper bound of ~7.8%.**
 
-In plain English: a checker that never waved through a single hard item could still, on this kind
-of material, be wrong up to roughly **8 times in 100** and we would not have seen it. That is a
-ceiling on our ignorance, not a measurement of accuracy.
+Every clause of that sentence is load-bearing:
 
-*(The previous draft quoted 8.2% at n=35. The corrected construction gives slightly more
-opportunities, 37, and a slightly tighter bound, 7.8% — but the earlier figure was computed over
-items that were partly correlated, so it was not comparable in the first place.)*
+- **"Under an iid model"** — EVAL-005 does **not** establish iid or exchangeability. The model is
+  assumed for the calculation, not demonstrated by the battery.
+- **"reference upper bound"** — a sizing figure, not a measurement and not an inference.
+- **"~7.8%"** — this is **not** a universal checker error bound and **not** an estimate of any
+  checker's real-world error rate.
 
-### ⚠ The epistemic limit, which must travel with the number
+What may honestly be said after a clean run: *"zero false passes across 37 distinct hard base-word
+opportunities; under an iid Bernoulli reference model that corresponds to a 95% upper bound of
+7.8%, which this battery does not establish as a real-world rate."*
 
-This is a **binomial upper bound over the opportunities this battery constructs**, conditional on
-its word list, its perturbation operators and its font. The words are 53 lexical items reused from
-one dataset lineage; the operators are a taxonomy we wrote. Neither is a probability sample of the
-Hindi a generator will be asked to draw next year.
+What may **not** be said: *"the checker's error rate is below 7.8%."*
 
-**So this is not an estimate of any checker's universal true error rate.** It bounds what *this
-battery* could have failed to detect. It is legitimate to say "no false pass in 37 distinct
-opportunities, 95% upper bound 7.8% on this material". It is not legitimate to say "the checker's
-true error rate is ≤5%", with or without a larger battery.
+The all-mismatch figure at n=53 is **5.5%** under the same assumption. It is reported as wider
+coverage, not as separate evidence: the 37 hard opportunities are inside it.
 
 ### Per-class figures are not rates
 
@@ -103,13 +125,13 @@ measurements.
 
 ---
 
-## What it would take to reach a ≤5% bound
+## The battery-size planning target
 
-Reaching a 95% upper bound of **5% or better with zero failures requires 59 distinct
-opportunities.** Because every mismatch sits on its own base word and the hard direction takes 70%
-of the mismatch stratum, that converts directly into a word-list requirement:
+Bringing the **reference calculation** below 5% needs **59 zero-failure opportunities**. Because
+every mismatch sits on its own base word and the hard direction takes 70% of the mismatch stratum,
+that converts directly into a word-list planning target:
 
-| Validated base words | Hard opportunities | 95% upper bound if zero false passes |
+| Validated base words | Hard opportunities | iid reference upper bound, zero false passes |
 |---:|---:|---:|
 | 53 *(today)* | 37 | 7.8% |
 | 80 | 56 | 5.2% |
@@ -118,21 +140,25 @@ of the mismatch stratum, that converts directly into a word-list requirement:
 | 90 | 63 | 4.6% |
 
 **Recomputed after the corrected selection logic, the earlier "~85–90 words" recommendation
-survives.** It was not carried over: 84 words is the arithmetic minimum, 85 is what the builder
-derives (`ceil(59 / 0.7)`), and 90 buys a little margin against words being rejected during
-validation. The figure is now backed by an opportunity count that is genuinely one-per-word.
+survives.** 84 is the arithmetic minimum, 85 is what the builder derives (`ceil(59 / 0.7)`), and 90
+buys margin against words being rejected during validation.
 
-**This is the single highest-value input to the battery**, and it is cheap: a word-list validation,
-not another transcription exercise. See `NATIVE-VALIDATION.md`.
+⚠ **This is a planning target for the reference calculation, not proof of anything.** Reaching 84–90
+words would make the iid reference figure fall below 5%. It would **not** demonstrate that a checker
+errs on fewer than 5% of real cases, because the independence assumption behind that figure is still
+not established and the words are still not a probability sample of future generated Hindi. More
+words tighten a calculation; they do not supply an assumption.
 
-⚠ **The current repository cannot supply 84–90 words.** Merged repository-local material yields
-**53** distinct Hindi lexical items — the EVAL-003 candidate manifest. The only other committed
-Devanagari of any volume is the annotator-disagreement file, whose strings are *specifically the
-contested ones* (and partly Marathi), so it is the worst possible source of validated words.
-Closing the gap needs roughly **31–37 additional Hindi lexical items** from Resources. The precise
-request is in `eval/tasks/EVAL-005-RESOURCES-REQUEST.md`.
+### The pool cannot currently supply it
 
----
+Merged repository-local material yields **53** distinct Hindi lexical items. Resources' merged
+records establish that **3,924 single-word crops are transcription-resolvable** across IndicSTR12
+and IIIT-ILST — but that is metadata about which labels *exist*; the raw lexical strings live in the
+git-ignored Resources corpus, and how many *distinct* Hindi words they yield is unknown. Nor would
+they be validated words: every candidate still has to pass the Hindi lexical validation.
+
+The request is in `eval/tasks/EVAL-005-RESOURCES-REQUEST.md`, and its first step is a check of
+existing local material rather than any new acquisition.
 
 ## Proposed qualification rule
 
@@ -149,12 +175,12 @@ distinguished by **what a failure in each one means**, and by **which one carrie
 
 | Stratum | n | Role |
 |---|---:|---|
-| **Hard** — plausible corruption, `corrupt_image` | 37 | **The primary disqualifying subset, and the only one a bound is quoted on.** This is the production failure reproduced exactly: malformed text, plausible target, checker waves it through. One occurrence at this sample size means the checker autocorrects, and a checker that autocorrects cannot be a gate however good its other numbers are. |
+| **Hard** — plausible corruption, `corrupt_image` | 37 | **The primary disqualifying subset, and the only one a reference figure is quoted on.** This is the production failure reproduced exactly: malformed text, plausible target, checker waves it through. One occurrence at this sample size means the checker autocorrects, and a checker that autocorrects cannot be a gate however good its other numbers are. |
 | **Control** — `corrupt_target`, plus any visibly-broken cluster | 16 | An **additional coverage condition** on strictly easier material. A false pass here is not evidence about autocorrection; it means the checker is not comparing against the target at all. Also disqualifying, but for a different and more basic reason. |
 
-The all-mismatch upper bound at n=53 is **5.5%**. It is reported as a **wider-coverage figure, not
-as an independent result**: it includes the 37 hard opportunities, so it cannot be cited alongside
-the 7.8% as though the two were separate evidence.
+The all-mismatch reference figure at n=53 is **5.5%** under the same iid assumption. It is reported
+as **wider coverage, not as a separate result**: it contains the 37 hard opportunities, so it cannot
+be cited alongside the 7.8% as though the two were independent evidence.
 
 ### Rule 2 — usability
 
@@ -187,10 +213,17 @@ once we have seen what real checkers do.
 
 ## Recorded with any result, without exception
 
-> Passing this battery means the checker **did not autocorrect any of N distinct hard
-> opportunities**, at a 95% upper bound of X% **on this battery's material**. It does **not** mean
-> the checker is accurate, it is **not** an estimate of a universal error rate, and it says
-> **nothing** about malformed generated glyphs, which this battery cannot produce.
+> Passing this battery means the checker **did not autocorrect any of N distinct hard base-word
+> opportunities** on this battery's material.
+>
+> Under an iid / exchangeable Bernoulli opportunity model — which **EVAL-005 does not establish** —
+> that corresponds to a 95% reference upper bound of X%. That figure is a sizing calculation, not a
+> measurement: it is **not** a universal checker error bound and **not** an estimate of the
+> checker's real-world error rate. Errors may remain correlated across words, diacritics, failure
+> classes and lexical patterns.
+>
+> It does **not** mean the checker is accurate, and it says **nothing** about malformed generated
+> glyphs, which this battery cannot produce.
 
 ---
 

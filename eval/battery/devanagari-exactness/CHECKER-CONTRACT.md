@@ -65,7 +65,7 @@ showing a model the answer you hope for invites it to agree — not a verdict on
 
 | File | Goes to a checker? | Contents |
 |---|---|---|
-| `checker-input-transcribe.jsonl` | **yes**, shape 1 | item id, image, image hash, the frozen prompt. **No target.** |
+| `checker-input-transcribe.jsonl` | **yes**, shape 1 | item id, image, image **file** hash, the frozen prompt. **No target.** |
 | `checker-input-verdict.jsonl` | **yes**, shape 2 | the above **plus** the target, and a prompt carrying it |
 | `scoring-key.jsonl` | **never** | target, rendered string, expected verdict, direction, plausibility, class, base word, hard-opportunity flag |
 
@@ -75,11 +75,11 @@ showing a model the answer you hope for invites it to agree — not a verdict on
 
 ```json
 // checker-input-transcribe.jsonl  — shape 1
-{"item_id":"dx-0007","image_file":"images/img-0005.png","image_sha256":"…",
+{"item_id":"dx-0007","image_file":"images/img-0005.png","image_file_sha256":"…",
  "checker_shape":"transcribe","prompt":"Transcribe the text visible in this image…"}
 
 // checker-input-verdict.jsonl  — shape 2
-{"item_id":"dx-0007","image_file":"images/img-0005.png","image_sha256":"…",
+{"item_id":"dx-0007","image_file":"images/img-0005.png","image_file_sha256":"…",
  "checker_shape":"verdict","target_string":"तोड़ना","prompt":"…TARGET: तोड़ना…"}
 ```
 
@@ -97,7 +97,7 @@ What it enforces:
    an allow-list fails closed.
 2. **No ground-truth metadata in either shape** — `rendered_string`, `expected_verdict`,
    `failure_class`, `failure_group`, `direction`, `plausibility`, `edit_detail`, `base_word`,
-   `rendered_shape`, `target_shape`, raster hashes, `hard_opportunity`, `render_spec`.
+   `rendered_shape`, `target_shape`, the pixel fingerprints, `hard_opportunity`, `render_spec`.
 3. **For `transcribe`: no target, and no Devanagari character anywhere in the payload.** The
    second rule is the one that catches a leak arriving through a field nobody anticipated —
    including a target appended to the prompt. Every target in this battery is Devanagari, so its
@@ -203,12 +203,13 @@ Character edit distance is recorded **alongside** as a diagnostic. It never affe
 |---|---|
 | `verify_blind` returns no violations before the first call | a leaked target invalidates shape 1 entirely, and it cannot be detected afterwards from the responses |
 | Items presented in a fixed shuffled order, recorded | order effects are removed but reproducible |
-| No item's result visible while another is judged | each item is independent |
+| No item's result visible while another is judged | prevents context leakage between items — one response must not condition the next. **This is execution isolation, not statistical independence:** it stops the checker from seeing the other items, it does not make its errors uncorrelated across them. See `METRICS-AND-QUALIFICATION.md`. |
 | **Every checker given a qualification status completes the full repeat requirement** | see `METRICS-AND-QUALIFICATION.md`; a checker that was not repeated is not qualified because another one was |
 | Checker id **and version** recorded | a changed version is a different instrument and needs re-qualification |
 | Temperature/sampling fixed and recorded | otherwise repeats measure sampling noise, not the checker |
 | Prompt frozen before the run, sha256 recorded | changing a prompt after seeing results and reporting it as the same run is an EXPERIMENT MUTATION stop |
 | Font file sha256, face index, renderer and shaper versions recorded | a different font is a different experiment; see `README.md` §Reproducing |
+| `image_file_sha256` recorded per response | proves the checker read the exact file we shipped. It is **artifact** identity — the visibility gate uses the decoded-pixel fingerprint instead, and the two must not be confused |
 
 ---
 
