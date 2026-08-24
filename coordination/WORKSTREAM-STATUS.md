@@ -6,7 +6,7 @@
 | Stream | Status | Current approved work | Blocking item / next gate |
 |---|---|---|---|
 | Canon | **CANON-003 active. 13/18 usable books Controller-accepted.** Accepted: five pre-parallel books + Lane A Books 6–7 + Lane C Books 13–15 + original Lane D Books 16–18. | `CANON-003.md` + `CANON-003-PARALLEL-EXECUTION.md` + `CANON-003-REBALANCE-01.md` | Lane B latest checkpoint reports Books 9–10 complete and Book 12 in progress; Controller audit still pending. Rebalance worker owns Books 8+11. After all remaining books return and pass audit, run one fresh integration/synthesis session with independent mechanical revalidation. |
-| Eval | **EVAL-004 human-reference construction authorized.** EVAL-003 readiness is closed/merged; the existing 54-item Hindi-primary pack and protocol are frozen. | `eval/tasks/EVAL-004-HUMAN-REFERENCE.md` | Consume ≈3.5–4.5 total human hours across two independent Hindi-competent readers, freeze both passes, use exact agreement as the strict reference, exclude disagreements rather than adjudicating in V0, then stop before any checker/API/model run. Reader identities must be resolved privately before execution. |
+| Eval | **EVAL-004 stopped by Controller after a single-reader 54-item pilot.** EVAL-003 readiness remains closed/merged; the two-reader calibration was not completed. | none | Decide whether to redesign checker qualification around harder, controlled generated-Hindi failure cases. Do not qualify or rank checkers from the EVAL-004 pilot. |
 | Resources | **RES-001/002 closed and merged.** | none | Pending optional Controller action on `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md`; otherwise remain closed. |
 
 ## Canon
@@ -27,17 +27,19 @@ No schema, granularity, visual-pass, ontology-vocabulary or Canon-consumption ch
 
 ## Eval
 
-EVAL-003 readiness is merged. The active pack is **173 eligible Hindi-labelled unique photographs → 54 selected → 54 distinct photograph hashes** under `--overlap-policy admit-once --language-filter hindi --target-n 54`.
+EVAL-003 readiness is merged. The prepared pack is **173 eligible Hindi-labelled unique photographs → 54 selected → 54 distinct photograph hashes** under `--overlap-policy admit-once --language-filter hindi --target-n 54`.
 
 Two related CVIT releases are treated as one source lineage. Their annotation disagreement (725 identical / 357 different across 1,082 one-to-one matched regions) is evidence that source labels cannot be promoted directly to ground truth; it is not human-performance evidence and yields no evaluator threshold.
 
-Canonical crop files are materialised and shared by human-review and future checker inputs. The frozen protocol uses **two independent blind Hindi-competent readers**; exact agreement forms the strict reference. After both passes are frozen, either reader may perform the separate altered-target validity check without modifying the reference.
+Canonical crop files were materialised and the original EVAL-004 protocol required **two independent blind Hindi-competent readers**, with exact agreement forming the strict reference.
 
-**EVAL-004 is now explicitly authorized.** Human-time budget is approximately **3.5–4.5 hours total** across the two readers. Before human time is consumed, the runner must re-run the existing matching/crop/blinding preflight. Reader identities stay private; repository records use `reader_a` / `reader_b` and only attest that they are distinct Hindi-competent humans.
+**Controller override, 24 Aug 2026:** EVAL-004 was stopped after one complete 54-item Reader-A pilot. A second person informally looked at the material but did not perform the frozen independent blind pass, so there is no protocol-compliant Reader B and no two-reader reference. The pilot is exploratory only. See `eval/decisions/EVAL-004-STOP-2026-08-24.md`.
 
-V0 disagreements and unreadable items are **excluded from the strict gate rather than adjudicated**. This keeps EVAL-004 within the approved human budget and avoids silently turning a third opinion into a new reference rule. If fewer than roughly 20 strict-reference items survive, the task stops for Controller review.
+Consequently, Reader A is not ground truth; no checker may be qualified, disqualified, ranked, or entered into the Capability Registry from EVAL-004; and no accuracy / false-pass / Hindi-reading qualification claim may be made from this run.
 
-No checker roster, API/model spend, generator work, BSTD use, Marathi stress subset, Registry entry or methodology change is authorized in EVAL-004. If deterministic altered-target tooling is not already present under the frozen rules, the human reference is still frozen and preserved; implementation becomes a later bounded task without rerunning the readers.
+The pilot's design lesson is that basic photographed-signage words may be too weak a proxy for the downstream failure state of interest: a multimodal checker silently normalizing or autocorrecting subtly malformed **generated** Hindi text. If Eval resumes, the next gate is a Controller decision on a harder controlled-failure qualification design, not automatic completion of the old two-reader signage run.
+
+No checker roster, API/model spend, generator work, BSTD use, Marathi stress subset, Registry entry or methodology change is currently authorized.
 
 ## Cross-stream dependency chain
 
@@ -52,9 +54,9 @@ CANON-003 remaining book work
 
 RES-002 corpus ──► EVAL-003 readiness MERGED
                          │
-                         └──► EVAL-004 two-reader Hindi reference AUTHORIZED
+                         └──► EVAL-004 single-reader pilot STOPPED
                                   │
-                                  └──► later checker roster/API qualification (separately gated)
+                                  └──► next Eval gate: decide whether to redesign a harder checker-qualification battery
 
 Capability Registry / routing remain blocked until empirical measurements exist and Registry architecture is separately approved.
 ```
@@ -63,7 +65,8 @@ Capability Registry / routing remain blocked until empirical measurements exist 
 
 - Keep accepted Canon branches untouched until final integration.
 - Finish and audit remaining fixed Canon books before any schema revision or Canon-consumption experiment.
-- Execute EVAL-004 only under the frozen EVAL-003 pack/protocol; no method redesign during human reference construction.
+- Treat EVAL-004 as a stopped exploratory pilot, not a completed calibration.
+- Do not promote Reader A to ground truth or qualify checkers from the pilot.
 - Treat source labels as provenance/evidence, not truth.
 - Keep BSTD untouched until a deliberate cross-lineage validation task.
 - Do not authorize checker/API/model runs, Registry, Production IR or routing work implicitly.
