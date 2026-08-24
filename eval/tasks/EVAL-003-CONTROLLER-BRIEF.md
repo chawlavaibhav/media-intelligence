@@ -4,7 +4,9 @@
 explained where they carry a decision.
 
 **TASK:** EVAL-003 — Devanagari checker calibration pack readiness
-**STATUS:** completed — awaiting Controller review
+**STATUS:** completed — **correction pass applied 24 Aug 2026**, awaiting Controller review.
+Ten corrections; two were substantive overclaims of mine. See *Correction pass* below and
+findings §11.
 
 **Spend:** ₹0 API · 0 hours human specialist time · 0 external calls · 0 generations · 0 capability
 results · 0 Registry entries · BSTD reserve untouched.
@@ -21,13 +23,45 @@ EVAL-003 built the package that would answer that — and stopped before it cost
 
 ---
 
+## CORRECTION PASS — what changed
+
+| # | Correction | Where |
+|---|---|---|
+| 1 | "independent expert teams" / "human-to-human ceiling" **withdrawn**; supported conclusion retained | findings §2, README, run plan |
+| 2 | Region matching redone **strictly one-to-one**; old and new both reported (identical: 725/1082; 0 of 1,778 contested) | findings §2.1 |
+| 3 | "convention only" → `matches_after_selected_diacritic_removal`, marks named | findings §2.2 |
+| 4 | Candidate arithmetic restated in **records**: 551 − 346 − 3 = 202 | findings §5 |
+| 5 | Language composition measured: **0 Hindi**; options proposed, default unchanged | `PROPOSED-V0-COMPOSITION.md` |
+| 6 | Human protocol → **two independent readers**; ≈ 3.5–4.5 h | run plan, review guide |
+| 7 | Crop materialisation **solved and verified**; found a real `sips` defect | `materialise-crops.py` |
+| 8 | Machine-specific `/Users/...` paths removed from generated metadata | `selection-summary.json` |
+| 9 | Cross-stream correction **filed, not applied** | `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md` |
+| 10 | All regressions re-run and passing | *Confirmation* below |
+
+**A defect this pass introduced and caught.** Restructuring the builder silently deleted the manifest
+and report writes, leaving stale pre-correction files on disk while the script still reported
+success. Found by checking generated files for the new field names instead of trusting the run's exit
+code. Restored and re-verified. Recorded because "reports success, writes nothing" is exactly the
+class of failure our harness guards against elsewhere.
+
+---
+
 ## The seven questions you asked, answered
 
-### 1 · What exactly will the Hindi reader see and do?
+### 1 · What exactly will the readers see and do?
 
-They open a browser page showing **54 cropped photographs of real Indian street signage**, one at a
-time. For each, they type **exactly what they can see drawn** — letter for letter, mistakes included
-— or mark it `cannot read` or `ambiguous`.
+**Two readers, independently.** Each opens a browser page showing **54 cropped photographs of real
+Indian street signage**, one at a time, and types **exactly what they can see drawn** — letter for
+letter, mistakes included — or marks it `cannot read` or `ambiguous`. Neither sees the other's
+answers.
+
+**The single-reader design is withdrawn.** It would have made one person's transcription the answer
+key: if they misread an item, every checker that read it *correctly* would have been scored wrong,
+and nothing in the process would have revealed it. Now exact agreement between the two becomes
+reference material; disagreements are excluded from the hard gate or adjudicated, and reported
+either way. **Neither reader alone becomes ground truth.**
+
+They see the **same crop files the checker will receive** — byte-identical, verified by hash.
 
 **They see no expected answer of any kind.** No dataset label, no AI output, no suggestion. This is
 verified mechanically: the generated pack was scanned and **contains no Devanagari character
@@ -37,17 +71,24 @@ That blinding is not ceremony. The pull toward the plausible word is exactly wha
 report six visibly misspelled signs as correct — and it acts on people too. A reader shown a target
 and asked "does this match?" tends to see a match.
 
-**About 1.5–2 hours.** Full instructions: `eval/calibration/devanagari-v0/HUMAN-REVIEW-GUIDE.md`.
+**About 1.5–2 hours per reader; ≈ 3.5–4.5 hours total** including a short adjudication and the later
+altered-string check — which, per the corrected protocol, **must not be done by the reader who
+established that item's original reading.** Full instructions:
+`eval/calibration/devanagari-v0/HUMAN-REVIEW-GUIDE.md`.
 
 ### 2 · How many independent items do we actually have?
 
-| Step | Count |
+| Step | Records |
 |---|---:|
-| CVIT images with usable annotations | 551 |
-| less byte-identical across the two datasets | −173 |
-| less duplicate copies inside one dataset | −3 |
-| **Eligible independent photographs** | **202** |
+| Labelled source records | 551 |
+| less records removed because **both copies** of each of the 173 shared hashes go | **−346** |
+| less same-source duplicate records | −3 |
+| **Eligible unique photographs** | **202** |
 | **Selected for the pack** | **54** |
+
+**Arithmetic corrected:** 173 shared *hashes* remove **346 records**, since each shared photograph is
+a record in both datasets. My earlier "551 − 173 − 3" was wrong even though it reached the right
+total.
 
 Independence is by file hash, not filename, and one region per photograph — so the same picture
 cannot enter twice. Verified: 54 distinct hashes, zero overlap files leaked in.
@@ -65,9 +106,11 @@ photographs, not clean renders — which the approved plan requires, because cle
 separate a strong reader from a weak one.
 
 **What it fails to represent:**
+- **Hindi: 0 items in 54.** The single largest gap, measured in this correction pass — see the
+  composition section below. As built, this calibrates script-general Devanagari reading only.
 - **Nukta: 1 item in 54** — and only 1 region in 1,629 across the eligible pool. A corpus property,
   not a detection bug; the check covers both the combining mark and precomposed forms.
-- **Effectively single-source** — 53 of 54 from IndicSTR12 (see question 4).
+- **Effectively single-source** — 53 of 54 from IndicSTR12 (see question 4), and all Marathi.
 - **Blur and contrast not measured** — deterministic in principle, but no image library exists in
   this environment. Recorded as `null` with a stated reason rather than guessed.
 - **The buckets are proxies, not a validated difficulty scale.** Nobody has shown "small" means "hard".
@@ -103,22 +146,31 @@ would quietly change what a calibration run measured. Five fixtures cover it.
 
 | Stage | Human | API |
 |---|---|---|
-| Blind transcription | **1.5–2 h**, Hindi first-language reader | ₹0 |
-| Freeze readings | 0 | ₹0 |
+| Blind transcription, **reader A** | **1.5–2 h** | ₹0 |
+| Blind transcription, **reader B** (independent) | **1.5–2 h** | ₹0 |
+| Freeze both, compare, count agreement | 0 | ₹0 |
+| Adjudicate disagreements *(optional)* | 0–30 min | ₹0 |
 | Derive intact/broken targets | 0 | ₹0 |
-| Confirm broken targets differ from what is visible | **20–30 min**, same reader | ₹0 |
+| Confirm broken targets differ — **not by the reader who read that item** | 20–30 min | ₹0 |
 | **Run candidate checkers** | 0 | **first API spend** |
 | Score | 0 | ₹0 |
-| **Total** | **≈ 2–2.5 hours** | per-call cost × volume |
+| **Total** | **≈ 3.5–4.5 hours across two readers** | per-call cost × volume |
 
 **API cost cannot be quoted** — that needs a model roster, which EVAL-003 was explicitly barred from
 selecting. Order of magnitude at our recorded ~₹0.90 per check: low tens of rupees for 54 images
 across a small roster with repeats. An estimate from an old figure, not a quote.
 
-**One unresolved prerequisite:** crop materialisation. The manifest carries crop boxes, not cropped
-files. The only image tool available here is `sips`, whose offset semantics could not be verified
-without pixel inspection — and a silent mis-crop would mean reader and checker judging the *wrong
-region*, invisibly. The approved run must implement and verify this before stage 1.
+**Crop materialisation is now solved** — and solving it caught a real defect.
+
+Crops are materialised once, and **the reviewer and the checker read the same files**, verified by
+hash across all 54 items. That replaces "two computations agree" with "it is the same file".
+
+Geometry is proven rather than assumed: a self-test writes a synthetic image in which every pixel
+encodes its own coordinates, crops known rectangles, and decodes the result with a dependency-free
+PNG reader written for the purpose. **That test found that `sips --cropOffset 0 0` is silently
+treated as "no offset" and returns a CENTRE crop** — so any region at the exact image origin would
+have been wrong, and nothing downstream would have revealed it. A verified flip-crop-flip workaround
+handles that case, and the script refuses to materialise anything if the self-test fails.
 
 ### 7 · What could a clean V0 result let us say — and what could it not?
 
@@ -132,58 +184,111 @@ photographed Devanagari."*
 of **up to ~18%**. A checker that genuinely misses one in ten has roughly a **1-in-5 chance** of
 acing 15. Supporting a real "under 5%" claim needs 59 opportunities.
 
-**And two limits specific to this material — see the finding below.**
+**Also could not say, as the pool currently stands:** anything about **Hindi**. With 0 Hindi items, a
+clean result licenses a claim about **script-general Devanagari reading** only — see the composition
+problem below.
+
+**And no threshold may be derived from the 67% cross-dataset figure.** That correction stands.
 
 ---
 
-## THE FINDING THAT MATTERS MOST
+## THE CORRECTION THAT MATTERS MOST
 
-**Two expert annotation teams, given the same photographs, disagree about one time in three.**
+**I overstated the central finding, and you were right to stop it.**
 
-The 173 overlapping files are the only place we have two independent expert readings of the *same
-pixels*. Comparing them region by region (matched geometrically, so "annotated different words" is
-excluded):
+I reported that "two independent expert annotation teams disagree one time in three" and turned 67%
+into a **human-performance ceiling** that should bound any evaluator threshold.
 
-| | |
-|---|---:|
-| Same-region comparisons | 1,082 |
-| **Identical transcription** | **725 (67.0%)** |
-| **Different transcription** | **357 (33.0%)** |
-| — spelling convention only | 64 (18% of disagreements) |
-| — **actually different letters** | **293 (82% of disagreements)** |
+**Nothing in the repository supports either claim.** What we have is two dataset releases from the
+*same* lab (CVIT / IIIT Hyderabad), each with manual annotations, and **no provenance** about who
+made them, whether the annotators were independent, or whether the later release re-annotated or
+simply inherited from the earlier one. Two releases from one lineage are not a controlled
+inter-annotator study, and I presented them as one.
 
-Same sign, same box: IndicSTR12 reads `मार्केट`, IIIT-ILST reads `माकेट`. Also `सर्राफा`/`सरर्फि`,
-`झेरोक्स`/`झारक्स`.
+**Withdrawn:** "independent expert teams", "human-to-human agreement", and the ceiling framing.
+**No threshold may be derived from 67% or 73%.**
 
-**Three consequences:**
+**What survives, and it is still the useful part:**
 
-1. **"Source labels are not ground truth" is now measured, not a policy position.**
-2. **Our reader's transcription will also be one reading**, not truth. The record must say "as read
-   by X on date Y".
-3. **There is a ceiling.** Human-to-human agreement on this exact material is ~67%, or ~73% forgiving
-   spelling conventions. **A checker cannot sensibly be held above the rate qualified humans achieve
-   here.**
+> **Source annotations are demonstrably unsafe to promote directly to project ground truth.** Two
+> releases from one lineage assign different transcriptions to the same pixels often enough
+> (357 of 1,082 matched regions) that adopting either arbitrarily would embed unexamined error.
 
-This does **not** contradict the approved calibration plan — that plan already says an instrument
-threshold may never exceed measured inter-annotator agreement. **This supplies the number.**
+That is precisely why the protocol establishes its own reference — and now does so with **two**
+readers rather than one.
 
-**Caveat:** measured on the overlap set — images one lab chose to reuse — which may not be
-representative. And whether any specific pair is a misreading or a legitimate alternative reading is
-a Hindi judgement, deliberately not made.
+### The matching audit you asked for
+
+You were right that the geometry did not enforce one-to-one correspondence. Implemented strictly
+one-to-one: pairs sorted by descending IoU, each region on either side matched at most once,
+threshold 0.5 stated explicitly.
+
+**The corrected figures are identical: 725/1082 either way.** The reason is measurable — **0 of
+1,778** regions were within threshold of more than one partner, because the two releases' boxes are
+near-identical rather than merely overlapping. **The flaw was real; its effect on this corpus was
+nil.** Both results are reported side by side so nothing is silently overwritten.
+
+### The "convention only" label, removed
+
+Renamed to `matches_after_selected_diacritic_removal`, with the four marks named (U+094D, U+093C,
+U+0902, U+0901). 64 of 357 match after removal. That is a mechanical Unicode result and **is not**
+evidence they are equivalent readings.
 
 ---
+
+## THE PROBLEM YOU SUSPECTED, MEASURED: the pool has no Hindi in it
+
+**53 Marathi, 1 unlabelled, 0 Hindi.**
+
+**Why:** **all 173 Hindi-labelled records sit inside the excluded overlap.** The smaller dataset's
+Devanagari folder *is* the larger dataset's Hindi folder, so "exclude everything that appears in
+both" removes every Hindi photograph. Deduplication and Hindi coverage are in structural conflict in
+this corpus.
+
+**Why it matters — script-general vs Hindi-specific.** Marathi is written in Devanagari, so Marathi
+signage tests **script** reading fine. But the defect we are hunting is a **language-prior** failure:
+a vision model reads toward the plausible *word*, which is exactly how one checker passed six
+misspelled Hindi signs. A model's Hindi prior is generally stronger than its Marathi prior, so a
+Marathi-only pool may **under-detect the very failure we care about** — while our production failure
+is Hindi and the checker prompt says "Devanagari (Hindi) text".
+
+*(That the priors differ is a reasonable expectation, not something measured here.)*
+
+**Options, with measured numbers, in `PROPOSED-V0-COMPOSITION.md`:**
+
+| Option | Pool | Composition |
+|---|---|---|
+| **A** — current default, exclude all overlaps | 202 eligible | 53 Marathi, **0 Hindi** |
+| **B** — admit each shared photograph **once** | 375 eligible | **19 Hindi, 35 Marathi** |
+| **C** — B, partitioned: Hindi core + Marathi stress subset | 375 eligible | Controller sets the split |
+
+Option B keeps one photograph to one item — verified: 54 items, 54 distinct hashes. It is implemented
+behind `--overlap-policy admit-once`; **the default is unchanged and nothing was switched.**
+
+**I recommend C, built on B** — but it is your call, and no new data is needed either way.
 
 ## SURPRISES
 
+- **I over-claimed on the central finding and did not catch it myself.** The project's standing rule
+  is that external labels are one source's observations — I had the discipline available, and still
+  described two releases from one lab as independent expert teams, then built a threshold argument
+  on top of it. Review caught it; I did not.
 - **The overlap is far more consequential than its headline number.** "173 shared files" sounds like
-  a deduplication chore; it actually means one of our two development sources contributes 3 items.
-- **The material is not what the note described.** Not cropped words but full scene photographs with
-  up to 98 annotated regions each — which changes what "transcribe the text in this image" even means.
-- **The disagreement rate.** I expected source labels to be imperfect. I did not expect a third.
+  a deduplication chore. It actually means one development source contributes 3 items, **and** that
+  excluding overlaps removes 100% of the Hindi.
+- **The crop self-test earned its keep immediately** by finding that `sips --cropOffset 0 0` silently
+  centre-crops. Without it, any region at the image origin would have been wrong invisibly.
+- **The matching flaw had zero effect on this data.** Worth fixing regardless — that was luck, not
+  design, and a different corpus could easily have differed.
 
 ## UNKNOWN / NOT VERIFIED
 
-- Whether crops can be materialised correctly — unresolved by choice, flagged for the approved run.
+- **Whether a model's Hindi prior really is stronger than its Marathi prior.** That expectation is
+  the argument for fixing the composition, and it is a reasonable expectation, **not** something this
+  project has measured.
+- **Who produced the source annotations, and whether independently.** The absence of this provenance
+  is precisely why the "expert teams" claim was withdrawn.
+- Whether two readers will agree often enough to leave a usable gate. Unmeasured until run.
 - How many of the 54 survive the reader. The pool is oversized because this is unknown.
 - Whether deterministic "broken" targets are genuinely broken — a string edit can accidentally
   produce a real word. Confirming needs Hindi judgement; deferred to a separate pass **after** the
@@ -198,18 +303,25 @@ a Hindi judgement, deliberately not made.
 
 ## DECISIONS NEEDED
 
-1. **Approve the ~2–2.5 hours of Hindi first-language reader time**, and identify the reader. This is
-   the only thing blocking stage 1.
-2. **Approve a checker roster and API spend** for stage 5. Deliberately not selected here.
-3. **Note the ceiling before results exist**, so a ~70%-agreement outcome is read as "consistent with
-   human performance on this material", not as a failure.
-4. **Accept the crop-materialisation prerequisite** as work belonging to the approved run.
+1. **Decide the language composition** — Option A (script-general only, 0 Hindi), B (19 Hindi /
+   35 Marathi), or C (B, partitioned with a Marathi stress subset). **This is the most consequential
+   decision**, because it determines whether a clean result can say anything about Hindi at all.
+   I recommend C. No new data is needed for any option.
+2. **Approve ≈ 3.5–4.5 hours across two Devanagari-capable readers**, and identify them. Roughly
+   double the single-reader estimate; the reason is in the correction above.
+3. **Approve a checker roster and API spend** for stage 5. Deliberately not selected here.
+4. **Note before results exist** that the first result is a qualification screen bounded at ~18%,
+   **and** that no threshold may be derived from the 67% cross-dataset figure.
+5. **Action or reject the cross-stream correction** to the Resources source record (item 9).
 
 ## EVIDENCE WORTH INSPECTING
 
-- `eval/calibration/devanagari-v0/README.md` §"Two findings that change how results must be read".
-- `eval/calibration/devanagari-v0/annotator-disagreement.json` — the raw disagreement pairs.
-- `eval/calibration/devanagari-v0/review-pack/index.html` — what the reader would actually see.
+- `eval/calibration/devanagari-v0/PROPOSED-V0-COMPOSITION.md` — the 0-Hindi problem and the three
+  options. **The decision that matters most.**
+- `eval/findings/EVAL-003-calibration-readiness-findings.md` §2 — the withdrawn overclaim in full,
+  with the original wording preserved above the correction.
+- `eval/calibration/devanagari-v0/annotator-disagreement.json` — raw pairs, plus the corrected and
+  superseded matching results side by side.
 
 ## FILES
 
@@ -230,5 +342,8 @@ reference without which no checker score means anything. Roster and API spend ca
 ## CONFIRMATION
 
 No external model/API/network call. No human review time consumed. No generator run. No capability
-result. No Registry entry. No battery, ladder, threshold, observation-unit or Registry change. BSTD
-untouched. **EVAL-004 not started.**
+result. No Registry entry. No battery, ladder, threshold, observation-unit or Registry change. No
+Resources file edited. No new data acquired. BSTD untouched — 25,252 files, none opened. The
+**27/27 historical checker-judgement regression still passes**, along with the harness positive,
+negative and selftest suites.
+**Human calibration not started. EVAL-004 not started.**

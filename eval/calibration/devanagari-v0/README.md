@@ -25,6 +25,10 @@ project ground truth about what any sign says.
 | File | What it is |
 |---|---|
 | `build-candidate-pool.py` | deterministic selector — rebuilds the pool from the corpus |
+| `materialise-crops.py` | produces one crop file per item, with a self-test that **proves** crop geometry before writing anything |
+| `_png.py` | dependency-free PNG read/write, used only so crop geometry can be verified |
+| `crops/` | the crop files. **Both the reviewer and the checker read these**, so the region judged is identical by construction. Git-ignored; regenerate with `materialise-crops.py` |
+| `PROPOSED-V0-COMPOSITION.md` | the language-composition problem and options — **needs a Controller decision** |
 | `candidate-manifest.jsonl` | the 54 selected items, full provenance. **Contains source transcriptions — not for reviewer eyes** |
 | `candidate-manifest.csv` | same, **without** transcriptions, safe to open alongside review work |
 | `selection-summary.json` | exactly how the sample was chosen, and the reserve attestation |
@@ -38,9 +42,13 @@ project ground truth about what any sign says.
 ## Reproducing
 
 ```
-python3 build-candidate-pool.py --corpus-root <path-to>/resources/corpus/raw
-python3 build-review-pack.py --verify-blind
+python3 build-candidate-pool.py  --corpus-root <path-to>/resources/corpus/raw
+python3 materialise-crops.py     --corpus-root <path-to>/resources/corpus/raw
+python3 build-review-pack.py     --verify-blind
 ```
+
+`materialise-crops.py --self-test` verifies crop geometry on its own and exits, without touching the
+corpus. It refuses to materialise anything if that test fails.
 
 The raw corpus is git-ignored and may sit in another worktree, so `--corpus-root` is explicit.
 Selection uses stable sorting on SHA-256, not a random number generator: the same repository state
@@ -52,12 +60,16 @@ always produces a byte-identical manifest.
 
 Starting material: two CVIT / IIIT Hyderabad collections of photographed Indian signage.
 
-| Step | Result |
+| Step | Records |
 |---|---:|
-| Images with usable annotations | 551 |
-| minus files **byte-identical across the two datasets** | −173 |
-| minus duplicate copies inside one dataset | −3 |
-| **Eligible independent photographs** | **202** |
+| Labelled source records | 551 |
+| minus records removed because **both copies** of each of the 173 shared hashes are excluded | −346 |
+| minus same-source duplicate records | −3 |
+| **Eligible unique photographs** | **202** |
+
+**Note the arithmetic.** 173 shared *hashes* remove **346 records**, because each shared photograph
+appears as a record in both datasets and both copies are dropped. Writing "551 − 173 − 3" would be
+wrong even though it happens to land near the right number.
 | Selected across 12 difficulty strata | **54** |
 
 **Only ~12% of the acquired images carry annotations at all** (551 of 4,476). That is a consequence
@@ -118,40 +130,68 @@ labelled**. Only 3 labelled IIIT-ILST images are unique.
 So the development material is one lineage, and **BSTD is the only genuine cross-source check we
 have.** That is why it is held back untouched.
 
-### 2 · Expert annotators disagree with each other about a third of the time
+### 2 · The two dataset releases disagree with each other about a third of the time
 
-On the 173 shared photographs we compared the two teams' transcriptions of the **same physical
-region** (matched geometrically, so "they annotated different words" is excluded):
+> ⚠️ **Corrected 24 Aug 2026.** An earlier version of this section called this "expert annotators
+> disagreeing" and treated 67% as a **human-performance ceiling**. **Both claims are withdrawn.**
+> The repository holds no provenance showing who produced these annotations or whether the two sets
+> were made independently. What is measured is *cross-dataset annotation disagreement between two
+> releases from the same source lineage* — nothing about human reading ability, and nothing that may
+> be used to set an evaluator threshold.
+
+On the 173 shared photographs we compared the two releases' transcriptions of the **same physical
+region**, matched **strictly one-to-one** (each region on either side matches at most once, pairs
+accepted in descending IoU order, threshold 0.5):
 
 | | |
 |---|---:|
-| Regions compared | 1,082 |
+| Regions matched | 1,082 |
 | Identical transcription | **725 (67.0%)** |
 | Different transcription | **357 (33.0%)** |
-| — of those, spelling-convention only | 64 (18%) |
-| — of those, **different letters** | **293 (82%)** |
+| — identical after removing virama, nukta, anusvara, chandrabindu | 64 (18%) |
+| — still different after that removal | 293 (82%) |
 
-Same pixels, same region, two expert teams, one in three disagreements. For example, on one sign:
-IndicSTR12 reads `मार्केट`, IIIT-ILST reads `माकेट`.
+Same sign, same box: one release reads `मार्केट`, the other `माकेट`.
 
-**Three consequences:**
+**On the diacritic figure.** Deleting those four marks is a mechanical Unicode operation. It does
+**not** establish that such pairs are semantically or orthographically equivalent, or that they
+represent the same reading — that needs native-language evidence this project does not have. The
+field is named `matches_after_selected_diacritic_removal` so it cannot be read as more than it is.
 
-1. **Source transcriptions are demonstrably not ground truth.** This is no longer a policy position;
-   it is measured.
-2. **Our Hindi reader's transcription will also be one reading, not truth.** The record must say
-   "as read by X on date Y".
-3. **There is a ceiling.** A checker cannot sensibly be required to agree with our reader more often
-   than another qualified reader would. Roughly 67% — or ~73% if you forgive spelling conventions —
-   is what human-to-human agreement looks like on this exact material.
+**Matching-method audit.** The first pass chose a best partner independently for each region of one
+dataset, without enforcing exclusivity, so one region could in principle have been counted against
+several. That was a real methodological flaw. Recomputed strictly one-to-one, the figures are
+**unchanged (725/1082 either way)** — because in this corpus the two releases' boxes are near-
+identical rather than overlapping, and **0 of 1,778** regions were contested by more than one
+partner. Both results are reported in `annotator-disagreement.json`.
 
-The 173 overlap files are **excluded from the candidate pool** as required. They are kept as evidence
-in `annotator-disagreement.json`, where they are arguably more valuable than they would have been as
-test items: they are the only place we have two independent human readings of the same pixels.
+**What this supports:**
 
-**Caveat:** this 33% is measured on the overlap set — the images one lab chose to reuse — which may
-not be representative of the wider pool.
+**Source annotations are demonstrably unsafe to promote directly to project ground truth.** Two
+releases from one lineage assign different transcriptions to the same pixels often enough that
+adopting either arbitrarily would embed unexamined error. That is why the protocol establishes its
+own reference with two independent readers.
 
----
+**What this does not support:** any claim about human reading ability, any ceiling on achievable
+accuracy, and any evaluator threshold.
+
+The 173 overlap files are **excluded from the candidate pool** by default. They are kept as evidence
+in `annotator-disagreement.json`.
+
+**Caveat:** measured on the overlap set — the images one release reused — which may not be
+representative of the wider pool.
+
+### 3 · The pool currently contains no Hindi at all
+
+**100% of Hindi-labelled records sit inside the excluded overlap** (173 of 173). The smaller
+dataset's Devanagari folder *is* the larger dataset's Hindi folder, so excluding shared files removes
+every Hindi photograph and leaves a pool that is **53 Marathi + 1 unlabelled**.
+
+Deduplication and Hindi coverage are in structural conflict here. Since our production failure is
+Hindi and the checker prompt says "Devanagari (Hindi) text", this is a validity gap rather than a
+sampling detail. Options — including an implemented `--overlap-policy admit-once` that yields
+**19 Hindi / 35 Marathi** while keeping one photograph to one item — are set out in
+`PROPOSED-V0-COMPOSITION.md`. **The default is unchanged pending a Controller decision.**
 
 ## What is deliberately held back
 

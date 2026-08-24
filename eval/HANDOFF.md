@@ -111,20 +111,36 @@ result. What it produced, in `eval/calibration/devanagari-v0/`:
 
 - **A 54-item candidate pool** of real photographed Devanagari signage, built deterministically from
   the CVIT lineage. The same repository state always produces a byte-identical manifest.
-- **A blinded reviewer pack** — the Hindi reader sees crop and item ID only. Verified mechanically:
-  no Devanagari character appears anywhere in the generated pack.
+- **A blinded reviewer pack** — readers see crop and item ID only. Verified mechanically: no
+  Devanagari character appears anywhere in the generated pack. **The protocol uses two independent
+  readers** (≈ 3.5–4.5 h total); a single reader's transcription would silently have become the
+  answer key.
+- **Materialised crops with proven geometry.** Reviewer and checker read the **same files**, verified
+  by hash. A self-test on a coordinate-encoded synthetic image proves crop geometry and found that
+  `sips --cropOffset 0 0` silently centre-crops; a verified workaround handles it.
 - **A calibration run plan** with staged blinding, costs, and what a clean result would and would not
   license.
 - **`check-vlm.mjs` per-item targets** — each item can carry its own reference transcription.
   Judgement provably unchanged: all 27 stored historical cases re-scored through both code paths,
   0 mismatches.
 
-**⚠ The finding that changes expectations: two expert annotation teams, transcribing the same
-photographs, disagree about one time in three.** On 1,082 same-region comparisons they agreed 725
-times (67%); ~73% if spelling-convention differences are forgiven. **A checker cannot sensibly be
-held to a standard above what qualified humans achieve on this material**, and our reader's
-transcription will likewise be one reading, not truth. This instantiates a rule the approved
-calibration plan already contained — it supplies the number.
+**⚠ Two dataset releases from the same source lineage disagree about one time in three.** On 1,082
+strictly one-to-one matched regions they agree 725 times (67%).
+
+**What that supports:** source annotations are demonstrably unsafe to promote directly to project
+ground truth — which is why the protocol establishes its own reference with **two independent
+readers** rather than adopting a dataset label.
+
+**What it does NOT support** *(corrected 24 Aug 2026 after Controller review — an earlier version of
+this handoff claimed otherwise)*: it is **not** human inter-annotator agreement, **not** a measure of
+human reading ability, and **not** a ceiling. No evaluator threshold may be derived from it. The
+repository holds no provenance showing the two annotation sets were made independently.
+
+**⚠ The pool currently contains no Hindi at all** — 53 Marathi, 1 unlabelled. All 173 Hindi-labelled
+records sit inside the excluded cross-dataset overlap, because the smaller dataset's Devanagari
+folder *is* the larger one's Hindi folder. Since the failure we hunt is a language-prior failure and
+our production failure is Hindi, this is a validity gap. Options are in
+`eval/calibration/devanagari-v0/PROPOSED-V0-COMPOSITION.md`; **awaiting a Controller decision.**
 
 Earlier: **EVAL-002** (completed, Controller-approved, closed) and **EVAL-001** (completed,
 Controller-approved).
@@ -158,7 +174,9 @@ Earlier: **EVAL-001 — Capability Battery V0 design**, completed and Controller
 
 ## CURRENT TASK / QUEUE
 
-**None.** EVAL-004 has not been opened and must not be started without an approved task file.
+**None.** The EVAL-003 correction pass is complete and awaiting Controller review. **Do not start the
+human calibration** — it needs a composition decision, reader approval and a checker roster first.
+EVAL-004 has not been opened and must not be started without an approved task file.
 
 ---
 
@@ -186,9 +204,11 @@ be adopted, not reinvented.
 Always report the number of *independent items* alongside the number of attempts.
 
 **Devanagari calibration material now exists, and its labels disagree with each other.** Resources
-supplied 29,722 real photographed Devanagari images with transcriptions. Two expert teams disagree on
-~33% of the same regions (EVAL-003 findings §2). Treat every source transcription as one observation,
-never as project ground truth.
+supplied 29,722 real photographed Devanagari images with transcriptions. Two dataset releases from
+the **same source lineage** assign different transcriptions to ~33% of the same regions (EVAL-003
+findings §2). Treat every source transcription as one observation, never as project ground truth.
+This is cross-dataset annotation disagreement — **not** human inter-annotator agreement, and no
+evaluator threshold may be derived from it.
 
 **The CVIT lineage is effectively one dataset.** 173 files are byte-identical across IndicSTR12 and
 IIIT-ILST — and those are 98% of everything IIIT-ILST has labelled, leaving only 3 unique images.

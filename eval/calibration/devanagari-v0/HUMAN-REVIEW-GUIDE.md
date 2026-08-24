@@ -1,7 +1,11 @@
-# Guide for the Hindi reader — blind transcription pass
+# Guide for readers — blind transcription pass
 
-**Task:** EVAL-003 · **Status: prepared, NOT yet to be performed.** Doing this work needs Controller
-approval of human time. Nothing here has been asked of anyone.
+**Task:** EVAL-003 (corrected) · **Status: prepared, NOT yet to be performed.** Doing this work needs
+Controller approval of human time. Nothing here has been asked of anyone.
+
+> **This protocol uses TWO independent readers, not one.** An earlier draft made a single reader's
+> transcription the reference. That was wrong: it would have quietly turned one person's reading into
+> project ground truth, with no way to tell a confident misreading from a correct one. See §8.
 
 ---
 
@@ -9,6 +13,14 @@ approval of human time. Nothing here has been asked of anyone.
 
 You will be shown **54 cropped photographs of real Devanagari signage** — shop signs, boards,
 notices, photographed in the street. For each one you write down **exactly what you can see drawn.**
+
+**Two readers do this separately.** You will not see the other reader's answers, and they will not
+see yours. Please do not discuss the items until both passes are complete.
+
+⚠️ **Note on language.** Most items in the current pack are **Marathi**, which is written in the
+same Devanagari script as Hindi. You are being asked to read the **script**, so Marathi items are
+in scope — transcribe them exactly as drawn like any other. If the Controller approves a revised
+composition, the mix may change; the instructions do not.
 
 The unusual instruction is this:
 
@@ -41,9 +53,12 @@ The reason is that **the pull toward the plausible word acts on people too.** A 
 the image and asked "what does it say?" will not be pulled in any particular direction.
 
 There is a second, quieter reason. The datasets these images came from already carry their own
-transcriptions, and we checked how much those agree with each other. On 1,082 regions where two
-expert teams annotated the exact same photograph, **they disagreed about one time in three.** Your
-reading is a third independent one, and it is only worth having if it was made independently.
+transcriptions, and we checked how much those agree with each other. On 1,082 regions covering the
+same photographs, **two dataset releases assign different transcriptions about one time in three.**
+
+We do **not** know who produced those annotations or whether they were made independently, so that
+figure says nothing about how well people read — only that **the existing labels cannot simply be
+adopted as correct.** Your reading is made independently for exactly that reason.
 
 ---
 
@@ -66,8 +81,8 @@ vowel signs to make a word look right, and do not convert to a different spellin
 
 **Order.** Please work through the pack in the order given and do not skip ahead to compare items.
 
-**Time.** 54 items, roughly 1–2 minutes each: about **1.5 to 2 hours**, including breaks. You can
-stop and resume — your answers are saved as you go.
+**Time.** 54 items, roughly 1–2 minutes each: about **1.5 to 2 hours per reader**, including breaks.
+You can stop and resume — your answers are saved as you go.
 
 ---
 
@@ -87,21 +102,16 @@ The exported file has four columns: `item_id`, `human_transcription`, `status`, 
 
 ## 5 · What your answers will and will not become
 
-**They will become:** the reference used to score candidate AI checkers. When a checker reads an
-image, its answer is compared against yours. Agreement counts in the checker's favour; disagreement
-counts against it.
+**Where the two readers agree exactly**, that reading becomes high-confidence reference material for
+scoring candidate AI checkers.
 
-**They will not become:** the project's settled truth about what any sign says.
+**Where the two readers disagree**, the item is *not* silently resolved in either reader's favour.
+It is either kept out of the strict pass/fail test, or adjudicated in a separate recorded step. A
+disagreement between two careful readers is a fact about how hard the item is, and it is more useful
+recorded than hidden.
 
-That distinction is deliberate. Your transcription is **one expert reading**, and we have direct
-evidence from this same material that expert readings of the same photograph differ about a third
-of the time. So the record will say *"as read by a Hindi first-language reader on this date"*, not
-*"this is what the sign says."*
-
-**A consequence worth knowing:** no checker can be expected to agree with you more often than
-another equally-qualified reader would. If we ever set a bar for a machine that is higher than the
-observed human-to-human agreement on this material, we would be demanding something no reader
-achieves.
+**Neither reader alone becomes ground truth**, and the project's records will say *"read by two
+independent readers on this date, agreed / disagreed"* rather than *"this is what the sign says."*
 
 **Nothing you write is used to train anything.** This material is for internal evaluation only.
 
@@ -109,16 +119,39 @@ achieves.
 
 ## 6 · What happens after your pass
 
-1. Your answers are frozen. Nothing is edited afterwards.
-2. **Only then** is a second set of items derived, in which the target string is deliberately
-   altered from what you wrote — so we can test whether a checker correctly *rejects* a mismatch.
-   That derivation happens after your pass precisely so it cannot influence it, and you are not
-   told which items will be used that way.
-3. Candidate checkers are run against the images, blind to your answers.
-4. The comparison is made.
+1. Both readers' answers are frozen. Nothing is edited afterwards.
+2. Agreements and disagreements are counted and recorded.
+3. **Only then** are altered target strings derived for some items, so we can test whether a checker
+   correctly *rejects* a mismatch. This happens after both passes are frozen precisely so it cannot
+   influence them, and neither reader is told which items will be used that way.
+4. Candidate checkers are run against the crops, blind to both readers' answers.
+5. The comparison is made.
 
-You may later be asked a **separate, much shorter** question: whether particular altered strings
-are in fact different from what is visible. That is a different task, done after this one is closed.
+**A later, separate and much shorter task** asks someone to confirm that particular altered strings
+really are different from what is visible. **That check is not given to the same reader who
+established the original reading for that item** — otherwise it would be the same person marking
+their own work.
+
+---
+
+## 8 · Why two readers, and what it costs
+
+**The problem with one reader.** A single reader's transcription becomes, in practice, the answer
+key. If they misread an item, every checker that reads it correctly is scored *wrong*, and nothing in
+the process would reveal it. With no second opinion there is no way to distinguish "the checker
+failed" from "the reference was wrong".
+
+**What two independent readers buy.** Where they agree exactly, that is materially stronger evidence
+than one reading. Where they disagree, we learn the item is genuinely hard — and we can keep it out
+of a pass/fail gate rather than scoring machines against a coin flip.
+
+**What it costs.** Roughly double the reading time: **about 3–4 hours total** rather than 1.5–2, plus
+20–30 minutes for the later altered-string check, and a short adjudication step if disagreements need
+resolving. Estimated total: **≈ 3.5–4.5 hours across two readers.**
+
+**What we still cannot claim.** Two readers agreeing does not make a reading certain, and this
+protocol does not measure "how well people read Devanagari" — it has no controlled design for that.
+It establishes reference material with a known agreement level, and nothing more.
 
 ---
 

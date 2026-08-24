@@ -2,8 +2,8 @@
   "task": "EVAL-003",
   "seed": 20260824,
   "determinism": "selection is by stable sort on sha256 within strata; no RNG is used",
-  "corpus_root_used": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/resources/resources/corpus/raw",
-  "res_manifest_used": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval/resources/manifests/corpus-pilot-v0.jsonl",
+  "corpus_root_used": "<external>/raw",
+  "res_manifest_used": "resources/manifests/corpus-pilot-v0.jsonl",
   "reserve_untouched": {
     "src_bstd_devanagari": {
       "present": true,
@@ -16,10 +16,24 @@
     "src_indicstr12_devanagari": 375,
     "src_iiit_ilst_devanagari": 176
   },
-  "cross_source_byte_identical_excluded": 173,
-  "within_source_duplicates_collapsed": 3,
-  "eligible_candidates_after_exclusions": 202,
+  "exclusion_arithmetic": {
+    "policy": "exclude",
+    "labelled_source_records": 551,
+    "cross_source_shared_hashes": 173,
+    "records_removed_by_overlap_policy": 346,
+    "records_removed_explanation": "both copies of every shared hash are excluded, so each shared hash removes TWO source records",
+    "same_source_duplicate_records_removed": 3,
+    "eligible_unique_photographs": 202,
+    "check": "551 - 346 - 3 = 202"
+  },
+  "overlap_policy": "exclude",
+  "overlap_photographs_admitted_once": 0,
   "selected": 54,
+  "selected_language_labels": {
+    "marathi": 53,
+    "unstated_script_labelled_only": 1
+  },
+  "language_note": "Distributor's language label, recorded for composition reporting only. Devanagari was identified by SCRIPT IN THE TRANSCRIPTION, never by language label. Marathi is written in Devanagari.",
   "strata_available": {
     "large/cluttered": 10,
     "large/isolated": 14,

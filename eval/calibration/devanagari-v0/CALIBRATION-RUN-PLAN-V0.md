@@ -44,18 +44,40 @@ per photograph, so the same picture cannot contribute twice.
 
 ## 3 · Stages, and exactly what is blind at each
 
-### Stage 1 — Blind human transcription **(human time)**
-The reader sees crop + item ID. **No expected answer, no dataset label, no checker output** —
-verified mechanically: the generated pack contains no Devanagari character at all.
-Output: `item_id, human_transcription, status, notes`. `cannot_read` and `ambiguous` are valid.
+### Stage 1 — Blind transcription by **two independent readers** *(human time)*
 
-**Cost: ~1.5–2 hours of a Hindi first-language reader.** Nothing else in this plan consumes human
-time until stage 5.
+> **Corrected 24 Aug 2026.** An earlier draft used one reader as the reference. That would have made
+> a single person's reading the answer key with no way to distinguish a confident misreading from a
+> correct one — every checker that read such an item correctly would have been scored wrong.
 
-### Stage 2 — Freeze
-Human readings are frozen and hashed. Nothing downstream may edit them. Items marked `cannot_read`
-are excluded from scoring and **reported**, not quietly dropped — a high rejection rate is a fact
-about the material, not a nuisance.
+Each reader independently sees crop + item ID. **No expected answer, no dataset label, no checker
+output, and no sight of the other reader's responses** — blinding is verified mechanically: the
+generated pack contains no Devanagari character at all.
+
+Both readers see the **same materialised crop files** the checker will later receive — byte-identical,
+verified by hash — so there is no possibility of reader and checker judging different regions.
+
+Output per reader: `item_id, human_transcription, status, notes`, with `cannot_read` and `ambiguous`
+as valid answers.
+
+**Cost: ~1.5–2 hours per reader.**
+
+### Stage 2 — Freeze, then compare the two readings
+
+Both readers' answers are frozen and hashed. Nothing downstream may edit them. Then:
+
+| Case | Treatment |
+|---|---|
+| **Both readers agree exactly** | becomes high-confidence V0 reference material |
+| **Readers disagree** | **not** resolved in either reader's favour. Either excluded from the hard pass/fail gate, or sent to a recorded adjudication step. Reported either way |
+| **Either marks `cannot_read`** | excluded from scoring and **reported**, not quietly dropped |
+
+**Neither reader alone becomes ground truth.** Records say "read by two independent readers on this
+date, agreed / disagreed", never "this is what the sign says". The agreement rate between the two
+readers is itself a reported result, and it bounds how much of the pool can carry a strict gate.
+
+A high rejection or disagreement rate is a fact about the material, not a nuisance to be worked
+around.
 
 ### Stage 3 — Derive intact and broken targets *(deterministic, no human, no API)*
 Only now, **after stage 2 is frozen**, is each usable item assigned:
@@ -81,12 +103,18 @@ another real word, or — worse — accidentally produce the *correct* reading o
 would turn a "broken" item into an intact one and corrupt the false-pass count. **Whether an altered
 string genuinely differs from what is visible is a Hindi-language judgement**, so stage 4 exists.
 
-### Stage 4 — Confirm the broken targets **(short human check, separate from stage 1)**
-The reader confirms, for `broken` items only, that the altered string is in fact different from what
-is visible. Any item that fails this check is reclassified or dropped, and that is recorded.
+### Stage 4 — Confirm the broken targets **(short human check)**
+Someone confirms, for `broken` items only, that the altered string really is different from what is
+visible. Items failing this check are reclassified or dropped, and that is recorded.
 
-**This happens after stage 1 is frozen, and the reader is not told during stage 1 which items will
-be altered.** That ordering is what keeps stage 1 blind. Estimated **20–30 minutes**.
+**Two ordering rules, both load-bearing:**
+1. This happens **after both stage-1 passes are frozen**, and neither reader is told during stage 1
+   which items will be altered. That is what keeps stage 1 blind.
+2. **The confirmation for a given item must not be done by the same reader who established that
+   item's original reading** — otherwise a person is marking their own work, and a misreading in
+   stage 1 would be silently ratified in stage 4.
+
+Estimated **20–30 minutes**.
 
 ### Stage 5 — Run candidate checkers *(API spend)*
 Each checker receives the image and the assigned target. It does **not** see the human transcription,
@@ -103,11 +131,18 @@ unchanged and that was verified against all 27 stored historical cases.
 the same answer twice — currently unmeasured, and a checker that is right on average but unstable
 per-item is not usable as a gate.
 
-**Crop materialisation is an unsolved prerequisite.** The manifest carries crop boxes, not cropped
-files. EVAL-003 deliberately did not create crops: the only image tool available here is `sips`,
-whose offset semantics could not be verified without pixel inspection, and silently mis-cropping
-would mean a reader and a checker judging the wrong region. **The approved run must implement and
-verify cropping before stage 1.**
+**Crop materialisation is now solved and verified** (correction pass). `materialise-crops.py`
+produces one crop file per item, and **both the reviewer interface and the checker input reference
+those same files** — equivalence by identity rather than by two computations agreeing, confirmed by
+hash across all 54 items.
+
+Crop geometry is proven, not assumed: `--self-test` writes a synthetic image in which every pixel
+encodes its own coordinates, crops known rectangles, and decodes the result with a dependency-free
+PNG reader to confirm the returned pixels carry the expected source coordinates.
+
+That self-test found a real defect: **`sips --cropOffset 0 0` is treated as "no offset" and silently
+returns a CENTRE crop.** Any region at the exact image origin would have been silently wrong. A
+verified flip-crop-flip workaround handles that case, and the self-test covers it.
 
 ### Stage 6 — Score
 | Metric | Question | Consumer |
@@ -143,29 +178,40 @@ proposed. This is the same bound EVAL-001 §2b already established, now with rea
 
 **Two further limits specific to this material:**
 
-**The ceiling is not 100%.** Two expert teams annotating the *same* photographs agreed only **67%**
-of the time (1,082 same-region comparisons; 725 identical). Even counting spelling-convention
-differences as agreement, it is ~73%. **A checker cannot sensibly be held to a standard above the
-observed human-to-human rate on this material**, and our reader's transcription is one reading, not
-truth.
+**The source labels are not a usable answer key.** Two releases from the same source lineage assign
+different transcriptions to the same regions 33% of the time (1,082 one-to-one matched regions).
+That is why the reference is established by our own readers rather than adopted from the datasets.
+
+> ⚠️ **This figure is not a human-performance ceiling and must not be used to set a threshold.** The
+> repository holds no provenance showing those annotations were produced by independent annotators.
+> An earlier draft of this plan treated 67% as a ceiling on achievable checker accuracy. **That is
+> withdrawn.**
 
 **Reading is not drawing.** A checker that passes this can read Devanagari from photographs. Whether
 it can judge *generated* Hindi text is a further question — generated text fails differently, often
 looking clean while being semantically wrong. This screen is necessary, not sufficient.
 
----
+**Language composition.** As currently built the pool is **53 Marathi + 1 unlabelled, 0 Hindi** — see
+`PROPOSED-V0-COMPOSITION.md`. Until that is resolved, a clean result licenses a claim about
+**script-general Devanagari reading**, not about Hindi specifically.
 
 ## 5 · Exactly what the next task would spend
 
 | Stage | Human time | API spend | Notes |
 |---|---|---|---|
-| 1 · Blind transcription | **1.5–2 h**, Hindi first-language reader | ₹0 | the main human cost |
-| 2 · Freeze | 0 | ₹0 | mechanical |
+| 1 · Blind transcription, **reader A** | **1.5–2 h** | ₹0 | Devanagari-capable reader |
+| 1 · Blind transcription, **reader B** | **1.5–2 h** | ₹0 | independent; no sight of A |
+| 2 · Freeze and compare | 0 | ₹0 | mechanical |
+| 2b · Adjudicate disagreements *(if wanted)* | **0–30 min** | ₹0 | otherwise disagreements are simply excluded from the gate |
 | 3 · Derive targets | 0 | ₹0 | deterministic |
-| 4 · Confirm broken targets | **20–30 min**, same reader | ₹0 | after stage 1 is frozen |
-| 5 · Run checkers | 0 | **first API spend** | ~54 images × N checkers × 3 repeats for the leader |
+| 4 · Confirm broken targets | **20–30 min** | ₹0 | not by the reader who read that item |
+| 5 · Run checkers | 0 | **first API spend** | ~54 crops × N checkers × 3 repeats for the leader |
 | 6 · Score | 0 | ₹0 | mechanical |
-| — | **≈ 2–2.5 h total** | per-call cost × volume | |
+| — | **≈ 3.5–4.5 h total across two readers** | per-call cost × volume | |
+
+**This is roughly double the single-reader estimate**, and that is the point: a single reader's
+transcription silently becomes the answer key, and there is no way to tell a confident misreading
+from a correct one.
 
 **API cost cannot be stated here.** Doing so needs a model roster, and selecting one is explicitly
 outside EVAL-003. At ~₹0.90 per check (our recorded figure), 54 images across a small roster with
@@ -180,7 +226,9 @@ the qualification-gate framing rather than an accuracy claim.
 
 Stop and report rather than continuing if:
 
-- crop materialisation cannot be verified — a mis-cropped region invalidates both reader and checker;
+- crop geometry self-test fails on the machine doing the run — a mis-cropped region invalidates both
+  reader and checker, and the self-test is what stands between us and that;
+- the two readers disagree so often that too few agreed items remain to screen anything;
 - the reader rejects so many items that fewer than ~20 usable remain, leaving too few opportunities
   to screen anything;
 - stage 4 finds that many deterministic alterations did not actually change the visible reading;

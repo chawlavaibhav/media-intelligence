@@ -10,8 +10,11 @@ So the generated pack contains ONLY: item id, source image path, crop box.
 It contains NO source transcription, NO checker output, NO expected answer.
 `--verify-blind` re-reads the generated files and fails if any Devanagari character appears.
 
-No image is copied or modified: the viewer crops from the original at display time, so there is
-no transformed-file provenance risk and no storage cost.
+CORRECTION PASS: the viewer now displays the MATERIALISED CROP FILES produced by
+materialise-crops.py — the very same files a checker will be given. Previously the reviewer saw a
+CSS-positioned crop of the original while the checker would have received something produced
+separately: two computations that could silently disagree, with a mis-crop invisible in every
+artifact. Pointing both at one file replaces "two computations agree" with "it is the same file".
 """
 import argparse, csv, json, unicodedata
 from pathlib import Path
@@ -50,6 +53,7 @@ VIEWER = """<!doctype html>
  </div>
  <div class=meta id=itemid></div>
  <div class=crop id=crop></div>
+ <div class=meta id=cropmeta></div>
  <label>What is visibly written?</label>
  <input type=text id=txt autocomplete=off spellcheck=false>
  <div class=row>
@@ -73,14 +77,12 @@ function show(){
   const it = ITEMS[i];
   document.getElementById("pos").textContent = `item ${i+1} of ${ITEMS.length}`;
   document.getElementById("itemid").textContent = it.item_id;
-  const [x0,y0,x1,y1] = it.crop_box_xyxy, w = x1-x0, h = y1-y0;
-  const scale = Math.min(3, Math.max(1, 420/Math.max(w,h)));
+  // The SAME crop file the checker receives. Not a re-derived view of the original.
+  const scale = Math.min(3, Math.max(1, 420/Math.max(it.crop_w, it.crop_h)));
   document.getElementById("crop").innerHTML =
-    `<div style="width:${w*scale}px;height:${h*scale}px;overflow:hidden;position:relative">
-       <img src="${ROOT}/${it.source_image_relpath}"
-            style="position:absolute;left:${-x0*scale}px;top:${-y0*scale}px;
-                   transform-origin:0 0;transform:scale(${scale})">
-     </div>`;
+    `<img src="${ROOT}/${it.crop_file}" style="width:${it.crop_w*scale}px;height:${it.crop_h*scale}px">`;
+  document.getElementById("cropmeta").textContent =
+    `${it.crop_w}x${it.crop_h}px  ·  file ${it.crop_file}`;
   const r = R[it.item_id] || {};
   document.getElementById("txt").value  = r.human_transcription || "";
   document.getElementById("note").value = r.notes || "";
@@ -118,9 +120,10 @@ def main():
     here = Path(__file__).resolve().parent
     ap.add_argument("--manifest", default=str(here / "candidate-manifest.jsonl"))
     ap.add_argument("--out-dir", default=str(here / "review-pack"))
-    ap.add_argument("--image-root", default="../../../../resources/resources/corpus/raw",
-                    help="path the viewer uses to reach the original images, relative to the "
-                         "generated HTML. The raw corpus is git-ignored and may live elsewhere.")
+    ap.add_argument("--crop-index", default=str(here / "crops" / "crop-index.json"),
+                    help="crop index written by materialise-crops.py")
+    ap.add_argument("--image-root", default="../crops",
+                    help="path from the generated HTML to the materialised crop files")
     ap.add_argument("--verify-blind", action="store_true",
                     help="re-read the generated pack and fail if any Devanagari leaked into it")
     a = ap.parse_args()
@@ -128,10 +131,24 @@ def main():
     out = Path(a.out_dir); out.mkdir(parents=True, exist_ok=True)
     rows = [json.loads(l) for l in Path(a.manifest).read_text(encoding="utf-8").splitlines() if l.strip()]
 
-    # BLIND PROJECTION — id, image, box. Nothing else crosses this boundary.
+    ci = Path(a.crop_index)
+    if not ci.exists():
+        raise SystemExit(f"ERROR: crop index not found: {ci}\n"
+                         f"Run materialise-crops.py first — reviewer and checker must be given "
+                         f"the same crop files.")
+    crops = {c["item_id"]: c for c in json.loads(ci.read_text(encoding="utf-8"))["crops"]}
+    missing = [r["candidate_id"] for r in rows if r["candidate_id"] not in crops]
+    if missing:
+        raise SystemExit(f"ERROR: {len(missing)} candidate(s) have no materialised crop, "
+                         f"e.g. {missing[:3]}")
+
+    # BLIND PROJECTION — id and crop file only. Nothing else crosses this boundary.
+    # crop_sha256 travels so a later checker run can prove it got the identical file.
     blind = [{"item_id": r["candidate_id"],
-              "source_image_relpath": r["source_image_relpath"],
-              "crop_box_xyxy": r["crop_box_xyxy"]} for r in rows]
+              "crop_file": crops[r["candidate_id"]]["crop_file"],
+              "crop_sha256": crops[r["candidate_id"]]["crop_sha256"],
+              "crop_w": crops[r["candidate_id"]]["crop_w"],
+              "crop_h": crops[r["candidate_id"]]["crop_h"]} for r in rows]
 
     (out / "items-blind.json").write_text(json.dumps(blind, ensure_ascii=False, indent=2), encoding="utf-8")
     (out / "index.html").write_text(
@@ -158,7 +175,16 @@ def main():
                      "project ground truth about what the sign 'really' says — see HUMAN-REVIEW-GUIDE.md.",
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # Checker input template: same ids, same crop files, targets deliberately EMPTY. Targets are
+    # filled only after the human pass is frozen (run plan stage 3), so this cannot be run as-is.
+    (out / "checker-items.TEMPLATE.jsonl").write_text(
+        "".join(json.dumps({"id": b["item_id"], "image": f"../crops/{b['crop_file']}",
+                            "target": "<PENDING: set from frozen human reading, run plan stage 3>",
+                            "conditions": {"crop_sha256": b["crop_sha256"]}},
+                           ensure_ascii=False) + "\n" for b in blind), encoding="utf-8")
+
     print(f"wrote blind pack for {len(blind)} items -> {out}")
+    print("  reviewer and checker both reference the same crops/*.png files")
 
     if a.verify_blind:
         leaks = []

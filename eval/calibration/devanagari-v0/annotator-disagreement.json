@@ -1,16 +1,40 @@
 {
   "generated_by": "eval/calibration/devanagari-v0/build-candidate-pool.py",
-  "SYNTHETIC": false,
   "IS_GROUND_TRUTH": false,
-  "note": "Cross-source annotator disagreement measured on files that are byte-identical across the two CVIT datasets. These files are EXCLUDED from the candidate pool. This is evidence about label reliability, not a candidate set.",
+  "what_this_measures": "Disagreement between the transcriptions that two releases from the SAME source lineage (CVIT / IIIT Hyderabad) attach to byte-identical photographs.",
+  "what_this_does_NOT_measure": [
+    "human inter-annotator agreement — no provenance in this repository shows the two annotation sets were produced by independent annotators",
+    "human reading ability, or any ceiling on it",
+    "anything that may legitimately be used to set an evaluator threshold"
+  ],
+  "supported_conclusion": "Source annotations are demonstrably unsafe to promote directly to project ground truth: two releases from one lineage assign different transcriptions to the same pixels often enough that adopting either arbitrarily would embed unexamined error.",
+  "note": "These files are EXCLUDED from the candidate pool. Evidence about label reliability, not a candidate set.",
   "byte_identical_files": 173,
-  "regions_matched_iou_ge_0.5": 1082,
+  "iou_threshold": 0.5,
+  "matching_method": "strict one-to-one: pairs at IoU >= threshold sorted by descending IoU and accepted greedily; each region on either side matches at most once",
+  "regions_matched": 1082,
   "identical_transcription": 725,
   "different_transcription": 357,
   "agreement_rate": 0.6701,
-  "of_disagreements_convention_only": 64,
-  "of_disagreements_substantive": 293,
-  "convention_only_definition": "identical after removing virama, nukta, anusvara and chandrabindu — same letters, different conjunct/diacritic convention",
+  "superseded_method": {
+    "description": "EVAL-003 first pass: best partner chosen per IndicSTR12 region with NO exclusivity, so one IIIT-ILST region could be counted against several. Retained so the correction is visible.",
+    "regions_matched": 1082,
+    "identical_transcription": 725,
+    "agreement_rate": 0.6701
+  },
+  "diacritic_removal_probe": {
+    "field": "matches_after_selected_diacritic_removal",
+    "marks_removed": {
+      "virama": "U+094D",
+      "nukta": "U+093C",
+      "anusvara": "U+0902",
+      "chandrabindu": "U+0901"
+    },
+    "count_true": 64,
+    "count_false": 293,
+    "meaning": "TRUE means the two strings become identical once those four marks are deleted from both. A mechanical Unicode result only.",
+    "explicitly_not_claimed": "This does NOT establish that such pairs are semantically or orthographically equivalent, nor that they represent the same reading. That requires native-language evidence which this project does not have."
+  },
   "examples": [
     {
       "sha256": "459b233c32f830deeb4efbcec17840b39a0f4e9cbe915f03d0fcd6c717d972ee",
@@ -23,7 +47,7 @@
       ],
       "indicstr12_text": "सर्राफा",
       "iiit_ilst_text": "सरर्फि",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "459b233c32f830deeb4efbcec17840b39a0f4e9cbe915f03d0fcd6c717d972ee",
@@ -36,7 +60,7 @@
       ],
       "indicstr12_text": "रामनारायन",
       "iiit_ilst_text": "रामनारायण",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "459b233c32f830deeb4efbcec17840b39a0f4e9cbe915f03d0fcd6c717d972ee",
@@ -49,7 +73,7 @@
       ],
       "indicstr12_text": "एण्ड",
       "iiit_ilst_text": "एणड",
-      "convention_only": true
+      "matches_after_selected_diacritic_removal": true
     },
     {
       "sha256": "459b233c32f830deeb4efbcec17840b39a0f4e9cbe915f03d0fcd6c717d972ee",
@@ -62,7 +86,7 @@
       ],
       "indicstr12_text": "सल्स",
       "iiit_ilst_text": "सत्स",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "459b233c32f830deeb4efbcec17840b39a0f4e9cbe915f03d0fcd6c717d972ee",
@@ -75,7 +99,7 @@
       ],
       "indicstr12_text": "मार्केट",
       "iiit_ilst_text": "माकेट",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "7a069b12f8cd6de02d13598e0901bbdbebd52a5dbef7f06408c3975a990eee8b",
@@ -88,7 +112,7 @@
       ],
       "indicstr12_text": "झेरोक्स",
       "iiit_ilst_text": "झारक्स",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "00df210ae4f38e15b9f3db4bf92ae5041f6c0f45e46f24e233867cb758d71a1d",
@@ -101,7 +125,7 @@
       ],
       "indicstr12_text": "ठाणे",
       "iiit_ilst_text": "ठण",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "00df210ae4f38e15b9f3db4bf92ae5041f6c0f45e46f24e233867cb758d71a1d",
@@ -114,7 +138,7 @@
       ],
       "indicstr12_text": "पोलीस",
       "iiit_ilst_text": "पुलिस",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "00df210ae4f38e15b9f3db4bf92ae5041f6c0f45e46f24e233867cb758d71a1d",
@@ -127,7 +151,7 @@
       ],
       "indicstr12_text": "शक्ति",
       "iiit_ilst_text": "शकती",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "cf68def8d887aeb2491a965532cf9f0d5ce0374053806db741a1f907a6df5a06",
@@ -140,7 +164,7 @@
       ],
       "indicstr12_text": "रमज़ान",
       "iiit_ilst_text": "रमजान",
-      "convention_only": true
+      "matches_after_selected_diacritic_removal": true
     },
     {
       "sha256": "cf68def8d887aeb2491a965532cf9f0d5ce0374053806db741a1f907a6df5a06",
@@ -153,7 +177,7 @@
       ],
       "indicstr12_text": "प्रदेशवासियों",
       "iiit_ilst_text": "प्रदेशवासियो",
-      "convention_only": true
+      "matches_after_selected_diacritic_removal": true
     },
     {
       "sha256": "cf68def8d887aeb2491a965532cf9f0d5ce0374053806db741a1f907a6df5a06",
@@ -166,7 +190,7 @@
       ],
       "indicstr12_text": "उन्नति,",
       "iiit_ilst_text": "उन्नति",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "cf68def8d887aeb2491a965532cf9f0d5ce0374053806db741a1f907a6df5a06",
@@ -179,7 +203,7 @@
       ],
       "indicstr12_text": "महिना",
       "iiit_ilst_text": "महीना",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "e1b2640ec958ae4971287501012f83fd0078aa4559da0f167225f477e51aea3d",
@@ -192,7 +216,7 @@
       ],
       "indicstr12_text": "मन्दिर",
       "iiit_ilst_text": "मंदिर",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "ebcf26da9a61055278e343eb0914c0618e09750ec54b0e6ab02a1c293f91de54",
@@ -205,7 +229,7 @@
       ],
       "indicstr12_text": "म.",
       "iiit_ilst_text": "म",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "ebcf26da9a61055278e343eb0914c0618e09750ec54b0e6ab02a1c293f91de54",
@@ -218,7 +242,7 @@
       ],
       "indicstr12_text": "पा.",
       "iiit_ilst_text": "पा",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "ebcf26da9a61055278e343eb0914c0618e09750ec54b0e6ab02a1c293f91de54",
@@ -231,7 +255,7 @@
       ],
       "indicstr12_text": "मु.",
       "iiit_ilst_text": "मु",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "ebcf26da9a61055278e343eb0914c0618e09750ec54b0e6ab02a1c293f91de54",
@@ -244,7 +268,7 @@
       ],
       "indicstr12_text": "बृ,",
       "iiit_ilst_text": "बू",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "68a737bd8251c9c86601b4b1ab9f39643e83583e450984bc38111adc4e1728fb",
@@ -257,7 +281,7 @@
       ],
       "indicstr12_text": "भेंट-",
       "iiit_ilst_text": "भेट",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "4bb67687a2e93137c4706a8e460765f988038c6655e1ad6a149c629a8ed6e1cc",
@@ -270,7 +294,7 @@
       ],
       "indicstr12_text": "जूते",
       "iiit_ilst_text": "जुते",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "4bb67687a2e93137c4706a8e460765f988038c6655e1ad6a149c629a8ed6e1cc",
@@ -283,7 +307,7 @@
       ],
       "indicstr12_text": "यहाँ",
       "iiit_ilst_text": "यह",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "4bb67687a2e93137c4706a8e460765f988038c6655e1ad6a149c629a8ed6e1cc",
@@ -296,7 +320,7 @@
       ],
       "indicstr12_text": "नही",
       "iiit_ilst_text": "नहीं",
-      "convention_only": true
+      "matches_after_selected_diacritic_removal": true
     },
     {
       "sha256": "d38b58cb7a2a423a73edf10f5f4178bbee9638fcb9f0fb121b87aabc12720f6d",
@@ -309,7 +333,7 @@
       ],
       "indicstr12_text": "राँची",
       "iiit_ilst_text": "रांची",
-      "convention_only": true
+      "matches_after_selected_diacritic_removal": true
     },
     {
       "sha256": "d38b58cb7a2a423a73edf10f5f4178bbee9638fcb9f0fb121b87aabc12720f6d",
@@ -322,7 +346,7 @@
       ],
       "indicstr12_text": "शाखा,",
       "iiit_ilst_text": "शाखा",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     },
     {
       "sha256": "d38b58cb7a2a423a73edf10f5f4178bbee9638fcb9f0fb121b87aabc12720f6d",
@@ -335,7 +359,7 @@
       ],
       "indicstr12_text": "चुटिया",
       "iiit_ilst_text": "चूटिया",
-      "convention_only": false
+      "matches_after_selected_diacritic_removal": false
     }
   ]
 }
