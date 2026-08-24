@@ -1,0 +1,90 @@
+# CANON-003 Lane C, book 13 — Claude C. Hopkins, "Scientific Advertising", chapters 1-7.
+# Independent visual-evidence pass, run BEFORE any claim was written, per the frozen CANON-002-era
+# method. All 24 printed pages of the section were rendered and inspected.
+
+source_id: hopkins_scientific_advertising_ch1_7
+pass: performed
+visual_completeness: verified_page_level
+
+what_was_inspected:
+  method: >
+    The section was rendered from the source PDF at page level (24 pages, printed 1-24 = PDF pages
+    9-32) and every page was inspected as an image before extraction began. Two pages carrying
+    load-bearing numbers were additionally re-rendered at high resolution and read digit by digit
+    against the text layer.
+  pages_rendered: 24
+  printed_page_range: [1, 24]
+  pdf_page_range: [9, 32]
+  renders_committed: false          # ephemeral only, per CANON-003 resource budget
+
+# ── The finding: this source has no visual layer at all ─────────────────────
+observed:
+  figures_in_section: 0
+  illustrations_in_section: 0
+  tables_in_section: 0
+  diagrams_in_section: 0
+  reproduced_advertisements_in_section: 0
+  page_layout: >
+    Single column of continuous body text on every page. An italic running header carries the
+    chapter title; a footer carries the page number. Chapter openers carry "Chapter N" and the
+    chapter title. Nothing else appears on any page of the section.
+
+visual_loss_pattern:
+  pattern_name: no_visual_layer
+  description: >
+    The source is entirely verbal. There is nothing on the page that plain text extraction can
+    fail to carry, so for this book text extraction is complete rather than lossy.
+  why_this_is_worth_recording: >
+    It is the control case the batch did not yet have. Earlier books in this batch established
+    that text extraction can destroy a spatially argued source silently. This book establishes the
+    other end of the range: a source class where the risk is zero, and where a visual pass
+    correctly returns nothing. A method that only ever reports loss cannot distinguish "we lost
+    the evidence" from "there was no visual evidence to lose"; this pass distinguishes them.
+
+# ── A separate, sharper observation about missing evidence ──────────────────
+absent_evidence_observed:
+  pattern_name: absent_in_source
+  what_is_missing: >
+    Hopkins argues throughout from specific advertisements — the Mead Cycle Company mail order ads,
+    the incubator advertisement with and without a row of chickens in silhouette, the two food
+    advertisers' sampling offers, the brewer's plate-glass-room copy, the "Our net profit is 3 per
+    cent" advertisement. He tells the reader to "Look at an ad of the Mead Cycle Company" and to
+    "Note the picture he uses, the headlines, the economy of space, the small type."
+  what_the_book_supplies: nothing — not one of these advertisements is reproduced
+  distinction_from_extraction_loss: >
+    This is not evidence lost in digitisation. The evidence was never printed in the book. The
+    reader of the 1923 original was in exactly the same position as the reader of this scan: told
+    what the advertisement did, never shown it. A visual pass cannot repair this and no better
+    scan would.
+  consequence_for_extraction: >
+    Every claim whose support is a named advertisement is recorded as text-supported and
+    outcome-claimed, with the advertisement recorded as described-but-not-shown. No claim in this
+    extraction carries visually_demonstrated.
+
+# ── Text-layer integrity, checked against the rendered pages ────────────────
+text_layer_integrity:
+  ocr_source: Internet Archive scan, text layer produced by the scanning pipeline
+  body_text_quality: >
+    Very clean. Across the 8,202 words of the section, 3 words lack any vowel (`Mrs`, and `Pll`
+    twice, which is "I'll" misread), no word carries an interior capital, and there are no
+    scrambled or spliced sentences. That is a garbled-word rate of roughly 0.04%.
+  where_ocr_does_fail: >
+    Italic footers only. Printed page numbers are set in italic and are misread as `ii`, `124`,
+    `1)`, `ts)`, `ee` and similar. Page 11's footer reads "11" on the page and `ii` in the text
+    layer. No body text is affected.
+  numbers_verified_against_the_page:
+    - {printed_page: 11, verified: ["$14.20", "41 cents", "250,000 replies per year", "2 to 35 times", "nine times in ten"], note: "85 cents partly cropped in the high-resolution render; text layer reads 85 and the visible '5 cents' is consistent"}
+    - {printed_page: 23, verified: ["3 per cent", "9 per cent", "$1,500", "$735", "250 times", "130 formulas", "78-second", "4,000 feet", "1,018 experiments"]}
+  structural_check: >
+    The contents page lists 21 chapters; all 21 chapter headings are present in the extracted text
+    in order, and chapters 1-7 extract with no missing or displaced section.
+
+demonstrations: []
+visual_only_observations: []
+
+summary:
+  demonstrations_recorded: 0
+  visual_only_observations_recorded: 0
+  reason: the source contains no visual argument
+  all_claims_rest_on: text_only
+  visual_completeness: verified_page_level

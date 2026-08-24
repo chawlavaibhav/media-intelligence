@@ -1,0 +1,3013 @@
+# CANON-003 Lane C, book 13 — Claude C. Hopkins, "Scientific Advertising", chapters 1-7
+# (printed pp. 1-24). Fresh SPEC-03 extraction. Historical material for this book, if any exists,
+# is sealed until this book's checkpoint commit.
+# Granularity: CANON-001 V0 rule, unchanged.
+# Visual completeness: verified_page_level. The source contains no figures; see
+# visual-evidence-ledger.yaml. No claim is recorded as visually demonstrated.
+#
+# Section rationale: chapters 1-7 are one connected span. Chapter 1 states how Hopkins believes
+# advertising knowledge is established; chapters 2-4 give the three doctrines he derives directly
+# from it (advertising is salesmanship, advertising must offer service, mail order is the school
+# that proves both); chapters 5-7 apply the doctrines to headlines, psychology and specificity.
+# A single Hopkins chapter is 2-4 printed pages and is far too small to expose his reasoning
+# system, so a multi-chapter span is required. Chapters 8-21 were not processed; the notable
+# exclusion is chapter 15, "Test Campaigns", so this extraction's inventory of the source's
+# measurement claims covers chapters 1-7 only and is not the book's complete case.
+#
+# EXTRACTION NOTE, recorded because it governs how this whole file reads: this source repeatedly
+# describes itself as scientific, exact, proved and law-governed. Those are recorded as the
+# source's claims. The `evidence.characteristics` of each object record what the source actually
+# supplies to support the claim in question, which is usually practitioner assertion or an
+# unattributed anecdote. Where the source asserts that measurement was performed but reports no
+# measurement, that gap is written into a caveat with origin `extractor_observed` rather than
+# being recorded as `empirical_within_source`.
+
+source_id: hopkins_scientific_advertising_ch1_7
+
+source_knowledge:
+
+# ─────────────────────────── Chapter 1 ───────────────────────────
+
+- sk_id: sk_hop_sa_0001
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "advertising has in some hands reached the status of a science"
+    - "It is based on fixed principles and is reasonably exact."
+    - "unless one is guided by laws as immutable as the law of gravitation"
+  concept_label: advertising_has_become_a_science_governed_by_fixed_laws
+  label_origin: extractor_assigned
+  claim: >
+    Advertising has changed from a gamble into a science. Its causes and effects have been analysed
+    until they are well understood, its correct procedures have been proved and established, and it
+    is governed by laws the source compares to the law of gravitation for immutability. The source
+    states that the book therefore deals not with theories and opinions but with well-proved
+    principles and facts, and that any realms of uncertainty it enters will be carefully denoted.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Large agencies run hundreds of campaigns, record the results, and retain them across
+      generations of staff, so the field accumulates proved knowledge instead of losing it.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "national advertising handled by large agencies, at the time of writing"
+  caveats:
+    - text: "the source scopes the claim to 'some hands' rather than to the field as a whole"
+      origin: source_stated
+    - text: >
+        This is the book's foundational claim and the section supplies no instance of a law, a
+        dataset, a test protocol, a sample size or a result to support it. The support offered is
+        the author's assertion that agencies have tested and recorded. Chapters 1-7 name three
+        cost-per-reply figures, one before-and-after picture test and one aggregate headline
+        result; none is attributed to a named product, date or advertiser, and none is replicated.
+      origin: extractor_observed
+    - text: >
+        The gravitation comparison is a simile in a sentence about the necessity of laws, not a
+        claim that a specific advertising law has gravitation's evidential standing. Recorded so
+        the figure of speech is not read as a stronger claim than the source makes.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Advertising, once a gamble"
+    - "This is no proper field for sophistry or theory, or for any other will-o'-the-wisp."
+  source_stated_remedies:
+    - "we act on basic laws"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0002, note: "the science claim rests entirely on the keyed-return method"}
+    - {relation: qualified_by, target: sk_hop_sa_0005, note: "the source limits what remains uncertain"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_given, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "opening"
+    page_start: 1
+    page_end: 4
+    locator: "chapter 1, opening paragraph and closing argument"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0002
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "We learn the principles and prove them by repeated tests."
+    - "This is done through keyed advertising, by traced returns, largely by the use of coupons."
+    - "When one method invariably proves best, that method becomes a fixed principle."
+  concept_label: principles_are_established_by_keyed_returns_and_repeated_comparison
+  label_origin: extractor_assigned
+  claim: >
+    Advertising principles are established by running advertisements with a tracking key, tracing
+    the returns each produces, and comparing one method against many others backward and forward
+    while recording the results. A method that invariably proves best across such comparisons
+    becomes a fixed principle. The source states that in a large agency coupon returns are watched
+    and recorded across hundreds of lines and, within a single line, sometimes across thousands of
+    separate advertisements.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A coupon or other direct-reply device attaches an observed response to a specific
+      advertisement, so cost per reply and cost per dollar of sale can be computed and two
+      advertisements can be ranked on the same measure.
+  scope:
+    domain_discussed_by_source: [advertising, mail_order_advertising]
+    conditions: "any advertisement able to carry a coupon, sample offer or other direct-reply device"
+  caveats:
+    - text: "the source defers the detail of these coupon plans to a later chapter, 'Test Campaigns', which is outside this section"
+      origin: source_stated
+    - text: >
+        The section describes the apparatus and states that it has been used at scale, but reports
+        no test in enough detail to be checked or repeated: no product, no date, no number of
+        insertions, no definition of what counted as a return, and no result other than the three
+        cost-per-reply figures in chapter 4.
+      origin: extractor_observed
+    - text: >
+        "Invariably proves best" is a very strong promotion rule and the source states no number of
+        comparisons, no margin and no tie-breaking procedure that would make it operable.
+      origin: extractor_observed
+  source_stated_problems:
+    - "So no guesswork is permitted."
+  source_stated_remedies:
+    - "keyed advertising"
+    - "traced returns"
+    - "the use of coupons"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_hop_sa_0003, note: "reply counts are not the final measure"}
+    - {relation: specialises, target: sk_hop_sa_0021, note: "mail order is where this method is most exact"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "the middle of chapter 1"
+    page_start: 2
+    page_end: 2
+    locator: "chapter 1, 'We learn the principles and prove them by repeated tests'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0003
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "But those figures are not final. One ad may bring too many worthless replies, another replies that are valuable."
+    - "our final conclusions are always based on cost per customer or cost per dollar of sale"
+  concept_label: the_final_measure_is_cost_per_customer_not_replies
+  label_origin: extractor_assigned
+  claim: >
+    Counting the replies an advertisement produces is not a sufficient measure, because one
+    advertisement may bring many worthless replies and another fewer but valuable ones. The final
+    conclusion must always be drawn on cost per customer or cost per dollar of sale.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Replies differ in quality, so a cheaper reply can be a more expensive customer."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any keyed comparison between advertisements"
+  caveats:
+    - text: >
+        The source applies this rule to itself unevenly. The three headline figures it offers in
+        chapter 4 to prove the value of keying — 85 cents, $14.20 and 41 cents — are all cost per
+        reply, the measure this object says is not final.
+      origin: extractor_observed
+  source_stated_problems:
+    - "One ad may bring too many worthless replies"
+  source_stated_remedies:
+    - "cost per customer or cost per dollar of sale"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0002, note: "corrects the measure the method uses"}
+    - {relation: contradicts, target: sk_hop_sa_0023, note: "chapter 4's evidence is stated in the measure this object rejects as final"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "coupon returns"
+    page_start: 2
+    page_end: 2
+    locator: "chapter 1, 'But those figures are not final'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0004
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "In lines where direct returns are impossible we compare one town with another."
+    - "Scores of methods may be compared in this way, measured by cost of sales."
+  concept_label: town_by_town_comparison_where_direct_returns_are_impossible
+  label_origin: extractor_assigned
+  claim: >
+    Where an advertisement cannot produce a traceable direct return, methods are compared by running
+    them in different towns and measuring cost of sales in each. The source states that scores of
+    methods can be compared this way.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "product lines where direct replies cannot be traced"
+  caveats:
+    - text: >
+        No control for differences between towns is described — population, competition, trade
+        already present, distribution, or season. The source treats the town as an interchangeable
+        unit without saying so.
+      origin: extractor_observed
+  source_stated_problems:
+    - "lines where direct returns are impossible"
+  source_stated_remedies:
+    - "compare one town with another"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0002, note: "the fallback measurement design when keying is unavailable"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "coupon returns"
+    page_start: 2
+    page_end: 2
+    locator: "chapter 1"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0005
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Now the only uncertainties pertain to people and to products, not to methods."
+    - "We cannot say that an article will be popular, but we know how to find out very quickly."
+  concept_label: uncertainty_now_lies_in_people_and_products_not_in_method
+  label_origin: extractor_assigned
+  claim: >
+    The remaining uncertainty in advertising is confined to human idiosyncrasy and to the product
+    itself, not to advertising method. The source concedes that whether an article will be popular
+    cannot be predicted, but claims that it can be found out quickly and that the most effective way
+    to sell it is known. Ventures may still fail, but the failures are said to be trifling and their
+    causes unrelated to the advertising.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Method has been settled by comparison; what has not been settled is which people want which product."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "advertising conducted under the traced-return method"
+  caveats:
+    - text: "the source explicitly concedes that human idiosyncrasies, preferences and prejudices are hard to measure"
+      origin: source_stated
+    - text: >
+        The claim is unfalsifiable as stated: any failure can be assigned to the product or the
+        public rather than to the method, because the source has defined method failure out of the
+        available explanations.
+      origin: extractor_observed
+  source_stated_problems:
+    - "It is hard to measure human idiosyncrasies, the preferences and prejudices, the likes and dislikes that exist."
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0001, note: "states what the science does and does not claim to settle"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "the corrected condition"
+    page_start: 3
+    page_end: 3
+    locator: "chapter 1, 'That condition has been corrected'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0006
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Individuals may come and go, but they leave their records and ideas behind them."
+    - "such agencies become storehouses of advertising experiences, proved principles, and methods"
+  concept_label: agencies_accumulate_tested_knowledge_across_people_and_decades
+  label_origin: extractor_assigned
+  claim: >
+    Advertising knowledge accumulates because large agencies record what their campaigns did and
+    retain those records when the individuals who made them leave. Over decades the agency becomes a
+    store of proved principles and methods, and a guide to everyone who follows. The source adds
+    that large agencies also see across many clients' businesses, so nearly every selling question
+    is answered by many experiences.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Records outlive the people who made them, and breadth of clientele supplies many independent
+      experiences of the same question.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "large national advertising agencies at the time of writing"
+  caveats:
+    - text: >
+        This is the institutional premise of the science claim and is given as description, not
+        evidence. No agency is named, no archive is described, and nothing is said about how a
+        recorded result was retrieved, indexed or checked against a later one.
+      origin: extractor_observed
+  source_stated_problems:
+    - "so no lessons have been lost"
+  source_stated_remedies:
+    - "The results have been watched and recorded"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0002, note: "what is accumulated is the output of keyed comparison"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "the present status of advertising"
+    page_start: 1
+    page_end: 2
+    locator: "chapter 1"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0007
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Some things we learn in this way apply only to particular lines."
+    - "Others apply to all lines. They become fundamentals for advertising in general."
+  concept_label: findings_are_either_line_specific_or_universal
+  label_origin: extractor_assigned
+  claim: >
+    What a traced comparison establishes divides into two kinds: findings that hold only for a
+    particular product line, which still supply basic principles for analogous undertakings, and
+    findings that hold across all lines and become universal fundamentals no wise advertiser will
+    depart from. The book states that it deals only with the second kind.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any principle derived from traced comparison"
+  caveats:
+    - text: >
+        The source states the distinction but supplies no test for which side of it a given finding
+        falls on, and no example of a finding it judged line-specific and therefore excluded. In
+        chapter 4 it applies the universal reading to mail order results directly.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0002, note: "limits how far a traced result may be generalised"}
+    - {relation: contradicts, target: sk_hop_sa_0024, note: "chapter 4 generalises mail order practice to all advertising without applying this test"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — How Advertising Laws Are Established"
+    section: "universal principles"
+    page_start: 3
+    page_end: 3
+    locator: "chapter 1"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────── Chapter 2 ───────────────────────────
+
+- sk_id: sk_hop_sa_0008
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Advertising is salesmanship. Its principles are the principles of salesmanship."
+    - "Advertising is multiplied salesmanship."
+    - "Thus every advertising question should be answered by the salesman's standards."
+  concept_label: advertising_is_multiplied_salesmanship_and_is_judged_by_salesmans_standards
+  label_origin: source_verbatim
+  claim: >
+    Advertising is salesmanship carried out in print. Its principles are the principles of
+    salesmanship, successes and failures in both are due to like causes, and every advertising
+    question should therefore be settled by asking what a salesman's standard would require. The
+    difference is one of degree only: advertising addresses thousands where the salesman addresses
+    one, and carries a corresponding cost.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both activities are attempts to persuade one buyer to act, so what governs the effectiveness
+      of one governs the other; multiplication changes the scale, not the principles.
+  scope:
+    domain_discussed_by_source: [advertising, personal_selling]
+    conditions: "any advertising decision"
+  caveats:
+    - text: >
+        This is the load-bearing analogy of the whole chapter and of several later ones. It is
+        asserted, not demonstrated: the source offers no case in which the analogy was tested and
+        held, and no case in which it failed. Chapter 5 later names a real disanalogy — the salesman
+        commands attention and the advertisement can be ignored — without revisiting the strength
+        of the rules already derived from the analogy.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "Treat it as a salesman. Force it to justify itself. Compare it with other salesmen."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hop_sa_0011, note: "the style rules are derived from this analogy"}
+    - {relation: generalises, target: sk_hop_sa_0012, note: "the brevity argument is derived from this analogy"}
+    - {relation: generalises, target: sk_hop_sa_0013, note: "the type-size argument is derived from this analogy"}
+    - {relation: qualified_by, target: sk_hop_sa_0031, note: "chapter 5 states where the analogy breaks"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "opening"
+    page_start: 5
+    page_end: 5
+    locator: "chapter 2, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0009
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The only purpose of advertising is to make sales."
+    - "It is not for general effect. It is not to keep your name before the people. It is not primarily to aid your other salesmen."
+  concept_label: the_only_purpose_of_advertising_is_to_make_sales
+  label_origin: source_verbatim
+  claim: >
+    Advertising has one purpose, to make sales, and is profitable or unprofitable according to its
+    actual sales. The source explicitly rejects three other purposes advertisers give: general
+    effect, keeping the name before the public, and supporting the firm's own salesmen.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "all advertising"
+  caveats:
+    - text: >
+        Stated as a definition rather than a finding. No evidence is offered that campaigns run for
+        general effect or name recognition fail; the three rejected purposes are simply excluded.
+      origin: extractor_observed
+    - text: >
+        The claim's force depends on sales being attributable to the advertisement, which the source
+        elsewhere concedes is only possible with keying or a coupon.
+      origin: extractor_observed
+  source_stated_problems:
+    - "It is not for general effect."
+  source_stated_remedies:
+    - "Figure its cost and result. Accept no excuses which good salesmen do not make."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0008, note: "follows from treating the advertisement as a salesman"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "opening"
+    page_start: 5
+    page_end: 5
+    locator: "chapter 2, 'Let us emphasize that point'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0010
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "A salesman's mistake may cost little. An advertising mistake may cost a thousand times as much."
+    - "A mediocre salesman may affect a small part of your trade. Mediocre advertising affects all of your trade."
+    - "Some people spend $10 per word on an average advertisement. Therefore every ad should be a super-salesman."
+  concept_label: multiplication_multiplies_error_so_advertising_demands_more_caution
+  label_origin: extractor_assigned
+  claim: >
+    Because advertising is salesmanship multiplied, its errors are multiplied too. A salesman's
+    mistake costs little and touches a small part of the trade; the same mistake in advertising may
+    cost a thousand times as much and affects all of the trade. The source therefore requires
+    advertising to be more cautious and more exacting than personal selling, and states that at a
+    cost of around $10 per word every advertisement must be a super-salesman.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The same message reaches every prospect at once, so a defect in it is not averaged out by other salesmen."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "national advertising at the scale and rates of the time of writing"
+  caveats:
+    - text: "the $10-per-word figure is given for 'some people' and 'an average advertisement', without a medium, circulation or date"
+      origin: extractor_observed
+    - text: "'a thousand times as much' is rhetorical scale, not a measured ratio"
+      origin: extractor_observed
+  source_stated_problems:
+    - "Mediocre advertising affects all of your trade."
+  source_stated_remedies:
+    - "Be more cautious, more exacting, therefore."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0008, note: "the consequence of the multiplication in 'multiplied salesmanship'"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "the difference is only in degree"
+    page_start: 5
+    page_end: 5
+    locator: "chapter 2"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0011
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "But fine writing is a distinct disadvantage. So is unique literary style."
+    - "They take attention from the subject. They reveal the hook."
+    - "Any studied attempt to sell, if apparent, creates corresponding resistance."
+  concept_label: visible_craft_creates_resistance
+  label_origin: extractor_assigned
+  claim: >
+    Fine writing and distinctive literary style are disadvantages in advertising because they take
+    attention from the subject and reveal the hook, and any attempt to sell that is apparent to the
+    reader creates a corresponding resistance. The source extends this to personal selling: fine
+    talkers are rarely good salesmen because they inspire the fear of over-influence and the
+    suspicion that the buyer is being sold on grounds other than merit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Noticing the technique makes the buyer suspect the motive, and suspicion of the motive
+      displaces attention from the merits of the thing being sold.
+  scope:
+    domain_discussed_by_source: [advertising, personal_selling]
+    conditions: "any selling message"
+  caveats:
+    - text: >
+        The evidence is the salesmanship analogy plus the assertion that the ablest advertising men
+        are graduate salesmen and house-to-house canvassers. No comparison of a plainly written and
+        a finely written advertisement is reported.
+      origin: extractor_observed
+    - text: >
+        The claim is close to unfalsifiable as stated, because an effective piece of craft is by
+        definition one the reader did not notice, so any surviving counter-example can be
+        reclassified as craft that was not apparent.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They reveal the hook."
+    - "Any studied attempt to sell, if apparent, creates corresponding resistance."
+  source_stated_remedies:
+    - "One must be able to express himself briefly, clearly and convincingly, just as a salesman must."
+  examples:
+    positive:
+      - {description: "the ablest advertising men described as graduate salesmen and house-to-house canvassers who may know little of grammar", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0008, note: "derived from the salesmanship analogy"}
+    - {relation: qualifies, target: sk_hop_sa_0016, note: "both describe the writer serving himself instead of the buyer"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "on ad-writing"
+    page_start: 5
+    page_end: 6
+    locator: "chapter 2, 'Many think of advertising as ad-writing'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0012
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Some say, \"Be very brief. People will read but little.\" Would you say that to a salesman?"
+    - "The only readers we get are people whom our subject interests. No one reads ads for amusement, long or short."
+    - "Consider them as prospects standing before you, seeking for information. Give them enough to get action."
+  concept_label: brevity_should_not_be_imposed_because_only_interested_people_read
+  label_origin: extractor_assigned
+  claim: >
+    A general rule to be brief is wrong. The only readers an advertisement gets are people its
+    subject already interests, and nobody reads advertisements for amusement whether long or short.
+    Readers should be treated as prospects standing in front of the seller and given enough to
+    produce action, just as no one would restrict a salesman to a fixed number of words with a
+    prospect in front of him.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Readership is self-selected by interest, so length does not cost the advertiser readers it
+      would otherwise have had; it only serves the readers it already has.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "advertisements whose readers have selected themselves by interest"
+  caveats:
+    - text: >
+        The self-selection premise is asserted, not measured. It also sits awkwardly against
+        chapter 5's claim that readers decide by a glance, since a glance decision is made before
+        the interest the premise assumes.
+      origin: extractor_observed
+  source_stated_problems:
+    - "That would be an unthinkable handicap."
+  source_stated_remedies:
+    - "Give them enough to get action."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0008, note: "derived from the salesmanship analogy"}
+    - {relation: generalises, target: sk_hop_sa_0027, note: "chapter 4 states the same rule as 'the more you tell the more you sell'"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "answering advertising questions by the salesman's test"
+    page_start: 6
+    page_end: 6
+    locator: "chapter 2"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0013
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Some advocate large type and big headlines. Yet they do not admire salesmen who talk in loud voices."
+    - "People read all they care to read in 8-point type."
+    - "Anything larger is like loud conversation. It gains no attention worth while."
+  concept_label: enlarged_type_gains_no_worthwhile_attention_and_multiplies_cost
+  label_origin: extractor_assigned
+  claim: >
+    Large type and big headlines gain no attention worth having. Readers read all they care to read
+    in 8-point type, which is what magazines and newspapers use and what readers are accustomed to;
+    anything larger is the equivalent of a salesman talking loudly. It may not offend, but it is
+    useless, wasteful, multiplies the cost of the story, and seems blatant to many.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Reading habit is set by the surrounding editorial matter, so type at the accustomed size is
+      read and larger type only consumes paid space.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "print advertising set alongside 8-point editorial matter"
+  caveats:
+    - text: >
+        In chapter 2 the argument is entirely the salesmanship analogy plus an assertion about
+        reading habit. Chapter 4 later claims this is proved, on the ground that mail order
+        advertisers use small type; that is inference from practice, not a reported comparison.
+      origin: extractor_observed
+    - text: "the 8-point figure is bounded to the typographic conventions of the periodicals of the time"
+      origin: extractor_observed
+  source_stated_problems:
+    - "It gains no attention worth while."
+    - "It multiplies the cost of your story."
+  source_stated_remedies:
+    - "People read all they care to read in 8-point type."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0008, note: "derived from the salesmanship analogy"}
+    - {relation: qualified_by, target: sk_hop_sa_0024, note: "chapter 4 supplies the claimed proof from mail order practice"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "answering advertising questions by the salesman's test"
+    page_start: 6
+    page_end: 6
+    locator: "chapter 2"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0014
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Don't think of people in the mass. That gives you a blurred view."
+    - "Think of a typical individual, man or woman, who is likely to want what you sell."
+    - "keep before you a typical buyer"
+  concept_label: address_one_typical_individual_not_the_mass
+  label_origin: extractor_assigned
+  claim: >
+    An advertisement should be planned and written to one imagined typical buyer who is likely to
+    want the thing being sold, not to people in the mass, which gives a blurred view. Having gained
+    that person's attention with the headline, the writer should then do in the advertisement what
+    he would do face to face with that buyer. The source adds three prohibitions: do not try to be
+    amusing because money spending is a serious matter, do not boast because all people resent it,
+    and do not show off.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Thinking of the mass blurs the picture of who is being addressed and what would move them."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "planning and writing any advertisement"
+  caveats:
+    - text: >
+        The claim is about the writer's working method and is not the kind of thing the source's own
+        keyed-return apparatus could test. It is offered as craft instruction and evidenced by the
+        salesmanship analogy alone.
+      origin: extractor_observed
+  source_stated_problems:
+    - "That gives you a blurred view."
+  source_stated_remedies:
+    - "Think of a typical individual, man or woman, who is likely to want what you sell."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0008, note: "derived from the salesmanship analogy"}
+    - {relation: qualifies, target: sk_hop_sa_0031, note: "the headline is what delivers that individual"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "when you plan and prepare an advertisement"
+    page_start: 7
+    page_end: 7
+    locator: "chapter 2"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0015
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Some advertising men go out in person and sell to people before they plan or write an ad."
+    - "One of the ablest of them has spent weeks on one article, selling from house to house."
+    - "It is quite customary to interview hundreds of possible customers."
+  concept_label: learn_buyer_reactions_by_selling_in_person_before_writing
+  label_origin: extractor_assigned
+  claim: >
+    Before planning or writing an advertisement, some advertising men sell the article in person,
+    house to house, sometimes for weeks, in order to learn which forms of argument and approach get
+    a reaction and which factors do not appeal. Others send out questionnaires to learn buyers'
+    attitudes. The source states that interviewing hundreds of possible customers is customary and
+    that in some way everyone must learn how to strike responsive chords, because guesswork is very
+    expensive.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Direct contact supplies the buyer's reactions, which the maker of the article cannot supply
+      because his knowledge of manufacture and trade leads him astray about consumers, whose
+      interests are not his.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "preparation before writing"
+  caveats:
+    - text: "the ablest practitioner referred to is not named and the article is not identified"
+      origin: extractor_observed
+  source_stated_problems:
+    - "Guesswork is very expensive."
+    - "this very knowledge often leads him astray in respect to consumers"
+  source_stated_remedies:
+    - "go out in person and sell to people before they plan or write an ad"
+    - "send out questionnaires to learn the attitude of buyers"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0016, note: "the corrective for writing from the seller's point of view"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "studying the consumer"
+    page_start: 7
+    page_end: 7
+    locator: "chapter 2"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0016
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Ads are planned and written with some utterly wrong conception. They are written to please the seller."
+    - "The interests of the buyer are forgotten."
+    - "Instead of sales, they seek applause."
+  concept_label: advertising_written_to_please_the_seller_cannot_sell
+  label_origin: extractor_assigned
+  claim: >
+    The characteristic failure of advertising is that it is written to please the seller rather than
+    the buyer, and goods can never be sold profitably, in person or in print, while that attitude
+    exists. The source names the same fault in the writer: ad-writers abandon their part, forget
+    they are salesmen, try to be performers and seek applause instead of sales. It calls this one of
+    the greatest advertising faults, and ranks the lack of true salesmanship second only to trying
+    to sell people what they do not want as a cause of failure.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The buyer acts on his own interest, so a message organised around the seller's interest gives him no reason to act."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "all advertising"
+  caveats:
+    - text: >
+        The ranking of causes of failure — wrong product first, lack of salesmanship second — is
+        given without any count or survey behind it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They are written to please the seller."
+    - "Instead of sales, they seek applause."
+  source_stated_remedies:
+    - "Measure them by salesmen's standards, not by amusement standards."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hop_sa_0017, note: "chapter 3 states the buyer's side of the same fault"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Just Salesmanship"
+    section: "chapter close"
+    page_start: 7
+    page_end: 8
+    locator: "chapter 2, final paragraphs"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────── Chapter 3 ───────────────────────────
+
+- sk_id: sk_hop_sa_0017
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Remember that the people you address are selfish, as we all are. They care nothing about your interest or your profit. They seek service for themselves."
+    - "The ads are based entirely on service. They offer wanted information. They cite advantages to users."
+  concept_label: readers_are_self_interested_so_advertising_must_offer_service
+  label_origin: extractor_assigned
+  claim: >
+    The people an advertisement addresses are selfish and care nothing about the advertiser's
+    interest or profit; they seek service for themselves. Ignoring this is described as a common and
+    costly mistake. The best advertisements are therefore based entirely on service — offering
+    wanted information, citing advantages to the user, or offering a sample, a first package or
+    goods on approval so the claims can be proved at no cost or risk.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Advertisements that appear altruistic are based on a knowledge of human nature: the writers
+      know people are led to buy by their own interest, not the seller's.
+  scope:
+    domain_discussed_by_source: [advertising, personal_selling]
+    conditions: "any advertisement or sales approach"
+  caveats:
+    - text: >
+        Support is the salesmanship analogy plus three unnamed trade anecdotes. No comparison of a
+        service-framed and an interest-framed advertisement is reported.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Ads say in effect, \"Buy my brand. Give me the trade you give to others. Let me have the money.\" That is not a popular appeal."
+  source_stated_remedies:
+    - "The ads are based entirely on service."
+  examples:
+    positive:
+      - {description: "brush maker with some 2,000 canvassers whose men open by giving a brush and inviting the housewife to choose one", figure_ref: null}
+      - {description: "coffee seller in some 500 cities who leaves a half-pound package and returns only to ask how it was liked", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0016, note: "the buyer's side of the seller-pleasing fault"}
+    - {relation: generalises, target: sk_hop_sa_0018, note: "the strongest form of the service rule"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — Offer Service"
+    section: "complete chapter"
+    page_start: 9
+    page_end: 10
+    locator: "chapter 3, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0018
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The best ads ask no one to buy. That is useless."
+    - "Often they do not quote a price. They do not say that dealers handle the product."
+    - "The good salesman does not merely cry a name."
+  concept_label: the_best_advertisements_do_not_ask_for_the_order
+  label_origin: extractor_assigned
+  claim: >
+    The best advertisements ask nobody to buy, because asking is useless; often they do not quote a
+    price and do not say that dealers stock the product. Instead they picture the customer's side of
+    the service until the natural result is that the customer buys.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The decision has to arise from the buyer's own view of the benefit, so the request adds nothing and reveals the seller's interest."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "advertising whose purpose is to bring the reader to buy"
+  caveats:
+    - text: >
+        Stated absolutely — "the best ads ask no one to buy" — with no exception given and no
+        comparison reported between an advertisement that asks and one that does not.
+      origin: extractor_observed
+    - text: >
+        It stands in tension with the same book's insistence on the coupon, which is a request for
+        a specific action, though the source does not treat these as competing.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "He pictures the customer's side of his service until the natural result is to buy."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0017, note: "the strongest form of the service rule"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — Offer Service"
+    section: "complete chapter"
+    page_start: 9
+    page_end: 9
+    locator: "chapter 3"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0019
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "\"Let us help you for a week without cost or obligation,\" said the ad. Such an offer was resistless, and about nine in ten of the trials led to sales."
+    - "Practically all merchandise sold by mail is sent subject to return."
+  concept_label: removing_cost_and_obligation_from_the_trial_produces_the_sale
+  label_origin: extractor_assigned
+  claim: >
+    Offers that let the customer use the product before paying, with no cost or obligation, convert
+    at high rates. The source reports an electric sewing-machine motor maker who found advertising
+    difficult, stopped soliciting a purchase, and instead offered a week's use at home through any
+    dealer with a man sent to demonstrate it; the offer is described as resistless and about nine in
+    ten of the trials are said to have led to sales. It states that cigar makers, book, typewriter,
+    washing machine, kitchen cabinet and vacuum sweeper makers all send goods without prepayment,
+    and that practically all merchandise sold by mail is sent subject to return.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The offer is service rather than solicitation, so the buyer accepts on his own interest; the
+      brush and coffee cases add that receiving a gift creates a wish to reciprocate.
+  scope:
+    domain_discussed_by_source: [advertising, direct_selling, mail_order_advertising]
+    conditions: "products that can be trialled at home before payment"
+  caveats:
+    - text: >
+        The nine-in-ten figure is the only conversion rate given in the section. The advertiser is
+        unnamed, the number of trials is not stated, no time period is given, and there is no
+        comparison against the same product sold without the trial offer.
+      origin: extractor_observed
+    - text: >
+        Trials are self-selected: people who accept a free week of use are already interested, so a
+        high conversion among them does not establish the offer's effect on total sales.
+      origin: extractor_observed
+  source_stated_problems:
+    - "The maker of an electric sewing machine motor found advertising difficult."
+  source_stated_remedies:
+    - "He offered to send to any home, through any dealer, a motor for one week's use."
+  examples:
+    positive:
+      - {description: "sewing-machine motor offered for a week's free use with a demonstrator; about nine in ten trials said to lead to sales", figure_ref: null}
+      - {description: "cigar makers sending boxes with 'Smoke ten, then keep them or return them, as you wish'", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0017, note: "the concrete form service most often takes"}
+    - {relation: qualified_by, target: sk_hop_sa_0045, note: "chapter 6 distinguishes this from giving the product away outright"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, empirical_within_source, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — Offer Service"
+    section: "complete chapter"
+    page_start: 9
+    page_end: 10
+    locator: "chapter 3"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0020
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "His phrase is \"Drive people to the stores,\" and that is his attitude in everything he says."
+    - "People can be coaxed but not driven."
+    - "Whatever they do they do to please themselves."
+  concept_label: buyers_can_be_coaxed_but_not_driven
+  label_origin: source_verbatim
+  claim: >
+    Buyers can be coaxed but never driven, and whatever they do they do to please themselves. The
+    source identifies the opposite attitude by the advertiser's own phrase, "Drive people to the
+    stores", and says the salesman-in-print very often forgets what the most ignorant peddler
+    applies, talking about his own interests and blazoning a name as though that mattered.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "all advertising"
+  caveats:
+    - text: "asserted as a fact about human motivation, with no evidence offered beyond the trade anecdotes preceding it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "He blazons a name, as though that was of any importance."
+    - "Drive people to the stores"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0017, note: "states why the service framing is the only one that works"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — Offer Service"
+    section: "chapter close"
+    page_start: 10
+    page_end: 10
+    locator: "chapter 3, final paragraph"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────── Chapter 4 ───────────────────────────
+
+- sk_id: sk_hop_sa_0021
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The severest test of an advertising man is in selling goods by mail."
+    - "There cost and result are immediately apparent. False theories melt away like snowflakes in the sun."
+    - "Figures which do not lie tell one at once the merits of an ad."
+    - "Mail order advertising is the court of last resort."
+  concept_label: mail_order_is_the_severest_test_because_cost_and_result_are_immediate
+  label_origin: extractor_assigned
+  claim: >
+    Selling goods by mail is the severest test of an advertising man and the school he must graduate
+    from before he can hope for success, because there cost and result are immediately apparent and
+    the advertising is visibly profitable or not on the face of the returns. All guesswork is
+    eliminated, every mistake is conspicuous, and the man is taught efficiency and economy under a
+    master who cannot be fooled. Only then is he likely to apply the same principles and keys to all
+    advertising. The source calls mail order advertising the court of last resort.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      In mail order the reply and the sale both arrive attributable to a specific advertisement, so
+      the cost per result is computable without any assumption.
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "goods sold direct by mail"
+  caveats:
+    - text: >
+        "Figures which do not lie" is asserted of the apparatus, not shown of any figure. The
+        section gives no worked example in which a false theory was actually tested and dissolved.
+      origin: extractor_observed
+    - text: >
+        The claim that mail order results transfer to all advertising is asserted here and is the
+        premise chapter 4 spends the rest of its length applying; it is not itself tested anywhere
+        in this section.
+      origin: extractor_observed
+  source_stated_problems:
+    - "False theories melt away like snowflakes in the sun."
+  source_stated_remedies:
+    - "apply the same principles and keys to all advertising"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0002, note: "the setting in which the keyed-return method is most exact"}
+    - {relation: generalises, target: sk_hop_sa_0024, note: "the warrant for the mail-order copy prescriptions"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "opening"
+    page_start: 11
+    page_end: 13
+    locator: "chapter 4, opening and 'court of last resort'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0022
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "One quickly loses his conceit by learning how often his judgment errs—often nine times in ten."
+  concept_label: the_advertising_mans_own_judgment_errs_about_nine_times_in_ten
+  label_origin: extractor_assigned
+  claim: >
+    An advertising man working under traced returns learns that his own judgment about which
+    advertisement will do better is wrong, often nine times out of ten.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "predicting which of two advertisements will perform better"
+  caveats:
+    - text: >
+        The nine-in-ten rate is stated in passing, hedged with "often", and is not tied to any
+        record, count or period. It is the source's most consequential quantitative claim about the
+        reliability of expert judgement and it carries no data at all.
+      origin: extractor_observed
+    - text: >
+        A rate worse than chance for a two-way choice would imply systematically inverted judgement,
+        which the source does not claim or examine; the figure is best read as emphasis rather than
+        as a measurement.
+      origin: extractor_observed
+  source_stated_problems:
+    - "how often his judgment errs"
+  source_stated_remedies:
+    - "All guesswork is eliminated."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0021, note: "what the severe test reveals about the tester"}
+    - {relation: generalises, target: sk_hop_sa_0036, note: "chapter 5 restates it as the appeals we like best rarely proving best"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "opening"
+    page_start: 11
+    page_end: 11
+    locator: "chapter 4, 'This puts men on their mettle'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0023
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "A man was selling a five-dollar article. The replies from his ad cost him 85 cents. Another man submitted an ad which he thought better. The replies cost $14.20 each. Another man submitted an ad which for two years brought replies at an average of 41 cents each."
+    - "they are doing what that man did—paying for sales from 2 to 35 times what they need cost"
+  concept_label: untraced_advertising_can_cost_many_times_what_results_need_cost
+  label_origin: extractor_assigned
+  claim: >
+    Advertisements that are not keyed can cost their owners many times what results need cost. The
+    source gives one case: a five-dollar article whose advertisement produced replies at 85 cents
+    each; a second advertisement, submitted by someone who thought it better, produced replies at
+    $14.20 each; a third produced replies at an average of 41 cents each over two years. The source
+    invites the reader to consider that difference across 250,000 replies per year, says thousands
+    of advertisers spend large sums on a guess, and concludes that they are paying for sales from
+    2 to 35 times what they need cost.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Without a key on returns there is nothing to reveal that an advertisement is the expensive one,
+      so the loss continues indefinitely.
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "direct-reply advertising for a single article"
+  caveats:
+    - text: >
+        The strongest numbers in the section, and entirely unattributed: no product, no advertiser,
+        no publication, no date, no number of insertions, no definition of a reply, and no statement
+        of how the three advertisements differed. The 250,000 replies per year is offered as a
+        multiplier to consider, not as the volume any of the three actually ran at.
+      origin: extractor_observed
+    - text: >
+        The "2 to 35 times" range is the ratio between these three figures (85 cents and $14.20
+        against 41 cents), so it is a restatement of the same single case rather than an independent
+        finding across advertisers.
+      origin: extractor_observed
+    - text: >
+        Stated in cost per reply, which the same book says at chapter 1 is not the final measure.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They spend large sums on a guess."
+    - "Think of the countless untraced campaigns where a whim of that kind costs half the advertising money without a penny of return."
+  source_stated_remedies:
+    - "keying other ads"
+  examples:
+    positive:
+      - {description: "three advertisements for one five-dollar article at 85 cents, $14.20 and 41 cents per reply", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0002, note: "the case offered as proof that keying pays"}
+    - {relation: demonstrated_together_with, target: sk_hop_sa_0026, note: "the incubator case is the section's other reported result"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, empirical_within_source, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "opening"
+    page_start: 11
+    page_end: 11
+    locator: "chapter 4, 'A man was selling a five-dollar article'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0024
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Mail order advertising is always set in small type. It is usually set in smaller type than ordinary print. That economy of space is universal. So it proves conclusively that larger type does not pay."
+    - "In mail order advertising there is no waste of space. Every line is utilized. Borders are rarely used."
+    - "There is no palaver. There is no boasting, save of super-service. There is no useless talk. There is no attempt at entertainment."
+  concept_label: mail_order_practice_is_treated_as_proof_of_the_general_copy_rules
+  label_origin: extractor_assigned
+  claim: >
+    Mail order advertising is always set in small type, wastes no space, rarely uses borders, and
+    contains no palaver, boasting, useless talk or entertainment. The source treats the universality
+    of this practice as conclusive proof that larger type does not pay and that unoccupied space and
+    ornament are waste, and instructs the reader to remember it when tempted to double type size or
+    leave space empty. It states plainly that doubling space by doubling type size may still leave
+    the advertisement profitable, but that traced returns have proved the advertiser is then paying
+    a double price for sales.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Mail order advertisers are under measurement, so any practice they universally adopt has
+      survived comparison against its alternatives.
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "print advertising generally, generalised from mail order practice"
+  caveats:
+    - text: >
+        This is the clearest case in the section of a claim marked as proved whose actual support is
+        an inference from what practitioners do. What is observed is the practice; the tests that
+        allegedly selected it are asserted, not reported. No comparison of large-type and small-type
+        versions of the same advertisement is given.
+      origin: extractor_observed
+    - text: >
+        The inference also assumes mail order practice is selected purely by measured performance,
+        which the same chapter contradicts by noting that pride, whim and compromise shape
+        advertising, and that the reader may be departing from mail order principle knowingly.
+      origin: extractor_observed
+    - text: >
+        Universality is itself an assertion. The source does not report a survey of mail order
+        advertisements, and its own examples are drawn from advertisers it already regards as good.
+      origin: extractor_observed
+  source_stated_problems:
+    - "you are paying a double price for sales"
+    - "Remember that when you are tempted to leave valuable space unoccupied."
+  source_stated_remedies:
+    - "Mail order advertising is always set in small type."
+    - "Every line is utilized."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0021, note: "mail order's measured status is the whole warrant"}
+    - {relation: qualifies, target: sk_hop_sa_0013, note: "offered as the proof of chapter 2's type-size rule"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "what mail order practice shows"
+    page_start: 12
+    page_end: 12
+    locator: "chapter 4"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0025
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Mail order advertisers know that readers forget."
+    - "A large percentage of people who read an ad and decide to act will forget that decision in five minutes."
+    - "So he inserts that reminder to be cut out, and it turns up when the reader is ready to act."
+  concept_label: the_coupon_exists_because_a_decision_to_act_is_forgotten_within_minutes
+  label_origin: extractor_assigned
+  claim: >
+    A coupon is included not only to capture a response but because a large percentage of readers
+    who read an advertisement and decide to act will have forgotten that decision within five
+    minutes. The reader is absorbed in the magazine's own content. The coupon is a physical reminder
+    to be cut out, which resurfaces when the reader is ready to act. The source states that the mail
+    order advertiser knows this waste by tests and does not propose to accept it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Intention formed while reading decays quickly and competes with the surrounding editorial
+      matter; a physical token survives the decay and is present at the moment of action.
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "advertisements in magazines and newspapers"
+  caveats:
+    - text: >
+        "Knows that waste by tests" asserts measurement and reports none — no forgetting rate, no
+        comparison of coupon and non-coupon versions, and no source for the five-minute figure.
+      origin: extractor_observed
+  source_stated_problems:
+    - "readers forget"
+    - "will forget that decision in five minutes"
+  source_stated_remedies:
+    - "Mail order advertising usually contains a coupon."
+    - "he inserts that reminder to be cut out"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0021, note: "presented as one of the things mail order teaches"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "what mail order practice shows"
+    page_start: 12
+    page_end: 12
+    locator: "chapter 4"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0026
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "In mail order advertising the pictures are always to the point. They are salesmen in themselves. They earn the space they occupy."
+    - "So he increased his space 50 per cent to add a row of chickens in silhouette. It did make a striking ad, but his cost per reply was increased by exactly 50 per cent. The new ad, costing one-half more for every insertion, brought not one added sale."
+    - "Before you use useless pictures, merely to decorate or interest, look over some mail order ads."
+  concept_label: a_picture_must_earn_the_space_it_occupies
+  label_origin: extractor_assigned
+  claim: >
+    A picture in an advertisement must be a salesman in itself and earn the space it occupies, with
+    its size gauged by its importance to the sale. Pictures used to decorate or merely to interest
+    are waste. The source reports a mail order incubator advertiser whose type advertisements with
+    the right headlines already brought excellent returns, and who added a row of chickens in
+    silhouette at 50 per cent more space: the advertisement was more striking, cost per reply rose
+    by exactly 50 per cent, and it brought not one added sale. The lesson drawn is that incubator
+    buyers were practical people looking for attractive offers, not for pictures.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A decorative picture adds cost proportional to the space it takes and adds no selling
+      argument, so cost per result rises by exactly the space added.
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "direct-reply advertising for a practical, considered purchase"
+  caveats:
+    - text: >
+        The most nearly controlled comparison in the section: one variable added to an existing
+        advertisement, with a reported result on both cost and sales. It is still one unnamed
+        advertiser, one product, one trial, with no period, volume or replication given.
+      origin: extractor_observed
+    - text: >
+        The source draws a general rule about decorative pictures from a case whose own explanation
+        is specific to the buyers of that product, and does not reconcile the two readings.
+      origin: extractor_observed
+  source_stated_problems:
+    - "useless pictures, merely to decorate or interest"
+    - "Pictures in ordinary advertising may teach little. They probably result from whims."
+  source_stated_remedies:
+    - "They earn the space they occupy. The size is gauged by their importance."
+  examples:
+    counter:
+      - {description: "incubator advertisement enlarged 50 per cent to carry a row of chickens in silhouette; cost per reply up exactly 50 per cent, no added sale", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0021, note: "presented as one of the things mail order teaches"}
+    - {relation: demonstrated_together_with, target: sk_hop_sa_0023, note: "the section's two reported results"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, empirical_within_source, anecdotal, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "pictures"
+    page_start: 12
+    page_end: 13
+    locator: "chapter 4, the incubator case"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0027
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Mail order advertising tells a complete story if the purpose is to make an immediate sale. You see no limitations there on amount of copy."
+    - "The motto there is, \"The more you tell the more you sell.\" And it has never failed to prove out so in any test we know."
+  concept_label: telling_the_complete_story_sells_more
+  label_origin: extractor_assigned
+  claim: >
+    Where the purpose is an immediate sale, the advertisement should tell a complete story, and
+    there is no limit on the amount of copy. The source gives the mail order motto "The more you
+    tell the more you sell" and states that it has never failed to prove out in any test known to
+    the writer.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [mail_order_advertising, advertising]
+    conditions: "advertising whose purpose is an immediate sale"
+  caveats:
+    - text: >
+        "Never failed to prove out in any test we know" is the strongest evidential phrasing in the
+        section and no test is identified. The qualifier "any test we know" also makes the claim
+        unfalsifiable from outside the author's own records.
+      origin: extractor_observed
+    - text: >
+        The source scopes it to immediate-sale advertising, which excludes the general advertising
+        the rest of the book addresses; the scope limit is stated once and not carried forward.
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "The more you tell the more you sell."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0012, note: "the mail order form of chapter 2's argument against imposed brevity"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "amount of copy"
+    page_start: 13
+    page_end: 13
+    locator: "chapter 4"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0028
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "But an ad twice larger brings twice the returns. A four-times-larger ad brings four times the returns, and usually some in addition."
+    - "But this occurs only when the larger space is utilized as well as the small space. Set half-page copy in a page space and you double the cost of returns."
+  concept_label: returns_scale_with_space_only_when_the_larger_space_is_filled
+  label_origin: extractor_assigned
+  claim: >
+    Returns scale with the size of the advertisement: twice the space brings twice the returns and
+    four times the space brings four times the returns, usually with some in addition. This holds
+    only when the larger space is used as fully as the small space was; setting half-page copy in a
+    page space doubles the cost of returns. The source states it has seen many a test prove that.
+    It adds that no advertisement is too small to tell a reasonable story.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [mail_order_advertising]
+    conditions: "direct-reply advertisements whose space is fully utilised"
+  caveats:
+    - text: >
+        A precise proportional law, stated with no data. "We have seen many a test prove that"
+        refers to the utilisation condition, not to the proportionality itself.
+      origin: extractor_observed
+    - text: >
+        Strict proportionality with a bonus at four times ("usually some in addition") is
+        internally odd: linear scaling and superlinear scaling are asserted in the same sentence
+        without a boundary between them.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Set half-page copy in a page space and you double the cost of returns."
+  source_stated_remedies:
+    - "this occurs only when the larger space is utilized as well as the small space"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0024, note: "the space-utilisation rule stated as a scaling relation"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "size of advertisement"
+    page_start: 13
+    page_end: 13
+    locator: "chapter 4"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0029
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Look at an ad of the Mead Cycle Company—a typical mail order ad. These have been running for many years. The ads are unchanging."
+    - "Mr. Mead told the writer that not for $10,000 would he change a single word in his ads."
+    - "You may say they are unattractive, crowded, hard to read—anything you will. But the test of results has proved those ads the best salesmen those lines have yet discovered."
+  concept_label: long_running_mail_order_advertisements_are_proved_models
+  label_origin: extractor_assigned
+  claim: >
+    A mail order advertisement that has run unchanged for many years is a proved model, because it
+    is the final result of years of comparison between one advertisement and another. The source
+    cites the Mead Cycle Company's advertisements and reports that Mr. Mead told the writer he would
+    not change a single word in them for $10,000. Every feature, word and picture in such an
+    advertisement teaches advertising at its best, whatever the reader's aesthetic objection, and
+    they are as near perfect for their purpose as an advertisement can be.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Continued running under keyed measurement means the advertisement kept paying, and its
+      unchanged form means it beat everything tried against it.
+  scope:
+    domain_discussed_by_source: [mail_order_advertising]
+    conditions: "advertisements that have run unchanged over years under traced returns"
+  caveats:
+    - text: >
+        The evidence is survival plus the advertiser's own testimony. No comparison record, no
+        figures, and no statement of what was tested against it are given, so "proved" here means
+        "still running", which is a weaker fact than it is used as.
+      origin: extractor_observed
+    - text: >
+        Survival also selects for advertisers who kept measuring and kept paying; nothing is said
+        about long-running advertisements that were never tested against anything.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "mail order ads are models"
+  examples:
+    positive:
+      - {description: "Mead Cycle Company mail order advertisements, unchanged over many years — named but not reproduced anywhere in the book", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0021, note: "rests on mail order being continuously measured"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "the Mead Cycle example"
+    page_start: 13
+    page_end: 13
+    locator: "chapter 4"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0030
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "We cannot often follow all the principles of mail order advertising, though we know we should. The advertiser forces a compromise. Perhaps pride in our ads has an influence."
+    - "Therefore it is always a question of what we are willing to pay for our frivolities."
+    - "But let us know what we are doing. Let us know the cost of our pride."
+  concept_label: departures_from_proved_practice_are_a_cost_to_be_known_not_a_sin_to_be_avoided
+  label_origin: extractor_assigned
+  claim: >
+    In practice the principles of mail order advertising often cannot be followed, because the
+    advertiser forces a compromise and pride in the advertisements has an influence. Every departure
+    adds to selling cost, so the question is always what the advertiser is willing to pay for his
+    frivolities. The source accepts that most people can afford to do something for pride and
+    opinion, as they do with fine offices and buildings, but insists the cost be known: keyed
+    comparisons should be made, and the source states that whenever they are, the nearer the copy
+    gets to proved mail order copy the more customers it wins per unit of money.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "general advertising by advertisers who will not adopt mail order form"
+  caveats:
+    - text: >
+        The most unusual passage in the section: the author concedes that his own proved principles
+        are routinely not followed for non-evidential reasons, and proposes pricing the deviation
+        rather than eliminating it. It qualifies the book's own science framing more than anything
+        else in these seven chapters.
+      origin: extractor_observed
+    - text: >
+        "Whenever we do we invariably find" again asserts a universal result from unreported
+        comparisons.
+      origin: extractor_observed
+  source_stated_problems:
+    - "every departure from those principles adds to our selling cost"
+  source_stated_remedies:
+    - "We can at least know what we pay. We can make keyed comparisons, one ad with another."
+    - "let us go back to our model—a good mail order ad—and eliminate some of our waste"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0024, note: "concedes the prescriptions are routinely not followed"}
+    - {relation: qualifies, target: sk_hop_sa_0001, note: "admits non-evidential forces govern real practice"}
+    - {relation: member_of_system, target: scs_hop_sa_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4 — Mail Order Advertising—What It Teaches"
+    section: "chapter close"
+    page_start: 14
+    page_end: 14
+    locator: "chapter 4, final page"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────── Chapter 5 ───────────────────────────
+
+- sk_id: sk_hop_sa_0031
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The salesman is there to demand attention. He cannot well be ignored. The advertisement can be ignored."
+    - "The purpose of a headline is to pick out people you can interest."
+    - "Then create a headline which will hail those people only."
+  concept_label: a_headline_selects_the_readers_the_advertisement_can_interest
+  label_origin: extractor_assigned
+  claim: >
+    The difference between advertising and personal salesmanship lies largely in personal contact:
+    the salesman is present and cannot well be ignored, the advertisement can be. But the salesman
+    also wastes much of his time on prospects he could never interest and cannot pick them out,
+    while an advertisement is read only by interested people who choose to read it. The purpose of a
+    headline is therefore to pick out the people the advertiser can interest, and to hail those
+    people only — as one would call a particular person's name across a crowd.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Readers select what they read by headline, exactly as they select which newspaper items to
+      read, so the headline determines which population reads the argument beneath it.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "print advertising placed among other reading matter"
+  caveats:
+    - text: >
+        This is the one place where the source names a real limit on its governing salesmanship
+        analogy — the advertisement can be ignored and the salesman cannot — and it does not go back
+        and reconsider the rules chapter 2 derived from that analogy.
+      origin: extractor_observed
+    - text: >
+        The newspaper-headline comparison is offered as an argument by analogy, not as evidence
+        about advertisements.
+      origin: extractor_observed
+  source_stated_problems:
+    - "The advertisement can be ignored."
+  source_stated_remedies:
+    - "create a headline which will hail those people only"
+  examples:
+    positive:
+      - {description: "a newspaper article about the most beautiful woman in the city, headed 'Egyptian Psychology', which she and her friends would never read", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0008, note: "names the disanalogy between advertising and personal selling"}
+    - {relation: generalises, target: sk_hop_sa_0032, note: "the failure case of the same rule"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Headlines"
+    section: "opening"
+    page_start: 15
+    page_end: 16
+    locator: "chapter 5, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0032
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Perhaps a blind headline or some clever conceit will attract many times as many. But they may consist mostly of impossible subjects for what you have to offer."
+    - "And the people you are after may never realize that the ad refers to something they may want."
+  concept_label: a_blind_or_clever_headline_attracts_the_wrong_readers_and_hides_the_offer_from_the_right_ones
+  label_origin: extractor_assigned
+  claim: >
+    A blind headline or a clever conceit may attract many times as many readers, but most of them
+    will be impossible prospects for what is being offered, and the readers the advertiser actually
+    wants may never realise that the advertisement concerns something they might want. Headlines
+    that mislead are rejected for the same reason: they either conceal or reveal an interest.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attention volume and attention relevance are different quantities; a headline optimised for
+      the first can reduce the second to zero.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any advertisement whose product interests only part of the readership"
+  caveats:
+    - text: >
+        Stated with "perhaps" and "may". No keyed comparison of a blind headline against a direct
+        one is reported, although the chapter states elsewhere that two thousand headlines were
+        keyed on one product.
+      origin: extractor_observed
+  source_stated_problems:
+    - "a blind headline or some clever conceit"
+    - "we don't want those headlines misleading"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0031, note: "the failure case of headline-as-selector"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Headlines"
+    section: "opening"
+    page_start: 15
+    page_end: 15
+    locator: "chapter 5"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0033
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The identical ad run with various headlines differs tremendously in its returns. It is not uncommon for a change in headlines to multiply returns from five to ten times over."
+    - "The writer has before him keyed returns on nearly two thousand headlines used on a single product. The story in these ads is nearly identical. But the returns vary enormously, due to the headlines."
+    - "with every keyed return in our record appears the headline that we used"
+  concept_label: changing_only_the_headline_can_multiply_returns_several_fold
+  label_origin: extractor_assigned
+  claim: >
+    Running the identical advertisement with different headlines produces enormously different
+    returns, and it is not uncommon for a change of headline alone to multiply returns five- to
+    tenfold. The source states that the writer has in front of him keyed returns on nearly two
+    thousand headlines used on a single product whose body copy is nearly identical, that every
+    keyed return in the record carries the headline used with it, and that comparing them shows
+    which kind of appeal pays best — which differs by product line.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The headline decides which readers read the argument, so it moves the whole result while the argument is held constant."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "keyed print advertising for one product across many headlines"
+  caveats:
+    - text: >
+        The design described is a genuine minimal-pair comparison — one element varied, the body
+        copy held nearly constant — and the record described is large. But no result from it is
+        reported: no product, no period, no distribution of returns, no example pair with its two
+        numbers. The reader is told the record exists and told its summary conclusion.
+      origin: extractor_observed
+    - text: >
+        "Nearly identical" copy is not identical copy, and the source does not say how the residual
+        differences were handled.
+      origin: extractor_observed
+    - text: >
+        The five-to-ten-fold range is given as "not uncommon", which is a frequency claim with no
+        frequency attached.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "we compare headlines until we know what sort of appeal pays best"
+  examples:
+    positive:
+      - {description: "a soap where 'Keep Clean' or 'No animal fats' might attract few, while a beauty or complexion headline might attract many times as many — offered as illustration, with 'might', not as a result", figure_ref: null}
+      - {description: "an automobile advertisement whose universal-joint headline might fall flat where 'The Sportiest of Sport Bodies' might outpull it fifty to one — again 'might'", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_hop_sa_0002, note: "the keyed-return method applied to one element"}
+    - {relation: generalises, target: sk_hop_sa_0031, note: "the measured form of the headline-as-selector claim"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, empirical_within_source, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Headlines"
+    section: "keyed returns on headlines"
+    page_start: 16
+    page_end: 17
+    locator: "chapter 5"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0034
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "That does not mean that we neglect the others. One sort of appeal may bring half the returns of another, yet be important enough to be profitable. We overlook no field that pays."
+    - "If we are using twenty magazines we may use twenty separate ads."
+  concept_label: run_many_appeals_in_parallel_because_a_weaker_appeal_can_still_pay
+  label_origin: extractor_assigned
+  claim: >
+    Finding the best-pulling appeal does not mean abandoning the others. An appeal that brings half
+    the returns of the best may still be profitable enough to keep, and no paying field is
+    overlooked; what the comparison establishes is what proportion of advertisements should carry
+    each kind of appeal. The source states that with twenty magazines it may use twenty separate
+    advertisements, because circulations overlap and a considerable percentage of people are
+    attracted by each of several forms of approach.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Different readers respond to different approaches, and overlapping circulations mean the same
+      person may see several, so a portfolio of appeals reaches more of the interested population
+      than the single best appeal would.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "multi-publication campaigns for a product with several uses"
+  caveats:
+    - text: >
+        A notable qualification of the book's own optimisation logic — the winner does not take all
+        — but it is asserted rather than shown, and no allocation rule or proportion is given.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "we employ a vast variety of ads"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0033, note: "limits how the headline comparison should be acted on"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Headlines"
+    section: "variety of appeals"
+    page_start: 17
+    page_end: 17
+    locator: "chapter 5"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0035
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Don't think that those millions will read your ads to find out if your product interests. They will decide by a glance—by your headline or your pictures."
+    - "People are hurried. The average person worth cultivating has too much to read. They skip three-fourths of the reading matter which they pay to get."
+    - "But they will never know it unless the headline or the picture tells them."
+  concept_label: readers_decide_by_a_glance_at_the_headline_or_the_picture
+  label_origin: extractor_assigned
+  claim: >
+    Readers will not read an advertisement to find out whether the product interests them; they
+    decide by a glance at the headline or the picture. People are hurried, the average person worth
+    cultivating has too much to read, and readers skip three-fourths of the matter they have paid
+    for. They may be more interested in a product than in anything else in the magazine and will
+    never learn it unless the headline or picture tells them. The source therefore instructs the
+    advertiser to address the people sought and them only.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Attention is scarce and allocated at a glance, so anything not visible at a glance is never evaluated."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "print advertising in magazines and newspapers"
+  caveats:
+    - text: "the three-fourths skip rate is stated without any source, method or population"
+      origin: extractor_observed
+    - text: >
+        It sits in tension with chapter 2's premise that the only readers an advertisement gets are
+        people its subject already interests. Here interest is created or missed at the glance;
+        there it is presupposed.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They don't read ads which, at a glance, seem to offer nothing interesting."
+  source_stated_remedies:
+    - "Address the people you seek, and them only."
+  examples:
+    positive:
+      - {description: "a double-page advertisement for women's dresses said not to gain a glance from a man, nor a shaving cream advertisement from a woman", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0012, note: "tension with the self-selection premise behind the anti-brevity argument"}
+    - {relation: depends_on, target: sk_hop_sa_0031, note: "why the selecting element must be the headline"}
+    - {relation: member_of_system, target: scs_hop_sa_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, outcome_claimed, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Headlines"
+    section: "why headlines matter"
+    page_start: 16
+    page_end: 17
+    locator: "chapter 5"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0036
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The appeals we like best will rarely prove best, because we do not know enough people to average up their desires."
+    - "Anyone who keys ads will be amazed at the difference."
+  concept_label: the_appeals_the_advertiser_prefers_rarely_prove_the_best
+  label_origin: extractor_assigned
+  claim: >
+    The appeals an advertising man likes best will rarely turn out to be the best-performing ones,
+    because no individual knows enough people to average up their desires. Learning what works on a
+    given line therefore has to be done by experiment, and anyone who keys advertisements will be
+    amazed at the difference.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Personal preference is a sample of one drawn from an unrepresentative acquaintance, so it
+      cannot estimate the population's response.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "choosing between candidate appeals for a product"
+  caveats:
+    - text: >
+        The book's central anti-taste claim, and it rests on assertion. The same chapter's own
+        illustrations of good and bad headlines are the author's judgements, offered with "might",
+        which is the faculty this object says is unreliable.
+      origin: extractor_observed
+  source_stated_problems:
+    - "we do not know enough people to average up their desires"
+  source_stated_remedies:
+    - "So we learn on each line by experiment."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0022, note: "the headline form of the nine-times-in-ten claim"}
+    - {relation: depends_on, target: sk_hop_sa_0002, note: "the reason the keyed method is needed at all"}
+    - {relation: member_of_system, target: scs_hop_sa_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Headlines"
+    section: "fixed principles behind headlines"
+    page_start: 17
+    page_end: 17
+    locator: "chapter 5"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────── Chapter 6 ───────────────────────────
+
+- sk_id: sk_hop_sa_0037
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The competent advertising man must understand psychology."
+    - "Human nature is perpetual. In most respects it is the same today as in the time of Caesar. So the principles of psychology are fixed and enduring."
+    - "You will never need to unlearn what you learn about them."
+  concept_label: psychological_principles_are_fixed_because_human_nature_does_not_change
+  label_origin: extractor_assigned
+  claim: >
+    A competent advertising man must understand psychology, learning which effects lead to which
+    reactions and using that knowledge to increase results and avoid mistakes. Because human nature
+    is perpetual and in most respects the same today as in the time of Caesar, the principles of
+    psychology are fixed and enduring and will never need to be unlearned.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Constancy of human nature makes the principles derived from it stable over time."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "all advertising, at any period"
+  caveats:
+    - text: >
+        The permanence claim is the strongest generalisation in the section — stronger than the
+        chapter 1 laws claim, since it extends across two thousand years — and the only support is
+        the assertion that human nature is perpetual.
+      origin: extractor_observed
+    - text: >
+        The chapter's own material is a sequence of trade anecdotes, none of which is a
+        psychological finding in the sense the opening claims, and several of which are explicitly
+        bounded to the period ("Americans are extravagant").
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "use that knowledge to increase results and avoid mistakes"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hop_sa_0038, note: "the chapter's individual levers are offered as instances"}
+    - {relation: generalises, target: sk_hop_sa_0040, note: "the chapter's individual levers are offered as instances"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "opening"
+    page_start: 18
+    page_end: 18
+    locator: "chapter 6, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0038
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "curiosity is one of the strongest of human incentives. We employ it whenever we can."
+    - "\"Grains puffed to 8 times normal size.\" \"Foods shot from guns.\" \"125 million steam explosions caused in every kernel.\""
+    - "These foods were failures before that factor was discovered."
+  concept_label: curiosity_is_a_strong_incentive_and_can_be_manufactured_from_process_facts
+  label_origin: extractor_assigned
+  claim: >
+    Curiosity is one of the strongest human incentives and should be used wherever possible. The
+    source reports that Puffed Wheat and Puffed Rice were made successful largely through curiosity,
+    using claims about the manufacturing process — grains puffed to eight times normal size, foods
+    shot from guns, 125 million steam explosions in every kernel — and that these foods had been
+    failures before that factor was discovered.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "products with an unusual or dramatisable process"
+  caveats:
+    - text: >
+        A before-and-after outcome claim with a named product and no figures, no dates and no
+        account of what else changed when the campaign changed.
+      origin: extractor_observed
+    - text: >
+        The three quoted lines are also specific process claims, so the case is equally well
+        explained by chapter 7's specificity doctrine. The source does not separate the two effects.
+      origin: extractor_observed
+  source_stated_problems:
+    - "These foods were failures before that factor was discovered."
+  source_stated_remedies:
+    - "We employ it whenever we can."
+  examples:
+    positive:
+      - {description: "Puffed Wheat and Puffed Rice, said to have been failures until curiosity-based claims were used", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0037, note: "an instance of the psychological levers"}
+    - {relation: qualified_by, target: sk_hop_sa_0051, note: "the same lines also satisfy the specificity rule"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "curiosity"
+    page_start: 18
+    page_end: 18
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0039
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "We learn that cheapness is not a strong appeal. Americans are extravagant. They want bargains but not cheapness."
+    - "They want to feel that they can afford to eat and have and wear the best. Treat them as though they could not and they resent your attitude."
+  concept_label: cheapness_is_not_an_appeal_although_a_bargain_is
+  label_origin: extractor_assigned
+  claim: >
+    Cheapness is not a strong appeal. Buyers want bargains but not cheapness, and want to feel they
+    can afford the best; treating them as though they cannot creates resentment.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The appeal is read as a statement about the buyer's means, which is resented."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "the American market at the time of writing"
+  caveats:
+    - text: "the source itself scopes the claim to Americans and to their being extravagant"
+      origin: source_stated
+    - text: >
+        "We learn that" implies a finding from the traced-return apparatus, but no test, product or
+        figure is attached, and the bargain/cheapness distinction is left undefined in operational
+        terms.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Treat them as though they could not and they resent your attitude."
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_hop_sa_0040, note: "price signals quality, so lowering it to appeal can cost the signal"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "cheapness"
+    page_start: 18
+    page_end: 18
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0040
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "We learn that people judge largely by price. They are not experts."
+    - "In the British National Gallery is a painting which is announced in the catalog to have cost $750,000. Most people at first pass it by at a glance. Then later they get farther on in the catalog and learn what the painting cost. They return then and surround it."
+    - "So we state—as a fact—that we paid $100,000 for that formula. That statement when tried has won a wealth of respect."
+  concept_label: people_judge_value_by_stated_price_because_they_are_not_experts
+  label_origin: extractor_assigned
+  claim: >
+    People judge value largely by price because they are not experts. The source gives a painting in
+    the British National Gallery which visitors pass by until the catalogue tells them it cost
+    $750,000, after which they return and crowd around it; a department store's $1,000 hat
+    advertised at Easter, for which the floor could not hold the women who came to see it; and its
+    own practice of stating as a fact that $100,000 was paid for a formula, which it says has won a
+    wealth of respect when tried.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Lacking expertise, the buyer uses the price as the available evidence of worth."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "goods whose quality the buyer cannot judge directly"
+  caveats:
+    - text: >
+        Three anecdotes, none dated, sourced or counted. "That statement when tried has won a wealth
+        of respect" describes a test and reports no result from it.
+      origin: extractor_observed
+    - text: >
+        The painting and hat cases are about crowds gathering, not about purchases; the source
+        treats attention and valuation as one effect.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "We often employ this factor in psychology."
+  examples:
+    positive:
+      - {description: "the $750,000 painting in the British National Gallery, ignored until the catalogue price is read", figure_ref: null}
+      - {description: "a department store's $1,000 Easter hat", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_hop_sa_0039, note: "cheapness appeals against price-as-signal"}
+    - {relation: qualified_by, target: sk_hop_sa_0051, note: "the effect is carried by a definite figure"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "price"
+    page_start: 18
+    page_end: 18
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0041
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Many articles are sold under guarantee—so commonly sold that guarantees have ceased to be impressive."
+    - "But one concern made a fortune by offering a dealer's signed warrant... Instead of a far-away stranger, a neighbor gave the warrant."
+    - "\"Pay in a week if you like them.\" That proved many times as impressive."
+  concept_label: a_guarantee_impresses_in_proportion_to_the_risk_the_seller_visibly_accepts
+  label_origin: extractor_assigned
+  claim: >
+    A guarantee loses force as it becomes universal, and regains it when the seller visibly accepts
+    more risk or brings the guarantor closer to the buyer. The source reports a concern that made a
+    fortune by having the local dealer who took the money sign a written warrant to repay it, rather
+    than a distant stranger guaranteeing it, and says the plan has always proved effective. It
+    contrasts "Try it for a week; if you don't like it we'll return your money" with sending goods
+    with no money down and saying "Pay in a week if you like them", which it says proved many times
+    as impressive, illustrated by the two-horses story in which the buyer chose the seller who asked
+    for nothing in advance.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Familiarity erodes the guarantee's signal; proximity of the guarantor and the removal of
+      prepayment both increase the risk the seller is visibly taking, which is what impresses.
+  scope:
+    domain_discussed_by_source: [advertising, direct_selling]
+    conditions: "goods sold on trial or under guarantee"
+  caveats:
+    - text: >
+        "It has always proved effective" is a universal outcome claim with no case count, and the
+        concern is unnamed.
+      origin: extractor_observed
+    - text: >
+        The two-horses story is attributed to "one great advertising man" and is a parable about the
+        speaker's own choice, not an observation of buyers.
+      origin: extractor_observed
+    - text: >
+        The mechanism given here is ours to the extent that the source states two separate
+        improvements — nearer guarantor, no prepayment — without naming the common factor. The
+        wording "the risk the seller visibly accepts" is an extractor summary and is recorded as
+        such.
+      origin: extractor_observed
+  source_stated_problems:
+    - "guarantees have ceased to be impressive"
+  source_stated_remedies:
+    - "a dealer's signed warrant"
+    - "sending goods without any money down"
+  examples:
+    positive:
+      - {description: "the two horses offered on identical claims, one 'come back for your money', one 'come and pay me then'", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0019, note: "a stronger form of the risk-free trial"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "guarantees"
+    page_start: 19
+    page_end: 19
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0042
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "\"Let us offer to put the buyer's name in gilt lettering on each book.\" That was done, and with scarcely another change in the ads they sold some hundreds of thousands of books."
+    - "When a man knows that something belongs to him—something with his name on—he will make the effort to get it, even though the thing is a trifle."
+  concept_label: attaching_the_buyers_name_creates_effort_out_of_proportion_to_the_value
+  label_origin: extractor_assigned
+  claim: >
+    Attaching the buyer's own name to an object produces effort and value out of proportion to the
+    object. The source reports a set of books that sold unprofitably until an adviser suggested
+    offering the buyer's name in gilt lettering on each volume, after which, with scarcely another
+    change in the advertisements, hundreds of thousands were sold. It contrasts small gifts such as
+    memorandum books sent unsolicited, which get very small results, with a letter saying a
+    leather-covered book with the man's name on it is waiting and will be sent on request — which
+    nearly all men are said to have requested, supplying on the request form information that
+    indicated how they might be sold.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Once something is understood to belong to the person, they will make an effort to obtain it
+      even if the thing itself is a trifle.
+  scope:
+    domain_discussed_by_source: [advertising, direct_marketing]
+    conditions: "offers that can be personalised to the individual buyer"
+  caveats:
+    - text: >
+        Both cases are unnamed and unmeasured. "Scarcely another change in the ads" is the closest
+        the passage comes to isolating the variable, and it explicitly admits other changes.
+      origin: extractor_observed
+    - text: "the source calls the effect 'some peculiar kink in human psychology', which is a name for the effect, not an explanation of it"
+      origin: source_stated
+  source_stated_problems:
+    - "Many send out small gifts, like memorandum books, to customers and prospects. They get very small results."
+  source_stated_remedies:
+    - "offer to put the buyer's name in gilt lettering on each book"
+  examples:
+    positive:
+      - {description: "the leather-covered book with the man's name on it, waiting and sent on request, with a request form that also collected selling information", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0037, note: "an instance of the psychological levers"}
+    - {relation: qualifies, target: sk_hop_sa_0046, note: "both turn on the buyer asking rather than being given"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "personalisation"
+    page_start: 19
+    page_end: 19
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0043
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "an offer limited to a certain class of people is far more effective than a general offer"
+    - "Those who are entitled to any seeming advantage will go a long way not to lose that advantage."
+  concept_label: an_offer_limited_to_a_class_outperforms_a_general_offer
+  label_origin: extractor_assigned
+  claim: >
+    An offer limited to a defined class of people — veterans of the war, members of a lodge or sect,
+    executives — is far more effective than the same offer made generally, because those entitled to
+    a seeming advantage will go a long way rather than lose it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Entitlement to an advantage creates an aversion to forgoing it."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "offers that can be restricted to an identifiable group"
+  caveats:
+    - text: >
+        "It is found that" with no finder, product or figure. No comparison of a limited and a
+        general version of the same offer is reported.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "an offer limited to a certain class of people"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0031, note: "a limited offer performs the same selecting function as a headline"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "limited offers"
+    page_start: 19
+    page_end: 20
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0044
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "He said, \"Look out for substitutes,\" \"Be sure you get this brand,\" etc., with no effect. Those were selfish appeals."
+    - "Then he said, \"Try our rivals' too\"—said it in his headlines. He invited comparisons and showed that he did not fear them. That corrected the situation."
+  concept_label: inviting_comparison_defeats_substitution_where_warning_against_it_fails
+  label_origin: extractor_assigned
+  claim: >
+    Warning buyers against substitutes has no effect because it is a selfish appeal. An advertiser
+    suffering from substitution instead told buyers in his headlines to try his rivals' products
+    too, inviting comparison and showing he did not fear it, and the source says that corrected the
+    situation: buyers became careful to get the brand so conspicuously superior that its maker could
+    court a trial of the rest.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Inviting comparison is read as evidence of superiority, whereas warning against substitution
+      is read as the seller protecting his own interest.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "branded goods facing substitution at the point of sale"
+  caveats:
+    - text: >
+        Unnamed advertiser, no figures, and no statement of what else changed. The reported outcome
+        is 'that corrected the situation', which is not a measure.
+      origin: extractor_observed
+    - text: >
+        The claim only works for a product that is in fact superior, which the source assumes rather
+        than establishes.
+      origin: extractor_observed
+  source_stated_problems:
+    - "An advertiser suffered much from substitution."
+    - "Those were selfish appeals."
+  source_stated_remedies:
+    - "He invited comparisons and showed that he did not fear them."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0017, note: "the service framing applied to a competitive problem"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "substitution"
+    page_start: 20
+    page_end: 20
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0045
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Two advertisers offered food products nearly identical. Both offered a full-size package as an introduction. But one gave his package free. The other bought the package."
+    - "The first advertiser failed and the second succeeded. The first even lost a large part of the trade he had. He cheapened his product by giving a 15-cent package away."
+    - "An article good enough for the maker to buy is good enough for the user to buy."
+  concept_label: a_sample_the_maker_pays_retail_for_outperforms_a_free_sample
+  label_origin: extractor_assigned
+  claim: >
+    Giving a product away outright cheapens it, while having the maker buy it at retail price for
+    the user does not. The source reports two advertisers of nearly identical food products, both
+    offering a full-size introductory package: one gave the package away, the other issued a coupon
+    good at any store for which the maker paid the retail price. The first failed and lost a large
+    part of the trade he already had; the second succeeded. The source's reasoning is that it is
+    hard to pay for an article that has once been free, like paying railroad fare after travelling
+    on a pass, and that an article good enough for the maker to buy is good enough for the user to
+    buy.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A free article establishes a price of zero in the user's mind and the maker's willingness to
+      pay retail establishes the opposite; the coupon also routes the trial through the dealer.
+  scope:
+    domain_discussed_by_source: [advertising, sampling]
+    conditions: "introductory sampling of low-priced consumer goods"
+  caveats:
+    - text: >
+        Presented as a matched pair — nearly identical products, same offer size, one variable
+        different — but the two arms are two different firms, so everything else about them also
+        differs. No figures are given for either.
+      origin: extractor_observed
+    - text: >
+        It sits against chapter 3, where free samples and free trials are recommended without this
+        qualification, and against the brush maker who gives a brush away outright. The source does
+        not reconcile them.
+      origin: extractor_observed
+  source_stated_problems:
+    - "He cheapened his product by giving a 15-cent package away."
+  source_stated_remedies:
+    - "A coupon was good at any store for a package, for which the maker paid retail price."
+  examples:
+    counter:
+      - {description: "the advertiser who gave the 15-cent package away, failed, and lost part of his existing trade", figure_ref: null}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_hop_sa_0019, note: "chapter 3 recommends free samples without this limit"}
+    - {relation: qualifies, target: sk_hop_sa_0040, note: "the same price-as-signal mechanism applied to samples"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "sampling"
+    page_start: 20
+    page_end: 20
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0046
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Hand an unwanted product to a housewife and she pays it slight respect. She is in no mood to see its virtues."
+    - "But get her to ask for a sample after reading your story, and she is in a very different position. She knows your claims. She is interested in them, else she would not act. And she expects to find the qualities you told."
+  concept_label: a_sample_the_user_asked_for_is_received_differently_from_one_handed_over
+  label_origin: extractor_assigned
+  claim: >
+    A sample the user requested after reading the advertisement is received in a different frame
+    from one handed to her unasked. An unwanted product handed over gets slight respect and the
+    recipient is in no mood to see its virtues; a requested sample arrives with the claims already
+    known, with demonstrated interest, and with the expectation of finding the qualities described.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Asking is itself evidence of interest and installs an expectation, which changes what the user
+      then perceives in the product.
+  scope:
+    domain_discussed_by_source: [advertising, sampling]
+    conditions: "product sampling"
+  caveats:
+    - text: >
+        No comparison is reported. The claim is a psychological account of two situations, offered
+        as self-evident.
+      origin: extractor_observed
+    - text: >
+        It is a different claim from the free-versus-paid sample beside it — this one turns on who
+        initiated, that one on what the sample cost — and the source runs them together.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Hand an unwanted product to a housewife and she pays it slight respect."
+  source_stated_remedies:
+    - "get her to ask for a sample after reading your story"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_hop_sa_0047, note: "the expectation set by the claims is what she then finds"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "sampling"
+    page_start: 20
+    page_end: 20
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0047
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "There is a great deal in mental impression. Submit five articles exactly alike and five people may each choose one of them. But point out in one some qualities to notice and everyone will find them. The five people then will all choose the same article."
+    - "If people can be made sick or well by mental impressions, they can be made to favor a certain brand in that way."
+  concept_label: telling_people_what_to_notice_determines_what_they_perceive
+  label_origin: extractor_assigned
+  claim: >
+    What people perceive in a product is determined by what they have been told to notice. Five
+    identical articles will be chosen at random by five people, but point out qualities to notice in
+    one and everyone will find them and all five will choose that one. The source argues from the
+    premise that people can be made sick or well by mental impression that they can equally be made
+    to favour a brand that way, and states that on some lines this is the only way to win them.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Directed attention creates the perception, so a described quality is then found in the object."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "products that are materially alike"
+  caveats:
+    - text: >
+        The five-articles case is stated in the hypothetical — "submit five articles" — and reads as
+        a thought experiment. Nothing indicates it was run, and no result is reported.
+      origin: extractor_observed
+    - text: >
+        The sick-or-well premise is asserted as common ground and used as the whole warrant for the
+        brand conclusion.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "point out in one some qualities to notice"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hop_sa_0046, note: "the general form of the expectation effect in sampling"}
+    - {relation: qualifies, target: sk_hop_sa_0053, note: "explains why being first to state a universal attribute works"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "mental impression"
+    page_start: 20
+    page_end: 20
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0048
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "The other put a woman in charge—a motherly, dignified, capable woman. They did business in her name. They used her picture. She signed all ads and letters. She wrote to these girls like a friend."
+    - "There was no comparison in those two appeals. It was not long before this woman's long-established next-door rival had to quit."
+  concept_label: a_named_person_who_addresses_the_buyer_as_a_peer_outsells_an_impersonal_offer
+  label_origin: extractor_assigned
+  claim: >
+    An offer made in the name of a specific, credible person who addresses the buyer as someone who
+    understands their position outperforms the same offer made impersonally. The source reports two
+    firms selling women's clothing on instalments side by side to poor girls: one treated them as
+    poor girls and made the bare business offer; the other put a motherly, dignified, capable woman
+    in charge, traded in her name, used her picture, had her sign all advertisements and letters,
+    and had her write as a friend who knew what it meant not to be able to dress well. The source
+    says there was no comparison between the two appeals and that the long-established rival next
+    door soon had to quit. It adds a related case: a furniture business that could not make
+    promiscuous catalogue mailing pay wrote to women already vouched for by the clothing firm,
+    offering an open credit account with nothing in advance, which it says was flattering and won
+    the orders.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The buyer responds to being addressed by an identified person who acknowledges her situation
+      rather than by a firm; long-time credit offered impersonally seems like a reflection on her.
+  scope:
+    domain_discussed_by_source: [advertising, direct_marketing]
+    conditions: "instalment selling to buyers sensitive about their circumstances"
+  caveats:
+    - text: >
+        Neither firm is named, no figures are given, and the reported outcome is a competitor
+        closing — which many causes could produce.
+      origin: extractor_observed
+    - text: >
+        The two firms differ in more than the personification: one also extends recognition and
+        credit on the strength of an existing relationship.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Sending out catalogs promiscuously did not pay."
+    - "Offering long-time credit often seems like a reflection."
+  source_stated_remedies:
+    - "They did business in her name. They used her picture. She signed all ads and letters."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0014, note: "the seller personified as the counterpart of addressing one buyer"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "the two instalment houses"
+    page_start: 20
+    page_end: 21
+    locator: "chapter 6"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0049
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "An identical offer made in a different way may bring multiplied returns."
+    - "There are endless phases to psychology. Some people know them by instinct. Many of them are taught by experience. But we learn most of them from others. When we see a winning method we note it down for use when occasion offers."
+  concept_label: the_form_of_an_offer_can_matter_more_than_the_offer_itself
+  label_origin: extractor_assigned
+  claim: >
+    The way an offer is made can multiply its returns while the offer itself stays identical. The
+    source presents this as the summary of its psychology chapter, says the phases of psychology are
+    endless, that some are known by instinct and many taught by experience but most are learned from
+    others by noting down a winning method when it is seen, and that somewhere in the mines of
+    business experience the best method must be found somehow.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any offer made to buyers"
+  caveats:
+    - text: >
+        This is the whole-chapter claim and it names its own method of discovery as copying what
+        appears to work — which is the accumulation of unmeasured practitioner lore, not the
+        traced-return apparatus chapter 1 describes. The source does not notice the difference.
+      origin: extractor_observed
+    - text: >
+        "Somewhere in the mines of business experience we must find the best method somehow" is an
+        unusually candid admission that the chapter has no systematic method.
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "When we see a winning method we note it down for use when occasion offers."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_hop_sa_0041, note: "the chapter's cases are instances of this claim"}
+    - {relation: generalises, target: sk_hop_sa_0045, note: "the chapter's cases are instances of this claim"}
+    - {relation: contradicts, target: sk_hop_sa_0002, note: "prescribes copying observed winners rather than keyed comparison"}
+    - {relation: member_of_system, target: scs_hop_sa_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6 — Psychology"
+    section: "chapter close"
+    page_start: 21
+    page_end: 21
+    locator: "chapter 6, final paragraphs"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────── Chapter 7 ───────────────────────────
+
+- sk_id: sk_hop_sa_0050
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Platitudes and generalities roll off the human understanding like water from a duck. They leave no impression whatever."
+    - "But superlatives of that sort are usually damaging. They suggest looseness of expression, a tendency to exaggerate, a carelessness of truth. They lead readers to discount all the statements that you make."
+    - "No generality has any weight whatever."
+  concept_label: generalities_and_superlatives_leave_no_impression_and_discredit_the_rest
+  label_origin: extractor_assigned
+  claim: >
+    Platitudes and generalities leave no impression at all, and superlatives such as "Best in the
+    world" or "Lowest prices in existence" are usually damaging as well as useless: they claim only
+    what is expected, they suggest looseness, exaggeration and carelessness of truth, and they lead
+    readers to discount every other statement the advertiser makes. A man inclined to superlatives
+    must expect all his statements to be taken with caution.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Readers allow a recognised licence in selling talk, as in poetry, so a general claim carries
+      no information and its looseness transfers to everything beside it.
+  scope:
+    domain_discussed_by_source: [advertising, personal_selling]
+    conditions: "written or spoken selling claims"
+  caveats:
+    - text: >
+        The contamination claim — that a superlative discredits the advertiser's other statements —
+        is the strongest part and is asserted with no case, comparison or measurement.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Platitudes and generalities"
+    - "simply claiming the expected"
+    - "They lead readers to discount all the statements that you make."
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "'Best in the world', 'Lowest prices in existence', 'Supreme in quality' — offered as typical damaging superlatives", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_hop_sa_0051, note: "the two halves of the specificity argument"}
+    - {relation: member_of_system, target: scs_hop_sa_005}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — Being Specific"
+    section: "opening"
+    page_start: 22
+    page_end: 24
+    locator: "chapter 7, opening and close"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0051
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "But a man who makes a specific claim is either telling the truth or a lie. People do not expect an advertiser to lie. They know that he can't lie in the best mediums."
+    - "So a definite statement is usually accepted. Actual figures are not generally discounted. Specific facts, when stated, have their full weight and effect."
+    - "The weight of an argument may often be multiplied by making it specific."
+  concept_label: a_specific_claim_is_believed_because_it_could_be_caught_being_false
+  label_origin: extractor_assigned
+  claim: >
+    A specific claim is believed because it is either true or a lie, with no middle ground, and
+    readers do not expect an advertiser to lie — they know he cannot lie in the best media. Definite
+    statements are therefore usually accepted, actual figures are not generally discounted, and
+    specific facts carry their full weight. The weight of an argument may often be multiplied by
+    making it specific: a tungsten lamp said to give "more light" leaves doubt, while one said to
+    give three and one-third times the light is believed; "Our prices have been reduced" makes no
+    marked impression while "Our prices have been reduced 25 per cent" gets the full value of the
+    announcement.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Specificity removes the licence readers grant to selling talk, because a definite claim is
+      checkable and the medium is assumed to police it; the growing respect for advertising is said
+      to have come through a growing regard for its truth.
+  scope:
+    domain_discussed_by_source: [advertising, personal_selling]
+    conditions: "claims that can be stated as figures or definite facts"
+  caveats:
+    - text: >
+        The believability mechanism rests on the premise that an advertiser cannot lie in the best
+        media, which the source states as fact and does not support.
+      origin: extractor_observed
+    - text: >
+        No comparison of a vague and a specific version of the same advertisement is reported; the
+        tungsten lamp and price-reduction lines are illustrations, not results.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "The weight of an argument may often be multiplied by making it specific."
+  examples:
+    positive:
+      - {description: "'gives three and one-third times the light' against 'gives more light'", figure_ref: null}
+      - {description: "'Our prices have been reduced 25 per cent' against 'Our prices have been reduced'", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_hop_sa_0050, note: "the two halves of the specificity argument"}
+    - {relation: generalises, target: sk_hop_sa_0052, note: "the inference readers are said to draw from a figure"}
+    - {relation: member_of_system, target: scs_hop_sa_005}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — Being Specific"
+    section: "opening"
+    page_start: 22
+    page_end: 22
+    locator: "chapter 7"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0052
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "Say that it gives three and one-third times the light and people realize that you have made tests and comparisons."
+    - "One maker advertised a 78-second shave. That was definite. It indicated actual tests."
+    - "\"The final result of testing and comparing 130 formulas.\""
+  concept_label: a_definite_figure_makes_the_reader_infer_that_tests_were_made
+  label_origin: extractor_assigned
+  claim: >
+    A definite figure in an advertisement causes the reader to infer that the advertiser has made
+    tests and comparisons. The source gives the tungsten lamp's three-and-one-third times, a
+    safety-razor maker's 78-second shave which "indicated actual tests" and is said to have produced
+    a sensational advance in sales, and a shaving soap advertised as "The final result of testing
+    and comparing 130 formulas" alongside "Multiplies itself in lather 250 times", "Softens the
+    beard in one minute" and "Maintains its creamy fullness for ten minutes on the face" — a new
+    entrant in a field where every customer had to be taken from someone else, which the source says
+    produced perhaps the quickest and greatest success ever made in an equally difficult field.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A number could not be arrived at without measuring, so stating one implies the measurement
+      was done.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "claims stated as precise figures"
+  caveats:
+    - text: >
+        The mechanism is an inference the reader is said to draw, and the source is explicit that
+        what matters is the impression of testing. Nothing in the passage requires the tests to have
+        happened; the source neither says they did nor says they need not have.
+      origin: extractor_observed
+    - text: >
+        This is the sharpest point in the section for reading the book's own evidential status. The
+        book's central persuasive claim is that specific figures signal that measurement occurred —
+        and the book itself makes heavy use of specific figures whose underlying measurements it
+        does not report.
+      origin: extractor_observed
+    - text: >
+        The outcome claims attached — "sensational advance", "quickest and greatest success" — carry
+        no sales figures.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "He stated specific facts."
+  examples:
+    positive:
+      - {description: "78-second shave; 'Multiplies itself in lather 250 times'; 'testing and comparing 130 formulas'", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0051, note: "the particular inference a figure supports"}
+    - {relation: member_of_system, target: scs_hop_sa_005}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — Being Specific"
+    section: "specific facts"
+    page_start: 22
+    page_end: 23
+    locator: "chapter 7"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0053
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "All the claims were such as any brewer might have made. They were mere essentials in ordinary brewing. But he was the first to tell the people about them, while others cried merely \"pure beer.\""
+    - "He made the greatest success that was ever made in beer advertising."
+  concept_label: being_first_to_state_an_ordinary_process_fact_claims_it
+  label_origin: extractor_assigned
+  claim: >
+    Stating an ordinary, universally shared attribute in specific detail claims it for the
+    advertiser who states it first. The source reports that in an era when all beers were advertised
+    as "Pure" — a claim that made no impression, and the bigger the type the bigger the folly — one
+    brewer instead described a plate-glass room where the beer was cooled in filtered air, a
+    white-wood-pulp filter every drop passed through, bottles washed four times by machinery, a
+    4,000-foot well for pure water, 1,018 experiments to obtain the yeast and the single mother cell
+    all yeast came from. All of these were mere essentials of ordinary brewing that any brewer could
+    have claimed, but he was first to tell people about them, and the source says he made the
+    greatest success ever made in beer advertising. It gives a second case: "Used the world over"
+    against "Used by the peoples of 52 nations", which many others then followed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The attribute is common but the telling is not, so the advertiser who describes it first is
+      the one credited with it.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "categories where all competitors share an unstated process or attribute"
+  caveats:
+    - text: >
+        The outcome is asserted at superlative strength — "the greatest success that was ever made
+        in beer advertising" — with no figures, date or brand named.
+      origin: extractor_observed
+    - text: >
+        The claim that rivals cannot recover the position by saying the same thing later is implied
+        rather than argued, and the 52-nations case immediately reports that many others did follow.
+      origin: extractor_observed
+  source_stated_problems:
+    - "After millions had been spent to impress a platitude"
+  source_stated_remedies:
+    - "he was the first to tell the people about them"
+  examples:
+    positive:
+      - {description: "the brewer's plate-glass room, white-wood-pulp filter, four machine washings, 4,000-foot well, 1,018 yeast experiments and mother cell", figure_ref: null}
+      - {description: "'Used by the peoples of 52 nations' against 'Used the world over'", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_hop_sa_0051, note: "specificity applied to an attribute nobody owns"}
+    - {relation: depends_on, target: sk_hop_sa_0047, note: "the reader finds the quality once it has been pointed out"}
+    - {relation: member_of_system, target: scs_hop_sa_005}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — Being Specific"
+    section: "the brewer"
+    page_start: 23
+    page_end: 24
+    locator: "chapter 7"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_hop_sa_0054
+  source_id: hopkins_scientific_advertising_ch1_7
+  source_terms:
+    - "One statement may take as much room as another, yet a definite statement be many times as effective. The difference is vast."
+    - "If a claim is worth making, make it in the most impressive way."
+    - "Salesmanship-in-print is very expensive. Every word you use may cost $10 to insert."
+  concept_label: specificity_is_free_because_a_definite_statement_occupies_the_same_space
+  label_origin: extractor_assigned
+  claim: >
+    A definite statement occupies no more room than a vague one, yet may be many times as effective,
+    so specificity is obtained at no cost in space. Since salesmanship-in-print is expensive — the
+    source repeats that every word may cost $10 to insert — and a salesman's loose talk matters
+    little while talking to millions at that cost does not, any claim worth making should be made in
+    the most impressive way.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Cost is paid per unit of space, and specificity does not consume additional space."
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "paid print advertising"
+  caveats:
+    - text: >
+        Recorded as a separate object from the believability claim because it is an economic
+        argument that could hold or fail independently — a definite statement could be equally
+        effective and still be worth making, or ineffective and still be free. It is a borderline
+        granularity call and could defensibly have been folded into the specificity claim itself.
+      origin: extractor_observed
+    - text: >
+        "Many times as effective" repeats the chapter's central claim without adding evidence for it.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "If a claim is worth making, make it in the most impressive way."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_hop_sa_0051, note: "the cost argument for acting on the specificity rule"}
+    - {relation: specialises, target: sk_hop_sa_0010, note: "the same per-word cost argument as chapter 2"}
+    - {relation: member_of_system, target: scs_hop_sa_005}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — Being Specific"
+    section: "chapter close"
+    page_start: 24
+    page_end: 24
+    locator: "chapter 7, final paragraphs"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

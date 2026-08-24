@@ -1,0 +1,230 @@
+# CANON-003 Lane C, book 13 — Hopkins, "Scientific Advertising" ch.1-7. SPEC-04 bindings against
+# SPEC-01 v0.1. Written only after the source representation was complete. All proposed; nothing
+# reviewed. 54 SourceKnowledge objects produce 8 bindings; most of this source is craft doctrine
+# for a print medium our schemas do not model, and is correctly left unbound.
+source_id: hopkins_scientific_advertising_ch1_7
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_hop_sa_0001
+  source_knowledge_refs: [sk_hop_sa_0031, sk_hop_sa_0032, sk_hop_sa_0035]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: copy.headline
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, diagnoses]
+  rationale: >
+    The source treats the headline as the element that decides which readers see the argument
+    beneath it, and names the failure mode precisely: a headline that attracts by cleverness rather
+    than by naming its audience pulls the wrong people and hides the offer from the right ones.
+    SPEC-01 carries a headline and, separately, an audience specification; this supplies a
+    consistency test between them — does the headline actually hail the specified audience, or only
+    the general reader.
+  applicability:
+    when: "a Creative IR specifies both an audience and a headline"
+    limits: >
+      The source is describing print advertisements placed among other reading matter, where the
+      reader chooses what to read. Whether the same selecting function belongs to a headline in a
+      feed placement, where distribution is chosen by a ranking system rather than by the reader, is
+      not addressed by the source and is not asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_hop_sa_0003]
+  repair_ontology_refs: [t_hop_sa_0023]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hop_sa_0002
+  source_knowledge_refs: [sk_hop_sa_0050, sk_hop_sa_0051, sk_hop_sa_0053]
+  source_system_refs: [scs_hop_sa_005]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source's specificity doctrine is unusually checkable for a source of its age and kind. It
+    identifies a class of copy — superlatives and category platitudes — as carrying no information
+    and as discrediting the definite claims beside them, and it identifies the alternative as a
+    definite fact or figure. That is a detectable property of generated copy: whether the claims in
+    an asset are checkable statements or unfalsifiable superlatives, and whether both kinds appear
+    together.
+  applicability:
+    when: "reviewing generated marketing copy for claim quality"
+    limits: >
+      The source establishes that specificity is more persuasive, not that it is true. An evaluator
+      built on this would reward definiteness, which is exactly the signal the source says produces
+      an unearned impression of testing. Any use must pair it with a truthfulness check, or it
+      rewards fabricated precision. Recorded because this source supplies the technique and the
+      warning in the same chapter.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_hop_sa_0004, t_hop_sa_0005]
+  repair_ontology_refs: [t_hop_sa_0024]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hop_sa_0003
+  source_knowledge_refs: [sk_hop_sa_0026, sk_hop_sa_0024]
+  source_system_refs: [scs_hop_sa_003]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    A stated test for whether a visual element belongs in a commercial asset: does it carry part of
+    the sale, or is it there to decorate. The source supplies the one before-and-after result in
+    this section — a picture added at 50 per cent more space, cost per reply up exactly 50 per cent,
+    no added sale — and a rule that the size of an element should be gauged by its importance to the
+    sale rather than by composition.
+  applicability:
+    when: "assessing whether decorative elements in a generated asset earn their space"
+    limits: >
+      One unnamed advertiser, one product, one trial, in a paid-print cost model where space is
+      bought by the unit. Digital placements do not price area the same way, so the cost half of the
+      argument does not transfer; only the question of whether the element sells does.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_hop_sa_0008, t_hop_sa_0009]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hop_sa_0004
+  source_knowledge_refs: [sk_hop_sa_0001, sk_hop_sa_0002, sk_hop_sa_0022, sk_hop_sa_0023, sk_hop_sa_0024, sk_hop_sa_0033, sk_hop_sa_0052]
+  source_system_refs: [scs_hop_sa_001, scs_hop_sa_005]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [constrains]
+  rationale: >
+    A worked precedent for the hardest case in weighing sources: one that asserts empirical
+    authority. This book states that advertising is a science, that its principles were proved by
+    repeated keyed tests, and that a definite figure causes readers to infer that tests were made.
+    Chapters 1-7 then supply, in total, three unattributed cost-per-reply figures, one
+    before-and-after picture result, and a reported record of two thousand keyed headlines from
+    which no result is given. The precedent it sets is that a source's claim to be measured, and a
+    source's reporting of a measurement, are different facts and must be recorded separately — and
+    that the first cannot be allowed to raise the weight of the second.
+  applicability:
+    when: "deciding how much weight a source's claims should carry where the source describes itself as evidence-based"
+    limits: >
+      One source, and one whose method chapter is genuinely and unusually explicit. Nothing here
+      establishes that its measurements were not made; it establishes that this section does not
+      report them. Whether chapter 15, "Test Campaigns", supplies more is outside the processed
+      section and is NOT VERIFIED.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hop_sa_0005
+  source_knowledge_refs: [sk_hop_sa_0007, sk_hop_sa_0024]
+  source_system_refs: [scs_hop_sa_003]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    The source states its own generalisation rule — some findings apply only to a particular product
+    line and only some become universal — and then, two chapters later, generalises mail order copy
+    practice to all advertising without applying it. That is a precedent worth keeping for how
+    retrieved knowledge should be applied: a principle should carry the setting it was established
+    in, and a set of principles sharing one warrant should not be applied piecewise as though each
+    had its own support.
+  applicability:
+    when: "deciding whether a retrieved principle may be applied outside the setting it was established in"
+    limits: >
+      The rule is the source's own and is sound; what this binding records is the source failing to
+      follow it. That is a demonstration of the hazard, not evidence about how often it occurs.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_hop_sa_0006
+  source_knowledge_refs: [sk_hop_sa_0009, sk_hop_sa_0036]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: objective.class
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [flags]
+  rationale: >
+    SPEC-01's objective class list includes awareness and brand_film. This source denies that either
+    is a legitimate objective — "It is not for general effect. It is not to keep your name before the
+    people" — and states that the appeals the specifier prefers rarely prove to be the ones that
+    perform. It does not fill the field; it flags that one commonly chosen value in it is contested
+    by a major source in the domain, which is information the field itself does not carry.
+  applicability:
+    when: "an objective of awareness or brand_film is specified for a commercial product"
+    limits: >
+      A 1923 direct-response practitioner's position, argued from the premise that only attributable
+      sales count. It is a live disagreement in the field, not a settled finding, and the binding
+      records the disagreement rather than resolving it.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; records a contested position, does not settle it"
+
+- binding_id: bnd_hop_sa_0007
+  source_knowledge_refs: [sk_hop_sa_0026, sk_hop_sa_0033, sk_hop_sa_0045, sk_hop_sa_0053]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source supplies concrete minimal-pair candidates in which one element differs and the source
+    states which side won: the same incubator advertisement with and without a decorative row of
+    chickens; identical body copy under different headlines; a full-size sample given free against
+    the same sample bought at retail by the maker; "Lowest prices in America" against "Our net profit
+    is 3 per cent"; "Used the world over" against "Used by the peoples of 52 nations". These are
+    candidate test items for any measure that claims to rank commercial creative.
+  applicability:
+    when: "assembling candidate comparison items for a creative-fitness measure"
+    limits: >
+      Candidates only, and they must be labelled as source-asserted expected outcomes rather than
+      validated ground truth — the same condition the Controller set for the CANON-001 and CANON-002
+      stimuli. Several are 1923 print items whose products and markets no longer exist, the sample
+      pair is two different companies rather than one controlled comparison, and none carries a
+      reported figure except the incubator case.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; source-asserted expected outcomes, not ground truth"
+
+- binding_id: bnd_hop_sa_0008
+  source_knowledge_refs: [sk_hop_sa_0047, sk_hop_sa_0046, sk_hop_sa_0040]
+  source_system_refs: [scs_hop_sa_004]
+  target_type: governance
+  target_path: null
+  governance_consumer: conflict_resolution
+  role: [flags]
+  rationale: >
+    The source states that what a person perceives in a product is set by what they were told to
+    notice beforehand, and applies it to identical articles. Read against a system that asks human
+    reviewers to judge generated assets, this is a stated reason why a reviewer's expectation can
+    determine the judgement, and therefore why a disagreement between two reviewers may be a
+    difference in what each was told rather than in what they saw. It is recorded as a flag on how
+    such disagreements should be read, not as a repair.
+  applicability:
+    when: "reconciling conflicting human judgements about the same generated asset"
+    limits: >
+      The source's own support is a hypothetical five-article example that was not run, plus an
+      argument from mental impression affecting health. This is a hypothesis to hold, not a finding
+      to act on.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; weak source support, recorded as a hypothesis"
