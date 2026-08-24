@@ -1,0 +1,266 @@
+source_id: binet_field_effectiveness_in_context_ch1_consideration
+pass: independent_visual_evidence
+visual_completeness: verified_page_level
+
+method:
+  why_a_visual_pass_was_mandatory: >
+    The chart text of this report IS in the text layer - axis labels, series names, category names
+    and every printed data value extract cleanly. What linearised text destroys is the BINDING
+    between them. A text-only pass receives, for Figure 03, the sequence 60% 54% 50% 40% 40% 37%
+    31% 27% 23% 23% 28% and the words SALES, MARKET SHARE, CUSTOMER ACQUISITION, LOYALTY, PRICE
+    SENSITIVITY, PROFIT, with nothing to say which number belongs to which category or to which of
+    the two series. Every quantitative claim in this extraction therefore required the page to be
+    looked at.
+  tooling: pdftotext -layout and pdftoppm at 110-130 dpi, poppler
+  renders_committed: false
+  renders_ephemeral: true
+  pages_rendered: [3, 13, 16, 20, 22, 24]
+  pages_read_as_images: [3, 13, 16, 20, 22, 24]
+  page_offset: PDF page = printed page + 2, established from the running page numbers and stable
+    across the whole file
+
+figures_inspected:
+  - figure: FIGURE 03
+    title: HIGH CONSIDERATION BOOSTS ALL BUSINESS EFFECTS
+    printed_page: 11
+    kind: grouped_bar_chart
+    y_axis: {label: '% REPORTING VERY LARGE EFFECTS', scale: 0 to 60 per cent, units: percentage of campaigns}
+    x_axis: {label: BUSINESS EFFECTS, categories: [SALES, MARKET SHARE, CUSTOMER ACQUISITION, LOYALTY, PRICE SENSITIVITY, PROFIT]}
+    series: [LOW CONSIDERATION, HIGH CONSIDERATION]
+    values_printed_on_chart: true
+    values:
+      SALES: {low: 40, high: 54}
+      MARKET SHARE: {low: 27, high: 31}
+      CUSTOMER ACQUISITION: {low: 23, high: 37}
+      LOYALTY: {low: 13, high: 14}
+      PRICE SENSITIVITY: {low: 5, high: 8}
+      PROFIT: {low: 23, high: 28}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "marketing produces much stronger business results in high-consideration categories" and
+      "high-consideration improves marketing performance on every single business metric".
+    what_the_figure_does_and_does_not_establish: >
+      It establishes that the high-consideration bar is at least as tall as the low-consideration
+      bar on all six metrics. It does not establish causation, and the loyalty and price-sensitivity
+      gaps are one and three percentage points. The source's own prose is correspondingly hedged on
+      those two.
+    supports: [sk_eic_0002, sk_eic_0004]
+
+  - figure: FIGURE 04
+    title: HIGH CONSIDERATION INCREASES EFFICIENCY
+    printed_page: 11
+    kind: two_row_table
+    columns: [ESOV EFFICIENCY, ROMI]
+    rows: [LOW CONSIDERATION, HIGH CONSIDERATION]
+    values_printed_on_chart: true
+    values:
+      LOW CONSIDERATION: {esov_efficiency: 0.60, romi: 418%}
+      HIGH CONSIDERATION: {esov_efficiency: 0.73, romi: 430%}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "Consideration increases efficiency as well as effectiveness"; ROMI described as "slightly
+      higher".
+    what_the_figure_does_and_does_not_establish: >
+      Four printed numbers with no dispersion, no sample size and no interval. The ROMI difference
+      is twelve points on a base of about 420 per cent.
+    supports: [sk_eic_0003]
+
+  - figure: FIGURE 07
+    title: PENETRATION IS ALWAYS THE MAIN DRIVER
+    printed_page: 14
+    kind: two_panel_grouped_bar_chart
+    panels: [EMOTIONAL CONSIDERATION, RATIONAL CONSIDERATION]
+    y_axis: {label: '% CAMPAIGNS WITH VL EFFECTS', scale: 0 to 50 per cent}
+    x_axis: {categories: [LOW, MEDIUM, HIGH]}
+    series: [PENETRATION, LOYALTY]
+    values_printed_on_chart: true
+    values:
+      EMOTIONAL CONSIDERATION: {LOW: {penetration: 27, loyalty: 15}, MEDIUM: {penetration: 32, loyalty: 12}, HIGH: {penetration: 33, loyalty: 17}}
+      RATIONAL CONSIDERATION: {LOW: {penetration: 26, loyalty: 10}, MEDIUM: {penetration: 28, loyalty: 15}, HIGH: {penetration: 44, loyalty: 16}}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "regardless of the nature of the purchase decision, penetration is always the main driver of
+      growth"; "loyalty-first approaches are doomed to fail"; and the qualification that loyalty
+      effects become "marginally more significant when overall consideration is low, and when
+      decisions are more emotional".
+    what_the_figure_does_and_does_not_establish: >
+      Penetration exceeds loyalty in all six cells, which is what "always" refers to. It does not
+      support "doomed to fail", which is a recommendation. And the loyalty series is not monotonic
+      in the direction the qualification implies - emotional runs 15, 12, 17 and rational 10, 15,
+      16 - so the qualification is weaker than a trend.
+    supports: [sk_eic_0008, sk_eic_0009, sk_eic_0010]
+
+  - figure: FIGURE 12
+    title: OPTIMUM BRAND:ACTIVATION SPLIT
+    printed_page: 18
+    kind: two_panel_stacked_bar_chart
+    y_axis: {label: BRAND/ACTIVATION SPLIT, scale: 0 to 100 per cent}
+    series: [BRAND, ACTIVATION]
+    x_axis: {categories: [LOW CONSIDERATION, HIGH CONSIDERATION, PRIMARILY EMOTIONAL, PRIMARILY RATIONAL]}
+    values_printed_on_chart: true
+    values:
+      LOW CONSIDERATION: {brand: 61, activation: 39}
+      HIGH CONSIDERATION: {brand: 69, activation: 31}
+      PRIMARILY EMOTIONAL: {brand: 67, activation: 33}
+      PRIMARILY RATIONAL: {brand: 71, activation: 29}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "marketers can dial down their activation spend when consideration is high and/or the purchase
+      decision is primarily rational" and, conversely, "marketers can dial down the brand spend in
+      low-consideration and/or emotional categories". The source also states on the same page that
+      "The efficiency picture is in fact more nuanced than the chart suggests."
+    what_the_figure_does_and_does_not_establish: >
+      These are fitted optima, read off the maximum of an inverted U curve described in the
+      appendix, not observed best splits. The appendix also records that the fit required removing
+      rational product-benefit brand campaigns, and that activation spend is under-reported in a
+      direction that flatters brand. Both qualifications are recorded as sk_eic_0027 and
+      sk_eic_0026 and are attached to this claim by intra-source relations.
+    supports: [sk_eic_0016]
+
+  - figure: FIGURE 13
+    title: BRAND BUILDING BOOSTS SHORT-TERM EFFECTS
+    printed_page: 20
+    kind: bar_chart
+    y_axis: {label: '% REPORTING VL ACTIVATION EFFECTS', scale: 0 to 45 per cent}
+    x_axis: {label: NUMBER OF VL BRAND EFFECTS REPORTED, categories: ['0', '1', '>=2']}
+    values_printed_on_chart: true
+    values: {'0': 17, '1': 36, '>=2': 42}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      The figure title asserts that brand building BOOSTS short-term effects.
+    what_the_figure_does_and_does_not_establish: >
+      This is the clearest association-versus-causation case in the processed span. The chart shows
+      that campaigns reporting more very large brand effects also report very large activation
+      effects more often. It does not establish direction, and both axes are counts of the same
+      case author's top-box gradings of the same campaign, so a generously graded campaign can
+      raise both. The extraction records the association and marks the causal title as the source's
+      framing.
+    supports: [sk_eic_0015]
+
+  - figure: FIGURE 14
+    title: EMOTIONAL ADVERTISING WORKS EVEN HARDER IN HIGH RESEARCH CATEGORIES
+    printed_page: 20
+    kind: bar_chart
+    y_axis: {label: ESOV EFFICIENCY, scale: 0.0 to 0.8}
+    series_label_on_plot: EFFICIENCY OF EMOTIONAL ADVERTISING
+    x_axis: {label: EXTENT OF ONLINE RESEARCH, categories: [LOW RESEARCH CATEGORIES, HIGH RESEARCH CATEGORIES]}
+    values_printed_on_chart: true
+    values: {LOW RESEARCH CATEGORIES: 0.67, HIGH RESEARCH CATEGORIES: 0.73}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      The prose calls the difference "slightly more efficient". The pull quote on the same page
+      escalates to "There is no evidence to suggest that online research makes emotional brand
+      building redundant: quite the reverse", and the body to "Only emotional campaigns can create
+      competitive advantage in this environment."
+    what_the_figure_does_and_does_not_establish: >
+      Two bars differing by 0.06 with no dispersion shown. The prose's own word, "slightly", is
+      proportionate to it; the pull quote and the "only emotional campaigns" assertion are not, and
+      are recorded as assertion rather than as measured result.
+    supports: [sk_eic_0018]
+
+  - figure: FIGURE 16
+    title: OPTIMUM BRAND ALLOCATION IS HIGHER IN HIGH ONLINE RESEARCH CATEGORIES
+    printed_page: 22
+    kind: stacked_bar_chart
+    y_axis: {label: OPTIMUM BUDGET SPLIT %, scale: 0 to 100 per cent}
+    series: [BRAND, ACTIVATION]
+    x_axis: {categories: [LOW RESEARCH, HIGH RESEARCH]}
+    values_printed_on_chart: true
+    values:
+      LOW RESEARCH: {brand: 55, activation: 45}
+      HIGH RESEARCH: {brand: 74, activation: 26}
+    base_note: 'Source: IPA Databank, 1998-2016 for-profit cases'
+    adjacent_interpretation: >
+      "the optimum balance in high research categories is a much greater allocation to brand
+      building compared to low research categories", set against the actual allocation given in the
+      adjacent prose - about 69 per cent brand in low research categories and about 55 per cent in
+      high research ones - which the source calls "virtually the mirror opposite".
+    what_the_figure_does_and_does_not_establish: >
+      Fitted optima again, with the same appendix qualifications. The actual-allocation figures are
+      in the prose only and carry the source's own hedge, "around".
+    supports: [sk_eic_0022, sk_eic_0023]
+
+figures_not_inspected:
+  - figures: [FIGURE 05, FIGURE 06, FIGURE 08, FIGURE 09, FIGURE 10, FIGURE 11, FIGURE 15]
+    printed_pages: [12, 13, 15, 16, 17, 21]
+    why: >
+      These figures support claims that the extraction records at the direction the prose states
+      rather than at a numeric magnitude. Their pages were not rendered.
+    consequence: >
+      sk_eic_0013 carries extraction_uncertainty: figure_not_inspected for exactly this reason, and
+      no numeric value from any of these figures appears anywhere in this extraction. Objects
+      sk_eic_0005, 0006, 0007 and 0014 are recorded from the prose, which states each claim in
+      words, and carry visually_demonstrated only where the source itself points at the figure as
+      the demonstration. This is a bounded, stated limit of the pilot rather than a claim of
+      completeness.
+
+representation_findings:
+  - ref: vis_eic_phantom_text_in_forewords
+    status: OBSERVED
+    printed_pages: [1, 2, 3]
+    what_happened: >
+      The text layer of the three foreword pages contains sentences that are not printed anywhere on
+      those pages. Rendering PDF page 3 and reading it confirms that the visible page carries only
+      Janet Hull's foreword and a photograph; the phrases "This is a self-help manual for brands, to
+      guide strategy depending on the contexts that the brand operates in", "So it is not safe to
+      assume that general learning can be automatically applied in all situations" and "The report
+      also observes that whilst marketing has been improving its effectiveness in some contexts"
+      appear in the extracted text of that page and belong to the "In a nutshell" page, printed 5.
+    how_it_presents: >
+      Interleaved line by line with the real foreword text, so a text-only pass produces a foreword
+      in which a third party appears to say things the report says elsewhere. Both pdftotext -layout
+      and default reading-order mode reproduce it.
+    scope: >
+      Confined to printed pages 1, 2 and 3, verified by scanning all 139 pages for the marker
+      phrases. Printed page 5 is the legitimate home of that text. No page in the processed span is
+      affected.
+    consequence_for_this_extraction: >
+      None. The forewords are third-party contributions outside the processed section and no object
+      is drawn from them.
+    method_note: >
+      This is a shape the adopted Audit Gate loss-pattern vocabulary does not have a value for. Its
+      values all describe information LOST from the page; here information is ADDED to the text
+      layer that the page does not show. No pattern value was stretched to cover it and no claim in
+      this extraction is affected, so no method change is proposed. If a later task processes these
+      pages, the gap becomes live and should be raised then.
+
+  - ref: vis_eic_chart_values_survive_but_lose_their_bindings
+    status: OBSERVED
+    what_happened: >
+      Chart text is fully present in the text layer and fully unusable without the page. Values,
+      axis labels, series names and category names all extract; their correspondence does not.
+    why_it_matters: >
+      A text-only extractor would see plausible numbers beside plausible labels and could bind them
+      wrongly with no signal that anything was uncertain. On printed page 15 the fragment "1.5"
+      appears mid-sentence in the extracted prose, having come from a chart axis on the same page.
+    detectability: silent
+    consequence_for_this_extraction: >
+      Every numeric value recorded in any SourceKnowledge object in this extraction was read from a
+      render, not from the text layer.
+
+  - ref: vis_eic_text_integrity_otherwise_clean
+    status: OBSERVED
+    measurements:
+      pages_in_text_layer: 139
+      words_extracted: 45749
+      replacement_characters: 0
+      vowel_less_words_over_3_letters: 89
+      vowel_less_share: 0.321%
+      near_empty_pages: 1
+    what_it_means: >
+      A native Adobe InDesign 14.0 PDF with no OCR layer. The vowel-less words are overwhelmingly
+      chart axis fragments and abbreviations such as VL, ESOV, ROMI and SOV rather than garbling.
+      One near-empty page is the back cover. No missing page, no dropped section, no encoding
+      damage.
+    contents_page_control: >
+      Every section title listed on the contents page for the processed span was found in the
+      extracted text at the printed page the contents page names.
+
+summary:
+  figures_inspected: 7
+  figures_carrying_a_recorded_numeric_value: 7
+  numeric_values_recorded_from_renders: 34
+  numeric_values_recorded_from_the_text_layer: 0
+  figures_referenced_but_not_inspected: 7
+  claims_recorded_as_visually_demonstrated: 11
+  representation_findings: 3
