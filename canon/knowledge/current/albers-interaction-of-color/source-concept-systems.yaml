@@ -1,0 +1,119 @@
+# CANON-003 book 4 — Albers, Interaction of Color, chapters I-V. SourceConceptSystems under SPEC-03.
+source_id: albers_interaction_of_color_ch1_5
+source_concept_systems:
+
+- scs_id: scs_alb_c003_001
+  source_id: albers_interaction_of_color_ch1_5
+  label: the_argument_from_unreliable_perception_to_a_programme_of_study
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    Chapters I to III are one continuous derivation. Colour cannot be reliably remembered, and its
+    names are inadequate, so a colour cannot be pinned down in the abstract. A colour is in any case
+    almost never seen alone, arriving always in relation to changing neighbours. Meaning therefore
+    lives between elements rather than in them — as with letters in a word, tones in music, spelling
+    in poetry. So the object of study must be what happens between colours rather than the pigments
+    themselves, and the working material must be one that can supply the identical colour twice.
+  whole_system_claim:
+    text: >
+      The unreliability of colour memory and naming, combined with the fact that colour is never seen
+      in isolation, together license a specific programme: study interaction rather than pigment, and
+      work in colour paper rather than paint so that the same colour can be repeated exactly. Each
+      step is offered as the reason for the next.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "chapters I-III, PDF pages 29-33"}
+  members:
+    - {sk_ref: sk_alb_c003_0001, role_in_system: opening_evidence, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0002, role_in_system: stated_reason, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0003, role_in_system: stated_reason, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0006, role_in_system: premise, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0007, role_in_system: generalising_premise, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0008, role_in_system: programme, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0009, role_in_system: material_consequence, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_alb_c003_0008, to: sk_alb_c003_0006, nature: "studying interaction is warranted by colour never being seen alone", origin: source_stated}
+      - {from: sk_alb_c003_0008, to: sk_alb_c003_0007, nature: "and by meaning residing between elements", origin: source_stated}
+      - {from: sk_alb_c003_0009, to: sk_alb_c003_0008, nature: "the material is chosen to serve the programme", origin: source_stated}
+      - {from: sk_alb_c003_0002, to: sk_alb_c003_0001, nature: "poor visual memory is given as the first reason names fail", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+    system_level_uncertainty: >
+      The derivation is the source's own and runs in its chapter order, with each chapter opening
+      from the previous one's conclusion. What is ours is treating chapter II's reading-and-music
+      analogies as a generalising premise rather than as illustration.
+  provenance:
+    locator: "chapters I-III"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_alb_c003_002
+  source_id: albers_interaction_of_color_ch1_5
+  label: the_relativity_exercise_and_its_conditions
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    Chapter IV is one exercise together with everything that has to hold for it to work: the claim
+    it demonstrates, the physical analogy that makes it plausible, the setup, the two dimensions
+    along which influence acts, the pedagogy of withholding the method, the rejection of harmony as
+    a criterion, and the layout failure that destroys the effect.
+  whole_system_claim:
+    text: >
+      Making one colour look like two is not a trick but a controlled comparison, and it only
+      succeeds under stated conditions. The pieces must be identical and the grounds large; the
+      arrangement must not tile; the judgement is whether the effect occurred, not whether the result
+      is pleasant; and the conditions must be discovered by the student rather than supplied.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "chapter IV, PDF pages 34-37"}
+  members:
+    - {sk_ref: sk_alb_c003_0011, role_in_system: claim_demonstrated, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0010, role_in_system: supporting_analogy, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0012, role_in_system: exercise, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0013, role_in_system: what_it_teaches, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0014, role_in_system: what_it_teaches, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0016, role_in_system: pedagogy, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0017, role_in_system: criterion, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_alb_c003_0015, role_in_system: failure_condition, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+      - {from: sk_alb_c003_0012, to: sk_alb_c003_0009, nature: "the exercise requires colour paper's exact repeatability", origin: source_stated}
+      - {from: sk_alb_c003_0013, to: sk_alb_c003_0012, nature: "influence is what the exercise reveals", origin: source_stated}
+      - {from: sk_alb_c003_0015, to: sk_alb_c003_0012, nature: "the tiling failure is a failure of this exercise specifically", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_alb_c003_0016, sk_alb_c003_0015]
+        nature: >
+          The pedagogy withholds reasons and favourable conditions so students discover them by trial
+          and error, while the layout constraints are stated to the reader directly as rules. The
+          source does not say whether students are told the tiling constraint or expected to
+          rediscover it.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      Membership is source-stated: all eight members occupy one chapter organised around one
+      exercise. The recorded conflict between the withholding pedagogy and the directly stated layout
+      rules is ours; the source states each without noticing the tension.
+  provenance:
+    locator: "chapter IV"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual

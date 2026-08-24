@@ -1,0 +1,804 @@
+# CANON-003 book 4 — Josef Albers, "Interaction of Color", chapters I-V (PDF pp.29-43)
+# Fresh SPEC-03 extraction. No historical Albers material exists in this repository.
+# Granularity: CANON-001 V0 rule, unchanged.
+# Visual completeness: blocked_visual_validation — the digitisation is greyscale and the subject is
+# colour. See visual-evidence-ledger.yaml. Verbatim quotations were confirmed against rendered page
+# images, not taken from the OCR layer.
+# Section rationale: chapters I-V are a tightly connected span that carries Albers's whole argument
+# from premise to method — colour cannot be remembered or named, is never seen in isolation,
+# therefore study interaction, therefore work in paper, therefore teach by deception exercises.
+
+source_id: albers_interaction_of_color_ch1_5
+
+source_knowledge:
+
+- sk_id: sk_alb_c003_0001
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "If one says \"Red\" (the name of a color) and there are 50 people listening, it can be expected that there will be 50 reds in their minds."
+  concept_label: a_colour_name_produces_as_many_colours_as_listeners
+  label_origin: extractor_assigned
+  claim: >
+    Naming a colour to fifty listeners produces fifty different colours in their minds, and all of
+    them very different. Even naming a colour everyone has seen innumerable times — the red of
+    Coca-Cola signs, the same red across the country — still produces many different reds. Given
+    hundreds of red samples to choose from, listeners select quite different colours, and none can
+    be sure of having found the precise shade.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "any spoken or written colour name"
+  caveats:
+    - text: "the source presses the case further: even when the actual sign is shown so everyone focuses on the same red, each receives the same projection on the retina, yet no one can be sure each has the same perception"
+      origin: source_stated
+    - text: "the fifty-people case is a teaching demonstration described in the classroom, not a reported study; no counts are given"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_alb_c003_0002, note: "poor visual memory is offered as the first explanation"}
+    - {relation: generalises, target: sk_alb_c003_0003, note: "inadequate nomenclature as the second"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: "I — Color recollection, visual memory"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter I, PDF page 29"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0002
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "the visual memory is very poor in comparison with our auditory memory"
+  concept_label: visual_memory_for_colour_is_poor_compared_with_auditory_memory
+  label_origin: extractor_assigned
+  claim: >
+    It is hard, if not impossible, to remember distinct colours. Visual memory is very poor compared
+    with auditory memory, which can often repeat a melody heard only once or twice.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "recall of specific colours"
+  caveats:
+    - text: "a comparative claim about two memory systems, asserted without study, measurement or citation"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it is hard, if not impossible, to remember distinct colors"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0001, note: "the first stated reason names differ from colours"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "I"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter I, PDF page 29"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0003
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "the nomenclature of color is most inadequate"
+  concept_label: colour_nomenclature_is_inadequate_to_the_number_of_colours
+  label_origin: extractor_assigned
+  claim: >
+    The nomenclature of colour is most inadequate: there are innumerable colours and very few names
+    for them.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "colour naming in general"
+  caveats:
+    - text: "a source addressing its own field's vocabulary as insufficient rather than as ambiguous — a different diagnosis from Light: Science & Magic's refusal of a word carrying divergent meanings"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the nomenclature of color is most inadequate"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0001, note: "the second stated reason"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "I"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter I, PDF page 29"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0004
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "in reading we do not read letters but words, words as a whole, as a \"word picture.\""
+  concept_label: reading_proceeds_by_word_picture_not_by_letter
+  label_origin: extractor_assigned
+  claim: >
+    The constructivist notion that the simpler a letter's form the simpler its reading has proved
+    wrong, because reading does not proceed letter by letter but by whole words taken as a word
+    picture. The source attributes the discovery to psychology, particularly Gestalt psychology.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching, typography]
+    conditions: "reading continuous text"
+  caveats:
+    - text: "the source names the origin of the mistaken view — an obsession of beginning constructivism that became something like a dogma and is still followed by modernistic typographers"
+      origin: source_stated
+    - text: "attributed to Gestalt psychology and to ophthalmology without specific citation"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the phrase Interaction of Color set four ways on one page — serif capitals, serif mixed case, sans capitals, sans mixed case", figure_ref: vis_alb_word_pictures}
+  intra_source_relations:
+    - {relation: generalises, target: sk_alb_c003_0005, note: "the differentiation rule follows from reading by whole shape"}
+    - {relation: generalises, target: sk_alb_c003_0007, note: "and is the model for the claim that reading depends on context"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "II — Color reading and contexture"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter II, PDF page 30"
+    figure_refs: [vis_alb_word_pictures]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_alb_word_pictures]}
+
+- sk_id: sk_alb_c003_0005
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "the more the letters are differentiated from each other, the easier is the reading"
+    - "words consisting of only capital letters present the most difficult reading -- because of their equal height, equal volume, and, with most, their equal width"
+  concept_label: differentiation_between_letters_aids_reading_and_capitals_hinder_it
+  label_origin: extractor_assigned
+  claim: >
+    The more letters are differentiated from one another, the easier reading becomes. Words set
+    entirely in capitals are hardest to read, because of their equal height, equal volume and, in
+    most cases, equal width. Sans-serif faces give an uneasier read than serif faces in text, and
+    the source holds the fashionable preference for sans-serif in text to show neither historical
+    nor practical competence.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Reading works on the whole word's shape, so uniformity of height, volume and width removes the
+      differentiating outline the eye uses.
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching, typography]
+    conditions: "continuous text, not captions"
+  caveats:
+    - text: "the source gives a historical reason for its judgement on sans-serif: such faces were designed for captions rather than texts, introduced when pictorial reproduction arrived with stone lithography, and produce poor word pictures"
+      origin: source_stated
+    - text: "attributed to ophthalmology without citation; the page's four-way setting demonstrates the difference but measures nothing"
+      origin: extractor_observed
+  source_stated_problems:
+    - "words consisting of only capital letters present the most difficult reading"
+    - "they produce poor \"word pictures\""
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the same phrase in serif and sans, capitals and mixed case, showing the differing outlines", figure_ref: vis_alb_word_pictures}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0004, note: "the consequence of reading by word picture"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "II"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter II, PDF page 30"
+    figure_refs: [vis_alb_word_pictures]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_alb_word_pictures]}
+
+- sk_id: sk_alb_c003_0006
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "we almost never (that is, without special devices) see a single color unconnected and unrelated to other colors"
+    - "Colors present themselves in continuous flux, constantly related to changing neighbors and changing conditions."
+  concept_label: a_colour_is_never_seen_alone
+  label_origin: extractor_assigned
+  claim: >
+    A single tone can be heard on its own, but a single colour is almost never seen unconnected and
+    unrelated to other colours. Colours present themselves in continuous flux, constantly related to
+    changing neighbours and changing conditions.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "ordinary viewing, without special devices"
+  caveats:
+    - text: "the source hedges the universality with 'almost never' and with the parenthetical exception of special devices"
+      origin: source_stated
+    - text: "this is the premise the entire book rests on: if it were false, studying interaction rather than pigment would have no justification"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_alb_c003_0008, note: "the reason the study is of interaction rather than of pigment"}
+    - {relation: generalises, target: sk_alb_c003_0011, note: "and the reason a colour can be made to look like two"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "II"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter II, PDF page 31"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0007
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "clear reading depends upon the recognition of context"
+    - "Hearing music depends on the recognition of the in-between of the tones, of their placing and of their spacing."
+  concept_label: meaning_lives_in_the_relations_between_elements_not_in_the_elements
+  label_origin: extractor_assigned
+  claim: >
+    Clear reading depends on recognising context. The source argues the same across three domains:
+    hearing single tones is not hearing music, which depends on the in-between of tones, their
+    placing and spacing; knowing spelling has nothing to do with understanding poetry; and factually
+    identifying the colours in a painting has nothing to do with sensitive seeing or with
+    understanding the colour action within it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "reading, music, poetry and painting alike, per the source"
+  caveats:
+    - text: "the argument is carried by parallel analogy across four domains rather than by evidence in any one of them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0004, note: "the word-picture case generalised"}
+    - {relation: generalises, target: sk_alb_c003_0008, note: "supplies the warrant for studying interaction"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "II"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter II, PDF page 31"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0008
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "Our concern is the interaction of color; that is, seeing what happens between colors."
+    - "what counts is not the what but the how"
+  concept_label: the_object_of_study_is_what_happens_between_colours
+  label_origin: extractor_assigned
+  claim: >
+    This study differs fundamentally from one that anatomically dissects colorants and physical
+    qualities such as wavelength. Its concern is the interaction of colour — seeing what happens
+    between colours. The source aligns this with what it says Kandinsky often demanded for the
+    reading of art: what counts is not the what but the how.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "the source's own programme of study"
+  caveats:
+    - text: "an explicit demarcation from colour science; the source is not disputing the physics but declaring a different object of study"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_alb_c003_0006, note: "the programme is warranted by colours never being seen alone"}
+    - {relation: generalises, target: sk_alb_c003_0009, note: "the choice of paper follows from the programme"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "II"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter II, PDF page 31"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0009
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "color paper permits a repeated use of precisely the same color without the slightest change in tone, light, or surface quality"
+  concept_label: colour_paper_is_preferred_to_paint_for_experimental_control
+  label_origin: extractor_assigned
+  claim: >
+    The studies are done in colour paper rather than paint. Paper provides innumerable ready-made
+    colours cheaply, gathered from printers' waste, packing and wrapping papers, magazine cutouts and
+    catalogues rather than from prepared sets. It permits repeated use of precisely the same colour
+    without the slightest change in tone, light or surface quality, and without traces of hand or
+    tool. It needs almost no equipment beyond paste and a razor blade. It protects against unwanted
+    texture — brush marks, changes from wet to dry, hard and soft boundaries — which the source says
+    too often hides poor colour conception or insensitive handling. And because a large collection
+    can be displayed at once, it trains constant comparison of neighbouring and contrasting colours
+    in a way no palette can.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Exact repeatability of a colour is what allows a study to isolate one variable; paint varies
+      with thickness, evenness and application, so it cannot supply the same colour twice.
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "classroom and studio colour exercises"
+  caveats:
+    - text: "the source names the least desirable option specifically: prepared 'tuned' sets claiming to be failure-proof, and named systems such as Munsell or Ostwald"
+      origin: source_stated
+    - text: "the reasoning is that of experimental control — hold every variable but one — stated in practical rather than methodological language"
+      origin: extractor_observed
+  source_stated_problems:
+    - "varying density and intensity from traces of hand or tool"
+    - "so-called texture which too often only hides poor color conception or application"
+  source_stated_remedies:
+    - "work in colour paper rather than paint"
+    - "assemble a paper collection from waste strips, packing papers and magazine cutouts rather than prepared sets"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0008, note: "the material choice the programme requires"}
+    - {relation: generalises, target: sk_alb_c003_0012, note: "exact repeatability is what makes the one-colour-as-two exercise possible"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: "III — Why color paper, instead of pigment and paint"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter III, PDF pages 32-33"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0010
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "a discrepancy between physical fact and psychic effect"
+  concept_label: the_water_pots_show_perception_diverging_from_physical_fact
+  label_origin: extractor_assigned
+  claim: >
+    Three bowls of water — warm, lukewarm, cold — demonstrate the gap between physical fact and
+    perception. Hands dipped into the outer bowls feel warm on the left and cold on the right; moved
+    into the middle bowl they feel the temperatures reversed, cold on the left and warm on the right,
+    though the water is neither, being lukewarm. The source calls this a haptic illusion and states
+    that optical illusions deceive in much the same way, leading us to see and read other colours
+    than those physically present.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A perceived quality is read relative to what preceded it rather than absolutely, so the same
+      physical state yields opposite perceptions depending on context.
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "offered as an analogy for optical perception of colour"
+  caveats:
+    - text: "the analogy is between touch and sight and is asserted rather than argued; the source moves directly from 'in much the same way' to the optical case"
+      origin: extractor_observed
+    - text: "the demonstration is one the reader can perform, which is what gives it force without requiring the reader to trust the author"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_alb_c003_0011, note: "the physical model for colour relativity"}
+  evidence:
+    characteristics: [explicitly_stated, argued, empirical_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "IV — A color has many faces, the relativity of color"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF page 34"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0011
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "Color is the most relative medium in art."
+  concept_label: colour_is_the_most_relative_medium_in_art
+  label_origin: source_verbatim
+  claim: >
+    Colour is the most relative medium in art. The source has this written on the blackboard and in
+    students' notebooks at the outset of the relativity study.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "colour as an artistic medium"
+  caveats:
+    - text: "a superlative comparing colour against all other artistic media, asserted without the comparison being made"
+      origin: extractor_observed
+    - text: "the studies that would demonstrate it were unavailable in colour in this digitisation, so within this extraction the claim rests entirely on the text and on the water-pot analogy"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0010, note: "the colour case of the general relativity of perception"}
+    - {relation: depends_on, target: sk_alb_c003_0006, note: "relativity follows from never seeing a colour alone"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF page 34"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0012
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "the first exercise is to make one and the same color look different"
+    - "2 small rectangles of the same color and the same size be placed on large grounds of very different color"
+  concept_label: one_colour_can_be_made_to_look_like_two
+  label_origin: extractor_assigned
+  claim: >
+    The founding exercise is to make one and the same colour look different: two small rectangles of
+    identical colour and size, placed on large grounds of very different colour, so that the two
+    identical pieces appear unlike each other and if possible incredibly different. The only colours
+    factually different are the grounds, which are alike in size and shape.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "small equal pieces on large differing grounds"
+  caveats:
+    - text: "an isolation as strict as any in this batch: the influenced pieces are literally the same paper, so nothing but the ground varies"
+      origin: extractor_observed
+    - text: "the studies demonstrating it were unavailable in colour in this digitisation; the claim is extracted from text alone"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "place two small rectangles of the same colour and size on large grounds of very different colour"
+  examples:
+    positive:
+      - {description: "the relativity studies themselves, unavailable in colour in this digitisation", figure_ref: vis_alb_relativity_studies}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0011, note: "the exercise that demonstrates relativity"}
+    - {relation: depends_on, target: sk_alb_c003_0009, note: "requires the exact repeatability paper provides"}
+    - {relation: qualified_by, target: sk_alb_c003_0015, note: "the arrangement must avoid the tiling failure"}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF pages 34-35"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0013
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "change is a result of influence"
+    - "certain colors are hard to change, and that there are others more susceptible to change"
+  concept_label: colours_differ_in_whether_they_influence_or_accept_influence
+  label_origin: extractor_assigned
+  claim: >
+    Change in a colour's appearance is a result of influence, so the influencing colour must be
+    distinguished from the influenced one. Some colours are hard to change and others are more
+    susceptible, and the study seeks to identify which are inclined to exert influence and which will
+    accept it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "colours placed adjacent to one another"
+  caveats:
+    - text: "the source states this as something the class becomes aware of and discovers, rather than as a rule given to them"
+      origin: source_stated
+    - text: "no list of which colours influence and which accept influence is given in this span; it is presented as a distinction to be found, not a table to be learned"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alb_c003_0012, note: "what the exercise teaches"}
+    - {relation: qualified_by, target: sk_alb_c003_0014, note: "the influence runs along two dimensions"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF page 35"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0014
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "there are 2 kinds of changing influences working in 2 directions, light on the one side and hue on the other. And both occur simultaneously though in varying strength"
+  concept_label: influence_operates_on_light_and_hue_simultaneously
+  label_origin: extractor_assigned
+  claim: >
+    Two kinds of changing influence work in two directions — light on one side and hue on the other.
+    Both occur simultaneously, though in varying strength.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "any adjacency of colours"
+  caveats:
+    - text: "the source presents this as what a second, more advanced class exhibition should clarify, so it is staged as a later discovery rather than an initial instruction"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alb_c003_0013, note: "specifies the two dimensions influence runs along"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF page 35"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0015
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "their illusional effects annul each other"
+    - "The simultaneous influence from too many directions -- from left and right, and above and below"
+    - "The unfavorable distribution of area between the influencing and the influenced color."
+  concept_label: tiled_arrangements_annul_the_effect_they_are_meant_to_show
+  label_origin: extractor_assigned
+  claim: >
+    Small pieces on small grounds must not be used, and studies interlocked into a tile pattern
+    destroy the effect they are meant to demonstrate. Two reasons are given: simultaneous influence
+    arriving from too many directions at once — left and right, above and below — and an unfavourable
+    distribution of area between the influencing and the influenced colour. Shown separately in pairs
+    the same studies demonstrate the effect clearly. The source says such presentation lacks both
+    sight and insight.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Influence arriving from several directions at once cancels, and too small a ground relative to
+      the influenced piece removes the ground's power to influence it.
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "presentation and layout of colour studies"
+  caveats:
+    - text: "the counter-example is marked graphically as well as verbally — the tiled arrangement is struck through with a diagonal and labelled NO"
+      origin: extractor_observed
+    - text: "the figure reproduces perfectly in this greyscale digitisation and is still unable to show the fault, which is that the colour illusions cancel"
+      origin: extractor_observed
+  source_stated_problems:
+    - "arrangements such as the one shown below disguise the desired effect and lead to confusion"
+    - "such presentation lacks both sight and insight"
+  source_stated_remedies:
+    - "show studies separately in pairs rather than interlocked in a tile pattern"
+    - "do not use small pieces of paper on small grounds"
+  examples:
+    counter:
+      - {description: "a two-by-three grid of small centred squares, struck through and labelled NO", figure_ref: vis_alb_tile_arrangement}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alb_c003_0012, note: "constrains how the exercise must be presented"}
+    - {relation: qualifies, target: sk_alb_c003_0013, note: "an area condition on influence being able to operate"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF pages 36-37"
+    figure_refs: [vis_alb_tile_arrangement]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_alb_tile_arrangement]}
+
+- sk_id: sk_alb_c003_0016
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "the class is invited to produce similar effects but is not given reasons or favorable conditions"
+    - "discovery and invention are the criteria of creativeness"
+  concept_label: withhold_the_method_so_the_class_discovers_it
+  label_origin: extractor_assigned
+  claim: >
+    Students are shown challenging examples of surprising colour changes and then invited to produce
+    similar effects, but are given neither the reasons nor the favourable conditions. Work therefore
+    begins on a trial-and-error basis, which the source holds promotes continuing comparison,
+    observation and thinking in situations, and makes the class aware that discovery and invention
+    are the criteria of creativeness.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Withholding the explanation forces trial and error, and trial and error is what produces the
+      comparison and observation the study is trying to train.
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "classroom teaching of colour"
+  caveats:
+    - text: "a claim about pedagogy rather than about colour, and the only one in this span that concerns how knowledge should be transmitted rather than what is true of colour"
+      origin: extractor_observed
+    - text: "the source is describing its own long-running teaching practice; no comparison against a differently taught class is offered"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "show the effect, withhold the reasons, and let the class find the conditions by trial and error"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alb_c003_0012, note: "how the exercise is to be set"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF pages 34-35"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alb_c003_0017
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "whether or not we arrive at a pleasant or harmonious color combination is unimportant"
+  concept_label: pleasantness_and_harmony_are_not_the_criterion
+  label_origin: extractor_assigned
+  claim: >
+    In these exercises and all that follow, whether the result is a pleasant or harmonious colour
+    combination is unimportant. Precision and clean execution are required for all finished studies.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "all the studies in the source's programme"
+  caveats:
+    - text: "an explicit rejection of aesthetic judgement as the measure of the work, in favour of whether the intended perceptual effect was achieved"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alb_c003_0012, note: "states what the exercise is and is not judged on"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "IV"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter IV, PDF page 36"
+    figure_refs: [vis_alb_tile_arrangement]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_alb_tile_arrangement]}
+
+- sk_id: sk_alb_c003_0018
+  source_id: albers_interaction_of_color_ch1_5
+  source_terms:
+    - "Very few are able to distinguish higher and lower light intensity (usually called higher and lower value) between different hues."
+  concept_label: few_can_judge_relative_lightness_across_different_hues
+  label_origin: extractor_assigned
+  claim: >
+    Very few people can distinguish higher from lower light intensity — usually called value —
+    between different hues, and only a minority can tell the lighter from the darker within close
+    cases. The source draws a parallel: someone unable to distinguish a higher from a lower tone
+    probably should not make music, and by the same standard almost everyone would prove incompetent
+    for the proper use of colour.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [colour_study_and_teaching]
+    conditions: "comparing lightness across differing hues"
+  caveats:
+    - text: "the source notes this holds despite daily exposure to black-and-white images, and argues that photography and photomechanical reproduction have given an unprecedented training in reading greys, with a parallel training in colour on the way"
+      origin: source_stated
+    - text: "a claim about the distribution of an ability in the population, asserted without measurement"
+      origin: extractor_observed
+  source_stated_problems:
+    - "only a minority can distinguish the lighter from the darker within close cases"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alb_c003_0014, note: "light is one of the two dimensions influence runs along, and is the harder to judge"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "V — Lighter and/or darker, light intensity, lightness"
+    section: null
+    page_start: null
+    page_end: null
+    locator: "chapter V, PDF page 38"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
