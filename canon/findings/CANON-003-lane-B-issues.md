@@ -340,3 +340,80 @@ it, not because I did. Second, it is evidence about the instrument — **mechani
 fidelity error that reading would probably not have.** The drafted relations were individually
 plausible and read naturally; only the fixed vocabulary check exposed them. That is an argument for
 validating before every checkpoint rather than at the end of a book.
+
+---
+
+## LB-09 — two books by the same authors are not two independent origins, and nothing records that
+
+*Added after book 9's fresh checkpoint `ddef98d`, from the post-checkpoint comparison. Marked as
+post-checkpoint so it is not read as evidence the fresh pass produced.*
+
+**Plain English.** SPEC-05 allows a claim that several sources describe the same thing, but only when
+the sources are independent. *Grammar of the Shot* and *Grammar of the Edit* are by the same two
+authors, in the same series, from the same publisher, a year apart, each referring to the other.
+Agreement between them is one position stated twice. Nothing in the schema records that.
+
+**Where observed.** Book 9 compared against book 1 (*Grammar of the Shot* ch.4, pre-parallel, shared
+starting evidence). **1 distinct book pair.**
+
+**Status.** OBSERVED — the shared authorship is on both title pages. The consequence for aggregation
+is INFERRED, since no aggregation pass has run yet.
+
+**Affected layer.** Ontology; cross-source synthesis.
+
+**New or recurrence.** New. Related in spirit to the pre-parallel finding that the isolation rule had
+a hole because the specs quote books the batch processes — both are cases of an assumed independence
+that does not hold — but the mechanism is different: that one was contamination of the extractor,
+this is contamination of the *evidence base*.
+
+**The evidence.** Four terms now exist in two source files with near-identical meaning:
+
+| Term | In book 1 | In book 9 |
+|---|---|---|
+| `axis_of_action` / `action_line` | `t_gos_*` | `t_gote_c003_0019` |
+| `screen_direction` | `t_gos_*` | `t_gote_c003_0018` |
+| `jump_cut` | `t_gos_*` | `t_gote_c003_0031` |
+| `eye_line_match` / `eye_trace` | `t_gos_*` | `t_gote_c003_0021` |
+
+Both books also independently state that their own rules are defeasible by creative intent — book 1
+as "very few absolutes ... a creative reason is sufficient warrant", book 9 as "effective creativity
+overrules grammar". Under a naive count that is two sources agreeing on a meta-position about craft
+rules. It is one authorial position, restated.
+
+**Why it matters.** SPEC-05's `cross_source_concept` is the only concept kind that makes a claim
+about the world, and the only one requiring two or more independent origins. It is the join the whole
+architecture is built to support. Its guard is a count of `origin_ref` values, and `origin_ref` is a
+source identifier. **Two source identifiers can share an author, a publisher, a series, and a
+decade.** A promotion rule that counts distinct `origin_ref`s would pass this pair.
+
+**Practical consequence if unchanged.** The first `cross_source_concept` this corpus produces could
+be built on a same-author pair and presented as convergent evidence. Because
+`children_are_authoritative` is load-bearing, the children would still carry the right detail — but
+the parent would assert an agreement that does not exist, and the count at the parent is exactly what
+an aggregation layer would report.
+
+**Proposed fix — PROPOSAL ONLY, not applied.** An independence check before promoting to
+`cross_source_concept`, drawing on author and publisher rather than source id alone. **Weigh against:**
+this is one pair, it was found by hand, and the batch has not yet attempted a single cross-source
+promotion, so the failure is predicted rather than observed. It may also be cheaper to handle at the
+promotion review — SPEC-05 already requires human review to promote `potentially_equivalent_to` to
+`same_failure_family`, so a reviewer might catch it without a schema change.
+
+**A note on how this was found.** It surfaced because the batch's own selection policy deliberately
+chose a companion volume for source-shape diversity. The selection rule that made the corpus broader
+also introduced the dependency, and the two facts arrived together.
+
+---
+
+## Correction to the inventory's expectation for book 9
+
+The source inventory selected *Grammar of the Edit* as a test of "whether two books by the same
+authors produce near-duplicate knowledge". **They do not.** The overlap is about 13% — eight of sixty
+objects — and where the two books share a concept, the shooting book states it as a camera action and
+the editing book as a selection constraint on footage that already exists. The 30-degree rule is the
+clearest instance: "move the camera at least 30 degrees" against "place shots more than 30 degrees
+apart".
+
+That is a more useful result than the near-duplication the inventory anticipated, and it changes the
+question. The risk from a companion volume is not redundant knowledge; it is **false independence**,
+which is LB-09.
