@@ -30,6 +30,19 @@ All of these must hold:
 `needs_controller_review`. Do not solve the problem and continue — that silently promotes a
 worker's judgement call into an architecture decision.**
 
+### Pre-approved blocked-candidate handling
+
+A multi-candidate discovery/acquisition task may explicitly authorize a narrower behaviour for an
+individual candidate: record it as blocked/unavailable and continue to the next already-approved
+candidate **without crossing the gate**. This is allowed only when the task file defines the status,
+the candidate is optional, no terms are accepted, no authentication/payment/manual permission is
+attempted, and no ambiguous material has already been acquired.
+
+This does **not** waive the ACCESS / LEGAL stop gate. The worker must still stop the whole task if
+resolving the gate is necessary to meet the task objective, if a human legal/permission judgement is
+needed to proceed, or if ambiguity affects material already downloaded/used. The exception exists so
+a pre-approved corpus survey does not halt merely because one optional candidate is gated.
+
 ## Autonomous queues
 
 `mode: autonomous_queue` lets a worker continue through a pre-approved sequence — e.g.
