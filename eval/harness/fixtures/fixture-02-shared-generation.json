@@ -1,0 +1,52 @@
+{
+  "SYNTHETIC_FIXTURE": true,
+  "WARNING": "MOCK DATA. Hand-written to exercise the harness. Not a measurement of any model.",
+  "fixture_id": "fx-02-shared-generation",
+  "purpose": "Exercises the correlation rule: ONE generated image scored on TWO dimensions must produce two dimension-results but must NOT be counted as two independent trials.",
+  "battery_ref": "eval/battery/CAPABILITY-BATTERY-V0-DRAFT.md §6.4, §6.4b, §5.4",
+
+  "items": [
+    {
+      "item_id": "fx02-scene-001",
+      "dimension": "object_count",
+      "difficulty_level": 3,
+      "observation_unit": "frame",
+      "target": "3 laptops",
+      "conditions": { "detector_confidence": 0.9, "shared_generation_with": "fx02-scene-001-rel" }
+    },
+    {
+      "item_id": "fx02-scene-001-rel",
+      "dimension": "spatial_relationship",
+      "difficulty_level": 3,
+      "observation_unit": "frame",
+      "target": "cup left_of laptop",
+      "conditions": { "detector_confidence": 0.3, "shared_generation_with": "fx02-scene-001" }
+    }
+  ],
+
+  "trials": [
+    {
+      "trial_id": "fx02-t001",
+      "item_id": "fx02-scene-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx02/scene-001",
+      "note": "ONE generation. Scored on two dimensions below. The harness must report 1 distinct generation, 1 trial per dimension, and must not sum these into 2 independent trials.",
+      "scored": [
+        {
+          "dimension": "object_count",
+          "instrument": { "id": "mock-detector", "version": "fixture", "role": "gate", "state": "published_calibration_only" },
+          "verdict": "fail",
+          "defects": [ { "term": "count exceeded", "observed_by": "instrument" } ],
+          "cost": { "currency": "USD", "usd_per_call": 0.03, "usd_per_evaluation": 0.0, "usd_human_verification_per_trial": null, "human_verification": "not_measured" }
+        },
+        {
+          "dimension": "spatial_relationship",
+          "instrument": { "id": "mock-detector", "version": "fixture", "role": "gate", "state": "published_calibration_only" },
+          "verdict": "pass",
+          "defects": [],
+          "cost": { "currency": "USD", "usd_per_call": 0.0, "usd_per_evaluation": 0.0, "usd_human_verification_per_trial": null, "human_verification": "not_measured", "note": "generation cost already charged to the object_count result; charging it twice would double-count one generation" }
+        }
+      ]
+    }
+  ]
+}
