@@ -1,0 +1,1592 @@
+# CANON-002 — Robin Williams, "The Non-Designer's Design Book", ch.2 Proximity, printed pp.15-32
+# Fresh SourceKnowledge extraction created directly under SPEC-03.
+#
+# Independence: produced WITHOUT consulting canon/findings/FINDINGS-04-williams-proximity-pass1.md,
+# canon/knowledge/migration/AUDIT-williams.md, or
+# canon/knowledge/atoms-v1-superseded/williams-proximity-atoms.yaml.
+#
+# Granularity: CANON-001 V0 rule, as approved 24 Aug 2026 — a separate object where a claim can be
+# retrieved, supported, contradicted or qualified independently; NOT for a further example,
+# explanation or restatement. Restatements are carried inside the object they restate, usually as
+# source_stated_remedies. Ambiguous cases are listed in the CANON-002 findings.
+#
+# Visual evidence: every figure_ref resolves to the ledger in visual-evidence-ledger.yaml, which was
+# completed BEFORE this file was written. Page images were rendered ephemerally and not committed;
+# provenance is recorded in the ledger header.
+#
+# NOTE on SPEC-03's Molly Bang example: per CANON-002, that example is known to be factually wrong
+# and was NOT used to decide source_explicit versus extractor inference here. The schema rule and
+# the source evidence were used instead.
+
+source_id: williams_non_designers_design_book_ch2_proximity
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# THE PRINCIPLE AND ITS CONVERSE
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0001
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Robin's Principle of Proximity states that you group related items together, move them physically close to each other so the related items are seen as one cohesive group rather than a bunch of unrelated bits."
+  concept_label: group_related_items_into_close_proximity
+  label_origin: extractor_assigned
+  claim: >
+    Related items should be grouped and moved physically close to one another so that they are seen
+    as one cohesive group rather than a collection of unrelated pieces.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page carrying more than one piece of information"
+  caveats:
+    - text: "the source names this as its own principle, attaching the author's name to it"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "group related items together and move them physically close to each other"
+  examples:
+    positive:
+      - {description: "business card regrouped from five scattered items into two clusters", figure_ref: vis_business_card}
+      - {description: "long undifferentiated list separated into groups by blank lines", figure_ref: vis_correspondences_list}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_rw_c002_0002, note: "the source states the positive rule and its converse as a matched pair"}
+    - {relation: depends_on, target: sk_rw_c002_0004, note: "the instruction rests on the perceptual claim that closeness is read as relationship"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "opening statement of the principle"
+    page_start: 15
+    page_end: 15
+    figure_refs: [vis_business_card, vis_correspondences_list]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_business_card, vis_correspondences_list]
+
+- sk_id: sk_rw_c002_0002
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Items or groups of information that are not related to each other should not be in close proximity (nearness) to the other elements, which gives the reader an instant visual clue to the organization and content of the page."
+    - "Don't create relationships with elements that don't belong together! If they are not related, move them apart from each other."
+  concept_label: unrelated_items_must_be_kept_apart
+  label_origin: extractor_assigned
+  claim: >
+    Items that are not related to each other must not be placed in close proximity. Separation is
+    itself a signal: the absence of closeness tells the reader those items do not belong together.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page containing items that are not related"
+  caveats:
+    - text: "the source sets this out as an equal half of the principle rather than as a corollary, italicising the negation in both statements of it, and repeats it in the chapter's closing list of things to avoid"
+      origin: source_stated
+    - text: "the newsletter flag is the worked case: two items placed together were implying a relationship the author judged wrong, so the fault was a false grouping rather than a missing one"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "if they are not related, move them apart from each other"
+  examples:
+    positive:
+      - {description: "newsletter flag in which the society name and the tagline sat together, implying a relationship the author judged incorrect", figure_ref: vis_newsletter_flag}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_rw_c002_0001, note: "matched pair"}
+    - {relation: depends_on, target: sk_rw_c002_0004, note: "separation only signals if closeness signals"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "statement of the principle; restated in Summary of proximity"
+    page_start: 15
+    page_end: 32
+    figure_refs: [vis_newsletter_flag]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_newsletter_flag]
+
+- sk_id: sk_rw_c002_0003
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "When several items are in close proximity to each other, they become one visual unit rather than several separate units."
+  concept_label: close_items_fuse_into_one_visual_unit
+  label_origin: extractor_assigned
+  claim: >
+    Several items placed in close proximity stop being read as several separate units and are read
+    as a single visual unit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "two or more items placed close together"
+  caveats:
+    - text: "this is the source's perceptual claim about what the eye does; it is stated separately from, and used to support, the relationship claim"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "ten-item flower list in which one blank line makes the last four read as a separate unit; word content, order, typeface and box identical between the two versions", figure_ref: vis_flowers}
+  intra_source_relations:
+    - {relation: generalises, target: sk_rw_c002_0004, note: "fusing into one unit is what the relationship reading is built on"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - repeated_within_source
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.17 statement; restated in Summary of proximity"
+    page_start: 17
+    page_end: 32
+    figure_refs: [vis_flowers]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_flowers]
+
+- sk_id: sk_rw_c002_0004
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "on a page (as in life), physical closeness implies a relationship"
+    - "As in life, the proximity, or the closeness, implies a relationship."
+  concept_label: physical_closeness_is_read_as_relationship
+  label_origin: extractor_assigned
+  claim: >
+    Physical closeness on a page is read by the viewer as a relationship between the items, in the
+    same way closeness between people is read as a relationship in life.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source grounds it by analogy with life rather than by a perceptual account: closeness
+      between things is habitually read as connection, and the page inherits that habit.
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any two elements on a page"
+  caveats:
+    - text: "the source states this twice in nearly identical wording, at the opening and again on page 17, and returns to it in the summary"
+      origin: source_stated
+    - text: "the analogy with life is offered as grounding but is not developed into a mechanism"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "one blank line splits an otherwise identical list so the last four items read as a distinct set", figure_ref: vis_flowers}
+    counter:
+      - {description: "society name and tagline placed together, implying a relationship the author judged wrong", figure_ref: vis_newsletter_flag}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0003, note: "the semantic reading laid on top of the perceptual fusing"}
+    - {relation: generalises, target: sk_rw_c002_0002, note: "false grouping is a misuse of this same reading"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - repeated_within_source
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "opening; restated p.17 and in Summary of proximity"
+    page_start: 15
+    page_end: 32
+    figure_refs: [vis_flowers, vis_newsletter_flag]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_flowers, vis_newsletter_flag]
+
+- sk_id: sk_rw_c002_0005
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "You understand this instantly. And you understand it without even being conscious of it."
+    - "you instantly know it is not one of the readings, even if you can't see it clearly"
+  concept_label: spatial_grouping_is_read_pre_attentively
+  label_origin: extractor_assigned
+  claim: >
+    The grouping conveyed by spacing is understood instantly and without conscious effort, and
+    remains legible even when the content itself cannot be read clearly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any grouped page, including when viewed too briefly or too small to read"
+  caveats:
+    - text: "the source states the not-clearly-visible version specifically of subsidiary information placed far from a set of readings"
+      origin: source_stated
+    - text: "this is the strongest testable claim in the chapter and the one furthest from what the page images can show; a picture can show that a grouping exists but not that it is perceived instantly or unconsciously"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "subsidiary venue and ticket block set far below three evenly spaced readings", figure_ref: vis_first_friday_before_after}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0004, note: "specifies how the relationship reading is arrived at"}
+    - {relation: generalises, target: sk_rw_c002_0016, note: "the glance-level claim rests on this"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "flower example p.15; First Friday commentary p.21"
+    page_start: 15
+    page_end: 21
+    figure_refs: [vis_first_friday_before_after]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_first_friday_before_after]
+
+# ─────────────────────────────────────────────────────────────
+# WHAT GROUPING BUYS
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0006
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "how many times does your eye stop to look at something?"
+    - "Does your eye stop five times? Of course—there are five separate items on this little card."
+  concept_label: separate_elements_equal_eye_stops
+  label_origin: extractor_assigned
+  claim: >
+    The number of separate elements on a page equals the number of times the reader's eye stops, so
+    element count is directly observable by counting eye stops.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page or small format piece"
+  caveats:
+    - text: "the source treats the equality as obvious rather than arguing it"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "business card with five items placed apart, described by the source as five eye stops", figure_ref: vis_business_card}
+  intra_source_relations:
+    - {relation: generalises, target: sk_rw_c002_0026, note: "the counting procedure depends on this equivalence"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "business card p.16; restated under How to get it p.32"
+    page_start: 16
+    page_end: 32
+    figure_refs: [vis_business_card]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_business_card]
+
+- sk_id: sk_rw_c002_0007
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "You understand where to begin reading the message, and you know when you are finished."
+    - "You should be able to follow a logical progression through the piece, from a definite beginning to a definite end."
+  concept_label: grouping_establishes_a_definite_entry_and_exit
+  label_origin: extractor_assigned
+  claim: >
+    Grouping gives the reader a definite place to begin and a definite point at which they are
+    finished, so the piece can be followed as a logical progression rather than searched.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page the reader must read through"
+  caveats:
+    - text: "the source poses the ungrouped failure as a series of questions the reader cannot answer, rather than asserting it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it is not clear where you should begin reading the card, and it is not clear when you are finished"
+    - "Do you wander around making sure you didn't miss any corners?"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "regrouped business card, where the source asks whether there is now any question about where to begin", figure_ref: vis_business_card}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0008, note: "one of the several things grouping is said to achieve"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - argued
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.17; restated in Summary of proximity"
+    page_start: 17
+    page_end: 32
+    figure_refs: [vis_business_card]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_business_card]
+
+- sk_id: sk_rw_c002_0008
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "The basic purpose of proximity is to organize."
+    - "simply grouping related elements together into closer proximity automatically creates organization"
+  concept_label: grouping_automatically_creates_organisation
+  label_origin: extractor_assigned
+  claim: >
+    The basic purpose of proximity is to organise, and grouping related elements automatically
+    produces that organisation without further intervention.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page"
+  caveats:
+    - text: "the source states this as the principle's basic purpose, in a section headed The basic purpose"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_rw_c002_0007, note: "entry and exit clarity is one consequence"}
+    - {relation: generalises, target: sk_rw_c002_0009, note: "organised white space is another"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Summary of proximity — The basic purpose"
+    page_start: 32
+    page_end: 32
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0009
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "the \"white space\" (the space around the letters) automatically becomes more organized as well"
+    - "As a by-product of organizing the communication, you also create more appealing (more organized) white space (designers' favorite thing)."
+  concept_label: organised_white_space_is_a_byproduct_of_grouping
+  label_origin: extractor_assigned
+  claim: >
+    Organised white space is a by-product of grouping rather than something designed separately.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page that has been grouped"
+  caveats:
+    - text: "the source calls white space designers' favourite thing, marking it as a valued outcome rather than a neutral one"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0008, note: "a named by-product of the organising purpose"}
+    - {relation: contradicts, target: sk_rw_c002_0018, note: "organised white space is the opposite state to trapped white space"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.17; restated in Summary of proximity"
+    page_start: 17
+    page_end: 32
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0010
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "If the information is organized, it is more likely to be read and more likely to be remembered."
+  concept_label: organised_information_is_more_read_and_remembered
+  label_origin: extractor_assigned
+  claim: >
+    Organised information is more likely to be read and more likely to be remembered.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any organised page"
+  caveats:
+    - text: "an outcome claim about reader behaviour, asserted without measurement, controls or citation; it is the only claim in the chapter that reaches past perception to retention"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0008, note: "the payoff claimed for organisation"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - outcome_claimed
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Summary of proximity — The basic purpose"
+    page_start: 32
+    page_end: 32
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────
+# THE MAGNITUDE OF THE GAP, NOT JUST ITS PRESENCE
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0011
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Notice the spacing between the three readings is the same, indicating that these three groups are somehow related."
+  concept_label: equal_gaps_between_groups_signal_peer_status
+  label_origin: extractor_assigned
+  claim: >
+    When the gaps between several groups are equal, the groups are read as peers — items of the same
+    kind and the same level.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "three or more groups on one page"
+  caveats:
+    - text: "the source's closing list adds the qualifier that equal white space between elements should be avoided unless each group is part of a subset"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "avoid leaving equal amounts of white space between elements unless each group is part of a subset"
+  examples:
+    positive:
+      - {description: "three reading blocks separated by identical vertical gaps", figure_ref: vis_equal_versus_unequal_spacing}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_rw_c002_0013, note: "equal gaps signal sameness where an enlarged gap signals difference"}
+    - {relation: specialises, target: sk_rw_c002_0004, note: "a claim about the size of the gap rather than its presence"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "First Friday commentary p.21; qualifier in What to avoid p.32"
+    page_start: 21
+    page_end: 32
+    figure_refs: [vis_equal_versus_unequal_spacing]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_equal_versus_unequal_spacing]
+
+- sk_id: sk_rw_c002_0012
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "The subsidiary information is farther away—you instantly know it is not one of the readings"
+  concept_label: greater_distance_signals_subordinate_or_unrelated_status
+  label_origin: extractor_assigned
+  claim: >
+    Setting a block noticeably farther away than the gaps used between peers marks it as subordinate
+    to, or outside, that set.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "a page carrying both a peer set and information subsidiary to it"
+  caveats:
+    - text: "the source frames distance here as encoding level within a structure, which is a stronger claim than the chapter's opening statement that closeness implies relationship"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "set subsidiary information farther away than the gaps used between the peer items"
+  examples:
+    positive:
+      - {description: "venue, sponsor and ticket block set well below three evenly spaced readings", figure_ref: vis_first_friday_before_after}
+      - {description: "quotation set farther from the body copy because it is not directly related", figure_ref: vis_web_page}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0011, note: "distance separates levels where equality marks a level"}
+    - {relation: specialises, target: sk_rw_c002_0002, note: "an applied case of keeping unrelated material apart"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "First Friday commentary p.21; web page commentary p.31"
+    page_start: 21
+    page_end: 31
+    figure_refs: [vis_first_friday_before_after, vis_web_page]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_first_friday_before_after, vis_web_page]
+
+- sk_id: sk_rw_c002_0013
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "And why exactly do you assume one reading is different from the others? Because one is separate from the others. You instantly know that event is somehow different because of the spatial relationships."
+  concept_label: enlarging_one_gap_marks_that_item_as_different_in_kind
+  label_origin: extractor_assigned
+  claim: >
+    Enlarging the gap before one item in an otherwise evenly spaced set makes that item read as
+    different in kind from the rest, without any change to its content or its typography.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source attributes the reading directly to the spatial relationships: the separated item is
+      assumed different because it is separate.
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "a set of otherwise evenly spaced peer items"
+  caveats:
+    - text: "the source invites a quick glance rather than a careful reading when posing this, treating the effect as glance-level"
+      origin: source_stated
+    - text: "the two pages carrying this comparison use the same layout template but different content (Winter versus Summer schedule), so spacing is isolated as the variable while the wording is not held constant"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "two readings set close together and a third set off by a visibly larger gap", figure_ref: vis_equal_versus_unequal_spacing}
+    counter:
+      - {description: "the same template with all three gaps equal", figure_ref: vis_equal_versus_unequal_spacing}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_rw_c002_0011, note: "same variable, opposite setting"}
+    - {relation: specialises, target: sk_rw_c002_0004, note: "the relationship reading applied to relative gap size"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Summer Reading Schedule p.22"
+    page_start: 22
+    page_end: 22
+    figure_refs: [vis_equal_versus_unequal_spacing]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_equal_versus_unequal_spacing]
+
+# ─────────────────────────────────────────────────────────────
+# TRAPPED WHITE SPACE
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0014
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "the headlines are each the same distance from the body copy above and below, making the heads and body copy pieces appear as separate, unconnected items"
+    - "You can't tell if the headline belongs to the text above it or below it because the distances are the same."
+  concept_label: equal_space_above_and_below_a_heading_makes_its_attachment_ambiguous
+  label_origin: extractor_assigned
+  claim: >
+    When a heading has the same amount of space above it as below it, the reader cannot tell which
+    body of text it belongs to, and the heading and its text read as separate unconnected items.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source names the cause precisely: the designer typed two Returns after each headline and
+      each paragraph, so the distances above and below are identical and carry no signal.
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any heading set between two blocks of text"
+  caveats:
+    - text: "the source's closing list strengthens this to avoiding even a split second of confusion over whether a headline, subhead, caption or graphic belongs with its related material"
+      origin: source_stated
+    - text: "directly legible from the before image without the prose; the equal gaps are visible"
+      origin: extractor_observed
+  source_stated_problems:
+    - "you can't tell if the headline belongs to the text above it or below it"
+    - "the heads and body copy pieces appear as separate, unconnected items"
+  source_stated_remedies:
+    - "move the headlines closer to their related paragraphs of text"
+  examples:
+    positive:
+      - {description: "mini-poster in which each headline sits equidistant between the paragraphs above and below it", figure_ref: vis_understander_poster}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0004, note: "an ambiguity produced when closeness fails to discriminate"}
+    - {relation: demonstrated_together_with, target: sk_rw_c002_0015, note: "the same page carries both the ambiguity and the trapped-space observation"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Understander poster pp.24-25; restated in What to avoid p.32"
+    page_start: 24
+    page_end: 32
+    figure_refs: [vis_understander_poster]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_understander_poster]
+
+- sk_id: sk_rw_c002_0015
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "there is white space where it doesn't belong, like between the headlines and their related texts"
+    - "When white space is \"trapped\" like this, it tends to visually push the elements apart."
+  concept_label: trapped_white_space
+  label_origin: source_verbatim
+  claim: >
+    White space left between elements that belong together is trapped, and trapped white space
+    actively pushes those elements apart rather than merely failing to join them. A page can have
+    plenty of white space and still be badly served by it if the space is broken up and sitting in
+    the wrong places.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "white space sitting between elements that belong together"
+  caveats:
+    - text: "the source puts trapped in quotation marks, marking it as its own coined usage"
+      origin: source_stated
+    - text: "the source distinguishes quantity of white space from its placement: there is lots of white space available here, but it's all broken up"
+      origin: source_stated
+  source_stated_problems:
+    - "white space where it doesn't belong"
+    - "it tends to visually push the elements apart"
+  source_stated_remedies:
+    - "move related elements together so the white space is not trapped within them"
+  examples:
+    positive:
+      - {description: "mini-poster with broken-up white space between each headline and its paragraph", figure_ref: vis_understander_poster}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_rw_c002_0014, note: "same page"}
+    - {relation: contradicts, target: sk_rw_c002_0009, note: "trapped white space is the failure state whose opposite is the organised white space grouping produces"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Understander poster p.24"
+    page_start: 24
+    page_end: 25
+    figure_refs: [vis_understander_poster]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_understander_poster]
+
+- sk_id: sk_rw_c002_0016
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "If I do just one thing to this piece, if I move the headlines closer to their related paragraphs of text, several things happen: The organization is clearer. The white space is not trapped within elements. There appears to be more room on the page."
+  concept_label: moving_headings_to_their_text_clarifies_and_appears_to_add_room
+  label_origin: extractor_assigned
+  claim: >
+    Moving headings closer to their related paragraphs produces three effects at once: the
+    organisation becomes clearer, the white space stops being trapped, and the page appears to have
+    more room on it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "a page whose headings sit equidistant from surrounding text"
+  caveats:
+    - text: "the source presents this as a single change with three consequences, which is what makes it a claim rather than three separate observations"
+      origin: extractor_observed
+    - text: "the appears to be more room effect is a claim about apparent rather than actual space; no space is added"
+      origin: extractor_observed
+    - text: "the after image also enlarges and repositions the figure and changes the alignment; the source flags the alignment change but not the figure change"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "move the headlines closer to their related paragraphs of text"
+  examples:
+    positive:
+      - {description: "poster reset with each headline moved against its paragraph", figure_ref: vis_understander_poster}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0015, note: "the repair for trapped white space and what it yields"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Understander poster p.25"
+    page_start: 25
+    page_end: 25
+    figure_refs: [vis_understander_poster]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_understander_poster]
+
+# ─────────────────────────────────────────────────────────────
+# WHAT GROUPING COSTS, AND THE SUBSTITUTES FOR SPACE
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0017
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Sometimes when grouping items into close proximity, you need to make some changes, such as in the size or weight or placement of text or graphics."
+  concept_label: grouping_may_require_changing_size_weight_or_placement
+  label_origin: extractor_assigned
+  claim: >
+    Grouping is not always achievable by moving items alone. It may require changing the size, the
+    weight or the placement of text or graphics to make the room the grouping needs.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "pages where there is not enough room to group as they stand"
+  caveats:
+    - text: "this concedes that the principle cannot always be applied in isolation, which the source later generalises when it says proximity is rarely the only answer"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "change the size, weight or placement of text or graphics to make room for the grouping"
+  examples:
+    positive:
+      - {description: "menu reset in caps and lowercase at a smaller size, which the source says gave it a lot more room to put space between elements", figure_ref: vis_menu_progression}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0023, note: "an early admission of the point later stated generally"}
+    - {relation: generalises, target: sk_rw_c002_0018, note: "the point-size claim is one instance"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.20"
+    page_start: 20
+    page_end: 20
+    figure_refs: [vis_menu_progression]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_menu_progression]
+
+- sk_id: sk_rw_c002_0018
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Body copy (the main bulk of reading text) does not have to be 12 point!"
+    - "Information that is subsidiary to the main message, such as the volume number and year of a newsletter, can often be as small as 7 or 8 point."
+  concept_label: subsidiary_information_may_be_set_far_smaller_than_body_copy
+  label_origin: extractor_assigned
+  claim: >
+    Body copy need not be 12 point, and information subsidiary to the main message can often be set
+    as small as 7 or 8 point.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "information subsidiary to the main message"
+  caveats:
+    - text: "the only claim in the chapter carrying specific numeric values; the source hedges with often and gives no legibility or audience condition"
+      origin: extractor_observed
+    - text: "stated for print; the source does not repeat it when it turns to web pages"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "set subsidiary information as small as 7 or 8 point"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0017, note: "a specific size change in service of grouping"}
+    - {relation: qualifies, target: sk_rw_c002_0012, note: "size and distance are used together to mark subsidiary status"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.20"
+    page_start: 20
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0019
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "We really don't have enough room to add more space before \"Starters\" and \"Entrees,\" but we do have room to make an indent. That extra space under the heading helps to separate these two groups of information. It's all about space."
+  concept_label: indentation_can_group_when_there_is_no_room_for_more_space
+  label_origin: extractor_assigned
+  claim: >
+    Where there is no room to add vertical space between groups, indenting a section performs the
+    same separating work, because the effect depends on space generally rather than on vertical gap
+    specifically.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source generalises the mechanism explicitly: it is all about space, so horizontal offset
+      substitutes for vertical gap.
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "pages too tight to add vertical separation between groups"
+  caveats:
+    - text: "the source notes it also enlarged the section headings at the same step and names that as the principle of Contrast, so the demonstration is not isolated"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "indent each section when there is no room to add space before its heading"
+  examples:
+    positive:
+      - {description: "menu state in which each section is indented under its heading rather than separated by added vertical space", figure_ref: vis_menu_progression}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0001, note: "widens the means of grouping beyond vertical proximity"}
+    - {relation: specialises, target: sk_rw_c002_0017, note: "a placement change made to achieve grouping"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "menu p.28"
+    page_start: 28
+    page_end: 28
+    figure_refs: [vis_menu_progression]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_menu_progression]
+
+- sk_id: sk_rw_c002_0020
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "The original text in all caps took up all the space so there was no extra, blank, \"white\" space to rest your eyes."
+    - "The more text you have, the less you can get away with all caps."
+  concept_label: all_caps_consumes_the_space_grouping_needs
+  label_origin: extractor_assigned
+  claim: >
+    Text set in all capitals consumes the space that would otherwise be available as white space for
+    the eye to rest in, and the more text there is the less tolerable all capitals becomes.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      All capitals occupy more room per character, so they leave no spare blank space on the page.
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "bodies of text set in all capitals; the effect worsens as text volume rises"
+  caveats:
+    - text: "the source separately asserts that all capitals are hard to read, which is a legibility claim rather than a spatial one and is not argued here"
+      origin: source_stated
+  source_stated_problems:
+    - "there was no extra, blank, white space to rest your eyes"
+  source_stated_remedies:
+    - "change all capitals to caps and lowercase"
+  examples:
+    positive:
+      - {description: "restaurant menu set entirely in capitals as one continuous block", figure_ref: vis_menu_progression}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0009, note: "a typographic choice that prevents the white space grouping would otherwise create"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - argued
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "menu p.27"
+    page_start: 27
+    page_end: 27
+    figure_refs: [vis_menu_progression]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_menu_progression]
+
+# ─────────────────────────────────────────────────────────────
+# METHOD, SCOPE AND THE CHAPTER'S OWN LIMITS
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0021
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "you already know which pieces of information are logically connected, you know which information should be emphasized and what can be de-emphasized. Express that information graphically by grouping it."
+    - "Intellectually, you already know how to use proximity. You already know how to collect pieces of information into their appropriate groups. All you need to do is transfer that skill to the printed page."
+  concept_label: the_logical_grouping_is_already_known_and_only_needs_expressing
+  label_origin: extractor_assigned
+  claim: >
+    The person making the page already knows which pieces of information are logically connected and
+    which should be emphasised or de-emphasised. The task is not to work out the grouping but to
+    express an already-known grouping graphically.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "flyers, brochures, newsletters and similar pieces"
+  caveats:
+    - text: "the source states this twice and says it has to repeat itself, marking it as a point it expects resistance to"
+      origin: source_stated
+    - text: "the dance postcard contradicts this in practice: its grouped version introduces four category headings (Smooth, Rhythm, Street, Social) that appear nowhere in the ungrouped version. There the taxonomy had to be authored, not recognised. The source does not mention this"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "express the grouping you already know graphically"
+  examples:
+    positive: []
+    counter:
+      - {description: "dance postcard whose grouped version invents four dance categories not present in the scattered version", figure_ref: vis_dance_postcard}
+  intra_source_relations:
+    - {relation: generalises, target: sk_rw_c002_0022, note: "writing the groups out is the procedure this premise licenses"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.19; restated p.31"
+    page_start: 19
+    page_end: 31
+    figure_refs: [vis_dance_postcard]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_dance_postcard]
+
+- sk_id: sk_rw_c002_0022
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Before trying to design with this information, write out the separate pieces of information that belong together; group the elements."
+    - "First I intellectually grouped the information together (in my head or sketched onto paper), then physically set the text in groups on the page."
+  concept_label: group_intellectually_before_designing_on_the_page
+  label_origin: extractor_assigned
+  claim: >
+    The grouping should be decided away from the page first — written out or sketched — and only
+    then set physically on the page.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "before beginning layout"
+  caveats:
+    - text: "the source reports this as its own working order, in the first person"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "write out the separate pieces of information that belong together before designing"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0021, note: "the procedure that follows from the grouping already being known"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "menu commentary p.26; First Friday commentary p.21"
+    page_start: 21
+    page_end: 26
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0023
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Rarely is the principle of proximity the only answer to a page. The other three principles are intrinsic to the design process and you will usually find yourself using all four. But take them one at a time—start with proximity."
+    - "you can imagine how all of the other principles would mean nothing if I didn't first apply the appropriate spacing"
+  concept_label: proximity_is_rarely_sufficient_but_comes_first
+  label_origin: extractor_assigned
+  claim: >
+    Proximity is rarely the only answer to a page and is normally used together with the other three
+    principles, but it should be applied first, because the others achieve nothing until the spacing
+    is right.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page being designed with the source's four principles"
+  caveats:
+    - text: "the source states both halves in the same paragraph: the principles are used together, and they are to be taken one at a time starting with proximity"
+      origin: source_stated
+    - text: "this is an ordering claim about the source's own four-principle set, three of which lie outside the extracted chapter and were not inspected"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "take the principles one at a time and start with proximity"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0001, note: "bounds how much the proximity principle can be expected to do alone"}
+    - {relation: generalises, target: sk_rw_c002_0017, note: "the general form of the earlier admission that other changes are needed"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.29"
+    page_start: 29
+    page_end: 29
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0024
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "The simple principle of proximity can make web pages easier to navigate by collecting information into logical groups."
+  concept_label: proximity_applies_to_web_navigation
+  label_origin: extractor_assigned
+  claim: >
+    The same principle makes web pages easier to navigate, by collecting information into logical
+    groups; any site that is easy to get around in will be found to group information into clumps.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "web pages and site navigation"
+  caveats:
+    - text: "the source offers a check rather than evidence: look at any site you find easy to navigate and you will find grouping"
+      origin: source_stated
+    - text: "the worked example is a 2008-era desktop web page; the source makes no claim about other viewport sizes or devices"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "collect site links into logical groups in one column"
+  examples:
+    positive:
+      - {description: "site links moved from three horizontal rows into a single grouped left-hand column", figure_ref: vis_web_page}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0001, note: "the principle applied to a second medium"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "pp.30-31"
+    page_start: 30
+    page_end: 31
+    figure_refs: [vis_web_page]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_web_page]
+
+- sk_id: sk_rw_c002_0025
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Look at the site links just under the title. Are they all equal in importance? In the arrangement above, they appear to be equal in importance—but realistically they're not."
+  concept_label: uniform_arrangement_makes_unequal_items_appear_equal
+  label_origin: extractor_assigned
+  claim: >
+    Arranging sets of items uniformly makes them appear equal in importance even when they are not,
+    so a uniform arrangement misstates the structure of what it presents.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "sets of navigation items or similar repeated elements"
+  caveats:
+    - text: "the source asserts the real importance ranking rather than deriving it; the image can show the items look equal but not that they are unequal"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the information on this page is muddled"
+    - "they appear to be equal in importance—but realistically they're not"
+  source_stated_remedies:
+    - "move the links into one column to show their relationships to one another"
+  examples:
+    positive:
+      - {description: "three rows of site links set evenly, giving each row the same apparent weight", figure_ref: vis_web_page}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0011, note: "an unwanted case of equal spacing signalling peer status"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "web page p.30"
+    page_start: 30
+    page_end: 30
+    figure_refs: [vis_web_page]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_web_page]
+
+# ─────────────────────────────────────────────────────────────
+# THE PROCEDURE, AND WHAT TO AVOID
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_rw_c002_0026
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Squint your eyes slightly and count the number of visual elements on the page by counting the number of times your eye stops."
+  concept_label: squint_and_count_eye_stops
+  label_origin: extractor_assigned
+  claim: >
+    Squinting slightly and counting the number of times the eye stops gives the number of visual
+    elements on the page.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "assessing a finished or draft page"
+  caveats:
+    - text: "given under a heading called How to get it, as a procedure rather than a claim about pages"
+      origin: source_stated
+    - text: "squinting removes detail and leaves gross spatial structure, which is consistent with the source's separate claim that grouping is legible even when content cannot be read clearly, though the source does not connect the two"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "squint slightly and count the number of times your eye stops"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_rw_c002_0006, note: "the count is only meaningful if eye stops equal separate elements"}
+    - {relation: demonstrated_together_with, target: sk_rw_c002_0027, note: "the procedure and its threshold are given together"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Summary of proximity — How to get it"
+    page_start: 32
+    page_end: 32
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0027
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "If there are more than three to five items on the page (of course it depends on the piece), see which of the separate elements can be grouped together into closer proximity to become one visual unit."
+    - "Avoid too many separate elements on a page."
+  concept_label: three_to_five_visual_elements_is_the_working_ceiling
+  label_origin: extractor_assigned
+  claim: >
+    More than three to five separate visual elements on a page is the trigger for regrouping. The
+    source scopes this immediately by saying it depends on the piece.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page; the source says the number depends on the piece"
+  caveats:
+    - text: "the source qualifies the number in the same sentence with of course it depends on the piece"
+      origin: source_stated
+    - text: "the only numeric threshold the chapter gives for grouping, and it is given as a range rather than a value"
+      origin: extractor_observed
+  source_stated_problems:
+    - "too many separate elements on a page"
+  source_stated_remedies:
+    - "group separate elements into closer proximity until they become one visual unit"
+  examples:
+    positive:
+      - {description: "business card described by the source as having five separate items", figure_ref: vis_business_card}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_rw_c002_0026, note: "the threshold accompanies the counting procedure"}
+    - {relation: depends_on, target: sk_rw_c002_0006, note: "counts elements by eye stops"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "Summary of proximity — How to get it and What to avoid"
+    page_start: 32
+    page_end: 32
+    figure_refs: [vis_business_card]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_business_card]
+
+- sk_id: sk_rw_c002_0028
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "There seems to be a fear of empty space."
+    - "Don't stick things in the corners or in the middle just because the space is empty."
+  concept_label: filling_empty_space_for_its_own_sake_scatters_the_page
+  label_origin: extractor_assigned
+  claim: >
+    New designers spread words, phrases and graphics across the page to fill corners and avoid empty
+    space, out of what the source calls a fear of empty space. The result is a page that appears
+    unorganised and information that may not be instantly accessible.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source attributes the scattering to a fear of empty space rather than to a design decision.
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "pages produced by new designers, per the source"
+  caveats:
+    - text: "the source opens the chapter with this and closes with the matching instruction in What to avoid"
+      origin: source_stated
+    - text: "an attribution of motive to a group of practitioners, offered without evidence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the page appears unorganized and the information may not be instantly accessible to the reader"
+  source_stated_remedies:
+    - "don't stick things in the corners or in the middle just because the space is empty"
+  examples:
+    positive:
+      - {description: "business card with an item pushed into each corner", figure_ref: vis_business_card}
+      - {description: "dance postcard with about twenty phrases scattered edge to edge at varying angles", figure_ref: vis_dance_postcard}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_rw_c002_0009, note: "the fear of empty space works against the organised white space grouping produces"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - repeated_within_source
+      - practitioner_assertion
+      - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "opening p.15; What to avoid p.32"
+    page_start: 15
+    page_end: 32
+    figure_refs: [vis_business_card, vis_dance_postcard]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_business_card, vis_dance_postcard]
+
+- sk_id: sk_rw_c002_0029
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "It's really amazing how much information we get from a quick glance at a page. Thus it becomes your responsibility to make sure the reader gets the correct information."
+  concept_label: the_designer_is_responsible_for_what_a_glance_conveys
+  label_origin: extractor_assigned
+  claim: >
+    Because a reader takes in a great deal from a quick glance, the designer is responsible for
+    ensuring that what the glance conveys is correct.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "any page a reader may glance at"
+  caveats:
+    - text: "this converts the chapter's perceptual claims into an obligation, which is a different kind of statement from the rest of the chapter"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_rw_c002_0005, note: "the duty the source draws from the pre-attentive reading claim"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "p.22"
+    page_start: 22
+    page_end: 22
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_rw_c002_0030
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Don't feel like you have to somehow portray \"dancing\" through your design. At this point, if your choice is between clear communication or amateur design, choose clear communication."
+  concept_label: choose_clear_communication_over_thematic_decoration
+  label_origin: extractor_assigned
+  claim: >
+    A designer should not feel obliged to express the subject matter through the styling of the
+    design. Where the choice is between clear communication and amateur decoration, clear
+    communication should win, and skill is built up from there.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "work by designers still building skill, per the source"
+  caveats:
+    - text: "the source scopes this to the reader's current stage with at this point and calls upgrading design skills a gradual process"
+      origin: source_stated
+    - text: "the worked case is a postcard whose slanted, curved type was an attempt to portray dancing; the source treats the attempt itself as the fault"
+      origin: extractor_observed
+  source_stated_problems:
+    - "we don't run the risk of losing potential customers because they give up searching through the vast field of slanted text"
+  source_stated_remedies:
+    - "choose clear communication over amateur design"
+  examples:
+    positive:
+      - {description: "dance postcard whose scattered slanted type attempts to depict dancing", figure_ref: vis_dance_postcard}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0029, note: "a priority rule for when expression and clarity conflict"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - practitioner_assertion
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "dance postcard p.23"
+    page_start: 23
+    page_end: 23
+    figure_refs: [vis_dance_postcard]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_dance_postcard]
+
+- sk_id: sk_rw_c002_0031
+  source_id: williams_non_designers_design_book_ch2_proximity
+  source_terms:
+    - "Now that there are two bold phrases, where do you begin? Do you start in the upper left? Do you start in the center?"
+  concept_label: two_emphasised_elements_create_competing_entry_points
+  label_origin: extractor_assigned
+  claim: >
+    A single boldest element gives the reader a starting point. Adding a second element of equal
+    emphasis removes it, and the reader bounces between the two while trying to catch the remaining
+    items.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [page_layout_for_print_and_web]
+    conditions: "a page carrying more than one element of equal strongest emphasis"
+  caveats:
+    - text: "an emphasis claim rather than a proximity claim; the source uses it to deepen the problem before introducing its remedy and does not draw a principle from it"
+      origin: extractor_observed
+    - text: "the two card states differ only in which phrases are set bold, with no position change, so this is an isolated comparison the source does not treat as one"
+      origin: extractor_observed
+  source_stated_problems:
+    - "you bounce back and forth between the words in bold, nervously trying to also catch the words in the corners"
+    - "Do you know when you're finished?"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "business card with a second phrase set bold, positions unchanged", figure_ref: vis_business_card}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_rw_c002_0007, note: "a second route to losing a definite entry point"}
+  evidence:
+    characteristics:
+      - explicitly_stated
+      - visually_demonstrated
+      - controlled_comparison
+      - mechanism_absent
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Proximity"
+    section: "business card p.16"
+    page_start: 16
+    page_end: 16
+    figure_refs: [vis_business_card]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: [vis_business_card]

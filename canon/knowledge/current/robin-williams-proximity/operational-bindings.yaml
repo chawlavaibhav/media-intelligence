@@ -1,0 +1,208 @@
+# CANON-002 — Williams, ch.2 Proximity. Operational Bindings under SPEC-04, against SPEC-01 v0.1.
+# Written last, after the source representation was complete on disk. Ours, recorded as ours.
+# All status: proposed — nothing reviewed.
+
+source_id: williams_non_designers_design_book_ch2_proximity
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_rw_c002_0001
+  source_knowledge_refs: [sk_rw_c002_0002, sk_rw_c002_0004]
+  source_system_refs: [scs_rw_c002_001]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    SPEC-01 records intended relationships between entities. This source supplies the complementary
+    failure: a relationship the viewer infers because two elements were placed close together, which
+    nobody intended. Because the source states the signal works in both directions, absence of
+    closeness is checkable too — two entities the brief says are related, set far apart, is the same
+    defect inverted.
+  applicability:
+    when: "an asset whose Creative IR declares relationships between entities or copy elements"
+    limits: >
+      Requires the whole asset; proximity is a property of the arrangement. The source discusses
+      static page layout. Nothing here establishes how the effect behaves over time in video, and the
+      source makes no claim about that.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rw_c002_0005]
+  repair_ontology_refs: [t_rw_c002_0012, t_rw_c002_0011]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rw_c002_0002
+  source_knowledge_refs: [sk_rw_c002_0011, sk_rw_c002_0012, sk_rw_c002_0013, sk_rw_c002_0025]
+  source_system_refs: [scs_rw_c002_002]
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.spatial_hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, diagnoses]
+  rationale: >
+    The source treats the relative size of gaps as encoding structure — equal gaps for peers, an
+    enlarged gap for an item of a different kind, a much larger gap for subsidiary material. That is
+    a concrete way to express a declared spatial arrangement, and a way to detect when the arrangement
+    on the page contradicts the structure the brief declared.
+  applicability:
+    when: "a still creative or frame whose spatial arrangement is being specified or reviewed"
+    limits: >
+      The graded reading is our synthesis across four separately stated cases, not a claim the source
+      makes in general form. The source gives no numeric ratios: it says which gap should be larger,
+      never by how much.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_rw_c002_0009]
+  repair_ontology_refs: [t_rw_c002_0019]
+  status: proposed
+  status_reason: "not reviewed; rests on an extractor-synthesised system"
+
+- binding_id: bnd_rw_c002_0003
+  source_knowledge_refs: [sk_rw_c002_0014, sk_rw_c002_0015, sk_rw_c002_0016]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses, repairs]
+  observation_unit: whole_asset
+  rationale: >
+    Gives a mechanism-level account of a checkable layout defect: a heading with equal space above
+    and below it cannot be attached to either body of text. Because the account names the cause, it
+    also names the repair rather than only reporting that something looks wrong. The measurement it
+    requires — the space above a heading against the space below it — is geometric.
+  applicability:
+    when: "any asset carrying headings, subheads or captions over body text"
+    limits: >
+      The source discusses page layout with a designer in control of spacing. Whether a generative
+      model can be directed to satisfy an above-versus-below spacing relation is a Capability Lab
+      question and is not asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rw_c002_0002, t_rw_c002_0001]
+  repair_ontology_refs: [t_rw_c002_0013]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rw_c002_0004
+  source_knowledge_refs: [sk_rw_c002_0006, sk_rw_c002_0027, sk_rw_c002_0026, sk_rw_c002_0007]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [evaluates, diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    Supplies a coarse, cheap check on whether an asset is over-fragmented: count the separate visual
+    elements, and treat more than three to five as the trigger for regrouping. The source's own
+    procedure — squint, then count eye stops — is a deliberate low-fidelity method, which is
+    consistent with its separate claim that grouping stays legible when content cannot be read.
+  applicability:
+    when: "a first-pass structural check on a still creative before finer evaluation"
+    limits: >
+      The source qualifies its own threshold with "it depends on the piece", so this supports
+      flagging for review rather than a pass or fail. It says nothing about how an automated counter
+      should decide what constitutes one element, which is the hard part.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rw_c002_0004, t_rw_c002_0006]
+  repair_ontology_refs: [t_rw_c002_0011, t_rw_c002_0018]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rw_c002_0005
+  source_knowledge_refs: [sk_rw_c002_0001, sk_rw_c002_0007, sk_rw_c002_0031]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [diagnoses]
+  rationale: >
+    A declared ranking implies a single definite entry point. This source supplies two ways a layout
+    contradicts that: no grouping, so no starting point exists at all; or two elements of equal
+    strongest emphasis, so the reader has two and bounces between them. Both are detectable against a
+    declared rank-1 element.
+  applicability:
+    when: "a Creative IR declaring a ranked hierarchy over resolvable elements"
+    limits: >
+      The competing-entry-point claim is about emphasis, not proximity; the source raises it in
+      passing and draws no principle from it. It is used here because the demonstration happens to be
+      isolated, not because the source developed it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rw_c002_0003, t_rw_c002_0008]
+  repair_ontology_refs: [t_rw_c002_0011]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rw_c002_0006
+  source_knowledge_refs: [sk_rw_c002_0021, sk_rw_c002_0022]
+  source_system_refs: [scs_rw_c002_003]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    The source states an ordering constraint on its own principles — take them one at a time, start
+    with proximity, because the others achieve nothing until the spacing is right — and a precondition
+    for applying any of them, that the logical grouping is established away from the page first. Both
+    bear on whether a single piece of this source's knowledge may be applied alone.
+  applicability:
+    when: "deciding whether one claim from this source may be applied or retrieved in isolation"
+    limits: >
+      Stated about the source's own four principles, three of which lie outside the extracted chapter
+      and were not inspected. Whether the ordering generalises is not asserted.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_rw_c002_0017]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rw_c002_0007
+  source_knowledge_refs: [sk_rw_c002_0001, sk_rw_c002_0003, sk_rw_c002_0004]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The flower list is a strictly isolated pair: two lists identical in words, order, typeface,
+    colour and container, differing only by one blank line, with the source stating the expected
+    reading. Unlike most craft-book demonstrations, nothing but the variable under test changes.
+  applicability:
+    when: "constructing benchmark stimuli, or calibrating an instrument on a comparison where the variable is genuinely isolated"
+    limits: >
+      A candidate stimulus, not an instrument, and not usable as-is. The expected reading is the
+      author's assertion; no human response data exists for it. It must be independently validated
+      before an evaluator's answer can be scored right or wrong against it. The same caveat the
+      Controller applied to the CANON-001 pairs on 24 Aug 2026 applies here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; flagged CROSS_STREAM in the CANON-002 Controller Brief"
+
+- binding_id: bnd_rw_c002_0008
+  source_knowledge_refs: [sk_rw_c002_0019, sk_rw_c002_0018, sk_rw_c002_0020]
+  source_system_refs: [scs_rw_c002_004]
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    Three concrete construction actions with numeric or mechanical character: indent a section when
+    vertical room has run out, set subsidiary information at 7 or 8 point, reset all capitals to caps
+    and lowercase. Recorded as construction procedures only.
+  applicability:
+    when: "Production IR exists and a deterministic layout or compositing path is being specified"
+    limits: >
+      NOT translated into generation instructions. These are typesetting operations performed by a
+      designer with direct control of the page. Per the Project Contract, a construction action from a
+      source is not rewritten as a generation action.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rw_c002_0010]
+  repair_ontology_refs: [t_rw_c002_0014, t_rw_c002_0015, t_rw_c002_0016]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked, not translated"

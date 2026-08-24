@@ -1,0 +1,414 @@
+# CANON-002 — Williams, ch.2 Proximity. SPEC-05 ontology material, source-local.
+# Terms, Layer-2 relations between them, and source_specific_concepts only.
+# NOT created: canonical_concept, cross_source_concept, relations to other sources, new relation
+# types. `distinct_from` is used, per Controller decision 3 of 24 Aug 2026, which permits it in the
+# SPEC-05 ontology layer only — it is NOT used inside SPEC-03 intra_source_relations.
+
+source_id: williams_non_designers_design_book_ch2_proximity
+extraction_date: 2026-08-24
+
+terms:
+
+# ── problems the source names ────────────────────────────────
+- term_id: t_rw_c002_0001
+  term: trapped_white_space
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    White space left between elements that belong together, which the source says tends to visually
+    push those elements apart. The source sets "trapped" in quotation marks as its own usage.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 24, page_end: 24}
+  arising_from: [sk_rw_c002_0015]
+
+- term_id: t_rw_c002_0002
+  term: ambiguous_heading_attachment
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    A heading set the same distance from the text above it as below it, so the reader cannot tell
+    which body of text it belongs to and both read as separate unconnected items.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 24, page_end: 32}
+  arising_from: [sk_rw_c002_0014]
+
+- term_id: t_rw_c002_0003
+  term: no_clear_place_to_begin_or_finish
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    The state of an ungrouped page in which it is not clear where the reader should begin and not
+    clear when they are finished, so they wander the page checking the corners.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 16, page_end: 17}
+  arising_from: [sk_rw_c002_0007]
+
+- term_id: t_rw_c002_0004
+  term: too_many_separate_elements
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    More separate visual elements on a page than the reader can take in, which the source puts at
+    more than three to five while noting it depends on the piece.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 32, page_end: 32}
+  arising_from: [sk_rw_c002_0027]
+
+- term_id: t_rw_c002_0005
+  term: false_grouping
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    Unrelated items placed close together so that the reader infers a relationship the designer did
+    not intend. The source's case is a society name sitting with a tagline that belonged to the
+    publication instead.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 18, page_end: 32}
+  arising_from: [sk_rw_c002_0002]
+
+- term_id: t_rw_c002_0006
+  term: scattered_elements
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    Words, phrases and graphics strung out across the page to fill corners and avoid empty space, so
+    the page appears unorganised and the information is not instantly accessible.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 15, page_end: 15}
+  arising_from: [sk_rw_c002_0028]
+
+- term_id: t_rw_c002_0007
+  term: fear_of_empty_space
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    The source's name for the motive it attributes to new designers who fill every corner of a page
+    rather than leave space empty.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 15, page_end: 15}
+  arising_from: [sk_rw_c002_0028]
+
+- term_id: t_rw_c002_0008
+  term: competing_entry_points
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    Two or more elements carrying equal strongest emphasis, so the reader has no single starting
+    point and bounces between them.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 16, page_end: 16}
+  arising_from: [sk_rw_c002_0031]
+
+- term_id: t_rw_c002_0009
+  term: uniformity_misstating_importance
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    Sets of items arranged uniformly so they appear equal in importance when the source says they
+    are not.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 30, page_end: 30}
+  arising_from: [sk_rw_c002_0025]
+
+- term_id: t_rw_c002_0010
+  term: all_caps_consuming_white_space
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: problem
+  definition_in_origin_frame: >
+    Text set in all capitals taking up all the available space so no blank space remains for the eye
+    to rest in; the source says the more text there is, the less this can be got away with.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 27, page_end: 27}
+  arising_from: [sk_rw_c002_0020]
+
+# ── remedies the source names (verb-first) ───────────────────
+- term_id: t_rw_c002_0011
+  term: group_related_items_closer
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: "Move related items physically close to each other so they read as one cohesive group."
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite, generative_respecification]
+  source_ref: {page_start: 15, page_end: 15}
+  arising_from: [sk_rw_c002_0001]
+
+- term_id: t_rw_c002_0012
+  term: move_unrelated_items_apart
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: "If items are not related, move them apart from each other so no relationship is implied."
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit, deterministic_composite, generative_respecification]
+  source_ref: {page_start: 32, page_end: 32}
+  arising_from: [sk_rw_c002_0002]
+
+- term_id: t_rw_c002_0013
+  term: move_heading_against_its_text
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Move each headline closer to its related paragraph so the spacing above and below stops being
+    equal; the source reports this alone clarifies organisation, frees the trapped space and makes
+    the page appear roomier.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite]
+  source_ref: {page_start: 25, page_end: 25}
+  arising_from: [sk_rw_c002_0016]
+
+- term_id: t_rw_c002_0014
+  term: indent_a_section_when_no_vertical_room_remains
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Indent a section under its heading when there is not enough room to add vertical space, since the
+    effect depends on space generally rather than vertical gap specifically.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite]
+  source_ref: {page_start: 28, page_end: 28}
+  arising_from: [sk_rw_c002_0019]
+
+- term_id: t_rw_c002_0015
+  term: reduce_subsidiary_type_size
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Set information subsidiary to the main message much smaller — the source says often as small as
+    7 or 8 point — and stop treating 12 point as a floor for body copy.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite]
+  source_ref: {page_start: 20, page_end: 20}
+  arising_from: [sk_rw_c002_0018]
+
+- term_id: t_rw_c002_0016
+  term: convert_all_caps_to_caps_and_lowercase
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Reset text from all capitals to caps and lowercase, which the source uses to recover both
+    legibility and the blank space grouping needs.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite]
+  source_ref: {page_start: 27, page_end: 27}
+  arising_from: [sk_rw_c002_0020]
+
+- term_id: t_rw_c002_0017
+  term: write_out_the_groups_before_designing
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Write out or sketch which pieces of information belong together before beginning layout, then set
+    them on the page.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {page_start: 21, page_end: 26}
+  arising_from: [sk_rw_c002_0022]
+
+- term_id: t_rw_c002_0018
+  term: squint_and_count_eye_stops
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Squint slightly and count the number of times the eye stops, to get the number of separate visual
+    elements on the page.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, unknown]
+  source_ref: {page_start: 32, page_end: 32}
+  arising_from: [sk_rw_c002_0026]
+
+- term_id: t_rw_c002_0019
+  term: set_subsidiary_information_farther_away
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: remedy
+  definition_in_origin_frame: >
+    Place information subsidiary to a set at a visibly greater distance than the gaps used between
+    the members of that set, so it reads as outside the set.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, deterministic_composite, generative_respecification]
+  source_ref: {page_start: 21, page_end: 31}
+  arising_from: [sk_rw_c002_0012]
+
+# ── properties the source names ──────────────────────────────
+- term_id: t_rw_c002_0020
+  term: one_visual_unit
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: property
+  definition_in_origin_frame: >
+    The state of several items placed close together, in which they are read as a single unit rather
+    than as several separate units.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 17, page_end: 32}
+  arising_from: [sk_rw_c002_0003]
+
+- term_id: t_rw_c002_0021
+  term: eye_stop
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: property
+  definition_in_origin_frame: >
+    One instance of the reader's eye halting to look at something; the source treats the count of
+    these as equal to the number of separate elements on the page.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {page_start: 16, page_end: 32}
+  arising_from: [sk_rw_c002_0006]
+
+- term_id: t_rw_c002_0022
+  term: organized_white_space
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: property
+  definition_in_origin_frame: >
+    The state of the space around the elements once related items have been grouped; the source calls
+    it a by-product of organising the communication and designers' favourite thing.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 17, page_end: 32}
+  arising_from: [sk_rw_c002_0009]
+
+- term_id: t_rw_c002_0023
+  term: proximity
+  origin: source
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  kind: property
+  definition_in_origin_frame: >
+    Closeness between elements on a page. The source glosses it as nearness and treats it as
+    implying a relationship, as in life.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {page_start: 15, page_end: 32}
+  arising_from: [sk_rw_c002_0004]
+
+relationships:
+
+- from: t_rw_c002_0001
+  to: t_rw_c002_0002
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source describes both on the same page and gives one repair for both: equal spacing above and
+    below a heading is what traps the space, and moving the heading fixes the ambiguity and the
+    trapping together.
+
+- from: t_rw_c002_0001
+  to: t_rw_c002_0013
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The problem and the remedy the source gives for it, stated on facing pages."
+
+- from: t_rw_c002_0005
+  to: t_rw_c002_0012
+  relation: related_to
+  confidence_basis: source_stated
+  note: "False grouping and the source's stated remedy for it."
+
+- from: t_rw_c002_0006
+  to: t_rw_c002_0007
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The source presents the fear as the motive and the scattering as the result, in the same opening paragraph."
+
+- from: t_rw_c002_0004
+  to: t_rw_c002_0021
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The element count that defines the problem is obtained by counting eye stops."
+
+- from: t_rw_c002_0001
+  to: t_rw_c002_0022
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both are states of the white space on a page and both are the source's own terms, so they invite
+    merging. They are opposites, not variants: organised white space is space that has ended up
+    between groups as a by-product of grouping, while trapped white space is space sitting inside a
+    group and pushing it apart. Same substance, opposite placement, opposite effect. Recorded so the
+    merge is not proposed again.
+
+- from: t_rw_c002_0005
+  to: t_rw_c002_0009
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both are failures of a page to state its own structure truthfully, and both were checked for
+    equivalence. They differ in what is misstated and how: false grouping asserts a relationship
+    between two specific unrelated items by placing them together, while uniformity misstating
+    importance asserts equal rank across a whole set by arranging it evenly. The first is repaired by
+    moving two items apart; the second by restructuring a set. Different mechanism, different repair.
+
+- from: t_rw_c002_0003
+  to: t_rw_c002_0008
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Both leave the reader without a starting point, and the source raises them on the same two pages.
+    They arise differently — one from absent grouping, one from duplicated emphasis — so they are
+    recorded as related rather than equivalent, and no stronger relation is asserted.
+
+concepts:
+
+- concept_id: sc_rw_c002_proximity_principle
+  kind: source_specific_concept
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  label: robins_principle_of_proximity
+  children_terms: [t_rw_c002_0023, t_rw_c002_0020, t_rw_c002_0011, t_rw_c002_0012]
+  origin: source_stated
+  basis: >
+    The source names the principle after itself — "Robin's Principle of Proximity" — and defines it
+    in one statement covering closeness, the resulting single visual unit, and both the positive and
+    negative instructions. The grouping of these terms under one named concept is the source's own
+    act, not ours.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_rw_c002_white_space_states
+  kind: source_specific_concept
+  origin_ref: williams_non_designers_design_book_ch2_proximity
+  label: the_two_states_of_white_space
+  children_terms: [t_rw_c002_0001, t_rw_c002_0022, t_rw_c002_0010]
+  origin: extractor_inferred
+  basis: >
+    The source coins both "trapped" and "organized" white space and states on page 24 that a page can
+    hold plenty of white space and still be badly served because it is all broken up. That sentence
+    is the closest the source comes to treating the two as states of one thing. Collecting them, with
+    the all-capitals case that consumes the resource, under a single concept is ours; the source never
+    presents them together.
+  asserts_agreement_between_sources: false

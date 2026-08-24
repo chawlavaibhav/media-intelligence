@@ -1,0 +1,242 @@
+# CANON-002 — Williams, ch.2 Proximity. SourceConceptSystem objects under SPEC-03.
+# Written before the historical Williams material was opened.
+# A system is written only where the knowledge lives in the relationships between claims.
+
+source_id: williams_non_designers_design_book_ch2_proximity
+
+source_concept_systems:
+
+- scs_id: scs_rw_c002_001
+  source_id: williams_non_designers_design_book_ch2_proximity
+  label: proximity_as_a_two_sided_signalling_rule
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: source_stated
+  description: >
+    Closeness and separation are one signalling system with two settings, not a rule plus an
+    exception. Placing items together asserts a relationship; placing them apart asserts the absence
+    of one. Both assertions are made whether or not the designer intended them, so every placement
+    on the page is a statement about relatedness.
+  whole_system_claim:
+    text: >
+      Proximity signals in both directions. Grouping related items and separating unrelated ones are
+      two halves of a single obligation, and a page cannot satisfy one half while ignoring the other,
+      because every gap on the page is read as meaning something.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "statement of the principle p.15; restated in What to avoid p.32", page_start: 15, page_end: 32}
+  members:
+    - {sk_ref: sk_rw_c002_0001, role_in_system: positive_rule, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0002, role_in_system: negative_rule, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0004, role_in_system: perceptual_premise, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0003, role_in_system: perceptual_premise, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0005, role_in_system: qualifying_corollary, order: null, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_rw_c002_0001, to: sk_rw_c002_0004, nature: "the instruction to group rests on closeness being read as relationship", origin: source_stated}
+      - {from: sk_rw_c002_0002, to: sk_rw_c002_0004, nature: "the instruction to separate rests on the same reading", origin: source_stated}
+      - {from: sk_rw_c002_0004, to: sk_rw_c002_0003, nature: "the relationship reading is laid on top of perceptual fusing", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: {section: "What to avoid", page_start: 32, quote_paraphrase: "don't create relationships with elements that don't belong together; if they are not related, move them apart"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Both halves and their shared premise are source-stated, which is why the whole-system claim is
+      source_explicit. What is ours is treating the pre-attentive claim as a member of this system
+      rather than as background, and the judgement that the source states one obligation rather than
+      a rule and a caution.
+  provenance:
+    section: "chapter-wide"
+    page_start: 15
+    page_end: 32
+    source_support: text_and_visual
+
+- scs_id: scs_rw_c002_002
+  source_id: williams_non_designers_design_book_ch2_proximity
+  label: gap_magnitude_encodes_structural_level
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Beyond the binary of near and far, the chapter treats the relative size of gaps as carrying
+    structure: equal gaps mark peers, an enlarged gap marks an item as different in kind, a much
+    larger gap marks subsidiary status, and equal gaps applied to unequal things misstate them.
+  whole_system_claim:
+    text: >
+      The relative size of the gaps on a page encodes a structure over its contents. Reading that
+      structure back off the page is how a viewer learns what is a peer of what, what is subordinate
+      to what, and what stands outside the set — before reading any of the content.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each member separately and never presents them as one system. It says
+      spacing between the three readings is the same, indicating they are related (p.21); that the
+      subsidiary block is farther away and therefore known not to be a reading (p.21); that a
+      separated third item is instantly known to be different (p.22); and that uniformly arranged
+      site links wrongly appear equal in importance (p.30). Reading these four as one graded
+      signalling scheme is ours. The source's own framing throughout the chapter remains the binary
+      near-or-far one.
+    source_ref: null
+  members:
+    - {sk_ref: sk_rw_c002_0011, role_in_system: dimension, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0013, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0012, role_in_system: dimension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0025, role_in_system: failure_case, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_rw_c002_0018, role_in_system: reinforcing_cue, order: null, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_rw_c002_0013, to: sk_rw_c002_0011, nature: "an enlarged gap only reads as difference against a baseline of equal gaps", origin: extractor_inferred}
+      - {from: sk_rw_c002_0012, to: sk_rw_c002_0011, nature: "subsidiary distance is defined relative to the peer gap", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is individually source-stated and three of the four are visually demonstrated,
+      one by a near-minimal pair. The grouping into a graded scheme is entirely ours, and it is the
+      most consequential inference in this extraction: it claims the source teaches something about
+      relative magnitude that the source itself only ever states case by case. If this system should
+      be dissolved on review, every member survives independently.
+  provenance:
+    section: "First Friday and web page examples"
+    page_start: 20
+    page_end: 31
+    source_support: text_and_visual
+
+- scs_id: scs_rw_c002_003
+  source_id: williams_non_designers_design_book_ch2_proximity
+  label: working_procedure_for_applying_proximity
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The chapter gives an ordered working procedure: recognise the grouping you already know, write
+    it out away from the page, squint and count the eye stops, regroup if there are more than three
+    to five, and make whatever size, weight or placement changes the grouping needs — applying
+    proximity before the other three principles.
+  whole_system_claim:
+    text: >
+      Proximity is applied as a procedure with an order, not as a quality to aim at. The order runs
+      from intellectual grouping, to written-out groups, to counting on the page, to regrouping, to
+      the secondary adjustments the regrouping forces — and proximity comes before the other three
+      principles because they achieve nothing until the spacing is right.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "How to get it p.32; p.19; p.21; p.26; p.29", page_start: 19, page_end: 32}
+  members:
+    - {sk_ref: sk_rw_c002_0021, role_in_system: premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0022, role_in_system: step, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0026, role_in_system: step, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0027, role_in_system: decision_rule, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0017, role_in_system: step, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0023, role_in_system: ordering_constraint, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0006, role_in_system: premise, order: null, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: source_stated
+    dependencies:
+      - {from: sk_rw_c002_0026, to: sk_rw_c002_0006, nature: "counting eye stops presupposes eye stops equal separate elements", origin: source_stated}
+      - {from: sk_rw_c002_0027, to: sk_rw_c002_0026, nature: "the threshold is applied to the count the procedure produces", origin: source_stated}
+      - {from: sk_rw_c002_0022, to: sk_rw_c002_0021, nature: "writing the groups out presupposes the grouping is already known", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_rw_c002_0021, sk_rw_c002_0030]
+        nature: >
+          The procedure assumes the grouping is already known and only needs expressing. The dance
+          postcard's regrouped version invents four category headings absent from the ungrouped
+          version, so there the grouping had to be authored rather than recognised. The source does
+          not acknowledge this and its procedure has no step for it.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion, visually_demonstrated]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The source supplies the steps, the ordering language and a heading called How to get it, so
+      both system type and whole-system claim are source-level. The recorded conflict is ours and
+      rests on the visual pass: it is visible only by comparing the two states of the dance postcard,
+      and it identifies a step the stated procedure lacks.
+  provenance:
+    section: "pp.19-32, principally Summary of proximity — How to get it"
+    page_start: 19
+    page_end: 32
+    source_support: text_and_visual
+
+- scs_id: scs_rw_c002_004
+  source_id: williams_non_designers_design_book_ch2_proximity
+  label: white_space_as_a_managed_resource
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    White space in this chapter behaves as a finite resource whose placement, not quantity, decides
+    whether it helps. Grouping produces organised white space; equal spacing traps it between things
+    that belong together; all capitals consume it entirely; and indentation can create it where
+    vertical room has run out.
+  whole_system_claim:
+    text: >
+      Having enough white space and having useful white space are different things. The same page can
+      hold plenty of it and be badly served, because what matters is whether the space falls between
+      groups or inside them. Grouping, typographic case, type size and indentation all act on the
+      same resource.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each member separately and never names white space as a resource under
+      management. Its closest statement is on page 24 — there is lots of white space available here,
+      but it's all broken up — which distinguishes quantity from placement for one example only.
+      Generalising that into a causal account covering case, size and indentation is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_rw_c002_0009, role_in_system: produced_state, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0015, role_in_system: failure_state, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0014, role_in_system: failure_mechanism, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0016, role_in_system: repair, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_rw_c002_0020, role_in_system: consumer, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_rw_c002_0019, role_in_system: substitute, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_rw_c002_0028, role_in_system: failure_motive, order: null, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_rw_c002_0015, to: sk_rw_c002_0014, nature: "equal space above and below a heading is what traps the space", origin: source_stated}
+      - {from: sk_rw_c002_0016, to: sk_rw_c002_0015, nature: "moving headings to their text is the stated repair", origin: source_stated}
+    tradeoffs:
+      - between: [sk_rw_c002_0019, sk_rw_c002_0017]
+        nature: "when there is no vertical room, either shrink the type to make room or indent instead; the source uses both on the same piece at different steps"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Members are individually well supported and two carry the source's own coined term. The causal
+      framing, the trade-off and three of the seven memberships are ours. This is the system most
+      likely to be an over-reading: the source treats white space as a by-product and a hazard, not
+      as something it manages deliberately.
+  provenance:
+    section: "pp.17-28"
+    page_start: 17
+    page_end: 28
+    source_support: text_and_visual

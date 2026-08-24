@@ -1,0 +1,338 @@
+# CANON-002 — Robin Williams, "The Non-Designer's Design Book", ch.2 Proximity, printed pp.15-32
+# Phase 1 independent visual-evidence ledger.
+#
+# PURPOSE (per CANON-002): record what the page images themselves support, INDEPENDENTLY, before
+# any SourceKnowledge object exists. Not a confirmation pass over text-derived claims.
+#
+# Written without consulting FINDINGS-04, AUDIT-williams or the superseded Williams atoms.
+#
+# VISUAL SOURCE PROVENANCE — verified in Phase 0, see CANON-002 findings:
+#   local file: "Williams, Robin P - The non-designer's design book ... (2008, Peachpit Press) - libgen.li.pdf"
+#   PDF /Title 0321563077 = ISBN of the 3rd edition (Peachpit, 2008); 217 pages
+#   page offset: PDF page = printed page + 1; printed 15-32 = PDF 16-33
+#   printed 33 (PDF 34) begins ch.3 Alignment, confirming the chapter boundary
+#   text match: after normalisation the repo text file and pdftotext of PDF pp.16-33 are the same
+#     character count (28,597) and 152 of 152 sentences over 60 characters match verbatim
+#   rendered ephemerally to the session scratchpad only; NOT committed, per task scope
+#
+# origin marking: observed_in_figure = seen in the page image;
+#                 requires_prose = the image alone cannot establish it;
+#                 author_flagged = the author names the change herself.
+
+source_id: williams_non_designers_design_book_ch2_proximity
+pass: independent_visual_evidence
+pages_inspected: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+pages_not_inspected: []
+
+# ═════════════════════════════════════════════════════════════
+# HEADLINE FINDING OF THE VISUAL PASS
+# ═════════════════════════════════════════════════════════════
+plain_text_extraction_damage:
+  severity: severe
+  finding: >
+    This chapter's subject is spatial relationship. The repository text file cannot carry spatial
+    relationship, so the plain-text extraction destroys the evidence for the chapter's central
+    demonstration rather than merely abbreviating it.
+  worked_case:
+    page: 15
+    what_the_page_shows: >
+      Two tinted boxes side by side, each headed "My Flowers", each listing the same ten flowers in
+      the same order in the same typefaces. The ONLY difference is that the right-hand box has a
+      blank line after "Cowslip", separating the last four flowers from the first six.
+    what_the_text_file_shows: >
+      The two lists appear consecutively and are character-for-character identical. The separating
+      blank line is absent.
+    consequence: >
+      The prose says "It appears that the last four flowers are somehow different from the others"
+      and "because they are physically separated from the rest of the list". Read from the text file
+      alone, that sentence describes something not present in the evidence. A text-only extractor
+      must either take the claim on trust or record it as unsupported.
+  implication_for_method: >
+    For this source the visual pass is not a completeness improvement, it is a precondition. This is
+    a different situation from CANON-001, where the Molly Bang text carried the claims and figures
+    largely corroborated them.
+
+# ═════════════════════════════════════════════════════════════
+# DEMONSTRATIONS
+# ═════════════════════════════════════════════════════════════
+demonstrations:
+
+- ref: vis_flowers
+  pages: [15]
+  kind: minimal_pair
+  isolation: strict
+  visible_difference: >
+    One blank line inserted after the sixth item in the right-hand list. Word content, word order,
+    typeface, type size, colour, box tint and box size are identical between the two.
+  what_the_visual_supports: >
+    That a single interruption in vertical spacing is sufficient, with nothing else changed, to make
+    a subset of a list read as a distinct group.
+  requires_prose: >
+    The claim that the reader understands this "instantly" and "without even being conscious of it".
+    The image shows the grouping; it cannot show the speed or the automaticity.
+  lost_in_plain_text: true
+  uncertainty: none
+  extractor_note: >
+    This is the most strictly isolated comparison in the chapter, and stricter than any pair found
+    in the CANON-001 source. Exactly one variable changes.
+
+- ref: vis_business_card
+  pages: [16, 17]
+  kind: progression_three_state
+  isolation: partial
+  visible_difference: >
+    State 1 (p16 upper): five elements pushed to the corners and centre of the card, one phrase bold.
+    State 2 (p16 lower): the same five elements in the same positions, with a second phrase now also
+    bold. State 3 (p17): the same five elements regrouped into two clusters — name block at top,
+    address block below — centred, with no element in a corner.
+  what_the_visual_supports: >
+    That regrouping alone visibly reduces the number of separate things the eye must stop at. State
+    1 to State 2 also shows that adding a second bold element creates a competing entry point
+    without any position changing.
+  requires_prose: >
+    The eye-stop count of five, the reading order questions, and the claim that the reader does not
+    know when they are finished. None of these is legible from the image.
+  lost_in_plain_text: true
+  uncertainty: none
+  extractor_note: >
+    State 1 to State 2 is itself a clean single-variable pair about emphasis rather than proximity;
+    the author uses it only rhetorically and does not draw a principle from it.
+
+- ref: vis_newsletter_flag
+  pages: [18]
+  kind: before_after
+  isolation: confounded
+  visible_difference: >
+    Before: all-caps title, rounded corners, small swan inside the panel, society name and tagline
+    grouped top-left, volume and date at opposite ends. After: mixed-case and much larger title,
+    square corners, enlarged swan overlapping the panel edge, society name grouped with volume and
+    date on one line, tagline moved under the title.
+  what_the_visual_supports: >
+    That the regrouping changes which items read as belonging together. It cannot isolate proximity
+    as the cause, because at least five attributes change at once.
+  requires_prose: >
+    Which pairing was wrong in the before state. The image cannot say whether the society or the
+    publication is the thing that is "amusing, peculiar, educative".
+  lost_in_plain_text: true
+  uncertainty: none
+  author_flagged_confounds: true
+  extractor_note: >
+    The author lists her own additional changes: caps to lowercase, rounded corners to straight,
+    enlarged and overlapping swan, and a font change for small text on a dark ground. She flags four
+    of the five confounds herself. This differs from CANON-001, where confounds had to be observed
+    by the extractor.
+
+- ref: vis_correspondences_list
+  pages: [19]
+  kind: minimal_pair
+  isolation: near_strict
+  visible_difference: >
+    Identical word content and order in both columns. Right-hand version adds blank lines before each
+    bold heading, and sets the headings slightly larger.
+  what_the_visual_supports: >
+    That spacing alone separates a long undifferentiated list into legible groups. Bold was already
+    present in the left version, so bold is NOT the variable.
+  requires_prose: null
+  lost_in_plain_text: true
+  uncertainty: >
+    The heading size increase is small and the author names it ("Notice I added some contrast to the
+    headlines and repeated that contrast"), so the pair is near-strict rather than strict.
+  author_flagged_confounds: true
+
+- ref: vis_first_friday_before_after
+  pages: [20, 21]
+  kind: before_after
+  isolation: confounded
+  visible_difference: >
+    Before: every line centred, uniform spacing throughout, play titles embedded mid-sentence with
+    their dates, subsidiary venue and ticket information interleaved with the readings. After: three
+    blocks separated by equal vertical gaps, each block led by its play title in large display type,
+    description beneath, date and time beneath that, and all subsidiary information moved to the
+    bottom and separated by a much larger gap.
+  what_the_visual_supports: >
+    That the three readings read as three peer items in the after version and as undifferentiated
+    running text in the before version.
+  requires_prose: >
+    The count question ("How many readings are in the series?") and the claim that the reader knows
+    the subsidiary block is not a reading "even if you can't see it clearly".
+  lost_in_plain_text: true
+  uncertainty: none
+  author_flagged_confounds: partial
+  extractor_note: >
+    UNFLAGGED CONFOUND. The after version also reorders content within each block — the play title
+    moves from mid-sentence to the head of the block, and the date moves from before the description
+    to after it. The author describes only grouping and spacing. Ordering is a second variable and
+    she does not mention it.
+
+- ref: vis_equal_versus_unequal_spacing
+  pages: [21, 22]
+  kind: minimal_pair
+  isolation: near_strict
+  visible_difference: >
+    Same layout template, same typefaces, same block structure. On p21 the vertical gaps between the
+    three reading blocks are equal. On p22 the first two blocks sit close together and the third is
+    separated by a visibly larger gap.
+  what_the_visual_supports: >
+    That equal gaps between groups read as peer status, and that enlarging one gap makes the item
+    beyond it read as different in kind — with no change to type, colour, size or content structure.
+  requires_prose: >
+    The reason the third reading is different. The image shows that it IS separated; only the prose
+    supplies that the first two are one double-bill and the third is a separate event.
+  lost_in_plain_text: true
+  uncertainty: >
+    Content differs between the two pages (Winter versus Summer schedule, different plays), so the
+    pair is near-strict: the spacing variable is isolated but the wording is not held constant.
+  extractor_note: >
+    Together these two pages carry a claim about the MAGNITUDE of a gap encoding level in a
+    structure, which is distinct from the chapter's core claim that closeness implies relationship.
+
+- ref: vis_dance_postcard
+  pages: [23]
+  kind: before_after
+  isolation: confounded
+  visible_difference: >
+    Before: about twenty phrases set at varying angles, scattered edge to edge, no grouping, no
+    hierarchy. After: title across the top, one line carrying studio, street and hours, then four
+    labelled columns, then two closing lines.
+  what_the_visual_supports: >
+    That the after version separates who, what, when and where into locatable positions.
+  requires_prose: null
+  lost_in_plain_text: true
+  uncertainty: none
+  author_flagged_confounds: false
+  extractor_note: >
+    UNFLAGGED CONFOUND, AND THE MOST SUBSTANTIVE ONE IN THE CHAPTER. The after version introduces
+    four category headings — "Smooth", "Rhythm", "Street", "Social" — which do not appear anywhere in
+    the before version. The dance names existed; the taxonomy over them did not. Grouping here
+    required the designer to invent classification information that was not in the source content.
+    The author does not mention this at all, and the chapter's stated method ("you already know
+    which pieces are logically connected") assumes the grouping already exists in the material.
+
+- ref: vis_understander_poster
+  pages: [24, 25]
+  kind: before_after
+  isolation: confounded
+  visible_difference: >
+    Before: everything centred; each headline sits with equal blank space above and below it; figure
+    at lower right overlapping the text block. After: headline and its paragraph moved together with
+    the gap between pairs enlarged; all text flush left; figure enlarged and moved to a full-height
+    left column; phone and email set on separate lines as a grouped block.
+  what_the_visual_supports: >
+    That equal spacing above and below a headline leaves its attachment genuinely ambiguous — this is
+    directly legible in the before image and does not need the prose.
+  requires_prose: >
+    The naming of the cause ("typed two Returns after each headline and paragraph") and the term
+    "trapped" white space.
+  lost_in_plain_text: true
+  uncertainty: none
+  author_flagged_confounds: partial
+  extractor_note: >
+    The author flags the alignment change. She does not flag the enlargement and repositioning of the
+    figure, which materially changes the page.
+
+- ref: vis_menu_progression
+  pages: [26, 27, 28, 29]
+  kind: progression_four_state
+  isolation: confounded_but_author_narrated
+  visible_difference: >
+    State 1 (p26): all caps, one continuous block, no separation, headings underlined. State 2 (p27):
+    caps and lowercase, smaller type, blank space between items, descriptions set under their dish
+    names. State 3 (p28): each section indented under its heading. State 4 (p29): new typeface,
+    descriptions italic and indented further, prices moved to a right-hand column.
+  what_the_visual_supports: >
+    That separation can be built incrementally, and that indentation performs grouping work when
+    there is not enough room to add vertical space — visible by comparing State 2 with State 3.
+  requires_prose: null
+  lost_in_plain_text: true
+  uncertainty: none
+  author_flagged_confounds: true
+  extractor_note: >
+    The author narrates her own confound at every step: caps to caps-and-lowercase, type size
+    reduction, heading enlargement named as Contrast, the typeface change, and prices aligned right
+    named as Alignment. Across four states she names six non-proximity changes. This is unusually
+    disciplined self-reporting.
+
+- ref: vis_web_page
+  pages: [30, 31]
+  kind: before_after
+  isolation: confounded
+  visible_difference: >
+    Before: three rows of links running horizontally under the title, each row led by a bold label,
+    all rows evenly spaced so no row appears subordinate. After: all links collected into a single
+    left-hand column under three headings, body copy in its own column at the right, quotation moved
+    further from the body copy.
+  what_the_visual_supports: >
+    That the horizontal arrangement gives the three link sets equal apparent weight, and that
+    collecting them into one column makes the heading-to-item relationship visible.
+  requires_prose: >
+    That the sets are not in fact equal in importance. The image can show they LOOK equal; only the
+    author asserts that they are not.
+  lost_in_plain_text: true
+  uncertainty: none
+  author_flagged_confounds: true
+
+# ═════════════════════════════════════════════════════════════
+# OBSERVATIONS THE VISUAL PASS PRODUCED THAT THE PROSE DOES NOT MAKE
+# Recorded as extractor observations. Not promoted to source claims.
+# ═════════════════════════════════════════════════════════════
+visual_only_observations:
+
+- ref: vis_obs_invented_taxonomy
+  pages: [23]
+  observation: >
+    Regrouping scattered content sometimes requires inventing category labels that do not exist in
+    the content being grouped. The dance postcard's four column headings are authored by the
+    designer, not derived from the material.
+  strength: clearly_visible_not_stated_by_source
+  why_it_matters: >
+    The chapter repeatedly says the reader already knows which items are logically connected. This
+    example shows a case where the grouping had to be created rather than recognised. It is a limit
+    on the chapter's own method, visible only by comparing the two images.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_typeface_annotation
+  pages: [15, 17, 18, 19, 20, 21, 23, 24, 25, 27, 29, 30, 31]
+  observation: >
+    Almost every spread carries a small margin annotation naming the typefaces used in the example on
+    that page.
+  strength: clearly_visible
+  why_it_matters: >
+    An authorial convention, not proximity content. Recorded so a later extractor does not mistake
+    these fragments for chapter content when they appear as loose words in the text file.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_uniform_example_frame
+  pages: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+  observation: >
+    Every example is presented inside a consistently tinted panel with a drop shadow, and every page
+    opens with a tinted commentary box in a serif face while running commentary is set in a sans face.
+    The book applies its own proximity principle to its own page design.
+  strength: clearly_visible
+  why_it_matters: >
+    The consistent frame is what makes the before/after pairs comparable at all. It also means the
+    tint and shadow are never variables in any comparison.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_before_states_are_real_artifacts
+  pages: [26]
+  observation: >
+    The author states of the menu that she "took it right out of a restaurant". The before states in
+    this chapter are presented as found artifacts rather than constructed straw men.
+  strength: stated_by_source_and_consistent_with_image
+  why_it_matters: >
+    Affects how much weight the before/after comparisons can carry. A found artifact is better
+    evidence than a constructed one, but is also uncontrolled.
+  promoted_to_source_claim: false
+
+# ═════════════════════════════════════════════════════════════
+# SUMMARY
+# ═════════════════════════════════════════════════════════════
+summary:
+  demonstrations_recorded: 10
+  strict_minimal_pairs: 1        # vis_flowers
+  near_strict_minimal_pairs: 2   # vis_correspondences_list, vis_equal_versus_unequal_spacing
+  confounded_before_after: 6
+  progressions: 2
+  author_flagged_own_confounds_in: 5
+  unflagged_confounds_found_by_this_pass: 3   # first_friday ordering, dance taxonomy, understander figure
+  demonstrations_wholly_lost_in_plain_text: 10
