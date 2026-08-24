@@ -841,3 +841,68 @@ that is a Canon problem or a product-schema limitation). On this lane's evidence
 on **what kind of statement a source makes**, not on its domain. Testimony about a particular case is
 not a product-schema limitation — it is knowledge that was never general. Recording it unbound is the
 schema working, not failing.
+
+---
+
+## LB-20 — the independence problem again, and this time even the author field differs
+
+*Sharper form of **LB-09**. Noticed while reading book 12's source; the cross-book comparison and this
+entry were completed after book 12's fresh checkpoint.*
+
+**Plain English.** *In the Blink of an Eye* is by Walter Murch. *The Conversations* is by Michael
+Ondaatje. Different authors, different publishers, different years — and both are Walter Murch
+talking about editing. Counting sources by their title page makes them two independent witnesses.
+They are one man, twice.
+
+**Where observed.** Books 10 and 12. **1 distinct book pair.**
+
+**Status.** OBSERVED — the same argument appears in both, extracted independently, and both
+extractions are in this branch.
+
+**Affected layer.** Ontology; cross-source synthesis.
+
+**Evidence.** Two shared items, both extracted from the two sources' own words before any comparison:
+
+- **The Egyptian-painting argument.** Book 10, footnote to printed p.8: each part of the body drawn
+  from its most characteristic angle, combined in one figure, with the speculation that "in some
+  remote future, our films … will look just as comic and twisted". Book 12,
+  `sk_conv_c003_0027`: the same argument at length, ending "five hundred years from now, when people
+  see films from our era, they'll seem 'Egyptian' in a strange way."
+- **`planarity`.** Book 10 records it as a named criterion of the Rule of Six; book 12 records
+  `planarity_of_the_face` in the same sense, applied to lens choice.
+
+**Why this is worse than LB-09.** There, two books shared their authors, publisher and series — a
+reviewer might catch it from the title page. Here **the author field itself differs**. `dc:creator`
+is "Michael Ondaatje". The book is *about* Murch and consists largely of Murch's words, and no
+metadata field records that.
+
+**Practical consequence if unchanged.** SPEC-05's `cross_source_concept` is the only concept kind
+making a claim about the world, and its guard is two or more independent origins. This pair would
+pass any check based on author, publisher or source id. A first cross-source concept built on it
+would report agreement between two sources where there is one speaker.
+
+**Disclosed contamination, which is a second finding.** I recognised the Egyptian argument **on
+sight** while reading book 12's source, because I had extracted it from book 10 days earlier in this
+same lane. Nothing was imported — `sk_conv_c003_0027` is written from the wording in front of me,
+which is substantially longer and differently developed — and the recognition is disclosed on the
+object itself. But an extraction cannot claim an independence it does not have. This is the same
+class of hole the batch already logged when the specs were found to quote books the batch processes:
+**assigning two books by or about one person to one lane means the second extraction is performed by
+someone who has read the first.**
+
+**Proposed fix — PROPOSAL ONLY, not applied.** Two candidates, neither implemented:
+1. Record the *speaking* party separately from the *authoring* party, so an independence check can
+   see that two `origin_ref`s share a voice. This overlaps with **LB-15** — both want a speaker the
+   schema does not have.
+2. At assignment time, route books sharing a principal voice to different lanes, or accept and
+   disclose the contamination as was done here.
+
+**Weigh against:** one pair, found by hand, and no cross-source promotion has been attempted yet.
+SPEC-05 already requires human review before promoting to `same_failure_family`, so a reviewer might
+catch this without any schema change — **provided they know to look**, which is what this entry is
+for.
+
+**The useful thing is the set of three.** Lane B has now produced: a same-author pair that would pass
+a naive independence check and should not (LB-09); a same-*voice*, different-author pair that would
+pass any metadata check at all (LB-20); and a genuinely independent pair that should pass and does
+— Murch's `eye_trace` against *Grammar of the Edit*'s. Three cases, one lane, three books.
