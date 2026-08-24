@@ -13,19 +13,23 @@ truth. Evaluation media must stay independent of the knowledge under test. Right
 into code licence, dataset/annotation licence, underlying-media rights, access terms and
 redistribution status.
 
-**LAST COMPLETED TASK:** none — this stream has not executed yet.
+**LAST COMPLETED TASK:** `RES-001` (24 Aug 2026). Corpus pilot v0 acquired: 4,776 items / 4.58 GB
+across 4 sources — KoNViD-1k (1,200 real videos), YouTube-UGC (5 real clips, explicit CC BY 4.0),
+ImageRewardDB (2,584 generated images), VideoFeedback (987 generated videos). All validated, 0
+defects, 0 duplicates. Five sources blocked — none for licence silence. See
+`tasks/RES-001-CONTROLLER-BRIEF.md`.
 
-**CURRENT TASK / QUEUE:** `tasks/RES-001.md` — bounded corpus acquisition pilot. **Storage budget
-amended by Controller on 24 Aug 2026 (Amendment 01, recorded in
-`tasks/RES-001-CONTROLLER-BRIEF.md`): target 4–6 GB retained, hard stop 8 GB, maintain 10–12 GB
-free disk at all times, sources processed sequentially, archives deleted after successful
-extraction and validation under five stated conditions, no cloud/object storage in RES-001.** The
-figures printed in `tasks/RES-001.md` (10–15 GB / 20 GB) are superseded. No paid APIs; prioritize
-at least three distinct usable source/domain families if legitimately accessible. Raw media must
-remain out of git; manifests/reports/scripts belong in the repo.
+**CURRENT TASK / QUEUE:** none. RES-001 complete; awaiting Controller review. Four open decisions
+in the brief, the first being third-party personal data (crowdworker IPs) shipped inside
+KoNViD-1k's subjective-scores file — flagged, not deleted.
 
 **IMPORTANT OBSERVATIONS:**
-- Do not infer media rights from a code licence.
+- Do not infer media rights from a code licence. A web search asserted the PVP *dataset* was MIT;
+  that was the repository *code* licence. The trap is real and appears unprompted.
+- Licence silence is not a block for public, ungated, internal-only use (clarification 6) — but
+  record rights as `not_stated`/`not_verified` and never present such material as cleared.
+- Access gates and explicit terms still block absolutely. Every remaining blocked source is blocked
+  for one of those, not for silence.
 - Prefer creator/official/lab distributions; no unofficial mirrors, torrents, piracy or arbitrary
   scraping.
 - Access/login/payment/licence ambiguity is a STOP, not a puzzle to work around.

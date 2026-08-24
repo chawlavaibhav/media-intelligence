@@ -1,126 +1,110 @@
-# RES-001 — Source assessment (Phase 1: discovery, verification, rights)
+# RES-001 — Source assessment
 
-**Date:** 24 Aug 2026 · **Status:** Phase 1 complete for 8 of 9 approved families. No media downloaded yet.
-**Method:** each candidate was resolved to its official distribution point, and the page and any readme
-were read directly. Rights were recorded as six separate fields. Nothing below is inferred from the
-`CORPUS-SOURCING-PLAN.md`, which is a candidate pool, not evidence.
+**Date:** 24 Aug 2026 · **Status:** all 9 approved families assessed; 4 acquired.
+**Method:** each candidate resolved to its official distribution point; licence, terms, `robots.txt`
+and access conditions read directly from that source. Rights recorded as six separate fields.
+Nothing is inferred from `CORPUS-SOURCING-PLAN.md`, which is a candidate pool, not evidence.
 
----
-
-## Headline finding
-
-**Every media type we can legitimately obtain is AI-generated. Every source of real, human-made
-media is blocked.**
-
-This was not the expected shape. `CORPUS-SOURCING-PLAN.md` named real advertising as the one thing
-we cannot substitute. It is the one thing this pilot cannot get.
-
-| | Families | Outcome |
-|---|---|---|
-| **Generated media** | 3 of 3 assessed | All three open, Apache-2.0, ungated |
-| **Real / human-made media** | 4 assessed, 1 not assessed | All four blocked, each for a different reason |
-
-The four real-media blocks are independent, which is what makes the pattern worth reporting — it is
-not one bad link or one awkward licence.
-
-| Source | Blocker | Type of blocker |
-|---|---|---|
-| Pitt Image and Video Ads | "To obtain the dataset for research purposes, please email us." | Human permission decision |
-| AVA | Authors distribute image lists only; media obtainable only by scraping dpchallenge.com or via torrent | Distribution method we may not use |
-| LSVQ | Download form must be completed | Human permission decision |
-| KoNViD-1k | Files are directly downloadable, but no licence is stated anywhere | Rights ambiguity |
+> **This report was rewritten after Controller clarifications 6–7.** Its earlier conclusion —
+> *"every media type we can legitimately obtain is AI-generated; every source of real human-made
+> media is blocked"* — was **correct under the previous rights policy and is now superseded.**
+> The change is recorded rather than erased, because the reversal is itself the finding.
 
 ---
 
-## Approved for download (3 families)
+## The finding
 
-All three state Apache-2.0 on their official pages and showed no login, agreement or access-request
-gate. Apache-2.0 clearly permits the internal research and evaluation use RES-001 authorises.
+**The binding constraint was the rights policy, not availability.** Not one source changed. Under the
+old rule the pilot could acquire no real human-made media at all. Under the new one, real media is
+the majority of the corpus by item count.
 
-| source_id | What it is | Media | Size | Pilot plan |
-|---|---|---|---|---|
-| `src_imagerewarddb` | Expert preference over generated images, with alignment / fidelity / harmlessness scored separately | Generated images (from DiffusionDB) | 1K-scale subset = 2.7 GB | Take 1K-scale whole |
-| `src_videofeedback` | Generated video scored on 5 aspects incl. temporal consistency | Generated video | 8.81 GB total | Bounded deterministic subset |
-| `src_videogen_rewardbench` | Pairwise preference over video from **12 different generators** | Generated video | 13.4 GB total | Bounded deterministic subset |
+But the reversal is partial, and the part that survived matters:
 
-**Why these three and not more of the same.** `src_imagerewarddb` is the only one that separates
-evaluation dimensions, which is the closest public analogue to our own split between technical
-fidelity and creative fitness. `src_videogen_rewardbench` is the only one with wide generator
-diversity, so evaluator behaviour can be tested across model styles rather than one house look.
+| Blocker type | Survived the policy change? |
+|---|---|
+| Licence not stated | **No** — no source is now blocked for this |
+| Login / email / form gate | **Yes** — 3 sources |
+| Explicit terms prohibition | **Yes** — 1 source |
+| Distribution format | **Yes** — 1 source |
 
-**One honest caveat on all three.** The publishers assert Apache-2.0 over media that are outputs of
-third-party commercial generators (Kling, Luma, Gen3, Minimax and others). Whether a dataset
-publisher can license those outputs is not something we verified independently. For internal
-research and evaluation this is the normal position and the stated terms cover our use. It would
-need a real answer before any use beyond that.
+Every hard blocker still sits on real human-made media. That pattern was not an artefact of the old
+rule; it is a property of how media that people own is distributed.
 
 ---
 
-## Blocked, with reasons
+## Acquired
 
-### `src_pitt_ads` — blocked_access
-Two independent blockers, either sufficient. First, images are obtained by emailing the authors —
-a human permission decision that RES-001 clarification 4 forbids crossing. Second, even with URLs
-in hand the media sit on third-party sites, so acquisition would be scraping. Videos are supplied
-as an ID list, not media. No licence statement exists on the official page or in the readme, and the
-media are advertisements under brand copyright.
+| source_id | Domain | Items | Bytes | Rights as found |
+|---|---|---:|---:|---|
+| `src_konvid1k` | Real natural video | 1,200 | 2.41 GB | **not_stated** |
+| `src_youtube_ugc` | Real UGC video | 5 | 0.86 GB | **explicit CC BY 4.0** |
+| `src_imagerewarddb` | Generated images + expert preference | 2,584 | 1.13 GB | apache-2.0 stated |
+| `src_videofeedback` | Generated video + 5-aspect scores | 987 | 0.18 GB | apache-2.0 stated |
 
-**This is the loss that matters.** It was the sourcing plan's first priority and the only proposed
-source of real commercial creative with intent annotations.
+**KoNViD-1k** — 1,200 real 8-second clips. Ungated direct zip; `robots.txt` absent on the file host
+and the database host does not disallow the dataset page. No licence anywhere. The official page
+describes the videos as Creative Commons from YFCC100M but names no variant, and the distributed
+metadata carries `flickr_id` but **no licence field** — checked directly, not assumed. Acquired under
+clarification 6 with rights recorded `not_stated`/`not_verified`. The `flickr_id` means a future
+rights review could resolve per-video status if a use beyond internal evaluation is proposed.
 
-### `src_ava` — blocked_access
-The official package contains image lists and annotations only. The authors do not distribute the
-photographs at all. The two available routes — scripted scraping of dpchallenge.com, or an academic
-torrent — are both explicitly prohibited by RES-001. Rights over the contest photographs are also
-unstated.
+**YouTube-UGC** — the best-documented source in the pilot, and the one Phase 1 never assessed.
+Distributed by Google from a public GCS bucket (`ugc-dataset`), anonymous, ungated. **No YouTube
+endpoint is touched**, so YouTube's `robots.txt` restrictions on `/get_video` are not engaged. The
+bucket carries an explicit `LICENSE` (Creative Commons Public License) and an `ATTRIBUTION` file
+naming each clip's original work, author, and "licensed under CC BY 4.0". Only 5 clips because the
+originals are pre-transcode files of 0.06–5 GB each; selection is the first 360P clip of each
+distributor-defined category, in sorted order.
 
-### `src_lsvq` — blocked_access
-Free to the research community but behind a download form. The associated repository also notes the
-automatic form reply has been broken and that some videos may no longer be retrievable from their
-original sites, so the practical state of the distribution is uncertain even for someone who does
-complete the form.
+**ImageRewardDB** — the distributor's **complete validation split**, taken whole, so no selection
+judgement of ours enters the corpus. The only source that scores alignment, fidelity and quality
+separately — the closest public analogue to our own technical-versus-creative split.
 
-### `src_pvp` — blocked_license
-Repository code is MIT. The **dataset** licence is not stated. The paper describes images as partly
-DALL-E generated and partly sourced through Google Image Search; the web-sourced portion carries
-third-party copyright with no stated clearance.
-
-**Recorded because it is the exact trap this project warns about:** a web search summary asserted the
-dataset is "available under the MIT license." That is a paraphrase of the *code* licence. Media
-rights are not inferred from a code licence, so the claim was not accepted.
-
-### `src_konvid1k` — blocked_license, and the one worth a Controller decision
-This is the only real-media candidate that is both openly downloadable and budget-compatible:
-1,200 videos, 2.3 GB, a direct zip link, no login, no form.
-
-**It is blocked on rights, not access.** No licence appears on the database page or the site root;
-the footer carries only a copyright notice. The official page describes the source videos as
-Creative Commons sequences drawn from YFCC100M, but does not identify which CC variant applies to
-which video. YFCC100M mixes commercially-usable CC licences with NonCommercial ones, and we are a
-commercial entity — so "CC" alone does not answer our question.
-
-Under RES-001 clarification 3 this is ambiguous, and ambiguous means stop. Flagged rather than
-resolved, because resolving it is a legal judgement reserved to the Controller.
-
-### `src_youtube_ugc` — candidate_not_downloaded, **not assessed**
-No verification was performed. Recorded as unassessed rather than unavailable. No claim is made
-about its status either way.
+**VideoFeedback** — every addressable file on the media repo's main revision. Carries
+temporal-consistency labels, the axis relevant to the cross-frame observation-unit problem.
 
 ---
 
-## What this means for the corpus
+## Blocked
 
-**Coverage we will have:** generated images and generated video, with three different human
-annotation styles (expert dimensional ratings, multi-aspect scores, pairwise preference) across
-roughly 13+ distinct generative models.
+**`src_pvp` — `blocked_access`.** HuggingFace reports `gated: auto` on `holi-lab/PVP`: automatic
+approval, but still login plus terms acceptance. Clarification 6 does not waive gates. Separately
+checked the ungated `holi-lab/visual_persuasion` — it holds only annotations and training JSON, **no
+images**, so it is not the PVP media and was not substituted (clarification 2).
 
-**Coverage we will not have:** any real photography, any real advertising, any human-made video, any
-commercial creative, and — unchanged from the sourcing plan's own gap table — anything Indic-script,
-Indian-market, or short-form feed-native.
+*Recorded because it is the exact trap this project warns about:* a web search asserted the PVP
+dataset is "available under the MIT license." That is the repository **code** licence. Media rights
+are never inferred from a code licence, so the claim was not accepted.
 
-**The consequence, stated plainly:** this pilot can support work on *how AI-generated media fails and
-how evaluators judge it*. It cannot support any claim that involves comparison against real
-professional creative work. That is a real limit on what the corpus can be used to test, and it
-should be recorded before anyone designs an experiment assuming otherwise.
+**`src_ava` — `blocked_license`, on stronger grounds than before.** Reassessed expecting the
+licence-silence rule to unblock it. Instead, `dpchallenge.com/terms.php` explicitly prohibits: *"use
+a robot, spider or other device or process to monitor the activity on or copy pages from the
+DPChallenge.com Web Site"*, and *"You may not reproduce or distribute any information available from
+the Website... You shall not store or aggregate such information in any manner."* The site also
+states *"All digital photo copyrights belong to the photographers and may not be used without
+permission."* `robots.txt` does not blanket-disallow — the `User-agent: *` block is commented out —
+but the terms of service do, and terms control.
 
-Whether this changes the project's plan is a Controller decision. It is reported here, not acted on.
+**`src_pitt_ads` / `src_lsvq` — `blocked_access`.** Email request and download form respectively;
+both are human permission decisions, and clarification 7 keeps them blocked absent separate
+authorisation.
+
+**`src_videogen_rewardbench` — `too_large_for_pilot`. A format block, not a rights block.**
+Apache-2.0 and ungated, but the media ship as one 13.42 GB `videos.zip` with no addressable per-item
+path. A bounded subset would require partial-archive range techniques the pilot should not depend on;
+peak need would be ~26.8 GB against an 8 GB cap. Its 12-generator diversity exists nowhere else in
+the corpus and is the strongest candidate for a later, larger acquisition.
+
+---
+
+## Two things that do not fit the rights fields
+
+**Personal data.** `KoNViD_1k_subjective.csv` ships crowdworker **IP addresses, worker IDs and
+city/country**. Nothing in the six rights fields would have caught this. Flagged for Controller
+decision; nothing deleted.
+
+**Stale identifiers.** `THUDM/ImageRewardDB` now 307-redirects to `zai-org/...`, and
+`KwaiVGI/VideoGen-RewardBench` to `KlingTeam/...`. Any older reference to those paths is stale.
+
+**One unreconciled discrepancy.** VideoFeedback's dataset card claims 37.6k pairs / 8.81 GB; its
+media repo's main revision exposes 987 files / 0.18 GB. Recorded as observed, not explained.
