@@ -1,0 +1,187 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_hopkins_scientific_advertising
+source_id: hopkins_scientific_advertising_ch1_7
+knowledge_dir: canon/knowledge/current/hopkins-scientific-advertising-ch1-7
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/hopkins-scientific-advertising-ch1-7/PROVENANCE.md
+  - canon/knowledge/current/hopkins-scientific-advertising-ch1-7/visual-evidence-ledger.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch1-7/source-knowledge.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch1-7/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-C-issues.md
+
+representation_integrity:
+  delivery_format: authored_print_scan
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    Internet Archive scan of a 2009 Snowball/BN Publishing reprint, 88 PDF pages. Printed pages
+    1-24 are PDF pages 9-32, and all 21 chapter headings from the contents page appear in the
+    extracted text in order.
+  inspection_state: inspected_page_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: no_loss_detected
+      affects: >
+        Nothing. Every one of the 24 pages was rendered and inspected before extraction. Zero
+        figures, zero illustrations, zero tables, zero diagrams, zero reproduced advertisements.
+        Single column of body text on every page.
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The ledger names the pattern no_visual_layer and calls it the control case the batch did
+        not yet have: earlier books established that text extraction can destroy a spatially argued
+        source silently, and this one establishes the other end of the range, where text extraction
+        is complete rather than lossy. Body text quality was measured - 3 vowel-less words in
+        8,202, all recognisable - and OCR failure is confined to italic page-number footers.
+    - pattern: source_evidence_never_printed
+      affects: >
+        Hopkins argues throughout from specific advertisements - the Mead Cycle mail order ads, the
+        incubator advertisement with and without a row of chickens in silhouette, the brewer's
+        plate-glass room - and the book reproduces not one of them.
+      detectability: named_by_text
+      recoverability: not_applicable
+      evidence: >
+        The ledger records this separately as absent_in_source and states the distinction: this is
+        not evidence lost in digitisation. The reader of the 1923 original was in exactly the same
+        position as the reader of this scan - told what the advertisement did, never shown it. A
+        better copy would change nothing.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The pattern that matters here is the one that is NOT our fault. Filing an evidence gap the
+    author created alongside gaps our digitisation created would misattribute the problem and,
+    worse, imply a remedy - find a better copy - that does not exist. Keeping
+    source_evidence_never_printed as a distinct value is what stops that.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 54 objects reviewed. This is the corpus's hardest source for area B and the one where the
+    frozen vocabulary is most visibly under-specified.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_hop_sa_0019, sk_hop_sa_0023, sk_hop_sa_0026, sk_hop_sa_0033]
+      evidence: >
+        Four objects, all carrying empirical_within_source in the frozen record. These are the only
+        places in seven chapters where a measurement is described AND a result is given: the three
+        cost-per-reply figures (85 cents, $14.20, 41 cents), the before-and-after picture test, and
+        the roughly nine-in-ten conversion rate. sk_hop_sa_0033 is a genuine minimal pair - one
+        element varied, body copy held nearly constant.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs:
+        [sk_hop_sa_0002, sk_hop_sa_0021, sk_hop_sa_0025, sk_hop_sa_0027, sk_hop_sa_0028,
+         sk_hop_sa_0039, sk_hop_sa_0040]
+      evidence: >
+        Seven objects where the source explicitly asserts that measurement happened and reports
+        nothing from it. sk_hop_sa_0027 carries the strongest evidential phrasing in the section -
+        "never failed to prove out in any test we know" - and names no test. sk_hop_sa_0025 says
+        the mail order advertiser "knows that waste by tests" and gives no forgetting rate, no
+        comparison and no source. sk_hop_sa_0028 states a precise proportional law with no data.
+        sk_hop_sa_0002 describes the apparatus and states it has been used at scale, reporting no
+        product, protocol, sample size or result. A described record of roughly 2,000 keyed
+        headlines is mentioned and no result from it is given. Every one of these was written into
+        an extractor_observed caveat under the frozen method, which preserves the truth in prose
+        that nothing can count.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        The remaining objects; 53 of 54 carry practitioner_assertion.
+  relation_to_evidence_characteristics: >
+    This is the sharpest demonstration that empirical_within_source is one slot doing two jobs.
+    Applying it to the seven objects above would credit the book with evidence it did not supply.
+    Withholding it - which is what the extraction correctly did - records them as bare assertion
+    and loses the fact that the source CLAIMS an empirical basis, which is itself important
+    information about a book called Scientific Advertising. The audit records the second fact
+    without touching the first, and the validator enforces that the two agree: none of the seven
+    carries empirical_within_source, and all four of the reported-measurement objects do.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hop_sa_0001, bnd_hop_sa_0006]
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hop_sa_0002, bnd_hop_sa_0003]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hop_sa_0004, bnd_hop_sa_0005, bnd_hop_sa_0008]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hop_sa_0007]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        The keyed-advertisement apparatus is a working method for an organisation - key the ad,
+        trace returns, compare, promote the winner to a fixed principle. It describes how a team
+        should learn, not what an asset should contain. Sixteen of this book's remedy terms carry
+        executable_by: [unknown] for exactly this reason.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_hop_sa_0010, sk_hop_sa_0013, sk_hop_sa_0035, sk_hop_sa_0039, sk_hop_sa_0054]
+      observation: >
+        Carry culturally_bounded - claims about what readers of 1923 wanted and how they behaved.
+        Left unbound, correctly.
+  conclusion: >
+    Four consumers bound. What the application audit adds here is small; what the evidence-origin
+    audit adds is the largest in the corpus.
+
+lineage:
+  authors: [Claude C. Hopkins]
+  publisher: Snowball Publishing / BN Publishing (2009 reprint)
+  series: null
+  first_published: 1923
+  copy_edition: 2009 reprint, Internet Archive scan
+  related_sources_in_corpus:
+    - source_id: ogilvy_on_advertising_ch2
+      relation: no_known_relation
+      evidence: >
+        Ogilvy's doctrine descends from Hopkins and the two books agree on the central claim that
+        advertising is salesmanship judged by measured response. No shared author, publisher or
+        series, and no citation of Hopkins inside the processed Ogilvy chapter. Recorded so that a
+        reviewer promoting a concept across the two sees the intellectual-descent question was
+        asked. Shared tradition is not shared origin under the candidate rule.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation established from the repository record.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    A 1923 book about advertising, read 103 years later. Its apparatus - keyed coupons returned by
+    post, traced against mail-order sales - is a measurement technology that no longer exists, and
+    its claims about reader behaviour belong to a specific print culture.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_hop_sa_0008]
+      evidence: >
+        The salesmanship analogy - that an advertisement should do what a good salesperson does -
+        is a claim about persuasion, not about a medium. The extraction records that it is asserted
+        rather than demonstrated, which is a separate matter from whether it has dated.
+    - class: technology_contingent
+      sk_refs: [sk_hop_sa_0001, sk_hop_sa_0006]
+      evidence: >
+        Both carry historical_claim. The keyed-return apparatus and the mail-order-as-school
+        doctrine depend on a postal response mechanism as the source of truth. The underlying
+        principle - measure response and promote what wins - survives; the specific apparatus does
+        not, and the two are stated together in the source.
+    - class: historical_convention
+      sk_refs: [sk_hop_sa_0010, sk_hop_sa_0013, sk_hop_sa_0035, sk_hop_sa_0054]
+      evidence: >
+        All carry culturally_bounded. Claims about what 1923 readers wanted, how they read and
+        what they found persuasive.
+    - class: uncertain
+      sk_refs: [sk_hop_sa_0037, sk_hop_sa_0053]
+      evidence: >
+        Carry historical_claim; the audit cannot decide from the repository record whether these
+        are period-bound or durable.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

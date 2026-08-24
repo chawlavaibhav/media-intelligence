@@ -1,0 +1,147 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_miller_storybrand_sb7
+source_id: miller_storybrand_sb7_framework_ch1_3
+knowledge_dir: canon/knowledge/current/miller-storybrand-sb7
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/miller-storybrand-sb7/PROVENANCE.md
+  - canon/knowledge/current/miller-storybrand-sb7/visual-evidence-ledger.yaml
+  - canon/knowledge/current/miller-storybrand-sb7/source-knowledge.yaml
+  - canon/knowledge/current/miller-storybrand-sb7/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-D-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    HarperCollins Leadership EPUB. The page does not exist, but image filenames carry printed page
+    numbers - f0021-01 is a figure from printed page 21 - so figures can be cited to a printed page
+    even though prose cannot. Nine of 18 objects therefore carry a page number and nine do not.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: in_figure_text_absent
+      affects: >
+        Two figures carry content the processed text never states. The BrandScript template on
+        printed p.38 is a screenshot of the author's software tool containing sub-fields the
+        chapters never state in prose - under HAS A PROBLEM, the labels VILLAIN / INTERNAL /
+        EXTERNAL / PHILOSOPHICAL - plus a CHARACTER TRANSFORMATION box, an eighth element in a
+        framework the book calls SB7. The framework diagram on p.21 draws the seven elements on a
+        rising and falling line where the final two do not sit in sequence: the line reaches a
+        junction and FORKS, so success and failure are two outcomes of one decision point rather
+        than two consecutive steps, which is what the prose says.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Every figure in the book carries alt="image" - not one descriptive alternative text
+        anywhere - so a text-only extraction recovers nothing at all from them, not a caption, not
+        a label, not a hint that something was there. Six of twelve figures in the section were
+        opened; four support a claim and two carry content absent from the text. The eighth
+        framework slot exists, within the processed span, only in the image.
+    - pattern: no_authored_page
+      affects: Prose cannot be located to a printed page.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: ledger method, what_could_not_be_checked - page layout does not exist in a reflowable EPUB.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    D-12's finding, and it overturns the proxy the batch inventory used. This book has 36 images
+    and Creativity, Inc. has 33; four of these support a claim and none of those does. Count does
+    not track risk. What predicts the loss is whether the source teaches a STRUCTURE - a form with
+    named slots, an order, a branch - because prose is a poor container for those, so an author
+    with a framework draws it regardless of discipline and an author without one does not, however
+    visual their field. Triage by named framework, not by image count.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 18 objects reviewed. No object carries empirical_within_source; four carry outcome_claimed.
+  categories:
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_sb_c003_0008, sk_sb_c003_0012, sk_sb_c003_0013, sk_sb_c003_0018]
+      evidence: >
+        Four uncontrolled outcome claims about client results, carrying outcome_claimed and
+        historical_claim in the frozen record. None supplies a figure, a comparison or a statement
+        of what else changed. None carries empirical_within_source, which the validator confirms is
+        the consistent assignment for this category.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 18 objects carry practitioner_assertion. The foundational mechanism of the framework is
+        credited in the extraction to a reported conversation rather than to a study.
+  relation_to_evidence_characteristics: >
+    This source shows the boundary between outcome_claimed and the origin question. outcome_claimed
+    already records that a result was asserted without controls; the origin category adds that the
+    source is presenting these as evidence its method works. The two overlap here more than
+    anywhere else in the corpus, which is an argument for keeping the origin categories few and for
+    not treating them as a replacement for the existing characteristics.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sb_c003_0001, bnd_sb_c003_0002, bnd_sb_c003_0003, bnd_sb_c003_0004]
+      note: >
+        Four Creative IR bindings from 18 objects - the highest rate in the corpus. A framework of
+        named message slots is almost exactly the shape of a Creative IR.
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sb_c003_0005]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sb_c003_0007]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sb_c003_0006]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: no_current_binding
+  unbound_knowledge_of_note: []
+  conclusion: >
+    This is D-13, and it is the corpus's most important warning about how the audit could be
+    misread. Across Lane D, Creativity, Inc. produced 0 Creative IR bindings on mechanism-bearing
+    evidence, Art & Fear produced 0 on argued evidence, and this book produced 4 on four
+    uncontrolled outcome claims and a closing position the extraction records as unfalsifiable as
+    stated. The source that binds best to the product schema is the one with the weakest support.
+    Bindability measures how close a source's subject is to our product's subject and measures
+    nothing about whether the source is right. Anything that later retrieves by product-schema fit
+    will surface this book and bury the mechanism-bearing ones, with nothing in the system being
+    wrong - which is why the application audit must never be read as a quality signal and why the
+    anti-score rule exists.
+
+lineage:
+  authors: [Donald Miller]
+  publisher: HarperCollins Leadership
+  series: null
+  first_published: 2017
+  copy_edition: EPUB
+  related_sources_in_corpus:
+    - source_id: sutherland_alchemy_introduction
+      relation: shares_publisher_only
+      evidence: >
+        Both are HarperCollins titles - HarperCollins Leadership and HarperCollins. Different
+        authors, subjects and positions; Sutherland's book argues against the rationalist framing
+        this one adopts. Recorded to exercise the shares_publisher_only rule on a pair that
+        actively disagrees, where treating a shared imprint as shared origin would be plainly
+        wrong.
+  independence_verdict: independent_origin
+  independence_basis: >
+    Shares a publishing group with one corpus source and nothing else.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2017 book about message structure. Four objects carry historical_claim, all recounting client
+    outcomes. Nothing depends on a technology that could expire.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]

@@ -1,0 +1,156 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_heath_made_to_stick_intro
+source_id: heath_made_to_stick_introduction
+knowledge_dir: canon/knowledge/current/heath-made-to-stick-introduction
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/heath-made-to-stick-introduction/PROVENANCE.md
+  - canon/knowledge/current/heath-made-to-stick-introduction/visual-evidence-ledger.yaml
+  - canon/knowledge/current/heath-made-to-stick-introduction/source-knowledge.yaml
+  - canon/knowledge/current/heath-made-to-stick-introduction/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-C-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Random House EPUB, ISBN 978-1-58836-596-5. An EPUB reflows, so there is no page and no printed
+    page number to cite. Every object locates itself by section heading, which is weaker than a
+    page range and is stated rather than disguised.
+  inspection_state: inspected_figure_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: heading_carried_as_image
+      affects: >
+        The section's own title - the single word INTRODUCTION - exists only as a 238x39 greyscale
+        JPEG with no alt text. A text-only extraction produces a section with no title on it. The
+        pattern is a house convention of this EPUB: all six chapter titles are images of words in
+        the same way.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        C-19. The fourteen sub-headings inside the section are real text and extract correctly, so
+        structure below the top level survives intact and the title was recovered by opening the
+        image. This is the mildest member of the family Alton shows at its worst, where losing half
+        the hierarchy from the top produced a chapter that looked flat rather than damaged.
+    - pattern: no_authored_page
+      affects: The page as a designed object does not exist; provenance is by heading only.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        ledger page_layout status does_not_exist. The ledger also records the consequence honestly:
+        low for this book, because a source that argues in continuous prose and shows nothing has
+        little for a page to carry - the same limitation on a spatially argued source would be
+        serious.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    Nineteen images in the whole book, four inspected, and not one of them is evidence: six chapter
+    and section title graphics, two ornaments, and eleven cover and title-page graphics. The
+    book argues entirely in words. Recording that as no_visual_argument, separately from the
+    inspection state, is what stops a later reader treating an EPUB with no page as an incomplete
+    inspection.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 28 objects reviewed. This source is the mirror image of Hopkins: it reports measurement
+    constantly and almost none of it is its own.
+  categories:
+    - category: third_party_measurement_reported
+      sk_refs: [sk_hea_mts_0006, sk_hea_mts_0023, sk_hea_mts_0025, sk_hea_mts_0026]
+      evidence: >
+        Four named, published external studies, each with a design and figures, reported by the
+        source rather than conducted by it. Elizabeth Newton's 1990 Stanford doctoral study of
+        tappers and listeners - 120 songs, 3 identified, 2.5 per cent actual against 50 per cent
+        predicted (sk_hea_mts_0023). Joel Best and Gerald Horiuchi's study of every reported
+        Halloween incident since 1958 (sk_hea_mts_0006). A 1999 Israeli study classifying 200
+        award-winning advertisements against 200 matched non-award ones, 89 per cent against 2 per
+        cent (sk_hea_mts_0025), and its three-arm follow-up with a shared task and a blinded
+        selector (sk_hea_mts_0026). None carries empirical_within_source, correctly, because none
+        is the authors' own.
+    - category: source_quotes_unnamed_third_party
+      sk_refs: [sk_hea_mts_0016, sk_hea_mts_0018]
+      evidence: >
+        Both say "research shows" with no researcher, study or figure attached in the processed
+        section. sk_hea_mts_0018's generic citation of the mental-rehearsal literature is the
+        load-bearing support for its mechanism.
+    - category: source_author_assertion
+      sk_refs: [sk_hea_mts_0017]
+      evidence: >
+        Stated as known - "it's difficult", "it's easier" - with no study, campaign or figure named
+        in this section. Carries practitioner_assertion and mechanism_absent.
+  relation_to_evidence_characteristics: >
+    The gap here runs the opposite way from Hopkins and is the sharper half of the problem.
+    empirical_within_source is defined as the source's OWN measurement, so the fixed list has no
+    value for cited external research at all, and the characteristic had to be withheld from four
+    genuinely well-designed studies. The practical result, stated in the extraction's own file
+    header, is that sk_hea_mts_0023 - which rests on a published controlled study - and
+    sk_hea_mts_0017 - which rests on "it's difficult... but it's easier" - are not cleanly separable
+    by anything a machine reads. The audit separates them without editing either object, and the
+    validator confirms none of the four third-party objects wrongly carries the own-measurement
+    characteristic.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs:
+        [bnd_hea_mts_0002, bnd_hea_mts_0003, bnd_hea_mts_0004, bnd_hea_mts_0005]
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hea_mts_0001]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hea_mts_0006, bnd_hea_mts_0007, bnd_hea_mts_0009]
+      note: >
+        bnd_hea_mts_0006 is rule_application and carries a distinction the schema could not: the
+        source does not merely fail to warn against using its six principles in isolation, it
+        explicitly licenses partial use - "you don't need all of these traits in order to be
+        great". SPEC-03's source_warns_against_isolated_use is boolean, so silence and explicit
+        permission both record as false (C-14).
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_hea_mts_0008]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: no_current_binding
+  unbound_knowledge_of_note: []
+  conclusion: >
+    Four consumers bound, including four Creative IR bindings from 28 objects - a high rate,
+    because a framework for making a message stick is close to what our product's message fields
+    are for. That closeness says nothing about whether the framework is correct.
+
+lineage:
+  authors: [Chip Heath, Dan Heath]
+  publisher: Random House Publishing Group
+  series: null
+  first_published: 2008
+  copy_edition: EPUB, ISBN 978-1-58836-596-5
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation with any corpus source. Note that this
+    source's evidence is largely third-party: if a later cross_source_concept were built on the
+    Newton study reported here AND on the same study reported elsewhere, that would be one
+    evidential event reported twice. The lineage of the SOURCE is independent; the lineage of its
+    EVIDENCE is recorded in area B and must be read alongside it. The candidate design keeps these
+    as two separate questions and does not merge them.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2008 book about why ideas are remembered. Its mechanism is human memory and attention, not a
+    medium. Three objects carry historical_claim, all concerning specific campaigns and events
+    rather than a technology the claims depend on.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

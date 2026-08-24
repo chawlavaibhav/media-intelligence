@@ -1,0 +1,146 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_freeman_photographers_eye
+source_id: freeman_photographers_eye_graphic_guide_parts1_3
+knowledge_dir: canon/knowledge/current/freeman-photographers-eye-graphic-guide
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/freeman-photographers-eye-graphic-guide/PROVENANCE.md
+  - canon/knowledge/current/freeman-photographers-eye-graphic-guide/visual-evidence-ledger.yaml
+  - canon/knowledge/current/freeman-photographers-eye-graphic-guide/source-knowledge.yaml
+  - canon/knowledge/current/freeman-photographers-eye-graphic-guide/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-A-issues.md
+
+representation_integrity:
+  delivery_format: converted_pdf
+  page_addressability: converter_pages_not_authored
+  page_addressability_evidence: >
+    The 214 A4 pages were produced by calibre from an ebook. The book's own five internal
+    cross-references all point elsewhere in this copy: SQUARE is cited as page 22 and is at page
+    29, where page 22 is FRAME-FIT; SYMMETRICAL is cited as page_52 and is at page 61, and that
+    reference survives in the running text as the literal string "page_52" with the underscore
+    intact - a broken hyperlink anchor. Every object in this extraction therefore carries
+    page_start: null.
+  inspection_state: inspected_page_level
+  visual_argument_role: page_layout_is_the_argument
+  observed_loss_patterns:
+    - pattern: false_page_affordance
+      affects: >
+        Rendering a page shows a single column of text with the photographs dropped in beneath -
+        not the designed spread the author made. The batch inventory had classified this source in
+        the group where a visual pass can recover the actual printed page.
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        LA-11, established by the source's own cross-references rather than assumed. The danger is
+        specific: in an EPUB there is no page and no one would claim page-level verification, but
+        here a page CAN be rendered, so a visual pass reasoning "this is a PDF, therefore I can
+        inspect the page" would record verified page-level completeness for a layout that never
+        existed.
+    - pattern: demonstration_performs_the_claim
+      affects: >
+        Freeman's reveal case claims "it takes the eye a moment to slip down to the corner to
+        notice it". Looking at the photograph, that is what happens - the bright mausoleums take
+        the attention and the tiny white figure has to be hunted for. The evidence is the delay in
+        the viewer's own looking.
+      detectability: named_by_text
+      recoverability: not_applicable
+      evidence: >
+        LA-14. Every other loss in this corpus is a loss of information that could in principle be
+        written down. This one cannot be: text can report that the effect exists but cannot produce
+        it, and no fidelity of description would. visually_demonstrated is recorded and is true,
+        and it means something weaker here than it does for a diagram.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The most instructive representation case in the corpus, because both patterns defeat a check
+    that looks sufficient. File type does not tell you whether a page is authored, and
+    visually_demonstrated does not tell you whether the demonstration can survive being described.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 34 objects reviewed. No object carries empirical_within_source. 23 carry anecdotal, which
+    here means Freeman recounting his own shoots, and 27 visually_demonstrated.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 34 objects. Freeman argues from his own photographs and his own graphic deconstructions
+        of them; he names no study and quotes no authority as a warrant.
+  relation_to_evidence_characteristics: >
+    Straightforward in area B. The audit's contribution to this source is entirely in area A, and
+    recording that plainly is useful - it establishes that the four audits are independent and a
+    source can be interesting in one and trivial in another.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_fre_c003_0001, bnd_fre_c003_0002, bnd_fre_c003_0005]
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_fre_c003_0006]
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_fre_c003_0003, bnd_fre_c003_0004]
+      note: >
+        LA-12 records that one of these needed something SPEC-04's observation_unit cannot express.
+        Freeman states that whether a scale figure registers at all depends on the print size -
+        "it has to be printed big" - so the same file passes or fails depending on how large it is
+        reproduced. observation_unit is indexed on how many assets you must look at; this claim is
+        about the scale at which you look. whole_asset was recorded as the nearest value and marked
+        inaccurate in the binding's own limits.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_fre_c003_0007]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_fre_c003_0008]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: no_current_binding
+  unbound_knowledge_of_note: []
+  conclusion: >
+    Binds across five consumers. The audit's only application finding is a recorded inaccuracy
+    inside an existing binding, which the gate surfaces without altering the binding.
+
+lineage:
+  authors: [Michael Freeman]
+  publisher: Focal Press
+  series: The Photographer's Eye
+  first_published: 2013
+  copy_edition: >
+    USA first edition 2013; conceived, designed and produced by Ilex Press Ltd. ISBN
+    978-0-240-82426-0.
+  related_sources_in_corpus:
+    - source_id: grammar_of_the_shot_ch4_continuity
+      relation: shares_publisher_only
+      evidence: >
+        Both are Focal Press titles. Different authors, different series, different decade and
+        different subject. Recorded to exercise the rule that a shared publisher alone does not
+        defeat independence - if it did, this corpus would lose a legitimate convergence between a
+        photography source and a filmmaking source for no evidential reason.
+    - source_id: grammar_of_the_edit_ch3_5_editing_decisions
+      relation: shares_publisher_only
+      evidence: Same Focal Press imprint; no shared authorship, series or derivation.
+  independence_verdict: independent_origin
+  independence_basis: >
+    Shares a publisher with two other corpus sources and nothing else. Under the candidate rule
+    shares_publisher_only does not defeat independence, so this source remains promotable against
+    both Grammar books.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2013 book about composition. Seven objects carry historical_claim and two culturally_bounded,
+    concerning photographic convention and Western reading order. The optical and compositional
+    claims do not depend on a camera generation.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

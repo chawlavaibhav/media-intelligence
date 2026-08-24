@@ -1,0 +1,147 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_grammar_of_the_shot_ch4
+source_id: grammar_of_the_shot_ch4_continuity
+knowledge_dir: canon/knowledge/current/grammar-of-the-shot-ch4
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/grammar-of-the-shot-ch4/PROVENANCE.md
+  - canon/knowledge/current/grammar-of-the-shot-ch4/visual-evidence-ledger.yaml
+  - canon/knowledge/current/grammar-of-the-shot-ch4/source-knowledge.yaml
+  - canon/knowledge/current/grammar-of-the-shot-ch4/operational-bindings.yaml
+  - canon/findings/CANON-003-batch-issue-ledger.md
+  - canon/findings/CANON-003-lane-B-issues.md
+
+representation_integrity:
+  delivery_format: native_digital_pdf
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    PROVENANCE records a stable offset of PDF page = printed page + 13 across a 232-page file, and
+    the extraction cites printed pages 93-112. A fixed offset that resolves against the printed
+    numbering is evidence the pagination is the publisher's, not a converter's.
+  inspection_state: inspected_page_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: named_loss_with_unstated_content
+      affects: >
+        Six of the chapter's eight recorded demonstrations are wholly unavailable to a text-only
+        pass. Figure 4.13 pairs three overhead camera-position diagrams with the frame each one
+        produces; the text can say screen direction reverses, but only the figure shows why, and
+        only the figure makes visible the property that matters - each of the three frames is
+        individually correct and the error exists only across them.
+      detectability: named_by_text
+      recoverability: recovered_in_this_copy
+      evidence: >
+        visual-evidence-ledger.yaml records demonstrations_wholly_lost_in_plain_text: 6 against
+        demonstrations_recorded: 8, with printed pages 104, 105 and 110 rendered and read. Every
+        figure is introduced by a numbered caption the text file preserves, so the absence is
+        announced rather than silent.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    This is the batch's cleanest visual case: an authored page, a complete render, and figures that
+    resolve the claims they carry. It is the control against which the reflowed and converted
+    sources should be read.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 17 objects were reviewed against the frozen evidence characteristics. The source is a
+    craft textbook that argues from stated geometry and its own illustrations; it reports no
+    measurement of any kind and cites no external study.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 17 objects. Eight carry practitioner_assertion and eleven visually_demonstrated; none
+        carries empirical_within_source, outcome_claimed or anecdotal. The authors speak in their
+        own voice throughout and attribute nothing to a third party.
+  relation_to_evidence_characteristics: >
+    Nothing here strains the existing vocabulary. This source is the negative control for area B:
+    a book with exactly one claim origin, where evidence.characteristics alone is sufficient and
+    the audit adds no information. Recording that is the point - the origin audit must be cheap
+    when there is nothing to disentangle.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gos_c003_0004, bnd_gos_c003_0005]
+      note: continuity geometry that fills specified shot-relationship fields.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gos_c003_0008]
+      note: >
+        Carried as a production candidate with target_path null, because Production IR does not
+        exist. Parked, not translated into a generative instruction.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gos_c003_0001, bnd_gos_c003_0002, bnd_gos_c003_0003]
+      note: >
+        All three name an observation unit larger than a frame. A crossed action line is invisible
+        inside any single shot; it exists only as a relation between two.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gos_c003_0006]
+      note: rule_application - the source states its own rules are defeasible by creative intent.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gos_c003_0007]
+      note: the correct/incorrect figure pairs are ready-made minimal-pair test cases.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        Nothing here is a deterministic layout or assembly operation. The rules constrain where a
+        camera may stand, which is a physical or generative decision, not a computable composite.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      note: >
+        The chapter is about the artefact, not about how a team behaves. No remedy in it acts on a
+        person.
+  unbound_knowledge_of_note: []
+  conclusion: >
+    This source binds across five of the seven consumers, which is the highest coverage in the
+    corpus. It is also the source whose subject sits closest to the product's subject. Both facts
+    are about fit, not about whether the book is right, and the audit deliberately says nothing
+    about the latter.
+
+lineage:
+  authors: [Roy Thompson, Christopher J. Bowen]
+  publisher: Focal Press
+  series: Grammar of the Shot / Grammar of the Edit
+  first_published: null
+  copy_edition: Second Edition
+  related_sources_in_corpus:
+    - source_id: grammar_of_the_edit_ch3_5_editing_decisions
+      relation: companion_volume
+      evidence: >
+        Same two authors, same publisher, same series, a year apart, each book referring to the
+        other. Four terms exist in both source files with near-identical meaning - axis_of_action /
+        action_line, screen_direction, jump_cut, eye_line_match / eye_trace - and both books
+        independently state that their rules are defeasible by creative intent. Recorded as LB-09.
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not independent OF grammar_of_the_edit_ch3_5_editing_decisions specifically. Against every other
+    source in this corpus it is an independent origin. The verdict is recorded at its strongest
+    reading because the promotion rule needs the conservative answer; the pairwise detail is in
+    related_sources_in_corpus and is what the promotion function actually reads.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: true
+    evidence: >
+      SPEC-04's worked example bnd_eval_012 cites sk_gos_0004 and sk_gos_0005 by name and states the
+      shot_pair observation-unit finding. SPEC-05 uses this book's continuity geometry as its
+      worked source_specific_concept. An extractor who read the specs already knew both findings,
+      so agreement between the fresh pass and the historical audit on those points is not
+      independent evidence. This is issue B-17.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A second-edition craft textbook about camera geometry. The claims are about where a camera
+    stands relative to an imaginary line, which does not depend on a recording technology. One
+    object carries historical_claim (sk_gos_c003_0017) and it is a remark about convention, not a
+    technical dependency.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]

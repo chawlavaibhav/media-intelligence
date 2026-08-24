@@ -1,0 +1,147 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_light_science_magic_ch3
+source_id: light_science_and_magic_ch3
+knowledge_dir: canon/knowledge/current/light-science-magic-ch3
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/light-science-magic-ch3/PROVENANCE.md
+  - canon/knowledge/current/light-science-magic-ch3/visual-evidence-ledger.yaml
+  - canon/knowledge/current/light-science-magic-ch3/source-knowledge.yaml
+  - canon/knowledge/current/light-science-magic-ch3/operational-bindings.yaml
+  - canon/findings/CANON-003-batch-issue-ledger.md
+  - canon/knowledge/SPEC-04-operational-bindings.md
+  - canon/knowledge/SPEC-05-knowledge-ontology.md
+
+representation_integrity:
+  delivery_format: repository_text_extract
+  page_addressability: pages_unknown
+  page_addressability_evidence: >
+    The processed text is canon/sources/lsm-ch3-reflection.txt, 27,296 bytes, verified against the
+    5th edition EPUB at 200 of 200 sentences over 70 characters once HTML entities were decoded.
+    The underlying EPUB has no pages, and the repository text carries none.
+  inspection_state: not_inspected_access_blocked
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: named_loss_with_unstated_content
+      affects: >
+        Fourteen figures, 3.1 to 3.14, each with a numbered descriptive caption the text preserves.
+        Seven are diagrams whose geometry the prose describes in enough detail that the loss is
+        partial. Seven are photographs, and several are matched pairs differing in exactly one
+        variable - 3.2 against 3.3 changes light size; 3.5 against 3.6 does the same for a shiny
+        saw; 3.13 against 3.14 adds a polarising filter and changes nothing else. Those comparisons
+        are the chapter's proof and they are unavailable.
+      detectability: named_by_text
+      recoverability: recoverable_not_attempted
+      evidence: >
+        The ledger records 14 figures named in text but unseen and 3 matched photographic pairs
+        unavailable. The worked case is 3.13/3.14, where the polarising filter removes the
+        reflection from black plastic while leaving the white feather unchanged, and the feather's
+        unchanged brightness is what proves the exposure compensation was honest. That
+        self-checking can only be confirmed by looking.
+    - pattern: no_authored_page
+      affects: The 5th edition EPUB has no page; no printed page number can be cited.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: PROVENANCE and the extraction, which carries no page_start on any of the 20 objects.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    Recorded as not_inspected_access_blocked rather than as a damaged artifact, because nothing is
+    wrong with the source. The local book library became unreadable mid-batch - diagnosed as macOS
+    privacy protection over Downloads, Documents and Desktop, not the Claude Code sandbox, and
+    later fixed by the user granting access. This is the clearest reason inspection_state must be
+    separable from artifact integrity: the same value that CANON-003 gave this source
+    (blocked_visual_validation) was also given to Albers, whose file opened perfectly and whose
+    evidence is permanently destroyed. One was a permission; the other is unrecoverable.
+
+evidence_origin:
+  audit_scope: notable_objects_only
+  audit_scope_note: All 20 objects reviewed; two carry a non-default origin.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_lsm_c003_0005, sk_lsm_c003_0011]
+      evidence: >
+        Both carry empirical_within_source in the frozen record. The authors report their own
+        photographic tests with stated conditions, which is measurement in the sense SPEC-03
+        intends.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        The other 18 objects. Only three carry practitioner_assertion; 14 carry mechanism_given,
+        because this source explains the physics rather than asserting practice. That profile is
+        the opposite of Ogilvy's and the schema absorbed both without modification.
+  relation_to_evidence_characteristics: >
+    No strain. This source is where SPEC-03's evidence vocabulary works exactly as designed.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsm_c003_0003]
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsm_c003_0004]
+      note: >
+        The family of angles determines where a physical source must sit. Parked as a production
+        candidate and explicitly not translated into a generative control; the frozen binding says
+        so in its own limits.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsm_c003_0002]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsm_c003_0001]
+      note: >
+        taxonomy_governance - the source refuses the word "specular" because practitioners use it
+        for three different things, and names the underlying concepts separately instead.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsm_c003_0005]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: no_current_binding
+  unbound_knowledge_of_note: []
+  conclusion: >
+    Binds across all five SPEC-04 target types from only 20 objects, and does so on
+    mechanism-bearing evidence. The corpus's counterexample to any reading of binding count as
+    quality runs the other way - StoryBrand binds well on weak evidence - and this source shows the
+    two can also coincide.
+
+lineage:
+  authors: [Fil Hunter, Steven Biver, Paul Fuqua]
+  publisher: null
+  series: null
+  first_published: null
+  copy_edition: 5th Edition
+  related_sources_in_corpus:
+    - source_id: alton_painting_with_light_ch2_motion_picture_illumination
+      relation: no_known_relation
+      evidence: >
+        Both are lighting sources treating reflection and angle. Separate authors, publishers and
+        eras; neither derives from the other. Agreement between them would be genuine convergence.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation with any corpus source.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: true
+    evidence: >
+      This is the source B-17 was found on, and it is the sharpest exposure case in the corpus.
+      SPEC-04's worked governance example bnd_gov_001 is this chapter's "specular" refusal, quoted
+      in full, and SPEC-05 opens its rule section with the same refusal as its precedent. During
+      CANON-001 the extractor read both. The fresh pass's governance binding therefore appeared to
+      converge with the historical audit and did not, because the finding was already known. It was
+      struck from the convergence column. Any later promotion involving this source's governance
+      knowledge must treat that agreement as contaminated rather than independent.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A current 5th edition about the physics of reflection. The mechanism is optical and does not
+    depend on a capture technology. One object carries historical_claim, concerning past studio
+    practice rather than the physics.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]

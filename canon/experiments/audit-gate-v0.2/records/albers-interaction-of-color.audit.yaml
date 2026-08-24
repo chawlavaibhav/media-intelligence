@@ -1,0 +1,129 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_albers_interaction_of_color
+source_id: albers_interaction_of_color_ch1_5
+knowledge_dir: canon/knowledge/current/albers-interaction-of-color
+audited_against_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/albers-interaction-of-color/PROVENANCE.md
+  - canon/knowledge/current/albers-interaction-of-color/visual-evidence-ledger.yaml
+  - canon/knowledge/current/albers-interaction-of-color/source-knowledge.yaml
+  - canon/knowledge/current/albers-interaction-of-color/operational-bindings.yaml
+  - canon/findings/CANON-003-batch-issue-ledger.md
+
+representation_integrity:
+  delivery_format: authored_print_scan
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    An Internet Archive digitisation of the Yale University Press edition. PDF pages 29-43 carry
+    the printed pages of chapters I-V, and chapter VI begins at PDF 44, which confirms the span
+    boundary independently.
+  inspection_state: inspected_but_required_dimension_destroyed
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: required_visual_dimension_destroyed
+      affects: >
+        The book's entire subject is what one colour does to another. The digitisation is
+        greyscale. Two of the three recorded demonstrations depend on colour, and one of those is
+        legible but colour-stripped: a page showing two grey squares on two grey grounds looks like
+        a complete, successfully reproduced figure.
+      detectability: silent
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        Saturation measured across all fifteen rendered pages of the span and a six-page sample
+        from PDF 95-100: zero coloured pixels out of 4,800 sampled per page, on every page tested.
+        Not muted - absent. The ledger names the pattern dimension_destroyed and ranks it the most
+        deceptive in the batch, above silent loss, because the earlier patterns at least leave the
+        extractor knowing something is missing. This one does not.
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    This is the case that defeats the whole idea of a single visual-completeness value. Every page
+    rendered, every figure present, correctly positioned and legible - and the argument is gone.
+    Nothing about access, file integrity, figure count or render success predicts it. Only knowing
+    what the book is about reveals the loss, which is why the audit records the argumentative role
+    of the visual alongside the inspection state.
+
+evidence_origin:
+  audit_scope: notable_objects_only
+  audit_scope_note: All 18 objects reviewed; one carries a non-default origin.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_alb_c003_0010]
+      evidence: >
+        Carries empirical_within_source in the frozen record. Albers reports results from his own
+        classroom exercises, run repeatedly with his own students - a measurement in the weak sense
+        of a repeated observed outcome, and his own.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        The other 17 objects, ten carrying practitioner_assertion. Albers argues from demonstration
+        and from teaching experience, citing no external work.
+  relation_to_evidence_characteristics: >
+    Agrees with the frozen field with no strain. Worth recording because Albers is the corpus's
+    most damaged source in area A and its least interesting in area B, which again shows the audits
+    are independent.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alb_c003_0001, bnd_alb_c003_0003]
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alb_c003_0002]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alb_c003_0005]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alb_c003_0004]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        Albers's method is pedagogy: the founding exercise is to make one colour look like two, and
+        the claim is that colour cannot be learned by being told. That is knowledge about how a
+        human should be trained to see, which fits no product consumer and is not a governance rule
+        about our ontology either. Recorded as a candidate fit with no binding made.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_alb_c003_0004]
+      observation: >
+        Carries historical_claim - a statement about how colour was taught when the book was
+        written. Useful context, no consumer.
+  conclusion: >
+    Four consumers bound. The audit's substantive finding for this source is that its bindings rest
+    on evidence the available copy has partly destroyed, which is a fact about the copy and belongs
+    beside the bindings rather than inside them.
+
+lineage:
+  authors: [Josef Albers]
+  publisher: Yale University Press
+  series: null
+  first_published: 1963
+  copy_edition: >
+    1971 printing, "text of the original edition with selected plates", digitised by the Internet
+    Archive.
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation with any corpus source. No corpus source
+    cites it and it cites none.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 1963 book about human colour perception. Its subject is the eye, not a reproduction
+    technology, so age does not threaten the claims. The one object carrying historical_claim is
+    about pedagogy of the period, not about equipment. Note the distinction from Alton: both are
+    mid-century, and only one has technology-dependent content.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]
