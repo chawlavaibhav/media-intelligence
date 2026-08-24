@@ -5,17 +5,17 @@
 
 | Stream | Status | Current approved work | Blocking item / next gate |
 |---|---|---|---|
-| Canon | **CANON-003 active, parallel extraction.** Five usable books complete at the pre-parallel checkpoint. Lane D is now **Controller-audited complete with Books 16–18 accepted as usable**, bringing the currently confirmed count to 8. Lanes A/B/C remain separately reviewable as they return. | `CANON-003.md` + `CANON-003-PARALLEL-EXECUTION.md` | Keep Lane D isolated and unmerged. Audit remaining lane returns against the frozen method. After all usable assignments, one fresh integration/synthesis session merges/reconciles lanes, revalidates all per-book outputs, counts recurrence and synthesizes. No schema changes or Canon-consumption experiments during the batch. |
+| Canon | **CANON-003 active, parallel extraction with one execution rebalance.** Five usable books complete at the pre-parallel checkpoint. Lane D is Controller-audited complete with Books 16–18 accepted, bringing the currently confirmed count to 8. A has Book 6 worker-complete; B has Book 9 worker-complete; C has Books 13–14 worker-complete. | `CANON-003.md` + `CANON-003-PARALLEL-EXECUTION.md` + `CANON-003-REBALANCE-01.md` | New ownership: A→Book 7; B→Books 10+12; C→Book 15; fresh rebalance branch→Books 8+11. Audit returned books before final integration. Accepted Lane D stays untouched. No schema changes or Canon-consumption experiments during the batch. |
 | Eval | **EVAL-003 correction return audited; final bounded pass active.** Major validity corrections are accepted provisionally, but the branch is not merge-ready and no calibration is approved. | `EVAL-003.md` + `EVAL-003-CORRECTION-PASS.md` + `EVAL-003-FINALIZATION-PASS.md` | Sync `work/eval` with main; add adversarial one-to-one matcher regression; rebuild primary V0 as **54 Hindi-labelled unique photographs** if available; fix the two-reader altered-target rule; remove stale contradictory prose; complete the three-point Resources proposal; re-run bounded verification. No human/API work yet. |
 | Resources | **RES-001/002 closed and merged. No active task.** | none | Stay closed unless a Controller-approved cross-stream correction or new sourcing requirement warrants a new task. |
 
 ## Canon live-review note
 
-Lane D is accepted. Git history now supplies the missing checkpoint evidence rather than relying on the worker's retrospective claim. The common base → Book 16 checkpoint `b7f0d47` is exactly one commit and contains only Book 16 source-representation files. Book 16 findings/history are committed before the Book 17 fresh checkpoint `75e4da1`; Book 17 findings/history are committed before the Book 18 fresh checkpoint `f0127e4`; Book 18 findings/history land only after that checkpoint. This satisfies the frozen fresh-before-historical rule for all three books, so the earlier provisional status is lifted with **no method deviation**.
+Lane D is accepted and its original branch remains frozen. To reduce idle time without changing the preselected 18-book experiment, Controller approved `CANON-003-REBALANCE-01.md`. At the audit point Books 8 and 11 were explicitly not started, so they were reassigned to a fresh branch `work/canon-003-rebalance-d` created from the original common parallel base. No book was added or dropped and no method/schema rule changed.
 
-Compare-to-base also shows the lane stayed in bounds: only source-specific Book 16–18 directories plus Lane D findings/checkpoint/issues files changed. Locked shared synthesis/Controller files were untouched. The return preserves important distinctions rather than smoothing them away: process knowledge is not forced into Creative IR, source-system synthesis is marked as extractor synthesis, visual evidence is inspected explicitly, evidence weaknesses remain visible, and schema implications are proposed but not applied.
+The remaining load is now balanced as follows: Lane A finishes Book 7; Lane B finishes Books 10 and 12; Lane C finishes Book 15; the rebalance worker handles Books 8 and 11. Book 12 deliberately remains with B because Lane D had already predicted that an interview-shaped source such as *The Conversations* might expose its claim-attribution issue; moving that source to the same worker after the prediction would weaken freshness.
 
-Lane D should now **stop and remain untouched** until the fresh final Canon integration session. It should not merge itself to main or synthesize across lanes.
+The rebalance worker must not continue from Lane D's accepted branch and must not read A/B/C fresh findings or use D's issue file as an extraction checklist. It follows the same frozen per-book process and stops after Books 8 and 11.
 
 ## Eval live-review note
 
@@ -28,7 +28,7 @@ Human/API calibration is still blocked until the finalization pass returns clean
 ## Cross-stream dependency chain
 
 ```text
-CANON-003 parallel book extractions
+CANON-003 parallel/rebalanced book extractions
         │
         └──► fresh CANON-003 integration/synthesis
                  │
@@ -46,7 +46,8 @@ Capability Registry / routing remain blocked until empirical measurements exist 
 
 ## Current Controller posture
 
-- Keep Canon lanes isolated until fresh extraction checkpoints are committed; accepted lanes remain untouched until integration.
+- Preserve the fixed 18-book source set; rebalance only explicitly not-started work under written Controller amendment.
+- Keep accepted Lane D untouched until integration.
 - Treat source annotations as provenance/evidence, not truth; reference construction remains two-reader and blind.
 - Spend the first I1 calibration budget on the Hindi-facing capability actually needed, not a zero-Hindi proxy pack.
 - Do not reopen Resources for ordinary cleanup; use the cross-stream proposal path.
