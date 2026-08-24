@@ -1,0 +1,335 @@
+# CANON-003 book 6 (Lane A) — Samara, "Making and Breaking the Grid" ch.1 core.
+# SPEC-04 bindings against SPEC-01 v0.1. Written only after the source representation was stable.
+#
+# 11 bindings against 79 SourceKnowledge objects. Most of this book does not reach a product field
+# and is left unbound, which SPEC-04 says is the normal state. Where it DOES reach one, the fit is
+# unusually direct: StaticCreativeExtension names typography_layout, spatial_hierarchy and
+# composition-with-depth, and this source is about exactly those three things.
+source_id: samara_making_breaking_grid_ch1
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_sam_c003_0001
+  source_knowledge_refs: [sk_sam_c003_0007]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.typography_layout
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills]
+  rationale: >
+    SPEC-01 names a typography_layout field and does not say what may go in it. This source supplies
+    a complete and closed vocabulary for it: columns and their gutters, flowlines, rows and their
+    gutters, modules, spatial zones and markers, with the source's own statement that every grid is
+    made of these and no others. A layout specified in these terms is machine-comparable in the way
+    SPEC-01 wants element references to be.
+  applicability:
+    when: "specifying or reading the layout structure of a static piece"
+    limits: >
+      The vocabulary is for orthogonal, alignment-based structures. The source's own hierarchic grid
+      is defined by intuitive placement, and a layout with no repeating interval can be described in
+      these terms only loosely.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0002
+  source_knowledge_refs: [sk_sam_c003_0008, sk_sam_c003_0010, sk_sam_c003_0012, sk_sam_c003_0015, sk_sam_c003_0016]
+  source_system_refs: [scs_sam_c003_001]
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.typography_layout
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, derives]
+  rationale: >
+    Each of the five structures is introduced with the content condition that calls for it —
+    continuous text, discontinuous information, many kinds of information, needs that fit no
+    category, needs one structure cannot serve. Given a described content shape, that narrows which
+    layout structures are defensible before any layout exists.
+  applicability:
+    when: "a layout structure is being chosen and the kinds and volumes of content are known"
+    limits: >
+      The conditions are stated qualitatively — "extremely complex", "many different kinds" — with
+      no thresholds, so this narrows the option set and does not select within it. The source also
+      records structures being chosen for what they signify rather than what the content needs, and
+      supplies no way to weigh that against the functional match.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sam_c003_0035]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0003
+  source_knowledge_refs: [sk_sam_c003_0017, sk_sam_c003_0022, sk_sam_c003_0036]
+  source_system_refs: [scs_sam_c003_003]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The alignment discipline is one of very few claims in this batch that is mechanically decidable.
+    Given a layout and the structure it was built on, whether an element's edges land on a column or
+    row guide is measurable rather than judged. That makes it a checkable acceptance condition, not
+    an opinion about quality.
+  applicability:
+    when: "a rendered static layout is being checked and the structure it was built on is known"
+    limits: >
+      Decidability depends entirely on knowing the grid. Where it is not supplied it would have to
+      be inferred from the layout, which is the source's own method for deriving a grid and is not
+      reliable in reverse. The check is also incomplete on its own: the source's exceptions —
+      silhouettes and bleeds judged optically, ragged edges completed by a placed element, hung
+      bullets, centred text related by width, paragraph breaks explicitly exempted — would all read
+      as failures against the bare rule.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [cc_sam_c003_element_fails_to_meet_the_structure, t_sam_c003_0029]
+  repair_ontology_refs: [t_sam_c003_0040]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0004
+  source_knowledge_refs: [sk_sam_c003_0031, sk_sam_c003_0076, sk_sam_c003_0078]
+  source_system_refs: [scs_sam_c003_004]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  rationale: >
+    Variation, bounce and pacing are properties of a sequence and do not exist inside any single
+    piece. Whether image position alternates between spreads, whether one set of sizes recurs in
+    changed places, whether the rhythm shifts to mark a change of content — none of these can be
+    observed in one asset held alone. Any evaluator for them must receive the ordered set.
+  applicability:
+    when: "evaluating a run of pieces produced under one structure, in their intended order"
+    limits: >
+      The source gives no threshold for enough variation and states the danger — succumbing to
+      regularity — only qualitatively. This supports detecting that a sequence does not vary, not
+      judging whether it varies well. The order must be the intended one; the same set shuffled
+      would score differently and the source's pacing claims assume a reading sequence.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sam_c003_0028]
+  repair_ontology_refs: [t_sam_c003_0051]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0005
+  source_knowledge_refs: [sk_sam_c003_0074, sk_sam_c003_0070]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.composition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, derives]
+  rationale: >
+    SPEC-01's composition field names framing, depth and figure-ground. This source gives depth a
+    set of structural determinants rather than a pictorial one: how full the page is, how many
+    alignments are explicitly marked, how similar the element scales are, how much text is present,
+    and how varied the negative shapes are. That is a way of specifying apparent depth in a flat
+    typographic composition, which the field otherwise has no vocabulary for.
+  applicability:
+    when: "specifying or judging whether a static layout should read as flat surface or as layered depth"
+    limits: >
+      Four factors are said to push each way and the source never says what happens when they
+      conflict — a full page with strong size contrast is unaccounted for. The source also hedges
+      the text factor ("more likely be felt"), and none of the five determinants is quantified.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sam_c003_0050]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0006
+  source_knowledge_refs: [sk_sam_c003_0032]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.spatial_hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills]
+  rationale: >
+    A spatial zone is a region of the format with a role assigned to it — images here, step text
+    below, navigation in this band. That is what a spatial hierarchy field is for, and this source
+    supplies both the construction (groups of columns, rows or modules, or a guide added
+    deliberately outside the structure) and the purposes it serves.
+  applicability:
+    when: "assigning roles to regions of a static format"
+    limits: >
+      The source permits adding a guide independent of the grid to emphasise a zone, so a zone is
+      not always derivable from the structure it sits in. A specification recording zones must
+      therefore record them separately rather than compute them from the grid.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0007
+  source_knowledge_refs: [sk_sam_c003_0050]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [evaluates]
+  observation_unit: whole_asset
+  rationale: >
+    Fifty to eighty characters per line, about sixty-five ideal, is the only quantified rule in this
+    section and it is countable on rendered text. It is the rare case where a craft source yields a
+    threshold that can be checked without judgement.
+  applicability:
+    when: "checking continuous text in a rendered static piece"
+    limits: >
+      The source scopes it to English in its own footnote and says every language has its own
+      optimal count, so it must not be applied to other scripts or languages. The number itself is
+      asserted with no derivation and no study; the specimen demonstrating it borrows its text from
+      another book without borrowing authority for the figure. Counting characters is easy; the
+      confidence attaching to the range is not high.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sam_c003_0034]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0008
+  source_knowledge_refs: [sk_sam_c003_0059]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: delivery.aspect_ratios
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, constrains]
+  rationale: >
+    SPEC-01 records a list of aspect ratios for delivery and treats them as independent. This source
+    says they need not be: where a module proportion generates the formats, or the formats generate
+    the module, the set of ratios becomes one system, and columns or rows can be added or removed to
+    suit a format while the proportion holds. That is a reason a ratio list might carry a derivation
+    rather than being a flat enumeration.
+  applicability:
+    when: "a set of formats is being produced for one campaign or identity programme"
+    limits: >
+      Conditional on the designer being able to anticipate most of the materials, which the source
+      states as a requirement. Where formats are fixed externally — platform-mandated ratios — the
+      derivation runs the other way or not at all, and the source does not treat that case.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; the schema currently has no place to record a derivation between ratios"
+
+- binding_id: bnd_sam_c003_0009
+  source_knowledge_refs: [sk_sam_c003_0018, sk_sam_c003_0041, sk_sam_c003_0043, sk_sam_c003_0052, sk_sam_c003_0053, sk_sam_c003_0055, sk_sam_c003_0058]
+  source_system_refs: [scs_sam_c003_002]
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The largest usable block of this source is a derivation that turns typographic measurements into
+    a structure: universal width increment, gutter from running text, margins as remainder, leading
+    forced onto a common divisor, row depth from where baselines meet, baseline grid reconciled by
+    arithmetic. Every step is exactly executable and none of it is a generation action. Production
+    IR does not exist, so it is recorded in the source's own frame and parked.
+  applicability:
+    when: "a layout structure must actually be constructed from settled type styles"
+    limits: >
+      Deterministic layout operations. NOT translated into generative control — asking a model to
+      "use a 5x12 modular grid with 12-point row gutters" is a different and unevidenced claim, and
+      making it is a Pass 2 hypothesis this binding does not assert. The chain also carries a cost
+      the source concedes: forcing the leading onto a common divisor changes the interline spacing
+      previously established as optimal for reading.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [cc_sam_c003_deterministic_layout_repairs]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked, not translated"
+
+- binding_id: bnd_sam_c003_0010
+  source_knowledge_refs: [sk_sam_c003_0017, sk_sam_c003_0020, sk_sam_c003_0024, sk_sam_c003_0028]
+  source_system_refs: [scs_sam_c003_003]
+  target_type: governance
+  target_path: null
+  governance_consumer: retrieval_governance
+  role: [constrains]
+  rationale: >
+    This source is a clean case of knowledge that becomes wrong when split. The rule "image edges
+    align with column and row edges" retrieved without its family is actively misleading: the source
+    exempts silhouettes and full bleeds, which have no edges to align; exempts paragraph breaks from
+    the row guides outright; permits a rag not to reach the column edge; and answers a wanted
+    misalignment by subdividing the grid rather than moving the element. An evaluator or generator
+    given the bare rule would flag as errors four things the source explicitly allows.
+  applicability:
+    when: "deciding what may be retrieved separately from a rule-with-exceptions structure"
+    limits: >
+      One source. It demonstrates that the governing rule and its exemptions must travel together;
+      it says nothing about how such families should be detected in general, and the source itself
+      supplies no marker distinguishing a governing rule from an exception — the exceptions are
+      simply captions on the following pages.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0011
+  source_knowledge_refs: [sk_sam_c003_0009, sk_sam_c003_0013, sk_sam_c003_0067, sk_sam_c003_0068]
+  source_system_refs: [scs_sam_c003_005]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A worked case of two evidence profiles interleaved in one text with nothing marking the join.
+    Most of this source is geometric and checkable — a measure, a count, an alignment. Scattered
+    through it are claims about what audiences will infer: that a manuscript grid reads as
+    authoritative, that a modular grid signifies rationalism, that symmetry reads classical and
+    asymmetry modern. Not one reports any audience evidence, and they are typographically
+    indistinguishable from the checkable claims around them. Weighing a source that mixes the two
+    is a distinct problem from weighing one that is uniformly assertion, and this book is a clean
+    example of the type.
+  applicability:
+    when: "weighing a craft source that contains both mechanically checkable rules and unevidenced audience-inference claims"
+    limits: >
+      One source. It shows the mixture exists and that nothing in the text signals the switch; it
+      says nothing about how common the pattern is, nor how the two kinds of claim should be scored
+      against each other. Distinguishing them here required reading each claim, not a rule.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sam_c003_0012
+  source_knowledge_refs: [sk_sam_c003_0003]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source's opening demonstration is a ready-made minimal pair: one set of information, one
+    type family, a small set of sizes, set two ways, with the alignment structure each grouping
+    implies drawn beside it. That is a test case with a known answer — given the same content
+    grouped two ways, does the derived structure differ in the stated way — and it is one of the few
+    places in this batch where a source supplies both halves of a controlled comparison.
+  applicability:
+    when: "constructing test cases for whether a system can read structure off a composition"
+    limits: >
+      The pair demonstrates a derivation, not a viewer effect. The source makes no claim about what
+      a reader does with either version, so a benchmark built on it tests structural inference and
+      must not be read as testing communication.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
