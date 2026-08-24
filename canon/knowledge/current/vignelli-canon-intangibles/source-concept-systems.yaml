@@ -1,0 +1,115 @@
+# CANON-003 book 5 — The Vignelli Canon, Part One. SourceConceptSystems under SPEC-03.
+source_id: vignelli_canon_part_one_intangibles
+source_concept_systems:
+
+- scs_id: scs_vig_c003_001
+  source_id: vignelli_canon_part_one_intangibles
+  label: the_three_aspects_as_a_sequential_test
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    Semantics, syntactics and pragmatics are presented as three aspects to be examined one at a time,
+    and the source treats them as successive conditions: find the meaning, make the elements
+    consistent with one another, and check that the result is understood. Failing the third voids the
+    first two.
+  whole_system_claim:
+    text: >
+      Work can be semantically correct and syntactically consistent and still be wasted effort, if at
+      the point of fruition no one understands it. The three aspects are therefore cumulative
+      conditions rather than parallel concerns, and comprehension is the one that can void the others.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "Semantics, Syntactics, Pragmatics; PDF spreads 6-8"}
+  members:
+    - {sk_ref: sk_vig_c003_0001, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0002, role_in_system: condition, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0003, role_in_system: condition, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0004, role_in_system: overriding_condition, order: 4, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_vig_c003_0004, to: sk_vig_c003_0002, nature: "the source says work semantically correct is still useless if not understood", origin: source_stated}
+      - {from: sk_vig_c003_0004, to: sk_vig_c003_0003, nature: "and the same for syntactic consistency", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The three aspects and their order are the source's own, announced at the opening and given a
+      section each. What is ours is reading them as cumulative conditions rather than as three
+      coordinate concerns; the source's phrasing in the Pragmatics section supports it directly.
+  provenance:
+    locator: "PDF spreads 6-8"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_vig_c003_002
+  source_id: vignelli_canon_part_one_intangibles
+  label: values_held_against_style
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    A cluster of the source's values defined by what they are not. Discipline is not style;
+    appropriateness transcends style; design is a discipline and emphatically not a style;
+    intellectual elegance is not a design style; visual power is not visual impact; timelessness is
+    against fashion. Each is asserted by exclusion.
+  whole_system_claim:
+    text: >
+      The book's central move in Part One is to separate a permanent, transferable discipline from
+      transient style, and to place every value it holds on the discipline side. The values are
+      defined largely by what they exclude rather than by tests they satisfy.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source never groups these or names the pattern. It repeats the same rhetorical move in six
+      separate sections — discipline "regardless of its style", appropriateness "transcends any issue
+      of style", "design is a discipline... nothing could be more wrong" than thinking it a style,
+      intellectual elegance "is not a design style", visual strength "should never be confused with
+      just visual impact", and timelessness "against any fashion of design and any design fashion".
+      Collecting them is ours, and the observation that the definitions are negative is ours too.
+    source_ref: null
+  members:
+    - {sk_ref: sk_vig_c003_0005, role_in_system: value, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0006, role_in_system: value, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0008, role_in_system: governing_claim, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0009, role_in_system: value, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0010, role_in_system: standard, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0011, role_in_system: value, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_vig_c003_0012, role_in_system: value, order: 7, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_vig_c003_0009, to: sk_vig_c003_0010, nature: "visual strength is stated to be an expression of intellectual elegance", origin: source_stated}
+      - {from: sk_vig_c003_0012, to: sk_vig_c003_0005, nature: "the source calls responsibility another form of discipline", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_vig_c003_0007, sk_vig_c003_0004]
+        nature: >
+          Pragmatics demands that an artefact stand by itself in all its clarity and treats confused
+          design as revealing a confused mind. Ambiguity, three sections later, recommends deliberately
+          conferring the possibility of being read in several different ways. The source states both
+          approvingly and never addresses the tension.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is individually source-stated and each carries its own section heading. The
+      grouping, the observation that the definitions are negative, and both recorded conflicts are
+      ours. This is a hypothesis about how the book argues rather than a report of a structure it
+      declares, and each member stands independently if it is rejected.
+  provenance:
+    locator: "PDF spreads 9-17"
+    page_start: null
+    page_end: null
+    source_support: text
