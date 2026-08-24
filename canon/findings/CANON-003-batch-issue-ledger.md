@@ -315,6 +315,119 @@ what mattered.
 - **Consequence if unchanged:** small, hard-to-detect attention bias in visual passes
 - **Proposed fix (NOT APPLIED):** record artifact condition in the per-book provenance file, which was done here
 
+### B-13 — BATCH BLOCKER: the local book library became unreachable *(new, batch-level)*
+
+**Plain English.** Every book except the six chapter texts stored in the repository lives in a folder
+on the local disk. Partway through book 2, that folder stopped being readable — not corrupted, just
+refused at the filesystem level, for the whole directory.
+
+It was readable earlier in the same session. That access is how Phase 0 verified all four anchor books
+against their full copies, and how book 1's twenty pages were rendered for its visual pass.
+
+**Why it matters, concretely.** The batch needs at least 15 books. Reachable material is now:
+
+| Source | State |
+|---|---|
+| Bang, Williams | already processed in CANON-001/002 |
+| Lupton | blocked, column corruption |
+| Grammar of the Shot | done, book 1 |
+| Ogilvy | done, book 2 |
+| Light: Science & Magic | **the last remaining processable source** |
+
+So the batch can reach **book 3 of a required 15** and then has nothing left to process.
+
+**What I did not do.** The only workaround available to this worker is to bypass the sandbox. That is
+an access-control bypass, which `shared/AUTONOMY-POLICY.md` names as a stop-gate action. Taking it
+unilaterally would be exactly the kind of judgement call the gate exists to prevent, so it was not
+taken.
+
+**Why this is not the same as CANON-003's visual-blocking policy.** That policy covers one book whose
+figures are unavailable: mark visual completeness blocked, extract from text, continue. It was applied
+to Ogilvy and worked. It does not cover the library itself becoming unreachable, which removes not
+only figures but provenance verification and the remaining 29 books.
+
+**Uncertainty.** Whether access can be restored is unknown from here. If it can, nothing is lost — the
+inventory, selection and verification work all remains valid.
+
+- **Books:** all unprocessed selections · **Distinct books affected: 29** · **Status: OBSERVED**
+- **Layer:** provenance, visual completeness, batch feasibility
+- **New / recurrence:** new
+- **Consequence if unchanged:** the batch stops at 3 of 15 usable books
+- **Proposed fix (NOT APPLIED):** Controller decision — restore access, or re-scope the batch to what the repository alone can support
+
+### B-14 — Historical catches product-schema fit the fresh pass misses *(recurrence strengthened to 3 books)*
+
+**Plain English.** Updated from B-09. Three consecutive books now show the same thing: the older
+extraction noticed how craft knowledge meets the product's Creative IR, and the fresh extraction —
+holding the same evidence — did not.
+
+- **Williams:** `creative.hierarchy` is a ranked list and cannot express "the reader knows when they
+  are finished".
+- **Grammar of the Shot:** a sight line is literally one entity looking at another, so it belongs in
+  the `relationships` field.
+- **Ogilvy:** the whole `message.proposition` / `message.support` family, obviously right for a chapter
+  about what to say and why. I produced two Creative IR bindings against the audit's fourteen.
+
+**A fourth instance, of the same kind but a different target.** The Ogilvy audit connects a source
+claim — that advertising can reduce sales — to **assumption 13** in the project's falsification
+register, which holds that human acceptance correlates sufficiently with commercial outcome. I
+extracted the claim, extracted the stronger version of it, and built an evaluation binding warning
+that scoring style measures the wrong thing. I never connected any of it to the register.
+
+**INFERRED, and this is the batch's most important interpretive claim so far.** The fresh method is
+better at source fidelity and worse at relating what it finds back to the project's own framework —
+whether that framework is a schema field or an assumption. The likely reason is structural: the old
+method *required* every atom to name a Creative IR field, which forced the question on every object.
+Removing that requirement removed the distortion it caused **and** the attention it compelled.
+
+If that reading is right, this is a genuine trade-off introduced by SPEC-03, not a defect in it, and
+the fix is a separate pass rather than a change to extraction.
+
+- **Books:** Williams, Grammar of the Shot, Ogilvy · **Distinct books: 3** · **Status: OBSERVED; interpretation INFERRED**
+- **Layer:** Creative IR fit
+- **New / recurrence:** strengthens B-09 from 2 books to 3
+- **Consequence if unchanged:** a faithful Canon that under-connects to the product it exists to serve
+- **Proposed fix (NOT APPLIED):** a distinct post-extraction pass that asks, per object, which SPEC-01 fields and which assumptions-register entries it touches — run deliberately *after* the source pass so it cannot contaminate it
+
+### B-15 — A fourth visual-loss pattern, and severity tracks detectability *(extends B-10 to 4 books)*
+
+**Plain English.** Ogilvy's text keeps six literal "Click here for hi-res image" placeholders where the
+advertisements were. The loss is **announced**.
+
+Four books, four patterns, ranked by how dangerous they are — which is not the same as how much is
+missing:
+
+1. **Silent** (Williams) — nothing marks the loss. The extractor cannot know. Dangerous.
+2. **Named** (Grammar of the Shot) — figures numbered and captioned. Incomplete but honest.
+3. **Announced** (Ogilvy) — explicit placeholder text. Unmissable.
+4. **Minimal** (Bang) — prose carries the argument; little is lost.
+
+**Why it matters.** Only the silent case produces confident wrong extraction. The others produce known
+gaps, which are a scheduling problem rather than a correctness problem.
+
+- **Books:** Bang, Williams, Grammar of the Shot, Ogilvy · **Distinct books: 4** · **Status: OBSERVED**
+- **Layer:** visual completeness
+- **New / recurrence:** extends B-10
+- **Consequence if unchanged:** all visual loss treated as equally serious, when only one kind corrupts results
+- **Proposed fix (NOT APPLIED):** classify visual loss by detectability, not by amount
+
+### B-16 — The old admission habit survived into the migration *(new)*
+
+**Plain English.** The Ogilvy audit classified "big ideas come from the informed unconscious" as
+**human-learning-only** — outside Canon. But SPEC-03 has no usefulness test: if a source teaches it,
+it is source knowledge. I extracted it as an ordinary object.
+
+**Why it matters.** SPEC-03 was written because the old rule discarded knowledge that had no immediate
+product use. This is a small, live instance of that same judgement surviving the migration into work
+performed under the new schema.
+
+**Uncertainty.** One instance in one book.
+
+- **Books:** Ogilvy · **Distinct books: 1** · **Status: OBSERVED**
+- **Layer:** source fidelity
+- **Consequence if unchanged:** migrated objects carry admission decisions the current schema does not authorise
+- **Proposed fix (NOT APPLIED):** none for the fresh method, which handled it correctly
+
 ---
 
 ## C. Evidence *against* earlier concerns
@@ -326,8 +439,19 @@ it is the first evidence that catastrophic silent visual loss is not universal. 
 
 **H-02 did not recur.** Grammar of the Shot narrates changes between its own before-and-after figures,
 but those changes are the subject of the demonstration rather than incidental confounds, so the
-classification trap that lost three Williams claims did not arise. Not yet evidence that it was
-source-specific — this source simply does not have the shape that triggers it.
+classification trap that lost three Williams claims did not arise. Ogilvy has no before-and-after
+comparisons at all. Two books without recurrence, but neither has the shape that triggers it, so this
+is not yet evidence that the problem was source-specific.
+
+**H-03 did not recur.** The two-claims-in-one-passage ambiguity that made the Williams all-caps
+decision hard has not reappeared in either book since. Grammar of the Shot separates its claims by
+section heading; Ogilvy does the same.
+
+**The schema absorbed an evidence profile unlike anything before it.** Ogilvy is 20/22 practitioner
+assertion, 14/22 anecdotal, 5/22 uncontrolled outcome claims and 0/22 controlled comparison — the
+opposite of every earlier book. Nothing had to be forced, excluded or invented, and the weakness is
+recorded inside each object rather than hidden. This is positive evidence for the evidence-characteristics
+design, which replaced the uncalibrated decimal confidences the historical passes used.
 
 ---
 
@@ -335,10 +459,12 @@ source-specific — this source simply does not have the shape that triggers it.
 
 | | Count |
 |---|---|
-| Books completed under the frozen method | **1** (Grammar of the Shot ch.4) |
+| Books completed under the frozen method | **2** (Grammar of the Shot ch.4; Ogilvy ch.2) |
 | Books blocked before extraction | 5 (Lupton + 4 image-only/format) |
-| Issues logged | 12 new, 5 carried forward |
-| **Issues seen in 2+ distinct books** | **4** (B-07 ×3, B-08 ×2, B-09 ×2, B-10 ×3) |
+| Books now unreachable | **29** (see B-13) |
+| Issues logged | 16 new, 5 carried forward |
+| **Issues seen in 2+ distinct books** | **4** (B-07 ×4, B-08 ×3, B-14 ×3, B-15 ×4) |
+| **Batch feasibility** | **AT RISK — 3 of 15 reachable, see B-13** |
 
 ### Book 1 method-integrity note
 The frozen method held. No schema, granularity rule, visual-pass method or ontology vocabulary was
