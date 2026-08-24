@@ -5,35 +5,37 @@
 
 | Stream | Status | Current approved work | Blocking item / next gate |
 |---|---|---|---|
-| Canon | **CANON-003 active. 16/18 usable books Controller-accepted.** Accepted: five pre-parallel books + Lane A Books 6–7 + rebalance Book 8 + Lane B Books 9–10 + Lane C Books 13–15 + original Lane D Books 16–18. | `CANON-003.md` + `CANON-003-PARALLEL-EXECUTION.md` + `CANON-003-REBALANCE-01.md` | Only Books 11 and 12 remain. Rebalance worker owns Book 11; Lane B owns Book 12. After both return and pass audit, run one fresh integration/synthesis session with independent mechanical revalidation of every accepted book. |
+| Canon | **CANON-003 extraction closed at 16 Controller-accepted usable books.** The task minimum was 15; the 18-book target is intentionally not pursued further. | Final CANON-003 integration, independent mechanical revalidation and 16-book synthesis. | Run one fresh integration session over the accepted 16-book evidence set. Books 11–12 are deferred reserve sources, not failures and not part of the synthesis set unless separately re-authorized. |
 | Eval | **EVAL-004 stopped by Controller after a single-reader 54-item pilot.** EVAL-003 readiness remains closed/merged; the two-reader calibration was not completed. | none | Decide whether to redesign checker qualification around harder, controlled generated-Hindi failure cases. Do not qualify or rank checkers from the EVAL-004 pilot. |
 | Resources | **RES-001/002 closed and merged.** | none | Pending optional Controller action on `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md`; otherwise remain closed. |
 
 ## Canon
 
-Controller-accepted usable books now total **16/18**.
+Controller-accepted usable books total **16**. This exceeds CANON-003's minimum success threshold of 15. On 24 Aug 2026 the Controller chose to stop extraction above the minimum but below the 18-book target rather than spend additional time on diminishing-return sources. See `canon/decisions/CANON-003-STOP-AT-16-2026-08-24.md`.
 
 Accepted parallel work:
 
 - Lane A: Books 6–7 accepted and stopped.
-- Rebalance lane: **Book 8 accepted**; Book 11 remains.
-- Lane B: **Books 9–10 accepted**; Book 12 remains.
+- Rebalance lane: Book 8 accepted.
+- Lane B: Books 9–10 accepted.
 - Lane C: Books 13–15 accepted and stopped.
 - Original Lane D: Books 16–18 accepted/frozen.
-- Together with the five usable pre-parallel books, the confirmed usable count is **16**.
+- Together with the five usable pre-parallel books, the confirmed usable synthesis set is **16 books**.
 
 The Controller audit for Books 8–10 is recorded at `coordination/CANON-003-BOOKS-08-10-AUDIT.md`. It verifies branch isolation against common base `4cbe25783cb2bccf1584c792d44ca54adf71bf3b`, book-specific fresh checkpoints before historical comparison, representative-section/provenance/visual procedure, and frozen-method discipline. The worker validators were ephemeral and are therefore not treated as independently rerun evidence; final integration must mechanically revalidate every accepted book before completion is claimed.
 
 Book 7 identity correction remains durable: the preselected Freeman artifact is *The Photographer's Eye: A Graphic Guide* (2013), not the 2007 *The Photographer's Eye*. Final synthesis must retain that corrected identity.
 
-The fixed 18-book source set remains unchanged. Only these books remain open:
+Deferred reserve sources:
 
 - Book 11 — Christopher Kenworthy, *Master Shots* — `work/canon-003-rebalance-d`.
 - Book 12 — Michael Ondaatje, *The Conversations* — `work/canon-003-b`.
 
+These are **deferred, not failed or blocked**. Any later worker output for them is outside the frozen 16-book evidence set unless the Controller separately decides to expand the batch.
+
 No accepted worker branch is merged individually. Keep accepted branches untouched until one fresh final integration/synthesis session reconciles all reviewed lanes and reruns mechanical validation.
 
-No schema, granularity, visual-pass, ontology-vocabulary or Canon-consumption change is allowed until the batch-level synthesis.
+No schema, granularity, visual-pass, ontology-vocabulary or Canon-consumption change is allowed until the batch-level synthesis is complete.
 
 ## Eval
 
@@ -54,14 +56,15 @@ No checker roster, API/model spend, generator work, BSTD use, Marathi stress sub
 ## Cross-stream dependency chain
 
 ```text
-CANON-003 Books 11 + 12
+CANON-003 extraction CLOSED at 16 accepted books
         │
-        └──► Controller audits
+        └──► one fresh CANON-003 integration/synthesis
                  │
-                 └──► one fresh CANON-003 integration/synthesis
-                          │
-                          ├──► independent mechanical revalidation of all accepted books
-                          └──► possible consolidated Canon-method revision task
+                 ├──► independent mechanical revalidation of all 16 accepted books
+                 ├──► 16-book multi-source synthesis
+                 └──► possible consolidated Canon-method revision task
+
+Books 11–12 ──► deferred reserve evidence only; not required for current synthesis
 
 RES-002 corpus ──► EVAL-003 readiness MERGED
                          │
@@ -74,9 +77,11 @@ Capability Registry / routing remain blocked until empirical measurements exist 
 
 ## Current Controller posture
 
+- Treat the accepted **16 books** as the frozen CANON-003 synthesis set.
 - Keep accepted Canon branches untouched until final integration.
-- Finish and audit Books 11–12 before any schema revision or Canon-consumption experiment.
-- Prepare for one final CANON-003 integration/synthesis session with independent mechanical revalidation.
+- Do not wait for Books 11–12; they are deferred reserve sources.
+- Start one fresh CANON-003 integration/synthesis session with independent mechanical revalidation.
+- Do not revise Canon schemas/method until that synthesis is complete.
 - Treat EVAL-004 as a stopped exploratory pilot, not a completed calibration.
 - Do not promote Reader A to ground truth or qualify checkers from the pilot.
 - Treat source labels as provenance/evidence, not truth.
