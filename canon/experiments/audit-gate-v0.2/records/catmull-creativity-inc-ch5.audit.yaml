@@ -1,0 +1,170 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_catmull_creativity_inc_ch5
+source_id: catmull_creativity_inc_ch5_honesty_and_candor
+knowledge_dir: canon/knowledge/current/catmull-creativity-inc-ch5
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 7459e41f773a7ae5150d301c92d627f2abcc873b4ae14fad8e91575638cbcb4b
+    - path: operational-bindings.yaml
+      digest: 010b868e4d43138ee49d60c28283bb77ff71ba9644fdc377013fe3ed022967ae
+    - path: source-concept-systems.yaml
+      digest: 4c04acd2494efd2ef5f13bbad3924ca8cec6d328aec0acf190e17b61c0837d19
+    - path: source-knowledge.yaml
+      digest: 65fdf87141dcc3221e93935b3618b3fa19c0bc8bb2ff164791f0419f04b4c02b
+    - path: visual-evidence-ledger.yaml
+      digest: 735b1b88fd9a6553a0b5dca6a23bef51ae6e0edc72fe4354484477366bc56a82
+  combined_digest: 4e84f7d86305122105902dcc330fd36ff5099593bb2d3ee35650885deb78124b
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/catmull-creativity-inc-ch5/PROVENANCE.md
+  - canon/knowledge/current/catmull-creativity-inc-ch5/visual-evidence-ledger.yaml
+  - canon/knowledge/current/catmull-creativity-inc-ch5/source-knowledge.yaml
+  - canon/knowledge/current/catmull-creativity-inc-ch5/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-D-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Random House EPUB converted from a Kindle file; printed pages do not exist inside it.
+  inspection_state: inspected_figure_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: no_loss_detected
+      affects: >
+        Nothing. All 33 images in the package were measured. Chapter 5 contains exactly one image
+        reference and it is 525 x 1 pixels - a decorative horizontal rule repeated under all 28
+        chapter titles. The book's 21 real images sit in a separate photo insert and are captioned
+        biographical photographs credited to named photographers; none demonstrates a claim and
+        none is referenced from the argument.
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        D-03. One pixel of height separated a correct reading from a wrong one. A visual pass that
+        counted figure references rather than measuring them would have reported one figure in this
+        chapter and then either hunted for an argument that does not exist or marked the chapter
+        visually incomplete for never having inspected a horizontal line.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    This source is why inspection_state and visual_argument_role must be two fields. CANON-003
+    recorded verified_figure_level here and the same value on Building a StoryBrand, where the
+    figures contained a field schema the prose never states. One recorded value, two opposite
+    meanings. Under the candidate model both keep inspection_state: inspected_figure_level and
+    separate on visual_argument_role - no_visual_argument here, figure_carries_content there.
+
+evidence_origin:
+  audit_scope: notable_objects_only
+  audit_scope_note: >
+    All 21 objects reviewed. The interesting finding is attributional, not empirical.
+  categories:
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_cat_c003_0017, sk_cat_c003_0018, sk_cat_c003_0020]
+      evidence: >
+        Several of the chapter's most useful claims are not the book's author speaking. The two
+        selection criteria for building your own review group are Andrew Stanton's words presented
+        as guidance to the reader (sk_cat_c003_0020); the second half of the definition of
+        constructive criticism, including the teaching analogy, is quoted from Stanton and endorsed
+        by placement rather than formulated by Catmull (sk_cat_c003_0018); one account is a
+        director's own recollection quoted by the source (sk_cat_c003_0017). All three were
+        recorded in extractor_observed caveats under the frozen method, which files an authorship
+        property as an observation of the extractor's - the wrong shelf.
+    - category: source_own_measurement_reported
+      sk_refs: [sk_cat_c003_0008]
+      evidence: >
+        Carries empirical_within_source in the frozen record. Catmull reports Pixar's own repeated
+        internal observation across productions.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        The remaining 17 objects; all 21 carry practitioner_assertion and four anecdotal.
+  relation_to_evidence_characteristics: >
+    D-02, and it is a different failure from Lane C's. Lane C's gap is about measurement; this is
+    about voice. A practitioner assertion by the book's author is one person's authority; a claim
+    the author selected from a colleague and endorsed is arguably two people's, or arguably weaker
+    because the author did not commit to it in his own voice. Neither reading is available to
+    anything reading the Canon later, because the fact lives in a caveat. Nothing in
+    evidence.characteristics addresses voice at all, so this category adds information rather than
+    duplicating a field.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      note: >
+        Zero Creative IR bindings from 21 objects, and that is the correct result. The chapter
+        concerns critique culture and how a team behaves, not the contents of one generated asset.
+        This is the corpus's clearest evidence that unbound knowledge must remain first-class.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_cat_c003_0005]
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_cat_c003_0002]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_cat_c003_0003, bnd_cat_c003_0004]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_cat_c003_0001]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        The Braintrust is a meeting format with preconditions, failure modes and a defined unit of
+        feedback. It is the single most operational thing in the chapter and it acts entirely on
+        people. D-01 recorded that the repair vocabulary cannot express a social or organisational
+        action; executable_by has physical_production, generative_respecification,
+        deterministic_composite, human_edit and unknown, and none of them is "change how a group
+        talks to each other". This is the strongest case in the corpus for naming human_workflow as
+        an audit consumer, and it deliberately produces no binding.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_cat_c003_0001, sk_cat_c003_0016]
+      observation: >
+        The mechanism for why capable people withhold criticism, and the observation that detecting
+        a failed Braintrust relies on a director reporting it afterwards. Both are load-bearing in
+        the source and bind to nothing.
+  conclusion: >
+    Four consumers bound and Creative IR deliberately empty. Under the old mandatory-binding rule
+    this chapter would have been forced to name a Creative IR field for every object, and the
+    result would have been 21 distortions. The audit asks the same question and accepts the honest
+    answer.
+
+lineage:
+  authors: [Ed Catmull, Amy Wallace]
+  publisher: Random House
+  series: null
+  first_published: 2014
+  copy_edition: EPUB, ISBN 9780679644507
+  related_sources_in_corpus:
+    - source_id: heath_made_to_stick_introduction
+      relation: shares_publisher_only
+      evidence: >
+        Both are Random House titles. Different authors, subjects and decades. Recorded to exercise
+        the rule that a shared publisher alone does not defeat independence.
+    - source_id: bayles_orland_art_and_fear_part_one_opening
+      relation: no_known_relation
+      evidence: >
+        Both concern the psychology of creative work and D-11 recorded that the two produced
+        near-identical evidence profiles. Similar profile is not shared origin; the books share no
+        author, publisher or lineage, so agreement between them is genuine convergence.
+  independence_verdict: independent_origin
+  independence_basis: >
+    Shares a publisher with one corpus source and nothing else.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2014 book about how a group gives feedback. Two objects carry historical_claim, both
+    recounting Pixar's own past. Nothing depends on a production technology.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]

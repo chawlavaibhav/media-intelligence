@@ -1,0 +1,171 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_grammar_of_the_edit_ch3_5
+source_id: grammar_of_the_edit_ch3_5_editing_decisions
+knowledge_dir: canon/knowledge/current/grammar-of-the-edit-ch3-5
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 160952d8a9c05f3a3188eb26c9b983ae78b02a146c9b9d25859f74628fcc082d
+    - path: operational-bindings.yaml
+      digest: 92e3f37bff5ed83d2e41c2a8d580185179d9e9a8604064abd70f21d15ac91bfa
+    - path: source-concept-systems.yaml
+      digest: 1c48d1c6b7eee401bef89a009013fc2eefb86b0254cb28727197094605958d23
+    - path: source-knowledge.yaml
+      digest: d9061b19d1d9034c3682314f81caa171fa7904742a184d940e7bf3ceb439a642
+    - path: visual-evidence-ledger.yaml
+      digest: e97d3cc69c4bba959ff53e4e54b0ab67d087ac9470a7015ea642e2ae6824434e
+  combined_digest: b64f559d6c59b86381e74899504a351c3c56a12df4afa73a161a80e4790c9acc
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/grammar-of-the-edit-ch3-5/PROVENANCE.md
+  - canon/knowledge/current/grammar-of-the-edit-ch3-5/visual-evidence-ledger.yaml
+  - canon/knowledge/current/grammar-of-the-edit-ch3-5/source-knowledge.yaml
+  - canon/knowledge/current/grammar-of-the-edit-ch3-5/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-B-issues.md
+
+representation_integrity:
+  delivery_format: native_digital_pdf
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    The ledger records a native digital PDF with no OCR layer, 15,755 words extracted with
+    pdftotext -layout and no garbling. Printed pages 55-109 resolve directly. All section names on
+    the contents page were found in the extracted text - the contents-page control - so nothing is
+    buried or displaced.
+  inspection_state: inspected_page_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: in_figure_text_absent
+      affects: >
+        Labels typeset inside the diagrams exist nowhere in the extracted text. "WRONG SIDE OF
+        LINE" in Figure 5.5 is what marks the third diagram as the error case; "THE LINE" in Figure
+        5.3 names the axis inside the drawing. Both return zero occurrences in the whole book's
+        extracted text.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        visual-evidence-ledger.yaml in_graphic_text_loss, severity moderate_and_silent, with two
+        instances verified by grep against both the section text and the full book text. The ledger
+        states plainly that there is no cheap independent index for in-graphic text equivalent to
+        the contents-page check; detecting it required the visual pass itself.
+    - pattern: text_layer_order_damage
+      affects: >
+        The Figure 5.3 caption on printed p.103 is emitted in the middle of the running prose
+        because the figure sits in the right-hand column. Reading order is disturbed for a few
+        lines; no words are lost and no sentence is spliced.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        ledger ordering_anomalies, severity cosmetic, explicitly described as the mildest end of
+        the same family that blocked Lupton outright.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    A source can pass every cheap integrity check - clean text, complete sections, correct
+    ordering - and still have lost the words that carry a figure's polarity. The in-figure loss
+    here is the same shape as Samara's, in a different domain, which makes it the second distinct
+    book for that pattern.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 60 objects reviewed. Like its companion volume this is a craft textbook arguing from
+    stated practice and its own photographed footage; no object carries empirical_within_source or
+    outcome_claimed.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 60 objects carry practitioner_assertion. The Acknowledgments name the on-camera talent
+        and state that all photographs are by the author, so even the photographic evidence is the
+        authors' own production rather than reported from elsewhere.
+  relation_to_evidence_characteristics: >
+    As with book 1, one origin and no strain. The audit's value for this source is not in area B
+    at all - it is in area D.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gote_c003_0006, bnd_gote_c003_0007, bnd_gote_c003_0008]
+      note: >
+        Includes the first binding in the corpus to fill SPEC-01's continuity field, which had
+        existed with nothing to put in it (LB-08).
+    - consumer: production_ir
+      outcome: no_current_binding
+      note: >
+        The editing book states constraints on footage that already exists rather than actions to
+        perform on a set, so unlike its companion volume it produces no production candidate.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs:
+        [bnd_gote_c003_0001, bnd_gote_c003_0002, bnd_gote_c003_0003, bnd_gote_c003_0004, bnd_gote_c003_0005]
+      note: >
+        Five of eleven bindings are evaluation, and nearly every one needs an observation unit
+        larger than a frame (LB-07). This is the strongest evaluation-bearing source in the corpus.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gote_c003_0009, bnd_gote_c003_0010]
+      note: rule_application and retrieval_governance.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_gote_c003_0011]
+      note: the matched correct/incorrect line-crossing pair.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        Selection constraints on shots are not computable composites; deciding which take satisfies
+        continuity requires judging content, not executing a layout rule.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      note: nothing in the processed span acts on a person rather than on material.
+  unbound_knowledge_of_note: []
+  conclusion: >
+    Binds in five of seven, and its profile differs from its companion volume in exactly the way
+    the books differ - more evaluation, no production. Bindability tracked subject matter here, as
+    the SPEC-03/SPEC-04 split intends.
+
+lineage:
+  authors: [Roy Thompson, Christopher J. Bowen]
+  publisher: Focal Press
+  series: Grammar of the Shot / Grammar of the Edit
+  first_published: 2009
+  copy_edition: Second Edition
+  related_sources_in_corpus:
+    - source_id: grammar_of_the_shot_ch4_continuity
+      relation: companion_volume
+      evidence: >
+        Same authors, publisher and series; each book cites the other. Overlap in extracted
+        knowledge is only about 13 per cent - eight of sixty objects - so the risk is not duplicate
+        content but false independence. Where the two share a concept the shooting book states it
+        as a camera action and the editing book as a selection constraint: "move the camera at
+        least 30 degrees" against "place shots more than 30 degrees apart".
+    - source_id: murch_blink_p1_25_editing_decisions
+      relation: no_known_relation
+      evidence: >
+        Recorded deliberately. Murch is a separate author, publisher and decade writing on the same
+        subject, so agreement between Murch and either Grammar book IS an independent convergence,
+        while agreement between the two Grammar books is not. Naming the contrast makes the
+        distinction auditable rather than assumed.
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not independent of grammar_of_the_shot_ch4_continuity. Independent of every other source in the
+    corpus, including Murch on the closely related subject of editing.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05 quote Molly Bang, Williams, Lupton, Grammar of the Shot and Light: Science &
+      Magic. This title is not among them. Its companion volume is, which is a second-order
+      exposure risk worth recording but not the same as direct quotation.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2009 second edition about editing decisions. Four objects carry historical_claim and three
+    culturally_bounded, all concerning viewing convention rather than equipment. Nothing in the
+    processed span depends on a recording or cutting technology that has since been replaced.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

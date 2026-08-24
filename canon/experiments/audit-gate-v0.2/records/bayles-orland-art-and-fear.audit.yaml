@@ -1,0 +1,176 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_bayles_orland_art_and_fear
+source_id: bayles_orland_art_and_fear_part_one_opening
+knowledge_dir: canon/knowledge/current/bayles-orland-art-and-fear
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 6a6716fcd3aab4d8d9df1c6b112d2d151db97375e2f7d8e6e009189c77ea6f87
+    - path: operational-bindings.yaml
+      digest: 17c271de0fb2cd78f98c91ba8affe8c304e71ded48dde70cfe3f8a61e8b95008
+    - path: source-concept-systems.yaml
+      digest: cfa4600ac07ddf954f4f15943bced8d970f464cc0738285a550f005b3036bb59
+    - path: source-knowledge.yaml
+      digest: 40b9c245c9d1ef3ce4b7862fe0e6b3273b419bfe671c40614717ecf8d5f51cef
+    - path: visual-evidence-ledger.yaml
+      digest: 7013a3160aa1cc416075d7cfc0d92cd3e4583641cdee7a0dec2ae608e7737393
+  combined_digest: 7922ae1abef650568faa376b90836c186da7d09caa53fa0412f241e5b4edee1d
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/bayles-orland-art-and-fear/PROVENANCE.md
+  - canon/knowledge/current/bayles-orland-art-and-fear/visual-evidence-ledger.yaml
+  - canon/knowledge/current/bayles-orland-art-and-fear/source-knowledge.yaml
+  - canon/knowledge/current/bayles-orland-art-and-fear/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-D-issues.md
+
+representation_integrity:
+  delivery_format: authored_print_scan
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    /Creator and /Producer read Adobe Acrobat 9.0 Paper Capture Plug-in, which is Adobe's OCR tool:
+    this file is a scan of the printed book with a machine-read text layer, not a native digital
+    PDF. 136 pages at 328 x 514 pt, about 4.6 x 7.1 inches. All 23 objects cite printed pages.
+  inspection_state: inspected_page_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: display_type_ocr_damage
+      affects: >
+        Running heads, logotypes and drop caps. "ART & FEAR" renders variously as "ART& FEAR" and
+        on one page as "7 HE NATURE OF THE PROBLEM"; the drop-cap initial leaves the first word
+        looking like "AKING ART IS DIFFICULT" with its M stranded on the line below; the
+        publisher's decorative logotype comes out as unreadable punctuation.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Body text at ordinary size is clean: across 4,695 words of the processed section, zero
+        words came out without a vowel, the standard cheap test for character-level garbling. The
+        ledger records the reason for logging this at all - the damage is the HARMLESS kind, and a
+        count of OCR errors on this file would be dominated by page furniture and would badly
+        overstate the damage to the argument.
+    - pattern: no_loss_detected
+      affects: >
+        The argument itself. Every one of the 136 pages was rendered at 40 dpi and its proportion
+        of dark pixels measured. A body-text page runs about 8 per cent dark; exactly one page
+        departs from that, the cover at 41 per cent. No illustration page exists anywhere in the
+        book, and the two interior pages read as images at 110 dpi contain no figure, diagram,
+        table or illustration.
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        A book about the psychology of making art, written by a painter and a photographer,
+        contains no pictures of art. Twelve pages fall below 0.5 per cent dark and are the blank
+        versos at chapter breaks, including the two that bracket the processed section and confirm
+        its boundaries independently of the contents page.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The ink-coverage sweep is the cheapest reliable way found in this batch to establish that a
+    scanned source has no visual argument, and it is stronger evidence than counting image files
+    because it looks at what is actually on the page. Recording the method matters: the same
+    conclusion reached by counting files, as on Creativity, Inc., rests on a weaker check.
+
+evidence_origin:
+  audit_scope: notable_objects_only
+  audit_scope_note: >
+    All 23 objects reviewed. Like Creativity, Inc. the finding is about voice, and it is heavier
+    here because the borrowed material carries more of the argument.
+  categories:
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_af_c003_0019, sk_af_c003_0020, sk_af_c003_0021, sk_af_c003_0022]
+      evidence: >
+        The book builds a substantial part of its argument from other people's words. The writing
+        illustrations are quoted from Joan Didion on being stuck with the first sentence
+        (sk_af_c003_0019); the 1 per cent / 99 per cent split is a remark the source reports
+        Charles Eames making good-naturedly, not a measurement (sk_af_c003_0020); the supporting
+        quotation about the poem in the head always being perfect is Stanley Kunitz's
+        (sk_af_c003_0021); the closing formulation is quoted from Ben Shahn (sk_af_c003_0022). Each
+        chapter also opens with an epigraph from a named person - Hippocrates and the sculptor
+        Stephen DeStaebler for the processed span.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        The remaining 19 objects; all 23 carry practitioner_assertion, six anecdotal, none
+        empirical_within_source or outcome_claimed.
+  relation_to_evidence_characteristics: >
+    Two of two Lane D books needed this category and the second is the heavier case, which makes
+    voice-attribution a genuine recurrence rather than a one-book quirk. The visual pass found a
+    typographic dimension of the same problem: the rendered page sets each epigraph apart in
+    italic, and in the text layer it arrives as three short lines followed by a name,
+    indistinguishable in kind from the body text around it. Typography was doing attribution work
+    and the text layer lost it.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      note: >
+        Zero, from 23 objects. With Creativity, Inc. that is 44 objects and no Creative IR binding
+        across two books - the corpus's strongest positive control for legitimate non-bindability.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_af_c003_0003]
+    - consumer: evaluation
+      outcome: no_current_binding
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_af_c003_0001, bnd_af_c003_0002]
+    - consumer: benchmark
+      outcome: no_current_binding
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        The only procedure in the section is the two-step Operating Manual for Not Quitting, which
+        acts on the maker rather than on the work. Same shape as the Braintrust and the same
+        absence of any executor value that fits.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_af_c003_0002, sk_af_c003_0009]
+      observation: >
+        Both carry historical_claim. The source also declares its own foundations as chosen
+        assumptions rather than findings - it has a section called "A Few Assumptions" - which
+        D-07 recorded as a source shape the schema does not distinguish from asserted fact.
+    - sk_refs: [sk_af_c003_0019, sk_af_c003_0020, sk_af_c003_0021, sk_af_c003_0022]
+      observation: >
+        The four quoted-voice objects are all unbound. The most quotable claims in this source are
+        the ones that bind least, which is the inverse of the StoryBrand pattern and worth carrying
+        into any retrieval design.
+  conclusion: >
+    Two consumers bound out of seven - the lowest coverage in the corpus - on a source whose
+    evidence is argued and mechanism-bearing throughout. Coverage is about our product, not about
+    the book.
+
+lineage:
+  authors: [David Bayles, Ted Orland]
+  publisher: Image Continuum Press
+  series: null
+  first_published: 1993
+  copy_edition: >
+    Image Continuum Press printing; the copyright page lists twelve Capra Press printings 1994-2000
+    and printings through 2010.
+  related_sources_in_corpus:
+    - source_id: catmull_creativity_inc_ch5_honesty_and_candor
+      relation: no_known_relation
+      evidence: >
+        Same subject area and, per D-11, near-identical evidence profiles: practitioner assertion,
+        mostly argued, no outcome claims. Different authors, publishers and decades. A shared
+        evidence profile is not shared origin, and treating it as one would block a legitimate
+        convergence between two independent accounts of creative practice.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation with any corpus source.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 1993 book about the psychology of making art. Its claims are about fear, uncertainty and
+    habit. Two objects carry historical_claim and neither depends on a technology.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]

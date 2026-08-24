@@ -1,0 +1,137 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_vignelli_canon_part_one
+source_id: vignelli_canon_part_one_intangibles
+knowledge_dir: canon/knowledge/current/vignelli-canon-intangibles
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 8ac4c50b1a30e2d84809b1ec8531811679dc3ae119fe1ac40f745035dd6cbba2
+    - path: operational-bindings.yaml
+      digest: 4c4f0d84ed6d4d96cd48c4b20589ed2641a6036cfdca126c0ad9c9a15e31ea93
+    - path: source-concept-systems.yaml
+      digest: 72d916c021dd895a3e8eeb42fb0e6290c923f444bfbbfd66697f062e154c3c16
+    - path: source-knowledge.yaml
+      digest: cfb91621e31f51459d024fe6eda836d20b2244b21fc2389f428a000f7981a114
+    - path: visual-evidence-ledger.yaml
+      digest: 959a6ffbe6c84af68d46804bdd6060a3b8a5845e7a771b10c251fd77c5e2147f
+  combined_digest: 32035d447d25b4187ea4b8cd8b31022887b025087aa4145eca570fbccb7b76e9
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/vignelli-canon-intangibles/PROVENANCE.md
+  - canon/knowledge/current/vignelli-canon-intangibles/visual-evidence-ledger.yaml
+  - canon/knowledge/current/vignelli-canon-intangibles/source-knowledge.yaml
+  - canon/knowledge/current/vignelli-canon-intangibles/operational-bindings.yaml
+  - canon/findings/CANON-003-batch-issue-ledger.md
+
+representation_integrity:
+  delivery_format: native_digital_pdf
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    PDF spreads 5-17 carry Part One's twelve named sections and render as the designed spreads.
+    Colour is present on 9 of 13 spreads, up to 2,166 coloured pixels per 4,800 sampled.
+  inspection_state: inspected_page_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: text_layer_order_damage
+      affects: >
+        Part One has twelve named sections. Eleven extract cleanly. The twelfth - Syntactics, one
+        of the three concepts the book opens by announcing - did not, because it shares its spread
+        with the New York City Subway Diagram, whose several hundred words of route legend are
+        emitted around and through the Syntactics prose.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        B-19. Every word is present and correct; this is an ordering failure, the mildest member of
+        the family that blocked Lupton outright. It was caught by the contents page listing a
+        section the extracted body text did not appear to contain, and then by rendering the spread
+        and reading it. The full Syntactics argument was recovered.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    A full-page graphic can bury an entire named concept in the text layer, and the cheap safeguard
+    is an independent index of what should be present - here the contents page. That check found in
+    this source what no amount of reading the body text would have found, and it is the same check
+    that later confirmed nothing was buried in Grammar of the Edit and Murch.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 13 objects carry practitioner_assertion; none carries empirical_within_source,
+    outcome_claimed or controlled_comparison.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 13 objects. Vignelli states design values in his own voice as a manifesto. He offers no
+        measurement and attributes no claim to another person.
+  relation_to_evidence_characteristics: >
+    The purest single-origin source in the corpus. Its evidence profile is uniform and the audit
+    adds nothing in area B, which is the correct and cheap outcome.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_vig_c003_0002, bnd_vig_c003_0003]
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_vig_c003_0001]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_vig_c003_0004]
+    - consumer: benchmark
+      outcome: no_current_binding
+      note: values stated as values do not yield a minimal pair.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        Several of the twelve intangibles - discipline, appropriateness, ambiguity - are dispositions
+        a designer should hold rather than properties an artefact should have. That is a fit with
+        how a person works, and there is no consumer for it.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_vig_c003_0010, sk_vig_c003_0013]
+      observation: >
+        Carry historical_claim; statements about the state of design at the time of writing.
+  conclusion: >
+    Three consumers bound from thirteen objects. A high proportion of this source is disposition
+    rather than specification, and the audit makes that visible where a binding count alone would
+    read it as a thin source.
+
+lineage:
+  authors: [Massimo Vignelli]
+  publisher: null
+  series: null
+  first_published: 2010
+  copy_edition: null
+  related_sources_in_corpus:
+    - source_id: samara_making_breaking_grid_ch1
+      relation: no_known_relation
+      evidence: >
+        Both descend from Swiss modernism and both treat the grid as central, so agreement between
+        them looks like a school speaking twice. They share no author, publisher, series or
+        derivation, so under the candidate rule this is a genuine independent convergence. Recorded
+        because a reviewer might reasonably suspect otherwise, and the record should show the
+        question was asked.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation. Shared intellectual tradition is not
+    shared origin, and the candidate rule deliberately does not treat it as such - if it did, most
+    convergence within any single craft would be unprovable.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2010 statement of design values. Nothing in it depends on a production technology.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim]

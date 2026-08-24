@@ -1,0 +1,186 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_alton_painting_with_light_ch2
+source_id: alton_painting_with_light_ch2_motion_picture_illumination
+knowledge_dir: canon/knowledge/current/alton-painting-with-light-ch2
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 511dbd97f506b48c41ae7930cabd043dd1ca6735ce16a102a2eb82fa61c9f50a
+    - path: operational-bindings.yaml
+      digest: ca26335a4948c35c2a795ebf7b3656337f110f838d5c9431a7311afdad144bb1
+    - path: source-concept-systems.yaml
+      digest: c7ff73c39cfef87316f3e3179dff4c0d75d3ae9fc89c4c9ad4d49f60441f19d0
+    - path: source-knowledge.yaml
+      digest: c0fb5d4e23ce69ddf4ea7993bd6f4ab2a5473e7566a0e0856e49abfe408fc347
+    - path: visual-evidence-ledger.yaml
+      digest: 1b0bb5e9d6067c9d2966218b2c7a22283dd3cda784da32761a22f9d86c6f4bfe
+  combined_digest: 6124554598c47f621ba08e5d4df9f02c6021831b950f03fe5b1935a801996bbd
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/alton-painting-with-light-ch2/PROVENANCE.md
+  - canon/knowledge/current/alton-painting-with-light-ch2/visual-evidence-ledger.yaml
+  - canon/knowledge/current/alton-painting-with-light-ch2/source-knowledge.yaml
+  - canon/knowledge/current/alton-painting-with-light-ch2/operational-bindings.yaml
+  - canon/findings/CANON-003-rebalance-lane-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    University of California Press EPUB reprinting the 1949 text. An EPUB reflows; no printed page
+    exists in the file. Every object in the extraction locates itself by section rather than page.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: heading_carried_as_image
+      affects: >
+        Every chapter- and section-level heading is an SVG of glyph outline paths - a drawing of
+        the words - with an empty alt attribute. The six section titles of chapter 2 exist nowhere
+        in the text layer, while the 39 deeper headings are ordinary text and extract cleanly.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        R-01. The result is not a chapter that looks damaged, it is a chapter that looks FLAT: 39
+        topics in a row with no sign that thirteen of them belong inside one section called "The
+        Theory of Illumination". A text-only extractor would produce a coherent-looking, wrongly
+        structured reading and have no reason to doubt it. Losing all the headings would have been
+        more honest than losing half of them from the top. Caught by listing image references and
+        noticing that subheadings sat under no heading; rasterising the twenty SVGs recovered every
+        section title.
+    - pattern: figure_inspected_claim_underdetermined
+      affects: >
+        Alton offers Figures 83 and 84 for the claim that "both are flat surfaces, yet one gives a
+        sensation of depth and the other does not". The text never says which one. Neither figure
+        carries a verdict label, unlike the Wrong/Right pair three pages earlier. Both read as a
+        tunnel.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        R-02. Recorded in the frozen record as extraction_uncertainty: ambiguous_referent rather
+        than resolved by inference from the neighbouring rule, which would have been a guess
+        dressed as a reading. The missing element is not the picture but the pairing of picture to
+        verdict.
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    This source breaks the batch's working assumption that inspecting the figure recovers what the
+    text lost. Here the figures were inspected and one claim is still not settled. A source marked
+    verified at figure level can therefore overstate what was recovered, which is precisely why
+    claim_resolution_after_inspection is a separate field from inspection_state.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 27 objects carry practitioner_assertion and none carries empirical_within_source. Alton
+    writes as a working cinematographer stating what the studio does.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 27 objects. No study, no measurement, no attributed third party anywhere in the
+        processed chapter.
+  relation_to_evidence_characteristics: >
+    Trivial in area B and the most consequential source in the corpus for area E. The two are
+    independent questions and this source proves it: uniform claim origin, radically non-uniform
+    durability.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alt_c003_0001, bnd_alt_c003_0004]
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alt_c003_0005]
+      note: >
+        Physical lighting actions, parked as a production candidate. Not rewritten as generative
+        prompts - "move the light outside the family of angles" does not become "regenerate with a
+        different lighting prompt".
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alt_c003_0002, bnd_alt_c003_0003]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_alt_c003_0006]
+    - consumer: benchmark
+      outcome: no_current_binding
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: no_current_binding
+      note: >
+        The chapter describes a shooting day with crew roles, which is close to a workflow, but the
+        knowledge recorded is about where light goes rather than about how people should be
+        organised.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_alt_c003_0003, sk_alt_c003_0004, sk_alt_c003_0005, sk_alt_c003_0006]
+      observation: >
+        The instrument catalogue and rigging practice. Unbound, and correctly so - see the
+        technology contingency section, which is the reason these should stay unbound rather than
+        the reason they are.
+  conclusion: >
+    Four consumers bound. The application audit is unremarkable here; the source's real audit
+    finding is that some of its bound knowledge is durable and some of its unbound knowledge
+    expired in 1949, and only area E separates them.
+
+lineage:
+  authors: [John Alton]
+  publisher: University of California Press
+  series: null
+  first_published: 1949
+  copy_edition: >
+    University of California Press edition, ISBN 9780520275843, reprinting the 1949 text with a new
+    introduction by Todd McCarthy.
+  related_sources_in_corpus:
+    - source_id: light_science_and_magic_ch3
+      relation: no_known_relation
+      evidence: >
+        Both are lighting sources and both discuss reflection and angle, so a naive aggregation
+        would treat agreement between them as convergence. They share no author, publisher or
+        lineage and are separated by decades, so the convergence is real. Recorded because this is
+        the pairing most likely to be promoted first, and it should be visible that independence
+        was checked rather than assumed.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation with any corpus source.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    A 1949 technical manual about motion-picture lighting, processed 77 years later. The subject is
+    a craft executed with equipment and film stock that no longer exist, so the durability question
+    is live for every claim in it.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_alt_c003_0011, sk_alt_c003_0012, sk_alt_c003_0013]
+      evidence: >
+        Physical geometry that has not dated - one source renders a solid flat, matching tones lose
+        their edge, an angle reveals form. These are optical facts about light and surfaces and are
+        as true of a sensor as of 1949 nitrate.
+    - class: technology_contingent
+      sk_refs: [sk_alt_c003_0003, sk_alt_c003_0004, sk_alt_c003_0005, sk_alt_c003_0006, sk_alt_c003_0018]
+      evidence: >
+        Claims whose validity expired with their technology: the instrument catalogue, shiny props
+        being wanted BECAUSE of antihalo film, the requirement that every negative be normally
+        exposed. All carry historical_claim in the frozen record.
+    - class: historical_convention
+      sk_refs: [sk_alt_c003_0021]
+      evidence: >
+        One studio convention of the period stated as technical fact - that high reflectors are
+        unfavourable to feminine faces. Carries both historical_claim and culturally_bounded in the
+        frozen record, which is the correct pair and was applied by hand.
+    - class: uncertain
+      sk_refs: [sk_alt_c003_0024, sk_alt_c003_0025, sk_alt_c003_0026]
+      evidence: >
+        Carry historical_claim but the audit cannot decide from the repository record alone whether
+        the underlying claim is about optics or about 1949 practice. Recorded as uncertain rather
+        than resolved, because resolving it would need the book re-opened and CANON-004 forbids
+        that where the repository record is silent.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
