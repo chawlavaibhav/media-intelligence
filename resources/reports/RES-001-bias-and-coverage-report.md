@@ -9,28 +9,30 @@ prevent (Project Contract, separation 9).
 
 | Media type | items |
 |---|---:|
-| image | 2,584 |
-| video | 2,192 |
+| image | 32,306 |
+| video | 2,480 |
 
 | Domain family | items |
 |---|---:|
+| real_scene_text_devanagari | 29,722 |
 | generated_image_preference | 2,584 |
 | real_natural_video (Flickr/YFCC100M) | 1,200 |
 | generated_video_human_scores | 987 |
+| generated_video_pairwise_preference | 288 |
 | real_ugc_video (YouTube creators) | 5 |
 
 | Vertical resolution | items |
 |---|---:|
-| <=1080p | 307 |
-| <=360p | 5 |
-| <=540p | 3,037 |
-| <=720p | 1,416 |
-| >1080p | 11 |
+| <=1080p | 549 |
+| <=360p | 29,033 |
+| <=540p | 3,497 |
+| <=720p | 1,665 |
+| >1080p | 42 |
 
 ## Real vs generated — the axis that changed
 
-- **Real human-made media:** 2 sources — `src_konvid1k`, `src_youtube_ugc`
-- **AI-generated media:** 2 sources — `src_imagerewarddb`, `src_videofeedback`
+- **Real human-made media:** 5 sources — `src_konvid1k`, `src_youtube_ugc`, `src_bstd_devanagari`, `src_indicstr12_devanagari`, `src_iiit_ilst_devanagari`
+- **AI-generated media:** 3 sources — `src_imagerewarddb`, `src_videofeedback`, `src_videogen_rewardbench`
 
 Under the previous rights policy this pilot could acquire **no real human-made media at all**. The
 licence-silence change reversed that: the corpus is now majority real media by item count.
@@ -62,7 +64,6 @@ any Indic-script or Indian-market work; any audio work; any claim about current 
 
 | source | status | blocker |
 |---|---|---|
-| `src_videogen_rewardbench` | `too_large_for_pilot` | Apache-2. |
 | `src_pvp` | `blocked_access` | Gated (login + terms acceptance). |
 | `src_ava` | `blocked_license` | Explicit site terms prohibit robots, reproduction and aggregation; photographers' copyright expressly reserved. |
 | `src_pitt_ads` | `blocked_access` | Email/manual-approval gate; clarification 7 keeps this blocked absent separate Controller authorisation. |

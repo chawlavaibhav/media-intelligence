@@ -1,7 +1,7 @@
 # Source record — VideoGen-RewardBench
 
 **source_id:** `src_videogen_rewardbench`  
-**status:** `too_large_for_pilot`  
+**status:** `partial_download`  
 **assessed:** 2026-08-24 (RES-001, under Controller clarifications 6–7)
 
 ## Identity
@@ -31,17 +31,17 @@
 
 ## Terms / access notes
 
-RIGHTS ARE CLEAR - THIS IS A FORMAT BLOCK, NOT A LICENCE BLOCK. The media ship as ONE 13.42 GB videos.zip. There is no addressable per-item path, so a bounded deterministic subset is impossible without partial-archive techniques this pilot should not depend on. Peak requirement (archive + extraction) would be ~26.8 GB against an 8 GB cap and a 12 GB free-space floor.
+STATUS CHANGED IN RES-002 from too_large_for_pilot to partial_download. RES-001 concluded a bounded subset was impossible because the media ship as one 13.42 GB videos.zip. That conclusion was WRONG: a zip stores its index at the end of the file, the host answers HTTP 206 (range requests), and so the member list can be read and individual members fetched by byte offset. The full archive was never downloaded or staged on disk. Reading the entire index cost 0.5 MB in 4 range requests (0.004% of the archive); acquiring 288 selected members brought total transfer to 0.78 GB (5.8%). Selection is 24 files per distributor-defined generator folder across all 12 generators, sorted order within each - equal representation rather than first-N, which would have over-represented whichever generator sorts first. Human preference labels retained in videogen-rewardbench.csv. No full-archive SHA256 is recorded because the archive was never downloaded; fabricating one would be dishonest. Reproduction metadata in _transient_acquisition.json.
 
 ## Determination
 
-**`too_large_for_pilot`** — Apache-2.0 and ungated, but monolithic 13.42 GB archive cannot be subset. Best candidate for a later, larger acquisition - 12-generator diversity is not available elsewhere.
+**`partial_download`** — Apache-2.0, ungated, host honours HTTP range. Member-level acquisition made the 12-generator diversity available at 5.8% of the archive transfer and zero long-term archive storage.
 
 ## Acquisition state
 
-- downloaded_item_count: **0**
-- downloaded_bytes: **0**
-- version/subset: n/a
+- downloaded_item_count: **288**
+- downloaded_bytes: **782,604,215**
+- version/subset: 288 members, 24 per generator x 12 generators (transient member-level acquisition)
 
 ## Permitted use
 
