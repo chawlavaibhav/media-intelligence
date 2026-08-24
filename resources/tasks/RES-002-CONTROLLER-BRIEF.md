@@ -8,8 +8,8 @@
 ## WHAT I DID
 
 Two things. **First**, closed the Devanagari gap: acquired **29,722 real photographed Devanagari
-images with human transcriptions** from three independent collections. RES-001 had none, which is
-why Eval's Hindi-text checker was blocked.
+images with human transcriptions** from three collections (two independent lineages — see the
+duplicates section). RES-001 had none, which is why Eval's Hindi-text checker was blocked.
 
 **Second**, proved that a large public archive can be sampled without downloading it. RES-001 gave
 up on VideoGen-RewardBench because its 13.42 GB arrives as a single zip. That was a wrong
@@ -23,7 +23,7 @@ Retained **1,170 MB** against a 2,048 MB budget. Free disk never fell below **14
 
 | Item | Done |
 |---|---|
-| 1. Duplicate claim | Corrected. The brief said "0 exact duplicates" — wrong, carried over from a KoNViD-only check. Real figure: **4,771 unique fingerprints across 4,776 items, 5 duplicate hashes**, all inside ImageRewardDB (same image under two filenames — expected where one image appears in several human comparisons). Retained and reported, not removed. |
+| 1. Duplicate claim | Corrected twice — see the dedicated section below. For the RES-001 corpus alone the figure is 5 duplicate hashes; for the **full corpus after RES-002 it is 200**, and the RES-002 additions turned out to carry a finding worth more than the number. |
 | 2. Stale Handoff | Fixed. It claimed no external dataset had been downloaded. |
 | 3. Eval-sufficiency claim | Narrowed everywhere. The corpus supports real-video judge calibration; it does **not** unblock the Hindi checker. |
 | 4. VideoFeedback discrepancy | Left unexplained, as instructed. Card claims ~37.6k pairs / 8.81 GB; the exposed repo yielded 987 files / 0.18 GB. |
@@ -66,16 +66,81 @@ may not separate a strong reader from a weak one.
 file, about six seconds.**
 
 **Validation:** 30,010 new items, **all decode cleanly, 0 defects.** Corpus-wide: 34,786 items,
-5.70 GB, 5 duplicate hashes (all pre-existing, in ImageRewardDB).
+34,586 distinct files, 5.70 GB of media.
+
+## DUPLICATES — the figure changed, and the reason matters more than the figure
+
+**Mechanically verified across the full corpus: 200 duplicate hashes among 34,786 items.** The
+earlier "5" was correct for the RES-001 corpus of 4,776 items; RES-002 added 30,010 items and the
+number moved with them. Nothing was recounted differently — the corpus grew.
+
+| kind | hashes | what it is |
+|---|---:|---|
+| Within a single source | **27** | a source containing the same file twice |
+| **Spanning two sources** | **173** | the same file present in two supposedly separate datasets |
+
+| source | within-source | involved in cross-source | source items |
+|---|---:|---:|---:|
+| `src_bstd_devanagari` | 19 | 0 | 25,246 |
+| `src_indicstr12_devanagari` | 3 | 173 | 3,086 |
+| `src_iiit_ilst_devanagari` | 0 | 173 | 1,390 |
+| `src_imagerewarddb` | 5 | 0 | 2,584 |
+
+### The finding: two of my "independent" Devanagari sources are not independent
+
+**173 files are byte-identical between IndicSTR12 and IIIT-ILST** — 12.4% of IIIT-ILST, 5.6% of
+IndicSTR12. Both are releases from the same lab (CVIT, IIIT Hyderabad), so the newer dataset appears
+to reuse images from the older one.
+
+**This contradicts something I told you and told Eval.** I described three *independent* collections.
+That is wrong: BSTD is genuinely independent, but IndicSTR12 and IIIT-ILST are related. Corrected in
+the registry, both source records, the integrity report and the note to Eval.
+
+**Why it matters practically.** The reason for wanting three collections was to allow one to be held
+back as genuinely unseen test material — a checker measured only on photography it has already met
+looks better than it is. If Eval holds back IIIT-ILST, **roughly one in eight of those images is not
+unseen at all**; it is literally the same file that appeared in IndicSTR12. BSTD remains a clean
+holdout candidate.
+
+### A second, smaller finding
+
+Two of BSTD's 19 within-source duplicate pairs **span its own train and test splits** — the same
+image file appears on both sides of the distributor's own division. Small, but anyone using BSTD's
+published splits as-is should know they are not perfectly disjoint.
+
+**Nothing was deleted.** Removing the 173 overlaps would have improved the duplicate count and
+erased the finding.
+
+## RETAINED SIZE — three figures, all correct
+
+Different numbers appear for the same source depending on what is being counted. None is wrong;
+quoting one without saying which is what causes confusion.
+
+| | BSTD | whole corpus |
+|---|---:|---:|
+| **Media bytes** (manifest — the evaluation payload) | 201.4 MB | 5.70 GB |
+| **Folder bytes** (media + retained transcriptions, licences, member lists) | 224.3 MB | 5.74 GB |
+| **Disk usage** (`du` — allocated filesystem blocks) | 263.9 MB | — |
+
+BSTD shows the spread most sharply for two reasons. Its 17.1 MB of JSON transcriptions and 5.8 MB of
+member lists are retained deliberately — **those transcriptions are what make it calibration material
+rather than a pile of pictures.** And it holds 25,252 very small files, so filesystem block
+allocation adds 23.3% on top of the actual bytes. KoNViD-1k, made of 1,203 large videos, shows ~0.1%
+overhead by comparison.
+
+My earlier chat figure of "263 MB" for BSTD was the `du` number. Against the 2,048 MB RES-002 budget
+the relevant measure is retained bytes, and by either byte measure the task finished well inside it.
 
 ## INFERRED
 
 - RES-001's `too_large_for_pilot` verdict was a **method limitation, not a property of the source**.
   Nothing about VideoGen-RewardBench changed; only what we knew how to do. Worth remembering when
   future sources look unobtainable.
-- Having three independent Devanagari collections rather than one materially changes what Eval can
-  claim. A checker measured against a single collection's photography may simply have learned that
-  collection's cameras and fonts. Whether to hold one back as unseen is Eval's call, not mine.
+- Having more than one Devanagari collection still materially changes what Eval can claim — a checker
+  measured against a single collection's photography may simply have learned that collection's
+  cameras and fonts. But it is **two** independent lineages, not three: BSTD on one side, and the two
+  CVIT datasets on the other. Whether to hold one back as unseen is Eval's call; if they do, BSTD is
+  the clean choice.
 
 ## SURPRISES
 

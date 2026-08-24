@@ -112,7 +112,7 @@ S = [
   redistribution_status="not_stated - treat as NOT permitted", commercial_use_status_if_explicit="not_stated",
   terms_access_notes="Member-level range acquisition: transferred 112 MB of a 1.38 GB archive (8.1%); archive never staged on disk, so no full-archive hash is recorded. Selection = the distributor's hindi/ and marathi/ folders, the two Devanagari-script languages, plus their *_gt.txt files. The 62 GB synthetic companion was deliberately not acquired: RES-002 states clean synthetic text alone is insufficient for calibration.",
   version="Devanagari subset, 3,465 of 31,242 real members", status="partial_download",
-  reason="Second independent Devanagari collection. Different collectors and conditions than BSTD, which matters because a checker that only sees one collection can look better than it is."),
+  reason="Second Devanagari collection, independent of BSTD. NOT independent of IIIT-ILST: both are CVIT / IIIT Hyderabad releases and 173 files are byte-identical across the two (5.6% of this source, 12.4% of IIIT-ILST). Verified by SHA256, see the integrity report."),
 
  dict(source_id="src_iiit_ilst_devanagari", canonical_name="IIIT-ILST - Devanagari subset", domain="real_scene_text_devanagari",
   origin="CVIT, IIIT Hyderabad", official_url="https://cvit.iiit.ac.in/research/projects/cvit-projects/iiit-ilst",
@@ -123,9 +123,9 @@ S = [
   code_license="not_stated", dataset_annotation_license="not_stated",
   underlying_media_rights="not_stated / not_verified. Photographs of real signage; no rights statement on the project page.",
   redistribution_status="not_stated - treat as NOT permitted", commercial_use_status_if_explicit="not_stated",
-  terms_access_notes="Member-level range acquisition of the distributor's Devanagari/ folder plus README.txt. All 1,569 members verified present at their exact central-directory sizes with matching SHA256. NOTE: the recorded bytes_transferred_total for this source undercounts - a first attempt failed partway with HTTP/2 framing errors from this host and the rerun skipped members already on disk. The figure is left as measured rather than replaced with an estimate; see _transient_acquisition.json.",
+  terms_access_notes="OVERLAPS IndicSTR12: 173 byte-identical files (12.4% of this source). Member-level range acquisition of the distributor's Devanagari/ folder plus README.txt. All 1,569 members verified present at their exact central-directory sizes with matching SHA256. NOTE: the recorded bytes_transferred_total for this source undercounts - a first attempt failed partway with HTTP/2 framing errors from this host and the rerun skipped members already on disk. The figure is left as measured rather than replaced with an estimate; see _transient_acquisition.json.",
   version="Devanagari subset, 1,569 of 4,847 real members", status="partial_download",
-  reason="Third independent Devanagari collection, with a different annotation format (XML boxes+transcriptions) than the other two."),
+  reason="Third Devanagari collection, with a different annotation format (XML boxes+transcriptions). NOT independent of IndicSTR12: 173 of this source's 1,390 items (12.4%) are byte-identical to IndicSTR12 items. Both come from CVIT / IIIT Hyderabad. Independent of BSTD."),
 
  dict(source_id="src_pvp", canonical_name="Personalized Visual Persuasion (PVP)", domain="persuasion_image_ratings",
   origin="holi-lab / Seoul National University", official_url="https://huggingface.co/datasets/holi-lab/PVP",

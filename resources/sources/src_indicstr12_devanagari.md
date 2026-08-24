@@ -35,7 +35,7 @@ Member-level range acquisition: transferred 112 MB of a 1.38 GB archive (8.1%); 
 
 ## Determination
 
-**`partial_download`** — Second independent Devanagari collection. Different collectors and conditions than BSTD, which matters because a checker that only sees one collection can look better than it is.
+**`partial_download`** — Second Devanagari collection, independent of BSTD. NOT independent of IIIT-ILST: both are CVIT / IIIT Hyderabad releases and 173 files are byte-identical across the two (5.6% of this source, 12.4% of IIIT-ILST). Verified by SHA256, see the integrity report.
 
 ## Acquisition state
 

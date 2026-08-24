@@ -50,6 +50,11 @@ the other sources were added. The correct figure, which the auto-generated integ
 right all along, is **4,771 unique file fingerprints across 4,776 items — 5 hashes appear twice, so
 5 items are byte-identical copies of another item.**
 
+*Scope note (added 24 Aug 2026): those figures describe the RES-001 corpus as it stood at the end of
+RES-001. RES-002 added four more sources, and the **current full-corpus figure is 34,586 distinct
+files across 34,786 items with 200 duplicate hashes.** The live numbers are always in
+`resources/reports/RES-001-integrity-report.md`, which is generated from the manifest.*
+
 All five pairs are inside ImageRewardDB: the same generated image stored under two different
 filenames. That is expected in a preference dataset, where one image can appear in more than one
 human comparison. **The duplicates are retained, not removed** — RES-001 requires reporting them,
@@ -120,8 +125,11 @@ The corpus supports **some** of Eval's work and explicitly not all of it.
 agrees with humans on material that was filmed rather than generated. That was impossible before this
 task.
 
-**It does not unblock the Hindi-text checker.** The corpus contains **no known Devanagari or Indic
-material at all.** Devanagari text rendering is recorded elsewhere in this project as our worst
+**It does not unblock the Hindi-text checker.** *(True at RES-001 close. **Superseded by RES-002**,
+which acquired 29,722 real photographed Devanagari images with transcriptions. Left here as the
+record of what RES-001 concluded; for current coverage see the derived table in
+`resources/reports/RES-001-bias-and-coverage-report.md`.)* At that time the corpus contained **no
+known Devanagari or Indic material at all.** Devanagari text rendering is recorded elsewhere in this project as our worst
 observed failure area, so this is a live gap, not a theoretical one. Anyone reading "the corpus
 supports evaluator calibration" should not conclude Hindi-text evaluation is covered — it is not.
 (RES-002 exists to close this.)

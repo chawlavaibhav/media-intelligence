@@ -1,88 +1,100 @@
-# RES-001 — Integrity report
+# Integrity report — full corpus
 
-**Date:** 24 Aug 2026 · **Method:** deterministic only. SHA256 over every retained file, plus
-`ffprobe` decode of every item. No model is involved and nothing is judged on content.
+**Generated from the manifest and registry. Do not hand-edit — rerun `resources/scripts/build_reports.py`.**
+
+Method: SHA256 over every retained file plus an `ffprobe` decode of every item. Deterministic;
+no model is involved and nothing is judged on content.
 
 ## Totals
 
 | | |
 |---|---|
 | Retained items | **34,786** |
-| Retained bytes | **5.70 GB** |
-| Budget target | 4–6 GB |
-| Budget hard stop | 8 GB |
-| Free disk floor | 12 GB |
+| Distinct files (unique SHA256) | **34,586** |
+| Media bytes (manifest) | **5.70 GB** |
+| Decoding cleanly | **34,786 / 34,786** |
 
-## Per source
+## Byte accounting — three figures, all correct, measuring different things
 
-| source_id | items | bytes | validated ok | problems |
+These differ and none is wrong. Quoting one without saying which causes avoidable confusion.
+
+1. **Media bytes** — the sum of the media files in the manifest. The evaluation payload.
+2. **Folder bytes** — media *plus* retained annotations, transcriptions, licence files and
+   member lists. Larger, and the annotations are the reason several sources are useful at all.
+3. **Disk usage (`du`)** — allocated filesystem blocks. A source made of tens of thousands of
+   tiny images pays real block overhead; one made of a few large videos pays almost none.
+
+| source | media bytes | folder bytes | non-media | items |
 |---|---:|---:|---:|---:|
-| `src_bstd_devanagari` | 25,246 | 0.20 GB | 25,246 | 0 |
-| `src_iiit_ilst_devanagari` | 1,390 | 0.05 GB | 1,390 | 0 |
-| `src_imagerewarddb` | 2,584 | 1.13 GB | 2,584 | 0 |
-| `src_indicstr12_devanagari` | 3,086 | 0.09 GB | 3,086 | 0 |
-| `src_konvid1k` | 1,200 | 2.41 GB | 1,200 | 0 |
-| `src_videofeedback` | 987 | 0.18 GB | 987 | 0 |
-| `src_videogen_rewardbench` | 288 | 0.78 GB | 288 | 0 |
-| `src_youtube_ugc` | 5 | 0.86 GB | 5 | 0 |
+| `src_bstd_devanagari` | 201.4 MB | 224.3 MB | 22.9 MB | 25,246 |
+| `src_iiit_ilst_devanagari` | 52.8 MB | 53.9 MB | 1.1 MB | 1,390 |
+| `src_imagerewarddb` | 1125.6 MB | 1126.8 MB | 1.2 MB | 2,584 |
+| `src_indicstr12_devanagari` | 90.3 MB | 93.5 MB | 3.2 MB | 3,086 |
+| `src_konvid1k` | 2412.9 MB | 2413.2 MB | 0.2 MB | 1,200 |
+| `src_videofeedback` | 181.6 MB | 181.9 MB | 0.3 MB | 987 |
+| `src_videogen_rewardbench` | 782.6 MB | 790.9 MB | 8.3 MB | 288 |
+| `src_youtube_ugc` | 855.1 MB | 855.3 MB | 0.2 MB | 5 |
+| **total** | **5.70 GB** | **5.74 GB** | **37.5 MB** | **34,786** |
+
+The largest gap is the Devanagari scene-text material, whose retained transcription files are
+a meaningful share of its folder — those transcriptions are precisely what makes it calibration
+material rather than a pile of pictures.
 
 ## Decode validation
 
-- Items decoding cleanly: **34,786 / 34,786**
-- Zero-byte files: **0**
-- Undecodable files: **0**
+- Clean: **34,786 / 34,786**
+- Zero-byte: **0**
+- Undecodable: **0**
 
 ## Exact duplicates
 
-- Unique SHA256: **34,586** across **34,786** items
-- Exact duplicate hashes: **200**
+- Distinct files: **34,586** across **34,786** items
+- Duplicate hashes: **200**  (**27** within a single source, **173** spanning two sources)
+- Redundant copies: **200**
 
-Duplicates are **reported, never silently removed** (RES-001 in-scope rule). Perceptual-duplicate
-detection was not run: it is optional in RES-001 and the required libraries are not installed.
+**Duplicates are reported, never removed.** Deleting them would improve the number and destroy
+the finding.
 
-| sha256 | copies |
+| source | within-source | involved in cross-source | source items |
+|---|---:|---:|---:|
+| `src_bstd_devanagari` | 19 | 0 | 25,246 |
+| `src_iiit_ilst_devanagari` | 0 | 173 | 1,390 |
+| `src_imagerewarddb` | 5 | 0 | 2,584 |
+| `src_indicstr12_devanagari` | 3 | 173 | 3,086 |
+
+### Cross-source duplicates — the one that matters
+
+| sources sharing byte-identical files | hashes |
 |---|---:|
-| `5c01966a04b1a4cc…` | 2 |
-| `f7038f723a4dd5ee…` | 2 |
-| `b5e76762d2b4c166…` | 2 |
-| `a94307e9c4706c53…` | 2 |
-| `5d0a56f28f7c64ed…` | 2 |
-| `e8581b07284bdc5c…` | 2 |
-| `d3827b63df32e8aa…` | 2 |
-| `9a415931348e094a…` | 2 |
-| `3d46b8090fc31630…` | 2 |
-| `2d51286b95346e61…` | 2 |
-| `44f464a1acbaa16a…` | 2 |
-| `771838ff843f7473…` | 2 |
-| `e79c1ab67d821232…` | 2 |
-| `b2f9b55803e6945d…` | 2 |
-| `236e4b16cb59a09f…` | 2 |
-| `0e49534be46e8c89…` | 2 |
-| `15b39c9321f56b2f…` | 2 |
-| `7417de2fc2394e63…` | 2 |
-| `e6c6d31ef4022f78…` | 2 |
-| `459b233c32f830de…` | 2 |
+| `src_iiit_ilst_devanagari` ↔ `src_indicstr12_devanagari` | **173** |
 
-## Archive deletions (Amendment 01 / RES-001 budget rule)
+For each pair below, the overlap is stated as a share of each source, because "173 files"
+means something very different for a 1,390-item source than for a 3,086-item one.
 
-Archives were deleted only after all five conditions held. Every archive was fingerprinted
-**before** deletion so a future re-download can still be verified against it.
+- **173 of `src_iiit_ilst_devanagari`'s 1,390 items** (12.4%) are byte-identical to an item in the other source.
+- **173 of `src_indicstr12_devanagari`'s 3,086 items** (5.6%) are byte-identical to an item in the other source.
 
-| source | archive | bytes | sha256 |
-|---|---|---:|---|
-| `src_bstd_devanagari` | `recognition.zip` |  | `159fb044fba701f87e41a98b…` |
-| `src_imagerewarddb` | `validation_1.zip` |  | `8eb57656d6c424b9451240d5…` |
-| `src_imagerewarddb` | `validation_2.zip` |  | `5349f894b1b1571fbe1aed6a…` |
-| `src_konvid1k` | `KoNViD_1k_videos.zip` |  | `3528bf99b4d8bad23ced543a…` |
-| `src_konvid1k` | `KoNViD_1k_metadata.zip` |  | `13af8b028536bf1864361396…` |
+## Archive deletions
 
-Full fingerprints are retained in `resources/corpus/raw/<source_id>/_archive.sha256`.
+Archives were deleted only after all five conditions held, and each was fingerprinted **before**
+deletion so a future re-download stays verifiable.
 
-### Media removed
+| source | archive | sha256 |
+|---|---|---|
+| `src_bstd_devanagari` | `recognition.zip` | `159fb044fba701f87e41a98b…` |
+| `src_imagerewarddb` | `validation_1.zip` | `8eb57656d6c424b9451240d5…` |
+| `src_imagerewarddb` | `validation_2.zip` | `5349f894b1b1571fbe1aed6a…` |
+| `src_konvid1k` | `KoNViD_1k_videos.zip` | `3528bf99b4d8bad23ced543a…` |
+| `src_konvid1k` | `KoNViD_1k_metadata.zip` | `13af8b028536bf1864361396…` |
 
-One file, `src_youtube_ugc/Animation_360P-188f.mkv` (207,046,293 bytes, sha256
-`33998201f2b31c9c1faa786ceccb083ab8a5948e5cd23dab6bc766c10eda47e6`), was removed. It was fetched
-under a first-pass selection rule that took the two lexicographically first 360P clips, both from
-the same category. The rule was then revised to one clip per category for better coverage. The
-file was removed so that re-running `fetch-youtube-ugc.sh` reproduces the corpus exactly. This was
-a reproducibility correction, not a space-saving deletion.
+Sources acquired by HTTP range have **no full-archive hash on purpose** — the archive was
+never downloaded, so any hash would be fabricated. Their reproduction record is the remote size,
+the complete member list, the selection rule and a hash per retained member, in
+`_transient_acquisition.json`.
+
+### Files removed
+
+- `src_konvid1k/KoNViD_1k_subjective.csv` — approved privacy deletion (crowdworker IP addresses,
+  worker IDs, city/region/country). See `RES-002-privacy-deletion-log.md`.
+- `src_youtube_ugc/Animation_360P-188f.mkv` — fetched under a superseded selection rule; removed
+  so the corpus reproduces exactly from the script. A reproducibility correction, not a cleanup.
