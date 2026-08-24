@@ -1,0 +1,181 @@
+# CANON-003 book 17 (Lane D) — "Art & Fear", printed pp.1-21. SourceConceptSystems under SPEC-03.
+# Three systems. The first two are the source's own groupings, announced under its own headings.
+# The third is the only one where the source explicitly names a set of claims as belonging together.
+source_id: bayles_orland_art_and_fear_part_one_opening
+source_concept_systems:
+
+- scs_id: scs_af_c003_001
+  source_id: bayles_orland_art_and_fear_part_one_opening
+  label: a_few_assumptions
+  label_origin: source_verbatim
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    The four premises the book states under its own heading "A Few Assumptions", after rejecting
+    the talent view: artmaking involves skills that can be learned; art is made by ordinary,
+    flawed people; making art and viewing art are different at their core; and artmaking predates
+    the art establishment, so the modern equation of art with the artist's identity is a recent
+    and damaging idea.
+  whole_system_claim:
+    text: >
+      The source states the purpose of the set directly: getting on with the work turns on making
+      basic assumptions about human nature that place the power, and therefore the responsibility,
+      for your actions in your own hands. The four are selected for that property. This is the
+      source choosing premises by what they enable a maker to do, having explicitly declined to
+      argue whether the rival premise is true.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "printed p.3 (PDF p.15), immediately before the heading"}
+  members:
+    - {sk_ref: sk_af_c003_0003, role_in_system: rejected_alternative, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0004, role_in_system: assumption, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0005, role_in_system: assumption, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0006, role_in_system: assumption, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0009, role_in_system: assumption, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0007, role_in_system: corollary, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0008, role_in_system: corollary, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_af_c003_0007, to: sk_af_c003_0006, nature: "the source draws the loneliness of the work as a corollary of maker and viewer attending to different things", origin: source_stated}
+      - {from: sk_af_c003_0008, to: sk_af_c003_0007, nature: "having said others have no reason to care, the source assigns the unnoticed work its teaching function", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Unusually for this batch, almost nothing here is ours. The set, its heading, its order, its
+      stated purpose and the corollaries are all the source's. What is ours is only the decision to
+      include the rejected talent view as a member with the role of rejected alternative, because
+      the set is defined against it and reads incompletely without it.
+  provenance:
+    chapter: "I — The Nature of the Problem"
+    section: "A Few Assumptions"
+    page_start: 2
+    page_end: 7
+    locator: "printed pp.2-7 (PDF pp.14-19)"
+    source_support: text
+
+- scs_id: scs_af_c003_002
+  source_id: bayles_orland_art_and_fear_part_one_opening
+  label: how_practices_end_and_the_one_procedure_against_it
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The source's account of attrition: most who begin, quit; quitting happens at two specific
+    moments rather than for the countless available reasons; stopping is normal and only becomes
+    quitting if nothing is begun afterwards; the loss of a destination for the work is the more
+    treacherous of the two moments because it arrives on success and on graduation alike; and the
+    one countermeasure offered is a two-step operating manual for supplying a destination yourself.
+  whole_system_claim:
+    text: >
+      Attrition is treated as structural rather than as a failure of will: the thing that ends
+      practices is the disappearance of a place for the work to go, so the remedy is to build a
+      standing destination rather than to try harder. The source's stated diagnosis that the real
+      killer is the absence of a continuing support system after graduation, immediately followed
+      by its only procedure in the section, is the pivot the whole model turns on.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each element separately and never assembles them. The causal reading is
+      close to its own sequence — two quitting moments, the stopping/quitting distinction, success
+      and graduation as instances of destination loss, then "a strategy suggests itself" followed
+      by the two-step manual — but presenting it as one model, and treating destination loss as the
+      dominant cause rather than one of two, is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_af_c003_0010, role_in_system: outcome, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0011, role_in_system: cause, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0012, role_in_system: distinction, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0013, role_in_system: cause, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0014, role_in_system: cause, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0015, role_in_system: procedure, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_af_c003_0015, to: sk_af_c003_0014, nature: "the source presents the manual as the strategy suggested by the absence of a continuing support system", origin: source_stated}
+      - {from: sk_af_c003_0013, to: sk_af_c003_0011, nature: "success withdrawing the destination is the second quitting moment in operation", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are the source's. The causal arrangement is ours, and it is a stronger reading
+      than the source commits to: the book asserts two quitting moments and spends far more space
+      on the second, which is why the model treats destination loss as dominant. A reader who
+      weighted the two equally would build a different model from the same pages.
+  provenance:
+    chapter: "II — Art and Fear"
+    section: "opening through Operating Manual for Not Quitting"
+    page_start: 9
+    page_end: 13
+    locator: "printed pp.9-13 (PDF pp.21-25)"
+    source_support: text
+
+- scs_id: scs_af_c003_003
+  source_id: bayles_orland_art_and_fear_part_one_opening
+  label: the_three_inevitabilities
+  label_origin: source_verbatim
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    Vision, uncertainty and knowledge of materials, which the source names together as
+    inevitabilities that all artists must acknowledge and learn from, each with a stated property:
+    vision is always ahead of execution, knowledge of materials is your contact with reality, and
+    uncertainty is a virtue. The chapter then gives each its own named subsection.
+  whole_system_claim:
+    text: >
+      The three are presented as conditions to be worked with rather than problems to be solved,
+      and the source's practical point is that each is commonly mistaken for a personal failing.
+      Reclassifying them as inevitabilities is what converts the same experience from self-doubt
+      into usable information.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "printed p.15 (PDF p.27), end of Vision & Execution"}
+  members:
+    - {sk_ref: sk_af_c003_0018, role_in_system: inevitability, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0019, role_in_system: mechanism, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0020, role_in_system: mechanism, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0021, role_in_system: failure_mode, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_af_c003_0022, role_in_system: inevitability, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_af_c003_0023, role_in_system: inevitability, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_af_c003_0022, to: sk_af_c003_0021, nature: "attention to how the material actually responds is the source's corrective to an imagination that overrates it", origin: extractor_inferred}
+      - {from: sk_af_c003_0023, to: sk_af_c003_0022, nature: "the source states materials are the one element that can reasonably be controlled, and everything else is uncertain", origin: source_stated}
+    tradeoffs:
+      - between: [sk_af_c003_0019, sk_af_c003_0023]
+        nature: >
+          Each committed decision narrows what can follow, and the source separately warns against
+          planning the work in advance. Committing early enough to finish, while staying loose
+          enough to respond, is a tension the source leaves standing.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The three-member grouping and its purpose are the source's own, stated in one sentence and
+      then given three subsections. Ours are the inclusion of the imagination mechanics and the
+      undisciplined-imagination failure mode as members, and the recorded trade-off between
+      committing early and staying open, which the source never addresses.
+  provenance:
+    chapter: "II — Art and Fear"
+    section: "Vision & Execution, Imagination, Materials, Uncertainty"
+    page_start: 14
+    page_end: 21
+    locator: "printed pp.14-21 (PDF pp.26-33)"
+    source_support: text

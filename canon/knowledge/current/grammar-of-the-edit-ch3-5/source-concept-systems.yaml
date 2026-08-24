@@ -1,0 +1,359 @@
+# CANON-003 book 9 (Lane B) — Grammar of the Edit, ch.3-5. SourceConceptSystems under SPEC-03.
+# Five systems. Origin is marked at every structural level, per the spec's requirement.
+#
+# Systems 2 and 4 are the ones that carry knowledge no single object holds. System 2 records a
+# discrepancy between what the source says its framework is and what it does with it; system 4
+# records the source's own position on how binding its rules are. Both were written after all 60
+# SourceKnowledge objects existed, not before.
+
+source_id: grammar_of_the_edit_ch3_5_editing_decisions
+
+source_concept_systems:
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_gote_c003_001
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  label: the_six_element_test_for_a_transition
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >
+    Six named factors — information, motivation, shot composition, camera angle, continuity and
+    sound — which the source introduces together as the criteria for whether a transition is a good
+    edit, applies one at a time to every transition and edit type in the following chapter, and
+    finally restates in negative form as the six reasons two shots cannot be joined at all.
+  whole_system_claim:
+    text: >
+      The six factors are a single test, not six separate pieces of advice. The source's own closing
+      move makes this explicit: when two shots will not cut together, the reason is that one of
+      exactly these six is wrong, and no change of transition type will repair it. The framework is
+      therefore both the standard for a good edit and the diagnostic for a bad one, and the source
+      states there is very little an editor can do once one of the six has failed.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "What Factors Help Make a Transition a Good Edit?; Select the Appropriate Form of Edit", page_start: 57, page_end: 105}
+  members:
+    - {sk_ref: sk_gote_c003_0003, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0004, role_in_system: criterion, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0006, role_in_system: criterion, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0010, role_in_system: criterion, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0012, role_in_system: criterion, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0014, role_in_system: criterion, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0021, role_in_system: criterion, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0057, role_in_system: diagnostic_inverse, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_gote_c003_0057, to: sk_gote_c003_0003, nature: "the six failure causes are the six criteria restated negatively; the source lists them in the same order", origin: source_stated}
+    tradeoffs:
+      - between: [sk_gote_c003_0004, sk_gote_c003_0006]
+        nature: "information governs the shot cut to, motivation the shot cut from; a transition can satisfy one and fail the other"
+        origin: source_stated
+        source_ref: {section: "Motivation", page_start: 60}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The membership and the ordering are the source's own — it names the six, numbers them, and
+      repeats the same six in the same order at least six times across the span. What is ours is the
+      decision to attach the diagnostic list from Chapter Five as a member of the same system rather
+      than as a separate claim. The source does not say "these are the same six"; it simply lists
+      six failure causes that match its six criteria one for one, in order.
+  provenance:
+    chapter: "Chapters Three, Four and Five"
+    section: "What Factors Help Make a Transition a Good Edit?; Select the Appropriate Form of Edit"
+    page_start: 57
+    page_end: 105
+    source_support: text_and_visual
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_gote_c003_002
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  label: the_element_set_named_as_fixed_but_applied_as_variable
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    The set of elements the source actually applies changes from one transition or edit type to the
+    next, while the source continues to call it the six elements. The cut is analysed against all
+    six. The dissolve and the wipe drop continuity and add a seventh, time. The fade is analysed
+    against four — motivation, composition, sound and time — with information, camera angle and
+    continuity silently absent. The wipe explicitly waives composition and camera angle. The screen
+    position edit is said not to need all six. The concept edit is said to need none of them.
+  whole_system_claim:
+    text: >
+      The source presents one fixed checklist and operates a variable one. Across seven applications
+      the element set is never the same twice, an unannounced seventh element (time) appears for
+      every transition that has a duration, and two of the seven cases carry an explicit waiver.
+      The source never states that the set varies and never reconciles the variation with the claim
+      that all edit types benefit from the same six elements. The variation is not random: elements
+      are dropped exactly where they are inapplicable — continuity cannot apply to a transition
+      between unrelated times or places, camera angle cannot apply where the whole point is that the
+      shots are unrelated — so the underlying rule appears to be applicability, not membership. That
+      rule is never written down.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Assembled by listing, for each of the four transitions and each of the five edit categories,
+      which numbered elements the source actually walks through. The counts are directly checkable
+      against printed pages 76-78 (cut, six), 80-82 (dissolve, six with continuity replaced by
+      time), 84-85 (wipe, six with two waived), 86-87 (fade, four), 88-90 (action edit, six), 91
+      (screen position edit, "not every ... will address all six"), and 94 (concept edit, "the six
+      elements need not be applied here"). No claim here rests on anything the source says about its
+      framework; only on what it does with it.
+    source_ref: null
+  members:
+    - {sk_ref: sk_gote_c003_0024, role_in_system: framing_claim, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gote_c003_0028, role_in_system: unannounced_seventh_element, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gote_c003_0035, role_in_system: explicit_partial_waiver, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0037, role_in_system: silent_reduction, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gote_c003_0039, role_in_system: framing_claim, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0041, role_in_system: stated_partial_exemption, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0044, role_in_system: explicit_total_waiver, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs: []
+    conflicts:
+      - between: [sk_gote_c003_0039, sk_gote_c003_0044]
+        nature: "the source states all five edit categories benefit from the same six elements, then states the six need not be applied to the concept edit"
+        origin: extractor_inferred
+      - between: [sk_gote_c003_0024, sk_gote_c003_0037]
+        nature: "the chapter announces it will analyse each transition against the six elements, then analyses the fade against four without saying so"
+        origin: extractor_inferred
+      - between: [sk_gote_c003_0003, sk_gote_c003_0035]
+        nature: "the camera-angle and composition criteria are stated as requirements for a good edit and then waived for the wipe"
+        origin: source_stated
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The individual observations are OBSERVED and countable on the page. Three of the seven
+      departures are the source's own words, so those need no interpretation. What is INFERRED is
+      that they constitute one pattern rather than three unrelated remarks, and the further
+      suggestion that the operative rule is applicability rather than membership is our reading of
+      why the omissions fall where they do. The source may simply have been inconsistent. Both
+      readings are consistent with the text and this system does not choose between them.
+  provenance:
+    chapter: "Chapters Three and Four"
+    section: "across The Cut, The Dissolve, The Wipe, The Fade and The Five Major Categories of Edit Types"
+    page_start: 57
+    page_end: 96
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_gote_c003_003
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  label: the_four_continuities
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    Continuity is divided by the source into four kinds that must each be addressed separately:
+    content, movement, position and sound. Each has its own failure and, for three of the four, its
+    own remedy.
+  whole_system_claim:
+    text: >
+      The four are treated as one responsibility with four independent failure surfaces. A
+      transition can satisfy any three and fail the fourth, and each failure looks different to the
+      viewer — a mismatched object, a reversed direction of travel, a subject that jumps across the
+      screen, sound that vanishes. Two of the four, movement and position, share a single underlying
+      cause in the geometry of the action line, and the source treats them separately in Chapter
+      Three before supplying the shared cause in Chapter Five.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The division into four and the requirement to address each is the source's own, stated at the
+      head of the Continuity section and repeated in the chapter review. What is ours is the
+      observation that movement and position both reduce to the action line, which the source
+      supplies two chapters later without connecting it back, and the observation that the four are
+      independently failable rather than aspects of one property.
+    source_ref: null
+  members:
+    - {sk_ref: sk_gote_c003_0014, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0015, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0017, role_in_system: dimension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0018, role_in_system: dimension, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0019, role_in_system: dimension, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0016, role_in_system: shared_remedy, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_gote_c003_0017, to: sk_gote_c003_0054, nature: "screen direction is established by the action line", origin: source_stated}
+      - {from: sk_gote_c003_0018, to: sk_gote_c003_0054, nature: "frame-side position is fixed by the same line", origin: extractor_inferred}
+      - {from: sk_gote_c003_0016, to: sk_gote_c003_0015, nature: "the cut-away is the named remedy for a content mismatch", origin: source_stated}
+      - {from: sk_gote_c003_0016, to: sk_gote_c003_0017, nature: "and the same device, called an insert shot, is the remedy for a direction reversal", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership and ordering are the source's own. The grouping of the cut-away as a shared remedy
+      serving two of the four is ours, though it rests on the source using the same action and the
+      same stated mechanism in both places under two names.
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity"
+    page_start: 66
+    page_end: 70
+    source_support: text_and_visual
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_gote_c003_004
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  label: how_binding_the_grammar_is
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    Three statements, one at the end of each chapter, about the standing of the rules the book
+    teaches: that right and wrong are settled by the audience rather than by the rules, that the
+    framework is for reasoning with rather than memorising, and that the grammar should be learned
+    before it is broken because effective creativity overrules it.
+  whole_system_claim:
+    text: >
+      The book teaches a rule system and simultaneously denies that it is one. Each chapter closes
+      by weakening what it just taught, and the three weakenings are consistent: the rules are
+      reasoning aids whose authority comes from the audience's response, not from the rules
+      themselves. This is what makes the framework's silent exceptions coherent rather than
+      contradictory — if the six elements were binding, waiving them for the wipe and the concept
+      edit would be inconsistent; because they are aids, waiving them is just judgement. The source
+      never draws that connection.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Each of the three member claims is explicit and verbatim, and each appears at a chapter
+      boundary — printed p.73, p.96 and pp.97 and 108. What is ours is treating them as one position
+      rather than three closing remarks, and using that position to account for the pattern recorded
+      in scs_gote_c003_002. The source states each part and never assembles them.
+    source_ref: null
+  members:
+    - {sk_ref: sk_gote_c003_0023, role_in_system: position_statement, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gote_c003_0046, role_in_system: position_statement, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_gote_c003_0060, role_in_system: position_statement, order: 3, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs:
+      - between: [sk_gote_c003_0060, sk_gote_c003_0003]
+        nature: "the licence to depart from the grammar against the framework that defines a good edit; the source resolves it by requiring the departure to be conscious and the result effective"
+        origin: source_stated
+        source_ref: {section: "Editing Is Creating", page_start: 108}
+      - between: [sk_gote_c003_0060, sk_gote_c003_0013]
+        nature: "deliberate use of the jump cut against the instruction that it should almost always be prevented"
+        origin: source_stated
+        source_ref: {section: "Editing Is Creating", page_start: 108}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    "It is usually best to learn these general guidelines and working practices ... before trying to
+    break conventions." The source explicitly warns against taking the licence without the
+    framework, which means these three claims should not be retrieved apart from the rules they
+    qualify.
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The three claims are individually well supported and verbatim. The claim that they form one
+      position is ours, and the further use of that position to explain the framework's variable
+      application is a second inferential step which the source does not take.
+  provenance:
+    chapter: "Chapters Three, Four and Five"
+    section: "chapter closings"
+    page_start: 73
+    page_end: 108
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_gote_c003_005
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  label: the_seven_general_practices
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    Seven practices the source lists as the starting point for approaching any material: sound and
+    vision are partners not rivals; a new shot should contain new information; there should be a
+    reason for every edit; observe the action line; select the appropriate form of edit; the better
+    the edit, the less it is noticed; editing is creating.
+  whole_system_claim:
+    text: >
+      Six of the seven restate material already taught as elements or transitions, and the source
+      says so — it flags two of them as being elements of the cut and the dissolve. What the list
+      adds is a change of register: the same content stated as standing practice rather than as a
+      per-transition test, plus one practice with no counterpart earlier, the invisibility standard,
+      and one that is not a practice at all but a claim about the editor's role. The list is the
+      source's own; treating it as mostly a restatement with two additions is ours.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source lists the seven at printed p.97 and gives each a section. Two of them are marked by
+      the source itself as already covered — "This general practice is one of the elements of the
+      cut and also one of the elements of the dissolve" and "This convention is linked with
+      motivation, one of the six elements of the cut". The remaining overlaps with the action line
+      and with select-the-appropriate-form are visible by comparison but not flagged. That the
+      invisibility standard and "editing is creating" have no earlier counterpart is our
+      observation.
+    source_ref: null
+  members:
+    - {sk_ref: sk_gote_c003_0047, role_in_system: practice, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0004, role_in_system: practice_restated, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0050, role_in_system: practice, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0054, role_in_system: practice, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0057, role_in_system: practice, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0058, role_in_system: practice_without_earlier_counterpart, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_gote_c003_0060, role_in_system: practice_without_earlier_counterpart, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_gote_c003_0058, to: sk_gote_c003_0059, nature: "the invisibility standard is justified by the downstream cost of a noticed edit", origin: source_stated}
+      - {from: sk_gote_c003_0050, to: sk_gote_c003_0006, nature: "the reason-for-every-edit practice is the motivation element restated", origin: source_stated}
+    tradeoffs:
+      - between: [sk_gote_c003_0050, sk_gote_c003_0005]
+        nature: "leave a self-sufficient shot intact, against discarding a shot that adds no new information"
+        origin: extractor_inferred
+      - between: [sk_gote_c003_0049, sk_gote_c003_0021]
+        nature: "never put picture on screen with sounds that do not match, against the taught technique of deliberate sound contradiction"
+        origin: extractor_inferred
+    conflicts:
+      - between: [sk_gote_c003_0058, sk_gote_c003_0029]
+        nature: "the better the edit the less it is noticed, against the dissolve attracting attention on purpose"
+        origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    "These general practices may be considered the starting point at which you begin to consider
+    your approach to editing any material, but they are not the only points, nor are they the end
+    point."
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership and ordering are the source's own list. Which members are restatements is partly
+      the source's own admission and partly our comparison. The two trade-offs and the one conflict
+      are ours: the source states all four claims involved and never notes that they pull against
+      each other.
+  provenance:
+    chapter: "Chapter Five"
+    section: "General Practices for Editors"
+    page_start: 97
+    page_end: 109
+    source_support: text_and_visual

@@ -1,0 +1,302 @@
+# CANON-003 book 9 (Lane B) — Grammar of the Edit, ch.3-5. SPEC-04 bindings against SPEC-01 v0.1.
+# Written last, after the 60 SourceKnowledge objects and 5 systems were stable.
+#
+# Eleven bindings against sixty objects. Most of this source does not reach a product field and is
+# left unbound, which SPEC-04 says is the normal state. What binds well here is unusual for this
+# batch: the source is almost entirely about relations BETWEEN shots, so nearly every binding it
+# supports is an evaluation binding that has to name an observation unit larger than one frame.
+# That is the most useful thing this book gives the product, and it is also the thing the current
+# Creative IR has least room for.
+
+source_id: grammar_of_the_edit_ch3_5_editing_decisions
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+# ── evaluation ──────────────────────────────────────────────
+- binding_id: bnd_gote_c003_0001
+  source_knowledge_refs: [sk_gote_c003_0015, sk_gote_c003_0017, sk_gote_c003_0018, sk_gote_c003_0019]
+  source_system_refs: [scs_gote_c003_003]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot_pair
+  rationale: >
+    The four continuities are each a property of a pair of shots and of nothing smaller. Whether an
+    object matches, whether direction holds, whether a subject kept its side of frame, whether the
+    sound carried — none can be answered by looking at either shot alone. The source supplies four
+    named, separable checks and a demonstration of three of them.
+  applicability:
+    when: "checking two consecutive shots from one scene"
+    limits: >
+      The source gives no threshold for any of the four. It says actions must match and positions
+      must be maintained without saying how much deviation is tolerable, so this supports flagging a
+      candidate discontinuity rather than scoring severity.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0035, t_gote_c003_0033, t_gote_c003_0034]
+  repair_ontology_refs: [t_gote_c003_0015, t_gote_c003_0016]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gote_c003_0002
+  source_knowledge_refs: [sk_gote_c003_0012, sk_gote_c003_0013, sk_gote_c003_0026]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot_pair
+  rationale: >
+    The source names two independent causes of the same perceived jump — camera angles closer than
+    about 30 degrees, and compositions too similar even when the subjects are unrelated — and both
+    are properties of a pair. The second is the more useful of the two for generated material,
+    because it does not require knowing where a camera was: it compares two frames.
+  applicability:
+    when: "checking whether two consecutive shots are too alike to cut together"
+    limits: >
+      The 30 degree threshold assumes a real camera position around a real action, which generated
+      footage may not have. The compositional version has no threshold at all — the source says only
+      "too similar". Neither is calibrated.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0031]
+  repair_ontology_refs: [t_gote_c003_0041]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gote_c003_0003
+  source_knowledge_refs: [sk_gote_c003_0054, sk_gote_c003_0055, sk_gote_c003_0056]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: sequence
+  rationale: >
+    The action line is established once for a scene and then constrains every shot in it, so a
+    crossed line is not a property of any pair but of a shot's relation to the whole scene's
+    established geometry. The source's own test for the two-person case is checkable: if both
+    characters face the same way across a reciprocal pair, the line was crossed.
+  applicability:
+    when: "evaluating a set of shots covering one scene with an established direction of action or attention"
+    limits: >
+      The source's exception — unless the line is seen to change — requires knowing whether a
+      direction change was shown on screen, which is itself a judgement about the footage rather
+      than a measurable property.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0032]
+  repair_ontology_refs: [t_gote_c003_0042]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gote_c003_0004
+  source_knowledge_refs: [sk_gote_c003_0059]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [constrains]
+  observation_unit: sequence
+  rationale: >
+    The source claims a bad edit damages comprehension of what comes AFTER it, because the viewer's
+    mind stays occupied justifying the anomaly. If that is right, the cost of a defective transition
+    is not located at the transition, and any evaluator that scores edits independently and sums
+    them will understate the damage of one bad edit and overstate the value of many adequate ones.
+    This binding constrains how edit-level scores may be combined rather than producing a score.
+  applicability:
+    when: "aggregating per-transition quality judgements into a judgement about a sequence"
+    limits: >
+      The claim is asserted with a stated mechanism and no evidence, and the source scopes it to
+      viewers without technical film knowledge. It should constrain the design of an evaluation, not
+      be treated as a measured effect size — there is no size given.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0037]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed — the underlying claim is unmeasured and would need empirical support before it drove an aggregation rule"
+
+- binding_id: bnd_gote_c003_0005
+  source_knowledge_refs: [sk_gote_c003_0019, sk_gote_c003_0020]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot_pair
+  rationale: >
+    Sound continuity across a cut is checkable in a way most of this source's claims are not: if two
+    shots share a time and place, an ambience present in the first and absent in the second is a
+    detectable discontinuity. The source also names the repair — a continuous bed under the cut.
+  applicability:
+    when: "two consecutive shots from the same scene, both carrying audio"
+    limits: >
+      Requires knowing the two shots are meant to share a time and place, which the material does
+      not state. Deliberate removal of ambience is a technique the same source teaches, so a
+      detected drop-out cannot be called a fault without knowing the intent.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0036]
+  repair_ontology_refs: [t_gote_c003_0043]
+  status: proposed
+  status_reason: "not reviewed"
+
+# ── creative IR ─────────────────────────────────────────────
+- binding_id: bnd_gote_c003_0006
+  source_knowledge_refs: [sk_gote_c003_0014, sk_gote_c003_0015, sk_gote_c003_0017, sk_gote_c003_0018, sk_gote_c003_0019]
+  source_system_refs: [scs_gote_c003_003]
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.continuity_requirements
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, constrains]
+  rationale: >
+    SPEC-01 carries a continuity_requirements field with no stated contents. This source supplies a
+    four-way division — content, movement, position, sound — that the field could take directly, and
+    each division names what must be held constant rather than what must be produced.
+  applicability:
+    when: "specifying a multi-shot video creative where shots must read as one continuous scene"
+    limits: >
+      The source addresses an editor selecting from footage already shot. Whether these four
+      divisions are the right shape for a field that specifies material before it exists is
+      untested, and the source's remedies all assume a pool of alternative coverage to cut to,
+      which a generated single take does not have.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [cc_perceived_break_at_a_transition]
+  repair_ontology_refs: [cc_attention_break_as_repair]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gote_c003_0007
+  source_knowledge_refs: [sk_gote_c003_0053, sk_gote_c003_0004]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.temporal_structure
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives]
+  rationale: >
+    SPEC-01's temporal_structure carries beats with start and end times and no method for choosing
+    them. The source gives one: describe the content of the shot, and the time that takes is the
+    shot's length. It is the only operational timing rule in the section, and it scales with how
+    much is in the frame, so a denser beat earns a longer one.
+  applicability:
+    when: "setting durations for beats whose job is to deliver visual information"
+    limits: >
+      The method rests on the assumption that most viewers comprehend at about the editor's rate,
+      which the source states and does not support. It suits informational and establishing shots
+      and says nothing about beats driven by rhythm or emotion, where the source falls back on an
+      explicitly unquantified feel.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_gote_c003_0045]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gote_c003_0008
+  source_knowledge_refs: [sk_gote_c003_0010, sk_gote_c003_0041, sk_gote_c003_0056]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.temporal_hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    Temporal hierarchy says which elements carry each beat. The source adds that where attention
+    moves between beats is itself specifiable: a subject placed with open look room toward one side
+    sends the viewer's eye there, and the next beat should put its priority element where the eye
+    was sent. This constrains how a hierarchy may move across a cut, not what it contains.
+  applicability:
+    when: "specifying which element leads each beat in a multi-shot video creative"
+    limits: >
+      Assumes reciprocal framing of the kind two-person dialogue coverage supplies. The source gives
+      no guidance for beats with no single dominant element, and its own warning about overly busy
+      compositions bounds how far the eye may be asked to travel without saying where the bound is.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0039]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed — this is a leap. The source describes what an editor recognises in existing coverage; using it to specify a creative in advance is our extension, not the source's claim."
+
+# ── governance ──────────────────────────────────────────────
+- binding_id: bnd_gote_c003_0009
+  source_knowledge_refs: [sk_gote_c003_0023, sk_gote_c003_0046, sk_gote_c003_0060]
+  source_system_refs: [scs_gote_c003_004]
+  target_type: governance
+  target_path: null
+  role: [constrains]
+  governance_consumer: rule_application
+  rationale: >
+    A worked precedent for a question the Canon has to answer about every craft source: how binding
+    is a rule a book states as a rule? This source answers it about itself, three times, at three
+    chapter boundaries — the rules are reasoning aids, the audience settles correctness, and
+    effective creativity overrules the grammar provided the departure is conscious. It also states
+    the condition: learn the guidelines before breaking them. Directly applicable to whether a
+    Canon-derived principle may be applied as a constraint or only as advice.
+  applicability:
+    when: "deciding whether a principle extracted from a craft source may be enforced or only advised"
+    limits: >
+      This is one source's position about its own rules. It does not license treating every craft
+      source's rules as advisory — some sources assert their rules as binding, and this book's
+      position is evidence about this book.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gote_c003_0010
+  source_knowledge_refs: [sk_gote_c003_0035, sk_gote_c003_0037, sk_gote_c003_0044]
+  source_system_refs: [scs_gote_c003_002]
+  target_type: governance
+  target_path: null
+  role: [flags]
+  governance_consumer: retrieval_governance
+  rationale: >
+    The source names a fixed set of six elements and applies a different subset seven times without
+    saying so. The practical consequence for retrieval is specific: the six must not be retrieved
+    and presented as a checklist that always applies, because the source itself waives two of them
+    for one transition and all of them for one edit type. Retrieving the framework without its
+    exceptions would deliver a rule the source does not hold.
+  applicability:
+    when: "retrieving a named framework from a source that also states exceptions to it elsewhere"
+    limits: >
+      Whether the variation is a principled applicability rule or simple inconsistency is not
+      settled — see the system-level uncertainty on scs_gote_c003_002. Either way the retrieval
+      consequence is the same, which is why this binds despite the open question.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+# ── benchmark ───────────────────────────────────────────────
+- binding_id: bnd_gote_c003_0011
+  source_knowledge_refs: [sk_gote_c003_0056, sk_gote_c003_0012, sk_gote_c003_0018]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [evaluates]
+  rationale: >
+    Three of this source's figures are matched pairs in which one variable changes and everything
+    else is held: Figure 5.4 against Figure 5.5 reuses the same location, talent, wardrobe and
+    first shot and changes only which side of the line the second camera sat on; Figure 3.4 pairs
+    two near-identical angles against one clearly different; Figure 3.7 moves one subject across
+    the frame between two shots of one scene. Each comes with the source's stated expected reading,
+    so each generates a test case with a labelled correct answer.
+  applicability:
+    when: "building minimal-pair test cases for between-shot continuity judgement"
+    limits: >
+      The expected readings are the authors' assertions about what a viewer perceives, not measured
+      human responses. Any benchmark built from these must carry that marking, as CANON-001's
+      visual minimal pairs were required to. The page images are copyrighted and are not committed;
+      only the described structure of each pair is recorded here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gote_c003_0032, t_gote_c003_0031, t_gote_c003_0034]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"

@@ -1,0 +1,1815 @@
+# CANON-003 Lane C, book 15 — Rory Sutherland, "Alchemy", the complete Introduction
+# ("Cracking the (Human) Code"). Fresh SPEC-03 extraction. Historical material for this book, if any
+# exists, is sealed until this book's checkpoint commit.
+# Granularity: CANON-001 V0 rule, unchanged.
+# Visual completeness: not_verified_page_layout — both figures inspected and recovered; an EPUB has
+# no page. One claim is recorded as visually demonstrated. See visual-evidence-ledger.yaml.
+#
+# Section rationale: the Introduction is the book's epistemic statement. It defines psycho-logic,
+# argues the case against requiring a rationale before trying something, sets out the nonsense /
+# non-sense distinction, the two-operating-systems model and the context argument, and names the
+# framework the rest of the book uses. Parts 1-6 apply it. The prologue and "Rory's Rules of
+# Alchemy" were not processed.
+#
+# EXTRACTION NOTE — this governs the whole file. This source is deliberately a heuristic,
+# anti-rational, commercial practitioner text. It argues that things can work without a known
+# reason, that demanding a rationale before trying something is itself a failure mode, and it
+# describes itself as "a provocation". Its claims are recorded as what they are: assertions,
+# analogies, anecdotes and one of the author's own field tests. They are NOT recorded as
+# experimentally established rules, and no mechanism has been supplied where the source does not
+# supply one. Where the source concedes it does not know why something happens, that concession is
+# recorded in `source_uncertainty` rather than smoothed over — this is the first book in Lane C
+# where `source_uncertainty` carries values other than `none` at scale, and that is a property of
+# the source worth preserving.
+
+source_id: sutherland_alchemy_introduction
+
+source_knowledge:
+
+- sk_id: sk_sut_alc_0001
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "This book is intended as a provocation, and is only accidentally a work of philosophy."
+    - "I have only become qualified to write this book by accident. I am a classicist, not an anthropologist, but have, almost by chance, spent 30 years in the advertising industry"
+    - "If this book provides you with nothing else, I hope it gives you permission to suggest slightly silly things from time to time."
+  concept_label: the_source_characterises_itself_as_a_provocation_not_a_body_of_findings
+  label_origin: extractor_assigned
+  claim: >
+    The source states its own epistemic status directly: it is a provocation, only accidentally a
+    work of philosophy, written by a self-described classicist who is qualified by thirty years in
+    advertising rather than by training in any of the disciplines it draws on. It describes its
+    intended effect as giving the reader permission to suggest slightly silly things and to fail more
+    often, not as supplying established results.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [behavioural_science, marketing, decision_making]
+    conditions: "the whole book"
+  caveats:
+    - text: >
+        Recorded first, and as its own object, because it is the frame every other claim in this
+        file should be read inside. A source that declares itself a provocation is making a different
+        kind of offer from one that declares itself a text book, and treating its assertions as
+        findings would misrepresent it in a way it explicitly warns against.
+      origin: extractor_observed
+    - text: >
+        The self-deprecation also does work for the source: it lowers what any individual claim has
+        to carry while the book as a whole still argues a strong thesis.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0002, note: "sets the epistemic register for the core concept"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introducing Psycho-Logic; On Nonsense and Non-Sense"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Introducing Psycho-Logic' and 'On Nonsense and Non-Sense'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0002
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "most things aren't logical – they are psycho-logical"
+    - "Rather than being designed to be optimal, it has evolved to be useful."
+    - "This alternative logic emerges from a parallel operating system within the human mind, which often operates unconsciously"
+  concept_label: psycho_logic_is_a_second_evolved_decision_system
+  label_origin: source_verbatim
+  claim: >
+    Human decisions follow what the source names "psycho-logic": a parallel operating system in the
+    mind, largely unconscious, which evolved to be useful rather than designed to be optimal, and
+    which often diverges sharply from the logic taught in mathematics or economics. The source
+    chooses the term deliberately as neutral, in preference to "emotion", which it says is used as
+    code for "you're being an idiot" and which makes non-rational behaviour sound like logic's evil
+    twin.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Logic makes a successful engineer; psycho-logic is what made humans a successful species. It
+      is an evolved heuristic system, so it optimises for survival and social fitness rather than for
+      correctness.
+  scope:
+    domain_discussed_by_source: [human_behaviour, decision_making, marketing]
+    conditions: "human decisions generally, especially in social contexts"
+  caveats:
+    - text: >
+        "Psycho-logic" is the source's own coinage and is offered as a name for a phenomenon, not as
+        a theory with content. The source compares it to gravity — "a force that nobody noticed until
+        someone put a name to it" — which is a claim about naming, not evidence that the thing named
+        behaves in any specified way.
+      origin: extractor_observed
+    - text: >
+        The evolutionary framing is asserted throughout and is not supported in this section by any
+        evolutionary evidence.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_sut_alc_0005, note: "the hidden-reason claim is one consequence"}
+    - {relation: qualified_by, target: sk_sut_alc_0027, note: "the GPS analogy is where the two systems are set side by side"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introducing Psycho-Logic"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Introducing Psycho-Logic'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0003
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "100,000 of them announced that the envelopes had been delivered by volunteers; 100,000 encouraged people to complete a form which meant their donation would be boosted by a 25 per cent tax rebate; 100,000 were in better-quality envelopes; and 100,000 were in portrait format"
+    - "The ‘rational’ envelope in fact reduces donations by over 30 per cent compared to the plain control, while the other three tests increase donations by over 10 per cent."
+    - "it also reduced the proportion of people who gave anything at all; I’ll be honest with you – I have no idea why this should be."
+  concept_label: the_only_rational_variant_in_a_field_test_was_the_only_one_that_lost_money
+  label_origin: extractor_assigned
+  claim: >
+    In a charity fundraising test the source's own colleagues ran, envelopes delivered to millions of
+    doors were randomly varied four ways at 100,000 each: announcing that volunteers had hand
+    delivered them; prompting a form that would add a 25 per cent government tax rebate to the
+    donation; better-quality paper; and portrait rather than landscape format. Only the tax-rebate
+    variant gives a rational reason to give more. It reduced donations by over 30 per cent against
+    the plain control, and reduced the proportion of people giving anything at all. The other three
+    each raised donations by over 10 per cent, and the better paper also attracted more donations of
+    £100 or more.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Candidate explanations are offered and explicitly held as speculation: a shorter flap may suit
+      putting notes or cheques in; thick paper may feel more agreeable to put a large cheque into; a
+      volunteer's effort may prompt reciprocation; the mention of a 25 per cent bonus may reduce the
+      amount people feel they need to give. For the drop in participation the source says outright
+      that it does not know.
+  scope:
+    domain_discussed_by_source: [charity_fundraising, direct_marketing]
+    conditions: "printed door-drop fundraising envelopes in the United Kingdom"
+  caveats:
+    - text: >
+        The source explicitly does not know why the rational variant also cut the number of people
+        giving anything, and says so rather than supplying a reason.
+      origin: source_stated
+    - text: >
+        This is the source's own field test, randomised, with a control and roughly 400,000 treated
+        units, and it is by a distance the strongest evidence in the section. What it does not carry
+        is a client name, a date, absolute donation levels, a significance test, or a definition of
+        the control. The effect directions are reported; the underlying numbers are not.
+      origin: extractor_observed
+    - text: >
+        It is one campaign for one cause. The source uses it as the opening metaphor for the whole
+        book — "Remember the story of those envelopes" — which is a much larger load than a single
+        test can carry.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_sut_alc_0004, note: "the test is offered as the evidence for the search-space claim"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, empirical_within_source, outcome_claimed, practitioner_assertion]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introduction: Cracking the (Human) Code"
+    page_start: null
+    page_end: null
+    locator: "Introduction, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0004
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "if we allow the world to be run by logical people, we will only discover logical things"
+    - "To a logical person, there would have been no point in testing three of these variables, but they are the three that actually work."
+  concept_label: requiring_a_rationale_before_testing_restricts_what_can_ever_be_discovered
+  label_origin: extractor_assigned
+  claim: >
+    If only options with a prior rationale are ever tried, only effects with a prior rationale can
+    ever be found. The source's demonstration is its own envelope test: a logical person would have
+    seen no point in testing three of the four variables, and those three are the ones that worked.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The requirement for a rationale acts as a filter on what enters the experiment at all, so the
+      set of discoverable effects is bounded by the set of effects someone could already explain.
+  scope:
+    domain_discussed_by_source: [business, policy, marketing, research]
+    conditions: "any setting where what gets tested is chosen by argument"
+  caveats:
+    - text: >
+        The argument is sound in form and its support here is one test. It also cuts both ways and
+        the source does not say so: removing the rationale filter increases what can be discovered
+        and also increases how much must be tested to find it.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_sut_alc_0009, note: "the general form of the discovery-before-explanation argument"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, controlled_comparison, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introduction: Cracking the (Human) Code"
+    page_start: null
+    page_end: null
+    locator: "Introduction, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0005
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "There are often two reasons behind people’s behaviour: the ostensibly logical reason, and the real reason."
+    - "large parts of human behaviour are like a cryptic crossword clue: there is always a plausible surface meaning, but there is also a deeper answer hidden beneath the surface"
+  concept_label: stated_reasons_and_real_reasons_are_routinely_different
+  label_origin: extractor_assigned
+  claim: >
+    Behaviour usually has two reasons: the one that can be stated and defended, and the one that
+    actually operates. The source's analogy is a cryptic crossword clue, whose surface reading is
+    plausible and wrong, and which can only be solved once you accept that nothing is as it appears.
+    Its running example is toothbrushing: the approved reason is dental health, which the source
+    doubts, asking why 95 per cent of toothpastes are then flavoured with mint.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [human_behaviour, market_research]
+    conditions: "behaviour people are asked to explain"
+  caveats:
+    - text: >
+        The mint observation is raised as a question and the source defers its answer to a later
+        chapter outside this section, so within the processed span the alternative explanation is
+        promised rather than given.
+      origin: source_stated
+    - text: >
+        The 95-per-cent figure carries no source. The crossword is an analogy, not evidence.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "Learning how to disentangle the literal from the lateral meaning"
+  examples:
+    positive:
+      - {description: "the clue 'Does perhaps rush around (4)', whose answer is 'deer' — reed reversed — and is invisible from the surface reading", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0002, note: "one consequence of decisions being made psycho-logically"}
+    - {relation: qualified_by, target: sk_sut_alc_0021, note: "the evolutionary account of why the real reason is hidden"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introduction: Cracking the (Human) Code"
+    page_start: null
+    page_end: null
+    locator: "Introduction, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0006
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "if you expose every one of the world’s problems to ostensibly logical solutions, those that can easily be solved by logic will rapidly disappear, and all that will be left are the ones that are logic-proof"
+    - "Most political, business, foreign policy and, I strongly suspect, marital problems seem to be of this type."
+  concept_label: the_problems_that_remain_are_the_ones_logic_cannot_solve
+  label_origin: extractor_assigned
+  claim: >
+    Because logical solutions are applied first and everywhere, the problems that survive are
+    precisely those on which logic does not work. The source's analogy is treating every kitchen
+    item as dishwasher-proof: after a year everything left genuinely is. It suspects most remaining
+    political, business, foreign-policy and marital problems are of this kind.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Selection. The easy cases are removed by the method that solves them, leaving a residue defined by that method's failure."
+  scope:
+    domain_discussed_by_source: [policy, business, human_affairs]
+    conditions: "domains where logical solutions have already been applied at scale"
+  caveats:
+    - text: "the source marks the extension to political, business and marital problems as suspicion — 'I strongly suspect'"
+      origin: source_stated
+    - text: >
+        A selection argument, offered by analogy, with no attempt to establish that the residue is
+        actually large or that logic was genuinely tried on it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "logic-proof"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0004, note: "why the unexamined options matter more than they should"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Some Things Are Dishwasher-Proof, Others Are Reason-Proof"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Some Things Are Dishwasher-Proof, Others Are Reason-Proof'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0007
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "Not everything that makes sense works, and not everything that works makes sense."
+    - "In the other quadrants, ‘wonky’ human perception and emotionality are integral to any workable solution."
+    - "although humans can learn how to ride bicycles quite easily, physicists still cannot fully understand how bicycles work"
+  concept_label: making_sense_and_working_are_independent_properties
+  label_origin: extractor_assigned
+  claim: >
+    Whether something makes sense and whether it works are two separate dimensions, and all four
+    combinations are populated. The source demonstrates this with a chart running FAILS to WORKS
+    against MAKES SENSE to SEEMS WEIRD. Only the top-right quadrant — pure science, Newtonian
+    physics, the Boeing 787, cars, dishwashers — is where sense and success coincide. Placed in
+    makes-sense-and-fails are scientism, Marxism, flossing, economies of scale and mergers,
+    management consultancy and economics; in seems-weird-and-works are heuristics, behavioural
+    economics, evolution, constitutional monarchy, marketing, bicycles, the Panama Canal, placebos
+    and Red Bull; in seems-weird-and-fails are identity politics, water diving and Jonestown. The
+    bicycle is singled out in the text: people ride them easily and physicists still cannot fully
+    explain how they work.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where human perception and emotion are part of the system, a solution that ignores them can be
+      correct and still fail, and a solution that exploits them can be inexplicable and still work.
+  scope:
+    domain_discussed_by_source: [business, policy, science, human_affairs]
+    conditions: "any problem involving people"
+  caveats:
+    - text: >
+        The placements are the author's assertions, not measurements, and several are strong
+        political and scientific claims made by position on a chart rather than by argument —
+        Marxism, economics and management consultancy in makes-sense-and-fails, identity politics in
+        seems-weird-and-fails. None is defended anywhere in this section.
+      origin: extractor_observed
+    - text: >
+        Almost the entire content of the figure exists only in the figure; the prose beside it names
+        just the top-right quadrant and the bicycle. This claim is therefore one of the few in Lane C
+        that a text-only extraction would have recorded with nearly all of its content missing.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the bicycle: ridden easily, still not fully explained by physics, and evolved by trial and error rather than intentional design", figure_ref: image7}
+  intra_source_relations:
+    - {relation: generalises, target: sk_sut_alc_0009, note: "the discovery-before-explanation argument is the mechanism behind the works-but-weird quadrant"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introducing Psycho-Logic"
+    page_start: null
+    page_end: null
+    locator: "Introduction, the chart at the end of 'Introducing Psycho-Logic'"
+    figure_refs: [image7]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [image7]}
+
+- sk_id: sk_sut_alc_0008
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "It isn’t, though. It’s a different kind of thing, which I call ‘non-sense’."
+    - "much ‘irrational’ human behaviour is not really nonsensical at all; it is non-sensical"
+    - "Non-sense includes things that are useful or effective, even though (or perhaps because) they defy conventional logic."
+  concept_label: nonsense_and_non_sense_are_different_and_the_hyphen_carries_the_difference
+  label_origin: source_verbatim
+  claim: >
+    The source distinguishes two things a single word normally covers. Nonsense is behaviour that
+    genuinely serves nothing, often because we evolved for different conditions. Non-sense, written
+    with a hyphen, is behaviour that is useful or effective while defying conventional logic — either
+    because we are judging the motive wrongly, or because evolution has found something we have not
+    yet explained. The source states that almost all good advertising contains some element of
+    non-sense.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Evolution is described as a brilliant uneducated craftsman — what it lacks in intellect it
+      makes up for in experience — so behaviour it produced may be effective for reasons no one has
+      articulated.
+  scope:
+    domain_discussed_by_source: [human_behaviour, advertising, evolutionary_psychology]
+    conditions: "behaviour that appears irrational"
+  caveats:
+    - text: >
+        The distinction is a definition the source introduces, not a finding, and it has no test:
+        nothing here says how to tell in advance which of the two a given piece of behaviour is. In
+        practice the source assigns the label after deciding whether the behaviour works.
+      origin: extractor_observed
+  source_stated_problems:
+    - "nonsense"
+  source_stated_remedies:
+    - "Be careful before calling something nonsense."
+  examples:
+    positive:
+      - {description: "advertisements featuring cute animals outperforming those that do not, explained after the fact by evolved attention to living things", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0007, note: "names the two lower quadrants apart"}
+    - {relation: generalises, target: sk_sut_alc_0029, note: "the appendix is the worked case"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "On Nonsense and Non-Sense"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Nonsense and Non-Sense'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0009
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "There are two separate forms of scientific enquiry – the discovery of what works and the explanation and understanding of why it works. These are two entirely different things, and can happen in either order."
+    - "Aspirin, for instance, was known to work as an analgesic for decades before anyone knew how it worked."
+    - "Perhaps a plausible ‘why’ should not be a pre-requisite in deciding a ‘what’"
+  concept_label: discovering_what_works_and_explaining_why_are_separate_and_can_happen_in_either_order
+  label_origin: extractor_assigned
+  claim: >
+    Finding out that something works and understanding why are two different enquiries which can
+    occur in either order. Aspirin was used as an analgesic for decades before its mechanism was
+    known; penicillin's discovery was not predicted in advance. The source argues that policy and
+    business decisions are overwhelmingly made on a reason-first, discovery-later basis, which it
+    calls wasteful in the extreme, and proposes that a plausible why should not be a prerequisite for
+    deciding a what.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Evolution is offered as the model: it discovers what survives without needing to know why, and
+      works because each gene bears the costs and rewards of its own accidents.
+  scope:
+    domain_discussed_by_source: [science, policy, business]
+    conditions: "deciding what to try"
+  caveats:
+    - text: >
+        Two selected cases of accidental discovery, with no account of how often the reason-first
+        method succeeds. The source's own summary — "the record of science in some ways casts doubt
+        on a scientific approach to problem solving" — is a rhetorical inversion rather than a
+        conclusion the two cases support.
+      origin: extractor_observed
+    - text: >
+        The evolution analogy carries a condition the source does not carry over: evolution works
+        because failures are paid for locally and continuously. A business trying things without
+        rationale has no equivalent guarantee.
+      origin: extractor_observed
+  source_stated_problems:
+    - "policy and business decisions are overwhelmingly based on a ‘reason first, discovery later’ methodology"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "aspirin, effective for decades before its mechanism was understood; penicillin, whose discovery was not predicted", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0004, note: "the general form of why the rationale filter is costly"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "The Danger of Technocratic Elites"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'The Danger of Technocratic Elites'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0010
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "If you are a technocrat, you’ll generally have achieved your status by explaining things in reverse; the plausible post-rationalisation is the stock-in-trade of the commentariat."
+    - "it is difficult for such people to avoid the trap of assuming that the same skills that can explain the past can be used to predict the future"
+  concept_label: skill_at_explaining_the_past_is_mistaken_for_skill_at_predicting_the_future
+  label_origin: extractor_assigned
+  claim: >
+    People acquire technocratic status by producing plausible explanations of things that have
+    already happened, and then assume the same skill predicts what will happen next. The source's
+    point is that what looks neat and linear in hindsight — a criminal investigation, a scientific
+    discovery — was messy and wasteful in real time, so retrospective coherence is not evidence that
+    the process was, or should be, orderly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Hindsight removes the discarded branches, so any process looks linear afterwards regardless of
+      how it actually ran.
+  scope:
+    domain_discussed_by_source: [policy, commentary, science]
+    conditions: "people whose status rests on explanation"
+  caveats:
+    - text: >
+        An argument about a professional class, made without any instance of a named technocrat's
+        prediction failing. The mechanism is sound and general; the target is asserted.
+      origin: extractor_observed
+  source_stated_problems:
+    - "the plausible post-rationalisation"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0009, note: "why retrospective neatness misleads about method"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "The Danger of Technocratic Elites"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'The Danger of Technocratic Elites'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0011
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "the single worst thing that can happen in a criminal investigation is for everyone involved to become fixated on the same theory... There’s a name for this – it’s called ‘privileging the hypothesis’."
+    - "in an evolved or complex system, or in human behaviour, things can have multiple uses depending on the context within which they are viewed"
+  concept_label: one_shared_hypothesis_can_defeat_an_investigation_because_evolved_things_serve_several_purposes
+  label_origin: extractor_assigned
+  claim: >
+    A single false assumption held by everyone can undermine an entire enquiry — named "privileging
+    the hypothesis" — and the deeper cause is that in designed systems one thing serves one purpose,
+    while in evolved or complex systems and in human behaviour a thing can serve several depending on
+    context. The source's worked case is the Perugia investigation into the murder of Meredith
+    Kercher, where the team concluded that a break-in had been staged, could not see past it, and was
+    wrong: breaking a window loudly from an exposed position may have served not to gain entry but to
+    test whether anyone was home.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Habits of thought suited to consciously designed systems — one part, one function — are carried
+      into complex evolved ones, where second-order considerations make several readings available.
+  scope:
+    domain_discussed_by_source: [investigation, complex_systems, human_behaviour]
+    conditions: "interpreting behaviour in evolved or complex systems"
+  caveats:
+    - text: >
+        The reinterpretation of the break-in is the source's own reconstruction, offered as the
+        obvious reading once context is admitted. It is a hypothesis about a real case and is not
+        presented as established.
+      origin: extractor_observed
+    - text: >
+        The mouth-and-nose example is an analogy from anatomy to intention and does not carry the
+        weight the argument puts on it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "privileging the hypothesis"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the human mouth, which allows eating and also breathing when the nose is blocked", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0012, note: "the context argument applied to interpretation"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Crime, Fiction and Post-Rationalism"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Crime, Fiction and Post-Rationalism'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0012
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "in reality ‘context’ is often the most important thing in determining how people think, behave and act: this simple fact dooms many universal models from the start"
+    - "Because in order to form universal laws, naïve rationalists have to pretend that context doesn’t matter."
+    - "‘At the federal level I am a Libertarian. At the state level, I am a Republican. At the town level, I am a Democrat. In my family I am a socialist. And with my dog I am a Marxist’"
+  concept_label: context_dependence_defeats_universal_laws_of_human_behaviour
+  label_origin: extractor_assigned
+  claim: >
+    Context determines how people think and act to such a degree that universal, context-free laws of
+    human behaviour are doomed from the start, and forming such laws requires pretending context does
+    not matter. The source's illustrations are a Pall Mall club where wealthy right-wing members all
+    pay the same fee regardless of use; Goldman Sachs, described by Taleb as internally socialistic
+    while proposing no profit share with JP Morgan; a quoted individual whose politics shifts from
+    Libertarian to Marxist as the unit shrinks from federal to household; and the banana liqueur that
+    tasted good only in the Caribbean. It invokes Adam Smith's warning against the "man of system"
+    who imagines he can arrange society like pieces on a chessboard, forgetting that every piece has
+    a principle of motion of its own.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Perception itself is affected by context, so the same act has a different value to the same
+      person in a different setting; a universal law has no place to record the setting.
+  scope:
+    domain_discussed_by_source: [economics, politics, human_behaviour]
+    conditions: "any attempt to state a general law about people"
+  caveats:
+    - text: >
+        The examples are chosen and anecdotal, and the strongest of them — the Adam Smith passage —
+        is an eighteenth-century warning rather than evidence about the present.
+      origin: extractor_observed
+    - text: >
+        The claim is self-limiting in a way the source does not address: "context is often the most
+        important thing" is itself a universal claim about human behaviour.
+      origin: extractor_observed
+  source_stated_problems:
+    - "the ‘man of system’"
+    - "the modern rationalist straitjacket"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the banana liqueur bought in the Caribbean and found vomit-inducing at home", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_sut_alc_0013, note: "the opposite-ideas claim is the sharpest consequence of context dependence"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, historical_claim, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "On Nonsense and Non-Sense; Context Is Everything"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Nonsense and Non-Sense' and 'Context Is Everything'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0013
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "while in physics the opposite of a good idea is generally a bad idea, in psychology the opposite of a good idea can be a very good idea indeed: both opposites often work"
+    - "there are two equally potent, but completely contradictory, ways to sell a product: ‘Not many people own one of these, so it must be good’ and ‘Lots of people already own one of these, so it must be good.’"
+  concept_label: two_opposite_approaches_can_both_work_and_the_context_decides_which
+  label_origin: extractor_assigned
+  claim: >
+    In psychology, unlike physics, the opposite of a good idea can also be a good idea, and both
+    often work. Scarcity and ubiquity are both potent selling arguments. The source reports its own
+    case: an insurance sales letter that had grown longer paragraph by paragraph, each addition
+    improving response, which it rewrote to two paragraphs — and the very short version also worked,
+    because a long letter reassures by being thorough and a short one reassures by implying the
+    product needs no selling. It observes the same shape in retail, where the top and the bottom of
+    the price spectrum have both weathered instability better than the middle, and in its own
+    behaviour buying bed linen, where only "zero" or "a lot" carried an emotional reward.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each of the two opposites carries a different reassurance or reward, so which one works is
+      decided by the context and by what the buyer needs reassuring about.
+  scope:
+    domain_discussed_by_source: [marketing, retail, persuasion]
+    conditions: "psychological rather than physical problems"
+  caveats:
+    - text: >
+        The insurance-letter case is the author's own test with a reported directional result, no
+        figures, and a single product. The retail and bed-linen observations are assertion and
+        introspection.
+      origin: extractor_observed
+    - text: >
+        The claim is a strong one and it removes falsifiability from a large class of advice: if both
+        an approach and its opposite may work, no result disconfirms either. The source does not
+        supply a rule for deciding which context calls for which.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "miso soup, which the source suspects would fail on its merits and is drunk because it is popular in Japan; against luxury goods, which would be destroyed by ubiquity", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0012, note: "the sharpest consequence of context dependence"}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, empirical_within_source, outcome_claimed, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "The Opposite of a Good Idea Can Be a Good Idea"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'The Opposite of a Good Idea Can Be a Good Idea'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0014
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "Irrational people are much more powerful than rational people, because their threats are so much more convincing."
+    - "being rational means you are predictable, and being predictable makes you weak"
+    - "If you are wholly predictable, people learn to hack you."
+  concept_label: predictability_is_a_weakness_because_it_can_be_exploited
+  label_origin: extractor_assigned
+  claim: >
+    An actor known to behave rationally is predictable, and a predictable actor can be anticipated
+    and exploited, so apparent irrationality can be a source of negotiating power. The source's
+    political example is a threatened wall and a threatened repeal of a trade agreement, arguing the
+    threat alone can achieve the trade objective without the action; its technical example is that
+    driverless cars which reliably stop for pedestrians would invite jaywalkers to step out in front
+    of them, so such cars may have to learn to appear angry and occasionally fail to stop.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where an outcome depends on what others expect you to do, removing the certainty of your
+      response changes their behaviour without requiring you to act.
+  scope:
+    domain_discussed_by_source: [negotiation, politics, automated_systems]
+    conditions: "situations where others adapt to your expected behaviour"
+  caveats:
+    - text: >
+        The political example is contested territory and the source knows it — it says outright "you
+        may hate it, but it works" and "I don't admire him". The claim that the threat achieved the
+        trade objective is asserted, with no outcome measured.
+      origin: extractor_observed
+    - text: >
+        The driverless-car claim is attributed only to "some scientists", unnamed and uncited.
+      origin: extractor_observed
+    - text: >
+        The argument is about strategic settings where others respond to your reputation. Applied
+        outside those, unpredictability is simply cost.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0002, note: "an instance where the psycho-logical move beats the logical one"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Some Things Are Dishwasher-Proof, Others Are Reason-Proof"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Some Things Are Dishwasher-Proof, Others Are Reason-Proof'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0015
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "It’s important to remember that big data all comes from the same place – the past."
+    - "The need to rely on data can also blind you to important facts that lie outside your model."
+    - "‘my data disagree with your anecdotes’"
+  concept_label: a_model_built_from_past_data_is_blind_to_what_lies_outside_it
+  label_origin: extractor_assigned
+  claim: >
+    Data comes from the past, so a model built on it cannot see a new pattern, a rogue variable or a
+    rare event, and reliance on it blinds the user to relevant facts outside the model. The source's
+    case is a 2016 campaign strategist who refused non-quantitative input, mocked a former
+    president's suggestion to visit Midwestern working-class voters, dismissed a suggestion with "my
+    data disagree with your anecdotes", and sent the candidate to Arizona rather than Wisconsin,
+    which she never visited. It adds that the visibly different crowd sizes at the two campaigns were
+    relevant information that no model contained.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A model's inputs bound what it can represent, so a genuinely new phenomenon appears in the
+      model as noise or not at all.
+  scope:
+    domain_discussed_by_source: [politics, business, forecasting]
+    conditions: "decisions made from quantitative models of past behaviour"
+  caveats:
+    - text: >
+        A single election, reconstructed after the fact, and the source is arguing precisely against
+        reasoning from retrospective coherence a page earlier. The reasoning it applies to
+        technocrats it does not apply to itself here.
+      origin: extractor_observed
+    - text: >
+        The source does concede that the blame placed elsewhere "maybe... in part" was warranted, so
+        it does not claim the model was the sole cause.
+      origin: source_stated
+  source_stated_problems:
+    - "an overreliance on mathematical models of decision-making"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0006, note: "an instance of hyper-rational method failing on a psycho-logical problem"}
+    - {relation: contradicts, target: sk_sut_alc_0010, note: "the source reasons from hindsight here, having warned against exactly that"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, historical_claim, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Some Things Are Dishwasher-Proof, Others Are Reason-Proof"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Some Things Are Dishwasher-Proof, Others Are Reason-Proof'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0016
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "you can never be fired for being logical"
+    - "It is much easier to be fired for being illogical than it is for being unimaginative."
+    - "narrow, conventional logic is the natural mode of thinking for the risk-averse bureaucrat or executive"
+  concept_label: the_incentive_to_be_logical_is_about_blame_not_about_results
+  label_origin: extractor_assigned
+  claim: >
+    Organisations produce logical thinking not because it works better but because it is safe. If
+    reasoning is sound, failure attracts little blame; being illogical is far more punishable than
+    being unimaginative. The source names this as the reason narrow conventional logic becomes the
+    default mode once an organisation reaches a certain size.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The asymmetry is in personal risk, not in expected outcome: defensible reasoning transfers
+      blame away from the decision maker regardless of the result.
+  scope:
+    domain_discussed_by_source: [business, organisations]
+    conditions: "large organisations with individually accountable decision makers"
+  caveats:
+    - text: >
+        Asserted from professional experience, with no case, survey or figure. It is also convenient
+        for the source's thesis, since it explains resistance to the argument as self-interest rather
+        than disagreement.
+      origin: extractor_observed
+  source_stated_problems:
+    - "you can never be fired for being logical"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the choice in a board meeting between 'we should reduce the price' and 'we should feature more ducks in our advertising', where the first is far easier to propose and the second may be more profitable", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0017, note: "why nobody tests the counterintuitive option"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Context Is Everything"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Context Is Everything'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0017
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "The fatal issue is that logic always gets you to exactly the same place as your competitors."
+    - "Our mantra is ‘Test counterintuitive things, because no one else ever does.’"
+  concept_label: shared_logic_produces_shared_answers_so_advantage_lies_in_the_untested
+  label_origin: extractor_assigned
+  claim: >
+    Logic applied to the same facts yields the same conclusion for everyone, so a competitor
+    reasoning correctly arrives where you arrive. The source reports founding a division at its
+    agency staffed with psychology graduates whose stated mantra is to test counterintuitive things
+    on the ground that no one else ever does.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Advantage requires doing something others have not done, and the rationale filter guarantees
+      that the untried options are the ones no one can justify.
+  scope:
+    domain_discussed_by_source: [business, marketing, behaviour_change]
+    conditions: "competitive settings"
+  caveats:
+    - text: >
+        No result from that division is reported in this section, so the mantra is stated as practice
+        rather than as something shown to pay.
+      origin: extractor_observed
+    - text: >
+        The argument holds only where competitors share both the facts and the objective, which the
+        source does not qualify.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "Test counterintuitive things, because no one else ever does."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_sut_alc_0004, note: "acts on the search-space argument"}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Context Is Everything"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Context Is Everything'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0018
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "no big business idea makes sense at first"
+    - "‘And, best of all, the drink has a taste which consumers say they hate.’ (Red Bull)"
+    - "No sane person would have invested a penny in these schemes."
+  concept_label: successful_businesses_routinely_began_as_propositions_that_sounded_absurd
+  label_origin: extractor_assigned
+  claim: >
+    The source claims no large business idea makes sense when first proposed, and lists six as
+    imagined pitches that would have been rejected: a really cool vacuum cleaner (Dyson); an
+    encyclopaedia written entirely for free (Wikipedia); a coarse, uncomfortable, slow-drying fabric
+    popular with labourers (jeans); a restaurant offering three or four items (McDonald's); a drink
+    whose taste consumers say they hate (Red Bull); and paying several dollars for something makeable
+    at home for pennies (Starbucks).
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [business, innovation]
+    conditions: "proposing a genuinely novel product"
+  caveats:
+    - text: >
+        Six survivors, selected after the fact, with no denominator. Nothing is said about the far
+        larger number of absurd-sounding propositions that failed, which is exactly what the claim
+        would need to be worth anything.
+      origin: extractor_observed
+    - text: >
+        The pitches are the source's own reconstructions written to sound ridiculous, not records of
+        what was actually proposed.
+      origin: extractor_observed
+    - text: >
+        "No big business idea makes sense at first" is a universal claim, and the same section argues
+        against universal claims about human affairs.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0007, note: "instances of the seems-weird-and-works quadrant"}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Context Is Everything"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Context Is Everything'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0019
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "a customer prize draw to win ‘free energy for a year – worth over £1,000’ received 67,000 entries. The subsequent draw, where you could win a cute penguin nightlight (with a value of £15) received over 360,000 entries."
+    - "One customer even turned down an offer of a £200 refund on their bill, saying, ‘No, I’d rather have a penguin.’"
+  concept_label: a_small_emotionally_charged_prize_drew_five_times_the_response_of_a_large_cash_one
+  label_origin: extractor_assigned
+  claim: >
+    The source reports a client's two consecutive prize draws: one offering free energy for a year
+    worth over £1,000 drew 67,000 entries; the next, offering a penguin nightlight worth £15, drew
+    over 360,000. One customer is reported as declining a £200 refund in favour of the penguin. The
+    source adds that it would find it hard to recommend such a thing to a board even knowing it is
+    true, because it sounds like nonsense.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Offered as evolutionary psychology and marked as speculation: advertising exists to be noticed
+      and we evolved to attend to living things; and a gift for one's child may be more emotionally
+      rewarding than a cash gain for oneself.
+  scope:
+    domain_discussed_by_source: [marketing, promotions]
+    conditions: "consumer prize draws by a utility company"
+  caveats:
+    - text: >
+        Two consecutive draws by one client, reported second hand from a meeting, with no dates, no
+        base sizes, no statement of how the draws were promoted, and no control for anything that
+        changed between them. The entry counts are the only figures.
+      origin: extractor_observed
+    - text: >
+        The proposed mechanism is offered as what "an evolutionary psychologist might also suggest",
+        which the source flags as speculation rather than explanation.
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0008, note: "a worked instance of non-sense that pays"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, empirical_within_source, outcome_claimed, practitioner_assertion]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "On Nonsense and Non-Sense"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Nonsense and Non-Sense'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0020
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "around 90 per cent of people have no idea what sort of aircraft they are travelling on or how a jet engine works but will infer a great deal about the safety and quality of the experience offered by an airline from the care and attention it pays to on-board snacks"
+    - "we are just as likely to be unhappy with a hospital because the reception area is neglected, the magazines are out of date and the nurse didn’t spare us much time"
+  concept_label: people_judge_what_they_cannot_assess_from_details_they_can
+  label_origin: extractor_assigned
+  claim: >
+    Where the substance of a service is beyond a customer's competence to judge, they infer it from
+    peripheral details they can judge. Passengers who know nothing about aircraft or jet engines
+    infer safety and quality from on-board catering; patients judge a hospital by its reception area,
+    its magazines and the time a nurse spared them rather than by clinical outcomes. The source
+    suggests the UK's National Health Service might benefit from "wasting" more money on signalling
+    and the US healthcare sector from spending a lot less, and warns that the same urge to signal
+    commitment can turn into unnecessary tests and invasive surgery.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The customer cannot evaluate the core service, so an observable detail that plausibly
+      correlates with care becomes the available evidence and carries the whole judgement.
+  scope:
+    domain_discussed_by_source: [services, healthcare, aviation, advertising]
+    conditions: "services whose quality the customer cannot directly assess"
+  caveats:
+    - text: >
+        The 90-per-cent figure carries no source. The hospital and airline claims are assertions, and
+        the two contrasting quoted remarks about a hospital are illustrations the source composed.
+      origin: extractor_observed
+    - text: >
+        The source states that the objective outcome measures the NHS performs well on are precisely
+        what people do not respond to; it offers no evidence for that comparison beyond assertion.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "an airline board debating $150 million aircraft, then presented with a campaign about cucumber sandwiches and scones", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0008, note: "a worked instance of non-sense that pays"}
+    - {relation: qualifies, target: sk_sut_alc_0022, note: "why asking people would not surface this"}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "On Nonsense and Non-Sense; Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Nonsense and Non-Sense' and 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0021
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "we do not have full access to the reasons behind our decision-making because, in evolutionary terms, we are better off not knowing; we have evolved to deceive ourselves, in order that we are better at deceiving others"
+    - "It is not enough to conceal them from others – to be really convincing, you also have to conceal them from yourself."
+  concept_label: self_deception_evolved_because_concealing_a_motive_from_yourself_conceals_it_from_others
+  label_origin: extractor_assigned
+  claim: >
+    The source reports a theory it attributes to the evolutionary biologist Robert Trivers and the
+    evolutionary psychologist Robert Kurzban: people lack access to their own motives because
+    concealing them from oneself is what makes concealing them from others convincing. If unconscious
+    motivations reached consciousness, subtle behavioural cues would reveal them and damage social and
+    reproductive prospects. Its illustration is Trivers's hare, which zigzags to escape a pursuer and
+    is safer if the pattern is genuinely random, since foreknowledge of the next jump would show in
+    its posture and dogs would learn to read it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Selection against leakage. An animal or person whose own knowledge of its next move is
+      detectable by an observer is at a disadvantage, so ignorance of one's own motives is favoured.
+  scope:
+    domain_discussed_by_source: [evolutionary_psychology, market_research]
+    conditions: "motives with social consequences"
+  caveats:
+    - text: >
+        A named third party's theory, reported by the source. There is no value in the SPEC-03
+        evidence vocabulary for cited external research, so it is recorded here rather than as
+        `empirical_within_source`, consistently with this lane's handling elsewhere.
+      origin: extractor_observed
+    - text: >
+        The source endorses it with a self-interested argument — "if he were not, our job as
+        advertisers would be much easier than it is" — which is a reason to expect the theory to be
+        congenial, not a reason to think it true.
+      origin: extractor_observed
+    - text: >
+        The hare is an illustration by analogy; nothing in it is evidence about human motivation.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0005, note: "the proposed reason the real reason is hidden"}
+    - {relation: generalises, target: sk_sut_alc_0022, note: "why market research fails"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0022
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "‘The trouble with market research is that people don’t think what they feel, they don’t say what they think, and they don’t do what they say.’"
+    - "For a business to be truly customer-focused, it needs to ignore what people say. Instead it needs to concentrate on what people feel."
+    - "Research will never tell you this"
+  concept_label: asking_people_cannot_recover_the_reasons_for_their_behaviour
+  label_origin: extractor_assigned
+  claim: >
+    Asking people why they behave as they do produces plausible post-rationalisations rather than
+    reasons, because they do not have access to their own motives. The source quotes David Ogilvy's
+    maxim that people do not think what they feel, do not say what they think, and do not do what
+    they say, and Bill Bernbach on the need to attend to the unchanging man whose language camouflages
+    what really motivates him. Its conclusion is that a genuinely customer-focused business must
+    ignore what people say and attend to what they feel.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The self-deception account supplies the mechanism: the reason is not available to the person
+      being asked, so a question can only return the plausible surface answer.
+  scope:
+    domain_discussed_by_source: [market_research, marketing]
+    conditions: "asking people about their own motives or intentions"
+  caveats:
+    - text: >
+        Both quotations are from advertising practitioners, and the claim is a strong one about a
+        whole research method. Nothing here compares a stated-preference finding against an observed
+        outcome to show the divergence.
+      origin: extractor_observed
+    - text: >
+        The source's own supporting anecdote — a young man saying he reads Ian McEwan novels to
+        attract women — is itself a self-report, which is the instrument the claim says cannot be
+        trusted. The source notes the candour is rare rather than noticing the tension.
+      origin: extractor_observed
+  source_stated_problems:
+    - "people don’t think what they feel, they don’t say what they think, and they don’t do what they say"
+  source_stated_remedies:
+    - "concentrate on what people feel"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0021, note: "the practical consequence of self-deception"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0023
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "while we know how we feel, we cannot accurately explain why"
+    - "Nature cares a great deal about feelings, and feelings largely drive what we do, but they do not come with explanations attached"
+  concept_label: feelings_arrive_without_their_explanations
+  label_origin: extractor_assigned
+  claim: >
+    People reliably know how they feel and cannot accurately say why. Feelings largely drive
+    behaviour but arrive without explanations attached, so what a person believes about the cause of
+    a feeling may have little to do with the actual cause. The source calls this emotional
+    misattribution and treats it as the reason naive questions are worth asking.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "We are often better off not knowing the reason, so the explanation was never made available."
+  scope:
+    domain_discussed_by_source: [psychology, market_research]
+    conditions: "any attempt to explain one's own preferences"
+  caveats:
+    - text: >
+        Asserted as established. No study is named for emotional misattribution in this section,
+        although a substantial literature exists; the source is not drawing on it here.
+      origin: extractor_observed
+  source_stated_problems:
+    - "emotional misattribution"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0021, note: "the everyday form of the self-deception account"}
+    - {relation: generalises, target: sk_sut_alc_0024, note: "why the naive question is productive"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0024
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "it pays often to ask naïve questions to which the answers seem completely self-evident"
+    - "to reach intelligent answers, you often need to ask really dumb questions"
+    - "The reason we do not ask basic questions is because, once our brain provides a logical answer, we stop looking for better ones"
+  concept_label: asking_a_question_whose_answer_seems_obvious_is_a_productive_method
+  label_origin: extractor_assigned
+  claim: >
+    Deliberately asking questions whose answers appear self-evident is a productive method, because
+    the obvious answer is usually a post-rationalisation that stopped the search. The source names
+    the mechanism directly: once the brain supplies a logical answer we stop looking for better ones.
+    Its worked example is why people dislike standing on crowded trains — an obvious question nobody
+    in a rail meeting could answer, which opens onto several candidate explanations (feeling cheated
+    of a paid-for seat; the effort of balancing; being unable to read, drink or use a phone; nowhere
+    for bags; status and view) and to a design proposal in which standing carries a window view, a
+    cushion, a shelf and charging sockets so that it could be chosen rather than endured. The source
+    is explicit that it does not know which explanation is right: "We don't know yet."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A satisfying answer terminates enquiry, so the questions that were answered earliest and most
+      easily are the ones whose better answers were never found.
+  scope:
+    domain_discussed_by_source: [research, product_design, marketing]
+    conditions: "understanding behaviour that is taken for granted"
+  caveats:
+    - text: >
+        The source states plainly that the train proposal is untested and that it does not know which
+        of the candidate explanations holds — "We could find out", "We don't know yet". The example
+        demonstrates the method, not a result.
+      origin: source_stated
+    - text: >
+        The method has no stopping rule. Nothing here says how to tell a productive naive question
+        from an unproductive one, and the source's own examples are chosen with hindsight.
+      origin: extractor_observed
+  source_stated_problems:
+    - "once our brain provides a logical answer, we stop looking for better ones"
+  source_stated_remedies:
+    - "ask naïve questions to which the answers seem completely self-evident"
+  examples:
+    positive:
+      - {description: "'Why do people go to restaurants?' — the obvious answer is hunger, but hunger could be satisfied far more cheaply elsewhere; the source's reading is social connection and status", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_sut_alc_0023, note: "the method works because people cannot report their own reasons"}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Introduction: Cracking the (Human) Code; Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, opening and 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0025
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "There are five main reasons why we have evolved to behave in seemingly illogical ways, and they conveniently all begin with the letter S.* They are: Signalling, Subconscious hacking, Satisficing and Psychophysics."
+    - "* Except for the one that begins with a P."
+  concept_label: the_four_s_es_are_named_here_and_defined_elsewhere
+  label_origin: source_verbatim
+  claim: >
+    The source names the framework the rest of the book uses — Signalling, Subconscious hacking,
+    Satisficing and Psychophysics — as the reasons humans evolved to behave in seemingly illogical
+    ways, and states that without understanding them rational people will be permanently baffled by
+    others' behaviour. It defines none of the four within this section.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [evolutionary_psychology, behavioural_science]
+    conditions: "explaining seemingly illogical human behaviour"
+  caveats:
+    - text: >
+        Recorded exactly as the source has it, including an internal inconsistency that was NOT
+        corrected here. The section is headed "The Four S-es"; the sentence says "five main reasons";
+        four items are then listed; and the footnote to "all begin with the letter S" reads "Except
+        for the one that begins with a P". Heading, count and list do not agree.
+      origin: extractor_observed
+    - text: >
+        Extraction integrity was checked before recording this, because a missing fifth item would
+        look identical to a source error. The section file was read in full, the footnote resolved,
+        and nothing is missing: the whole section is 78 words and the discrepancy is in the published
+        text. The source has not been silently repaired.
+      origin: extractor_observed
+    - text: >
+        This is the book's headline framework and the processed section supplies only the names. Any
+        content for the four terms lives in Parts 1-6, outside this extraction. The framework is
+        therefore recorded as announced-and-deferred rather than as knowledge.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0002, note: "the promised taxonomy of psycho-logical causes"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "The Four S-es"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'The Four S-es' — the complete section, 78 words"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0026
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "the world runs on two operating systems"
+    - "This may be true when you are building a road, but it is not true when you are painting the lines on it."
+    - "The logical and the psycho-logical approaches run on different operating systems and require different software"
+  concept_label: logical_and_psycho_logical_problems_are_different_kinds_of_problem
+  label_origin: extractor_assigned
+  claim: >
+    Problems divide into two kinds needing different methods. A logical problem has a definition of
+    success independent of perception — will the bridge carry X vehicles of Y kilograms at Z miles an
+    hour — and can be settled in objective units. A psycho-logical problem turns on how people
+    respond to informational cues, and the source's illustration is that building a road is the first
+    kind while painting the lines on it is the second. Because logic is self-explanatory, it is
+    applied by default in social and institutional settings where it has no place, which the source
+    describes as running inappropriate software for the operating system.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where success is defined without reference to perception, objective units suffice; where it
+      depends on how people read cues, it does not.
+  scope:
+    domain_discussed_by_source: [engineering, policy, design, marketing]
+    conditions: "choosing a method for a problem"
+  caveats:
+    - text: >
+        The source gives no test for classifying a problem into one kind or the other, and its own
+        examples show the two are entangled in the same project rather than cleanly separable.
+      origin: extractor_observed
+  source_stated_problems:
+    - "we end up using inappropriate software for the operating system"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "painting parallel lines across a road at progressively smaller intervals before a junction, so narrowing gaps create the sensation of slowing less than one really is", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_sut_alc_0031, note: "the road-marking cases are the worked instances"}
+    - {relation: qualified_by, target: sk_sut_alc_0027, note: "the GPS analogy is the same duality inside a single decision"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Context Is Everything"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Context Is Everything'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0027
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "There is the unambiguously ‘right’ answer, where certainty is achieved by limiting the number of data points considered. The downside of this is that, in the wrong context, it can be hopelessly wrong."
+    - "GPS devices know everything about what they know and nothing about anything else."
+    - "the reason we don’t always obey our GPS is not because we are wrong: it is because there are important factors in our journey-planning that the GPS is completely ignorant of"
+  concept_label: certainty_is_bought_by_narrowing_the_inputs_and_the_narrowing_is_what_makes_it_fail
+  label_origin: extractor_assigned
+  claim: >
+    Logic achieves its unambiguous answers by limiting how many factors it considers, and that same
+    limitation is what makes it hopelessly wrong in the wrong context. Psycho-logic considers a far
+    wider range and arrives at a not-perfect-but-rarely-stupid conclusion. How much credibility each
+    deserves varies by context. The source's extended case is satellite navigation: a technical
+    triumph that optimises journey time and distance and knows nothing else — no scenery, no
+    preference for continuous slow movement over stop-start traffic, no notion of public transport,
+    no trade-off between average journey time and its variance.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A model's certainty comes from excluding variables; anything excluded is invisible to it, so
+      confidence and blindness increase together.
+  scope:
+    domain_discussed_by_source: [decision_making, automated_systems]
+    conditions: "any optimiser working on a simplified objective"
+  caveats:
+    - text: >
+        The satellite-navigation account is an analogy for how human reasoning works, and the source
+        offers it as a way to understand the book rather than as evidence for the duality.
+      origin: extractor_observed
+    - text: >
+        "Not-perfect-but-rarely-stupid" is a claim about the reliability of intuition that nothing in
+        this section supports.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0026, note: "the two operating systems inside a single decision"}
+    - {relation: generalises, target: sk_sut_alc_0028, note: "the variance case is the concrete instance"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0028
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "what I need when I’m catching a flight is not the fastest average journey, but the one with the lowest variance in journey time – the one with the ‘least-bad worst-case scenario’"
+    - "we know more than we know we know"
+  concept_label: the_right_objective_is_sometimes_the_least_bad_worst_case_not_the_best_average
+  label_origin: extractor_assigned
+  claim: >
+    An optimiser tuned to the average can be optimising the wrong quantity. Driving to an airport,
+    the source takes back roads that usually cost fifteen minutes more than the motorway, because
+    what matters is not the best expected journey time but the least-bad worst case: a
+    small-but-significant risk of ninety stationary minutes would mean a missed flight. It adds that
+    the choice was made instinctively and that the reasoning was only available afterwards — "we know
+    more than we know we know".
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where the cost of the worst outcome is discontinuous — a missed flight rather than a longer
+      journey — minimising variance dominates minimising the mean.
+  scope:
+    domain_discussed_by_source: [decision_making, optimisation]
+    conditions: "decisions with a discontinuous penalty for the worst outcome"
+  caveats:
+    - text: >
+        A single personal anecdote, and the claim that the choice was instinctive rather than
+        reasoned is the author's introspection about his own reasoning — the faculty the same section
+        argues is unreliable.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0027, note: "a concrete case of the objective being wrongly specified"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Why We Should Ignore Our GPS"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Why We Should Ignore Our GPS'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0029
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "The lesson we should learn from the appendix is that something can be valuable without necessarily being valuable all the time."
+    - "In looking for the everyday function of the human appendix, we were looking for the wrong thing."
+    - "Be careful before calling something nonsense."
+  concept_label: something_can_be_valuable_without_being_valuable_all_the_time
+  label_origin: extractor_assigned
+  claim: >
+    A thing can be genuinely valuable while appearing useless most of the time, so judging it by its
+    everyday function is looking for the wrong thing. The source's case is the human appendix, long
+    treated as a vestigial remnant because removing it produces no immediate ill effects. It reports
+    that in 2007 William Parker, Randy Bollinger and colleagues at Duke University hypothesised that
+    it serves as a haven for digestive bacteria valuable for digestion and immunity, and that later
+    research showed people whose appendix had been removed were four times more likely to suffer
+    clostridium difficile colitis.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Evolution does not take a short-term instrumentalist view, so a feature can be maintained for
+      a rare condition rather than a daily one — the source's image is a pouch preserving a starter
+      culture.
+  scope:
+    domain_discussed_by_source: [biology, evaluation_of_practices]
+    conditions: "judging whether something serves a purpose"
+  caveats:
+    - text: >
+        Cited third-party research with named investigators, an institution, a date and an effect
+        size. As elsewhere in this lane it is not recorded as `empirical_within_source`, because the
+        measurement is not the source's own and the vocabulary has no value for cited research.
+      origin: extractor_observed
+    - text: >
+        The source generalises from one biological case to a rule about calling things nonsense,
+        which is an analogy rather than an argument.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "Be careful before calling something nonsense."
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0008, note: "the worked case for the non-sense category"}
+    - {relation: member_of_system, target: scs_sut_alc_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "On Nonsense and Non-Sense"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Nonsense and Non-Sense'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0030
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "if the above results came from a trial of a new drug, we would want to add it to tap water"
+    - "Just because we don’t know why it works, we should not be blind to the fact that it does."
+  concept_label: an_effect_should_not_be_dismissed_because_its_mechanism_is_unacceptable
+  label_origin: extractor_assigned
+  claim: >
+    An effect should not be discounted because the explanation offered for it is implausible. The
+    source's case is religious practice: it reports a 1996 Heritage Institute survey on religion in
+    American public life associating regular church attendance with marital stability and
+    satisfaction, movement out of poverty, lower rates of suicide, drug abuse, out-of-wedlock births,
+    crime and divorce, better mental health, recovery from addiction and marital breakdown, greater
+    longevity and better recovery from illness. Its argument is that results of that size from a drug
+    trial would have us add the drug to tap water, and that not knowing why something works is not a
+    reason to be blind to the fact that it does.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [social_science, evaluation_of_practices]
+    conditions: "practices with observed associations and no accepted mechanism"
+  caveats:
+    - text: >
+        Cited third-party research, reported as a list of findings from a single 1996 survey by a
+        named advocacy institute, with no effect sizes, no sample and no controls stated.
+      origin: extractor_observed
+    - text: >
+        Every item listed is an association. The drug-trial comparison the source draws requires a
+        causal claim, and the design described — a survey — cannot supply one. Self-selection into
+        regular attendance is an obvious alternative explanation that the source does not raise.
+      origin: extractor_observed
+    - text: >
+        The general principle the source draws from it — do not discount an effect for lacking a
+        mechanism — is sound and is stated elsewhere with better support. This particular case is the
+        weakest evidence in the section.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0009, note: "an instance of accepting a what without a why"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, outcome_claimed, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "On Nonsense and Non-Sense"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'On Nonsense and Non-Sense'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sut_alc_0031
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "a British team was able to reduce the incidence of accidents on a traffic circle in Florida by 95 per cent by placing the painted lines differently"
+    - "In one Dutch town traffic experts improved traffic safety by removing road markings altogether."
+  concept_label: changing_the_cues_in_a_physical_environment_can_change_behaviour_more_than_changing_the_structure
+  label_origin: extractor_assigned
+  claim: >
+    Behaviour in a physical environment responds to informational cues, and altering the cues can
+    produce large effects without altering the structure. The source reports that a British team cut
+    accidents on a Florida traffic circle by 95 per cent by placing the painted lines differently,
+    and that traffic experts in a Dutch town improved safety by removing road markings altogether. It
+    also notes that the original Clearwater design was not helped by a large decorative fountain in
+    the middle, and that a later redesign reduced the accident rate significantly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Drivers act on how the environment reads to them, so the markings that convey the situation can
+      matter more than the geometry they are painted on.
+  scope:
+    domain_discussed_by_source: [traffic_design, behaviour_change]
+    conditions: "environments where people respond to cues"
+  caveats:
+    - text: >
+        The 95-per-cent figure is reported with no date, no baseline accident count, no comparison
+        period and no citation. It is the largest single effect claimed anywhere in this section.
+      origin: extractor_observed
+    - text: >
+        The two cases point in opposite directions — place the lines better, and remove them
+        entirely — which fits the source's own thesis that opposites can both work, but means neither
+        case supports a rule about markings.
+      origin: extractor_observed
+    - text: >
+        The fountain claim and the redesign outcome are carried by the photograph's caption, not by
+        the body text.
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the Clearwater traffic circle, photographed with its central decorative fountain", figure_ref: image36}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sut_alc_0026, note: "the worked instances of a psycho-logical problem"}
+    - {relation: member_of_system, target: scs_sut_alc_003}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Context Is Everything"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Context Is Everything', with the photograph and its caption"
+    figure_refs: [image36]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [image36]}
+
+- sk_id: sk_sut_alc_0032
+  source_id: sutherland_alchemy_introduction
+  source_terms:
+    - "it is perfectly possible to be both rational and wrong"
+    - "This book is not an attack on the many healthy uses of logic or reason, but it is an attack on a dangerous kind of logical overreach, which demands that every solution should have a convincing rationale before it can even be considered or attempted."
+  concept_label: the_target_is_logical_overreach_not_logic
+  label_origin: extractor_assigned
+  claim: >
+    The source states its target precisely: not logic or reason, whose healthy uses it accepts, but
+    logical overreach — the demand that every solution carry a convincing rationale before it may
+    even be considered or attempted. Its summary of the position is that it is perfectly possible to
+    be both rational and wrong. It notes it would not want a conceptual artist running air-traffic
+    control, and that much of the time applying models to optimise things is a good thing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [business, policy, decision_making]
+    conditions: "the book's own argument"
+  caveats:
+    - text: >
+        Recorded as its own object because it is the scope statement for everything else in the file,
+        and because the difference between "logic is wrong" and "requiring a rationale before trying
+        something is wrong" is the difference between a position that can be dismissed and one that
+        cannot. It is the first thing lost if this source is summarised as anti-rational.
+      origin: extractor_observed
+    - text: >
+        The stated moderation is not always maintained. Several claims elsewhere in the section —
+        that Marxism, economics and management consultancy make sense and fail, that no big business
+        idea makes sense at first — go well beyond a critique of overreach.
+      origin: extractor_observed
+  source_stated_problems:
+    - "logical overreach"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sut_alc_0004, note: "states the limit of the argument against the rationale filter"}
+    - {relation: member_of_system, target: scs_sut_alc_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction: Cracking the (Human) Code"
+    section: "Some Things Are Dishwasher-Proof, Others Are Reason-Proof; On Nonsense and Non-Sense"
+    page_start: null
+    page_end: null
+    locator: "Introduction"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

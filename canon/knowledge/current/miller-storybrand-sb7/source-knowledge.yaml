@@ -1,0 +1,906 @@
+# CANON-003 book 18 (Lane D) — Donald Miller, "Building a StoryBrand" (2017), chapters 1-3:
+# "The Key to Being Seen, Heard, and Understood", "The Secret Weapon That Will Grow Your Business",
+# "The Simple SB7 Framework". Fresh SPEC-03 extraction under the frozen CANON-002-era method.
+# V0 granularity rule, unchanged. Visual completeness: verified_figure_level.
+#
+# SECTION RATIONALE: Section 1 of the book, which is the source's own division. It contains the
+# whole causal argument (why marketing fails), the case for story as the remedy, and the complete
+# framework in summary with all seven principles stated. Section 2 then spends one chapter on each
+# element. Processing Section 1 exposes the reasoning system entire; processing one later chapter
+# would expose one element in depth without the argument that produced it.
+#
+# NOTE ON THIS SOURCE'S SHAPE, recorded rather than smoothed over:
+# this is commercial-communication knowledge sold alongside a paid framework, a certification
+# programme and a software tool. Its claims are frequently supported by revenue outcomes with no
+# controls — a client's course selling $25,000 and then $103,000 after a rewrite, the author's own
+# company doubling for four consecutive years — and by causal attributions about famous companies
+# made from outside them. The science in chapter 1 is delivered as reported speech from a named
+# friend, not as citation. All of that is recorded in the evidence characteristics, which is what
+# they are for.
+
+source_id: miller_storybrand_sb7_framework_ch1_3
+
+source_knowledge:
+
+- sk_id: sk_sb_c003_0001
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "pretty websites don't sell things. Words sell things"
+    - "nobody will listen to you if your message isn't clear, no matter how expensive your marketing material may be"
+  concept_label: the_failure_is_in_the_message_not_the_product_or_the_design
+  label_origin: extractor_assigned
+  claim: >
+    When marketing does not work, the source's first move is to relocate the fault: not to the
+    product, and not to the quality of the design, but to how the offer is described. Spending on
+    design before the message is clear is presented as spending on amplification of noise.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unclear message is not listened to at any production value, so design spend applied before
+      clarity buys reach for something the customer will not process.
+  scope:
+    domain_discussed_by_source: [marketing, branding, websites, sales_copy]
+    conditions: "any commercial message aimed at a customer who has not yet engaged"
+  caveats:
+    - text: "the source sells message-clarification services, a certification programme and a software tool, so the diagnosis and the remedy are commercially linked"
+      origin: extractor_observed
+    - text: "the supporting evidence is the author's own company doubling revenue for four consecutive years and unspecified clients doubling to quadrupling theirs, with no control and no failed case"
+      origin: extractor_observed
+  source_stated_problems:
+    - "we haven't clarified our message"
+  source_stated_remedies:
+    - "clarify the message before spending on design"
+  examples:
+    positive:
+      - {description: "an industrial painting company whose website read like an Italian restaurant's, reduced to one image, one line of copy and a quote button", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_sb_c003_0006, note: "the framework is offered as the way to do the clarifying"}
+    - {relation: member_of_system, target: scs_sb_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, anecdotal, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Key to Being Seen, Heard, and Understood"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_1.xhtml, opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0002
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "the overriding function of the brain is to help an individual survive and thrive"
+    - "if we position our products and services as anything but an aid in helping people survive"
+  concept_label: attention_is_given_only_to_what_reads_as_survival_relevant
+  label_origin: extractor_assigned
+  claim: >
+    The source's first stated cause of marketing failure. People continually scan their
+    environment, advertising included, for information that helps them survive and thrive, and
+    discard the rest. A message about the company's own history, scale or internal goals is
+    therefore filtered out before it is considered. The source's illustration is that after an hour
+    in a ballroom you would not know how many chairs it held but would know where the exits were.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The brain's overriding function, on the account the source is given, is survival, so the
+      subconscious sorts incoming information by survival relevance and discards what fails.
+  scope:
+    domain_discussed_by_source: [marketing, branding, consumer_behaviour]
+    conditions: "a customer encountering a commercial message unprompted"
+  caveats:
+    - text: "the whole neuroscientific argument is delivered as reported conversation with a named friend on the author's back porch, with no study cited"
+      origin: extractor_observed
+    - text: "Maslow's hierarchy is invoked as the supporting frame, which is a mid-century model of motivation rather than a current finding about attention"
+      origin: extractor_observed
+    - text: "the source's list of survival needs runs from food and shelter to love, tribe and meaning, which is broad enough that almost any benefit can be claimed to fit"
+      origin: extractor_observed
+  source_stated_problems:
+    - "brands fail to focus on the aspects of their offer that will help people survive and thrive"
+    - "positioning ourselves as the chairs, not the exits"
+  source_stated_remedies:
+    - "make the message about something that helps the customer survive and thrive"
+  examples:
+    positive:
+      - {description: "the ballroom: nobody counts the chairs, everybody knows where the exits are", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_sb_c003_001}
+    - {relation: trades_off_with, target: sk_sb_c003_0003, note: "the source names these as the two mistakes and treats them as jointly necessary conditions"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Key to Being Seen, Heard, and Understood"
+    section: "Why So Many Businesses Fail / Mistake Number One"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_1.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0003
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "Processing information demands that the brain burn calories"
+    - "they cause their customers to burn too many calories in an effort to understand their offer"
+  concept_label: processing_cost_causes_the_audience_to_disengage
+  label_origin: extractor_assigned
+  claim: >
+    The second stated cause. Understanding a message costs effort, and effort works against the
+    same survival function that governs attention, so when a message demands too much processing
+    the audience tunes out the source of it to conserve. The source's image is that a customer has
+    to run on a treadmill for as long as you are talking.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Processing burns calories; burning calories acts against survival; so there is a mechanism in
+      the customer designed to tune out a confusing source.
+  scope:
+    domain_discussed_by_source: [marketing, websites, elevator_pitch, keynote]
+    conditions: "any message requiring the audience to work out what is on offer"
+  caveats:
+    - text: "the calorie mechanism is asserted in reported speech, without measurement; the metabolic cost of reading a website is not quantified anywhere"
+      origin: extractor_observed
+    - text: "as stated the claim is unfalsifiable — any message that fails can be said to have cost too much to process"
+      origin: extractor_observed
+  source_stated_problems:
+    - "too much seemingly random information"
+    - "noise"
+  source_stated_remedies:
+    - "communication must be simple"
+    - "if you confuse, you'll lose"
+  examples:
+    positive:
+      - {description: "a photography course whose sales page was cut by 90 percent and stripped of terms like f-stop, after which the same email list bought four times as much", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_sb_c003_001}
+    - {relation: generalises, target: sk_sb_c003_0004, note: "story is offered as the remedy for processing cost"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Key to Being Seen, Heard, and Understood"
+    section: "Mistake Number Two"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_1.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0004
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "story is a sense-making device"
+    - "story formulas put everything in order so the brain doesn't have to work to understand what's going on"
+  concept_label: story_structure_lowers_the_cost_of_understanding_a_message
+  label_origin: extractor_assigned
+  claim: >
+    Story is offered as the specific remedy for processing cost, on the grounds that it is a
+    sense-making device: it identifies an ambition, defines what stands in the way, and provides a
+    plan, so the information arrives pre-ordered. The source's analogy is music against noise —
+    the same sound waves, but organised under rules the brain can engage, which is why a song is
+    remembered and a dump truck reversing is not.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A familiar structure removes the work of ordering the information, so the audience spends
+      nothing on organising and can attend to the content.
+  scope:
+    domain_discussed_by_source: [marketing, branding, screenwriting]
+    conditions: "communication competing for attention against other messages"
+  caveats:
+    - text: "the music analogy is an analogy and is presented as one; no evidence is offered that story structure specifically reduces processing effort"
+      origin: extractor_observed
+    - text: "the claim that people daydream 30 percent of the time unless engaged by a story is attributed to unnamed neuroscientists"
+      origin: extractor_observed
+  source_stated_problems:
+    - "noise"
+  source_stated_remedies:
+    - "organise the message using a story structure"
+  examples:
+    positive: []
+    counter:
+      - {description: "a Bourne film that also included losing weight, marrying, passing the bar and adopting a cat — the source's picture of an audience forced to organise the data itself", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sb_c003_0003, note: "the stated answer to processing cost"}
+    - {relation: member_of_system, target: scs_sb_c003_001}
+    - {relation: generalises, target: sk_sb_c003_0006, note: "the seven-element framework is the operational form of this claim"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1-2"
+    section: "Story to the Rescue / Story Makes Music Out of Noise"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_1.xhtml, Chapter_2.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0005
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "anything that doesn't serve the plot has to go"
+    - "in every line of copy we write, we're either serving the customer's story or descending into confusion"
+  concept_label: the_framework_is_used_as_a_filter_that_removes_material
+  label_origin: extractor_assigned
+  claim: >
+    The framework's primary use, as the source describes it, is subtractive: it is a filter that
+    decides what to cut. A tagline sounding good or an image catching the eye is not a reason to
+    keep it if it does not serve the customer's story. The source borrows the test from film
+    editing, where whole characters are cut when they do not serve the plot.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [marketing_copy, websites, branding]
+    conditions: "deciding what to include in a piece of marketing material"
+  caveats:
+    - text: "the test asks whether an element serves the customer's story, which the framework itself defines — so the filter can only remove what the framework does not have a slot for"
+      origin: extractor_observed
+  source_stated_problems:
+    - "clutter and confusion sprayed all over our websites, e-mails and commercials"
+  source_stated_remedies:
+    - "cut anything that does not serve the customer's story"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "how the framework is applied to existing material"}
+    - {relation: member_of_system, target: scs_sb_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — The Secret Weapon That Will Grow Your Business"
+    section: "The Three Crucial Questions / We Need a Filter"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_2.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0006
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "A CHARACTER who wants something encounters a PROBLEM before they can get it. At the peak of their despair, a GUIDE steps into their lives, gives them a PLAN, and CALLS THEM TO ACTION. That action helps them avoid FAILURE and ends in a SUCCESS."
+  concept_label: the_seven_element_framework_as_the_unit_of_message_design
+  label_origin: extractor_assigned
+  claim: >
+    The framework itself: seven elements — character, problem, guide, plan, call to action, failure
+    avoided, success — which the source says are the necessary elements of a compelling story and
+    the categories a brand message should be reduced to. It is presented as derived from studying
+    hundreds of films, novels, plays and musicals, and as a summation of best practices refined
+    over thousands of years of storytelling.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The formula follows a well-worn path in the brain, so positioning a product along that path
+      makes it easier to attend to.
+  scope:
+    domain_discussed_by_source: [marketing, branding, websites, keynotes, elevator_pitch]
+    conditions: "constructing a brand's core message"
+  caveats:
+    - text: "the diagram shows the last two elements as a fork from one junction rather than as consecutive steps, which the prose does not say"
+      origin: extractor_observed
+    - text: "the derivation is asserted, not shown: no sample, no criteria and no count of the films studied are given"
+      origin: extractor_observed
+    - text: "the source concedes some stories leave the guide out or use several, and calls indie films that break the formula critically successful but commercially unsuccessful, which is an outcome claim without evidence"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "reduce the message to soundbites in seven categories"
+  examples:
+    positive:
+      - {description: "The Hunger Games mapped onto the framework", figure_ref: "printed p.21"}
+      - {description: "Star Wars mapped onto the framework", figure_ref: "printed p.22"}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_sb_c003_002}
+    - {relation: demonstrated_together_with, target: sk_sb_c003_0007, note: "the diagram and the worked examples arrive together"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, repeated_within_source, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2-3"
+    section: "Story in a Nutshell / The StoryBrand Framework"
+    page_start: 21
+    page_end: 22
+    locator: "EPUB Chapter_2.xhtml and Chapter_3.xhtml; figures on printed pp.21-22"
+    figure_refs: ["printed p.21 framework diagram", "printed p.21 Hunger Games", "printed p.22 Star Wars"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["f0021-01", "f0021-02", "f0022-01"]}
+
+- sk_id: sk_sb_c003_0007
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "External: Must defeat the Empire / Internal: Is he a Jedi? / Philosophical: Good vs. evil"
+    - "there are three levels of problems a customer encounters"
+  concept_label: problems_have_three_levels_and_the_internal_one_drives_purchase
+  label_origin: extractor_assigned
+  claim: >
+    Customers encounter three levels of problem — external, internal and philosophical — and the
+    source's stated principle is that companies tend to sell solutions to external problems while
+    customers buy solutions to internal ones. The three levels are named in the text of chapter 3
+    without examples; the worked instances appear only in the chapter 2 diagrams, where each
+    story's problem node is labelled with all three.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      These are the three levels of problem human beings face in ordinary life, so a story that
+      names them matches what the audience already experiences.
+  scope:
+    domain_discussed_by_source: [marketing, branding, storytelling]
+    conditions: "describing what a customer is trying to resolve"
+  caveats:
+    - text: "the claim that customers are more motivated by internal problems is asserted here and deferred to a later chapter for support, which is outside the processed section"
+      origin: source_stated
+    - text: "the three-level taxonomy is demonstrated only in the figures within this section; a text-only extraction would carry the claim without a single instance of it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "companies tend to sell solutions to external problems"
+  source_stated_remedies:
+    - "address the internal problem, not only the external one"
+  examples:
+    positive:
+      - {description: "Star Wars: external — defeat the Empire; internal — is he a Jedi; philosophical — good versus evil", figure_ref: "printed p.22"}
+      - {description: "The Hunger Games: external — must survive; internal — stay good and authentic; philosophical — tyranny versus democracy", figure_ref: "printed p.21"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the internal structure of the framework's second element"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2-3"
+    section: "worked examples; Has a Problem"
+    page_start: 21
+    page_end: 30
+    locator: "EPUB Chapter_3.xhtml, element 2; figures on printed pp.21-22"
+    figure_refs: ["printed p.21 Hunger Games", "printed p.22 Star Wars"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["f0021-02", "f0022-01"]}
+
+- sk_id: sk_sb_c003_0008
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "THE CUSTOMER IS THE HERO, NOT YOUR BRAND"
+    - "Brands that position themselves as heroes unknowingly compete with their potential customers"
+  concept_label: the_customer_is_the_hero_and_the_brand_is_the_guide
+  label_origin: source_verbatim
+  claim: >
+    The framework's central reversal, and the one the source calls a major paradigm shift. The
+    customer occupies the hero role and the brand occupies the guide role. A brand that presents
+    itself as the hero is competing with the customer for the same position, and the source
+    describes the customer's reaction as recognising another hero and going back to looking for a
+    guide.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Every person experiences the world as its protagonist, so a brand claiming that role is
+      claiming a position the audience already occupies.
+  scope:
+    domain_discussed_by_source: [marketing, branding, presentations]
+    conditions: "any brand communication addressed to a customer"
+  caveats:
+    - text: "the supporting authority is a communication expert's advice to speakers, cited as a note, plus the source's reading of Apple's advertising history"
+      origin: extractor_observed
+    - text: "the causal reading of Apple — that clarifying its role in the customer's story is a primary factor in its growth — is an attribution made from outside the company"
+      origin: extractor_observed
+  source_stated_problems:
+    - "brands that position themselves as heroes"
+  source_stated_remedies:
+    - "position the customer as the hero and the brand as the guide"
+  examples:
+    positive:
+      - {description: "Apple after 1997: a nine-page technical newspaper advertisement for the Lisa replaced by a two-word billboard, and computers largely absent from the advertising", figure_ref: null}
+      - {description: "the guide roles of Haymitch, Obi-Wan, and a speech therapist in The King's Speech", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework's first and third elements, stated as a role assignment"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "1. A Character; 3. And Meets a Guide"
+    page_start: 29
+    page_end: 32
+    locator: "EPUB Chapter_3.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0009
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "Unless we identify something our customer wants, they will never feel invited into the story"
+    - "The catalyst for any story is that the hero wants something"
+  concept_label: a_message_must_name_something_the_customer_wants
+  label_origin: extractor_assigned
+  claim: >
+    The framework's first required content: a specific thing the customer wants, defined in
+    relation to the brand. Without it the source says the audience is never invited into the story
+    at all, because wanting something is what starts a story and what the rest of it resolves.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [marketing, branding]
+    conditions: "the opening of any brand message"
+  caveats:
+    - text: "the section states the requirement and defers the method for meeting it to a later chapter outside this span"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "identify what the customer wants as it relates to the brand"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework's first element"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "1. A Character"
+    page_start: 29
+    page_end: 29
+    locator: "EPUB Chapter_3.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0010
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "CUSTOMERS TRUST A GUIDE WHO HAS A PLAN"
+    - "two kinds of plans: the agreement plan and the process plan"
+  concept_label: a_plan_removes_the_risk_between_interest_and_purchase
+  label_origin: extractor_assigned
+  claim: >
+    Interest is not enough to produce a purchase; the source states that what remains missing is a
+    clear path that removes confusion about how to do business with the brand. It names two kinds
+    of plan — a process plan of steps to take, and an agreement plan — and says each earns trust
+    and increases the chance of purchase.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A purchase is a large step, especially an expensive one, so a laid-out path removes the
+      uncertainty that stops it.
+  scope:
+    domain_discussed_by_source: [marketing, sales, websites]
+    conditions: "a customer who understands the offer but has not acted"
+  caveats:
+    - text: "the two plan types are named here and explained in a later chapter outside this span; within this section the distinction exists in the text as a forward reference and in the BrandScript template as two labelled fields"
+      origin: extractor_observed
+  source_stated_problems:
+    - "we haven't laid out a simple plan of action they can take"
+  source_stated_remedies:
+    - "give the customer a process plan or an agreement plan"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework's fourth element"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "4. Who Gives Them a Plan"
+    page_start: 33
+    page_end: 33
+    locator: "EPUB Chapter_3.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0011
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "CUSTOMERS DO NOT TAKE ACTION UNLESS THEY ARE CHALLENGED TO TAKE ACTION"
+    - "One call to action is direct... The other is a transitional call to action"
+  concept_label: action_requires_an_explicit_challenge_in_two_kinds
+  label_origin: extractor_assigned
+  claim: >
+    Characters in stories act only when an outside force challenges them, and the source states the
+    same holds for customers: without a clear call to action people do not engage. It names two
+    kinds — a direct call asking for the purchase or the appointment, and a transitional call that
+    continues the relationship without asking for the sale.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source's stated reason is that this is how life works: a character who decides to change
+      unprompted is not believable, because human beings act when their circumstances challenge
+      them to.
+  scope:
+    domain_discussed_by_source: [marketing, websites, sales]
+    conditions: "any message intended to produce an action"
+  caveats:
+    - text: "the argument runs from a convention of screenwriting to a claim about human behaviour, and the source states the direction plainly — it is true in story because it is true in life — without evidence for the second half"
+      origin: extractor_observed
+    - text: "the claim that these two calls have worked for thousands of clients is an outcome claim with no controls"
+      origin: extractor_observed
+  source_stated_problems:
+    - "companies don't create obvious calls to action"
+  source_stated_remedies:
+    - "use a direct call to action and a transitional one"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework's fifth element"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "5. And Calls Them to Action"
+    page_start: 34
+    page_end: 34
+    locator: "EPUB Chapter_3.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0012
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "If there is nothing at stake in a story, there is no story"
+    - "we must show people the cost of not doing business with us"
+  concept_label: stakes_must_be_named_and_dosed
+  label_origin: extractor_assigned
+  claim: >
+    A message must state what the customer stands to lose by not acting, because without stakes
+    there is no reason to care. The source then qualifies its own element in a way it does for no
+    other: failure is like salt in a recipe — too much ruins it, none leaves it bland — and it says
+    directly that the seven elements should not be used evenly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      What holds an audience is the open question of what will be gained or lost; if nothing can
+      be, there is nothing to attend to.
+  scope:
+    domain_discussed_by_source: [marketing, branding, storytelling]
+    conditions: "any message asking for a decision"
+  caveats:
+    - text: "no guidance is given on the dose beyond the salt analogy; how much stake is too much is left undefined"
+      origin: extractor_observed
+    - text: "the competitive examples — a fast-food chain implying rivals use less meat, one grocery chain positioned against processed food and another against the first one's prices — are the source's readings of those campaigns, not statements by them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if there's nothing at stake in whether or not I buy your product, I'm not going to buy it"
+  source_stated_remedies:
+    - "show the cost of not doing business with us"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework's sixth element"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+    - {relation: qualifies, target: sk_sb_c003_0006, note: "the only place the source says its elements are not to be applied evenly"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "6. That Helps Them Avoid Failure"
+    page_start: 35
+    page_end: 35
+    locator: "EPUB Chapter_3.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0013
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "NEVER ASSUME PEOPLE UNDERSTAND HOW YOUR BRAND CAN CHANGE THEIR LIVES. TELL THEM."
+    - "Everybody wants to be taken somewhere"
+  concept_label: the_resolved_state_must_be_stated_not_implied
+  label_origin: extractor_assigned
+  claim: >
+    A message must say explicitly what the customer's life looks like after engaging the product,
+    and the source calls this perhaps the most important element of a messaging strategy. Its
+    examples are political slogans that named a destination and brands that state a resolved state
+    — losing weight and feeling great, liking the way you look.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [marketing, branding, political_communication]
+    conditions: "the closing content of any brand message"
+  caveats:
+    - text: "the political examples are cited to notes and are used as illustrations of vividness, not as evidence that stating a resolved state produces a result"
+      origin: extractor_observed
+  source_stated_problems:
+    - "assuming people understand how your brand can change their lives"
+  source_stated_remedies:
+    - "offer a vision of how great the customer's life could be"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework's seventh element"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "7. And Ends in a Success"
+    page_start: 36
+    page_end: 36
+    locator: "EPUB Chapter_3.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0014
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "1. What does the hero want? 2. Who or what is opposing the hero getting what she wants? 3. What will the hero's life look like if she does (or does not) get what she wants?"
+    - "if these three questions can't be answered within the first fifteen to twenty minutes, the story has already descended into noise"
+  concept_label: three_questions_that_must_be_answerable_at_any_moment
+  label_origin: extractor_assigned
+  claim: >
+    A test the source applies to stories: at no point should it be possible to stop a film and be
+    unable to say what the hero wants, what opposes them, and what their life will look like either
+    way. It adds a deadline — if the three cannot be answered in the first fifteen to twenty
+    minutes, the story has already failed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [storytelling, screenwriting, marketing]
+    conditions: "narrative content of any length"
+  caveats:
+    - text: "the fifteen-to-twenty-minute threshold is stated without derivation and is the only quantity in the source's story argument"
+      origin: extractor_observed
+    - text: "the box-office consequence attached to it is asserted, not evidenced"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the story has descended into noise"
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_sb_c003_0015, note: "the customer-facing form of the same test"}
+    - {relation: member_of_system, target: scs_sb_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — The Secret Weapon That Will Grow Your Business"
+    section: "The Three Crucial Questions"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_2.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0015
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "What do you offer? How will it make my life better? What do I need to do to buy it?"
+    - "Could a caveman look at your website and immediately grunt what you offer?"
+  concept_label: the_grunt_test_three_answers_within_five_seconds
+  label_origin: source_verbatim
+  claim: >
+    The source's operational acceptance test for marketing material, which it calls the grunt test:
+    a viewer must be able to answer what you offer, how it will make their life better, and what to
+    do to buy it — within five seconds of looking at the website or material. The source's frame is
+    whether someone with no context could grunt the three answers back.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [websites, marketing_material]
+    conditions: "a first encounter with a page or a piece of collateral"
+  caveats:
+    - text: "the five-second threshold is asserted with no measurement behind it, and is restated elsewhere in the chapter as a rhetorical question about lost sales"
+      origin: extractor_observed
+    - text: "the test says the three answers must be present and gives no criterion for whether an answer is a good one"
+      origin: extractor_observed
+  source_stated_problems:
+    - "failing the grunt test"
+  source_stated_remedies:
+    - "put the offer, the benefit and the action within five seconds' reach"
+  examples:
+    positive:
+      - {description: "an aspirin company: you sell headache medicine, it makes me feel better fast, I get it at a named chain", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0014, note: "the same test applied to a commercial page"}
+    - {relation: member_of_system, target: scs_sb_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — The Secret Weapon That Will Grow Your Business"
+    section: "Does Your Marketing Pass the Grunt Test?"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_2.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0016
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "your entire brand message is going to sit on a single sheet of paper"
+    - "the StoryBrand BrandScript"
+  concept_label: the_brandscript_as_a_single_page_message_specification
+  label_origin: extractor_assigned
+  claim: >
+    The framework's output artefact: one page holding the brand's whole message, with a named field
+    for each element, created in the author's free web tool. The source instructs the reader to
+    build one for the overall brand, then one for each division, then one for each product, and
+    optionally one per customer segment — so the artefact nests across a company.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [branding, marketing_operations]
+    conditions: "a company with more than one product or division"
+  caveats:
+    - text: "the template contains sub-fields the processed chapters never list in prose — villain, internal, external and philosophical under the problem; empathy and authority under the guide; process and agreement under the plan; direct and transitional under the call to action — and a whole eighth box, Character Transformation, with a from and a to"
+      origin: extractor_observed
+    - text: "the artefact is a commercial product of the source's company and access is tied to the book purchase"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "put the whole message on one page in seven named fields"
+  examples:
+    positive:
+      - {description: "the template itself, and the nesting diagram showing one brand script above two divisions above three products", figure_ref: "printed pp.38-39"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_sb_c003_0006, note: "the framework rendered as a fillable artefact"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "When You Feel Confused, Clarify Your Message"
+    page_start: 38
+    page_end: 39
+    locator: "EPUB Chapter_3.xhtml; figures on printed pp.38-39"
+    figure_refs: ["printed p.38 BrandScript template", "printed p.39 nesting diagram"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["f0038-01", "f0039-01"]}
+
+- sk_id: sk_sb_c003_0017
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "Each module of the SB7 Framework has set-in-stone rules you cannot break"
+    - "Truly creative and brilliant marketers and screenwriters know how to use the formula while still avoiding cliché"
+  concept_label: the_framework_is_stated_as_rules_that_cannot_be_broken
+  label_origin: extractor_assigned
+  claim: >
+    The source closes the section by hardening the framework: each module has rules that cannot be
+    broken, or customers will not find themselves in the story. It also states that apparent
+    exceptions rarely survive inspection, and that skilled practitioners use the formula while
+    avoiding cliché — so a message that does not look formulaic is still expected to be following
+    the formula.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [marketing, branding, screenwriting]
+    conditions: "any application of the framework"
+  caveats:
+    - text: "as stated this is unfalsifiable in both directions: a success that does not use the formula is said to be using it invisibly, and a failure is said to have broken a rule"
+      origin: extractor_observed
+    - text: "this sits against the source's own concession that some stories omit the guide and that the elements should not be used evenly"
+      origin: extractor_observed
+  source_stated_problems:
+    - "customers won't find themselves in the story you're telling"
+  source_stated_remedies:
+    - "learn the rules of each module rather than filling in the template"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_sb_c003_0012, note: "set-in-stone rules against the source's own statement that the elements are not to be used evenly"}
+    - {relation: member_of_system, target: scs_sb_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Simple SB7 Framework"
+    section: "The Stakes Are High"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_3.xhtml, closing"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_sb_c003_0018
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  source_terms:
+    - "People don't buy the best products; they buy the products they can understand the fastest"
+  concept_label: comprehension_speed_beats_product_superiority
+  label_origin: extractor_assigned
+  claim: >
+    The source's strongest commercial claim, stated flatly: a superior product loses to an inferior
+    one whose offer is communicated more clearly. It is used to justify treating message clarity as
+    a competitive position rather than a presentational detail.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attention is allocated by survival relevance and processing cost, so the offer that is
+      understood first is the one considered at all.
+  scope:
+    domain_discussed_by_source: [marketing, competitive_strategy]
+    conditions: "competing offers in a market"
+  caveats:
+    - text: "no comparison of a better product losing to a clearer one is presented; the supporting case is the source's own reading of one technology company's history"
+      origin: extractor_observed
+    - text: "the source concedes in the same passage that whether that company makes the best products is debatable and subjective, then uses it as the illustration anyway"
+      origin: source_stated
+  source_stated_problems:
+    - "we'll lose to an inferior product if our competitor's offer is communicated more clearly"
+  source_stated_remedies:
+    - "clarify the message"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_sb_c003_0001, note: "why the message is treated as the decisive variable"}
+    - {relation: member_of_system, target: scs_sb_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, outcome_claimed, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1-2"
+    section: "opening; Steve Jobs and the Message of Apple"
+    page_start: null
+    page_end: null
+    locator: "EPUB Chapter_1.xhtml, Chapter_2.xhtml"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

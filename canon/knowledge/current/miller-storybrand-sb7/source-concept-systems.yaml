@@ -1,0 +1,147 @@
+# CANON-003 book 18 (Lane D) — "Building a StoryBrand" ch.1-3. SourceConceptSystems under SPEC-03.
+# Two systems. The second is the framework itself, whose membership, ordering and naming are
+# entirely the source's; the first is the causal argument that produces it, which the source states
+# in pieces and never assembles.
+source_id: miller_storybrand_sb7_framework_ch1_3
+source_concept_systems:
+
+- scs_id: scs_sb_c003_001
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  label: why_marketing_fails_and_what_the_remedy_has_to_do
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The argument underneath the framework: attention is allocated by survival relevance, processing
+    a message costs effort that works against survival, so a message that is either irrelevant to
+    survival or expensive to process is discarded. Story is offered as the remedy because it
+    arrives pre-ordered; the framework is the operational form of story; the framework is used
+    subtractively as a filter; and two tests — three questions for a narrative, three answers in
+    five seconds for a page — decide whether the result works.
+  whole_system_claim:
+    text: >
+      The source treats message clarity as a competitive position rather than a matter of
+      presentation, and the two named mistakes are the load-bearing premises: a better product
+      loses to a clearer one because attention is allocated before quality is assessed. Everything
+      the framework does follows from those two claims, so the framework's authority rests entirely
+      on them.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the two mistakes under their own headings and says together they explain
+      why the framework works, which is a partial assembly. What is ours is extending the chain
+      through story, the framework, the filter and the two tests, and stating that the framework's
+      authority depends on premises that are themselves supported only by reported conversation.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sb_c003_0002, role_in_system: premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0003, role_in_system: premise, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0004, role_in_system: remedy, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0001, role_in_system: diagnosis, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0018, role_in_system: consequence, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sb_c003_0005, role_in_system: application, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0014, role_in_system: test, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0015, role_in_system: test, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sb_c003_0004, to: sk_sb_c003_0003, nature: "story is offered specifically as the answer to processing cost — it puts information in order so the brain does not have to", origin: source_stated}
+      - {from: sk_sb_c003_0015, to: sk_sb_c003_0014, nature: "the source presents the grunt test as the customer-facing form of the three story questions, in consecutive sections", origin: source_stated}
+      - {from: sk_sb_c003_0018, to: sk_sb_c003_0002, nature: "products understood fastest win because attention is allocated by relevance and cost before quality is weighed", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Each member is the source's own claim. The causal chain is ours, and so is the observation
+      that the framework's authority rests on two premises delivered as reported speech from a
+      friend rather than as evidence. A reader could take the two mistakes as motivating background
+      rather than as load-bearing premises; on that reading the framework would stand on its
+      commercial results instead, which are also uncontrolled.
+  provenance:
+    chapter: "1-2"
+    locator: "EPUB Chapter_1.xhtml and Chapter_2.xhtml"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_sb_c003_002
+  source_id: miller_storybrand_sb7_framework_ch1_3
+  label: the_sb7_framework
+  label_origin: source_verbatim
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The seven elements in the source's own order — a character who wants something, a problem, a
+    guide, a plan, a call to action, a failure avoided, a success — each stated as a numbered
+    principle with its own heading, its own icon, and its own field on the output artefact.
+  whole_system_claim:
+    text: >
+      The source states the sequence as one sentence and treats it as the necessary structure of a
+      compelling story, transferred whole to a brand message. Two qualifications are the source's
+      own and matter for anything applying it: the elements are not to be used evenly, with the
+      failure element explicitly dosed like salt; and the diagram places success and failure as a
+      fork from a single junction rather than as consecutive steps, so the last two elements are
+      alternative outcomes of the same decision.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {locator: "Story in a Nutshell, printed p.21, and the framework diagram on the same page"}
+  members:
+    - {sk_ref: sk_sb_c003_0006, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0009, role_in_system: element, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0007, role_in_system: element, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0008, role_in_system: element, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0010, role_in_system: element, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0011, role_in_system: element, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0012, role_in_system: element, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0013, role_in_system: element, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0016, role_in_system: artefact, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_sb_c003_0017, role_in_system: application_rule, order: 10, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_sb_c003_0010, to: sk_sb_c003_0008, nature: "the plan is what makes the guide trustworthy; the source states customers trust a guide who has a plan", origin: source_stated}
+      - {from: sk_sb_c003_0011, to: sk_sb_c003_0010, nature: "the source states that a customer who has been given a plan still will not act until challenged", origin: source_stated}
+      - {from: sk_sb_c003_0016, to: sk_sb_c003_0006, nature: "the artefact is one named field per element", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sb_c003_0012, sk_sb_c003_0006]
+        nature: >
+          Stakes must be present or nothing is at issue, and stakes must be dosed or the message is
+          ruined. The source gives the trade-off explicitly, in its salt analogy, and gives no way
+          to judge the dose.
+        origin: source_stated
+        source_ref: {locator: "6. That Helps Them Avoid Failure, printed p.35"}
+    conflicts:
+      - between: [sk_sb_c003_0017, sk_sb_c003_0012]
+        nature: >
+          The section closes by saying each module has set-in-stone rules that cannot be broken,
+          having said two pages earlier that the elements should not be used evenly and that some
+          stories omit the guide entirely. The source does not notice the tension. As stated, the
+          strong version is also unfalsifiable — a success that ignores the formula is described as
+          using it invisibly.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    The source warns against filling in the artefact without learning the rules of each element,
+    comparing it to an amateur screenwriter who knows the shape of a story and writes a boring one.
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, repeated_within_source, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership, order, naming and the artefact are all the source's own, so this is a reported
+      system rather than a synthesised one. Ours is only the recorded conflict between the
+      set-in-stone framing and the source's own concessions. One caution for any later reader: the
+      order and the fork between the last two elements are carried by a diagram, not by the prose,
+      so a text-only reconstruction of this system would be a straight list of seven and would be
+      wrong in a way nothing in the text would reveal.
+  provenance:
+    chapter: "2-3"
+    locator: "EPUB Chapter_2.xhtml and Chapter_3.xhtml; figures on printed pp.21-22, 38-39"
+    page_start: 21
+    page_end: 39
+    source_support: text_and_visual

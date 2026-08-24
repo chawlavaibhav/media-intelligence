@@ -1,0 +1,425 @@
+# CANON-003 book 8 (rebalance lane) — "Painting With Light" ch.2. SPEC-05 ontology, source-local.
+# Existing term kinds and relation types only.
+#
+# Almost every remedy here is a physical action with a lamp, a camera or a piece of set — so
+# `executable_by: [physical_production]` is the honest value, exactly as it was for the other
+# physically-argued source already in this batch. Two remedies are set construction or painting
+# rather than lighting, and are marked physical_production too; nothing here is executable against
+# a generative model, and no translation is asserted.
+
+source_id: alton_painting_with_light_ch2_motion_picture_illumination
+extraction_date: 2026-08-24
+
+terms:
+- term_id: t_alt_c003_0001
+  term: keylight
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    The principal light, used to light individuals or groups. Placed so that it both illuminates the
+    scene properly and appears to come from the light source established in the story.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Designations of Different Types of Lights"}
+  arising_from: [sk_alt_c003_0007, sk_alt_c003_0011]
+
+- term_id: t_alt_c003_0002
+  term: filler_light
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    A shadowless soft light used where the keylight is too strong and the shadows too deep, placed
+    as near the camera as possible to avoid adding a second visible shadow.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Designations of Different Types of Lights"}
+  arising_from: [sk_alt_c003_0007, sk_alt_c003_0012]
+
+- term_id: t_alt_c003_0003
+  term: kicker
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    Cross backlight, coming from the rear either from high or from the floor. One of the three
+    lights added to the key to restore roundness.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Designations of Different Types of Lights"}
+  arising_from: [sk_alt_c003_0007]
+
+- term_id: t_alt_c003_0004
+  term: eyelight
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    A light at eye height with almost no exposure value, reflecting only from the shiny surface of
+    the eyeball. Used in close-ups to improve photographic quality.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Designations of Different Types of Lights"}
+  arising_from: [sk_alt_c003_0007]
+
+- term_id: t_alt_c003_0005
+  term: crosslight
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    Light coming from either side, up or down, but always across. The source's first preference for
+    lighting set walls, on the grounds that it accentuates their values rather than merely
+    illuminating them.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Designations of Different Types of Lights; Roughing In"}
+  arising_from: [sk_alt_c003_0007, sk_alt_c003_0019]
+
+- term_id: t_alt_c003_0006
+  term: flat_photography
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: problem
+  definition_in_origin_frame: >
+    An image without modelling or separation, in which a round object reads as a flat shape. The
+    source's named consequences of a single light source, of dulled props, and of matching tones
+    between subject and ground.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Props; The Theory of Illumination"}
+  arising_from: [sk_alt_c003_0004, sk_alt_c003_0009]
+
+- term_id: t_alt_c003_0007
+  term: add_filler_kicker_and_backlight_to_the_key
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    The correction for a subject photographing flat under one source: three further lights with
+    distinct positions added to the principal one.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "The Theory of Illumination"}
+  arising_from: [sk_alt_c003_0009]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0008
+  term: multiple_shadows
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: problem
+  definition_in_origin_frame: >
+    More than one visible shadow from one subject, which the source calls confusion and which the
+    filler's placement near the camera is intended to avoid.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "The Theory of Illumination / Lighting"}
+  arising_from: [sk_alt_c003_0012]
+
+- term_id: t_alt_c003_0009
+  term: best_angle
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    The camera position from which the greatest number of an object's surfaces is visible, beyond
+    which no further movement improves the picture. The source's stated criterion for where to put
+    the camera.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Elementary Illumination, Angles"}
+  arising_from: [sk_alt_c003_0010]
+
+- term_id: t_alt_c003_0010
+  term: tonal_separation_of_foreground_and_background
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Making foreground and background differ in tone, in either direction, so that each reads clear
+    of the other. The source's operational means to the illusion of depth.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "The Theory of Illumination / Lighting"}
+  arising_from: [sk_alt_c003_0015]
+  executable_by: [physical_production, human_edit]
+
+- term_id: t_alt_c003_0011
+  term: cast_shadows_on_a_monotone_wall
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Breaking up a flat, featureless wall by throwing a shadow pattern across it.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "The Theory of Illumination / Lighting"}
+  arising_from: [sk_alt_c003_0016]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0012
+  term: build_sets_with_breaks
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Constructing sets with doors, windows, heavy mouldings, staircases, columns and foreground
+    pieces rather than flat walls, to make them easier to light and better looking.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "The Set"}
+  arising_from: [sk_alt_c003_0002]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0013
+  term: paint_sets_in_cold_colours
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Painting sets in cold colours, several shades of blue, so that warm-toned faces separate from
+    the background in monochrome rendering.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "The Set"}
+  arising_from: [sk_alt_c003_0003]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0014
+  term: key_of_the_picture
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    The overall lighting approach set by the category of screenplay — comedy, drama or mystery —
+    decided before the script is broken into scenes. The source warns explicitly that this is not
+    the keylight.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Key of the Picture"}
+  arising_from: [sk_alt_c003_0018]
+
+- term_id: t_alt_c003_0015
+  term: two_way_light
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: problem
+  definition_in_origin_frame: >
+    Lighting one subject from two contradictory directions — the source's example is a window lit
+    from outside with the person flatly keyed from inside — producing what it calls a contradictory,
+    confusing feeling.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Window Shots"}
+  arising_from: [sk_alt_c003_0026]
+
+- term_id: t_alt_c003_0016
+  term: light_from_the_established_direction
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Lighting a subject consistently with the source the scene has established, accepting low-key
+    faces rather than adding a contradictory frontal key.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Window Shots"}
+  arising_from: [sk_alt_c003_0026, sk_alt_c003_0011]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0017
+  term: burning_up_the_highlights
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: problem
+  definition_in_origin_frame: >
+    Exterior surfaces rendering as blank white when natural sunlight is imitated exactly — the wall
+    and window "burn up" — because the film cannot hold the range the eye accepts.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Shooting In From Outside"}
+  arising_from: [sk_alt_c003_0027]
+
+- term_id: t_alt_c003_0018
+  term: shade_the_source_with_gauze_or_a_branch
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Reducing sunlight falling on a wall and window with gauze, a tree branch, or both, so the
+    exterior holds detail while the shot keeps a natural daylight character.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Shooting In From Outside"}
+  arising_from: [sk_alt_c003_0027]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0019
+  term: roughing_in
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Lighting the background and the parts of the set the actors will not move through, before the
+    acting area is lit and before rehearsal.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Roughing In"}
+  arising_from: [sk_alt_c003_0019]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0020
+  term: underlit_faces_going_muddy
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: problem
+  definition_in_origin_frame: >
+    Faces losing tone as actors move through a set lit only in general terms — the specific failure
+    the rehearsal exists to reveal.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Rehearsal"}
+  arising_from: [sk_alt_c003_0020]
+
+- term_id: t_alt_c003_0021
+  term: shiny_props
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: remedy
+  definition_in_origin_frame: >
+    Dressing a set with highly reflective objects — glazed china, silverware, plate-glass mirrors,
+    copper — so that specular highlights give the image life. Contingent on antihalo film stock.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Props"}
+  arising_from: [sk_alt_c003_0004]
+  executable_by: [physical_production]
+
+- term_id: t_alt_c003_0022
+  term: sharp_shadow_effect
+  origin: source
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  kind: property
+  definition_in_origin_frame: >
+    The hard-edged shadow characteristic of sunlight or moonlight, produced by an arc lamp and the
+    stated reason for choosing one. Its absence is what makes a diffused rig read as dawn.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Arc Lights; Actual Illumination"}
+  arising_from: [sk_alt_c003_0006, sk_alt_c003_0024]
+
+relationships:
+- from: t_alt_c003_0001
+  to: t_alt_c003_0014
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source guards this collision itself — "the key of the picture (not to be confused with
+    keylight)". One is an instrument's role in a setup, the other the lighting approach of a whole
+    film. The word is shared and the concepts are unrelated, which is precisely the case this layer
+    exists to hold apart.
+
+- from: t_alt_c003_0002
+  to: t_alt_c003_0003
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Both are lights added to the key, and they do opposite jobs: the filler is shadowless and
+    reduces contrast from near the camera, the kicker comes from behind and adds a separating edge.
+    Defined separately in the same list.
+
+- from: t_alt_c003_0007
+  to: t_alt_c003_0006
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The flatness problem and the source's stated correction for it, demonstrated as a minimal pair."
+
+- from: t_alt_c003_0010
+  to: t_alt_c003_0013
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: >
+    Painting the set cold is one way of obtaining tonal separation, specific to monochrome
+    rendering of warm faces. Separation is the general requirement; the paint is one means to it.
+    The source states both and does not connect them.
+
+- from: t_alt_c003_0015
+  to: t_alt_c003_0008
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both are failures caused by more than one light. They are different: multiple
+    shadows is a visible artefact of two lights on one subject, while two-way light is a
+    contradiction between the lighting and the source the scene has established. A setup can produce
+    either without the other.
+
+- from: t_alt_c003_0005
+  to: t_alt_c003_0011
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Crosslighting a wall and casting a shadow pattern on it are both answers to a featureless
+    surface, one by raking the surface and one by adding a figure to it. The source gives them in
+    different sections.
+
+- from: t_alt_c003_0017
+  to: t_alt_c003_0018
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The failure and the source's stated countermeasure for it."
+
+- from: t_alt_c003_0022
+  to: t_alt_c003_0016
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Shadow quality is how the audience reads the direction and kind of a source, so choosing the
+    instrument for its shadow character is part of lighting consistently with the established
+    source. The source states each separately.
+
+- from: t_alt_c003_0021
+  to: t_alt_c003_0006
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source blames the dulling of props for the flatness of earlier pictures, so this is its own
+    causal link between a set-dressing practice and an image defect.
+
+concepts:
+- concept_id: sc_alt_c003_light_designations
+  kind: source_specific_concept
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  label: designations_of_different_types_of_lights
+  children_terms: [t_alt_c003_0001, t_alt_c003_0002, t_alt_c003_0003, t_alt_c003_0004, t_alt_c003_0005]
+  origin: source_stated
+  basis: >
+    The source gives these under one heading of its own, as the studio's names for the lights. The
+    grouping is the book's; only the reading of it as a decomposition rather than an inventory is
+    ours, and that is recorded on the concept system rather than here.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_alt_c003_purpose_of_illumination
+  kind: source_specific_concept
+  origin_ref: alton_painting_with_light_ch2_motion_picture_illumination
+  label: the_twofold_purpose_of_illumination
+  children_terms: [t_alt_c003_0009, t_alt_c003_0010, t_alt_c003_0014]
+  origin: source_stated
+  basis: >
+    "The purpose of illumination is twofold" is the source's own statement, with four numbered
+    quality values under it. These terms are the ones that became operational in the chapter —
+    the angle criterion, the separation remedy, and the genre key.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_alt_c003_flatness_causes
+  kind: canonical_concept
+  label: causes_of_a_flat_image
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_alt_c003_0006, t_alt_c003_0008, t_alt_c003_0015, t_alt_c003_0017]
+  basis: >
+    A retrieval grouping, ours, over this source's named image defects. It asserts no equivalence: a
+    single-source rendering, a doubled shadow, a contradiction with the established light direction,
+    and blown-out exterior highlights are four different failures with four different corrections.

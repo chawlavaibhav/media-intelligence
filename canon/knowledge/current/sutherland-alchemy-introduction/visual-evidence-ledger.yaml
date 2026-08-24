@@ -1,0 +1,101 @@
+# CANON-003 Lane C, book 15 — Rory Sutherland, "Alchemy", Introduction ("Cracking the (Human)
+# Code"). Independent visual-evidence pass, run BEFORE any claim was written, per the frozen
+# CANON-002-era method.
+
+source_id: sutherland_alchemy_introduction
+pass: performed
+visual_completeness: not_verified_page_layout    # figures inspected; page layout does not exist in EPUB
+
+what_was_inspected:
+  method: >
+    The source is an EPUB. Both images referenced by the processed section were opened and looked
+    at, and each was read against the text that surrounds it. The section markup was also read for
+    tables, lists and block quotes.
+  images_referenced_by_the_processed_section: 2
+  images_inspected: 2
+  renders_committed: false
+
+# ── The finding: unlike the rest of this lane, one figure carries argument ──
+demonstrations:
+  - id: dem_alc_001
+    figure_ref: image7
+    what_it_is: >
+      A two-axis chart, credited to Greg Stevenson. The horizontal axis runs FAILS to WORKS; the
+      vertical axis runs MAKES SENSE to SEEMS WEIRD. Roughly two dozen items are placed in the four
+      quadrants.
+    what_the_figure_shows_that_the_text_does_not: >
+      Almost all of it. The text beside the figure says only that the top-right quadrant holds
+      "advances made in pure science", that in the other quadrants human perception and emotionality
+      are integral, and that the bicycle is a strange inclusion because physicists still cannot fully
+      explain how bicycles work. Every other placement exists only in the picture.
+    placements_read_from_the_figure:
+      makes_sense_and_fails: [Scientism, Marxism, Flossing, "Economies of scale, mergers", "Management consultancy", Economics]
+      makes_sense_and_works: ["Newtonian physics", Science, "Boeing 787", Cars, Dishwashers]
+      seems_weird_and_fails: ["Identity politics", "Water diving", Jonestown]
+      seems_weird_and_works: [Meerkats, Heuristics, "Behavioural economics", Evolution, "Constitutional monarchy", Marketing, Bicycles, "The Panama Canal", Placebos, "Red Bull"]
+    why_it_matters: >
+      The figure is the book's thesis in one image, and several of its placements are the strongest
+      claims on the page — that Marxism and economies of scale make sense and fail, that placebos and
+      Red Bull seem weird and work. A text-only extraction of this section would carry the thesis and
+      lose every example that supports it.
+    inspected: true
+
+  - id: dem_alc_002
+    figure_ref: image36
+    what_it_is: >
+      An aerial photograph, credited to Ken Sides, of a large multi-lane traffic circle in
+      Clearwater, Florida, with a decorative fountain at its centre.
+    what_it_supports: >
+      The caption states that the initial design was not helped by the fountain and that a later
+      redesign reduced the accident rate significantly. The body text separately reports that a
+      British team cut accidents on a Florida traffic circle by 95 per cent by placing the painted
+      lines differently.
+    what_the_figure_adds: >
+      Scale and the presence of the fountain, which the body text does not mention at all. The
+      caption carries the outcome claim; the photograph carries the object it is about.
+    inspected: true
+
+visual_only_observations:
+  - what: "the caption's claim that a decorative fountain in the middle worsened the original design"
+    where: "caption to image36"
+    recovered: true
+    note: >
+      Present only in the caption, not in the body text. Captions in this EPUB do extract as text, so
+      it was not at risk; recorded because it is a distinct claim carried by the figure's apparatus
+      rather than by the prose.
+
+# ── Loss pattern ────────────────────────────────────────────────────────────
+visual_loss_pattern:
+  pattern_name: named_loss_with_unstated_content
+  description: >
+    The text points at the figure — "this graph", "the top-right section of this graph" — so a reader
+    of the text alone knows a figure exists and knows roughly what it is for. What they cannot know
+    is what is in it. The label survives; the content does not.
+  severity: moderate, and recoverable
+  why: >
+    An extractor working from text alone would not silently miss the figure, because the prose
+    announces it. It would, however, produce a claim ("some things that make sense fail") with none
+    of the specific placements that make the claim contentful and testable. The gap is visible and a
+    visual pass closes it completely.
+  contrast_within_this_lane: >
+    Books 13 and 14 had no figures at all, so this is the first source in Lane C where a visual pass
+    recovered argument rather than confirming there was none to recover. It is also the first case in
+    this lane where the figure's content is genuinely absent from the prose.
+
+# ── The structural limit of an EPUB ─────────────────────────────────────────
+page_layout:
+  status: does_not_exist
+  explanation: >
+    An EPUB reflows, so there is no page to inspect and no printed page number to cite. Figures were
+    checked and both were recovered, but the claim "nothing was lost from the page" cannot be made
+    about a file with no pages. Every object in this extraction locates itself by section heading.
+  greyscale_note: >
+    Both images are greyscale in this file. Neither carries a colour argument — one is a line chart,
+    one a photograph — so nothing appears to be lost by it. NOT VERIFIED whether the printed edition
+    is in colour.
+
+summary:
+  demonstrations_recorded: 2
+  visual_only_observations_recorded: 1
+  figures_inspected: 2
+  claims_recorded_as_visually_demonstrated: 1

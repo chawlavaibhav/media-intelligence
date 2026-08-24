@@ -1,0 +1,448 @@
+# CANON-003 book 16 (Lane D) — "Creativity, Inc." ch.5. SPEC-05 ontology, source-local.
+# Existing term kinds and relation types only. No new vocabulary was introduced.
+#
+# ONE THING TO READ BEFORE THE TERMS: every remedy in this source is an organisational or social
+# action — change the word you use to ask for feedback, shrink the room, keep a dominating person
+# out, phrase a note so the maker wants to act on it. SPEC-05 requires each remedy term to declare
+# `executable_by`, whose permitted values are physical_production, generative_respecification,
+# deterministic_composite, human_edit and unknown. None of those describes "change who is in the
+# room". The honest value under the frozen vocabulary is `unknown`, and that is what is recorded,
+# nine times. It should be read as "this vocabulary has no value for this kind of action", not as
+# "we did not work out how to do it". Logged in the Lane D issue file.
+
+source_id: catmull_creativity_inc_ch5_honesty_and_candor
+extraction_date: 2026-08-24
+
+terms:
+- term_id: t_cat_c003_0001
+  term: candor
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: property
+  definition_in_origin_frame: >
+    Forthrightness or frankness. The source's deliberate substitute for honesty, chosen because it
+    carries no moral accusation and is understood as optional, so people can admit when they are
+    withholding it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5 opening"}
+  arising_from: [sk_cat_c003_0002]
+
+- term_id: t_cat_c003_0002
+  term: lack_of_candor
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    People choosing not to say what they really think at work. The source says it is often
+    rational, sometimes legitimate, and dysfunctional for a creative organisation if unchecked.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5 opening"}
+  arising_from: [sk_cat_c003_0001]
+
+- term_id: t_cat_c003_0003
+  term: honestys_baggage
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    The moral freight the word honesty carries, which makes admitting that you withhold sound like
+    confessing to a character defect, and so prevents the obstacles from being discussed at all.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5 opening"}
+  arising_from: [sk_cat_c003_0001]
+
+- term_id: t_cat_c003_0004
+  term: braintrust
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: entity
+  definition_in_origin_frame: >
+    A recurring meeting, held every few months for each film in production, at which people with
+    storytelling judgement watch the current rough version and say candidly what is not working.
+    No fixed membership; no authority to mandate anything.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, the Braintrust introduced"}
+  arising_from: [sk_cat_c003_0004]
+
+- term_id: t_cat_c003_0005
+  term: reels
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: entity
+  definition_in_origin_frame: >
+    A crude mock-up of the whole film: storyboards edited together with temporary voices and music.
+    The artefact the review group actually watches, regenerated every three to six months.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, why candor matters"}
+  arising_from: [sk_cat_c003_0008]
+
+- term_id: t_cat_c003_0006
+  term: good_note
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Feedback that says what is wrong, missing, unclear or senseless; arrives early enough to be
+    acted on; demands nothing; offers any proposed fix only as an illustration; and is specific.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, good notes"}
+  arising_from: [sk_cat_c003_0015]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0007
+  term: unspecific_note
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    Feedback that reports the giver's reaction without locating anything in the work. The source's
+    named failing example is a note saying only that the giver was writhing with boredom.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, good notes"}
+  arising_from: [sk_cat_c003_0015]
+
+- term_id: t_cat_c003_0008
+  term: prescriptive_note
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    A note that demands a specific remedy rather than surfacing the cause. The source rejects it on
+    two grounds: the visible fault is usually not where the cause lies, and the group's fix is
+    unlikely to be as good as the maker's.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, diagnosis not prescription"}
+  arising_from: [sk_cat_c003_0011]
+
+- term_id: t_cat_c003_0009
+  term: diagnose_the_cause_not_the_symptom
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Direct feedback at the underlying cause of a visible fault rather than at the fault itself, on
+    the analogy of knee pain produced by fallen arches, where operating on the knee would make
+    things worse.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, diagnosis not prescription"}
+  arising_from: [sk_cat_c003_0011]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0010
+  term: wrong_symptom_identified
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    The reviewing group correctly senses that something is wrong and names the wrong cause. The
+    source treats this as common and as still useful, because it makes the maker search.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, additive not competitive"}
+  arising_from: [sk_cat_c003_0017]
+
+- term_id: t_cat_c003_0011
+  term: creator_loses_perspective
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    The maker of a complicated creative project becomes so immersed that they can no longer see the
+    work whole — the details converge and obscure it — and cannot see the problem they need to fix.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, why the Braintrust is central"}
+  arising_from: [sk_cat_c003_0021]
+
+- term_id: t_cat_c003_0012
+  term: identification_with_ones_own_idea
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    Holding an idea so closely that a challenge to it is felt as an offence against the person, which
+    is what makes criticism unusable.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, diagnosis not prescription"}
+  arising_from: [sk_cat_c003_0013]
+
+- term_id: t_cat_c003_0013
+  term: remove_power_dynamics_from_the_feedback
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Give the reviewing group no authority to mandate anything, so criticism cannot arrive as an
+    instruction from someone who outranks the maker.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, two key differences"}
+  arising_from: [sk_cat_c003_0010]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0014
+  term: ask_for_candor_rather_than_honesty
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Change the word used to request the behaviour, so that admitting you withhold it costs nothing
+    and the barriers can be discussed.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5 opening"}
+  arising_from: [sk_cat_c003_0002]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0015
+  term: mini_braintrust
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Convene a smaller group when people were holding back in the larger one, to encourage more
+    direct communication by limiting the number of participants.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, closing pages"}
+  arising_from: [sk_cat_c003_0016]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0016
+  term: exclude_a_dominating_presence
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Keep a person whose standing would suppress frankness out of the room, by agreement. The
+    source's case is Steve Jobs, excluded from these meetings from 1993 onwards.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, volume and Steve Jobs"}
+  arising_from: [sk_cat_c003_0016]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0017
+  term: headlining
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Distilling the many observations from a review session into a digestible takeaway for the
+    maker, done afterwards by the producer working with them.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, inside a Braintrust meeting"}
+  arising_from: [sk_cat_c003_0014]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0018
+  term: additive_approach
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Treating each viewpoint offered as contributing something, rather than measuring it against your
+    own idea and turning the session into a debate to be won.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, additive not competitive"}
+  arising_from: [sk_cat_c003_0018]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0019
+  term: competitive_approach
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    Measuring other people's ideas against your own in a critique, which turns the discussion into
+    something to win or lose.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, additive not competitive"}
+  arising_from: [sk_cat_c003_0018]
+
+- term_id: t_cat_c003_0020
+  term: constructive_criticism
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: remedy
+  definition_in_origin_frame: >
+    Criticism that builds while it breaks down — making new material out of what has been taken
+    apart — and that is phrased so the recipient wants to do the work again.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, good notes"}
+  arising_from: [sk_cat_c003_0018]
+  executable_by: [unknown]
+
+- term_id: t_cat_c003_0021
+  term: blocks_to_candor
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    The recurring obstacles the source names: fear of saying something stupid and looking bad, of
+    offending, of being intimidated, and of retaliation. They reassert themselves after being
+    addressed.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, the Braintrust introduced"}
+  arising_from: [sk_cat_c003_0005, sk_cat_c003_0006]
+
+- term_id: t_cat_c003_0022
+  term: hallway_candor
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    More frankness outside the meeting than inside it — the source's closing symptom of a company
+    where fundamental questions are not really being discussed where they are decided.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter 5, closing lines"}
+  arising_from: [sk_cat_c003_0020]
+
+- term_id: t_cat_c003_0023
+  term: studio_notes
+  origin: source
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  kind: problem
+  definition_in_origin_frame: >
+    The ordinary Hollywood practice the source contrasts itself with: criticism written up after a
+    screening and delivered days later by executives, which directors reject because of who wrote it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "chapter 5, how Hollywood gives notes"}
+  arising_from: [sk_cat_c003_0012]
+
+relationships:
+- from: t_cat_c003_0001
+  to: t_cat_c003_0003
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source's central rhetorical move, and it insists on it: candor and honesty mean nearly the
+    same thing, and the difference that matters is that only one of them accuses. Recorded as
+    distinct_from because a merge on meaning would destroy the point the source is making.
+
+- from: t_cat_c003_0020
+  to: t_cat_c003_0006
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: >
+    A good note is defined by its content — what it names and how specifically. Constructive
+    criticism as the source's quoted director defines it adds a requirement about effect on the
+    recipient. Every good note is not necessarily constructive in that stronger sense.
+
+- from: t_cat_c003_0018
+  to: t_cat_c003_0019
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source defines these against each other in one paragraph: additive contributes, competitive
+    measures rival ideas against your own. The pair exists to be contrasted.
+
+- from: t_cat_c003_0010
+  to: t_cat_c003_0007
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both are notes that fail. They are not the same failure. An unspecific note
+    locates nothing; a wrongly diagnosed note locates something precisely and gets the cause wrong.
+    The source treats the first as useless and the second as often useful, so merging them would
+    invert its judgement.
+
+- from: t_cat_c003_0008
+  to: t_cat_c003_0009
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source separates prescribing a remedy from surfacing a cause and builds the mechanism on the
+    separation. Recorded as an explicitly stated opposition rather than as two shades of one idea.
+
+- from: t_cat_c003_0011
+  to: t_cat_c003_0004
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The condition, and the mechanism the source says exists to correct it."
+
+- from: t_cat_c003_0013
+  to: t_cat_c003_0012
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source states that removing the power to mandate is what keeps criticism aimed at the work
+    rather than the person, so the remedy acts on the problem of self-identification.
+
+- from: t_cat_c003_0015
+  to: t_cat_c003_0016
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Both are the same lever — changing who is in the room — applied at different scales, one by
+    shrinking the group and one by excluding an individual. The source never connects them.
+
+- from: t_cat_c003_0023
+  to: t_cat_c003_0008
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    The studio-notes practice the source rejects is its worked instance of prescriptive, late
+    feedback from people the maker does not accept as peers. The source does not state the link in
+    these terms.
+
+- from: t_cat_c003_0021
+  to: t_cat_c003_0002
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The named fears, and the withholding they produce."
+
+concepts:
+- concept_id: sc_cat_c003_good_notes
+  kind: source_specific_concept
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  label: good_notes
+  children_terms: [t_cat_c003_0006, t_cat_c003_0020, t_cat_c003_0018, t_cat_c003_0009]
+  origin: source_stated
+  basis: >
+    "Good notes" is the source's own term for its constructive-criticism practice, introduced as the
+    word Pixar uses for it. The source gives the definition, the failing example and the manner
+    requirements together in the same closing section.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_cat_c003_braintrust_compact
+  kind: source_specific_concept
+  origin_ref: catmull_creativity_inc_ch5_honesty_and_candor
+  label: the_braintrust_compact
+  children_terms: [t_cat_c003_0004, t_cat_c003_0001, t_cat_c003_0013, t_cat_c003_0005]
+  origin: extractor_inferred
+  basis: >
+    The source names "the compact upon which the meetings are based" and says protecting it is his
+    main role, but never enumerates what is in it. Collecting the mechanism, its indispensable
+    property, the removal of authority and the artefact reviewed under one concept is ours.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_cat_c003_barriers_to_disclosure
+  kind: canonical_concept
+  label: barriers_to_disclosure_in_review
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_cat_c003_0002, t_cat_c003_0003, t_cat_c003_0021, t_cat_c003_0022]
+  basis: >
+    A retrieval grouping, ours, over this one source's several names for people not saying what they
+    think. It claims no equivalence between them — the moral freight of a word, a set of fears, and
+    frankness that happens in corridors instead of meetings are different things with the same
+    consequence.

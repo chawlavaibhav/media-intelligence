@@ -1,0 +1,2939 @@
+# CANON-003 book 9 (Lane B) — Roy Thompson & Christopher J. Bowen, "Grammar of the Edit", 2nd ed.
+# Chapters Three, Four and Five, complete (printed pp.55-109 = PDF pp.68-122).
+# Fresh SPEC-03 extraction under the CANON-001 V0 granularity rule, unchanged.
+# Visual completeness: verified_page_level.
+#
+# SECTION RATIONALE: three chapters, taken as one tightly connected span rather than one chapter.
+# Chapter Three introduces six factors that make an edit good. Chapter Four opens by saying it will
+# analyse each transition against "the six elements of information, motivation, composition, camera
+# angle, continuity, and sound" and then does exactly that, four times, plus five edit categories.
+# Chapter Five states the general practices that govern both and carries the section's strongest
+# visual demonstration. Chapter Four is not readable without Chapter Three; the dependency is the
+# source's own, not a convenience. Chapter Six ("Working Practices") is workflow procedure and is a
+# different kind of material.
+#
+# SCOPE NOTE, STATED SO THE COUNT IS NOT MISREAD: this span is 55 printed pages against roughly 20
+# for the earlier books in this batch, and the source is unusually enumerative — it lists six
+# elements, applies them to four transitions, then defines five edit categories and seven general
+# practices. The object count is therefore higher than books 1-5. That is section size and source
+# shape, not a change in granularity policy. Object density is about 1.1 per printed page, against
+# 0.85 for book 1.
+#
+# ISOLATION NOTE: no Canon knowledge file for "Grammar of the Shot" was opened at any point during
+# this extraction, although the two books share authors, publisher, series and subject. Everything
+# below was read off this source. Whether the two books produce overlapping knowledge is a question
+# for the post-checkpoint comparison, not an input to it.
+#
+# ON THIS SOURCE'S SHAPE: an introductory teaching text. Claims are asserted from professional
+# experience and taught by enumeration; most are accompanied by a demonstration figure and a worked
+# scenario, and a minority are given a mechanism. There is no measurement anywhere in the section.
+
+source_id: grammar_of_the_edit_ch3_5_editing_decisions
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# CHAPTER THREE — WHEN TO CUT AND WHY
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_gote_c003_0001
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The main purpose behind any edited project is for it to be shown to an audience."
+    - "not just any audience, but the specific audience that the project is targeting"
+  concept_label: edit_for_the_specific_targeted_audience
+  label_origin: extractor_assigned
+  claim: >
+    Every editing decision is made on behalf of a particular intended audience, not an audience in
+    general. The material was written, shot and must be cut with that audience in mind. Anticipating
+    what they will want to see next is presented as the editor's primary orienting skill, and
+    different genres and audiences require different editing approaches.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, commercials, music_video, documentary]
+    conditions: "any edited motion picture intended for viewing"
+  caveats:
+    - text: "the source says other factors not mentioned in its list may come into play"
+      origin: source_stated
+    - text: "no method is given for discovering what a specific audience expects; the source treats it as a skill developed by watching a great deal of material over time"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "watch a wide range of programming to learn the common approaches of each genre"
+  examples:
+    positive:
+      - {description: "a college fraternity comedy and a documentary on nineteenth-century textile mills do not share an audience", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0003, note: "the six factors are offered as the working form of this orientation"}
+    - {relation: qualifies, target: sk_gote_c003_0023, note: "the audience is also who finally judges whether an edit was right"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three — When to Cut and Why?"
+    section: "chapter opening"
+    page_start: 55
+    page_end: 56
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0002
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "People are rarely conscious of these elements, but through viewing film and television imagery over time, they subconsciously know how to \"read\" certain edits"
+    - "There is a grammar of the edit."
+  concept_label: audiences_read_edits_through_learned_convention
+  label_origin: source_verbatim
+  claim: >
+    Viewers acquire, from long exposure to film and television, a subconscious competence at reading
+    edits. They decipher meaning in the flow of images without being aware of doing so. This learned
+    competence is what the book calls a grammar: just as shot types carry meaning, the way shots are
+    joined carries meaning to the viewer.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Repeated exposure over time builds the competence. The source attributes it to viewing habit,
+      not to anything innate.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "viewers with ordinary exposure to motion pictures"
+  caveats:
+    - text: "the source says these common attributes hold across most styles of editing while also insisting different jobs need different techniques"
+      origin: source_stated
+    - text: "asserted, not evidenced; no study, measurement or comparison across viewer populations is offered anywhere in the section"
+      origin: extractor_observed
+    - text: "if the competence is learned by exposure it should vary with viewing history and era, which the source does not address except when noting that the convention against dissolves in news is itself changing"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0024, note: "each transition type carrying its own meaning depends on this learned reading"}
+    - {relation: generalises, target: sk_gote_c003_0058, note: "the invisibility standard assumes a viewer competent enough to notice a break"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "chapter opening"
+    page_start: 56
+    page_end: 56
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0003
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "What factors or elements compel an editor to want to make an edit in the first place?"
+    - "Information / Motivation / Shot composition / Camera angle / Continuity / Sound"
+  concept_label: six_factors_that_make_a_transition_a_good_edit
+  label_origin: extractor_assigned
+  claim: >
+    Six factors are named as the major reasons to consider a cut and as the checklist against which
+    a transition is judged: information, motivation, shot composition, camera angle, continuity and
+    sound. The source presents them as a starting point rather than an exhaustive account.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "most material, per the source"
+  caveats:
+    - text: "the source calls the list a jumping off point and says other factors not mentioned may come into play"
+      origin: source_stated
+    - text: "the set is named as six and treated as fixed, but the source silently applies a different subset to each transition type later in the span — see sk_gote_c003_0037 and the concept system scs_gote_c003_002"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0004, note: "information is the first factor"}
+    - {relation: generalises, target: sk_gote_c003_0006, note: "motivation is the second"}
+    - {relation: generalises, target: sk_gote_c003_0010, note: "shot composition is the third"}
+    - {relation: generalises, target: sk_gote_c003_0012, note: "camera angle is the fourth"}
+    - {relation: generalises, target: sk_gote_c003_0014, note: "continuity is the fifth, itself divided into four kinds"}
+    - {relation: generalises, target: sk_gote_c003_0021, note: "sound is the sixth"}
+    - {relation: member_of_system, target: scs_gote_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "What Factors Help Make a Transition a Good Edit?"
+    page_start: 57
+    page_end: 57
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0004
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "A new shot should always present some new information to the viewer."
+    - "this element of new information is basic to all editing choices"
+  concept_label: every_new_shot_must_carry_new_information
+  label_origin: extractor_assigned
+  claim: >
+    Each shot cut to must give the viewer information it did not already have. The information may
+    be visual — a character entering, a new location, an unexplained event — or aural, such as
+    narration or an off-screen sound. The source states this is basic to all editing choices, and
+    frames the editor's working question as: what would, should, cannot and do I wish the audience
+    to see next.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      New information keeps the audience thinking and feeling. While they are engaged in processing
+      it they are not attending to the physical act of the edit, so the cut passes unnoticed.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "every transition"
+  caveats:
+    - text: "the information may be deliberately misleading; the source cites showing false information in a mystery, and showing the audience what the characters do not know in melodrama"
+      origin: source_stated
+    - text: "no test is offered for how much novelty counts as new information, so the rule is applied by judgement"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the audience notices the physical act of the edit"
+  source_stated_remedies:
+    - "give the new shot something the audience does not yet have"
+  examples:
+    positive:
+      - {description: "a large establishing view of a location; a close-up of a computer screen; rain falling; a baby crying", figure_ref: "3.1"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0003, note: "first of the six factors"}
+    - {relation: generalises, target: sk_gote_c003_0005, note: "the disposal rule follows from it"}
+    - {relation: qualified_by, target: sk_gote_c003_0006, note: "information governs the shot cut to; motivation governs the shot cut from"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Information"
+    page_start: 58
+    page_end: 59
+    figure_refs: ["3.1"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.1 caption only; page rendered and figure seen"]}
+
+- sk_id: sk_gote_c003_0005
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "No matter how beautiful, cool, or expensive a shot may be, if it does not add new information to the progression of the story, then it may not belong in the final edit."
+  concept_label: discard_a_shot_that_adds_no_information_however_good
+  label_origin: extractor_assigned
+  claim: >
+    A shot's quality, appeal or cost does not earn it a place in the cut. If it adds no new
+    information to the story's progression it may not belong in the final edit, and the editor
+    should look for another shot from the same scene that does.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "selecting which shots enter the final cut"
+  caveats:
+    - text: "phrased as \"may not belong\" rather than \"does not belong\", so the source leaves the decision with the editor"
+      origin: source_stated
+    - text: "stands in tension with Chapter Five's instruction not to cut apart a shot that is good and complete in itself; the two are reconcilable but the source never reconciles them explicitly"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a shot is kept because it is beautiful, cool, or expensive"
+  source_stated_remedies:
+    - "look for another shot from the same scene that does provide new information and fits the story"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0004, note: "the disposal consequence of the information rule"}
+    - {relation: trades_off_with, target: sk_gote_c003_0050, note: "against the instruction to leave a self-sufficient shot intact"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Information"
+    page_start: 59
+    page_end: 59
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0006
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "There should always be a motivation for making a transition away from a shot."
+    - "This motivation can be either visual or aural."
+  concept_label: every_departure_from_a_shot_must_be_motivated
+  label_origin: extractor_assigned
+  claim: >
+    Information governs the shot being cut to; motivation governs the shot being cut away from.
+    There must always be a reason to leave the current shot and a reason it is left at that
+    particular moment. The motivating element may be visual — usually some movement by a subject or
+    object, from a car clearing a river down to a small shift of a character's eyes — or aural.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Movement or sound in the current shot creates an expectation the next shot answers. When an
+      actor's eyes move off-screen, cutting to the object of interest both discharges the motivation
+      and supplies new information.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "every transition"
+  caveats:
+    - text: "the source's worked example — a man's eyes move left, cut to the cat he is looking at — is not what the accompanying figure depicts; Figure 3.2A-B shows a man reading a book about pigs cut to a pig"
+      origin: extractor_observed
+  source_stated_problems:
+    - "there is no reason to leave the shot at that moment"
+  source_stated_remedies:
+    - "find the movement or sound in the outgoing shot that creates the need to see the next one"
+  examples:
+    positive:
+      - {description: "a character in close-up moves only his eyes to the left; the cut goes to what he is looking at", figure_ref: "3.2A-B"}
+      - {description: "a tea kettle begins to whistle in a medium long shot, motivating the cut to a close-up of the kettle", figure_ref: "3.2C-D"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0003, note: "second of the six factors"}
+    - {relation: qualifies, target: sk_gote_c003_0004, note: "the two factors govern opposite ends of the same transition"}
+    - {relation: generalises, target: sk_gote_c003_0007, note: "the sound bridge is a specific motivating device"}
+    - {relation: generalises, target: sk_gote_c003_0009, note: "elapsed time can itself become the motivator"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Motivation"
+    page_start: 60
+    page_end: 61
+    figure_refs: ["3.2"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.2"]}
+
+- sk_id: sk_gote_c003_0007
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "An editor may create what is called a sound bridge."
+    - "A sound, seemingly generated by something not seen or known to the audience, begins under shot one. It motivates the transition into shot two, where the origin of the strange sound is revealed."
+  concept_label: sound_bridge
+  label_origin: source_verbatim
+  claim: >
+    A sound whose source is not visible or known begins under the outgoing shot, motivates the cut,
+    and is explained by the incoming shot, which reveals its origin. The device carries the viewer
+    across a change of location or subject that would otherwise be abrupt.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The unexplained sound gives the audience something to process, and the new shot resolves it.
+      Because they are occupied resolving it and the resolution follows a knowable logic, they do
+      not notice the unexpected transition.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "a transition to a new location, time or subject"
+  caveats:
+    - text: "the source describes this as a third and more advanced use of audio, above the two simpler motivating uses"
+      origin: source_stated
+    - text: "the source's own cross-reference for this claim is wrong: it cites Figure 3.4E and F, but Figure 3.4 has only panels A to C and shows camera-angle similarity; the train-whistle bridge is Figure 3.2E and F. Verified by rendering both pages."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a man watches a tea kettle; the audience hears what they take for the kettle whistling; the cut reveals a steam engine's whistle in a new location", figure_ref: "3.2E-F"}
+      - {description: "a man says he is going to hunt for a job; a lion's roar is heard; the cut goes to a crowded commuter street with animal noises in the mix", figure_ref: "3.8C-D"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0006, note: "a specific motivating device"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0021, note: "a sound bridge is one form of sound leading picture"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "Chapter Three"
+    section: "Motivation; and Sound"
+    page_start: 61
+    page_end: 72
+    figure_refs: ["3.2E-F", "3.8C-D"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.2"]}
+
+- sk_id: sk_gote_c003_0008
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "because the close-up shot actually magnifies the visual size and importance of the tea kettle, it can be appropriate to raise the volume on the sound of the whistle in your audio track as well"
+    - "This lets the size of the visual object influence the volume level of the sound that object is producing."
+  concept_label: apparent_object_size_sets_its_sound_level
+  label_origin: extractor_assigned
+  claim: >
+    How large an object appears in frame governs how loud its sound should be in the mix. Cutting
+    closer magnifies the object's visual size and importance, so raising the level of the sound it
+    makes is appropriate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The close-up magnifies both the size and the importance of the object; the audio level is
+      matched to that magnified presence.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "a cut that changes the framing scale of a sound-producing object"
+  caveats:
+    - text: "stated as \"can be appropriate\" rather than as a requirement"
+      origin: source_stated
+    - text: "the source gives no amount — how much louder is left entirely to judgement"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "raise the volume of an object's sound when cutting closer to it"
+  examples:
+    positive:
+      - {description: "cutting from a medium long shot of a man watching a kettle to a close-up of the kettle, with the whistle raised", figure_ref: "3.2C-D"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0018, note: "a specific case of matching audio to visual perspective"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Motivation"
+    page_start: 60
+    page_end: 60
+    figure_refs: ["3.2C-D"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.2"]}
+
+- sk_id: sk_gote_c003_0009
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Time passing will even become a motivator for the cut."
+    - "a \"gut feeling\" unit of time known as a beat"
+  concept_label: elapsed_time_as_motivator_measured_in_beats
+  label_origin: extractor_assigned
+  claim: >
+    With experience, the passage of time itself becomes a sufficient motivation to cut. The interval
+    is not counted in seconds or frames but felt as a unit the source calls a beat — described as an
+    unknowable yet knowable amount, a feeling that it is now time to cut to something different.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "as an editor's skill progresses"
+  caveats:
+    - text: "the source explicitly declines to quantify a beat, calling it a gut feeling and an unknowable yet knowable unit"
+      origin: source_stated
+    - text: "this is the only unit of timing the source offers besides describing the shot aloud, and the two are never related to each other"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0006, note: "a motivator that comes from duration rather than from an event"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0037, note: "the fade section again tells the editor to feel the right beats"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three; restated in Chapter Four"
+    section: "The Cut, element 2; The Fade, element 4"
+    page_start: 77
+    page_end: 87
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0010
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "you use the alternate placement of characters frame left and frame right to generate interest"
+    - "the audience traces character A's eye-line across the empty screen and rests upon the new face of character B"
+    - "eye-line match or eye trace"
+  concept_label: alternating_frame_placement_drives_eye_trace_across_the_cut
+  label_origin: extractor_assigned
+  claim: >
+    The editor cannot compose the shots but chooses which compositions meet at a cut. Placing one
+    character at frame left with open look room to the right, and cutting to a matching shot of the
+    other character at frame right with look room to the left, makes the viewer's gaze travel across
+    the screen at the cut and land on the new face. The source calls this eye-line match or eye
+    trace and likens the effect to a tennis ball crossing a court.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      While watching character A at frame left the viewer is aware that A's attention is directed
+      across the screen to the right. At the cut the viewer traces that eye-line across the empty
+      look room and is rewarded by finding character B where the trace ended.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "two-person dialogue coverage with matching reciprocal singles"
+  caveats:
+    - text: "the source stresses that the placement of character B must match the eye-line from character A for the reward to occur"
+      origin: source_stated
+    - text: "the mechanism is asserted about where viewers look; no eye-tracking or other measurement is offered"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a wide shot of two people at a table, then reciprocal medium close-ups with each character on the opposite side of frame", figure_ref: "3.3"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0003, note: "third of the six factors"}
+    - {relation: qualified_by, target: sk_gote_c003_0011, note: "the trace must not be made too hard to follow"}
+    - {relation: generalises, target: sk_gote_c003_0041, note: "the screen position edit is this factor raised to a category"}
+    - {relation: depends_on, target: sk_gote_c003_0056, note: "reciprocal look room only exists if the coverage respected the line"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Shot Composition"
+    page_start: 62
+    page_end: 63
+    figure_refs: ["3.3"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.3"]}
+
+- sk_id: sk_gote_c003_0011
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "You want to engage the audience's eye trace without making them search too hard for the next bit of information."
+    - "Subtle searches will keep the viewing experience interesting, but more elaborate searches may only serve to make it more confusing."
+  concept_label: eye_trace_difficulty_has_an_optimum
+  label_origin: extractor_assigned
+  claim: >
+    The visual search the viewer performs at a cut has a useful range. A subtle search sustains
+    interest; an elaborate one produces confusion. Beautiful multi-layered compositions can therefore
+    work against the edit, and the editor must consider how the audience will locate the important
+    new information inside a busy frame.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "cutting into or out of visually complex compositions"
+  caveats:
+    - text: "no boundary is given between subtle and elaborate; the distinction is left to judgement"
+      origin: extractor_observed
+    - text: "this is the section's only explicit statement that a compositional virtue can become an editing liability"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the viewer has to search too hard for the next bit of information"
+    - "the viewing experience becomes more confusing"
+  source_stated_remedies:
+    - "think about how the audience will locate the new important information in a complex frame before cutting into it"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0010, note: "bounds how far the eye may be asked to travel"}
+    - {relation: qualifies, target: sk_gote_c003_0026, note: "the cut's composition element repeats the same warning about overly busy new shots"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Shot Composition"
+    page_start: 63
+    page_end: 63
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0012
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "There has to be reasonable difference in the camera angle on action for two shots to be \"comfortably\" edited together."
+    - "place shots of differing horizontal angles (greater than 30 degrees apart) next to one another in the edit"
+  concept_label: successive_shots_need_more_than_thirty_degrees_of_angle_difference
+  label_origin: extractor_assigned
+  claim: >
+    Two shots joined at a cut must be taken from horizontal camera angles more than about 30 degrees
+    apart around the 180 degree arc. The editor cannot control where the camera was placed and can
+    only choose, from the coverage supplied, shots whose angles differ enough.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Two shots recorded with similar framing from very near angles produce images that look too
+      similar even though they differ slightly. The similarity registers with the viewer as a glitch
+      or jump at the cut point.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "successive shots covering the same action within a scene"
+  caveats:
+    - text: "the source notes the constraint originates in production, not editing: only certain angles get shot because of time and money"
+      origin: source_stated
+    - text: "30 degrees is stated as a threshold with no derivation and no cited evidence; it arrives as received craft convention"
+      origin: extractor_observed
+    - text: "the source treats similar framing and similar angle as jointly necessary for the failure, but its remedy addresses angle alone"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it may appear to the eye like there is a glitch or a jump in the image at the cut point"
+  source_stated_remedies:
+    - "place shots of differing horizontal angles, more than 30 degrees apart, next to one another"
+  examples:
+    counter:
+      - {description: "two wide shots of a woman on a path taken from nearly the same position, which read as one image displaced", figure_ref: "3.4A-B"}
+    positive:
+      - {description: "a close-up of the same subject from a markedly different angle, which cuts cleanly against the wide shot", figure_ref: "3.4C"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0003, note: "fourth of the six factors"}
+    - {relation: generalises, target: sk_gote_c003_0013, note: "insufficient angle change is one cause of the jump cut"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0026, note: "the cut section adds that similar composition alone can cause the same perceived jump"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Camera Angle"
+    page_start: 64
+    page_end: 65
+    figure_refs: ["3.4"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.4"]}
+
+- sk_id: sk_gote_c003_0013
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "the viewer perceives a jump, a glitch, or extremely brief interruption or alteration to the pictures shown"
+    - "The image in their eyes will merely jump, which they will consciously notice and as a result it will serve to pull them out of the viewing experience"
+  concept_label: jump_cut_as_a_consciously_noticed_break
+  label_origin: extractor_assigned
+  claim: >
+    A jump cut is what the viewer perceives when successive images are too alike: a jump, glitch or
+    very brief interruption. Its defining property is that the viewer notices it consciously, which
+    pulls them out of the viewing experience — something the editor should almost always prevent.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience does not read the two shots as sufficiently different views of the same
+      information, so instead of reading a change of view they see the picture move.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any cut between insufficiently distinct images"
+  caveats:
+    - text: "the source says some directors have used the jump cut to a creative end, always for a special sequence"
+      origin: source_stated
+    - text: "the term is used for at least three different causes across the span — too-similar camera angles, too-similar compositions, and a dissolve too short to register — which the source does not distinguish under a single name"
+      origin: extractor_observed
+  source_stated_problems:
+    - "jump cut"
+    - "the viewer is pulled out of the viewing experience"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0012, note: "the perceptual result the angle rule exists to prevent"}
+    - {relation: contradicts, target: sk_gote_c003_0060, note: "Chapter Five allows deliberate use of the jump cut, which this treats as always to be prevented"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Camera Angle"
+    page_start: 65
+    page_end: 65
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0014
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Providing smooth, seamless continuity across transitions is a very important element to keeping your edits unnoticed by the viewer."
+    - "there are actually several different forms of continuity that need to be addressed"
+  concept_label: continuity_is_four_separable_kinds
+  label_origin: extractor_assigned
+  claim: >
+    Continuity across a transition is not one property but four that must be addressed separately:
+    continuity of content, of movement, of position and of sound. The editor is not responsible for
+    the quality of the footage but is responsible for making the best picture possible from it, and
+    must compensate in the edit where production failed to supply matching material.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "transitions within a continuous scene"
+  caveats:
+    - text: "the source concedes that continuity of content must be watched for but may not be easily fixed"
+      origin: source_stated
+    - text: "the four kinds are given equal weight in the text but only three have a remedy attached; continuity of sound is described but no repair is named beyond laying an ambience bed"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0003, note: "fifth of the six factors"}
+    - {relation: generalises, target: sk_gote_c003_0015, note: "continuity of content"}
+    - {relation: generalises, target: sk_gote_c003_0017, note: "continuity of movement"}
+    - {relation: generalises, target: sk_gote_c003_0018, note: "continuity of position"}
+    - {relation: generalises, target: sk_gote_c003_0019, note: "continuity of sound"}
+    - {relation: member_of_system, target: scs_gote_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity"
+    page_start: 66
+    page_end: 66
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0015
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Actions performed by the on-camera talent must match from one shot to the next."
+    - "the editor must create some means of hiding, masking, or \"explaining\" the visual incongruity"
+  concept_label: continuity_of_content_actions_and_objects_must_match
+  label_origin: extractor_assigned
+  claim: >
+    Actions and the objects involved in them must match from shot to shot within a scene: a dog
+    present in the wide shot should be present in the tighter shots, a telephone picked up in the
+    right hand should still be in the right hand after the cut. Where the coverage does not supply
+    matching material the editor must hide, mask or explain the incongruity, and the audience must
+    remain unaware of it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A visible incongruity breaks the audience's belief in the filmed illusion. The source likens
+      the editor to a magician distracting the eye to cover the trick of the edit.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "shots covering the same continuous scene"
+  caveats:
+    - text: "the source concedes the problem originates in production — actors are obliged to repeat actions across takes and often do not — and that it may not be easily fixed"
+      origin: source_stated
+    - text: "several of the offered solutions change the shape of the scene rather than repairing the mismatch: starting on a close-up instead of the wide, or adding a sound effect of the dog leaving"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the continuity of content must be watched for but may not be easily fixed"
+    - "you run the risk of breaking their belief in the filmed illusion"
+  source_stated_remedies:
+    - "begin the scene on a different shot that does not contain the mismatched element"
+    - "lay in a sound effect that explains the element's absence"
+    - "cut away to a brief shot so the audience accepts that the change happened off screen"
+  examples:
+    counter:
+      - {description: "the family dog present in the wide shot of a dinner table but absent from the tighter shots", figure_ref: null}
+      - {description: "a man picks up a telephone in his right hand and appears holding it in his left after the cut", figure_ref: "3.5"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0014, note: "first of the four kinds of continuity"}
+    - {relation: generalises, target: sk_gote_c003_0016, note: "the cut-away is the remedy named for it"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity of Content"
+    page_start: 66
+    page_end: 67
+    figure_refs: ["3.5"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0016
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "the cut-away is any brief shot that will provide the appropriate distraction and time filler to allow the audience to make the leap in logic"
+  concept_label: cut_away_buys_time_for_the_audience_to_accept_a_discontinuity
+  label_origin: extractor_assigned
+  claim: >
+    Inserting any brief shot between two mismatched shots gives the audience both a distraction and
+    enough elapsed time to accept that the change happened off screen. The same device is named
+    twice in the chapter: as a cut-away for an object or action mismatch, and as an insert shot for
+    a reversal of screen direction.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The intervening shot breaks the audience's continuous attention on the mismatched element and
+      supplies the screen time in which the change could plausibly have occurred.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "when the coverage contains a discontinuity that cannot be avoided by shot choice"
+  caveats:
+    - text: "the source requires only that the inserted shot be logical and fit the narrative flow; it sets no minimum duration and no test for whether the break was long enough"
+      origin: extractor_observed
+    - text: "recorded as one remedy because the source describes the same action and the same mechanism in both places under two names; the reading that they are two devices is available but the text does not support it"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "cut away to a brief shot before returning to the action"
+    - "insert a logical shot that continues the narrative and breaks attention on the direction of movement"
+  examples:
+    positive:
+      - {description: "a brief shot between the right-hand and left-hand telephone shots", figure_ref: "3.5"}
+      - {description: "an insert shot between two shots that reverse a character's direction of travel", figure_ref: "3.6C-E"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0015, note: "the remedy for a content mismatch"}
+    - {relation: specialises, target: sk_gote_c003_0017, note: "and for a reversal of screen direction"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity of Content; Continuity of Movement"
+    page_start: 67
+    page_end: 68
+    figure_refs: ["3.5", "3.6C-E"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0017
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Screen direction is the movement of talent or objects toward frame right or frame left. This must be maintained as you transition from one shot to the next"
+  concept_label: continuity_of_movement_screen_direction_maintained
+  label_origin: extractor_assigned
+  claim: >
+    Screen direction — whether talent or objects move toward frame left or frame right — must hold
+    across a cut whenever the next shot continues the same movement. Where the available shot
+    contradicts the established direction, the editor must insert a shot that continues the
+    narrative and breaks the audience's attention on the direction of travel.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "successive shots covering the same movement"
+  caveats:
+    - text: "the source places responsibility with production, which should have respected screen direction and the 180 degree rule while shooting coverage"
+      origin: source_stated
+    - text: "the inserted shot is said to offer the audience a break allowing the character time to reverse direction; no reason is given why elapsed screen time makes a reversal acceptable"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the shot contradicts the already established screen direction"
+  source_stated_remedies:
+    - "insert a logical shot that provides a visual break from the discontinuity of movement"
+  examples:
+    positive:
+      - {description: "talent movement maintaining screen direction across the edit", figure_ref: "3.6A-B"}
+    counter:
+      - {description: "two shots reversing screen direction, joined by an insert shot", figure_ref: "3.6C-E"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0014, note: "second of the four kinds of continuity"}
+    - {relation: depends_on, target: sk_gote_c003_0054, note: "screen direction is established by the action line"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity of Movement"
+    page_start: 68
+    page_end: 68
+    figure_refs: ["3.6"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0018
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "If an actor is shown frame right in shot one, then he must be somewhere on frame right in any subsequent shots during that scene."
+  concept_label: continuity_of_position_subject_keeps_its_side_of_the_frame
+  label_origin: extractor_assigned
+  claim: >
+    Film space has a sense of place as well as direction. A subject or object occupying one side of
+    the frame must remain on that side in subsequent shots of the scene, unless it physically moved
+    during a shot, in which case showing it on a new side is logical. Cutting two shots that make a
+    subject jump across the screen distracts the viewer and breaks the illusion of smooth editing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "shots within one scene"
+  caveats:
+    - text: "the exception is stated clearly — an on-screen move justifies a new side of frame — which makes this a rule about unexplained change rather than about position as such"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the subject or object jumps from one side of the screen to the other"
+    - "the illusion of smooth editing will be broken"
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "a woman at frame left in one shot who appears at frame right after a cut to the other character and back", figure_ref: "3.7"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0014, note: "third of the four kinds of continuity"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity of Position"
+    page_start: 69
+    page_end: 69
+    figure_refs: ["3.7"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["3.7"]}
+
+- sk_id: sk_gote_c003_0019
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "If the action of the scene is happening in the same place and at the same time, then the sound will continue from one shot to the next."
+    - "Perspective increase or drop off should be represented."
+  concept_label: continuity_of_sound_and_perspective_across_the_cut
+  label_origin: extractor_assigned
+  claim: >
+    When shots share a time and place, their sound continues across the cut whether or not its
+    source remains visible: an aeroplane heard in the first shot is still audible to the characters
+    in the second and should still be audible to the audience. Sound levels for voices and objects
+    should stay consistent through an edited scene, and changes in an object's distance from camera
+    should be represented by raising or lowering its level.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "shots from one scene sharing time and place"
+  caveats:
+    - text: "the source calls the continuity of sound and its perspective of critical importance but gives it the least detailed treatment of the four continuities"
+      origin: extractor_observed
+    - text: "consistency of level and representation of perspective change are stated together, though they pull in opposite directions and the source does not say how to reconcile them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the audience is pulled out of the viewing experience wondering what happened to the sounds"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "an aeroplane seen and heard in shot one remains audible in the next shot of the scene", figure_ref: null}
+    counter:
+      - {description: "office ambience that stops at the cut to a closer shot of the same woman", figure_ref: "3.8A-B"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0014, note: "fourth of the four kinds of continuity"}
+    - {relation: generalises, target: sk_gote_c003_0008, note: "the object-size rule is a case of representing perspective"}
+    - {relation: qualified_by, target: sk_gote_c003_0021, note: "deliberately removing the expected ambience is a device, not a fault"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity of Sound"
+    page_start: 70
+    page_end: 70
+    figure_refs: ["3.8A-B"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0020
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "all spaces have a background noise level"
+    - "commonly called ambience, but it may also be referred to as atmosphere or natural sound (nats for short)"
+    - "This ambience track helps smooth out audio transitions"
+  concept_label: ambience_bed_smooths_audio_transitions
+  label_origin: extractor_assigned
+  claim: >
+    Every space has an ever-present background sound level — ambience, also called atmosphere,
+    natural sound or nats, and when lifted from production recordings, room tone. It creates a bed
+    of consistent tone under dialogue and effects, and laying it continuously across cuts smooths
+    the audio transitions within a scene. It is either taken from the production recordings or
+    built by an editor or sound designer from other sources.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An uninterrupted layer of sound running under the cuts removes the discontinuity that would
+      otherwise be audible when the audio changes at every shot change.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "any edited scene"
+  caveats:
+    - text: "the source records four names for the same thing — ambience, atmosphere, natural sound, room tone — and draws one distinction, that room tone is the term when lifted from the production recordings"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "lay a continuous ambience bed under the cut"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0019, note: "the practical means of achieving sound continuity"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Continuity of Sound"
+    page_start: 70
+    page_end: 70
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0021
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "the sound track can also be a great way to comment on something within the film or to juxtapose messages within the film"
+    - "the inappropriate animal sounds actually become story-enhancing sounds"
+  concept_label: sound_may_depart_from_the_literal_to_create_meaning
+  label_origin: extractor_assigned
+  claim: >
+    Sound need not simply reproduce what is visible. Removing the sound the audience expects, or
+    replacing it with sound that contradicts the picture, produces meaning the images do not carry.
+    Dropping office noise under a closer shot of a calm woman tells the audience about her internal
+    state; a lion's roar over a man saying he will hunt for a job makes the commuter street a
+    hunting ground. Sound the audience would not normally accept becomes story-enhancing when it
+    follows the context.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience accepts a sound that contradicts the image when the narrative context supplies a
+      reading for it. The mismatch is then interpreted rather than rejected.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "where a departure from literal sound has a narrative reading available"
+  caveats:
+    - text: "the source calls the same removal of expected ambience a fault a page earlier, when it is not deliberate; the difference is intent, which no property of the finished track records"
+      origin: extractor_observed
+    - text: "recorded as one claim with two examples rather than two claims. Removal and contradiction are different operations, but the source introduces both under one sentence about commenting and juxtaposing, and gives them one mechanism. Splitting them would assert a distinction the source does not make."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "office ambience drops away at the cut, replaced by dreamy music, revealing the woman's inner calm", figure_ref: "3.8A-B"}
+      - {description: "a lion's roar over the phrase \"going to hunt for a job\", carrying into a commuter street mixed with animal noises", figure_ref: "3.8C-D"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0019, note: "the deliberate exception to sound continuity"}
+    - {relation: contradicts, target: sk_gote_c003_0049, note: "Chapter Five says never to put a picture on screen with sounds that do not match, then allows the creative exception"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Sound"
+    page_start: 70
+    page_end: 72
+    figure_refs: ["3.8"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0022
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "This editing practice of having either picture or sound start early or end late is known as creating a split edit, an L-cut, or lapping."
+    - "a butt-cut or straight cut where picture and sound end and begin at the same point in time"
+  concept_label: split_edit_offsets_picture_and_sound_cut_points
+  label_origin: extractor_assigned
+  claim: >
+    Picture and sound are separate tracks and need not change at the same instant. Cutting both at
+    once is a butt-cut or straight cut. Offsetting one produces a split edit, also called an L-cut
+    or lapping: sound leading picture when the next shot's audio arrives first, picture leading
+    sound when the outgoing audio continues under the new image. Assemble and rough cuts are
+    normally all butt-cuts; split edits appear when timing is refined in the fine cut.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "any transition, once timing is being refined"
+  caveats:
+    - text: "the source says these can be very engaging when done correctly and can put the brakes on quickly when done incorrectly, without saying what distinguishes the two"
+      origin: source_stated
+    - text: "the placement in the workflow — butt-cuts early, split edits in the fine cut — is stated as normal practice rather than as a requirement"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a man's yelp continuing under a new shot of treetops, from which birds scatter as if the yelp reached them", figure_ref: "3.8E-F"}
+      - {description: "a butt-cut becoming a split edit", figure_ref: "3.8G-H"}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0007, note: "a sound bridge is one form of sound leading picture"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Sound"
+    page_start: 71
+    page_end: 72
+    figure_refs: ["3.8E-H"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0023
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "QUESTION: Is there ever a right way or a wrong way to make an edit? ANSWER: Yes and no."
+    - "in the end, it will be the viewing audience that decides if your choices were right or wrong"
+    - "As long as you have reasons why you made each edit, you are on the right path."
+  concept_label: correctness_is_settled_by_the_audience_not_by_the_rules
+  label_origin: extractor_assigned
+  claim: >
+    There is both a right and a wrong way to edit and there is not. Craft supplies technical methods
+    and reasons; aesthetics supplies other reasons for doing otherwise. How an edit is made and why
+    it is made are different but always interrelated. The final judgement rests with the audience —
+    did the edits work, did the audience notice them — and the editor's standard is simply having a
+    reason for each edit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "judging any completed edit"
+  caveats:
+    - text: "the source's own answer to its chapter question is \"yes and no\", which it does not resolve further"
+      origin: source_stated
+    - text: "this makes the six factors advisory rather than binding, while the chapter that introduces them treats them as the criteria for a good edit; the source does not address the tension"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "keep the chapter's elements in mind and pre-think what the audience would appreciate"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0003, note: "makes the six-factor list advisory"}
+    - {relation: generalises, target: sk_gote_c003_0060, note: "anticipates the closing rule that effective creativity overrules grammar"}
+    - {relation: member_of_system, target: scs_gote_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Three"
+    section: "Is There a Right or Wrong Reason for a Cut?"
+    page_start: 55
+    page_end: 73
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# CHAPTER FOUR — TRANSITIONS AND EDIT CATEGORIES
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_gote_c003_0024
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Each one of these four transitions carries with it its own meaning when viewed within a program."
+    - "Audiences understand these transitions and have certain expectations around their proper, or should we say, more common usage."
+  concept_label: each_transition_type_carries_its_own_learned_meaning
+  label_origin: extractor_assigned
+  claim: >
+    The cut, the dissolve, the wipe and the fade are not interchangeable ways of getting from one
+    shot to the next. Each carries its own meaning when seen within a programme, and audiences hold
+    expectations about how each is properly, or at least more commonly, used. The source announces
+    that it will analyse all four against the six elements introduced in the previous chapter.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any transition between two shots"
+  caveats:
+    - text: "the source qualifies \"proper\" to \"more common\" mid-sentence, weakening a normative claim into a descriptive one"
+      origin: source_stated
+    - text: "the announced plan is to analyse each transition against the same six elements; in execution a different subset is applied to each, which the source never states"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0002, note: "an instance of the learned grammar the book is named for"}
+    - {relation: generalises, target: sk_gote_c003_0025, note: "the cut"}
+    - {relation: generalises, target: sk_gote_c003_0029, note: "the dissolve"}
+    - {relation: generalises, target: sk_gote_c003_0033, note: "the wipe"}
+    - {relation: generalises, target: sk_gote_c003_0037, note: "the fade"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four — Transitions and Edit Categories"
+    section: "chapter opening"
+    page_start: 75
+    page_end: 75
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0025
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "It can be defined as an instantaneous change from one shot to another."
+    - "It is transparent. As a result, it is the one transition that the audience has grown to accept as a form of visual reality."
+  concept_label: the_cut_is_instantaneous_and_transparent_when_well_made
+  label_origin: extractor_assigned
+  claim: >
+    The cut is an instantaneous change from one shot to another and the most frequently used
+    transition. Made at the right moment and satisfying as many of the positive edit elements as
+    possible, it is not consciously noticed — it is transparent — and it is the one transition
+    audiences have come to accept as a form of visual reality. The source also gives its etymology:
+    film strips were physically cut, so editors were called cutters, and the word survives.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Splicing two strips with tape or glue was the easiest, fastest and cheapest transition, so it
+      was used a great deal. Over a century of cinema that frequency is what made its meaning clear
+      to everyone.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any transition"
+  caveats:
+    - text: "transparency is conditional on the edit being well made; the source immediately notes it is possible to make good cuts and not so good cuts"
+      origin: source_stated
+    - text: "the historical explanation is a claim about why the convention formed, offered without citation"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a cut uniting two shots of continuous action", figure_ref: "4.1A-B"}
+      - {description: "a cut ending a sequence and leading the viewer to a new location", figure_ref: "4.1C-D"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0024, note: "first of the four transitions"}
+    - {relation: generalises, target: sk_gote_c003_0027, note: "where the cut is used"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0058, note: "the same invisibility standard stated as a general practice"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Cut"
+    page_start: 76
+    page_end: 79
+    figure_refs: ["4.1"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0026
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "If the two shots at the instantaneous cut are too similar in their composition, even though they are of totally different subject matter, it can appear as a visual \"jump cut\" to the audience."
+    - "Using differences in composition at cut points forces the viewer to immediately engage their eyes and brain and search for the new information in the new shot."
+  concept_label: composition_difference_is_required_at_the_cut_independently_of_subject
+  label_origin: extractor_assigned
+  claim: >
+    Two shots joined at a cut must differ in composition, and this holds even when their subject
+    matter is entirely different. Similar compositions read as a visual jump cut regardless of
+    content. A difference in composition makes the viewer engage and search the new frame for the
+    new information, and while they are searching they do not notice the cut.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The difference forces an immediate visual search. So long as the new composition is not so
+      busy as to confuse, the viewer becomes engrossed in the second shot and the cut passes
+      unnoticed.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any straight cut"
+  caveats:
+    - text: "bounded by the same warning as the eye-trace claim — an overly busy new composition confuses rather than engages"
+      origin: source_stated
+    - text: "this is a materially stronger claim than the camera-angle rule and is easy to miss because it sits inside a numbered list. Two shots of totally different subjects, from unrelated scenes, can still read as a jump purely on compositional similarity."
+      origin: extractor_observed
+  source_stated_problems:
+    - "visual jump cut arising from compositional similarity alone"
+  source_stated_remedies:
+    - "give the second shot an interesting yet different composition from the first"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0025, note: "the composition element as applied to the cut"}
+    - {relation: generalises, target: sk_gote_c003_0013, note: "a second, independent cause of the perceived jump"}
+    - {relation: qualified_by, target: sk_gote_c003_0011, note: "difference must not become difficulty"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Cut, element 3"
+    page_start: 77
+    page_end: 77
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0027
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The cut is most often used where: The action is continuous / There needs to be a change of \"impact\" / There is a change of information or locale"
+  concept_label: when_to_use_a_cut
+  label_origin: extractor_assigned
+  claim: >
+    A cut is the appropriate transition in three situations: where the action is continuous, where a
+    change of impact is needed, and where there is a change of information or locale. The source
+    also positions the cut as the default working transition — the assemble edit should always be
+    built from cuts, and it remains the fastest way to work.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "choosing which of the four transitions to use"
+  caveats:
+    - text: "\"change of impact\" is never defined anywhere in the section; it is the only one of the three conditions given no explanation or example"
+      origin: extractor_observed
+    - text: "the source advises developing the editing skill set around solid cuts and warns that playing too much with the grammar of the cut may cause problems, which is advice about career formation rather than about this transition"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "start every assemble edit with cuts"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0025, note: "usage conditions for the cut"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Cut"
+    page_start: 76
+    page_end: 78
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0028
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "An important element in the efficacy of the dissolve is its duration, or how long it lingers on screen."
+    - "A quick dissolve of just a few overlapping frames ... can imitate a jump cut"
+    - "A long dissolve ... may ... appear more like a superimposition of the two shots rather than a dissolve."
+  concept_label: dissolve_duration_governs_how_it_reads
+  label_origin: extractor_assigned
+  claim: >
+    How long a dissolve lingers determines what the audience reads it as. A dissolve of only a few
+    overlapping frames passes so quickly it can imitate a jump cut if the other edit elements are
+    not met. A dissolve lasting several seconds can, around its midpoint, read as a superimposition
+    rather than a transition. One second is the usual software default; a dissolve may last as long
+    as there is material on both shots, and should last as long as its purpose requires.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any dissolve"
+  caveats:
+    - text: "the one-second default is described as a property of computer video editing software of the time, not as a recommendation"
+      origin: source_stated
+    - text: "this makes duration a seventh element, applied to dissolves, wipes and fades but never to the cut, and never added to the named list of six"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a quick dissolve imitating a jump cut"
+    - "a long dissolve reading as a superimposition"
+  source_stated_remedies:
+    - "let the dissolve last as long as its purpose in the picture requires"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0029, note: "the time element as applied to the dissolve"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Dissolve, element 6"
+    page_start: 81
+    page_end: 82
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0029
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "the dissolve is defined as a gradual change from the ending pictures of one shot into the beginning pictures of the next shot"
+    - "unlike the straight cut, it attracts attention to itself on purpose"
+    - "So the dissolve chiefly allows the editor to play with time."
+  concept_label: the_dissolve_is_a_deliberately_visible_manipulation_of_time
+  label_origin: extractor_assigned
+  claim: >
+    A dissolve is a gradual change from the end of one shot into the beginning of the next, achieved
+    by superimposing both while ramping one down in opacity and the other up, so the images are seen
+    overlapping. Unlike the cut it attracts attention to itself on purpose. Its chief use is to play
+    with time — condensing a long event into a montage, moving into a flashback, or slowing events
+    with slow motion so the audience has time to absorb them. Also called a lap dissolve, a lap, or
+    a video mix.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Simultaneous downward and upward ramping of opacity over a period of time, so that both images
+      are on screen together while one replaces the other.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, music_video]
+    conditions: "transitions involving a change or compression of time"
+  caveats:
+    - text: "the source says such treatments are usually planned by the filmmakers from the outset, while encouraging editors to experiment with dissolving time if scenes run long"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "five frames showing one dissolve in progress: a stone gateway, three superimposed midpoints, then a building alone", figure_ref: "4.2"}
+      - {description: "a day at an amusement park shown as ten dissolving shots lasting one minute of screen time", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0024, note: "second of the four transitions"}
+    - {relation: generalises, target: sk_gote_c003_0030, note: "where the dissolve is used"}
+    - {relation: generalises, target: sk_gote_c003_0028, note: "its duration governs how it reads"}
+    - {relation: generalises, target: sk_gote_c003_0031, note: "its affective association"}
+    - {relation: contradicts, target: sk_gote_c003_0025, note: "deliberately noticeable, where the cut aims at transparency"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Dissolve"
+    page_start: 80
+    page_end: 82
+    figure_refs: ["4.2"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["4.2"]}
+
+- sk_id: sk_gote_c003_0030
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The dissolve is correctly used where: There is a change in time / There is a change in locale / Time needs to be slowed down or sped up / There is an emotional appeal regarding the subject in the story / There is a strong visual relationship between the outgoing and the incoming images"
+  concept_label: when_to_use_a_dissolve
+  label_origin: extractor_assigned
+  claim: >
+    Five conditions call for a dissolve: a change in time, a change in locale, a need to slow or
+    speed time, an emotional appeal concerning the subject, or a strong visual relationship between
+    the outgoing and incoming images. The source's composition guidance adds that the two shots
+    should overlap without visual contradiction at the midpoint, either by opposing frames that
+    balance or by matching frames of different subjects — the match dissolve.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "choosing which of the four transitions to use"
+  caveats:
+    - text: "the camera-angle requirement is explicitly negated for one case: footage collapsing time from a single fixed angle is a legitimate exception the source names itself"
+      origin: source_stated
+    - text: "\"a strong visual relationship\" is the exact condition the wipe requires the absence of, so the two transitions are separated by this criterion alone in the source's own lists"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "dissolving from an extreme close-up of an eye to a close-up of the full moon — two round objects matching in shape", figure_ref: null}
+      - {description: "a character wandering an apartment across an afternoon, dissolved from one unmoving camera angle to compress time", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0029, note: "usage conditions for the dissolve"}
+    - {relation: contradicts, target: sk_gote_c003_0034, note: "requires the visual relationship the wipe requires the absence of"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Dissolve"
+    page_start: 80
+    page_end: 81
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0031
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "It is often said that dissolves are the \"tear jerker\" transition."
+    - "As they allow the viewer time to think and feel, they are associated with more languid, somber, or \"thoughtful\" emotional responses."
+  concept_label: dissolves_carry_a_languid_somber_thoughtful_register
+  label_origin: extractor_assigned
+  claim: >
+    Dissolves carry an emotional register of their own. They are commonly called the tear jerker
+    transition and are associated with languid, somber or thoughtful responses, and they are
+    effective in romantic or sad sequences, particularly with slow motion.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The duration gives the viewer time to think and feel, and to view and digest the meaning of
+      the material.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "narrative sequences with an emotional intent"
+  caveats:
+    - text: "attributed as received opinion — \"it is often said\" — rather than asserted by the authors directly"
+      origin: source_stated
+    - text: "an affective claim about how a formal device is felt, with no evidence beyond the attribution; it is the clearest example in the section of a transition being credited with a mood independent of content"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0029, note: "the affective reading of the dissolve"}
+    - {relation: depends_on, target: sk_gote_c003_0028, note: "the register is attributed to the duration"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, culturally_bounded]
+    source_uncertainty: source_states_it_as_tradition
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Dissolve"
+    page_start: 82
+    page_end: 82
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0032
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "you will be hard pressed to find dissolves in the daily news broadcast"
+    - "As they are understood to represent the manipulation of time, there is little appropriate usage of dissolves in factual news reporting"
+    - "but even this rule of visual grammar is changing as we move deeper into the media overload of the twenty-first century"
+  concept_label: transition_conventions_are_genre_bound_and_historically_unstable
+  label_origin: extractor_assigned
+  claim: >
+    Which transitions are appropriate depends on genre, and the boundaries move. Dissolves belong in
+    fiction, television drama and music video but are rare in daily news, because a device
+    understood to represent the manipulation of time has little legitimate place in factual
+    reporting. The source states that even this rule of visual grammar is changing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The dissolve's established meaning — manipulation of time — is what makes it inappropriate to
+      factual reporting. The constraint follows from the learned meaning, not from any technical
+      property.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, news_production, music_video]
+    conditions: "matching transition choice to genre"
+  caveats:
+    - text: "the source dates its own claim, writing that the rule is changing as we move deeper into the media overload of the twenty-first century; the book is from 2009"
+      origin: source_stated
+    - text: "this is the section's one explicit acknowledgement that the grammar it teaches is historically contingent, and it is made in passing about a single transition rather than as a general position"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0002, note: "a learned grammar can shift, which the framing claim does not otherwise address"}
+    - {relation: qualifies, target: sk_gote_c003_0029, note: "bounds where the dissolve belongs"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, historical_claim, culturally_bounded]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Dissolve"
+    page_start: 82
+    page_end: 82
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0033
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The wipe may be thought of as a cross between a cut and a dissolve."
+    - "You get to see both images on the screen at once like a dissolve but there is usually no superimposition involved."
+    - "Wipes are meant to be noticed by the audience"
+  concept_label: the_wipe_replaces_the_frame_without_superimposition
+  label_origin: extractor_assigned
+  claim: >
+    A wipe sits between a cut and a dissolve: it has a duration like a dissolve and both images are
+    on screen at once, but they do not superimpose — one image is pushed off and replaced by the
+    other along a moving boundary. Wipes are meant to be noticed, often appear in shapes or with
+    graphic elements, and can zigzag, spiral or travel diagonally, horizontally or vertically. The
+    source describes the wipe as the fanciful way of moving around time and space, and as often
+    acting as a filler bridging two otherwise unjoinable segments.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "programmes calling for graphic treatment at transitions"
+  caveats:
+    - text: "the source notes that in 1930s Hollywood cinema wipes were a more graphically pleasing alternative to dissolves, and that in the current visual marketplace they are appropriate in all genres — a reversal it does not comment on"
+      origin: extractor_observed
+    - text: "\"usually no superimposition\" leaves an unstated exception open"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "one image wiped off screen and replaced by another", figure_ref: "4.3"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0024, note: "third of the four transitions"}
+    - {relation: generalises, target: sk_gote_c003_0034, note: "where the wipe is used"}
+    - {relation: generalises, target: sk_gote_c003_0035, note: "which requirements it waives"}
+    - {relation: generalises, target: sk_gote_c003_0036, note: "the natural wipe"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Wipe"
+    page_start: 84
+    page_end: 85
+    figure_refs: ["4.3"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0034
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The wipe is correctly used where: There is a change in time / There is a change in locale / There is NO strong visual relationship between the outgoing and the incoming images / Projects call for more visually graphic treatments at transitions"
+  concept_label: when_to_use_a_wipe
+  label_origin: extractor_assigned
+  claim: >
+    A wipe is called for by a change in time, a change in locale, the absence of any strong visual
+    relationship between the outgoing and incoming images, or a project needing more graphic
+    treatment at its transitions. The source states that where there is no purposeful way to get
+    from one place, time or topic to another, a creative wipe can entertain the viewer across the
+    transition and deliver them somewhere new.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "choosing which of the four transitions to use"
+  caveats:
+    - text: "the source capitalises NO in its own list, marking the absence of a visual relationship as the criterion that separates the wipe from the dissolve"
+      origin: source_stated
+    - text: "this is the only transition the source justifies by the editor having no better option — the need to leave a location or segment is said to be motivation enough"
+      origin: extractor_observed
+  source_stated_problems:
+    - "no purposeful way of getting from one place or time or topic to another"
+  source_stated_remedies:
+    - "use a creative wipe to carry the viewer across to the new time, place or topic"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0033, note: "usage conditions for the wipe"}
+    - {relation: contradicts, target: sk_gote_c003_0030, note: "requires the absence of the visual relationship the dissolve requires the presence of"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Wipe"
+    page_start: 84
+    page_end: 84
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0035
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "A good wipe, often a highly stylized transition effect, does not always have to follow the standard elements that lead to good edits"
+    - "the framing of the shots just ending and just beginning around the wipe do not require any special visual connection"
+    - "there is no real need to adhere to the differing camera angle rules either"
+  concept_label: the_wipe_waives_the_composition_and_camera_angle_requirements
+  label_origin: extractor_assigned
+  claim: >
+    A wipe is exempt from two of the six elements. Because the wiping element is itself an
+    interesting graphical composition, the framings on either side need no special visual
+    connection, and the camera-angle rule does not apply — the source says camera angles are beside
+    the point because the wipe wipes the slate clean and introduces a new deal.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The graphic element occupying the transition does the work that compositional and angular
+      difference would otherwise do: it separates the two shots for the viewer.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any wipe"
+  caveats:
+    - text: "the source still encourages the editor to explore composition and angle creatively, so the waiver is permission rather than instruction"
+      origin: source_stated
+    - text: "this is one of two places where the source suspends its own six-element framework for a specific transition or edit type, without acknowledging that it has a general practice of doing so"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0033, note: "which requirements the wipe waives"}
+    - {relation: contradicts, target: sk_gote_c003_0012, note: "suspends the camera-angle rule"}
+    - {relation: contradicts, target: sk_gote_c003_0026, note: "suspends the composition-difference rule"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0044, note: "the concept edit waives all six on the same pattern"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Wipe, elements 3 and 4"
+    page_start: 84
+    page_end: 85
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0036
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "a clever filmmaker may have conceived of strong vertical or horizontal movements within the shot composition and the clever editor will turn these visual elements into what is called a natural wipe"
+  concept_label: natural_wipe_uses_in_frame_movement_as_the_wiping_element
+  label_origin: extractor_assigned
+  claim: >
+    Where the outgoing shot contains strong vertical or horizontal movement, an object within the
+    action can appear to push, pull or wipe across the screen, and the editor can use that movement
+    as the transition itself. The source calls this a natural wipe and says it requires careful
+    planning at the shooting stage.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "footage containing strong directional in-frame movement"
+  caveats:
+    - text: "the source says the resulting transition may be executed as either a cut or a wipe, so the natural wipe is a way of concealing a transition rather than a transition type"
+      origin: source_stated
+    - text: "depends on production having conceived the movement in advance, which the source states, so it is not available to an editor from arbitrary coverage"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0033, note: "a variant of the wipe"}
+    - {relation: specialises, target: sk_gote_c003_0006, note: "in-frame movement serving as the motivating element"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Wipe, element 3"
+    page_start: 84
+    page_end: 84
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0037
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Motion pictures or sequences from television programs traditionally begin and end with a fade."
+    - "the screen starts out entirely black and then gradually the black fades away to reveal a fully visible image underneath it signaling that the story has begun"
+  concept_label: the_fade_marks_the_boundary_of_a_program_or_act
+  label_origin: extractor_assigned
+  claim: >
+    A fade in reveals the image from an opaque field, usually black; a fade out returns it to one.
+    Their conventional function is to signal that a story, chapter, scene, sequence or act has begun
+    or ended, and they are also used where there is a change in time or locale. Scripts conventionally
+    open with "fade in" and close with "fade out". The source describes them as transitions into and
+    out of the dream-like state of motion picture viewing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "boundaries of a programme, act, scene or sequence"
+  caveats:
+    - text: "fades can take any colour but the source says black is usual and white very occasional"
+      origin: source_stated
+    - text: "the fade is analysed against only four elements — motivation, composition, sound and time. Information, camera angle and continuity are silently absent, making this the clearest case of the named six-element set not being the set actually applied."
+      origin: extractor_observed
+    - text: "for the fade, the source says the fact that the piece is beginning or ending is motivation enough, which makes the motivation element self-satisfying rather than a test"
+      origin: extractor_observed
+  source_stated_problems:
+    - "staring at an all black screen for too long, without any new information on the audio track, will feel off-putting"
+  source_stated_remedies:
+    - "fade up the new audio under the black before the picture fades in"
+  examples:
+    positive:
+      - {description: "a fade out ending one sequence, then a fade in on the first shot of the next", figure_ref: "4.4"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0024, note: "fourth of the four transitions"}
+    - {relation: generalises, target: sk_gote_c003_0038, note: "its composition requirement"}
+    - {relation: specialises, target: sk_gote_c003_0022, note: "fading audio up under black is an instance of sound leading picture"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Fade"
+    page_start: 86
+    page_end: 87
+    figure_refs: ["4.4"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0038
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "It can be very helpful in achieving a clean fade in or fade out to use a shot that will either begin or end (or both) with a low contrast image."
+    - "the discrepancy between the light and dark areas of the frame will create an imbalance in brightness and make the fading action appear uneven or poorly timed"
+  concept_label: low_contrast_frames_fade_evenly_high_contrast_frames_do_not
+  label_origin: extractor_assigned
+  claim: >
+    A fade reads as clean when the shot at the fade point is low in contrast. Large areas of dark
+    and light within the frame make the fade appear uneven or poorly timed, because as opacity
+    gradually fills in or removes the image the difference in brightness between those areas creates
+    an imbalance.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Opacity changes uniformly across the frame, but a frame with strong light and dark areas does
+      not reach or leave the fade colour at a uniform apparent rate, so the transition looks
+      mistimed.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "the shot at either end of a fade"
+  caveats:
+    - text: "this is one of the few claims in the section grounded in an optical property of the image rather than in audience convention, and it constrains shot selection rather than shot order"
+      origin: extractor_observed
+    - text: "the source gives no threshold for what counts as low contrast"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the fading action appears uneven or poorly timed"
+  source_stated_remedies:
+    - "choose a shot that begins or ends with a low contrast image at the fade point"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0037, note: "the composition element as applied to the fade"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Fade, element 2"
+    page_start: 86
+    page_end: 86
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0039
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Our five categories for the different types of edit are: Action edit / Screen position edit / Form edit / Concept edit / Combined edit"
+    - "None of these lists are exhaustive and these five types of edits are no exception"
+    - "There may be no industry standards for the terminology, but the definitions will still apply across the board."
+  concept_label: five_categories_of_edit_type_named_without_claim_to_standard
+  label_origin: extractor_assigned
+  claim: >
+    Edits fall into five named categories — action, screen position, form, concept and combined —
+    which cover most of the major kinds of edit performable with most material. The source states
+    the list is not exhaustive, that there may be no industry standard for the terminology, and that
+    the definitions nevertheless apply generally. All five are said to benefit from the same six
+    elements that strengthen any edit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "classifying an edit already decided upon"
+  caveats:
+    - text: "the source disclaims both exhaustiveness and standard terminology in the same paragraph that introduces the categories"
+      origin: source_stated
+    - text: "the source says the genre being edited helps decide which kinds of edit are available, without saying how"
+      origin: source_stated
+    - text: "the categories classify the RELATION between two shots, whereas the four transitions classify the MECHANICS of joining them. The source never states this distinction, though it depends on it — it says which transition each category is usually executed with."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0040, note: "the action edit"}
+    - {relation: generalises, target: sk_gote_c003_0041, note: "the screen position edit"}
+    - {relation: generalises, target: sk_gote_c003_0042, note: "the form edit"}
+    - {relation: generalises, target: sk_gote_c003_0043, note: "the concept edit"}
+    - {relation: generalises, target: sk_gote_c003_0045, note: "the combined edit"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Five Major Categories of Edit Types"
+    page_start: 88
+    page_end: 88
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0040
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "this category encompasses edits between shots that depict continuous action or movement of subjects or objects"
+    - "Time is unbroken."
+    - "Since you cut on action, the audience is not perceiving the cut, but merely registering the presentation of new information"
+  concept_label: action_edit_joins_continuous_movement_across_the_cut
+  label_origin: extractor_assigned
+  claim: >
+    An action edit joins two shots depicting one continuous action or movement, with different
+    framings and unbroken time, so the movement appears smooth and continuous across the cut. It is
+    nearly always a straight cut, and is also called a movement edit or a continuity edit. The
+    continuity of movement must match at the cut point, and the editor is free to cut at any point
+    during the overlapping action.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because the cut falls on a movement the viewer is already tracking, they do not perceive the
+      cut itself — they register the new information the second framing supplies.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "coverage containing overlapping action from two framings"
+  caveats:
+    - text: "the source says continuity is the most important aspect of this category, which makes it the one edit type whose defining property is also one of the six elements"
+      origin: extractor_observed
+    - text: "the freedom to cut at any point during the action is asserted without qualification, though the chapter elsewhere treats the exact moment as a matter of judgement"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a long shot of a man lifting a book from a library table, cutting to a medium close-up continuing the lift and his eyes scanning the page", figure_ref: "4.5"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0039, note: "first of the five categories"}
+    - {relation: depends_on, target: sk_gote_c003_0017, note: "requires continuity of movement to hold"}
+    - {relation: specialises, target: sk_gote_c003_0027, note: "the cut's first usage condition is continuous action"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Action Edit"
+    page_start: 88
+    page_end: 90
+    figure_refs: ["4.5"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0041
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "\"Directional\" because the edit helps direct the viewer's eyes around the screen, and \"placement\" because it is the unique placement of subjects or objects in the two shots cut together that make the viewer's eyes move around the frame."
+    - "one strong visual element occupies one side of the frame and casts its attention or a movement toward the other side"
+  concept_label: screen_position_edit_moves_the_eye_across_the_frame
+  label_origin: extractor_assigned
+  claim: >
+    A screen position edit uses the placement of subjects in two shots to move the viewer's eyes
+    around the screen. One strong element occupies one side of the frame and directs attention or
+    movement toward the other; the incoming shot puts the object of that attention on the opposite
+    side, satisfying the viewer's need to see something occupy that space. Also called a directional
+    or placement edit. It can be a cut or a dissolve, but is usually a cut where no passage of time
+    is implied.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The mirrored composition creates and then discharges an expectation: the viewer's eyes are on
+      one side, the attention in frame points across, and the cut rewards the movement by placing
+      the new subject where the eyes were sent.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "coverage designed, through storyboards or script notes, to lead the eye across the frame"
+  caveats:
+    - text: "the source states plainly that not every screen position edit will address all six elements, \"but the more the merrier\" — a third instance of the framework being treated as optional"
+      origin: source_stated
+    - text: "the source says the shots must have been conceived and composed for this purpose during production, so the category describes what an editor can recognise rather than create"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a wide two-shot, then a single of character A at frame left gesturing right, then a matching single of character B at frame right", figure_ref: "4.6"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0039, note: "second of the five categories"}
+    - {relation: specialises, target: sk_gote_c003_0010, note: "the eye-trace factor raised to a category"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Screen Position Edit"
+    page_start: 90
+    page_end: 91
+    figure_refs: ["4.6"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0042
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "a transition from a shot that has a pronounced shape, color, dimension or sound, to another shot that has a matching shape, color, dimension, or sound"
+    - "Rarely is the form edit just blind luck on the part of the editor."
+  concept_label: form_edit_matches_shape_colour_dimension_or_sound_across_the_cut
+  label_origin: extractor_assigned
+  claim: >
+    A form edit joins a shot with a pronounced shape, colour, dimension or sound to another whose
+    shape, colour, dimension or sound matches it. It is usually executed as a dissolve — then called
+    a match dissolve — particularly where location or time changes, though it can be a straight cut
+    when sound provides the motivation. It must normally be conceived during writing or
+    pre-production, because the matching elements require deliberate composition and sometimes
+    deliberate screen direction.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Consistency of shape and composition keeps the viewer's eye trained on one part of the screen,
+      giving them the focus needed to read the meaning of the juxtaposition. During the dissolve the
+      two objects occupy the same positions, and that union is what generates the meaning.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, advertising, television_commercials]
+    conditions: "footage containing deliberately matched forms"
+  caveats:
+    - text: "the source names shape, colour, dimension and sound as matchable, but every example given matches shape and position only; colour and dimension are never demonstrated"
+      origin: extractor_observed
+    - text: "the reproduction is monochrome throughout, so a colour-matched form edit could not have been shown in this edition even had one been offered"
+      origin: extractor_observed
+    - text: "the cigarette-and-headstone example is later said to be very much like a concept edit, so the source's own boundary between the two categories is soft"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a jet tyre, car tyre, bicycle wheel and wagon wheel, all round and framed at the same size and centre position, dissolving in sequence to compress a journey", figure_ref: "4.7A-D"}
+      - {description: "cigarette packs standing in a white field dissolving into headstones standing in the same positions", figure_ref: "4.7E-G"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0039, note: "third of the five categories"}
+    - {relation: depends_on, target: sk_gote_c003_0030, note: "requires the strong visual relationship the dissolve calls for"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0043, note: "the source uses the cigarette-and-headstone example for both categories and says so"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Form Edit"
+    page_start: 91
+    page_end: 93
+    figure_refs: ["4.7"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["4.7"]}
+
+- sk_id: sk_gote_c003_0043
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The concept edit may stand alone as a purely mental suggestion."
+    - "through the juxtaposition of these visual elements at that particular time in the story, they can generate implied meaning not explicitly told in the story"
+  concept_label: concept_edit_generates_meaning_by_juxtaposition
+  label_origin: extractor_assigned
+  claim: >
+    A concept edit joins two shots of unrelated content so that their juxtaposition, at that
+    particular point in the story, generates an implied meaning the story never states. It can cover
+    changes of place, time, people or story without an obvious visual break, and is also called a
+    dynamic edit or an idea edit. It is usually planned early by the filmmaker, who already knows
+    the pairing will convey a mood, make a dramatic emphasis or create an abstract idea. It is rare
+    but not impossible for an editor to build one from footage not intended for it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The meaning is produced in the viewer's mind by the pairing itself, not by any property of
+      either shot. The source's example — a man asked how it feels to be getting married, cut to a
+      shackled prisoner on a television, cut back to him watching — carries a reading neither shot
+      contains.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "two shots whose pairing supports a reading"
+  caveats:
+    - text: "the source warns these edits can be tricky and that an unclear intended meaning contributes an unwanted interruption of the visual information flow — the risk is the same device failing, not a separate failure mode"
+      origin: source_stated
+    - text: "no test is offered for whether the intended meaning will be clear to a viewer, which is the only thing that separates a concept edit from a mistake"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the intended meaning is not clear to the viewer"
+    - "an unwanted interruption of the visual information flow"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a newly engaged man asked how it feels, cut to a close-up of a prison film showing shackled ankles, cut to the couple watching it", figure_ref: "4.8"}
+      - {description: "cigarette packs dissolving into gravestones, read as smoking leading to early death", figure_ref: "4.7E-G"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0039, note: "fourth of the five categories"}
+    - {relation: generalises, target: sk_gote_c003_0044, note: "and it waives the six elements entirely"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Concept Edit"
+    page_start: 93
+    page_end: 94
+    figure_refs: ["4.8"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0044
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The six elements need not be applied here."
+    - "It is not the elements in the shots that make the concept edit, but the effect of what happens in the viewer's mind when these two shots are joined together at that time."
+  concept_label: the_concept_edit_waives_all_six_elements
+  label_origin: extractor_assigned
+  claim: >
+    The six elements do not apply to a concept edit. What makes the edit is not any property of the
+    two shots but the effect produced in the viewer's mind by joining them at that moment. The
+    source states plainly that neither shot has anything to do with the other.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "any concept edit"
+  caveats:
+    - text: "this is the strongest suspension of the framework in the section: not a relaxation of two elements as with the wipe, but a statement that none applies"
+      origin: extractor_observed
+    - text: "it also relocates where an edit's quality lives. For the other four categories quality is a property of the shot pair; here it is a property of the viewer's response, which the editor cannot inspect."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0043, note: "the concept edit's exemption"}
+    - {relation: contradicts, target: sk_gote_c003_0003, note: "denies the six-factor framework applies here at all"}
+    - {relation: contradicts, target: sk_gote_c003_0039, note: "against the statement that all five categories benefit from the same six elements"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0035, note: "the wipe's partial waiver, same pattern"}
+    - {relation: member_of_system, target: scs_gote_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Concept Edit"
+    page_start: 94
+    page_end: 94
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0045
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The combined edit combines two or more of the four other types of edits."
+    - "It would be rare that two, unplanned shots, could be massaged into a combined edit by the editor alone."
+  concept_label: combined_edit_stacks_several_edit_categories_at_one_transition
+  label_origin: extractor_assigned
+  claim: >
+    A combined edit is one transition that satisfies two or more of the other four categories at
+    once — for instance an action edit that is simultaneously a screen position edit, a form edit
+    and a concept edit. It requires substantial pre-production planning and is rarely achievable by
+    the editor from unplanned footage. The source calls these powerful storytelling moments and
+    notes the transition itself is still just a cut, dissolve or wipe.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "transitions planned in advance to carry several relations at once"
+  caveats:
+    - text: "the source's own review calls the combined edit \"still just a cut, dissolve, or wipe at one transition\", which confirms that the five categories and the four transitions are two independent classifications of the same event"
+      origin: source_stated
+    - text: "the worked example is described in the conditional — if planned well and shot properly — so the category is illustrated by a hypothetical rather than by a case"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a boy tossing a flashlight to his brother, cut to a sword landing in the hand of the same brother now armoured in a cave — action, screen position, form and concept at once", figure_ref: "4.9"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0039, note: "fifth of the five categories"}
+    - {relation: depends_on, target: sk_gote_c003_0040, note: "composed from the other categories"}
+    - {relation: depends_on, target: sk_gote_c003_0041, note: "composed from the other categories"}
+    - {relation: depends_on, target: sk_gote_c003_0042, note: "composed from the other categories"}
+    - {relation: depends_on, target: sk_gote_c003_0043, note: "composed from the other categories"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "The Combined Edit"
+    page_start: 94
+    page_end: 95
+    figure_refs: ["4.9"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0046
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "The job of the editor is not to memorize the six elements of good edits or the five types of edit categories as presented in this book, but to use the reasoning behind these concepts to inform his or her choices while making the edits."
+  concept_label: the_taxonomy_is_for_reasoning_with_not_for_memorising
+  label_origin: extractor_assigned
+  claim: >
+    The categories and elements are not to be memorised. What matters is using the reasoning behind
+    them to inform choices while cutting. What is important is knowing that cuts, dissolves, wipes
+    and fades are made differently, mean different things, and give the audience different
+    experiences; the goal is joining shots at the right time, in the right way, for the right
+    reasons.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "how a learner should hold the book's framework"
+  caveats:
+    - text: "this appears under the heading \"Will I Be Quizzed on Any of This?\", framed for a student reader, but it states the source's own position on the status of its taxonomy"
+      origin: extractor_observed
+    - text: "it partly resolves the tension created by the framework's silent exceptions: if the lists are reasoning aids rather than tests, the exceptions are not inconsistencies. The source does not draw that connection itself."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0003, note: "downgrades the six elements to reasoning aids"}
+    - {relation: qualifies, target: sk_gote_c003_0039, note: "and the five categories with them"}
+    - {relation: generalises, target: sk_gote_c003_0023, note: "consistent with the chapter-three position that reasons matter more than rules"}
+    - {relation: member_of_system, target: scs_gote_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Four"
+    section: "Will I Be Quizzed on Any of This?"
+    page_start: 96
+    page_end: 96
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# CHAPTER FIVE — GENERAL PRACTICES FOR EDITORS
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_gote_c003_0047
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Sound is a partner in the production and must be edited with the same care and attention to detail as the visual elements."
+    - "The ear and the eye work in unison, supplementing information to each other, so any conflict between the two will cause confusion."
+  concept_label: sound_and_vision_are_partners_not_rivals
+  label_origin: source_verbatim
+  claim: >
+    Sound must be edited with the same care as picture. Ear and eye work in unison and supplement
+    each other, so conflict between them causes confusion. Aural information should extend and
+    expand the message of the visuals — a car passing an airport sign is better understood with jet
+    engines under it; a large truck demands the sound of a large engine. Where one of the two
+    dominates a shot or scene, that should be the editor's conscious choice.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The two channels supplement each other's information. Reinforcing the picture with matching
+      sound delivers a multi-sensory experience that is more easily understood; contradiction
+      between them produces confusion and rivalry in the viewer's mind.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "any edited material"
+  caveats:
+    - text: "the source observes it is surprising how many editors allow sound to fight the picture, so it treats this as a common failure rather than an obvious truth"
+      origin: source_stated
+    - text: "the exception is stated in the same passage — unless conflict is the creative intention of the filmmakers — which makes the rule conditional on intent"
+      origin: source_stated
+  source_stated_problems:
+    - "the sound fights the picture"
+    - "confusion and rivalry in the mind of the viewer"
+  source_stated_remedies:
+    - "edit sound with the same care and attention to detail as picture"
+    - "add the sound that reinforces what the picture shows"
+  examples:
+    positive:
+      - {description: "a car passing an \"Airport\" road sign, with jet engine sound added", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0048, note: "the mechanism offered for why sound leads"}
+    - {relation: generalises, target: sk_gote_c003_0049, note: "the applied rule"}
+    - {relation: member_of_system, target: scs_gote_c003_005}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five — General Practices for Editors"
+    section: "Sound and Vision are Partners and not Rivals"
+    page_start: 98
+    page_end: 98
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0048
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "sound can more quickly create reality than vision"
+    - "The eye tends to take what it sees factually, whereas sound can stimulate the imagination in a more direct way."
+  concept_label: sound_creates_reality_faster_than_vision
+  label_origin: extractor_assigned
+  claim: >
+    Sound establishes a reality more quickly than picture does. The eye takes what it sees as fact,
+    while sound reaches the imagination more directly. The source draws the working consequence that
+    stimulating the ear to help the eye is one of the editor's basic tasks.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "any edited material"
+  caveats:
+    - text: "an asymmetry claim about two perceptual channels, offered with no evidence and no mechanism beyond restating it — the strongest unsupported assertion in the section"
+      origin: extractor_observed
+    - text: "it is nevertheless load-bearing: it is the stated reason sound deserves equal care and the reason a sound bridge or a contradicting sound works at all"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "stimulate the ear to help the eye"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0047, note: "the asymmetry that justifies the partnership rule"}
+    - {relation: generalises, target: sk_gote_c003_0007, note: "explains why an unexplained sound can carry a transition"}
+    - {relation: generalises, target: sk_gote_c003_0021, note: "and why contradicting sound is read rather than rejected"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Sound and Vision are Partners and not Rivals"
+    page_start: 98
+    page_end: 98
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0049
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "an editor should never have a picture on the screen with sounds that do not match"
+    - "unless, of course, this is the creative intention of the filmmakers"
+  concept_label: picture_and_sound_must_match_unless_mismatch_is_intended
+  label_origin: extractor_assigned
+  claim: >
+    In its simplest form the rule is that a picture should never be on screen with sounds that do
+    not match it — except where the mismatch is the filmmakers' creative intention.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, sound_editing]
+    conditions: "any shot with sound"
+  caveats:
+    - text: "the exception is as broad as the rule. Chapter Three spends two pages teaching deliberate mismatch as a technique, so in practice the rule forbids only unintended mismatch."
+      origin: extractor_observed
+    - text: "nothing in the finished material distinguishes an intended mismatch from an accident, so the rule cannot be applied by inspecting the work — only by knowing the intent"
+      origin: extractor_observed
+  source_stated_problems:
+    - "picture on the screen with sounds that do not match"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0047, note: "the partnership rule stated as an instruction"}
+    - {relation: contradicts, target: sk_gote_c003_0021, note: "against the chapter-three technique of deliberate sound contradiction, reconciled only by intent"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Sound and Vision are Partners and not Rivals"
+    page_start: 98
+    page_end: 98
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0050
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "do your best not to cut apart a shot that stands on its own, intact"
+    - "Sometimes the best choice for an editor to make is to not cut a shot at all, but simply time its entrance and exit within the sequence."
+  concept_label: leave_a_self_sufficient_shot_intact
+  label_origin: extractor_assigned
+  claim: >
+    A shot that is good and complete in itself — with a beginning, a middle and an end — should not
+    be cut apart, especially where the result would be no better or more interesting and would not
+    serve the audience better than the shot as recorded. Sometimes the editor's best choice is not
+    to cut the shot at all, only to time when it enters and leaves the sequence. The source adds
+    that if a shot is boring, the fault may lie in the shot type, the composition, the script or the
+    performance rather than in its length.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "a shot that is complete in itself"
+  caveats:
+    - text: "the source immediately qualifies: a long monologue should still be broken by reaction shots, and only an unwitnessed monologue with no reason for flashback may stand unedited"
+      origin: source_stated
+    - text: "this is the section's counterweight to the information rule, and the two are never explicitly reconciled — one says discard a shot that adds nothing new, this says leave a self-sufficient shot alone"
+      origin: extractor_observed
+  source_stated_problems:
+    - "cutting up a shot just so the audience should have something else to look at is a poor motivation"
+    - "it may only serve to break the monologue and disturb the audience"
+  source_stated_remedies:
+    - "time the shot's entrance and exit rather than cutting into it"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_gote_c003_0005, note: "against the rule that a shot adding no new information may not belong"}
+    - {relation: qualified_by, target: sk_gote_c003_0051, note: "the monologue exception"}
+    - {relation: specialises, target: sk_gote_c003_0006, note: "an application of the motivation requirement to the decision not to cut"}
+    - {relation: member_of_system, target: scs_gote_c003_005}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "There Should Be a Reason for Every Edit"
+    page_start: 100
+    page_end: 100
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0051
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "These reaction shots should be shown to help break up the continual, verbal assault of the one character and to provide new information about the listening party"
+  concept_label: reaction_shots_break_a_monologue_and_inform_about_the_listener
+  label_origin: extractor_assigned
+  claim: >
+    A long monologue delivered to another person should still be cut visually. The listener will
+    react facially or bodily, and showing those reactions both breaks up the continuous speech and
+    supplies new information about the listener. The exception is a character talking to himself
+    with no reason to reference other shots, where the monologue may stand unedited.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "extended dialogue delivered to a present listener"
+  caveats:
+    - text: "the justification is the information rule, so the reaction shot qualifies as an edit for the same reason any shot does; the source does not treat it as a special licence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the continual, verbal assault of the one character"
+  source_stated_remedies:
+    - "cut in a reaction shot of the listening party"
+  examples:
+    positive:
+      - {description: "a reaction shot cut into a long monologue", figure_ref: "5.1"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0050, note: "the exception to leaving a shot intact"}
+    - {relation: specialises, target: sk_gote_c003_0004, note: "justified by the new-information rule"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "There Should Be a Reason for Every Edit"
+    page_start: 100
+    page_end: 100
+    figure_refs: ["5.1"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0052
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Some call this the MTV effect thanks to the quick cutting of many of the music videos once found on that cable network."
+    - "This tendency has developed alarmingly to where a shot lasting more than three seconds is viewed by some producers and directors as \"boringly long.\""
+  concept_label: fast_cutting_norm_has_shortened_the_acceptable_shot
+  label_origin: extractor_assigned
+  claim: >
+    A very fast paced editing style, which some call the MTV effect after music video cutting, has
+    become widespread, to the point where some producers and directors regard a shot longer than
+    three seconds as boringly long. The source calls the development alarming while allowing that
+    quick cuts can be very effective and have their place like all styles, and that what is
+    acceptable in an action sequence is not acceptable in a love scene.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing, music_video]
+    conditions: "contemporary practice as of the source's writing"
+  caveats:
+    - text: "the source calls the tendency alarming, which is a judgement rather than an observation, and states it as such"
+      origin: source_stated
+    - text: "a claim about industry norms at the time of writing (2009), attributed to unnamed producers and directors; nothing establishes how widely the three-second figure was held"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0053, note: "bounds the describe-it-aloud method against prevailing pace"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "There Should Be a Reason for Every Edit"
+    page_start: 100
+    page_end: 101
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0053
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "it is essential to give the eyes enough time to read and absorb the visual information"
+    - "you could describe, in your mind, what you are seeing in the shot ... \"There is a house in the hills, there is smoke coming out of the chimney, a man is walking to the house, it is evening because the sun is setting. Cut!\" And that is the length of the shot."
+  concept_label: shot_length_set_by_describing_the_shot_contents_aloud
+  label_origin: extractor_assigned
+  claim: >
+    A shot must run long enough for the eyes to read and absorb its visual information. To find that
+    length, silently describe what is in the shot; the time the description takes is the length of
+    the shot. The source's justification is that if the extractor's own eyes and brain need that
+    much time to digest the image, most viewers will comprehend it at about the same rate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Describing the content aloud takes roughly as long as apprehending it, and comprehension rates
+      are assumed to be similar across viewers, so one person's description time stands in for the
+      audience's reading time.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "deciding the duration of an informational or establishing shot"
+  caveats:
+    - text: "the assumption that most viewers comprehend at about the same rate as the editor is stated but not supported"
+      origin: extractor_observed
+    - text: "this is the section's only operational method for a decision it elsewhere assigns to a felt beat, and the source does not relate the two"
+      origin: extractor_observed
+    - text: "the method scales with the amount of content in the frame, so a busier composition automatically earns a longer shot — a consequence the source does not draw but which follows directly"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "describe the shot's content to yourself; that duration is the shot's length"
+  examples:
+    positive:
+      - {description: "the house, chimney smoke, walking man and setting sun the prose enumerates, drawn exactly as described", figure_ref: "5.2"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0004, note: "the time needed to deliver the shot's new information"}
+    - {relation: qualified_by, target: sk_gote_c003_0052, note: "prevailing fast-cut practice pushes against it"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "There Should Be a Reason for Every Edit"
+    page_start: 101
+    page_end: 101
+    figure_refs: ["5.2"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["5.2"]}
+
+- sk_id: sk_gote_c003_0054
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "It is the imaginary line that cuts through the area of action along talent's sight lines or follows in the direction of an object's movement."
+    - "The editor must only select shots from one side of the line unless the line is seen to change"
+  concept_label: the_action_line_and_the_one_side_rule
+  label_origin: extractor_assigned
+  claim: >
+    The action line, or axis of action, is an imaginary line running through the area of action —
+    along the talent's sight lines, or in the direction an object moves. It establishes a 180 degree
+    arc around the subject and dictates which side the camera may shoot from. The editor must select
+    only shots taken from one side of it, and so maintain the established screen direction, unless
+    the line is seen to change on screen, as when a car changes direction during a shot.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "assembling coverage of a scene with an established direction of action or attention"
+  caveats:
+    - text: "the source calls the line a mental guide for both directors and editors, so the editor's obligation is to select within constraints production has already fixed"
+      origin: source_stated
+    - text: "the exception — unless the line is seen to change — puts the burden on the change being visible to the audience, which the source states but does not elaborate"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "select shots from only one side of the line"
+  examples:
+    positive:
+      - {description: "an overhead diagram of the line with camera positions, paired with the frames each produces", figure_ref: "5.3"}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0055, note: "what crossing it does"}
+    - {relation: generalises, target: sk_gote_c003_0056, note: "the case of two people in conversation"}
+    - {relation: generalises, target: sk_gote_c003_0017, note: "it is what establishes the screen direction that must be maintained"}
+    - {relation: generalises, target: sk_gote_c003_0012, note: "the line establishes the 180 degree arc within which the 30 degree rule operates"}
+    - {relation: member_of_system, target: scs_gote_c003_005}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Observe the Action Line"
+    page_start: 102
+    page_end: 103
+    figure_refs: ["5.3"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["5.3"]}
+
+- sk_id: sk_gote_c003_0055
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "Crossing the line results in a visually contradicting situation for the audience."
+    - "It will, in essence, flip-flop the orientation of left and right within the film space."
+  concept_label: crossing_the_line_reverses_the_film_spaces_left_and_right
+  label_origin: extractor_assigned
+  claim: >
+    Cutting together shots from opposite sides of the action line reverses the left-right
+    orientation of the film space. A car travelling right to left in one shot appears to travel left
+    to right in the next, though in the story it never turned. The audience is confronted with a
+    contradicting viewpoint, their perception of the action changes, the visual flow breaks and they
+    ask why the movement reversed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Shooting from the far side of the line inverts the screen geometry, so the same physical
+      movement is recorded travelling the opposite way across frame. The reversal is a property of
+      camera placement, not of the action.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "cutting between shots taken from opposite sides of an established line"
+  caveats:
+    - text: "the diagram carries the drawn label \"WRONG SIDE OF LINE\", which exists only inside the artwork and is absent from the text layer entirely"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a visually contradicting situation for the audience"
+    - "the viewer will be confused and will ask, \"Why is the car now going the opposite way?\""
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "a truck shot from one side of the line then from the other, appearing to reverse direction", figure_ref: "5.3"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0054, note: "the consequence of breaking the one-side rule"}
+    - {relation: generalises, target: sk_gote_c003_0017, note: "the mechanism behind a discontinuity of movement"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Observe the Action Line"
+    page_start: 102
+    page_end: 102
+    figure_refs: ["5.3"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["5.3"]}
+
+- sk_id: sk_gote_c003_0056
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "A two-shot will establish frame left and frame right, therefore also establishing screen direction, look room, and lines of attention for the two characters."
+    - "Clearly, with both persons looking right, they would appear to be talking to some third, but unseen, person off-screen."
+  concept_label: the_line_for_people_governs_reciprocal_coverage
+  label_origin: extractor_assigned
+  claim: >
+    The action line exists for people as well as movement. A two-shot fixes which character is frame
+    left and which frame right, and with that the screen direction, the look room and each
+    character's line of attention. Every coverage single must keep the characters on their
+    established sides looking in their established directions. If one single is shot from the far
+    side of the line, both characters appear to look the same way, so they read as addressing an
+    unseen third person — which makes no sense to an audience who can account for only two.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience reconstructs the geometry of the space from the direction each character faces.
+      Two characters facing the same way cannot be facing each other, so the audience infers a third
+      party rather than a mistake.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "dialogue coverage of two characters"
+  caveats:
+    - text: "the source states the requirement absolutely: both shots must come from the initial side of the arc, never one from each"
+      origin: source_stated
+  source_stated_problems:
+    - "both persons appear to be looking toward frame right"
+    - "they would appear to be talking to some third, but unseen, person off-screen"
+  source_stated_remedies:
+    - "take both coverage singles from the same side of the established line"
+  examples:
+    positive:
+      - {description: "correct coverage — diagrams plus frames, character A at frame left looking right, character B right of centre looking left", figure_ref: "5.4"}
+    counter:
+      - {description: "the identical setup with character B's single shot from the far side, so both characters look frame right", figure_ref: "5.5"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0054, note: "the line applied to people rather than movement"}
+    - {relation: depends_on, target: sk_gote_c003_0055, note: "the same reversal mechanism"}
+    - {relation: generalises, target: sk_gote_c003_0010, note: "reciprocal look room is what eye trace relies on"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Observe the Action Line"
+    page_start: 102
+    page_end: 105
+    figure_refs: ["5.4", "5.5"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["5.4", "5.5"]}
+
+- sk_id: sk_gote_c003_0057
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "If a cut does not create a successful transition between two shots, then it is unlikely that a dissolve or a fade will make it successful."
+    - "An illegitimate cut is no better than an illegitimate dissolve."
+    - "If an edit should be a cut and it fails as a cut, then the failure might be compounded, even more, as a dissolve."
+  concept_label: a_failed_cut_cannot_be_rescued_by_another_transition
+  label_origin: extractor_assigned
+  claim: >
+    Where two shots will not join as a cut they will not join as a dissolve or a fade either, and
+    the failure may be made worse. The reason is that the fault lies in the shots, not in the
+    transition: the angle is wrong, the continuity is wrong, there is no new information, there is
+    no motivation, the composition is wrong, or some combination. There is very little an editor can
+    do to improve this. Depending on the programme a wipe may sometimes make an otherwise sticky cut
+    point work; if a wipe is not appropriate to the show, the editor is back to square one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A dissolve superimposes the two shots, so a fault in the pairing is displayed for longer and
+      with both images present. The source's example is a crossed line in a dialogue scene: as a cut
+      it jars, and as a dissolve the two faces superimpose and the viewer starts looking for a
+      symbolic or supernatural reading that was never intended.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "a shot pair that fails as a straight cut"
+  caveats:
+    - text: "the wipe exception is real but narrow and genre-dependent, and the source immediately notes that if a wipe is not appropriate there is no remedy left"
+      origin: source_stated
+    - text: "this is the most diagnostically useful claim in the section: it names six checkable causes and asserts that the transition type is not among them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the angle is wrong"
+    - "the continuity is wrong"
+    - "there is no new information"
+    - "there is no motivation"
+    - "the shot composition is wrong"
+  source_stated_remedies:
+    - "a wipe may sometimes work at a sticky cut point, where the programme allows it"
+  examples:
+    counter:
+      - {description: "a crossed-line dialogue pair failing as a cut and failing worse as a dissolve, the two faces superimposing", figure_ref: "5.6"}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_gote_c003_0003, note: "its six diagnostic causes are the six elements restated as failures"}
+    - {relation: qualified_by, target: sk_gote_c003_0033, note: "the wipe is the one partial exception"}
+    - {relation: demonstrated_together_with, target: sk_gote_c003_0056, note: "demonstrated on the crossed-line case"}
+    - {relation: member_of_system, target: scs_gote_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Select the Appropriate Form of Edit"
+    page_start: 104
+    page_end: 105
+    figure_refs: ["5.5", "5.6"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["5.5", "5.6"]}
+
+- sk_id: sk_gote_c003_0058
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "A program that is well-edited will result in the edits going unnoticed by the viewer."
+    - "Some of the best edits are the ones that no one notices but you, the proud editor."
+  concept_label: the_better_the_edit_the_less_it_is_noticed
+  label_origin: source_verbatim
+  claim: >
+    The standard of a well-edited programme is that its edits go unnoticed, so that the story flows
+    from beginning to end. Edits can be powerful purely through the selection of shots and still not
+    be seen, which the source calls the work of a creative editor. The source names this invisible
+    technique — cutting that does not purposefully draw attention to itself — as the safe way to
+    work.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "conventional narrative and factual programming"
+  caveats:
+    - text: "the standard is in direct tension with the dissolve and the wipe, which the source says attract attention on purpose; it never addresses whether those are therefore worse edits"
+      origin: extractor_observed
+    - text: "it also makes the quality of an edit unobservable to the audience whose response is supposed to judge it — a well-made edit and an absent edit look identical"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gote_c003_0025, note: "the cut's transparency is the paradigm case"}
+    - {relation: contradicts, target: sk_gote_c003_0029, note: "the dissolve attracts attention on purpose"}
+    - {relation: contradicts, target: sk_gote_c003_0033, note: "and wipes are meant to be noticed"}
+    - {relation: generalises, target: sk_gote_c003_0059, note: "the cost of failing the standard"}
+    - {relation: member_of_system, target: scs_gote_c003_005}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "The Better the Edit, the Less It Is Noticed"
+    page_start: 106
+    page_end: 106
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0059
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "one bad edit can ruin an entire sequence of shots"
+    - "that visual or auditory blip will register on their brains as something \"not-quite-right\""
+    - "their brain may still be trying to justify what it had earlier experienced at the bad cut, therefore causing issues with the viewer's ability to absorb the new information presented after the bad edit"
+  concept_label: a_bad_edit_degrades_comprehension_of_what_follows_it
+  label_origin: extractor_assigned
+  claim: >
+    A single bad edit damages more than its own moment. The general public will not identify it as a
+    bad edit, but the blip registers as something not-quite-right, perhaps below consciousness, and
+    the viewer's mind continues trying to justify it while the programme goes on. That continuing
+    effort impairs their ability to absorb information presented after the bad edit, so one bad edit
+    can ruin an entire sequence.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Unresolved attention is the mechanism: the viewer's brain keeps working on the anomaly, and
+      that occupied attention is unavailable for what follows.
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "an audience without technical film knowledge"
+  caveats:
+    - text: "the source excludes filmmakers and those familiar with the technical side, so the claim is about the general public specifically"
+      origin: source_stated
+    - text: "a cognitive claim with a stated mechanism and no evidence. It is also the most consequential claim in the section, because it converts a local defect into a downstream one and would change how any evaluation of edits should be scoped."
+      origin: extractor_observed
+  source_stated_problems:
+    - "one bad edit can ruin an entire sequence of shots"
+    - "issues with the viewer's ability to absorb the new information presented after the bad edit"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gote_c003_0058, note: "the cost of being noticed"}
+    - {relation: generalises, target: sk_gote_c003_0013, note: "why being pulled out of the experience matters beyond the moment"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "The Better the Edit, the Less It Is Noticed"
+    page_start: 106
+    page_end: 106
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gote_c003_0060
+  source_id: grammar_of_the_edit_ch3_5_editing_decisions
+  source_terms:
+    - "QUESTION: Aren't the rules of editing made to be broken? ANSWER: No, they are made to be followed, and, perhaps eventually, creatively reinterpreted by you."
+    - "Breaking the practices to achieve a special result is valid under nearly all circumstances."
+    - "effective creativity overrules grammar"
+  concept_label: learn_the_grammar_before_breaking_it_creativity_overrules_it
+  label_origin: extractor_assigned
+  claim: >
+    The rules are made to be followed and eventually reinterpreted, not broken. The common grammar
+    exists to get everyone on the same page; an editor's creativity and craft can overrule it, but
+    the editor should always be conscious of which rule is being bent. Well-known directors have
+    produced creditable results by breaking the fundamentals, including deliberate use of the jump
+    cut, always for a special sequence. Breaking the practices to achieve a special result is valid
+    in nearly all circumstances. The source closes: perfect editing grammar is not an end in itself,
+    and effective creativity overrules grammar.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, television_editing]
+    conditions: "how a practitioner should hold the whole framework"
+  caveats:
+    - text: "the source also makes the editor responsible for keeping edits within the accepted grammar of the programme's genre, warning that work outside it may not be understood — so the licence to depart is bounded by audience competence"
+      origin: source_stated
+    - text: "the licence is stated in the same span as the claim that a jump cut should almost always be prevented; the reconciliation is that deliberate use for a special sequence is not the failure case, but the source does not spell this out"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the program may not be well-received and they simply may not get it"
+  source_stated_remedies:
+    - "learn the guidelines first, then experiment knowingly"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gote_c003_0003, note: "the six factors may be departed from knowingly"}
+    - {relation: qualifies, target: sk_gote_c003_0013, note: "licenses the deliberate jump cut"}
+    - {relation: specialises, target: sk_gote_c003_0023, note: "the chapter-three position stated as a closing rule"}
+    - {relation: member_of_system, target: scs_gote_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter Five"
+    section: "Editing Is Creating; chapter opening"
+    page_start: 97
+    page_end: 108
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

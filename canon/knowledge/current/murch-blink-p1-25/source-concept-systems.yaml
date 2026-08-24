@@ -1,0 +1,314 @@
+# CANON-003 book 10 (Lane B) — Murch, "In the Blink of an Eye" pp.1-25. SourceConceptSystems.
+# Four systems. Origin marked at every structural level.
+#
+# scs_murch_c003_001 is the reason this book is in the batch. It is represented with SPEC-03's
+# EXISTING `priority_order` system type. What that type can carry, it carries faithfully. What it
+# cannot carry is recorded in `system_level_uncertainty` and in the lane issue file as LB-10, rather
+# than fixed by inventing a field.
+
+source_id: murch_blink_p1_25_editing_decisions
+
+source_concept_systems:
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_murch_c003_001
+  source_id: murch_blink_p1_25_editing_decisions
+  label: the_rule_of_six
+  label_origin: source_verbatim
+  system_type: priority_order
+  system_type_origin: source_stated
+  description: >
+    Six criteria for an ideal cut, numbered by the source and ranked: emotion, story, rhythm,
+    eye-trace, planarity, three-dimensional continuity. The source attaches a percentage to each
+    (51, 23, 10, 7, 5, 4), states a procedure for when they conflict — sacrifice upward from the
+    bottom — and gives two claims about how the ranks relate to each other: that higher criteria
+    obscure failures of lower ones but not the reverse, and that the top three are bound far more
+    tightly to each other than the lower three are.
+  whole_system_claim:
+    text: >
+      The six are a single ordered instrument, not six separate pieces of advice. The order is what
+      makes it usable: it tells an editor what to give up first when a cut cannot satisfy everything,
+      and the source states it in that form — "What I'm suggesting is a list of priorities." The
+      ordering is also claimed to be perceptual and not merely preferential: satisfying a higher item
+      tends to obscure problems with lower items, and not the other way round. And the source ranks
+      three-dimensional spatial continuity LAST, deliberately reversing what it says film schools
+      teach first and what early sound film treated as the rule.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "The Rule of Six", page_start: 17, page_end: 20}
+  members:
+    - {sk_ref: sk_murch_c003_0019, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0020, role_in_system: ranked_criterion, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0021, role_in_system: ranked_criterion, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0022, role_in_system: ranked_criterion, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0023, role_in_system: ranked_criterion, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0024, role_in_system: ranked_criterion, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0025, role_in_system: ranked_criterion, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0027, role_in_system: sacrifice_procedure, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0028, role_in_system: asymmetry_claim, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0029, role_in_system: interval_claim, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0030, role_in_system: coupling_claim, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0031, role_in_system: applicability_bound, order: 12, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_murch_c003_0027, to: sk_murch_c003_0019, nature: "the sacrifice procedure operates on the ranking and is meaningless without it", origin: source_stated}
+      - {from: sk_murch_c003_0028, to: sk_murch_c003_0019, nature: "the masking asymmetry is offered as the justification for the order", origin: source_stated}
+      - {from: sk_murch_c003_0027, to: sk_murch_c003_0031, nature: "the sacrifice procedure applies only in the minority of cases where all six cannot be met", origin: source_stated}
+    tradeoffs:
+      - between: [sk_murch_c003_0020, sk_murch_c003_0025]
+        nature: "emotion against three-dimensional spatial continuity — the source's own worked case, resolved in favour of emotion by all means"
+        origin: source_stated
+        source_ref: {chapter: "The Rule of Six", page_start: 19}
+      - between: [sk_murch_c003_0023, sk_murch_c003_0024]
+        nature: "eye-trace against planarity — the adjacent pair the source uses to demonstrate the asymmetry"
+        origin: source_stated
+        source_ref: {chapter: "The Rule of Six", page_start: 19, page_end: 20}
+    conflicts:
+      - between: [sk_murch_c003_0030, sk_murch_c003_0027]
+        nature: >
+          The sacrifice procedure asks the editor to give up items one at a time from the bottom, but
+          the coupling claim says the top three are bound about as tightly as nucleons. If emotion,
+          story and rhythm move together, they cannot be traded singly, so the procedure is least
+          applicable exactly where the ranking matters most. The source states both and does not
+          address the tension.
+        origin: extractor_inferred
+      - between: [sk_murch_c003_0019, sk_murch_c003_0011]
+        nature: >
+          A general ranked list of what makes a good cut sits against the same source's earlier claim
+          that what counts as a bad bit is unique to the particular film being made.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    "The values I put after each item are slightly tongue-in-cheek, but not completely." The source
+    qualifies its own weights, and also scopes the whole list to itself — "An ideal cut (for me)".
+    Both markings are routinely dropped when this list is quoted elsewhere, so they are recorded here
+    as an explicit warning against retrieving the ranking without them.
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership, ordering and the sacrifice procedure are entirely the source's own — numbered,
+      weighted, and restated as five ordered pairs. Nothing about the order is our inference.
+
+      WHAT THIS REPRESENTATION LOSES, stated because it matters for how the object may be used.
+      `priority_order` with `members[].order` records that emotion outranks story which outranks
+      rhythm. It does not record BY HOW MUCH. The source's percentages are not decoration: 51 against
+      23, 10, 7, 5 and 4 says emotion outweighs the other five combined, and that the gap between
+      rank 2 and rank 3 is wider than the entire spread from rank 3 to rank 6. Read as a bare
+      ordinal list, the Rule of Six looks like six roughly comparable considerations in a preferred
+      sequence, which is close to the opposite of what the source argues. SPEC-03 has no field for a
+      member weight or an interval, so the numbers are preserved verbatim inside
+      sk_murch_c003_0020-0025 and sk_murch_c003_0029, where they are readable by a human and not by a
+      machine. No field was added. Recorded as LB-10.
+
+      A second thing the type cannot hold is that the ordering is claimed to be perceptual as well as
+      preferential — sk_murch_c003_0028 asserts higher items mask failures of lower ones. That is a
+      claim about what an audience notices, and it is carried as an ordinary member rather than as a
+      property of the ordering, because `ordering` has only `scheme` and `origin`.
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 17
+    page_end: 20
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_murch_c003_002
+  source_id: murch_blink_p1_25_editing_decisions
+  label: the_three_regimes_of_visual_displacement
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    A model of how the viewer reads a change between successive images, with three regimes set by the
+    magnitude of the change: small displacement read as motion within one context, total displacement
+    read as a new context requiring re-evaluation, and intermediate displacement read as neither,
+    producing a jarring jump.
+  whole_system_claim:
+    text: >
+      The cut is not a different kind of event from ordinary motion, only a different magnitude of
+      the same event. Film is already being cut twenty-four times a second, and what separates motion
+      from a cut from a jump is how far the image moves between frames. The failure case is in the
+      middle, not at the extreme: an image different enough to signal that something changed but not
+      different enough to prompt re-evaluation triggers two incompatible readings, and their
+      collision is what the viewer experiences as a jump.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "Why Do Cuts Work?", page_start: 6, page_end: 7}
+  members:
+    - {sk_ref: sk_murch_c003_0006, role_in_system: continuum_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0007, role_in_system: three_regime_claim, order: 2, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_murch_c003_0007, to: sk_murch_c003_0006, nature: "the three-regime reading only follows once a continuous shot is understood as small displacements", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The three regimes and the mechanism are the source's own words. Calling it a causal model is
+      ours — the source presents it as an explanation in the flow of a lecture and never labels it.
+      The model is not predictive as stated: it names two thresholds and locates neither, so it
+      accounts for a failure after the fact rather than forecasting one. Its supporting analogy, a
+      beehive moved two inches, two yards or two miles, is asserted without a source.
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 6
+    page_end: 7
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_murch_c003_003
+  source_id: murch_blink_p1_25_editing_decisions
+  label: three_independent_justifications_for_cutting
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Three separate arguments for why films are cut: a practical one (assembling everything
+    simultaneously is logistically very difficult, and long takes compound the risk of failure), a
+    selective one (discontinuity lets the best angle be chosen for each emotion and story point), and
+    an intrinsic one (cutting is a positive influence in and for itself, by the force of its
+    paradoxical suddenness).
+  whole_system_claim:
+    text: >
+      The three arguments are cumulative and deliberately ordered from weakest to strongest, and the
+      source signals the escalation — "beyond even these considerations" — before stating the third.
+      The point of the sequence is that the intrinsic argument survives the removal of the other two:
+      "We would want to cut even if discontinuity were not of such great practical value." That
+      sentence is the load-bearing one, and it converts cutting from a workaround into a medium.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The three arguments are each stated explicitly and separately, at printed pages 8 and 9. What
+      is ours is reading them as one escalating structure rather than as three remarks. The reading
+      rests on the source's own transition — "And yet, beyond even these considerations" — and on the
+      counterfactual it then states, which only does work if the earlier arguments are being set
+      aside.
+    source_ref: null
+  members:
+    - {sk_ref: sk_murch_c003_0008, role_in_system: practical_argument, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0009, role_in_system: selective_argument, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0010, role_in_system: intrinsic_argument, order: 3, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs: []
+    conflicts:
+      - between: [sk_murch_c003_0010, sk_murch_c003_0017]
+        nature: >
+          Cutting is asserted to be intrinsically valuable, and eight pages later the source argues
+          that deciding NOT to cut is frequently the harder and better work. Both positions are held
+          and neither is withdrawn.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Each member is well supported individually. The escalation reading is ours, and the third
+      argument — the one the escalation exists to reach — is the only one of the three the source
+      offers no mechanism for.
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 7
+    page_end: 9
+    source_support: text
+
+# ═════════════════════════════════════════════════════════════
+- scs_id: scs_murch_c003_004
+  source_id: murch_blink_p1_25_editing_decisions
+  label: the_editors_stance_toward_the_material
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    A set of claims and practices about where the editor should stand in relation to the footage:
+    occupy the audience's position and ask their questions, misdirect attention as a magician does,
+    correct for the editing room being a miniature of the theatre, recognise that anyone present at
+    the shoot sees past the frame, resist the distortion of what a shot cost, see only what is on the
+    screen as the audience's ombudsman, help the director build a barrier between shooting and
+    editing, and separate what you wish were there from what is.
+  whole_system_claim:
+    text: >
+      All eight address one problem: the editor's judgement is systematically distorted by
+      information the audience will never have. The distortions named are specific — the memory of
+      the shoot, the cost of a shot, the small screen, the editor's own wishes — and every remedy has
+      the same shape, which is to reconstruct the audience's position artificially, whether by
+      imagining a thousand-seat theatre, refusing knowledge of the shoot, or sending the director to
+      the Alps. The source treats the editor's ignorance of production as a qualification rather than
+      a deficiency, which is the position the whole set rests on.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source presents these across two chapters as separate observations and never groups them.
+      What is ours is the claim that they share one problem and one remedy shape. The reading is
+      supported by the source's own framing of the editor as the person who "does not know the exact
+      conditions under which it was shot (or has the ability not to know)" and as "the ombudsman for
+      the audience" — both of which define the role by informational position rather than by skill.
+    source_ref: null
+  members:
+    - {sk_ref: sk_murch_c003_0032, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0033, role_in_system: practice, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0034, role_in_system: corrective_technique, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0035, role_in_system: named_distortion, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0036, role_in_system: named_distortion, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0037, role_in_system: corrective_discipline, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0038, role_in_system: corrective_technique, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_murch_c003_0039, role_in_system: corrective_discipline, order: 8, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_murch_c003_0037, to: sk_murch_c003_0035, nature: "the see-only-the-screen discipline exists to answer the beyond-the-frame distortion", origin: source_stated}
+      - {from: sk_murch_c003_0038, to: sk_murch_c003_0035, nature: "and so does the barrier between shooting and editing", origin: source_stated}
+      - {from: sk_murch_c003_0036, to: sk_murch_c003_0035, nature: "cost distortion is a specific form of the same surplus information", origin: source_stated}
+    tradeoffs:
+      - between: [sk_murch_c003_0037, sk_murch_c003_0032]
+        nature: >
+          The editor is told to know as little as possible about the shoot, and also to model the
+          audience's mental state closely. Both are demands for a particular kind of knowledge and
+          ignorance, and the source does not say how much of the first is compatible with the second.
+        origin: extractor_inferred
+    conflicts:
+      - between: [sk_murch_c003_0033, sk_murch_c003_0018]
+        nature: >
+          The editor should misdirect the audience's attention, as Houdini did; and an editor who
+          keeps directing attention pursues complete control, which is self-defeating and makes
+          viewers resentful. Both are stated within six pages and the boundary between them is never
+          drawn.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are individually explicit. The grouping is entirely ours, and it spans two of the
+      source's own chapter divisions, which is a reason for caution: the source may not regard
+      misdirection and the barrier between shooting and editing as belonging to one subject. The
+      grouping is offered as a hypothesis about the source, which is what a fully extractor-inferred
+      system is.
+  provenance:
+    chapter: "Misdirection; Seeing Around the Edge of the Frame"
+    section: null
+    page_start: 21
+    page_end: 25
+    source_support: text

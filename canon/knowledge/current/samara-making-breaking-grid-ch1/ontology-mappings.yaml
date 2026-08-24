@@ -1,0 +1,932 @@
+# CANON-003 book 6 (Lane A) — Samara, "Making and Breaking the Grid" ch.1 core (pp.20-76).
+# SPEC-05 ontology, source-local. Existing relation types and term kinds only.
+#
+# NOTE ON THIS SOURCE'S REPAIR PROFILE: almost every remedy this book states is a layout operation
+# that a deterministic layout engine could execute exactly — add a column, hang a character, set a
+# gutter measure. Recorded honestly with executable_by: deterministic_composite where that is true.
+# This is a different profile from the physical-camera repairs of the lighting sources, and the
+# existing executable_by vocabulary already covers it without addition.
+source_id: samara_making_breaking_grid_ch1
+extraction_date: 2026-08-24
+
+terms:
+
+# ── entities: the parts the source names ──────────────────────
+- term_id: t_sam_c003_0001
+  term: body
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    The structure itself inside the margins, whether a single wide block for continuous text or
+    broken into columns or modules. The source says a grid is, in essence, what happens inside the
+    margins, within the body.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Anatomy of Pages", page_start: 22}
+  arising_from: [sk_sam_c003_0005, sk_sam_c003_0007]
+
+- term_id: t_sam_c003_0002
+  term: margin
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    The negative space between the format edges and the content, surrounding and defining the live
+    area where type and images are arranged. Named differently by position.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Anatomy of Pages", page_start: 22}
+  arising_from: [sk_sam_c003_0005]
+
+- term_id: t_sam_c003_0003
+  term: runner
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    A navigational notation typically identifying a publication's title and author. Called a
+    running head at the top, a running foot at the bottom, a running side along the foredges.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Anatomy of Pages", page_start: 22}
+  arising_from: [sk_sam_c003_0005]
+
+- term_id: t_sam_c003_0004
+  term: folio
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    The page number. The source warns that some contemporary editors use the word for the page
+    number and runner together as a unit.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Anatomy of Pages", page_start: 22}
+  arising_from: [sk_sam_c003_0005]
+
+- term_id: t_sam_c003_0005
+  term: column
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    A vertical alignment of type creating horizontal divisions between the outside margins. Any
+    number; equal or unequal in width; each separated from its neighbours by a column gutter.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Page Structure", page_start: 23}
+  arising_from: [sk_sam_c003_0007]
+
+- term_id: t_sam_c003_0006
+  term: flowline
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    An alignment breaking the space into horizontal bands. Guides the eye across the format and
+    imposes additional stopping and starting points for text or images. There may be one or several.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Page Structure", page_start: 23}
+  arising_from: [sk_sam_c003_0007, sk_sam_c003_0030]
+
+- term_id: t_sam_c003_0007
+  term: row
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    The band resulting from numerous flowlines at regular repeated intervals from head to foot
+    margin, intersecting the columns and creating a counterpoint to their vertical emphasis. Rows
+    are separated by row gutters.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Page Structure", page_start: 23}
+  arising_from: [sk_sam_c003_0007]
+
+- term_id: t_sam_c003_0008
+  term: module
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    An individual unit of space created by the intersection of columns and rows — or, considered
+    the other way, the unit whose grouping produces columns and rows. Each defines a small chunk of
+    informational space.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Page Structure", page_start: 23}
+  arising_from: [sk_sam_c003_0007, sk_sam_c003_0012]
+
+- term_id: t_sam_c003_0009
+  term: spatial_zone
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    A group of columns, rows or modules forming a distinct field to which a specific role can be
+    assigned — a horizontal field reserved for images, the field below it for text columns.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Page Structure", page_start: 23}
+  arising_from: [sk_sam_c003_0007, sk_sam_c003_0032]
+
+- term_id: t_sam_c003_0010
+  term: marker
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    A placement indicator for subordinate or consistently appearing text — running heads, section
+    titles, folios, or any element that always occupies one location across a series of layouts.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Page Structure", page_start: 23}
+  arising_from: [sk_sam_c003_0007]
+
+- term_id: t_sam_c003_0011
+  term: baseline_grid
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    A document-wide increment, equal to the common leading number, to which text styles are locked
+    so that baselines never misalign. For a grid with rows its guides must land exactly on the row,
+    row-gutter and foot-margin guides.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Correlating the Row Structure with a Baseline Grid", page_start: 51}
+  arising_from: [sk_sam_c003_0058]
+
+- term_id: t_sam_c003_0012
+  term: false_margin
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: entity
+  definition_in_origin_frame: >
+    A column that is genuinely part of the grid but left open so that it acts as margin space,
+    leaving the designer the flexibility to use it if the need arises.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Margin Measures and Body Position", page_start: 65}
+  arising_from: [sk_sam_c003_0072]
+
+# ── properties: the source's structures and qualities ─────────
+- term_id: t_sam_c003_0013
+  term: manuscript_grid
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    Also called the block grid. The structurally simplest kind: a single relatively large text block
+    per page, for extensive continuous text.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Manuscript Grid", page_start: 24}
+  arising_from: [sk_sam_c003_0008]
+
+- term_id: t_sam_c003_0014
+  term: column_grid
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    A structure of multiple columns for information that is discontinuous. Columns may be dependent
+    for running text, independent for small blocks, or crossed to make wider measures.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Column Grid", page_start: 26}
+  arising_from: [sk_sam_c003_0010]
+
+- term_id: t_sam_c003_0015
+  term: modular_grid
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    A column grid with a large number of horizontal flowlines subdividing the columns into rows,
+    creating a matrix of modules. Described by a C# x R# notation.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Modular Grid", page_start: 28}
+  arising_from: [sk_sam_c003_0012, sk_sam_c003_0014]
+
+- term_id: t_sam_c003_0016
+  term: hierarchic_grid
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    An odd grid fitting no category, based on intuitive placement of alignments customised to the
+    proportions of the elements rather than on regular repeated intervals.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "The Hierarchic Grid", page_start: 30}
+  arising_from: [sk_sam_c003_0015]
+
+- term_id: t_sam_c003_0017
+  term: compound_grid
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    Multiple grids used in the same project — sharing outer margins, overlaid with independent
+    margins, or combined on one page but separated for specific purposes.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Compound Grids", page_start: 32}
+  arising_from: [sk_sam_c003_0016]
+
+- term_id: t_sam_c003_0018
+  term: negative_space
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    White space, seen as shapes of equal importance to the positive elements. The source says a grid
+    organises space as much as the material in it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Grid Basics", page_start: 21}
+  arising_from: [sk_sam_c003_0004]
+
+- term_id: t_sam_c003_0019
+  term: interline_space
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    The shape of the negative space between lines of text. The source states that this, and not
+    leading, is what actually matters in typesetting.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Designing to Read", page_start: 47}
+  arising_from: [sk_sam_c003_0051]
+
+- term_id: t_sam_c003_0020
+  term: optimal_character_count
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    Between fifty and eighty characters including spaces per line, about sixty-five usually ideal.
+    Stated as independent of type size and reader maturity, and scoped by the source to English.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Designing to Read", page_start: 46}
+  arising_from: [sk_sam_c003_0050]
+
+- term_id: t_sam_c003_0021
+  term: universal_width_increment
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    A single width that governs every text style's optimal width as a multiple of itself. Once
+    found, it is the column width.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Determining Column Structure", page_start: 48}
+  arising_from: [sk_sam_c003_0052]
+
+- term_id: t_sam_c003_0022
+  term: harmonic_spacing
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    Spacing that increases proportionally and incrementally from the tightest, between letters, to
+    the largest, the margins — expressing that contiguous material sits closer and unrelated
+    material further apart. The printer's 2:1 margin-to-gutter ratio is one case.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Harmonic Spacing: Micro to Macro", page_start: 50}
+  arising_from: [sk_sam_c003_0056, sk_sam_c003_0057]
+
+- term_id: t_sam_c003_0023
+  term: degree_of_articulation
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    How full the compositional space appears — to what degree the body is filled to its margins,
+    and how many of the grid's alignments are explicitly marked by elements.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Degrees of Articulation", page_start: 64}
+  arising_from: [sk_sam_c003_0070, sk_sam_c003_0074]
+
+- term_id: t_sam_c003_0024
+  term: surface_activity
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    The perception that material slides across a flat plane rather than existing on layers in
+    depth. Increased by fullness, by explicitly marked alignments, by similar element scales, and
+    by large amounts of text, which being linear and textural is felt as surface rather than mass.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Qualities of Depth and Surface Activity", page_start: 68}
+  arising_from: [sk_sam_c003_0074]
+
+- term_id: t_sam_c003_0025
+  term: pacing
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    The cadence or timing a viewer apprehends from one part of a sequence to the next, and the
+    degree of dynamism they perceive. Distinguished from ordering: ordering is about function,
+    pacing is about feeling.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Sequence and Pace", page_start: 74}
+  arising_from: [sk_sam_c003_0078]
+
+- term_id: t_sam_c003_0026
+  term: bounce
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    The source's own tentative name — "what could be termed 'bounce'" — for the rhythm produced by
+    alternating image position from spread to spread while holding the set of image sizes constant.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Variation and Violation", page_start: 71}
+  arising_from: [sk_sam_c003_0076]
+
+- term_id: t_sam_c003_0027
+  term: violation
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: property
+  definition_in_origin_frame: >
+    Deliberately ignoring a rigorous grid, either occasionally for surprise and emphasis, or
+    constantly where the structure was purposely designed to integrate transgressive behaviour.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Variation and Violation", page_start: 70}
+  arising_from: [sk_sam_c003_0075, sk_sam_c003_0077]
+
+# ── problems, in the source's own frame ───────────────────────
+- term_id: t_sam_c003_0028
+  term: succumbing_to_the_grids_regularity
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The source's stated greatest danger in using a grid: producing layouts that do not sustain
+    interest page after page because the designer accepted the uniformity the structure implies.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Variation and Violation", page_start: 70}
+  arising_from: [sk_sam_c003_0075]
+
+- term_id: t_sam_c003_0029
+  term: image_edges_falling_mid_column
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The source's named common error: an image's edges landing somewhere in the middle of a column
+    or row, aligning with nothing.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Image Behavior: Options", page_start: 34}
+  arising_from: [sk_sam_c003_0018]
+
+- term_id: t_sam_c003_0030
+  term: disrupted_aligned_edge
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    Loss of clarity in a column's aligned edge — caused by bullets or opening quotation marks set on
+    the alignment instead of hung outside it. The source calls the result sloppy.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Special Cases and Logic Oddities", page_start: 37}
+  arising_from: [sk_sam_c003_0027]
+
+- term_id: t_sam_c003_0031
+  term: text_appearing_unrelated_to_column_alignments
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The result of setting text on a centred axis, where neither edge sits on a guide so the element
+    reads as detached from the structure.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Special Cases and Logic Oddities", page_start: 37}
+  arising_from: [sk_sam_c003_0026]
+
+- term_id: t_sam_c003_0032
+  term: rag_that_will_not_fill_the_column
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The soft irregular right edge of ragged text, which never quite reaches the column edge and
+    becomes more pronounced at display sizes.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Special Cases and Logic Oddities", page_start: 37}
+  arising_from: [sk_sam_c003_0024]
+
+- term_id: t_sam_c003_0033
+  term: eye_jumping_into_the_adjacent_column
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The reader's eye moving horizontally into a neighbouring column instead of downward through the
+    running text. The reason the source derives the gutter from the running text.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Determining Column Structure", page_start: 48}
+  arising_from: [sk_sam_c003_0053]
+
+- term_id: t_sam_c003_0034
+  term: reader_rereading_the_same_line
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The reader locating the beginning of the same line after the return and reading it again,
+    caused by interline space too tight for the paragraph's width.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Designing to Read", page_start: 47}
+  arising_from: [sk_sam_c003_0051]
+
+- term_id: t_sam_c003_0035
+  term: modules_so_small_as_to_be_insignificant
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The failure of the intuitive answer to widely varying content — a very fine grid whose modules
+    stop functioning as units of space. The source also warns that too many subdivisions become
+    confusing or redundant.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Physicalities of Format and Content", page_start: 44}
+  arising_from: [sk_sam_c003_0045, sk_sam_c003_0012]
+
+- term_id: t_sam_c003_0036
+  term: navigation_content_misalignment_on_resize
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    Misalignment between navigational and content elements as a browser resizes, which the source
+    attributes to a conflict between symmetry and asymmetry introduced by default templates.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Layout in a Responsive Context", page_start: 56}
+  arising_from: [sk_sam_c003_0063]
+
+- term_id: t_sam_c003_0037
+  term: reflow_disunifying_a_branded_experience
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    The inversion of compositional emphasis when a multi-column layout collapses to a single
+    vertical scroll, pronounced enough to break the continuity of an identity across formats.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "For Interaction Design", page_start: 59}
+  arising_from: [sk_sam_c003_0065]
+
+- term_id: t_sam_c003_0038
+  term: notational_elements_becoming_distracting
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    Folios and runners drawing attention because they appear in the same place on every page, and
+    obstructing content the designer wants in that position.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {section: "Notational Elements", page_start: 40}
+  arising_from: [sk_sam_c003_0033]
+
+- term_id: t_sam_c003_0039
+  term: awkwardly_empty_negative_space
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: problem
+  definition_in_origin_frame: >
+    A negative space that seems empty in the wrong way and calls for activation — which the source
+    treats as a fault, while elsewhere requiring open space be preserved for visual rest.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {section: "Boxes, Lines, and Dots", page_start: 41}
+  arising_from: [sk_sam_c003_0037]
+
+# ── remedies, in the source's own frame ───────────────────────
+- term_id: t_sam_c003_0040
+  term: add_columns_or_rows_until_the_wanted_position_is_an_alignment
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Where a misaligned image position genuinely looks better, subdivide the structure further so
+    that position becomes a proportional alignment within it, rather than moving the image.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite, human_edit]
+  source_ref: {section: "Image Behavior: Options", page_start: 34}
+  arising_from: [sk_sam_c003_0018]
+
+- term_id: t_sam_c003_0041
+  term: hang_bullets_and_opening_quotes_outside_the_alignment
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Set bullets, and quotation marks that begin a line, to the left of the column alignment so the
+    aligned edge stays clear.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite]
+  source_ref: {section: "Special Cases and Logic Oddities", page_start: 37}
+  arising_from: [sk_sam_c003_0027]
+
+- term_id: t_sam_c003_0042
+  term: place_an_element_to_optically_complete_a_column_edge
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Where ragged text will not fill the column, place a well-chosen element so the eye completes the
+    column's right edge without the text reaching it.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {section: "Special Cases and Logic Oddities", page_start: 37}
+  arising_from: [sk_sam_c003_0024]
+
+- term_id: t_sam_c003_0043
+  term: derive_one_universal_width_increment_from_the_text_styles
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Reconcile every optimally styled text specimen's width into a single increment they are all
+    multiples of, and use that increment as the column width.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite, human_edit]
+  source_ref: {section: "Determining Column Structure", page_start: 48}
+  arising_from: [sk_sam_c003_0052]
+
+- term_id: t_sam_c003_0044
+  term: base_the_column_gutter_on_the_running_text
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Set the gutter from what the running text requires to keep the eye moving downward, then take
+    the lateral margins as whatever remains after the columns are fitted.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite]
+  source_ref: {section: "Determining Column Structure", page_start: 48}
+  arising_from: [sk_sam_c003_0053]
+
+- term_id: t_sam_c003_0045
+  term: force_all_leading_measures_onto_a_common_divisor
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Increase or decrease each text style's leading until every measure is divisible by one number,
+    then take the row depth from the interval at which most baselines meet.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite]
+  source_ref: {section: "Developing Row Structure", page_start: 49}
+  arising_from: [sk_sam_c003_0055]
+
+- term_id: t_sam_c003_0046
+  term: overlay_the_widest_differing_layouts_transparently
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Sketch the extremes of the content by hand and small, overlay the sketches transparently, and
+    build the grid from the alignments that correspond, splitting the difference where they nearly do.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {section: "Building a Grid", page_start: 43}
+  arising_from: [sk_sam_c003_0043, sk_sam_c003_0061]
+
+- term_id: t_sam_c003_0047
+  term: build_the_structure_outward_from_the_smallest_format
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Conceive a responsive structure from the column or module outward, taking the smartphone screen
+    width as the base column, rather than reverse-engineering it from a large-browser grid.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite, human_edit]
+  source_ref: {section: "Layout in a Responsive Context", page_start: 56}
+  arising_from: [sk_sam_c003_0062, sk_sam_c003_0064]
+
+- term_id: t_sam_c003_0048
+  term: build_matching_horizontal_breaks_into_the_large_format
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Put horizontal breaks and alignments of the same quality as those the small format will produce
+    into the large-format layout, so the identity survives the collapse to a single column.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {section: "For Interaction Design", page_start: 59}
+  arising_from: [sk_sam_c003_0065]
+
+- term_id: t_sam_c003_0049
+  term: pin_critical_content_so_it_survives_scrolling
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Fix brand messages and navigation in place while the page scrolls, accounting for the pinned
+    item's size and its potential to obscure or be obscured by content passing through it.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite]
+  source_ref: {section: "For Interaction Design", page_start: 59}
+  arising_from: [sk_sam_c003_0066]
+
+- term_id: t_sam_c003_0050
+  term: leave_columns_or_modules_open
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Do not reveal the structure at every juncture; leave part of it unfilled, both to create a
+    dynamic experience and to keep negative space for visual rest.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, generative_respecification]
+  source_ref: {section: "Degrees of Articulation", page_start: 64}
+  arising_from: [sk_sam_c003_0070]
+
+- term_id: t_sam_c003_0051
+  term: alternate_position_while_repeating_size
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Cluster images toward the top or bottom alternately from spread to spread, and reuse one set of
+    image sizes in changed positions — the source's tactics for producing bounce.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite, human_edit]
+  source_ref: {section: "Variation and Violation", page_start: 71}
+  arising_from: [sk_sam_c003_0076]
+
+- term_id: t_sam_c003_0052
+  term: violate_the_structure_occasionally_to_feature_content
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Ignore a rigorous grid in one instance among many structured layouts, so the surprise breathes
+    life into the sequence and highlights the featured content.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {section: "Variation and Violation", page_start: 72}
+  arising_from: [sk_sam_c003_0077]
+
+- term_id: t_sam_c003_0053
+  term: use_an_open_grid_column_as_a_margin
+  origin: source
+  origin_ref: samara_making_breaking_grid_ch1
+  kind: remedy
+  definition_in_origin_frame: >
+    Position the body by leaving a real column open to act as margin space instead of enlarging the
+    margin, which keeps the space available for use later.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite, human_edit]
+  source_ref: {section: "Margin Measures and Body Position", page_start: 65}
+  arising_from: [sk_sam_c003_0072, sk_sam_c003_0011]
+
+relationships:
+
+- from: t_sam_c003_0015
+  to: t_sam_c003_0014
+  relation: narrower_than
+  confidence_basis: source_stated
+  note: >
+    The source defines the modular grid as a column grid with a large number of horizontal
+    flowlines, so it is a special case of the column grid by the source's own definition rather
+    than by our judgement.
+
+- from: t_sam_c003_0016
+  to: t_sam_c003_0015
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Checked because both organise a page into fields. The source defines the hierarchic grid
+    explicitly against the modular one: its alignments are placed intuitively and customised to the
+    proportions of the elements, rather than at regular repeated intervals. Recorded as a negative
+    finding so the two are not later merged on the strength of looking alike in a diagram.
+
+- from: t_sam_c003_0009
+  to: t_sam_c003_0016
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source states that spatial zones add some of the qualities of a hierarchic grid into grids
+    defined by regular intervals. They are the bridge between the two structures, not a third kind.
+
+- from: t_sam_c003_0019
+  to: t_sam_c003_0018
+  relation: narrower_than
+  confidence_basis: source_stated
+  note: >
+    The source defines interline space as the shape of the negative space between lines, which makes
+    it negative space observed at the smallest scale in the section.
+
+- from: t_sam_c003_0022
+  to: t_sam_c003_0018
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Harmonic spacing is a rule about the progression of negative spaces from letterspacing to
+    margin, so it is the same substance governed at every scale at once.
+
+- from: t_sam_c003_0039
+  to: t_sam_c003_0018
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both name empty area and the source uses them within nine pages of each other.
+    They are opposites in this source: negative space is a shape of equal importance that must be
+    preserved for visual rest, and awkwardly empty negative space is a fault to be activated with a
+    dot. The source gives no test separating them, which is why the distinction is recorded rather
+    than resolved.
+
+- from: t_sam_c003_0028
+  to: t_sam_c003_0023
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Succumbing to regularity is the failure state of low articulation variety; the articulation
+    sections describe the same variable that the danger is stated against.
+
+- from: t_sam_c003_0027
+  to: t_sam_c003_0028
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Violation is the source's named response to the danger of regularity. The pair is the book's
+    title thesis in two terms.
+
+- from: t_sam_c003_0026
+  to: t_sam_c003_0025
+  relation: narrower_than
+  confidence_basis: extractor_judgement
+  note: >
+    Bounce is a specific spread-to-spread rhythm produced by two named tactics; pacing is the
+    general cadence across a sequence. The source coins bounce tentatively and never relates the
+    two terms, so this is our reading of the scope difference.
+
+- from: t_sam_c003_0032
+  to: t_sam_c003_0031
+  relation: same_observed_effect
+  confidence_basis: extractor_judgement
+  note: >
+    Both appear to the reader as a text element failing to meet the column edge. The mechanisms
+    differ: a rag does not reach the edge because line lengths vary, while centred text does not
+    reach either edge because it is set to an axis. The source gives them different remedies —
+    a placed element for one, a matched width or an axis on a guide for the other — which is
+    consistent with the effect matching and the cause not.
+
+- from: t_sam_c003_0033
+  to: t_sam_c003_0034
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both are the reader's eye going to the wrong place in running text. They are
+    different failures with different remedies: horizontal escape into an adjacent column is fixed
+    by the gutter measure, vertical re-entry on the same line by interline space. Recorded so a
+    single "reader loses their place" concept is not proposed later.
+
+- from: t_sam_c003_0038
+  to: t_sam_c003_0049
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    The constant position that makes folios and runners distracting in print is the same property
+    that makes pinning valuable on screen. The source recommends the second and warns about the
+    first, without connecting them. Recorded as related rather than equivalent because the source
+    draws no such link and the consequences it reports are opposite.
+
+- from: t_sam_c003_0040
+  to: t_sam_c003_0029
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The source's stated repair for its own named common error."
+
+- from: t_sam_c003_0045
+  to: t_sam_c003_0019
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Forcing the leading measures onto a common divisor changes the interline space established as
+    optimal. The source records this cost in a footnote; the relation preserves the link between the
+    repair and the property it damages.
+
+concepts:
+
+- concept_id: sc_sam_c003_grid_parts
+  kind: source_specific_concept
+  origin_ref: samara_making_breaking_grid_ch1
+  label: the_parts_every_grid_is_made_of
+  children_terms: [t_sam_c003_0005, t_sam_c003_0006, t_sam_c003_0007, t_sam_c003_0008, t_sam_c003_0009, t_sam_c003_0010]
+  origin: source_stated
+  basis: >
+    The source states that every grid contains the same basic parts no matter how complex it
+    becomes, then numbers exactly these six under one diagram. The grouping is the book's own.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_sam_c003_grid_types
+  kind: source_specific_concept
+  origin_ref: samara_making_breaking_grid_ch1
+  label: the_named_grid_structures
+  children_terms: [t_sam_c003_0013, t_sam_c003_0014, t_sam_c003_0015, t_sam_c003_0016, t_sam_c003_0017]
+  origin: source_stated
+  basis: >
+    Five structures, each given its own titled section within Grid Basics and each introduced with
+    the content condition that calls for it. The set is the source's; reading it as a selection
+    procedure is ours and is recorded separately as scs_sam_c003_001.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_sam_c003_page_anatomy
+  kind: source_specific_concept
+  origin_ref: samara_making_breaking_grid_ch1
+  label: the_named_parts_of_the_page
+  children_terms: [t_sam_c003_0001, t_sam_c003_0002, t_sam_c003_0003, t_sam_c003_0004]
+  origin: source_stated
+  basis: >
+    The source presents these four as the components of the book-format page, evolved from the
+    codex and each denoted by a specific term, in one numbered diagram.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_sam_c003_variation_and_violation
+  kind: source_specific_concept
+  origin_ref: samara_making_breaking_grid_ch1
+  label: variation_and_violation
+  children_terms: [t_sam_c003_0026, t_sam_c003_0027, t_sam_c003_0025, t_sam_c003_0028]
+  origin: source_stated
+  basis: >
+    "Variation and Violation" is the source's own section title, and pacing is treated in the same
+    "Design as a System" part as the sustained form of the same move. The danger term is included
+    because the source states it as the thing the section exists to answer.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_sam_c003_element_fails_to_meet_the_structure
+  kind: canonical_concept
+  label: element_fails_to_meet_the_structure
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_sam_c003_0029, t_sam_c003_0030, t_sam_c003_0031, t_sam_c003_0032]
+  basis: >
+    Ours, for retrieval only. Four problems in this source share the surface description "an element
+    does not land where the structure says it should" — a misaligned image, a broken aligned edge, a
+    detached centred text element, and a rag short of the column edge. They arise differently and
+    take four different repairs, so this grouping deliberately asserts no equivalence between them.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_sam_c003_deterministic_layout_repairs
+  kind: canonical_concept
+  label: repairs_a_layout_engine_could_execute_exactly
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_sam_c003_0040, t_sam_c003_0041, t_sam_c003_0043, t_sam_c003_0044, t_sam_c003_0045, t_sam_c003_0047, t_sam_c003_0049, t_sam_c003_0051, t_sam_c003_0053]
+  basis: >
+    Ours, for retrieval. Nine of this source's fourteen remedies are geometric operations on a
+    structure — add a subdivision, hang a character, set a measure, multiply a base column — and
+    carry executable_by: deterministic_composite. They have nothing else in common; the grouping
+    records an execution property, not a conceptual one, and asserts no equivalence. It is recorded
+    because it is a different repair profile from the physical-camera repairs seen in the lighting
+    sources of this batch.
+  asserts_agreement_between_sources: false

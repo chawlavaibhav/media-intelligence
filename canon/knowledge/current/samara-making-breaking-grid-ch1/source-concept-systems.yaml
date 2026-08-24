@@ -1,0 +1,443 @@
+# CANON-003 book 6 (Lane A) — Samara, "Making and Breaking the Grid" ch.1 core (pp.20-76).
+# SourceConceptSystems under SPEC-03. Existing system types only.
+source_id: samara_making_breaking_grid_ch1
+source_concept_systems:
+
+- scs_id: scs_sam_c003_001
+  source_id: samara_making_breaking_grid_ch1
+  label: choosing_a_grid_type_from_the_shape_of_the_content
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    Five named structures, each introduced with the content condition that calls for it: a
+    manuscript grid for extensive continuous text; a column grid for information that is
+    discontinuous; a modular grid for extremely complex projects with many kinds of information;
+    a hierarchic grid where the needs fit no category; and a compound grid where one structure
+    cannot serve. Two of the five also carry an inherited connotation that can override the
+    functional match.
+  whole_system_claim:
+    text: >
+      The five structures form a selection procedure driven by one variable — how discontinuous and
+      how various the content is — and the ordering runs from least to most articulated. A designer
+      picks the least articulated structure the content will tolerate, except where the structure's
+      inherited associations argue otherwise.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source never presents these as a procedure or states a selection rule. It gives each
+      structure its own section, in this order, and opens each with the content condition that
+      suits it. Reading the five as one decision driven by a single variable is ours; so is the
+      observation that the order is monotonic in articulation. Each member stands independently
+      if the framing is rejected.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sam_c003_0008, role_in_system: option, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0010, role_in_system: option, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0012, role_in_system: option, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0015, role_in_system: option, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0016, role_in_system: option, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0009, role_in_system: overriding_consideration, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0013, role_in_system: overriding_consideration, order: 7, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sam_c003_0012, to: sk_sam_c003_0010, nature: "the source defines the modular grid as a column grid with many flowlines, so it is not an independent option", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sam_c003_0012, sk_sam_c003_0015]
+        nature: "regular repeated intervals give proportional control; alignments fitted to the elements give fit. The source defines the hierarchic grid explicitly against regular intervals."
+        origin: source_stated
+        source_ref: {section: "The Hierarchic Grid", page_start: 30}
+    conflicts:
+      - between: [sk_sam_c003_0013, sk_sam_c003_0012]
+        nature: >
+          The modular grid is justified functionally by the complexity of the content, and the
+          source then reports designers choosing it for projects with simple informational needs
+          because of what it signifies. Both are stated without comment on the tension.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is source-stated and separately sectioned. What is ours is the claim that they
+      constitute one selection procedure ordered by a single variable. The source's own presentation
+      is a taxonomy, not a decision tree, and it never says to prefer the least articulated option.
+  provenance:
+    chapter: "1 Making the Grid"
+    section: "Grid Basics"
+    page_start: 24
+    page_end: 33
+    source_support: text_and_visual
+
+- scs_id: scs_sam_c003_002
+  source_id: samara_making_breaking_grid_ch1
+  label: deriving_the_structure_from_the_typesetting
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    An ordered derivation that starts from the text and ends with a locked structure: style each
+    kind of text optimally, find one width increment all the styles share and make it the column
+    width, take the gutter from the running text's needs and the lateral margins from what remains,
+    decide whether baselines must align, and if they must, force the leading measures onto a common
+    divisor, take the row depth from where most baselines meet, and reconcile the baseline grid with
+    the rows arithmetically.
+  whole_system_claim:
+    text: >
+      In a text-led project the structure is computed from the typography rather than chosen, and
+      each stage takes only the output of the one before it. The chain is not free of cost: the
+      later stages reach back and change the typographic measures the earlier stages optimised, and
+      the source concedes this rather than resolving it.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Determining Column Structure / Developing Row Structure / Correlating the Row Structure with a Baseline Grid", page_start: 46, page_end: 51}
+  members:
+    - {sk_ref: sk_sam_c003_0047, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0049, role_in_system: input, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0050, role_in_system: input, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0051, role_in_system: input, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0052, role_in_system: stage, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0053, role_in_system: stage, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0054, role_in_system: branch_point, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0055, role_in_system: stage, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0058, role_in_system: stage, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0057, role_in_system: cross_cutting_constraint, order: 10, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+      - {from: sk_sam_c003_0052, to: sk_sam_c003_0050, nature: "the widths being reconciled are the optimal paragraph widths set by the character-count rule", origin: source_stated}
+      - {from: sk_sam_c003_0053, to: sk_sam_c003_0052, nature: "the gutter is added to an increment that must already exist", origin: source_stated}
+      - {from: sk_sam_c003_0055, to: sk_sam_c003_0051, nature: "the row depth is built from the styles' leading measures", origin: source_stated}
+      - {from: sk_sam_c003_0058, to: sk_sam_c003_0055, nature: "the baseline increment is the common leading number", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sam_c003_0055, sk_sam_c003_0051]
+        nature: >
+          Forcing every style's leading onto a common divisor changes the interline spacing that was
+          determined to be optimal for reading. The source states this in a footnote and says a
+          little extra is usually acceptable but that decreasing interline space may be problematic
+          for some styles. It does not say which requirement wins.
+        origin: source_stated
+        source_ref: {section: "Developing Row Structure", page_start: 49}
+    conflicts:
+      - between: [sk_sam_c003_0053, sk_sam_c003_0056]
+        nature: >
+          Here the lateral margins are whatever remains after the columns are fitted. Two pages
+          later the margin is supposed to be about twice the gutter. Both cannot generally hold and
+          the source does not reconcile them.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_sam_c003_0053, sk_sam_c003_0033]
+        nature: >
+          The margin is a residue of the column arithmetic here, while the notational-elements
+          section says folios and runners usually force the margin measure to increase.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The sequence and its ordering are the source's own — it uses "the first stage", "the next
+      stage", "the last step" and numbers the final procedure one to eight. The recorded trade-off
+      is also the source's, stated in its own footnote. What is ours is including the harmonic
+      spacing principle as a constraint cutting across the chain, and both recorded conflicts.
+  provenance:
+    chapter: "1 Making the Grid"
+    section: "Building a Grid — Based on Textsetting and Typesetting Attributes"
+    page_start: 46
+    page_end: 51
+    source_support: text_and_visual
+
+- scs_id: scs_sam_c003_003
+  source_id: samara_making_breaking_grid_ch1
+  label: one_alignment_discipline_and_its_named_exceptions
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: source_stated
+  description: >
+    One rule — element edges land on column edges laterally and row edges vertically — extended by
+    the source from images to text and then to graphic details, together with the cases where it
+    cannot be met literally and what is substituted instead: optical judgement for silhouettes and
+    bleeds, a placed element for a rag, hanging for bullets and opening quotes, width or axis for
+    centred text, consistency for boxed text, and an explicit exemption for paragraph breaks.
+  whole_system_claim:
+    text: >
+      The discipline is one rule with a family of stated exemptions, and the exemptions are what
+      make it usable. In every exempt case something replaces geometric alignment rather than
+      alignment being abandoned — an optical judgement, a substitute marker, or a consistency
+      requirement. The single case where the rule is simply switched off, paragraph breaks, is the
+      one place where the material's own behaviour is allowed to win.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the generalisation itself — text should correspond to the guides "similar
+      to the way images should correspond", and details "should too" — so the chain from image to
+      text to detail is source-stated. What is ours is collecting the six special cases as one
+      family, and the observation that each substitutes a different kind of check rather than
+      dropping the requirement. The source presents them as six separate captions with no
+      connecting statement.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sam_c003_0017, role_in_system: governing_rule, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0022, role_in_system: extension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0036, role_in_system: extension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0018, role_in_system: repair, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0020, role_in_system: exception, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0024, role_in_system: exception, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0025, role_in_system: exception, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0026, role_in_system: exception, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0027, role_in_system: exception, order: 9, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0028, role_in_system: exemption, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0029, role_in_system: exception, order: 11, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0039, role_in_system: exception, order: 12, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sam_c003_0022, to: sk_sam_c003_0017, nature: "the source derives the text rule from the image rule by analogy", origin: source_stated}
+      - {from: sk_sam_c003_0036, to: sk_sam_c003_0017, nature: "and the detail rule from both", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_sam_c003_0018, sk_sam_c003_0040]
+        nature: >
+          The remedy for a misaligned image is to add columns or rows during layout. The planning
+          section says the grid is a closed system once developed. Adding subdivisions is exactly
+          reopening it.
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_sam_c003_0028, sk_sam_c003_0058]
+        nature: >
+          Paragraph breaks are explicitly freed from the row guides, while the baseline-grid
+          procedure locks all text to a fixed increment that must land on every row and row-gutter
+          guide. The source states both and never addresses whether a locked baseline grid still
+          permits the freedom.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, repeated_within_source, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The generalisation chain is the source's, stated in its own words at both steps. The
+      collection of exceptions into one family, their classification, and both conflicts are ours.
+      Every exception stands alone if the grouping is rejected.
+  provenance:
+    chapter: "1 Making the Grid"
+    section: "Grid Basics — Image Behavior, Text Behavior, Detailing"
+    page_start: 34
+    page_end: 41
+    source_support: text_and_visual
+
+- scs_id: scs_sam_c003_004
+  source_id: samara_making_breaking_grid_ch1
+  label: regularity_is_the_value_and_the_danger
+  label_origin: extractor_assigned
+  system_type: trade_off_set
+  system_type_origin: source_stated
+  description: >
+    The set of claims in which the property that makes a grid useful — regularity — is also
+    identified as the thing that must be worked against: articulation as the real work, leaving the
+    structure partly unrevealed, the flat-versus-deep consequence of how far alignments are marked,
+    the statement that succumbing to regularity is the greatest danger, the variation tactics, the
+    licensing of violation, pacing across a sequence, and the tension named directly in the
+    campaign section.
+  whole_system_claim:
+    text: >
+      The source builds an argument for structure across roughly forty pages and then states that
+      structure alone produces failure. The resolution offered is that the grid is a guide rather
+      than a rule, that a system exists to encourage flexibility, and that responsibility sits with
+      the designer — "Grids don't make dull layouts, designers do." The test for a legitimate
+      deviation is never given beyond "a good reason".
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Design as a System — Variation and Violation", page_start: 70}
+  members:
+    - {sk_ref: sk_sam_c003_0069, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0070, role_in_system: dimension, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0074, role_in_system: dimension, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0075, role_in_system: governing_claim, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0076, role_in_system: tactic, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0077, role_in_system: tactic, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0078, role_in_system: dimension, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0079, role_in_system: dimension, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0031, role_in_system: dimension, order: 9, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0073, role_in_system: dimension, order: 10, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sam_c003_0077, to: sk_sam_c003_0075, nature: "violation is licensed by the grid being a guide", origin: source_stated}
+      - {from: sk_sam_c003_0076, to: sk_sam_c003_0075, nature: "variation is the milder form of the same licence", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sam_c003_0070, sk_sam_c003_0074]
+        nature: "the same variable — how much of the structure is filled and marked — is described as producing dynamism in one section and flatness in another; they are the same fact seen from two sides"
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_sam_c003_0079, sk_sam_c003_0075]
+        nature: "consistent architecture across a campaign against the flexibility that keeps any one piece alive; the source names this tension in its own words"
+        origin: source_stated
+        source_ref: {section: "Integrating Formats and Media", page_start: 76}
+      - between: [sk_sam_c003_0073, sk_sam_c003_0077]
+        nature: "carrying one compositional idea across every part builds cohesion; the force of a violation comes from breaking exactly that consistency"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_sam_c003_0070, sk_sam_c003_0037]
+        nature: >
+          An open, unfilled area is a virtue that must be maintained for visual rest under
+          articulation, and an awkward emptiness to be activated with a dot under detailing. No
+          test separates the two cases.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    "the grid is a guide—to be followed as much as possible, but deviated from if there's a good
+    reason to do so" — the source explicitly warns against applying its own rules mechanically.
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The trade-off is the source's own and is the book's title thesis, so the system type and the
+      whole-system claim are source-stated. What is ours is the membership list, including pulling
+      the flowline consistency-or-differentiation claim in from Grid Basics, and both conflicts.
+      The second conflict is recorded against the source rather than reported by it.
+  provenance:
+    chapter: "1 Making the Grid"
+    section: "Using a Grid — Design as a System"
+    page_start: 62
+    page_end: 76
+    source_support: text_and_visual
+
+- scs_id: scs_sam_c003_005
+  source_id: samara_making_breaking_grid_ch1
+  label: structure_read_as_signification
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The claims in which a structure is chosen or judged for what it will be taken to mean rather
+    than for what it organises: the manuscript grid's classical and authoritative reading, the
+    modular grid's rationalist reading used as an interpretive overlay, symmetry as classical and
+    asymmetry as modern, and the general statement that structure itself can be a message read
+    culturally, historically and associationally.
+  whole_system_claim:
+    text: >
+      Running alongside the functional argument is a second, unmeasured one: every structural choice
+      already carries an inherited reading, and that reading can override the functional match. The
+      source states the general principle only in the last of these four places, three sections
+      after it has twice relied on it.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each member individually. It never groups them, and it does not note that
+      the manuscript and modular connotation claims made forty pages earlier are instances of the
+      principle it later names. Collecting the four, and the observation that the general statement
+      arrives after the specific applications, are both ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sam_c003_0067, role_in_system: governing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0009, role_in_system: instance, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0013, role_in_system: instance, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0068, role_in_system: instance, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0073, role_in_system: related_claim, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_sam_c003_0068, to: sk_sam_c003_0067, nature: "symmetry and asymmetry are given as a worked case of structure as message", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sam_c003_0013, sk_sam_c003_0012]
+        nature: "choosing a structure for what it signifies against choosing it for what the content needs; the source reports designers doing the first on projects that do not require the second"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Each member is source-stated. The grouping is entirely ours, and it is a hypothesis about how
+      the book argues rather than a structure it declares. Every claim in the set is a claim about
+      what audiences infer, and the source reports no audience evidence for any of them, so the set
+      is uniformly weakly supported — which is itself the most useful thing about grouping it.
+  provenance:
+    chapter: "1 Making the Grid"
+    section: "Grid Basics and Building a Grid — connotation claims"
+    page_start: 24
+    page_end: 61
+    source_support: text_and_visual
+
+- scs_id: scs_sam_c003_006
+  source_id: samara_making_breaking_grid_ch1
+  label: building_a_responsive_structure_from_the_smallest_format_outward
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    Why screen layout is treated as a construction-direction problem: web formats emphasise columns
+    because columns survive a change of viewport width; default templates produce two specific
+    conflicts; the fix is to build outward from the column or module; the smartphone width is the
+    ready-made base column; collapsing to one column inverts the compositional emphasis and can
+    disunify an identity; and pinning keeps critical content present at the cost of obscuring.
+  whole_system_claim:
+    text: >
+      A responsive structure fails when it is designed at the largest size and derived downward,
+      because a large-format grid has no guarantee of subdividing cleanly at the smallest. Building
+      upward from the smallest column makes every larger format a whole multiple of it, so
+      continuity is structural rather than repaired at each breakpoint. The remaining problems —
+      inverted emphasis on collapse, and obscuring by pinned elements — are consequences the
+      direction of construction does not remove.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "For Interaction Design — Layout in a Responsive Context", page_start: 56, page_end: 59}
+  members:
+    - {sk_ref: sk_sam_c003_0006, role_in_system: premise, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sam_c003_0063, role_in_system: failure_mode, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0062, role_in_system: governing_claim, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0064, role_in_system: method, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0065, role_in_system: residual_problem, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sam_c003_0066, role_in_system: residual_problem, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_sam_c003_0064, to: sk_sam_c003_0062, nature: "the smartphone base column is how building outward is done", origin: source_stated}
+      - {from: sk_sam_c003_0062, to: sk_sam_c003_0063, nature: "the template conflicts are what motivate the construction direction", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sam_c003_0065, sk_sam_c003_0069]
+        nature: >
+          Building horizontal breaks into the large-format layout to match what the small format will
+          produce constrains the large layout's articulation for the sake of a view that is not
+          being designed. The source states the requirement and not the cost.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_sam_c003_0066, sk_sam_c003_0033]
+        nature: >
+          Pinning is recommended so critical content stays present, while the notational-elements
+          section treats an element in a constant position as inherently distracting and as forcing
+          margins wider. The same property is a benefit in one medium and a cost in the other, and
+          the source does not connect them.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The causal ordering and the governing claim are the source's own and stated in its words. What
+      is ours is including the web-page anatomy claim from Grid Basics as the premise, the trade-off,
+      and the conflict with the notational-elements section. The whole system is dated by
+      construction: it describes device widths and template practice as they stood in 2017.
+  provenance:
+    chapter: "1 Making the Grid"
+    section: "Building a Grid — For Interaction Design"
+    page_start: 56
+    page_end: 59
+    source_support: text_and_visual

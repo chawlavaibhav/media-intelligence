@@ -1,0 +1,799 @@
+# CANON-003 book 7 (Lane A) — Freeman, "The Photographer's Eye: A Graphic Guide", Parts 1-3.
+# SPEC-05 ontology, source-local. Existing relation types and term kinds only.
+#
+# NOTE ON THIS SOURCE'S REPAIR PROFILE: every remedy here is an action taken with a camera before
+# the exposure — move, wait, change the lens, choose the viewpoint, level the pan. Recorded as
+# executable_by: physical_production, with the two exceptions that are darkroom or software crops.
+# This is the OPPOSITE profile from the layout manual processed earlier in this lane, whose repairs
+# were deterministic geometric operations. Neither required a vocabulary addition.
+source_id: freeman_photographers_eye_graphic_guide_parts1_3
+extraction_date: 2026-08-24
+
+terms:
+
+# ── entities ─────────────────────────────────────────────────
+- term_id: t_fre_c003_0001
+  term: frame
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: entity
+  definition_in_origin_frame: >
+    The enclosure placed around a potential subject. The source says the frame is meant to enclose,
+    and takes the term from filmmaking, where a scene is enclosed and the action plays out within it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "PART 1 introduction"}
+  arising_from: [sk_fre_c003_0001]
+
+- term_id: t_fre_c003_0002
+  term: frame_edge
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: entity
+  definition_in_origin_frame: >
+    The boundary of the enclosure, treated throughout as something subject elements can approach,
+    align to, be cut by, or break across.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "EXACT, EDGE-ALIGN, FRAME BREAK"}
+  arising_from: [sk_fre_c003_0002, sk_fre_c003_0003]
+
+- term_id: t_fre_c003_0003
+  term: frame_within_the_scene
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: entity
+  definition_in_origin_frame: >
+    A window, door or other man-made opening acting as a frame onto another picture within the
+    picture.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "FRAMED"}
+  arising_from: [sk_fre_c003_0022]
+
+- term_id: t_fre_c003_0004
+  term: horizon
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: entity
+  definition_in_origin_frame: >
+    The cleanest and clearest case of a necessary division. Known and expected, and like a single
+    subject on a plain background it has to be put somewhere — high, middle or low.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "PART 3 introduction"}
+  arising_from: [sk_fre_c003_0027]
+
+# ── properties: the source's named treatments ────────────────
+- term_id: t_fre_c003_0005
+  term: framing
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Enclosing the scene — deciding where to cut into a landscape, figure or object and what to
+    leave out. Comes before anything else, even before thinking about relationships inside the
+    picture.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "PART 1 introduction"}
+  arising_from: [sk_fre_c003_0001]
+
+- term_id: t_fre_c003_0006
+  term: placing
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Deciding where in the rectangular frame a concrete subject goes and how close it sits to other
+    things. Presupposes a subject small enough that there is a choice.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "PART 2 introduction"}
+  arising_from: [sk_fre_c003_0015]
+
+- term_id: t_fre_c003_0007
+  term: dividing
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Partitioning the frame with a line, which works only where what falls either side of the line
+    differs — in tone, colour, texture or anything else creating contrast.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "PART 3 introduction"}
+  arising_from: [sk_fre_c003_0027]
+
+- term_id: t_fre_c003_0008
+  term: exact_framing
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Framing made as rigorous and precise as time allows, with cuts and gaps proportionate to the
+    angle at which the subject's curves meet the frame edges.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "EXACT"}
+  arising_from: [sk_fre_c003_0002]
+
+- term_id: t_fre_c003_0009
+  term: loose_framing
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Not being obsessed with how things fit the frame or intersect its edges, and not minding when
+    the frame breaks into a person. The source insists it is an attitude, not sloppiness.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "LOOSE"}
+  arising_from: [sk_fre_c003_0005]
+
+- term_id: t_fre_c003_0010
+  term: frame_fit
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Using the edges and corners so the subject just fits the frame. Fragile: one slip and it falls
+    apart if anything important crosses the edge.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "FRAME-FIT"}
+  arising_from: [sk_fre_c003_0006]
+
+- term_id: t_fre_c003_0011
+  term: frame_break
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Deliberately dividing near-symmetrical subjects in half at the frame edge, producing symmetry
+    that pulls the eyes apart rather than to the centre.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "FRAME BREAK"}
+  arising_from: [sk_fre_c003_0007]
+
+- term_id: t_fre_c003_0012
+  term: edge_magnetism
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    The source's word for the relationship a straight subject edge acquires when placed close to a
+    frame edge — "like a kind of magnetism", stronger the closer it is placed.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "EDGE-ALIGN"}
+  arising_from: [sk_fre_c003_0003]
+
+- term_id: t_fre_c003_0013
+  term: square_frame
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    A frame with equal sides, therefore without bias or direction. Draws the eye inward, divides
+    easily into equal parts, and has a definite centre like a circle. Historically read as strict
+    and formal.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "SQUARE"}
+  arising_from: [sk_fre_c003_0009, sk_fre_c003_0010]
+
+- term_id: t_fre_c003_0014
+  term: sense_of_tallness
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Distinguished by the source from merely using a vertical frame. Produced by opposing contrasting
+    elements at the two extremes of the long axis so the distance between them registers.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "TALL"}
+  arising_from: [sk_fre_c003_0008]
+
+- term_id: t_fre_c003_0015
+  term: off_center
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    The in-between placement zone. The source calls its vagueness a virtue and says any rule of
+    thirds can only be approximate. It is natural rather than forced, and shows subject and setting
+    together.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "OFF-CENTER"}
+  arising_from: [sk_fre_c003_0017, sk_fre_c003_0018]
+
+- term_id: t_fre_c003_0016
+  term: extreme_placement
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    A subject placed right at an edge or in a corner. The least likely option; needs a reason or it
+    looks perverse. Most often used to let the background dominate the subject.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "EXTREME"}
+  arising_from: [sk_fre_c003_0021]
+
+- term_id: t_fre_c003_0017
+  term: just
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    The source's own term, offered as "just a personal idea of mine": graphically, almost touching.
+    Hovers between complete and incomplete, and need only be apparent through the camera rather
+    than real.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "JUST"}
+  arising_from: [sk_fre_c003_0023]
+
+- term_id: t_fre_c003_0018
+  term: reveal
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    A cinematic device — the camera shows one thing then discloses another — which the source says
+    is difficult and perhaps impossible in a still, and attempts by making attention go to one place
+    and then wander.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "REVEAL"}
+  arising_from: [sk_fre_c003_0025]
+
+- term_id: t_fre_c003_0019
+  term: two_shot
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Two people framed tight-to-medium so their faces dominate, borrowed from cinema and television.
+    Should be made active by moving the eye back and forth between the pair.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "TWO SHOT"}
+  arising_from: [sk_fre_c003_0026]
+
+- term_id: t_fre_c003_0020
+  term: figure_in_a_landscape
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    A type the source dates to at least the sixteenth century: a small human figure supplying the
+    comparison a landscape lacks, so its size can be read.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "FIGURE IN A LANDSCAPE"}
+  arising_from: [sk_fre_c003_0024]
+
+- term_id: t_fre_c003_0021
+  term: classical_division
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Well accepted, comfortable on the eye, what a well-trained photographer would do for a generally
+    satisfying image. About innately satisfying proportions balancing larger against smaller and
+    darker against lighter; explicitly NOT identified with the Golden Section.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "CLASSICAL"}
+  arising_from: [sk_fre_c003_0028]
+
+- term_id: t_fre_c003_0022
+  term: tonal_weight
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    The extra attention a brighter area commands over a darker one of the same size, which any
+    division of the frame must take into account. The source's word is that our eyes are drawn to
+    the light.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "CLASSICAL"}
+  arising_from: [sk_fre_c003_0029]
+
+- term_id: t_fre_c003_0023
+  term: eccentric_division
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Placing the only sharp strong element near the frame's edge so the eye goes there first and then
+    has nowhere to wander except toward the true, subtler subject.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "ECCENTRIC"}
+  arising_from: [sk_fre_c003_0031]
+
+- term_id: t_fre_c003_0024
+  term: disruptive_division
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: property
+  definition_in_origin_frame: >
+    Dividing the frame so the eye cannot rest anywhere for long. Deliberate disruption, which the
+    source says makes the image more energetic.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "DISRUPTIVE"}
+  arising_from: [sk_fre_c003_0032]
+
+# ── problems ─────────────────────────────────────────────────
+- term_id: t_fre_c003_0025
+  term: framing_element_dominating_the_subject
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    An in-scene element used as a frame taking over the picture because it is too bright for the
+    area it occupies.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "EDGE-ALIGN caption"}
+  arising_from: [sk_fre_c003_0004]
+
+- term_id: t_fre_c003_0026
+  term: something_important_breaking_across_the_frame_edge
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    The failure mode of frame-fit: one slip and the whole arrangement falls apart because a needed
+    part of the subject crosses out of the frame.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "FRAME-FIT"}
+  arising_from: [sk_fre_c003_0006]
+
+- term_id: t_fre_c003_0027
+  term: a_fit_so_exact_it_looks_too_tight
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    The opposite failure of frame-fit: no gap at all between subject and frame edge, which the
+    source says would look too tight.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "FRAME-FIT"}
+  arising_from: [sk_fre_c003_0006]
+
+- term_id: t_fre_c003_0028
+  term: placement_that_looks_perverse
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    An extreme edge or corner placement with no visible reason. Because the frame is meant to
+    enclose, a subject pushed against its boundary without a reason simply looks perverse.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "EXTREME"}
+  arising_from: [sk_fre_c003_0021]
+
+- term_id: t_fre_c003_0029
+  term: hidden_subject_the_viewer_never_finds
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    A thing-to-be-revealed hidden too well — too small or too poorly lit — so the viewer gets bored
+    and moves on before noticing it.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "REVEAL"}
+  arising_from: [sk_fre_c003_0025]
+
+- term_id: t_fre_c003_0030
+  term: scale_figure_too_small_to_register
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    A figure included to give scale reduced below the size at which it can be seen, so the point is
+    wasted. Whether it registers depends on the print size, not on the file.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "FIGURE IN A LANDSCAPE"}
+  arising_from: [sk_fre_c003_0024]
+
+- term_id: t_fre_c003_0031
+  term: landscape_that_lacks_comparison
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    A landscape that does not impress as much as the real thing because it contains nothing of
+    known size — the trees could be almost any size.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "FIGURE IN A LANDSCAPE"}
+  arising_from: [sk_fre_c003_0024]
+
+- term_id: t_fre_c003_0032
+  term: bright_area_overdominating_a_division
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    A frame divided by proportion alone in which the lighter zone takes more attention than its
+    share, so the balance the proportion was meant to produce does not occur.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "CLASSICAL"}
+  arising_from: [sk_fre_c003_0029]
+
+- term_id: t_fre_c003_0033
+  term: panorama_sequence_drifting_off_level
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    Dropping slightly between frames when panning handheld, which forces a crop severe enough to
+    lose the skyline.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "PANORAMIC"}
+  arising_from: [sk_fre_c003_0013]
+
+- term_id: t_fre_c003_0034
+  term: offframe_reference_becoming_annoying
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: problem
+  definition_in_origin_frame: >
+    The risk the source attaches to referring to events outside the frame more than occasionally:
+    the device stops being intriguing and becomes simply annoying.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "OFFSTAGE"}
+  arising_from: [sk_fre_c003_0014]
+
+# ── remedies ─────────────────────────────────────────────────
+- term_id: t_fre_c003_0035
+  term: make_a_bright_framing_element_occupy_less
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: "Thin an in-scene framing element in the image so it does not dominate the subject it encloses."
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "EDGE-ALIGN caption"}
+  arising_from: [sk_fre_c003_0004]
+
+- term_id: t_fre_c003_0036
+  term: leave_a_deliberate_slight_gap
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: "Keep a small deliberate space between the subject and the frame edge; any less would look too tight."
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "FRAME-FIT"}
+  arising_from: [sk_fre_c003_0006]
+
+- term_id: t_fre_c003_0037
+  term: find_the_camera_position_rather_than_crop_afterwards
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Move and change lenses until the frame is right in camera. The source rejects cropping in later
+    to make it appear to work, on the grounds that it misses the point.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "FRAME-FIT"}
+  arising_from: [sk_fre_c003_0006]
+
+- term_id: t_fre_c003_0038
+  term: oppose_contrasting_elements_at_the_ends_of_the_long_axis
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: "Place two strongly contrasting elements at opposite extremes of the frame's long axis so its length registers."
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "TALL"}
+  arising_from: [sk_fre_c003_0008]
+
+- term_id: t_fre_c003_0039
+  term: crop_to_square_to_strengthen_a_centred_subject
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Recrop a rectangular frame to square so the equidistant edges and corners concentrate attention
+    further toward a centred subject.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [deterministic_composite, human_edit]
+  source_ref: {locator: "CENTERED"}
+  arising_from: [sk_fre_c003_0019]
+
+- term_id: t_fre_c003_0040
+  term: pan_level_and_overlap_each_frame_by_half
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Shoot the panorama series level and consistently, overlapping each frame by about a half, using
+    a landmark on one frame's leading edge as the next frame's centre.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "PANORAMIC"}
+  arising_from: [sk_fre_c003_0013]
+
+- term_id: t_fre_c003_0041
+  term: key_a_subtle_subject_to_a_sharp_one_at_the_edge
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Where the real subject is too subtle to hold attention, put the one sharp strong element close
+    to the frame's edge so the eye arrives there first and is then sent toward the real subject.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "ECCENTRIC"}
+  arising_from: [sk_fre_c003_0031]
+
+- term_id: t_fre_c003_0042
+  term: give_each_subject_a_different_claim_on_attention
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Make one subject hold the eye by focus and lighting and the other by background contrast, so
+    neither settles the attention and it moves between them.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "TWO SHOT"}
+  arising_from: [sk_fre_c003_0026]
+
+- term_id: t_fre_c003_0043
+  term: use_a_flat_frontal_viewpoint_to_isolate_deliberate_diagonals
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Shoot head-on so everything structural stays strictly horizontal and vertical, leaving the
+    intended diagonals as the only obliques in the frame.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "ANGULAR"}
+  arising_from: [sk_fre_c003_0033]
+
+- term_id: t_fre_c003_0044
+  term: weigh_tone_when_setting_the_division_or_equalise_it
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Take account of how bright each zone is when choosing where the division falls; or, if a
+    geometric proportion is to be kept, equalise the tones so it holds.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production, human_edit]
+  source_ref: {locator: "CLASSICAL"}
+  arising_from: [sk_fre_c003_0029]
+
+- term_id: t_fre_c003_0045
+  term: build_a_background_that_gives_each_unit_a_place
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Where a subject has no inherent arrangement, construct a background whose own structure supplies
+    a resting place for each unit, so the composition has a basic repeating element.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "SYMMETRICAL"}
+  arising_from: [sk_fre_c003_0030]
+
+- term_id: t_fre_c003_0046
+  term: find_a_viewpoint_that_makes_near_contact_apparent
+  origin: source
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  kind: remedy
+  definition_in_origin_frame: >
+    Use the camera position to create an almost-touching relationship that does not exist in space.
+    The source says the moment does not need to be real, only apparent.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "JUST"}
+  arising_from: [sk_fre_c003_0023]
+
+relationships:
+
+- from: t_fre_c003_0008
+  to: t_fre_c003_0009
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source treats these as opposite settings of the same variable and insists loose framing is
+    not sloppiness. Recorded so a later pass does not read "loose" as a degraded form of "exact".
+
+- from: t_fre_c003_0010
+  to: t_fre_c003_0011
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source names frame break as "the opposite of the previous image" — frame-fit. Both concern
+    the subject's outline meeting the frame edge, and they specify opposite outcomes.
+
+- from: t_fre_c003_0013
+  to: t_fre_c003_0011
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Checked because both concern symmetry. The source separates them by the direction of the
+    resulting eye movement: a square frame draws the eye inward to a definite centre, while a
+    broken symmetrical subject pulls the eyes apart. Same property, opposite effect.
+
+- from: t_fre_c003_0017
+  to: t_fre_c003_0018
+  relation: same_mechanism
+  confidence_basis: extractor_judgement
+  note: >
+    Both hold attention through a delay in the viewer — gauging an unresolved gap, or finding a
+    hidden element. The source presents them as unrelated techniques in different parts of the book.
+    Recorded as same_mechanism rather than same_observed_effect because what a viewer sees differs
+    entirely; it is the temporal structure that matches.
+
+- from: t_fre_c003_0018
+  to: t_fre_c003_0023
+  relation: same_mechanism
+  confidence_basis: extractor_judgement
+  note: >
+    The reveal and the eccentric division both move the eye from a first, easily found subject to a
+    second, harder one, and both depend on the interval between. The source connects neither.
+
+- from: t_fre_c003_0029
+  to: t_fre_c003_0030
+  relation: same_failure_family
+  confidence_basis: extractor_judgement
+  note: >
+    An element too small or too poorly lit to be found, whether it is a hidden subject in a reveal
+    or a figure supplying scale. The source states the same failure in two places without noticing
+    it is the same. Grouped here because the repair is identical: raise the element above the
+    threshold of being noticed.
+
+- from: t_fre_c003_0026
+  to: t_fre_c003_0027
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The two failure modes of frame-fit, in opposite directions — the subject crossing out of the
+    frame, and no gap left at all. The source states both in one passage and gives them different
+    remedies.
+
+- from: t_fre_c003_0021
+  to: t_fre_c003_0024
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both are the source's treatments of how to divide a frame and both are endorsed
+    within four pages. They are opposed aims: classical division is about satisfying the eye,
+    disruptive division about refusing it rest. Recorded as a negative finding because the source
+    does not acknowledge that it holds both.
+
+- from: t_fre_c003_0022
+  to: t_fre_c003_0021
+  relation: narrower_than
+  confidence_basis: source_stated
+  note: >
+    Tonal weight is the correction the source applies within classical division — the reason a
+    proportion defined on area alone is insufficient.
+
+- from: t_fre_c003_0012
+  to: t_fre_c003_0025
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The magnetic pull of a subject edge near a frame edge, and the risk that the same element takes
+    over the picture if it is bright and thick. The source states both about one photograph.
+
+- from: t_fre_c003_0044
+  to: t_fre_c003_0032
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The source's repair for the failure it demonstrated by manipulating its own image."
+
+- from: t_fre_c003_0037
+  to: t_fre_c003_0039
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Recorded because the source appears to contradict itself. It rejects cropping in later to make
+    a frame-fit appear to work, and four sections later argues for cropping a finished 3:2 image to
+    square. The difference it draws is between faking a precision that was not achieved and
+    changing the frame's proportion for a stated reason — but it never states that difference.
+
+concepts:
+
+- concept_id: sc_fre_c003_three_zones
+  kind: source_specific_concept
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  label: the_three_placement_zones
+  children_terms: [t_fre_c003_0015, t_fre_c003_0016]
+  origin: source_stated
+  basis: >
+    The source names three general positions in one sentence — around the centre, near an edge or
+    corner, and the in-between — and gives each its own case. Two are named terms in their own
+    right; the centred case is carried as a claim rather than a coined term.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_fre_c003_framing_treatments
+  kind: source_specific_concept
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  label: the_framing_treatments
+  children_terms: [t_fre_c003_0008, t_fre_c003_0009, t_fre_c003_0010, t_fre_c003_0011, t_fre_c003_0012]
+  origin: source_stated
+  basis: >
+    Part 1 is the source's own division and these are the treatments it collects there before
+    turning to frame proportion. The grouping is the book's contents page.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_fre_c003_division_types
+  kind: source_specific_concept
+  origin_ref: freeman_photographers_eye_graphic_guide_parts1_3
+  label: the_kinds_of_division
+  children_terms: [t_fre_c003_0021, t_fre_c003_0023, t_fre_c003_0024]
+  origin: source_stated
+  basis: >
+    Part 3, "Dividing", is the source's own section and these are the named types within it that
+    became terms. The grouping is the book's; the observation that they pull in opposite directions
+    is ours and is recorded in scs_fre_c003_005.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_fre_c003_delay_devices
+  kind: canonical_concept
+  label: devices_that_hold_attention_by_delaying_the_viewer
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_fre_c003_0017, t_fre_c003_0018, t_fre_c003_0023, t_fre_c003_0020]
+  basis: >
+    Ours, for retrieval. Four of this source's techniques work by making the viewer wait — for a gap
+    to be judged, for a hidden element to be found, for the eye to travel from a sharp element to a
+    subtle one, for a scale figure to be noticed. The source connects none of them and they look
+    nothing alike, so this asserts no equivalence. It exists because they share one failure mode,
+    which is a useful thing to be able to retrieve together.
+  asserts_agreement_between_sources: false
+
+- concept_id: cc_fre_c003_physical_camera_repairs
+  kind: canonical_concept
+  label: repairs_executable_only_before_the_exposure
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  children_terms: [t_fre_c003_0035, t_fre_c003_0036, t_fre_c003_0037, t_fre_c003_0038, t_fre_c003_0040, t_fre_c003_0041, t_fre_c003_0042, t_fre_c003_0043, t_fre_c003_0045, t_fre_c003_0046]
+  basis: >
+    Ours, for retrieval. Ten of this source's twelve repairs are actions taken with a camera before
+    the shutter opens — move, wait, change the lens, choose the viewpoint, light it differently,
+    build the set. They carry executable_by: physical_production and have no generative equivalent.
+    The grouping records an execution property, not a conceptual one, and asserts no equivalence.
+  asserts_agreement_between_sources: false

@@ -1,0 +1,673 @@
+# CANON-003 Lane C, book 13 — Hopkins, "Scientific Advertising" ch.1-7. SPEC-05 ontology,
+# source-local. Existing relation types only; `distinct_from` used per Controller decision 3
+# (permitted in this layer, not inside SPEC-03 intra_source_relations).
+source_id: hopkins_scientific_advertising_ch1_7
+extraction_date: 2026-08-24
+
+terms:
+
+# ── problems ────────────────────────────────────────────────────────────────
+- term_id: t_hop_sa_0001
+  term: guesswork
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Choosing between advertising options without a measured comparison. The source uses the word
+    three times in this section — "So no guesswork is permitted", "All guesswork is eliminated",
+    "Guesswork is very expensive" — and treats it as the condition the traced-return method exists
+    to abolish.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "1, 2, 4", locator: "chapters 1, 2 and 4"}
+  arising_from: [sk_hop_sa_0002, sk_hop_sa_0015, sk_hop_sa_0021]
+
+- term_id: t_hop_sa_0002
+  term: untraced_campaign
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    A campaign that runs without a key on returns, so nobody can discover whether it is the cheap
+    version or the expensive one. The source's phrase is "countless untraced campaigns where a whim
+    of that kind costs half the advertising money without a penny of return."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "4", locator: "the incubator case"}
+  arising_from: [sk_hop_sa_0023, sk_hop_sa_0026]
+
+- term_id: t_hop_sa_0003
+  term: blind_headline
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    A headline that does not say who the advertisement is for. It may attract many times as many
+    readers, but mostly people who could never buy, while the intended buyers never realise the
+    advertisement concerns them.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "5", locator: "Headlines"}
+  arising_from: [sk_hop_sa_0032]
+
+- term_id: t_hop_sa_0004
+  term: platitudes_and_generalities
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Claims stated so generally that they carry no information — "Best in the world", "Lowest prices
+    in existence", "Pure". They "roll off the human understanding like water from a duck" and leave
+    no impression, and superlatives of the kind also lead readers to discount the advertiser's
+    other statements.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "7", locator: "Being Specific, opening"}
+  arising_from: [sk_hop_sa_0050]
+
+- term_id: t_hop_sa_0005
+  term: claiming_the_expected
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Asserting the attribute every product in the category is already assumed to have, so the claim
+    distinguishes nothing. The source's own phrase for what a superlative amounts to.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "7", locator: "Being Specific"}
+  arising_from: [sk_hop_sa_0050, sk_hop_sa_0053]
+
+- term_id: t_hop_sa_0006
+  term: seeking_applause_instead_of_sales
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    The writer abandoning the salesman's part to perform. "They forget they are salesmen and try to
+    be performers. Instead of sales, they seek applause." Named by the source as one of the greatest
+    advertising faults.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "2", locator: "Just Salesmanship"}
+  arising_from: [sk_hop_sa_0016]
+
+- term_id: t_hop_sa_0007
+  term: written_to_please_the_seller
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    An advertisement organised around the advertiser's interests rather than the buyer's. "The
+    interests of the buyer are forgotten. One can never sell goods profitably, in person or in
+    print, when that attitude exists."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "2", locator: "chapter close"}
+  arising_from: [sk_hop_sa_0016, sk_hop_sa_0017]
+
+- term_id: t_hop_sa_0008
+  term: useless_pictures
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Pictures used "merely to decorate or interest", which occupy paid space without carrying any
+    part of the sale. Contrasted with mail order pictures, which are "salesmen in themselves" and
+    "earn the space they occupy".
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "4", locator: "pictures"}
+  arising_from: [sk_hop_sa_0026]
+
+- term_id: t_hop_sa_0009
+  term: unoccupied_space
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Space paid for and not used to sell — borders, margins, enlarged type, half-page copy set in a
+    page. "Remember that when you are tempted to leave valuable space unoccupied."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "4", locator: "what mail order practice shows"}
+  arising_from: [sk_hop_sa_0024, sk_hop_sa_0028]
+
+- term_id: t_hop_sa_0010
+  term: substitution
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    A dealer supplying a different brand when the buyer asks for the advertised one. The source
+    reports that warning buyers against it — "Look out for substitutes", "Be sure you get this
+    brand" — had no effect, because those are selfish appeals.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "6", locator: "Psychology"}
+  arising_from: [sk_hop_sa_0044]
+
+- term_id: t_hop_sa_0011
+  term: cheapened_by_giving_it_away
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Destroying a product's price in the buyer's mind by handing it over free. "He cheapened his
+    product by giving a 15-cent package away... It is hard to pay for an article which has once been
+    free. It is like paying railroad fare after traveling on a pass."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "6", locator: "the two food advertisers"}
+  arising_from: [sk_hop_sa_0045]
+
+- term_id: t_hop_sa_0012
+  term: driving_people_to_the_stores
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    The advertiser's own phrase, quoted by the source as the mark of the wrong attitude: treating
+    buyers as something to be pushed. "People can be coaxed but not driven."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "3", locator: "Offer Service, close"}
+  arising_from: [sk_hop_sa_0020]
+
+- term_id: t_hop_sa_0013
+  term: the_reader_forgets_the_decision
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    A reader decides to act on an advertisement and has forgotten within five minutes, because the
+    magazine's own content reclaims his attention. "A large percentage of people who read an ad and
+    decide to act will forget that decision in five minutes."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "4", locator: "the coupon"}
+  arising_from: [sk_hop_sa_0025]
+
+- term_id: t_hop_sa_0014
+  term: revealing_the_hook
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    Letting the selling technique become visible, so the reader attends to the attempt rather than
+    the merits. "They reveal the hook. Any studied attempt to sell, if apparent, creates
+    corresponding resistance."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "2", locator: "on ad-writing"}
+  arising_from: [sk_hop_sa_0011]
+
+- term_id: t_hop_sa_0015
+  term: the_cost_of_our_pride
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: problem
+  definition_in_origin_frame: >
+    The measurable premium an advertiser pays for departing from proved practice in order to satisfy
+    taste or self-regard. The source does not forbid the departure; it insists the price be known.
+    "Let us know the cost of our pride."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "4", locator: "chapter close"}
+  arising_from: [sk_hop_sa_0030]
+
+# ── remedies ────────────────────────────────────────────────────────────────
+- term_id: t_hop_sa_0016
+  term: keyed_advertising
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Marking each version of an advertisement so the responses it produces can be attributed to it
+    alone, which is what makes one version comparable with another.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "1", locator: "How Advertising Laws Are Established"}
+  arising_from: [sk_hop_sa_0002]
+
+- term_id: t_hop_sa_0017
+  term: traced_returns
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    The recorded responses themselves, followed back to the advertisement that produced them.
+    "Mail order advertising is traced down to the fraction of a penny."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "1", locator: "How Advertising Laws Are Established"}
+  arising_from: [sk_hop_sa_0002, sk_hop_sa_0021]
+
+- term_id: t_hop_sa_0018
+  term: cost_per_customer
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    The measure the source says all final conclusions must rest on — cost per customer or cost per
+    dollar of sale — as against cost per reply, which can be misleading because replies differ in
+    value.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "1", locator: "'But those figures are not final'"}
+  arising_from: [sk_hop_sa_0003]
+
+- term_id: t_hop_sa_0019
+  term: town_by_town_comparison
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Comparing one method against another by running them in different towns and measuring cost of
+    sales in each, used where no direct return can be traced.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "1", locator: "chapter 1"}
+  arising_from: [sk_hop_sa_0004]
+
+- term_id: t_hop_sa_0020
+  term: offer_service
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Building the advertisement entirely on what the reader gets — wanted information, advantages to
+    the user, a sample, a first package, goods on approval — rather than on a request for the
+    reader's trade. The source's chapter title.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "3", locator: "Offer Service"}
+  arising_from: [sk_hop_sa_0017, sk_hop_sa_0018]
+
+- term_id: t_hop_sa_0021
+  term: send_on_approval
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Putting the goods in the buyer's hands before any payment or obligation, to be kept or returned
+    as the buyer wishes. "Use them a week, then do as you wish." The stronger variant the source
+    prefers is "Pay in a week if you like them" rather than a money-back promise.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "3, 6", locator: "Offer Service; Psychology"}
+  arising_from: [sk_hop_sa_0019, sk_hop_sa_0041]
+
+- term_id: t_hop_sa_0022
+  term: the_coupon_as_a_reminder
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    A cut-out included not only to capture a reply but to survive the reader's forgetting and
+    resurface when he is ready to act. "It is there to cut out as a reminder of something the reader
+    has decided to do."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "4", locator: "the coupon"}
+  arising_from: [sk_hop_sa_0025]
+
+- term_id: t_hop_sa_0023
+  term: hail_those_people_only
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Writing the headline so it calls out to the specific people who could buy, and to nobody else —
+    as one would shout a particular name across a crowd.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "5", locator: "Headlines"}
+  arising_from: [sk_hop_sa_0031]
+
+- term_id: t_hop_sa_0024
+  term: being_specific
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Replacing a general claim with a definite one, usually a figure — three and one-third times the
+    light, reduced 25 per cent, a 78-second shave, 1,018 experiments. The source's chapter title,
+    and the remedy it pairs with platitudes.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "7", locator: "Being Specific"}
+  arising_from: [sk_hop_sa_0051, sk_hop_sa_0052]
+
+- term_id: t_hop_sa_0025
+  term: the_salesman_test
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    The source's decision procedure for any advertising question: "Ask yourself, 'Would this help a
+    salesman sell the goods?' 'Would it help me sell them if I met the buyer in person?'"
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "2", locator: "Just Salesmanship"}
+  arising_from: [sk_hop_sa_0008]
+
+- term_id: t_hop_sa_0026
+  term: sample_bought_at_retail_price
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Issuing a coupon good at any store for a full-size package, for which the maker pays the dealer
+    the retail price, rather than giving the package away. "An article good enough for the maker to
+    buy is good enough for the user to buy."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "6", locator: "the two food advertisers"}
+  arising_from: [sk_hop_sa_0045]
+
+- term_id: t_hop_sa_0027
+  term: dealers_signed_warrant
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Having the local dealer who takes the buyer's money sign a written agreement to return it,
+    replacing a distant manufacturer's guarantee with a neighbour's. "Instead of a far-away
+    stranger, a neighbor gave the warrant."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "6", locator: "guarantees"}
+  arising_from: [sk_hop_sa_0041]
+
+- term_id: t_hop_sa_0028
+  term: invite_comparison_with_rivals
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Telling buyers in the headline to try competing products too, as a demonstration that the
+    advertiser does not fear the comparison. Offered as the remedy that worked where warning against
+    substitutes did not.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "6", locator: "substitution"}
+  arising_from: [sk_hop_sa_0044]
+
+- term_id: t_hop_sa_0029
+  term: name_in_gilt_lettering
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Putting the buyer's own name on the article offered, which the source says gave "much added
+    value" through "some peculiar kink in human psychology" and turned a failing book campaign into
+    hundreds of thousands of sales.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "6", locator: "personalisation"}
+  arising_from: [sk_hop_sa_0042]
+
+- term_id: t_hop_sa_0030
+  term: personified_seller
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Trading in the name of a specific named person who signs the advertisements and letters, whose
+    picture is used, and who writes to the buyer as someone who understands her position.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "6", locator: "the two instalment houses"}
+  arising_from: [sk_hop_sa_0048]
+
+- term_id: t_hop_sa_0031
+  term: tell_the_complete_story
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: remedy
+  definition_in_origin_frame: >
+    Placing no limit on the amount of copy where the purpose is an immediate sale. The source's
+    mail order motto: "The more you tell the more you sell."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "4", locator: "amount of copy"}
+  arising_from: [sk_hop_sa_0027, sk_hop_sa_0012]
+
+# ── properties ──────────────────────────────────────────────────────────────
+- term_id: t_hop_sa_0032
+  term: salesmanship_in_print
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: property
+  definition_in_origin_frame: >
+    The source's name for what an advertisement is. It is used to license the transfer of every
+    personal-selling standard onto advertising, and it is the term the whole of chapter 2 turns on.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "2, 7", locator: "Just Salesmanship; Being Specific"}
+  arising_from: [sk_hop_sa_0008]
+
+- term_id: t_hop_sa_0033
+  term: multiplied_salesmanship
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: property
+  definition_in_origin_frame: >
+    Advertising understood as one salesman's approach delivered to thousands at once, with both the
+    cost and the consequence of any error multiplied in the same proportion.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "2", locator: "Just Salesmanship"}
+  arising_from: [sk_hop_sa_0008, sk_hop_sa_0010]
+
+- term_id: t_hop_sa_0034
+  term: court_of_last_resort
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: property
+  definition_in_origin_frame: >
+    The source's name for mail order advertising: the setting where a disputed question about
+    advertising can actually be settled, because cost and result are attributable there.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "4", locator: "Mail Order Advertising—What It Teaches"}
+  arising_from: [sk_hop_sa_0021, sk_hop_sa_0029]
+
+- term_id: t_hop_sa_0035
+  term: fixed_principle
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: property
+  definition_in_origin_frame: >
+    The status a method acquires once it "invariably proves best" across keyed comparisons. It is
+    the source's unit of established knowledge and its promotion rule; no threshold or count is
+    given for what makes the proving invariable.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "1", locator: "How Advertising Laws Are Established"}
+  arising_from: [sk_hop_sa_0002, sk_hop_sa_0001]
+
+- term_id: t_hop_sa_0036
+  term: mental_impression
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: property
+  definition_in_origin_frame: >
+    The source's name for a belief that changes what the person then perceives. "Submit five
+    articles exactly alike... point out in one some qualities to notice and everyone will find them."
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "6", locator: "Psychology"}
+  arising_from: [sk_hop_sa_0047]
+
+- term_id: t_hop_sa_0037
+  term: price_as_evidence_of_worth
+  origin: source
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  kind: property
+  definition_in_origin_frame: >
+    A stated price read by non-expert buyers as information about quality. "We learn that people
+    judge largely by price. They are not experts."
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {chapter: "6", locator: "Psychology"}
+  arising_from: [sk_hop_sa_0040]
+
+relationships:
+
+- from: t_hop_sa_0001
+  to: t_hop_sa_0002
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because the source uses them almost interchangeably and they invite merging. They are
+    different failures with different repairs. Guesswork is choosing without evidence; an untraced
+    campaign may have been chosen on good grounds and simply never measured afterwards. The repair
+    for the first is comparison before the decision; the repair for the second is a key on returns
+    after it. Recording the split because collapsing them makes "measure it" look like a single act.
+
+- from: t_hop_sa_0003
+  to: t_hop_sa_0004
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both are vague copy and both attract nobody worth having, which is why the similarity was
+    examined. They fail differently. A blind headline fails by selecting the wrong readers, so the
+    argument beneath it is never read by anyone who could buy. A platitude fails by being read and
+    discounted, and it damages the credibility of the specific claims around it. The first is a
+    targeting failure, the second a credibility failure, and the source gives them different
+    remedies — hail those people only, and be specific.
+
+- from: t_hop_sa_0021
+  to: t_hop_sa_0011
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    The most useful negative finding in this source. Sending goods on approval and giving a package
+    away are both "let the buyer have it for nothing", and the source's own chapters 3 and 6 sit on
+    opposite sides of that resemblance. Hopkins distinguishes them: on approval the article keeps
+    its price and the buyer expects to pay if he keeps it; given away, the article's price becomes
+    zero and, in the reported case, the advertiser lost part of the trade he already had. Same
+    surface act, opposite effect on perceived value.
+
+- from: t_hop_sa_0016
+  to: t_hop_sa_0017
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Keyed advertising is the apparatus and traced returns are the data it produces; the source uses
+    them in one breath. The reading intended here is that one is narrower than the other, but
+    `related_to` is used rather than `broader_than`/`narrower_than` because promoting a relation
+    beyond the two this worker may set locally would be assuming an authority it does not have. The
+    intended reading is recorded in this note instead.
+
+- from: t_hop_sa_0004
+  to: t_hop_sa_0005
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source treats claiming the expected as what a platitude amounts to in a category where every
+    competitor could say the same thing. Connected but not identical: a platitude can also be vague
+    about something no competitor claims.
+
+- from: t_hop_sa_0006
+  to: t_hop_sa_0007
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Both are the advertisement serving somebody other than the buyer, and the source states them in
+    consecutive paragraphs. They are kept separate because the beneficiary differs: applause-seeking
+    serves the writer's reputation, seller-pleasing serves the client's self-image.
+
+- from: t_hop_sa_0020
+  to: t_hop_sa_0012
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source sets these against each other directly — offering service against driving people to
+    the stores — as the right and wrong attitudes to the same task. Recorded as related because the
+    ontology has no opposition relation and inventing one is not permitted here.
+
+- from: t_hop_sa_0008
+  to: t_hop_sa_0009
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    A useless picture is one form of unoccupied space in the source's accounting — space paid for
+    that does no selling. The incubator case is exactly this: 50 per cent more space, no more sales.
+    Kept as separate terms because unoccupied space also covers borders, margins and oversized type,
+    which are not pictures.
+
+- from: t_hop_sa_0013
+  to: t_hop_sa_0022
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source states the coupon exists because the reader forgets. Problem and remedy, stated
+    together in one passage.
+
+- from: t_hop_sa_0036
+  to: t_hop_sa_0037
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Both describe a belief installed before the encounter determining what the buyer then perceives
+    — a stated price and a pointed-out quality do the same work. This looks like one mechanism under
+    two names, but promoting it beyond `related_to` would assert an equivalence the source never
+    states, so it is recorded as connected and left for review.
+
+concepts:
+
+- concept_id: sc_hop_sa_traced_return_method
+  kind: source_specific_concept
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  label: the_traced_return_method
+  children_terms: [t_hop_sa_0016, t_hop_sa_0017, t_hop_sa_0018, t_hop_sa_0019, t_hop_sa_0022, t_hop_sa_0001, t_hop_sa_0002, t_hop_sa_0035, t_hop_sa_0034]
+  origin: source_stated
+  basis: >
+    Chapter 1 exists to define this apparatus and names its parts in one passage — keyed
+    advertising, traced returns, coupons, cost per customer, town comparison, the abolition of
+    guesswork, and the promotion of a winning method to a fixed principle. Chapter 4 adds mail order
+    as the setting where it works best. The grouping is the source's own.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_hop_sa_salesmanship_standard
+  kind: source_specific_concept
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  label: the_salesmanship_standard
+  children_terms: [t_hop_sa_0032, t_hop_sa_0033, t_hop_sa_0025, t_hop_sa_0020, t_hop_sa_0012, t_hop_sa_0014, t_hop_sa_0006, t_hop_sa_0007, t_hop_sa_0031]
+  origin: source_stated
+  basis: >
+    The source generalises its own vocabulary here: advertising is salesmanship-in-print, it is
+    multiplied salesmanship, the way to settle a question is the salesman test, and the named faults
+    are all failures to behave as a salesman would. Chapter 2 states the generalisation explicitly
+    and chapter 3 reopens it with "Here again is salesmanship."
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_hop_sa_specificity_doctrine
+  kind: source_specific_concept
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  label: the_specificity_doctrine
+  children_terms: [t_hop_sa_0024, t_hop_sa_0004, t_hop_sa_0005, t_hop_sa_0036]
+  origin: source_stated
+  basis: >
+    Chapter 7 defines the pairing itself: platitudes and superlatives on one side, definite
+    statements and figures on the other, with mental impression supplying why a stated quality is
+    then found. The grouping is the chapter's own structure.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_hop_sa_spending_without_knowing
+  kind: source_specific_concept
+  origin_ref: hopkins_scientific_advertising_ch1_7
+  label: advertising_money_spent_without_knowing_what_it_bought
+  children_terms: [t_hop_sa_0001, t_hop_sa_0002, t_hop_sa_0015, t_hop_sa_0008, t_hop_sa_0009]
+  origin: extractor_inferred
+  basis: >
+    Guesswork, the untraced campaign, the cost of pride, useless pictures and unoccupied space are
+    all the same underlying condition in this source — money committed with no way of knowing what
+    it returned — and the incubator case is offered as its worked instance. The source states each
+    separately across chapters 1, 2 and 4 and never groups them, so the grouping is ours. It is
+    recorded because it is the concept the book's whole argument is aimed at, and because the cost
+    of pride is the one member the source treats as acceptable rather than as an error.
+  asserts_agreement_between_sources: false

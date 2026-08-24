@@ -1,0 +1,146 @@
+# CANON-003 book 16 (Lane D) — "Creativity, Inc." ch.5. SPEC-04 bindings against SPEC-01 v0.1.
+# Written only after the source representation above was stable.
+#
+# READ THIS FIRST: there are ZERO creative_ir bindings, and that is the correct result. SPEC-01
+# describes what a single creative asset should contain — entities, hierarchy, copy, brand,
+# delivery. This chapter contains no claim about what any asset should contain. It is entirely
+# about how a group of people reviews work in progress. Forcing any of it onto a Creative IR path
+# would be inventing a consumer, which is precisely the distortion SPEC-03 and SPEC-04 were split
+# apart to prevent.
+#
+# The five bindings below are all evaluation, governance or benchmark, and they exist because our
+# product builds automated critics of creative work. This source is about a critic that works.
+
+source_id: catmull_creativity_inc_ch5_honesty_and_candor
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_cat_c003_0001
+  source_knowledge_refs: [sk_cat_c003_0015, sk_cat_c003_0018]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [evaluates]
+  rationale: >
+    The source's definition of a good note is a usable test for the output of any automated critic
+    we build: does the note state what is wrong, missing or unclear; is it specific enough to
+    locate in the work; does it avoid demanding a particular fix; and if it proposes one, is that
+    offered as an illustration. The source also supplies the failing case — a note that reports
+    only the reviewer's reaction — which is the exact shape of a weak model critique.
+  applicability:
+    when: "scoring the quality of feedback produced by an evaluator, human or model"
+    limits: >
+      The criteria are qualitative and the source sets no threshold for "specific" or "timely". This
+      supports a rubric, not a metric. It is also a claim about feedback to a human maker; whether
+      the same properties make feedback useful to a generative model is untested here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_cat_c003_0007, t_cat_c003_0008]
+  repair_ontology_refs: [t_cat_c003_0006]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_cat_c003_0002
+  source_knowledge_refs: [sk_cat_c003_0017, sk_cat_c003_0011]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [constrains, diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source separates two things an evaluator produces and our current thinking runs together:
+    the detection that something is wrong, and the account of why. It states that a reviewing group
+    can be reliable on the first and wrong on the second, and gives a worked case where the named
+    cause was the dialogue and the real cause was the relative size of two figures. The practical
+    consequence for us is that an evaluator's alarm and its explanation should carry separate
+    confidence, and a repair should never be triggered by the explanation alone.
+  applicability:
+    when: "designing an evaluator that reports a defect together with a suggested cause or fix"
+    limits: >
+      The source offers no way to tell in advance which part of a critique is trustworthy, and its
+      evidence is one recounted incident. This supports separating the two signals; it does not say
+      how to weight either.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_cat_c003_0010]
+  repair_ontology_refs: [t_cat_c003_0009]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_cat_c003_0003
+  source_knowledge_refs: [sk_cat_c003_0011, sk_cat_c003_0010]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: conflict_resolution
+  role: [constrains]
+  rationale: >
+    A precedent for how a critic's output should relate to the maker's decision. The source's rule
+    is that the reviewing party surfaces causes and holds no power to mandate a fix, on two stated
+    grounds: the visible fault is usually not where the cause lies, and the reviewer's solution is
+    likely to be worse than the maker's. Applied to us, that is an argument for evaluator findings
+    entering as advisories to be resolved rather than as instructions that overwrite a specification.
+  applicability:
+    when: "deciding whether an automated finding may override a human-specified creative decision"
+    limits: >
+      The source's setting is peer humans with craft judgement on both sides. An automated evaluator
+      is not a peer in that sense, and the asymmetry is not addressed by this source.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_cat_c003_0008]
+  repair_ontology_refs: [t_cat_c003_0013]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_cat_c003_0004
+  source_knowledge_refs: [sk_cat_c003_0004, sk_cat_c003_0007, sk_cat_c003_0019]
+  source_system_refs: [scs_cat_c003_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A clean worked example of an evidence profile the Canon will meet repeatedly and currently has
+    no settled way to weigh: a senior practitioner describing a mechanism that worked inside one
+    organisation, supported by recounted incidents from that same organisation, with mechanisms
+    explained but never measured and no case presented where the mechanism failed. The claims are
+    valuable and the sample has an obvious selection problem, and both are true at once. This
+    binding exists so the profile is visible when such knowledge is later weighed against a source
+    that argues from physical mechanism or measurement.
+  applicability:
+    when: "weighing organisational or process knowledge drawn from a single successful company"
+    limits: >
+      One source. It shows what the profile looks like; it says nothing about how common it is, and
+      nothing about how such claims should score against mechanism-bearing or measured ones.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_cat_c003_0005
+  source_knowledge_refs: [sk_cat_c003_0007, sk_cat_c003_0008]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The source's production loop — review a deliberately crude full-length stand-in for the work,
+    at a fixed cadence, expecting early versions to be bad — is a process claim about how creative
+    work is brought to quality. Production IR does not exist, so nothing is translated here. It is
+    recorded as a parked candidate rather than rewritten as a generation schedule.
+  applicability:
+    when: "a production process for generated creative is eventually specified"
+    limits: >
+      Physical film production economics, stated in storyboard counts and multi-month cycles. No
+      generative equivalent is asserted, and the cadence is specific to the source's own medium and
+      budget.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: production_candidate
+  status_reason: "Production IR does not exist"

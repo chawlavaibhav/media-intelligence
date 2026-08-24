@@ -1,0 +1,209 @@
+# CANON-003 Lane C, book 15 — Sutherland, "Alchemy", Introduction. SPEC-04 bindings against
+# SPEC-01 v0.1. Written after the source representation was complete. All proposed.
+#
+# A note on what this source can and cannot bind to. It is an avowedly heuristic, anti-rational
+# commercial text that describes itself as a provocation. Almost nothing in it fills a Creative IR
+# field, and nothing in it should. Where it is genuinely useful to this project is one level up:
+# it has strong, well-argued positions about how knowledge should be weighed, how a retrieved
+# principle should be applied, and what an evaluator can and cannot learn by asking people. Six of
+# the seven bindings below are therefore governance or evaluation bindings, and that distribution is
+# a fact about the source rather than a shortfall.
+source_id: sutherland_alchemy_introduction
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_sut_alc_0001
+  source_knowledge_refs: [sk_sut_alc_0009, sk_sut_alc_0030, sk_sut_alc_0007]
+  source_system_refs: [scs_sut_alc_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [constrains]
+  rationale: >
+    SPEC-03 records `mechanism.stated_by_source: false` as a normal value, and this source supplies
+    the argument for why that is right. It holds that discovering what works and explaining why are
+    separate enquiries which can run in either order, that aspirin and penicillin were used long
+    before they were understood, and that not knowing why something works is not a reason to be blind
+    to the fact that it does. The binding is a stated position, from a source in the domain, that a
+    knowledge object without a mechanism must not be weighted below one with a mechanism merely for
+    lacking it.
+  applicability:
+    when: "deciding how much weight a knowledge object carries when its source gives no mechanism"
+    limits: >
+      The source is arguing for a permissive standard and has an interest in one. It also does not
+      address the obvious cost: without a mechanism there is no way to predict where an effect will
+      stop holding, which is exactly what a knowledge base needs to know when transferring a claim
+      to a new setting. Recorded as one side of a live question, not as its answer.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sut_alc_0001]
+  repair_ontology_refs: [t_sut_alc_0011]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sut_alc_0002
+  source_knowledge_refs: [sk_sut_alc_0013, sk_sut_alc_0012]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: conflict_resolution
+  role: [constrains, flags]
+  rationale: >
+    Directly relevant to a knowledge base that will accumulate contradictory advice from many
+    sources. This source's claim is that in psychology, unlike physics, the opposite of a good idea
+    can also be a good idea — scarcity and ubiquity both sell, a long letter and a two-paragraph
+    letter both worked on the same product — and that context decides which. The consequence for
+    conflict resolution is that two sources recommending opposite actions are not necessarily in
+    contradiction, and that resolving such a pair by picking a winner can destroy information.
+  applicability:
+    when: "two knowledge objects appear to recommend opposite actions"
+    limits: >
+      The source supplies no rule for deciding which context calls for which, so this binding
+      identifies a class of apparent conflicts that should be held open rather than resolved. It does
+      not say how to act on either. It also weakens falsifiability, and that cost is real: if an
+      approach and its opposite may both work, no observation refutes either.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sut_alc_0014]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sut_alc_0003
+  source_knowledge_refs: [sk_sut_alc_0012, sk_sut_alc_0011]
+  source_system_refs: [scs_sut_alc_002]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    A stated warning against exactly what a knowledge base makes easy: applying a retrieved principle
+    as a universal law. The source's position is that context often determines behaviour to a degree
+    that dooms universal models, that forming such models requires pretending context does not
+    matter, and that in evolved or complex systems one thing can serve several purposes depending on
+    how it is viewed. Applied here, it argues that a retrieved principle should carry the setting it
+    was established in, and that a principle detached from its context is a different and weaker
+    object than it appears.
+  applicability:
+    when: "a principle is retrieved for use outside the setting its source discussed"
+    limits: >
+      The claim is itself a universal one about human affairs, which the source does not notice. It
+      is well argued and unevidenced beyond selected anecdote.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sut_alc_0005, t_sut_alc_0003]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sut_alc_0004
+  source_knowledge_refs: [sk_sut_alc_0022, sk_sut_alc_0021, sk_sut_alc_0023]
+  source_system_refs: [scs_sut_alc_002]
+  target_type: evaluation
+  target_path: null
+  role: [constrains, flags]
+  observation_unit: whole_asset
+  rationale: >
+    A constraint on how a creative asset may be evaluated by people. The source's position, with a
+    stated mechanism, is that people do not have access to their own motives, so asking a viewer why
+    they preferred an asset returns a plausible post-rationalisation rather than a reason. It quotes
+    Ogilvy that people do not think what they feel, do not say what they think, and do not do what
+    they say. The consequence for any human-judgement evaluator is that stated reasons are not
+    evidence about mechanism, even when the stated preference itself is reliable.
+  applicability:
+    when: "designing or reading a human evaluation that asks viewers to explain their judgements"
+    limits: >
+      The claim is asserted rather than demonstrated here — no stated-preference result is compared
+      against an observed outcome anywhere in this section — and the source's own supporting anecdote
+      is itself a self-report. It supports treating explanations as suspect; it does not establish
+      that preferences themselves are unreliable, and the two are different claims.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sut_alc_0006, t_sut_alc_0004]
+  repair_ontology_refs: [t_sut_alc_0012]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_sut_alc_0005
+  source_knowledge_refs: [sk_sut_alc_0020]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    A specific, checkable prediction about how quality is judged: where a viewer cannot assess the
+    substance of what is offered, they infer it from peripheral details they can assess. For a
+    generated asset this predicts that small visible defects in incidental elements — typography,
+    edges, a hand, a background — will carry a disproportionate share of the perceived quality of the
+    whole, more than a defect in something the viewer has no basis to evaluate.
+  applicability:
+    when: "deciding which defects in a generated asset matter to a viewer's judgement of quality"
+    limits: >
+      The source's claim is about services judged by customers, not about generated images, and it is
+      supported by assertion and an unsourced figure. The extension to generated media is ours and is
+      a hypothesis worth testing, not a finding.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sut_alc_0013]
+  status: proposed
+  status_reason: "not reviewed; the extension to generated media is ours"
+
+- binding_id: bnd_sut_alc_0006
+  source_knowledge_refs: [sk_sut_alc_0028, sk_sut_alc_0027]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: objective.success_criteria
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [flags]
+  rationale: >
+    SPEC-01 records what the user says they care about. This source flags a distinction that field
+    currently has no way to express: whether the objective is the best expected outcome or the
+    least-bad worst case. They are different objectives and can select different work — a job where
+    a single bad output is catastrophic should be specified and evaluated differently from one where
+    the average matters. The source's own case is choosing a slower route to an airport to avoid a
+    small chance of missing a flight.
+  applicability:
+    when: "success criteria are being specified for a job whose worst case is disproportionately costly"
+    limits: >
+      A single personal anecdote in the source, generalised by us. The binding flags a gap in how
+      success criteria can currently be expressed; it does not propose a schema change, and adding
+      one would be a Controller decision rather than this task's.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sut_alc_0015]
+  status: proposed
+  status_reason: "not reviewed; flags a gap, proposes no change"
+
+- binding_id: bnd_sut_alc_0007
+  source_knowledge_refs: [sk_sut_alc_0003, sk_sut_alc_0019, sk_sut_alc_0013]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source supplies three real comparisons with reported directional outcomes and a variable that
+    was actually varied: four envelope treatments against a plain control, where the only rationally
+    motivated one lost over 30 per cent and the three seemingly irrelevant ones each gained over 10
+    per cent; two consecutive prize draws, £1,000 of free energy drawing 67,000 entries against a £15
+    penguin nightlight drawing over 360,000; and one insurance product sold successfully by both a
+    long letter and a two-paragraph one. These are candidate items for testing whether any measure of
+    message quality predicts response in the direction the source reports.
+  applicability:
+    when: "assembling candidate comparison items for a message-effectiveness measure"
+    limits: >
+      Source-asserted expected outcomes, not validated ground truth — the same labelling condition
+      the Controller set for the CANON-001 and CANON-002 stimuli. None carries a client name, a date,
+      base sizes or a significance test; the prize draws were consecutive rather than concurrent and
+      controlled for nothing; and all three are print or direct-mail items from a different medium.
+      The envelope test is the strongest of the three and is the only one that was randomised.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; source-asserted expected outcomes, not ground truth"
