@@ -8,24 +8,24 @@
 | # | Book | Section | Objects | Systems | Terms | Bindings | Visual | Validated | Historical |
 |---|---|---|---|---|---|---|---|---|---|
 | 9 | *Grammar of the Edit*, 2nd ed. | ch.3–5, printed pp.55–109 | 60 | 5 | 48 | 11 | verified page-level | pass | **done** — `no historical comparator`; companion-volume comparison run |
+| 10 | Murch, *In the Blink of an Eye* | printed pp.1–25 | 39 | 4 | 23 | 8 | verified page-level (0 figures) | pass | **done** — `no historical comparator` |
 
 ## Remaining assignments
 
 | # | Book | Status |
 |---|---|---|
-| 10 | Walter Murch — *In the Blink of an Eye* | not started |
 | 11 | Christopher Kenworthy — *Master Shots* | not started |
 | 12 | Michael Ondaatje — *The Conversations* | not started |
 
-Nothing has been created for books 10, 11 or 12 — no directory, no files, no provenance work. A
-fresh session can pick up from this checkpoint without inspecting or undoing anything.
+Nothing has been created for books 11 or 12 — no directory, no files, no provenance work. A fresh
+session can pick up from this checkpoint without inspecting or undoing anything.
 
 ## Latest SHA
 
 Recorded in the commit that adds this file — see `git log -1` on `work/canon-003-b`.
 
-Book checkpoints: **`ddef98d`** — book 9 fresh pre-history checkpoint. Post-checkpoint comparison
-and findings are in the commit that follows it.
+Book checkpoints: **`ddef98d`** (book 9) · **`72a6b31`** (book 10). Each is the fresh pre-history
+checkpoint for its book; post-checkpoint comparison and findings follow in the next commit each time.
 
 ## Unresolved local issues
 
@@ -35,10 +35,18 @@ and findings are in the commit that follows it.
 - **LB-09 is open and rests on one pair.** Two books by the same authors are not two independent
   origins, and SPEC-05's `cross_source_concept` guard counts source ids. No cross-source promotion
   has been attempted yet, so the failure is predicted rather than observed.
+- **Book 10 is closed.** Fresh checkpoint `72a6b31` pushed, then searched: no historical Murch
+  material exists, recorded as `no historical comparator` — the fourth such book in the batch.
 - **LB-01 is open and single-source.** SPEC-03's intra-source relation vocabulary could not express
-  thirteen connections in book 9. One book is not enough to propose a change. Watch books 10–12 —
-  Murch in particular, whose material is an explicitly ranked list, may stress the same area from a
-  different direction.
+  thirteen connections in book 9. Murch did not stress the same area, so it has not recurred.
+- **LB-10 is open and single-source, and it is the one the operator asked about.** SPEC-03's
+  `priority_order` carries Murch's rank order faithfully and cannot carry his weights. Not fixed;
+  recorded with the numbers preserved verbatim on the member objects.
+- **LB-14 is a live hazard for book 12.** A transcribed lecture deferred its central question 33
+  pages. *The Conversations* is an interview transcript and is likely to be less locally complete
+  still.
+- **A cross-source concept candidate is flagged for the integrator**, not created: Murch's
+  `eye_trace` and *Grammar of the Edit*'s `eye trace` are genuinely independent origins.
 - No blocked books. No stop condition fired.
 
 ## Isolation state
