@@ -11,6 +11,11 @@ sample — see `findings/DIRECTION-RESET-01-CANON-ROLE.md`), then re-audited int
 shape in `knowledge/migration/`. Original pre-SPEC-03 atom files remain at
 `knowledge/atoms-v1-superseded/`.
 
+**CANON-002 is complete** and awaiting Controller review — the second current-schema extraction,
+Williams ch.2 Proximity, at `knowledge/current/robin-williams-proximity/`: a visual-evidence ledger
+plus 31 SourceKnowledge objects, 4 systems, 23 ontology terms and 8 bindings. Pre-history checkpoint
+`3b933ef`. Its headline result is in the observations below.
+
 **CANON-001 is complete and Controller-APPROVED (24 Aug 2026).** The first fresh end-to-end
 extraction under SPEC-03/04/05 exists at `knowledge/current/molly-bang/` — 55 SourceKnowledge
 objects, 6 SourceConceptSystems, 26 ontology terms, 13 bindings. It validates against SPEC-03
@@ -54,10 +59,26 @@ questions closed, housekeeping corrections applied. Not yet merged to `main`.
 See `tasks/CANON-001-CONTROLLER-BRIEF.md` and
 `findings/CANON-001-current-schema-extraction-findings.md`.
 
-**CURRENT TASK / QUEUE:** None. CANON-001 is finished and no next task is approved. Do not
-self-assign a second source or an experiment.
+**CURRENT TASK / QUEUE:** None. CANON-002 is finished and awaiting review. No next task is approved.
+Do not start CANON-003, do not touch a third source, and do not run or extend an experiment.
 
 **IMPORTANT OBSERVATIONS:**
+- **Plain-text extraction destroys spatially-argued sources, and a text-only pass cannot detect
+  this.** Williams's opening demonstration is two flower lists differing only by one blank line; in
+  `sources/williams-proximity-p15-32.txt` they are character-identical, so her explanation describes
+  evidence the file does not contain. `FINDINGS-04` recorded "no unresolved items" for visual
+  completeness. Do not trust a prior visual-status statement that was made from text.
+- **A claim that also acts as a confound can fall out of an extraction.** CANON-002 missed three
+  claims the historical pass caught, all from printed p.18, because the visual pass filed Williams's
+  own list of additional changes as methodological confounds and never tested them as claims. Not
+  back-filled, per the CANON-001 precedent. Test author-flagged confounds as candidate claims.
+- **Source shape drives ontology yield.** Williams: 65% of objects carry a source-written remedy,
+  29% a source-named problem. Bang: 16% and 11%. Williams states a mechanism in 19% of objects,
+  Bang in 49%. Two sources only — a contrast, not a taxonomy.
+- **`creative.hierarchy` cannot express "the viewer knows when they are finished".** It is a
+  rank-ordered list; Williams requires a definite end as well as a definite beginning. Now observed
+  independently by the historical Williams pass, the historical Lupton pass and CANON-002. Three
+  sightings. Tagged ARCHITECTURAL for review; no schema touched.
 - **SPEC-03's `scs_mb_001` worked example is factually wrong about Molly Bang.** It states *"The
   source never states this as a general claim."* She states it on page 58 and again across pages
   58–60. CANON-001 records it as `source_explicit`. **The Controller has confirmed the error and
@@ -96,7 +117,12 @@ Nothing below blocks the next task; these are forward-looking items.
 82, 83, 85, 88, 89, 90). Half the CANON-001 extraction rests on text alone as a result. Routing work
 remains downstream of Eval's future Capability Registry.
 
-**CROSS-STREAM CHANGES:** `PROPOSED-INTEGRATION-CHANGE-CANON-001.md` — **APPROVED 24 Aug 2026**.
+**CROSS-STREAM CHANGES (CANON-002):** `PROPOSED-INTEGRATION-CHANGE-CANON-002.md` — **PROPOSED**, not
+accepted. The Williams flower pair is the most strictly isolated comparison found in either
+extraction. Offered to Eval's deferred creative list under the same labelling as the Bang pairs, plus
+one extra constraint: it must be presented as images, because text extraction destroys it silently.
+
+**CROSS-STREAM CHANGES (CANON-001):** `PROPOSED-INTEGRATION-CHANGE-CANON-001.md` — **APPROVED 24 Aug 2026**.
 Four near-minimal picture pairs go to Eval's **deferred** creative-evaluation list, not to Capability
 Battery V0 (EVAL-001 clarification §2 places creative judgement outside V0).
 
@@ -106,5 +132,11 @@ response data before any evaluator's answer can be scored right or wrong against
 carry `expected reading: source-asserted by Molly Bang; NOT validated human ground truth`. The two
 recorded isolation confounds travel with the pairs and are a separate defect from the validation gap.
 
-**NEXT APPROVED TASK:** None. CANON-001 is approved and closed. Do not start CANON-002, do not touch
-a second source, and do not run or extend an experiment without a new Controller-issued task file.
+**NEXT APPROVED TASK:** None. CANON-001 is approved and closed; CANON-002 is complete and awaiting
+review. Do not start CANON-003 or touch a third source without a new Controller-issued task file.
+
+**OPEN DECISIONS FROM CANON-002:** whether to back-fill the three missed p.18 claims; whether to amend
+the visual-pass method so author-flagged confounds are tested as claims; whether three sightings of
+the `creative.hierarchy` traversal limitation warrant a schema review; which claim wins when a source
+states two in one passage and argues one; and the Controller's position on the provenance of the
+locally-held Williams PDF used for the visual pass.
