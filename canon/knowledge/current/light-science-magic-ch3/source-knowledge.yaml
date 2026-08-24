@@ -1,0 +1,931 @@
+# CANON-003 book 3 — Light: Science & Magic, 5th ed., ch.3 "The Management of Reflection and the
+# Family of Angles". Fresh SPEC-03 extraction. Historical LSM material sealed until checkpoint.
+# Granularity: CANON-001 V0 rule, unchanged. Visual completeness: blocked_visual_validation.
+# Section rationale: the complete chapter — a self-contained physical account of how surfaces reflect
+# light and what follows for where a photographer stands a light.
+
+source_id: light_science_and_magic_ch3
+
+source_knowledge:
+
+- sk_id: sk_lsm_c003_0001
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Photographic lighting, therefore, is primarily an exercise in reflection management."
+    - "Understanding and managing reflection, for the result you want, is what constitutes good lighting."
+  concept_label: lighting_is_the_management_of_reflection
+  label_origin: extractor_assigned
+  claim: >
+    A subject can transmit, absorb or reflect light, and of the three, reflection is the most visible.
+    Highly transparent subjects tend to be invisible because they affect light minimally; highly
+    absorbent ones may also be invisible because they convert light into forms such as heat. Good
+    lighting therefore consists in understanding and managing reflection.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Transmission and absorption produce little or nothing for the eye to see, so what a viewer
+      perceives of a subject is almost entirely what it reflects.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "any lit subject"
+  caveats:
+    - text: "the chapter is framed as putting into words visual knowledge the reader already holds, rather than as teaching new facts"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_lsm_c003_0003, note: "the three reflection types are the subdivision of this claim"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3 — The Management of Reflection and the Family of Angles"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "chapter opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0002
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "The reason that these subjects, with identical transmission and absorption, appear different is that the subjects reflect the light differently ."
+  concept_label: identical_tone_still_looks_different_by_reflection_type
+  label_origin: extractor_assigned
+  claim: >
+    Three subjects of exactly the same grey — thick matte paper, smooth pewter, and glossy ceramic
+    tile — transmit nothing and absorb equally, yet look obviously different. The difference is
+    entirely in how they reflect. The source establishes this by a thought experiment rather than a
+    photograph, on the grounds that the reader can already see the difference in their mind.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      With transmission and absorption held constant by construction, reflection is the only remaining
+      variable, so it must account for the visible difference.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "surfaces matched for tone but differing in finish"
+  caveats:
+    - text: "the demonstration is a thought experiment the reader performs, not a measurement; the source anticipates failure and instructs the reader to try again"
+      origin: source_stated
+    - text: "an unusually clean isolation of one variable, achieved by stipulation rather than by apparatus — the three subjects are defined to be identical in every respect but finish"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_lsm_c003_0003, note: "motivates the taxonomy of reflection types"}
+  evidence:
+    characteristics: [explicitly_stated, argued, controlled_comparison, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "opening thought experiment"
+    page_start: null
+    page_end: null
+    locator: "opening thought experiment"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0003
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Light can reflect from a subject as diffuse reflection, direct reflection , and polarized direct reflection —or as it is often called, glare."
+    - "it is the proportion of each reflection in the mix that makes one surface look different from another"
+  concept_label: three_reflection_types_and_their_proportion
+  label_origin: extractor_assigned
+  claim: >
+    Light reflects from a subject in three ways: diffuse reflection, direct reflection, and polarized
+    direct reflection, also called glare. Most surfaces produce some of each, and it is the proportion
+    of the three in the mix that makes one surface look different from another.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "all surfaces"
+  caveats:
+    - text: "the source states it will analyse each type as a perfect example uncontaminated by the other two, and notes that no real surface is such a case, though events in nature sometimes come close"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_lsm_c003_0004, note: "diffuse is the first type"}
+    - {relation: generalises, target: sk_lsm_c003_0010, note: "direct is the second"}
+    - {relation: generalises, target: sk_lsm_c003_0015, note: "polarized direct is the third"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Types of Reflections"
+    page_start: null
+    page_end: null
+    locator: "Types of Reflections"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0004
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Diffuse reflections are the same brightness regardless of the angle from which we view them."
+  concept_label: diffuse_reflection_is_angle_independent
+  label_origin: extractor_assigned
+  claim: >
+    A diffuse reflection has the same brightness from every viewing angle. Neither the angle of
+    illumination nor the camera's angle of view affects how bright the subject records.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The surface reflects light from the source equally in all directions, so every viewing position
+      receives the same amount.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "surfaces producing predominantly diffuse reflection"
+  caveats:
+    - text: "the source states that outside lighting textbooks no surface reflects perfectly diffusely, and offers white paper as an approximation"
+      origin: source_stated
+    - text: "supported in the source by a diagram of three cameras at different angles seeing a white card as equally bright, which was not available for inspection"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a white card photographed by three cameras at different angles, recording the same density in each negative — described but not seen", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0003, note: "the first of the three types"}
+    - {relation: contradicts, target: sk_lsm_c003_0010, note: "direct reflection is visible from one angle only"}
+    - {relation: qualified_by, target: sk_lsm_c003_0008, note: "distance still changes its brightness"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "3"
+    section: "Diffuse Reflections"
+    page_start: null
+    page_end: null
+    locator: "Diffuse Reflections"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0005
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "All white things produce a great deal of diffuse reflection. We know this because they appear white regardless of the angle from which we view them."
+  concept_label: white_surfaces_are_predominantly_diffuse
+  label_origin: extractor_assigned
+  claim: >
+    White surfaces produce a great deal of diffuse reflection, evidenced by their appearing white from
+    any angle. The source offers a test the reader can run immediately: walk around the room and note
+    that the apparent brightness of black objects changes with viewpoint while white objects stay
+    about the same.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "white and black surfaces in ordinary rooms"
+  caveats:
+    - text: "the source returns to this observation later to explain it: black objects change with viewpoint not because they produce stronger direct reflection but because their weak diffuse reflection makes the direct component easier to see"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "walk around the room and compare how white and black objects change with viewpoint"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0004, note: "an identifying test for the angle-independence property"}
+    - {relation: qualified_by, target: sk_lsm_c003_0017, note: "the source later explains the black-object half of the same observation"}
+  evidence:
+    characteristics: [explicitly_stated, argued, empirical_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Diffuse Reflections"
+    page_start: null
+    page_end: null
+    locator: "Diffuse Reflections"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0006
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "The contrast of the light source does not affect the appearance of a diffuse reflection."
+    - "neither the angle nor the size of the light source affects the appearance of a diffuse reflection"
+  concept_label: source_size_and_contrast_do_not_change_a_diffuse_reflection
+  label_origin: extractor_assigned
+  claim: >
+    Changing the light source from small and hard to large and soft alters the shadows in a scene but
+    leaves the diffuse reflection itself unchanged. Neither the angle nor the size of the source
+    affects how a diffuse reflection appears.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "diffuse-reflecting surfaces under sources of differing size"
+  caveats:
+    - text: "the source's evidence is a matched photographic pair of the same playing-card scene lit by a small then a large source, in which the shadows soften while the highlights on the cards stay the same; neither photograph was available for inspection, so this claim rests on the source's description of its own comparison"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "same playing-card scene under a small light and then a large one; shadows soften, card highlights unchanged — described but not seen", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0004, note: "extends angle-independence to source size and contrast"}
+    - {relation: contradicts, target: sk_lsm_c003_0014, note: "for direct reflection, source size changes everything"}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "3"
+    section: "Diffuse Reflections"
+    page_start: null
+    page_end: null
+    locator: "Diffuse Reflections"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0007
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Diffusing the light source has no effect on whether the reflection is diffuse ."
+    - "The source determines the type of light, and the surface determines the type of reflection. Any light can produce any reflection, depending on the subject."
+  concept_label: the_source_sets_the_light_type_the_surface_sets_the_reflection_type
+  label_origin: extractor_assigned
+  claim: >
+    Diffusing a light source — bouncing it from an umbrella or covering it with translucent material —
+    has no bearing on whether the resulting reflection is diffuse. The source determines the type of
+    light; the surface determines the type of reflection. Any light can produce any reflection,
+    depending on the subject.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both uses of the word diffusion mean a scattering of light; the question is what does the
+      scattering, the light or the subject.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "any combination of source and surface"
+  caveats:
+    - text: "the source raises this under the heading Diffusion Confusion, explicitly to prevent a terminological trap it expects readers to fall into"
+      origin: source_stated
+    - text: "one of two places in this chapter where the author intervenes against the field's own vocabulary; the other is its refusal of the word specular"
+      origin: extractor_observed
+  source_stated_problems:
+    - "diffusion confusion"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsm_c003_0006, note: "explains why source size cannot change reflection type"}
+    - {relation: demonstrated_together_with, target: sk_lsm_c003_0009, note: "both are terminology interventions"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Diffusion Confusion"
+    page_start: null
+    page_end: null
+    locator: "Diffusion Confusion"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0008
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "The inverse square law says that intensity is inversely proportional to the square of the distance."
+    - "reflection from a surface gets brighter if we move the light closer and it gets dimmer if we move the light farther away"
+  concept_label: diffuse_reflection_follows_the_inverse_square_law
+  label_origin: extractor_assigned
+  claim: >
+    The distance from light to subject does change a diffuse reflection. A light at a given distance
+    illuminates a subject four times as brightly as the same light twice as far away, and nine times
+    as brightly as one three times as far, following the inverse square law.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Intensity is inversely proportional to the square of the distance, and the diffuse reflection
+      varies with the intensity falling on the surface.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "diffuse reflection; the source notes it does not hold for all subjects"
+  caveats:
+    - text: "the source flags in advance that intuition is misleading here, because some subjects do not get brighter as the light approaches — setting up the direct-reflection case that follows"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsm_c003_0004, note: "the one variable that does change a diffuse reflection"}
+    - {relation: contradicts, target: sk_lsm_c003_0012, note: "direct reflection brightness is distance-independent"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "The Inverse Square Law"
+    page_start: null
+    page_end: null
+    locator: "The Inverse Square Law"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0009
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Because specular reflection has different meanings for different people, we will not use the term in this book."
+    - "a \"specular\" light source does not necessarily produce a \"specular\" reflection"
+  concept_label: the_term_specular_is_refused_because_it_carries_divergent_meanings
+  label_origin: extractor_assigned
+  claim: >
+    Photographers use specular in at least three incompatible ways: as a synonym for direct
+    reflection, for the smaller brighter highlights within a large one, and for highlights created by
+    a small source. Modern usage adds a fourth, specular light as a synonym for hard light. Because
+    the word carries divergent meanings, the source declines to use it at all and names the underlying
+    concepts separately instead, always calling hard lights hard so it is clear the light is meant
+    rather than the reflection.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A hard light is always hard, but how it reflects depends on the surface, so a single word
+      spanning both the light and the reflection cannot be used consistently.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "terminology within photographic practice"
+  caveats:
+    - text: "the source notes the Greek root means mirror and that the word originally described only the reflection, so the ambiguity is a modern accretion"
+      origin: source_stated
+    - text: "the source explicitly permits readers who use the term to substitute it while reading, so the refusal is applied to its own writing rather than imposed on the reader"
+      origin: source_stated
+  source_stated_problems:
+    - "specular reflection has different meanings for different people"
+  source_stated_remedies:
+    - "refuse the ambiguous term and name the underlying concepts separately"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_lsm_c003_0007, note: "the chapter's two terminology interventions"}
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Specular Reflection and Specular Light"
+    page_start: null
+    page_end: null
+    locator: "Specular Reflection and Specular Light"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0010
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Direct reflections are a mirror image of the light source that produces them."
+    - "the angle of incidence equals the angle of reflectance"
+  concept_label: direct_reflection_is_a_mirror_image_at_one_determined_angle
+  label_origin: extractor_assigned
+  claim: >
+    A direct reflection is a mirror image of the light source. Light rays bounce from a smooth surface
+    at the same angle at which they strike it, so the point from which a direct reflection can be seen
+    is exactly determined by the angles between source, subject and camera.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The angle of incidence equals the angle of reflectance, which fixes the single viewing position
+      from which the reflection is visible.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "smooth surfaces such as polished metal, water or glass"
+  caveats:
+    - text: "the source states no real subject produces a perfect direct reflection, though brightly polished metal, water or glass may nearly do so"
+      origin: source_stated
+    - text: "supported by a diagram in which one of three cameras sees a bright reflection of the source and the other two see none at all; not available for inspection"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a shiny saw blade with light and three cameras in fixed positions; one camera sees a bright reflection, the others see the blade as dark — described but not seen", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0003, note: "the second of the three types"}
+    - {relation: contradicts, target: sk_lsm_c003_0004, note: "angle-determined rather than angle-independent"}
+    - {relation: generalises, target: sk_lsm_c003_0013, note: "the family of angles generalises this to a whole surface"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "3"
+    section: "Direct Reflections"
+    page_start: null
+    page_end: null
+    locator: "Direct Reflections"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0011
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "The brightness of the image of a direct reflection is the same regardless of the distance from the source."
+    - "if we spread four times the butter on a piece of bread of four times the area, the thickness of the layer of butter stays the same"
+  concept_label: direct_reflection_brightness_is_independent_of_source_distance
+  label_origin: extractor_assigned
+  claim: >
+    A direct reflection records as bright as the light source itself, regardless of how far away the
+    source is. This appears to defy the inverse square law and does not, because moving the source to
+    half the distance quadruples the light reflected and simultaneously quadruples the area the
+    reflection covers, leaving brightness unchanged.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The extra light is spread over a proportionally larger image of the source, so intensity per
+      unit area is constant — the source's analogy is four times the butter on four times the bread.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "direct reflection from a mirror-like surface"
+  caveats:
+    - text: "the source offers a test the reader can perform: position a mirror so a lamp is reflected in it, move the mirror closer, and observe that the brightness holds constant while the size of the reflection changes"
+      origin: source_stated
+    - text: "the source anticipates the reader's alarm at the claim and addresses it directly, which marks it as the counter-intuitive point of the chapter"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_lsm_c003_0008, note: "the two reflection types respond oppositely to source distance"}
+    - {relation: specialises, target: sk_lsm_c003_0010, note: "a property of direct reflection"}
+  evidence:
+    characteristics: [explicitly_stated, argued, empirical_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Breaking the Inverse Square Law?"
+    page_start: null
+    page_end: null
+    locator: "Breaking the Inverse Square Law?"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0012
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "we can also tell that the source is small because it is reflected in the shiny surface of the saw"
+  concept_label: a_shiny_surface_reports_the_size_of_the_light_source
+  label_origin: extractor_assigned
+  claim: >
+    Because a direct reflection is an image of the source, a shiny surface in the frame shows the
+    photographer how large the source is. Hard shadows and the size of the reflection in a shiny
+    subject are two independent indications of a small source, and seeing the source's image makes the
+    effect of enlarging it predictable in advance.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The reflection is a mirror image of the source, so its size in the frame is a direct readout of
+      the source's size.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "scenes containing a shiny subject"
+  caveats:
+    - text: "the source's evidence is a matched pair of photographs of a hand saw under a small then a large source; neither was available for inspection"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "read the size of the light source from its reflection in a shiny surface, and use it to anticipate the effect of enlarging the source"
+  examples:
+    positive:
+      - {description: "hand saw under a small source, showing hard shadows and a small reflection — described but not seen", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0010, note: "a practical consequence of the mirror-image property"}
+    - {relation: generalises, target: sk_lsm_c003_0014, note: "leads to the filling-the-family result"}
+  evidence:
+    characteristics: [explicitly_stated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "3"
+    section: "Direct Reflections"
+    page_start: null
+    page_end: null
+    locator: "Direct Reflections"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0013
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Taken together, these different angles make up the family of angles that produces direct reflection ."
+    - "This family of angles is one of the most useful concepts in photographic lighting."
+  concept_label: the_family_of_angles
+  label_origin: source_verbatim
+  claim: >
+    A surface is made of an infinite number of points and a viewer sees each at a slightly different
+    angle. Taken together those angles form the family of angles that produces direct reflection. The
+    source declares this one of the most useful concepts in photographic lighting, and restricts the
+    phrase to direct reflection because a family of angles for diffuse reflection would be meaningless
+    — diffuse reflection can come from a source at any angle.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because rays reflect from a polished surface at the angle at which they strike it, the family's
+      location relative to camera and subject can be determined geometrically.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "direct reflection only, by the source's own stipulation"
+  caveats:
+    - text: "the source explicitly defines the term's scope by excluding the diffuse case as meaningless, rather than leaving it ambiguous"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0010, note: "generalises the single-point geometry to a whole surface"}
+    - {relation: generalises, target: sk_lsm_c003_0014, note: "the placement rule follows from it"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "The Family of Angles"
+    page_start: null
+    page_end: null
+    locator: "The Family of Angles"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0014
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "any light positioned within the family of angles will produce a direct reflection"
+    - "any light positioned outside of the family of angles will not light a mirror-like subject at all, at least as far as the camera can see"
+  concept_label: light_placement_relative_to_the_family_decides_whether_direct_reflection_appears
+  label_origin: extractor_assigned
+  claim: >
+    Whether a direct reflection appears is decided entirely by whether the light sits inside the family
+    of angles. A light inside it produces one; a light outside it does not light a mirror-like subject
+    at all as far as the camera is concerned. To see direct reflection across most of a mirror-like
+    surface, the source must be large enough to fill the family; to see none, both camera and light
+    must be placed so the source falls outside it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "mirror-like subjects"
+  caveats:
+    - text: "the source states it will use this principle repeatedly in later chapters, marking it as the chapter's operative result"
+      origin: source_stated
+    - text: "the placement rule is a two-sided control — it says how to obtain the reflection and how to eliminate it — which is unusual among the craft rules seen in this batch"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "use a light large enough to fill the family of angles to produce direct reflection across the surface"
+    - "place both camera and light so the source falls outside the family of angles to eliminate direct reflection"
+  examples:
+    positive:
+      - {description: "diagram of two lights, one inside the family producing a direct reflection and one outside producing none — described but not seen", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0013, note: "the operative rule derived from the family"}
+    - {relation: qualifies, target: sk_lsm_c003_0012, note: "explains why enlarging the source fills the saw"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "3"
+    section: "The Family of Angles"
+    page_start: null
+    page_end: null
+    locator: "The Family of Angles"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0015
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "an image of the polarized reflection is always substantially dimmer than a photograph of the light source itself"
+    - "A perfectly polarized direct reflection is exactly half as bright as an un-polarized one"
+  concept_label: polarized_direct_reflection_is_dimmer_than_ordinary_direct_reflection
+  label_origin: extractor_assigned
+  claim: >
+    Polarized direct reflection resembles ordinary direct reflection and is visible from the same
+    single viewing position, but is always substantially dimmer. A perfectly polarized direct
+    reflection is exactly half as bright as an un-polarized one, provided the source is not itself
+    polarized, and in practice is dimmer still because polarization is inevitably accompanied by
+    absorption.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The molecular structure of some reflecting surfaces blocks part of a photon's oscillating energy,
+      in the way a polarizing filter does, so only part of the energy is reflected.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "surfaces such as lakes, painted metal, glossy wood or plastic"
+  caveats:
+    - text: "the source notes photographers often treat polarized and ordinary direct reflection as the same, and that the distinction earns its place because polarized reflection can be managed with specialised tools"
+      origin: source_stated
+    - text: "the source states polarization is never perfect in practice and that some diffuse and some un-polarized direct reflection are always mixed in"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0003, note: "the third of the three types"}
+    - {relation: qualifies, target: sk_lsm_c003_0010, note: "same geometry, different brightness"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Polarized Direct Reflection"
+    page_start: null
+    page_end: null
+    locator: "Polarized Direct Reflection"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0016
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Crossing the axes of two polarizing filters blocks the transmission of light, just as the two picket fences do with rope energy."
+  concept_label: polarization_explained_by_the_jump_rope_and_picket_fence
+  label_origin: extractor_assigned
+  claim: >
+    The oscillating electromagnetic field around a photon is likened to a jump rope swung between two
+    children. A picket fence between them makes the rope bounce in one plane instead of swinging in an
+    arc, which is what a polarizing filter does to light. Adding a second fence at right angles stops
+    the movement transmitting at all, which is what crossing two polarizers does.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Molecules in a polarizing filter block the oscillation of light energy in one direction, exactly
+      as the fence constrains the rope; some reflecting surfaces do the same by molecular structure.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "explanatory model for polarization"
+  caveats:
+    - text: "an analogy carrying the chapter's only physical explanation of polarization, developed across four figures none of which was available for inspection"
+      origin: extractor_observed
+    - text: "the source supports it with a photograph of two overlapping polarizers whose crossed axes make the type beneath invisible; not available for inspection"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_lsm_c003_0015, note: "explains why polarized reflection is dimmer"}
+    - {relation: generalises, target: sk_lsm_c003_0018, note: "and why a filter can remove it"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "3"
+    section: "Polarized Direct Reflection"
+    page_start: null
+    page_end: null
+    locator: "Polarized Direct Reflection"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0017
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "Black and transparent subjects do not necessarily produce stronger direct reflections than white ones. Instead, they produce weaker diffuse reflection, making it easier to see the direct reflection."
+  concept_label: dark_subjects_reveal_direct_reflection_by_producing_less_diffuse_reflection
+  label_origin: extractor_assigned
+  claim: >
+    Polarized direct reflection is more visible on black or transparent subjects, but not because such
+    subjects reflect more directly. They produce weaker diffuse reflection, which leaves the direct
+    component easier to see. This is the explanation for the earlier room observation that black
+    objects change brightness with viewpoint while white objects do not.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Visibility of the direct component is set by its ratio to the diffuse component, so reducing the
+      diffuse reflection raises the direct reflection's prominence without changing it.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "black, dark or transparent subjects"
+  caveats:
+    - text: "the source closes a loop it opened several pages earlier, using the mechanism to explain an observation the reader was asked to make before it could be explained"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsm_c003_0005, note: "explains the black-object half of the earlier room test"}
+    - {relation: qualifies, target: sk_lsm_c003_0015, note: "explains where polarized reflection is most visible"}
+  evidence:
+    characteristics: [explicitly_stated, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Polarized Direct Reflection"
+    page_start: null
+    page_end: null
+    locator: "Polarized Direct Reflection"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0018
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "The conclusive test, however, is the appearance of the subject through a polarizing filter. If the polarizer eliminates the reflection, then that reflection is polarized."
+  concept_label: diagnostic_guidelines_for_identifying_polarized_reflection
+  label_origin: extractor_assigned
+  claim: >
+    Polarized and un-polarized direct reflections look similar and brightness alone will not separate
+    them, because real subjects mix reflection types. The source offers graded guidelines: electrical
+    conductors such as metal are likely to reflect un-polarized, insulators such as plastic, glass and
+    ceramic are more likely to polarize; mirror-like surfaces suggest simple direct reflection;
+    non-mirror-like surfaces such as polished wood or leather are more likely polarized when viewed at
+    40 to 50 degrees. The conclusive test is the polarizing filter: if it eliminates the reflection the
+    reflection was polarized, if it has no effect the reflection was ordinary, and if it dims without
+    eliminating, the reflection is mixed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "identifying reflection type on a real subject"
+  caveats:
+    - text: "the source marks the first three guidelines as tendencies with the words likely and more likely, and reserves conclusive for the filter test alone"
+      origin: source_stated
+    - text: "the 40 to 50 degree figure is qualified as depending on the subject material"
+      origin: source_stated
+    - text: "a rare structure among the sources in this batch: a graded diagnostic ladder ending in a decisive physical test, rather than a rule of thumb"
+      origin: extractor_observed
+  source_stated_problems:
+    - "polarized and un-polarized direct reflections often have similar appearance"
+  source_stated_remedies:
+    - "view the subject through a polarizing filter and observe whether the reflection is eliminated, unaffected, or merely dimmed"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsm_c003_0015, note: "how to tell the two direct types apart in practice"}
+    - {relation: depends_on, target: sk_lsm_c003_0016, note: "the filter test works because of the polarization mechanism"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Is It Polarized Reflection or Ordinary Direct Reflection?"
+    page_start: null
+    page_end: null
+    locator: "Is It Polarized Reflection or Ordinary Direct Reflection?"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0019
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "placing a polarizing filter over the light source will turn a direct reflection into polarized reflection"
+    - "The open sky often serves as a beautifully functional polarized light source."
+  concept_label: polarizing_the_source_makes_a_reflection_manageable
+  label_origin: extractor_assigned
+  claim: >
+    A polarizer on the camera lens has no effect on an ordinary direct reflection except to add
+    neutral density. Placing a polarizing filter over the light source instead converts the direct
+    reflection into polarized reflection, which the lens polarizer can then manage. Polarized sources
+    are not confined to the studio: the open sky often serves as one, which is why polarizing filters
+    sometimes work on subjects such as bright metal even though filter manufacturers say they should
+    not.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      In those cases the subject is reflecting an already-polarized source, so the reflection is
+      polarized despite the surface being a conductor.
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "studio and daylight work with reflective subjects"
+  caveats:
+    - text: "the source explicitly contradicts advice given by filter manufacturers, and explains why both can be right"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "place a polarizing filter over the light source to convert direct reflection into polarized reflection"
+    - "rotate the lens polarizer 90 degrees from the reducing orientation to increase polarized reflection"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsm_c003_0018, note: "acting on the reflection type once identified"}
+    - {relation: depends_on, target: sk_lsm_c003_0016, note: "rests on the polarization mechanism"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Turning Ordinary Direct Reflection into Polarized Reflection"
+    page_start: null
+    page_end: null
+    locator: "Turning Ordinary Direct Reflection into Polarized Reflection"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsm_c003_0020
+  source_id: light_science_and_magic_ch3
+  source_terms:
+    - "In a good photograph, the light is appropriate to the subject and the subject is appropriate to the light."
+    - "The meaning of appropriate is the creative decision of the photographer."
+  concept_label: the_technique_serves_a_creative_decision_it_does_not_make
+  label_origin: extractor_assigned
+  claim: >
+    Good recording requires more than focus and exposure: the light must be appropriate to the subject
+    and the subject to the light. What counts as appropriate is the photographer's creative decision,
+    and any decision is likely to be appropriate if guided by understanding of how subject and light
+    together produce an image. The method is to decide which reflection type matters for the subject
+    and then capitalize on it — by manipulating the light in the studio, or outside it by positioning
+    the camera, anticipating sun and cloud, and waiting for the right time of day.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [photographic_lighting]
+    conditions: "studio and location work"
+  caveats:
+    - text: "the source is explicit that the physics constrains but does not determine the choice, and that the creative decision remains the photographer's"
+      origin: source_stated
+    - text: "this is the chapter's only claim that is not physical, and it governs the application of all the others"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "decide which type of reflection is important to the subject, then capitalize on it"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsm_c003_0014, note: "bounds the placement rule with the photographer's intent"}
+    - {relation: qualifies, target: sk_lsm_c003_0001, note: "states what reflection management is ultimately for"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3"
+    section: "Applying the Theory"
+    page_start: null
+    page_end: null
+    locator: "Applying the Theory"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

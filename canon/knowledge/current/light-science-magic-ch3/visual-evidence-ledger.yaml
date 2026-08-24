@@ -1,0 +1,67 @@
+# CANON-003 book 3 — Hunter, Biver & Fuqua, "Light: Science & Magic", 5th ed., ch.3
+# Visual-evidence pass: BLOCKED, same cause as book 2.
+source_id: light_science_and_magic_ch3
+pass: attempted_and_blocked
+visual_completeness: blocked_visual_validation
+
+blocking_reason:
+  what_happened: >
+    The local book library is unreadable. Diagnosed during this batch as macOS privacy protection
+    rather than the Claude Code sandbox: the blocked directories are exactly Downloads, Documents and
+    Desktop — macOS's protected set — while Pictures, Movies, the repository and /tmp all remain
+    readable. Disabling the Claude Code sandbox made no difference, which confirms the diagnosis.
+  scope: the whole local book library
+  is_it_a_source_integrity_problem: false
+  remedy_requires: >
+    A macOS permission the user must grant (Privacy & Security → Files and Folders → Downloads, or
+    Full Disk Access). It cannot be granted by this worker and typically requires the user's password.
+  consequence_for_this_book: >
+    None of Figures 3.1 to 3.14 could be inspected. Every claim rests on text alone. Provenance
+    remains established: verified earlier in this session against the 5th edition EPUB at 200 of 200
+    sentences over 70 characters, once HTML entities were decoded.
+
+# ── What is missing, established from the text itself ───────────────────────
+visual_loss_observed_from_text:
+  figures_referenced: 14
+  figure_range: "3.1 through 3.14"
+  loss_pattern: named
+  what_the_text_preserves: >
+    Every figure carries a numbered, descriptive caption stating what it shows — for example "3.7 The
+    light positioned within the family of angles will produce direct reflection. The other light,
+    outside the family of angles, will not." A text-only reader therefore knows exactly which figures
+    exist and what each demonstrates.
+  what_is_nonetheless_lost: >
+    This chapter's figures divide into two kinds and the loss differs by kind.
+    (a) DIAGRAMS (3.1, 3.4, 3.7, 3.8, 3.9, 3.10, 3.11) show geometry — where a light, a surface and
+    several cameras sit, and which camera sees a reflection. These carry the same diagram-to-result
+    mapping that Grammar of the Shot's figures carried, and the text describes the geometry in enough
+    detail that the loss is partial rather than total.
+    (b) PHOTOGRAPHS (3.2, 3.3, 3.5, 3.6, 3.12, 3.13, 3.14) are the evidence for the claims. Several
+    are matched pairs differing in exactly one variable: 3.2 versus 3.3 changes light size and holds
+    the subject fixed; 3.5 versus 3.6 does the same for a shiny saw; 3.13 versus 3.14 adds a
+    polarising filter and changes nothing else. Those comparisons are the chapter's proof, and they
+    are unavailable.
+  worked_case:
+    figures: ["3.13", "3.14"]
+    why_it_matters: >
+      The pair is a controlled demonstration with an internal validity check the author points out:
+      the polarising filter removes the reflection from black plastic while leaving the white feather
+      unchanged, and the feather's unchanged brightness is what proves the exposure compensation was
+      honest rather than fudged. That is an unusually careful piece of self-checking, and it can only
+      be confirmed by looking.
+
+extraction_constraint_applied: >
+  No claim is recorded as visually demonstrated. Where the source argues from a photograph, the claim
+  is extracted with source_support: text and the photograph recorded as a described-but-unseen
+  example. Claims whose only support is a matched photographic pair carry that limitation in a
+  caveat.
+
+demonstrations: []
+visual_only_observations: []
+
+summary:
+  demonstrations_recorded: 0
+  reason: visual source unreachable — macOS permission
+  figures_named_in_text_but_unseen: 14
+  matched_photographic_pairs_unavailable: 3
+  all_claims_rest_on: text_only

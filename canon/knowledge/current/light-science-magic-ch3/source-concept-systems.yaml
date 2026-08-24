@@ -1,0 +1,156 @@
+# CANON-003 book 3 — Light: Science & Magic ch.3. SourceConceptSystems under SPEC-03.
+source_id: light_science_and_magic_ch3
+source_concept_systems:
+
+- scs_id: scs_lsm_c003_001
+  source_id: light_science_and_magic_ch3
+  label: the_three_reflection_types_as_a_contrast_set
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    Diffuse, direct and polarized direct reflection are defined against one another on the same four
+    questions: does viewing angle matter, does source distance matter, does source size matter, and
+    how bright is the result. Every real surface produces a mixture, and the mixture's proportions are
+    what make one surface look unlike another.
+  whole_system_claim:
+    text: >
+      The three reflection types form one contrast set, not three separate topics. Each is defined by
+      how it answers the same questions, they behave oppositely on several of them, and no real
+      surface exhibits one alone. What a photographer sees is always a proportion.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Types of Reflections", locator: "Types of Reflections"}
+  members:
+    - {sk_ref: sk_lsm_c003_0003, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0004, role_in_system: type, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0010, role_in_system: type, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0015, role_in_system: type, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0002, role_in_system: motivating_case, order: null, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0017, role_in_system: mixture_effect, order: null, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_lsm_c003_0017, to: sk_lsm_c003_0004, nature: "the visibility of direct reflection is set by how little diffuse reflection accompanies it", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: {section: "Types of Reflections", locator: "Types of Reflections", quote_paraphrase: "most surfaces cause some of each of these three types; the proportions vary with the subject"}
+  evidence:
+    characteristics: [explicitly_stated, argued, controlled_comparison, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      Membership and the mixture claim are source-stated; the source introduces the three together and
+      says explicitly that surfaces produce all three at once. What is ours is treating the four
+      shared questions as the system's internal structure — the source answers them for each type but
+      never tabulates them as a common frame.
+  provenance:
+    section: "Types of Reflections through Polarized Direct Reflection"
+    locator: "most of the chapter"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_lsm_c003_002
+  source_id: light_science_and_magic_ch3
+  label: family_of_angles_as_a_placement_control
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    A physical derivation ending in a placement rule. Rays reflect at the angle they strike; that fixes
+    a single viewing angle per point; summed across a surface it becomes the family of angles; whether
+    a light falls inside or outside that family decides whether a direct reflection appears at all; and
+    a source large enough to fill the family produces reflection across the whole surface.
+  whole_system_claim:
+    text: >
+      Direct reflection is not a property of a surface but of a geometric relationship between source,
+      surface and camera. Because that relationship can be calculated, the photographer has a two-sided
+      control: put the light inside the family to produce the reflection, or place camera and light so
+      it falls outside to remove it.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "The Family of Angles", locator: "The Family of Angles"}
+  members:
+    - {sk_ref: sk_lsm_c003_0010, role_in_system: physical_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0013, role_in_system: construction, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0014, role_in_system: control_rule, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0012, role_in_system: diagnostic, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0011, role_in_system: qualifying_property, order: null, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_lsm_c003_0013, to: sk_lsm_c003_0010, nature: "the family is the per-point geometry summed over a surface", origin: source_stated}
+      - {from: sk_lsm_c003_0014, to: sk_lsm_c003_0013, nature: "the placement rule is stated in terms of the family", origin: source_stated}
+      - {from: sk_lsm_c003_0012, to: sk_lsm_c003_0010, nature: "reading source size from a reflection depends on the reflection being a mirror image", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The derivation chain is the source's own and it declares the family of angles one of the most
+      useful concepts in photographic lighting. Including the distance-independence property as a
+      qualifier is our placement; the source treats it in a separate aside.
+  provenance:
+    section: "Direct Reflections through The Family of Angles"
+    locator: "middle of the chapter"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_lsm_c003_003
+  source_id: light_science_and_magic_ch3
+  label: terminological_discipline_as_a_condition_of_the_theory
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    The chapter twice stops to intervene in its own field's vocabulary: it refuses the word specular
+    because practitioners use it for at least three different things, and it separates two senses of
+    diffusion because one describes the light and the other the surface. Both interventions exist to
+    protect the same distinction — that the source determines the type of light and the surface
+    determines the type of reflection.
+  whole_system_claim:
+    text: >
+      This chapter's physical account only works if one distinction holds: the light and the surface
+      are separate causes with separate vocabularies. Both terminological interventions defend that
+      distinction, and the source treats getting the words right as a precondition of getting the
+      physics right rather than as a stylistic preference.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source makes each intervention separately, under its own heading, and does not connect them.
+      What links them is that both failures collapse a property of the light into a property of the
+      reflection — a "specular" source assumed to give a "specular" reflection, a diffused source
+      assumed to give a diffuse reflection. The source states the underlying distinction plainly in the
+      diffusion passage, which is what makes the grouping defensible, but the grouping is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_lsm_c003_0009, role_in_system: intervention, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0007, role_in_system: intervention, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_lsm_c003_0013, role_in_system: protected_definition, order: 3, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies: []
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Both interventions are source-stated and each is given its own heading, so the members are not in
+      doubt. The claim that they serve one purpose is ours, and it is the whole content of this system.
+      A reviewer who disagrees loses nothing: each intervention stands alone as source knowledge.
+  provenance:
+    section: "Specular Reflection and Specular Light; Diffusion Confusion; The Family of Angles"
+    locator: "two asides and one definition"
+    page_start: null
+    page_end: null
+    source_support: text
