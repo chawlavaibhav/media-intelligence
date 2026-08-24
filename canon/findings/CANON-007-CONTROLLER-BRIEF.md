@@ -147,7 +147,7 @@ appearing to say things the report says elsewhere.
 describes information *lost* from a page. Here information is *added* to the text layer that the
 page does not show. I recorded it under `text_layer_order_damage` as the closest available value
 **and said in the record, the ledger and PROVENANCE that it is not exact.** No method change is
-proposed, because the phantom text is confined to printed pages 1–3 — verified by scanning all 139
+proposed **for this finding**, because the phantom text is confined to printed pages 1–3 — verified by scanning all 139
 pages for the marker phrases — no page in the processed span is affected, and no object is drawn
 from the forewords. **If a later task processes those pages, the gap becomes live and should be
 raised then.**
