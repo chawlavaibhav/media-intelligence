@@ -39,7 +39,7 @@ Reassessed under clarification 6/7 and still blocked - the blocker is an ACCESS 
 
 ## Acquisition state
 
-- downloaded_item_count: **0**
+- downloaded_item_count (media files): **0**
 - downloaded_bytes: **0**
 - version/subset: n/a
 

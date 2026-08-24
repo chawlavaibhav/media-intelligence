@@ -39,7 +39,7 @@ STATUS CHANGED IN RES-002 from too_large_for_pilot to partial_download. RES-001 
 
 ## Acquisition state
 
-- downloaded_item_count: **288**
+- downloaded_item_count (media files): **288**
 - downloaded_bytes: **782,604,215**
 - version/subset: 288 members, 24 per generator x 12 generators (transient member-level acquisition)
 

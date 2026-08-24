@@ -39,7 +39,7 @@ TRANSIENT acquisition: the 0.83 GB archive was downloaded to temporary staging, 
 
 ## Acquisition state
 
-- downloaded_item_count: **25246**
+- downloaded_item_count (media files): **25246**
 - downloaded_bytes: **201,386,592**
 - version/subset: Devanagari subset, 25,246 of 106,490 archive members
 
