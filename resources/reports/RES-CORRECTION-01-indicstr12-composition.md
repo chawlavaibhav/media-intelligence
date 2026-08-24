@@ -163,21 +163,28 @@ Same numerator, different denominators. Neither figure is wrong and they do not 
 | Denominator | Overlap | Share |
 |---|---:|---:|
 | All acquired IIIT-ILST images (1,390) | 173 | **12.4%** |
-| Locally paired IIIT-ILST records (176) | 173 | **98.3%** |
+| IIIT-ILST **scene photographs** (176) | 173 | **98.3%** |
 
 **Why the first is right for the source:** 1,390 files were acquired and 173 of them are byte-identical
 to IndicSTR12 files. As a statement about what is on disk, 12.4% is correct.
 
-**Why the second is what a consumer feels:** a holdout can only contain records that can actually be
-scored, which means paired ones. In that subset **only 3 records are genuinely unique to IIIT-ILST**.
-For evaluation purposes the two CVIT releases are effectively one source.
+**What the second actually measures:** the overlap rate *among scene photographs carrying their own
+sidecar annotation*. In that population **only 3 of IIIT-ILST's 176 scene photographs are unique**
+relative to IndicSTR12.
+
+> **This is not a claim that crop images cannot be evaluated.** An earlier version of this report said
+> a holdout "can only contain records that can actually be scored, which means paired ones". The
+> evidence above disproves that: **2,711 of 2,711 IndicSTR12 crops and 1,213 of 1,214 IIIT-ILST crops
+> resolve to a transcription**, so crops are scoreable too. The 98.3% figure is about scene
+> photographs specifically, not about what is usable.
 
 Two further facts, both verified here:
 
 1. **The 173 shared photographs are exactly IndicSTR12's complete Hindi-labelled scene set** — all
    173 of 173. The smaller dataset's Devanagari scene folder *is* the larger dataset's Hindi scene
    folder. Excluding shared files therefore removes 100% of IndicSTR12's Hindi scene material.
-2. **No cropped word image is byte-identical across the two sources.**
+2. **No cropped word image is byte-identical across the two sources** — which is true at the byte
+   level and, on its own, misleading. See the next section.
 
 ### A caveat hash-based deduplication cannot catch
 
@@ -189,7 +196,14 @@ fingerprint check will ever flag them**, including ours. But they depict the sam
 photographs.
 
 Anything treating IIIT-ILST crops as unseen material would be wrong, and the duplicate report would
-not warn you. **BSTD remains the only genuine cross-lineage reserve.**
+not warn you.
+
+**So both populations point the same way, for different reasons.** Scene photographs overlap at the
+byte level (98.3%); crop images do not, but 99.3% of them are cut from shared parents, so their
+independence is compromised at the content level. **IndicSTR12 and IIIT-ILST should be treated as one
+source lineage for holdout and independence purposes, and BSTD remains the genuine cross-lineage
+reserve.** That conclusion is unchanged by the discovery that crops are scoreable — if anything the
+crop evidence reinforces it, since the crops are not an independent escape route either.
 
 ## Unchanged
 

@@ -94,6 +94,29 @@ will ever flag them** — not ours, not yours. But they show the same regions of
 Practical consequence, consistent with what you already concluded: **BSTD is the only genuine
 cross-lineage reserve.** Holding out IIIT-ILST crops would not be holding out anything unseen.
 
+### What the 98.3% figure does and does not mean
+
+Worth stating precisely, because our own earlier wording got this wrong and yours could be read the
+same way. **98.3% is the overlap rate among scene photographs carrying their own sidecar annotation** —
+173 of 176 — and what it demonstrates is that **only 3 IIIT-ILST scene photographs are unique**
+relative to IndicSTR12.
+
+It is **not** a statement that only scene photographs can be scored. Crops are scoreable too:
+2,711/2,711 for IndicSTR12 and 1,213/1,214 for IIIT-ILST. We had written that a holdout "can only
+contain records that can actually be scored, which means paired ones"; our own crop-resolution finding
+disproves that, and it is corrected across the Resources records.
+
+**The conclusion is unaffected, and arrives twice by different routes:**
+
+| Population | Independence | Measure |
+|---|---|---|
+| Scene photographs | broken at the **byte** level | 173/176 = 98.3% identical |
+| Crop images | broken at the **content** level | 1,205/1,214 = 99.3% from shared parents |
+
+So the crops are not an independent escape route either. **Treat IndicSTR12 and IIIT-ILST as one
+source lineage for holdout and independence purposes; BSTD remains the genuine cross-lineage
+reserve.**
+
 ---
 
 ## 4. Confirming your other conclusions

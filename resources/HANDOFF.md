@@ -100,9 +100,13 @@ that. A specific request gets a better answer than a larger pile.
 - **Two of the three Devanagari sources are NOT independent of each other.** IndicSTR12 and IIIT-ILST
   are both CVIT / IIIT Hyderabad releases and share **173 byte-identical files** (12.4% of IIIT-ILST,
   5.6% of IndicSTR12). BSTD is genuinely independent of both. If a held-out Devanagari set is ever
-  wanted, **BSTD is the clean choice.** Two valid denominators, both true: the overlap is **173 of
-  1,390 acquired images (12.4%)** but **173 of 176 locally paired records (98.3%)** — and a holdout
-  can only contain records it can score. Only **3** paired IIIT-ILST records are genuinely unique.
+  wanted, **BSTD is the clean choice.** Two valid denominators, both true: **173 of 1,390 acquired
+  images (12.4%)** overall, and **173 of 176 scene photographs (98.3%)** — the latter being
+  specifically the overlap rate among photographs carrying their own annotation, where only **3**
+  IIIT-ILST scene photographs are unique. Crop images are **also scoreable**, so this is not a claim
+  that only 551 items are usable; crop-level independence is compromised separately, because 1,205 of
+  1,214 IIIT-ILST crops come from parent photographs shared with IndicSTR12. Both routes point the
+  same way: treat the two CVIT releases as **one source lineage** for holdout purposes.
 - **BSTD's own train/test splits are not perfectly disjoint** — 2 duplicate pairs span them.
 - **A dataset's language label is not its script label.** Marathi is written in Devanagari; filtering
   BSTD by `language == hindi` would have missed 5,109 Marathi images plus 351 more labelled as other
