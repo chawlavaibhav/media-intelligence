@@ -331,20 +331,292 @@ Recorded as **`no historical comparator`**. None was manufactured.
 
 ---
 
-## Lane C running tally after book 13
+---
+
+## Book 14 — Chip Heath & Dan Heath, *Made to Stick*, Introduction
+
+Fresh checkpoint: `a699a49`. Historical comparison: **no prior extraction exists**; one prior
+*prediction* about this book does exist and is compared in C-21.
+
+---
+
+### C-13 — The same evidence vocabulary fails again, in the opposite direction: there is no way to record cited external research
+
+**Status:** OBSERVED · **Layer:** source fidelity / evidence characteristics · **New in Lane C, and
+the mirror image of C-01** · **Distinct books showing the vocabulary gap: 2**
+
+**What it is.** This book's support is overwhelmingly published research by named third parties:
+Elizabeth Newton's 1990 Stanford doctoral study of tappers and listeners, with a design and figures
+(120 songs, 3 identified, 2.5 per cent actual against 50 per cent predicted); Joel Best and Gerald
+Horiuchi's study of every reported Halloween incident since 1958; a 1999 Israeli study classifying
+200 award-winning advertisements against 200 matched non-award ones (89 per cent against 2 per
+cent), and its follow-up three-arm training experiment with a blinded selector.
+
+`empirical_within_source` is defined as "the source reports its **own** measurement". None of these
+is the authors' own. The fixed list has no value for cited external research at all.
+
+**Why this is the sharper half of the problem.** Book 13 and book 14 are the same vocabulary failing
+in opposite directions:
+
+| | what the source does | what the vocabulary records |
+|---|---|---|
+| Hopkins | claims measurement, reports almost none | risk of crediting evidence that was not supplied |
+| Heath & Heath | reports measurement constantly, almost none of it their own | no way to credit evidence that *was* supplied |
+
+**What was done, under the frozen method.** The characteristic was withheld from every third-party
+study, and each study was recorded in full — researcher, design, comparison group, figures — in a
+caveat marked `extractor_observed`.
+
+**Practical consequence, and it is worse than C-01's.** This book's best-evidenced claims and its
+bare assertions now carry similar characteristic sets. `sk_hea_mts_0023`, which rests on a published
+controlled study, and `sk_hea_mts_0017`, which rests on "it's difficult... but it's easier", are not
+cleanly separable by anything a machine reads. The extraction states this in the file header and in
+`PROVENANCE.md` so it cannot be misread as the extractor having missed the evidence — but a
+statement in prose is not a fix.
+
+**PROPOSED — not applied.** A characteristic for "the source reports a named third party's
+measurement", distinct both from the source's own measurement and from bare assertion. Schema
+change; approval trigger; recorded only.
+
+---
+
+### C-14 — `source_warns_against_isolated_use: false` cannot tell silence from explicit permission
+
+**Status:** OBSERVED · **Layer:** systems · **New in Lane C** · **Distinct books: 1**
+
+**What it is.** The field is boolean. For this book the correct value is `false`, and that value is
+misleading, because this source does not merely fail to warn against using its principles in
+isolation — it explicitly licenses partial use: "you don't need all of these traits in order to be
+great... And having all the traits doesn't guarantee greatness."
+
+Three states exist and the field has two: the source warns against isolated use; the source is
+silent; the source affirmatively permits it. The second and third both record as `false`.
+
+**Why it matters.** This is a retrieval-governance fact. "The author said you may use one of these
+alone" and "the author never addressed it" license completely different behaviour by anything that
+retrieves a single member of the system.
+
+**How it was handled.** The value stays `false` and the distinction is written into the system's
+`system_level_uncertainty`, alongside a note in the binding that carries it
+(`bnd_hea_mts_0006`, governance / rule_application).
+
+**PROPOSED — not applied.** Make the field three-valued. Schema change; recorded only.
+
+---
+
+### C-15 — Two governing documents disagree about which relationship types a worker may set, and the conservative reading cost real fidelity
+
+**Status:** OBSERVED · **Layer:** ontology / governance · **New in Lane C; sharpens C-05(a)** ·
+**Distinct books in this lane showing relation under-use: 2**
+
+**What it is.** The source states an identity outright: the tapper who cannot stop hearing the tune
+**is** the Curse of Knowledge. The tapper/listener gap is that tendency observed under measurement,
+not a separate phenomenon resembling it. The SPEC-05 relation for this is `same_mechanism`.
+
+The two documents give different answers about whether this worker may set it:
+
+- **SPEC-05's governance section** singles out only `same_failure_family` as requiring human review,
+  which would permit `same_mechanism`.
+- **The Canon charter** enumerates the relations a worker may choose locally and lists exactly two:
+  `related_to` and `potentially_equivalent_to`.
+
+The narrower reading was followed, so `related_to` was recorded and the intended relation written
+into the note.
+
+**Why this is worth escalating rather than filing quietly.** The cost is not hypothetical. A
+source-stated identity is now recorded in the structured layer as an unspecified connection, and
+`related_to` is the same value used elsewhere in this file for "the source mentions these together".
+Across books 13 and 14 the same downgrade has now happened to `broader_than`/`narrower_than` four
+times and to `same_mechanism` once, and in every case the real relation survives only in a prose
+note.
+
+**Practical consequence if unchanged.** The ontology layer's whole purpose is to make relationships
+machine-readable so aggregation is possible later. Systematically downgrading to `related_to`
+produces a graph where almost every edge means nothing in particular.
+
+**PROPOSED — not applied.** Reconcile the two documents. The cheapest resolution needs no schema
+change at all: state which relation types are a local decision. Recorded only.
+
+---
+
+### C-16 — Evidence *for* the current design, and the strongest in this lane: the system layer carried what no object could
+
+**Status:** OBSERVED · **Layer:** systems · **Evidence for the frozen design** ·
+**Distinct books: 1**
+
+This book is the case SPEC-03's SourceConceptSystem was written for, and it worked.
+
+The six principles are, individually, ordinary. The source says so itself: "many of the principles
+have a commonsense ring to them... It's not as though there's a powerful constituency for
+overcomplicated, lifeless prose." An extraction that produced six rules — be simple, be unexpected,
+be concrete — would have been faithful at the object level and would have thrown away everything the
+book contributes.
+
+What is not commonsense lives entirely above the objects, and all of it was recordable:
+
+- the six are **one checklist**, run against an idea you already have, and the source demonstrates
+  the procedure twice;
+- they are explicitly **not a formula** — not necessary, not sufficient;
+- all six are aimed at **one named obstacle**, and that obstacle is why obvious advice is not
+  followed;
+- the whole thing is warranted by a **separate argument** that stickiness is learnable at all, which
+  the source never assembles in one place.
+
+Three systems hold this. Two carry `whole_system_claim.origin: source_explicit` — the source built
+them, not us — which is rarer in this batch than `extractor_synthesis` and is worth noting on its
+own.
+
+**The counterfactual is the point.** Without the system layer this extraction would have been six
+banal rules plus twenty-two supporting observations, and would have read as a weak source. With it,
+the framework survives as a framework.
+
+---
+
+### C-17 — The V0 granularity rule needed a judgement call at a framework member, and held without a new rule
+
+**Status:** OBSERVED · **Layer:** granularity · **Evidence for the frozen rule, with a caveat** ·
+**Distinct books in this lane needing a recorded granularity judgement: 2**
+
+**The tension.** Strictly applied, V0 says split when a claim can be retrieved, supported,
+contradicted or qualified independently. Several principles contain sub-claims that pass that test —
+surprise seizes attention but decays while curiosity gaps hold interest; hard numbers are often the
+wrong instrument for belief; people feel for individuals rather than abstractions. Splitting them
+would have produced ten or more objects where the framework has six members, and the checklist would
+no longer map onto the extraction.
+
+**How it was resolved without inventing a rule.** Each principle is one object, because the
+principle is the unit the checklist operates on. Sub-claims that carry their own distinct mechanism
+*and* their own support are separate objects related by `specialises` to their principle, and the
+system's membership lists the six principles only. Both the V0 test and the framework survive.
+
+**Why it is recorded rather than presented as settled.** The choice of which sub-claims cleared the
+bar was a judgement. Four did. Others — for instance the Golden Rule as an exemplar of simplicity —
+were treated as illustration and not split, per V0's instruction not to split for another example.
+A different extractor could defensibly have drawn that line one object either way.
+
+---
+
+### C-18 — An EPUB-sourced book is structurally less locatable, and the batch's books are therefore not equally citable
+
+**Status:** OBSERVED · **Layer:** provenance · **New in Lane C** · **Distinct books: 1**
+
+Every object in this book has `page_start: null` and `page_end: null` and locates itself by section
+heading. This is not an omission — an EPUB reflows, so there is no page and no printed page number
+to cite. Nor could the text be checked against a print edition, as this lane's book 13 was, because
+no print copy is available locally.
+
+**Why it matters beyond tidiness.** The batch now contains books whose claims can be checked against
+a specific printed page and books whose claims can only be located to a named section of several
+thousand words. Anything that later cites Canon knowledge back to a source will find the two classes
+are not equally verifiable, and nothing in the schema currently records which class an object
+belongs to — `provenance.locator` is free text.
+
+**Mitigation used here.** The section headings in this file are real text, present in the text layer,
+and there are fourteen of them across the section, so locators are as fine-grained as the source
+allows. That is stated in `PROVENANCE.md` rather than left to be discovered.
+
+---
+
+### C-19 — A new visual pattern: the section's own title exists only as a picture
+
+**Status:** OBSERVED · **Layer:** visual completeness · **New in Lane C** · **Distinct books: 1**
+
+The word "INTRODUCTION" is a 238×39 JPEG with no alt text. So are all six chapter titles: this EPUB
+sets its top-level headings as images of words, as a house convention. A text-only extraction of the
+file produces a section with no title on it.
+
+**Severity: low, and the reason is worth keeping.** Nothing is corrupted, no sentence is lost, and
+the fourteen sub-headings *inside* the section are real text and extract perfectly. Only the label of
+the top-level unit is affected, and a visual pass recovers it completely by opening one image.
+
+**Named as `heading_as_image` in the visual evidence ledger.** The pre-parallel handover checkpoint
+reports an item of a similar shape from an earlier book — a graphic disturbing where a named section
+appeared in the text layer. This lane has not read that book's working files and does not assert the
+two are the same issue. Flagged for the integrator.
+
+**Cheap check that caught it.** Enumerating every image in the package and opening each distinct one
+takes minutes and is what distinguished "this book has no figures" from "this book has no figures
+and one of its headings is a figure".
+
+---
+
+### C-20 — Source shape predicts binding yield, which is information about the product schema rather than about Canon
+
+**Status:** OBSERVED (the counts) / INFERRED (the cause) · **Layer:** bindings ·
+**Distinct books: 2, within this lane**
+
+| Book | Objects | Bindings | Rate |
+|---|---|---|---|
+| 13 — Hopkins | 54 | 8 | one per ~7 |
+| 14 — Heath & Heath | 28 | 9 | one per ~3 |
+
+**Inferred cause.** Hopkins is largely print-medium craft — type size, space utilisation, coupons,
+mail-order economics — for a medium our schemas do not model, so most objects correctly stay unbound.
+Made to Stick is about designing a message for an audience, which is what a Creative IR is for, so
+its claims land on fields that already exist: proposition, hook, emotional target, hierarchy.
+
+**Why record it.** A low binding rate has been read in this batch as evidence that SPEC-04 is
+behaving correctly, which it is. This adds that the rate is also a property of the source's subject
+matter, so binding counts across books measure the schema's coverage of a domain and not the quality
+of an extraction. Comparing them without that in mind would produce a wrong conclusion.
+
+---
+
+### C-21 — No prior extraction exists, but a prior *prediction* does, and it was half right
+
+**Status:** OBSERVED · **Layer:** provenance / planning · **Distinct books: 1**
+
+Searched after the fresh checkpoint was pushed and committed. There is **no prior extraction, audit,
+findings file or superseded atom set** for this book. Recorded as `no historical comparator`; none
+was manufactured.
+
+But `canon/experiments/CANON-CURRICULUM-V0.md` contains a prediction made about this book before
+anyone had read it for extraction:
+
+> the SUCCESs framework is unusually operational — six named attributes with diagnostics, which
+> maps almost directly onto evaluation dimensions
+
+Comparing that against the fresh pass, after the checkpoint:
+
+- **Right on direction.** The framework did bind more readily than anything else in this lane — nine
+  bindings from twenty-eight objects, including a whole-asset evaluation binding built directly on
+  the checklist. "Unusually operational" is fair.
+- **Overstated on substance.** "Six named attributes **with diagnostics**" is not what the source
+  supplies. The Introduction gives six *questions* and no test for answering any of them. Every
+  answer in the source's own worked example is the authors' judgement. And the source states
+  explicitly that the traits are neither necessary nor sufficient, which rules out the scoring
+  behaviour "maps almost directly onto evaluation dimensions" implies.
+
+**Why this is worth logging.** The coverage map and curriculum carry confidence ratings — this
+book's domain is rated "strong" — that were assigned from reputation rather than from extraction.
+This is the first case in this lane where one could be checked, and it was directionally right and
+materially overstated. That is a caution about reading those ratings as findings, not a defect in
+them; they were written as planning documents.
+
+## Lane C running tally after book 14
 
 | | |
 |---|---|
-| Books complete | 1 of 3 |
+| Books complete | 2 of 3 |
 | Books blocked | 0 |
-| New issues raised | C-01, C-02, C-03, C-05(b), C-08, C-09, C-11 |
-| Evidence *for* the frozen design | C-04 (contradiction representable), C-06 (granularity held), C-07 (visual loss did not recur), C-10 (binding ratio as predicted) |
-| Possible recurrence of a pre-parallel item | C-05(a), flagged for the integrator to confirm or reject |
+| New issues raised, book 13 | C-01, C-02, C-03, C-05(b), C-08, C-09, C-11 |
+| New issues raised, book 14 | C-13, C-14, C-15, C-18, C-19, C-21 |
+| Evidence *for* the frozen design | C-04, C-06, C-07, C-10 (book 13); C-16, C-17 (book 14) |
+| Recurring **within this lane**, across 2 distinct books | the evidence-characteristic gap (C-01 / C-13, failing in opposite directions); relation-type under-use (C-05(a) / C-15); a recorded granularity judgement call (C-06 / C-17) |
+| Possible recurrence of a pre-parallel item, flagged not counted | C-05(a), C-19 |
 | Schema/method changes made | **none** |
 
-## Book 14 — Chip Heath & Dan Heath, *Made to Stick*
+### The one thing to read first, if reading only one
 
-Not started.
+Two books in this lane, from the same domain, broke the **same** SPEC-03 field in **opposite**
+directions. Hopkins claims measurement and supplies almost none; the Heaths supply measurement
+constantly and almost none of it is their own. `empirical_within_source` — "the source reports its
+own measurement" — cannot record either honestly, and the fixed characteristic list has no
+neighbouring value that can. Both were handled by writing the truth into prose caveats, which is
+faithful and unaggregatable.
+
+This is the strongest signal Lane C has produced. Whether it is a general problem or an artefact of
+one domain is exactly what the other lanes will settle.
 
 ## Book 15 — Rory Sutherland, *Alchemy*
 
