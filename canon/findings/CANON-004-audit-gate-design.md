@@ -1,7 +1,7 @@
 # CANON-004 — Post-Extraction Audit Gate v0.2: design and test evidence
 
-**Date:** 25 Aug 2026 · **Branch:** `work/canon-004` · **Status:** design/test complete, awaiting
-Controller decision. SPEC-03, SPEC-04 and SPEC-05 are unchanged.
+**Date:** 25 Aug 2026 · **Branch:** `work/canon-004` · **Status:** design/test complete, plus one
+Controller correction pass applied 25 Aug. Awaiting Controller decision. SPEC-01/03/04/05 unchanged.
 
 ---
 
@@ -15,7 +15,7 @@ the frozen record and never writes to it. It answers five questions: what the co
 evidence this is, what the product can use, whether two sources are really two, and whether an old
 technical claim is still true.
 
-All 16 accepted books now have one. The candidate schema, the 16 records, a validator and 32 tests
+All 16 accepted books now have one. The candidate schema, the 16 records, a validator and 46 tests
 are committed on this branch.
 
 **The headline result:** the gate catches every one of the four recurring CANON-003 failures, and it
@@ -23,10 +23,13 @@ needs **one** authoritative rule change to do it — a single addition to SPEC-0
 section. Everything else is additive: new files, new directory, no edit to any existing schema and
 no edit to any accepted source claim.
 
-**What it costs.** An audit record averages **154 lines** against an average `source-knowledge.yaml`
-of 1,590 — roughly a **10 per cent** addition to a book's committed record, and slightly less than
+**What it costs.** An audit record averages **167 lines** against an average `source-knowledge.yaml`
+of 1,590 — roughly an **11 per cent** addition to a book's committed record, and slightly more than
 the existing `visual-evidence-ledger.yaml` at 158 lines. Writing all 16 required no source book to
 be re-opened; every record was built from committed repository evidence.
+
+Fourteen of those lines per record are the machine-generated `source_snapshot` added in the
+correction pass (§10). The human-written part of a record is unchanged at 154 lines.
 
 ---
 
@@ -179,9 +182,21 @@ binding:
   LB-11). Seven of sixteen is a real recurrence.
 - **`deterministic_composition`** fired **once**, on Samara: nine of fourteen remedies are geometric
   operations a layout engine could execute exactly — add a column, hang a character, set a measure —
-  and none is a generative control (LA-08). One in sixteen is weak, and it is kept only because that
-  one hit is precisely the finding, not because the vocabulary needs symmetry. **This is the
-  candidate's weakest component and the first thing to cut under ADOPT WITH REDUCTION.**
+  and none is a generative control (LA-08). **Retained, on Controller direction, and the reasoning
+  is worth recording because it corrects a mistake in the first draft of this document.**
+
+  That draft proposed cutting it for firing once in sixteen. That inference does not hold.
+  Frequency in this corpus measures what these sixteen books happen to teach; it does not measure
+  whether the product will need the distinction. The project explicitly anticipates deterministic
+  executors for creative-production tasks where an exact operation beats asking a generative model
+  to approximate one — and Samara's grid geometry is exactly that class of knowledge: operations a
+  layout engine can perform precisely, which a generative model can only approach. Sixteen books
+  weighted towards photography, film and persuasion are the wrong instrument for measuring how much
+  deterministic layout knowledge exists in the world.
+
+  The cost of keeping it is one `no_current_binding` line in fifteen records, which is the same
+  cost every consumer carries when it does not apply. `no_current_binding` remains the normal and
+  correct answer for most sources. No binding was created and no SPEC-04 target type was added.
 
 **The audit's most important negative result.** Lane D's D-13, confirmed here from the committed
 bindings: *Creativity, Inc.* produced 21 objects and 0 Creative IR bindings; *Art & Fear* 23 objects
@@ -388,10 +403,11 @@ the backfill is already done. All 16 records exist and validate.
 
 ## 9. Unresolved questions
 
-1. **Drift between the two files.** The audit is a second record that can fall out of step with the
-   frozen one. The validator enforces consistency for `empirical_within_source` only. Nothing yet
-   detects an audit written against an older version of a source record — `audited_against_commit`
-   is recorded but not checked.
+1. **Drift between the two files — RESOLVED in the correction pass.** The audit is a second record
+   that could fall out of step with the frozen one. `source_snapshot` now proves the audited
+   artifacts are byte-identical to the ones on disk, and a stale audit fails rather than passing.
+   See §10.2. What remains open is narrower: the snapshot proves the *representation* has not
+   moved, not that the auditor's reading of it was right.
 2. **The anti-score rule is partial.** It blocks a field named like a score. It cannot block a
    reader counting categories. §3 states the residual risk; the consumption-layer rule that would
    close it is out of scope here.
@@ -401,11 +417,96 @@ the backfill is already done. All 16 records exist and validate.
    are independent. The candidate keeps source lineage and evidence origin as separate questions and
    deliberately does not merge them. Whether they need joining is a real open question and one book
    is not enough to answer it.
-4. **`deterministic_composition` fired once in sixteen.** Kept because the single hit is exactly the
-   LA-08 finding, but it is the weakest component and the obvious first cut.
+4. **How much deterministic-composition knowledge exists is unmeasured.** It fired once in sixteen
+   books, and this corpus is weighted towards photography, film and persuasion rather than layout
+   and typography. The consumer is retained because an exact executor is strategically anticipated,
+   not because the corpus demonstrates demand. A design- or typography-weighted batch would measure
+   it properly; this one cannot.
 5. **Who runs the gate.** These 16 records were written by one worker reading committed evidence. It
    is untested whether a different worker, or the book's own extractor, produces the same record. The
    isolation question CANON-003 raised for extraction applies here too and has not been examined.
 6. **The gate has not been exercised on a promotion.** The rule is tested against the corpus and no
    `cross_source_concept` has ever been created. The failure it prevents is predicted, and the
    prediction is now mechanically checkable, which is a step short of observed.
+
+---
+
+## 10. Controller correction pass — 25 Aug 2026
+
+The Controller accepted the direction and returned three bounded corrections. All are applied on this
+branch.
+
+### 10.1 `deterministic_composition` is retained
+
+Reversed. The reasoning is in §2C. In short: firing once in sixteen books measures what these books
+happen to teach, not whether the product needs the distinction, and an exact executor for layout
+operations is explicitly anticipated. The recommendation to cut it is withdrawn.
+
+### 10.2 The stale-audit hole is closed mechanically
+
+**The problem.** An audit describes a source at one moment. The first draft recorded
+`audited_against_commit` and no check read it, so an accepted source could be edited after its audit
+and the stale audit would keep validating. For a gate whose purpose is to block cross-source
+promotion and product use, that is worse than having no gate: a consumer would be told the source
+had been audited when the thing audited no longer exists.
+
+**The fix.** Each record now carries `source_snapshot`, a deterministic content fingerprint of the
+frozen artifacts it was written against. The validator recomputes it from disk on every run and fails
+if anything moved.
+
+- SHA-256 of each covered file's raw bytes, paths relative to `knowledge_dir`, processed in
+  lexicographic order. The result depends only on file contents — not on filesystem ordering, clock,
+  locale or git state.
+- `combined_digest` is the SHA-256 of the UTF-8 encoding of `"{path}:{digest}\n"` joined over those
+  sorted entries.
+- Per-file digests are kept alongside it so the failure names *which* artifact moved.
+
+**Why a fingerprint rather than git.** A commit SHA changes on rebase, squash, cherry-pick and
+worktree moves without a single byte of the audited source changing, and it does not change when a
+file is edited in a dirty working tree. Content addressing is the property actually needed:
+*are these bytes still the bytes I audited?*
+
+**Coverage — five files, each justified individually**, per the instruction not to broaden for
+completeness:
+
+| File | Why a change to it falsifies the audit |
+|---|---|
+| `source-knowledge.yaml` | `sk_refs` resolve into it; `evidence_origin` is cross-checked against its `empirical_within_source`; `source_id` must match |
+| `operational-bindings.yaml` | `application_fit` cites its `binding_id`s |
+| `source-concept-systems.yaml` | bindings resolve `source_system_refs` into it; audit prose cites `source_warns_against_isolated_use` and `priority_order` |
+| `ontology-mappings.yaml` | the layer whose promotion the lineage audit governs; audit prose cites remedy `executable_by` values |
+| `visual-evidence-ledger.yaml` | Area A is derived from it, and nothing else would detect a change to it |
+
+`PROVENANCE.md` is **excluded**: narrative prose, not a machine-consumed representation, and the
+factual content the audit takes from it is restated inside the audit's own fields. It remains in
+`evidence_basis_for_this_audit` as informational provenance. This is a deliberate scope choice, not
+an oversight — a prose edit to a provenance file does not invalidate an audit whose claims are
+recorded in its own structured fields.
+
+**One version mechanism, not two.** `audited_against_commit` is renamed `recorded_at_commit` and is
+informational only. The validator does not read it, and a test asserts that changing it to a
+different value has no effect on validation. `source_snapshot` is the sole enforced check.
+
+**No refresh tool, deliberately.** A one-command "update the snapshot" utility would rubber-stamp
+exactly the staleness the field exists to catch. When a source legitimately changes, the correct
+response is to re-run the Audit Gate for that book, which produces a new snapshot as a by-product.
+`compute_source_snapshot()` is exposed as a function for that re-run and for the tests.
+
+**Verified against the real corpus, not only fixtures.** Appending one comment line to
+*The Vignelli Canon*'s visual ledger turned a clean 16-record run into exactly one error naming the
+file and both digests; restoring the file returned it to clean.
+
+### 10.3 Test fixtures now use the real controlled vocabulary
+
+The independence fixtures constructed `not_independent`, which is not a schema value — they passed
+only because the promotion function ignored the unrecognised string. Fixtures now use
+`not_independent_of_named_sources`, a test asserts every fixture verdict is in the controlled
+vocabulary, and `independent_origins_ok` now **fails closed** on an unrecognised verdict rather than
+letting a malformed record through. That last part is a real robustness fix the fixture bug exposed.
+
+### 10.4 Branch synced with current `main`
+
+`origin/main` advanced to `8e99785` when Resources PR #5 merged. Merged in cleanly with no conflicts;
+the Resources change touches no file under `canon/` or `tests/` and none of its semantics were pulled
+into Canon. The corpus remains exactly the 16 CANON-003 books — *Master Shots* and *The
+Conversations* are not present and were not ingested.

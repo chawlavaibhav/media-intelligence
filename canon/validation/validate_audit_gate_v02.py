@@ -14,6 +14,7 @@ It checks four things the design document claims:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -23,6 +24,34 @@ import yaml
 
 RECORDS_SUBPATH = Path("canon/experiments/audit-gate-v0.2/records")
 KNOWLEDGE_SUBPATH = Path("canon/knowledge/current")
+
+# ── the source snapshot ─────────────────────────────────────────────────────────────────────
+# An Audit Gate record describes a source representation at one moment. If that representation
+# later changes, the audit is stale and must not keep validating - it is about to gate cross-source
+# promotion and product use, so a stale pass is worse than no gate.
+#
+# The snapshot is the ONLY enforced version mechanism. `recorded_at_commit` is informational
+# provenance and is deliberately not read by this validator; see SCHEMA-audit-record-v0.2.md.
+#
+# Membership rule: a file is in the snapshot when the audit's assertions are falsified by a change
+# to it. Each of the five below is justified individually; PROVENANCE.md is excluded because it is
+# narrative prose whose factual content is restated inside the audit's own fields.
+SNAPSHOT_FILES = (
+    # sk_refs resolve into it; evidence_origin is cross-checked against its
+    # `empirical_within_source` characteristics; `source_id` must match it.
+    "source-knowledge.yaml",
+    # application_fit findings cite binding_ids from it, and a binding may carry source_system_refs.
+    "operational-bindings.yaml",
+    # bindings resolve system refs into it, and audit prose cites system-level fields such as
+    # `source_warns_against_isolated_use` and `priority_order`.
+    "source-concept-systems.yaml",
+    # the layer whose cross_source_concept promotion the lineage audit governs; audit prose also
+    # cites remedy `executable_by` values from it.
+    "ontology-mappings.yaml",
+    # representation_integrity is derived from it; nothing else would detect a change to Area A.
+    "visual-evidence-ledger.yaml",
+)
+SNAPSHOT_ALGORITHM = "sha256-of-sorted-path-and-content"
 
 # ── controlled vocabularies (see SCHEMA-audit-record-v0.2.md) ────────────────────────────────
 AUDIT_STATUS = {"complete", "evidence_insufficient"}
@@ -154,6 +183,85 @@ def _collect_binding_refs(value: Any) -> list[str]:
     return found
 
 
+def compute_source_snapshot(root: Path, knowledge_dir: str) -> dict[str, Any]:
+    """Deterministic content fingerprint of the frozen source artifacts an audit describes.
+
+    Read-only. Paths are relative to `knowledge_dir` and are hashed in lexicographic order, so the
+    result depends only on file contents and never on filesystem order, clock or git state.
+
+    Returns {"algorithm", "files": [{"path", "digest"}], "combined_digest", "missing": [path]}.
+    A missing file is reported rather than skipped: silently omitting it would let a deleted
+    artifact produce a snapshot that still matched.
+    """
+    book = root / knowledge_dir
+    files: list[dict[str, str]] = []
+    missing: list[str] = []
+    for name in sorted(SNAPSHOT_FILES):
+        path = book / name
+        if not path.is_file():
+            missing.append(name)
+            continue
+        files.append({"path": name, "digest": hashlib.sha256(path.read_bytes()).hexdigest()})
+    canonical = "".join(f"{f['path']}:{f['digest']}\n" for f in files)
+    return {
+        "algorithm": SNAPSHOT_ALGORITHM,
+        "files": files,
+        "combined_digest": hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
+        "missing": missing,
+    }
+
+
+def _validate_snapshot(record: dict[str, Any], root: Path, rid: str, knowledge_dir: str) -> list[str]:
+    """Prove the audited artifacts are still byte-identical to the ones on disk now."""
+    errors: list[str] = []
+    declared = record.get("source_snapshot")
+    if not isinstance(declared, dict):
+        return [
+            f"{rid}: source_snapshot missing - an audit must record the exact source artifacts it "
+            f"was written against, or it cannot be shown to be current"
+        ]
+
+    if declared.get("algorithm") != SNAPSHOT_ALGORITHM:
+        errors.append(
+            f"{rid}: source_snapshot.algorithm {declared.get('algorithm')!r} is not "
+            f"{SNAPSHOT_ALGORITHM!r}"
+        )
+
+    actual = compute_source_snapshot(root, knowledge_dir)
+    for name in actual["missing"]:
+        errors.append(
+            f"{rid}: snapshot artifact {name} is missing from {knowledge_dir}; the audited source "
+            f"representation is incomplete"
+        )
+
+    declared_files = {
+        str(entry.get("path")): str(entry.get("digest"))
+        for entry in _list(declared.get("files"))
+        if isinstance(entry, dict)
+    }
+    actual_files = {entry["path"]: entry["digest"] for entry in actual["files"]}
+
+    for name in sorted(set(SNAPSHOT_FILES) - set(declared_files)):
+        errors.append(f"{rid}: source_snapshot does not cover required artifact {name}")
+    for name in sorted(set(declared_files) - set(SNAPSHOT_FILES)):
+        errors.append(f"{rid}: source_snapshot covers unexpected artifact {name}")
+
+    for name in sorted(set(declared_files) & set(actual_files)):
+        if declared_files[name] != actual_files[name]:
+            errors.append(
+                f"{rid}: STALE AUDIT - {name} has changed since this audit was written "
+                f"(audited {declared_files[name][:12]}, now {actual_files[name][:12]}); "
+                f"re-run the Audit Gate for this source"
+            )
+
+    if not errors and declared.get("combined_digest") != actual["combined_digest"]:
+        errors.append(
+            f"{rid}: source_snapshot.combined_digest does not match the recomputed digest; "
+            f"the snapshot is internally inconsistent"
+        )
+    return errors
+
+
 def _frozen_record(root: Path, knowledge_dir: str) -> dict[str, Any]:
     """Read the frozen SPEC-03/04 artifacts an audit record points at. Read-only."""
     book = root / knowledge_dir
@@ -202,6 +310,7 @@ def validate_record(record: dict[str, Any], root: Path) -> list[str]:
         if not book.is_dir():
             errors.append(f"{rid}: knowledge_dir does not exist: {knowledge_dir}")
         else:
+            errors.extend(_validate_snapshot(record, root, rid, str(knowledge_dir)))
             try:
                 frozen = _frozen_record(root, str(knowledge_dir))
             except ValueError as exc:
@@ -467,7 +576,12 @@ def independent_origins_ok(
     # other source in the corpus. Only a genuinely unresolved lineage blocks globally.
     for sid in (source_a, source_b):
         lineage = by_source[sid].get("lineage") or {}
-        if lineage.get("independence_verdict") == "independence_not_established":
+        verdict = lineage.get("independence_verdict")
+        # Fail closed on a verdict outside the controlled vocabulary. Passing an unrecognised value
+        # through would let a malformed record silently qualify for promotion.
+        if verdict not in INDEPENDENCE_VERDICTS:
+            return False, f"{sid} carries an unrecognised independence_verdict {verdict!r}"
+        if verdict == "independence_not_established":
             return False, f"{sid} carries independence_verdict independence_not_established"
     return True, "no dependence-creating relation declared by either source"
 

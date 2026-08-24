@@ -15,7 +15,10 @@ def _write_yaml(path: Path, data) -> None:
 
 
 def _make_frozen_book(root: Path, name: str, source_id: str, *, empirical: bool = False) -> str:
-    """Minimal frozen SPEC-03/04 pair for an audit record to point at."""
+    """Minimal frozen source representation for an audit record to point at.
+
+    Writes every file the snapshot covers, so a fixture book is snapshot-complete.
+    """
     book = root / "canon" / "knowledge" / "current" / name
     characteristics = ["explicitly_stated"]
     if empirical:
@@ -31,16 +34,29 @@ def _make_frozen_book(root: Path, name: str, source_id: str, *, empirical: bool 
         "source_id": source_id,
         "operational_bindings": [{"binding_id": "bnd_fx_0001", "target_type": "governance"}],
     })
+    _write_yaml(book / "source-concept-systems.yaml", {
+        "source_id": source_id, "source_concept_systems": []})
+    _write_yaml(book / "ontology-mappings.yaml", {
+        "source_id": source_id, "terms": [], "relationships": [], "concepts": []})
+    _write_yaml(book / "visual-evidence-ledger.yaml", {
+        "source_id": source_id, "pass": "performed", "visual_completeness": "fixture"})
     return f"canon/knowledge/current/{name}"
 
 
-def _minimal_record(source_id: str, knowledge_dir: str, audit_id: str) -> dict:
+def _minimal_record(source_id: str, knowledge_dir: str, audit_id: str, root: Path) -> dict:
+    snapshot = validator.compute_source_snapshot(root, knowledge_dir)
     return {
         "audit_record_version": "v0.2-experimental",
         "audit_id": audit_id,
         "source_id": source_id,
         "knowledge_dir": knowledge_dir,
+        "recorded_at_commit": "0" * 40,
         "audit_status": "complete",
+        "source_snapshot": {
+            "algorithm": snapshot["algorithm"],
+            "files": snapshot["files"],
+            "combined_digest": snapshot["combined_digest"],
+        },
         "representation_integrity": {
             "delivery_format": "publisher_epub",
             "page_addressability": "no_pages_reflowable",
@@ -94,7 +110,8 @@ class AuditGateRecordTests(unittest.TestCase):
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
         self.knowledge_dir = _make_frozen_book(self.root, "fixture-book", "fixture_source")
-        self.record = _minimal_record("fixture_source", self.knowledge_dir, "aud_fixture")
+        self.record = _minimal_record(
+            "fixture_source", self.knowledge_dir, "aud_fixture", self.root)
 
     def tearDown(self):
         self._tmp.cleanup()
@@ -165,7 +182,8 @@ class AuditGateRecordTests(unittest.TestCase):
     def test_third_party_measurement_must_not_carry_empirical_within_source(self):
         _make_frozen_book(self.root, "empirical-book", "empirical_source", empirical=True)
         record = _minimal_record(
-            "empirical_source", "canon/knowledge/current/empirical-book", "aud_empirical")
+            "empirical_source", "canon/knowledge/current/empirical-book", "aud_empirical",
+            self.root)
         record["evidence_origin"]["categories"] = [{
             "category": "third_party_measurement_reported",
             "sk_refs": ["sk_fx_0001"],
@@ -191,6 +209,120 @@ class AuditGateRecordTests(unittest.TestCase):
         self.assertTrue(any("observed_loss_patterns is empty" in e for e in errors), errors)
 
 
+class StaleAuditTests(unittest.TestCase):
+    """An audit describes a source at one moment. If the source moves, the audit must stop passing.
+
+    This gate blocks cross-source promotion and product use, so a stale pass is worse than no gate.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        self.knowledge_dir = _make_frozen_book(self.root, "fixture-book", "fixture_source")
+        self.book = self.root / self.knowledge_dir
+        self.record = _minimal_record(
+            "fixture_source", self.knowledge_dir, "aud_fixture", self.root)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    # 1. unchanged source snapshot -> audit passes
+    def test_unchanged_source_snapshot_passes(self):
+        self.assertEqual(validator.validate_record(self.record, self.root), [])
+
+    # 2. mutate a frozen source artifact after the audit -> audit fails as stale
+    def test_mutating_source_knowledge_after_the_audit_fails_as_stale(self):
+        path = self.book / "source-knowledge.yaml"
+        path.write_text(path.read_text() + "\n# edited after the audit was written\n", encoding="utf-8")
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(any("STALE AUDIT" in e and "source-knowledge.yaml" in e for e in errors), errors)
+
+    def test_mutating_any_covered_artifact_is_detected(self):
+        for name in validator.SNAPSHOT_FILES:
+            with self.subTest(artifact=name):
+                path = self.book / name
+                original = path.read_text()
+                path.write_text(original + "\n# probe\n", encoding="utf-8")
+                errors = validator.validate_record(self.record, self.root)
+                path.write_text(original, encoding="utf-8")
+                self.assertTrue(
+                    any("STALE AUDIT" in e and name in e for e in errors),
+                    f"a change to {name} was not detected: {errors}",
+                )
+
+    # 3. regenerate the audit snapshot against the changed artifact -> it can pass again
+    def test_regenerating_the_snapshot_after_a_legitimate_change_passes_again(self):
+        path = self.book / "ontology-mappings.yaml"
+        path.write_text(path.read_text() + "\n# a legitimate later correction\n", encoding="utf-8")
+        self.assertTrue(any("STALE AUDIT" in e for e in validator.validate_record(self.record, self.root)))
+
+        refreshed = validator.compute_source_snapshot(self.root, self.knowledge_dir)
+        self.record["source_snapshot"] = {
+            "algorithm": refreshed["algorithm"],
+            "files": refreshed["files"],
+            "combined_digest": refreshed["combined_digest"],
+        }
+        self.assertEqual(validator.validate_record(self.record, self.root), [])
+
+    # 4. missing fingerprint/snapshot metadata -> fails
+    def test_missing_snapshot_fails(self):
+        del self.record["source_snapshot"]
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(any("source_snapshot missing" in e for e in errors), errors)
+
+    def test_snapshot_that_omits_a_required_artifact_fails(self):
+        self.record["source_snapshot"]["files"] = [
+            f for f in self.record["source_snapshot"]["files"]
+            if f["path"] != "operational-bindings.yaml"
+        ]
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(
+            any("does not cover required artifact operational-bindings.yaml" in e for e in errors),
+            errors,
+        )
+
+    def test_deleting_a_snapshot_artifact_fails_clearly(self):
+        (self.book / "visual-evidence-ledger.yaml").unlink()
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(
+            any("snapshot artifact visual-evidence-ledger.yaml is missing" in e for e in errors),
+            errors,
+        )
+
+    def test_wrong_algorithm_is_refused(self):
+        self.record["source_snapshot"]["algorithm"] = "md5-of-something"
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(any("is not 'sha256-of-sorted-path-and-content'" in e for e in errors), errors)
+
+    def test_tampered_combined_digest_is_refused(self):
+        self.record["source_snapshot"]["combined_digest"] = "0" * 64
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(any("internally inconsistent" in e for e in errors), errors)
+
+    # There must be exactly ONE enforced version mechanism.
+    def test_recorded_at_commit_is_informational_and_not_enforced(self):
+        self.record["recorded_at_commit"] = "deadbeef" * 5
+        self.assertEqual(
+            validator.validate_record(self.record, self.root), [],
+            "recorded_at_commit must be informational provenance; the snapshot is the enforced check",
+        )
+
+    def test_snapshot_is_deterministic_and_content_addressed(self):
+        first = validator.compute_source_snapshot(self.root, self.knowledge_dir)
+        second = validator.compute_source_snapshot(self.root, self.knowledge_dir)
+        self.assertEqual(first, second)
+        self.assertEqual([f["path"] for f in first["files"]], sorted(validator.SNAPSHOT_FILES))
+
+    def test_computing_a_snapshot_does_not_modify_the_source(self):
+        before = {
+            name: (self.book / name).read_bytes() for name in validator.SNAPSHOT_FILES
+        }
+        validator.compute_source_snapshot(self.root, self.knowledge_dir)
+        validator.validate_record(self.record, self.root)
+        after = {name: (self.book / name).read_bytes() for name in validator.SNAPSHOT_FILES}
+        self.assertEqual(before, after)
+
+
 class IndependenceRuleTests(unittest.TestCase):
     """The promotion rule: a source id count must not stand in for independent origins."""
 
@@ -201,7 +333,7 @@ class IndependenceRuleTests(unittest.TestCase):
                 "audit_id": f"aud_{name}",
                 "source_id": source_id,
                 "lineage": {
-                    "independence_verdict": "not_independent" if related and any(
+                    "independence_verdict": "not_independent_of_named_sources" if related and any(
                         r["relation"] in validator.DEPENDENT_RELATIONS for r in related
                     ) else "independent_origin",
                     "related_sources_in_corpus": related,
@@ -249,6 +381,23 @@ class IndependenceRuleTests(unittest.TestCase):
         ok, reason = validator.independent_origins_ok("book_a", "book_b", records)
         self.assertFalse(ok)
         self.assertIn("independence_not_established", reason)
+
+    def test_unrecognised_verdict_fails_closed(self):
+        records = self._records(("a", "book_a", []), ("b", "book_b", []))
+        records["a.audit.yaml"]["lineage"]["independence_verdict"] = "probably_fine"
+        ok, reason = validator.independent_origins_ok("book_a", "book_b", records)
+        self.assertFalse(ok, "a verdict outside the controlled vocabulary must not pass")
+        self.assertIn("unrecognised independence_verdict", reason)
+
+    def test_fixtures_use_the_real_controlled_vocabulary(self):
+        records = self._records(
+            ("a", "book_a", [{"source_id": "book_b", "relation": "companion_volume"}]),
+            ("b", "book_b", [{"source_id": "book_a", "relation": "companion_volume"}]),
+        )
+        for record in records.values():
+            self.assertIn(
+                record["lineage"]["independence_verdict"], validator.INDEPENDENCE_VERDICTS
+            )
 
     def test_missing_audit_record_blocks_promotion(self):
         records = self._records(("a", "book_a", []))

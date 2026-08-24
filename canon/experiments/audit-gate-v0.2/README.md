@@ -43,3 +43,7 @@ The findings and the Controller decision brief live in `canon/findings/`:
   source record and points at it by `sk_id`. It never edits it.
 - **The audit is not a quality score.** There is no rank, rating, grade or confidence number
   anywhere in the model, and the validator refuses a record that introduces one.
+- **An audit cannot outlive the thing it describes.** Each record carries a `source_snapshot` — a
+  content fingerprint of the exact frozen artifacts it was written against. The validator recomputes
+  it every run, so a source edited after its audit makes that audit fail rather than quietly keep
+  passing. See `SCHEMA-audit-record-v0.2.md`.

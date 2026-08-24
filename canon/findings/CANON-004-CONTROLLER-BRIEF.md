@@ -1,8 +1,8 @@
 # CANON-004 — Controller brief
 
 **Task:** CANON-004, Post-Extraction Audit Gate v0.2
-**Date:** 25 Aug 2026 · **Branch:** `work/canon-004` · **Base:** `main` at `dc27616`
-**Status:** design and test work complete · **needs_controller_review**
+**Date:** 25 Aug 2026 · **Branch:** `work/canon-004` · **Base:** `main` at `8e99785`
+**Status:** design and test work complete, plus one Controller correction pass · **needs_controller_review**
 **Severity:** `LOCAL` — one Canon-only spec rule. No architectural conflict, no cross-stream change filed.
 
 ---
@@ -17,8 +17,9 @@ SPEC-01 are untouched. No accepted source claim was reinterpreted or rewritten. 
 have a validated audit record, so **adopting this requires no backfill.**
 
 **Decision needed:** ADOPT, ADOPT WITH REDUCTION, REVISE AND RETEST, or REJECT.
-**Recommendation: ADOPT WITH REDUCTION**, cutting the one component that did not earn its place
-(details in "The one thing to cut" below).
+**Recommendation: ADOPT.** The correction pass closed the one real hole in the design — a stale audit
+could previously keep validating after its source had changed — and exposed no further architectural
+problem. The earlier recommendation to cut `deterministic_composition` is withdrawn.
 
 ---
 
@@ -37,7 +38,7 @@ It reads the frozen record and never writes to it. That separation is the whole 
 found that mixing product questions into source extraction distorts the source, so the second look
 has to happen in its own layer, after the first is sealed.
 
-Committed on the branch: the candidate schema, 16 records, a validator and 32 tests.
+Committed on the branch: the candidate schema, 16 records, a validator and 46 tests.
 
 ---
 
@@ -84,23 +85,94 @@ applicable with a stated basis.
 
 ## What it costs
 
-An audit record averages **154 lines** against an average source-knowledge file of 1,590 — about a
-**10 per cent** addition to a book's record, and slightly less than the existing visual-evidence
-ledger. Writing all sixteen required **no source book to be re-opened**; every record was built from
-committed repository evidence. Three of sixteen carry an element the repository could not settle,
-and none escalated to `evidence_insufficient`.
+An audit record now averages **167 lines** against an average source-knowledge file of 1,590 — about
+an **11 per cent** addition to a book's record, and slightly more than the existing visual-evidence
+ledger at 158. **Fourteen of those lines are the machine-generated snapshot; the human-written part
+is unchanged at 154 lines**, so closing the stale-audit hole added no authoring burden. Writing all
+sixteen required **no source book to be re-opened**. Three of sixteen carry an element the repository
+could not settle, and none escalated to `evidence_insufficient`.
 
 ---
 
-## The one thing to cut
+## Corrections applied this pass
 
-`deterministic_composition` as an application consumer fired **once in sixteen books** — on Samara,
-where nine of fourteen remedies are layout operations an engine could execute exactly and none is a
-generative control. The finding is real. One in sixteen is thin, and fifteen records carry a
-`no_current_binding` line that adds nothing. It is the obvious reduction.
+### 1. `deterministic_composition` retained
 
-By contrast `human_workflow` fired as a candidate in **7 of 16** books — the Braintrust, the
-Operating Manual for Not Quitting, Hopkins's keyed-advertisement method — and should stay.
+The previous brief recommended cutting it for firing once in sixteen books. **That inference does not
+hold, and the recommendation is withdrawn.**
+
+Frequency in this corpus measures what these sixteen books happen to teach. It does not measure
+whether the product will need the distinction. The project explicitly anticipates deterministic
+executors for creative-production tasks where an exact operation beats asking a generative model to
+approximate one, and Samara's grid geometry is precisely that class — add a column, hang a character,
+set a measure, all operations a layout engine performs exactly. A corpus weighted towards
+photography, film and persuasion is the wrong instrument for measuring how much layout knowledge
+exists in the world.
+
+Cost of keeping it: one `no_current_binding` line in fifteen records, the same cost every consumer
+carries when it does not apply. No binding was created and no SPEC-04 target type was added.
+
+`human_workflow` also stays — it fired as a candidate in **7 of 16** books (the Braintrust, the
+Operating Manual for Not Quitting, Hopkins's keyed-advertisement method).
+
+### 2. Stale audits now fail, mechanically
+
+**The hole.** An audit describes a source at one moment. The first draft recorded a commit SHA that
+nothing checked, so an accepted source could be edited after its audit and the stale audit would keep
+validating. For a gate meant to block promotion and product use, that is worse than no gate: a
+consumer would be told a source had been audited when the thing audited no longer exists.
+
+**The fix.** Each record carries `source_snapshot` — a SHA-256 content fingerprint of the frozen
+artifacts it was written against, computed over lexicographically sorted paths so it depends only on
+file bytes, never on filesystem order, clock or git state. The validator recomputes it on every run
+and fails if anything moved, naming the file and both digests.
+
+**Why a fingerprint rather than git.** A commit SHA changes on rebase, squash and cherry-pick without
+a byte of the source changing, and does not change at all when a file is edited in a dirty tree.
+Content addressing asks the question actually needed: *are these still the bytes I audited?*
+
+**What is covered — five files, each justified individually** rather than swept in for completeness:
+`source-knowledge.yaml` (sk_refs and the evidence cross-check resolve into it),
+`operational-bindings.yaml` (application fit cites its binding ids),
+`source-concept-systems.yaml` (bindings resolve system refs into it; audit prose cites its fields),
+`ontology-mappings.yaml` (the layer whose promotion the lineage audit governs),
+`visual-evidence-ledger.yaml` (representation integrity is derived from it and nothing else would
+catch a change to it).
+
+**`PROVENANCE.md` is deliberately excluded** — narrative prose, not a machine-consumed
+representation, and the facts the audit takes from it are restated in the audit's own structured
+fields. It stays in the informational evidence basis.
+
+**One version mechanism, not two.** `audited_against_commit` is renamed `recorded_at_commit` and is
+informational only. The validator does not read it, and a test asserts that changing it has no effect
+on validation.
+
+**No refresh tool, deliberately.** A one-command snapshot updater would rubber-stamp the exact
+staleness the field exists to catch. A changed source needs a re-run of the Audit Gate, which
+produces a new snapshot as a by-product.
+
+**Proven on the real corpus, not only fixtures:** appending one comment line to *The Vignelli
+Canon*'s visual ledger turned a clean 16-record run into exactly one error naming the file and both
+digests; restoring it returned the run to clean.
+
+### 3. Test fixtures corrected, and a robustness fix they exposed
+
+The independence fixtures constructed `not_independent`, which is not a schema value; they passed
+only because the promotion function ignored the unrecognised string. Fixtures now use
+`not_independent_of_named_sources`, a test asserts every fixture verdict is in the controlled
+vocabulary, and `independent_origins_ok` now **fails closed** on an unrecognised verdict instead of
+letting a malformed record through.
+
+### 4. Branch synced with current `main`
+
+`origin/main` advanced to `8e99785` when Resources PR #5 merged. Merged cleanly, no conflicts. The
+Resources change touches no file under `canon/` or `tests/`, and none of its semantics were pulled
+into Canon.
+
+### 5. Corpus unchanged
+
+CANON-004 remains fixed to the 16-book CANON-003 corpus. *Master Shots* and *The Conversations* are
+absent from the repository and were not ingested, audited or integrated.
 
 ---
 
@@ -186,8 +258,8 @@ relation or term kind, no Creative IR change, no CI workflow.
   categories and treating the count as a ranking. The corpus contains exactly the trap: *Building a
   StoryBrand* binds best to the product schema and has the weakest support in the corpus. The rule
   that closes this belongs to the consumption layer and is out of scope here.
-- Nothing yet checks that an audit was written against the current version of its source record.
-  `audited_against_commit` is recorded and not verified.
+- The snapshot proves the source *representation* has not moved since the audit. It does not prove
+  the auditor read it correctly — that remains a review question, not a mechanical one.
 - These 16 records were written by one worker. Whether a different worker produces the same record
   is untested.
 
@@ -195,11 +267,24 @@ relation or term kind, no Creative IR change, no CI workflow.
 
 ## Verification
 
-| Instrument | Result |
-|---|---|
-| `canon/validation/validate_canon003_integrated.py` | **0 errors** — 16 books, 505 objects, 54 systems, 417 terms, 53 concepts, 111 bindings |
-| `canon/validation/validate_audit_gate_v02.py` | **0 errors** — 16 records |
-| `tests/` (both suites) | **32 passed** |
+Run fresh from the final PR head, after the corrections and after the `main` sync. These are the
+actual commands and their actual output, not a carry-over from an earlier run.
+
+| # | Command | Exit | Result |
+|---|---|---|---|
+| 1 | `python canon/validation/validate_canon003_integrated.py --root .` | **0** | `error_count: 0` · 16 books, 505 SourceKnowledge objects, 54 systems, 417 terms, 53 concepts, 111 bindings |
+| 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count: 0` · `record_count: 16` |
+| 3 | `python -m pytest tests/ -q` | **0** | **46 passed, 5 subtests passed** |
+
+The corpus counts are byte-for-byte identical to the pre-correction run, which is the expected
+result: the correction pass added audit metadata and changed no frozen source artifact.
+
+**SPEC files confirmed byte-identical to current `main` (`8e99785`):**
+`git diff --stat origin/main -- canon/knowledge/SPEC-01-creative-ir.md
+canon/knowledge/SPEC-03-source-knowledge.md canon/knowledge/SPEC-04-operational-bindings.md
+canon/knowledge/SPEC-05-knowledge-ontology.md` returns empty.
+
+No GitHub Actions workflow was added.
 
 Run with a local `.venv` carrying PyYAML and pytest; no PyYAML is installed system-wide on this
 machine, which is worth knowing before the next session tries to validate anything.

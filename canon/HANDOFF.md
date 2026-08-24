@@ -20,7 +20,10 @@ boundary accepted. CANON-003 stopped at 16 books by Controller decision
 Conversations*) are deferred reserves, not failures. *Thinking with Type* remains blocked on
 structural column interleaving.
 
-**LAST COMPLETED TASK:** `tasks/CANON-004.md` — Post-Extraction Audit Gate v0.2. Deliverables:
+**LAST COMPLETED TASK:** `tasks/CANON-004.md` — Post-Extraction Audit Gate v0.2, plus a Controller
+correction pass on 25 Aug (retain `deterministic_composition`; close the stale-audit hole with an
+enforced `source_snapshot` content fingerprint; correct the independence test fixtures; sync with
+`main` at `8e99785`). Deliverables:
 `findings/CANON-004-audit-gate-design.md`, `findings/CANON-004-CONTROLLER-BRIEF.md`,
 `experiments/audit-gate-v0.2/` (candidate schema + 16 records), `validation/validate_audit_gate_v02.py`,
 `tests/test_validate_audit_gate_v02.py`.
@@ -41,6 +44,9 @@ the single SPEC-05 rule and the procedure step — CANON-004 deliberately does n
 - **Validate with a committed instrument, not a session script.** The integration validator returns
   early on a YAML parse failure, which under-reported one book's term checks; that gap surfaced as 10
   real errors on `main` and was repaired in CANON-004.
+- **An audit record is only valid for the exact bytes it audited.** If any of a book's five
+  machine-consumed artifacts changes, that book's Audit Gate record fails as stale and must be
+  re-run. There is deliberately no snapshot-refresh shortcut.
 - **PyYAML is not installed system-wide on this machine.** Create a local `.venv` (self-ignoring) with
   `pyyaml` and `pytest` before running either validator.
 

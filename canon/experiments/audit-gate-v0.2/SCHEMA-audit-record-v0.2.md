@@ -44,8 +44,22 @@ audit_record_version: v0.2-experimental
 audit_id: aud_<short_source_slug>
 source_id: <the source_id used in the frozen source-knowledge.yaml>
 knowledge_dir: canon/knowledge/current/<dir>
-audited_against_commit: <sha of the frozen record this audit describes>
+recorded_at_commit: <sha>          # INFORMATIONAL ONLY - not enforced. See below.
 audit_status: complete | evidence_insufficient
+source_snapshot:                   # ENFORCED. The single version mechanism.
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: <sha256 of the file's bytes>
+    - path: operational-bindings.yaml
+      digest: <sha256>
+    - path: source-concept-systems.yaml
+      digest: <sha256>
+    - path: source-knowledge.yaml
+      digest: <sha256>
+    - path: visual-evidence-ledger.yaml
+      digest: <sha256>
+  combined_digest: <sha256 over the canonical join>
 evidence_basis_for_this_audit: [<repository paths actually read>]
 source_reopened: false            # true only if the original book had to be opened again
 ```
@@ -54,6 +68,53 @@ source_reopened: false            # true only if the original book had to be ope
 repository record does not settle the audit's questions and the original book would have to be
 re-opened. It is **not** the same as an unwritten audit, and the validator requires an explicit
 reason for it.
+
+### The source snapshot — proving the audit is not stale
+
+An audit record describes a source representation **at one moment**. If that representation later
+changes, the audit is stale. Because this gate blocks cross-source promotion and downstream product
+use, a stale record that keeps validating is worse than no gate at all: a consumer would be told the
+source had been audited when the thing audited no longer exists.
+
+`source_snapshot` closes that. It is a deterministic content fingerprint of the frozen artifacts the
+audit was written against. The validator recomputes it from the files on disk and fails if anything
+has moved.
+
+**How it is computed.** For each covered file, the SHA-256 of its raw bytes. Paths are relative to
+`knowledge_dir` and are processed in **lexicographic order**, so the result depends only on file
+contents — never on filesystem ordering, clock, locale or git state. The `combined_digest` is the
+SHA-256 of the UTF-8 encoding of `"{path}:{digest}\n"` joined over those sorted entries.
+
+Per-file digests are recorded alongside the combined one so the validator can name *which* artifact
+moved rather than only reporting that something did.
+
+**What is covered, and why each file is in.** A file belongs in the snapshot when a change to it
+would falsify something the audit asserts. Not for completeness.
+
+| File | Why the audit depends on it |
+|---|---|
+| `source-knowledge.yaml` | `sk_refs` resolve into it; `evidence_origin` is cross-checked against its `empirical_within_source` characteristics; `source_id` must match it |
+| `operational-bindings.yaml` | `application_fit` findings cite its `binding_id`s |
+| `source-concept-systems.yaml` | bindings resolve `source_system_refs` into it, and audit prose cites system-level fields such as `source_warns_against_isolated_use` and `priority_order` |
+| `ontology-mappings.yaml` | the layer whose `cross_source_concept` promotion the lineage audit governs; audit prose also cites remedy `executable_by` values from it |
+| `visual-evidence-ledger.yaml` | `representation_integrity` is derived from it, and nothing else would detect a change to Area A |
+
+**Explicitly excluded: `PROVENANCE.md`.** It is narrative prose, not a machine-consumed
+representation, and the factual content the audit takes from it — delivery format, page
+addressability, the evidence for each — is restated inside the audit's own fields, where it is
+visible and reviewable. It stays in `evidence_basis_for_this_audit` as informational provenance.
+
+**One version mechanism, not two.** `recorded_at_commit` is informational provenance: it says which
+repository state a human was looking at. The validator **does not read it**, and a test asserts that
+changing it has no effect. `source_snapshot` is the only enforced check. Git history is deliberately
+not the mechanism — a content fingerprint survives rebases, squashes, cherry-picks and worktree
+moves, all of which change a commit SHA without changing a single byte of the audited source.
+
+**There is deliberately no snapshot-refresh tool.** Refreshing a snapshot against changed content
+without re-examining the source would rubber-stamp exactly the staleness this field exists to catch.
+When a source legitimately changes, the correct response is to re-run the Audit Gate for that book,
+which produces a new snapshot as a by-product. `compute_source_snapshot()` is exposed as a function
+for that purpose and for the tests.
 
 ---
 
@@ -392,6 +453,9 @@ Implemented in `canon/validation/validate_audit_gate_v02.py`.
 
 1. `audit_record_version`, `audit_id`, `source_id`, `knowledge_dir`, `audit_status` present.
 2. `source_id` matches the `source_id` in the referenced `source-knowledge.yaml`.
+2a. `source_snapshot` present, using the declared algorithm, covering exactly the five files above,
+    with every declared digest matching the file on disk and the `combined_digest` internally
+    consistent. A missing covered artifact is reported as such, not skipped.
 3. Every `sk_ref` anywhere in the record resolves to an `sk_id` in that frozen file.
 4. Every `bnd_` reference resolves to a `binding_id` in that book's `operational-bindings.yaml`.
 5. All enum values drawn from the fixed lists above.
@@ -413,4 +477,6 @@ Implemented in `canon/validation/validate_audit_gate_v02.py`.
     do not defeat independence are deliberately not symmetric - `shares_publisher_only` is
     uninformative to mirror and `cites_source` is genuinely one-directional.
 14. `independent_origins_ok(a, b)` implements the promotion rule and is exposed for use by any later
-    cross-source promotion check.
+    cross-source promotion check. It **fails closed**: an `independence_verdict` outside the
+    controlled vocabulary is refused rather than passed through, so a malformed record cannot
+    silently qualify for promotion.
