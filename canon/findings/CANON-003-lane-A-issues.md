@@ -266,3 +266,199 @@ batch.
 
 **Proposed only.** None. Recorded so the synthesis does not read absence of comparison as absence
 of disagreement.
+
+---
+---
+
+# Book 7 additions — Freeman, *The Photographer's Eye: A Graphic Guide*
+
+Issues LA-11 onward were observed on book 7. Where book 7 bears on an issue already logged from
+book 6, the earlier entry is updated in place below the new ones.
+
+---
+
+## LA-11 — A converted PDF offers a FALSE page-level affordance, which is more dangerous than having no page at all
+
+**Plain English.** Book 7's PDF was produced by calibre from an ebook. Its 214 A4 pages are the
+converter's, not the publisher's. Rendering one shows a single column of text with the photographs
+dropped in beneath — not the designed spread the author made. The batch inventory had classified
+this source in the group where "a visual pass can recover the actual printed page".
+
+**Books:** 7 (Freeman). **Status:** OBSERVED. **Distinct books:** 1.
+**Layer:** provenance / visual completeness.
+**New or recurrence:** new, and the sharper sibling of LA-02.
+
+**How it was established, rather than assumed.** The book's own internal cross-references. Five
+appear in the section and **every one points elsewhere in this copy**: SQUARE is cited as page 22
+and is at page 29, where page 22 is FRAME-FIT; SYMMETRICAL is cited as `page_52` and is at page 61.
+One reference is a broken hyperlink anchor left in the running text as the literal string
+`page_52`, underscore intact.
+
+**Why it is worse than LA-02.** In book 6 the format is an EPUB: there is no page, the limitation
+announces itself, and no one would claim page-level verification. Here a page **can** be rendered.
+A visual pass reasoning "this is a PDF, therefore I can inspect the page" would record verified
+page-level completeness for a layout that never existed. **The affordance is false rather than
+absent**, and file type alone cannot distinguish the two.
+
+**Consequence if unchanged.** Two things. Provenance: any page number cited from such a file is the
+converter's and citing it as a printed page is a fabrication — this extraction therefore carries
+`page_start: null` throughout. And completeness: the batch's visual-availability classification,
+which drives what each book's visual pass is expected to achieve, is wrong for at least one source
+and was wrong on a check anyone could have run.
+
+**Proposed only, not applied.** Read `/Creator` and `/Producer` during inventory; a converter name
+there means the pagination is not the book's. Where a book contains internal cross-references, they
+are a free consistency check on whether the pagination is the original's.
+
+---
+
+## LA-12 — `observation_unit` is indexed on the wrong dimension for at least one real claim
+
+**Plain English.** SPEC-04 requires every evaluation binding to say what unit must be observed, and
+offers `frame · shot · shot_pair · sequence · whole_asset · asset_set_over_time`. Every one of those
+answers **how many assets you must look at.**
+
+Freeman states a condition of a different kind. Whether a figure included to give a landscape scale
+registers at all depends on the **print size** — one of his two versions "works under one condition:
+It has to be printed big." The same file passes or fails depending on how large it is reproduced.
+
+**Books:** 7 (Freeman). **Status:** OBSERVED. **Distinct books:** 1.
+**Layer:** bindings.
+**New or recurrence:** new.
+
+**What the evidence shows.** This is not a missing value in a list. The vocabulary is indexed on
+observation *scope* and the claim is about observation *scale*. Adding a seventh value to the same
+list would not express it, because the two are different axes.
+
+**Consequence if unchanged.** `whole_asset` was recorded as the nearest available value and marked
+inaccurate in the binding's own limits. An evaluator reading that binding would check the right
+asset at an unspecified size and could reach either verdict.
+
+**Proposed only.** None. One claim in one book is far too thin, and the honest reading is that this
+may be specific to print-reproduced photography. Watch for a second instance in another domain — a
+second would make it structural rather than particular.
+
+---
+
+## LA-13 — `creative.hierarchy` cannot express a traversal — a CANON-002 hypothesis RECURS
+
+**Plain English.** CANON-003 explicitly carried forward the CANON-002 concern that
+`creative.hierarchy` may not express a definite traversal or end, and asked that recurrences be
+watched for. This is a recurrence, and the source produced three instances independently.
+
+`creative.hierarchy` is a ranked list: rank 1, rank 2, rank 3. It says which element matters most.
+Freeman makes three claims that are not about rank at all but about a **path**:
+
+- the two shot, where "the attention plays ping-pong between the two subjects" — it goes, comes back,
+  and goes again;
+- the reveal, where attention lands on one place, lingers, wanders, then discovers a second;
+- the eccentric division, where the eye arrives at the one sharp element and is sent onward to the
+  real subject.
+
+A ranked list can record that the actor outranks the actress. It cannot record that the eye is meant
+to go there **and come back**, which is the whole of what is being claimed.
+
+**Books:** 7 (Freeman). **Status:** OBSERVED. **Distinct books:** 1 in this lane.
+**Layer:** Creative IR fit / bindings.
+**New or recurrence:** **recurrence of a CANON-001/002 carry-in hypothesis.** The batch design asked
+for this specifically, so finding it is the experiment working rather than a surprise.
+
+**One honest qualification.** Two of the three instances — the two shot and the reveal — are devices
+the author explicitly borrows from cinema. So this may be a still-image schema meeting a
+moving-image idea rather than a defect in the field. That distinction matters and cannot be settled
+from one book.
+
+**Consequence if unchanged.** Knowledge about the order and return path of attention has nowhere to
+live. It was recorded as a binding that asserts a gap (`bnd_fre_c003_0005`) rather than a use, so it
+is at least visible; but nothing consumes it and nothing would find it.
+
+**Proposed only.** None. No field was added and none is proposed during the batch.
+
+---
+
+## LA-14 — A third kind of visual loss: the demonstration that PERFORMS the claim
+
+**Plain English.** Freeman's reveal case claims "it takes the eye a moment to slip down to the corner
+to notice it". Looking at the photograph, that is what happens: the bright mausoleums take the
+attention and the tiny white figure has to be hunted for. **The evidence is the delay in the
+viewer's own looking.**
+
+**Books:** 7 (Freeman). **Status:** OBSERVED. **Distinct books:** 1.
+**Layer:** visual completeness.
+**New or recurrence:** new kind, within a family this batch already knows.
+
+**Why it is a different kind.** Every visual loss recorded so far is a loss of **information** — a
+colour stripped by a scan, a section pushed out of order, labels baked into artwork, a page that
+does not exist. Those are all things that could in principle be written down. This cannot. Text can
+report that the effect exists; it cannot produce it, and no fidelity of description would, because
+the evidence IS the experience.
+
+**Consequence if unchanged.** For claims of this kind the extracted object is honest but the
+evidence behind it is unavailable to anything downstream. `visually_demonstrated` is recorded and is
+true, but it means something weaker here than it does for a diagram, and nothing marks the
+difference.
+
+**Proposed only.** None. One book.
+
+---
+
+## LA-15 — Two consecutive books produced opposite repair profiles, and the existing vocabulary held both
+
+**Plain English.** Book 6's remedies were geometric operations a layout engine could execute exactly
+— add a column, hang a character, set a measure. Nine of fourteen carried
+`executable_by: deterministic_composite`. Book 7's are physical actions taken with a camera before
+the shutter opens — move, wait, change the lens, build the set. Ten of twelve carry
+`executable_by: physical_production`, with no generative equivalent.
+
+**Books:** 6 (Samara), 7 (Freeman). **Status:** OBSERVED. **Distinct books:** 2.
+**Layer:** ontology.
+**New or recurrence:** this is **evidence FOR the design**, recorded so the batch is not only a
+fault list. It extends LA-09.
+
+**What the evidence shows.** `executable_by` exists to make the physical-versus-generative gap
+visible. Two consecutive books in one lane, about as unalike as the library allows, landed at
+opposite poles of it plus the deterministic middle, and **neither required a vocabulary addition.**
+A field designed for one distinction turned out to carry three cleanly.
+
+**Consequence.** None needed. Recorded as positive evidence with two distinct books behind it, which
+is more than most entries in this file have.
+
+---
+
+## LA-01 — UPDATED after book 7: section size is a real but SECONDARY confound
+
+The original entry (above) raised the concern that per-book object counts may be measuring chapter
+length rather than source richness. Book 7 tests it almost perfectly, because the two sections are
+nearly the same size.
+
+| | Book 6 — Samara | Book 7 — Freeman |
+|---|---|---|
+| Section | 57 printed pages | 59 converted pages |
+| Words | 14,737 | 5,748 |
+| Objects | **79** | **34** |
+| Objects per page | 1.4 | 0.6 |
+
+Same lane, same frozen method, near-identical page counts, **2.3× difference in objects.**
+
+**Revised status:** OBSERVED, 2 distinct books. **Source shape is the dominant term; section size is
+a real but secondary confound.** Raw counts are not comparable across books, but the differences
+between books are not artefacts of chapter length either. That is a stronger and more useful
+statement than the book-6 entry could support, and it is the kind of conclusion the batch design —
+hold the method fixed, vary the source — was built to produce.
+
+The proposal stands unchanged and unapplied: record section size alongside object count, and compare
+per page.
+
+---
+
+## LA-02 — UPDATED after book 7: "no page" and "false page" are different problems
+
+Book 6 established that an EPUB has no page, so a book that is evidence for itself loses that
+evidence irrecoverably. Book 7 shows the more dangerous variant: a converted PDF **does** render a
+page, and it is the converter's.
+
+**Revised status:** OBSERVED, 2 distinct books, but they are **not the same issue** and should not
+be counted as one recurrence. LA-02 is a permanent, self-announcing limitation. LA-11 is a false
+affordance that a visual pass can walk into while believing it has verified something. Kept separate
+deliberately, so the integrator does not merge them into "ebook formats lose layout" and lose the
+distinction that matters.
