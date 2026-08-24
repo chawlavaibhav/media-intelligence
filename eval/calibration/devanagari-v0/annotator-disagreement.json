@@ -16,6 +16,12 @@
   "identical_transcription": 725,
   "different_transcription": 357,
   "agreement_rate": 0.6701,
+  "contested_partner_audit": {
+    "definition": "B-regions within the IoU threshold of MORE THAN ONE A-region — the only situation in which the superseded method could have double-counted.",
+    "b_regions_examined": 1778,
+    "contested": 0,
+    "why_totals_matched": "With zero contested partners the superseded and corrected methods cannot differ on this corpus. That is a property of this data, NOT evidence that the superseded rule was sound. The adversarial regression in --self-test covers the case this corpus does not contain."
+  },
   "superseded_method": {
     "description": "EVAL-003 first pass: best partner chosen per IndicSTR12 region with NO exclusivity, so one IIIT-ILST region could be counted against several. Retained so the correction is visible.",
     "regions_matched": 1082,

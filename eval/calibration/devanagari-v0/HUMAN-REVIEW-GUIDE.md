@@ -17,10 +17,10 @@ notices, photographed in the street. For each one you write down **exactly what 
 **Two readers do this separately.** You will not see the other reader's answers, and they will not
 see yours. Please do not discuss the items until both passes are complete.
 
-⚠️ **Note on language.** Most items in the current pack are **Marathi**, which is written in the
-same Devanagari script as Hindi. You are being asked to read the **script**, so Marathi items are
-in scope — transcribe them exactly as drawn like any other. If the Controller approves a revised
-composition, the mix may change; the instructions do not.
+**Language.** Every item in this pack is **Hindi-labelled** — 54 of 54. Readers should be
+**Hindi-competent**. If a future pack includes Marathi — the same Devanagari script, but a different
+language — that would need readers with Marathi competence and would be run and reported separately.
+**Being able to read Hindi does not automatically qualify someone to read Marathi.**
 
 The unusual instruction is this:
 
@@ -127,10 +127,11 @@ independent readers on this date, agreed / disagreed"* rather than *"this is wha
 4. Candidate checkers are run against the crops, blind to both readers' answers.
 5. The comparison is made.
 
-**A later, separate and much shorter task** asks someone to confirm that particular altered strings
-really are different from what is visible. **That check is not given to the same reader who
-established the original reading for that item** — otherwise it would be the same person marking
-their own work.
+**A later, separate and much shorter task** asks one of you to confirm that particular altered
+strings really are different from what is visible. **Either reader may do this.** It is safe because
+by then the agreed reference is **frozen** — the check cannot change it. The only question is whether
+a proposed altered string differs from what is agreed and visible; if there is any doubt the item is
+dropped rather than the reference adjusted. We record who did the check.
 
 ---
 

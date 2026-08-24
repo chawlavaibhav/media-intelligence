@@ -60,16 +60,21 @@ always produces a byte-identical manifest.
 
 Starting material: two CVIT / IIIT Hyderabad collections of photographed Indian signage.
 
+**Committed configuration (Controller-approved, 24 Aug 2026):**
+`--overlap-policy admit-once --language-filter hindi --target-n 54`
+
 | Step | Records |
 |---|---:|
 | Labelled source records | 551 |
-| minus records removed because **both copies** of each of the 173 shared hashes are excluded | −346 |
+| minus second copies of the 173 shared hashes (**admit-once**: each shared photograph is kept once) | −173 |
 | minus same-source duplicate records | −3 |
-| **Eligible unique photographs** | **202** |
+| minus records outside the **hindi** language filter | −202 |
+| **Eligible Hindi photographs** | **173** |
+| **Selected** | **54** — all Hindi, 54 distinct hashes |
 
-**Note the arithmetic.** 173 shared *hashes* remove **346 records**, because each shared photograph
-appears as a record in both datasets and both copies are dropped. Writing "551 − 173 − 3" would be
-wrong even though it happens to land near the right number.
+**Note the arithmetic.** Counts are **records**, not hashes. Under the earlier `exclude` policy each
+shared hash removed **two** records (both copies), giving `551 − 346 − 3 = 202` — and zero Hindi.
+Under `admit-once` each shared hash removes only the second copy.
 | Selected across 12 difficulty strata | **54** |
 
 **Only ~12% of the acquired images carry annotations at all** (551 of 4,476). That is a consequence
@@ -181,17 +186,25 @@ in `annotator-disagreement.json`.
 **Caveat:** measured on the overlap set — the images one release reused — which may not be
 representative of the wider pool.
 
-### 3 · The pool currently contains no Hindi at all
+### 3 · Every Hindi photograph is a shared photograph — and the pack is now Hindi-primary
 
-**100% of Hindi-labelled records sit inside the excluded overlap** (173 of 173). The smaller
-dataset's Devanagari folder *is* the larger dataset's Hindi folder, so excluding shared files removes
-every Hindi photograph and leaves a pool that is **53 Marathi + 1 unlabelled**.
+**100% of Hindi-labelled records sit inside the cross-dataset overlap** (173 of 173). The smaller
+dataset's Devanagari folder *is* the larger dataset's Hindi folder. So an `exclude` policy removes
+every Hindi photograph, and the first pack it produced was 53 Marathi + 1 unlabelled with **no Hindi
+at all**.
 
-Deduplication and Hindi coverage are in structural conflict here. Since our production failure is
-Hindi and the checker prompt says "Devanagari (Hindi) text", this is a validity gap rather than a
-sampling detail. Options — including an implemented `--overlap-policy admit-once` that yields
-**19 Hindi / 35 Marathi** while keeping one photograph to one item — are set out in
-`PROPOSED-V0-COMPOSITION.md`. **The default is unchanged pending a Controller decision.**
+**Controller decision, 24 Aug 2026: the primary V0 pack is Hindi-focused.** Shared photographs are
+admitted **once** — one photograph, one item, never counted twice — and only Hindi-labelled items are
+selected. The committed pack is **54 Hindi of 173 eligible Hindi candidates**.
+
+The reason is that the checker prompt and our observed production failure are both Hindi-facing.
+Spending the first human budget on a pack with no Hindi would have bought an avoidable transfer
+assumption.
+
+A result from this pack speaks to **reading Hindi from photographed signage**. It does **not**
+automatically transfer to Marathi or to Devanagari-language use in general. The Marathi stress subset
+is **deferred, not rejected** — see `PROPOSED-V0-COMPOSITION.md` for the options as originally
+presented.
 
 ## What is deliberately held back
 

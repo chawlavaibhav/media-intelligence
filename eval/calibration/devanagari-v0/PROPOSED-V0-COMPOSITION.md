@@ -1,6 +1,17 @@
 # Proposed V0 language composition — for Controller decision
 
-**Task:** EVAL-003 correction pass · **Status: PROPOSAL. Not executed. Default unchanged.**
+**Task:** EVAL-003 · **Status: DECIDED 24 Aug 2026 — retained as the record of the decision.**
+
+> ### Controller decision
+> **The primary V0 pack is Hindi-focused.** Shared photographs are admitted **once**; only
+> Hindi-labelled items are selected. Built and committed: **54 Hindi from 173 eligible**, 54 distinct
+> hashes, configuration `--overlap-policy admit-once --language-filter hindi --target-n 54`.
+>
+> This is **Option B**, narrowed to Hindi only. The **Marathi stress subset (Option C) is deferred,
+> not rejected** — it would need Marathi-competent readers and a separately reported result, and is
+> not part of the primary V0 human spend.
+>
+> The options below are retained as the reasoning that led here.
 
 ---
 

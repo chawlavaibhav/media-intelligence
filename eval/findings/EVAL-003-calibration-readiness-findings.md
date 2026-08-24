@@ -132,12 +132,11 @@ contains 98 separate words. The pipeline therefore selects **one region per phot
 deterministically (largest area, then position, then lexicographic) and records its box, so the task
 put to both reader and checker is a single unambiguous word.
 
-**Deliberately not done: crops were not materialised.** The only image tool available here is macOS
-`sips`, whose crop-offset semantics could not be verified without pixel inspection (no Pillow, no
-numpy). Silently mis-cropping would mean a reader and a checker judging the wrong region — a
-correctness failure invisible in every artifact. The manifest carries the box; the review pack
-renders the crop in-browser from the untouched original; **materialising crops for the checker is
-recorded as a prerequisite the approved run must implement and verify.**
+**Crops are materialised, with proven geometry** *(this paragraph previously said crops were
+deliberately not materialised; that was true of the first pass and is no longer the current state —
+see §11.7)*. `materialise-crops.py` writes one crop per item, and **the reviewer and the checker read
+the same files**, verified by hash across all 54 items. Geometry is proven by a self-test on a
+coordinate-encoded synthetic image, which also caught a real `sips` defect at the image origin.
 
 ---
 
@@ -335,3 +334,51 @@ disk while the script still appeared to succeed. Caught by checking the generate
 field names rather than trusting the run. Restored and re-verified. Recorded because the same class
 of error — a program that reports success while writing nothing — is exactly what the harness
 integrity checks exist to catch elsewhere.
+
+---
+
+## 12 · Finalization pass — 24 Aug 2026
+
+**Controller decision: the primary V0 pack is Hindi-focused.** The correction pass established that
+the `exclude` policy produced a pack with **no Hindi at all**, because all 173 Hindi-labelled records
+are shared photographs. The Controller approved admitting shared photographs **once** and selecting
+Hindi-labelled items only.
+
+**Result — no shortfall:** **173 eligible Hindi photographs, 54 selected, 54 distinct hashes, 54
+Hindi.** A shortfall guard exits non-zero rather than substituting Marathi; it did not fire.
+Arithmetic: `551 − 173 (admit-once) − 3 (same-source dupes) − 202 (language filter) = 173`.
+
+Every Hindi photograph is a shared photograph, so nothing here claims two independent sources for
+these items. The Marathi stress subset is **deferred, not rejected**, and would need Marathi-competent
+readers and a separately reported result.
+
+**Adversarial matching regression added.** §2.1 previously leaned on the real-corpus observation that
+no partners were contested. That is not evidence the matcher is correct — it is evidence this corpus
+never exercised the bug. `build-candidate-pool.py --self-test` now constructs the case the corpus
+lacks: two A-regions both above threshold against, and both preferring, the same B-region. The
+superseded rule matches both; the corrected rule uses that B-region once. Ten assertions, all passing.
+The `0 of 1,778` figure is now computed by `count_contested_partners` and recorded in
+`annotator-disagreement.json`, with an explicit note that zero contested partners is a property of
+this data and not a validation of the superseded rule.
+
+**Stage-4 protocol corrected.** The rule "not checked by the reader who established that item's
+reading" was **impossible**: both readers read every item, so nobody was eligible, and satisfying it
+would have required a third specialist. Withdrawn. **Either reader may perform the altered-target
+check**, because by then the reference is frozen and the check cannot edit or replace it. Doubt drops
+the item; the checker's identity is recorded. No third reader, no extra budget.
+
+**Human time under the two-reader protocol: ≈ 3.5–4.5 hours**, readers **Hindi-competent**.
+
+**Stale current-state prose removed.** Corrected in place: crops-not-materialised in §4; the
+one-reader protocol; the impossible stage-4 rule; "the pool contains no Hindi" as current state; and
+wording implying Hindi competence covers Marathi. Correction history is retained in marked sections
+so the trace survives without leaving a followable obsolete instruction.
+
+**Resources proposal completed** with all three required points, including the locally-paired-record
+counts (551 of 4,476) and the two valid overlap denominators (12.4% of the full source, 98.3% of the
+locally paired subset — consistent, not contradictory). No Resources file was edited.
+
+**Verification:** builder determinism, 54/54 distinct hashes, 54 Hindi, adversarial regression 10/10,
+crop geometry 8/8, crop-hash identity across reviewer and checker 54/54, blind-pack scan clean,
+**27/27 historical checker cases with 0 judgement mismatches**, harness suites green, no absolute
+paths, BSTD untouched at 25,252 files, and no human/API/model/generator work.

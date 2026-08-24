@@ -154,6 +154,126 @@ def region_features(text, box, img_w, img_h, n_regions_in_image):
         "pixel_metrics_state": "not_computed_no_image_library",
     }
 
+# ---------------------------------------------------------------------------
+# Region matching — lifted out of main() so it can be tested directly.
+# ---------------------------------------------------------------------------
+def iou(a, b):
+    ix = max(0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0, min(a[3], b[3]) - max(a[1], b[1]))
+    inter = ix * iy
+    u = (a[2]-a[0])*(a[3]-a[1]) + (b[2]-b[0])*(b[3]-b[1]) - inter
+    return inter / u if u > 0 else 0.0
+
+def match_regions_one_to_one(A, B, threshold):
+    """
+    Strict one-to-one region matching.
+
+    All candidate pairs at or above `threshold` are sorted by descending IoU and accepted
+    greedily; once a region on either side has been used it cannot be matched again. Ties break
+    on (i, j) so the result is deterministic.
+
+    Returns [(i, j, iou)].
+
+    The exclusivity is the whole point: without it a single region on one side can be counted
+    against several regions on the other, inflating both the match count and the apparent
+    agreement. See --self-test for the adversarial case.
+    """
+    pairs = []
+    for i, ra in enumerate(A):
+        for j, rb in enumerate(B):
+            v = iou(ra["box"], rb["box"])
+            if v >= threshold:
+                pairs.append((-v, i, j))
+    pairs.sort()
+    usedA, usedB, out = set(), set(), []
+    for negv, i, j in pairs:
+        if i in usedA or j in usedB:
+            continue
+        usedA.add(i); usedB.add(j)
+        out.append((i, j, -negv))
+    return out
+
+def match_regions_superseded(A, B, threshold):
+    """
+    The superseded method: a partner chosen independently for each A-region with NO exclusivity.
+    Retained and exercised so the correction stays visible and the regression has something to
+    compare against. Returns [(i, j, iou)].
+    """
+    out = []
+    for i, ra in enumerate(A):
+        best, bi = None, 0.0
+        for j, rb in enumerate(B):
+            v = iou(ra["box"], rb["box"])
+            if v > bi:
+                bi, best = v, j
+        if bi >= threshold and best is not None:
+            out.append((i, best, bi))
+    return out
+
+def count_contested_partners(A, B, threshold):
+    """How many B-regions are within `threshold` of more than one A-region.
+
+    This is the quantity that determines whether the superseded method could have double-counted
+    on a given corpus. Computed rather than asserted, so any figure quoted in the findings is
+    reproducible from committed code."""
+    n = 0
+    for rb in B:
+        if sum(1 for ra in A if iou(ra["box"], rb["box"]) >= threshold) > 1:
+            n += 1
+    return n
+
+def _self_test(verbose=True):
+    """Adversarial regression for the matching rule.
+
+    Deliberately constructs the case the real corpus does NOT contain: two A-regions that both
+    exceed the threshold against, and prefer, the SAME B-region. A rule without exclusivity
+    matches both; the corrected rule must use that B-region at most once.
+    """
+    ok = True
+    def check(name, cond, detail=""):
+        nonlocal ok
+        ok &= bool(cond)
+        if verbose:
+            print(f"  {'PASS' if cond else 'FAIL'}  {name}{('  ' + detail) if detail else ''}")
+
+    T = 0.5
+    # --- Case 1: two A-regions contend for one B-region ---------------------------------------
+    A = [{"box": (0, 0, 100, 100), "text": "a1"}, {"box": (5, 5, 105, 105), "text": "a2"}]
+    B = [{"box": (2, 2, 102, 102), "text": "b1"}]
+    sup, one = match_regions_superseded(A, B, T), match_regions_one_to_one(A, B, T)
+    check("two A-regions contend for one B-region: superseded matches both",
+          len(sup) == 2, f"(got {len(sup)})")
+    check("...corrected rule uses that B-region at most once",
+          len(one) == 1 and len({j for _, j, _ in one}) == 1, f"(got {len(one)})")
+    check("...and the contested-partner counter sees it",
+          count_contested_partners(A, B, T) == 1)
+
+    # --- Case 2: the higher-IoU contender wins, deterministically ------------------------------
+    A2 = [{"box": (0, 0, 100, 100), "text": "far"}, {"box": (1, 1, 101, 101), "text": "near"}]
+    B2 = [{"box": (1, 1, 101, 101), "text": "target"}]
+    m = match_regions_one_to_one(A2, B2, T)
+    check("the closer of two contenders is the one matched",
+          len(m) == 1 and m[0][0] == 1 and abs(m[0][2] - 1.0) < 1e-9)
+
+    # --- Case 3: three A vs two B — at most min(|A|,|B|) matches -------------------------------
+    A3 = [{"box": (0, 0, 50, 50)}, {"box": (1, 1, 51, 51)}, {"box": (2, 2, 52, 52)}]
+    B3 = [{"box": (0, 0, 50, 50)}, {"box": (200, 200, 250, 250)}]
+    m3 = match_regions_one_to_one(A3, B3, T)
+    check("matches never exceed min(len(A), len(B))", len(m3) <= 2, f"(got {len(m3)})")
+    check("no B-region reused", len({j for _, j, _ in m3}) == len(m3))
+    check("no A-region reused", len({i for i, _, _ in m3}) == len(m3))
+
+    # --- Case 4: below threshold matches nothing; symmetry sanity -------------------------------
+    A4 = [{"box": (0, 0, 10, 10)}]
+    B4 = [{"box": (9, 9, 19, 19)}]
+    check("pairs below threshold are not matched", match_regions_one_to_one(A4, B4, T) == [])
+    check("identical inputs match fully",
+          len(match_regions_one_to_one(A3, A3, T)) == len(A3))
+
+    # --- Case 5: determinism ---------------------------------------------------------------
+    check("repeated calls are identical",
+          match_regions_one_to_one(A3, B3, T) == match_regions_one_to_one(A3, B3, T))
+    return ok
+
 def _portable(p, repo: Path) -> str:
     """Render a path relative to the repo root so nothing machine-specific is committed. The raw
     corpus is git-ignored and sits wherever a given checkout puts it."""
@@ -187,6 +307,12 @@ def main():
                     help="Resources item manifest, used only to fill image width/height by sha256. "
                          "Default: <repo>/resources/manifests/corpus-pilot-v0.jsonl")
     ap.add_argument("--target-n", type=int, default=54, help="candidates to select (task range 45-60)")
+    ap.add_argument("--self-test", action="store_true",
+                    help="run the adversarial matching regression and exit; touches no corpus")
+    ap.add_argument("--language-filter", default=None,
+                    help="restrict candidates to this distributor language label (e.g. 'hindi'). "
+                         "Devanagari is still identified by SCRIPT; this filter is applied on top, "
+                         "and is how the Controller-approved Hindi-primary V0 pack is built.")
     ap.add_argument("--overlap-policy", choices=("exclude", "admit-once"), default="exclude",
                     help="What to do with photographs present in BOTH CVIT datasets. "
                          "'exclude' (default, EVAL-003 as written): drop them entirely. "
@@ -197,6 +323,12 @@ def main():
                          "— do not switch the default without Controller approval.")
     ap.add_argument("--seed", type=int, default=20260824, help="recorded for provenance; selection is sort-based, not RNG-based")
     args = ap.parse_args()
+
+    if args.self_test:
+        print("Adversarial regression for one-to-one region matching:")
+        ok = _self_test()
+        print("SELF-TEST OK — exclusivity is enforced." if ok else "SELF-TEST FAILED.")
+        raise SystemExit(0 if ok else 1)
 
     corpus = Path(args.corpus_root) if args.corpus_root else (repo / "resources" / "corpus" / "raw")
     out = Path(args.out_dir); out.mkdir(parents=True, exist_ok=True)
@@ -253,6 +385,7 @@ def main():
     # --- build candidates ------------------------------------------------------------------
     seen_sha, candidates, within_source_dupes = set(), [], []
     admitted_overlap = 0
+    language_filtered_out = 0
     for source in CVIT_SOURCES:                       # stable source order
         for img in sorted(per_source[source]):        # stable path order
             sha = hashes[img]
@@ -272,8 +405,14 @@ def main():
                 continue                              # RULE 2: one candidate per distinct file
             seen_sha.add(sha)
 
+            # RULE 3: script, not language. The language filter below is an ADDITIONAL
+            # restriction for the Hindi-primary pack, never a substitute for the script test.
+            lang = source_language_label(img, source)
+            if args.language_filter and lang != args.language_filter:
+                language_filtered_out += 1
+                continue
             regions = per_source[source][img]
-            dev = [r for r in regions if has_devanagari(r["text"])]   # RULE 3: script, not language
+            dev = [r for r in regions if has_devanagari(r["text"])]
             if not dev:
                 continue
 
@@ -300,7 +439,7 @@ def main():
                 "candidate_id": f"dev-v0-{sha[:12]}",
                 "source_id": source,
                 "source_lineage": "CVIT/IIIT-Hyderabad",
-                "source_language_label": source_language_label(img, source),
+                "source_language_label": lang,
                 "source_image_relpath": str(img.relative_to(corpus)),
                 "source_image_sha256": sha,
                 "crop_box_xyxy": chosen["box"],
@@ -332,6 +471,15 @@ def main():
                 if len(selected) >= args.target_n: break
         if not progressed: break
         i += 1
+    if len(selected) < args.target_n:
+        print(f"\nSHORTFALL: asked for {args.target_n} candidates, only {len(selected)} available.")
+        print(f"  eligible pool          : {len(candidates)}")
+        print(f"  language filter        : {args.language_filter or '(none)'}")
+        print(f"  eligible language mix  : "
+              f"{ {c['source_language_label']: sum(1 for x in candidates if x['source_language_label']==c['source_language_label']) for c in candidates} }")
+        print("  Reporting the shortfall rather than substituting another language.")
+        raise SystemExit(3)
+
     for rank, c in enumerate(selected, 1):
         c["selection_rank"] = rank
 
@@ -344,11 +492,6 @@ def main():
     # agreement, NOT a measure of human reading ability, and MUST NOT be used to set an evaluator
     # threshold.
     IOU_THRESHOLD = 0.5
-    def iou(a, b):
-        ix = max(0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0, min(a[3], b[3]) - max(a[1], b[1]))
-        inter = ix * iy
-        u = (a[2]-a[0])*(a[3]-a[1]) + (b[2]-b[0])*(b[3]-b[1]) - inter
-        return inter / u if u > 0 else 0.0
     rev = {hashes[p]: p for p in ilst}
 
     # Deleting these marks is a MECHANICAL Unicode operation. It does NOT establish that two
@@ -360,41 +503,29 @@ def main():
 
     matched_1to1 = agree_1to1 = 0
     matched_greedy = agree_greedy = 0        # superseded method, recomputed for comparison
+    contested_b_regions = 0                  # where the superseded method COULD have double-counted
+    total_b_regions = 0
     disagreements = []
     for p in sorted(ind):
         sha = hashes[p]
         if sha not in cross_overlap: continue
         A, B = ind[p], ilst[rev[sha]]
 
-        # SUPERSEDED (EVAL-003 first pass): a partner was chosen independently for each A-region
-        # with no exclusivity, so one B-region could be counted against several A-regions.
-        # Recomputed here only so the correction is visible rather than silently overwritten.
-        for ra in A:
-            best, bi = None, 0.0
-            for rb in B:
-                v = iou(ra["box"], rb["box"])
-                if v > bi: bi, best = v, rb
-            if bi >= IOU_THRESHOLD and best is not None:
-                matched_greedy += 1
-                if ra["text"] == best["text"]: agree_greedy += 1
+        total_b_regions += len(B)
+        contested_b_regions += count_contested_partners(A, B, IOU_THRESHOLD)
 
-        # CORRECTED: strict one-to-one. All pairs at or above threshold are sorted by descending
-        # IoU and accepted greedily; once a region on either side is used it cannot match again.
-        # Ties break on (i, j) so the result is deterministic.
-        pairs = sorted((-iou(ra["box"], rb["box"]), i, j)
-                       for i, ra in enumerate(A) for j, rb in enumerate(B)
-                       if iou(ra["box"], rb["box"]) >= IOU_THRESHOLD)
-        usedA, usedB = set(), set()
-        for negv, i, j in pairs:
-            if i in usedA or j in usedB: continue
-            usedA.add(i); usedB.add(j)
+        for i, j, v in match_regions_superseded(A, B, IOU_THRESHOLD):
+            matched_greedy += 1
+            if A[i]["text"] == B[j]["text"]: agree_greedy += 1
+
+        for i, j, v in match_regions_one_to_one(A, B, IOU_THRESHOLD):
             ra, rb = A[i], B[j]
             matched_1to1 += 1
             if ra["text"] == rb["text"]:
                 agree_1to1 += 1
             else:
                 disagreements.append({
-                    "sha256": sha, "iou": round(-negv, 3), "box": ra["box"],
+                    "sha256": sha, "iou": round(v, 3), "box": ra["box"],
                     "indicstr12_text": ra["text"], "iiit_ilst_text": rb["text"],
                     "matches_after_selected_diacritic_removal": strip(ra["text"]) == strip(rb["text"]),
                 })
@@ -447,6 +578,17 @@ def main():
         "identical_transcription": agree_1to1,
         "different_transcription": len(disagreements),
         "agreement_rate": round(agree_1to1 / matched_1to1, 4) if matched_1to1 else None,
+        "contested_partner_audit": {
+            "definition": "B-regions within the IoU threshold of MORE THAN ONE A-region — the only "
+                          "situation in which the superseded method could have double-counted.",
+            "b_regions_examined": total_b_regions,
+            "contested": contested_b_regions,
+            "why_totals_matched": "With zero contested partners the superseded and corrected "
+                                  "methods cannot differ on this corpus. That is a property of "
+                                  "this data, NOT evidence that the superseded rule was sound. "
+                                  "The adversarial regression in --self-test covers the case this "
+                                  "corpus does not contain.",
+        },
         "superseded_method": {
             "description": "EVAL-003 first pass: best partner chosen per IndicSTR12 region with "
                            "NO exclusivity, so one IIIT-ILST region could be counted against "
@@ -506,12 +648,18 @@ def main():
                 "the shared photograph is admitted once, so each shared hash removes only the "
                 "second copy — ONE source record"),
             "same_source_duplicate_records_removed": len(within_source_dupes),
+            "language_filter": args.language_filter,
+            "records_removed_by_language_filter": language_filtered_out,
             "eligible_unique_photographs": len(candidates),
             "check": (
-                f"{total_labelled_records} - "
-                f"{records_removed_by_overlap if args.overlap_policy == 'exclude' else records_removed_by_overlap - len(cross_overlap)}"
-                f" - {len(within_source_dupes)} = {len(candidates)}"),
+                f"{total_labelled_records}"
+                f" - {records_removed_by_overlap if args.overlap_policy == 'exclude' else records_removed_by_overlap - len(cross_overlap)} (overlap policy '{args.overlap_policy}')"
+                f" - {len(within_source_dupes)} (same-source dupes)"
+                + (f" - {language_filtered_out} (language filter '{args.language_filter}')" if args.language_filter else "")
+                + f" = {len(candidates)}"),
         },
+        "language_filter": args.language_filter,
+        "eligible_language_labels": {},
         "overlap_policy": args.overlap_policy,
         "overlap_photographs_admitted_once": admitted_overlap,
         "selected": len(selected),
@@ -522,6 +670,9 @@ def main():
         "strata_available": {f"{k[0]}/{k[1]}": len(v) for k, v in sorted(strata.items())},
         "strata_selected": {},
     }
+    for c in candidates:
+        k = c["source_language_label"]
+        summary["eligible_language_labels"][k] = summary["eligible_language_labels"].get(k, 0) + 1
     for c in selected:
         k = f'{c["strata"]["size"]}/{c["strata"]["clutter"]}'
         summary["strata_selected"][k] = summary["strata_selected"].get(k, 0) + 1
@@ -535,7 +686,10 @@ def main():
     print(f"same-source dupes       : {ea['same_source_duplicate_records_removed']}")
     print(f"eligible photographs    : {ea['eligible_unique_photographs']}   [{ea['check']}]")
     print(f"selected                : {len(selected)}")
-    print(f"language labels         : {summary['selected_language_labels']}")
+    print(f"language filter         : {args.language_filter or '(none)'}")
+    print(f"eligible language mix   : {summary['eligible_language_labels']}")
+    print(f"selected language mix   : {summary['selected_language_labels']}")
+    print(f"contested B-regions     : {contested_b_regions} of {total_b_regions}")
     print(f"BSTD opened             : {reserve['src_bstd_devanagari']['opened_by_this_script']}")
     print(f"cross-dataset agreement : one-to-one {agree_1to1}/{matched_1to1} = "
           f"{report['agreement_rate']}  |  superseded greedy {agree_greedy}/{matched_greedy} = "

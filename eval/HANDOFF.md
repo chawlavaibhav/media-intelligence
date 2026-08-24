@@ -113,8 +113,9 @@ result. What it produced, in `eval/calibration/devanagari-v0/`:
   the CVIT lineage. The same repository state always produces a byte-identical manifest.
 - **A blinded reviewer pack** — readers see crop and item ID only. Verified mechanically: no
   Devanagari character appears anywhere in the generated pack. **The protocol uses two independent
-  readers** (≈ 3.5–4.5 h total); a single reader's transcription would silently have become the
-  answer key.
+  Hindi-competent readers** (≈ 3.5–4.5 h total); a single reader's transcription would silently have
+  become the answer key. After both passes are frozen, **either reader** may run the short
+  altered-target check — the reference is frozen by then, so that check cannot alter it.
 - **Materialised crops with proven geometry.** Reviewer and checker read the **same files**, verified
   by hash. A self-test on a coordinate-encoded synthetic image proves crop geometry and found that
   `sips --cropOffset 0 0` silently centre-crops; a verified workaround handles it.
@@ -136,11 +137,15 @@ this handoff claimed otherwise)*: it is **not** human inter-annotator agreement,
 human reading ability, and **not** a ceiling. No evaluator threshold may be derived from it. The
 repository holds no provenance showing the two annotation sets were made independently.
 
-**⚠ The pool currently contains no Hindi at all** — 53 Marathi, 1 unlabelled. All 173 Hindi-labelled
-records sit inside the excluded cross-dataset overlap, because the smaller dataset's Devanagari
-folder *is* the larger one's Hindi folder. Since the failure we hunt is a language-prior failure and
-our production failure is Hindi, this is a validity gap. Options are in
-`eval/calibration/devanagari-v0/PROPOSED-V0-COMPOSITION.md`; **awaiting a Controller decision.**
+**The V0 pack is Hindi-primary — Controller decision, 24 Aug 2026.** All 173 Hindi-labelled records
+are *shared* photographs (present in both CVIT releases), so excluding shared files leaves no Hindi at
+all. Shared photographs are therefore admitted **once** — one photograph, one item, never two — and
+only Hindi-labelled items are selected. Committed pack: **54 Hindi from 173 eligible, 54 distinct
+hashes.**
+
+A result from it speaks to **reading Hindi from photographed signage**. It does **not** transfer
+automatically to Marathi or to Devanagari-language use generally. The Marathi stress subset is
+**deferred, not rejected**, and would need Marathi-competent readers and a separate report.
 
 Earlier: **EVAL-002** (completed, Controller-approved, closed) and **EVAL-001** (completed,
 Controller-approved).
@@ -174,9 +179,10 @@ Earlier: **EVAL-001 — Capability Battery V0 design**, completed and Controller
 
 ## CURRENT TASK / QUEUE
 
-**None.** The EVAL-003 correction pass is complete and awaiting Controller review. **Do not start the
-human calibration** — it needs a composition decision, reader approval and a checker roster first.
-EVAL-004 has not been opened and must not be started without an approved task file.
+**None.** The EVAL-003 **finalization pass** is complete and awaiting Controller review. The
+composition question is now decided (Hindi-primary). **Do not start the human calibration** — it still
+needs reader approval and a checker roster. EVAL-004 has not been opened and must not be started
+without an approved task file.
 
 ---
 
@@ -283,8 +289,9 @@ certify a consistently *wrong* result. Any consistency test needs a fidelity tes
 
 **M1a is now satisfied.** Resources delivered the Devanagari reading material and EVAL-003 built a
 calibration pack from it. What blocks the first real calibration is **human time and a roster**:
-~1.5–2 hours of a Hindi first-language reader for the blind transcription pass, 20–30 minutes to
-confirm altered targets afterwards, then a checker roster and API spend. **None is approved.**
+**≈ 3.5–4.5 hours across two independent Hindi-competent readers** — 1.5–2 h each for the blind
+transcription pass, plus 20–30 minutes for one of them to confirm the altered targets afterwards —
+then a checker roster and API spend. **None is approved.**
 
 
 **Material needed from Resources.** The Hindi test material splits in two, and the two cannot
@@ -304,7 +311,9 @@ substitute for each other:
   joined-letter forms, vowel marks, and the specific letter pairs we have watched models confuse.
 
 **Neither has an owner.** Runs also wait on Controller approval of the model roster and on the
-human-time budget (**≈ 11–15.5 hours, of which 2–4 must be a Hindi first-language reader**).
+human-time budget. Two figures are in play and should not be confused: **≈ 3.5–4.5 hours across two
+readers** for the EVAL-003 Devanagari checker calibration specifically, versus the broader
+**≈ 11–15.5 hours** estimated in EVAL-001 for calibrating *all* V0 instruments.
 
 ---
 

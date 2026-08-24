@@ -13,6 +13,121 @@ results · 0 Registry entries · BSTD reserve untouched.
 
 ---
 
+## FINALIZATION PASS — 24 Aug 2026
+
+All seven finalization items complete. **No blocker remains.**
+
+### Branch sync
+`origin/main` merged into `work/eval` with an ordinary merge commit — **no rebase, squash or history
+rewrite**. Controller files accepted as authoritative; returned Eval work preserved. Branch is now
+current with `main`.
+
+### Adversarial matching regression — added, and it passes
+The one-to-one matcher is lifted out of `main()` into testable functions, and
+`build-candidate-pool.py --self-test` runs a fabricated case the real corpus does **not** contain:
+**two A-regions both above threshold against, and both preferring, the same B-region.**
+
+```
+PASS  two A-regions contend for one B-region: superseded matches both  (got 2)
+PASS  ...corrected rule uses that B-region at most once  (got 1)
+PASS  ...and the contested-partner counter sees it
+PASS  the closer of two contenders is the one matched
+PASS  matches never exceed min(len(A), len(B))
+PASS  no B-region reused / no A-region reused
+PASS  pairs below threshold are not matched
+PASS  identical inputs match fully
+PASS  repeated calls are identical
+```
+
+The real-corpus observation is **no longer used as evidence of correctness**, and the `0 of 1,778`
+figure is now computed in committed code (`count_contested_partners`) and written to
+`annotator-disagreement.json` under `contested_partner_audit`, with an explicit note that zero
+contested partners is a property of this corpus and **not** evidence the superseded rule was sound.
+
+### Hindi-primary V0 pack — built, no shortfall
+
+| | |
+|---|---:|
+| Eligible Hindi-labelled photographs | **173** |
+| **Selected** | **54** |
+| Distinct SHA-256 among the 54 | **54** |
+| Eligible language mix | `{hindi: 173}` |
+| Selected language mix | `{hindi: 54}` |
+
+Configuration: `--overlap-policy admit-once --language-filter hindi --target-n 54`.
+
+Each photograph appears **once**, attributed deterministically to one source record; the two dataset
+names are not treated as independent evidence. A shortfall guard exits non-zero rather than
+substituting another language — it did not fire. Source transcriptions remain provenance metadata,
+hidden from readers and checkers.
+
+**Why admit-once was necessary:** all 173 Hindi-labelled records are shared photographs. Under
+`exclude` there is no Hindi at all.
+
+Arithmetic, in records:
+`551 − 173 (overlap policy 'admit-once') − 3 (same-source dupes) − 202 (language filter 'hindi') = 173`.
+
+### Reviewer qualification and human time
+
+**Two independent Hindi-competent readers.** Every item is Hindi-labelled, so Hindi competence is the
+requirement; the guide states explicitly that reading Hindi does not automatically qualify someone
+for Marathi.
+
+| Stage | Human |
+|---|---|
+| Blind transcription, reader A | 1.5–2 h |
+| Blind transcription, reader B | 1.5–2 h |
+| Freeze, compare, count agreement | 0 |
+| Adjudicate disagreements *(optional)* | 0–30 min |
+| Confirm altered targets | 20–30 min |
+| **Total** | **≈ 3.5–4.5 h across two readers** |
+
+### Stage-4 rule corrected without a third reader
+The impossible rule is withdrawn. **Either of the two readers may perform the altered-target check**,
+because by that stage the reference is **frozen** and the check has no power to edit or replace it —
+it only asks whether a proposed altered string is visibly different from the agreed reference. Doubt
+drops the item rather than adjusting the reference, and the checker's identity is recorded. **No
+third reader, no extra budget.**
+
+### Stale contradictions removed
+Swept and corrected: crops-not-materialised prose in the findings; the one-reader protocol; the
+impossible stage-4 rule in three places; "the pool contains no Hindi" as a current-state claim; and
+wording implying a Hindi reader is automatically competent for Marathi. Historical trace is kept in
+clearly marked correction sections; no obsolete instruction remains followable.
+
+### Resources proposal completed
+`eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md` now carries all three points:
+1. full-scene / multiple-region correction;
+2. **375 IndicSTR12 + 176 IIIT-ILST = 551 locally paired image+annotation records** against 4,476
+   acquired images, with a request to distinguish media acquired from locally usable pairs;
+3. **173 of the 176 locally paired IIIT-ILST records** are byte-identical to an IndicSTR12 file —
+   98.3% of that subset, leaving 3 unique — stated explicitly as a **different denominator** from
+   Resources' 12.4% full-source figure, **consistent rather than contradictory**.
+
+No Resources file was edited; no rights or reacquisition change is sought.
+
+### Verification outputs
+
+| Check | Result |
+|---|---|
+| Builder determinism, Hindi-primary config | byte-identical ✓ |
+| 54 items = 54 distinct hashes | ✓ |
+| Selected language composition | **54 Hindi** ✓ |
+| Adversarial one-to-one regression | 10/10 PASS ✓ |
+| Crop geometry self-test | 8/8 PASS ✓ |
+| Crop/hash identity, reviewer vs checker | 54/54, 0 mismatches ✓ |
+| Blind-pack scan | no Devanagari in pack ✓ |
+| 27 historical checker cases | 27 re-scored, **0 judgement mismatches** ✓ |
+| Malformed per-item inputs + harness suites | selftest, positive, negative all pass ✓ |
+| Absolute machine paths in committed evidence | none ✓ |
+| BSTD reserve | 25,252 files, never opened ✓ |
+| Human / API / model / generator work | none ✓ |
+
+**Remaining blocker: none.** What EVAL-003 cannot do for itself is spend — two readers' time and a
+checker roster with API budget remain Controller decisions.
+
+---
+
 ## What this task was for
 
 Before we can ask "is this AI generator good at Hindi text?", we have to answer a prerequisite:
@@ -31,7 +146,7 @@ EVAL-003 built the package that would answer that — and stopped before it cost
 | 2 | Region matching redone **strictly one-to-one**; old and new both reported (identical: 725/1082; 0 of 1,778 contested) | findings §2.1 |
 | 3 | "convention only" → `matches_after_selected_diacritic_removal`, marks named | findings §2.2 |
 | 4 | Candidate arithmetic restated in **records**: 551 − 346 − 3 = 202 | findings §5 |
-| 5 | Language composition measured: **0 Hindi**; options proposed, default unchanged | `PROPOSED-V0-COMPOSITION.md` |
+| 5 | Language composition measured: **0 Hindi** under the then-current policy; options proposed. **Resolved in the finalization pass — see below** | `PROPOSED-V0-COMPOSITION.md` |
 | 6 | Human protocol → **two independent readers**; ≈ 3.5–4.5 h | run plan, review guide |
 | 7 | Crop materialisation **solved and verified**; found a real `sips` defect | `materialise-crops.py` |
 | 8 | Machine-specific `/Users/...` paths removed from generated metadata | `selection-summary.json` |
@@ -151,7 +266,7 @@ would quietly change what a calibration run measured. Five fixtures cover it.
 | Freeze both, compare, count agreement | 0 | ₹0 |
 | Adjudicate disagreements *(optional)* | 0–30 min | ₹0 |
 | Derive intact/broken targets | 0 | ₹0 |
-| Confirm broken targets differ — **not by the reader who read that item** | 20–30 min | ₹0 |
+| Confirm altered targets differ — **either reader**; the reference is frozen and cannot be edited | 20–30 min | ₹0 |
 | **Run candidate checkers** | 0 | **first API spend** |
 | Score | 0 | ₹0 |
 | **Total** | **≈ 3.5–4.5 hours across two readers** | per-call cost × volume |
@@ -184,9 +299,10 @@ photographed Devanagari."*
 of **up to ~18%**. A checker that genuinely misses one in ten has roughly a **1-in-5 chance** of
 acing 15. Supporting a real "under 5%" claim needs 59 opportunities.
 
-**Also could not say, as the pool currently stands:** anything about **Hindi**. With 0 Hindi items, a
-clean result licenses a claim about **script-general Devanagari reading** only — see the composition
-problem below.
+**Scope of the claim, after the Hindi-primary rebuild:** the pack is **54 Hindi-labelled
+photographs**, so a clean result speaks to **reading Hindi from photographed signage**. It does
+**not** automatically transfer to Marathi or to Devanagari-language use generally — the Marathi
+stress subset is deferred, not rejected.
 
 **And no threshold may be derived from the 67% cross-dataset figure.** That correction stands.
 

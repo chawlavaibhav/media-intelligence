@@ -24,8 +24,9 @@ reported six visibly misspelled signs as correct matches. This run is built to c
 | | |
 |---|---|
 | **Development material** | CVIT lineage — IndicSTR12 + IIIT-ILST, real photographed signage |
-| **Candidate pool** | 54 independent items, built deterministically (`build-candidate-pool.py`) |
-| **Expected usable after rejections** | ~30–45; the pool is oversized so the reader can reject unreadable crops |
+| **Candidate pool** | **54 Hindi-labelled photographs**, from 173 eligible Hindi candidates |
+| **Configuration** | `--overlap-policy admit-once --language-filter hindi --target-n 54` |
+| **Expected usable after rejections** | ~30–45; the pool is oversized so readers can reject unreadable crops |
 | **Unseen reserve** | **BSTD — 25,246 images, never opened.** Different lineage (Bhashini / IIT Jodhpur) |
 
 **Why the reserve exists.** A checker measured only on photography it has already met looks better
@@ -36,9 +37,15 @@ are **98% of everything IIIT-ILST has labelled** — only 3 labelled IIIT-ILST i
 our purposes the development material is effectively one source, and BSTD is the only real
 cross-lineage check.
 
-**Independence of the 54.** Each is a distinct photograph by SHA-256. Files appearing in both CVIT
-datasets are excluded outright; duplicate copies within a source collapse to one item; one region
-per photograph, so the same picture cannot contribute twice.
+**Independence of the 54.** Each is a distinct photograph by SHA-256 — verified: 54 items, 54
+distinct hashes. A photograph present in **both** CVIT releases is admitted **once**, attributed
+deterministically to one source record for provenance; the two dataset names are **not** treated as
+independent evidence about it. Duplicate copies within a source collapse to one item, and one region
+is taken per photograph, so the same picture cannot contribute twice.
+
+**Every Hindi-labelled photograph is a shared one** — all 173 appear in both releases. That is why
+`admit-once` is required to obtain any Hindi at all, and why nothing here claims two independent
+sources for these items.
 
 ---
 
@@ -103,16 +110,27 @@ another real word, or — worse — accidentally produce the *correct* reading o
 would turn a "broken" item into an intact one and corrupt the false-pass count. **Whether an altered
 string genuinely differs from what is visible is a Hindi-language judgement**, so stage 4 exists.
 
-### Stage 4 — Confirm the broken targets **(short human check)**
-Someone confirms, for `broken` items only, that the altered string really is different from what is
-visible. Items failing this check are reclassified or dropped, and that is recorded.
+### Stage 4 — Confirm the altered targets **(short human check)**
 
-**Two ordering rules, both load-bearing:**
-1. This happens **after both stage-1 passes are frozen**, and neither reader is told during stage 1
-   which items will be altered. That is what keeps stage 1 blind.
-2. **The confirmation for a given item must not be done by the same reader who established that
-   item's original reading** — otherwise a person is marking their own work, and a misreading in
-   stage 1 would be silently ratified in stage 4.
+> **Corrected 24 Aug 2026.** An earlier draft said this check must not be done by the reader who
+> established that item's reading. Since **both** readers read **every** item, that left nobody
+> eligible and would have forced a third specialist into the budget. Withdrawn.
+
+**Either of the two readers may perform this check.** It is safe for a structural reason rather than
+a matter of trust: by this stage **the reference is already frozen**, and this check has no power to
+edit or replace it. The only question asked is:
+
+> *Is this proposed altered string visibly different from the agreed reference and the image?*
+
+**Rules:**
+- Runs **only after both stage-1 passes are frozen** and the agreed reference is fixed.
+- Applies only to items that already carry an agreed reference. Items where the readers disagreed
+  never enter the gate set, so they are never altered.
+- **If there is any doubt, drop or reclassify the item.** Never adjust the reference to fit a target.
+- **Record which reader performed the check**, per item.
+- Neither reader is told during stage 1 which items will later be altered.
+
+A third independent adjudicator would be a separate human-time decision, not part of EVAL-003.
 
 Estimated **20–30 minutes**.
 
@@ -191,9 +209,13 @@ That is why the reference is established by our own readers rather than adopted 
 it can judge *generated* Hindi text is a further question — generated text fails differently, often
 looking clean while being semantically wrong. This screen is necessary, not sufficient.
 
-**Language composition.** As currently built the pool is **53 Marathi + 1 unlabelled, 0 Hindi** — see
-`PROPOSED-V0-COMPOSITION.md`. Until that is resolved, a clean result licenses a claim about
-**script-general Devanagari reading**, not about Hindi specifically.
+**Language composition — Controller-approved Hindi-primary pack.** The committed V0 pack is
+**54 Hindi-labelled photographs**, drawn from 173 eligible Hindi candidates.
+
+A clean result therefore licenses a claim about **reading Hindi from photographed signage**. It does
+**not** automatically transfer to Marathi or to Devanagari-language use in general. A Marathi stress
+subset is **deferred, not rejected**; it would need readers with Marathi competence and would be
+reported separately.
 
 ## 5 · Exactly what the next task would spend
 
@@ -204,7 +226,7 @@ looking clean while being semantically wrong. This screen is necessary, not suff
 | 2 · Freeze and compare | 0 | ₹0 | mechanical |
 | 2b · Adjudicate disagreements *(if wanted)* | **0–30 min** | ₹0 | otherwise disagreements are simply excluded from the gate |
 | 3 · Derive targets | 0 | ₹0 | deterministic |
-| 4 · Confirm broken targets | **20–30 min** | ₹0 | not by the reader who read that item |
+| 4 · Confirm altered targets | **20–30 min** | ₹0 | either reader; the reference is frozen and cannot be edited |
 | 5 · Run checkers | 0 | **first API spend** | ~54 crops × N checkers × 3 repeats for the leader |
 | 6 · Score | 0 | ₹0 | mechanical |
 | — | **≈ 3.5–4.5 h total across two readers** | per-call cost × volume | |
