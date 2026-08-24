@@ -46,7 +46,7 @@ def _make_frozen_book(root: Path, name: str, source_id: str, *, empirical: bool 
 def _minimal_record(source_id: str, knowledge_dir: str, audit_id: str, root: Path) -> dict:
     snapshot = validator.compute_source_snapshot(root, knowledge_dir)
     return {
-        "audit_record_version": "v0.2-experimental",
+        "audit_record_version": validator.AUDIT_RECORD_VERSION,
         "audit_id": audit_id,
         "source_id": source_id,
         "knowledge_dir": knowledge_dir,
@@ -118,6 +118,33 @@ class AuditGateRecordTests(unittest.TestCase):
 
     def test_minimal_valid_record_has_no_errors(self):
         self.assertEqual(validator.validate_record(self.record, self.root), [])
+
+    # ── the single adopted record version ───────────────────────────────────────────────────
+    def test_adopted_version_record_passes(self):
+        self.assertEqual(self.record["audit_record_version"], "v0.2")
+        self.assertEqual(validator.validate_record(self.record, self.root), [])
+
+    def test_pre_adoption_experimental_version_is_refused(self):
+        self.record["audit_record_version"] = "v0.2-experimental"
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(
+            any("unsupported audit_record_version 'v0.2-experimental'" in e for e in errors),
+            errors,
+        )
+
+    def test_arbitrary_unsupported_version_is_refused(self):
+        for bad in ("v0.1", "v0.3", "latest", "2", ""):
+            with self.subTest(version=bad):
+                self.record["audit_record_version"] = bad
+                errors = validator.validate_record(self.record, self.root)
+                self.assertTrue(errors, f"version {bad!r} was accepted")
+
+    def test_missing_version_still_fails(self):
+        del self.record["audit_record_version"]
+        errors = validator.validate_record(self.record, self.root)
+        self.assertTrue(
+            any("missing required field audit_record_version" in e for e in errors), errors
+        )
 
     def test_unresolved_sk_ref_is_reported(self):
         self.record["evidence_origin"]["categories"][0]["sk_refs"] = ["sk_does_not_exist"]
@@ -431,6 +458,23 @@ class RealCorpusTests(unittest.TestCase):
         self.assertEqual(report["errors"], [])
 
     # ── CANON-005 promotion: one authoritative home, no second active copy ───────────────────
+    def test_all_sixteen_committed_records_declare_the_adopted_version(self):
+        self.assertEqual(len(self.records), 16)
+        for name, record in self.records.items():
+            with self.subTest(record=name):
+                self.assertEqual(
+                    record.get("audit_record_version"), validator.AUDIT_RECORD_VERSION,
+                    f"{name} does not declare the adopted authoritative version",
+                )
+
+    def test_no_active_record_still_calls_itself_experimental(self):
+        for name, record in self.records.items():
+            with self.subTest(record=name):
+                self.assertNotIn(
+                    "experimental", str(record.get("audit_record_version")),
+                    "an authoritative record must not self-identify as experimental",
+                )
+
     def test_active_records_live_at_the_authoritative_path(self):
         self.assertEqual(validator.RECORDS_SUBPATH, Path("canon/audit/records"))
         self.assertTrue((REPO_ROOT / validator.RECORDS_SUBPATH).is_dir())

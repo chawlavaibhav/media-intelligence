@@ -73,7 +73,7 @@ One file per accepted source, at `canon/audit/records/<knowledge-dir-name>.audit
 Exactly one active record per accepted source; there is no second editable copy anywhere.
 
 ```yaml
-audit_record_version: v0.2-experimental
+audit_record_version: v0.2          # the one adopted version; enforced, see rule 1a
 audit_id: aud_<short_source_slug>
 source_id: <the source_id used in the frozen source-knowledge.yaml>
 knowledge_dir: canon/knowledge/current/<dir>
@@ -485,6 +485,10 @@ Implemented in `canon/validation/validate_audit_gate_v02.py`.
 **Per record**
 
 1. `audit_record_version`, `audit_id`, `source_id`, `knowledge_dir`, `audit_status` present.
+1a. `audit_record_version` is exactly `v0.2`, the single adopted authoritative version. A missing
+    version fails; so does any other value, including the pre-adoption `v0.2-experimental`. There is
+    deliberately no migration or version-negotiation machinery — one authoritative contract exists,
+    and the validator fails closed on anything else (`AUDIT_RECORD_VERSION`).
 2. `source_id` matches the `source_id` in the referenced `source-knowledge.yaml`.
 2a. `source_snapshot` present, using the declared algorithm, covering exactly the five files above,
     with every declared digest matching the file on disk and the `combined_digest` internally

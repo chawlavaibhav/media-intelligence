@@ -62,6 +62,11 @@ SNAPSHOT_FILES = (
 SNAPSHOT_ALGORITHM = "sha256-of-sorted-path-and-content"
 
 # ── controlled vocabularies (see canon/audit/AUDIT-GATE-v0.2.md) ─────────────────────────────
+# The one adopted Audit Gate version. There is deliberately no migration or version-negotiation
+# machinery: exactly one authoritative contract exists, and a record declaring anything else -
+# including the pre-adoption "v0.2-experimental" - is refused rather than tolerated.
+AUDIT_RECORD_VERSION = "v0.2"
+
 AUDIT_STATUS = {"complete", "evidence_insufficient"}
 
 DELIVERY_FORMATS = {
@@ -300,6 +305,14 @@ def validate_record(record: dict[str, Any], root: Path) -> list[str]:
     for field in ("audit_record_version", "audit_id", "source_id", "knowledge_dir", "audit_status"):
         if not _nonempty(record.get(field)):
             errors.append(f"{rid}: missing required field {field}")
+
+    # Fail closed on any version other than the single adopted one.
+    version = record.get("audit_record_version")
+    if _nonempty(version) and version != AUDIT_RECORD_VERSION:
+        errors.append(
+            f"{rid}: unsupported audit_record_version {version!r}; the only authoritative Audit "
+            f"Gate record version is {AUDIT_RECORD_VERSION!r}"
+        )
 
     status = record.get("audit_status")
     if status not in AUDIT_STATUS:

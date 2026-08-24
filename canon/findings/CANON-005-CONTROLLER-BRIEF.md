@@ -28,7 +28,17 @@ Moved with `git mv`, so `git log --follow` reaches the experimental history from
 | From | To | Git |
 |---|---|---|
 | `canon/experiments/audit-gate-v0.2/SCHEMA-audit-record-v0.2.md` | `canon/audit/AUDIT-GATE-v0.2.md` | `R090` — moved, then edited to carry the authoritative header and the gate order |
-| `canon/experiments/audit-gate-v0.2/records/*.audit.yaml` (16) | `canon/audit/records/*.audit.yaml` (16) | **`R100` on all sixteen — byte-identical** |
+| `canon/experiments/audit-gate-v0.2/records/*.audit.yaml` (16) | `canon/audit/records/*.audit.yaml` (16) | moved, then **one line changed in each** — see below |
+
+**The only content change to each promoted record is its version marker**, from
+`audit_record_version: v0.2-experimental` to `audit_record_version: v0.2`. That was a Controller
+correction: a record living at an authoritative path must not self-identify as experimental. Every
+audit finding, reference, snapshot digest, category, consumer outcome and lineage entry in all
+sixteen records is otherwise untouched — the diff is exactly one line per file, 16 lines in total.
+
+An earlier draft of this brief claimed the record moves were `R100` / byte-identical. That was true
+of the move itself and is **no longer true** after the version correction, so the claim is withdrawn
+rather than left standing.
 
 `canon/experiments/audit-gate-v0.2/` now contains **only** a README, rewritten as a historical
 pointer: it states plainly that nothing there is active, maps each old path to its new one, and
@@ -116,7 +126,7 @@ vocabularies, the anti-score rule, evidence-origin consistency against the froze
 `empirical_within_source`, complete application-fit coverage, pairwise lineage, fail-closed
 independence verdicts, stale-audit snapshot checks, and the 16-source coverage check.
 
-**Tests were added, not weakened** — 46 → 52, plus 37 subtests. The six new ones guard the promotion
+**Tests were added, not weakened** — 46 → 58, plus 74 subtests. Six guard the promotion
 itself: the authoritative path is where the validator looks; no duplicate records remain under the
 retired path; a duplicate that reappears is reported as an error; the adopted method document exists
 and declares itself authoritative; every record still carries a snapshot over the adopted artifact
@@ -124,6 +134,38 @@ set; all seven consumers survive in the vocabulary and in every record.
 
 The validator also gained a repository-level check: if any `*.audit.yaml` reappears under
 `canon/experiments/audit-gate-v0.2/records/`, the run fails with `duplicate active records`.
+
+---
+
+## 4a. Controller correction — the authoritative version marker
+
+`canon/audit/AUDIT-GATE-v0.2.md` declares itself authoritative, but its record example and all 16
+active records still said `audit_record_version: v0.2-experimental`, and the validator only checked
+that the field existed. An authoritative record must not describe itself as experimental, and a gate
+that blocks downstream consumption should not accept a version it does not support.
+
+Applied:
+
+- **`audit_record_version: v0.2`** in the normative example and in all 16 active records.
+- **`AUDIT_RECORD_VERSION = "v0.2"` in the validator**, enforced and failing closed. A missing
+  version still fails; so does any other value, including the pre-adoption `v0.2-experimental`.
+- **No migration or version-negotiation machinery**, deliberately. Exactly one authoritative contract
+  exists; a second version is a decision for a future task, not a mechanism to build in advance.
+- **Rule 1a** added to the normative validation rules so the contract is documented, not only coded.
+
+Historical CANON-004 findings and task text were **not** rewritten. They accurately describe the
+experimental phase, and git history preserves that these records originated as `v0.2-experimental`.
+The active records describe their current authoritative contract; the history describes how they got
+there.
+
+Six regression tests cover it: the adopted version passes; `v0.2-experimental` is refused by name; an
+arbitrary unsupported value is refused (parametrised over `v0.1`, `v0.3`, `latest`, `2`, empty); a
+missing version still fails; all 16 committed records declare `v0.2`; and no active record
+self-identifies as experimental.
+
+Source snapshots did **not** change and did not need to. They fingerprint the frozen source artifacts
+under `canon/knowledge/current/`, not the audit record itself, so editing a record's own version
+marker cannot invalidate them — and all 16 still validate.
 
 ---
 
@@ -140,7 +182,7 @@ because a commit that records its own SHA cannot exist.
 |---|---|---|---|
 | 1 | `python canon/validation/validate_canon003_integrated.py --root .` | **0** | `error_count = 0` · 16 books, 505 SourceKnowledge objects, 54 systems, 417 terms, 53 concepts, 111 bindings |
 | 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count = 0` · `record_count = 16` · `records_path = canon/audit/records` |
-| 3 | `python -m pytest tests/ -q` | **0** | **52 passed, 37 subtests passed** |
+| 3 | `python -m pytest tests/ -q` | **0** | **58 passed, 74 subtests passed** |
 
 Corpus counts are identical to the task-base baseline, which is the expected result for a promotion
 that moved files and changed no content.
@@ -155,7 +197,8 @@ that moved files and changed no content.
 | only authoritative spec changed is SPEC-05 | ✅ `git diff --name-only` over SPEC-01…SPEC-05 returns SPEC-05 alone |
 | SPEC-01, SPEC-03, SPEC-04 byte-identical to task base | ✅ `git diff --stat` empty (SPEC-02 also unchanged) |
 | no source-knowledge / system / binding meaning changed | ✅ `git diff --stat 57395a1 -- canon/knowledge/current/` empty |
-| record files unchanged apart from the move | ✅ all 16 renames are `R100` |
+| record content unchanged apart from the version marker | ✅ `git diff` shows exactly 1 changed line per record, 16 total: `v0.2-experimental` → `v0.2` |
+| all 16 active records declare the adopted version | ✅ `audit_record_version: v0.2` in every one; validator refuses any other value |
 | no GitHub Actions workflow added | ✅ no `.github` directory exists |
 | no new source ingested | ✅ no *Master Shots*, *The Conversations* or any other new material |
 

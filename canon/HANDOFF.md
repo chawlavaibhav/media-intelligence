@@ -19,7 +19,7 @@ them.
 | What | Where |
 |---|---|
 | Normative procedure and schema | `canon/audit/AUDIT-GATE-v0.2.md` |
-| Active records — exactly one per accepted source | `canon/audit/records/*.audit.yaml` (16) |
+| Active records — exactly one per accepted source | `canon/audit/records/*.audit.yaml` (16), all `audit_record_version: v0.2` |
 | Validator | `canon/validation/validate_audit_gate_v02.py` |
 | Tests | `tests/test_validate_audit_gate_v02.py` |
 | Experiment history — pointer only, nothing active | `canon/experiments/audit-gate-v0.2/README.md` |
@@ -32,6 +32,10 @@ cross-source promotion, downstream product/application use, or Canon-consumption
 remains in the repository as source evidence throughout; the gate governs use, not worth.
 
 All **16** currently accepted books have an active, validating audit record.
+
+**One adopted record version: `v0.2`.** The validator fails closed on anything else, including the
+pre-adoption `v0.2-experimental`. There is no migration or version-negotiation machinery, and adding
+a second version is a Controller decision, not something to build in advance.
 
 **CURRENT APPROVED DECISIONS:** Audit Gate v0.2 adopted 25 Aug 2026 and authoritative; the only
 authoritative spec it changed is SPEC-05 Governance rule 5. `deterministic_composition` and
