@@ -1,0 +1,1372 @@
+# CANON-003 book 12 (Lane B) — Michael Ondaatje, "The Conversations: Walter Murch and the Art of
+# Editing Film" (2002). THIRD CONVERSATION, complete. Fresh SPEC-03 extraction under the CANON-001
+# V0 granularity rule, unchanged. Visual completeness: not_verified_page_level (EPUB; see ledger).
+#
+# SECTION RATIONALE: one complete conversation — the source's own unit. Each chapter is one meeting
+# in one place on one day; this one is New York, December 2000, in a SoHo loft, and it runs from
+# "Editing The Conversation" through "The Most Characteristic Angle". It is contiguous, self-
+# contained, and it is the smallest complete unit the source itself defines. Nothing was taken from
+# elsewhere in the book, and the Introduction — which is Ondaatje's own essay rather than
+# conversation — was read only to establish the source's identity and form, not for claims.
+#
+# ═══ THIS SOURCE DOES NOT TEACH THE WAY A TEXTBOOK TEACHES, AND HAS NOT BEEN MADE TO ═══
+#
+# It is an interview. Nothing here is numbered, ranked, defined or summarised. Claims arrive inside
+# anecdotes about particular films, are frequently proposed by the interviewer and assented to by the
+# subject, and are as often abandoned as concluded. Three consequences for this extraction:
+#
+#   1. ATTRIBUTION IS RECORDED IN PROSE BECAUSE THE SCHEMA HAS NOWHERE ELSE TO PUT IT. SPEC-03 has
+#      source_id for the work and no field for a SPEAKER. In a two-voice source that matters: a claim
+#      Ondaatje proposes and Murch answers "Mm-hm" to is weaker evidence than one Murch states
+#      unprompted. Every object below names its speaker in the claim text and quotes with the
+#      source's own "O:"/"M:" markers in source_terms. Recorded as LB-15, not solved by adding a
+#      field.
+#
+#   2. MANY PASSAGES YIELD NO OBJECT AT ALL, AND THAT IS CORRECT. Long stretches are film history,
+#      biography, production gossip and literary comparison. They are not craft knowledge and have
+#      not been converted into any. Where Murch describes what he did on one film without asserting
+#      that it generalises, the specific act is recorded as an EXAMPLE inside an object whose claim
+#      the source actually makes — never promoted into a principle he did not state.
+#
+#   3. HEDGES AND ABANDONMENTS ARE PRESERVED. "I don't know whether love is the right word."
+#      "Curiously, I wasn't consciously aware of this when I was working on the film." "It is and it
+#      isn't." These are recorded in source_uncertainty rather than tidied away, because in a
+#      transcript the hedge is often the most accurate part of the claim.
+
+source_id: ondaatje_conversations_third_conversation
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# EDITING THE CONVERSATION
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_conv_c003_0001
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: When you have restricted material you're going to have to restructure things from the original intent, with sometimes felicitous juxtapositions."
+    - "M: So from the beginning we couldn't structure it the way the screenplay called for."
+  concept_label: restricted_material_forces_restructuring_away_from_original_intent
+  label_origin: extractor_assigned
+  claim: >
+    Murch's claim, from the case of a film ten days of whose material was never shot: when the
+    available material is restricted, the editor must restructure away from the original intent, and
+    the juxtapositions that result are sometimes felicitous. The shortfall is not merely absorbed —
+    it changes the shape of the film.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "a production that did not shoot all of its script"
+  caveats:
+    - text: "Murch reports the director's instruction as the origin of the approach — \"let's just cut what we have together and see if we can find a way to compensate for that missing footage\" — so the method was licensed from above rather than chosen by the editor"
+      origin: source_stated
+    - text: "\"sometimes felicitous\" is the whole of the claim's optimism; the source does not say how often, or how one would tell a felicitous juxtaposition from damage"
+      origin: extractor_observed
+  source_stated_problems:
+    - "about fifteen pages of script material that were not shot"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the park scene, whose approach material was never filmed, preserved by reframing it as a dream of Harry's", figure_ref: null}
+      - {description: "one additional shot filmed in postproduction — a hand pulling a reel of tape — which created the idea of Meredith as an agent of the Corporation and, Murch says, clarified and shaped the whole story", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0002, note: "reframing a scene's status is one such restructuring"}
+    - {relation: demonstrated_together_with, target: sk_conv_c003_0003, note: "costume consistency is what made the restructuring physically possible"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Editing The Conversation'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0002
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: Because since we had no fabric with which to knit it into the reality of the film, it floated for a while, like a wild card, until we got the idea of making it a dream of Harry's, which seemed to be the way to preserve it within the film"
+  concept_label: reframing_a_scenes_ontological_status_can_preserve_unusable_material
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of a specific solution: a scene that cannot be connected to the film's reality —
+    because the material that would have led into it does not exist — can be preserved by changing
+    what kind of thing it is, in this case by making it a character's dream.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The scene lacked the fabric to be knitted into the film's reality. Reclassifying it as a dream
+      removes the requirement that it connect causally to what surrounds it.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "a scene that cannot be connected to the surrounding narrative"
+  caveats:
+    - text: "recorded as a specific solution rather than as a general technique, because Murch does not claim it generalises. He describes what was done to one scene, in the first person plural, in the past tense."
+      origin: extractor_observed
+    - text: "the source's own image for the interim state — the scene \"floated for a while, like a wild card\" — is preserved because it describes an editorial condition the extraction has no other vocabulary for: material held in the film but not yet placed"
+      origin: extractor_observed
+  source_stated_problems:
+    - "no fabric with which to knit it into the reality of the film"
+  source_stated_remedies:
+    - "make it a dream"
+  examples:
+    positive:
+      - {description: "Harry's confrontation with Ann in the park, shot without the bus-chase material that led to it, reframed as a dream sequence", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0001, note: "one restructuring under restricted material"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Editing The Conversation'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0003
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: if a character keeps the same clothes, you can put a scene in a different place and it doesn't stand out"
+    - "M: people don't change clothes in real life as often as they do in film"
+    - "M: it's amazing how consistent you can make somebody's costume and have it not stand out"
+  concept_label: costume_consistency_buys_freedom_to_move_scenes
+  label_origin: extractor_assigned
+  claim: >
+    Murch, reporting a method he attributes to Coppola: keeping a character in the same clothes for
+    most of a film lets the editor move a scene to a different place in the structure without it
+    standing out. Frequent costume changes lock filmmakers into a more rigid scene structure. Two
+    reasons are given — that people change clothes less often in life than film shows, and that an
+    audience experiencing two hours of screen time will subconsciously accept a longer stretch in one
+    costume than the story's timeline would allow. The freedom ends where the story makes the issue
+    overt: a soaking, or a different social occasion a week later, forces a change.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Costume continuity is what pins a scene to a position in the timeline. Remove the pin and the
+      scene becomes movable. The audience's tolerance comes from their own two-hour experience rather
+      than from the story's calendar.
+  scope:
+    domain_discussed_by_source: [film_editing, film_production, costume]
+    conditions: "narrative film where the story spans days or longer"
+  caveats:
+    - text: "attributed by Murch to Coppola, developed on other films, and called \"quite an accurate observation\" — so this is Murch endorsing someone else's method rather than asserting his own"
+      origin: source_stated
+    - text: "Murch also identifies why the opposite happens: a costume department \"interested in showing what it can do — which is only natural\" will change clothes on the smallest pretext. The obstacle he names is departmental incentive, not craft judgement."
+      origin: extractor_observed
+    - text: "this is a PRODUCTION decision that determines what is possible in EDITING. It is one of the few places in the chapter where a claim crosses that boundary explicitly, and the direction is that the earlier department constrains the later one."
+      origin: extractor_observed
+  source_stated_problems:
+    - "that locks filmmakers into a more rigid scene structure"
+  source_stated_remedies:
+    - "keep a character in the same costume so scenes can be repositioned"
+  examples:
+    positive:
+      - {description: "Harry Caul almost always in the same transparent raincoat and crepe-soled shoes", figure_ref: null}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_conv_c003_0001, note: "what made the restructuring possible in practice"}
+    - {relation: specialises, target: sk_conv_c003_0004, note: "one instance of film's forced consistency"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Editing The Conversation'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0004
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "O: Film—even more than theatre, I think—insists on a unity, in some odd way. Not just in costume or location but even in sound."
+    - "O: if a different, distinct sound or room tone is suddenly introduced, unless it's explained or established it can appear inexplicably foreign. There's a forced consistency in film."
+    - "M: Right, which is necessitated by the fact that films are shot out of sequence."
+  concept_label: film_insists_on_a_forced_consistency_because_it_is_shot_out_of_sequence
+  label_origin: extractor_assigned
+  claim: >
+    A claim proposed by Ondaatje and assented to by Murch: film, more than theatre, insists on a
+    unity — of costume, of location, of sound — such that an unexplained or unestablished difference
+    reads as inexplicably foreign. Murch's addition is the cause: this forced consistency is
+    necessitated by films being shot out of sequence.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because material is gathered out of order and across time, consistency has to be imposed rather
+      than inherited. Anything inconsistent therefore reads as an error rather than as variation.
+  scope:
+    domain_discussed_by_source: [film_editing, filmmaking]
+    conditions: "narrative film"
+  caveats:
+    - text: "SPEAKER ATTRIBUTION MATTERS HERE. The substantive claim is the interviewer's; Murch's contribution is a one-word agreement plus a causal explanation. Recorded as an explicit source claim because Murch affirms it and extends it, but it is not evidence that Murch would have volunteered it."
+      origin: extractor_observed
+    - text: "the comparison with theatre is asserted by Ondaatje and not examined by either speaker"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it can appear inexplicably foreign"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0003, note: "costume consistency is one case of it"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Editing The Conversation'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0005
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: As an experiment we divided the scene in two."
+    - "M: Now we have the second half of the scene where he uncovers the fateful line—which now has greater meaning in this new context."
+    - "M: This structure allows the audience to follow the train of events more clearly."
+  concept_label: splitting_a_scene_and_delaying_its_second_half_can_make_a_plot_legible
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of a structural repair: a scene in which a character both performs a routine task
+    and makes a crucial discovery was divided in two, with an intervening event placed between the
+    halves. The delayed discovery then arrives in a context that gives it greater meaning, and the
+    audience can follow the sequence of events more clearly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The intervening event — a stranger seeming a little too anxious to take the tape — gives both
+      the character and the audience pause, which supplies the motive for the second half and loads
+      the discovery with a significance it did not have when it followed immediately.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "a plot audiences are failing to follow"
+  caveats:
+    - text: "Murch calls it \"an experiment\", and reports that many test screenings had left audiences \"completely flummoxed\" before the problem was even identified. He states plainly: \"it took us some time to realize that there was a problem and then figure out what to do about it.\""
+      origin: source_stated
+    - text: "this is the chapter's clearest instance of an editorial change validated by audience response rather than by principle, and the validation is informal — screenings where people were confused, then were not"
+      origin: extractor_observed
+  source_stated_problems:
+    - "audiences were completely flummoxed"
+    - "hard for them to understand ... the twists of this particular situation"
+  source_stated_remedies:
+    - "divide the scene in two and place an intervening event between the halves"
+  examples:
+    positive:
+      - {description: "Harry decoding the tape: routine work first, then delivery to the Director's anxious assistant, then a return to the studio where the fateful line is uncovered", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0001, note: "restructuring in service of legibility"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Editing The Conversation'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0006
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: if the balance shifted ever so slightly towards the murder-mystery aspect, our test audiences became impatient with the character-study parts: they seemed unnecessary"
+    - "M: On the other hand, if we stayed more with the characters, the murder mystery was so partial that it seemed unnecessary."
+    - "M: The metal of character study and the metal of murder mystery don't easily melt together."
+  concept_label: two_incompatible_registers_make_each_other_look_unnecessary
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of a structural instability: in a film alloying a character study with a genre
+    plot, shifting the balance slightly toward either one made the other read as unnecessary to test
+    audiences. The failure was symmetrical, and the balance point was, in his phrase, a knife-edge
+    alchemy between two elements that do not naturally flow together — copper and tin make bronze
+    easily, he says, but this was something else.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "a film combining two registers an audience reads differently"
+  caveats:
+    - text: "Murch scopes the observation to \"getting the structure of that film as right as we ever got it\", which concedes the balance was never fully achieved"
+      origin: source_stated
+    - text: "the evidence is test-audience impatience, reported without numbers or method. It is nonetheless the closest thing to an empirical observation in the chapter, and its shape — the same intervention failing in both directions — is what makes it more than an anecdote."
+      origin: extractor_observed
+    - text: "the source names a specific cause for the asymmetric difficulty: the murder mystery was deliberately left partial, because the director refused to work out the crime in case knowing it obliged him to shoot it"
+      origin: source_stated
+  source_stated_problems:
+    - "they seemed unnecessary—Get rid of that!"
+    - "it seemed like something chosen by the filmmakers to beef up"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "Editing The Conversation"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Editing The Conversation'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# THE INVISIBLE PARTNER — music
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_conv_c003_0007
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: music seems to function best when it channels an emotion that has already been created out of the fabric of the story and the film"
+  concept_label: music_channels_an_emotion_the_film_has_already_created
+  label_origin: extractor_assigned
+  claim: >
+    Murch's general claim about film music: it functions best when it channels an emotion the story
+    and the film have already created, rather than supplying one. He notes he has said it before —
+    "As I said" — so it is a position he holds rather than an observation about the case at hand.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_music]
+    conditions: "any scored film"
+  caveats:
+    - text: "\"seems to\" and \"best\" are both hedges; this is stated as a tendency, not a rule"
+      origin: source_stated
+    - text: "no test is given for whether an emotion has already been created, so the claim identifies a failure mode without supplying a way to check for it in advance"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "five or six minutes of a scene with no music but what is on the tape, until the moment the character realises the tape's meaning — then the piano enters", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0010, note: "the failure when music comments rather than channels"}
+    - {relation: qualified_by, target: sk_conv_c003_0009, note: "source music works by a different route"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, anecdotal, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Invisible Partner"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Invisible Partner'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0008
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: How much better if the music is present at the birth of the film, born along with the screenplay, the two of them interweaving through the process of shooting and post-production"
+    - "M: at that stage you really can't change the fundamental nature of the music. Nor has the music had an opportunity to shape the film."
+  concept_label: music_written_before_shooting_can_shape_the_film_music_added_late_cannot
+  label_origin: extractor_assigned
+  claim: >
+    Murch's argument about when music should be written. If the composer works from the screenplay
+    before shooting, the themes exist during production: actors can hear the colouration a scene will
+    carry and need not act it, and the editor can place music while cutting, with feedback running
+    between script, music and film so each nourishes the others. If music arrives at the end — the
+    usual practice — the only available responses are to accept it, reject it, or move it; its
+    fundamental nature cannot be changed and it has had no opportunity to shape the film. Murch says
+    music thrown out late is often thrown out for this reason.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Influence requires time and mutual exposure. Music present from the screenplay stage
+      participates in the decisions of shooting and cutting; music delivered after those decisions
+      can only be laid over them.
+  scope:
+    domain_discussed_by_source: [film_editing, film_music, film_production]
+    conditions: "any scored narrative film"
+  caveats:
+    - text: "Murch conditions his recommendation — \"I recommend it if the director and the composer have a good relationship\" — and reports being surprised to learn the method was unusual"
+      origin: source_stated
+    - text: "his image for the late alternative is unusually contemptuous for this source and is preserved because it is the argument: \"the music guy comes in all suited up with a big spray gun and blasts it red!\" and, for the panic remedy, \"like putting out an oil fire with dynamite\""
+      origin: extractor_observed
+    - text: "this is a claim about PROCESS ORDER rather than about any property of the finished work, and it is the second such claim in the chapter — the first being costume consistency. Both say an earlier decision determines what is possible later."
+      origin: extractor_observed
+  source_stated_problems:
+    - "the music is almost spray-gunned on to the film"
+    - "the music sometimes ends up being thrown out—because it wasn't given a chance to grow with the film"
+  source_stated_remedies:
+    - "give the composer the script before shooting and let the themes exist during production"
+  examples:
+    positive:
+      - {description: "David Shire given the screenplay long before shooting and asked to treat it as a strange kind of musical; the themes then played to the actors during shooting so they could hear the scene's colouration and not have to act it", figure_ref: null}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_conv_c003_0003, note: "the other claim in which an earlier department's decision determines later freedom"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Invisible Partner"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Invisible Partner'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0009
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: That's the great power of source music—music that comes from within the scene"
+    - "M: they are insulated from feeling overtly manipulated musically because the sounds are explained by the scene"
+    - "M: It sneaks past their immune system, so to speak. Whereas a musical score doesn't. It has to pass through some sort of blood/brain barrier."
+  concept_label: source_music_avoids_the_audiences_manipulation_defence
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of why music originating inside a scene — an orchestra shown playing, a radio, a
+    record player — works differently from a score. Because the scene explains the sound, the
+    audience is insulated from feeling musically manipulated: it reads as an accident of the
+    filming, not as commentary on the subtext, even though it is commentary. A score is perceived as
+    a new voice entering, and the viewer repositions slightly on hearing it. Murch says sound effects
+    work the same way, and that both aim at the ideal of the lucky accident.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attribution governs the defence. Sound the audience can attribute to the world of the scene is
+      not experienced as authored, so it is not resisted. Sound with no in-world source is
+      experienced as an authorial voice and triggers a slight repositioning.
+  scope:
+    domain_discussed_by_source: [film_editing, film_music, sound_design]
+    conditions: "any music or effect whose origin can be located within a scene"
+  caveats:
+    - text: "Murch immediately reports playing against his own principle: in The English Patient a piece was set up to be heard as score and then revealed to be a record playing in the scene, which he says has \"almost the opposite\" effect to the one he has just described"
+      origin: source_stated
+    - text: "he bounds it himself: \"If you overuse it, then it becomes predictable and it's not so welcome anymore.\" Recorded as sk_conv_c003_0011."
+      origin: source_stated
+    - text: "the mechanism is an unexamined metaphor — an immune system, a blood/brain barrier. It is doing real explanatory work and it is not evidence."
+      origin: extractor_observed
+  source_stated_problems:
+    - "you recognize that you are now being manipulated musically—and you reposition yourself slightly"
+  source_stated_remedies:
+    - "give the music or effect a visible origin inside the scene"
+  examples:
+    positive:
+      - {description: "Benny Goodman heard as score, then revealed as a record Caravaggio is playing — the transition Murch describes as water vapour condensing to liquid", figure_ref: null}
+      - {description: "a piano detuned to imply months of exposure to the weather, and a deliberately less accomplished performance, so the playing stays plausible for the character", figure_ref: "caption to image 080"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_conv_c003_0007, note: "a route to effect that does not depend on channelling an existing emotion"}
+    - {relation: qualified_by, target: sk_conv_c003_0011, note: "loses its power if overused"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Invisible Partner"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Invisible Partner'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0010
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: no matter where we put it, it always seemed too much on the nose"
+    - "M: Yet you felt as if Jim Morrison was right there behind the screen, telling you exactly what was happening."
+  concept_label: music_can_read_as_commentary_regardless_of_its_independent_origin
+  label_origin: extractor_assigned
+  claim: >
+    Murch's report of a failed experiment: music written long before a film and having no direct
+    connection to it nevertheless read as commentary on the action wherever it was placed, so that
+    the composer seemed to be behind the screen explaining the scene. The intended wider use was
+    abandoned and the music confined to the opening and the end.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_music]
+    conditions: "pre-existing music placed against picture"
+  caveats:
+    - text: "Murch calls the effect \"funny\" and offers no account of why it happened — \"there was something about that music\". The failure is reported honestly and left unexplained."
+      origin: source_stated
+    - text: "recorded because a negative result stated without a mechanism is still evidence, and this batch has few of them. It also stands against the source's own claim that music works by channelling an already-created emotion: here the music was doing something else and no placement fixed it."
+      origin: extractor_observed
+  source_stated_problems:
+    - "it always seemed too much on the nose"
+  source_stated_remedies:
+    - "pull back and use it only at the beginning and the end"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0007, note: "the failure case of music not channelling"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Invisible Partner"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Invisible Partner'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0011
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: Like all those techniques, there is a fine line: If you overuse it, then it becomes predictable and it's not so welcome anymore."
+  concept_label: any_such_technique_loses_its_power_if_overused
+  label_origin: extractor_assigned
+  claim: >
+    Murch's general bound on the devices he has been describing: each has a fine line, and overuse
+    makes it predictable and no longer welcome. He applies it to the whole class — "all those
+    techniques" — not to one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_music, sound_design]
+    conditions: "any repeatable device"
+  caveats:
+    - text: "no threshold is given, and the source does not say what counts as overuse in a single film"
+      origin: extractor_observed
+    - text: "recorded as its own object because it is stated about the class rather than about the instance, and because it can be contradicted independently — one could hold that a device which works, works every time"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it becomes predictable and it's not so welcome anymore"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_conv_c003_0009, note: "bounds source music"}
+    - {relation: qualifies, target: sk_conv_c003_0016, note: "and the closer-cut amplification of a gesture"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Invisible Partner"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Invisible Partner'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# THE MINOR KEY / WHAT'S UNDER THE HANDS?
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_conv_c003_0012
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: To the extent that these are characters played in a minor key, I'm interested in the minor key. They come at you sideways, whereas major-key characters come at you directly"
+  concept_label: minor_key_characters_come_at_you_sideways
+  label_origin: source_verbatim
+  claim: >
+    Murch's distinction, offered about the difficult protagonists of the films he has cut: characters
+    played in a minor key come at the audience sideways, where major-key characters come at them
+    directly. He states an interest in the minor key and in showing the deeper or less obvious
+    aspects of people who are, on the surface, unlikeable or even boring — adding that people usually
+    labelled uninteresting usually have the more interesting stories.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, character]
+    conditions: "narrative film with a difficult protagonist"
+  caveats:
+    - text: "Murch declines the interviewer's framing rather than accepting it. Ondaatje proposes an \"insistent need in you to make us love such people\"; Murch replies \"I don't know whether love is the right word. Understand, sympathize, perhaps.\" The correction is the claim, and it is preserved."
+      origin: source_stated
+    - text: "he also declines to own the pattern: \"I don't know how much of that pattern you've identified is my choice and how much is chance.\" That hedge is about authorship of a body of work, not about the distinction itself."
+      origin: source_stated
+    - text: "the musical metaphor is never unpacked. \"Sideways\" and \"directly\" are the whole of the definition."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0013, note: "how a minor-key character is actually assembled in the cut"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Minor Key"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Minor Key'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0013
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: How you do that, as an editor, ultimately comes down to selecting the shots, and moments within shots, where the character looks appealing yet problematic at the same time—conflicted, in other words."
+    - "M: If you have a choice of seven different shots, which one shows that conflict best?"
+  concept_label: character_is_built_by_selecting_moments_that_show_conflict
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of how an editor presents a difficult character: by selecting the shots, and the
+    moments within shots, where the character looks appealing and problematic at once — conflicted.
+    Given a choice among several takes, the operative question is which shows that conflict best.
+    He adds that there are many tiny but telling details an editor includes or eliminates to make the
+    audience aware of the deeper aspects of a character.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, character]
+    conditions: "assembling a character from available coverage"
+  caveats:
+    - text: "this is one of the few places in the chapter where a general editorial criterion is stated in operational form — a question to ask of a set of takes — rather than as a quality to aim at"
+      origin: extractor_observed
+    - text: "it presupposes that the coverage contains a conflicted moment. The source does not address what to do when it does not."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "of the available takes, choose the one that shows the character's conflict best"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0012, note: "the minor key, executed"}
+    - {relation: generalises, target: sk_conv_c003_0014, note: "the hat metaphor for how a small detail carries the message"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Minor Key"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Minor Key'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0014
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: if you are wearing a hat, as soon as you tip the hat slightly back on your head, it gets noticed—you're sending a message via the angle of the hat"
+    - "M: I'm using \"hat\" as a metaphor: one moment is always going to be the most revealing, in the best sense, of the inner character, at that point in the film."
+    - "M: a look, an aspect, an attitude, a gesture is fortuitously correct or incorrect, and either amplifies or contradicts the message the filmmakers want to convey"
+  concept_label: the_hat_metaphor_one_moment_is_always_most_revealing
+  label_origin: extractor_assigned
+  claim: >
+    Murch's metaphor for how small physical details carry meaning. A hat tipped back reads as
+    happy-go-lucky, rammed down as unwilling to talk, tipped forward as aggressive; and a tipped-back
+    hat will not serve someone trying to be earnest. He states explicitly that "hat" stands for a
+    class — a look, an aspect, an attitude, a gesture — each of which is fortuitously correct or
+    incorrect and either amplifies or contradicts what the filmmakers intend. His conclusion: one
+    moment is always going to be the most revealing of the inner character at that point in the film.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, character, performance]
+    conditions: "selecting among moments of performance"
+  caveats:
+    - text: "\"fortuitously\" is doing significant work: the detail is not designed, it is found. The editor's role is selection among accidents, not authorship of them."
+      origin: extractor_observed
+    - text: "\"one moment is ALWAYS going to be the most revealing\" is unusually absolute for this speaker and is offered without support. It also does not follow from the hat example, which is about a detail rather than a moment."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a paper mobile that a character bumps and blows: barely visible in the wide shot, then cut slightly closer at the point where it pirouettes. Murch: \"If I'd just held the long shot it wouldn't have been as interesting.\"", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0013, note: "what an editor is selecting for"}
+    - {relation: generalises, target: sk_conv_c003_0015, note: "the camera is normally a neutral hat"}
+    - {relation: generalises, target: sk_conv_c003_0016, note: "cutting closer amplifies such a detail"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Minor Key"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Minor Key'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0015
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: The camera is definitely not a neutral \"hat.\""
+    - "M: Most of the time the camera asks us not to think about the particular angle from which it's photographing, but to think about the action—it just happens that the chosen angle is the most revealing for this particular action."
+  concept_label: the_camera_is_normally_a_neutral_hat_and_can_be_made_a_presence
+  label_origin: extractor_assigned
+  claim: >
+    Murch extends the hat metaphor to the camera. Most of the time the camera asks the viewer not to
+    think about the angle but about the action, the angle merely happening to be the most revealing
+    one — that is the camera as a neutral hat. It can instead be made aggressively a presence, as in
+    an oscillating camera move that gives the effect of another alien presence in the room with a
+    character.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, cinematography]
+    conditions: "any camera setup or move"
+  caveats:
+    - text: "asked whether the oscillating camera represents the bug the character is hunting, Murch answers \"It is and it isn't\", reasoning that a literal camera in the room would have been found. The device is left deliberately unresolved by the source and is recorded that way."
+      origin: source_stated
+    - text: "this connects directly to the source's later claim that the director chooses the most characteristic angle for every situation — the neutral hat IS the most-characteristic-angle convention seen from the audience's side"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the oscillating camera in the final apartment scene of The Conversation, which reads as another presence in the room", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0014, note: "the metaphor applied to the camera"}
+    - {relation: demonstrated_together_with, target: sk_conv_c003_0027, note: "the most-characteristic-angle convention it depends on"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Minor Key"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Minor Key'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0016
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: It's right around that point that I cut to a slightly closer shot of that same action, where that little dangling thing pirouetted in the most interesting way. If I'd just held the long shot it wouldn't have been as interesting."
+  concept_label: cutting_closer_at_the_right_instant_amplifies_a_small_gesture
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of amplifying a small physical detail: an object barely visible in a wide shot,
+    knocked in passing, becomes the scene's tender moment when the cut goes slightly closer at the
+    instant it moves most interestingly. Holding the wide shot would not have carried it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "a small physical detail worth raising to the audience's notice"
+  caveats:
+    - text: "the interviewer supplies the significance — \"So much is happening in that little moment, which is nothing really\" — and Murch supplies only the mechanics of how it was cut. The claim about the moment's emotional weight is Ondaatje's; the claim about how it was achieved is Murch's."
+      origin: extractor_observed
+    - text: "the timing is stated as \"right around that point\", which is as precise as the source gets"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "cut slightly closer at the instant the detail moves"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0014, note: "amplifying a fortuitous detail"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Minor Key"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Minor Key'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0017
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: the human hunger for mystery: if somebody says, I'm not going to show you what's under my hands, you become fixated on what's under his hands"
+    - "M: Even if your hunch is that there's nothing, you won't be satisfied until you've seen what is—or isn't— under his hands."
+  concept_label: withholding_fixates_the_audience_regardless_of_what_is_withheld
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of why a character who reveals nothing becomes magnetic: a declared refusal to
+    show fixates the audience on what is being withheld, and the fixation survives the suspicion that
+    there is nothing there. The audience will not be satisfied until they have seen what is — or is
+    not — being hidden.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The hunger is for the resolution of the concealment, not for its contents. That is why an empty
+      hiding place still holds attention.
+  scope:
+    domain_discussed_by_source: [film_editing, character, narrative]
+    conditions: "a character or narrative that declares something withheld"
+  caveats:
+    - text: "Murch attributes the exploitation of this to the director — \"the very smart thing that Francis exploited\" — rather than to editing"
+      origin: source_stated
+    - text: "he immediately names the cost: the editors' job \"conversely, was to make things as clear as possible\", because the character's work was hard to understand by its nature. Withholding character and withholding process pull against each other and the source states the tension without resolving it."
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a character with nothing in his apartment to indicate what is going on inside him, who leaves when his girlfriend says \"I want to know about you\"", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_conv_c003_0018, note: "withholding the character against clarifying the process"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "What's Under the Hands?"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, \"What's Under the Hands?\""
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0018
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: He knew people were fascinated by process. So he dwelled deliberately on all the minutiae of Harry's work—and that's one of the things that suck you into Harry's life and get you to identify with him."
+  concept_label: dwelling_on_the_minutiae_of_a_craft_produces_identification
+  label_origin: extractor_assigned
+  claim: >
+    Murch's claim that audiences are fascinated by process, and that deliberately dwelling on the
+    minutiae of a character's work draws the viewer into that character's life and produces
+    identification with them. It also serves clarity, since the character's work was hard to
+    understand by its nature.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, narrative]
+    conditions: "a character whose work is unfamiliar to the audience"
+  caveats:
+    - text: "the same claim appears earlier in the chapter in the director's voice as reported by Murch — that it is fascinating to watch a craft being exercised, a woodcarver or a stonemason, and to notice that he sharpens the blade every tenth stroke. Ondaatje then offers the samurai-film parallel, that the warrior's solitary training interests us more than the final battle. Three statements of one claim by three parties inside a few paragraphs."
+      origin: extractor_observed
+    - text: "no mechanism is given for why process produces identification rather than merely interest"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "dwell on the minutiae of the character's work"
+  examples:
+    positive:
+      - {description: "Bresson's Pickpocket, offered by Ondaatje and confirmed by Murch — \"he shows you the poetry in the details of the craft\"", figure_ref: "image 081"}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_conv_c003_0017, note: "clarity of process against opacity of character"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "What's Under the Hands?"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, \"What's Under the Hands?\""
+    figure_refs: ["081"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0019
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: I think that encourages the audience to listen to sounds as if they are speech. In other words, you begin to search the soundtrack for meaning because there are no words \"in the foreground\" distracting you."
+    - "M: You pay attention to the stars on nights when there is no moon. When the moon is shining, all you can see is the moon. Dialogue is the moon, and stars are the sound effects."
+  concept_label: removing_dialogue_makes_the_audience_hear_sound_as_speech
+  label_origin: extractor_assigned
+  claim: >
+    Murch's claim about attention across the soundtrack: dialogue and sound effects compete, and
+    withdrawing dialogue causes the audience to search the remaining sound for meaning, listening to
+    sounds as if they were speech. His figure is the moon and the stars — the stars are visible on
+    nights when the moon is not shining. He notes the sound effects themselves did not change between
+    the halves of the film; what changed was the gradual evaporation of dialogue.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attention is a fixed quantity competing across one channel. Words in the foreground consume it;
+      remove them and the same effects, unchanged, acquire a significance they would not otherwise
+      have.
+  scope:
+    domain_discussed_by_source: [film_editing, sound_design]
+    conditions: "a soundtrack in which dialogue can be reduced"
+  caveats:
+    - text: "Murch states he did not do this knowingly: \"Curiously, I wasn't consciously aware of this when I was working on the film.\" He worked it out only after audiences remarked on the soundtrack, and says \"It seems obvious in retrospect.\""
+      origin: source_stated
+    - text: "that admission is the most epistemically interesting moment in the chapter. The claim is a post-hoc reconstruction of the maker's own work, offered by the maker, which is a weaker evidential position than it appears to be — and the source volunteers the weakness rather than concealing it."
+      origin: extractor_observed
+    - text: "the control the claim rests on is real and stated: the effects did not differ between the two halves, only the dialogue did"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "withdraw dialogue to make the audience attend to the rest of the soundtrack"
+  examples:
+    positive:
+      - {description: "the last half of The Conversation, in which dialogue gradually evaporates leaving the recorded conversation itself and the sound effects", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0022, note: "sound perspective carrying the plot depends on the audience attending to sound"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "What's Under the Hands?"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, \"What's Under the Hands?\""
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# RE-EDITING TOUCH OF EVIL / THE WRONG ECHO
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_conv_c003_0020
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: There are frequently moments like these in the making of films, where huge issues of character and story are decided by the inclusion—or not—of a single shot that reverberates throughout the film."
+  concept_label: a_single_shot_can_decide_a_characters_agency_for_the_rest_of_a_film
+  label_origin: extractor_assigned
+  claim: >
+    Murch's generalisation from a worked case: huge issues of character and story are frequently
+    decided by whether a single shot is included, and the effect reverberates through the whole film.
+    His case is the removal of one close-up in which a character visibly collapses on being shown
+    evidence against his boss. With the close-up in, the other man has seen him acknowledge the
+    truth, and everything he does for the last half-hour is done under duress — Murch's image is a
+    metaphorical leash. With it removed, the audience sees the doubt but the other character does
+    not, so the same subsequent actions become chosen rather than coerced. Murch says this raises the
+    character to a level of equality with the two leads and realises the director's own stated
+    conception of the film.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      What a character has been SEEN to reveal, by another character, determines whether their later
+      behaviour reads as free or as compelled. Removing the moment of being seen removes the
+      compulsion, without changing any subsequent shot.
+  scope:
+    domain_discussed_by_source: [film_editing, character, narrative]
+    conditions: "a shot in which one character witnesses another's exposure"
+  caveats:
+    - text: "the mechanism depends on staging as well as cutting: Murch notes the other character does not see the collapse \"because of the staging of the scene\", so the removal works only given how it was shot"
+      origin: source_stated
+    - text: "this is the most fully worked causal argument in the chapter — one identified change, a stated mechanism, and a specific consequence traced across a named span of the film. It is also, unavoidably, a single case."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the removal of Menzies's close-up in Touch of Evil, cutting what Murch calls the leash", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0021, note: "the stated reason for the change was not the real one"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "\"Night Was Night\": Re-editing Touch of Evil"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Night Was Night'"
+    figure_refs: ["084", "087"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["084"]}
+
+- sk_id: sk_conv_c003_0021
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: It's interesting that in the memo Welles doesn't get into any of the underlying reasons for making this change."
+    - "M: If he were to admit that he made a mistake in the conception of the scene, it would have given the studio more power over him. So he hides his real reason in a technical fog, blaming it on the use of the wrong lens."
+  concept_label: a_stated_technical_reason_can_conceal_the_real_one
+  label_origin: extractor_assigned
+  claim: >
+    Murch's reading of why a filmmaker's written instruction gave a technical justification — a
+    mistaken use of the wide-angle lens distorting a face grotesquely — for a change whose real
+    purpose was structural. The instruction was addressed to a hostile studio, and admitting an error
+    of conception would have conceded power. Murch reports that the note mystified him at the time,
+    that he followed it anyway because his job was to do what the memo said, and that he understood
+    it only after the work was complete and he could see it in the context of the whole film.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_history]
+    conditions: "instructions written for an adversarial reader"
+  caveats:
+    - text: "this is Murch's interpretation of another person's motive, reached decades later and offered as such. It is not the memo's own account of itself."
+      origin: extractor_observed
+    - text: "the observation is nonetheless directly relevant to how this batch reads sources: a source-stated rationale can be a cover for an unstated one, and the stated reason may be the weaker one precisely because it is safe to state. The extraction records the memo's stated reason and Murch's reading of it as two different things."
+      origin: extractor_observed
+    - text: "Murch also reports a general expectation against which this case is exceptional: \"even if you have all the necessary resources, you're lucky if seventy-five percent of the ideas pan out\", where here all fifty suggestions improved the film. That baseline is his own and unsourced."
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "\"because of a mistaken use of the wide angle lens which distorts Menzies's face grotesquely\" — the memo's stated reason, quoted in the conversation", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0020, note: "the same change, read for its stated versus actual rationale"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "\"Night Was Night\": Re-editing Touch of Evil"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Night Was Night'"
+    figure_refs: ["084", "087"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["084"]}
+
+- sk_id: sk_conv_c003_0022
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: to make the resolution of the story depend on different shadings and perspectives of sound"
+    - "M: Quinlan suddenly stops, suspicious—he hears his own voice with the wrong echo on it."
+    - "M: Welles hung the whole ending of the film on the ability of the people in it, and the audience, to understand a subtle nuance with the sound."
+  concept_label: sound_perspective_can_carry_the_plot
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of a sequence in which the resolution of the story depends entirely on shadings
+    and perspectives of sound. The same two voices are rendered three ways according to the
+    listener's position and equipment — normal when close, distorted like a telephone through a
+    receiver, echoey in a field of sound when far from both parties — with no musical accompaniment.
+    When the men cross a bridge and the eavesdropper must move under an archway, the recorded voice
+    acquires an echo that does not belong to the space the speaker is in. He notices his own voice
+    with the wrong echo on it, deduces the surveillance, and the ending follows.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Acoustic properties encode position. A mismatch between the echo a voice carries and the space
+      its speaker occupies is information, and both a character and an audience can read it.
+  scope:
+    domain_discussed_by_source: [film_editing, sound_design, narrative]
+    conditions: "a sequence where listener position is dramatically significant"
+  caveats:
+    - text: "Murch says this is \"very close to my heart\" and links it to his own work, so this is an editor describing a device he admires and has used, not a neutral report"
+      origin: extractor_observed
+    - text: "the claim is demonstrated on exactly one sequence, and its force depends on that sequence working — which the source asserts (\"This attention to detail pays off fantastically well\", \"It's fantastic!\") rather than evidences"
+      origin: extractor_observed
+    - text: "it is the strongest instance in the chapter of the source's recurring interest in sound carrying information the picture does not, and the only one where the information is plot rather than mood"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the oil-derrick and bridge sequence of Touch of Evil, three sound perspectives and one wrong echo", figure_ref: "088"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0019, note: "requires an audience already listening to the soundtrack"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Wrong Echo"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Wrong Echo'"
+    figure_refs: ["088"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0023
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: The original Henry Mancini title music was perfectly good in itself, but the problem was that it set up a stylistic expectation that the film never followed."
+  concept_label: opening_music_that_sets_an_unmet_expectation_is_a_fault_however_good
+  label_origin: extractor_assigned
+  claim: >
+    Murch's criterion for the opening music of a film: quality in itself is not the test. Music full
+    of bongos and brass made audiences expect a suave, handsome, effective detective, and nobody in
+    the film is like that. The fault is the mismatch between the expectation set and the film
+    delivered, not the music.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_music]
+    conditions: "opening titles and their music"
+  caveats:
+    - text: "the replacement Murch describes follows the same logic in the opposite direction: overlapping fragments of source music from brothels, cantinas, car radios and tourist traps, which he calls \"the aural equivalent of the camerawork\", and which uses a device the film employs throughout"
+      origin: source_stated
+    - text: "structurally identical to the \"most with the least\" style of judgement — a thing can be good and still wrong for its position — but here the criterion is fit to what follows rather than economy"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it set up a stylistic expectation that the film never followed"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_conv_c003_0024, note: "the same opening, changed"}
+    - {relation: specialises, target: sk_conv_c003_0007, note: "a case of music not answering to the film"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "\"Night Was Night\": Re-editing Touch of Evil"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Night Was Night'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0024
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: the opening shot now acts as a prelude to the events that follow. It settles you into your chair and presents you, in miniature, with all the themes and ideas that the following piece of cinema is about to investigate."
+    - "M: even if we'd made no other changes past that first shot, I think the film would be perceived as a different film, because you enter it in a different way"
+  concept_label: the_opening_can_function_as_a_prelude_and_changes_how_the_whole_is_read
+  label_origin: extractor_assigned
+  claim: >
+    Murch's claim about openings: an opening shot can act as a prelude, settling the viewer and
+    presenting in miniature the themes the film will investigate. He states the consequence strongly
+    — even with no other change, the film would be perceived as a different film, because the viewer
+    enters it differently.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, narrative]
+    conditions: "the opening of a film"
+  caveats:
+    - text: "the claim that the whole film would read differently from a change to its first shot alone is a counterfactual about a film that was in fact changed in fifty places. It cannot be checked."
+      origin: extractor_observed
+    - text: "Murch reports a related audience observation from a Denmark screening that he calls perceptive and adopts: with titles and title music running, the viewer knows subconsciously that the bomb cannot yet explode; without them there is no knowing when the three minutes and twenty seconds are up, so the approach of the bomb car is much tenser. Recorded here as an example rather than as its own object because the source presents it as someone else's remark that he agrees with."
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "removing superimposed titles and replacing the score with drifting source music, so the opening shot becomes a prelude", figure_ref: null}
+      - {description: "the audience losing its subconscious clock once the titles are gone, making the bomb's approach tenser", figure_ref: null}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_conv_c003_0023, note: "the fault the change corrected"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "\"Night Was Night\": Re-editing Touch of Evil"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'Night Was Night'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# THE MOST CHARACTERISTIC ANGLE
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_conv_c003_0025
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: There's a chemistry between each actor and a certain lens."
+    - "M: It has something to do with the translation of a three-dimensional object—the human face—into a two-dimensional photograph."
+    - "M: A telephoto lens tends to flatten out its subject, and a wide-angle lens does the opposite: it will curve out a flat subject."
+  concept_label: each_face_has_a_lens_and_distance_that_renders_it_most_itself
+  label_origin: extractor_assigned
+  claim: >
+    Murch's claim about lens and face: certain actors look most themselves photographed with a
+    certain lens at a certain distance, and this is why makeup and costume tests are shot with the
+    principals before production — one of the things being studied is the chemistry between the angle
+    of the lens and the planarity of the actor's face. He grounds it in optics: a telephoto flattens
+    its subject and a wide-angle curves out a flat one, and the underlying issue is the translation
+    of a three-dimensional object into a two-dimensional photograph. His everyday parallel is that
+    some people look better in person than in photographs and others the reverse.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Lens focal length changes how depth is mapped onto a plane. A face's own depth interacts with
+      that mapping, so the same face is rendered differently by different lenses at different
+      distances.
+  scope:
+    domain_discussed_by_source: [cinematography, film_editing, casting]
+    conditions: "photographing a human face"
+  caveats:
+    - text: "\"chemistry\" is the source's word and is not defined; the optical part of the claim is specific and the criterion for looking \"most themselves\" is not"
+      origin: extractor_observed
+    - text: "his one concrete instance is a memorable number rather than a method — a 45-millimetre lens at four and a half feet for one child actor, remembered, he says, because of the poetry of \"forty-five at four and a half\""
+      origin: source_stated
+    - text: "the term 'planarity' appears here in the same sense the same speaker uses it elsewhere as a named editorial criterion, but in this source it is used only of a face and is not presented as part of any framework"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "shoot makeup and costume tests with the principals to study lens and face together"
+  examples:
+    positive:
+      - {description: "Robert Duvall's deep-set eyes and rounded forehead, given by Murch as one of the reasons for his casting in THX 1138", figure_ref: "090"}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0026, note: "and what the editor can do about it after the fact"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Most Characteristic Angle"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Most Characteristic Angle'"
+    figure_refs: ["090"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["090"]}
+
+- sk_id: sk_conv_c003_0026
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: It's the editor's job then simply to receive the material and make it work in the best way possible."
+    - "M: I may write a note to the director and suggest, If you ever have a half-day where you're doing some pick-up shots, it might be good to reshoot this line with this actor as just a prime close-up."
+  concept_label: the_editor_receives_lens_decisions_and_can_only_request_a_remedy
+  label_origin: extractor_assigned
+  claim: >
+    Murch's account of the editor's position on lens choice: it is a discussion between the director
+    and the camera department, and the editor's job is to receive the material and make it work as
+    well as possible. Where an assembled scene reveals that a particular camera's lens does not serve
+    an actor, the available action is a written suggestion that the line be reshot as a prime
+    close-up if a half-day of pick-ups arises.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, cinematography]
+    conditions: "a lens problem discovered during assembly"
+  caveats:
+    - text: "the remedy is conditional on production circumstances the editor does not control — \"if you ever have a half-day\" — so it is a request rather than a repair"
+      origin: extractor_observed
+    - text: "this is the chapter's clearest statement of the editor's authority, and it is limited: receive, make work, and suggest. It sits oddly beside the same chapter's demonstration that removing one shot restructured a character's agency for half a film."
+      origin: extractor_observed
+  source_stated_problems:
+    - "the actor does not look so good with that lens"
+  source_stated_remedies:
+    - "write a note to the director proposing a pick-up close-up on a prime lens"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_conv_c003_0025, note: "the editorial consequence of the lens claim"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Most Characteristic Angle"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Most Characteristic Angle'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_conv_c003_0027
+  source_id: ondaatje_conversations_third_conversation
+  source_terms:
+    - "M: They were painting essences, and in order to paint an essence you have to paint it from its most characteristic angle."
+    - "M: That's exactly what we do in film, except that instead of the body of the person, it's the work itself."
+    - "M: It may be, five hundred years from now, when people see films from our era, they'll seem \"Egyptian\" in a strange way."
+  concept_label: film_combines_most_characteristic_angles_as_egyptian_painting_did
+  label_origin: extractor_assigned
+  claim: >
+    Murch's analogy for what shot selection is. Ancient Egyptian painters showed each part of a body
+    from the angle that revealed most about it — face in profile, shoulders frontal, hips frontal,
+    feet in profile — combining the characteristic essences of a person in one figure, which produces
+    a strange twisted effect that was natural to them. Film does exactly the same, he says, except
+    that the thing being composed is the work rather than a body: the director chooses the most
+    characteristic, revealing, interesting angle for every situation, line and scene, overshoots, and
+    gives the editor a further range of choices; the editor then shifts between angles on the same
+    principle. He adds that in five hundred years films of this era may look equally strange or comic.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both practices reject reproducing a single viewpoint faithfully in favour of assembling the
+      most revealing view of each element. What looks natural is a convention, which is why it can
+      later look comic.
+  scope:
+    domain_discussed_by_source: [film_editing, cinematography]
+    conditions: "any multi-angle coverage of a scene"
+  caveats:
+    - text: "the analogy carries the argument entirely; no evidence is offered that Egyptian painting and film coverage share anything beyond the described resemblance"
+      origin: extractor_observed
+    - text: "the closing move — that our own convention may look comic in five hundred years — is the chapter's one explicit statement that current film grammar is historically contingent rather than natural. It arrives as an aside."
+      origin: extractor_observed
+    - text: "DISCLOSED CONTAMINATION. I recognised this analogy while reading this source because I had extracted a compressed version of the same argument from In the Blink of an Eye earlier in this lane, where it appears as a footnote. Nothing was imported: this object is written from the wording in front of me, which is substantially longer and differently developed. The recognition is disclosed here and discussed in the book 12 findings, because an extraction cannot claim independence it does not have."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_conv_c003_0015, note: "the neutral-hat camera is this convention seen from the audience's side"}
+    - {relation: generalises, target: sk_conv_c003_0025, note: "and lens choice is one dimension of choosing the revealing view"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, culturally_bounded, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Third Conversation"
+    section: "The Most Characteristic Angle"
+    page_start: null
+    page_end: null
+    locator: "Third Conversation, 'The Most Characteristic Angle'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

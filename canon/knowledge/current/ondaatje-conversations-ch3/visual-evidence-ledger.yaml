@@ -1,0 +1,221 @@
+# CANON-003 book 12 (Lane B) — Michael Ondaatje, "The Conversations: Walter Murch and the Art of
+# Editing Film" (2002). Third Conversation, complete.
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"The Conversations_ Walter Murch and the Art of Editing Film.epub"
+#   dc:title "The Conversations" · dc:creator "Michael Ondaatje" (opf:role aut)
+#   dc:publisher "Knopf Doubleday Publishing Group" · dc:rights "Copyright © 2002 by Michael Ondaatje"
+#   ISBN 978-0-307-51817-0 · converted by calibre 0.9.12, Jan 2013
+#   EPUB. 144 images in the whole book; 20 in the processed chapter.
+#   Images inspected ephemerally from the unpacked EPUB in the session scratchpad; NOT committed.
+
+source_id: ondaatje_conversations_third_conversation
+pass: independent_visual_evidence
+images_in_chapter: 20
+images_inspected: [076, 084, 090]
+visual_completeness: not_verified_page_level
+
+# ═════════════════════════════════════════════════════════════
+# 1. WHY visual_completeness IS NOT verified_page_level
+# ═════════════════════════════════════════════════════════════
+completeness_reasoning: >
+  This is an EPUB, so there is no page to inspect. The figures exist and can be opened; the printed
+  layout does not exist in the artifact at all. That distinction was established for this batch
+  during source inventory and it bites here harder than usual, because this book is a PLATE book —
+  a print volume whose photographs were laid out in groups across facing pages, with captions
+  written to address several plates at once by position. Reflowing it destroyed the arrangement the
+  captions describe.
+
+  Recorded as `not_verified_page_level` rather than `blocked_visual_validation`: the images are
+  present and inspectable, so this is not an absence of visual evidence. What cannot be verified is
+  how the visual material was ORGANISED, and for this source that organisation was carrying meaning.
+
+# ═════════════════════════════════════════════════════════════
+# 2. THE FINDING: THE CAPTION SURVIVES, THE IMAGE SURVIVES,
+#    AND WHICH CAPTION BELONGS TO WHICH IMAGE DOES NOT
+# ═════════════════════════════════════════════════════════════
+caption_binding_loss:
+  severity: moderate_and_partly_silent
+  what_happened: >
+    Four caption blocks in this chapter use print-relative position words — "Overleaf:", "Above:",
+    "Right:", "center", "far right" — to say which plate each clause describes. In a reflowable EPUB
+    those words point at nothing. The captions are intact, the photographs are intact, and the
+    correspondence between them is gone.
+  worked_example:
+    caption_as_extracted: >
+      "Overleaf: Surveillance by Gene Hackman and John Cazale in The Conversation. Above: Maggie
+      Cheung and Tony Leung as the 'husband' and 'wife' from Wong Kar-Wai's In the Mood for Love.
+      The voyeurs: Grace Kelly and James Stewart in Hitchcock's Rear Window, 1954."
+    what_the_adjacent_image_actually_contains: >
+      Image 076, inspected: a composite of TWO plates — In the Mood for Love across the top, Rear
+      Window at the lower right — and a black rectangle occupying the lower left where a third plate
+      was in the printed book. The Conversation surveillance still named by "Overleaf" is not in this
+      image; it is elsewhere in the sequence.
+    consequence: >
+      A caption naming three films sits beside an image containing two of them, plus a void. A
+      reader of the extracted text has three film titles and no way to know which is which, and a
+      reader of the EPUB has the same problem plus a visible hole.
+  why_this_is_a_new_pattern: >
+    It is the third distinct visual-loss mechanism this lane has met and it is unlike the other two.
+    Book 9 lost the PICTURES, and lost text drawn inside pictures. Book 10 lost typographic EMPHASIS
+    on words that survived. Here nothing is missing — caption and image both survive — and what is
+    lost is the BINDING between them. An extractor working from the text alone sees complete,
+    confident, well-formed captions and has no signal that they have been detached from their
+    referents.
+  detectability_note: >
+    There is a cheap detector for this one, unlike the in-graphic text loss in book 9: search
+    captions for print-relative position words. Four hits in this chapter, each a true positive. The
+    check costs nothing and would flag any reflowed plate book.
+
+# ═════════════════════════════════════════════════════════════
+# 3. A PRIMARY DOCUMENT REPRODUCED AS A PHOTOGRAPH
+# ═════════════════════════════════════════════════════════════
+demonstrations:
+
+- ref: vis_conv_welles_memo_page
+  image: "084"
+  kind: primary_document_as_image
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    A photograph of page 1 of Orson Welles's fifty-eight-page memo on Touch of Evil — roughly 200
+    words of typescript, legible, with a diagonal "Copy © Walter Murch" watermark across it. It
+    opens: "I assume that the music now backing the opening sequence of the picture is temporary…"
+    and goes on to describe the intended succession of contrasting Latin American musical numbers
+    heard from cabarets and loudspeakers as the camera moves through the border town.
+  what_the_visual_supports: >
+    The entire Touch of Evil discussion rests on this document. The image is the document.
+  requires_prose: >
+    The circumstances — Welles allowed one screening, writing in the dark, addressing the studio head
+    who was his declared enemy — and Murch's reading of what the memo was really doing.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    This is book 9's in-graphic text problem escalated. There the loss was two diagram labels. Here
+    an entire primary source is reproduced as a photograph, and the text layer carries only the
+    caption: "One page of the fifty-eight-page memo Welles wrote during the screening of Touch of
+    Evil, then typed up after being allowed to see the film only once."
+
+    PARTIAL RECOVERY, and it is worth being precise about how much. The conversation quotes one
+    fragment of this page — "I assume the opening music is temporary" — and paraphrases its subject.
+    So a text-only extraction gets the memo's opening clause and its topic, and loses the other
+    ~190 words, including the specific description of the intended soundtrack that Murch then went on
+    to reconstruct. A second memo page appears later in the chapter as image 087, with the caption
+    "Another section of Welles's memo discussing the studio's editing", and nothing of its content is
+    quoted anywhere.
+
+- ref: vis_conv_duvall_lens
+  image: "090"
+  kind: illustrative_still
+  isolation: not_applicable
+  status: legible_but_too_small_to_support_the_claim
+  visible_content: >
+    A monochrome still of Robert Duvall in THX 1138 — shaved head, deep-set eyes, rounded forehead —
+    reproduced at 207 × 158 pixels.
+  what_the_visual_supports: >
+    The claim that there is "a chemistry between each actor and a certain lens", and that George
+    Lucas was drawn to the depth of Duvall's features.
+  requires_prose: >
+    Everything about lenses. The image shows a face; only the text says that a telephoto flattens a
+    subject and a wide-angle curves out a flat one, or that the issue is the translation of a
+    three-dimensional object into a two-dimensional photograph.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    A different failure from the others, and worth separating. The image is PRESENT, and it is still
+    inadequate. Murch's claim is about the planarity of a face under a particular lens at a
+    particular distance — a fine-grained property of facial rendering. At 207 × 158 pixels the
+    reproduction cannot support inspection of that property; it can only confirm that the man has
+    deep-set eyes, which the prose already says.
+
+    So: **a figure can survive extraction and still not carry its evidence.** The batch has been
+    treating visual completeness as a question of whether images are available. This case says
+    availability is necessary and not sufficient, and that resolution belongs in the same
+    assessment.
+
+# ═════════════════════════════════════════════════════════════
+# 4. WHAT THE IMAGES IN THIS CHAPTER ARE
+# ═════════════════════════════════════════════════════════════
+visual_only_observations:
+
+- ref: vis_conv_image_character
+  what_is_visible: >
+    All 20 images in the chapter are greyscale (PIL mode L). They are production stills, frame grabs,
+    documentary photographs of people at work, two photographs of Welles's memo, and one photograph
+    of Coppola's handwritten script notes.
+  why_it_matters: >
+    None of them is a diagram, and none demonstrates a technique. They are illustrative and
+    documentary — they show the people and films being discussed. That is a materially different
+    role from the figures in book 9, which were constructed to demonstrate a claim, several as
+    controlled comparisons.
+  status: source_supported
+  extractor_note: >
+    The consequence for extraction is that no claim in this chapter DEPENDS on an image in the way
+    that book 9's line-crossing claim depends on figures 5.4 and 5.5. The Welles memo is the one real
+    exception, and it is a document rather than a demonstration. This is why the chapter can be
+    extracted faithfully from text despite the caption-binding loss: the argument is carried in
+    speech, because the source is a recorded conversation.
+
+- ref: vis_conv_no_colour_dependence
+  what_is_visible: "Every image greyscale; no claim in the chapter refers to colour."
+  why_it_matters: >
+    Unlike the Albers hazard, there is nothing here for a greyscale reproduction to destroy. The
+    films discussed are in colour, but the discussion is about sound, structure, character and lens
+    geometry.
+  status: source_supported
+
+# ═════════════════════════════════════════════════════════════
+# 5. TEXT INTEGRITY
+# ═════════════════════════════════════════════════════════════
+text_integrity:
+  extraction_method: >
+    EPUB unpacked; the chapter's own XHTML file extracted with tags stripped, block elements turned
+    into line breaks, and <img> elements replaced by an explicit [[IMAGE: filename]] marker so that
+    image positions remain visible in the text stream. HTML entities decoded.
+  words_in_chapter: 13774
+  replacement_characters: 0
+  garbling: none_detected
+  non_ascii_present:
+    note: >
+      Curly quotes, em-dashes, ellipses and accented characters (á é ê) all intact — 155 em-dashes,
+      45 pairs of curly quotes, 23 ellipses. The presence of correctly decoded accents in
+      "Almásy", "fêted" and "d'échafaud" is the positive check that the encoding survived.
+  whole_book_check: >
+    All five conversations plus the introduction were extracted and checked: zero replacement
+    characters in any of them, 92,199 words total. The EPUB is clean throughout, not just in the
+    processed chapter.
+  structural_damage: none
+  section_completeness_check:
+    method: >
+      Section headings were read directly off the extracted chapter rather than from a contents page,
+      because the book's contents lists only the five conversations and not their internal sections.
+    result: >
+      Seven named sections found: EDITING THE CONVERSATION · THE INVISIBLE PARTNER · THE MINOR KEY ·
+      WHAT'S UNDER THE HANDS? · "NIGHT WAS NIGHT": RE-EDITING TOUCH OF EVIL · THE WRONG ECHO ·
+      THE MOST CHARACTERISTIC ANGLE.
+    method_note: >
+      An earlier heading sweep using a plain uppercase pattern found only five of the seven, missing
+      the two whose titles contain an apostrophe or a quotation mark. Recording this because it is a
+      real hazard: a completeness check built on a naive pattern can under-report and look like it
+      passed. The two missing headings were found by reading the chapter, not by the check.
+
+# ═════════════════════════════════════════════════════════════
+# 6. THE SOURCE'S FORM, OBSERVED BEFORE EXTRACTION
+# ═════════════════════════════════════════════════════════════
+source_form:
+  registers_present: 4
+  description: >
+    This chapter interleaves four distinct kinds of text, and they carry different evidential weight:
+      1. Ondaatje's third-person editorial frame, setting the scene (New York, a SoHo loft, steam
+         pipes "a sort of haphazard and unseen gamelan orchestra"), which is authorial writing.
+      2. The transcribed dialogue itself, marked "O:" and "M:".
+      3. An inset first-person contribution from a THIRD party — the producer Rick Schmidlin's
+         account, "As if Orson was sending us notes", running about 400 words inside the chapter.
+      4. Photograph captions, which sometimes carry substantive content ("Source music in The English
+         Patient: the piano was detuned to suggest that it had been exposed to the elements").
+  why_it_was_recorded_before_extraction: >
+    Because the register determines who is making a claim, and this source has no single voice.
+    A statement can be Murch asserting, Ondaatje proposing and Murch assenting ("Mm-hm", "Right"),
+    Ondaatje asserting unchallenged, or a third party recalling. Those are different evidential
+    situations and the extraction has to keep them apart.

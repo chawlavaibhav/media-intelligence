@@ -640,3 +640,204 @@ alone was not sufficient.
 **Proposed fix — PROPOSAL ONLY.** None. The existing fields handled it once a caveat carried the
 location. Recorded so that if book 12 forces the same manoeuvre, the pair becomes evidence that
 discursive sources need an explicit convention rather than an ad-hoc caveat.
+
+---
+
+# Book 12 — *The Conversations* (issues LB-15 onward)
+
+*Written before book 12's fresh checkpoint.*
+
+## LB-15 — SPEC-03 has no field for who said it, and a transcript needs one
+
+**Plain English.** This book is an interview. Two people talk, and sometimes a third. The schema
+records which *book* a claim came from, not which *person* said it — so a remark the interviewer made
+and the subject grunted at is stored exactly like a claim the subject volunteered.
+
+**Where observed.** Book 12, *The Conversations*. **1 distinct book.**
+
+**Status.** OBSERVED. SPEC-03's object has `source_id` and no speaker field; checkable against the
+spec.
+
+**Affected layer.** Source fidelity; ontology.
+
+**Why it matters here and not in the earlier books.** Books 9 and 10 each have one voice. This
+chapter has four registers: Ondaatje's third-person editorial frame, the `O:`/`M:` dialogue, an inset
+~400-word first-person account from the producer Rick Schmidlin, and photograph captions that
+sometimes carry substantive content ("Source music in The English Patient: the piano was detuned to
+suggest that it had been exposed to the elements").
+
+**The evidential differences are real, not pedantic.** Four situations occur in this one chapter:
+
+| Situation | Example | Evidential weight |
+|---|---|---|
+| Murch asserts unprompted | "music seems to function best when it channels an emotion that has already been created" | strongest |
+| Ondaatje proposes, Murch assents and extends | "There's a forced consistency in film." / "Right, which is necessitated by the fact that films are shot out of sequence." | claim is the interviewer's; the *cause* is Murch's |
+| Ondaatje asserts, unchallenged | the significance of the paper-mobile moment | weakest — Murch supplies only the mechanics |
+| Murch **declines** the framing | "an insistent need in you to make us love such people" → "I don't know whether love is the right word. Understand, sympathize, perhaps." | the correction *is* the claim |
+
+That last row is the sharpest case. The extracted claim is the opposite of what the question
+proposed, and only the speaker markers show it.
+
+**How the extraction handled it.** Every object names its speaker in the claim text and quotes with
+the source's own `O:`/`M:` markers in `source_terms`. It works, and it is prose — nothing can filter
+on it, count it, or notice that a given claim rests on an interviewer's proposal rather than a
+practitioner's assertion.
+
+**Practical consequence if unchanged.** In a multi-voice source, attribution is the difference
+between practitioner assertion and interviewer suggestion, and `evidence.characteristics` cannot
+express it: both come out as `practitioner_assertion`. Any later aggregation counts them equally.
+
+**Proposed fix — PROPOSAL ONLY, not applied.** An optional `speaker` or `attributed_to` on the object,
+populated only for multi-voice sources. **Weigh against:** one book in eleven so far. Lane D's
+creative-process books and any further interview material would be the test. An alternative costing
+nothing is to require that multi-voice sources state the attribution convention in `PROVENANCE.md`
+and carry the speaker in `source_terms`, which is what was done here.
+
+---
+
+## LB-16 — an EPUB of a plate book keeps the captions and loses what they point at
+
+**Plain English.** The captions in this book say "Overleaf", "Above", "Right". In print those words
+told you which photograph each sentence described. Reflowed into an EPUB they point at nothing, and
+nothing in the text shows that anything has come loose.
+
+**Where observed.** Book 12. **1 distinct book.**
+
+**Status.** OBSERVED — verified by inspecting the image the caption sits beside.
+
+**Affected layer.** Visual completeness; source fidelity.
+
+**New or recurrence.** A **third distinct visual-loss mechanism** for this lane, and unlike the other
+two. Book 9 lost pictures, and lost text drawn inside pictures. Book 10 lost typographic emphasis on
+words that survived. Here **nothing is missing** — caption and image both survive — and what is lost
+is the correspondence between them.
+
+**Evidence.** One caption block names three films: *"Overleaf: Surveillance by Gene Hackman and John
+Cazale in The Conversation. Above: Maggie Cheung and Tony Leung … from Wong Kar-Wai's In the Mood for
+Love. The voyeurs: Grace Kelly and James Stewart in Hitchcock's Rear Window, 1954."*
+
+The adjacent image, inspected, is a composite containing **two** of the three — *In the Mood for
+Love* top, *Rear Window* lower right — plus a **black rectangle** where a third plate sat in the
+printed book. The film named by "Overleaf" is elsewhere in the sequence entirely.
+
+Four caption blocks in the chapter use such words. All four are true positives.
+
+**Practical consequence if unchanged.** A text extraction yields confident, well-formed captions
+naming works and people, detached from the images they describe. An extractor could attach a
+caption's claim to the wrong picture with no signal that anything was wrong — the same class of error
+as book 9's broken figure cross-reference (**LB-04**), but arising from format conversion rather than
+from an author's slip.
+
+**Unlike LB-03, this one has a cheap detector.** Search captions for print-relative position words —
+"Overleaf", "Above", "Below", "Left", "Right", "top", "bottom", "center", "far right". Zero cost, and
+it flags any reflowed plate book. Recorded as a **proposal only**, not applied as a method change.
+
+---
+
+## LB-17 — a figure can survive extraction and still not carry its evidence
+
+**Plain English.** One image in this chapter is present, openable, and too small to show the thing it
+is there to show.
+
+**Where observed.** Book 12. **1 distinct book.**
+
+**Status.** OBSERVED — measured.
+
+**Affected layer.** Visual completeness.
+
+**Evidence.** Image 090 illustrates the claim that "there's a chemistry between each actor and a
+certain lens" — a claim specifically about *the planarity of an actor's face* under a given lens at a
+given distance. The reproduction is **207 × 158 pixels**. At that size it confirms the man has
+deep-set eyes, which the prose already says, and cannot support inspection of facial rendering at all.
+
+**Why it matters for the batch.** Visual completeness has been assessed on **availability** —
+whether page renders or figures exist for a source. This case says availability is necessary and not
+sufficient. A visual pass can tick every box, inspect every figure, and still not be able to check
+the claim, because the reproduction does not carry enough information.
+
+**Practical consequence if unchanged.** `visual_completeness: verified` can be recorded for a source
+whose figures are present and inadequate, which reads as stronger verification than actually
+occurred.
+
+**Proposed fix — PROPOSAL ONLY.** None. One instance. Recorded so that if another book in this batch
+has figures too small or too degraded to support their claims, the pair becomes evidence that
+resolution belongs in the visual-completeness assessment alongside availability.
+
+---
+
+## LB-18 — a conversation yields far fewer systems and terms than a textbook, and that is the result
+
+**Plain English.** This book produced three groupings and sixteen named terms. The textbook in the
+same lane produced five and forty-eight. The gap is what kind of book it is, not how well it was read.
+
+**Where observed.** Books 9, 10 and 12. **3 distinct books.** Logged as **evidence for** the current
+design.
+
+**Status.** OBSERVED.
+
+**Affected layer.** Systems; ontology; granularity.
+
+**Evidence.**
+
+| | Book 9 (textbook) | Book 10 (lecture) | Book 12 (interview) |
+|---|---|---|---|
+| Words in section | 15,911 | 6,493 | 13,774 |
+| SourceKnowledge objects | 60 | 39 | 27 |
+| Objects per 1,000 words | 3.8 | 6.0 | 2.0 |
+| SourceConceptSystems | 5 | 4 | 3 |
+| Ontology terms | 48 | 23 | 16 |
+| Bindings | 11 | 8 | 6 |
+
+**A textbook names things** — *action edit*, *natural wipe*, *sound bridge* — because naming is how a
+textbook teaches. **A conversation mostly does not**: the speaker describes what happened on a
+particular film and reaches for a figure of speech. Most of book 12's terms are vivid phrases rather
+than a maintained vocabulary, and that is marked on each via `verbatim`.
+
+**The systems tell the same story.** Only one of book 12's three is the speaker's own grouping — the
+"hat" metaphor, which he names as a metaphor and extends himself. The other two are marked largely
+`extractor_inferred` and explicitly labelled hypotheses about the source, because things said one
+after another in a conversation are not thereby a set.
+
+**Why this is evidence FOR the design.** The schema absorbed all three shapes without modification,
+and `origin` marking at every structural level is what made the difference legible rather than
+invisible. A fully `extractor_inferred` system is exactly what SPEC-03 says it is — a hypothesis
+about a source — and this book needed two of them.
+
+**Practical consequence.** Object, term and system counts are not comparable across source shapes.
+Book 12's low counts are the correct outcome of applying the frozen method to an interview, and
+reading them as thin coverage would be wrong.
+
+---
+
+## LB-19 — a governance-heavy source and an evaluation-heavy source can be about the same subject
+
+*Extends LB-13 with a third data point.*
+
+**Plain English.** Three books in this lane teach film editing. What each one gives the product is
+completely different, and the difference tracks how the author writes, not what they write about.
+
+**Where observed.** Books 9, 10, 12. **3 distinct books, one domain.**
+
+**Status.** OBSERVED.
+
+**Affected layer.** Bindings; Creative IR fit.
+
+**Evidence.**
+
+| | Book 9 | Book 10 | Book 12 |
+|---|---|---|---|
+| Evaluation bindings | **5** | 1 | 2 |
+| Governance bindings | 1 | **5** | 2 |
+| Creative IR bindings | 3 | 2 | 2 |
+| Teaches | checkable relations between shots | how to weigh considerations | what happened on particular films |
+
+Book 9 states **properties** two shots do or do not have → they bind to evaluation. Book 10 states
+**priorities** for trading considerations against each other → they bind to governance. Book 12
+states **testimony** about specific films under specific constraints → most of it binds to nothing,
+and correctly so.
+
+**Bearing on synthesis question 9** (which source knowledge repeatedly fails to bind, and whether
+that is a Canon problem or a product-schema limitation). On this lane's evidence the answer depends
+on **what kind of statement a source makes**, not on its domain. Testimony about a particular case is
+not a product-schema limitation — it is knowledge that was never general. Recording it unbound is the
+schema working, not failing.
