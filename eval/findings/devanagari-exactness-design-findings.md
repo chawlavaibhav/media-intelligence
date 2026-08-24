@@ -1,0 +1,521 @@
+# Devanagari exactness battery — design findings
+
+**Date:** 25 Aug 2026 · **Task: EVAL-005** *(Controller-assigned; design hardening only)*
+**API/model spend:** ₹0 · **Human specialist time:** 0 h · **Generators run:** 0 · **Registry entries:** 0
+
+What was built, what was learned building it, what the Controller review corrected, and what
+remains uncertain.
+
+**Revision note.** §§1–4 and §8 carry forward from the first design pass and still hold. §5 and §7
+were **materially wrong** in the first pass and were corrected in the first Controller review. §5.8
+and §7 were corrected again in the **second** review pass — the visibility gate was still comparing
+encoded file bytes rather than decoded pixels, and the statistical language still claimed an
+independence the design does not establish. §§5.10–5.12 record the **third** pass: the PNG decoder
+built in pass two was itself only partly faithful, one phrase had quietly reinstated the removed
+bound claim, and "nothing has been run" was imprecise. §6 and §9–10 are updated.
+
+---
+
+## 1 · The reframing that makes this tractable
+
+EVAL-004 was stopped because reading photographed signage is a weak proxy for the failure that
+matters. The redesign changes the question:
+
+> **Does the evaluator report a match when the visible text differs from the requested target?**
+
+And it changes where ground truth comes from. Instead of *finding* images and trying to establish
+what they say, we **construct** them: render a chosen string locally with a pinned font, and what
+the image contains is known by construction.
+
+**This dissolves the problem that stopped EVAL-004.** No annotator, no dataset label, no
+reader-agreement reference, no adjudication. The human requirement falls from 3.5–4.5 hours across
+two readers to **~1.5 hours once**, and none of it establishes ground truth (§6).
+
+---
+
+## 2 · Two different Unicode strings can produce identical pixels — measured
+
+**OBSERVED.** On the pinned font, precomposed क़ (U+0958) and क + nukta (U+0915 U+093C) shape to
+the **same glyph sequence** and render to **byte-identical PNGs**:
+
+```
+क़  (U+0958)        -> [uni0915093C=0+770]
+क + nukta          -> [uni0915093C=0+770]
+```
+
+**Why it matters.** An item built from that pair would ask a checker to report a difference that is
+not on the page, and mark it wrong for correctly describing what it saw. That measures Unicode
+pedantry, not visual faithfulness.
+
+**A related detail that lines up.** NFC collapses the precomposed nukta letters onto their
+decomposed forms, which is also what the renderer draws — so comparing in NFC **agrees with the
+pixels**. This is why the contract's exactness is *canonical* exactness rather than raw-codepoint
+identity, and saying so plainly is one of the review corrections (§5.6).
+
+---
+
+## 3 · Direction decides what is being measured
+
+A mismatch can be built two ways, and they are not the same test:
+
+| Direction | Construction | Autocorrect pressure |
+|---|---|---|
+| **`corrupt_image`** | render the perturbed string, ask about the **real word** | **high** — malformed text, plausible target; every pull of the prior says "yes" |
+| `corrupt_target` | render the real word, ask about the perturbed string | low — clean image, odd target |
+
+**INFERRED:** only the first reproduces the production failure. It is 70% of the mismatch stratum
+(37 of 53); the second is retained as a control. They are reported separately, because a good score
+on the easy direction would otherwise conceal blindness on the hard one.
+
+---
+
+## 4 · Neither trivial strategy survives
+
+- **50/50 match/mismatch** — "always match" and "always mismatch" both score exactly 50%.
+- **Every base word appears in both strata**, so recognising the word does not reveal the answer.
+- **32 paired items** — identical pixels, different target, **opposite** expected verdict. A checker
+  cannot be right on both by judging the image alone, nor by ignoring it.
+
+---
+
+## 5 · What the Controller reviews found, and what they changed
+
+Three review passes. The **first** required seven fixes; five found something the code actually did
+wrong rather than prose that read badly. The **second** found two more — one of them a defect
+introduced by the first pass's own fix. The **third** found a third instance of the same class: the
+component built in pass two was itself only partly faithful. Each is pinned by a regression test.
+
+### 5.1 · The blind checker shape was not blind — **contract defect**
+
+**OBSERVED.** The contract said every checker receives "one image and one target string", while
+also describing shape 1 (`transcribe`) as an *indirect* test in which the model commits to what it
+sees and our code does the comparison. Both cannot be true.
+
+**Why it matters.** Showing the model the target is precisely the autocorrection pressure the
+indirect shape exists to remove. Run that way, the two shapes measure the same thing and the
+comparison between them — which is a measurement in its own right, about prompt design — evaporates.
+
+**What was done.** `checker_input.py` now produces two different payloads. The transcribe payload
+carries the image and a frozen transcription-only prompt, and nothing else. The verdict payload
+carries the target, by design. A pre-run check, `verify_blind()`, enforces an **allow-list** (fails
+closed on any field added later), rejects every ground-truth field, and — the check that catches a
+leak arriving through a field nobody anticipated — rejects **any Devanagari character anywhere in a
+transcribe payload**. `write_checker_inputs()` refuses to write a file that fails, so a leaking file
+cannot be produced and then used by mistake. The evaluator-side target lives in a separate
+`scoring-key.jsonl` that never goes to a checker. Regression tests inject a target as a field and
+smuggle one into the prompt text; both are caught.
+
+### 5.2 · Shaping and rendering used different fonts — **reproducibility defect**
+
+**OBSERVED, measured before the fix:**
+
+```
+render() with a VALID font_file  -> faffe232d6430ce4…
+render() with a BOGUS font_file  -> faffe232d6430ce4…    (identical — the file was ignored)
+pango-view with a family name that does not exist -> rendered anyway, no error
+```
+
+The validity screen shaped with `hb-shape --font-file=<exact file>`; the rasteriser called
+`pango-view --font="<family name>"`, which resolves through fontconfig. `render()` ignored the
+pinned file entirely, and a nonexistent family produced a silent fallback rather than an error.
+
+**Why it matters.** Every "this difference is visible" decision was made in one font while the
+committed PNG was drawn through whatever another lookup happened to return. On this machine both
+landed on Kohinoor, so nothing was actually wrong in the built battery — but nothing guaranteed it,
+and on a different machine the two could diverge without any error being raised.
+
+**What was done.** `hb-view` replaces `pango-view`. It is HarfBuzz's own rasteriser, takes a font
+**file** rather than a family, and accepts the same `--face-index`, so the shaping behind the
+pixels is the shaping we measured. A missing font raises `FontMissing` and stops the build; there
+is no fallback face by design. Provenance — font path, **font SHA-256**, face index, `hb-shape` and
+`hb-view` versions, point size, margin, colours — is recorded in every `build-summary.json`.
+
+**The font is deliberately not committed.** `/System/Library/Fonts/Kohinoor.ttc` is a proprietary
+macOS asset and redistributing it is a licence question we have no basis to answer. Its identity is
+pinned by hash instead, so a future run can prove it used the same bytes or discover that it did
+not. Documentation that claimed portability has been corrected: the battery is deterministic *for a
+given environment*, and that environment is now stated with hashes.
+
+### 5.3 · Visibility was gated on glyphs, not pixels — **logical defect, with a live example**
+
+**OBSERVED.** Different glyph sequences do not imply different pixels:
+
+```
+सुबह         -> [uni0938=0+680|uni0941=0+0|uni092C=2+567|uni0939=3+507]
+सु‌बह (ZWNJ)  -> [uni0938=0+680|uni0941=0+0|space=2+0|uni092C=3+567|uni0939=4+507]
+```
+
+Genuinely different after NFC. **Different glyph sequences** — there is an extra zero-advance glyph.
+**Byte-identical PNGs.**
+
+**Why it matters.** The glyph-only gate would have admitted this as a valid mismatch, and then
+scored a checker wrong for correctly reporting that the two pictures are the same — the same defect
+the nukta screen was built to prevent, arriving through the door that was supposed to prevent it.
+
+**What was done.** The gate moved off glyph sequences. Rejection reasons are `canonical_equal`,
+`raster_identical` and `rendering_error`. Glyph comparison is retained and recorded as a diagnostic,
+so disagreements between the two are visible. Screening renders into a process-lifetime scratch
+directory that is deleted on exit, so no temporary image reaches the repository.
+
+**The first fix went one step too far, and §5.8 corrects it.** It compared the SHA-256 of the
+encoded PNG file, which is a different question again.
+
+**Honest note on impact:** on the current 53-word pool the criteria never disagreed — 1,834
+candidates pass, 2 are rejected `canonical_equal`, **0** `raster_identical`. The built battery would
+have been the same under any of the three tests. What changed is that the claim the battery makes is
+now the claim it verifies.
+
+### 5.4 · A plausibility hole put broken strings in the hard stratum — **found while fixing 5.3**
+
+**OBSERVED.** Two hard items rendered strings the shaper marks as invalid with a dotted circle
+(U+25CC): `इं्लीश` (deleting the first consonant of `इंग्लीश` leaves a virama hanging off an
+anusvara) and `ॉम्बे` (from `बॉम्बे`, opening with U+0949 — a vowel sign the rule's list did not
+contain).
+
+**Why it matters.** A dotted circle is unmistakable; any checker rejects it on sight. Counting such
+an item as an autocorrection opportunity inflates the hard stratum with items that test nothing.
+Both were in the hard stratum, which is the only stratum the iid reference figure is quoted on.
+
+**What was done.** Two rules, with the shaper having the final word: the string rule now requires a
+virama to sit *between* consonants, and **any string the shaper draws with a dotted circle is
+implausible by definition**. Asking the shaper what it actually drew beats asking us what we think
+is legal. Visibly-broken strings are still kept — a checker that misses them is unusable — but they
+are always assigned `corrupt_target`, so the malformation sits in the string we ask about and never
+in the image. The hard stratum is now entirely plausible with clean shaping.
+
+**A near-miss worth recording.** Widening the vowel-sign set to catch `ॉम्बे` reintroduced the old
+`तोड़ा` bug within minutes, because U+093C NUKTA sits inside the numeric run of vowel signs. The
+regression test from the first design pass caught it immediately. That is the second time this
+exact word has caught a rule change.
+
+### 5.5 · `nfc()` did not do what the contract said
+
+**OBSERVED.** `nfc()` performed `unicodedata.normalize("NFC", s).strip()`, while the contract said
+"NFC and nothing else".
+
+**Why it matters.** In a battery whose entire subject is *exactness*, a comparison primitive that
+quietly does more than its name says is the wrong kind of surprise. Hidden here, it also meant the
+whitespace decision was never argued or tested.
+
+**What was done.** Three separately named, separately tested rules: `nfc()` is NFC only;
+`strip_outer_whitespace()` is a **transport** rule applied at ingest (annotation-file artefacts) and
+at response parsing (chat-transport artefacts), never internally; `canonical_equal()` is the
+comparison predicate and does **not** strip. Internal whitespace is a real difference: `सुबह की`
+and `सुबहकी` compare unequal.
+
+### 5.6 · The language was "exact"; the operation is *canonically* exact
+
+Corrected in the contract and README. Two encodings of the same nukta letter draw the same pixels,
+so treating them as different would penalise a checker for correctly reporting what it saw. Saying
+"character-for-character identity" without that caveat would have been a promise the code
+deliberately does not keep — for a good reason that should be stated rather than buried.
+
+### 5.7 · Repeat consistency was attached to "the leading checker"
+
+**Why it matters.** That wording left open the reading that a checker could inherit a qualification
+from another checker's stability. It cannot: stability is a property of the instrument.
+
+**What was done.** A screening pass may rank and shortlist but produces **no qualification status of
+any kind**. Any checker that receives a status must itself complete ≥3 full passes across the whole
+battery in both shapes. A checker that was only screened is recorded as **"screened, not
+qualified"**. The cost estimate rose accordingly (§ METRICS), because repeats now attach to every
+qualifying checker rather than to one leader.
+
+### 5.8 · The visibility gate compared file bytes, not pixels — **second review pass**
+
+**OBSERVED.** Fix 5.3 replaced the glyph gate with `sha256(encoded PNG)`. But PNG is a container:
+the same picture can be written as many byte streams. Measured, starting from a real battery render:
+
+```
+hb-view render of सुबह                       file hash A
+re-encode of its own decoded pixels, zlib 1  file hash B
+re-encode, zlib 9, plus a tEXt chunk         file hash C
+                                             -> one pixel fingerprint for all three
+```
+
+**Why it matters.** It is the same error as the glyph gate, from the other side. A glyph gate calls
+identical pictures different because an invisible character changed the glyph run; a file-hash gate
+calls identical pictures different because the encoder changed. Both would admit a pair as a test
+item and then mark a checker **wrong** for correctly reporting that the two pictures match.
+
+**What was done.** A new `pngraster.py` decodes PNG to a canonical RGBA8 raster using stdlib `zlib`
+only — neither Pillow nor numpy is present on this machine, and adding an image library to a battery
+whose point is pinned local tooling would be a poor trade. `pixel_fingerprint()` hashes dimensions,
+pixel format and pixel data together, and `is_valid_mismatch()` decides `raster_identical` on that.
+
+Two hashes are now kept and named so they cannot be confused:
+
+| | Question it answers |
+|---|---|
+| `image_file_sha256` | **artifact identity** — did a checker read the exact file we shipped? |
+| pixel fingerprint | **visual identity** — do these two pictures look different? |
+
+The decoder is deliberately strict: interlaced PNGs and anything else it does not fully implement
+raise `UnsupportedPNG` rather than returning a guess, because a wrong raster would corrupt every
+visibility decision with no visible symptom. Its dimensions were cross-checked against `sips`.
+
+**Impact on the battery: none.** Item-for-item, the build is identical to the file-hash build — all
+90 distinct image files have 90 distinct file hashes *and* 90 distinct pixel fingerprints. What
+changed is, again, that the claim now matches the check.
+
+### 5.9 · "Genuinely independent" was an overclaim — **second review pass**
+
+**OBSERVED.** After fix 5.5, the design said 37 distinct base words gave "37 genuinely independent
+hard chances", and quoted a Clopper-Pearson bound over them.
+
+**Why it matters.** One item per word removes the most obvious *within-word* correlation. It does
+not establish independent, identically distributed Bernoulli trials. A checker blind to anusvara is
+blind to it on every word carrying one; errors may remain correlated across words, diacritics,
+failure classes and lexical patterns, and the 53 words come from a single dataset lineage. Presented
+as independence, the figure reads as an inference about a checker when it is a modelling assumption
+we simply adopted.
+
+**What was done.** The claim is separated into two things that were being conflated:
+
+- **The qualification gate is deterministic** — *zero false passes*. It needs no probability model
+  and is what a checker is actually judged on.
+- **The Clopper-Pearson figure is a reference calculation** used to size the battery, carrying its
+  assumption in every field name: `iid_reference_upper_bound_if_zero_false_passes_95pct`,
+  `hard_opportunities_for_5pct_iid_reference`,
+  `validated_base_words_planning_target_for_5pct_iid_reference`, plus an explicit
+  `independence_status: "NOT ESTABLISHED. …"`.
+
+The sanctioned wording is now: *under an iid / exchangeable Bernoulli opportunity model, zero false
+passes in 37 hard opportunities corresponds to a one-sided 95% reference upper bound of ~7.8%* —
+followed by the statement that EVAL-005 does not establish that model, that 7.8% is not a universal
+checker error bound, and that 84–90 words is a **planning target** for the calculation rather than
+proof of a sub-5% real-world rate.
+
+A test now greps every EVAL-005 source and document for independence language and fails if any of it
+returns. The Checker Contract's line about execution isolation was also corrected: keeping items from
+seeing each other prevents **context leakage**; it does not make outcomes "statistically independent".
+
+### 5.10 · The PNG decoder was only partly faithful — **third review pass**
+
+**OBSERVED.** `pngraster.py` parsed the PNG `tRNS` transparency chunk but applied it **only to
+indexed-colour images**. For grayscale (colour type 0) and truecolour (colour type 2), `tRNS` marks
+one sample value fully transparent and materially changes the RGBA raster — and it was being
+ignored. Two further paths were also only partly faithful:
+
+- **16-bit samples** were truncated to their high byte, so two 16-bit images differing only in their
+  low bytes would produce the **same** pixel fingerprint;
+- **colour-management chunks** (`gAMA`, `sRGB`, `iCCP`, `cHRM`) were skipped silently, and `acTL`
+  (APNG) would have been decoded as its default frame with the rest dropped.
+
+**Why it matters.** The decoder's whole contract is *fail closed* — the module docstring said so.
+Silently fingerprinting a transparent image as opaque is the one failure mode it exists to prevent,
+and it would be invisible: the number would simply be wrong. This is the same class of error as the
+glyph gate and the file-hash gate, arriving a third time through the component built to fix them.
+
+**What was done — narrowed, not expanded.** The battery's own images are 8-bit grayscale,
+non-interlaced, with `bKGD` and no `tRNS`, so the smallest safe fix was to make the supported
+contract explicit and refuse everything outside it rather than grow a general-purpose PNG library:
+
+| | |
+|---|---|
+| **Accepted** | non-interlaced; bit depths 1/2/4/8 in spec-legal colour-type combinations; colour types 0/2/3/4/6; **`tRNS` for indexed images only**, faithfully applied per index; ancillary chunks that cannot change a decoded raster (`bKGD`, `tEXt`, `pHYs`, …) |
+| **Refused** | `tRNS` on grayscale or truecolour (changes alpha, not implemented); `tRNS` on types 4/6 (spec forbids it, so the file is not what it claims); **bit depth 16** (would be truncated); illegal depth/colour combinations; indexed without a palette; `gAMA`/`sRGB`/`iCCP`/`cHRM`/`acTL`; any unrecognised **critical** chunk |
+
+Unrecognised *ancillary* chunks are still skipped — that is exactly what the PNG specification's
+ancillary bit exists to permit, and `hb-view` relies on it.
+
+**Regression coverage proves the disjunction the Controller asked for**: a PNG carrying a
+visual-affecting transparency feature is either **decoded correctly** or **refused**, never
+fingerprinted as if transparency did not exist. Indexed + `tRNS` decodes with alpha applied and
+produces a **different** fingerprint from the same image without it; grayscale + `tRNS`, truecolour
++ `tRNS` and RGBA + `tRNS` are all refused.
+
+**Impact on the battery: none.** All 90 images still decode, and every count is unchanged. What
+changed is that the decoder now refuses the cases it was previously getting quietly wrong.
+
+### 5.11 · "A qualification at a stated bound" — **third review pass**
+
+The qualification rule said passing means *"admitted for further evaluation at a stated bound"*. But
+EVAL-005 explicitly does not establish that the Clopper-Pearson value is an inferential bound on a
+checker (§5.9), so that phrasing quietly reinstated the claim §5.9 had removed.
+
+Now: **passing means the checker satisfied the deterministic qualification gates on this battery.**
+The iid reference calculation is reported separately, under its stated modelling assumption, and is
+never part of what "passing" means. Every other document was swept for the same slippage — "the only
+stratum a bound is quoted on", "to support a ≤5% bound", "the bound-bearing one" — and each rewritten
+to name the reference figure rather than a bound.
+
+### 5.12 · "Nothing has been run" was imprecise — **third review pass**
+
+Several documents said the battery had not been run. That is wrong as written: the deterministic
+local build, the rendering and the test suite **have** been run, repeatedly, and this document quotes
+their results. What has not happened is a checker/model/API qualification run or any human
+validation.
+
+All active EVAL-005 documents now say exactly that: *no checker/model/API qualification run and no
+human validation have occurred; only deterministic local construction, rendering and test
+verification have been run.* The distinction matters because the local results are real evidence
+about the battery's construction, and describing them as "nothing" would understate what is
+verified while doing nothing to clarify what is not.
+
+---
+
+## 6 · The human requirement, and why it is small
+
+**Not needed at all**, because ground truth is constructed: establishing what an image says,
+resolving reader disagreement, adjudication, exact-agreement reference, the second reader.
+
+**Still needed — ~1.5 hours, once**, and now **prepared as blank sheets** in
+`eval/battery/devanagari-exactness/native-validation/`:
+
+| Task | Time | Why |
+|---|---|---|
+| Validate the base word list (53 rows, stable ids) | 45–75 min | autocorrection only happens *toward* a plausible word; if a base is not a real word, the item does not test what we think |
+| Perceptibility sample (25 pairs, round-robin across groups, hard items first) | ~20 min | the build proves the final pixels differ; it does not prove a person can **see** it at 40pt |
+| Rendering sanity check (20 clean renders) | ~10 min | so we are not testing checkers against a broken font |
+
+**Zero of it has been consumed.** Every answer column is blank; no person has been asked anything.
+
+**One reader suffices**, and that is structural rather than a compromise: **none of these three
+tasks produces ground truth.** A mistake degrades the battery; it cannot corrupt the answer key,
+because the answer key does not come from a human.
+
+**Word ids are stable** (`w-<12 hex of sha256(NFC(word))>`), so validation done today survives the
+list being expanded — which it will need to be (§7).
+
+---
+
+## 7 · What the battery can support statistically — **corrected twice**
+
+### Error 1 — the bound was computed over correlated items
+
+The builder allowed **up to four mismatch items from one base word** (`MAX_ITEMS_PER_BASE = 4`) and
+then quoted a binomial zero-failure upper bound over the item count. Four deterministic
+perturbations of `सुबह` are not four separate chances to catch a checker out: a model that reads
+toward the plausible word will do it for all four.
+
+**Fixed structurally:** every mismatch item sits on a distinct base word, and a test asserts that
+hard items and distinct hard base words are equal. Class coverage was **not** sacrificed — the
+allocation is a deterministic maximum bipartite matching between failure classes and base words, so
+scarce classes claim a word before common ones crowd them out. All **20 classes across 5 groups**
+remain represented at 53 words.
+
+### Error 2 — distinct words were then described as "independent trials"
+
+Removing within-word correlation is not the same as establishing iid or exchangeable Bernoulli
+trials, and the design briefly claimed it was. See §5.9. The claim is now split:
+
+| | |
+|---|---|
+| **Qualification gate** | *Zero false passes.* Deterministic; assumes no probability model. |
+| **Clopper-Pearson figure** | An **iid reference calculation** for sizing the battery. Not an inference about any checker. |
+
+### The numbers
+
+| | Value |
+|---|---:|
+| Items | 106 (53 match / 53 mismatch) |
+| Mismatch items / **distinct mismatch base words** | 53 / **53** |
+| Hard items / **distinct hard base-word opportunities** | 37 / **37** |
+| iid reference upper bound, zero false passes, hard stratum | **7.8%** |
+| Same, all mismatches — *contains the above, not separate evidence* | 5.5% |
+| Opportunities for a sub-5% reference figure | **59** |
+| Base-word planning target | **84–85** |
+
+**The earlier "~85–90 words" recommendation survives recomputation.** It was not carried over: 84 is
+the arithmetic minimum, 85 is what the builder derives (`ceil(59 / 0.7)`), and 90 buys margin against
+words being rejected during validation. Neither the 7.8% nor the 84–90 figure changed in the second
+review pass; what changed is what they are said to mean.
+
+### ⚠ What the figure is not
+
+- **Not a demonstrated bound.** It assumes iid / exchangeable opportunities, which EVAL-005 does not
+  establish.
+- **Not a universal checker error bound**, and not an estimate of real-world error.
+- **Not made true by more words.** A larger battery tightens the calculation; it does not supply the
+  assumption.
+- **Not a per-class rate.** At ~2.6 items per class, one miss moves a "rate" by 30–50 points. Those
+  are diagnostic signals only.
+
+### The pool cannot supply the planning target — **updated for merged Resources state**
+
+**OBSERVED.** Merged repository-local material yields **53** distinct Hindi lexical items, all from
+the EVAL-003 candidate manifest. The corpus manifest's 34,786 records carry `source_labels_ref:
+null`. The only other committed Devanagari of volume is the annotator-disagreement file (~50
+strings) — *specifically the contested ones*, where at least one member of each pair is wrong by
+construction and several are Marathi.
+
+**Resources PR #5 is merged**, and it changes what we know: **3,924 of 3,925 single-word crops are
+transcription-resolvable** (IndicSTR12 2,711/2,711; IIIT-ILST 1,213/1,214), by two independent
+routes. Stated precisely: that establishes the **labels are recoverable**, not that the strings are
+in git — the raw lexical material may still live only in the git-ignored Resources corpus, and how
+many *distinct* Hindi words it yields is **unknown**.
+
+Nor would they be validated words. They have exactly the status of the 53 already in use: one
+annotation team's observation reused as a lexicon, each still needing the Hindi lexical validation.
+
+**Consequence.** `eval/tasks/EVAL-005-RESOURCES-REQUEST.md` now asks for a **check of existing local
+material first**, and requests no acquisition. IndicSTR12 and IIIT-ILST remain one evaluation
+lineage; BSTD stays the genuine cross-lineage reserve and is not to be spent on a word list.
+
+This is optional, not blocking. A run at 53 words is possible; it reports the figure at 37
+opportunities.
+
+---
+
+## 8 · What this battery cannot do — the boundary
+
+A renderer always draws **well-formed** glyphs. No string will make it produce a half-formed
+ligature, fused letters, a broken headline bar, or a stroke between two identities. Those are real
+generator failures — one of ours is a sign whose misspelling **drifted between frames of a single
+clip** — and no Unicode substitution reproduces them.
+
+They are specified as **Class B** in `GENERATED-GLYPH-STRESS-LAYER.md`, with a recommended route
+(deterministic corruption of clean renders, so the pixels stay known by construction) and an honest
+note that programmatic damage is not the same distribution as a diffusion model's failures.
+
+**Consequence for any result:** a checker that fails this battery cannot be trusted — it
+autocorrects *well-formed* wrong text, the easier case. A checker that passes has cleared a
+**necessary but not sufficient** bar, and that sentence must travel with the number.
+
+---
+
+## 9 · What remains uncertain
+
+- **Whether the base words are all real, well-formed Hindi.** Still the single most important open
+  question. The sheet is prepared; no reader has seen it.
+- **Whether every raster-visible difference is perceptible** to a person at 40 point. Unmeasured.
+- **Whether "plausible" is strong enough.** The plausibility rules test whether a string is a
+  well-formed Devanagari **cluster**, not whether it is a lexically likely misspelling. `ककालका`
+  (doubled initial consonant, from `कालका`) passes, though no Hindi word looks like that. Defensible
+  — duplicated letters are a real generator failure and the question is about drawing, not the
+  lexicon — but it means the hard stratum is "well-formed and visually subtle" rather than "a
+  mistake a human would plausibly make". The perceptibility sample is where a reader could tell us
+  some items are too easy.
+- **Whether font choice changes results.** One font, pinned by hash. A different face could make a
+  difference easier or harder to see; unmeasured, and now at least auditable.
+- **How correlated a checker's errors actually are** across words, diacritics and failure classes.
+  Unmeasured, and it is precisely what would have to be understood before any figure from this
+  battery could be turned into a real-world error estimate.
+- **How many distinct Hindi words the resolvable crop labels actually yield.** 3,924 crops are
+  transcription-resolvable, but the strings are not in git and may repeat one another.
+- **Whether the shape-1 / shape-2 comparison behaves as hypothesised** — that showing the target
+  invites autocorrection. Both shapes are now genuinely different experiments, which is what makes
+  the comparison meaningful; the outcome is still a hypothesis.
+- **Whether passing predicts anything about malformed generated glyphs.** Untested by construction.
+- **How many distinct Hindi words Resources can actually supply**, and whether tightening the iid
+  reference figure below 5% is worth the effort at all.
+- **Whether the proposed thresholds are right.** 0.95 repeat consistency, ≤10% false fail, ≤5%
+  refusal are judgement calls with no empirical backing in this repository.
+- **Real per-call pricing.** The cost estimate rests on an old recorded figure that must be
+  re-verified before any run.
+
+---
+
+## 10 · Scope and stop state
+
+No paid checker call, no image or video model call, no network request to any model, no human time,
+no Capability Registry entry, no BSTD use, no Marathi reserve use, and no change to any approved
+EVAL-001/002/003 artifact.
+
+EVAL-004 remains stopped: its Reader-A pilot is not promoted to ground truth, and no checker is
+qualified, ranked or entered from it.
+
+One stop condition fired and is **reported, not resolved**: the corrected battery-size planning
+target needs lexical material the repository does not hold. Eval did not go looking for it, and the
+request to Resources now asks for a check of existing local material rather than any acquisition.
