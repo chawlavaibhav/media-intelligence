@@ -1,0 +1,479 @@
+# CANON-003 book 10 (Lane B) — Murch, "In the Blink of an Eye" pp.1-25. SPEC-05 ontology, source-local.
+# Existing relation types and term kinds only. distinct_from permitted here per Controller decision 3.
+#
+# No cross_source_concept. This file records one source, and that kind requires two or more
+# independent origins. One genuine cross-source candidate was noticed and is NOT acted on here —
+# see the note at the foot of this file and the book 10 findings.
+
+source_id: murch_blink_p1_25_editing_decisions
+extraction_date: 2026-08-24
+
+terms:
+
+# ── the six criteria, as the source names them ──────────────
+- term_id: t_murch_c003_0001
+  term: emotion
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    Whether a cut is true to the emotion of the moment. The source's first criterion, weighted 51%,
+    to be preserved at all costs, and the thing it says an audience finally remembers.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 18}
+  arising_from: [sk_murch_c003_0020]
+
+- term_id: t_murch_c003_0002
+  term: story
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    Whether a cut advances the story. The second criterion, weighted 23%. The source gives no gloss.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 18}
+  arising_from: [sk_murch_c003_0021]
+
+- term_id: t_murch_c003_0003
+  term: rhythm
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    Whether a cut occurs at a moment that is rhythmically interesting and "right". Third criterion,
+    weighted 10%. The source puts "right" in quotation marks and does not define it.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 18}
+  arising_from: [sk_murch_c003_0022]
+
+- term_id: t_murch_c003_0004
+  term: eye_trace
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    "The concern with the location and movement of the audience's focus of interest within the
+    frame." Fourth criterion, weighted 7%. The source presents the name as a coinage — "what you
+    might call".
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 18}
+  arising_from: [sk_murch_c003_0023]
+
+- term_id: t_murch_c003_0005
+  term: planarity
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    "The grammar of three dimensions transposed by photography to two (the questions of stage-line,
+    etc.)". Fifth criterion, weighted 5%.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 18}
+  arising_from: [sk_murch_c003_0024]
+
+- term_id: t_murch_c003_0006
+  term: two_dimensional_plane_of_screen
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The name the source gives the fifth criterion in its numbered list, where the surrounding prose
+    calls the same criterion planarity.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 18}
+  arising_from: [sk_murch_c003_0024]
+
+- term_id: t_murch_c003_0007
+  term: stage_line
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The third name the source uses for the fifth criterion, in the worked example of the masking
+    asymmetry and in the list of lower-order items an audience tends not to notice.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 19, page_end: 20}
+  arising_from: [sk_murch_c003_0024, sk_murch_c003_0028]
+
+- term_id: t_murch_c003_0008
+  term: three_dimensional_continuity
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    "The three-dimensional continuity of the actual space (where people are in the room and in
+    relation to one another)". Sixth and lowest criterion, weighted 4%, placed there by the source
+    against what it says film schools teach first.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "The Rule of Six", page_start: 17, page_end: 18}
+  arising_from: [sk_murch_c003_0025]
+
+# ── the source's other named concepts ───────────────────────
+- term_id: t_murch_c003_0009
+  term: shadow_splice
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    A splice made, considered, and then undone or lifted from the film. The source estimates roughly
+    fifteen for every splice kept.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Cuts and Shadow Cuts", page_start: 4}
+  arising_from: [sk_murch_c003_0002]
+
+- term_id: t_murch_c003_0010
+  term: discontinuity
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: property
+  definition_in_origin_frame: >
+    The condition of a film being shot in separated pieces rather than continuously. The source calls
+    it the central fact of the production phase — "Discontinuity is King" — and the cinematic
+    equivalent of the discovery of flight.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Why Do Cuts Work?", page_start: 7}
+  arising_from: [sk_murch_c003_0008]
+
+- term_id: t_murch_c003_0011
+  term: bad_bit
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    Material that should be cut out. The source insists the content of the term is film-specific —
+    what is bad in one film may be good in another — and proposes that making a film can be seen as
+    the search to identify what, for that film, is uniquely a bad bit.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "\"Cut Out the Bad Bits\"", page_start: 10, page_end: 11}
+  arising_from: [sk_murch_c003_0011]
+
+- term_id: t_murch_c003_0012
+  term: mental_jarring
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    The comparatively disturbing effect produced when the displacement between two images is neither
+    subtle nor total, so it reads as neither motion nor a change of context and the two readings
+    collide. The source also calls it a jump.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Why Do Cuts Work?", page_start: 7}
+  arising_from: [sk_murch_c003_0007]
+
+- term_id: t_murch_c003_0013
+  term: seeing_around_the_edge_of_the_frame
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    The inability of anyone present at the shoot to view a take without imagining everything that was
+    there, physically and emotionally, just beyond what was actually photographed.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Seeing Around the Edge of the Frame", page_start: 23}
+  arising_from: [sk_murch_c003_0035]
+
+- term_id: t_murch_c003_0014
+  term: spectators_rather_than_participants
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    The state an audience is pushed into when a film supplies more detail than necessary, past the
+    point at which their imagination would otherwise be engaged.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Most with the Least", page_start: 15}
+  arising_from: [sk_murch_c003_0016]
+
+- term_id: t_murch_c003_0015
+  term: constrained_and_resentful
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    What viewers eventually feel under the constant pressure of an overactive editor's hand on the
+    backs of their necks — the cost the source attaches to pursuing complete control of attention.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Most with the Least", page_start: 16}
+  arising_from: [sk_murch_c003_0018]
+
+- term_id: t_murch_c003_0016
+  term: misdirection
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Causing the audience to look where you want them to look rather than where the work is being
+    done — the magicians' term, which the source says an editor can, does and should apply.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {chapter: "Misdirection", page_start: 21}
+  arising_from: [sk_murch_c003_0033]
+
+- term_id: t_murch_c003_0017
+  term: sacrifice_your_way_up_from_the_bottom
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    When a cut cannot satisfy all six criteria, give them up one item at a time starting from the
+    lowest-ranked.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {chapter: "The Rule of Six", page_start: 18, page_end: 20}
+  arising_from: [sk_murch_c003_0027]
+
+- term_id: t_murch_c003_0018
+  term: do_the_most_with_the_least
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Produce the greatest effect in the viewer's mind by the least number of things on screen. The
+    source states it as the underlying principle across every craft of filmmaking, with the emphasis
+    on try.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {chapter: "Most with the Least", page_start: 15}
+  arising_from: [sk_murch_c003_0015]
+
+- term_id: t_murch_c003_0019
+  term: paper_dolls_beside_the_editing_screen
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Two cut-out figures a few inches high placed either side of the editing screen, sized so that the
+    screen reads as if it were thirty feet wide, restoring theatrical scale to a judgement made on a
+    miniature.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {chapter: "Misdirection", page_start: 22}
+  arising_from: [sk_murch_c003_0034]
+
+- term_id: t_murch_c003_0020
+  term: cellular_wall_between_shooting_and_editing
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    A deliberate interval of about two weeks between the end of shooting and the first cut, spent on
+    things with nothing to do with the film, so the director can discharge the surplus of
+    beyond-the-frame information.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [unknown]
+  source_ref: {chapter: "Seeing Around the Edge of the Frame", page_start: 24, page_end: 25}
+  arising_from: [sk_murch_c003_0038]
+  extractor_note: >
+    `executable_by: [unknown]` is honest rather than lazy. SPEC-05's vocabulary —
+    physical_production, generative_respecification, deterministic_composite, human_edit, unknown —
+    describes operations on material. This remedy is a scheduling and organisational practice
+    performed on a PERSON, not on footage, and none of the four positive values fits it. Recorded as
+    LB-11.
+
+- term_id: t_murch_c003_0021
+  term: see_only_whats_on_the_screen
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: remedy
+  definition_in_origin_frame: >
+    Judging footage by what an audience will see, so that images are freed from the context of their
+    creation — using moments shot under duress and rejecting moments that cost money and pain.
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit]
+  source_ref: {chapter: "Seeing Around the Edge of the Frame", page_start: 24}
+  arising_from: [sk_murch_c003_0037]
+
+- term_id: t_murch_c003_0022
+  term: ombudsman_for_the_audience
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: entity
+  definition_in_origin_frame: >
+    The source's name for the editor's role: the person who represents the interests of an audience
+    that knows nothing about the conditions of production.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Seeing Around the Edge of the Frame", page_start: 24}
+  arising_from: [sk_murch_c003_0037]
+
+- term_id: t_murch_c003_0023
+  term: overactive_editor
+  origin: source
+  origin_ref: murch_blink_p1_25_editing_decisions
+  kind: problem
+  definition_in_origin_frame: >
+    An editor who changes shots too frequently — likened to a tour guide who cannot stop pointing
+    things out — pursuing complete control of the viewer's attention.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {chapter: "Most with the Least", page_start: 16}
+  arising_from: [sk_murch_c003_0018]
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 2 — RELATIONSHIPS
+# ═════════════════════════════════════════════════════════════
+relationships:
+
+- from: t_murch_c003_0005
+  to: t_murch_c003_0006
+  relation: maps_to
+  confidence_basis: source_stated
+  note: >
+    Planarity in the prose and two-dimensional plane of screen in the numbered list are the same
+    criterion, rank 5. The source uses both within one page without noting the change. Kept as two
+    terms because SPEC-05 forbids overwriting a source's own words, and related rather than merged.
+
+- from: t_murch_c003_0005
+  to: t_murch_c003_0007
+  relation: maps_to
+  confidence_basis: source_stated
+  note: >
+    Stage-line is the third name for the same rank-5 criterion, used in the worked example and in the
+    list of lower-order items. The source glosses planarity AS "the questions of stage-line, etc.",
+    so the identification is the source's own.
+
+- from: t_murch_c003_0012
+  to: t_murch_c003_0010
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    A negative finding worth recording. Mental jarring and discontinuity both name a break between
+    images and it would be easy to treat them as one concept. They are close to opposites in this
+    source: discontinuity is the condition the whole practice depends on and is called King, while
+    mental jarring is the specific failure that occurs when a displacement is NEITHER continuous nor
+    fully discontinuous. Checked and rejected as a match.
+
+- from: t_murch_c003_0014
+  to: t_murch_c003_0015
+  relation: same_mechanism
+  confidence_basis: extractor_judgement
+  note: >
+    Both are what happens when the film does too much of the audience's work — one through excess
+    detail, one through excess cutting. The source gives them the same underlying account: the
+    audience's participation is displaced. It never states the connection, so this is our reading.
+
+- from: t_murch_c003_0023
+  to: t_murch_c003_0016
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    A second negative finding, and the more useful one. The overactive editor is a failure mode and
+    misdirection is a recommended practice, yet both consist of the editor directing where the
+    audience looks. The source recommends one and warns against the other within six pages and never
+    draws the boundary. Recording them as checked-and-distinct preserves the problem instead of
+    hiding it inside a merged term.
+
+- from: t_murch_c003_0011
+  to: t_murch_c003_0012
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: >
+    A mental jarring is one kind of bad bit, but the source's bad bit is deliberately film-relative
+    and much wider — anything that should be cut out of this particular film. Our reading of two
+    terms the source never relates.
+
+- from: t_murch_c003_0021
+  to: t_murch_c003_0013
+  relation: same_mechanism
+  confidence_basis: source_stated
+  note: >
+    Seeing only what is on the screen is the direct answer to seeing around the edge of the frame:
+    the same informational surplus, once named as a distortion and once as the discipline that
+    removes it. The source states the pairing.
+
+- from: t_murch_c003_0020
+  to: t_murch_c003_0013
+  relation: same_mechanism
+  confidence_basis: source_stated
+  note: >
+    The two-week barrier addresses the same surplus, applied to the director rather than the editor.
+
+- from: t_murch_c003_0001
+  to: t_murch_c003_0008
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Recorded because the pair is the source's own worked trade-off — the highest and lowest criteria,
+    resolved in favour of emotion. Marking them explicitly distinct guards against a later pass
+    treating the six criteria as interchangeable members of one list, which is exactly what the
+    ranking exists to deny.
+
+# ═════════════════════════════════════════════════════════════
+# LAYER 3 — CONCEPTS
+# ═════════════════════════════════════════════════════════════
+concepts:
+
+- concept_id: sc_murch_rule_of_six_criteria
+  kind: source_specific_concept
+  label: the_six_criteria_for_an_ideal_cut
+  origin_ref: murch_blink_p1_25_editing_decisions
+  origin: source_stated
+  definition: >
+    The source's own generalisation over its own vocabulary: six named, numbered, weighted criteria
+    for an ideal cut. Valid with one origin and must not be presented as agreement between sources.
+    The ORDER is part of the concept, not incidental to it — the source states the list is a list of
+    priorities — and the weights are recorded on the member terms because this layer has nowhere to
+    put them.
+  children_terms: [t_murch_c003_0001, t_murch_c003_0002, t_murch_c003_0003, t_murch_c003_0004,
+                   t_murch_c003_0005, t_murch_c003_0008]
+
+- concept_id: sc_murch_audience_position
+  kind: source_specific_concept
+  label: the_editor_as_occupant_of_the_audiences_position
+  origin_ref: murch_blink_p1_25_editing_decisions
+  origin: extractor_inferred
+  definition: >
+    The source's cluster of role terms and practices defining the editor by informational position
+    rather than by skill: ombudsman for the audience, misdirection, seeing only what is on the
+    screen, and the barrier that keeps production knowledge out. Marked extractor_inferred because
+    the source states each part and never groups them.
+  children_terms: [t_murch_c003_0022, t_murch_c003_0016, t_murch_c003_0021, t_murch_c003_0020,
+                   t_murch_c003_0013]
+
+- concept_id: cc_audience_participation_displaced
+  kind: canonical_concept
+  label: audience_participation_displaced
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  definition: >
+    Ours, for retrieval. Groups the failures in which the film does work the audience should have
+    done: excess detail turning participants into spectators, and an overactive editor's constant
+    direction producing constraint and resentment. The two arise from different excesses and the
+    source never relates them, so this is a retrieval convenience and not a claim that they are one
+    failure.
+  children_terms: [t_murch_c003_0014, t_murch_c003_0015, t_murch_c003_0023]
+
+# ═════════════════════════════════════════════════════════════
+# NOTED AND NOT ACTED ON — a genuine cross-source candidate
+# ═════════════════════════════════════════════════════════════
+# `eye_trace` (t_murch_c003_0004) and the `eye_trace` term extracted from Grammar of the Edit in this
+# same lane name closely similar things, and unlike the Grammar of the Shot / Grammar of the Edit
+# pair these are genuinely independent origins: different authors, different publishers, and no
+# relationship between the books. That makes them a legitimate candidate for a cross_source_concept
+# under SPEC-05's two-independent-origins rule.
+#
+# No such concept is created here. This file is source-local, cross-source aggregation is the
+# integrator's work under the parallel amendment, and SPEC-05 requires review before a claim of
+# agreement is made. Flagged for the integrator in the book 10 findings.

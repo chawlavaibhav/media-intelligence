@@ -1,0 +1,1840 @@
+# CANON-003 book 10 (Lane B) — Walter Murch, "In the Blink of an Eye", revised 2nd ed. (2001).
+# Printed pages 1-25, complete and contiguous. Fresh SPEC-03 extraction under the CANON-001 V0
+# granularity rule, unchanged. Visual completeness: verified_page_level (the section has no figures).
+#
+# SECTION RATIONALE: printed pp.1-25 covers seven consecutive named sections — Cuts and Shadow Cuts,
+# Why Do Cuts Work?, "Cut Out the Bad Bits", Most with the Least, The Rule of Six, Misdirection, and
+# Seeing Around the Edge of the Frame. It is contiguous, it is the book's theoretical opening, and it
+# contains the Rule of Six in full, which is this source's reason for selection. Nothing was
+# cherry-picked from elsewhere in the book.
+#
+# ON THIS SOURCE'S SHAPE — this is not a textbook. It is "a revised transcription of a lecture on
+# film editing given by Walter Murch ... at Spectrum Films, Sydney, Australia, in October 1988",
+# revised in 1995 and 2001. The consequences are visible throughout and are recorded rather than
+# smoothed over:
+#   - it argues in the first person from one career, mostly one film (Apocalypse Now);
+#   - it reasons by extended analogy — DNA and chimpanzees, a beehive moved two yards, the bumble-bee,
+#     nuclear binding forces, Houdini — and the analogies carry argumentative weight rather than
+#     decorating it;
+#   - it addresses a live audience, hedges aloud ("slightly tongue-in-cheek, but not completely"),
+#     and defers its own central question by fifty pages;
+#   - it contains exactly two numbers derived from counting anything the author did, and one set of
+#     six percentages the author explicitly qualifies as not-quite-serious.
+#
+# ON THE RULE OF SIX AND THE SCHEMA — the ranked list is represented as a SPEC-03 SourceConceptSystem
+# of type `priority_order`, which is an existing structure and fits the ordering. It does NOT carry
+# the interval information: Murch's weights (51/23/10/7/5/4) say emotion is worth more than the other
+# five combined, and `order: 1..6` cannot express that. The weights are preserved verbatim in each
+# criterion's source_terms and claim, and the insufficiency is recorded as evidence in the lane issue
+# file (LB-10). No new structure was invented.
+
+source_id: murch_blink_p1_25_editing_decisions
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# CUTS AND SHADOW CUTS (pp.1-4)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0001
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "editing--even on a \"normal\" film--is not so much a putting together as it is a discovery of a path"
+    - "the overwhelming majority of an editor's time is not spent actually splicing film"
+  concept_label: editing_is_discovering_a_path_not_assembling
+  label_origin: extractor_assigned
+  claim: >
+    Editing is not primarily the act of joining pieces. It is the discovery of a path through the
+    material, and almost none of an editor's working time is spent making splices. The rest goes to
+    screenings, discussions, rewinding, re-screenings, meetings, scheduling, filing trims,
+    note-taking, bookkeeping and deliberative thought — activities that clear and illuminate the path
+    ahead.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      More footage means more possible pathways, the possibilities compound on each other, and each
+      additional possibility demands evaluation time. The splice itself takes seconds; choosing it
+      is the work.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any narrative film; the source generalises from an extreme case to a normal one"
+  caveats:
+    - text: "the source presents Apocalypse Now as a deliberately extreme case, chosen because \"it is frequently at the edges of things that we learn most about the middle\""
+      origin: source_stated
+    - text: "the source concedes the film was unusual on every axis — sensitive subject, daring structure, technical innovation, personal investment — and that few films combine such qualities, which weakens the generalisation it is used to support"
+      origin: source_stated
+    - text: "the supporting figure for a normal film, eight cuts per editor per day, appears only in a footnote and is given no source"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Apocalypse Now: 1,250,000 feet of printed film, a 95-to-1 shooting ratio against an industry average near 20-to-1, working out to 1.47 cuts per editor per day", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0002, note: "shadow splices are part of what the time goes to"}
+    - {relation: generalises, target: sk_murch_c003_0003, note: "the compounding effect of a high shooting ratio"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, empirical_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Cuts and Shadow Cuts"
+    section: null
+    page_start: 1
+    page_end: 4
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0002
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "For every splice in the finished film there were probably fifteen \"shadow\" splices-splices made, considered, and then undone or lifted from the film."
+  concept_label: shadow_splices_outnumber_kept_splices_about_fifteen_to_one
+  label_origin: extractor_assigned
+  claim: >
+    Most of the cuts an editor makes are not kept. On Apocalypse Now roughly fifteen splices were
+    made, considered and then undone or lifted for every splice that survived into the finished film.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "one film, at a 95-to-1 shooting ratio"
+  caveats:
+    - text: "the source says \"probably fifteen\", so the figure is an estimate rather than a count, unlike the 1.47 figure which it says it computed"
+      origin: source_stated
+    - text: "this is the source's own term — a shadow splice is a decision that left no trace in the finished work. There is no record of it anywhere except the editor's memory, which means the ratio cannot be checked by anyone."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0001, note: "where the unaccounted time goes"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Cuts and Shadow Cuts"
+    section: null
+    page_start: 4
+    page_end: 4
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0003
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "The more film there is to work with, of course, the greater the number of pathways that can be considered, and the possibilities compound upon each other and consequently demand more time for evaluation."
+  concept_label: more_footage_compounds_pathways_and_evaluation_time
+  label_origin: extractor_assigned
+  claim: >
+    Post-production time scales with the amount of material, but not linearly: additional footage
+    multiplies the number of considerable pathways, and the possibilities compound on each other, so
+    each increment demands disproportionately more evaluation.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The pathways are combinations, not items, so they compound rather than add.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any film with a high shooting ratio"
+  caveats:
+    - text: "the source says this is true for any film with a high shooting ratio, then attributes most of the actual delay on its example to non-quantitative factors — subject matter, structure, technical innovation and personal investment"
+      origin: source_stated
+    - text: "\"compound\" is asserted, not demonstrated; no comparison of two films at different ratios is offered"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "coverage varying wildly within one film — over 220,000 feet for the Kilgore scenes at roughly 100-to-1, against connecting scenes with only a master shot", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0001, note: "why the path takes so long to find"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Cuts and Shadow Cuts"
+    section: null
+    page_start: 2
+    page_end: 4
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# WHY DO CUTS WORK? (pp.5-9)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0004
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "it represents a total and instantaneous displacement of one field of vision with another, a displacement that sometimes also entails a jump forward or backward in time as well as space"
+    - "nothing in our day-to-day experience seems to prepare us for such a thing"
+  concept_label: the_cut_is_a_total_instantaneous_displacement_unlike_lived_perception
+  label_origin: extractor_assigned
+  claim: >
+    A cut is the total and instantaneous replacement of one field of vision by another, often
+    carrying a jump in time as well as space. Nothing in ordinary experience prepares a viewer for
+    it: from waking to sleeping, perceived visual reality is a continuous stream of linked images,
+    and life on Earth has experienced the world that way for hundreds of millions of years. Edited
+    film confronted human beings with something else only at the beginning of the twentieth century.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, human_visual_perception]
+    conditions: "any cut"
+  caveats:
+    - text: "the source says it would not have been surprising to find that brains had been wired by evolution and experience to reject film editing, and that if so the single-shot film would have become the standard"
+      origin: source_stated
+    - text: "the evolutionary framing is rhetorical rather than evidenced; no perceptual research is cited anywhere in the section"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0005, note: "sets up the question of why cuts work at all"}
+    - {relation: qualified_by, target: sk_murch_c003_0006, note: "the continuity of lived perception is itself a construction from 24 displacements a second"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 5
+    page_end: 6
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0005
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "So the central fact of all this is that cuts do work. But the question still remains: Why? It is kind of like the bumble-bee, which should not be able to fly, but does."
+    - "We will get back to this mystery in a few moments."
+  concept_label: why_cuts_work_is_posed_as_an_open_question
+  label_origin: extractor_assigned
+  claim: >
+    That cuts work is treated by the source as an established fact and as a genuine puzzle. It states
+    the question explicitly — why does a total displacement of the visual field not break the
+    viewer's experience — likens it to the bumble-bee that should not be able to fly, and defers the
+    answer.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, human_visual_perception]
+    conditions: "the whole practice of edited film"
+  caveats:
+    - text: "the source answers this question at printed pages 58-64, by way of John Huston's remark about blinking. That passage is OUTSIDE the span processed here and no part of it has been imported."
+      origin: extractor_observed
+    - text: "recorded as the source's own open question rather than as a gap in the extraction. A transcribed lecture can raise a question and return to it fifty pages later, which means any windowed reading of a source shaped like this may hold a question without its answer."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0004, note: "the puzzle the displacement claim creates"}
+    - {relation: qualified_by, target: sk_murch_c003_0007, note: "a partial mechanism is given for WHICH cuts work, though not for why any do"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 9
+    page_end: 9
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0006
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "film is actually being \"cut\" twenty-four times a second"
+    - "in a continuous shot, the space/time displacement from frame to frame is small enough (twenty milliseconds) for the audience to see it as motion within a context rather than as twenty-four different contexts a second"
+  concept_label: continuous_motion_is_already_twenty_four_displacements_a_second
+  label_origin: extractor_assigned
+  claim: >
+    A continuous shot is not continuous. Each frame is a displacement from the one before, and film
+    is being cut twenty-four times a second. What makes a shot read as motion rather than as
+    twenty-four separate contexts is that the frame-to-frame displacement is small — twenty
+    milliseconds — not that it is absent.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Below a threshold of displacement the viewer integrates successive images as motion within one
+      context. Above it, they re-evaluate the image as a different context.
+  scope:
+    domain_discussed_by_source: [film_editing, human_visual_perception]
+    conditions: "projected motion picture film at twenty-four frames per second"
+  caveats:
+    - text: "the twenty-millisecond figure is the interval between frames at 24fps, offered as the magnitude of the displacement rather than as a measured perceptual threshold"
+      origin: extractor_observed
+    - text: "this reframes the cut as a difference of degree rather than of kind, which is the move that makes the displacement model possible; the source does not flag it as a move"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_murch_c003_0004, note: "continuity of perception is itself built from displacement"}
+    - {relation: generalises, target: sk_murch_c003_0007, note: "the small-displacement case of the three-case model"}
+    - {relation: member_of_system, target: scs_murch_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 6
+    page_end: 6
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0007
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "What we do seem to have difficulty accepting are the kind of displacements that are neither subtle nor total"
+    - "The displacement of the image is neither motion nor change of context, and the collision of these two ideas produces a mental jarring-a jump-that is comparatively disturbing."
+  concept_label: intermediate_displacement_is_the_disturbing_case
+  label_origin: extractor_assigned
+  claim: >
+    Displacement between successive images has three regimes, and only the middle one fails. A small
+    displacement reads as motion within a context. A total displacement forces the viewer to
+    re-evaluate the image as a different context, which they do without difficulty most of the time.
+    A displacement that is neither subtle nor total is read as neither motion nor a change of
+    context, and the collision of the two readings produces a mental jarring — a jump — that is
+    comparatively disturbing. The source's example is cutting from a full-figure master to a slightly
+    tighter shot framing the actors from the ankles up.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The new image is different enough to signal that something has changed, but not different
+      enough to make the viewer re-evaluate its context. Two incompatible readings are triggered at
+      once and neither resolves.
+  scope:
+    domain_discussed_by_source: [film_editing, human_visual_perception]
+    conditions: "any transition between successive images"
+  caveats:
+    - text: "the source's supporting analogy is a beehive: moved two inches the bees are undisturbed, moved two miles they re-orient successfully, moved two yards they are fatally confused because the environment does not seem different enough to prompt re-orientation. The analogy is asserted, not sourced."
+      origin: source_stated
+    - text: "no boundary is given for either threshold. The model says the middle fails without saying where the middle starts, so it explains a failure after the fact rather than predicting one."
+      origin: extractor_observed
+    - text: "this is the section's most transferable claim and its most striking property is that it is NOT a rule about film grammar — it is a claim about a perceptual response to magnitude of change, and would apply to any medium presenting successive images"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a mental jarring-a jump-that is comparatively disturbing"
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "cutting from a full-figure master shot to a slightly tighter shot framing the actors from the ankles up", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0006, note: "the middle regime of the same continuum"}
+    - {relation: member_of_system, target: scs_murch_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 6
+    page_end: 7
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0008
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "Discontinuity is King: It is the central fact during the production phase of filmmaking, and almost all decisions are directly related to it"
+    - "films could be shot discontinuously, which was the cinematic equivalent of the discovery of flight"
+  concept_label: discontinuous_shooting_freed_film_from_time_and_space
+  label_origin: extractor_assigned
+  claim: >
+    The discovery that certain kinds of cutting worked led immediately to the discovery that films
+    could be shot discontinuously, which the source calls the cinematic equivalent of the discovery
+    of flight: films were no longer earthbound in time and space. Discontinuity is the central fact
+    of the production phase, and almost all production decisions relate to overcoming its
+    difficulties or exploiting its strengths.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      If every element had to be assembled simultaneously, as in the theatre, the range of possible
+      subjects would be comparatively narrow.
+  scope:
+    domain_discussed_by_source: [filmmaking, film_production, film_editing]
+    conditions: "the whole practice of filmmaking since the early twentieth century"
+  caveats:
+    - text: "the source names its own counter-examples: Hitchcock's Rope, ten ten-minute shots invisibly joined, and Kubrick building all sets simultaneously at Elstree for The Shining. It calls the latter a special exception to the general rule."
+      origin: source_stated
+    - text: "a historical claim about causation — that the discovery of cutting caused discontinuous shooting — offered without evidence"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "Hitchcock's Rope and Kubrick's Elstree stages for The Shining, both named by the source as exceptions", figure_ref: null}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_murch_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 7
+    page_end: 7
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0009
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "discontinuity also allows us to choose the best camera angle for each emotion and story point, which we can edit together for a cumulatively greater impact"
+  concept_label: discontinuity_permits_selecting_the_best_angle_for_each_beat
+  label_origin: extractor_assigned
+  claim: >
+    Beyond convenience, discontinuity allows the best camera angle to be chosen for each emotion and
+    each story point, and those choices to be assembled for a cumulatively greater impact. A
+    continuous stream of images would make this difficult and films would not be as sharp or as to
+    the point.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "narrative filmmaking"
+  caveats:
+    - text: "the source's footnote here compares this to Ancient Egyptian painting, where each part of the body was drawn from its most characteristic angle and the angles combined in one figure, and speculates that our films may one day look equally twisted"
+      origin: source_stated
+    - text: "\"cumulatively greater impact\" is asserted; no comparison against a continuous-take version of the same material is offered anywhere"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_murch_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 8
+    page_end: 8
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0010
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "cutting is more than just the convenient means by which discontinuity is rendered continuous. It is in and for itself-by the very force of its paradoxical suddenness-a positive influence in the creation of a film."
+    - "We would want to cut even if discontinuity were not of such great practical value."
+  concept_label: cutting_is_a_positive_force_not_merely_a_repair
+  label_origin: extractor_assigned
+  claim: >
+    Cutting is not only the means by which discontinuous shooting is made to read as continuous. By
+    the very force of its paradoxical suddenness it is in and for itself a positive influence on a
+    film, and the source states we would want to cut even if discontinuity had no practical value at
+    all.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "narrative filmmaking"
+  caveats:
+    - text: "the strongest and least supported of the source's three arguments for cutting, and the source presents it as the one that goes beyond the other two — the value is asserted as intrinsic and no mechanism is given"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_murch_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Why Do Cuts Work?"
+    section: null
+    page_start: 9
+    page_end: 9
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# "CUT OUT THE BAD BITS" (pp.10-14)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0011
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "in a certain sense, editing is cutting out the bad bits, the tough question is, What makes a bad bit?"
+    - "what is bad in one film may be good in another"
+    - "one way of looking at the process of making a film is to think of it as the search to identify what-for the particular film you are working on-is a uniquely \"bad bit.\""
+  concept_label: what_counts_as_a_bad_bit_is_specific_to_the_film_being_made
+  label_origin: extractor_assigned
+  claim: >
+    Editing is, in a plain sense, cutting out the bad bits; the difficult question is what makes a
+    bit bad. In a home movie the answer is obvious, because the goal is simple — an unrestructured
+    record of events in continuous time. In narrative film the fragmented time structure and the need
+    to indicate internal states make it proportionately harder, and what is bad in one film may be
+    good in another. The source proposes that making a film can be seen as the search to identify
+    what, for that particular film, is a uniquely bad bit.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "narrative film, contrasted with home movie"
+  caveats:
+    - text: "the source arrives at this by conceding that a layman's dismissive description of editing contained unwitting wisdom, which it says it recognised only twenty-five years later"
+      origin: source_stated
+    - text: "this makes the central editorial criterion film-relative and supplies no method for discovering it, which is a strong claim against any general checklist of editing faults — including, by implication, the ranked list this same source gives seven pages later"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a \"bad bit\""
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_murch_c003_0012, note: "removal is constrained by what it does to the remainder"}
+    - {relation: qualifies, target: sk_murch_c003_0019, note: "a film-relative criterion sits uneasily beside a general ranked list"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "\"Cut Out the Bad Bits\""
+    section: null
+    page_start: 10
+    page_end: 11
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0012
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "the editor embarks on the search to identify these \"bad bits\" and cut them out, provided that doing so does not disrupt the structure of the \"good bits\" that are left"
+  concept_label: removal_is_constrained_by_the_structure_of_what_remains
+  label_origin: extractor_assigned
+  claim: >
+    A bad bit may only be removed if removing it does not disrupt the structure of the good material
+    that remains. Identifying what to cut is therefore not sufficient warrant for cutting it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any removal from an assembled sequence"
+  caveats:
+    - text: "stated in a subordinate clause and never developed; the source gives no test for whether the remaining structure has been disrupted"
+      origin: extractor_observed
+    - text: "recorded separately from the bad-bit claim because it is independently contradictable — one could hold that a bad bit should always go regardless of what it costs the surrounding structure"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_murch_c003_0011, note: "the constraint on acting on a diagnosis"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "\"Cut Out the Bad Bits\""
+    section: null
+    page_start: 11
+    page_end: 11
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0013
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "the information in the DNA can be seen as uncut film and the mysterious sequencing code as the editor"
+    - "both of you would make different films out of the same material"
+    - "which is to say when and in what order to release those various pieces of information"
+  concept_label: the_editors_material_is_the_order_and_rate_of_release_of_information
+  label_origin: extractor_assigned
+  claim: >
+    Two editors given identical dailies will make different films, because the editorial choice is
+    not what the material contains but when and in what order its pieces of information are released.
+    The source reaches this through an extended analogy: human and chimpanzee DNA are about
+    ninety-nine percent identical, too similar to explain the differences between the organisms, so
+    the difference must lie in something controlling the order and the rates at which the stored
+    information is activated during growth. The information is the uncut film; the sequencing code is
+    the editor.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Sequence determines outcome even when content is held constant. The source's biological example
+      is the order of brain and skull development — brain first in humans to maximise brain size,
+      skull first in chimpanzees, probably because of a harsher environment at birth.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any assembly from a fixed body of material"
+  caveats:
+    - text: "the source is careful that the analogy is structural rather than evaluative: it explicitly declines to assign relative values to a chimpanzee or a human, saying each is appropriate to its environment"
+      origin: source_stated
+    - text: "the source hedges its own biology, calling the sequencing mechanism \"still under much discussion\" — a hedge worth preserving, since the argument's force comes from the analogy's authority"
+      origin: source_stated
+    - text: "the whole claim rests on an analogy from a field the source is not writing about. It is illustrative rather than evidential, and the batch has not previously encountered a claim whose entire support is a borrowed mechanism from another discipline."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "do we learn the gun is loaded before Madame X gets into her car, or only after? Either choice creates a different sense of the scene", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0014, note: "and the warning that follows from it"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "\"Cut Out the Bad Bits\""
+    section: null
+    page_start: 11
+    page_end: 13
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0014
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "the inadvisability of changing one's mind in the process of creating one of them"
+    - "Don't start making a chimpanzee and then decide to turn it into a human being instead."
+  concept_label: do_not_change_what_kind_of_film_you_are_making_midway
+  label_origin: extractor_assigned
+  claim: >
+    Once a film's kind is set, changing it during production produces something that is neither. The
+    source names two failure patterns from its own viewing: an unpretentious film whose possibilities
+    someone inflated mid-production, which became boring and pretentious; and an ambitious film to
+    which a studio ordered action and sex added, reducing a great potential to something less. Both
+    are described as neither human nor chimp.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [filmmaking, film_production]
+    conditions: "a film already in production"
+  caveats:
+    - text: "the source withholds both titles, calling them film X and film Y, so the two supporting cases cannot be examined"
+      origin: extractor_observed
+    - text: "the claim is about production and studio decisions rather than about editing, and the source offers the editor no remedy for it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a stitched-together Frankenstein's monster"
+    - "it came out being neither"
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "film X, inflated mid-production into pretension; film Y, ordered by the studio to add action and sex", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0013, note: "the practical warning drawn from the analogy"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "\"Cut Out the Bad Bits\""
+    section: null
+    page_start: 13
+    page_end: 14
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# MOST WITH THE LEAST (pp.15-16)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0015
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "You can never judge the quality of a sound mix simply by counting the number of tracks it took to produce it."
+    - "The underlying principle: Always try to do the most with the least-with the emphasis on try."
+  concept_label: do_the_most_with_the_least
+  label_origin: extractor_assigned
+  claim: >
+    Quality cannot be judged by counting components. Terrible mixes have been made from a hundred
+    tracks and wonderful ones from three; what decides it is the initial choices, the quality of the
+    sounds, and how capable the blend was of exciting emotions hidden in the hearts of the audience.
+    The underlying principle is to produce the greatest effect in the viewer's mind by the least
+    number of things on screen. The source applies it to all the crafts of filmmaking — acting, art
+    direction, photography, music, costume — and to editing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, sound_mixing, filmmaking]
+    conditions: "any craft contribution to a film"
+  caveats:
+    - text: "the source puts the emphasis on \"try\", stating you may not always succeed"
+      origin: source_stated
+    - text: "the criterion offered for a good mix — how capable the blend was of exciting emotions hidden in the hearts of the audience — is not observable, so the claim rules out a bad measure without supplying a usable one"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0016, note: "the stated reason for the principle"}
+    - {relation: generalises, target: sk_murch_c003_0017, note: "applied to the decision not to cut"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Most with the Least"
+    section: null
+    page_start: 15
+    page_end: 15
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0016
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "suggestion is always more effective than exposition"
+    - "Past a certain point, the more effort you put into wealth of detail, the more you encourage the audience to become spectators rather than participants."
+  concept_label: detail_past_a_point_turns_participants_into_spectators
+  label_origin: extractor_assigned
+  claim: >
+    The purpose of doing the least is to engage the audience's imagination, and suggestion is always
+    more effective than exposition for that. Past a certain point, added detail encourages the
+    audience to become spectators rather than participants.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Detail supplied by the film is detail the audience does not supply. Withholding it requires
+      their imagination to do the work, which makes them participants rather than onlookers.
+  scope:
+    domain_discussed_by_source: [film_editing, filmmaking]
+    conditions: "any film addressing an audience"
+  caveats:
+    - text: "\"past a certain point\" is never located, so the principle identifies a direction without a threshold"
+      origin: extractor_observed
+    - text: "\"always more effective\" is unusually absolute for this source, which hedges almost everywhere else"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the audience become spectators rather than participants"
+  source_stated_remedies:
+    - "do only what is necessary to engage the imagination of the audience"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0015, note: "the reason the principle is held"}
+    - {relation: generalises, target: sk_murch_c003_0018, note: "the same argument against the over-controlling editor"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Most with the Least"
+    section: null
+    page_start: 15
+    page_end: 15
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0017
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "Frequently, it takes more work and discernment to decide where not to cut"
+    - "the editor is actually making twenty-four decisions a second: \"No. No. No. No. No. No. No. No. No. No. Yes!\""
+  concept_label: deciding_not_to_cut_is_the_larger_part_of_the_work
+  label_origin: extractor_assigned
+  claim: >
+    A film is not better for having more cuts in it, and it frequently takes more work and
+    discernment to decide where not to cut than where to cut. The source reframes the editor as
+    making twenty-four decisions a second, almost all of them negative — the cut is the one moment
+    the answer is yes. An editor is paid to make decisions, not to cut.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any edited film"
+  caveats:
+    - text: "the twenty-four-decisions-a-second framing is rhetorical rather than descriptive — it restates the frame rate as a decision rate, which is a way of making the point rather than an account of how editors work"
+      origin: extractor_observed
+    - text: "the source states the conclusion the whole preceding argument builds to, then immediately asks whether it can be taken to the absurd conclusion of not cutting at all, and answers no"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0015, note: "the least, applied to the number of cuts"}
+    - {relation: qualified_by, target: sk_murch_c003_0010, note: "against the position that cutting is intrinsically valuable"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Most with the Least"
+    section: null
+    page_start: 15
+    page_end: 16
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0018
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "An overactive editor, who changes shots too frequently, is like a tour guide who can't stop pointing things out"
+    - "then he is pursuing a goal (complete control) that in the end is self-defeating"
+  concept_label: complete_control_of_the_viewers_attention_is_self_defeating
+  label_origin: extractor_assigned
+  claim: >
+    An editor who changes shots too frequently is like a tour guide who cannot stop pointing things
+    out. Some of the time the viewer wants to be shown; some of the time they want to walk around and
+    see what they see. An editor without the confidence to let people occasionally choose what to
+    look at, or to leave things to their imagination, is pursuing complete control, which is
+    self-defeating: viewers eventually feel constrained and then resentful under the constant
+    pressure of his hand on the backs of their necks.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Constant direction of attention is experienced as constraint, and constraint produces
+      resentment, which costs more than the control gains.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any edited film with an audience"
+  caveats:
+    - text: "an affective claim about how audiences respond to editorial pace, asserted from experience with no evidence"
+      origin: extractor_observed
+    - text: "the source frames the fault as a failure of the editor's confidence rather than of technique, which makes it a claim about disposition and not about a checkable property of the cut"
+      origin: extractor_observed
+  source_stated_problems:
+    - "people will eventually feel constrained and then resentful"
+  source_stated_remedies:
+    - "let people themselves occasionally choose what they want to look at, or leave things to their imagination"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0016, note: "the participant-versus-spectator argument applied to cutting rate"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Most with the Least"
+    section: null
+    page_start: 16
+    page_end: 16
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# THE RULE OF SIX (pp.17-20)
+#
+# The six criteria are recorded as six separate objects. Under the V0 granularity rule each can be
+# retrieved, supported, contradicted or qualified independently — one can hold that eye-trace matters
+# while denying that planarity does — and the source gives several of them their own gloss, their own
+# history and, in one case, its own footnote. Splitting them is also what allows the priority_order
+# system to carry real members with a real order.
+#
+# Each object carries its rank AND its stated percentage. The percentages are the source's own and
+# are load-bearing: they say emotion is worth more than the other five combined, which a rank alone
+# does not say. SPEC-03 has no field for a member weight, so the weights live in source_terms and
+# claim text. See LB-10 in the lane issue file.
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0019
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "An ideal cut (for me) is the one that satisfies all the following six criteria at once"
+    - "What I'm suggesting is a list of priorities."
+  concept_label: an_ideal_cut_satisfies_six_ranked_criteria_at_once
+  label_origin: extractor_assigned
+  claim: >
+    An ideal cut satisfies six criteria simultaneously: it is true to the emotion of the moment, it
+    advances the story, it occurs at a rhythmically interesting and right moment, it acknowledges
+    eye-trace, it respects planarity, and it respects the three-dimensional continuity of the actual
+    space. The six are not equal — the source presents them as a ranked list of priorities governing
+    what to give up first when they cannot all be satisfied.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "the source scopes the whole list to itself — \"An ideal cut (for me)\" — which is an authorship marking on a framework usually quoted as impersonal"
+      origin: source_stated
+    - text: "sits in tension with the same source's earlier claim that what counts as a bad bit is specific to the film being made. A film-relative criterion and a general ranked list are not obviously compatible, and the source does not reconcile them."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0020, note: "rank 1, emotion"}
+    - {relation: generalises, target: sk_murch_c003_0021, note: "rank 2, story"}
+    - {relation: generalises, target: sk_murch_c003_0022, note: "rank 3, rhythm"}
+    - {relation: generalises, target: sk_murch_c003_0023, note: "rank 4, eye-trace"}
+    - {relation: generalises, target: sk_murch_c003_0024, note: "rank 5, planarity"}
+    - {relation: generalises, target: sk_murch_c003_0025, note: "rank 6, three-dimensional continuity"}
+    - {relation: qualified_by, target: sk_murch_c003_0011, note: "against the film-relative account of a bad bit"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0020
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "1) Emotion  51%"
+    - "it is true to the emotion of the moment"
+    - "Emotion, at the top of the list, is the thing that you should try to preserve at all costs."
+    - "What they finally remember is not the editing, not the camerawork, not the performances, not even the story-it's how they felt."
+  concept_label: emotion_ranks_first_and_is_worth_more_than_the_other_five_combined
+  label_origin: extractor_assigned
+  claim: >
+    Emotion is the first criterion, weighted by the source at 51 percent — more than the other five
+    combined. A cut should be true to the emotion of the moment, and emotion should be preserved at
+    all costs. The source states it is the thing film school comes to last, if at all, because it is
+    the hardest to define and deal with, and that what an audience finally remembers is not the
+    editing, the camerawork, the performances or even the story, but how they felt.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "the source's working question is \"How do you want the audience to feel?\", set in italics on the page — the criterion is a question to be asked rather than a property to be measured"
+      origin: source_stated
+    - text: "51 percent is not an arbitrary number: it is the smallest whole percentage constituting a majority, so the weight is a way of saying emotion outweighs everything else together. The source never says this explicitly."
+      origin: extractor_observed
+    - text: "the highest-weighted criterion in the framework is also the one the source says is hardest to define, which means the list is anchored at the top by its least operational term"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "rank 1 of six"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 19
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0021
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "2) Story  23%"
+    - "it advances the story"
+  concept_label: story_ranks_second_at_twenty_three_percent
+  label_origin: extractor_assigned
+  claim: >
+    Advancing the story is the second criterion, weighted at 23 percent. With emotion it forms the
+    top two, which the source says are worth far more than the bottom four together.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "given no gloss at all, unlike eye-trace and planarity which the source defines in the same sentence. \"Advances the story\" is left to stand on ordinary usage."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "rank 2 of six"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 18
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0022
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "3) Rhythm  10%"
+    - "it occurs at a moment that is rhythmically interesting and \"right\""
+  concept_label: rhythm_ranks_third_at_ten_percent
+  label_origin: extractor_assigned
+  claim: >
+    Rhythm is the third criterion, weighted at 10 percent: the cut should occur at a moment that is
+    rhythmically interesting and right.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "the source puts \"right\" in quotation marks, marking the term as one it is using without being able to define"
+      origin: source_stated
+    - text: "rhythm completes the top three, which the source says are bound together far more tightly than the rest"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "rank 3 of six"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 18
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0023
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "4) Eye-trace  7%"
+    - "it acknowledges what you might call \"eye-trace\"-the concern with the location and movement of the audience's focus of interest within the frame"
+  concept_label: eye_trace_ranks_fourth_at_seven_percent
+  label_origin: extractor_assigned
+  claim: >
+    Eye-trace is the fourth criterion, weighted at 7 percent, and the source defines it: the concern
+    with the location and movement of the audience's focus of interest within the frame.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "the source hedges the name itself — \"what you might call\" — and puts it in quotation marks, presenting it as a coinage rather than an established term"
+      origin: source_stated
+    - text: "this is the criterion the source uses to demonstrate the asymmetry between adjacent ranks, so it carries more argumentative weight than its 7 percent suggests"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "rank 4 of six"}
+    - {relation: demonstrated_together_with, target: sk_murch_c003_0028, note: "the worked example of higher obscuring lower"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0024
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "5) Two-dimensional plane of screen  5%"
+    - "it respects \"planarity\"-the grammar of three dimensions transposed by photography to two (the questions of stage-line, etc.)"
+  concept_label: planarity_ranks_fifth_at_five_percent
+  label_origin: extractor_assigned
+  claim: >
+    Planarity is the fifth criterion, weighted at 5 percent: respecting the grammar of three
+    dimensions transposed by photography into two, which the source glosses as the questions of
+    stage-line and the like. In the numbered list it is named as the two-dimensional plane of the
+    screen.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "the source names this criterion two different ways within one page — \"planarity\" in the prose, \"two-dimensional plane of screen\" in the list — and uses \"stage-line\" for it later. Three labels for one rank."
+      origin: extractor_observed
+    - text: "the gloss \"the questions of stage-line, etc.\" is the source's only definition and it defers to an established convention rather than stating one"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "rank 5 of six"}
+    - {relation: demonstrated_together_with, target: sk_murch_c003_0028, note: "the worked example of the asymmetry"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0025
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "6) Three-dimensional space of action  4%"
+    - "it respects the three-dimensional continuity of the actual space (where people are in the room and in relation to one another)"
+    - "I actually place this three-dimensional continuity at the bottom of a list of six criteria"
+  concept_label: three_dimensional_continuity_ranks_last_at_four_percent
+  label_origin: extractor_assigned
+  claim: >
+    Three-dimensional continuity — where people are in the room and in relation to one another — is
+    the sixth and lowest criterion, weighted at 4 percent. The source places it there deliberately
+    and against tradition: it states this is the first thing discussed in film-school editing
+    classes, that for many years, particularly in early sound film, preserving three-dimensional
+    space was the rule, and that violating it was seen as a failure of rigor or skill. Jumping people
+    around in space was not done except in extreme circumstances such as fights or earthquakes.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any cut in a narrative film"
+  caveats:
+    - text: "the source attacks the traditional view in a footnote: in multi-camera situation comedy the cameras film simultaneously, so the actors are necessarily always correct as far as spatial continuity is concerned, and that \"absolutely does not prevent bad cuts from being made all the time\""
+      origin: source_stated
+    - text: "that footnote is a genuine disconfirming argument rather than an assertion — it identifies a case where the criterion is satisfied by construction and the outcome is still bad, which is evidence that the criterion is not sufficient. It does not show the criterion is unimportant, and the source does not claim that it does."
+      origin: extractor_observed
+    - text: "this is the only one of the six the source argues FOR its placement rather than simply asserting it, which suggests the demotion was expected to be contested"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    counter:
+      - {description: "multi-camera situation comedy: spatial continuity guaranteed by simultaneous filming, bad cuts made all the time anyway", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "rank 6 of six"}
+    - {relation: contradicts, target: sk_murch_c003_0026, note: "against the tradition the source names and rejects"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 17
+    page_end: 18
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0026
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "The first thing discussed in film-school editing classes is what I'm going to call three-dimensional continuity"
+    - "You struggled to preserve continuity of three-dimensional space, and it was seen as a failure of rigor or skill to violate it."
+  concept_label: the_tradition_that_spatial_continuity_comes_first
+  label_origin: extractor_assigned
+  claim: >
+    The source reports, as the position it is arguing against, that three-dimensional continuity is
+    what film-school editing classes teach first, and that for many years — particularly in the early
+    years of sound film — preserving continuity of three-dimensional space was the rule, with
+    violation seen as a failure of rigor or skill.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_education]
+    conditions: "film education and practice as reported by the source"
+  caveats:
+    - text: "a characterisation of other people's position, offered without citation. It is recorded as the source's report of a tradition, not as evidence that the tradition holds that view."
+      origin: extractor_observed
+    - text: "recorded as its own object because the whole force of the Rule of Six's ordering depends on this being the received view; if it is not, the demotion is not a demotion"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_murch_c003_0025, note: "the position the source's ranking overturns"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 17
+    page_end: 17
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0027
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "If you find you have to sacrifice certain of those six things to make a cut, sacrifice your way up, item by item, from the bottom."
+    - "If you have to give up something, don't ever give up emotion before story. Don't give up story before rhythm, don't give up rhythm before eye-trace, don't give up eye-trace before planarity, and don't give up planarity before spatial continuity."
+  concept_label: sacrifice_upward_from_the_bottom_of_the_list
+  label_origin: extractor_assigned
+  claim: >
+    When not all six criteria can be met, give them up from the bottom of the list upward, one item
+    at a time. The source restates this as five ordered pairs: never give up emotion before story,
+    story before rhythm, rhythm before eye-trace, eye-trace before planarity, or planarity before
+    spatial continuity. Its worked case: a cut that gives the right emotion, advances the story, is
+    rhythmically satisfying and respects eye-trace and planarity but fails to preserve
+    three-dimensional space is, by all means, the cut to make.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "when the available cuts cannot satisfy all six criteria"
+  caveats:
+    - text: "the source states most of the time all six can be satisfied, and that one should always aim for this — \"never accept less when more is available to you\". The sacrifice rule is for the residual case, not the normal one."
+      origin: source_stated
+    - text: "this is what makes the list operational. A ranking alone says which matters more; the sacrifice rule says what to DO, and it is the only part of the framework expressed as a procedure."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "sacrifice your way up, item by item, from the bottom"
+  examples:
+    positive:
+      - {description: "a cut satisfying the top five but failing spatial continuity is the cut to make; if no other edit has the right emotion, sacrificing spatial continuity is well worth it", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0019, note: "the procedure the ranking exists to support"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0028
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "satisfying the criteria of items higher on the list tends to obscure problems with items lower on the list, but not vice-versa"
+    - "getting Number 4 (eye-trace) working properly will minimize a problem with Number 5 (stage-line), whereas if Number 5 (stage-line) is correct but Number 4 (eye-trace) is not taken into consideration, the cut will be unsuccessful"
+  concept_label: higher_criteria_obscure_failures_of_lower_ones_but_not_the_reverse
+  label_origin: extractor_assigned
+  claim: >
+    The ordering has an asymmetric effect on perception, not only on preference. Satisfying a higher
+    criterion tends to obscure problems with lower ones, and the reverse does not hold. The source's
+    worked case is adjacent ranks: getting eye-trace right will minimise a stage-line problem, but a
+    correct stage-line with eye-trace ignored produces an unsuccessful cut. More broadly, if the
+    emotion is right and the story is advanced in a unique, interesting way in the right rhythm, the
+    audience tends to be unaware of or unconcerned about problems with eye-trace, stage-line and
+    spatial continuity.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "a cut satisfying some criteria and failing others"
+  caveats:
+    - text: "the source hedges the generalisation — \"the general principle seems to be\" — while stating the worked adjacent-rank case flatly"
+      origin: source_stated
+    - text: "this is the strongest justification the section offers for the ordering, and it is a different KIND of claim from the ranking itself: the ranking says what the editor should prefer, this says what the audience will notice. A preference order and a perceptual masking order are not the same thing, and the source treats them as one."
+      origin: extractor_observed
+    - text: "asserted about audience perception with no evidence, and it is exactly the sort of claim that could be tested"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "eye-trace correct minimises a stage-line problem; stage-line correct with eye-trace ignored fails", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_murch_c003_0019, note: "the perceptual justification offered for the ranking"}
+    - {relation: demonstrated_together_with, target: sk_murch_c003_0023, note: "demonstrated on ranks 4 and 5"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 19
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0029
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "The values I put after each item are slightly tongue-in-cheek, but not completely"
+    - "the top two on the list (emotion and story) are worth far more than the bottom four (rhythm, eye-trace, planarity, spatial continuity), and when you come right down to it, under most circumstances, the top of the list-emotion-is worth more than all five of the things underneath it"
+  concept_label: the_weights_are_hedged_but_the_intervals_are_the_point
+  label_origin: extractor_assigned
+  claim: >
+    The percentages attached to the six criteria — 51, 23, 10, 7, 5 and 4 — are described by the
+    source as slightly tongue-in-cheek but not completely. What they are meant to convey is stated
+    plainly: the top two are worth far more than the bottom four together, and under most
+    circumstances emotion alone is worth more than all five items beneath it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "interpreting the ranked list"
+  caveats:
+    - text: "\"slightly tongue-in-cheek, but not completely\" is a double hedge the source states about its own most-quoted numbers, and it is routinely dropped when the list is repeated elsewhere"
+      origin: source_stated
+    - text: "the numbers carry information the ranking does not. 51 and 23 against 10, 7, 5 and 4 says the gap between rank 2 and rank 3 is larger than the whole spread from rank 3 to rank 6. An ordinal list cannot express that, which is why this is recorded as its own object rather than as a note on the list."
+      origin: extractor_observed
+    - text: "SPEC-03 has no field for a member weight, so these intervals live in claim text and cannot be read mechanically. Recorded as LB-10 rather than solved by adding a field."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_murch_c003_0019, note: "supplies the intervals the ranking omits, and hedges them"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 18
+    page_end: 19
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0030
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "those top three things on the list--emotion, story, rhythm-are extremely tightly connected. The forces that bind them together are like the bonds between the protons and neutrons in the nucleus of the atom."
+    - "the forces connecting the lower three grow progressively weaker as you go down the list"
+  concept_label: the_top_three_criteria_are_tightly_bound_and_the_lower_bonds_weaken
+  label_origin: extractor_assigned
+  claim: >
+    Emotion, story and rhythm are extremely tightly connected in practice — the source likens the
+    forces binding them to the bonds between protons and neutrons in an atomic nucleus, by far the
+    tightest — and the forces connecting the lower three grow progressively weaker down the list.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "the relations among the six criteria in practice"
+  caveats:
+    - text: "the entire support is a physics analogy; no account is given of what it means for two editing criteria to be tightly bound, or of what would count as evidence either way"
+      origin: extractor_observed
+    - text: "it does real work in the framework nonetheless: it says the six are not six independent dials. If emotion, story and rhythm move together, an editor cannot in practice trade one against another, which qualifies the sacrifice rule for exactly the three items the sacrifice rule ranks highest."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_murch_c003_0027, note: "the top three cannot easily be traded against each other, which limits the sacrifice procedure"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 20
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0031
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "Most of the time you will be able to satisfy all six criteria"
+    - "you should always aim for this, if possible-never accept less when more is available to you"
+  concept_label: all_six_are_usually_satisfiable_and_should_always_be_aimed_at
+  label_origin: extractor_assigned
+  claim: >
+    Most of the time all six criteria can be satisfied at once — three-dimensional space, the
+    two-dimensional plane, eye-trace, rhythm, story and emotion all falling into place — and the
+    editor should always aim for that, never accepting less when more is available.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "ordinary editing, as against the constrained case"
+  caveats:
+    - text: "this bounds how often the ranked list actually operates. The framework the book is famous for is, by the source's own account, for the minority of cuts where the criteria conflict."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_murch_c003_0027, note: "bounds when the sacrifice rule applies"}
+    - {relation: member_of_system, target: scs_murch_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Rule of Six"
+    section: null
+    page_start: 20
+    page_end: 20
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# MISDIRECTION (pp.21-22)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0032
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "the central preoccupation of a film editor, which should be to put himself/herself in place of the audience"
+    - "What is the audience going to be thinking at any particular moment? Where are they going to be looking? What do you want them to think about? What do they need to think about? And, of course, what do you want them to feel?"
+  concept_label: the_editors_central_preoccupation_is_occupying_the_audiences_position
+  label_origin: extractor_assigned
+  claim: >
+    Underlying all the preceding considerations, the editor's central preoccupation should be to put
+    himself or herself in the place of the audience, and the source states the questions that
+    follow: what will the audience be thinking at this moment, where will they be looking, what do
+    you want them to think about, what do they need to think about, and what do you want them to
+    feel.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "any editorial decision"
+  caveats:
+    - text: "the five questions are the operational form of the framework: two of them — where will they look, what do you want them to feel — are the eye-trace and emotion criteria restated as questions rather than as scores"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0033, note: "the magician comparison follows from it"}
+    - {relation: qualifies, target: sk_murch_c003_0019, note: "the source presents this as underlying the six criteria"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Misdirection"
+    section: null
+    page_start: 21
+    page_end: 21
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0033
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "He was \"misdirecting\" you, as magicians say."
+    - "an editor can do that and does do that-and should do that"
+  concept_label: the_editor_misdirects_attention_as_a_magician_does
+  label_origin: extractor_assigned
+  claim: >
+    Keeping the audience's mental state in view is also the preoccupation of every magician, and the
+    editor is a kind of everyday working magician. The source's case is Houdini, whose job was to
+    create wonder and who therefore found ways to make the audience look left while he undid his
+    chains on the right — misdirection, in the magicians' term. An editor can, does and should do the
+    same.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "directing audience attention"
+  caveats:
+    - text: "the source says Houdini's misdirection worked on ninety-nine percent of an audience; the figure is rhetorical, not measured"
+      origin: extractor_observed
+    - text: "misdirection is stated as something the editor SHOULD do, which sits against the same section's warning that pursuing complete control of attention is self-defeating. Both are about directing where the viewer looks, and the source does not say where one becomes the other."
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "Houdini making the audience look left while he undid his chains on the right", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0032, note: "the practice that follows from occupying the audience's position"}
+    - {relation: contradicts, target: sk_murch_c003_0018, note: "against the warning that controlling attention is self-defeating"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Misdirection"
+    section: null
+    page_start: 21
+    page_end: 21
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0034
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "I have been looking at the image as the miniature it is in the editing room, rather than seeing it as the mural that it will become when projected in a theater"
+    - "cut out little paper dolls-a man and a woman-and put one on each side of the editing screen"
+  concept_label: correct_for_the_editing_room_being_a_miniature_of_the_theatre
+  label_origin: extractor_assigned
+  claim: >
+    Losing the overview in detail usually comes from looking at the image as the miniature it is in
+    the editing room rather than as the mural it will become in a theatre. The source's correction is
+    to imagine yourself very small and the screen very large, watching the finished film in a
+    thousand-seat theatre full of people, with the film beyond any further change: if you still like
+    it, it is probably all right; if not, you will now have a better idea how to fix it. Its physical
+    aid is a pair of paper dolls a few inches high placed either side of the editing screen, sized so
+    the screen seems thirty feet wide.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Judgement is made against an implied scale. Supplying the theatrical scale, and removing the
+      possibility of further change, restores the perspective the editing room distorts.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "editing intended for theatrical projection"
+  caveats:
+    - text: "explicitly scoped to a thousand-seat theatre and a thirty-foot screen. The correction is for one specific viewing scale, and the source does not consider material whose destination is another."
+      origin: extractor_observed
+    - text: "the paper dolls are the only physical technique described anywhere in the processed section"
+      origin: extractor_observed
+  source_stated_problems:
+    - "you can get caught up in the details and lose track of the overview"
+  source_stated_remedies:
+    - "imagine yourself very small and the screen very large, and that the film is beyond the possibility of any further changes"
+    - "put paper dolls a few inches high on each side of the editing screen"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0032, note: "a technique for occupying the audience's position"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Misdirection"
+    section: null
+    page_start: 21
+    page_end: 22
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────
+# SEEING AROUND THE EDGE OF THE FRAME (pp.23-25)
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_murch_c003_0035
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "you can't help, in your mind's eye, seeing around the edge of the frame-you can imagine everything that was there, physically and emotionally, just beyond what was actually photographed"
+    - "The film editor is one of the few people working on the production of a film who does not know the exact conditions under which it was shot (or has the ability not to know) and who can at the same time have a tremendous influence on the film."
+  concept_label: presence_at_the_shoot_makes_you_see_past_the_frame
+  label_origin: extractor_assigned
+  claim: >
+    Anyone who was on the set — actors, producer, director, cameraman, art director — cannot help
+    seeing, in the mind's eye, around the edge of the frame: imagining everything that was there
+    physically and emotionally, just beyond what was actually photographed. The editor is one of the
+    few people with substantial influence on a film who does not know, or has the ability not to
+    know, the exact conditions of shooting. The source treats this ignorance as the editor's
+    qualification, not a deficiency.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Having been through the practicalities of getting a shot, you carry that experience into
+      viewing it, and what you remember of the surrounding circumstance colours what you see on the
+      screen.
+  scope:
+    domain_discussed_by_source: [film_editing, film_production]
+    conditions: "anyone who was present during shooting"
+  caveats:
+    - text: "the parenthetical \"(or has the ability not to know)\" concedes that the editor's ignorance is a choice that must be actively maintained rather than a given"
+      origin: source_stated
+    - text: "the claim is about a bias in judgement rather than about a property of film, and it is the only claim in the section whose subject is the person judging rather than the material judged"
+      origin: extractor_observed
+  source_stated_problems:
+    - "seeing around the edge of the frame"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_murch_c003_0036, note: "the two ways the bias distorts a judgement"}
+    - {relation: generalises, target: sk_murch_c003_0037, note: "the editor's countervailing discipline"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Seeing Around the Edge of the Frame"
+    section: null
+    page_start: 23
+    page_end: 23
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0036
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "\"We worked like hell to get that shot, it has to be in the film.\""
+    - "there's a possibility that you may to forcing yourself to see it that way because it cost so much-in money, time, angst-to get it"
+    - "all you can remember was the hateful moment it was shot, and so you may be blind to the potentials it might have in a different context"
+  concept_label: the_cost_of_a_shot_distorts_judgement_in_both_directions
+  label_origin: extractor_assigned
+  claim: >
+    What a shot cost distorts how it is judged, and in both directions. A shot that took great money,
+    time and angst to get may be defended as what was wanted, when the conviction comes from the cost
+    rather than from the result. Conversely, a shot taken under protest, in a bad mood, at the end of
+    a difficult day, may be dismissed on the memory of the hateful moment it was shot, leaving its
+    potential in a different context unseen.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing, film_production]
+    conditions: "judging footage by someone who was present when it was shot"
+  caveats:
+    - text: "the sentence carrying the first half of this claim is OCR-damaged in the extracted text — \"you may to forcing yourself to see it that way\" is missing a word. The meaning is unambiguous from context and the reading was confirmed against the rendered page."
+      origin: extractor_observed
+    - text: "the source addresses the first direction to the director and the second to whoever shot it, so this is a claim about production personnel rather than about the editor, who is offered as the corrective"
+      origin: extractor_observed
+    - text: "recorded as one object rather than two because the source presents them as a matched pair — \"By the same token\" — with one underlying cause, the memory of the circumstance"
+      origin: extractor_observed
+  source_stated_problems:
+    - "you may be blind to the potentials it might have in a different context"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0035, note: "what the bias does to a specific judgement"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: "Seeing Around the Edge of the Frame"
+    section: null
+    page_start: 23
+    page_end: 24
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0037
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "The editor, on the other hand, should try to see only what's on the screen, as the audience will. Only in this way can the images be freed from the context of their creation."
+    - "you are the ombudsman for the audience"
+  concept_label: the_editor_sees_only_the_screen_as_the_audiences_ombudsman
+  label_origin: extractor_assigned
+  claim: >
+    The editor should try to see only what is on the screen, as the audience will, because only that
+    frees the images from the context of their creation. Doing so, the editor will use moments that
+    should be used even if they were shot under duress, and reject moments that should be rejected
+    even if they cost a terrible amount of money and pain. The source states the editor's standing:
+    the audience knows nothing about any of the circumstances, and the editor is their ombudsman.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience will only ever see what is on the screen. Judging by that standard is therefore
+      judging by the only standard that will apply when the film is shown.
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "assessing footage for inclusion"
+  caveats:
+    - text: "the source urges preserving \"a certain kind of virginity\" — keeping up with what is going on during the shoot while having as little specific knowledge of it as possible. That is a working instruction with an obvious cost, and the source does not weigh it against what an informed editor might contribute."
+      origin: source_stated
+    - text: "\"ombudsman for the audience\" is the source's own term for the role and is the clearest statement in the section of who the editor is accountable to"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "try to see only what's on the screen, as the audience will"
+    - "keep up with what's going on but have as little specific knowledge of it as possible"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0035, note: "the discipline that answers the bias"}
+    - {relation: specialises, target: sk_murch_c003_0032, note: "occupying the audience's position, applied to assessment"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Seeing Around the Edge of the Frame"
+    section: null
+    page_start: 24
+    page_end: 25
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0038
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "it is necessary to create a barrier, a cellular wall between shooting and editing"
+    - "the very best thing that can happen to the director (and the film) is that he say goodbye to everyone and disappear for two weeks"
+    - "if he had gone straight from shooting to editing, the confusion would be worse and he would have gotten the two different thought processes of shooting and editing irrevocably mixed up"
+  concept_label: a_deliberate_barrier_between_shooting_and_editing
+  label_origin: extractor_assigned
+  claim: >
+    Because the director is the person most burdened with beyond-the-frame information, the best
+    thing for the director and the film is a deliberate break of about two weeks between the end of
+    shooting and the first cut, spent thinking about things with nothing to do with the film. The
+    source calls this a barrier, a cellular wall between shooting and editing, and states that going
+    straight from one to the other mixes the two thought processes irrevocably. The editor's job
+    includes helping the director build that barrier, so the director can sit down and say: I am
+    going to pretend I had nothing to do with this film — what needs to be done?
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Shooting and editing are two different thought processes. Without an interval they run
+      together, and the surplus information from the shoot is never discharged.
+  scope:
+    domain_discussed_by_source: [film_editing, film_production]
+    conditions: "between the end of shooting and the first cut"
+  caveats:
+    - text: "the source concedes the barrier is only partial: a director \"will never be fully able to forget\" the images from beyond the edge of the frame, so the remedy reduces the bias rather than removing it"
+      origin: source_stated
+    - text: "the supporting case is Fred Zinnemann climbing in the Alps to put himself somewhere he had to be present rather than day-dreaming about the film's problems. One named practitioner, one practice, offered as illustration."
+      origin: extractor_observed
+    - text: "two weeks is stated without justification, and the source's alternative suggestions — the mountains, the sea, or Mars — signal that the specific destination is not the point"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the two different thought processes of shooting and editing irrevocably mixed up"
+  source_stated_remedies:
+    - "disappear for two weeks and think about things that have nothing to do with the film"
+    - "help the director erect this barrier for himself"
+  examples:
+    positive:
+      - {description: "Fred Zinnemann climbing in the Alps after the end of shooting, to be somewhere potentially life-threatening where he had to be present", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0035, note: "the remedy for the beyond-the-frame surplus"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Seeing Around the Edge of the Frame"
+    section: null
+    page_start: 24
+    page_end: 25
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_murch_c003_0039
+  source_id: murch_blink_p1_25_editing_decisions
+  source_terms:
+    - "you try as hard as you can to separate out what you wish from what is actually there, never abandoning your ultimate dreams for the film, but trying as hard as you can to see what is actually on the screen"
+  concept_label: separate_what_you_wish_from_what_is_actually_there
+  label_origin: extractor_assigned
+  claim: >
+    The closing instruction of the section: separate as hard as you can what you wish were on the
+    screen from what actually is, without abandoning your ultimate dreams for the film.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [film_editing]
+    conditions: "viewing your own material"
+  caveats:
+    - text: "the source holds two things at once — keep the dream, see what is there — and offers no method for doing so beyond effort. It is the most explicitly aspirational statement in the section."
+      origin: extractor_observed
+    - text: "recorded separately from the ombudsman claim because it addresses the editor's relation to their own intentions, not to the audience's interests"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_murch_c003_0037, note: "the same discipline turned on the editor's own wishes"}
+    - {relation: member_of_system, target: scs_murch_c003_004}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Seeing Around the Edge of the Frame"
+    section: null
+    page_start: 25
+    page_end: 25
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

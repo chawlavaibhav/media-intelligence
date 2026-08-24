@@ -417,3 +417,226 @@ apart".
 That is a more useful result than the near-duplication the inventory anticipated, and it changes the
 question. The risk from a companion volume is not redundant knowledge; it is **false independence**,
 which is LB-09.
+
+---
+
+# Book 10 — *In the Blink of an Eye* (issues LB-10 onward)
+
+*Written before book 10's fresh checkpoint. LB-09 above was added after book 9's checkpoint and is
+marked as such; everything from LB-10 to LB-14 is pre-checkpoint for book 10.*
+
+## LB-10 — SPEC-03 can record that a list is ranked, but not by how much
+
+**Plain English.** Murch's Rule of Six is not just an order, it is an order with sizes. He puts
+numbers on the six criteria — 51%, 23%, 10%, 7%, 5%, 4% — and the numbers say something the order
+alone does not: the first item is worth more than the other five put together. The schema can store
+the order. It has nowhere to put the sizes.
+
+**Where observed.** Book 10, *In the Blink of an Eye*. **1 distinct book.**
+
+**Status.** OBSERVED. `priority_order` and `members[].order` are the only ordering structures SPEC-03
+defines, and neither takes a magnitude. Checkable against the spec.
+
+**Affected layer.** Systems; source fidelity.
+
+**This is the case the operator asked to be tested.** The instruction was that Murch's priority
+ordering be represented faithfully using existing structures, and that if the schema proved
+insufficient this be recorded as evidence rather than met by inventing a new structure. That is what
+was done. `scs_murch_c003_001` uses the existing `priority_order` type, with six members carrying
+`order` 1–6, `ordering.scheme: source_numbered` and `origin: source_stated`. Nothing was invented.
+
+**What is lost.** The percentages are cardinal, not ordinal, and they carry two things the ranking
+cannot:
+
+1. **Emotion outweighs everything else combined.** 51 against 23+10+7+5+4 = 49. The choice of 51 is
+   the smallest whole percentage constituting a majority, which is almost certainly deliberate. The
+   source states the consequence in words as well: "the top of the list — emotion — is worth more
+   than all five of the things underneath it."
+2. **The gaps are wildly uneven.** The distance from rank 2 to rank 3 (23 → 10) is larger than the
+   entire spread from rank 3 to rank 6 (10 → 4). Ranks 3, 4, 5 and 6 are nearly a flat cluster.
+
+Read as `order: 1, 2, 3, 4, 5, 6`, the Rule of Six presents as six roughly comparable considerations
+in a preferred sequence. **That is close to the opposite of the argument.** The whole point is that
+the list is top-heavy.
+
+**Where the numbers actually live.** Verbatim inside `sk_murch_c003_0020` through `0025`, one per
+criterion, and in `sk_murch_c003_0029`, which records the source's own gloss on what they mean. They
+are readable by a person and invisible to anything mechanical.
+
+**A second, smaller insufficiency in the same system.** The source claims its ordering is
+*perceptual* as well as *preferential* — satisfying a higher item tends to obscure failures of lower
+ones, and not the reverse (`sk_murch_c003_0028`). That is a property OF the ordering, but
+`internal_structure.ordering` has only `scheme` and `origin`, so the claim is carried as an ordinary
+member of the system alongside the criteria it describes.
+
+**Practical consequence if unchanged.** Any consumer reading the system mechanically gets a rank
+order and silently loses the weighting. For a framework whose entire content is that one item
+dominates, that is a material distortion. It is also the specific way this could go wrong quietly:
+the object validates, reads sensibly, and misrepresents the source.
+
+**Proposed fix — PROPOSAL ONLY, not applied.** An optional `weight` or `interval_note` on
+`members[]`, populated only where a source states one. **Weigh against:** exactly one book in ten so
+far has supplied numeric weights, and this source hedges its own — "slightly tongue-in-cheek, but not
+completely". A field that is empty for nine books out of ten and marked not-quite-serious in the
+tenth is thin justification for changing a frozen schema. The alternative, which costs nothing, is to
+require that a `priority_order` system's `system_level_uncertainty` state explicitly what the
+ordering does *not* capture — which is what was done here.
+
+---
+
+## LB-11 — a remedy that acts on a person, not on material, has no `executable_by` value
+
+**Plain English.** SPEC-05 asks, for every repair, how it could be carried out — by a camera, by
+regenerating, by compositing, by a human editing. Murch's remedy for a director's distorted judgement
+is: send him to the Alps for two weeks. None of the four answers fits.
+
+**Where observed.** Book 10. **1 distinct book.**
+
+**Status.** OBSERVED.
+
+**Affected layer.** Ontology; bindings.
+
+**Evidence.** `t_murch_c003_0020`, the two-week barrier between shooting and editing, is recorded
+with `executable_by: [unknown]`. SPEC-05's vocabulary is `physical_production`,
+`generative_respecification`, `deterministic_composite`, `human_edit`, `unknown` — every positive
+value describes an operation performed on *material*. This remedy is a scheduling and organisational
+practice performed on a *person*, to change the state they are in when they later judge the material.
+
+**Why it matters, and why it is more than a vocabulary gap.** SPEC-05 introduced `executable_by`
+precisely so that a repair with no generative equivalent would be *visible* rather than silently
+bridged, and it works: `unknown` is honest and the gap is legible. But it flattens a real
+distinction. A repair marked `unknown` because nobody has worked out how to do it is a different
+thing from a repair marked `unknown` because it is not the kind of thing this field is about. Two
+other Murch remedies sit near the same edge — the paper dolls beside the editing screen, and "see
+only what's on the screen", both recorded as `human_edit` because a human does act on the material,
+though what they really change is the *conditions of judgement*.
+
+**Practical consequence if unchanged.** A class of practitioner knowledge — how to put yourself in a
+state where you judge well — collapses into `unknown` and becomes indistinguishable from
+untranslatable physical technique. Given that book 10 produced five governance bindings out of eight,
+against one out of eleven for book 9, this class may not be marginal.
+
+**Proposed fix — PROPOSAL ONLY.** None yet. One book. Worth watching in books 11 and 12, and in the
+creative-process books Lane D is processing, which are likely to be dense in exactly this kind of
+knowledge.
+
+---
+
+## LB-12 — a scanned two-page spread interleaves like a two-column page, and the damage is removable
+
+**Plain English.** This book's PDF puts two printed pages on every sheet. Extracted naively, the text
+reads straight across both pages and splices two unrelated arguments together — the same failure that
+blocked Lupton. Cropping each sheet in half before extracting removes it completely.
+
+**Where observed.** Book 10. **1 distinct book.**
+
+**Status.** OBSERVED. Both extractions were produced and compared.
+
+**Affected layer.** Source fidelity; provenance.
+
+**New or recurrence.** A **recurrence of the interleaving failure mode**, with a materially different
+outcome.
+
+**Evidence.** Naive full-page extraction of spread 15 produced: `"and over here we have the Mona
+Lisa, and, by the"` (left page) → `"I classes is what I'm going to call three-dimensional"` (right
+page) → `"way, look at these floor tiles ... " If you are on a tour,"` (left page). Cropped
+extraction of the same spread produces two clean single-column pages.
+
+**Why this matters for the batch.** The distinction it draws is between a *file* that is corrupt and
+an *extraction* that is. Interleaving here was an artifact of asking a tool to read a landscape sheet
+as one column; the underlying artifact was intact, and respecting its geometry recovered it exactly.
+No character was altered and nothing was inferred — both extractions contain the same words in a
+different order.
+
+**Deliberate limit on this finding.** This lane has **not** examined the Lupton anchor and is
+**not** claiming its block was avoidable. Lupton was blocked on a pre-extracted repository text file,
+which is a different situation from having the original artifact in hand. The claim here is only the
+narrow one: **"interleaved" describes an output, and is not by itself a verdict on a source.** Whether
+that bears on any other blocked book is for the integrator to consider, not this lane.
+
+**Practical consequence if unchanged.** A source could be blocked as corrupt when the corruption
+belongs to the extraction command. Given that the batch has blocked four books and treats blocking as
+final, the cost of that error is a book.
+
+**Proposed fix — PROPOSAL ONLY.** Before recording `blocked_source_integrity` for interleaving,
+check whether the page geometry explains it — landscape aspect, spread layout, multi-column setting —
+and if so re-extract respecting it. This is arguably not a method change at all but ordinary care in
+reading a file.
+
+---
+
+## LB-13 — visual dependence is set by the author's mode of argument, not by the domain
+
+**Plain English.** Two books in this lane teach the same subject. One is unreadable without its
+pictures; the other has none. Knowing the subject tells you nothing about the risk.
+
+**Where observed.** Books 9 and 10. **2 distinct books, same domain.** Logged as **evidence against**
+treating visual-loss risk as a property of a source's field.
+
+**Status.** OBSERVED.
+
+**Affected layer.** Visual completeness.
+
+**Evidence.**
+
+| | Book 9 — *Grammar of the Edit* | Book 10 — *In the Blink of an Eye* |
+|---|---|---|
+| Subject | when and why to cut | when and why to cut |
+| Pages processed | 55 | 25 |
+| Figures | 23 | **0** |
+| Controlled comparisons in figures | 3 | 0 |
+| Recoverable from text alone | no | **entirely** |
+| Text baked into artwork | 2 labels lost silently | none |
+
+Both are film-editing books. Both were selected into the same lane for the same domain quota. The
+visual-loss risk is total in one and zero in the other, and the difference is what kind of writer
+each is: one demonstrates and one argues.
+
+**Why it matters.** A selection or triage rule of the form "photography and filmmaking books need a
+visual pass, process books do not" would be wrong in both directions. The batch's inventory already
+classifies sources by whether page renders are available; this suggests that is the wrong axis on its
+own, because availability does not tell you whether anything would be found.
+
+**Practical consequence.** Visual-pass cost cannot be predicted from a book's subject before opening
+it. A cheap early signal does exist and cost nothing here: counting figure references in the
+extracted text. Book 10's section contains none, which was confirmed by rendering and reading.
+
+---
+
+## LB-14 — a transcribed lecture can defer its own central question past any reasonable window
+
+**Plain English.** Murch asks the book's main question on page 9 and answers it on page 58. Any
+extraction of a normal-sized section will therefore capture the question without the answer.
+
+**Where observed.** Book 10. **1 distinct book.**
+
+**Status.** OBSERVED.
+
+**Affected layer.** Source fidelity; granularity.
+
+**Evidence.** Printed page 9: "the central fact of all this is that cuts do work. But the question
+still remains: Why? ... We will get back to this mystery in a few moments." The answer — John
+Huston's remark about blinking, which the book is named after — arrives at printed pages 58–64,
+thirty-three pages later.
+
+**How the extraction handled it.** `sk_murch_c003_0005` records the question with
+`source_uncertainty: source_asks_open_question` and a caveat naming where the answer lies. It is not
+recorded as unanswered, and nothing from pp.58–64 was imported. The provenance record states the
+boundary.
+
+**Why it matters beyond this book.** The batch's per-book procedure asks for "a coherent
+representative section large enough to expose the author's reasoning system", which implicitly
+assumes an argument is locally complete. A textbook chapter usually is. **A transcribed lecture is
+not organised that way** — a speaker can raise something, digress for fifty minutes, and return. The
+same will likely be true of book 12, *The Conversations*, which is an interview transcript, and this
+is worth carrying forward into that extraction.
+
+**Practical consequence if unchanged.** A windowed extraction of a discursive source can record a
+question as open when the source answers it elsewhere. `source_asks_open_question` is a field about
+the SOURCE's uncertainty, and using it for a claim the source does in fact resolve later would be a
+misrepresentation — which is why the caveat naming the location was necessary here and why the field
+alone was not sufficient.
+
+**Proposed fix — PROPOSAL ONLY.** None. The existing fields handled it once a caveat carried the
+location. Recorded so that if book 12 forces the same manoeuvre, the pair becomes evidence that
+discursive sources need an explicit convention rather than an ad-hoc caveat.
