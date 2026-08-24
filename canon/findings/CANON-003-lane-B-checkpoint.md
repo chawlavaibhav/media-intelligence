@@ -7,7 +7,7 @@
 
 | # | Book | Section | Objects | Systems | Terms | Bindings | Visual | Validated | Historical |
 |---|---|---|---|---|---|---|---|---|---|
-| 9 | *Grammar of the Edit*, 2nd ed. | ch.3–5, printed pp.55–109 | 60 | 5 | 48 | 11 | verified page-level | pass | pending |
+| 9 | *Grammar of the Edit*, 2nd ed. | ch.3–5, printed pp.55–109 | 60 | 5 | 48 | 11 | verified page-level | pass | **done** — `no historical comparator`; companion-volume comparison run |
 
 ## Remaining assignments
 
@@ -24,14 +24,17 @@ fresh session can pick up from this checkpoint without inspecting or undoing any
 
 Recorded in the commit that adds this file — see `git log -1` on `work/canon-003-b`.
 
-Book checkpoints: book 9 fresh pre-history checkpoint is the commit adding
-`canon/knowledge/current/grammar-of-the-edit-ch3-5/`.
+Book checkpoints: **`ddef98d`** — book 9 fresh pre-history checkpoint. Post-checkpoint comparison
+and findings are in the commit that follows it.
 
 ## Unresolved local issues
 
-- **Book 9 historical comparison is pending.** The fresh checkpoint is committed and pushed; the
-  repository has not yet been searched for historical *Grammar of the Edit* material. That search is
-  the next action for this book and must happen only after the checkpoint exists.
+- **Book 9 is closed.** Fresh checkpoint `ddef98d` pushed, then the repository searched: no
+  historical *Grammar of the Edit* material exists, recorded as `no historical comparator`. The
+  companion-volume comparison against book 1 was run afterwards and produced LB-09.
+- **LB-09 is open and rests on one pair.** Two books by the same authors are not two independent
+  origins, and SPEC-05's `cross_source_concept` guard counts source ids. No cross-source promotion
+  has been attempted yet, so the failure is predicted rather than observed.
 - **LB-01 is open and single-source.** SPEC-03's intra-source relation vocabulary could not express
   thirteen connections in book 9. One book is not enough to propose a change. Watch books 10–12 —
   Murch in particular, whose material is an explicitly ranked list, may stress the same area from a
