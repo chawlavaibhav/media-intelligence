@@ -1,0 +1,360 @@
+# CANON-003 book 2 — Ogilvy on Advertising ch.2. SPEC-05 ontology, source-local.
+# Existing relation types only; distinct_from permitted in this layer per Controller decision 3.
+source_id: ogilvy_on_advertising_ch2
+extraction_date: 2026-08-24
+
+terms:
+- term_id: t_ogl_c003_0001
+  term: irrelevant_brilliance
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    Work that is striking but not grounded in knowledge of the product. The source attributes the
+    phrase "the slippery surface of irrelevant brilliance" to his brother Francis and gives it as the
+    risk of skipping preparation.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Do your homework"}
+  arising_from: [sk_ogl_c003_0004]
+
+- term_id: t_ogl_c003_0002
+  term: advertising_that_reduces_sales
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    Advertising whose effect on sales is negative rather than merely small. The source's phrase for
+    the brewer's case is that he spent millions "un-selling his beer".
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "chapter opening"}
+  arising_from: [sk_ogl_c003_0002]
+
+- term_id: t_ogl_c003_0003
+  term: passing_like_a_ship_in_the_night
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    The fate of advertising containing no big idea: it is not noticed at all.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "What's the big idea?"}
+  arising_from: [sk_ogl_c003_0010]
+
+- term_id: t_ogl_c003_0004
+  term: committee_advertising
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    Campaigns that reconcile a long list of objectives and too many executives' views, and so achieve
+    nothing. The source says such work looks like the minutes of a committee.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Down with committees"}
+  arising_from: [sk_ogl_c003_0018]
+
+- term_id: t_ogl_c003_0005
+  term: cult_of_creativity
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    Judging advertising by style, originality or awards rather than by whether it sells. The source
+    uses the term as a section heading and endorses the counter-position that if it does not sell it
+    is not creative.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "The cult of 'creativity'"}
+  arising_from: [sk_ogl_c003_0021]
+
+- term_id: t_ogl_c003_0006
+  term: discarding_an_advertisement_before_it_wears_out
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    Retiring a campaign that is still selling, usually because those close to it have grown tired of
+    seeing it. The source's illustration is Henry Ford objecting to a campaign that had not yet run.
+  first_seen: 2026-08-24
+  verbatim: false
+  source_ref: {locator: "Repeat your winners"}
+  arising_from: [sk_ogl_c003_0017]
+
+- term_id: t_ogl_c003_0007
+  term: parity_product
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: problem
+  definition_in_origin_frame: >
+    A product materially no different from its competitors, because manufacturers share technology
+    and use the same research to set colour, size, design and taste.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Make the product the hero"}
+  arising_from: [sk_ogl_c003_0015]
+
+- term_id: t_ogl_c003_0008
+  term: study_the_product_first
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: >
+    Read and investigate the product at length before writing, on the grounds that the selling idea
+    comes out of that knowledge.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, unknown]
+  source_ref: {locator: "Do your homework"}
+  arising_from: [sk_ogl_c003_0004]
+
+- term_id: t_ogl_c003_0009
+  term: position_the_product_explicitly
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: >
+    Decide and state what the product does and who it is for, before deciding image or campaign.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {locator: "Positioning"}
+  arising_from: [sk_ogl_c003_0006]
+
+- term_id: t_ogl_c003_0010
+  term: project_the_same_image_year_after_year
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: >
+    Keep every advertisement contributing to one consistent brand personality over years, resisting
+    the pressure from new agencies and new marketing directors to change it.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {locator: "Brand image"}
+  arising_from: [sk_ogl_c003_0007]
+
+- term_id: t_ogl_c003_0011
+  term: make_the_product_the_hero
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: "Put the product itself at the centre of the advertising, shown with simplicity."
+  first_seen: 2026-08-24
+  verbatim: true
+  executable_by: [human_edit, generative_respecification, deterministic_composite]
+  source_ref: {locator: "Make the product the hero"}
+  arising_from: [sk_ogl_c003_0014]
+
+- term_id: t_ogl_c003_0012
+  term: repeat_until_it_stops_selling
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: >
+    Continue running a successful advertisement, measuring selling effectiveness at intervals, until
+    research shows it has worn out.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit, unknown]
+  source_ref: {locator: "Repeat your winners"}
+  arising_from: [sk_ogl_c003_0017]
+
+- term_id: t_ogl_c003_0013
+  term: state_what_is_good_rather_than_what_is_better
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: >
+    For products whose competitors are also good, drop the comparative claim and say clearly, honestly
+    and informatively what is good about yours.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {locator: "'The positively good'"}
+  arising_from: [sk_ogl_c003_0016]
+
+- term_id: t_ogl_c003_0014
+  term: follow_direct_response_practice
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: remedy
+  definition_in_origin_frame: >
+    Where general and direct-response practice diverge on format, timing or copy length, follow direct
+    response, because it alone knows to a dollar what each advertisement sold.
+  first_seen: 2026-08-24
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {locator: "The lessons of direct response"}
+  arising_from: [sk_ogl_c003_0020]
+
+- term_id: t_ogl_c003_0015
+  term: big_idea
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: property
+  definition_in_origin_frame: >
+    The quality that makes a campaign attract attention and sell. Never defined by the source, which
+    supplies five recognition questions instead and states that no idea is big unless it would work
+    for thirty years.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "What's the big idea?"}
+  arising_from: [sk_ogl_c003_0010, sk_ogl_c003_0012, sk_ogl_c003_0013]
+
+- term_id: t_ogl_c003_0016
+  term: brand_image
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: property
+  definition_in_origin_frame: >
+    A product's personality — an amalgam of its name, packaging, price, advertising style and the
+    product itself. The source says it is 90 per cent of what a distiller has to sell.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Brand image"}
+  arising_from: [sk_ogl_c003_0007]
+
+- term_id: t_ogl_c003_0017
+  term: positioning
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: property
+  definition_in_origin_frame: >
+    What the product does and who it is for. The source records that the term is in great favour among
+    marketing experts while no two agree what it means, and gives this as its own definition.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Positioning"}
+  arising_from: [sk_ogl_c003_0006]
+
+- term_id: t_ogl_c003_0018
+  term: added_value
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: property
+  definition_in_origin_frame: >
+    The differentiation advertising style contributes to a product that is not itself different from
+    its competitors.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Make the product the hero"}
+  arising_from: [sk_ogl_c003_0015]
+
+- term_id: t_ogl_c003_0019
+  term: moving_parade
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: property
+  definition_in_origin_frame: >
+    The source's term for the audience: continually renewing rather than fixed, so an advertisement
+    keeps finding new prospects as they enter the market.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Repeat your winners"}
+  arising_from: [sk_ogl_c003_0017]
+
+- term_id: t_ogl_c003_0020
+  term: factors
+  origin: source
+  origin_ref: ogilvy_on_advertising_ch2
+  kind: entity
+  definition_in_origin_frame: >
+    The source's term for recurring techniques that reliably raise or lower an advertisement's
+    performance — "the triggers which make people read advertisements". He reports collecting 96 of
+    them over 35 years; none is enumerated in this chapter.
+  first_seen: 2026-08-24
+  verbatim: true
+  source_ref: {locator: "Pursuit of knowledge"}
+  arising_from: [sk_ogl_c003_0019]
+
+relationships:
+- from: t_ogl_c003_0001
+  to: t_ogl_c003_0008
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The risk of skipping preparation and the preparation the source prescribes."
+
+- from: t_ogl_c003_0007
+  to: t_ogl_c003_0018
+  relation: related_to
+  confidence_basis: source_stated
+  note: "Added value is what the source says advertising contributes when the product is a parity product."
+
+- from: t_ogl_c003_0006
+  to: t_ogl_c003_0012
+  relation: related_to
+  confidence_basis: source_stated
+  note: "Retiring a campaign too early, and the remedy of measuring until it wears out."
+
+- from: t_ogl_c003_0019
+  to: t_ogl_c003_0012
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The moving-parade claim is the stated justification for repetition."
+
+- from: t_ogl_c003_0016
+  to: t_ogl_c003_0017
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The source presents positioning and image as consecutive decisions — position first, then image —
+    so they are connected but sequential rather than equivalent.
+
+- from: t_ogl_c003_0005
+  to: t_ogl_c003_0015
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Checked because both concern originality and both are judged by the practitioner's reaction, which
+    invites merging. They are opposites in this source. A big idea is validated by whether it sells for
+    thirty years; the cult of creativity is precisely the error of validating by style, originality or
+    awards instead. The source attacks the second while insisting on the first, and quotes Reeves that
+    originality is the most dangerous word in advertising.
+
+- from: t_ogl_c003_0002
+  to: t_ogl_c003_0003
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both are advertising failing, but they fail differently and the difference matters for diagnosis.
+    Passing like a ship in the night is advertising that is not noticed — a zero effect. Advertising
+    that reduces sales is noticed and works against the product — a negative effect. The source treats
+    the second as the more surprising finding and evidences it separately.
+
+- from: t_ogl_c003_0004
+  to: t_ogl_c003_0005
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    The source raises both as institutional failures in consecutive sections and uses the same kind of
+    incentive argument for each, but never connects them explicitly. Recorded as related only.
+
+concepts:
+- concept_id: sc_ogl_c003_image_account
+  kind: source_specific_concept
+  origin_ref: ogilvy_on_advertising_ch2
+  label: the_image_account_of_what_advertising_sells
+  children_terms: [t_ogl_c003_0016, t_ogl_c003_0017, t_ogl_c003_0018, t_ogl_c003_0007, t_ogl_c003_0010]
+  origin: source_stated
+  basis: >
+    The source coins or defines each of these terms and develops them across consecutive sections as
+    one connected account: position the product, decide its image, keep the image constant, and use it
+    as the added value that differentiates a product materially identical to its rivals. The grouping
+    is the chapter's own structure.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_ogl_c003_measurement_complaint
+  kind: source_specific_concept
+  origin_ref: ogilvy_on_advertising_ch2
+  label: the_unmeasured_trade
+  children_terms: [t_ogl_c003_0020, t_ogl_c003_0014, t_ogl_c003_0005, t_ogl_c003_0004]
+  origin: extractor_inferred
+  basis: >
+    The source's own term "factors", its remedy of following direct response, and its two named
+    institutional failures all belong to one argument about a trade that does not measure itself. The
+    source makes each point separately and never groups them, so the grouping is ours.
+  asserts_agreement_between_sources: false

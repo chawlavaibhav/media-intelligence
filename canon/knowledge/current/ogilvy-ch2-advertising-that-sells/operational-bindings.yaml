@@ -1,0 +1,132 @@
+# CANON-003 book 2 — Ogilvy on Advertising ch.2. SPEC-04 bindings against SPEC-01 v0.1.
+# Written after the source representation was complete. All proposed; nothing reviewed.
+source_id: ogilvy_on_advertising_ch2
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_ogl_c003_0001
+  source_knowledge_refs: [sk_ogl_c003_0006]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: objective.description
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, constrains]
+  rationale: >
+    The source's definition of positioning — what the product does and who it is for — is a compact
+    statement of exactly what an objective description plus an audience specification must jointly
+    carry. It gives a shape for that field's content and a test for whether it has been filled at all.
+  applicability:
+    when: "a Creative IR whose objective is being specified for a branded product"
+    limits: >
+      The source records that the field itself has no agreed definition of positioning and supplies a
+      personal one. Adopting it is adopting one practitioner's stipulation, not a settled term.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_ogl_c003_0009]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ogl_c003_0002
+  source_knowledge_refs: [sk_ogl_c003_0007, sk_ogl_c003_0008]
+  source_system_refs: [scs_ogl_c003_003]
+  target_type: creative_ir
+  target_path: brand.palette
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, flags]
+  rationale: >
+    SPEC-01 records brand palette and type with a tolerance. This source supplies the reason a
+    tolerance matters: every execution contributes to one accumulating personality, so drift across
+    executions is itself the defect. It also supplies a default — an impression of quality — and a
+    named risk, that advertising which looks cheap transfers that to the product.
+  applicability:
+    when: "brand constraints are being specified or a generated execution is being checked against them"
+    limits: >
+      The source is discussing consistency across years of campaigns, not across variants within one
+      job. Whether the same argument holds at that much shorter timescale is untested here.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_ogl_c003_0010]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ogl_c003_0003
+  source_knowledge_refs: [sk_ogl_c003_0021, sk_ogl_c003_0014]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [constrains]
+  observation_unit: whole_asset
+  rationale: >
+    A constraint on the evaluator rather than on the asset. The source's central methodological claim
+    is that the advertisement a practitioner likes and the one that sells are seldom the same, and
+    that judging by style is the field's characteristic error. Any creative-fitness evaluator that
+    scores appeal, polish or originality is measuring the thing this source says is uncorrelated with
+    the outcome.
+  applicability:
+    when: "designing or reviewing a creative-fitness evaluator for commercial work"
+    limits: >
+      The source's evidence is a selected list of award winners who lost accounts, with no base rate
+      for non-winners. It supports treating style scores as suspect; it does not establish that style
+      and selling are unrelated.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogl_c003_0005]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ogl_c003_0004
+  source_knowledge_refs: [sk_ogl_c003_0001, sk_ogl_c003_0002, sk_ogl_c003_0003]
+  source_system_refs: [scs_ogl_c003_002]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [constrains]
+  rationale: >
+    A worked precedent for how to weigh a source that argues almost entirely from outcome claims. This
+    chapter reports a 19½-fold difference between advertisements, campaigns that reduced sales, and
+    sales figures for named accounts — nearly all attributed, anecdotal, and unreplicated, while being
+    the evidential foundation of everything else it says. It also argues that the industry has a
+    structural incentive not to test, which is a reason to expect exactly this evidence profile from
+    commercial-craft sources generally.
+  applicability:
+    when: "weighing how much a commercial-craft source should count where its claims are outcome assertions"
+    limits: >
+      One source. The incentive argument explaining why such sources under-measure is the author's own
+      and is itself unevidenced.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ogl_c003_0005
+  source_knowledge_refs: [sk_ogl_c003_0017, sk_ogl_c003_0013]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    The source names campaigns it says ran for decades — the Hathaway eyepatch from 1951, the Dove
+    promise from 1955, American Express from 1975, Marlboro for 25 years — and offers durability as
+    the discriminating test of a good idea. These are candidate historical cases for testing whether
+    any measure of creative fitness correlates with campaign longevity.
+  applicability:
+    when: "assembling historical cases against which a creative-fitness measure could be sanity-checked"
+    limits: >
+      Candidate cases only, not an instrument, and not usable as-is. They are survivors selected by the
+      author at time of writing, with no comparison set of campaigns that met his criteria and failed.
+      Any use must carry that selection bias explicitly. The same labelling condition the Controller
+      set for the CANON-001 and CANON-002 stimuli applies.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; selection-biased, see limits"

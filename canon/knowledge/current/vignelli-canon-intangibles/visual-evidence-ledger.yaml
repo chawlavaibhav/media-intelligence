@@ -1,0 +1,113 @@
+# CANON-003 book 5 — Massimo Vignelli, "The Vignelli Canon", Part One: The Intangibles
+# Independent visual-evidence pass, completed before any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"The Vignelli Canon.pdf"
+#   /Creator: Adobe InDesign CS3 · /Producer: Adobe PDF Library 8.0 · created 27 Mar 2009
+#   50 PDF pages, each a two-page spread. Part One runs PDF pages 5-17; Part Two ("The Tangibles")
+#   begins at PDF page 18, confirming the boundary.
+#   NOT a scan: this is a native digital PDF with a real text layer and full colour.
+#   rendered ephemerally at 90 dpi to session scratchpad; NOT committed.
+
+source_id: vignelli_canon_part_one_intangibles
+pass: independent_visual_evidence
+pages_rendered: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+pages_inspected: [7]
+visual_completeness: verified_page_level
+
+colour_check:
+  method: "saturation sampled across all 13 rendered spreads"
+  result: >
+    Colour present and intact on 9 of 13 spreads, up to 2,166 coloured pixels per 4,800 sampled.
+    This matters as a control: the same measurement run on the Albers digitisation returned zero on
+    every page tested. The method distinguishes a colour-bearing source from a stripped one.
+
+# ═════════════════════════════════════════════════════════════
+# THE FINDING: a full-page graphic buried an entire named section
+# ═════════════════════════════════════════════════════════════
+text_layer_ordering_problem:
+  severity: moderate_and_recoverable
+  what_happened: >
+    Part One contains twelve named sections. Eleven appear cleanly in the extracted text. The
+    twelfth — Syntactics, one of the three concepts the book opens by announcing — did not.
+  cause: >
+    Syntactics shares its spread with the New York City Subway Diagram, which carries several hundred
+    words of route legend. In the extracted text layer that legend is emitted around and through the
+    Syntactics prose, so the section reads as a wall of subway route descriptions with fragments of
+    argument embedded in it.
+  how_it_was_caught: >
+    By the contents page listing a section the extracted body text did not appear to contain, and
+    then by rendering the spread and reading it.
+  what_the_visual_recovered: >
+    The complete Syntactics argument, cleanly set in its own column: that syntax is the discipline
+    controlling grammar in the construction of phrases, that the syntax of design is provided by
+    grid, typefaces, text, headlines and illustrations, that consistency comes from the appropriate
+    relationship between these, and that grids are one of several tools for achieving it.
+  why_it_matters: >
+    This is not corruption — every word is present and correct. It is an ORDERING failure, and it is
+    the mildest member of the same family as the Lupton interleaving that blocked that book outright.
+    The difference in consequence is large: Lupton spliced sentences into text the author never wrote,
+    which is unrecoverable; this merely misplaces a block, which a visual pass repairs completely.
+  detectability_note: >
+    A text-only extractor working from the body alone could plausibly have missed an entire named
+    concept here. What made it detectable was the contents page — an independent index of what should
+    be present. That is worth noting as a cheap safeguard.
+
+demonstrations:
+
+- ref: vis_vig_subway_diagram
+  spread: 7
+  printed_pages: [12, 13]
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible_in_colour
+  visible_content: >
+    The 2008 New York City Subway Diagram reproduced at full spread width: colour-coded routes on a
+    geometric grid, with a legend of route descriptions above.
+  what_the_visual_supports: >
+    That the argument about syntactic consistency is being made against a real, complex artefact
+    rather than an abstract one. The diagram shows what "the appropriate relationship of the various
+    syntactical elements" looks like when carried across hundreds of elements — consistent line
+    weights, a fixed angle set, uniform station marks, a single type system.
+  requires_prose: >
+    The claim that this consistency is what makes it legible, and the attribution of the underlying
+    idea to Mies van der Rohe's "God is in the details".
+  lost_in_plain_text: true
+  colour_dependent: true
+  extractor_note: >
+    The diagram's own colour coding is a syntactic device — route identity carried by hue. In a
+    greyscale reproduction the example would still show grid discipline but would lose the specific
+    mechanism it is illustrating. It survives here because this PDF is native rather than scanned.
+
+visual_only_observations:
+
+- ref: vis_obs_vig_book_demonstrates_itself
+  spread: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+  observation: >
+    Every spread in Part One uses the same layout: section title in bold sans at the top left of the
+    verso, a single justified serif text column, generous margin, and the illustration given the
+    entire recto. Page numbers sit in a fixed position throughout.
+  strength: clearly_visible
+  why_it_matters: >
+    The book is arguing for discipline, consistency and the grid, and its own pages are built on an
+    unvarying one. As with Albers's typographic demonstration, the artefact is evidence for its own
+    claim. A text extraction preserves the argument and loses the demonstration.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_vig_spread_as_unit
+  spread: null
+  observation: >
+    The PDF's pages are two-page spreads, so PDF page 7 carries printed pages 12 and 13. Printed page
+    numbers are visible in the rendered images and were used to check the mapping.
+  strength: clearly_visible
+  why_it_matters: >
+    Provenance hygiene. Citing "page 7" without qualification would be ambiguous between the PDF
+    page and either printed page. All provenance in this extraction cites the PDF spread and names
+    the section, which is unambiguous.
+  promoted_to_source_claim: false
+
+summary:
+  demonstrations_recorded: 1
+  visual_only_observations: 2
+  sections_recovered_by_the_visual_pass: 1
+  colour_bearing_spreads: 9

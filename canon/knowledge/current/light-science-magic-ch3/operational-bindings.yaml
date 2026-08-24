@@ -1,0 +1,135 @@
+# CANON-003 book 3 — Light: Science & Magic ch.3. SPEC-04 bindings against SPEC-01 v0.1.
+source_id: light_science_and_magic_ch3
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_lsm_c003_0001
+  source_knowledge_refs: [sk_lsm_c003_0009]
+  source_system_refs: [scs_lsm_c003_003]
+  target_type: governance
+  target_path: null
+  governance_consumer: taxonomy_governance
+  role: [constrains]
+  rationale: >
+    A worked precedent for the ontology's hardest recurring problem. A technical field found that one
+    of its own core words carried at least three incompatible practitioner meanings. The source did not
+    pick a winner, did not normalise, and did not silently redefine. It refused the term, named the
+    underlying concepts separately, stated the reason in the text, and permitted readers who use the
+    word to substitute it while reading. That is precisely the discipline SPEC-05 adopts for
+    near-synonyms across sources.
+  applicability:
+    when: "deciding how the ontology should handle a term whose meaning diverges across communities"
+    limits: >
+      One instance from one field. It demonstrates the move is available and workable; it does not
+      establish when refusal is preferable to mapping.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsm_c003_0007]
+  repair_ontology_refs: [t_lsm_c003_0013]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_lsm_c003_0002
+  source_knowledge_refs: [sk_lsm_c003_0004, sk_lsm_c003_0010, sk_lsm_c003_0015, sk_lsm_c003_0017]
+  source_system_refs: [scs_lsm_c003_001]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    Supplies a physical account of when a surface's appearance is trustworthy evidence about the
+    surface. Diffuse reflection is angle-independent, so a matte subject looks the same from anywhere;
+    direct and polarized reflection are angle-determined, so a glossy subject's appearance is a fact
+    about the geometry, not about the object. An evaluator judging whether a rendered product looks
+    correct needs that distinction, because a shiny product photographed from a different angle
+    legitimately looks different without any error having occurred.
+  applicability:
+    when: "evaluating whether a rendered or photographed subject's surface appearance is faithful"
+    limits: >
+      The source describes physical optics with a real camera. Whether a generative model reproduces
+      these behaviours is a Capability Lab question and is not asserted here.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_lsm_c003_0005, t_lsm_c003_0008]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_lsm_c003_0003
+  source_knowledge_refs: [sk_lsm_c003_0001, sk_lsm_c003_0020]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.visual_language
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, constrains]
+  rationale: >
+    SPEC-01's visual_language field records lighting among palette, texture and genre. This source
+    supplies what a lighting specification must actually decide: which reflection type is to dominate on
+    which surfaces. The source states that deciding which reflection matters and then capitalising on it
+    is the whole method, and that the choice is the photographer's creative decision rather than one the
+    physics makes.
+  applicability:
+    when: "specifying lighting intent for a still or frame containing surfaces of differing finish"
+    limits: >
+      The source is explicit that the physics constrains without determining; the appropriate choice is
+      a creative decision. This binding therefore supplies vocabulary for expressing an intent, not a
+      rule for choosing one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_lsm_c003_0004
+  source_knowledge_refs: [sk_lsm_c003_0013, sk_lsm_c003_0014, sk_lsm_c003_0011, sk_lsm_c003_0019, sk_lsm_c003_0012]
+  source_system_refs: [scs_lsm_c003_002]
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The chapter's operative content is a set of physical camera and light placement procedures:
+    calculate the family of angles, put the light inside it to produce direct reflection or outside it
+    to remove it, enlarge the source to fill it, polarize the source to make a reflection manageable,
+    and read source size from its own reflection.
+  applicability:
+    when: "Production IR exists and a physical photographic setup is being specified"
+    limits: >
+      NOT translated into generation instructions. Every action here is moving a physical light, camera
+      or filter. Per the Project Contract, physical-production advice is not rewritten as
+      generative-model instruction — and this source is the Contract's own worked example of that rule.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsm_c003_0008, t_lsm_c003_0005]
+  repair_ontology_refs: [t_lsm_c003_0009, t_lsm_c003_0010, t_lsm_c003_0011, t_lsm_c003_0012, t_lsm_c003_0014]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked, not translated"
+
+- binding_id: bnd_lsm_c003_0005
+  source_knowledge_refs: [sk_lsm_c003_0002, sk_lsm_c003_0006, sk_lsm_c003_0011]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    Three candidate stimuli with unusually clean isolation. The opening thought experiment specifies
+    three subjects identical in tone and differing only in finish. The playing-card pair changes source
+    size and holds everything else fixed. The mirror-and-lamp test changes distance and predicts that
+    brightness holds while reflection size changes. Each has a definite predicted outcome grounded in
+    stated physics rather than in taste.
+  applicability:
+    when: "constructing stimuli where the expected answer follows from physics rather than from a practitioner's judgement"
+    limits: >
+      Candidate stimuli, not instruments, and not usable as-is — the photographs were unavailable for
+      inspection during this extraction, so the pairs are described rather than seen. Unlike the earlier
+      books' stimuli, the expected outcomes here derive from stated physical law rather than authorial
+      assertion, which makes them easier to validate independently but does not remove the need to.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; figures unavailable, see visual-evidence-ledger"

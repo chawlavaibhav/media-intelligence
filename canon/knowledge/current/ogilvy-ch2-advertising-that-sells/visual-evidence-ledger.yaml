@@ -1,0 +1,78 @@
+# CANON-003 book 2 — Ogilvy, "Ogilvy on Advertising", ch.2, "How to produce advertising that sells"
+# Visual-evidence pass: BLOCKED. Recorded per CANON-003's visual-evidence policy, which requires
+# marking incompleteness rather than abandoning the book or claiming a pass that did not happen.
+
+source_id: ogilvy_on_advertising_ch2
+pass: attempted_and_blocked
+visual_completeness: blocked_visual_validation
+
+blocking_reason:
+  what_happened: >
+    The local library at ~/Downloads/Books/ became unreadable partway through this batch. Access was
+    available earlier in the same session — it is how the Phase 0 inventory verified this chapter
+    against the full book, and how book 1's page renders were produced — and is now refused at the
+    filesystem level for the entire directory.
+  scope: the whole local book library, not this title alone
+  is_it_a_source_integrity_problem: false
+  note: >
+    This is an access problem, not a corruption problem. The book is intact and was readable earlier.
+    The only workaround available to this worker would be to bypass the sandbox, which is an
+    access-control bypass and a stop-gate action under shared/AUTONOMY-POLICY.md. It was not taken.
+  consequence_for_this_book: >
+    No figure could be inspected. Every claim below rests on text alone, and the text's provenance was
+    verified earlier in this session against the full EPUB (215 of 219 sentences over 70 characters
+    matched verbatim; the remaining four are caption-merge artifacts whose opening fragments are
+    findable elsewhere in the book).
+
+# ── What is missing, established from the text itself ────────────────────────
+# The text file records where images were, so the loss is measurable even without access.
+
+visual_loss_observed_from_text:
+  placeholders_present: 6
+  placeholder_forms:
+    - {text: "Click here for hi-res image and text.", count: 3}
+    - {text: "Click here for hi-res image.", count: 2}
+    - {text: "Click here for text.", count: 1}
+  what_the_placeholders_stand_in_for: >
+    Reproductions of actual advertisements — the Rolls-Royce "at sixty miles an hour" advertisement,
+    the Volkswagen campaign, the Avis "we try harder" campaign, and others. These are the primary
+    evidence for the chapter's claims: Ogilvy argues from specific advertisements and what they did
+    to sales.
+  what_survives: >
+    The captions survive in full and are substantive. For example: "Before I wrote this — the most
+    famous of all automobile ads — I did my homework. It ran only in two newspapers and two
+    magazines, at a cost of $25,000." The reader learns what the advertisement was and what it
+    achieved, but never sees it.
+
+# ── A fourth distinct visual-loss pattern for the batch ──────────────────────
+visual_loss_pattern:
+  pattern_name: announced_absence
+  description: >
+    The evidence is gone and the file says so. A literal instruction to click something that cannot
+    be clicked sits where each advertisement was.
+  contrast_with_earlier_books: >
+    Williams (CANON-002) was SILENT loss: the two demonstration lists became identical and nothing in
+    the file indicated anything was missing. Grammar of the Shot (book 1) was NAMED loss: every figure
+    is introduced by number and caption, so the reader knows what they cannot see. Ogilvy is ANNOUNCED
+    loss: the file contains explicit placeholder text marking each gap.
+  why_the_distinction_matters: >
+    Severity tracks detectability, not quantity. Announced and named loss are recoverable in
+    principle — you know exactly what to go and find. Silent loss is the dangerous one, because an
+    extractor cannot tell that anything is absent and will treat a description of missing evidence as
+    though the evidence were present.
+  rank_by_danger: [silent_loss_williams, named_loss_grammar_of_the_shot, announced_loss_ogilvy]
+
+# ── What this means for extraction ──────────────────────────────────────────
+extraction_constraint_applied: >
+  No claim below is recorded as visually demonstrated. Where Ogilvy argues from a specific
+  advertisement, the claim is extracted with source_support: text and the advertisement recorded as
+  a described-but-unseen example. Nothing is inferred about what the advertisements look like.
+
+demonstrations: []
+visual_only_observations: []
+
+summary:
+  demonstrations_recorded: 0
+  reason: visual source unreachable
+  image_placeholders_counted_in_text: 6
+  all_claims_rest_on: text_only

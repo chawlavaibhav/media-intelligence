@@ -1,0 +1,206 @@
+# CANON-003 book 1 — Grammar of the Shot ch.4. SPEC-04 bindings, derived against SPEC-01 v0.1.
+# Written last, after the source representation was complete on disk. Ours, recorded as ours.
+# All status: proposed — nothing reviewed.
+
+source_id: grammar_of_the_shot_ch4_continuity
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_gos_c003_0001
+  source_knowledge_refs: [sk_gos_c003_0012]
+  source_system_refs: [scs_gos_c003_002]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot_pair
+  rationale: >
+    The clearest available case of a defect with no within-frame signature. The source states the
+    error is not apparent until shots are edited together, and the figure shows the erroneous frame
+    is an unremarkable image on its own. Any evaluator scoring frames independently will pass a
+    scene containing it.
+  applicability:
+    when: "evaluating consecutive shots of a scene where subject attention or direction is established"
+    limits: >
+      Requires both shots together and the knowledge of which side the line was established on. The
+      source treats deliberate crossing as legitimate, so a detection is a flag for review rather
+      than a fault.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gos_c003_0001, t_gos_c003_0004]
+  repair_ontology_refs: [t_gos_c003_0006]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gos_c003_0002
+  source_knowledge_refs: [sk_gos_c003_0014, sk_gos_c003_0015]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot_pair
+  rationale: >
+    Two further pair-level checks the source makes explicit and demonstrates: whether consecutive
+    shots of one subject are too similar in framing, and whether reciprocal coverage of two subjects
+    is insufficiently similar. Both are comparisons between two frames, and the source supplies a
+    matched and a mismatched example of the second.
+  applicability:
+    when: "evaluating consecutive coverage shots, or the two halves of a reciprocal pair"
+    limits: >
+      The 30 degree threshold is hedged in the source and its figure does not establish it as the
+      minimum perceptible difference. The matching requirement is explicitly waived where storytelling
+      motivates a difference, so neither supports a pass or fail without knowing intent.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gos_c003_0002, t_gos_c003_0003]
+  repair_ontology_refs: [t_gos_c003_0007, t_gos_c003_0008]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gos_c003_0003
+  source_knowledge_refs: [sk_gos_c003_0007, sk_gos_c003_0016]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: sequence
+  rationale: >
+    Screen direction and eye-line match are properties of a run of shots rather than of any pair:
+    a subject's established direction of travel persists across an arbitrary number of intervening
+    shots until something on screen shows it change, and a look set up in one shot may be paid off
+    later. Checking either requires the sequence.
+  applicability:
+    when: "evaluating a sequence in which a subject moves directionally or attends to something off-frame"
+    limits: >
+      The source states the direction holds until a change is shown on screen, so an evaluator must
+      be able to recognise that change or it will report false failures.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gos_c003_0004, t_gos_c003_0005]
+  repair_ontology_refs: [t_gos_c003_0009, t_gos_c003_0010]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gos_c003_0004
+  source_knowledge_refs: [sk_gos_c003_0008, sk_gos_c003_0016]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.continuity_requirements
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, derives]
+  rationale: >
+    SPEC-01 carries a continuity_requirements field on the video extension. This source supplies the
+    concrete content such a field would hold for a dialogue or attention scene: which sight lines are
+    established, which side of the axis coverage sits on, and which looks require a matching reveal.
+  applicability:
+    when: "a video Creative IR for a scene with two or more subjects attending to one another"
+    limits: >
+      The source describes physical production with a crew placing a camera. Whether any of these
+      requirements can be expressed to, or satisfied by, a generative video model is a Capability Lab
+      question and is not asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gos_c003_0004]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gos_c003_0005
+  source_knowledge_refs: [sk_gos_c003_0002, sk_gos_c003_0017]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.temporal_structure
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives]
+  rationale: >
+    The source gives a containment hierarchy — shot inside scene inside act inside picture — and a
+    conventional progression from wider to tighter framing as a scene develops. Both bear on how a
+    temporal structure is laid out and what each beat is expected to contain.
+  applicability:
+    when: "specifying beat structure for a multi-shot video"
+    limits: >
+      The outside-in progression is attributed by the source to tradition and hedged; it is a
+      convention worth recording, not a requirement.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gos_c003_0006
+  source_knowledge_refs: [sk_gos_c003_0013]
+  source_system_refs: [scs_gos_c003_003]
+  target_type: governance
+  target_path: null
+  governance_consumer: rule_application
+  role: [constrains]
+  rationale: >
+    The source states directly that there are very few absolutes among its guidelines and that a
+    creative reason is sufficient warrant to depart from any of them, including the hardest rule in
+    the chapter. That is an in-source instruction about the standing of its own knowledge, which is
+    what the rule_application consumer governs. It bears directly on whether any claim from this
+    source may be applied as a constraint rather than as a default.
+  applicability:
+    when: "deciding whether a claim from this source may be enforced rather than advised"
+    limits: >
+      Stated by these authors about their own text. Whether it generalises to other sources is not
+      asserted.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_gos_c003_0007
+  source_knowledge_refs: [sk_gos_c003_0012, sk_gos_c003_0015]
+  source_system_refs: [scs_gos_c003_002]
+  target_type: benchmark
+  target_path: null
+  role: [derives]
+  rationale: >
+    Two candidate stimuli in which the defect is a relation between frames rather than a property of
+    one. Figure 4.13 pairs correct and line-crossed coverage of the same scene; Figures 4.19 and 4.20
+    pair matched and mismatched over-the-shoulder framing of the same two performers. Both are useful
+    for testing whether an instrument can detect a between-shot defect at all.
+  applicability:
+    when: "constructing stimuli to test whether an evaluator can detect defects that no single frame contains"
+    limits: >
+      Candidate stimuli, not instruments, and not usable as-is. The expected readings are the
+      authors' assertions, not measured viewer responses, and must be independently validated before
+      an evaluator's answer can be scored against them — the same condition the Controller set for
+      the CANON-001 and CANON-002 stimuli. The line-crossing figures are line drawings rather than
+      photographs, so they are cleaner than real footage and correspondingly less representative.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gos_c003_0001, t_gos_c003_0003]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; flagged CROSS_STREAM in the CANON-003 Controller Brief"
+
+- binding_id: bnd_gos_c003_0008
+  source_knowledge_refs: [sk_gos_c003_0010, sk_gos_c003_0014, sk_gos_c003_0015]
+  source_system_refs: [scs_gos_c003_001]
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The chapter's geometric core is a set of physical camera-placement procedures: establish the
+    axis, keep setups within one 180 degree arc, move at least 30 degrees between shots of a subject,
+    mirror across the arc for reciprocal coverage. Recorded as physical production actions only.
+  applicability:
+    when: "Production IR exists and a physical shoot is being planned"
+    limits: >
+      NOT translated into generation instructions. These are instructions for where to stand a camera
+      on a set. Per the Project Contract, physical-production advice is not rewritten as
+      generative-model instruction.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_gos_c003_0001, t_gos_c003_0002]
+  repair_ontology_refs: [t_gos_c003_0006, t_gos_c003_0007, t_gos_c003_0008]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked, not translated"

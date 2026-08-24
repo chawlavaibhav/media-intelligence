@@ -1,0 +1,767 @@
+# CANON-003 book 1 — Grammar of the Shot, 2nd ed., ch.4, printed pp.93-112
+# Fresh SPEC-03 extraction. Historical GOS material sealed until this book's checkpoint exists.
+# Granularity: CANON-001 V0 rule (approved 24 Aug 2026), applied unchanged.
+# Section rationale: the whole of chapter 4. It is a self-contained treatment of shooting for the
+# edit, running from why coverage exists to eight named continuity constructs, and is large enough
+# to expose the authors' reasoning system without spilling into neighbouring chapters.
+
+source_id: grammar_of_the_shot_ch4_continuity
+
+source_knowledge:
+
+- sk_id: sk_gos_c003_0001
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "shooting for editing"
+    - "you make sure that your shots cover all of the action from each angle required so that when it comes time to edit the individual shots together, there is enough visual material to show the entire story from the preferred positions of coverage"
+  concept_label: shoot_coverage_so_the_edit_has_enough_material
+  label_origin: extractor_assigned
+  claim: >
+    During production the action must be recorded from every angle the edit will require, so that
+    the whole story can later be assembled from the preferred positions. Recording a variety of shot
+    types gives the editor more choices about when the audience receives fresh information.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A cut to a new shot type is what delivers new information, so the range of shot types recorded
+      sets the range of moments at which the editor can deliver it.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "any project whose material will be edited"
+  caveats:
+    - text: "the authors frame the whole chapter as prethinking the edit, describing it as requiring a degree of psychic ability on the part of the production team"
+      origin: source_stated
+    - text: "the goal is stated as recording as few takes as possible while still getting the needed coverage, so coverage is bounded by time and money rather than maximised"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "cover the main action from several angles and with several different framings"
+  examples:
+    positive: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_gos_c003_0004, note: "continuity discipline is what makes coverage cuttable"}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four — Putting Your Shots Together"
+    section: "opening question and answer"
+    page_start: 93
+    page_end: 94
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gos_c003_0002
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "The shots cut together to make a scene, the scenes cut together to make an ACT, and the acts cut together to make an entire motion picture."
+  concept_label: shots_compose_into_scenes_acts_and_picture
+  label_origin: extractor_assigned
+  claim: >
+    Individual shots do not stand alone. They cut together into scenes, scenes into acts, and acts
+    into the whole motion picture — a fixed compositional hierarchy of building blocks.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "narrative motion pictures"
+  caveats:
+    - text: "the accompanying figure presents this as an evolution of building blocks, which frames the levels as a fixed containment order rather than one option among several"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "diagram of the evolution of a motion picture's building blocks (Figure 4.1); the page was rendered but this figure was not separately catalogued as a demonstration in the visual ledger", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gos_c003_0003, note: "the requirement that separately shot material read as continuous follows from shots being assembled"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Matching Your Shots in a Scene"
+    page_start: 95
+    page_end: 95
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gos_c003_0003
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "Production can span days, weeks, or months of real time, but the resulting images, when edited together, need to appear as though they were all captured at the same exact time with fluid movement and matching actions."
+  concept_label: separately_recorded_material_must_read_as_one_continuous_event
+  label_origin: extractor_assigned
+  claim: >
+    Material recorded across days, weeks or months must, once assembled, appear to have been
+    captured at one moment, with fluid movement and matching action. Consistency across separate
+    recording occasions is therefore a production requirement rather than an editing convenience.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "any scene assembled from separately recorded shots"
+  caveats:
+    - text: "the authors describe the ways of staying aware of potential glitches as a few, not as a complete system"
+      origin: source_stated
+  source_stated_problems:
+    - "potential glitches"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gos_c003_0002, note: "a consequence of assembling a scene from separately recorded parts"}
+    - {relation: generalises, target: sk_gos_c003_0004, note: "continuity of performance is one form this requirement takes"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Matching Your Shots in a Scene"
+    page_start: 95
+    page_end: 95
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gos_c003_0004
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "continuity, which is consistent repetition of movement, action, or dialogue by the talent from one camera setup to the next"
+  concept_label: continuity_of_performance_across_setups
+  label_origin: extractor_assigned
+  claim: >
+    Continuity is the consistent repetition of movement, action or dialogue by the performers from
+    one camera setup to the next, and also across the separate takes recorded within a single setup.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "fictional narrative work in which action is repeated for coverage"
+  caveats:
+    - text: "the authors immediately widen the term, stating continuity is not just an actor moving a hand the same way but involves a much wider range of planning at the level of visual story construction"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gos_c003_0007, note: "screen direction is the structural rather than performance form of continuity"}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Continuity"
+    page_start: 96
+    page_end: 96
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gos_c003_0005
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "The top, bottom, left, and right edges of the frame therefore become references of direction for the audience."
+    - "the camera occupies the \"fourth wall\""
+  concept_label: frame_edges_become_the_audiences_directional_reference
+  label_origin: extractor_assigned
+  claim: >
+    The four edges of the frame become the audience's references of direction. A character looks off
+    frame left; a car exits frame right. Viewers tie the directional attention of characters and the
+    movement of subjects to those edges.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The camera occupies the fourth wall, giving the audience a privileged and fixed vantage on the
+      film's space, so the frame's edges serve as the stable reference against which direction is read.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "any framed motion image"
+  caveats:
+    - text: "the authors note the horizon line introduced in an earlier chapter is a further grounding clue, so frame edges are one device among several"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "diagram naming the four edges and their corresponding areas of interest", figure_ref: vis_gos_screen_direction}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gos_c003_0007, note: "screen direction is defined relative to these edges"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Continuity of Screen Direction"
+    page_start: 97
+    page_end: 97
+    figure_refs: [vis_gos_screen_direction]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_screen_direction]}
+
+- sk_id: sk_gos_c003_0006
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "the filmmakers have a responsibility to the audience to present a knowable world that conforms to some constant, physical world rules such as up, down, left, right, near, far"
+  concept_label: the_film_world_must_obey_constant_physical_rules
+  label_origin: extractor_assigned
+  claim: >
+    The audience assumes a larger film world beyond the four edges of the frame, and filmmakers are
+    obliged to present that world as conforming to constant physical rules of direction and distance
+    so the audience is not spatially confused.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The screen is the audience's single window onto the film's world, and a film can be shot
+      anywhere in any direction, so consistency on screen is the only thing making the world knowable.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "any motion picture presenting a continuous space"
+  caveats:
+    - text: "stated as a responsibility to the audience, which makes it a normative claim rather than a perceptual one"
+      origin: extractor_observed
+  source_stated_problems:
+    - "they do not get confused spatially"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_gos_c003_0007, note: "the rule for left and right follows from the general obligation"}
+    - {relation: generalises, target: sk_gos_c003_0010, note: "so does the 180 degree rule"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Continuity of Screen Direction"
+    page_start: 97
+    page_end: 97
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gos_c003_0007
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "screen direction—the left or right movement of a subject—must be maintained from one shot to the next"
+    - "if a person walks out of frame left ... in this new shot they would have to be entering from frame right in order to maintain that direction of leftward movement"
+  concept_label: screen_direction_must_be_maintained_across_a_cut
+  label_origin: extractor_assigned
+  claim: >
+    A subject's left or right movement must be maintained from one shot to the next. A person who
+    exits frame left must enter the following shot from frame right, because within the film's space
+    their leftward journey is understood to continue until something on screen shows it change.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience assumes movement continues in its established direction, so the entry edge of the
+      next shot must be the one consistent with that continued travel.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "a subject moving left or right across consecutive shots"
+  caveats:
+    - text: "the rule holds until a change of movement is shown on screen, so it governs the unseen interval rather than the whole film"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "have the subject enter the new shot from the edge opposite the one they exited"
+  examples:
+    positive:
+      - {description: "three-state sequence: exit frame left, held empty frame, entry from frame right", figure_ref: vis_gos_screen_direction}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gos_c003_0006, note: "the concrete rule derived from the general obligation"}
+    - {relation: depends_on, target: sk_gos_c003_0005, note: "defined relative to the frame edges"}
+    - {relation: contradicts, target: sk_gos_c003_0012, note: "jumping the line is the failure of this rule"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Continuity of Screen Direction"
+    page_start: 97
+    page_end: 99
+    figure_refs: [vis_gos_screen_direction]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_screen_direction]}
+
+- sk_id: sk_gos_c003_0008
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "lines of direction, which are also called sight lines"
+    - "The child looks after a lost balloon—the dog looks at the burglar—the hungry man looks at the pie in the baker's window"
+  concept_label: attention_between_subjects_creates_a_sight_line
+  label_origin: extractor_assigned
+  claim: >
+    Screen direction is not carried only by large physical movement. Wherever a subject directs
+    attention at another subject or object, a line of direction — a sight line — is created, and the
+    audience uses these connections between people, and between people and objects, to establish
+    spatial relationships within the film's space.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience is described as keen to observe attention and as actively wanting to follow lines
+      of attention, so the connections are sought rather than merely noticed.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "any shot in which a subject attends to something"
+  caveats:
+    - text: "the three demonstrations are unrelated in content — a child and a balloon, a dog and an intruder, a man and a pie — which shows the structure recurring independently of subject matter"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "three drawn instances of an observer, an object of attention, and the line between them", figure_ref: vis_gos_lines_of_attention}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gos_c003_0007, note: "extends screen direction from movement to attention"}
+    - {relation: generalises, target: sk_gos_c003_0009, note: "the action line is established by tracing a sight line"}
+    - {relation: generalises, target: sk_gos_c003_0016, note: "eye-line match depends on this"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "The Line—Basis for Screen Direction"
+    page_start: 100
+    page_end: 101
+    figure_refs: [vis_gos_lines_of_attention]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_lines_of_attention]}
+
+- sk_id: sk_gos_c003_0009
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "180 degree line, imaginary line, action line, or axis of action"
+    - "it is established by tracing the sight line of the talent within the shot"
+  concept_label: the_action_line_is_established_by_the_talents_sight_line
+  label_origin: extractor_assigned
+  claim: >
+    An imaginary line runs through the shooting location roughly where the main action occurs, known
+    variously as the 180 degree line, the imaginary line, the action line or the axis of action. It
+    is established by tracing the sight line of the talent within the shot, and once established it
+    stays essentially locked in place.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "a scene with established sight lines between subjects"
+  caveats:
+    - text: "the authors note there are ways to alter the line while shooting coverage, without giving them in this chapter"
+      origin: source_stated
+    - text: "the source offers four names for one concept without preferring any, which is a case of a field carrying divergent terminology for the same thing"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "overhead plans of the line drawn through the axis of action", figure_ref: vis_gos_180_geometry}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gos_c003_0008, note: "derived by tracing a sight line"}
+    - {relation: generalises, target: sk_gos_c003_0010, note: "the arc is defined relative to this line"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "The Imaginary Line—The 180 Degree Rule"
+    page_start: 102
+    page_end: 102
+    figure_refs: [vis_gos_180_geometry]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_180_geometry]}
+
+- sk_id: sk_gos_c003_0010
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "Your camera must now operate within that 180 degree arc when you set up for your new camera angles and coverage shots"
+  concept_label: keep_all_camera_setups_within_one_180_degree_arc
+  label_origin: extractor_assigned
+  claim: >
+    Once the action line is established it cuts the circle of possible camera positions into two
+    halves. All subsequent camera setups for that scene must stay within the same 180 degree arc on
+    one side of the line.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The first shot fixes which side is frame left and which frame right, and fixes the directions
+      of attention across the film space; staying on one side of the line preserves both.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "coverage of a scene after the first shot has established the line"
+  caveats:
+    - text: "the permitted region is a definite geometric area shown on an overhead plan, which makes the rule testable rather than a matter of taste"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "set up all coverage cameras within the 180 degree arc on the near side of the established action line"
+  examples:
+    positive:
+      - {description: "overhead plan of the arc, paired with the frames each permitted position produces", figure_ref: vis_gos_180_geometry}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gos_c003_0009, note: "the arc is defined by the line"}
+    - {relation: contradicts, target: sk_gos_c003_0012, note: "jumping the line is the violation of this rule"}
+    - {relation: qualified_by, target: sk_gos_c003_0013, note: "the source permits deliberate exceptions"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "The Imaginary Line—The 180 Degree Rule"
+    page_start: 102
+    page_end: 103
+    figure_refs: [vis_gos_180_geometry]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_180_geometry]}
+
+- sk_id: sk_gos_c003_0011
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "A is still frame left with attention pointing frame right (even though B is no longer physically visible within the frame)"
+  concept_label: screen_position_and_attention_persist_when_the_other_subject_leaves_frame
+  label_origin: extractor_assigned
+  claim: >
+    In a single close-up cut from a two-shot, a character must keep the screen position and
+    direction of attention established in the wider shot, even though the other character is no
+    longer visible in frame.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "singles cut from an established two-shot"
+  caveats:
+    - text: "this is the point at which the rule becomes non-obvious: the constraint is carried by a relationship to something absent from the frame"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "series pairing camera setups with resulting frames across a dialogue scene", figure_ref: vis_gos_180_geometry}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gos_c003_0010, note: "what the arc rule requires in a single"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "The Imaginary Line—The 180 Degree Rule"
+    page_start: 103
+    page_end: 103
+    figure_refs: [vis_gos_180_geometry]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_180_geometry]}
+
+- sk_id: sk_gos_c003_0012
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "To \"jump the line\" or \"cross the line\" means that you placed the camera on the opposite side of the action line"
+    - "the real mistake is not apparent until the three shots are edited together"
+    - "most filmmakers do not notice it until they get into the editing process"
+  concept_label: jumping_the_line_is_invisible_within_any_single_shot
+  label_origin: extractor_assigned
+  claim: >
+    Placing the camera on the far side of the action line reverses the established left and right
+    and inverts the film space for the viewer. The resulting shot is perfectly good in itself: the
+    mistake becomes apparent only once the shots are edited together, at which point both characters
+    appear to look the same way rather than at each other.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Crossing the line reverses the directions established for the film space, so the cut yields
+      two characters whose attention no longer points at one another.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "coverage shot from the far side of an established action line"
+  caveats:
+    - text: "the authors state most filmmakers do not notice this until the edit, which asserts the defect is not merely invisible in a frame but reliably missed on set"
+      origin: source_stated
+    - text: "the figure makes the property directly legible: the erroneous close-up is an unremarkable image, and the fault exists only in its relation to the preceding shot"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the cuts make no sense because it now appears that both A and B are sitting in the same fashion looking off frame right"
+    - "inverting the film space on the unaware viewer"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "three camera plans paired with their frames, the third marked WRONG SIDE OF LINE", figure_ref: vis_gos_jumping_the_line}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_gos_c003_0010, note: "the violation of the arc rule"}
+    - {relation: contradicts, target: sk_gos_c003_0007, note: "and of maintained screen direction"}
+    - {relation: qualified_by, target: sk_gos_c003_0013, note: "the source permits it deliberately in some cases"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "\"Jumping the Line\""
+    page_start: 104
+    page_end: 105
+    figure_refs: [vis_gos_jumping_the_line]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_jumping_the_line]}
+
+- sk_id: sk_gos_c003_0013
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "Crossing the line is acceptable under certain circumstances"
+    - "there are very few absolutes when it comes to the guidelines and \"rules\" presented in this text"
+    - "if you have creative reasons to execute a certain shot or group of shots a certain way, then do it, even if it flies in the face of convention"
+  concept_label: the_chapters_rules_are_defeasible_by_creative_intent
+  label_origin: extractor_assigned
+  claim: >
+    Crossing the line is acceptable in certain circumstances — the authors give a couple dancing
+    cheek to cheek, where the axis runs through both faces so that seeing both requires crossing it.
+    More broadly the authors state there are very few absolutes among the guidelines in the text, and
+    that a creative reason is sufficient warrant to depart from convention.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "any of the chapter's guidelines"
+  caveats:
+    - text: "the authors defer the detailed treatment of acceptable line crossing to a later chapter outside this section"
+      origin: source_stated
+    - text: "this statement governs every other claim in the chapter, which makes it a claim about the status of the rules rather than one rule among them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a couple dancing cheek to cheek, described verbally: the axis cuts through both faces so both cannot be seen from one side", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gos_c003_0010, note: "bounds the arc rule"}
+    - {relation: qualifies, target: sk_gos_c003_0012, note: "bounds the error"}
+    - {relation: qualifies, target: sk_gos_c003_0015, note: "bounds the matching requirement"}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "\"Jumping the Line\""
+    page_start: 105
+    page_end: 105
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_gos_c003_0014
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "you should ideally move the camera at least 30 degrees around the semicircle before you begin to frame up a new shot of the same subject"
+    - "a jump cut—two shots with similar framing of the same object cut together causing a visual jump in either space or time"
+  concept_label: move_the_camera_at_least_thirty_degrees_between_shots_of_one_subject
+  label_origin: extractor_assigned
+  claim: >
+    Within the 180 degree arc, the camera should be moved at least 30 degrees before framing a new
+    shot of the same subject. Below that the perspective is not considered different enough, and
+    cutting two similarly framed shots of the same object together produces a jump cut — a visual
+    jump in space or time.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each shot is supposed to show the audience new information, so two coverage shots too similar
+      to one another fail that purpose and read as a jump rather than as a cut.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "successive coverage shots of the same subject within the arc"
+  caveats:
+    - text: "the authors hedge with ideally and at least, giving a floor rather than a value"
+      origin: source_stated
+    - text: "the figure shows five views at 30 degree intervals and demonstrates that they differ; it does not show a smaller interval, so it does not establish that 30 degrees is the threshold at which difference appears"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a jump cut"
+  source_stated_remedies:
+    - "move the camera at least 30 degrees around the arc before framing a new shot of the same subject"
+    - "change the focal length so no two coverage shots seem to come from the same angle on action"
+  examples:
+    positive:
+      - {description: "the arc divided into 30 degree slices, and the same subjects photographed from five successive slices", figure_ref: vis_gos_30_degree}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_gos_c003_0010, note: "operates inside the established arc"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "The 30 Degree Rule"
+    page_start: 106
+    page_end: 107
+    figure_refs: [vis_gos_30_degree]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_30_degree]}
+
+- sk_id: sk_gos_c003_0015
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "matching shots or reciprocating imagery"
+    - "Whenever you shoot one type of shot to cover one character in a scene you should create the exact same corresponding frame for the other character"
+  concept_label: reciprocating_imagery_match_coverage_between_characters
+  label_origin: extractor_assigned
+  claim: >
+    Coverage shot for one character must be matched by an equivalent frame for the other: the same
+    shot size, and matched camera height, lens angle and angle on action, taken from the
+    corresponding position on the opposite end of the arc. The editor should be given equal numbers
+    of shots and matching framing for each character.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Matching lets the editor progress along shot size from one character to the next; the arc
+      geometry is what makes the reciprocal position calculable, since a setup at 45 degrees on one
+      side has a counterpart at 45 degrees on the other.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "multi-character scenes covered in singles or over-the-shoulder shots"
+  caveats:
+    - text: "the authors allow for differences forced by actual subject size, hairstyle, hat or other accessories, and note not every aspect may match exactly once storytelling needs are taken into account"
+      origin: source_stated
+    - text: "an over-the-shoulder mismatch is said to cause an unfavourable audience reaction, perhaps only at a subconscious level — a claim about viewer response that the figures cannot evidence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the mismatch will cause your audience, perhaps just on a subconscious level, to have an unfavorable reaction to the scene"
+    - "providing an editor with an MCU of one character but only a BCU of the other may cause issues during the edit"
+  source_stated_remedies:
+    - "shoot the corresponding frame for the other character from the mirrored position on the arc"
+    - "keep camera height and lens focal length the same between reciprocal setups"
+  examples:
+    positive:
+      - {description: "matched over-the-shoulder frames with comparable foreground and subject size", figure_ref: vis_gos_ots_match_mismatch}
+      - {description: "matched medium close-ups from mirrored 45 degree positions", figure_ref: vis_gos_matching_shot_types}
+    counter:
+      - {description: "mismatched over-the-shoulder frames, foreground shoulder much larger in one and the subject smaller and at a different height", figure_ref: vis_gos_ots_match_mismatch}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_gos_c003_0010, note: "reciprocal positions are computed on the arc"}
+    - {relation: qualified_by, target: sk_gos_c003_0013, note: "deliberate mismatch is permitted for storytelling reasons"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Reciprocating Imagery"
+    page_start: 108
+    page_end: 110
+    figure_refs: [vis_gos_matching_shot_types, vis_gos_ots_match_mismatch]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_matching_shot_types, vis_gos_ots_match_mismatch]}
+
+- sk_id: sk_gos_c003_0016
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "eye-line match"
+    - "Eye-line match is a \"setup and then payoff\" scenario maker."
+  concept_label: eye_line_match_pays_off_a_look_with_a_correspondingly_angled_reveal
+  label_origin: extractor_assigned
+  claim: >
+    When a character isolated in frame directs attention outside its edges, the audience traces a
+    line from their eyes to that edge and the filmmaker is then obliged to show what they are
+    looking at. The revealing shot must be taken from a direction, angle and height closely matching
+    the observing character's vantage. It need not be a direct point-of-view shot, but it must
+    respect the established eye-line. The first shot sets up an expectation; the second fulfils it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Framing the second shot from a corresponding vantage is what produces the illusion of
+      connection, so the audience feels they are seeing what the character sees.
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "a framed character attending to something off-screen"
+  caveats:
+    - text: "the authors state the filmmaker is most often obliged to show the object, leaving the obligation defeasible"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "reveal the object of interest from a vantage matching the observing character's direction, angle and height"
+  examples:
+    positive:
+      - {description: "a subject looking off-frame, followed by the object revealed from a correspondingly subjective viewpoint", figure_ref: vis_gos_eyeline_match}
+  intra_source_relations:
+    - {relation: specialises, target: sk_gos_c003_0008, note: "an applied use of the sight line across a cut"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Eye-Line Match"
+    page_start: 111
+    page_end: 112
+    figure_refs: [vis_gos_eyeline_match]
+    source_support: text_and_visual
+    inspected: {text: true, figures: [vis_gos_eyeline_match]}
+
+- sk_id: sk_gos_c003_0017
+  source_id: grammar_of_the_shot_ch4_continuity
+  source_terms:
+    - "Tradition holds that an editor might normally show a scene from the outside in, where the shots of the action start off wider to show environment and characters and then, as the action progresses, cut together tighter and closer shots"
+  concept_label: scenes_are_traditionally_cut_from_wider_to_tighter
+  label_origin: extractor_assigned
+  claim: >
+    By tradition a scene is shown from the outside in: beginning with wider shots that establish
+    environment and characters, and cutting progressively tighter as the action develops, to reach
+    more intimate detail by the end.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_production]
+    conditions: "conventional narrative scene construction"
+  caveats:
+    - text: "the authors attribute this to tradition and hedge it with might normally, presenting it as convention rather than rule"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_gos_c003_0015, note: "explains why equal numbers of matched shot sizes per character are needed"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: source_states_it_as_tradition
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Four"
+    section: "Reciprocating Imagery"
+    page_start: 108
+    page_end: 108
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

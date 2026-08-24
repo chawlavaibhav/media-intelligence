@@ -1,0 +1,172 @@
+# CANON-003 book 4 — Josef Albers, "Interaction of Color", chapters I-V
+# Independent visual-evidence pass, completed before any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Josef Albers - Interaction of Color (1971, Yale University
+#     Press) - libgen.li.pdf"
+#   PDF /Title: "Interaction of color : text of the original edition with selected plates"
+#   /Author: Albers, Josef · /Creator: Digitized by the Internet Archive · 109 pages of text
+#   section processed: chapters I-V, PDF pages 29-43. Chapter VI begins at PDF page 44.
+#   rendered ephemerally at 100 dpi to session scratchpad; NOT committed.
+#
+# OCR condition: the text layer is an OCR of a scan and carries visible artifacts — "\ery" for
+#   "very", "^vill" for "will", "conntry" for "country", "sine" for "sure". Measured damage is low:
+#   43 mixed-case garbled words in 19,461, about 0.2%. Verbatim quotations below and in
+#   source-knowledge.yaml were confirmed against the rendered page images rather than taken from the
+#   OCR layer.
+
+source_id: albers_interaction_of_color_ch1_5
+pass: independent_visual_evidence
+pages_rendered: [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
+pages_inspected: [30, 36]
+visual_completeness: blocked_visual_validation
+
+# ═════════════════════════════════════════════════════════════
+# THE FINDING: the figures survive; the one dimension that matters does not
+# ═════════════════════════════════════════════════════════════
+blocking_reason:
+  what_happened: >
+    Every page in the processed span was rendered successfully and every figure is present, legible
+    and correctly positioned. The book is nonetheless not visually verifiable, because this
+    digitisation is entirely greyscale and the book's subject is colour.
+  measurement: >
+    Saturation was measured across all fifteen rendered pages of the span and across a six-page
+    sample from later in the book (PDF 95-100). Pixels with any appreciable colour: zero out of
+    4,800 sampled per page, on every page tested. Not "muted" — absent.
+  why_this_is_not_an_access_problem: >
+    Unlike books 2 and 3, nothing here is unreachable. The file opens, the pages render, the figures
+    are intact. The loss is inside the artifact itself.
+  what_the_title_promises_and_does_not_deliver: >
+    The PDF title claims "text of the original edition with selected plates". Albers's original 1963
+    edition published the text as one volume and the colour studies as separate plate folders. In
+    this digitisation the plates that survive are reproduced without colour, so the promise in the
+    title is technically met and practically void.
+
+# ── A fifth visual-loss pattern for the batch ────────────────
+visual_loss_pattern:
+  pattern_name: dimension_destroyed
+  description: >
+    The visual evidence is present, complete and correctly reproduced, but the single property the
+    argument depends on has been stripped from it.
+  contrast_with_earlier_books: >
+    Williams was SILENT loss — the evidence vanished and the file gave no sign. Grammar of the Shot
+    and Light: Science & Magic were NAMED loss — figures numbered and captioned but unavailable.
+    Ogilvy was ANNOUNCED loss — explicit "click here" placeholders. Albers is different from all
+    three: the figure is right there in front of the reader, and it is useless.
+  why_it_is_the_most_deceptive_so_far: >
+    The earlier patterns all leave the extractor knowing something is missing. This one does not.
+    A page showing two grey squares on two grey grounds looks like a complete, successfully
+    reproduced figure. Only knowing what the book is about reveals that the demonstration has been
+    destroyed. It is the silent-loss problem again, in a form that survives a visual pass.
+  rank_by_danger: [dimension_destroyed_albers, silent_loss_williams, named_loss_gos_lsm, announced_loss_ogilvy, minimal_loss_bang]
+
+# ═════════════════════════════════════════════════════════════
+# DEMONSTRATIONS
+# ═════════════════════════════════════════════════════════════
+demonstrations:
+
+- ref: vis_alb_word_pictures
+  chapter: "II"
+  pdf_page: 30
+  kind: parallel_instances
+  isolation: strict
+  status: fully_legible
+  visible_difference: >
+    The phrase "Interaction of Color" set four ways on one page: serif capitals, serif upper-and-lower
+    case, sans-serif capitals, sans-serif upper-and-lower case.
+  what_the_visual_supports: >
+    That the four settings differ markedly in how easily the eye takes them in as a single shape.
+    The capitals versions present an even band of uniform height and width; the mixed-case versions
+    have a varied outline the eye can grasp as one form.
+  requires_prose: >
+    The term "word picture", the attribution to Gestalt psychology and ophthalmology, and the
+    historical claim about the origin of sans-serif faces.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    The one demonstration in this span that survives the greyscale digitisation completely, because
+    it is about letterform rather than colour. It is also the only place in the span where the
+    fresh visual pass added anything the text did not already carry.
+
+- ref: vis_alb_tile_arrangement
+  chapter: "IV"
+  pdf_page: 36
+  kind: counter_example
+  isolation: not_applicable
+  status: legible_but_colour_stripped
+  visible_difference: >
+    A two-by-three grid of squares, each containing a smaller centred square, struck through with a
+    heavy diagonal line and labelled "NO".
+  what_the_visual_supports: >
+    That the author is marking a specific arrangement as wrong, and what that arrangement is —
+    small centred pieces tiled into a contiguous grid.
+  requires_prose: >
+    Everything about why. The text supplies both reasons: simultaneous influence arriving from too
+    many directions at once, and an unfavourable ratio of influencing to influenced area.
+  lost_in_plain_text: partial
+  colour_dependent: true
+  extractor_note: >
+    A clean example of the dimension-destroyed pattern. The figure reproduces perfectly and shows
+    the geometry of the mistake. What it cannot show is the mistake itself, which is that the colour
+    illusions cancel one another.
+
+- ref: vis_alb_relativity_studies
+  chapter: "IV"
+  pdf_page: null
+  kind: minimal_pair
+  isolation: strict_by_construction
+  status: NOT_AVAILABLE_IN_COLOUR
+  visible_difference: >
+    The chapter's central exercise: two rectangles of one and the same colour, identical in size and
+    shape, placed on two large grounds of very different colour, so that the two identical pieces
+    look unlike each other.
+  what_the_visual_would_support: >
+    The book's founding claim, that one colour can be made to look like two. By construction it is
+    the strictest possible isolation — the influenced pieces are literally the same paper.
+  what_is_actually_available: >
+    Nothing usable. In greyscale the two grounds reduce to two similar tones and the effect the
+    exercise exists to produce cannot occur.
+  requires_prose: >
+    All of it. The claim survives only because Albers states it in words and grounds it in the
+    water-pot analogy.
+  lost_in_plain_text: true
+  colour_dependent: true
+
+visual_only_observations:
+
+- ref: vis_obs_alb_typographic_self_demonstration
+  pdf_page: 30
+  observation: >
+    Chapter II argues about legibility and demonstrates the argument using its own subject matter —
+    the book's title set four ways — rather than an abstract example.
+  strength: clearly_visible
+  why_it_matters: >
+    Self-demonstration of this kind is unusually cheap to verify: the reader tests the claim by
+    reading the figure. It is also the reason this one demonstration survived a digitisation that
+    destroyed the rest.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_alb_negative_marking
+  pdf_page: 36
+  observation: >
+    The counter-example is marked with a struck-through diagonal and the word "NO" rather than
+    being described only in the caption.
+  strength: clearly_visible
+  why_it_matters: >
+    The book marks wrong answers graphically as well as verbally. A text-only extraction loses the
+    marking and keeps the description, which is the safer direction to lose in.
+  promoted_to_source_claim: false
+
+extraction_constraint_applied: >
+  No claim is recorded as visually demonstrated where the demonstration depends on colour. Chapter
+  IV's relativity claims are extracted with source_support: text and carry an explicit caveat that
+  the supporting studies were unavailable in colour. The chapter II typographic demonstration is the
+  one case in this span recorded as text_and_visual.
+
+summary:
+  demonstrations_recorded: 3
+  fully_legible: 1
+  legible_but_colour_stripped: 1
+  unavailable: 1
+  colour_dependent_demonstrations: 2
+  visual_only_observations: 2

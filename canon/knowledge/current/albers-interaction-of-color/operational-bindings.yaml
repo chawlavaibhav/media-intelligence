@@ -1,0 +1,135 @@
+# CANON-003 book 4 — Albers, Interaction of Color ch.I-V. SPEC-04 bindings against SPEC-01 v0.1.
+source_id: albers_interaction_of_color_ch1_5
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_alb_c003_0001
+  source_knowledge_refs: [sk_alb_c003_0001, sk_alb_c003_0002, sk_alb_c003_0003]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: brand.palette
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, flags]
+  rationale: >
+    SPEC-01 records a brand palette with a tolerance. This source argues that a colour name does not
+    specify a colour — fifty listeners produce fifty reds, and even people shown the same sign cannot
+    be assumed to perceive it alike. That is a direct constraint on how a palette field can be
+    populated: a named colour is an instruction to look something up, not a specification, and any
+    tolerance stated in words rather than values is underspecified.
+  applicability:
+    when: "a brand palette is being specified, validated, or transferred between systems"
+    limits: >
+      The source is arguing about human perception and naming, not about colour management. It does
+      not follow that numeric specification is sufficient, only that naming is not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_alb_c003_0006, t_alb_c003_0007]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alb_c003_0002
+  source_knowledge_refs: [sk_alb_c003_0006, sk_alb_c003_0011, sk_alb_c003_0012, sk_alb_c003_0013, sk_alb_c003_0014]
+  source_system_refs: [scs_alb_c003_002]
+  target_type: evaluation
+  target_path: null
+  role: [constrains, diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    A constraint on how colour can be evaluated at all. If a colour's appearance is determined by what
+    surrounds it, then checking a colour in isolation — sampling a pixel, comparing a swatch — does not
+    measure what a viewer sees. Two assets using the identical specified colour can look different, and
+    two using different colours can look the same. The source also gives the two dimensions along which
+    the shift occurs, light and hue, and says both act at once.
+  applicability:
+    when: "evaluating whether an asset's colour reads as intended, rather than whether it matches a value"
+    limits: >
+      The source does not quantify the effect or say when it is large enough to matter. It establishes
+      that isolated sampling is insufficient, not what should replace it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alb_c003_0003
+  source_knowledge_refs: [sk_alb_c003_0004, sk_alb_c003_0005]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: copy.headline
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01 carries headline copy with an exactness setting but records nothing about how it is set.
+    This source supplies a legibility constraint that bears on any headline rendered in capitals: words
+    set entirely in capitals present the most difficult reading, because equal height, volume and width
+    remove the word's distinguishing outline.
+  applicability:
+    when: "a headline or short copy element is being specified or reviewed for a rendered asset"
+    limits: >
+      Stated for continuous text and for reading rather than for glance-level display type, where
+      capitals are conventional. The source gives no threshold at which the penalty matters.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_alb_c003_0009]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alb_c003_0004
+  source_knowledge_refs: [sk_alb_c003_0015, sk_alb_c003_0009]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  role: [derives, constrains]
+  rationale: >
+    Two contributions. First, the relativity exercise is a strictly isolated stimulus by construction —
+    the influenced pieces are literally the same paper, so nothing but the ground varies. Second, and
+    more useful, the source states two ways of presenting such stimuli that destroy the effect being
+    tested: tiling them so influence arrives from several directions at once, and using too small a
+    ground relative to the influenced piece. That is a stated design constraint on any comparison-based
+    stimulus set, not only on colour ones.
+  applicability:
+    when: "designing stimulus sets in which several comparisons are shown together"
+    limits: >
+      Candidate stimulus, not an instrument, and not usable as-is: this digitisation is greyscale, so
+      the colour studies could not be inspected and the effect cannot be reproduced from it. The layout
+      constraint is stated for colour influence specifically; whether it generalises to other kinds of
+      side-by-side comparison is not established.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_alb_c003_0008]
+  repair_ontology_refs: [t_alb_c003_0011, t_alb_c003_0012]
+  status: proposed
+  status_reason: "not reviewed; colour unavailable in this digitisation"
+
+- binding_id: bnd_alb_c003_0005
+  source_knowledge_refs: [sk_alb_c003_0017, sk_alb_c003_0009]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [constrains]
+  rationale: >
+    A precedent for separating whether an effect occurred from whether the result is liked. The source
+    states that whether a study arrives at a pleasant or harmonious combination is unimportant, while
+    precision and clean execution are required. It backs this materially by choosing a medium that can
+    repeat a colour exactly, so that a failed study is a failure of the effect rather than of the
+    hand. Directly relevant to weighing creative-craft sources, where aesthetic approval and
+    demonstrated effect are routinely conflated.
+  applicability:
+    when: "weighing a craft source's evidence, where the source's own criterion may be taste rather than effect"
+    limits: >
+      One source, and one whose entire purpose is perceptual demonstration rather than commercial
+      outcome. It shows the separation is possible and how a source signals it; it does not show how
+      often craft sources make it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"

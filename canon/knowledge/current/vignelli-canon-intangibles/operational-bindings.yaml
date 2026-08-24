@@ -1,0 +1,109 @@
+# CANON-003 book 5 — The Vignelli Canon, Part One. SPEC-04 bindings against SPEC-01 v0.1.
+# Deliberately few. This source is almost entirely normative value statements without mechanism or
+# demonstration, and most of it does not reach a product field. Zero bindings would have been an
+# acceptable outcome; the four below are the ones that genuinely resolve.
+source_id: vignelli_canon_part_one_intangibles
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_vig_c003_0001
+  source_knowledge_refs: [sk_vig_c003_0003]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  rationale: >
+    The source's syntactic consistency is a property of a set of assets rather than of any one:
+    how type relates to grid and image from page to page across a whole project, how type sizes
+    relate to each other, how the parts relate to the whole. That is a check no single asset can
+    fail, and it is the first claim in this batch whose natural unit is a campaign or a system
+    rather than one piece.
+  applicability:
+    when: "evaluating consistency across a set of assets produced for one project or identity"
+    limits: >
+      The source says some ways of achieving consistency are correct and others incorrect but gives
+      no test for distinguishing them. This supports checking whether relationships hold constant,
+      not whether the chosen relationships are good ones.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_vig_c003_0002
+  source_knowledge_refs: [sk_vig_c003_0009]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.composition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives]
+  rationale: >
+    The one section of Part One that names concrete devices rather than values: difference of scale
+    within the same page, bold type contrasted with light type, and in three dimensions light
+    manipulated through differing textures. These are specifiable compositional choices.
+  applicability:
+    when: "specifying compositional emphasis for a still creative"
+    limits: >
+      The source's own test for whether the result is strength rather than vulgarity is whether it
+      expresses intellectual elegance, which it never defines operationally. The devices are usable;
+      the criterion for having used them well is not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_vig_c003_0010]
+  repair_ontology_refs: [t_vig_c003_0015]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_vig_c003_0003
+  source_knowledge_refs: [sk_vig_c003_0013]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: brand.logo
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01 records a brand logo with a placement and an exactness setting. This source supplies a
+    reason that exactness may be non-negotiable independent of any brand guideline: a mark with long
+    public exposure carries accumulated recognition that is itself the asset, so variation destroys
+    value rather than merely breaching a rule.
+  applicability:
+    when: "a logo's exactness tolerance is being set, or a generated asset's rendering of a mark is being judged"
+    limits: >
+      The fifty-year threshold the source gives is stated without derivation, and every case it names
+      is one where its own recommendation was retention. The principle is usable; the threshold is not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_vig_c003_0011]
+  repair_ontology_refs: [t_vig_c003_0016]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_vig_c003_0004
+  source_knowledge_refs: [sk_vig_c003_0004, sk_vig_c003_0010]
+  source_system_refs: [scs_vig_c003_002]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [constrains]
+  rationale: >
+    A worked case of a source whose claims are almost entirely normative and whose central standard
+    is explicitly beyond definition. Intellectual elegance is offered as the thread guiding every
+    decision, and no criterion is supplied by which a designer could tell whether a solution has it.
+    Weighing such a source is a distinct problem from weighing one that argues from mechanism, and
+    this book is a clean example of the type — useful precisely because it does not pretend otherwise.
+  applicability:
+    when: "weighing how much a source of purely normative craft values should count"
+    limits: >
+      One source. It shows what this evidence profile looks like; it says nothing about how common it
+      is or how such claims should be scored against mechanism-bearing ones.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_vig_c003_0013]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
