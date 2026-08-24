@@ -19,7 +19,7 @@ them.
 | What | Where |
 |---|---|
 | Normative procedure and schema | `canon/audit/AUDIT-GATE-v0.2.md` |
-| Active records — exactly one per source directory | `canon/audit/records/*.audit.yaml` (18), all `audit_record_version: v0.2` |
+| Active records — exactly one per source directory | `canon/audit/records/*.audit.yaml` (19), all `audit_record_version: v0.2` |
 | Validator | `canon/validation/validate_audit_gate_v02.py` |
 | Tests | `tests/test_validate_audit_gate_v02.py` |
 | Experiment history — pointer only, nothing active | `canon/experiments/audit-gate-v0.2/README.md` |
@@ -31,14 +31,14 @@ validator passes. **Until then — and again if its audit goes stale — it may 
 cross-source promotion, downstream product/application use, or Canon-consumption/retrieval.** It
 remains in the repository as source evidence throughout; the gate governs use, not worth.
 
-**Live corpus after CANON-006: 18 source directories, all 18 accepted, 18 active audit records.**
+**Live corpus after CANON-007: 19 source directories, all 19 accepted, 19 active audit records.**
 
 Two numbers that used to coincide are now distinct and must not be confused:
 
 | Number | Value |
 |---|---|
 | CANON-003 accepted books / CANON-004 method-test corpus | **16 — fixed forever** |
-| Live accepted Canon | **18** |
+| Live accepted Canon | **19** |
 
 `canon/validation/validate_canon003_integrated.py` remains a **historical** instrument for the frozen
 16 and its meaning must never change. The live invariant is simple and needs no registry: **every
@@ -67,7 +67,14 @@ boundary accepted. CANON-003 stopped at 16 books by Controller decision
 Conversations*) are deferred reserves, not failures. *Thinking with Type* remains blocked on
 structural column interleaving.
 
-**LAST COMPLETED TASK:** `tasks/CANON-006.md` — adjudicated the two deferred reserves under the
+**LAST COMPLETED TASK:** `tasks/CANON-007.md` — Wave 1 pilot, one source. Ingested Binet & Field,
+*Effectiveness in Context* (Chapter 1.0 plus Introduction and the methodology Appendix) from the
+official Thinkbox route; both the file size and SHA-256 matched the Work acquisition fingerprint
+exactly. Accepted through the full sequence with no stop condition. Live Canon 18 → 19.
+No SPEC changed; one minimal Controller-approved Audit Gate v0.2 vocabulary addition was made,
+`figure_semantic_binding_lost`, with no new Audit Gate version and no migration machinery.
+
+Preceding: `tasks/CANON-006.md` — adjudicated the two deferred reserves under the
 authoritative gate. *Master Shots* recovered from `work/canon-003-rebalance-d` and *The
 Conversations* from `work/canon-003-b`; both **accepted**. The Controller approved and this task
 applied one new lineage dependence relation, `shared_primary_informant`, amending SPEC-05 Governance
@@ -84,7 +91,8 @@ Preceding: `tasks/CANON-004.md` — designed and tested the gate, plus a Control
 25 Aug (retain `deterministic_composition`; close the stale-audit hole with an enforced
 `source_snapshot` content fingerprint; correct the independence test fixtures).
 
-**CURRENT TASK / QUEUE:** none. CANON-006 is `needs_controller_review`. **Next work is
+**CURRENT TASK / QUEUE:** none. CANON-007 is `needs_controller_review`. The rest of the Wave 1
+portfolio is **not** started and must not be self-assigned. **Next work is
 Controller-assigned only** — do not self-assign reserve-book integration, Canon expansion,
 cross-source promotion, RAG/retrieval or Production IR.
 
@@ -95,6 +103,18 @@ cross-source promotion, RAG/retrieval or Production IR.
 - Current source knowledge must stay source-faithful; product bindings are separate and optional.
 - **Bindability is not evidence quality.** The corpus's best-binding source (*Building a StoryBrand*,
   4 Creative IR bindings from 18 objects) has its weakest support. Never rank by binding count.
+- **Chart text can survive extraction while its meaning does not.** *Effectiveness in Context*
+  extracts every axis label, series name and printed value cleanly, and loses which number belongs
+  to which category. A text-only pass would bind them by guess with nothing signalling doubt. Every
+  numeric value from that source was read from a page render.
+- **A text layer can contain text the page does not show.** That report's three foreword pages carry
+  sentences printed nowhere on them. The loss-pattern vocabulary has no value for *added* text, only
+  for lost text; the mismatch is recorded rather than papered over, and becomes live if those pages
+  are ever processed.
+- **Do not treat an authored empirical report as its own measurement.** Its percentages are
+  proportions of case-author self-gradings from a declaredly biased sample, with activation spend
+  self-declared as under-reported in the direction that flatters its headline conclusion. Recorded
+  as `mixed_own_and_third_party`.
 - **A different author field is not independence either.** *The Conversations* and *In the Blink of
   an Eye* have different authors, publishers and years, and are the same practitioner speaking. No
   metadata field records that. Now expressed by `shared_primary_informant`; incidental quotation of
@@ -112,6 +132,11 @@ cross-source promotion, RAG/retrieval or Production IR.
   re-run. There is deliberately no snapshot-refresh shortcut.
 - **PyYAML is not installed system-wide on this machine.** Create a local `.venv` (self-ignoring) with
   `pyyaml` and `pytest` before running either validator.
+
+**SERIES DEPENDENCY TO DECLARE LATER.** *Effectiveness in Context* is Part 2 of a series and builds
+on the authors' own *The Long and the Short of It* and *Media in Focus*. If either is ever ingested,
+that pair is `shared_author` and `same_series` and must be declared at ingestion rather than
+discovered afterwards.
 
 **DEFERRED RESERVE SOURCES — resolved by CANON-006.** Both remain **outside** the frozen 16-book
 CANON-003/004 method-test set, which is a historical fact and does not change. Both now hold active

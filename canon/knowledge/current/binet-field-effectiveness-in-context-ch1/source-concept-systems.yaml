@@ -1,0 +1,237 @@
+source_id: binet_field_effectiveness_in_context_ch1_consideration
+source_concept_systems:
+- scs_id: scs_eic_001
+  source_id: binet_field_effectiveness_in_context_ch1_consideration
+  label: consideration_context_framework
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: Two dimensions of the purchase decision - how much consideration it attracts, and whether
+    that consideration is rational or emotional - which together determine which marketing effects are
+    easy to produce, which are hard, and therefore how budget should be split.
+  whole_system_claim:
+    text: The level and nature of consideration jointly set the relative difficulty of brand building
+      and sales activation in a category, and best practice should be flexed accordingly rather than
+      applied uniformly.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref:
+      section: Chapter 1.0 opening and 1.6
+      page_start: 9
+      page_end: 18
+  members:
+  - sk_ref: sk_eic_0001
+    role_in_system: framing
+    order: 1
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0002
+    role_in_system: level_dimension
+    order: 2
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0003
+    role_in_system: level_dimension
+    order: 3
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0005
+    role_in_system: nature_dimension
+    order: 4
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0006
+    role_in_system: nature_dimension
+    order: 5
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0007
+    role_in_system: nature_dimension
+    order: 6
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0016
+    role_in_system: budget_consequence
+    order: 7
+    membership_origin: source_stated
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+    - from: sk_eic_0006
+      to: sk_eic_0016
+      origin: source_stated
+      note: which task is harder determines where budget goes
+    tradeoffs:
+    - between:
+      - sk_eic_0006
+      - sk_eic_0007
+      nature: rational consideration makes activation easy and brand building harder; emotional consideration
+        does the reverse
+      origin: source_stated
+      source_ref:
+        section: '1.2'
+        page_start: 13
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref:
+    section: In a nutshell
+    page_start: 5
+    text: it is not safe to assume that general learning can be automatically applied in all situations
+      - we need to flex the rules
+  evidence:
+    characteristics:
+    - explicitly_stated
+    - visually_demonstrated
+    - argued
+    - repeated_within_source
+    - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: The source itself presents these two dimensions as one framework and returns
+      to it throughout, so the grouping is the report's rather than the extractor's. What is inferred
+      is only the boundary of the system as recorded here, since later chapters outside the processed
+      span add further context variables to it.
+  provenance:
+    chapter: Section 1, Chapter 1.0
+    section: 1.0-1.6
+    page_start: 9
+    page_end: 18
+    source_support: text_and_visual
+- scs_id: scs_eic_002
+  source_id: binet_field_effectiveness_in_context_ch1_consideration
+  label: brand_and_activation_as_complementary_mechanisms
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: Two mechanisms working on different timescales - brand building creating durable memory
+    structures, sales activation converting them into immediate sales - which the source treats as mutually
+    reinforcing rather than alternative.
+  whole_system_claim:
+    text: Brand and activation work in synergy, each enhancing the other, so both are required for maximum
+      effectiveness and for maximum efficiency; the question is never which one but in what proportion
+      for the context.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref:
+      section: '1.6'
+      page_start: 17
+      page_end: 18
+  members:
+  - sk_ref: sk_eic_0014
+    role_in_system: whole_system_statement
+    order: 1
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0015
+    role_in_system: supporting_association
+    order: 2
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0016
+    role_in_system: budget_consequence
+    order: 3
+    membership_origin: source_stated
+  - sk_ref: sk_eic_0022
+    role_in_system: context_variant
+    order: 4
+    membership_origin: source_stated
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+    - from: sk_eic_0014
+      to: sk_eic_0016
+      origin: source_stated
+      note: needing both is what makes the split a question of proportion
+    tradeoffs:
+    - between:
+      - sk_eic_0014
+      - sk_eic_0016
+      nature: both effects are required, yet budget is finite, so the split is a trade-off resolved
+        by which effect is harder to produce in context
+      origin: extractor_inferred
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref:
+    section: '1.6'
+    page_start: 18
+    text: Regardless of your category, you need both a strong brand and efficient activation
+  evidence:
+    characteristics:
+    - explicitly_stated
+    - visually_demonstrated
+    - argued
+    - mechanism_given
+    - repeated_within_source
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: The mechanism is stated by the source and the members are its own. The
+      support for the synergy claim is an association between co-reported effects rather than an experiment,
+      which sk_eic_0015 records.
+  provenance:
+    chapter: Section 1, Chapter 1.0
+    section: 1.6-1.7
+    page_start: 17
+    page_end: 22
+    source_support: text_and_visual
+- scs_id: scs_eic_003
+  source_id: binet_field_effectiveness_in_context_ch1_consideration
+  label: ipa_databank_evidence_apparatus
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: 'The chain by which a number in this report is produced: awards entrants submit confidential
+    campaign data, case authors grade outcomes on a four-point scale, only top-box grades are counted,
+    spend splits are partly inferred and partly self-reported, and optima are read off a fitted curve
+    after an exclusion.'
+  whole_system_claim:
+    text: Every quantitative claim in the report is a proportion of self-assessed top-box gradings drawn
+      from a sample biased toward successful campaigns, with a self-declared under-reporting of activation
+      spend and an analytic exclusion behind the optimum splits.
+    origin: extractor_synthesis
+    interpretation_basis: The source states each of these facts plainly and separately in the appendix
+      and in an introduction footnote, and never assembles them into one statement about what its numbers
+      are. The assembly is the extractor's, and it is recorded as a system rather than added to any
+      individual claim so that no single object is made to carry an argument the source did not make.
+    source_ref: null
+  members:
+  - sk_ref: sk_eic_0024
+    role_in_system: sample
+    order: 1
+    membership_origin: extractor_inferred
+  - sk_ref: sk_eic_0025
+    role_in_system: measurement
+    order: 2
+    membership_origin: extractor_inferred
+  - sk_ref: sk_eic_0026
+    role_in_system: known_bias
+    order: 3
+    membership_origin: extractor_inferred
+  - sk_ref: sk_eic_0027
+    role_in_system: analytic_choice
+    order: 4
+    membership_origin: extractor_inferred
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: extractor_inferred
+    dependencies:
+    - from: sk_eic_0025
+      to: sk_eic_0027
+      origin: extractor_inferred
+      note: the fitted optima are fitted to self-assessed gradings
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics:
+    - explicitly_stated
+    - mechanism_given
+    - argued
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: Each member is source-stated. That they constitute one apparatus whose
+      properties qualify every number in the report is the extractor's synthesis, and it is a hypothesis
+      about how to read the source rather than a claim the source makes.
+  provenance:
+    chapter: Appendix and Introduction
+    section: Metrics and methodology
+    page_start: 6
+    page_end: 134
+    source_support: text

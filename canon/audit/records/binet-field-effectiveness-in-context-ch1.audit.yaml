@@ -1,0 +1,393 @@
+audit_record_version: v0.2
+audit_id: aud_binet_field_effectiveness_in_context_ch1
+source_id: binet_field_effectiveness_in_context_ch1_consideration
+knowledge_dir: canon/knowledge/current/binet-field-effectiveness-in-context-ch1
+recorded_at_commit: 8aedd90df13978d7ca98ec2ae9801d983f6c36dc
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: b9c3301e1b6a67bacbbe11ca876a351a2411a4cc8aeeb884620f52586877d23b
+    - path: operational-bindings.yaml
+      digest: 1e06e6dd64e181691e74e96e85ce2e9a7c7efe1eb877391f0b9b7017bc48b7c2
+    - path: source-concept-systems.yaml
+      digest: a628e11f65eca6385447b676aea70b26240b9dcd4bf0c8e9605f2bdf81df92f1
+    - path: source-knowledge.yaml
+      digest: 67fd476878631b51aa5d870cf3938e6fe8f9ae47516dd4c2d4227223519587b3
+    - path: visual-evidence-ledger.yaml
+      digest: 902258e287bdafb98cd5bfeebee5590b1b52e526483a488e15164b3c511f299b
+  combined_digest: 33a451cba0f0d79b1230d945c05bc3ce65061a41e6b3d655b100150b4949dd57
+source_reopened: true   # same already-verified copy, identity re-checked; see representation_integrity
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/PROVENANCE.md
+  - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/visual-evidence-ledger.yaml
+  - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/source-knowledge.yaml
+  - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/operational-bindings.yaml
+  - canon/knowledge/current/binet-field-effectiveness-in-context-ch1/ontology-mappings.yaml
+  - canon/audit/records/murch-blink-p1-25.audit.yaml
+  - canon/audit/records/hopkins-scientific-advertising-ch1-7.audit.yaml
+
+representation_integrity:
+  delivery_format: native_digital_pdf
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    Official Thinkbox PDF, 139 pages, A4, PDF 1.6, unencrypted, produced by Adobe InDesign 14.0 with
+    no OCR layer. PDF page equals printed page plus two, an offset stable across the whole file and
+    established from the running page numbers. Every object in the extraction carries a printed page
+    range. File size and SHA-256 both matched the Work acquisition fingerprint exactly on first
+    download, so version identity was established rather than assumed.
+
+    The Controller correction pass re-opened this SAME copy to inspect the nine remaining
+    claim-referenced figures - the seven the Controller named plus two more that a mechanical sweep
+    of the processed span found. Identity was re-checked before re-opening - 24,726,437 bytes and the
+    same SHA-256 - and nothing was reacquired, so source_reopened: true refers to re-reading the
+    verified copy already in hand, not to a second acquisition.
+  inspection_state: inspected_page_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: figure_semantic_binding_lost
+      affects: >
+        Every quantitative claim in the processed span. The inversion of the usual case is what
+        matters here: the chart text is NOT missing. Axis labels, series names, category names and
+        every printed data value extract cleanly from the text layer. What linearised text destroys
+        is the BINDING between them - which number belongs to which category in which series.
+
+        Classified as in_figure_text_absent in the first pass, which contradicted that value's own
+        definition, since nothing about the figure text is absent. The Controller approved
+        figure_semantic_binding_lost for exactly this shape - tokens survive, semantic topology does
+        not - and this source is its first observed instance.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        A text-only pass on Figure 03 receives the sequence 60% 54% 50% 40% 40% 37% 31% 27% 23% 23%
+        28% alongside the words SALES, MARKET SHARE, CUSTOMER ACQUISITION, LOYALTY, PRICE
+        SENSITIVITY, PROFIT and two series names, with nothing connecting them. It would bind them
+        by guess and nothing would signal that anything was uncertain. On printed page 15 a chart
+        axis value, 1.5, appears mid-sentence inside the extracted prose. All 16 claim-referenced
+        figures in the processed span were rendered and read across 14 page renders, and all 80
+        numeric values recorded in this extraction came from those renders and none from the text
+        layer.
+    - pattern: text_layer_order_damage
+      affects: >
+        The three foreword pages, printed 1 to 3, which carry PHANTOM TEXT: sentences printed
+        nowhere on those pages, belonging to the In a nutshell page at printed 5, interleaved line
+        by line with the real foreword text. Both pdftotext -layout and default reading-order mode
+        reproduce it.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Rendering printed page 3 and reading it confirms the visible page carries only Janet Hull's
+        foreword and a photograph; the phrases "This is a self-help manual for brands" and "So it is
+        not safe to assume that general learning can be automatically applied in all situations" are
+        in that page's text layer and are not on it. A text-only pass would have a named third party
+        appearing to say things the report says elsewhere. Scope was established by scanning all 139
+        pages for the marker phrases: confined to printed 1 to 3, with printed 5 the legitimate
+        home of the text. No page in the processed span is affected and no object is drawn from the
+        forewords.
+
+        This value is the closest available and it is not exact. Every loss pattern in the adopted
+        vocabulary describes information LOST from a page; here information is ADDED to the text
+        layer that the page does not show. The value was not stretched silently - the mismatch is
+        recorded here, in the visual ledger and in PROVENANCE. No method change is proposed FOR THIS
+        FINDING because no extracted claim is affected; if a later task processes those pages the gap becomes live.
+    - pattern: figure_inspected_claim_underdetermined
+      affects: >
+        Figure 09, printed page 16, and through it sk_eic_0013 - the only object in this extraction
+        whose meaning the Controller correction pass changed.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The figure's two panels carry DIFFERENT Y-AXIS SCALES: 0.00 to 0.20 for emotional
+        consideration and 0.0 to 1.2 for rational, a factor of six. Side by side the bars look
+        comparable in height while the numbers are not - every rational value (1.11, 0.43, 0.36)
+        exceeds every emotional value (0.11, 0.18, 0.19).
+
+        The first pass had not rendered this page and recorded the claim from the prose as "ESOV
+        Efficiency is higher where consumers are emotionally involved and lower where they consider
+        the purchase rationally". At the absolute level the printed magnitudes contradict that
+        reading. The claim is now narrowed to the within-type direction the figure supports - rising
+        with emotional consideration, falling with rational consideration - which is also all the
+        source's own text asserts.
+
+        Recorded under this pattern because inspecting the figure did not by itself settle what the
+        claim should say: it took reading the axis maxima, which are two more numbers in the text
+        layer and carry no signal. The value fits - the figure was inspected and the claim was
+        underdetermined until the scales were read - and the resolution is recorded rather than the
+        difficulty being left open.
+
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The report is a chart-argued empirical document whose text layer is complete and, taken alone,
+    actively misleading. It is the first source in the corpus where the danger is not absence but
+    plausible mis-association, and the first where the text layer contains content the page does not
+    show. Both were caught only by rendering pages and reading them.
+
+    claim_resolution_after_inspection is recorded as all_resolved, and it is worth saying plainly
+    why that is now truthful when it was not before. The first pass inspected 7 claim-bearing
+    figures and left 9 uninspected while declaring all_resolved - an overclaim, and exactly the
+    failure this source's own methodological lesson describes. The Controller correction pass
+    re-opened the same already-verified copy and inspected the seven Controller-named figures; a
+    mechanical sweep then found two additional claim-referenced figures, and those were inspected
+    too, closing all nine previously uninspected figures. All sixteen
+    claim-referenced figures in the processed span are now inspected, every figure_ref on every
+    object resolves to an inspected figure, no object carries visually_demonstrated on an uninspected
+    figure, and no extraction_uncertainty of figure_not_inspected remains. One claim was narrowed and
+    one was strengthened as a result. There is no remaining claim-relevant visual uncertainty in the
+    processed scope, which is the only condition under which this value may be used.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 28 objects reviewed. The task warned specifically against calling everything the authors'
+    own measurement because Binet and Field wrote the report, and that warning is well aimed: the
+    origin chain here has four parties in it.
+  categories:
+    - category: mixed_own_and_third_party
+      sk_refs: [sk_eic_0002, sk_eic_0003, sk_eic_0008, sk_eic_0015, sk_eic_0016, sk_eic_0018,
+                sk_eic_0022, sk_eic_0027]
+      evidence: >
+        This is the accurate source-level description and it applies to every empirical claim. The
+        ANALYSIS is the authors' own: they cut the IPA Databank, fit the curves and report the
+        results, and those results appear nowhere else. The underlying MEASUREMENTS are not theirs:
+        case-study authors grade their own campaign's outcomes on a four-point scale and only
+        top-box "very large" grades are counted, so every percentage in the report is a proportion
+        of other people's self-assessments. sk_eic_0025 records that apparatus as a first-class
+        object rather than leaving it in the appendix.
+    - category: source_own_measurement_reported
+      sk_refs: [sk_eic_0017, sk_eic_0020, sk_eic_0021, sk_eic_0023]
+      evidence: >
+        Analyses that exist only in this publication and whose results are supplied: the 405-case
+        overlay establishing that high-research categories are higher-interest and more rational
+        (70 against 49 per cent, 80 against 52 per cent), the 3 per cent pure-loyalty share, the
+        roughly twofold ESOV Efficiency ratio, and the actual-allocation figures of about 69 and 55
+        per cent. Each carries empirical_within_source in the frozen record. They remain subject to
+        the same self-graded inputs; what distinguishes them is that the cut is the authors' own and
+        the number is given.
+    - category: third_party_measurement_reported
+      sk_refs: []
+      evidence: >
+        Present in the source and deliberately carrying no sk_refs, which is a distinction the
+        validator forced and which is worth stating rather than smoothing. The TNS Consumer
+        Barometer is a genuine third-party measurement of how much research consumers conduct by
+        category, and the authors did not produce it. But the source never REPORTS a Barometer
+        result: it uses the classification as an INPUT to its own 405-case overlay and reports the
+        overlay. So sk_eic_0017 is the authors' own analysis, carries empirical_within_source in the
+        frozen record, and belongs under source_own_measurement_reported alone.
+
+        The distinction that matters: a third-party measurement used as a covariate is not a
+        third-party measurement reported as evidence. Listing the object here would have implied the
+        source was relaying someone else's finding, which it is not. The dependency on an outside
+        classification is recorded instead in the technology-contingency assessment, where it is the
+        reason the whole online-research block is classed technology_contingent.
+    - category: source_author_assertion
+      sk_refs: [sk_eic_0010, sk_eic_0011, sk_eic_0012, sk_eic_0019, sk_eic_0024, sk_eic_0028]
+      evidence: >
+        Claims stated in the authors' own voice without a supplied result. "Loyalty-first approaches
+        are doomed to fail" is a recommendation over a six-cell comparison. The claim that rational
+        persuasion almost never reduces price sensitivity is an absence-of-evidence statement about
+        the database with no count of attempts against successes, and is attributed by the source to
+        its own earlier report. The diagnosis that marketers hold an "online fallacy" is an
+        inference about practitioner belief, not a measured variable.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_eic_0019]
+      evidence: >
+        The source states that emotional campaigns are less prevalent in high-research categories
+        than in low-research ones and gives no count, no percentage and no figure, in a report that
+        prints values on almost every other comparison. The claim carries real weight in the
+        argument - it is the evidence for the "widespread misconception" - and it is the one place
+        in the processed span where a prevalence claim is made and no prevalence is reported.
+  relation_to_evidence_characteristics: >
+    empirical_within_source is used in the frozen record where the authors report a result of their
+    own analysis, which is the closest reading SPEC-03 allows. It cannot express that the inputs to
+    that analysis are third-party self-gradings, and it cannot distinguish the TNS overlay from a
+    Databank cut. This is the Lane C gap recurring in a fourth form: Hopkins claimed measurement and
+    reported none, Heath reported others' measurements as if the report's evidence, Sutherland mixed
+    his own with cited work inside one section, and here the analysis is the authors' own while the
+    measurement beneath it is not. The audit layer records the distinction without editing the
+    frozen field, and the validator confirms the two agree.
+
+    Two declared biases are recorded as objects rather than as caveats, because they qualify
+    everything: the sample is drawn from awards entries and is biased toward successful campaigns
+    (sk_eic_0024), and activation spend is under-reported in the direction that flatters the
+    report's headline budget conclusion (sk_eic_0026). The source states both openly and neither is
+    quantified.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      note: >
+        Nothing here describes the contents of a generated asset. The rational-versus-emotional
+        distinction is about how a category is bought, not about what a given execution should
+        contain, and turning it into a message-field value would be exactly the kind of forced
+        binding SPEC-04 was written to prevent. Zero Creative IR bindings from 28 objects is the
+        correct result for a budget-allocation report.
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_eic_0003]
+      note: >
+        observation_unit is asset_set_over_time, and it is set by the source's own measurement
+        window rather than by judgement: business effects are measured over at least a year and ESOV
+        Efficiency is an annualised growth rate. No single asset can be scored against any metric in
+        this report.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_eic_0001, bnd_eic_0002]
+      note: >
+        Two consumers, and they are the source's most useful contribution. rule_application carries
+        the report's own refusal to be read as universal rules. evidence_interpretation carries the
+        discount that must be applied when this source's percentages are weighed against a
+        controlled measurement - a discount the source's own appendix supplies.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_eic_0004]
+      note: >
+        evidence_basis is extractor_inference rather than derived_from_source, because the source
+        measures campaign outcomes and says nothing about generated assets. It yields a test axis,
+        not a predicted result.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        A budget split is arithmetic but not a composition operation; there is no artefact for an
+        engine to assemble.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        The largest unbound block in the source and the most operational. sk_eic_0016 and
+        sk_eic_0022 tell a marketing team how to divide a budget; sk_eic_0028 tells them how to read
+        the report at all. These act on how an organisation decides, not on any material, and the
+        SPEC-05 executable_by vocabulary has no value for them - the two budget remedies carry
+        human_edit and unknown for that reason. Recorded as a fit with no binding made.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_eic_0024, sk_eic_0025, sk_eic_0026, sk_eic_0027]
+      observation: >
+        The whole evidence apparatus is unbound and should stay unbound. It is not knowledge about
+        advertising; it is knowledge about how far to trust the other 24 objects, and it is carried
+        into use by the evidence_interpretation governance binding rather than by being bound itself.
+    - sk_refs: [sk_eic_0009, sk_eic_0011, sk_eic_0019]
+      observation: >
+        Three claims deliberately left unbound because the evidence beneath them is weaker than
+        their phrasing: a non-monotonic loyalty series, an absence-of-evidence claim with no
+        denominator, and a prevalence claim with no prevalence reported.
+  conclusion: >
+    Three consumers bound from 28 objects, and the distribution is informative rather than thin.
+    This is the first source in the corpus whose centre of gravity is governance: it is a report
+    about how to interpret and allocate, so it binds where interpretation and allocation live and
+    nowhere near an asset. Reading that as a weak source would be the D-13 error in reverse.
+
+lineage:
+  authors: [Les Binet, Peter Field]
+  publisher: >
+    Institute of Practitioners in Advertising (IPA), in association with Google and Thinkbox;
+    official PDF distributed by Thinkbox
+  series: Marketing Effectiveness in the Digital Era (Part 2)
+  first_published: 2018
+  copy_edition: >
+    Official Thinkbox free-download PDF, 139 pages, PDF 1.6, file produced 14 October 2019. SHA-256
+    e589a4222f5ce06db52384c5cc002dbd4e96f4156530be60d19bdf73e70ae91e, 24,726,437 bytes.
+  related_sources_in_corpus:
+    - source_id: hopkins_scientific_advertising_ch1_7
+      relation: no_known_relation
+      evidence: >
+        The nearest neighbour in the corpus by subject and the pairing most likely to be promoted
+        first, so the question was asked rather than assumed. Both hold that advertising should be
+        judged by measured response, and both are sceptical of practice that cannot be evidenced.
+        They share no author, publisher, series or derivation, are separated by 95 years, and the
+        processed span of this report cites no earlier advertising author. Shared doctrine is not
+        shared origin.
+
+        A real difference is worth recording alongside the relation: Hopkins claims measurement and
+        supplies almost none, while this source supplies its measurements and declares their
+        limitations. Agreement between them would be genuine convergence, and the two are not the
+        same kind of evidence.
+    - source_id: ogilvy_on_advertising_ch2
+      relation: no_known_relation
+      evidence: >
+        Same domain, same national advertising tradition, different author, publisher, decade and
+        method. No citation either way in the committed records.
+    - source_id: heath_made_to_stick_introduction
+      relation: no_known_relation
+      evidence: >
+        Both report quantitative studies in support of communication claims, which could look like
+        a shared evidence base. It is not one: Heath reports named third-party academic studies,
+        this source analyses a proprietary industry database. Different authors, publishers and
+        evidence entirely.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher or derivation with any source in the live corpus. The IPA
+    appears nowhere else, so not even shares_publisher_only applies.
+
+    The shared_primary_informant test added by CANON-006 was applied and does not fire. It requires
+    that the same practitioner's own claims be a primary or substantial knowledge source in both
+    works. Binet and Field appear in no other corpus source, and the processed span quotes no
+    practitioner whose own book the corpus holds. The report names Andrew Ehrenberg, Byron Sharp and
+    Daniel Kahneman in passing, which is incidental quotation and explicitly does not qualify.
+
+    One dependence does exist and is internal to the source rather than to the corpus: this report
+    is Part 2 of a series and repeatedly builds on the authors' own earlier reports, The Long and
+    the Short of It and Media in Focus. Some claims - most clearly sk_eic_0011 - are carried forward
+    from those rather than newly established here, and carry historical_claim in the frozen record.
+    If either earlier report is ever ingested, this pair would be shared_author and same_series, and
+    that must be declared then rather than discovered later.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      Not quoted in SPEC-03, SPEC-04 or SPEC-05, and not referenced in any CANON-003 or CANON-004
+      finding. This is the first genuinely new source since the method was frozen, so it carries
+      none of the spec-contamination risk that B-17 recorded for Light: Science & Magic and Grammar
+      of the Shot, and none of the lane-contamination risk that LB-20 recorded for The Conversations.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    A 2018 report about marketing effectiveness whose data window closes in 2016, read in 2026. Its
+    subject is a media and measurement environment that changes fast, it makes explicit claims about
+    what is new and what is changing, and its central budget recommendation is framed as an
+    evolution rather than a constant. The durability question is live for a substantial part of it.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_eic_0006, sk_eic_0007, sk_eic_0012, sk_eic_0014]
+      evidence: >
+        Claims about how human attention and memory respond: that deliberate rational thought makes
+        brand perceptions harder to shift and immediate response easier, that emotional engagement
+        is the route to a price premium, and that durable memory structures and immediate triggers
+        are complementary mechanisms. These are claims about people rather than about a media
+        market, and nothing in them depends on the 2016 channel mix.
+    - class: technology_contingent
+      sk_refs: [sk_eic_0017, sk_eic_0018, sk_eic_0021, sk_eic_0022, sk_eic_0023]
+      evidence: >
+        The entire online-research analysis. It rests on a third-party classification of how much
+        research consumers conducted by category before 2016, on the search and aggregator economics
+        of that period, and on paid-search costs and behaviour the report describes explicitly. Since
+        2016 the mechanics of online discovery have changed in ways the report could not observe.
+        The classification of a category as high-research may itself have moved, which would move
+        every claim conditioned on it, including the 74:26 optimum split.
+    - class: technology_contingent
+      sk_refs: [sk_eic_0016, sk_eic_0026]
+      evidence: >
+        The optimum brand-activation splits. The source itself frames the 60:40 rule as evolving
+        rather than fixed, and the appendix records that activation spend is under-reported because
+        some of it - paid search especially - happens outside marketing's control. Both the measured
+        balance and the true balance depend on a media-buying structure that has continued to change.
+    - class: historical_convention
+      sk_refs: [sk_eic_0011, sk_eic_0024]
+      evidence: >
+        Claims that describe a state of the evidence base rather than a mechanism: that the Databank
+        holds almost no successful examples of reducing price sensitivity by rational persuasion,
+        and that the sample is biased toward successful campaigns. Both are properties of the IPA
+        Effectiveness Awards as an institution in a particular period, and both would need
+        re-establishing against a later Databank.
+    - class: uncertain
+      sk_refs: [sk_eic_0002, sk_eic_0003, sk_eic_0008]
+      evidence: >
+        The core consideration findings. The mechanism they describe is plausibly durable, but every
+        magnitude in them was measured over 1998 to 2016 on campaigns entered for a UK awards
+        scheme, and the report gives no basis for deciding whether the magnitudes or only the
+        directions travel. Recorded as uncertain rather than assigned, because deciding would need
+        evidence this source does not contain and CANON-007 forbids acquiring another.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

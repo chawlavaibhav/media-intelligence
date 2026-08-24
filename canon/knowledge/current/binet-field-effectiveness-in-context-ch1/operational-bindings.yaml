@@ -1,0 +1,94 @@
+source_id: binet_field_effectiveness_in_context_ch1_consideration
+operational_bindings:
+- binding_id: bnd_eic_0001
+  source_knowledge_refs:
+  - sk_eic_0028
+  - sk_eic_0001
+  target_type: governance
+  target_path: null
+  role:
+  - constrains
+  governance_consumer: rule_application
+  rationale: The source explicitly refuses universal application of its own findings and instructs readers
+    to flex the rules to context. Anything retrieving a claim from this source must carry the consideration
+    context it was measured in, and must not present a context-specific optimum as a general rule.
+  applicability:
+    when: any retrieval of a claim from this source
+    limits: does not license modifying the claim, only refusing to generalise it
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs:
+  - t_eic_0012
+  repair_ontology_refs:
+  - t_eic_0015
+  status: proposed
+  status_reason: not reviewed
+- binding_id: bnd_eic_0002
+  source_knowledge_refs:
+  - sk_eic_0025
+  - sk_eic_0024
+  - sk_eic_0026
+  source_system_refs:
+  - scs_eic_003
+  target_type: governance
+  target_path: null
+  role:
+  - constrains
+  - flags
+  governance_consumer: evidence_interpretation
+  rationale: Every percentage in this source is a proportion of case-author top-box self-gradings, from
+    a sample biased toward successful campaigns, with activation spend self-declared as under-reported.
+    Any weighing of this source's evidence against a controlled measurement must apply that discount
+    rather than treating the figures as measured effect sizes.
+  applicability:
+    when: comparing this source's numbers with evidence of another kind
+    limits: the discount is qualitative; the source supplies no correction factor and none is invented
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: not reviewed
+- binding_id: bnd_eic_0003
+  source_knowledge_refs:
+  - sk_eic_0015
+  - sk_eic_0014
+  target_type: evaluation
+  target_path: null
+  role:
+  - diagnoses
+  observation_unit: asset_set_over_time
+  rationale: 'The report''s outcome measures are campaign-level and long-run: business effects are measured
+    over at least a year, and ESOV Efficiency is an annualised growth rate. No single asset can be scored
+    against them, so any evaluator using this knowledge must observe a campaign''s asset set over time.'
+  applicability:
+    when: evaluating against brand or activation effect claims from this source
+    limits: the unit is set by the source's own measurement window, not by a judgement about assets
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: not reviewed
+- binding_id: bnd_eic_0004
+  source_knowledge_refs:
+  - sk_eic_0006
+  - sk_eic_0007
+  - sk_eic_0012
+  target_type: benchmark
+  target_path: null
+  role:
+  - derives
+  rationale: 'The rational-versus-emotional consideration split is a ready-made minimal-pair axis for
+    brief construction: the same product proposition addressed to a rationally considered and an emotionally
+    considered category should, on this source''s account, call for different treatments.'
+  applicability:
+    when: constructing brief categories or comparison sets
+    limits: the source measures campaign outcomes, not generated assets; this yields a test axis, not
+      a predicted result
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: not reviewed
