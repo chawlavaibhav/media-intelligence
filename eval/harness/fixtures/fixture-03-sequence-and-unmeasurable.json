@@ -1,0 +1,69 @@
+{
+  "SYNTHETIC_FIXTURE": true,
+  "WARNING": "MOCK DATA. Hand-written to exercise the harness. Not a measurement of any model.",
+  "fixture_id": "fx-03-sequence-and-unmeasurable",
+  "purpose": "Exercises: sequence-unit observation (many frames yield ONE observation, not many), and a dimension whose instrument state is required_but_no_calibrated_instrument — a property that matters but currently cannot be measured.",
+  "battery_ref": "eval/battery/CAPABILITY-BATTERY-V0-DRAFT.md §5.3, §5.4, §6.5, §4",
+
+  "items": [
+    {
+      "item_id": "fx03-clip-001",
+      "dimension": "text_stability_across_frames",
+      "difficulty_level": 2,
+      "observation_unit": "sequence",
+      "target": "सुबह की पहली चाय",
+      "target_provenance": "REUSED from eval/runs/finding-01-devanagari-check/. Not authored here.",
+      "conditions": { "clip_seconds": 5, "sampled_frames": 6 }
+    },
+    {
+      "item_id": "fx03-logo-001",
+      "dimension": "brand_logo_fidelity",
+      "difficulty_level": 1,
+      "observation_unit": "frame",
+      "target": "wordmark reproduced exactly",
+      "note": "DEFERRED dimension — present here only to prove the harness can carry a property that matters and cannot currently be measured. It is NOT one of the seven approved V0 dimensions."
+    }
+  ],
+
+  "trials": [
+    {
+      "trial_id": "fx03-t001",
+      "item_id": "fx03-clip-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx03/clip-001",
+      "scored": [
+        {
+          "dimension": "text_stability_across_frames",
+          "instrument": { "id": "mock-transcriber", "version": "fixture", "role": "gate", "state": "provisional_uncalibrated" },
+          "frames_sampled": 6,
+          "frame_transcriptions": [
+            "सुवह की पहली चाय", "सुवह की पहली चाय", "सुवह की पहली चाय",
+            "सुवह की पहली चाय", "सुवह के पहली चाय", "सुवह के पहली चाय"
+          ],
+          "frame_transcriptions_provenance": "REUSED from eval/runs/finding-01-devanagari-check/ — the already-recorded within-clip drift. Not authored here.",
+          "results": { "correctness": "fail", "stability": "fail" },
+          "defects": [
+            { "term": "character substitution", "observed_by": "instrument" },
+            { "term": "within-clip drift", "observed_by": "instrument" }
+          ],
+          "cost": { "currency": "USD", "usd_per_call": 0.25, "usd_per_evaluation": 0.066, "usd_human_verification_per_trial": null, "human_verification": "not_measured" }
+        }
+      ]
+    },
+    {
+      "trial_id": "fx03-t002",
+      "item_id": "fx03-logo-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx03/logo-001",
+      "scored": [
+        {
+          "dimension": "brand_logo_fidelity",
+          "instrument": { "id": null, "version": null, "role": null, "state": "required_but_no_calibrated_instrument" },
+          "verdict": "not_measured",
+          "defects": [],
+          "cost": { "currency": "USD", "usd_per_call": 0.03, "usd_per_evaluation": null, "usd_human_verification_per_trial": null, "human_verification": "not_measured" }
+        }
+      ]
+    }
+  ]
+}

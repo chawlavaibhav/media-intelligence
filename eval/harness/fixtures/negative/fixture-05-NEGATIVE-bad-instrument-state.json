@@ -1,0 +1,36 @@
+{
+  "SYNTHETIC_FIXTURE": true,
+  "WARNING": "MOCK DATA, AND DELIBERATELY WRONG. The harness is EXPECTED to reject this fixture.",
+  "fixture_id": "fx-05-NEGATIVE-bad-instrument-state",
+  "purpose": "Second negative control, violating a DIFFERENT rule from fx-04. Exists so that --negative must verify each fixture individually: an aggregate 'some error was raised somewhere' check would pass even if this one were silently accepted.",
+  "expected_error_codes": ["BAD_INSTRUMENT_STATE"],
+
+  "items": [
+    {
+      "item_id": "fx05-bad-001",
+      "dimension": "exact_text_latin",
+      "difficulty_level": 1,
+      "observation_unit": "frame",
+      "target": "OPEN"
+    }
+  ],
+
+  "trials": [
+    {
+      "trial_id": "fx05-t001",
+      "item_id": "fx05-bad-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx05/001",
+      "scored": [
+        {
+          "dimension": "exact_text_latin",
+          "instrument": { "id": "mock-transcriber", "version": "fixture", "role": "gate", "state": "probably_fine" },
+          "note": "INVALID instrument state — 'probably_fine' is not in the approved vocabulary. Accepting it would let an untrusted checker produce a Registry-eligible number.",
+          "verdict": "pass",
+          "defects": [],
+          "cost": { "currency": "USD", "usd_per_call": 0.01, "usd_per_evaluation": 0.0, "usd_human_verification_per_trial": null }
+        }
+      ]
+    }
+  ]
+}

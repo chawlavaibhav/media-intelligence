@@ -1,0 +1,50 @@
+{
+  "SYNTHETIC_FIXTURE": true,
+  "WARNING": "MOCK DATA, AND DELIBERATELY WRONG. This fixture violates the counting rules on purpose. The harness is EXPECTED to reject it. It exists to prove the guards actually fire — a check that never fails proves nothing.",
+  "fixture_id": "fx-04-NEGATIVE-must-fail",
+  "purpose": "Negative control. Contains (a) one generation counted as two separate trials within a single dimension — the exact error the correlation rule forbids, and (b) an invalid observation unit.",
+  "expected_harness_behaviour": "at least one error-severity check: GENERATION_DOUBLE_COUNTED and BAD_OBSERVATION_UNIT",
+
+  "items": [
+    {
+      "item_id": "fx04-bad-001",
+      "dimension": "object_count",
+      "difficulty_level": 1,
+      "observation_unit": "frame",
+      "target": "2 cups"
+    },
+    {
+      "item_id": "fx04-bad-002",
+      "dimension": "object_count",
+      "difficulty_level": 1,
+      "observation_unit": "every_other_frame",
+      "note": "INVALID observation unit — not in the SPEC-04 vocabulary.",
+      "target": "2 cups"
+    }
+  ],
+
+  "trials": [
+    {
+      "trial_id": "fx04-t001",
+      "item_id": "fx04-bad-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx04/shared",
+      "scored": [{ "dimension": "object_count", "instrument": { "id": "mock-detector", "version": "fixture", "role": "gate", "state": "deterministic" }, "verdict": "pass", "defects": [], "cost": { "currency": "USD", "usd_per_call": 0.01, "usd_per_evaluation": 0.0, "usd_human_verification_per_trial": null } }]
+    },
+    {
+      "trial_id": "fx04-t002",
+      "item_id": "fx04-bad-001",
+      "repeat_index": 1,
+      "generation_ref": "mock://synthetic/fx04/shared",
+      "note": "SAME generation_ref as fx04-t001 but presented as a second independent trial of the same dimension. This is the forbidden double-count.",
+      "scored": [{ "dimension": "object_count", "instrument": { "id": "mock-detector", "version": "fixture", "role": "gate", "state": "deterministic" }, "verdict": "pass", "defects": [], "cost": { "currency": "USD", "usd_per_call": 0.01, "usd_per_evaluation": 0.0, "usd_human_verification_per_trial": null } }]
+    },
+    {
+      "trial_id": "fx04-t003",
+      "item_id": "fx04-bad-002",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx04/badunit",
+      "scored": [{ "dimension": "object_count", "instrument": { "id": "mock-detector", "version": "fixture", "role": "gate", "state": "deterministic" }, "verdict": "pass", "defects": [], "cost": { "currency": "USD", "usd_per_call": 0.01, "usd_per_evaluation": 0.0, "usd_human_verification_per_trial": null } }]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "SYNTHETIC_FIXTURE": true,
+  "WARNING": "MOCK DATA. Every verdict, defect and cost below was written by hand to exercise the harness. Nothing here was produced by a model. This file is NOT evidence about any model's capability and must never be cited as a measurement.",
+  "fixture_id": "fx-01-text-repeats-and-defects",
+  "purpose": "Exercises: item loading, dimension identity, repeats vs independent items, multiple defects on one output, real scoring-function invocation, and cost fields left explicitly unmeasured.",
+  "battery_ref": "eval/battery/CAPABILITY-BATTERY-V0-DRAFT.md",
+
+  "items": [
+    {
+      "item_id": "fx01-dev-001",
+      "dimension": "exact_text_devanagari",
+      "difficulty_level": 2,
+      "observation_unit": "frame",
+      "target": "सुबह की पहली चाय",
+      "target_provenance": "REUSED from eval/runs/finding-01-devanagari-check/ — an already-recorded string in this repository. No new Hindi content was authored for this fixture.",
+      "conditions": { "resolution": "1600x900", "aspect_ratio": "16:9", "script": "devanagari", "string_length_words": 4 }
+    },
+    {
+      "item_id": "fx01-lat-001",
+      "dimension": "exact_text_latin",
+      "difficulty_level": 2,
+      "observation_unit": "frame",
+      "target": "MORNING FIRST TEA",
+      "conditions": { "resolution": "1600x900", "aspect_ratio": "16:9", "script": "latin", "string_length_words": 3 }
+    }
+  ],
+
+  "trials": [
+    {
+      "trial_id": "fx01-t001",
+      "item_id": "fx01-dev-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx01/dev-001-r0",
+      "scored": [
+        {
+          "dimension": "exact_text_devanagari",
+          "instrument": { "id": "mock-transcriber", "version": "fixture", "role": "gate", "state": "provisional_uncalibrated" },
+          "score_via": "check-vlm.scoreTranscription",
+          "transcription": "सुबह की पहली चाय",
+          "defects": [],
+          "cost": { "currency": "USD", "usd_per_call": 0.03, "usd_per_evaluation": 0.011, "usd_human_verification_per_trial": null, "human_verification": "not_measured" }
+        }
+      ]
+    },
+    {
+      "trial_id": "fx01-t002",
+      "item_id": "fx01-dev-001",
+      "repeat_index": 1,
+      "generation_ref": "mock://synthetic/fx01/dev-001-r1",
+      "note": "Same item, second seed. This is a REPEAT — it measures reproducibility, not an additional independent item.",
+      "scored": [
+        {
+          "dimension": "exact_text_devanagari",
+          "instrument": { "id": "mock-transcriber", "version": "fixture", "role": "gate", "state": "provisional_uncalibrated" },
+          "score_via": "check-vlm.scoreTranscription",
+          "transcription": "सुवह की पहली चाय",
+          "transcription_provenance": "REUSED from eval/runs/finding-01-devanagari-check/ — the already-recorded corrupted reading. Not authored here.",
+          "defects": [
+            { "term": "character substitution", "observed_by": "instrument" },
+            { "term": "baseline stroke broken", "observed_by": "human" }
+          ],
+          "cost": { "currency": "USD", "usd_per_call": 0.03, "usd_per_evaluation": 0.011, "usd_human_verification_per_trial": 6.0, "human_verification": "fixture_value" }
+        }
+      ]
+    },
+    {
+      "trial_id": "fx01-t003",
+      "item_id": "fx01-lat-001",
+      "repeat_index": 0,
+      "generation_ref": "mock://synthetic/fx01/lat-001-r0",
+      "scored": [
+        {
+          "dimension": "exact_text_latin",
+          "instrument": { "id": "mock-transcriber", "version": "fixture", "role": "gate", "state": "provisional_uncalibrated" },
+          "score_via": "check-vlm.scoreTranscription",
+          "transcription": "MORNING FIRST TEA",
+          "defects": [],
+          "cost": { "currency": "USD", "usd_per_call": 0.03, "usd_per_evaluation": 0.011, "usd_human_verification_per_trial": null, "human_verification": "not_measured" }
+        }
+      ]
+    }
+  ]
+}

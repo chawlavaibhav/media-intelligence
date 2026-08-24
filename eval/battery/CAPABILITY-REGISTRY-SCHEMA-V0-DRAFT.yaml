@@ -1,0 +1,258 @@
+# Capability Registry — Schema V0 DRAFT
+#
+# Task: EVAL-001 · Date: 24 Aug 2026
+# STATUS: PROPOSED SCHEMA. EVAL-001 is closed and Controller-approved as a task, but the Registry
+# schema itself — in particular the cross-stream field proposals — remains UNAPPROVED and deferred
+# by Controller direction (24 Aug 2026). Not in force. No entry has ever been written.
+#
+# Derived from the schema sketch in eval/battery/CAPABILITY-LAB-V0-PLAN.md, with fields added
+# where our own recorded evidence cannot otherwise be represented. Per Controller clarification 7,
+# every addition is marked `# PROPOSED` with the reason, and additions that change cross-stream
+# architecture or routing semantics are marked `# PROPOSED · CROSS_STREAM` and raised in the
+# Controller Brief rather than treated as accepted.
+#
+# Reading guide for the three markers:
+#   (no marker)                 carried unchanged from CAPABILITY-LAB-V0-PLAN.md
+#   # PROPOSED                  new; local to Eval; needs Controller approval
+#   # PROPOSED · CROSS_STREAM   new; touches Planner/Router or Empirical Memory semantics
+
+# =============================================================================
+# IDENTITY OF THE MEASUREMENT
+# =============================================================================
+
+entry_id: cap_0001
+
+# --- what was measured against ------------------------------------------------
+vendor: <string>                 # e.g. fal
+model: <string>                  # exact model identifier as the provider publishes it
+version: <string>                # exact version string; never "latest"
+endpoint: <string>               # e.g. text-to-image | image-to-video | edit
+workflow: single_call            # single_call | i2v | keyframe_chain | ref_conditioned | composite
+
+# RULE (clarification 5): one entry = one vendor + model + version + workflow.
+# Two providers may never share a row. "Wan / Veo" is not a valid value for any of these fields.
+
+# =============================================================================
+# WHAT PROPERTY WAS MEASURED
+# =============================================================================
+
+dimension: exact_text_devanagari      # id from CAPABILITY-BATTERY-V0-DRAFT.md §6
+battery_version: <string>             # PROPOSED. Which frozen battery spec produced this entry.
+                                      # Without it, a re-run under a revised battery is
+                                      # indistinguishable from the original — Autonomy Policy
+                                      # stop condition 8 made durable in the data.
+difficulty_level: 2                   # per that dimension's ladder
+
+observation_unit: frame               # PROPOSED · CROSS_STREAM
+                                      # Vocabulary adopted UNCHANGED from
+                                      # canon/knowledge/SPEC-04-operational-bindings.md:
+                                      #   frame | shot | shot_pair | sequence | whole_asset |
+                                      #   asset_set_over_time
+                                      # CROSS_STREAM because the Planner must be able to ask
+                                      # "can this workflow be checked at the unit this job needs?"
+                                      # A defect is undetectable, not merely under-measured, if
+                                      # the unit is wrong (battery draft §5.3).
+
+conditions:                           # everything held fixed. Change any of these -> new entry.
+  resolution: 1600x900
+  aspect_ratio: "16:9"
+  script: devanagari
+  string_length_words: 4
+  seed_policy: fixed | random | unsupported   # PROPOSED. Needed to interpret `reproducibility`.
+  sampled_frames: null                # PROPOSED. Required when observation_unit is sequence.
+  detector_confidence: null           # PROPOSED. Required for detector-instrumented dimensions;
+                                      # GenEval uses 0.3 default and 0.9 for counting, and the
+                                      # threshold materially changes the verdict.
+
+# =============================================================================
+# RESULT
+# =============================================================================
+
+result:
+  n_items: 12                    # PROPOSED. Independent prompt-instances.
+  repeats_per_item: 2            # PROPOSED.
+  trials: 24                     # = n_items × repeats_per_item
+  passes: 3
+  pass_rate: 0.125
+
+  # RULE (battery draft §5.4): pass_rate is reported WITH n_items. Frames from one clip are one
+  # trial, never N. Repeats are not independent items. Confidence is computed on n_items.
+  # FINDINGS-01's 14 samples came from 4 independent sources; treating them as 14 overstates
+  # confidence roughly threefold, and the finding says so itself.
+
+  pass_criterion_ref: <string>   # PROPOSED. Points at the exact predicate in the frozen battery
+                                 # spec. A tolerance change is a different measurement.
+
+  # --- failure recording ------------------------------------------------------
+  # CHANGED FROM THE PLAN. The plan's `failure_types: [{term, n}]` counts term frequencies and
+  # cannot express two defects on ONE output. Project Contract separation 13 requires multiple
+  # defects per output, and FINDINGS-11 §Co-occurrence shows the single-label shape already lost
+  # a real defect (seedream_sign_t1 was scored "rendered hex codes from prompt" and ALSO shows
+  # the head-collision defect). Counting terms is not the same as recording co-occurrence.
+
+  failed_trials:                 # PROPOSED · CROSS_STREAM
+    - trial_id: t_014
+      defects:                   # MULTIPLE defects per output are permitted and expected
+        - term: "character substitution"     # observer's own words, per SPEC-05 Layer 1
+          observed_by: instrument            # instrument | human
+        - term: "gibberish"
+          observed_by: human
+    - trial_id: t_019
+      defects:
+        - term: "character substitution"
+          observed_by: instrument
+
+  failure_type_counts:           # derived view, generated from failed_trials — never authored
+    - {term: "character substitution", n: 12}
+    - {term: "gibberish", n: 5}
+
+  # CROSS_STREAM because Empirical Memory inherits this shape. FINDINGS-11's recommendation 3 is
+  # explicit: change the failure record shape BEFORE more failures are logged in the single-label
+  # form. Repair selection and co-occurrence analysis both depend on it.
+
+# =============================================================================
+# INSTRUMENT — the reason this schema exists
+# =============================================================================
+#
+# FINDINGS-01: one VLM returned exact_match:true on six frames a second VLM scored at edit
+# distance 1-2 against the same target. A capability number without its instrument is not a weak
+# measurement; it is not a measurement.
+
+instrument:
+  id: <string>                        # e.g. qwen3-vl-235b-a22b-instruct
+  version: <string>                   # PROPOSED. Version, not just name. FINDINGS-01: a checker
+                                      # "must be re-measured when its version changes."
+  role: gate                          # PROPOSED. gate | diagnosis
+                                      # Two different accuracies (battery draft §5.2). Qwen3-VL is
+                                      # recorded 14/14 on VERDICTS while the same finding records
+                                      # it silently correcting चाथ→चाय — gate right, diagnosis
+                                      # incomplete. Routing consumes the gate; repair consumes the
+                                      # diagnosis. They may not share one number.
+  deterministic_component: <string>   # PROPOSED. Which part needs no calibration. For exact-text,
+                                      # normalisation+comparison is deterministic; only the
+                                      # transcription is uncertain. Recording the split stops the
+                                      # whole instrument being treated as equally unreliable.
+
+  calibration_ref: <string>           # id of the calibration study, not a prose citation
+  calibration_date: <date>            # PROPOSED
+  calibration_status:                 # PROPOSED · CROSS_STREAM
+    required_but_no_calibrated_instrument
+    # permitted values:
+    #   calibrated                        passed its acceptance thresholds; usable for scoring
+    #   provisional_uncalibrated          instrument exists, calibration incomplete or disputed
+    #   published_calibration_only        borrowed figures measured on someone else's material
+    #   deterministic                     no calibration needed
+    #   required_but_no_calibrated_instrument
+    #                                     the property matters and CANNOT currently be measured
+    #
+    # The last value is the important one. It mirrors SPEC-01's acceptance-contract
+    # `verification.mode: unresolved`, which exists so that a legitimate but currently
+    # unverifiable requirement is a KNOWN STATE rather than a schema failure. Without it, a
+    # dimension with no instrument silently disappears from the battery and later reads as
+    # "we decided this didn't matter." Brand-mark fidelity and human-object interaction are
+    # both in this state today (battery draft §4).
+    #
+    # CROSS_STREAM: the Planner must treat "measured to fail" and "cannot be measured" as
+    # different routing inputs. Collapsing them would route as if unmeasured risk were absent.
+
+  # RULE: no entry may be written for Registry scoring while calibration_status is
+  # `provisional_uncalibrated` or `required_but_no_calibrated_instrument`.
+
+human_verified_subset:
+  n_trials: 5
+  verifier_qualification: <string>    # PROPOSED. Per clarification 4: for Devanagari the
+                                      # qualification is native-speaker, and FINDINGS-01 records
+                                      # that neither prior reader's first language was Hindi.
+                                      # Recording "verified by a human" without recording WHICH
+                                      # human reproduces the exact gap that made the original
+                                      # labels preliminary.
+  agreement_with_instrument: <float>  # PROPOSED
+
+# =============================================================================
+# COST
+# =============================================================================
+#
+# HYPE-EDIT-1 (Jan 2026) reaches the same conclusion this project already assumes: models with
+# low per-image pricing are more expensive once retries and human review are counted. Its
+# effective-cost-per-success combines model price WITH human review time. Ours previously did not.
+# ASSUMPTIONS §12 already warned that CpAO omits the intelligence layer's own cost.
+
+cost:
+  currency: USD                       # PROPOSED. Prices are quoted in USD by providers and
+                                      # budgets are set in INR; an unlabelled number is a bug.
+  price_source: <string>              # PROPOSED. Where the rate was read.
+  price_read_date: <date>             # PROPOSED. Provider prices move.
+
+  usd_per_call: 0.03                  # generation only
+  usd_per_evaluation: 0.011           # PROPOSED. ~₹0.90 per VLM check (FINDINGS-01). On a cheap
+                                      # generation this is over a third of the true cost of the
+                                      # observation and cannot be omitted from CpAO.
+  usd_human_verification_per_trial: null   # PROPOSED. Dominates every other term in practice
+                                           # (battery draft §8.3).
+  usd_per_repair_attempt: null        # PROPOSED · CROSS_STREAM. A cheaply-repairable failure and
+                                      # a total loss are not equivalent, and routing should be
+                                      # able to prefer the former. Nullable: only populated once
+                                      # a repair loop exists to measure.
+
+  usd_per_pass: 0.20                  # cell cost / passes
+  usd_per_pass_lower_bound: null      # PROPOSED. Used when passes == 0.
+  # ZERO-PASS RULE: when passes == 0, usd_per_pass is `null` — never infinity, never a large
+  # sentinel — and usd_per_pass_lower_bound carries the cell cost. "Never observed to pass in N
+  # trials" and "expensive per pass" are different facts.
+
+# NOTE on sorting (clarification 9): usd_per_pass is an important metric but is NOT approved as
+# the sole or universal primary sort key. Component costs above are preserved deliberately so a
+# later Planner can trade off quality, reliability, latency and repairability rather than
+# collapsing them prematurely.
+
+# =============================================================================
+# OPERATIONAL BEHAVIOUR
+# =============================================================================
+
+latency_s:
+  p50: 14
+  p95: null                           # PROPOSED. A p50 alone hides the timeout tail that
+                                      # determines whether a workflow is usable interactively.
+
+reliability:
+  api_error_rate: 0.02
+  error_classes:                      # PROPOSED. E-19 (provider changed valid speaker names
+    - {class: "4xx", n: 1}            # between versions) was a schema-shaped failure, not noise.
+    - {class: "timeout", n: 0}
+  moderation_block_rate: 0.00
+  reproducibility:                    # PROPOSED
+    seed_supported: false
+    repeat_agreement: null            # agreement across repeats of one item
+    # FINDINGS-01 "Next" lists repeat-run consistency as unmeasured. Until it is measured, a
+    # single-run pass rate carries an unknown amount of run-to-run variance.
+
+# =============================================================================
+# PROVENANCE AND FRESHNESS
+# =============================================================================
+
+tested_date: 2026-08-23
+sample_source: lab                    # lab | production
+production_observations: 0
+
+freshness:                            # per clarification 10: NO invented decay function in V0
+  status: current                     # current | ageing | stale — assigned by trigger, not formula
+  model_version_at_test: <string>     # PROPOSED. Exact version measured.
+  retest_triggers:                    # PROPOSED. Explicit and auditable in place of maths.
+    - provider_version_change
+    - instrument_version_change
+    - scheduled_interval_elapsed
+    - production_failure_spike
+    - vendor_capability_announcement
+  # A decay formula may be proposed later FROM OBSERVED MODEL DRIFT. Inventing one now would
+  # encode a guess about drift rates we have never measured as though it were a finding.
+
+# =============================================================================
+# TRACEABILITY
+# =============================================================================
+
+run_ref: <string>                     # PROPOSED. Path to the frozen EXPERIMENT-RUN record.
+                                      # shared/templates/EXPERIMENT-RUN-TEMPLATE.md requires a run
+                                      # to be frozen once executed; without a pointer from the
+                                      # entry, the Registry and its evidence can drift apart.
+raw_outputs_ref: <string>             # PROPOSED. Where the generated media lives.
+notes: <string>
