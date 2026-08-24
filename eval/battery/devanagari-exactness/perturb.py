@@ -28,8 +28,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable, Iterable
 
-from devtext import (ANUSVARA, CHANDRABINDU, CONSONANTS, DEV_END, DEV_START, INDEP_VOWELS,
-                     MATRAS, NUKTA, RA, VIRAMA, VISARGA, nfc)
+from devtext import (ANUSVARA, CHANDRABINDU, CONSONANTS, DEPENDENT_VOWEL_SIGNS, DEV_END,
+                     DEV_START, INDEP_VOWELS, MATRAS, NUKTA, RA, VIRAMA, VISARGA,
+                     canonical_equal)
 
 # Visually confusable consonant pairs. Chosen because they differ by a small stroke and a
 # reader (human or model) resolving toward the plausible word can slide between them.
@@ -46,7 +47,8 @@ CONFUSABLE_MATRAS = [
 
 # Marks that may never begin a Devanagari orthographic cluster. A string starting with one is
 # not a plausible misspelling — it is visibly broken, and a checker will reject it trivially.
-LEADING_ILLEGAL = set(MATRAS) | {VIRAMA, NUKTA, ANUSVARA, CHANDRABINDU, VISARGA}
+LEADING_ILLEGAL = (set(MATRAS) | set(DEPENDENT_VOWEL_SIGNS) |
+                   {VIRAMA, NUKTA, ANUSVARA, CHANDRABINDU, VISARGA})
 
 
 def cluster_plausibility(s: str) -> str:
@@ -69,13 +71,20 @@ def cluster_plausibility(s: str) -> str:
         return "implausible_cluster"
     # A vowel sign is fine after a consonant OR after a nukta (ड़ा is ordinary Hindi); it is
     # wrong only at string start, or stacked on another vowel sign, or after a bare virama.
-    matra_bad_prev = set(MATRAS) | {VIRAMA}
+    matra_bad_prev = set(MATRAS) | set(DEPENDENT_VOWEL_SIGNS) | {VIRAMA}
     for i, ch in enumerate(s):
-        if ch == VIRAMA and (i + 1 >= len(s) or s[i+1] not in CONSONANTS):
-            return "implausible_cluster"
+        if ch == VIRAMA:
+            # A virama must sit BETWEEN two consonants (a nukta may intervene before it).
+            # Checking only the following character missed `इं्लीश` — deleting the
+            # first consonant of `इंग्लीश` leaves a virama hanging off an anusvara, which
+            # the shaper draws with a dotted circle. Controller review fix.
+            prev_ok = i > 0 and (s[i-1] in CONSONANTS or
+                                 (s[i-1] == NUKTA and i > 1 and s[i-2] in CONSONANTS))
+            if not prev_ok or i + 1 >= len(s) or s[i+1] not in CONSONANTS:
+                return "implausible_cluster"
         if ch == NUKTA and (i == 0 or s[i-1] not in CONSONANTS):
             return "implausible_cluster"
-        if ch in MATRAS and (i == 0 or s[i-1] in matra_bad_prev):
+        if ch in DEPENDENT_VOWEL_SIGNS and (i == 0 or s[i-1] in matra_bad_prev):
             return "implausible_cluster"
     return "plausible"
 
@@ -147,7 +156,7 @@ def matra_reposition(s: str) -> list[Candidate]:
                 continue
             k = j if j < i else j - 1
             cand = stripped[:k+1] + m + stripped[k+1:]
-            if nfc(cand) != nfc(s):
+            if not canonical_equal(cand, s):
                 out.append(Candidate(cand, "MATRA_REPOSITION", i,
                                      f"moved matra {m!r} from {i} to after index {k}"))
     return out
