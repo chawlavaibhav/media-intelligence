@@ -18,18 +18,24 @@ its branch; the Controller reviews the Controller Brief and merges `work/<stream
 (or opens a PR). This is the enforcement mechanism behind "a stream never edits another stream's
 files" — separate working directories on separate branches, not just a convention.
 
+## Communication check — mandatory
+
+Every new worker session, and every active session after the communication standard changes, must read `shared/COMMUNICATION-STANDARD.md` and confirm once in chat:
+
+> **Communication check:** I will use plain English without reducing substance; use minimum sufficient wording; separate evidence from inference; and never invent facts. I have read `shared/COMMUNICATION-STANDARD.md`.
+
+If the file cannot be found or read, STOP. Do not claim compliance.
+
+This confirmation is a startup check, not something to repeat in every message.
+
 ## Starting a new Canon session
-Read, in order: `coordination/PROJECT-CONTRACT.md` → `canon/CHARTER.md` → `canon/HANDOFF.md` →
-the assigned task file → only the source material the task names. Do not replay full project
-history.
+Read, in order: `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `canon/CHARTER.md` → `canon/HANDOFF.md` → the assigned task file → only the source material the task names. Do not replay full project history.
 
 ## Starting a new Eval session
-Same pattern: `coordination/PROJECT-CONTRACT.md` → `eval/CHARTER.md` → `eval/HANDOFF.md` →
-assigned task → named sources.
+Read, in order: `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `eval/CHARTER.md` → `eval/HANDOFF.md` → assigned task → named sources.
 
 ## Starting a new Resources session
-`coordination/PROJECT-CONTRACT.md` → `resources/CHARTER.md` → `resources/HANDOFF.md` → assigned
-task → named sources.
+Read, in order: `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `resources/CHARTER.md` → `resources/HANDOFF.md` → assigned task → named sources.
 
 ## Approving a task
 Controller writes/fills `shared/templates/TASK-TEMPLATE.md`, assigns an ID (`CANON-NNN` /
@@ -50,10 +56,36 @@ Any of the 8 triggers in `shared/AUTONOMY-POLICY.md`. On a stop: freeze evidence
 Controller Brief with `STATUS: needs_controller_review`, do not attempt to resolve the trigger and
 continue.
 
+## Controller-review checkpoints — chat for the human, GitHub for the record
+A worker must report the same important checkpoint in **both places**:
+
+1. **Chat:** give the human operator a plain-English, minimum-sufficient summary of what happened, what failed or surprised the worker, what remains uncertain, and what decisions/questions need attention. Do not reduce the chat response to only a task ID or commit SHA.
+2. **GitHub:** write the authoritative status, observations, questions, failures, surprises and decisions needed into the task's existing Controller Brief, or into `<stream>/tasks/<TASK-ID>-CHECKPOINT.md` if the Controller Brief does not yet exist.
+3. Commit the checkpoint on `work/<stream>`.
+4. Push `work/<stream>` to GitHub.
+5. End the chat report with the task ID and commit SHA so the Controller can inspect the exact branch state.
+
+The two surfaces have different purposes:
+- **Chat is for immediate human visibility.** The human should understand the important learning without opening GitHub.
+- **GitHub is the durable source of truth for Controller review.** The Controller reads the branch directly and should not rely on pasted chat text when the repository record is available.
+
+The human operator therefore does not need to copy/paste normal worker reports between Claude and the Controller. They may simply tell the Controller to review `<TASK-ID>` on `work/<stream>`. The human may also open the same Controller Brief in GitHub whenever they want the full record.
+
+A worker may update its own `HANDOFF.md` when useful, but the task checkpoint / Controller Brief is
+the authoritative review surface. Do not use `HANDOFF.md` as a substitute for recording the actual
+question and evidence.
+
 ## How the Controller reviews a Controller Brief
 Read `OBSERVED` and `INFERRED` as separate claims — the first is evidence, the second is
 interpretation. `RECOMMENDED NEXT STEP` is a suggestion only. Approve, amend, or reject; the
 worker's suggestion becomes real only once written as a new task.
+
+For meaningful tasks, the Controller should return two layers:
+- **Founder view:** plain-English summary of what worked, what failed, what surprised us, what changed our understanding, and which evidence is worth the human inspecting personally.
+- **Controller view:** scope compliance, evidence quality, technical correctness, merge recommendation, and proposed next task.
+
+Both layers follow `shared/COMMUNICATION-STANDARD.md`: complete and correct, but no longer than needed.
+Routine mechanical details may stay in the Controller layer. Learning-bearing findings, belief changes, repeated failures and directional implications must be surfaced in the Founder view rather than silently converted into the next task.
 
 ## How cross-stream findings are escalated
 Worker tags severity (`LOCAL` / `CROSS_STREAM` / `ARCHITECTURAL`) in its Controller Brief.
@@ -61,8 +93,7 @@ Worker tags severity (`LOCAL` / `CROSS_STREAM` / `ARCHITECTURAL`) in its Control
 → immediate stop, no further work in that task until Controller reviews.
 
 ## Starting a fresh Controller chat
-Read `coordination/CONTROL-STATE.md` first — it's built to be sufficient alone. Fall back to
-`coordination/DECISION-LOG.md` only if a CONTROL-STATE claim needs its history checked.
+Read `coordination/CONTROL-STATE.md` first, then `shared/COMMUNICATION-STANDARD.md`. Fall back to `coordination/DECISION-LOG.md` only if a CONTROL-STATE claim needs its history checked.
 
 ## Merging work safely
 Each stream owns its directory tree exclusively (enforced by worktree, see below, or by

@@ -1,5 +1,7 @@
 # <Stream> Handoff
 
+**COMMUNICATION STANDARD:** `shared/COMMUNICATION-STANDARD.md` applies. Plain English, minimum sufficient wording, no invention, evidence separated from inference.
+
 **PURPOSE:** what this stream is for, one paragraph
 **CURRENT STATE:** what exists right now, factually
 **CURRENT APPROVED DECISIONS:** decisions the Controller has actually signed off
