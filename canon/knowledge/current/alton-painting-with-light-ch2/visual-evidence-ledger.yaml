@@ -1,0 +1,214 @@
+# CANON-003 book 8 (rebalance lane) — John Alton, "Painting With Light" (1949; UC Press 1995
+# edition), chapter 2 "Motion Picture Illumination".
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Painting With Light.epub"
+#   dc:title "Painting With Light" · dc:creator John Alton · dc:publisher Univ of California Press
+#   ISBN 9780520275843 · ASIN B001NCDC0Y · dc:date 1995-05-18 (the 1995 reprint of the 1949 text)
+#   Package contents: 329 JPEG plates, 146 SVG files, 4 HTML files.
+#   No page renders were made and none exist: this is a reflowable EPUB, not a page-image file.
+
+source_id: alton_painting_with_light_ch2_motion_picture_illumination
+pass: independent_visual_evidence
+visual_completeness: verified_figure_level
+
+method:
+  plates_referenced_by_chapter_2: 56          # Figs 40-95, files img0059-img0114
+  plates_inspected: 7
+  svg_files_in_chapter_2_and_3_range: 20
+  svg_files_rendered_and_read: 20
+  what_was_checked: >
+    Every image reference in the chapter was listed and classified. Seven plates were opened and
+    read as images — the two that form the source's central minimal pair, the two that form its
+    depth pair, the two abstract depth figures, and one lighting plan. All twenty SVG files in the
+    chapter 2-3 range were rasterised and read, because of what they turned out to be (below).
+  what_could_not_be_checked: >
+    Page layout, which does not exist in a reflowable EPUB. Printed page numbers also do not exist
+    here — see the provenance record for why the file's `pageNNNN` anchors are not printed pages.
+
+# ═════════════════════════════════════════════════════════════
+# FINDING 1 — the section headings are not text. They are vector
+# drawings of letters, and the heading hierarchy survives inverted.
+# ═════════════════════════════════════════════════════════════
+findings:
+
+- ref: vis_alt_headings_are_vector_art
+  what_happened: >
+    Every heading at chapter and section level is an SVG file containing glyph outline paths — a
+    drawing of the words, not the words. `page0123_0000.svg` renders as "CHAPTER 2";
+    `page0123_0001.svg` as "MOTION PICTURE ILLUMINATION"; then "The Set", "Props", "People",
+    "Rigging for Illumination", "Lighting Equipment", "The Theory of Illumination".
+  what_it_means: >
+    In the extracted text these are `<img>` tags with empty alt attributes. **A text-only pass
+    reads this chapter as one undivided block and cannot name a single one of its six sections.**
+    All twenty SVGs in the chapter 2-3 range were rasterised and read to recover them; every
+    section title used in this extraction's provenance came from that render, not from the text.
+  status: recovered_by_visual_pass
+
+- ref: vis_alt_hierarchy_survives_inverted
+  what_happened: >
+    The chapter's *deeper* headings — ARC LIGHTS, DESIGNATIONS OF DIFFERENT TYPES OF LIGHTS, THE
+    PURPOSE OF ILLUMINATION, ORIENTATION, MOOD, DEPTH, KEY OF THE PICTURE, ROUGHING IN, REHEARSAL,
+    TRUCKING SHOTS, DAWN, SUNRISE, SUNSET — are ordinary all-caps text and extract cleanly. There
+    are 39 of them.
+  what_it_means: >
+    The heading hierarchy survives **upside down**. A text-only extractor sees "ARC LIGHTS" but not
+    "Lighting Equipment", which is the section containing it — so it has the leaves and not the
+    branches. This is more misleading than losing both: the text looks structured, and the
+    structure it shows is one level down from the one the author organised the chapter by.
+  detectability_note: >
+    Detectable only by noticing that thirteen all-caps subheadings sit under no heading at all, or
+    by looking at what the `<img>` tags contain. The navigation file lists chapter titles and would
+    have caught the chapter level, but not the six section titles.
+  status: recovered_by_visual_pass
+
+# ═════════════════════════════════════════════════════════════
+# FINDING 2 — the source argues by controlled minimal pairs, and
+# the pairs are photographs
+# ═════════════════════════════════════════════════════════════
+
+demonstrations:
+
+- ref: vis_alt_sphere_pair
+  figure_refs: ["Fig. 75", "Fig. 76"]
+  files: [img0094, img0095]
+  kind: minimal_pair
+  isolation: single_variable_changed
+  status: fully_legible
+  visible_content: >
+    Fig. 75 — a sphere lit by one source, reading as a flat white disc with no modelling at all,
+    its edge hard against a dark ground. Fig. 76 — the same sphere with key, filler, kicker and
+    backlight, reading as a solid ball: a graded falloff across its face, a dark edge, and a rim of
+    light separating it from the ground.
+  what_the_visual_supports: >
+    The chapter's foundational claim, that in interior lighting a single source photographs even a
+    round object flat, and that the correction is three further lights with named jobs. The
+    difference between the two photographs is the entire argument for why a four-light setup
+    exists.
+  requires_prose: >
+    Which three lights were added and what each is called. The photograph shows that the correction
+    worked, not what it consisted of.
+  lost_in_plain_text: true
+  colour_dependent: false
+
+- ref: vis_alt_tonal_separation_pair
+  figure_refs: ["Fig. 80 Wrong", "Fig. 81 Right"]
+  files: [img0099, img0100]
+  kind: minimal_pair
+  isolation: single_variable_changed
+  status: fully_legible
+  visible_content: >
+    Two blocks on a step, one in front of a dark panel and one in front of a light panel. In
+    Fig. 80 the tones match — dark block on dark ground, light block on light ground — and both
+    blocks lose their edges into the background. In Fig. 81 the tones are swapped so each block
+    opposes its ground, and both stand clear.
+  what_the_visual_supports: >
+    That separating foreground from background in tone is what produces the illusion of depth. The
+    pair also shows something the text does not say: the rule works in **both** directions at once,
+    within one frame, so it is a relation between element and ground rather than a global
+    preference for dark or light backgrounds.
+  requires_prose: "Nothing. This pair is self-explanatory, and it is labelled Wrong and Right."
+  lost_in_plain_text: true
+  colour_dependent: false
+
+- ref: vis_alt_lighting_plan
+  figure_refs: ["Fig. 90"]
+  files: [img0109]
+  kind: schematic
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    An overhead plan of a set drawn to scale: camera position at the bottom, two broads with one
+    silk flanking it, two Duarcs at each window, two 170 sunarcs diffused up high outside the
+    backing, beam paths drawn as crossing lines, and a printed legend identifying each symbol.
+  what_the_visual_supports: >
+    The dawn-lighting recipe. The prose says to imitate the glow of a distant sky with Pans from
+    the floor and several well-diffused reflectors crisscrossed from different directions. The plan
+    supplies what that sentence cannot: how many instruments, of which types, in which positions,
+    at what angles, relative to camera and window.
+  requires_prose: >
+    Why the light must be diffused — that an undiffused arc throws sharp shadows and would
+    contradict a dawn effect.
+  lost_in_plain_text: true
+  colour_dependent: false
+  extractor_note: >
+    This is the clearest case in the chapter of the executable content living in the picture. The
+    text carries the intent of the setup; the diagram carries its geometry. A reader with only the
+    text could not rig this set.
+
+- ref: vis_alt_crosslight_diagram
+  figure_refs: ["Fig. 85"]
+  files: [img0104]
+  kind: schematic
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    A perspective drawing of a three-wall set with two lamps at the upper corners, dashed beams
+    crossing to strike the opposite wall.
+  what_the_visual_supports: >
+    The instruction to back crosslight the side walls, the left wall from up high right and the
+    right wall from up high left. The drawing makes the crossing immediately legible; the sentence
+    requires the reader to hold two mirrored directions in mind.
+  requires_prose: "The reason — that crosslighting accentuates the values of the set rather than merely lighting it."
+  lost_in_plain_text: true
+  colour_dependent: false
+
+# ═════════════════════════════════════════════════════════════
+# FINDING 3 — one demonstration is under-determined even WITH the
+# figures
+# ═════════════════════════════════════════════════════════════
+
+- ref: vis_alt_depth_pair_is_unlabelled
+  figure_refs: ["Fig. 83", "Fig. 84"]
+  files: [img0102, img0103]
+  kind: worked_example
+  isolation: not_applicable
+  status: legible_but_ambiguous
+  visible_content: >
+    Fig. 83 — concentric rectangles in alternating tones, lightest at the centre. Fig. 84 — a black
+    rectangle at the centre with tones graded outward to white at the edges and four lines
+    radiating to the corners. Both are flat drawings and both read as a tunnel.
+  what_the_text_says: >
+    "Figure 83 and Figure 84 are both flat surfaces, yet one gives a sensation of depth and the
+    other does not." The text does not say which is which.
+  why_it_matters: >
+    Unlike the Wrong/Right pair, these carry no verdict label. The preceding rule — that the most
+    distant spot should be the lightest — points to Fig. 83, but that is the reader's inference,
+    not the source's statement. **The claim is under-determined in the text and remains
+    under-determined after the figures are inspected.** Recorded as extraction uncertainty on the
+    corresponding object rather than resolved by guessing.
+  lost_in_plain_text: true
+
+visual_only_observations:
+
+- ref: vis_obs_alt_equipment_portraits
+  observation: >
+    Roughly half the chapter's 56 plates are product photographs of named lighting instruments —
+    the Brute, the Duarc, the Molarc, senior and junior solar spots, the scoop, the pan — each
+    captioned with its figure number and model name.
+  strength: clearly_visible
+  why_it_matters: >
+    These are catalogue photographs, not evidence. They identify hardware and carry no argument,
+    which matters for how the chapter's visual weight should be read: 56 plates sounds like a
+    heavily demonstrated chapter, but the demonstrations are concentrated in about eight of them
+    and the rest are equipment identification.
+  promoted_to_source_claim: false
+
+- ref: vis_obs_alt_captions_survive
+  observation: >
+    Figure captions are ordinary text and extract cleanly — "Fig. 44 Brute", "Fig. 80 Wrong",
+    "Fig. 81 Right".
+  strength: clearly_visible
+  why_it_matters: >
+    A text-only pass on this chapter therefore knows that a figure existed, what number it had,
+    and sometimes its verdict. That is a much better position than a source whose figures carry no
+    alternative text at all: the Wrong/Right labels alone tell a text-only reader that a minimal
+    pair was being made, even though the pair itself is invisible.
+  promoted_to_source_claim: false
+
+summary:
+  demonstrations_recorded: 5
+  visual_only_observations: 2
+  sections_recovered_by_the_visual_pass: 6
+  figures_carrying_content_absent_from_the_text: 3

@@ -1,0 +1,1335 @@
+# CANON-003 book 8 (rebalance lane) — John Alton, "Painting With Light" (1949; UC Press 1995
+# reprint), chapter 2, "Motion Picture Illumination", complete.
+# Fresh SPEC-03 extraction under the frozen CANON-002-era method. V0 granularity rule, unchanged.
+# Visual completeness: verified_figure_level.
+#
+# SECTION RATIONALE: chapter 2 is the book's systematic core. It defines the objects lighting acts
+# on, names the studio's vocabulary of light functions, states the theory (why one source is not
+# enough, what makes an angle good, how depth is produced), states what illumination is *for*, and
+# then runs a complete working day from roughing in to the take, followed by a set of recipes for
+# specific hours and situations. Chapter 3, "Mystery Lighting", applies this to one genre; chapter
+# 2 is where the reasoning system itself is on the page.
+#
+# NOTE ON THIS SOURCE'S SHAPE, recorded rather than smoothed over:
+# a 1949 studio cinematographer writing for practitioners. Three kinds of content sit side by side
+# and age very differently — physical geometry that does not change, film-stock and equipment
+# specifics that are obsolete, and studio conventions of the period including one claim about
+# women's faces that is stated as technical fact. The evidence characteristics distinguish them;
+# nothing was modernised, softened or dropped.
+#
+# PROVENANCE CONVENTION: this file's `pageNNNN` anchors are NOT printed pages — they run past 0527
+# in a book of under 200 printed pages, so they are file-internal position markers. Provenance
+# therefore cites the chapter, the section name recovered by the visual pass, and the anchor id.
+
+source_id: alton_painting_with_light_ch2_motion_picture_illumination
+
+source_knowledge:
+
+- sk_id: sk_alt_c003_0001
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "From the point of view of illumination, a scene consists of sets, props, and people."
+  concept_label: a_scene_decomposes_into_sets_props_and_people
+  label_origin: extractor_assigned
+  claim: >
+    The chapter opens by decomposing what lighting acts on. A screenplay divides into sequences,
+    sequences into scenes, and a scene — for lighting purposes only — into three kinds of thing:
+    sets, props and people. The chapter's first three sections take them in that order.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_photography, studio_production]
+    conditions: "studio interior production as practised in 1949 Hollywood"
+  caveats:
+    - text: "the decomposition is explicitly for illumination purposes and is not offered as a general account of what a scene is"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_alt_c003_0002, note: "the set is the first constituent"}
+    - {relation: generalises, target: sk_alt_c003_0004, note: "props the second"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0123"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0002
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "To facilitate lighting, sets must be built with as many breaks as possible, and not made up of flat walls."
+    - "The more doors, windows, heavy moldings, or other breaks, the better."
+  concept_label: sets_should_be_built_with_breaks_not_flat_walls
+  label_origin: extractor_assigned
+  claim: >
+    A set is easier to light and looks better when its surfaces are interrupted — doors, windows,
+    heavy mouldings, a staircase, columns, foreground pieces. The source also asks for shine on all
+    woodwork, on the grounds that real woodwork has it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [set_construction, studio_production]
+    conditions: "sets built on a sound stage"
+  caveats:
+    - text: "no reason is given for why breaks help; the claim is stated as craft knowledge"
+      origin: extractor_observed
+  source_stated_problems:
+    - "sets made up of flat walls"
+  source_stated_remedies:
+    - "build in as many breaks as possible"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0001, note: "the set constituent"}
+    - {relation: qualified_by, target: sk_alt_c003_0016, note: "the same problem is solved by casting shadows when the wall cannot be rebuilt"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Set"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0123, section recovered from SVG heading"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0003
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "In order to separate faces from the background, cold colors are usually recommended for the painting of sets."
+    - "one warm color easily blends into another"
+  concept_label: paint_sets_in_cold_colours_to_separate_faces_from_background
+  label_origin: extractor_assigned
+  claim: >
+    Set colour matters even though most colours photograph acceptably in black and white, because
+    warm colours blend into one another and faces are warm. Cold colours — several shades of blue
+    are named — separate faces from the background, are faster to light, and give better results.
+    The source concedes warm sets may please the cast, crew and visiting executives, and says that
+    does not justify the resulting photography.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A warm-painted wall and a warm-toned face render at similar densities in monochrome, so the
+      face has nothing to separate against.
+  scope:
+    domain_discussed_by_source: [set_construction, black_and_white_cinematography]
+    conditions: "black-and-white photography; the source says so explicitly"
+  caveats:
+    - text: "scoped by the source to monochrome film, where colour separation must be converted into tonal separation"
+      origin: source_stated
+    - text: "the claim that cold sets are faster to light is asserted without explanation"
+      origin: extractor_observed
+  source_stated_problems:
+    - "warm-colored faces against warm-colored sets"
+  source_stated_remedies:
+    - "paint sets in cold colours, several shades of blue"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0015, note: "one way of achieving the separation the depth rule requires"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Set"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0123"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0004
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "Highlights, the life of photography, were puttied down; no wonder some of the pictures were so flat."
+    - "the more shiny props we have on the set, the better"
+  concept_label: shiny_props_are_wanted_now_that_film_can_hold_them
+  label_origin: extractor_assigned
+  claim: >
+    A reversal the source states as a matter of record. Shiny props were once believed to
+    photograph badly and were dulled — cars sprayed with a chalk-and-water solution, highlights
+    puttied down — and the source says the flatness of those pictures followed from it. With
+    antihalo film the opposite holds: glazed china, silverware, plate-glass mirrors and copper
+    dishes are wanted, because without their highlights a set photographs dull.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [set_dressing, black_and_white_cinematography]
+    conditions: "shooting on antihalo film stock, which the source treats as current"
+  caveats:
+    - text: "the claim is tied to a specific film technology, so the rule follows the stock and not the optics"
+      origin: extractor_observed
+    - text: "the source notes some cameramen still dull cars 'even today', so the practice it is arguing against was live when it wrote"
+      origin: source_stated
+  source_stated_problems:
+    - "highlights puttied down"
+    - "pictures so flat"
+  source_stated_remedies:
+    - "put shiny, highly reflective props on the set"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0001, note: "the props constituent"}
+    - {relation: trades_off_with, target: sk_alt_c003_0003, note: "the source wants specular highlights on props while wanting the walls behind them cold and matte"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "Props"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0123, section recovered from SVG heading"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0005
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The preparatory work of placing the reflectors in their respective positions is called rigging the set."
+    - "Each bay generally holds three reflectors, and has one operator assigned to it."
+  concept_label: rigging_is_a_fixed_physical_and_staffing_structure
+  label_origin: extractor_assigned
+  claim: >
+    Lighting is placed before anything is shot, from platforms suspended on chains above the set,
+    divided into bays of about three reflectors each with one electrician per bay. Sets are about
+    ten feet high with three walls, one of them wild — movable on roller jacks and removable
+    entirely when it obstructs a setup. Sets with ceilings are lit entirely from the floor.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [studio_production, set_construction]
+    conditions: "sound-stage production of the period"
+  caveats:
+    - text: "the source reports experiments aimed at eliminating overhead construction and expects production cost to fall if they succeed, so it presents this arrangement as current rather than permanent"
+      origin: source_stated
+    - text: "the bay ratio and set height are the conventions of one industry at one time, not derived from anything"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "photographs of the suspended reflector platforms and their railings", figure_ref: "Figs. 41, 42"}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_alt_c003_0006, note: "what is rigged is drawn from the instrument catalogue"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "Rigging for Illumination"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0125, section recovered from SVG heading"
+    figure_refs: ["Fig. 41", "Fig. 42"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0006
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "whenever we want a sunlight, moonlight, or other sharp shadow effect, we use arc lights"
+  concept_label: instrument_choice_follows_the_shadow_quality_required
+  label_origin: extractor_assigned
+  claim: >
+    The chapter catalogues the studio's instruments — arc lamps of several amperages with stated
+    beam-angle ranges, and incandescent lamps or inkies — and states the selection rule that
+    organises them: arcs are used whenever a sharp-shadowed effect is wanted, sunlight, moonlight
+    or otherwise. The catalogue is given with model names, ratings and beam divergence figures.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An arc throws definite sharp shadows; a lamp corrected for spherical aberration produces even
+      brightness with no dark centres or ghost patterns, which is why it is chosen where uniform
+      high intensity is needed.
+  scope:
+    domain_discussed_by_source: [lighting_equipment, studio_production]
+    conditions: "the instrument inventory available in 1949"
+  caveats:
+    - text: "the named instruments are obsolete; the selection principle — choose the instrument by the shadow quality wanted — is not tied to them"
+      origin: extractor_observed
+    - text: "several model names are damaged in this file's text layer, appearing as Dlolarc and Morinc for Molarc"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "catalogue photographs of the named instruments", figure_ref: "Figs. 43-74"}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_alt_c003_0007, note: "instruments are placed into the named light roles"}
+    - {relation: qualifies, target: sk_alt_c003_0019, note: "the reason an arc cannot be the undiffused key for a dawn scene"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "Lighting Equipment"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0127, section recovered from SVG heading"
+    figure_refs: ["Fig. 43", "Fig. 44", "Fig. 45", "Fig. 46"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0007
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "Keylight, or principal light, is used to light either individuals or groups."
+    - "Fill and filler light is a shadowless soft light, used to fill in when the keylight is too strong and the shadows are too deep."
+    - "Cross backlight or kicker comes from the rear, either from up high, or from the floor."
+  concept_label: lights_are_named_by_the_direction_they_come_from_and_the_job_they_do
+  label_origin: extractor_assigned
+  claim: >
+    Under one heading the source gives the studio's vocabulary of light functions: keylight or
+    principal light; clotheslight, to build up light on dark clothes; frontlight, from the camera's
+    direction; crosslight, from either side, up or down, but always across; toplight, directly from
+    above; cross backlight or kicker, from the rear high or from the floor; backlight, directly
+    from behind; eyelight, placed at eye height, with almost no exposure value, reflecting only
+    from the eyeballs; and fill or filler, a shadowless soft light used where the key is too strong
+    and the shadows too deep.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [motion_picture_lighting, portrait_lighting]
+    conditions: "any lit setup"
+  caveats:
+    - text: "the names are a mixture of direction (front, cross, top, back), target (clothes, eye) and role (key, fill), and the source does not remark on the mixture"
+      origin: extractor_observed
+    - text: "this vocabulary is the one part of the chapter still in daily professional use, which the source could not have known"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the keylight is too strong and the shadows are too deep"
+  source_stated_remedies:
+    - "fill with a shadowless soft light"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_001}
+    - {relation: depends_on, target: sk_alt_c003_0009, note: "the four-light correction is stated in these terms"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "Lighting Equipment / Designations of Different Types of Lights"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0127"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0008
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "in interior photography, lighting still imitates the principal light, or sunlight, and the secondary and tertiary lights, the reflected light from the clouds and the surrounding landscape"
+  concept_label: interior_lighting_imitates_the_structure_of_daylight
+  label_origin: extractor_assigned
+  claim: >
+    The organising analogy of the whole system: an interior lighting setup reproduces the structure
+    of outdoor light — one principal source standing for the sun, with secondary and tertiary
+    lights standing for what the clouds and the surrounding landscape reflect back.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [interior_cinematography]
+    conditions: "artificially lit interiors"
+  caveats:
+    - text: "the analogy is the source's justification for the light hierarchy, and it is asserted rather than derived; the chapter's own demonstration shows the effect but not that daylight is the reason for it"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_alt_c003_0009, note: "the four-light correction is this analogy made concrete"}
+    - {relation: member_of_system, target: scs_alt_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149, section recovered from SVG heading"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0009
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "In interior lighting, if we use one light source, even a round object photographs flat"
+    - "We correct this by adding to our keylight a filler, kicker, and backlight"
+  concept_label: one_source_photographs_flat_and_three_more_lights_restore_roundness
+  label_origin: extractor_assigned
+  claim: >
+    The chapter's foundational technical claim, and the one it demonstrates most carefully. Outdoors
+    a single source — the sun — gives an impression of roundness, for two stated reasons: the
+    varying reflective qualities around the object's circumference, and the eye's sensitivity to
+    small differences in light density. In interior photography the same single source renders even
+    a round object flat. The correction is three further lights added to the key: a filler, a
+    kicker and a backlight.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The eye and the film do not respond alike to the gradations around a lit form, so the
+      modelling the eye supplies outdoors has to be built by additional instruments indoors.
+  scope:
+    domain_discussed_by_source: [interior_cinematography, still_photography]
+    conditions: "artificial interior lighting of a three-dimensional subject"
+  caveats:
+    - text: "the demonstration is a photographic minimal pair — the same sphere under one light and under four — and it is the clearest controlled comparison in the chapter"
+      origin: extractor_observed
+    - text: "the photographs show that the correction worked; which three lights were added, and in what positions, is carried only by the sentence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "even a round object photographs flat"
+  source_stated_remedies:
+    - "add a filler, kicker and backlight to the keylight"
+  examples:
+    positive:
+      - {description: "the same sphere lit by four lights, reading as a solid ball with graded falloff and a separating rim", figure_ref: "Fig. 76"}
+    counter:
+      - {description: "the same sphere lit by one source, reading as a flat white disc", figure_ref: "Fig. 75"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0008, note: "the daylight analogy made into a specific setup"}
+    - {relation: member_of_system, target: scs_alt_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 75", "Fig. 76"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["Fig. 75 (img0094)", "Fig. 76 (img0095)"]}
+
+- sk_id: sk_alt_c003_0010
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The more surfaces of an object that are visible, the better will be the picture."
+    - "Because the screen in the motion picture theatre is a one-dimensional flat surface"
+  concept_label: the_best_angle_is_the_one_showing_the_most_surfaces
+  label_origin: extractor_assigned
+  claim: >
+    Camera position is decided by a stated criterion rather than by taste: because the screen is
+    flat, photograph from the angle that shows the most surfaces of the subject. The source teaches
+    it on a wooden block — face on, one of six faces is visible; move to one side, two; raise the
+    camera slightly, three; move further and nothing improves, so that is the best angle. It then
+    says the same reasoning scales from a block to a piece of furniture, a window, a vase of
+    flowers, or a set full of people.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The screen cannot supply depth of its own, so the depth in the image has to come from how
+      much of the object's form the angle reveals.
+  scope:
+    domain_discussed_by_source: [camera_angle, composition, cinematography]
+    conditions: "photographing any solid object"
+  caveats:
+    - text: "the rule maximises revealed surface and says nothing about what else an angle must do — narrative position, eyelines, or the frame's composition are outside it"
+      origin: extractor_observed
+    - text: "the source's own escalation from a block to a set full of people is asserted, not demonstrated"
+      origin: extractor_observed
+  source_stated_problems:
+    - "facing it straight on, all we can see is one surface"
+  source_stated_remedies:
+    - "move the camera to one side and raise it until no further surface is gained"
+  examples:
+    positive:
+      - {description: "the wooden block photographed from successively better angles, showing one, two and three of its six surfaces", figure_ref: "Figs. 77-79"}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_002}
+    - {relation: demonstrated_together_with, target: sk_alt_c003_0015, note: "the source combines best angle and tonal separation into its statement of a perfect picture"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Elementary Illumination, Angles"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 77", "Fig. 78", "Fig. 79"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0011
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "We determine our light source, which may be either natural or artificial."
+    - "By use of a small testlight we determine the position from which the light will properly illuminate the scene, and yet will appear as if coming from the reading lamp."
+  concept_label: establish_the_fictional_light_source_first_then_place_the_key_to_agree_with_it
+  label_origin: extractor_assigned
+  claim: >
+    The first act in lighting a scene is to decide where the light is supposed to be coming from —
+    the source lists sunlight, moonlight, skyshine and the northern lights among natural sources,
+    and street lights, headlights, lighthouses, a stage spotlight, flashlight, lantern, candle, oil
+    burner, match, torch, fireplace, campfire and phosphorescence among artificial ones. The key
+    light is then placed in the position that both lights the scene properly and appears to come
+    from that source, and a small testlight is used to find it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [cinematography, lighting_practice]
+    conditions: "any scene with an implied light source in the story world"
+  caveats:
+    - text: "the requirement that the key satisfy two conditions at once — correct exposure and plausible origin — is stated without saying what to do when they conflict"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "find the key position with a testlight"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_002}
+    - {relation: generalises, target: sk_alt_c003_0019, note: "every recipe in the chapter begins by naming the source being imitated"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Lighting"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0012
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "the key and the over-all illumination on the set are measured, keeping in mind the light balance necessary to give whatever feeling or mood may be required"
+    - "In order to avoid confusion resulting from multiple shadows, a filler light may be required, which is usually placed as near to the camera as possible."
+  concept_label: measure_the_balance_and_place_the_filler_to_suppress_multiple_shadows
+  label_origin: extractor_assigned
+  claim: >
+    After the key is placed, the key and the overall set illumination are measured with an exposure
+    meter, with the balance chosen for the mood required. Broads may be added either side of the
+    camera so no part of the set is underlit, and a filler is placed as close to the camera as
+    possible — the stated reason being to avoid the confusion of multiple shadows.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A light near the camera axis casts its shadows behind the subject where the lens cannot see
+      them, so it adds level without adding a second visible shadow.
+  scope:
+    domain_discussed_by_source: [lighting_practice, exposure]
+    conditions: "after the key light is set"
+  caveats:
+    - text: "the mechanism sentence is the extractor's reading of why 'as near to the camera as possible' suppresses multiple shadows; the source states the placement and the purpose, and does not spell out the geometry"
+      origin: extractor_observed
+  source_stated_problems:
+    - "confusion resulting from multiple shadows"
+    - "part of the set underilluminated"
+  source_stated_remedies:
+    - "place the filler as near the camera as possible"
+    - "a broad on each side of the camera"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_002}
+    - {relation: depends_on, target: sk_alt_c003_0011, note: "follows the key placement"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Lighting"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0013
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The purpose of illumination is twofold, that is, for quantity and for quality."
+    - "1. Orientation... 2. Mood or feeling... 3. Pictorial beauty, aesthetic pleasure... 4. Depth, perspective, third-dimensional illusion"
+  concept_label: illumination_has_two_purposes_quantity_and_four_kinds_of_quality
+  label_origin: extractor_assigned
+  claim: >
+    Lighting does two separable jobs. Lighting for quantity means lighting for exposure: enough
+    light in every corner, properly balanced, so no part of the negative is under- or overexposed.
+    Lighting for quality means bringing out four numbered values — orientation, so the audience can
+    see where the story is happening; mood or feeling, including season and time of day; pictorial
+    beauty; and depth or third-dimensional illusion.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [cinematography]
+    conditions: "any lit scene"
+  caveats:
+    - text: "the four quality values are numbered but not ranked against each other, and the source gives no guidance when two conflict"
+      origin: extractor_observed
+  source_stated_problems:
+    - "no part of the film shall be underexposed or overexposed"
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_003}
+    - {relation: generalises, target: sk_alt_c003_0015, note: "depth is the fourth value and gets its own treatment"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / The Purpose of Illumination"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0014
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The camera is the eye of the audience."
+    - "Too much camera movement is just as bad as none, like catsup on bad food. It is used to cover up."
+  concept_label: the_camera_stands_in_for_the_audiences_attention
+  label_origin: extractor_assigned
+  claim: >
+    Under orientation, the source states the identification directly: the camera is the audience's
+    eye, so when it moves closer the audience moves with it and when it concentrates on one item
+    the audience's attention goes there alone. It notes the growing tendency to move the camera,
+    and warns that too much movement is as bad as none and is used to cover up.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [cinematography, direction]
+    conditions: "narrative film"
+  caveats:
+    - text: "the comparison with the stage that precedes it is a claim about what theatre audiences can perceive, offered without evidence"
+      origin: extractor_observed
+    - text: "no criterion is given for how much movement is too much"
+      origin: extractor_observed
+  source_stated_problems:
+    - "too much camera movement"
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Orientation"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0015
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "if the foreground is dark, the background should be light, or vice versa"
+    - "The combination of a foreground, having visible as many surfaces of the object as possible, each surface having a different brightness, and a background of a different tone, makes a perfect picture."
+  concept_label: depth_comes_from_tonal_separation_between_foreground_and_background
+  label_origin: extractor_assigned
+  claim: >
+    The illusion of depth is produced by separating foreground from background in tone, in either
+    direction — dark against light or light against dark. The source states its own summary of a
+    complete picture as the conjunction of three things: an angle showing as many surfaces as
+    possible, each of those surfaces at a different brightness, and a background of a different
+    tone again.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [cinematography, composition]
+    conditions: "any picture with a foreground and a background"
+  caveats:
+    - text: "the demonstration puts both directions in one frame, which shows the rule is a relation between element and ground rather than a preference for dark or light backgrounds — the text does not say this and the picture does"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "separate foreground and background in tone"
+  examples:
+    positive:
+      - {description: "light block against dark ground and dark block against light ground, both standing clear — labelled Right", figure_ref: "Fig. 81"}
+    counter:
+      - {description: "dark block against dark ground and light block against light ground, both losing their edges — labelled Wrong", figure_ref: "Fig. 80"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0013, note: "the depth value made operational"}
+    - {relation: member_of_system, target: scs_alt_c003_002}
+    - {relation: qualified_by, target: sk_alt_c003_0017, note: "a second, different depth rule about which end of the scale reads as distant"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Lighting"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 80", "Fig. 81"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["Fig. 80 (img0099)", "Fig. 81 (img0100)"]}
+
+- sk_id: sk_alt_c003_0016
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "Mirrors will also enhance the illusion of depth by reflecting the well-lit opposite side of a room."
+    - "Flat monotone walls can be broken up by casting shadows upon them"
+  concept_label: two_further_devices_for_depth_mirrors_and_cast_shadows
+  label_origin: extractor_assigned
+  claim: >
+    Two additional devices for depth: a mirror, which adds the well-lit opposite side of the room
+    to the picture, and cast shadows, which break up a flat monotone wall.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [cinematography, set_dressing]
+    conditions: "interiors with flat or featureless surfaces"
+  caveats:
+    - text: "these are stated in two sentences with no further development, and the shadow device solves in light the problem the set-construction section solves in carpentry"
+      origin: extractor_observed
+  source_stated_problems:
+    - "flat monotone walls"
+  source_stated_remedies:
+    - "cast shadows on the wall"
+    - "use a mirror to bring the opposite side of the room into the frame"
+  examples:
+    positive:
+      - {description: "a wall broken up by a cast shadow pattern", figure_ref: "Fig. 82"}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alt_c003_0002, note: "the same problem solved with light instead of construction"}
+    - {relation: specialises, target: sk_alt_c003_0013, note: "further means to the depth value"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Lighting"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 82"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0017
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The spot which should appear to be the most distant should be the lightest, and vice versa"
+    - "the illusion is carried out by employing a full scale of shades from black to white"
+  concept_label: distance_is_carried_by_a_progression_from_dark_to_light
+  label_origin: extractor_assigned
+  claim: >
+    A second and distinct depth rule: the part of the picture that should read as most distant
+    should be the lightest, with the full scale from black to white employed to carry the
+    progression. The source motivates it by the theatre itself — an audience sitting in the dark
+    looking at a light screen already feels depth, and the picture continues that progression.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The viewing situation establishes dark-foreground-to-light-distance before the film begins,
+      and the image extends the same gradient inward.
+  scope:
+    domain_discussed_by_source: [cinematography, composition]
+    conditions: "projected motion pictures"
+  caveats:
+    - text: "this sits awkwardly beside the source's own tonal-separation rule, which is explicitly symmetrical — dark on light or light on dark. Here one direction is preferred. The source does not notice the tension"
+      origin: extractor_observed
+    - text: "the two figures offered as the demonstration are not labelled, and the text does not say which one gives the sensation of depth, so the claim's polarity is not settled by inspecting them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "make the most distant spot the lightest"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_alt_c003_0015, note: "symmetrical tonal separation against a preferred direction for distance; both are stated in the same section"}
+    - {relation: member_of_system, target: scs_alt_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Depth"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 83", "Fig. 84"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["Fig. 83 (img0102)", "Fig. 84 (img0103)"]}
+
+- sk_id: sk_alt_c003_0018
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The key of the picture (not to be confused with keylight) depends upon the category of the screen play."
+    - "Musical comedies are lit high and brilliant with a stylized, dreamlike light. For this type of photography, light sources and logic in lighting mean nothing."
+  concept_label: genre_sets_the_key_of_the_whole_picture_before_any_scene_is_lit
+  label_origin: extractor_assigned
+  claim: >
+    Before scenes are worked out, a decision is made at the level of the whole film. The source
+    names three categories from the point of view of illumination — comedy, subdivided into musical
+    and slapstick; drama; and mystery — each requiring a different approach. Once the key of the
+    picture is decided, the script is broken down into sequences and scenes and each mood is worked
+    out separately. For musical comedy, the source states that light sources and logic in lighting
+    mean nothing; comedy is lit as high as the stock and laboratory allow without becoming
+    senselessly flat, because a low-key scene would spoil the comic effect.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Photography, like music, has a psychological effect: you would not play someone a sad cello
+      solo to make them laugh, and lighting that works against the intended response has to be
+      avoided.
+  scope:
+    domain_discussed_by_source: [cinematography, genre]
+    conditions: "a whole production, decided before scene work"
+  caveats:
+    - text: "the source explicitly warns that the key of the picture is not the keylight, which is the one place in the chapter it guards against its own vocabulary colliding with itself"
+      origin: source_stated
+    - text: "the three genre categories are the studio system's commercial categories of the period, not a general taxonomy"
+      origin: extractor_observed
+    - text: "the musical-comedy exemption from source logic sits directly against the chapter's own rule that the key must appear to come from an established source"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a low-key scene might be upsetting and spoil the comedy effect"
+  source_stated_remedies:
+    - "decide the key of the picture first, then break the script down"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_alt_c003_0011, note: "musical comedy is exempted from the requirement that lighting agree with an established source"}
+    - {relation: member_of_system, target: scs_alt_c003_003}
+    - {relation: generalises, target: sk_alt_c003_0022, note: "drama gets the poetic treatment described later in the chapter"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Key of the Picture"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0019
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "First of all we must light the background and that part of the set in which the actors will not walk around. This is known as roughing it in."
+    - "If you cannot use crosslight, toplight may be used. If that too is impossible, employ frontlight, but never from the exact camera height"
+  concept_label: rough_in_the_set_by_a_stated_order_of_preference_for_light_direction
+  label_origin: extractor_assigned
+  claim: >
+    The working order is background first, then the acting area. Within it the source gives a
+    ranked fallback for wall lighting: back crosslight the side walls from the opposite high corner
+    — the left wall from up high right, the right from up high left; if crosslight is impossible,
+    use toplight; if that is impossible, use frontlight, but never from exactly camera height, and
+    break the light up with shadows. It adds that side walls should be darker in the foreground and
+    lighter towards the back, and that crosslighting does not merely light a set but accentuates
+    its values, with shiny objects in the beam's path giving the set life.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Crosslight rakes across the surface and reveals its relief; frontlight from the lens axis
+      flattens it, which is why frontlight is a last resort and must be displaced from camera
+      height when used.
+  scope:
+    domain_discussed_by_source: [studio_lighting, set_lighting]
+    conditions: "a three-wall interior set in a long shot"
+  caveats:
+    - text: "the mechanism sentence draws together the source's separate statements that crosslight accentuates values and that frontlight must never come from camera height; the source does not state the contrast in one place"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "back crosslight the side walls from the opposite high corner"
+    - "if crosslight is impossible use toplight, then frontlight off camera height, broken with shadows"
+  examples:
+    positive:
+      - {description: "a three-wall set with two lamps at the upper corners, beams crossing to the opposite walls", figure_ref: "Fig. 85"}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_002}
+    - {relation: depends_on, target: sk_alt_c003_0007, note: "stated entirely in the named light directions"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Roughing In"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 85"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["Fig. 85 (img0104)"]}
+
+- sk_id: sk_alt_c003_0020
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The action must be well lit so that it can be seen all the time; but in close shots the actors' faces should be the lightest spots on the screen."
+    - "(1) all lights are on; (2) no light moves; (3) dimmers are correct; (4) there is no voltage drop; (5) actors return to their designated positions (marks) exactly as in rehearsals; (6) one actor does not shade the face of another too extensively; (7) make-up was not damaged"
+  concept_label: rehearsal_reveals_what_the_rough_lighting_missed_and_the_take_has_a_checklist
+  label_origin: extractor_assigned
+  claim: >
+    Lighting is finished in two passes with a rehearsal between them. The rehearsal is walked with
+    the principals while stand-ins watch, and it exposes what the rough lighting missed — the source
+    gives an example in which the faces went muddy as the actors crossed the set. Individual
+    keylights are then added and balanced with kickers, with the rule that in close shots the faces
+    should be the lightest spots on the screen. During the take seven specific things are checked,
+    including that no light moves, that there is no voltage drop, that actors return exactly to
+    their marks, and that one actor does not shade another's face.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [studio_production, lighting_practice]
+    conditions: "a shooting day on a lit set"
+  caveats:
+    - text: "the seven checks are physical-production conditions of the period; five of the seven have no counterpart outside a stage with electricians and actors"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the general light was inadequate; the faces were underlit and consequently went muddy"
+  source_stated_remedies:
+    - "add individual keylights and balance them with kickers"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_alt_c003_002}
+    - {relation: depends_on, target: sk_alt_c003_0019, note: "follows the rough-in"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Rehearsal, The Take"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0021
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "Some people have the mistaken idea that a trucking or dolly shot is faster to light than a stationary one. Nothing could be further from the truth"
+    - "High reflectors cause deep shadows, exaggerate cheekbones, make deep-set eyes, none of which are favorable to feminine faces."
+  concept_label: a_moving_shot_must_satisfy_two_lighting_schemes_at_once
+  label_origin: extractor_assigned
+  claim: >
+    A shot that moves from a long shot to a medium or close-up has to carry both lightings at once,
+    which the source calls not an ideal condition. The specific conflict is stated: the long shot
+    takes in the whole set so there can be no lights on the floor, while the closer shot needs them.
+    The compromise is to suspend reflectors on ropes brought down almost to the upper camera line
+    rather than rigging them high, and to mount dimmed reflectors on the dolly or crane and fade
+    them in as the camera moves in.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Reflectors placed high cast deep shadows that exaggerate cheekbones and deepen eye sockets,
+      which the source states is unfavourable for women's faces.
+  scope:
+    domain_discussed_by_source: [cinematography, camera_movement]
+    conditions: "dolly or crane shots that change shot size"
+  caveats:
+    - text: "the stated reason for avoiding high reflectors is a claim about feminine faces specifically, presented as technical fact. It is a convention of the period's studio portraiture, recorded as the source states it and marked culturally bounded rather than repeated as a general rule"
+      origin: extractor_observed
+    - text: "the source's correction — that a moving shot is slower to light, not faster — is asserted against a belief it attributes to unnamed others"
+      origin: extractor_observed
+  source_stated_problems:
+    - "in the long shot there can be no lights on the floor; but for the closer shot they are absolutely essential"
+  source_stated_remedies:
+    - "suspend reflectors on ropes near the upper camera line"
+    - "mount dimmer-equipped reflectors on the dolly and fade them in"
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alt_c003_0020, note: "what changes when the camera moves during the take"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Trucking Shots"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0022
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "In drama we light for mood, we paint poems."
+    - "Lighting with its ups and downs becomes a symphonic construction, paralleling the dramatic situations."
+  concept_label: lighting_level_should_follow_the_dramatic_line_across_a_whole_film
+  label_origin: extractor_assigned
+  claim: >
+    In drama the lighting fluctuates across the film rather than being set once: gay sequences are
+    lit brightly, sad scenes lower, and tragedy is served by strong contrast of deep blacks and
+    glaring whites. The source calls the result a symphonic construction paralleling the dramatic
+    situations, and says the purpose of a long shot in drama is not only geographical but to
+    establish the mood and help tell the story.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [dramatic_cinematography]
+    conditions: "a whole dramatic film"
+  caveats:
+    - text: "the claim is about a property no single shot has — the contour of lighting level across a film — and the source gives no way to specify or check it"
+      origin: extractor_observed
+    - text: "the accompanying claim that this hypnotises the audience out of their everyday world is rhetorical and is recorded as the source's own framing"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0018, note: "what the drama key means in practice"}
+    - {relation: member_of_system, target: scs_alt_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Advanced Lighting — The Poetic Approach"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0023
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "To know dramatic lighting the photographer must familiarize himself with light in life-the different light effects as they really exist."
+    - "These poetic feelings are of utmost importance to the student of advanced photography."
+  concept_label: the_lighting_repertoire_is_learned_by_observing_real_light
+  label_origin: extractor_assigned
+  claim: >
+    The source's stated route to competence is observation of the world rather than study of
+    equipment. It walks a single living-room set through twenty-four hours in prose — dawn with
+    objects barely discernible and the sky appearing first, sunrise throwing long shadows and a
+    design on the ceiling, high noon with strong diffused light from all directions and less beauty
+    than morning, sunset with stretching shadows and a foreground already silhouetted, evening lit
+    by a chandelier and candles, and moonlight with sharp highlights and opaque shadows — and says
+    a photographer who does not understand these feelings can never convey them.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Audiences recognise real light: the source's example is that a pure white sky might add depth
+      but would never be accepted as the approach of a snowstorm.
+  scope:
+    domain_discussed_by_source: [dramatic_cinematography, observation]
+    conditions: "learning to light for mood"
+  caveats:
+    - text: "this passage is the chapter's most lyrical and is presented as instruction; its content is a description of how light behaves rather than a procedure"
+      origin: extractor_observed
+  source_stated_problems:
+    - "all illumination becomes just so much light"
+  source_stated_remedies:
+    - "study the different light effects as they really exist"
+  examples:
+    positive:
+      - {description: "four photographs given as sunrise, noon, sunset and evening", figure_ref: "Figs. 86-89"}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_alt_c003_0024, note: "the observed effects are then reconstructed on the stage"}
+    - {relation: member_of_system, target: scs_alt_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Advanced Lighting — The Poetic Approach"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 86", "Fig. 87", "Fig. 88", "Fig. 89"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0024
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "Take the light prepared for a dawn effect, build up the outside with a few additional Duares, build up the interior lighting from up high and also with frontlight, take the diffusers off the arcs shining in through the window, and you have the light ready for a sunrise scene."
+    - "we cannot use the same window for both unless we change the direction of the light, as everyone knows that the sun rises on one side of the house and sets on the other"
+  concept_label: the_hours_are_lit_as_incremental_edits_to_one_standing_setup
+  label_origin: extractor_assigned
+  claim: >
+    The recipes are written as differences rather than as independent setups. Dawn is built from
+    several well-diffused reflectors crisscrossed to establish an unmistakably exterior source, with
+    no undiffused arc because an arc throws sharp shadows. Sunrise is that same rig plus extra
+    instruments outside, more interior light from high and from the front, and the diffusers taken
+    off the window arcs. Breakfast is sunrise with the wall shadows moved and the key density raised.
+    Moonlight at a window is the daylight scheme minus the light on the backing and minus the front
+    filler. The source also states a continuity constraint: the same window cannot serve for both
+    sunrise and sunset unless the light direction changes, because the sun rises on one side of a
+    house and sets on the other.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each hour differs from its neighbour in a small number of controllable properties — how
+      diffused the source is, how high the key sits, where the shadow falls, whether the backing is
+      lit — so the hours form a series rather than a set of unrelated arrangements.
+  scope:
+    domain_discussed_by_source: [interior_cinematography, lighting_recipes]
+    conditions: "a standing interior set photographed at different implied hours"
+  caveats:
+    - text: "the mechanism sentence names the pattern; the source demonstrates it by writing each recipe as an edit to the last but never states it as a principle"
+      origin: extractor_observed
+    - text: "the recipes are stated in period instrument names, and their geometry is carried by plan diagrams rather than by the prose"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "build each hour as a modification of the adjacent one"
+  examples:
+    positive:
+      - {description: "an overhead plan of the dawn setup with instrument types, positions, beam paths and a legend", figure_ref: "Fig. 90"}
+      - {description: "the evening dining-room setup keyed from up high on both sides with a back-kicker hotter than the key", figure_ref: "Fig. 91"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0011, note: "each recipe names the source it imitates first"}
+    - {relation: member_of_system, target: scs_alt_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: ocr_degraded
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Actual Illumination and the hour recipes"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 90", "Fig. 91"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["Fig. 90 (img0109)"]}
+
+- sk_id: sk_alt_c003_0025
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "An overexposed negative will not give you a picture of daylight. All negatives must be normally exposed."
+    - "It is not the quantity but the quality that establishes a mood, which determines the theme, the message of the picture."
+  concept_label: mood_is_made_by_the_character_of_the_light_not_by_exposure_level
+  label_origin: extractor_assigned
+  claim: >
+    A daylight feeling is not produced by overexposing; every negative is exposed normally, and the
+    impression of time of day comes from the quality of the light — its direction, diffusion and
+    the shadows it makes — rather than from its quantity.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [exposure, cinematography]
+    conditions: "monochrome negative film of the period"
+  caveats:
+    - text: "stated flatly in the middle of a recipe rather than argued, and it is the sharpest separation in the chapter between the two purposes the source has already named — quantity and quality"
+      origin: extractor_observed
+    - text: "tied to a film process in which normal exposure was a fixed requirement; the underlying separation of level from character is not"
+      origin: extractor_observed
+  source_stated_problems:
+    - "an overexposed negative will not give you a picture of daylight"
+  source_stated_remedies: []
+  examples: {positive: [], counter: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alt_c003_0013, note: "sharpens the quantity/quality distinction the source drew earlier"}
+    - {relation: member_of_system, target: scs_alt_c003_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Breakfast Time"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0026
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "The old-fashioned way of lighting this was to light the window from the outside, and the person, in flat key from the inside. This two-way light produced a contradictory, confusing feeling."
+    - "The average layman may not understand lighting, but every child can tell sunlight when he sees it."
+  concept_label: light_from_one_consistent_direction_because_audiences_read_light_without_being_taught
+  label_origin: extractor_assigned
+  claim: >
+    The source rejects the older practice of lighting a figure at a sunlit window from two
+    contradictory directions — window from outside, face flatly from inside — because the result
+    feels contradictory. Its replacement lights realistically from the established direction: an arc
+    from outside, incandescent mixed in from the same direction, a weaker crosslight inside, and a
+    heavily diffused broad beside the camera. The justification is that audiences read light without
+    training, so subdued low-key faces with strong cross and backlight are now accepted without
+    comment even in daylight shots.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A viewer who cannot describe lighting can still tell sunlight from something else, so light
+      that contradicts its own established source is detected even when its cause is not.
+  scope:
+    domain_discussed_by_source: [cinematography, window_lighting]
+    conditions: "a figure against a sunlit or moonlit window"
+  caveats:
+    - text: "the claim that audiences now accept low-key faces in daylight is a claim about the taste of one period's audience, offered without evidence"
+      origin: extractor_observed
+    - text: "the recipe includes a set-dressing prerequisite — a light blue curtain, which tolerates a stronger outside light than a white one — so the lighting solution depends on a decision made before shooting"
+      origin: extractor_observed
+  source_stated_problems:
+    - "two-way light produced a contradictory, confusing feeling"
+  source_stated_remedies:
+    - "light realistically from the established direction, with an arc from outside"
+  examples:
+    positive:
+      - {description: "a single figure at a curtained window lit from outside with a weaker interior crosslight", figure_ref: "Fig. 92"}
+      - {description: "two profiles against a curtained window lit by two backlight arcs, one from each side", figure_ref: "Fig. 93"}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_alt_c003_0011, note: "the source-agreement rule applied to the hardest common case"}
+    - {relation: member_of_system, target: scs_alt_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Window Shots"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 92", "Fig. 93"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_alt_c003_0027
+  source_id: alton_painting_with_light_ch2_motion_picture_illumination
+  source_terms:
+    - "There are times when we must improve upon nature's lighting."
+    - "People have positive pictures (mental images) of the appearance of exteriors. Establish your light sources and light accordingly."
+  concept_label: imitating_nature_exactly_can_fail_and_the_target_is_the_viewers_mental_image
+  label_origin: extractor_assigned
+  claim: >
+    Two statements that qualify the chapter's realism. Simply imitating natural sunlight for a shot
+    taken through a window from outside would burn out the wall and the window, so the light is
+    shaded with gauze or a tree branch, the arc placed high to one side so it does not reflect in
+    the glass, and a kicker added from inside to round the face — while backlight is omitted because
+    it would not look natural. And when exteriors are built inside, the thing being matched is
+    stated to be the audience's mental image of an exterior rather than the exterior itself.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Film cannot hold the range that the eye accepts outdoors, so an exact imitation overexposes;
+      and the audience judges against a remembered picture, so the target is that picture.
+  scope:
+    domain_discussed_by_source: [cinematography, exterior_and_interior_exterior_lighting]
+    conditions: "shooting through a window from outside; exteriors built on a stage"
+  caveats:
+    - text: "the mechanism sentence joins two statements the source makes in separate sections — that imitation would burn out the highlights, and that people hold mental images of exteriors. The source does not connect them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if we simply imitate natural sunlight, the wall outside and the window will burn up"
+  source_stated_remedies:
+    - "shade the sunlight with gauze, a tree branch, or both"
+    - "omit backlight where it would not look natural"
+  examples:
+    positive:
+      - {description: "a figure photographed from outside through a window, with the wall shaded and a kicker added from indoors", figure_ref: "Fig. 94"}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_alt_c003_0023, note: "bounds the instruction to reproduce light as it really is"}
+    - {relation: member_of_system, target: scs_alt_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — Motion Picture Illumination"
+    section: "The Theory of Illumination / Shooting In From Outside, Interior Exterior"
+    page_start: null
+    page_end: null
+    locator: "EPUB index_split_001.html, anchor page0149"
+    figure_refs: ["Fig. 94"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: []}

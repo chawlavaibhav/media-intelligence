@@ -1,0 +1,179 @@
+# CANON-003 book 8 (rebalance lane) — "Painting With Light" ch.2. SPEC-04 bindings against SPEC-01 v0.1.
+# Written only after the source representation was stable.
+#
+# Six bindings from twenty-seven objects. Most of this chapter is physical: instruments, rigging,
+# a shooting day, and recipes stated in lamp positions. Those are recorded as parked production
+# candidates and are NOT rewritten as generation instructions — "place a diffused arc outside the
+# window" does not become "prompt for soft dawn light". That translation is a generative-media
+# hypothesis and is not performed here.
+#
+# What does bind is the small set of claims that are about the IMAGE rather than about the
+# apparatus: what makes a subject read as solid, what makes it separate from its ground, and what
+# an angle is for.
+
+source_id: alton_painting_with_light_ch2_motion_picture_illumination
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_alt_c003_0001
+  source_knowledge_refs: [sk_alt_c003_0009]
+  source_system_refs: [scs_alt_c003_001]
+  target_type: creative_ir
+  target_path: creative.visual_language
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, constrains]
+  rationale: >
+    SPEC-01 records lighting as part of a creative's visual language. This source supplies the
+    structure that field needs in order to say anything specific: a lighting description is not one
+    property but a relation between a principal light and named secondary lights, each contributing
+    modelling, separation or level. A specification that names only "soft daylight" leaves
+    undetermined the thing the source demonstrates is decisive — whether anything other than the key
+    is present at all.
+  applicability:
+    when: "specifying the lighting character of an asset beyond a single adjective"
+    limits: >
+      The source's evidence is one photographic minimal pair on a sphere, under 1949 monochrome
+      stock. It establishes that additional lights restore modelling; it does not quantify ratios,
+      and its instrument names are obsolete. The structure transfers; the settings do not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_alt_c003_0006]
+  repair_ontology_refs: [t_alt_c003_0007]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alt_c003_0002
+  source_knowledge_refs: [sk_alt_c003_0015, sk_alt_c003_0003]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses, evaluates]
+  observation_unit: frame
+  rationale: >
+    Tonal separation between a subject and its background is checkable on a single rendered frame
+    without any knowledge of intent: a subject whose tone matches its ground loses its edge, and
+    the source demonstrates both the failing and the passing case in a labelled pair. This is one of
+    the few claims in Lane assignments so far that an evaluator could test directly rather than
+    approximate.
+  applicability:
+    when: "checking whether the intended subject of a still or a frame reads clear of its background"
+    limits: >
+      The source states the rule symmetrically — dark on light or light on dark — and elsewhere in
+      the same section states a second, directional rule about distance that a symmetrical check
+      would not capture. The two are not reconciled by the source, so an evaluator should implement
+      the separation rule only, and not infer a preferred direction from it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_alt_c003_0006]
+  repair_ontology_refs: [t_alt_c003_0010, t_alt_c003_0013]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alt_c003_0003
+  source_knowledge_refs: [sk_alt_c003_0011, sk_alt_c003_0026]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: frame
+  rationale: >
+    The source's window case is a checkable consistency property: does the light on the subject
+    agree with the light source the frame itself shows? It names the failure — a figure at a sunlit
+    window keyed flatly from the opposite side — and gives the reason it matters, that viewers
+    detect the contradiction without being able to describe it. Generated images fail this
+    constantly, and the check requires only the frame.
+  applicability:
+    when: "checking a frame that contains both a visible light source and a lit subject"
+    limits: >
+      The source is describing physical setups and human viewers of 1949 cinema. Whether the
+      contradiction is equally detectable in a still social-feed creative viewed for a second is
+      untested here. The check also needs the source to be visible in frame; where it is implied
+      rather than shown, the source gives no test.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_alt_c003_0015]
+  repair_ontology_refs: [t_alt_c003_0016]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alt_c003_0004
+  source_knowledge_refs: [sk_alt_c003_0010]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: StaticCreativeExtension.composition
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives]
+  rationale: >
+    A stated criterion for viewpoint, which composition specifications usually leave to taste:
+    photograph from the angle that reveals the most surfaces of the subject, because the screen
+    supplies no depth of its own. It is specifiable in advance and it is testable against a
+    rendered result.
+  applicability:
+    when: "specifying the viewpoint on a product or object in a still creative"
+    limits: >
+      The rule maximises revealed form and is silent on everything else an angle must do — brand
+      convention, packaging face, eyeline, or where copy will sit. It should constrain a viewpoint
+      choice, never decide it alone.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_alt_c003_0005
+  source_knowledge_refs: [sk_alt_c003_0019, sk_alt_c003_0020, sk_alt_c003_0024, sk_alt_c003_0005, sk_alt_c003_0006]
+  source_system_refs: [scs_alt_c003_002]
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The bulk of the chapter: rigging a stage, an order of preference for lighting walls, a rehearsal
+    pass, a seven-item check during the take, and a family of recipes written as edits to a standing
+    setup. Production IR does not exist, so none of it is translated. It is recorded in the source's
+    own frame — lamps, positions, electricians — and left unbound.
+  applicability:
+    when: "a production process for creative work is eventually specified"
+    limits: >
+      Physical studio production of 1949, including instrument models that no longer exist. No
+      generative equivalent is asserted for any of it. The one structural observation worth keeping
+      separate from the hardware is that the recipes are written as differences from a neighbouring
+      setup rather than as independent arrangements; that pattern is not tied to the period.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_alt_c003_0020]
+  repair_ontology_refs: [t_alt_c003_0019, t_alt_c003_0018]
+  status: production_candidate
+  status_reason: "Production IR does not exist"
+
+- binding_id: bnd_alt_c003_0006
+  source_knowledge_refs: [sk_alt_c003_0006, sk_alt_c003_0004, sk_alt_c003_0021, sk_alt_c003_0025]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A worked case of a source whose content ages at three different rates in the same chapter, and
+    the Canon needs to be able to see the difference. The geometry does not date — a single source
+    renders a solid flat, tones that match lose their edge, an angle reveals form. The technology
+    dates completely — the instrument catalogue, the antihalo-film argument for shiny props, the
+    requirement that every negative be normally exposed. And one claim is a studio convention of the
+    period stated as technical fact: that high reflectors are unfavourable to feminine faces. All
+    three carry `practitioner_assertion` and are indistinguishable by claim type alone.
+  applicability:
+    when: "weighing an older technical source whose physical claims and technological claims are interleaved"
+    limits: >
+      One source. It shows the pattern clearly because the three kinds sit within a few pages of
+      each other. It offers no rule for separating them automatically — the separation here was made
+      by reading, and `historical_claim` and `culturally_bounded` were applied by hand.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
