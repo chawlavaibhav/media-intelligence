@@ -251,7 +251,7 @@ instrument until that calibration passes.**
 
 ### 6.2 · D2 — `exact_text_latin` *(control)*
 
-**approval_status:** `proposed_addition` — Controller decision required.
+**approval_status:** `controller_approved_v0` — approved for V0 by Controller, 24 Aug 2026.
 
 **Property.** Identical to D1, Latin script.
 
@@ -375,18 +375,19 @@ specified in calibration plan §3.4.
 
 ### 6.5 · D5 — `text_stability_across_frames`
 
-**approval_status:** `proposed_addition` — Controller decision required.
+**approval_status:** `controller_approved_v0` — approved for V0 by Controller, 24 Aug 2026.
 
 **Property.** Rendered on-screen text remains *the same string* for the duration it is on screen.
 
-**Why propose it.** This is the most distinctive measurement we have and the clearest
+**Why it is in V0.** This is the most distinctive measurement we have and the clearest
 demonstration that observation unit is load-bearing. It is our own observed failure (`E-05` in
 FINDINGS-11, the incidental finding in FINDINGS-01), it is the case that
 `canon/knowledge/SPEC-04-operational-bindings.md` `observation_unit` was written for, and it has
-independent published support: T2VTextBench (May 2025) is dedicated to on-screen text fidelity
-**and temporal consistency** in text-to-video, and reports every one of ten evaluated systems
-scoring below 0.4, best 0.37. Text instability in generated video is a real, general, published
-failure — not an artefact of one clip we happened to make.
+independent published support: **T2VTextBench arXiv:2505.04946v1 (8 May 2025, only version)** is
+dedicated to on-screen text fidelity **and temporal consistency** in text-to-video. v1 reports
+*"the highest average score is reported for Sora, which is only 0.37"* across ten evaluated systems
+on a 0/0.25/0.5/1 scale — every model below 0.4. Text instability in generated video is a real,
+general, published failure, not an artefact of one clip we happened to make.
 
 **Provenance.** `OBS` `direct`; `PUB` `direct` (T2VTextBench); `IR` `direct`
 (`VideoCreativeExtension.continuity_requirements` — see §7.2 on the path).
@@ -449,25 +450,45 @@ seed where the provider supports seeds, and explicitly `seed_unsupported` where 
 
 ## 7 · Instrument reference and known limits
 
-### 7.1 The Devanagari gap — headline finding
+### 7.1 The Devanagari gap — narrowed after Controller review
 
-The public benchmark review found **no benchmark covering Devanagari or any Hindi text-rendering
-evaluation**, confirming the concern flagged in `resources/corpus/CORPUS-SOURCING-PLAN.md` §D.
+**⚠️ Narrowed 24 Aug 2026.** An earlier draft claimed "no benchmark covering Devanagari."
+**That was too broad and is withdrawn.** Devanagari benchmarks exist — they measure a different
+task.
 
-The nearest published work is MULTITEXTEDIT (May 2026), 12 typologically diverse languages. Its
-language list is English, Hebrew, Arabic, **Bengali**, Korean, Russian, Vietnamese, Yoruba,
-Japanese, Chinese, Spanish, Dutch. Bengali — Brahmic, like Devanagari, with conjuncts and a
-headline stroke — is the closest available proxy, and it is the **third-worst performing language
-in the benchmark** (∆Sem 0.697; ∆TA 0.960; ∆LSF 1.172), behind only Hebrew and Arabic.
+**What exists: Devanagari *recognition*.** arXiv:2606.29213v1 (Jun 2026) stress-tests ten OCR/VLM
+systems reading Devanagari; IIIT-ILST, IndicSTR12, the Bharat Scene Text Dataset, IndicVisionBench,
+MLT-17/19 and DohaScript cover Indic scene text, documents and handwriting. Full table in
+findings §1.1.
 
-**What this licenses and what it does not.** It licenses borrowing the *method*. It does **not**
-license inferring a Devanagari number from a Bengali one. Bengali's poor showing is
-corroborating context for our own observed Devanagari failures, not a substitute measurement.
+**The narrowed claim, re-checked and still supported:**
 
-**Consequence:** the Devanagari instrument must be calibrated locally against native-speaker
-ground truth. There is no public benchmark to borrow it from. This is the single highest-value
-gap in the battery and, per the corpus plan's own reading, the most genuinely proprietary thing
-we could build.
+> **No public benchmark measures whether a generative image or video model correctly renders
+> Devanagari text it was instructed to produce.**
+
+Generative text-rendering benchmarks are English/Chinese (CVTG-2K, MARIO-Eval, AnyText,
+TextAtlasEval, LongText-Bench, ChineseWord, OneIG-Bench EN/ZH). MULTITEXTEDIT covers 12 languages
+including Bengali — not Devanagari. **Reading and drawing are different capabilities.** Our observed
+failures are drawing failures, and nothing public scores them.
+
+**NOT VERIFIED:** OneIG-Bench's 200-prompt Multilingualism set — language list could not be
+confirmed from the repository README or the OpenReview PDF. If it includes Devanagari, this claim
+narrows further.
+
+**Bengali as the nearest published generative proxy.** In MULTITEXTEDIT, Bengali — Brahmic, with
+conjuncts and a headline stroke — is third-worst of twelve (∆Sem 0.697, ∆TA 0.960, ∆LSF 1.172),
+behind only Hebrew and Arabic. Corroborating context for our own failures; it does **not** license
+inferring a Devanagari number from a Bengali one.
+
+**What the recognition benchmarks do give us.** They measure our *instrument* — an OCR-VLM reading
+generated images — and they materially change the calibration design. The load-bearing point:
+**clean synthetic renders do not discriminate between checkers** (all ten systems cluster at
+chrF++ 91–98), so a calibration set built only from clean renders would be uninformative. Detail in
+findings §1.3 and `INSTRUMENT-CALIBRATION-PLAN-V0.md` §3.1.
+
+**Consequence.** The instrument must still be calibrated locally: nothing public scores Devanagari
+*generation*, and whether reading-benchmark rankings transfer to generated-image text is NOT
+VERIFIED. But the calibration material is **partly reusable** rather than wholly new — see §9.1.
 
 ### 7.2 SPEC-01 path corrections
 
@@ -589,10 +610,17 @@ Settings: `N = 12` items, `R = 2` repeats, `V = 0.20`, `Ce = $0.011` (≈₹0.90
 |---|---:|---:|---:|---:|---:|
 | one dimension × one level | 24 | $6.00 | $48.00 | $1.58 | $28.80 |
 
-**Observation that matters more than the totals: human verification dominates.** Generation is
-2–4% of an image cell. Any real budget conversation is about human hours, not API spend — which
-is why the human-time estimates in the calibration plan are the load-bearing numbers, and why
-`Ch` and `V` are the parameters worth arguing about.
+**⚠️ Illustrative scenario, not a finding.** In the settings above, generation works out at ~2–4%
+of an image cell. That ratio depends entirely on `V` and `Ch`, **neither of which is approved or
+measured** — the 20% verification rate and the $6.00-per-verified-trial figure are placeholders
+chosen to make the arithmetic concrete. Halve either and the ratio moves by a factor of four; set
+human verification to zero and generation becomes the whole cost.
+
+**What the scenario does support**, independent of the exact numbers: **human verification can
+materially dominate total cost and must therefore be in the cost model rather than omitted.** That
+was the term missing from our schema. It follows that `V` and `Ch` are the parameters worth
+arguing about, and the calibration plan's human-hour estimates are what a budget decision actually
+turns on.
 
 ### 8.4 Shape of a V0 run — and the correction to "720"
 
@@ -608,12 +636,13 @@ design:
 Proposed shape — **image workflows** run D1–D4 (levels 1–3); **video workflows** run D5
 (levels 1–3) plus D1 at frame level on extracted frames; **all** workflows accumulate D6 for free.
 
-| Configuration | Generating cells | Trials at N=12, R=2 |
+| Workflow type | Generating cells | Trials at N=12, R=2 |
 |---|---:|---:|
-| Core only (D1, D3, D4 image; D6 free) | 9 per image workflow | 216 per image workflow |
-| Core + proposed additions (D2, D5) | 12 image + 3 video | 288 + 72 |
+| Image — D1, D2, D3, D4 × levels 1–3 (D6 free) | 12 | 288 per image workflow |
+| Video — D5 × levels 1–3, plus D1 on extracted frames | 6 | 144 per video workflow |
 
-Exact totals depend on the approved roster, which is a Controller decision.
+All six dimensions are Controller-approved for V0 (D2 and D5 approved 24 Aug 2026). Exact totals
+depend on the approved roster, which remains a Controller decision.
 
 ---
 
@@ -623,14 +652,35 @@ Recorded as requirements, not requests. Nothing here is acquired by Eval.
 
 | ID | Requirement | Why | Status |
 |---|---|---|---|
-| **M1** | Devanagari string set with native-speaker-verified reference renderings, covering conjuncts, matras, nukta, and the ब/व, य/थ confusion pairs | D1/D5; no public benchmark exists (§7.1) | must be **built** — not acquirable |
+| **M1a** | *Instrument*-calibration material: Devanagari images with existing ground-truth transcriptions from published recognition resources (arXiv:2606.29213 release, BSTD, IIIT-ILST, IndicSTR12), **including degraded and real-scan material, not only clean renders** | calibrating I1's reading accuracy | **partly reusable** — conditional on Resources verifying licensing (§9.1) |
+| **M1b** | *Capability* items: prompt → target-string pairs covering conjuncts, matras, nukta and the observed ब/व and य/थ confusion pairs, with native-speaker-verified reference renderings | D1/D5 — feeding generators | must be **built**; no public resource contains these |
 | **M2** | Latin string set matched to M1 on word and character count | D2 delta-vs-Latin design | trivially constructible |
 | **M3** | Reference image sets for person identity: ≥12 subjects, multiple views, with declared invariants and allowed-variation | D3 | needs rights clearance — Resources |
 | **M4** | Generic-object prompt set restricted to MS COCO's 80 classes | D4 detector constraint (§6.4) | constructible from GenEval's public prompt list |
 | **M5** | Access to the `media-factory` spike outputs (64 scored images) as regression cases | permanent regression layer | **BLOCKED** — see §10 |
 
-**M1 is the one that cannot be bought.** It is also, per the corpus plan's own assessment, the
-highest-value proprietary asset available to us cheaply.
+### 9.1 M1 — reassessed after Controller review
+
+An earlier draft stated M1 "cannot be acquired and must be built." **That rested on the over-broad
+claim corrected in §7.1 and is withdrawn.** M1 splits in two:
+
+- **M1a — reusable, pending licence verification.** Published Devanagari recognition resources
+  carry images with human ground-truth transcriptions, which is exactly what calibrating the
+  *reading* instrument needs. arXiv:2606.29213 states its benchmark, code and models are released,
+  and its arXiv page displays a CC BY 4.0 licence icon. **Eval has not verified any licence and
+  must not.** Per Project Contract separation 9 and RES-001's ownership, rights verification is
+  Resources' work, and every reuse here is conditional on it.
+- **M1b — must still be built.** Prompt/target-string pairs to feed generators exist nowhere
+  public, because no benchmark measures Devanagari *generation*. This is the genuinely proprietary
+  piece, and it is smaller than the original M1.
+
+**The two may not substitute for each other.** M1a calibrates whether the checker can *read*
+Devanagari. M1b measures whether a generator can *draw* it. Using recognition material as capability
+items would measure the wrong thing.
+
+**Revised effort.** The original estimate assumed building everything. If M1a reuse clears
+licensing, the native-reader requirement narrows to verifying M1b's reference renderings plus a
+smaller local agreement check — see `INSTRUMENT-CALIBRATION-PLAN-V0.md` §3.1.
 
 ---
 
@@ -679,13 +729,13 @@ Carried forward from `CAPABILITY-LAB-V0-PLAN.md`, unchanged, with two additions 
 
 ## 12 · Open items requiring a Controller decision
 
-1. **D2 (`exact_text_latin`) and D5 (`text_stability_across_frames`)** — approve as V0 dimensions,
-   or hold to V1? Both are `proposed_addition`. §8.4 gives the cost delta.
+1. ~~D2 and D5 as V0 dimensions~~ — **RESOLVED: both approved by Controller, 24 Aug 2026.**
 2. **The approved workflow roster.** §8.3 is an illustrative example only.
 3. **Human verification budget** — `V` and `Ch` in §8.2 dominate cost. The calibration plan's
    §5 human-hour estimates need a budget decision before any run.
-4. **M1 construction** — building the Devanagari reference set is a task nobody currently owns.
-   Eval, Resources, or a joint task?
+4. **M1 ownership, now split** (§9.1). **M1a** — can Resources verify licensing on the published
+   Devanagari recognition resources so their material can calibrate our reading instrument?
+   **M1b** — who builds the prompt/target-string set that must still be created from scratch?
 5. **The SPEC-01 naming-scheme gap** (§7.2) — CROSS_STREAM to Canon.
 6. **Registry schema field additions** — see the schema draft; several touch routing semantics
    and are raised as cross-stream rather than assumed.

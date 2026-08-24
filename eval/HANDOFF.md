@@ -19,9 +19,10 @@ clips); each sample was run once, so checker consistency is unmeasured; and no a
 repository supports the Tesseract 0/14 line. Detail in
 `findings/EVAL-001-battery-design-findings.md` §5.
 
-A V0 battery specification, Registry schema and instrument-calibration plan now exist **as drafts
-pending Controller review** (EVAL-001). No battery is approved. No Capability Registry exists. No
-provider benchmarking has run.
+A V0 battery specification, Registry schema and instrument-calibration plan exist **as drafts
+pending Controller review** (EVAL-001, revision 2). Two dimensions are Controller-approved for V0:
+`exact_text_latin` and `text_stability_across_frames` (24 Aug 2026). The battery as a whole is not
+approved. No Capability Registry exists. No provider benchmarking has run.
 
 **CURRENT APPROVED DECISIONS:** Technical hard-fidelity and creative-fitness evaluation are
 separate instruments. An evaluator must be calibrated against human judgement on the specific task
@@ -41,10 +42,18 @@ Controller Brief at `tasks/EVAL-001-CONTROLLER-BRIEF.md`, status `needs_controll
 - Cross-frame/shot failures require an explicit `observation_unit`. Vocabulary is already defined
   in `canon/knowledge/SPEC-04-operational-bindings.md` and must be adopted, not reinvented.
 - Frames from one clip are **one trial**, never N. Report `n_items` alongside `n_trials`.
-- **No public benchmark covers Devanagari text rendering** (EVAL-001 review, 24 Aug 2026). The
-  instrument must be calibrated locally; there is nowhere to borrow it from.
-- Human verification, not API spend, dominates run cost — roughly 25× generation in the worked
-  example.
+- **Devanagari OCR / scene-text benchmarks exist and are numerous.** What does not exist, as far as
+  the EVAL-001 review could establish (24 Aug 2026), is any benchmark measuring whether a
+  *generative* model correctly renders Devanagari it was told to produce. Reading and drawing are
+  different capabilities — do not cite an OCR benchmark as evidence about a generator.
+  Those recognition resources are, however, candidate material for calibrating our *reading*
+  instrument, conditional on Resources verifying licensing.
+- **Clean synthetic Devanagari renders do not discriminate between checkers** (all ten systems in
+  arXiv:2606.29213v1 cluster at chrF++ 91–98). Any calibration set must include degraded and real
+  material.
+- **Human verification can materially dominate run cost and must be in the cost model.** The
+  specific ratio in battery §8.3 is an illustrative scenario under unapproved assumptions, not a
+  measured finding.
 - Published benchmarks are methodology inputs, not our capability scores.
 - `scripts/check-vlm.mjs` hardcodes a path that does not exist on this machine and cannot be run
   as committed. Fixing it is a prerequisite for any re-calibration.
@@ -53,10 +62,11 @@ Controller Brief at `tasks/EVAL-001-CONTROLLER-BRIEF.md`, status `needs_controll
 specified; how Registry freshness should decay once drift has actually been observed (no formula
 invented in V0, per Controller clarification 10).
 
-**DEPENDENCIES:** EVAL-001 records five media requirements for Resources (battery draft §9); M1, a
-native-speaker-verified Devanagari string set, cannot be acquired and must be built, and has no
-owner. Capability Lab runs wait on Controller approval of the battery and on human calibration
-time being budgeted.
+**DEPENDENCIES:** EVAL-001 records media requirements for Resources (battery draft §9). M1 is split:
+**M1a** — published Devanagari recognition material, reusable for instrument calibration *only if
+Resources verifies licensing*; **M1b** — prompt/target-string pairs for feeding generators, which
+must still be built. Neither has an owner. Capability Lab runs wait on Controller approval of the
+roster and on human calibration time being budgeted (~10–14 hours, 2–4 native reader).
 
 **PROPOSED CROSS-STREAM CHANGES:** three identified in the EVAL-001 brief (to Canon, to Empirical
 Memory/Planner, to Resources). **None filed as `PROPOSED-INTEGRATION-CHANGE` files** — awaiting

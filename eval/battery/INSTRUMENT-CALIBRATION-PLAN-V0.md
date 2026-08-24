@@ -78,6 +78,47 @@ what it should say — blind to any model output and blind to the target string.
 target matters: a reader shown "सुबह की पहली चाय" and asked "does this match?" is subject to the
 same auto-correction pull that broke the model checker.
 
+#### Reusable material — revised 24 Aug 2026 after Controller review
+
+An earlier version of this plan assumed the whole calibration set had to be built. **That was
+based on an over-broad claim, now corrected (findings §1).** Published Devanagari *recognition*
+resources carry images with human ground-truth transcriptions, which is exactly what calibrating a
+*reading* instrument needs. Candidates: the arXiv:2606.29213v1 release (stated as benchmark, code
+and models released; arXiv page shows a CC BY 4.0 icon), the Bharat Scene Text Dataset, IIIT-ILST
+and IndicSTR12.
+
+**All reuse is conditional on Resources verifying licensing.** Eval has not verified any licence
+and must not — per Project Contract separation 9 and RES-001's ownership, rights verification is
+Resources' work. Until it clears, treat M1a as *candidate* material.
+
+**What reuse does not cover.** These resources calibrate whether the checker can *read* Devanagari.
+They cannot serve as capability items, which measure whether a generator can *draw* it. That set
+(M1b) must still be built.
+
+#### Three material corrections from arXiv:2606.29213v1
+
+**1. Clean synthetic renders do not discriminate — this invalidates the original sample design.**
+All ten systems in that study cluster within **chrF++ 91–98** on clean rendered Devanagari. A
+calibration set of clean renders would make every candidate look equally good and would have told
+us nothing. **The set must be stratified to include degraded and real-world material**, where the
+same study finds nine of ten systems collapsing across a 76-point range.
+
+**2. Do not choose the Devanagari checker on Latin performance.** The study states plainly that
+strong English OCR does not predict Indic OCR — GPT-5.5 drops to 58.5 while Gemini 2.5 Flash
+reaches 86.3. This independently supports our D2 Latin-control design, and forbids inferring I1's
+quality from I2's.
+
+**3. Screen for catastrophic outliers, not just mean agreement.** DeepSeek-OCR in that study
+produced rare but catastrophic repetition failures — outputs reported up to 71× the reference
+length — wrecking its corpus mean while its median was the best of any system. A checker with an
+excellent median and a rare runaway failure is dangerous in a pipeline. **Add an explicit outlier
+screen** (output length ratio, repetition detection) alongside the agreement thresholds.
+
+⚠️ **Transfer is NOT VERIFIED.** Those figures come from printed scans and synthetic degradations.
+Generated-image text is a third regime — often clean-looking but semantically wrong. Whether the
+checker rankings transfer to our material is exactly what local calibration must establish, and no
+external ranking may be adopted as ours.
+
 **Sample design.**
 
 | Property | Requirement | Reason |
@@ -86,6 +127,7 @@ same auto-correction pull that broke the model checker.
 | Correlated frames | at most 1 frame per clip counts as an item | §5.4 correlation rule |
 | Broken:intact ratio | approximately 50:50 | an agreeable checker cannot pass by always saying "match" |
 | Defect coverage | conjuncts, i/u matras, nukta, and the observed ब/व and य/थ pairs | the ब/व substitution is a single-character defect and is the hardest case we have actually seen |
+| **Stratification** | **not all clean renders** — include degraded and real-world material, plus generated-image text | clean renders do not separate candidates (chrF++ 91–98 for all ten systems in arXiv:2606.29213v1) |
 | Repeat runs | 3 runs per item on the leading candidate | consistency is currently unmeasured |
 | Readers | 2 independent native readers on a ≥ 10-item overlap | inter-annotator agreement bounds achievable instrument agreement |
 
@@ -98,6 +140,7 @@ same auto-correction pull that broke the model checker.
 | Gate agreement with native reader | ≥ 0.90 | |
 | Diagnostic agreement (character-level) | ≥ 0.75, **reported separately** | Qwen caught ब→व but silently corrected चाथ→चाय: gate right, diagnosis incomplete. A gate-qualified instrument may still be diagnosis-disqualified, and the Registry stores `instrument.role` for exactly this. |
 | Run-to-run consistency | ≥ 0.95 identical verdicts across 3 runs | |
+| **Catastrophic-outlier screen** | **no output exceeding 3× the reference length; no detected repetition loop** | DeepSeek-OCR's runaway outputs (up to 71× reference) wrecked its corpus mean despite the best median of any system. A rare runaway failure is disqualifying in a pipeline regardless of median quality. |
 | Inter-reader agreement | reported, and the instrument threshold may not exceed it | GenEval's precedent: 83% instrument vs 88% inter-annotator — you cannot beat your ground truth |
 
 **External reference point.** MULTITEXTEDIT reports a quadratic-weighted κ of **0.76** against
@@ -106,9 +149,16 @@ peer-reviewed bar for the same class of task in the same year, and a reasonable 
 It is **not** our threshold — theirs is a graded score across 12 languages, ours is a binary gate
 on one script, and clarification 4 forbids importing their result as ours.
 
-**Human time estimate.** ~30 items × 2 readers × ~2 min, plus a 10-item overlap and adjudication:
-**≈ 3–4 hours of native-reader time**, one-off, plus ~1 hour to build the string set (M1).
-This is the single most load-bearing human requirement in V0 and nobody currently owns it.
+**Human time estimate — revised.** Two cases, because M1a reuse changes the total:
+
+- **If M1a reuse clears licensing:** existing resources supply images with ground truth, so
+  native-reader time is needed mainly to verify M1b's reference renderings and to adjudicate a
+  smaller local agreement check — **≈ 2–3 hours**.
+- **If it does not clear:** the full set must be read from scratch — ~30 items × 2 readers × ~2 min
+  plus a 10-item overlap and adjudication — **≈ 3–4 hours**, plus ~1 hour to build the strings.
+
+Either way this remains the most load-bearing human requirement in V0, and **no one currently
+owns it**. The licence question is Resources' and gates which estimate applies.
 
 **Re-calibration triggers.** Instrument version change (FINDINGS-01: *"re-measured when its
 version changes"*); provider serving-stack change; any script or font family not in the
@@ -129,12 +179,13 @@ which is what EVAL-001 has done.
 mechanically independent instruments agree, human verification can be sampled rather than
 exhaustive.
 
-⚠️ This asymmetry is *why* I1 is expensive, and it is worth stating the reason honestly.
-FINDINGS-01 records `tesseract (hin) 0/14 — unreadable output`. **No supporting artifact for that
-run exists in the repository** (see findings §5), so it is carried as *unverified*. The claim is
-consistent with published difficulty around Devanagari OCR and with the fact that no public
-Devanagari rendering benchmark exists — but it is not evidence we can currently show, and I1's
-cost should not be justified by a number we cannot reproduce.
+⚠️ **State the reason for the asymmetry honestly.** FINDINGS-01 records `tesseract (hin) 0/14 —
+unreadable output`, and **no supporting artifact for that run exists in the repository** (findings
+§5.4), so it is carried as *unverified*. Nor does published work straightforwardly endorse it:
+arXiv:2606.29213v1 reports EasyOCR — a classical engine — clustering with nine other systems at
+chrF++ 91–98 on clean rendered Devanagari, collapsing only on degraded and real material.
+**Whether a cheap deterministic second opinion exists for Devanagari should be re-tested rather
+than assumed absent**, and I1's cost is not justified by an unreproducible number either way.
 
 **Sample design.** ≥ 30 independent items, ~50:50 broken:intact, matched to M1 on word and
 character count so the D1↔D2 delta is interpretable.
@@ -246,7 +297,7 @@ downstream can detect.
 
 | Instrument | Dimension | State today | False-pass bar | Human hours |
 |---|---|---|---|---:|
-| I1 Devanagari transcription | D1, D5 L2+ | `provisional_uncalibrated` | **0 in 30** | 3–4 (native reader) |
+| I1 Devanagari transcription | D1, D5 L2+ | `provisional_uncalibrated` | **0 in 30** + outlier screen | 2–4 (native reader) — depends on M1a licensing |
 | I2 Latin transcription | D2, D5 L1 | `requires_calibration` | 0 in 30 | 1–1.5 |
 | I3 Identity judge | D3 | `requires_calibration` | ≤ 5% | 5–6 |
 | I4 Object detector | D4 | `published_calibration_only` | — (≥0.80 agreement) | 1.5–2 |
@@ -261,7 +312,8 @@ reader**. This is one-off setup, not per-run.
 ## 5 · What blocks a run today
 
 1. **I1 has no native-speaker ground truth.** D1 and D5 levels 2+ cannot produce Registry entries.
-   Requires a Hindi first-language reader and the M1 string set, which does not exist yet.
+   Requires a Hindi first-language reader plus M1b (must be built) and, ideally, M1a (reusable only
+   once Resources verifies licensing).
 2. **I3 has no frozen rubric and no reference sets.** M3 needs rights clearance from Resources.
 3. **Human calibration time is unbudgeted.** ~11–14 hours is not currently approved anywhere.
 4. **I4's local confirmation set does not exist.** Cheapest of the four to unblock.
