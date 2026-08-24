@@ -1,0 +1,175 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_sutherland_alchemy_intro
+source_id: sutherland_alchemy_introduction
+knowledge_dir: canon/knowledge/current/sutherland-alchemy-introduction
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 29865c7a4f197cabca9636f107248652fb7f8ecb1786666938c2a3ca07f1d6ad
+    - path: operational-bindings.yaml
+      digest: dfeb4a7320ee134a46c6b7fc53eed2eb337c165dbe88b8248c9cd2b995c8945d
+    - path: source-concept-systems.yaml
+      digest: 2aae91936bf6f881d0bf2bfb7b667e25aa4dd9f3ecf00f8b6bfc9defdc150ea3
+    - path: source-knowledge.yaml
+      digest: 35e5d3ac367ca6da60ef1d0debc843cc3bb09c0c4aee928a7eb83a6c0fb1c598
+    - path: visual-evidence-ledger.yaml
+      digest: 0f70f445d6cd45a087b5193f8ea1c5f4b36c550f1d3a9211d4796245074c5a0e
+  combined_digest: 335392c4868612340c97ba315cb202aa3e2247cd7bbd3b1243ff46367417a936
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/sutherland-alchemy-introduction/PROVENANCE.md
+  - canon/knowledge/current/sutherland-alchemy-introduction/visual-evidence-ledger.yaml
+  - canon/knowledge/current/sutherland-alchemy-introduction/source-knowledge.yaml
+  - canon/knowledge/current/sutherland-alchemy-introduction/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-C-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    HarperCollins EPUB, ISBN 9780062388438. No page exists in the file; every object locates itself
+    by sub-section.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: named_loss_with_unstated_content
+      affects: >
+        A two-axis chart runs FAILS-WORKS against MAKES SENSE-SEEMS WEIRD with roughly two dozen
+        items placed in the quadrants. The prose names only the top-right quadrant and one item,
+        the bicycle. Every other placement exists solely in the image - Marxism, flossing,
+        economies of scale, management consultancy and economics in makes-sense-and-fails;
+        placebos, marketing, heuristics, evolution, constitutional monarchy and Red Bull in
+        seems-weird-and-works. Several of these are the strongest claims on the page and they are
+        made by position on a chart rather than by argument.
+      detectability: named_by_text
+      recoverability: recovered_in_this_copy
+      evidence: >
+        C-24. The text points at the figure - "this graph", "the top-right section of this graph" -
+        so the absence is announced and an extractor would not miss it silently. What a text-only
+        pass produces is the claim with none of the content that makes it contentful. Both images
+        were opened and read.
+    - pattern: no_authored_page
+      affects: No printed page; provenance by sub-section only.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: ledger page_layout status does_not_exist.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    This is the case that justifies keeping the visual pass mandatory rather than triaging it by
+    source class. The two preceding books in the same lane and the same domain had zero figures, so
+    it would have been reasonable to treat a visual pass on an advertising source as a formality.
+    Here one of two figures is the thesis. A pass skipped once a source class looks textual would
+    have missed it.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 32 objects reviewed. This source is the sharpest of the three in its lane because it needs
+    two origin values inside one extraction, and the frozen vocabulary has one.
+  categories:
+    - category: mixed_own_and_third_party
+      sk_refs: [sk_sut_alc_0003, sk_sut_alc_0013, sk_sut_alc_0019, sk_sut_alc_0029, sk_sut_alc_0030]
+      evidence: >
+        Within a single processed section the same characteristic is correctly applied to the
+        author's own field experiments - the envelope test and two other pieces of his agency's own
+        work, sk_sut_alc_0003, 0013 and 0019, all carrying empirical_within_source - and correctly
+        withheld from cited external research: Parker and Bollinger at Duke on the appendix with an
+        effect size (sk_sut_alc_0029), and a 1996 Heritage Institute survey on religious practice
+        (sk_sut_alc_0030). The file itself therefore contains the distinction the vocabulary cannot
+        express. This entry names the source-level fact; the two sub-categories below name which
+        objects fall where.
+    - category: source_own_measurement_reported
+      sk_refs: [sk_sut_alc_0003, sk_sut_alc_0013, sk_sut_alc_0019]
+      evidence: >
+        All three carry empirical_within_source in the frozen record. Sutherland's own experiments,
+        with results reported.
+    - category: third_party_measurement_reported
+      sk_refs: [sk_sut_alc_0021, sk_sut_alc_0029, sk_sut_alc_0030]
+      evidence: >
+        Trivers and Kurzban on self-deception (sk_sut_alc_0021, a named third party's theory
+        reported by the source), the Duke appendix research with named investigators, an
+        institution, a date and an effect size (sk_sut_alc_0029), and the 1996 survey reported as a
+        list of findings with no effect sizes, no sample and no controls (sk_sut_alc_0030). None
+        carries empirical_within_source, correctly.
+    - category: source_author_assertion
+      sk_refs: [sk_sut_alc_0023]
+      evidence: >
+        Asserted as established. No study is named for emotional misattribution in this section,
+        although a substantial literature exists; the source is not drawing on it here. 26 of 32
+        objects carry practitioner_assertion.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_sut_alc_0022]
+      evidence: >
+        Two quotations from named advertising practitioners, used as the warrant for a strong claim
+        about a whole research method.
+  relation_to_evidence_characteristics: >
+    Three books in one lane, three different failures of one field: Hopkins claims measurement and
+    reports almost none; Heath reports measurement constantly and almost none is his own;
+    Sutherland does both inside one section. That is the strongest recurrence signal in the corpus
+    for area B, and it is why the origin question needs its own structure rather than a fourteenth
+    evidence characteristic. Note that mixed_own_and_third_party is recorded at source level and
+    overlaps deliberately with the two specific categories; the overlap is what makes the source-
+    level fact aggregatable while keeping the object-level assignment exact.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sut_alc_0006]
+      note: one Creative IR binding from 32 objects.
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sut_alc_0004, bnd_sut_alc_0005]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sut_alc_0001, bnd_sut_alc_0002, bnd_sut_alc_0003]
+      note: >
+        Three of seven bindings are governance. The book is about how to evaluate evidence and when
+        not to trust rational analysis, which is knowledge about interpretation rather than about
+        an asset (C-28).
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sut_alc_0007]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        Much of the argument is about how a team should test ideas - try the illogical option,
+        distrust stated preferences. That is workflow guidance with no consumer. Seven of this
+        book's remedy terms carry executable_by: [unknown] for the same reason.
+  unbound_knowledge_of_note: []
+  conclusion: >
+    Source shape predicted which LAYER this source binds to, not merely how much it binds - heavily
+    governance, lightly Creative IR. That is a useful signal for retrieval design and it is
+    invisible in a binding count.
+
+lineage:
+  authors: [Rory Sutherland]
+  publisher: HarperCollins
+  series: null
+  first_published: 2019
+  copy_edition: EPUB, ISBN 9780062388438
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series, publisher or derivation with any corpus source.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2019 book about human decision-making. Six objects carry historical_claim, all recounting
+    past campaigns and events rather than depending on a technology. The mechanism claimed is
+    psychological.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

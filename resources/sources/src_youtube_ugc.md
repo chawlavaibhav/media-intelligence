@@ -39,7 +39,7 @@ Best-documented source in the pilot: explicit licence AND per-item attribution. 
 
 ## Acquisition state
 
-- downloaded_item_count: **5**
+- downloaded_item_count (media files): **5**
 - downloaded_bytes: **855,146,670**
 - version/subset: 360P tier, one clip per category, bounded sample
 

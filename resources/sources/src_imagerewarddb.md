@@ -39,7 +39,7 @@ Subset rule is the distributor's own COMPLETE validation split, taken whole - so
 
 ## Acquisition state
 
-- downloaded_item_count: **2584**
+- downloaded_item_count (media files): **2584**
 - downloaded_bytes: **1,125,610,808**
 - version/subset: official validation split (validation_1.zip + validation_2.zip)
 

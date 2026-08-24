@@ -1,0 +1,169 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_samara_making_breaking_grid_ch1
+source_id: samara_making_breaking_grid_ch1
+knowledge_dir: canon/knowledge/current/samara-making-breaking-grid-ch1
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: c03ee767df2c980369c5536023b3e31e7ce98f8b250142ca6bb282f424b183e8
+    - path: operational-bindings.yaml
+      digest: 778d450424f4fffd5624ec726736596ea3fa1ac0b8aa3b6189f83cb78ee5f2cf
+    - path: source-concept-systems.yaml
+      digest: d89e34998b788546527388649449a4c5d7755faf16a36574356d200ed5c024fe
+    - path: source-knowledge.yaml
+      digest: faced3b3f4169a5a129d483b46dd889abecedcb19c23ffec089b3a6e0017e8e4
+    - path: visual-evidence-ledger.yaml
+      digest: 4281da5ffa27927084dcf0cdee807ca33726025eb7cf886d3833057658eab5af
+  combined_digest: f6ba009ddf9af31dbaf52d79e159c75c1e5aed6be498911ba0f496cf8df23311
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/samara-making-breaking-grid-ch1/PROVENANCE.md
+  - canon/knowledge/current/samara-making-breaking-grid-ch1/visual-evidence-ledger.yaml
+  - canon/knowledge/current/samara-making-breaking-grid-ch1/source-knowledge.yaml
+  - canon/knowledge/current/samara-making-breaking-grid-ch1/operational-bindings.yaml
+  - canon/findings/CANON-003-lane-A-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    An EPUB reflows to the reader's screen. Figure filenames encode printed page numbers
+    (f0021-01 is a figure from printed page 21) so figures remain citable, but the page as a
+    designed object does not exist in the file.
+  inspection_state: inspected_no_page_available
+  visual_argument_role: source_is_its_own_specimen
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: >
+        The book argues for page structure and its own pages are built on a rigorous grid. It says
+        so twice, citing its own baselines and its own leading measures, and one caption analyses
+        one of its own spreads as a worked example. In an EPUB that evidence is not degraded, it is
+        absent.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        visual-evidence-ledger.yaml records page_level_inspection_possible: false with 120 figures
+        all present at usable resolution. LA-02 states the distinction that matters: this is not a
+        digitisation fault a better scan would fix, it is what the publisher's chosen format is. It
+        sits upstream of every step we perform and no change to extraction, rendering or validation
+        can recover it.
+    - pattern: in_figure_text_absent
+      affects: >
+        On printed p.28 the six worked examples of the book's modular-grid notation - 3x4, 3x6,
+        5x8, 5x12, 6x12, 9x14 - exist only as pixels. A text-only pass receives the notation rule
+        stated abstractly and not one instance of it, including the fact that its practical range
+        runs from very coarse to very fine.
+      detectability: silent
+      recoverability: recovered_in_this_copy
+      evidence: >
+        LA-03. Nothing in the extracted text is missing, malformed or out of order, so no integrity
+        check catches it; it is detectable only by opening the figures. Six figures were inspected
+        and the notation was recovered.
+    - pattern: caption_coverage_uneven
+      affects: >
+        11 of the 120 figure references carry no caption at all. The uncaptioned ones are not a
+        random sample - f0034-01 is the positive demonstration of the book's central image rule,
+        and the only caption on that page describes the error case instead.
+      detectability: detected_by_independent_check
+      recoverability: recoverable_not_attempted
+      evidence: >
+        LA-04, counted mechanically. Two pages earlier, p.24's caption is nearly a complete verbal
+        description of its figure, so coverage varies widely inside one book.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    Three different mechanisms in one source, with three different remedies: one permanent, one
+    fixed by looking, one still open. Compressing them into a single visual-risk value would lose
+    exactly the information a downstream reader needs, which is the central argument for recording
+    patterns rather than a score.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 79 objects reviewed. No object carries empirical_within_source; one carries
+    outcome_claimed. The source argues from demonstrated craft, with 59 objects visually
+    demonstrated - the highest in the corpus.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 79 objects, 72 carrying practitioner_assertion. Samara asserts in his own voice and
+        demonstrates with his own and others' layouts; he reports no study and quotes no named
+        authority as the warrant for a claim.
+  relation_to_evidence_characteristics: >
+    A second negative control for area B. Where the origin question is trivial, the audit costs one
+    line and adds nothing - which is the correct behaviour for a mandatory step. The burden falls
+    only on sources whose evidence is genuinely mixed.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs:
+        [bnd_sam_c003_0001, bnd_sam_c003_0002, bnd_sam_c003_0005, bnd_sam_c003_0006, bnd_sam_c003_0008]
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sam_c003_0009]
+      note: parked as a production candidate, target_path null.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sam_c003_0003, bnd_sam_c003_0004, bnd_sam_c003_0007]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sam_c003_0010, bnd_sam_c003_0011]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sam_c003_0012]
+    - consumer: deterministic_composition
+      outcome: candidate_no_binding_made
+      note: >
+        This is the finding that made the consumer worth naming. LA-08 recorded that the most
+        exactly executable knowledge in the book is the least bindable: nine of fourteen remedies
+        are geometric operations a layout engine could perform exactly - add a column, hang a
+        character, set a measure - and none of them is a generative control. SPEC-04 has no target
+        type for a deterministic executor, so under the current schema they can only be recorded as
+        unbound. The audit records the fit; it does not create the binding.
+    - consumer: human_workflow
+      outcome: no_current_binding
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_sam_c003_0002, sk_sam_c003_0009]
+      observation: >
+        Culturally bounded claims about Western reading order and about the grid's Swiss-modernist
+        lineage. Useful context, no current consumer, and no reason to force one.
+  conclusion: >
+    The only source in the corpus whose audit produced a candidate fit with no available binding
+    target. That is information about SPEC-04's coverage, not about the book.
+
+lineage:
+  authors: [Timothy Samara]
+  publisher: Rockport Publishers
+  series: null
+  first_published: 2002
+  copy_edition: Second Edition, Updated and Expanded, 2017
+  related_sources_in_corpus:
+    - source_id: vignelli_canon_part_one_intangibles
+      relation: no_known_relation
+      evidence: >
+        Both are Swiss-modernist-descended design sources and both praise the grid, so a naive
+        aggregation could read them as convergent. They share no author, publisher or series, so
+        the agreement is genuine convergence - recorded explicitly so that a later promotion is
+        seen to have been checked rather than assumed.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared authorship, series or derivation with any source in the corpus.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: Not quoted in SPEC-03, SPEC-04 or SPEC-05.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2017 second edition. Eight objects carry historical_claim and six culturally_bounded, all
+    concerning the grid's design history and reading conventions rather than a production
+    technology. The geometry itself does not depend on how a page is produced.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

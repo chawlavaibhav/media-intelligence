@@ -1,0 +1,171 @@
+audit_record_version: v0.2-experimental
+audit_id: aud_ogilvy_ch2
+source_id: ogilvy_on_advertising_ch2
+knowledge_dir: canon/knowledge/current/ogilvy-ch2-advertising-that-sells
+recorded_at_commit: dc276164c901aba1bdbf0eca33b7dbdad1a9f7a3
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 5f59cc190ebcc341155de1295aaede4bdd8b7490e1e3e17550bf31a060c210db
+    - path: operational-bindings.yaml
+      digest: 468ace4ceca0270d9cc560094c6b7c695885ce3f917fcb265158509c5df717f4
+    - path: source-concept-systems.yaml
+      digest: 5a10861d550aaef410c5cf4e2e55303baddcdb7ff9d64c8ee57a20ca6de83d00
+    - path: source-knowledge.yaml
+      digest: 68d42fdd1634ebd022b6cf8d10a50d547034a8d17af664ca7b98d736df543941
+    - path: visual-evidence-ledger.yaml
+      digest: 7f2b97486ed20c41793a3fa90c7c4303dd91d0a90cae4cf0462871f3e7d54bac
+  combined_digest: 8ccec15e8c8f576053c8c8996398af1cb442b27c6934d4b9edf40088cb3af688
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/ogilvy-ch2-advertising-that-sells/PROVENANCE.md
+  - canon/knowledge/current/ogilvy-ch2-advertising-that-sells/visual-evidence-ledger.yaml
+  - canon/knowledge/current/ogilvy-ch2-advertising-that-sells/source-knowledge.yaml
+  - canon/knowledge/current/ogilvy-ch2-advertising-that-sells/operational-bindings.yaml
+  - canon/findings/CANON-003-book02-ogilvy-findings.md
+
+representation_integrity:
+  delivery_format: repository_text_extract
+  page_addressability: pages_unknown
+  page_addressability_evidence: >
+    canon/sources/ogilvy-ch2-advertising-that-sells.txt, verified earlier in the same session
+    against the full EPUB at 215 of 219 sentences over 70 characters matched verbatim; the
+    remaining four are caption-merge artifacts whose opening fragments are findable elsewhere in
+    the book. No page numbers survive.
+  inspection_state: not_inspected_access_blocked
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: announced_loss_placeholder
+      affects: >
+        Six literal placeholders - three "Click here for hi-res image and text", two "Click here
+        for hi-res image", one "Click here for text" - stand where reproductions of actual
+        advertisements were. Those advertisements are the chapter's primary evidence: Ogilvy argues
+        from specific campaigns and what they did to sales.
+      detectability: announced_by_placeholder
+      recoverability: recoverable_not_attempted
+      evidence: >
+        The ledger names this pattern announced_absence and contrasts it with the two others the
+        batch had seen: Williams was SILENT loss, where the evidence vanished and the file gave no
+        sign; Grammar of the Shot was NAMED loss, figures numbered and captioned but unavailable;
+        this file contains an instruction to click something that cannot be clicked. Captions
+        survive in full and are substantive - the Rolls-Royce caption states the ad ran in two
+        newspapers and two magazines at a cost of $25,000 - so the reader learns what each
+        advertisement was and what it achieved, and never sees it.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The batch's ranking of danger by detectability was built here: announced and named losses are
+    recoverable in principle because you know exactly what to go and find, and silent loss is the
+    dangerous one because an extractor cannot tell anything is absent. That ordering is why
+    detectability is a required field on every loss pattern rather than a note.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 22 objects reviewed. Four carry empirical_within_source, five outcome_claimed, twenty
+    practitioner_assertion and fourteen anecdotal. This is the corpus's densest mixture of asserted
+    authority and claimed result, and it is the reason area B exists.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_ogl_c003_0002, sk_ogl_c003_0009, sk_ogl_c003_0017, sk_ogl_c003_0020]
+      evidence: >
+        All four carry empirical_within_source in the frozen record. Ogilvy reports research his
+        own agency conducted and gives a result - readership figures, recall comparisons - rather
+        than asserting that testing occurred.
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        The bulk of the chapter. Twenty of twenty-two objects carry practitioner_assertion and zero
+        carry controlled_comparison: an extreme profile, and the schema absorbed it without
+        modification days after absorbing Light: Science & Magic's opposite profile of 14 of 20
+        mechanism_given and zero anecdotal.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: []
+      evidence: >
+        Present in the source but not separable object-by-object from the repository record alone.
+        Five objects carry outcome_claimed, which SPEC-03 defines as a result claimed without
+        controls - close to this category but not identical, since outcome_claimed does not
+        distinguish "sales rose" from "we tested it and it worked". Recorded as a category with no
+        sk_refs rather than assigned by guess. Resolving it would need the chapter re-read against
+        each claim, which this audit did not do.
+  relation_to_evidence_characteristics: >
+    Ogilvy shows that outcome_claimed and the origin question are adjacent and not the same.
+    outcome_claimed says a result was asserted without controls; the origin categories say whose
+    result it was and whether a result was supplied at all. Hopkins is where the two come apart
+    most sharply.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogl_c003_0001, bnd_ogl_c003_0002]
+    - consumer: production_ir
+      outcome: no_current_binding
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogl_c003_0003]
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogl_c003_0004]
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogl_c003_0005]
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        Ogilvy's chapter includes agency procedure - how to run research before writing, how to
+        brief, when to stop revising. That is workflow knowledge about people, and it has no
+        consumer.
+  unbound_knowledge_of_note: []
+  conclusion: >
+    Four consumers bound. The audit's finding for this source is in area B, not area C.
+
+lineage:
+  authors: [David Ogilvy]
+  publisher: null
+  series: null
+  first_published: 1983
+  copy_edition: null
+  related_sources_in_corpus:
+    - source_id: hopkins_scientific_advertising_ch1_7
+      relation: no_known_relation
+      evidence: >
+        Ogilvy is famously an admirer of Hopkins and the two books share the doctrine that
+        advertising is salesmanship measured by response. That is intellectual descent, not shared
+        authorship, and this corpus's extraction records no citation of Hopkins inside the
+        processed chapter. Recorded as no_known_relation with the caveat stated, because a
+        reviewer promoting a concept across these two should see that the question was considered
+        and how thin the evidence for a relation is. If a citation were found in the source, the
+        correct relation would be cites_source, which under the candidate rule still does not
+        defeat independence.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, publisher, series or derivation established from the repository record.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05 quote Molly Bang, Williams, Lupton, Grammar of the Shot and Light: Science &
+      Magic. Ogilvy is not among them. A historical FINDINGS document for this book exists and was
+      correctly sealed until after the fresh checkpoint.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    A 1983 book about advertising in print, television and direct mail, read in 2026. The media it
+    describes still exist but the economics, measurement and audience behaviour it assumes may
+    not, so the durability question is live.
+  assessed: true
+  classes:
+    - class: uncertain
+      sk_refs: [sk_ogl_c003_0013, sk_ogl_c003_0019]
+      evidence: >
+        Both carry historical_claim in the frozen record. The audit cannot decide from the
+        repository record whether the underlying claims are about persuasion mechanisms that
+        persist or about a media economy that has gone. Deciding would require re-reading the
+        chapter against each claim, which this audit did not do. Recorded as uncertain rather than
+        assigned.
+  existing_characteristics_relied_on: [historical_claim]
