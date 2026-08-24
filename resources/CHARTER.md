@@ -25,20 +25,38 @@ Everything under `resources/`. Cross-stream proposals go in
 ## Decisions you may make locally
 Sampling mechanics within an approved corpus and budget. Manifest format. Checksum/dedup method.
 
+## Public data with no stated licence
+Licence silence is **not** automatically a rejection.
+
+For an already-approved source, Resources may download or scrape publicly accessible, ungated data
+for **internal research and evaluation only** when all of these hold:
+
+- no login, paywall, click-through agreement, API key or access-control bypass is required;
+- no explicit licence or site term prohibits the intended automated access/download or internal use;
+- the source, URL, access date, known terms and the fact that rights are **not stated / not verified**
+  are recorded accurately;
+- the material is not redistributed, shipped to customers, used as training data, or treated as
+  cleared production content;
+- scraping is rate-limited and does not evade technical blocks or anti-bot controls.
+
+This policy is permission to **acquire for bounded internal evaluation**, not a claim that copyright
+or commercial-use rights exist. If a later use needs redistribution, training, customer delivery or
+production use, rights must be reviewed again.
+
 ## Decisions requiring Controller review
-Any new dataset before download. Any licence ambiguity — stop, do not proceed on an assumption.
-Any decision that would make an "independent" holdout non-independent (e.g. selecting examples
-because they match a Canon principle under test — this is the circularity the whole charter exists
-to prevent).
+Any materially new dataset family before download. Any explicit licence/terms conflict, gated access,
+or legal ambiguity not covered by the public-data rule above. Any decision that would make an
+"independent" holdout non-independent (for example selecting examples because they match a Canon
+principle under test).
 
 ## Autonomy rules
 Once a dataset is approved: download, checksum, validate, manifest, and deterministic sampling may
 run `autonomous_queue`. Choosing *which* dataset, or changing sampling strategy mid-stream, is not.
 
 ## Mandatory stop conditions
-Per `shared/AUTONOMY-POLICY.md`. Explicitly: gated access; unclear rights; storage budget excess;
-an unexpected dataset property (e.g. discovering labels came from a source that itself used our
-target concepts, breaking independence).
+Per `shared/AUTONOMY-POLICY.md`. Explicitly: gated access; explicit licence/terms conflict; storage
+budget excess; an unexpected dataset property that breaks independence. **Absence of a stated
+licence alone is not a stop** for public, ungated, internal-only acquisition under the rule above.
 
 ## Controller Brief requirement
 Every completed task, using `shared/templates/CONTROLLER-BRIEF-TEMPLATE.md`.
