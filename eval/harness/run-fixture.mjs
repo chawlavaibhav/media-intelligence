@@ -13,7 +13,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { join, resolve, basename, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { scoreTranscription, norm } from "../scripts/check-vlm.mjs";
+import { scoreTranscription, norm, loadItems, parseArgs, DEFAULT_TARGET } from "../scripts/check-vlm.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -237,8 +237,10 @@ run-fixture.mjs — local evaluation harness, SYNTHETIC FIXTURES ONLY
   --negative              run the negative controls in fixtures/negative/ and PASS only if
                           EVERY one is individually rejected, each raising the error codes it
                           declares (proves the guards actually fire, per fixture)
-  --selftest              regression coverage for --negative itself: proves the per-fixture check
-                          would catch a negative fixture that was NOT rejected
+  --selftest              regression coverage for the harness AND the checker:
+                          (a) proves --negative would catch a negative fixture that was NOT
+                              rejected; (b) proves per-item targets did not change checker
+                              judgement and that malformed item files are rejected
   --out <dir>             write machine-readable results (default: eval/harness/out/)
   --check                 compare against the stored expected result and exit non-zero on drift
   -h, --help              this text
@@ -289,6 +291,7 @@ if (argv.includes("--selftest")) {
   ];
 
   let bad = 0;
+  console.log("A · --negative verifies each fixture individually");
   for (const c of cases) {
     const got = judgeNegative(c.records).ok;
     const ok = got === c.expect;
@@ -297,9 +300,60 @@ if (argv.includes("--selftest")) {
     if (c.note) console.log(`          note: ${c.note}`);
     if (!ok) console.log(`          expected ok=${c.expect}, got ok=${got}`);
   }
+
+  // ---- B · checker regression (EVAL-003) --------------------------------------------------
+  // The per-item-target feature must not have changed any verdict. This re-scores every stored
+  // historical transcription through BOTH code paths and requires byte-identical results.
+  console.log("\nB · checker: per-item targets did not change judgement");
+  const HIST = ["vlm_qwen-qwen3-vl-235b-a22b-instruct", "vlm_anthropic-claude-sonnet-4-5"];
+  let n = 0, mism = 0;
+  for (const f of HIST) {
+    const stored = JSON.parse(readFileSync(join(HERE, "..", "runs", "finding-01-devanagari-check", `${f}.json`), "utf8"));
+    for (const rec of Object.values(stored)) {
+      if (rec.raw === undefined) continue;
+      n++;
+      const a = scoreTranscription(rec.raw);                  // single-target path
+      const b = scoreTranscription(rec.raw, DEFAULT_TARGET);  // explicit-target path
+      const same = a.normalized === rec.normalized && a.exact_match === rec.exact_match
+                && a.edit_distance === rec.edit_distance
+                && b.normalized === a.normalized && b.exact_match === a.exact_match
+                && b.edit_distance === a.edit_distance;
+      if (!same) mism++;
+    }
+  }
+  const histOk = n === 27 && mism === 0;
+  if (!histOk) bad++;
+  console.log(`  ${histOk ? "PASS" : "FAIL"}  ${n} stored transcriptions re-scored via both paths, ${mism} mismatches (expect 27 / 0)`);
+
+  // ---- C · malformed per-item files must be rejected, each with a reason -------------------
+  console.log("\nC · malformed per-item input is rejected, not silently skipped");
+  const fxDir = join(HERE, "fixtures", "per-item");
+  const mal = [
+    ["items-valid.jsonl", false, "valid file loads"],
+    ["items-malformed-missing-target.jsonl", true, "missing required field"],
+    ["items-malformed-duplicate-id.jsonl", true, "duplicate id"],
+    ["items-malformed-missing-image.jsonl", true, "image not found"],
+    ["items-malformed-bad-json.jsonl", true, "unparseable line"],
+  ];
+  for (const [file, shouldThrow, why] of mal) {
+    let threw = false, msg = "";
+    try { loadItems(join(fxDir, file)); } catch (e) { threw = true; msg = e.message; }
+    const ok = threw === shouldThrow;
+    if (!ok) bad++;
+    console.log(`  ${ok ? "PASS" : "FAIL"}  ${file} -> ${threw ? "rejected" : "accepted"}  (${why})`);
+    if (threw && ok) console.log(`          reason given: ${msg.split("\n")[0].slice(0, 90)}`);
+  }
+
+  // ---- D · the two input modes are mutually exclusive ---------------------------------------
+  console.log("\nD · --input and --items cannot be combined");
+  let exclusive = false;
+  try { parseArgs(["--input", "x", "--items", "y"]); } catch { exclusive = true; }
+  if (!exclusive) bad++;
+  console.log(`  ${exclusive ? "PASS" : "FAIL"}  combining both modes is rejected`);
+
   console.log(bad === 0
-    ? `SELFTEST OK — ${cases.length} cases; --negative verifies each fixture individually.`
-    : `SELFTEST FAILED — ${bad} case(s) wrong.`);
+    ? `\nSELFTEST OK — all groups passed.`
+    : `\nSELFTEST FAILED — ${bad} check(s) wrong.`);
   process.exit(bad === 0 ? 0 : 1);
 }
 

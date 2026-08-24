@@ -67,16 +67,28 @@ const mime = (f) => ({ ".png": "image/png", ".webp": "image/webp", ".jpg": "imag
 const HELP = `
 check-vlm.mjs — transcribe-and-compare checker for rendered Devanagari text
 
-USAGE
-  node eval/scripts/check-vlm.mjs --input <file|dir> --out <file.json> [options]
+TWO INPUT MODES
 
-REQUIRED
+  1. SINGLE-TARGET (original)  — every image compared against one target string.
+       node eval/scripts/check-vlm.mjs --input <file|dir> --out <file.json> [--target <s>]
+
+  2. PER-ITEM TARGETS (added EVAL-003) — each item carries its own reference transcription,
+     which is what real calibration needs: every photograph says something different.
+       node eval/scripts/check-vlm.mjs --items <file.jsonl|.json> --out <file.json>
+
+     Each record needs: id (unique), image (path), target (expected string).
+     Optional: conditions (object, copied through to the result for provenance).
+     Paths are resolved relative to --items-root if given, else the items file's directory.
+
+REQUIRED (one of)
   --input   <path>    image file, or directory of .png/.webp/.jpg images
+  --items   <path>    JSONL or JSON-array file of per-item records
   --out     <path>    JSON results file; created if absent, resumed if present
 
 OPTIONS
+  --items-root <path> base directory for relative image paths in --items
   --model   <id>      vision model identifier (default: google/gemini-2.5-pro)
-  --target  <string>  expected string to compare against
+  --target  <string>  single-target mode only: expected string to compare against
                       (default: the FINDINGS-01 target, so that run reproduces with no flag)
   --dry-run           validate inputs and list what WOULD be sent. Makes no network
                       call, needs no API key, and writes nothing.
@@ -87,8 +99,10 @@ ENVIRONMENT
 
 NOTES
   The prompt, normalisation and verdict logic are unchanged from the version used for
-  FINDINGS-01. Only paths and invocation changed. A checker must be re-calibrated whenever its
-  model version changes — see eval/battery/INSTRUMENT-CALIBRATION-PLAN-V0.md.
+  FINDINGS-01. Only paths, invocation and WHERE THE TARGET COMES FROM have changed — the
+  comparison itself is the same predicate applied to a per-item target instead of a run-wide
+  one. A checker must be re-calibrated whenever its model version changes — see
+  eval/battery/INSTRUMENT-CALIBRATION-PLAN-V0.md.
 `;
 
 export function parseArgs(argv) {
@@ -98,12 +112,61 @@ export function parseArgs(argv) {
     if (a === "-h" || a === "--help") out.help = true;
     else if (a === "--dry-run") out.dryRun = true;
     else if (a === "--input") out.input = argv[++i];
+    else if (a === "--items") out.items = argv[++i];
+    else if (a === "--items-root") out.itemsRoot = argv[++i];
     else if (a === "--out") out.out = argv[++i];
     else if (a === "--model") out.model = argv[++i];
     else if (a === "--target") out.target = argv[++i];
     else throw new Error(`unknown argument: ${a}`);
   }
+  if (out.input && out.items)
+    throw new Error("--input and --items are mutually exclusive: one target for the run, or one target per item");
   return out;
+}
+
+/**
+ * Load per-item records. Accepts JSONL (one object per line) or a JSON array.
+ *
+ * Validation is strict and fails loudly, because a silently-skipped or silently-defaulted item
+ * would quietly change what a calibration run measured. Every rejection names the record.
+ */
+export function loadItems(itemsPath, itemsRoot) {
+  const p = resolve(itemsPath);
+  if (!existsSync(p)) throw new Error(`--items file does not exist: ${p}`);
+  const raw = readFileSync(p, "utf8").trim();
+  if (!raw) throw new Error(`--items file is empty: ${p}`);
+
+  let records;
+  if (raw.startsWith("[")) {
+    try { records = JSON.parse(raw); }
+    catch (e) { throw new Error(`--items is not valid JSON: ${e.message}`); }
+    if (!Array.isArray(records)) throw new Error(`--items JSON must be an array of records`);
+  } else {
+    records = [];
+    raw.split("\n").forEach((line, i) => {
+      if (!line.trim()) return;
+      try { records.push(JSON.parse(line)); }
+      catch (e) { throw new Error(`--items line ${i + 1} is not valid JSON: ${e.message}`); }
+    });
+  }
+  if (records.length === 0) throw new Error(`--items contained no records`);
+
+  const base = itemsRoot ? resolve(itemsRoot) : dirname(p);
+  const seen = new Set();
+  return records.map((r, i) => {
+    const where = `--items record ${i + 1}`;
+    for (const field of ["id", "image", "target"]) {
+      if (r[field] === undefined || r[field] === null)
+        throw new Error(`${where}: missing required field '${field}'`);
+      if (typeof r[field] !== "string" || r[field] === "")
+        throw new Error(`${where}: field '${field}' must be a non-empty string`);
+    }
+    if (seen.has(r.id)) throw new Error(`${where}: duplicate id '${r.id}' — ids must be unique`);
+    seen.add(r.id);
+    const img = resolve(base, r.image);
+    if (!existsSync(img)) throw new Error(`${where} (id '${r.id}'): image not found: ${img}`);
+    return { id: r.id, image: img, target: r.target, conditions: r.conditions ?? null };
+  });
 }
 
 /** Resolve --input to a sorted list of image paths. Accepts a single file or a directory. */
@@ -144,7 +207,7 @@ async function main(argv) {
   if (args.help) { console.log(HELP); return; }
 
   const missing = [];
-  if (!args.input) missing.push("--input");
+  if (!args.input && !args.items) missing.push("--input or --items");
   if (!args.out && !args.dryRun) missing.push("--out");
   if (missing.length) {
     console.error(`error: missing required argument(s): ${missing.join(", ")}`);
@@ -152,9 +215,13 @@ async function main(argv) {
     process.exit(2);
   }
 
-  let files;
+  // Normalise both modes to one work list of {id, image, target}. The verdict path below is
+  // then identical for both, so per-item targets cannot diverge from single-target judgement.
+  let work;
   try {
-    files = collectImages(args.input);
+    work = args.items
+      ? loadItems(args.items, args.itemsRoot)
+      : collectImages(args.input).map((f) => ({ id: basename(f), image: f, target: args.target, conditions: null }));
   } catch (e) {
     console.error(`error: ${e.message}`);
     process.exit(2);
@@ -162,11 +229,13 @@ async function main(argv) {
 
   if (args.dryRun) {
     console.log(`DRY RUN — no network call, nothing written.`);
+    console.log(`  mode:   ${args.items ? "per-item targets" : "single target"}`);
     console.log(`  model:  ${args.model}`);
-    console.log(`  target: «${args.target}»`);
+    if (!args.items) console.log(`  target: «${args.target}»`);
     console.log(`  out:    ${args.out ? resolve(args.out) : "(not set; not needed for --dry-run)"}`);
-    console.log(`  ${files.length} image(s) would be sent:`);
-    for (const f of files) console.log(`    ${basename(f)}`);
+    console.log(`  ${work.length} item(s) would be sent:`);
+    for (const w of work)
+      console.log(`    ${w.id}${args.items ? `  target=«${w.target}»` : ""}`);
     return;
   }
 
@@ -177,16 +246,20 @@ async function main(argv) {
   mkdirSync(dirname(outPath), { recursive: true });
   const prior = existsSync(outPath) ? JSON.parse(readFileSync(outPath, "utf8")) : {};
 
-  for (const file of files) {
-    const id = basename(file);
-    if (prior[id]?.raw !== undefined) { console.log(`skip  ${id}`); continue; }
+  for (const w of work) {
+    if (prior[w.id]?.raw !== undefined) { console.log(`skip  ${w.id}`); continue; }
     try {
-      const raw = await transcribe(file, args.model, key);
-      prior[id] = scoreTranscription(raw, args.target);
-      console.log(`ok    ${id}  match=${prior[id].exact_match}  dist=${prior[id].edit_distance}  «${raw.replace(/\n/g, " ").slice(0, 60)}»`);
+      const raw = await transcribe(w.image, args.model, key);
+      // Same predicate as the original; only the source of `target` differs.
+      prior[w.id] = scoreTranscription(raw, w.target);
+      if (args.items) {
+        prior[w.id].target_used = w.target;
+        if (w.conditions) prior[w.id].conditions = w.conditions;
+      }
+      console.log(`ok    ${w.id}  match=${prior[w.id].exact_match}  dist=${prior[w.id].edit_distance}  «${raw.replace(/\n/g, " ").slice(0, 60)}»`);
     } catch (e) {
-      prior[id] = { error: String(e).slice(0, 200) };
-      console.log(`FAIL  ${id}  ${prior[id].error}`);
+      prior[w.id] = { error: String(e).slice(0, 200) };
+      console.log(`FAIL  ${w.id}  ${prior[w.id].error}`);
     }
     writeFileSync(outPath, JSON.stringify(prior, null, 2));
   }

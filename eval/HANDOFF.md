@@ -103,8 +103,52 @@ we currently have no instrument we are entitled to trust.
 
 ## LAST COMPLETED TASK
 
-**EVAL-002 — Calibration & benchmark readiness.** **Completed and Controller-approved, 24 Aug
-2026; fully closed.** Full record: `tasks/EVAL-002-CONTROLLER-BRIEF.md`.
+**EVAL-003 — Devanagari checker calibration pack readiness.** Completed 24 Aug 2026, **awaiting
+Controller review**. Full record: `tasks/EVAL-003-CONTROLLER-BRIEF.md`.
+
+Readiness only: ₹0 API, 0 hours human specialist time, no external call, no generator, no capability
+result. What it produced, in `eval/calibration/devanagari-v0/`:
+
+- **A 54-item candidate pool** of real photographed Devanagari signage, built deterministically from
+  the CVIT lineage. The same repository state always produces a byte-identical manifest.
+- **A blinded reviewer pack** — readers see crop and item ID only. Verified mechanically: no
+  Devanagari character appears anywhere in the generated pack. **The protocol uses two independent
+  Hindi-competent readers** (≈ 3.5–4.5 h total); a single reader's transcription would silently have
+  become the answer key. After both passes are frozen, **either reader** may run the short
+  altered-target check — the reference is frozen by then, so that check cannot alter it.
+- **Materialised crops with proven geometry.** Reviewer and checker read the **same files**, verified
+  by hash. A self-test on a coordinate-encoded synthetic image proves crop geometry and found that
+  `sips --cropOffset 0 0` silently centre-crops; a verified workaround handles it.
+- **A calibration run plan** with staged blinding, costs, and what a clean result would and would not
+  license.
+- **`check-vlm.mjs` per-item targets** — each item can carry its own reference transcription.
+  Judgement provably unchanged: all 27 stored historical cases re-scored through both code paths,
+  0 mismatches.
+
+**⚠ Two dataset releases from the same source lineage disagree about one time in three.** On 1,082
+strictly one-to-one matched regions they agree 725 times (67%).
+
+**What that supports:** source annotations are demonstrably unsafe to promote directly to project
+ground truth — which is why the protocol establishes its own reference with **two independent
+readers** rather than adopting a dataset label.
+
+**What it does NOT support** *(corrected 24 Aug 2026 after Controller review — an earlier version of
+this handoff claimed otherwise)*: it is **not** human inter-annotator agreement, **not** a measure of
+human reading ability, and **not** a ceiling. No evaluator threshold may be derived from it. The
+repository holds no provenance showing the two annotation sets were made independently.
+
+**The V0 pack is Hindi-primary — Controller decision, 24 Aug 2026.** All 173 Hindi-labelled records
+are *shared* photographs (present in both CVIT releases), so excluding shared files leaves no Hindi at
+all. Shared photographs are therefore admitted **once** — one photograph, one item, never two — and
+only Hindi-labelled items are selected. Committed pack: **54 Hindi from 173 eligible, 54 distinct
+hashes.**
+
+A result from it speaks to **reading Hindi from photographed signage**. It does **not** transfer
+automatically to Marathi or to Devanagari-language use generally. The Marathi stress subset is
+**deferred, not rejected**, and would need Marathi-competent readers and a separate report.
+
+Earlier: **EVAL-002** (completed, Controller-approved, closed) and **EVAL-001** (completed,
+Controller-approved).
 
 It built plumbing only — no generation, no network call, no calibration, no spend. What it produced:
 
@@ -135,8 +179,10 @@ Earlier: **EVAL-001 — Capability Battery V0 design**, completed and Controller
 
 ## CURRENT TASK / QUEUE
 
-**None.** EVAL-003 has not been opened and **must not be started yet**. Resources is being
-finalised and its output becomes EVAL-003's input; the Controller will review before opening it.
+**None.** The EVAL-003 **finalization pass** is complete and awaiting Controller review. The
+composition question is now decided (Hindi-primary). **Do not start the human calibration** — it still
+needs reader approval and a checker roster. EVAL-004 has not been opened and must not be started
+without an approved task file.
 
 ---
 
@@ -162,6 +208,17 @@ be adopted, not reinvented.
 
 **Frames from one clip are one test, not many.** Near-identical samples inflate apparent confidence.
 Always report the number of *independent items* alongside the number of attempts.
+
+**Devanagari calibration material now exists, and its labels disagree with each other.** Resources
+supplied 29,722 real photographed Devanagari images with transcriptions. Two dataset releases from
+the **same source lineage** assign different transcriptions to ~33% of the same regions (EVAL-003
+findings §2). Treat every source transcription as one observation, never as project ground truth.
+This is cross-dataset annotation disagreement — **not** human inter-annotator agreement, and no
+evaluator threshold may be derived from it.
+
+**The CVIT lineage is effectively one dataset.** 173 files are byte-identical across IndicSTR12 and
+IIIT-ILST — and those are 98% of everything IIIT-ILST has labelled, leaving only 3 unique images.
+**BSTD is therefore the only genuine cross-source check we have, and it is held untouched.**
 
 **Hindi text: reading benchmarks are plentiful; a drawing benchmark has not been found.** There are
 many public benchmarks for *reading* Devanagari out of a photo (text recognition). **No suitable
@@ -200,10 +257,11 @@ objects; lower when locating. Shared software, **separate results**.
 **Published benchmarks are method inputs, never our scores.** They did not test our conditions, our
 scripts or our brand constraints.
 
-**`scripts/check-vlm.mjs` is now portable** (fixed in EVAL-002). Supply `--input` and `--out`;
-`--dry-run` validates a run with no API key and no network call. The judgement logic is unchanged
-and that was verified, not assumed. Note one remaining limit: the target string is **per run**, not
-per item. Individual per-item targets will be needed once the Hindi item set exists.
+**`scripts/check-vlm.mjs` is portable and supports per-item targets** (EVAL-002, EVAL-003). Two
+mutually exclusive modes: `--input` + `--target` for one target across a run, or `--items` for a file
+where each record carries its own `{id, image, target}`. `--dry-run` validates either with no API key
+and no network call. **Judgement is unchanged across both**, verified against all 27 stored historical
+cases with 0 mismatches, and that check runs in `node eval/harness/run-fixture.mjs --selftest`.
 
 **Test evaluation tooling with deliberately-broken inputs, not only correct ones.** EVAL-002 added
 negative-control fixtures and they immediately exposed three real defects: a run that raised
@@ -229,6 +287,13 @@ certify a consistently *wrong* result. Any consistency test needs a fidelity tes
 
 ## DEPENDENCIES — what this stream is waiting on
 
+**M1a is now satisfied.** Resources delivered the Devanagari reading material and EVAL-003 built a
+calibration pack from it. What blocks the first real calibration is **human time and a roster**:
+**≈ 3.5–4.5 hours across two independent Hindi-competent readers** — 1.5–2 h each for the blind
+transcription pass, plus 20–30 minutes for one of them to confirm the altered targets afterwards —
+then a checker roster and API spend. **None is approved.**
+
+
 **Material needed from Resources.** The Hindi test material splits in two, and the two cannot
 substitute for each other:
 
@@ -246,7 +311,9 @@ substitute for each other:
   joined-letter forms, vowel marks, and the specific letter pairs we have watched models confuse.
 
 **Neither has an owner.** Runs also wait on Controller approval of the model roster and on the
-human-time budget (**≈ 11–15.5 hours, of which 2–4 must be a Hindi first-language reader**).
+human-time budget. Two figures are in play and should not be confused: **≈ 3.5–4.5 hours across two
+readers** for the EVAL-003 Devanagari checker calibration specifically, versus the broader
+**≈ 11–15.5 hours** estimated in EVAL-001 for calibrating *all* V0 instruments.
 
 ---
 
