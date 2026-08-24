@@ -1,0 +1,179 @@
+# CANON-003 book 11 (rebalance lane) — "Master Shots" frame material and ch.8.
+# SPEC-04 bindings against SPEC-01 v0.1. Written only after the source representation was stable.
+#
+# READ THIS FIRST: this source is the closest fit to our product schema of any book in this lane,
+# and for a specific structural reason. SPEC-01 has a VideoCreativeExtension with a temporal
+# structure and continuity requirements, and this book is a catalogue of what happens between the
+# start and end of a shot. Its unit of description — a move with a start state, a trigger, a
+# duration constraint and a failure condition — is nearly the shape of a specification field.
+#
+# It is also almost entirely physical. Six bindings; three of them are parked production candidates
+# or evaluation checks, and no camera action has been rewritten as a generation instruction.
+
+source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_ms_c003_0001
+  source_knowledge_refs: [sk_ms_c003_0010, sk_ms_c003_0011, sk_ms_c003_0012, sk_ms_c003_0015]
+  source_system_refs: [scs_ms_c003_002]
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.temporal_structure
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills, derives]
+  rationale: >
+    SPEC-01 records a video's temporal structure but has no vocabulary for what happens inside a
+    single continuous shot. This source supplies one: a shot can carry an internal change of subject,
+    and the change has a nameable carrier — an object in transit, the camera's retreat timed to an
+    actor's advance, or a camera driving to a predetermined close-up. That is specifiable before
+    generation and it is a real gap in the field as it stands, which currently treats a shot as an
+    indivisible unit with one subject.
+  applicability:
+    when: "specifying a shot in which the subject of attention changes without a cut"
+    limits: >
+      Everything here is described for physical staging with actors and a moving camera. Whether a
+      generated shot can be specified this way at all depends on model capability we have not
+      tested; the binding supplies vocabulary for the specification, not a claim that it can be
+      executed.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ms_c003_0001]
+  repair_ontology_refs: [t_ms_c003_0002, t_ms_c003_0003, t_ms_c003_0004]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ms_c003_0002
+  source_knowledge_refs: [sk_ms_c003_0016]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.visual_language
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, diagnoses]
+  rationale: >
+    A specific and unusually operational claim about colour: an established colour can carry
+    identity for a figure the frame cannot otherwise resolve, provided the association was made in
+    an earlier closer shot and the rest of the frame is graded down so that one hue is nearly the
+    only colour present. That is a constraint on palette and on grading together, and it is
+    checkable — either the frame has one dominant contrasting hue or it does not.
+  applicability:
+    when: "specifying palette and grading for an asset where a small or defocused element must remain identifiable"
+    limits: >
+      The source's example is a two-shot sequence in a feature film, where the establishing close
+      shot does the work of teaching the association. A single still creative has no earlier shot to
+      borrow from, so the mechanism the source gives does not transfer intact to a standalone asset.
+      What transfers is the constraint that one hue must dominate for another to read.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_ms_c003_0006]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ms_c003_0003
+  source_knowledge_refs: [sk_ms_c003_0018, sk_ms_c003_0002]
+  source_system_refs: [scs_ms_c003_003]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: shot
+  rationale: >
+    The source's own success test for a camera move — that the audience registers the scene and not
+    the technique — names a real failure mode in generated video, where movement frequently appears
+    without any cause in the scene. An evaluator working at shot level can at least ask the weaker,
+    checkable version: does anything in the frame account for the camera's movement?
+  applicability:
+    when: "checking whether motion in a generated shot has a visible cause"
+    limits: >
+      The source's test as stated is unmeasurable, because it describes what an audience does not
+      notice. Only the weaker question — is there a visible motivation — is checkable, and passing
+      it does not establish the source's criterion. Recorded as the honest partial translation
+      rather than as the source's test.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ms_c003_0001, t_ms_c003_0013]
+  repair_ontology_refs: [t_ms_c003_0002]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ms_c003_0004
+  source_knowledge_refs: [sk_ms_c003_0014, sk_ms_c003_0019]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: frame
+  rationale: >
+    Two checkable frame-level properties from the reflection technique. Where a frame contains a
+    reflection, the reflected subject and the reacting subject should both be resolvable — the
+    source's stated lens trade-off is that too wide makes the reflection distant and too long leaves
+    it blurred. And where two planes of interest exist, exactly one should be readable at a time;
+    the source states that alternating between them confuses rather than guides.
+  applicability:
+    when: "checking a frame that contains a reflection, or two competing planes of interest"
+    limits: >
+      The eyeline claim attached to this technique — that a cheated eyeline reads as wrong
+      specifically in reflections — is hedged by the source to 'some viewers' and given no
+      explanation, so it is not carried into this binding.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ms_c003_0010, t_ms_c003_0009]
+  repair_ontology_refs: [t_ms_c003_0007]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ms_c003_0005
+  source_knowledge_refs: [sk_ms_c003_0011, sk_ms_c003_0012, sk_ms_c003_0013, sk_ms_c003_0015, sk_ms_c003_0017]
+  source_system_refs: [scs_ms_c003_002]
+  target_type: production
+  target_path: null
+  target_schema: null
+  role: [derives]
+  rationale: >
+    The executable content of all seven techniques: where the camera goes, where the actors go, in
+    what order, and how the two are timed against each other. Production IR does not exist, so none
+    of it is translated. It is recorded in the source's frame — dollies, marks, blocking, pace — and
+    left unbound. The geometry lives in the overhead diagrams rather than in the prose, which is
+    noted here because a text-only reading of these objects would carry the intent without the
+    positions.
+  applicability:
+    when: "a production process for creative work is eventually specified"
+    limits: >
+      Physical staging with actors and a camera operator. No generative equivalent is asserted for
+      any of it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ms_c003_0011, t_ms_c003_0012]
+  repair_ontology_refs: [t_ms_c003_0003, t_ms_c003_0004, t_ms_c003_0005, t_ms_c003_0008]
+  status: production_candidate
+  status_reason: "Production IR does not exist"
+
+- binding_id: bnd_ms_c003_0006
+  source_knowledge_refs: [sk_ms_c003_0004, sk_ms_c003_0020, sk_ms_c003_0001]
+  source_system_refs: [scs_ms_c003_001]
+  target_type: governance
+  target_path: null
+  governance_consumer: evidence_interpretation
+  role: [flags]
+  rationale: >
+    A distinctive evidence profile the Canon should be able to recognise. Every technique here is
+    warranted by one thing only: naming a released feature in which it was used, with frame grabs.
+    That is evidence a technique can be executed and was thought good enough to keep, and it is not
+    evidence that it caused any effect. The source does not overclaim — but it also tells the reader
+    twice to test its recommendations against the opposite choice and decide whether it was right,
+    which makes its claims proposals for testing rather than assertions. A source that pre-declares
+    that status is a different weighing problem from one that asserts, and nothing in the schema
+    marks the difference.
+  applicability:
+    when: "weighing a procedural source whose only warrant is that a technique appears in released work"
+    limits: >
+      One source. It shows what the profile looks like; it says nothing about how such claims should
+      be scored against sources arguing from mechanism or measurement.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"

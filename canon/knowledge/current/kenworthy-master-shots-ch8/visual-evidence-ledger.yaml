@@ -1,0 +1,171 @@
+# CANON-003 book 11 (rebalance lane) — Christopher Kenworthy, "Master Shots" vol.1, 2nd edition
+# (Michael Wiese Productions, 2011/2012). Front matter and chapter 8, "Directing Attention".
+# Independent visual-evidence pass, completed BEFORE any SourceKnowledge object was written.
+#
+# PROVENANCE:
+#   local file: ~/Downloads/Books/"Master shots.epub"
+#   dc:title "MasterShots Vol 1" · dc:creator Christopher Kenworthy
+#   dc:publisher Michael Wiese Productions · ISBN 9781615930876 · MOBI-ASIN B0087GYZUK
+#   dc:contributor "calibre (3.42.0)"; the ASIN indicates the package came from a Kindle file.
+#   124 images. No page renders exist and none were made: a reflowable EPUB has no page.
+#
+# THIS SOURCE STATES ITS OWN VISUAL DEPENDENCE, which makes the pass unusually well specified.
+# Its "About the Images" section says each technique carries three kinds of image, gives the
+# notation used in the diagrams, and instructs the reader to imagine the technique from the frame
+# grabs and overhead diagrams FIRST — explicitly ranking that above watching the films.
+
+source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+pass: independent_visual_evidence
+visual_completeness: verified_figure_level
+
+method:
+  images_in_book: 124
+  images_in_processed_section: 8          # one chapter opener plus one composite per technique
+  images_inspected: 4
+  colour_measured_on: 124                 # every image in the package
+  what_was_checked: >
+    Every image reference in the processed chapter was listed and mapped to its technique. Four
+    composites were opened and read: the chapter opener, two whose overhead diagrams carry the
+    notation the book defines, and the one belonging to the technique that argues about colour.
+    Colour saturation was then measured across all 124 images in the package.
+  what_could_not_be_checked: >
+    Page layout, which does not exist in a reflowable EPUB. Nothing in this book's argument depends
+    on page position; each technique's images arrive as a single composite file.
+
+# ═════════════════════════════════════════════════════════════
+# FINDING 1 — the notation is designed for monochrome and works
+# ═════════════════════════════════════════════════════════════
+findings:
+
+- ref: vis_ms_arrow_notation_survives
+  what_happened: >
+    "About the Images" defines the convention: white arrows show camera movement, black arrows show
+    actor movement. The overhead diagram for technique 8.2 shows two black arrows crossing — the two
+    actors' paths — and one white arrow leading away from the camera icon, which is the backward
+    dolly the text describes. The diagram for 8.1 shows a single black arrow tracing the path of the
+    character carrying the object.
+  what_it_means: >
+    The notation is **tonal, not chromatic**, and therefore survives everything: greyscale
+    reproduction, a low-resolution EPUB image, and a reader with no colour vision. It is a
+    deliberate choice by a publisher printing in black and white, and it works. Recorded because
+    this batch has met the opposite case, and this is what the good version looks like.
+  status: inspected_and_confirmed
+
+- ref: vis_ms_three_image_types_per_technique
+  what_happened: >
+    Each technique is illustrated by one composite image containing three kinds of picture at once:
+    frame grabs from the film named at the end of the section, an overhead diagram of the camera
+    and actor positions, and a computer-graphics recreation of the same setup.
+  what_it_means: >
+    The three carry different evidential weight and the source says so. The frame grabs are
+    evidence the technique has been used successfully; the overhead diagram is the executable
+    content — where the camera and the actors go; the rendering is explicitly **not** a copy of the
+    film frame, and the source states the differences are deliberate, to show that small changes to
+    the setup extend the technique. That last one is unusual: an illustration whose stated purpose
+    is to differ from the thing it illustrates.
+  status: recorded_as_source_shape
+
+# ═════════════════════════════════════════════════════════════
+# FINDING 2 — one technique's entire argument is chromatic, and
+# the book that carries it is monochrome
+# ═════════════════════════════════════════════════════════════
+
+- ref: vis_ms_colour_argument_in_a_monochrome_book
+  technique: "8.6 Color Guides"
+  file: 00078
+  what_happened: >
+    Technique 8.6 argues that colour directs attention as effectively as a camera move. Its worked
+    example is a character in a strikingly coloured orange jacket appearing blurred in the deep
+    background of a shot graded almost entirely to blue, so that the audience identifies her in a
+    beat. The accompanying image is greyscale. In it the background figure is a small grey smudge
+    on a grey beach.
+  measurement: >
+    Colour saturation was sampled across all 124 images in the package — roughly 2,000 samples per
+    image. **Zero coloured pixels were found in any of them.** Every image in the book is greyscale.
+  is_this_a_digitisation_artifact: >
+    INFERRED: no. Three things point to the printed book itself being monochrome — the arrow
+    notation distinguishes camera from actor by white against black rather than by hue, which is a
+    choice only a black-and-white book needs to make; "About the Images" describes the frame grabs
+    as enhanced "to greatly improve their clarity when printed" and never mentions colour; and the
+    greyscale is uniform across all 124 images rather than patchy. NOT VERIFIED — establishing it
+    would need a physical copy, which this task does not permit acquiring.
+  what_it_means: >
+    **The demonstration does not merely fail to support the claim; it shows the opposite.** In the
+    greyscale frames the background figure is hard to pick out, which is exactly the outcome the
+    technique says colour prevents. A reader working from the pictures — which is what this book
+    instructs its readers to do — sees the technique failing.
+  severity: high_and_undetectable_by_the_extraction
+  detectability_note: >
+    Nothing in the text layer, the file, or the image itself is anomalous. The image is a legitimate
+    greyscale photograph of a real frame. What makes it a loss is only the relation between what the
+    section claims and what its illustration can show, and that relation is only visible to someone
+    reading both. No mechanical check would find it.
+  lost_in_plain_text: true
+  colour_dependent: true
+  status: recorded_as_source_level_loss
+
+demonstrations:
+
+- ref: vis_ms_object_guide_composite
+  technique: "8.1 Object Guide"
+  file: 00073
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    Three frame grabs down the left showing a sheet of paper passed from one group to a second
+    character and on to a third across a café; an overhead diagram top right with a single black
+    arrow tracing that character's path from the right of the set to the left, past the camera
+    icon; a computer-graphics recreation bottom right of two figures in an entirely different
+    setting.
+  what_the_visual_supports: >
+    That the camera's move from one side of a location to the other is carried by a character's
+    errand rather than by a pan or a cut. The overhead makes the geometry immediate — the actor's
+    path passes the camera, which is why the text says the transition should be brief.
+  requires_prose: >
+    The reason the object must be neither insignificant nor the focus of the scene, and the
+    instruction to compose the beginning and end as finished shots in themselves.
+  lost_in_plain_text: true
+  colour_dependent: false
+
+- ref: vis_ms_handing_off_motion_composite
+  technique: "8.2 Handing Off Motion"
+  file: 00074
+  kind: worked_example
+  isolation: not_applicable
+  status: fully_legible
+  visible_content: >
+    Frame grabs of a crowded newsroom; an overhead diagram with two black arrows crossing — the two
+    actors moving in opposite directions — and a white arrow from the camera icon pointing away
+    from the action, the backward dolly; a rendered recreation of two figures in an office.
+  what_the_visual_supports: >
+    That the "hand-off" between two subjects is one continuous move rather than a cut, and that its
+    timing is a coincidence between the camera's retreat and an actor's advance. The crossing of the
+    two black arrows against the single white one is the whole mechanism in one picture.
+  requires_prose: "That the audience is meant to feel no camera move at all, only a change of subject."
+  lost_in_plain_text: true
+  colour_dependent: false
+
+visual_only_observations:
+
+- ref: vis_obs_ms_renderings_differ_on_purpose
+  observation: >
+    In every composite inspected, the computer-graphics recreation is set somewhere unrelated to the
+    film it accompanies — the café technique is rendered as two figures on a rocky hillside, the
+    newsroom technique as an office with different characters.
+  strength: clearly_visible
+  why_it_matters: >
+    Without the "About the Images" note this reads as carelessness. With it, the difference is the
+    point: the source states the renderings are deliberately not copies, to show that the technique
+    survives a change of setting. The evidential status of a picture in this book cannot be read off
+    the picture — it depends on a note in the front matter, which is why the front matter is part of
+    the processed section.
+  promoted_to_source_claim: true
+  promoted_to: sk_ms_c003_0009
+
+summary:
+  demonstrations_recorded: 2
+  visual_only_observations: 1
+  figures_supporting_a_claim: 7
+  figures_that_contradict_the_claim_they_illustrate: 1
+  colour_bearing_images_in_the_whole_book: 0

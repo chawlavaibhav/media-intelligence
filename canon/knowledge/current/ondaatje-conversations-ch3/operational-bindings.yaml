@@ -1,0 +1,179 @@
+# CANON-003 book 12 (Lane B) — The Conversations, Third Conversation. SPEC-04 bindings, SPEC-01 v0.1.
+# Written after the 27 objects and 3 systems were stable.
+#
+# SIX bindings against twenty-seven objects, and most of the chapter is deliberately left unbound.
+# That is the expected result for this source shape and it is worth stating why rather than letting
+# a low count read as thin work. A great deal of what Murch says here is an account of what was done
+# to one film under one set of constraints. It is true, it is well evidenced as testimony, and it
+# does not reach a product field because it was never a claim about films in general. SPEC-04 says a
+# SourceKnowledge object with zero bindings is normal; this chapter is the clearest case of that in
+# the lane.
+
+source_id: ondaatje_conversations_third_conversation
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_conv_c003_0001
+  source_knowledge_refs: [sk_conv_c003_0019, sk_conv_c003_0009]
+  source_system_refs: [scs_conv_c003_001]
+  target_type: creative_ir
+  target_path: VideoCreativeExtension.dialogue_intent
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01 carries a dialogue_intent field. This source says something specific and unobvious about
+    it: dialogue and sound effects compete for one pool of attention, so the amount of dialogue
+    determines what the rest of the soundtrack can carry. Reducing dialogue is not merely removing
+    words — it promotes everything else. Any specification of dialogue intent for a video creative is
+    therefore also, implicitly, a specification of how much the rest of the sound can do.
+  applicability:
+    when: "specifying dialogue for a video creative whose soundtrack is doing narrative or emotional work"
+    limits: >
+      The source's evidence is one film, and he states he was not conscious of the effect while
+      making it and reconstructed it afterwards from audience reaction. The claim is a maker's
+      retrospective account of his own work, which is a weaker evidential position than it reads as.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_conv_c003_0016]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_conv_c003_0002
+  source_knowledge_refs: [sk_conv_c003_0009]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source distinguishes sound the audience attributes to the world of the scene from sound they
+    attribute to an author, and claims only the second triggers a sense of being manipulated. For
+    commercial creative this is directly relevant: a viewer who registers an authorial voice
+    repositions, and repositioning against an advertisement is not a neutral event. The checkable
+    property is whether a piece of music or effect has a visible origin in the scene.
+  applicability:
+    when: "assessing whether a creative's music and effects will read as manipulative"
+    limits: >
+      The mechanism is an unexamined metaphor — an immune system, a blood/brain barrier — and the
+      source's own counter-example shows it can be inverted deliberately. It also assumes an audience
+      that does not already know it is watching an advertisement, which is exactly the assumption a
+      commercial context breaks.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed — the transfer to a context where the viewer knows they are being sold to is our extension and may not hold"
+
+- binding_id: bnd_conv_c003_0003
+  source_knowledge_refs: [sk_conv_c003_0013, sk_conv_c003_0014]
+  source_system_refs: [scs_conv_c003_002]
+  target_type: creative_ir
+  target_path: entities
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  rationale: >
+    SPEC-01's entities carry invariants and allowed_variation — what must hold constant about a
+    subject and what may change. This source says the properties that actually communicate character
+    are small, adjustable and found rather than designed: the angle of a hat, a look, an attitude, a
+    gesture. That bears on what belongs in allowed_variation, because a detail listed as free to vary
+    is a detail free to send a message nobody specified.
+  applicability:
+    when: "deciding which properties of a person or character are held invariant and which may vary"
+    limits: >
+      The source is describing selection among takes that already exist, where the details are
+      accidents an editor chooses between. Specifying a creative before it exists is the opposite
+      operation, and whether the same details matter when they are authored rather than found is not
+      something this source addresses.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed — the source's whole framing is selection after the fact, and this binding applies it before the fact"
+
+- binding_id: bnd_conv_c003_0004
+  source_knowledge_refs: [sk_conv_c003_0003, sk_conv_c003_0008]
+  source_system_refs: [scs_conv_c003_003]
+  target_type: governance
+  target_path: null
+  role: [constrains]
+  governance_consumer: rule_application
+  rationale: >
+    Two independent claims in this chapter have the same shape: an earlier department's decision
+    determines what a later one can do. Costume consistency decides whether scenes can be moved in
+    the edit; when the music is written decides whether it can shape the film or only be laid over
+    it. Both say that some options are foreclosed before the stage that would use them. Applied to a
+    generation pipeline, that constrains where a piece of Canon knowledge can be acted on: a
+    principle about assembly may be unusable if the specification stage has already fixed the
+    variable it needs.
+  applicability:
+    when: "deciding at which pipeline stage a Canon principle can actually be applied"
+    limits: >
+      Two instances from one chapter about one industry's division of labour. The direction of the
+      dependency is the transferable part; the particular dependencies are not.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_conv_c003_0012]
+  repair_ontology_refs: [t_conv_c003_0013, t_conv_c003_0014]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_conv_c003_0005
+  source_knowledge_refs: [sk_conv_c003_0021]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [flags]
+  governance_consumer: evidence_interpretation
+  rationale: >
+    A worked case in which a source's stated reason for an instruction was not its real reason: a
+    filmmaker justified removing a shot on a technical ground because admitting an error of
+    conception would have conceded power to a hostile reader. The Canon reads sources for their
+    stated rationales, and this is a documented instance of a stated rationale being chosen for
+    safety rather than accuracy — with the real reason recoverable only by carrying out the
+    instruction and observing the result.
+  applicability:
+    when: "recording why a source recommends something, where the source had a reason to be guarded"
+    limits: >
+      This is one editor's reading of another filmmaker's motive decades later, and it is not the
+      memo's account of itself. It supports keeping a source's stated reason and any interpretation
+      of it as separate records, which this extraction does; it does not license second-guessing
+      sources generally.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_conv_c003_0006
+  source_knowledge_refs: [sk_conv_c003_0023, sk_conv_c003_0024]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source's test for an opening is not whether it is good but whether the expectation it sets is
+    the one the work meets. Music that was "perfectly good in itself" was a fault because it promised
+    a film that did not arrive. For short-form commercial creative, where the opening seconds carry
+    most of the retention burden, an opening that mis-sets expectation is a checkable failure that
+    quality metrics on the opening alone would miss.
+  applicability:
+    when: "assessing whether a creative's opening sets an expectation the rest of it meets"
+    limits: >
+      Requires judging both the expectation set and the delivery, neither of which the source gives a
+      method for. The accompanying claim — that changing the opening alone would make the whole read
+      as a different work — is a counterfactual about a film that was changed in fifty places and
+      cannot be checked.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
