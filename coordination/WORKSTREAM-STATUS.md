@@ -6,7 +6,7 @@
 | Stream | Status | Current approved work | Blocking item / next gate |
 |---|---|---|---|
 | Canon | **CANON-003 active, parallel extraction with one execution rebalance.** Five usable books complete at the pre-parallel checkpoint. Lane D is Controller-audited complete with Books 16–18 accepted, bringing the currently confirmed count to 8. A has Book 6 worker-complete; B has Book 9 worker-complete; C has Books 13–14 worker-complete. | `CANON-003.md` + `CANON-003-PARALLEL-EXECUTION.md` + `CANON-003-REBALANCE-01.md` | New ownership: A→Book 7; B→Books 10+12; C→Book 15; fresh rebalance branch→Books 8+11. Audit returned books before final integration. Accepted Lane D stays untouched. No schema changes or Canon-consumption experiments during the batch. |
-| Eval | **EVAL-003 correction return audited; final bounded pass active.** Major validity corrections are accepted provisionally, but the branch is not merge-ready and no calibration is approved. | `EVAL-003.md` + `EVAL-003-CORRECTION-PASS.md` + `EVAL-003-FINALIZATION-PASS.md` | Sync `work/eval` with main; add adversarial one-to-one matcher regression; rebuild primary V0 as **54 Hindi-labelled unique photographs** if available; fix the two-reader altered-target rule; remove stale contradictory prose; complete the three-point Resources proposal; re-run bounded verification. No human/API work yet. |
+| Eval | **EVAL-003 substantive finalization passed Controller audit; documentation consistency cleanup active.** The Hindi-primary pack and protocol are mechanically in place, but operator-facing files still contain stale pre-finalization instructions, so the branch is not yet merge-ready and no calibration is approved. | `EVAL-003.md` + `EVAL-003-CORRECTION-PASS.md` + `EVAL-003-FINALIZATION-PASS.md` + `EVAL-003-DOC-CONSISTENCY-CLEANUP.md` | Preserve the 173-eligible / 54-Hindi pack, matcher, crop pipeline, two-reader protocol and Resources proposal unchanged. Remove stale 202-item/0-Hindi/browser-crop/pending-composition instructions, fix V0 reproduction commands, sweep current docs, then return. No human/API/model work yet. |
 | Resources | **RES-001/002 closed and merged. No active task.** | none | Stay closed unless a Controller-approved cross-stream correction or new sourcing requirement warrants a new task. |
 
 ## Canon live-review note
@@ -19,11 +19,11 @@ The rebalance worker must not continue from Lane D's accepted branch and must no
 
 ## Eval live-review note
 
-The correction return successfully withdrew the unsupported human-performance ceiling, made region matching one-to-one, separated the mechanical Unicode diagnostic from linguistic interpretation, corrected candidate arithmetic, moved to two-reader reference construction, materialised canonical hashed crops, and removed absolute paths.
+The finalization return fixed the substantive gates. `work/eval` contains the Controller finalization task; the Hindi-primary selection summary reports **173 eligible Hindi-labelled photographs and 54 selected, all 54 with distinct hashes**; the one-to-one matcher has a committed adversarial self-test where two A regions contend for one B; the run plan and reader guide use **two independent Hindi-competent readers** and allow either reader to perform the later altered-target validity check only after the reference is frozen; the review/checker artifacts reference the same materialised crop hashes; and the Eval→Resources proposal now records the full-scene correction, **375 + 176 locally paired records**, and the denominator-specific **173/176** overlap result.
 
-It also revealed the decisive composition issue: the original overlap-exclusion policy leaves **0 Hindi** in the 54-item pack. Controller decision for primary V0 is now a **Hindi-focused 54-item pack of unique photographs**, admitting shared CVIT photographs once rather than counting dataset copies independently. Marathi stress coverage is deferred rather than mixed into the first qualification result.
+The branch is still not merge-ready because the Controller Brief's claim that stale contradictions were removed is not true across the active documents. `EVAL-003-calibration-readiness-findings.md` still presents the old **202-item overlap-excluded / 0-Hindi** pool as current, says browser-only crops/no transformed images, and calls crop materialisation unresolved. The README also contains followable old-state instructions, including reproduction without the approved Hindi-primary arguments and stale pool/source-composition prose; `annotator-disagreement.json` still says the shared files are excluded; the retained composition note still contains a later recommendation saying the decision is open. These are documentation/operational consistency defects, not a reason to reopen the method.
 
-Human/API calibration is still blocked until the finalization pass returns cleanly.
+Controller therefore opened `eval/tasks/EVAL-003-DOC-CONSISTENCY-CLEANUP.md`. No new research, sample redesign, human review, API/model work, EVAL-004 or Registry work is authorized. After the cleanup returns cleanly, the next Controller decision is whether to merge EVAL-003 readiness and separately authorize the two-reader human pass.
 
 ## Cross-stream dependency chain
 
@@ -34,9 +34,9 @@ CANON-003 parallel/rebalanced book extractions
                  │
                  └──► evidence for a later consolidated Canon-method decision
 
-RES-002 closed corpus ──► EVAL-003 finalised Hindi-primary calibration readiness
+RES-002 closed corpus ──► EVAL-003 Hindi-primary readiness cleanup
                                │
-                               └──► Controller review
+                               └──► Controller merge review
                                       │
                                       ├──► later two-reader human calibration (not yet approved)
                                       └──► later API checker qualification (not yet approved)
@@ -50,6 +50,7 @@ Capability Registry / routing remain blocked until empirical measurements exist 
 - Keep accepted Lane D untouched until integration.
 - Treat source annotations as provenance/evidence, not truth; reference construction remains two-reader and blind.
 - Spend the first I1 calibration budget on the Hindi-facing capability actually needed, not a zero-Hindi proxy pack.
+- Do not reopen EVAL-003 methodology for documentation cleanup; make current operator instructions match the already-approved Hindi-primary artifacts.
 - Do not reopen Resources for ordinary cleanup; use the cross-stream proposal path.
 - Do not allow worker-recommended next steps to become automatic tasks.
 - Canon-consumption/planning experiments remain paused.
