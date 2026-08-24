@@ -1,0 +1,152 @@
+# CANON-003 book 16 (Lane D) — "Creativity, Inc." ch.5. SourceConceptSystems under SPEC-03.
+# Two systems. The first is the mechanism itself, which the source treats as a whole and which
+# loses its meaning when its parts are retrieved separately. The second is the source's account of
+# why people stay silent, which is a causal chain rather than a set of coordinate claims.
+source_id: catmull_creativity_inc_ch5_honesty_and_candor
+source_concept_systems:
+
+- scs_id: scs_cat_c003_001
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  label: the_braintrust_compact
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The conditions the source says a working peer-review mechanism rests on, together with the
+    state of affairs it exists to correct: makers lose perspective on their own work; first
+    versions are genuinely bad; a group of practised peers watches a cheap stand-in for the work
+    at a fixed cadence; the group holds no power to mandate; it names causes rather than
+    prescribing remedies; the work is separated from the person; the maker must be willing to
+    hear and to let go; feedback is delivered as good notes, additively; the group's diagnosis may
+    be wrong even when its alarm is right; and none of it survives without continuous maintenance.
+  whole_system_claim:
+    text: >
+      The parts hold each other up. Remove the group's lack of authority and the separation of work
+      from person collapses, because rank re-enters the room. Remove the requirement that notes
+      diagnose rather than prescribe and the maker's ownership of the solution goes with it.
+      Remove the maker's willingness to hear and the candor of the room has nowhere to land. The
+      source presents these as one mechanism with a compact underneath it that has to be protected,
+      not as a list of independently adoptable practices.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source never states the interaction as a general claim. It is synthesised from three
+      things the source does state: that his own primary role in the meetings is protecting "the
+      compact upon which the meetings are based"; that removing the power to mandate is what
+      changes the group's dynamics, which is a stated dependency between two of the conditions;
+      and that gathering people in a room every couple of months will not by itself work, which
+      says the parts are not separable from each other. Collecting the conditions into one system
+      and asserting mutual support between them is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_cat_c003_0021, role_in_system: precondition_being_corrected, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0007, role_in_system: precondition_being_corrected, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0004, role_in_system: mechanism, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0008, role_in_system: mechanism, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0009, role_in_system: condition, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0010, role_in_system: condition, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0011, role_in_system: condition, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0013, role_in_system: condition, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0014, role_in_system: condition, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0015, role_in_system: unit_of_feedback, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0018, role_in_system: unit_of_feedback, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0017, role_in_system: limit, order: 12, membership_origin: extractor_inferred}
+    - {sk_ref: sk_cat_c003_0019, role_in_system: limit, order: 13, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_cat_c003_0013, to: sk_cat_c003_0010, nature: "the source says removing the power to mandate is what keeps criticism off the person", origin: source_stated}
+      - {from: sk_cat_c003_0004, to: sk_cat_c003_0014, nature: "candor is stated to be valuable only if the receiver is open to it", origin: source_stated}
+      - {from: sk_cat_c003_0004, to: sk_cat_c003_0021, nature: "the mechanism exists because makers lose perspective", origin: source_stated}
+      - {from: sk_cat_c003_0011, to: sk_cat_c003_0010, nature: "not prescribing remedies is part of what leaves the decision with the maker", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_cat_c003_0009, sk_cat_c003_0012]
+        nature: >
+          Feedback is prized from practised insiders, yet the source concedes in the same chapter
+          that people outside the production can often see more clearly. Whether to weight the
+          insider or the outsider is left open.
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_cat_c003_0009, sk_cat_c003_0020]
+        nature: >
+          The chapter's stated membership requirement is a knack for storytelling and, usually,
+          having been through the process. The portable version it offers the reader at the end
+          drops both and says rank and role are irrelevant — janitor, intern or lieutenant — so
+          long as the person makes you think smarter and produces many solutions quickly. The
+          source does not notice the difference.
+        origin: extractor_inferred
+        source_ref: null
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    The source states directly that merely gathering people in a room for a candid discussion every
+    couple of months will not cure a company's problems, and lists three reasons why.
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, repeated_within_source, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is individually stated by the source, and two of the dependencies are the
+      source's own. What is ours is the claim that these constitute one interacting mechanism whose
+      parts hold each other up, and both recorded conflicts. A reader could reasonably take the
+      chapter as a list of good practices instead; the system is a hypothesis about how the source
+      reasons, and each member stands on its own if the hypothesis is rejected.
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    locator: "EPUB text/part0010.html, whole chapter"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_cat_c003_002
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  label: why_people_withhold_and_what_acts_on_it
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The source's account of silence in a review: the word honesty makes withholding undiscussable;
+    deference to rank, group size, dominating colleagues and high stakes make people withhold; the
+    fears involved regenerate after being addressed; and the two levers the source actually pulls
+    are the vocabulary used to ask for the behaviour and the composition of the room.
+  whole_system_claim:
+    text: >
+      Silence is treated as a produced effect with identifiable causes, not as a character defect,
+      and the interventions therefore act on the causes — the word used to ask, and who is in the
+      room — rather than on the people. Because the causes are structural, the source expects them
+      to return and treats maintenance as permanent.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each cause and each intervention separately across the chapter and never
+      draws them into a model. The causal reading is supported directly by the source's own
+      sequence — it names the barriers, then says they reassert themselves, then describes shrinking
+      the room and excluding a dominating figure as its responses — but the model is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_cat_c003_0001, role_in_system: cause, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0006, role_in_system: cause, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0005, role_in_system: persistence_property, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0002, role_in_system: intervention, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_cat_c003_0016, role_in_system: intervention, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_cat_c003_0002, to: sk_cat_c003_0001, nature: "the vocabulary change is the source's stated response to the moral freight of honesty", origin: source_stated}
+      - {from: sk_cat_c003_0016, to: sk_cat_c003_0006, nature: "shrinking the room and excluding a dominating presence act on group size and intimidation, two of the stated causes", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The causes and the interventions are the source's. Arranging them as a causal model, and the
+      link from the room-composition remedy back to the specific causes it addresses, are ours. No
+      part of this is measured anywhere in the source.
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    locator: "EPUB text/part0010.html, opening and closing sections"
+    page_start: null
+    page_end: null
+    source_support: text

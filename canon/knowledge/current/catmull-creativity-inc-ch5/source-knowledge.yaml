@@ -1,0 +1,1085 @@
+# CANON-003 book 16 (Lane D) — Ed Catmull with Amy Wallace, "Creativity, Inc." (2014),
+# chapter 5, "Honesty and Candor". Fresh SPEC-03 extraction under the frozen CANON-002-era method.
+# Granularity: CANON-001 V0 rule, unchanged — split when a claim can be retrieved, supported,
+# contradicted or qualified independently; do not split for a further example or restatement.
+# Visual completeness: verified_figure_level (the chapter has no figures; see the ledger).
+#
+# SECTION RATIONALE: chapter 5 is the chapter in which the book states its central operating
+# mechanism — the Braintrust — defines it, gives its preconditions, its failure modes and its
+# unit of feedback ("a good note"), and shows it running. It is the densest chapter of reasoning
+# in the book and is self-contained: it opens by posing the problem (why people withhold) and
+# closes by generalising the mechanism to readers outside Pixar.
+#
+# NOTE ON THIS SOURCE'S SHAPE, recorded rather than smoothed over:
+# this is organisational-process knowledge from one company, told by that company's president.
+# Its evidence is overwhelmingly practitioner assertion plus recounted incidents from the same
+# organisation, with mechanisms often given but never measured. There is no visual argument, no
+# controlled comparison, and no counterexample from a company where the mechanism failed. That
+# profile is recorded in evidence.characteristics on every object, not compensated for.
+
+source_id: catmull_creativity_inc_ch5_honesty_and_candor
+
+source_knowledge:
+
+- sk_id: sk_cat_c003_0001
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "there are often good reasons not to be honest"
+    - "we need to free ourselves of honesty's baggage"
+  concept_label: honesty_carries_moral_freight_that_suppresses_disclosure
+  label_origin: extractor_assigned
+  claim: >
+    Asking people to be honest is self-defeating in a work setting. Because dishonesty reads as a
+    moral failing, the word makes the topic undiscussable: admitting you hold back becomes an
+    admission of being a bad person, so people neither hold back less nor say that they do.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The moral connotation attaches a penalty to the admission rather than to the behaviour, so
+      the behaviour continues and the discussion of it stops.
+  scope:
+    domain_discussed_by_source: [creative_organisations, film_production, management]
+    conditions: "workplace interaction where the speaker perceives a cost to speaking"
+  caveats:
+    - text: "the source itself lists legitimate reasons to withhold — politicians, CEOs with the press, not embarrassing a colleague"
+      origin: source_stated
+    - text: "the claim is about the effect of a word on a conversation and is asserted, never measured"
+      origin: extractor_observed
+  source_stated_problems:
+    - "lack of candor"
+    - "our own fears and instincts for self-preservation often cause us to hold back"
+  source_stated_remedies:
+    - "replace the word honesty with another word that has a similar meaning but fewer moral connotations: candor"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_cat_c003_0002, note: "the substitute word and why it works"}
+    - {relation: member_of_system, target: scs_cat_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html, opening paragraphs"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0002
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "Candor is forthrightness or frankness"
+    - "You cannot address the obstacles to candor until people feel free to say that they exist"
+  concept_label: name_the_behaviour_so_that_withholding_it_is_admissible
+  label_origin: extractor_assigned
+  claim: >
+    Use "candor" instead. It means much the same thing but carries no accusation, so people can
+    say out loud that they sometimes hold their tongues — and the obstacles cannot be worked on
+    until they can be named without penalty. Because candor is understood as optional, the source
+    argues that when it is given it tends to be genuine.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Nobody is thought a bad person for being less than candid, so admitting the barrier costs
+      nothing; and a thing freely given rather than owed is more likely to be meant.
+  scope:
+    domain_discussed_by_source: [creative_organisations, management]
+    conditions: "any group being asked for critical feedback"
+  caveats:
+    - text: "the source concedes the two words are 'not so different, really' and rests the distinction entirely on common usage"
+      origin: source_stated
+    - text: "an English-language claim about connotation; the source does not consider whether it survives translation or another professional culture"
+      origin: extractor_observed
+  source_stated_problems:
+    - "people will not admit the obstacles to candor exist"
+  source_stated_remedies:
+    - "ask for candor rather than demand honesty"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_cat_c003_0001, note: "the remedy for the problem the previous object states"}
+    - {relation: member_of_system, target: scs_cat_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html, opening paragraphs"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0003
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "I look for ways to institutionalize it by putting mechanisms in place that explicitly say it is valuable"
+  concept_label: candor_must_be_institutionalised_not_exhorted
+  label_origin: extractor_assigned
+  claim: >
+    A stated value does not produce the behaviour. The source's method is to build a standing
+    mechanism whose existence declares the value — a recurring meeting with a defined purpose —
+    rather than to ask people to be more forthcoming.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [creative_organisations, management]
+    conditions: "an organisation that wants critical feedback to actually occur"
+  caveats:
+    - text: "the source later states plainly that installing the mechanism is not sufficient on its own"
+      origin: source_stated
+  source_stated_problems:
+    - "a value everybody endorses and nobody practises"
+  source_stated_remedies:
+    - "put mechanisms in place that explicitly say it is valuable"
+  examples:
+    positive:
+      - {description: "the Braintrust, described by the source as its primary delivery system for straight talk", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_cat_c003_0004, note: "the Braintrust is the instance of the general move"}
+    - {relation: qualified_by, target: sk_cat_c003_0019, note: "installing it is explicitly not enough"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0004
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "Put smart, passionate people in a room together, charge them with identifying and solving problems, and encourage them to be candid with one another"
+    - "meets every few months or so to assess each movie we're making"
+  concept_label: the_braintrust_as_a_standing_peer_review_of_work_in_progress
+  label_origin: extractor_assigned
+  claim: >
+    The mechanism is a recurring meeting, held every few months for each film in production, at
+    which a group of people skilled in storytelling watch the current rough version and say what
+    is not working. Its size and composition vary with what is being examined; membership is not
+    a fixed list. The source calls it Pixar's version of peer review.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Its indispensable element is candor: without candor there is no trust, and without trust
+      creative collaboration is not possible.
+  scope:
+    domain_discussed_by_source: [animated_film_production, creative_organisations]
+    conditions: "a long creative project passing through many revisions"
+  caveats:
+    - text: "the source says it is not foolproof and that its interactions sometimes only highlight how hard candor is"
+      origin: source_stated
+    - text: "the group grew from five people who already worked together exceptionally well; the source does not claim the mechanism would have formed without them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the nine months in 1999 spent rebuilding Toy Story 2, which is when the term entered use", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_cat_c003_0003, note: "one instance of institutionalised candor"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: depends_on, target: sk_cat_c003_0009, note: "membership requires storytelling judgement"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given, historical_claim]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "the Braintrust introduced"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0005
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "you can't address or eliminate the blocks to candor once and for all"
+    - "they all have a way of reasserting themselves"
+  concept_label: barriers_to_candor_regenerate_and_need_continuous_policing
+  label_origin: extractor_assigned
+  claim: >
+    The obstacles — fear of saying something stupid, of looking bad, of offending, of being
+    intimidated, of retaliation — come back even after they appear to have been beaten, so the
+    people responsible for the mechanism must keep watching for them and confront them each time.
+    The source describes protecting the compact the meetings rest on as his own primary role in
+    them, a job that is never finished.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [creative_organisations, management]
+    conditions: "any standing group asked for critical feedback, over time"
+  caveats:
+    - text: "no test is given for detecting that a barrier has reasserted itself; the source relies on watching the room"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the fear of saying something stupid and looking bad"
+    - "of offending someone or being intimidated"
+    - "of retaliating or being retaliated against"
+  source_stated_remedies:
+    - "when they do, you must address them squarely"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_002}
+    - {relation: qualifies, target: sk_cat_c003_0003, note: "a mechanism is not self-maintaining"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "the Braintrust introduced"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0006
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "societal conditioning discourages telling the truth to those perceived to be in higher positions"
+    - "The more people there are in the room, the more pressure there is to perform well"
+  concept_label: withholding_is_produced_by_status_group_size_and_stakes
+  label_origin: extractor_assigned
+  claim: >
+    Silence in a review has identifiable causes rather than being a personal failing: deference to
+    perceived rank, the number of people watching, confident colleagues signalling that criticism
+    is unwelcome, and the creator's sense that the work is under attack when the stakes are high.
+    The source describes the newcomer's calculation directly — not dishonesty, but not wanting to
+    look like an idiot.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Under threat the creator's attention shifts to reading subtexts and fending off perceived
+      attacks, which is attention not spent on the problem.
+  scope:
+    domain_discussed_by_source: [creative_organisations, film_production, meetings]
+    conditions: "a group review with an audience and visible stakes"
+  caveats:
+    - text: "presented as general human nature and societal conditioning without evidence from outside the source's own organisation"
+      origin: extractor_observed
+  source_stated_problems:
+    - "you're thinking about not looking like an idiot"
+    - "strong and confident people can intimidate their colleagues"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_002}
+    - {relation: qualified_by, target: sk_cat_c003_0016, note: "the stated remedy for a room where people hold back is a smaller room"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "the barriers"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0007
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "early on, all of our movies suck"
+    - "from suck to not-suck"
+  concept_label: first_versions_are_necessarily_bad_and_this_is_the_normal_state
+  label_origin: extractor_assigned
+  claim: >
+    Every one of the source's films was bad in its early versions, and the source says so bluntly
+    and repeatedly on purpose, because a softer phrasing fails to convey how bad. The work of
+    production is to move the film from that state to a good one by reworking it, so an early
+    version being poor is not a warning sign but the expected condition.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Creativity has to start somewhere; a flawed story finds its throughline, or a hollow
+      character its soul, only through repeated rework.
+  scope:
+    domain_discussed_by_source: [animated_film_production]
+    conditions: "original creative work developed over a long production"
+  caveats:
+    - text: "the source states this of its own films only; the sample is one studio's successful releases"
+      origin: extractor_observed
+    - text: "the claim gives no way to distinguish an early version that is normally bad from one that will never work — the source elsewhere concedes some ideas 'won't ever work'"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "reworking, reworking, and reworking again"
+  examples:
+    positive:
+      - {description: "a film about talking toys that could easily have felt derivative or merchandise-driven", figure_ref: null}
+      - {description: "starting WALL-E with 39 dialogue-free minutes", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_cat_c003_0008, note: "the iteration loop is how the movement happens"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, practitioner_assertion, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "why candor matters"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0008
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "A new version of the movie is generated every three to six months, and the process repeats itself"
+    - "reels"
+  concept_label: fixed_cadence_review_loop_over_a_cheap_stand_in_for_the_work
+  label_origin: extractor_assigned
+  claim: >
+    The review runs against a deliberately crude stand-in for the finished film: storyboards cut
+    together with temporary voices and music, called reels. The group watches that version,
+    discusses what is not ringing true, a new version is produced every three to six months, and
+    the loop repeats. The source gives an order-of-magnitude figure for the cost of this loop —
+    about twelve thousand storyboard drawings for one 90-minute reel, and story teams commonly
+    making ten times that number before they are done.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [animated_film_production]
+    conditions: "a production long enough to support repeated full-length revisions"
+  caveats:
+    - text: "the cadence and the drawing counts are the source's own production economics; nothing establishes that either transfers to a different medium or budget"
+      origin: extractor_observed
+    - text: "the source notes a director can become stuck and unable to act on the feedback, and offers only the next meeting as the recourse"
+      origin: source_stated
+  source_stated_problems:
+    - "sometimes a director becomes stuck, unable to address the feedback"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: qualifies, target: sk_cat_c003_0007, note: "the machinery that moves a bad first version"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, empirical_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "why candor matters"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0009
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "people with a deep understanding of storytelling and, usually, people who have been through the process themselves"
+    - "whose only requirement is that they display a knack for storytelling"
+  concept_label: feedback_is_prized_from_peers_who_have_done_the_work
+  label_origin: extractor_assigned
+  claim: >
+    The first of the two differences the source names between this mechanism and ordinary feedback
+    is who is in the room: people who understand storytelling and have usually been through the
+    same process. Notes are welcomed from many sources — every employee is asked for notes at an
+    in-house screening — but feedback from fellow directors and storytellers is prized above them.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [animated_film_production, creative_organisations]
+    conditions: "critique of work in a craft with deep tacit knowledge"
+  caveats:
+    - text: "the source elsewhere concedes that people outside the production can often see more clearly, which sits in tension with prizing insiders"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: trades_off_with, target: sk_cat_c003_0012, note: "insider expertise against the outsider's clearer view"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "two key differences"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0010
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "the Braintrust has no authority"
+    - "By removing from the Braintrust the power to mandate solutions, we affect the dynamics of the group"
+  concept_label: the_reviewing_group_must_hold_no_power_to_mandate
+  label_origin: extractor_assigned
+  claim: >
+    The second named difference, and the one the source calls crucial: the group cannot compel
+    anything. The director need not follow any specific suggestion and decides afterwards how to
+    respond. Because nobody is pulling rank, the source says defensiveness rarely appears and the
+    pain of being told the work is flawed is reduced.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Removing the power to mandate removes the power dynamic, which is what turns criticism of
+      the work into a threat to the person.
+  scope:
+    domain_discussed_by_source: [animated_film_production, creative_organisations]
+    conditions: "a review where the reviewers outrank or could overrule the maker"
+  caveats:
+    - text: "the source states there is still a hierarchy at the company; the exemption is specific to this meeting"
+      origin: source_stated
+    - text: "no account is given of what happens when a director repeatedly declines the feedback and the film does not improve"
+      origin: extractor_observed
+  source_stated_problems:
+    - "top-down, do-this-or-else affairs"
+  source_stated_remedies:
+    - "remove power dynamics from the equation"
+  examples:
+    positive:
+      - {description: "Steve Jobs kept out of the meetings by mutual agreement so his presence would not suppress candor", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: depends_on, target: sk_cat_c003_0013, note: "separating the work from the person is what the removal of rank protects"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "two key differences"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0011
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "While problems in a film are fairly easy to identify, the sources of those problems are often extraordinarily difficult to assess"
+    - "intended to bring the true causes of problems to the surface—not to demand a specific remedy"
+  concept_label: symptoms_are_visible_causes_are_not_so_notes_target_causes
+  label_origin: extractor_assigned
+  claim: >
+    A visible fault — a mystifying plot twist, an unbelievable change of heart — is usually caused
+    by something else elsewhere in the story. The group's job is therefore to surface the real
+    cause rather than to prescribe a fix for the symptom. The source also gives a second reason
+    for not prescribing: it believes the group's solution is unlikely to be as good as the one the
+    director and their team will find.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The source's analogy is a patient with knee pain caused by fallen arches: operating on the
+      knee would not relieve the pain and could easily make it worse.
+  scope:
+    domain_discussed_by_source: [animated_film_production, storytelling]
+    conditions: "a complex artefact whose faults surface far from their causes"
+  caveats:
+    - text: "the source gives no method for finding the true cause beyond patience, candor and discussion"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a mystifying plot twist"
+    - "a less-than-credible change of heart in our main character"
+  source_stated_remedies:
+    - "bring the true causes of problems to the surface"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: qualified_by, target: sk_cat_c003_0017, note: "the group can be right that something is wrong and wrong about what"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "diagnosis, not prescription"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0012
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "directors don't want the notes, because they are usually coming from people who aren't filmmakers"
+    - "some notes offered by studio executives are quite astute—people outside of the production can often see more clearly"
+  concept_label: notes_from_outside_the_craft_are_resisted_regardless_of_merit
+  label_origin: extractor_assigned
+  claim: >
+    The source contrasts its mechanism with the ordinary studio model, where criticism is written
+    up after a screening and delivered days later by executives. Directors reject those notes
+    because of who wrote them, producing a standing tension between the party paying for
+    commercial success and the party protecting an artistic vision. The source concedes in the
+    same passage that outsiders often see more clearly, so the resistance is about the source of
+    the note rather than its quality.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Resentment about input from people seen as non-creative compounds the ordinary difficulty of
+      directing a project that is poor for months before it is good.
+  scope:
+    domain_discussed_by_source: [film_industry, animated_film_production]
+    conditions: "feedback crossing a commercial/creative boundary"
+  caveats:
+    - text: "a characterisation of other studios' practice by a competitor, offered without a named case"
+      origin: extractor_observed
+  source_stated_problems:
+    - "built-in tension between directors and the studios that employ them"
+  source_stated_remedies:
+    - "a filmmaker-led studio where people want to hear each other's notes"
+  examples:
+    positive: []
+    counter:
+      - {description: "the source's own concession that outside executives are sometimes quite astute", figure_ref: null}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_cat_c003_0009, note: "prizing insider feedback against conceding outsiders often see more clearly; the source states both and does not reconcile them"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "how Hollywood gives notes"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0013
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "You are not your idea, and if you identify too closely with your ideas, you will take offense when they are challenged"
+    - "The film itself—not the filmmaker—is under the microscope"
+  concept_label: separate_the_work_from_the_person_or_criticism_becomes_attack
+  label_origin: extractor_assigned
+  claim: >
+    Criticism of the work is experienced as criticism of the maker whenever the maker identifies
+    with the work. The source states this as a principle that most people fail to grasp, and makes
+    it a design requirement of any feedback system: focus on the problem, not the person.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Close identification converts a challenge to the idea into an offence against the self,
+      which is why the power dynamic must be removed for the separation to hold.
+  scope:
+    domain_discussed_by_source: [creative_organisations, film_production]
+    conditions: "review of work made by an identifiable person present in the room"
+  caveats:
+    - text: "stated as a requirement without any method for producing the detachment in someone who lacks it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "identifying too closely with your ideas"
+  source_stated_remedies:
+    - "focus on the problem, not the person"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: qualified_by, target: sk_cat_c003_0014, note: "the receiver must also be willing to let go of what does not work"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "diagnosis, not prescription"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0014
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "candor is only valuable if the person on the receiving end is open to it"
+    - "Part of the suffering involves giving up control"
+  concept_label: candor_requires_a_receiver_willing_to_lose
+  label_origin: extractor_assigned
+  claim: >
+    The mechanism has a matching obligation on the maker: to hear the criticism and to let go of
+    things that do not work. The source presents this as necessarily painful rather than as a
+    skill that removes the pain, and quotes a writer on the specific hurt of others seeing what
+    you cannot.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A film has at some point to stop being made for its maker and start being made for an
+      audience; the group is where that pivot happens.
+  scope:
+    domain_discussed_by_source: [animated_film_production, creative_organisations]
+    conditions: "a maker receiving criticism of work still in progress"
+  caveats:
+    - text: "the claim about the pivot from making for yourself to making for others is attributed to the screenwriter Michael Arndt, not asserted by the book's author"
+      origin: extractor_observed
+    - text: "the source states elsewhere that the mechanism cannot help people who cannot digest feedback, and offers no remedy for that case"
+      origin: source_stated
+  source_stated_problems:
+    - "people who refuse to hear criticism without getting defensive"
+  source_stated_remedies:
+    - "headlining — distilling a session's many observations into a digestible takeaway for the director"
+  examples:
+    positive:
+      - {description: "a producer closing a session by asking the director what to blow up, what to reverse, and what he still loves", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_cat_c003_0004, note: "a precondition on the receiving side"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: ambiguous_referent
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "inside a Braintrust meeting"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0015
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "A good note says what is wrong, what is missing, what isn't clear, what makes no sense"
+    - "a good note is specific"
+  concept_label: the_good_note_as_the_unit_of_useful_criticism
+  label_origin: source_verbatim
+  claim: >
+    The source defines the unit of feedback it calls a good note by five properties: it states what
+    is wrong, missing, unclear or senseless; it arrives early enough for the problem to be fixed;
+    it makes no demand; if it contains a proposed fix, that fix illustrates a possibility rather
+    than prescribing an answer; and above all it is specific. The source gives its own failing
+    example — a note that only reports the giver's boredom.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [film_production, creative_organisations]
+    conditions: "any piece of critical feedback on work in progress"
+  caveats:
+    - text: "'specific' and 'timely' are given no threshold; the source relies on the examples to convey them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "\"I'm writhing with boredom\" is not a good note"
+  source_stated_remedies:
+    - "good notes"
+  examples:
+    positive: []
+    counter:
+      - {description: "a note reporting only the giver's boredom, named by the source as the failing case", figure_ref: null}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_cat_c003_001}
+    - {relation: qualified_by, target: sk_cat_c003_0018, note: "constructive criticism adds a further requirement about how the note lands"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "good notes"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0016
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "the solution is often to convene a smaller group—a sort of mini-Braintrust"
+    - "his bigger-than-life presence would make it harder to be candid"
+  concept_label: room_composition_is_the_control_lever_for_candor
+  label_origin: extractor_assigned
+  claim: >
+    When candor fails, the source changes who is in the room rather than exhorting the room. Two
+    stated moves: shrink the group when a director reports that people were holding back, and keep
+    a dominating figure out entirely — the source describes agreeing with Steve Jobs in 1993 that
+    he would not attend, and says candor overrode hierarchy in that case.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Fewer participants encourages more direct communication; an outsized presence suppresses it.
+  scope:
+    domain_discussed_by_source: [creative_organisations, meetings]
+    conditions: "a standing review group whose candor has degraded"
+  caveats:
+    - text: "the exclusion is a single recounted case involving one individual, agreed in a specific negotiation, not a policy the source tested"
+      origin: extractor_observed
+    - text: "the source says it is the manager's job to watch the dynamics, but relies on a director reporting the problem afterwards to detect it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "some people were holding back"
+    - "people dodging and weaving without even knowing it"
+  source_stated_remedies:
+    - "convene a smaller group — a mini-Braintrust"
+    - "keep a bigger-than-life presence out of the room"
+    - "a gentle nudge"
+  examples:
+    positive:
+      - {description: "Steve Jobs excluded from Braintrust meetings by mutual agreement from 1993", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_cat_c003_0006, note: "acts directly on the stated causes of withholding"}
+    - {relation: member_of_system, target: scs_cat_c003_002}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "volume, and Steve Jobs; and the closing pages"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0017
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "Sometimes the Braintrust will know something's wrong, but they will identify the wrong symptom"
+    - "it helped him find a solution even though it failed to diagnose what was truly amiss"
+  concept_label: a_correct_alarm_with_a_wrong_diagnosis_is_still_useful
+  label_origin: extractor_assigned
+  claim: >
+    A reviewing group's detection that something is wrong can be reliable while its account of what
+    is wrong is mistaken, and the mistaken account still has value because it forces the maker to
+    search. The source's recounted case: reviewers said a scene's dialogue made a character seem
+    to be bullying his wife and told the director to rewrite it. The director judged the dialogue
+    right, looked further, and found the real cause was scale — one character drawn far larger
+    than the other. He changed the drawing so she stood at matching size, changed no dialogue, and
+    the same reviewers asked which lines he had rewritten.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The reviewers were responding to what was on the screen; the felt effect was produced by the
+      relative size of the two figures rather than by the words, so the note named the wrong
+      carrier of a correctly perceived problem.
+  scope:
+    domain_discussed_by_source: [animated_film_production, storytelling]
+    conditions: "critique of a scene where several channels carry the same moment at once"
+  caveats:
+    - text: "the account is the director's own recollection, quoted by the source"
+      origin: extractor_observed
+    - text: "nothing here distinguishes in advance a correct alarm with a wrong diagnosis from a note that is simply wrong"
+      origin: extractor_observed
+  source_stated_problems:
+    - "they will identify the wrong symptom"
+  source_stated_remedies:
+    - "if the dialogue is not wrong, what is?"
+  examples:
+    positive:
+      - {description: "The Incredibles: relative figure scale, not dialogue, produced the impression of bullying", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_cat_c003_0011, note: "bounds how far the group's causal account can be trusted"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "additive, not competitive"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0018
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "look at the viewpoints being offered... as additive, not competitive"
+    - "You're building as you're breaking down"
+  concept_label: criticism_should_add_material_rather_than_compete_with_the_idea
+  label_origin: extractor_assigned
+  claim: >
+    Two related requirements about the manner of criticism. First, treat each contribution as
+    adding something rather than as a rival to be beaten: a competitive stance measures other
+    ideas against your own and turns the session into a debate with a winner. Second, construct
+    while criticising — make new pieces out of what has been taken apart — and aim the note so the
+    recipient wants to do the work again.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An additive stance is what allows the maker to see through other people's eyes, which is the
+      benefit the session is for.
+  scope:
+    domain_discussed_by_source: [creative_organisations, film_production]
+    conditions: "group critique"
+  caveats:
+    - text: "the second half is quoted from the director Andrew Stanton, including the teaching analogy; the book's author endorses it by placing it, but it is not his own formulation"
+      origin: extractor_observed
+    - text: "the source gives no test for whether a note was additive; the examples are illustrations"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a competitive approach... turning the discussion into a debate to be won or lost"
+  source_stated_remedies:
+    - "constructive criticism — building as you're breaking down"
+    - "phrase the note as a challenge the recipient wants to take up"
+  examples:
+    positive:
+      - {description: "asking whether you want people to walk out of the theatre quoting those lines, instead of saying the writing is not good enough", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_cat_c003_0015, note: "how the note should land, over and above what it must contain"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "additive, not competitive; good notes"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0019
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "It would be a mistake to think that merely gathering a bunch of people in a room for a candid discussion every couple of months will automatically cure your company's ills"
+    - "Creating a Braintrust is not something you do once and then check off your to-do list"
+  concept_label: the_mechanism_does_not_work_on_installation
+  label_origin: extractor_assigned
+  claim: >
+    The source states three limits on its own mechanism. Trust sufficient for real candor takes
+    time to build and the language of good notes has to be learned. The mechanism cannot help
+    people who reject its premises, get defensive, or lack the ability to absorb feedback and start
+    again. And it changes over time as relationships and departments change, so it has to be
+    watched and adapted continually rather than established once.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [creative_organisations, management]
+    conditions: "an organisation adopting the mechanism from outside"
+  caveats:
+    - text: "the source gives no duration for 'a while', and no way to tell an immature group from an unworkable one"
+      origin: extractor_observed
+  source_stated_problems:
+    - "even the most experienced Braintrust can't help people who don't understand its philosophies"
+  source_stated_remedies:
+    - "watch and protect it continually, making adaptations as needed"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_cat_c003_0004, note: "the source's own limits on the mechanism"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "closing pages"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0020
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "You can and should make your own solution group"
+    - "make you think smarter... put lots of solutions on the table in a short amount of time"
+  concept_label: portable_form_of_the_mechanism_with_two_selection_tests
+  label_origin: extractor_assigned
+  claim: >
+    The source generalises the mechanism beyond its own company and gives two selection criteria,
+    quoted from a director who assembles such a group for each of his own films: the people chosen
+    must make you think more sharply, and must put many candidate solutions on the table quickly.
+    Rank and job title are explicitly declared irrelevant — janitor, intern or trusted lieutenant.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [creative_work_generally]
+    conditions: "any creative person with colleagues available"
+  caveats:
+    - text: "the two criteria are Andrew Stanton's words, presented by the source as guidance to the reader"
+      origin: extractor_observed
+    - text: "the source's own chapter states requirements — deep craft understanding, a knack for storytelling — that these two criteria omit"
+      origin: extractor_observed
+  source_stated_problems:
+    - "more candor in the hallways than in the rooms where fundamental ideas or matters of policy are being hashed out"
+  source_stated_remedies:
+    - "seek out people who are willing to level with you, and when you find them, hold them close"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_cat_c003_0004, note: "the mechanism stripped to something a reader can build"}
+    - {relation: contradicts, target: sk_cat_c003_0009, note: "rank and role declared irrelevant here, while the chapter elsewhere prizes practised peers"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "closing pages"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_cat_c003_0021
+  source_id: catmull_creativity_inc_ch5_honesty_and_candor
+  source_terms:
+    - "People who take on complicated creative projects become lost at some point in the process"
+    - "Where once he or she could see a forest, now there are only trees"
+  concept_label: immersion_in_the_work_destroys_the_perspective_it_requires
+  label_origin: extractor_assigned
+  claim: >
+    The source grounds the whole mechanism in one claim about makers: to create something you must
+    internalise it almost to the point of fusing with it, and that fusion is necessary to the work
+    emerging — but it is also what removes your ability to see the work whole. Every director,
+    however talented or clear of vision, becomes lost somewhere. The problem this creates for a
+    reviewer is stated directly: how do you get someone to address a problem they cannot see?
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Details converge and obscure the whole, so the maker can no longer judge which direction
+      would move the work substantially.
+  scope:
+    domain_discussed_by_source: [animated_film_production, complicated_creative_projects]
+    conditions: "long projects requiring deep immersion"
+  caveats:
+    - text: "stated as universal — 'all directors, no matter how talented' — with no case offered of a maker who kept perspective"
+      origin: extractor_observed
+    - text: "the source's own answer is that the remedy depends on the situation, and it lists three different situations without a way to tell them apart"
+      origin: source_stated
+  source_stated_problems:
+    - "become lost at some point in the process"
+    - "much of what he thinks is visible on screen is, in fact, only visible in his own head"
+  source_stated_remedies:
+    - "the counsel of an outside group of peers"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_cat_c003_0004, note: "the condition the mechanism exists to correct"}
+    - {relation: member_of_system, target: scs_cat_c003_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5 — Honesty and Candor"
+    section: "why the Braintrust is central"
+    page_start: null
+    page_end: null
+    locator: "EPUB text/part0010.html"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
