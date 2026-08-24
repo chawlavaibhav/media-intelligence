@@ -39,7 +39,7 @@ Explicitly kept blocked by clarification 7. Repo also notes the automatic form r
 
 ## Acquisition state
 
-- downloaded_item_count: **0**
+- downloaded_item_count (media files): **0**
 - downloaded_bytes: **0**
 - version/subset: n/a
 
