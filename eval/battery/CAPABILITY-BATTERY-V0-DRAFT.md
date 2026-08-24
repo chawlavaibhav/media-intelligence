@@ -326,19 +326,23 @@ colourway. An embedding metric would have scored `nano_chai_t3` as a pass.
 
 ---
 
-### 6.4 · D4 — `object_count_and_spatial_placement`
+### 6.4 · D4 — `object_count`
 
-**approval_status:** `traced_to_plan_v0` (with a scope restriction, below)
+**approval_status:** `traced_to_plan_v0` (split from the plan's merged dimension — see note below)
 
-**Property.** The specified number of specified objects appear, in the specified spatial
-relation.
+**Property.** The specified number of the specified object appears.
 
-**Provenance.**
-- `PUB` `direct` — GenEval's `counting` and `position` tasks; T2I-CompBench++'s generative
-  numeracy and 2D/3D-spatial relationship categories.
-- `IR` `direct` — `relationships[]` (subject/relation/object) and `creative.hierarchy`
-  (`element_ref` resolution requires the referenced entity to exist and be countable).
-- `OBS` `direct` — `nano_desk_t3` "two laptops" (count violation).
+**Split rationale.** `CAPABILITY-LAB-V0-PLAN.md` merged counting and placement into one dimension.
+Both published sources separate them — GenEval has distinct `counting` and `position` tasks;
+T2I-CompBench++ separates generative numeracy from 2D/3D-spatial relationships — and they fail
+independently: a model can place two objects correctly and produce three of them. They also need
+**different detector settings**: GenEval uses confidence 0.9 for counting and 0.3 elsewhere, so a
+single dimension could not carry one honest `conditions.detector_confidence`. Shared detector
+infrastructure, **separate capability results**.
+
+**Provenance.** `PUB` `direct` — GenEval `counting`, T2I-CompBench++ numeracy. `IR` `direct` —
+`creative.hierarchy` `element_ref` resolution requires referenced entities to exist and be
+countable. `OBS` `direct` — `nano_desk_t3` "two laptops".
 
 **Observation unit:** `frame`.
 
@@ -346,29 +350,65 @@ relation.
 
 | Level | Added stressor |
 |---|---|
-| 1 | 2 distinct objects, no relation specified |
-| 2 | +explicit count (2, 3 or 4 of one object type) |
-| 3 | +explicit spatial relation between two objects |
-| 4 *(not run in V0)* | +count and relation jointly, with attribute binding |
+| 1 | exactly 2 of one object type |
+| 2 | +count raised to 3 or 4 |
+| 3 | +a second object type present at its own specified count |
+| 4 *(not run in V0)* | +count under partial occlusion |
 
-**Pass criterion.** Detector output satisfies the specified count and the rule-based spatial
-predicate, at the confidence thresholds fixed in `conditions`.
+**Pass criterion.** Detector instance count equals the specified count for each named type, at
+`conditions.detector_confidence = 0.9`.
 
-**Instrument.** Object detector plus rule-based geometry — the GenEval protocol. GenEval reports
-**83% agreement with annotators against 88% inter-annotator agreement**, rising to **91% on
-images annotators unanimously agree on**, using Mask2Former (Swin-S, COCO instance segmentation)
-at confidence 0.3, and 0.9 for the counting task specifically.
+**Instrument.** Mask2Former (Swin-S, COCO instance segmentation), counting configuration.
 
-**Scope restriction — this is the honest limit.** GenEval's authors record that the detector is
-confined to MS COCO's 80 classes, merges bounding boxes for overlapping same-class objects, and
-degrades on out-of-distribution imagery such as clip art. Our real subjects are branded products
-and wordmarks, which are not COCO classes. **V0 therefore restricts D4 to COCO-representable
-generic objects.** Brand-mark counting and placement is deferred (§4) with
-`required_but_no_calibrated_instrument`. Presenting a COCO-class result as covering brand marks
-would be exactly the kind of over-claim this battery exists to prevent.
+**instrument_state:** `published_calibration_available, local_confirmation_required`.
 
-**instrument_state:** `published_calibration_available, local_confirmation_required` — the 83%
-figure is GenEval's, measured on their material, not ours. A small local agreement check is
+---
+
+### 6.4b · D4b — `spatial_relationship`
+
+**approval_status:** `traced_to_plan_v0` (split from the plan's merged dimension — see §6.4)
+
+**Property.** Two specified objects stand in the specified spatial relation.
+
+**Provenance.** `PUB` `direct` — GenEval `position`; T2I-CompBench++ 2D/3D-spatial. `IR` `direct` —
+`relationships[]` (subject / relation / object). `OBS` `adjacent` — `nano_sign_t1` "board occludes
+body oddly" is a contact/occlusion failure; V0's predicate vocabulary does not yet cover contact,
+so this observation motivates the dimension without being scorable at V0 (see limits below).
+
+**Observation unit:** `frame`.
+
+**Ladder.**
+
+| Level | Added stressor |
+|---|---|
+| 1 | 2 objects, one 2D relation (left of / right of / above / below) |
+| 2 | +depth relation (in front of / behind) |
+| 3 | +relation holding while both objects are also count-constrained |
+| 4 *(not run in V0)* | +contact relations (holding, resting on) |
+
+**Pass criterion.** Detector bounding-box geometry satisfies the rule-based predicate for the
+specified relation, at `conditions.detector_confidence = 0.3`.
+
+**Limits, stated rather than discovered later.** Bounding-box geometry expresses *relative
+position* well and *contact* not at all. "Is the person actually holding it?" — the question
+SPEC-01's `relationships[]` most wants answered — is **not** decidable from boxes, and no
+calibrated instrument for it was found. Contact relations stay at level 4, unrun, and human-object
+interaction remains in §4 as `required_but_no_calibrated_instrument`.
+
+**instrument_state:** `published_calibration_available, local_confirmation_required` — GenEval
+reports **83% agreement with annotators against 88% inter-annotator agreement**, rising to **91%
+on images annotators unanimously agree on**, using Mask2Former (Swin-S, COCO) at confidence 0.3.
+
+**Scope restriction shared by D4 and D4b — the honest limit.** GenEval's authors record that the
+detector is confined to MS COCO's 80 classes, merges bounding boxes for overlapping same-class
+objects, mis-segments objects with holes, and degrades on out-of-distribution imagery such as clip
+art. Our real subjects are branded products and wordmarks, which are not COCO classes. **V0
+therefore restricts both dimensions to COCO-representable generic objects.** Brand-mark counting
+and placement is deferred (§4) with `required_but_no_calibrated_instrument`. Presenting a
+COCO-class result as covering brand marks would be exactly the over-claim this battery exists to
+prevent.
+
+Note also that GenEval's 83% was measured on *their* material. A small local agreement check is
 specified in calibration plan §3.4.
 
 ---
@@ -636,13 +676,25 @@ design:
 Proposed shape — **image workflows** run D1–D4 (levels 1–3); **video workflows** run D5
 (levels 1–3) plus D1 at frame level on extracted frames; **all** workflows accumulate D6 for free.
 
-| Workflow type | Generating cells | Trials at N=12, R=2 |
-|---|---:|---:|
-| Image — D1, D2, D3, D4 × levels 1–3 (D6 free) | 12 | 288 per image workflow |
-| Video — D5 × levels 1–3, plus D1 on extracted frames | 6 | 144 per video workflow |
+| Workflow type | Generating dimensions × levels | Cells | Trials at N=12, R=2 |
+|---|---|---:|---:|
+| Image | D1, D2, D3, D4, D4b × levels 1–3 | 15 | **360** per image workflow |
+| Video | D5 × levels 1–3, plus D1 on extracted frames × 3 | 6 | **144** per video workflow |
 
-All six dimensions are Controller-approved for V0 (D2 and D5 approved 24 Aug 2026). Exact totals
-depend on the approved roster, which remains a Controller decision.
+**Updated 24 Aug 2026 for the D4 split.** Image workflows now run five generating dimensions, not
+four: 15 cells rather than 12, and 360 trials rather than 288 at `N=12, R=2`. D6 still generates
+nothing and is unchanged.
+
+**D4 and D4b share generations only where the item genuinely satisfies both.** A count item and a
+relation item are different prompts, so the default is separate items. Where one item is designed to
+carry both a specified count *and* a specified relation — level 3 of each ladder — a single
+generation may be scored twice, once per dimension, **producing two separate Registry entries**. The
+table above assumes no sharing, so it is an upper bound; any sharing must be recorded in
+`conditions` so a shared generation is never counted as two independent trials.
+
+Seven dimensions are now defined for V0 (D2 and D5 Controller-approved 24 Aug 2026; D4/D4b split at
+Controller direction). Exact totals depend on the approved roster, which remains a Controller
+decision.
 
 ---
 
@@ -652,8 +704,8 @@ Recorded as requirements, not requests. Nothing here is acquired by Eval.
 
 | ID | Requirement | Why | Status |
 |---|---|---|---|
-| **M1a** | *Instrument*-calibration material: Devanagari images with existing ground-truth transcriptions from published recognition resources (arXiv:2606.29213 release, BSTD, IIIT-ILST, IndicSTR12), **including degraded and real-scan material, not only clean renders** | calibrating I1's reading accuracy | **partly reusable** — conditional on Resources verifying licensing (§9.1) |
-| **M1b** | *Capability* items: prompt → target-string pairs covering conjuncts, matras, nukta and the observed ब/व and य/थ confusion pairs, with native-speaker-verified reference renderings | D1/D5 — feeding generators | must be **built**; no public resource contains these |
+| **M1a** | *Instrument*-calibration material: Devanagari images with existing ground-truth transcriptions from published recognition resources (arXiv:2606.29213 release, BSTD, IIIT-ILST, IndicSTR12), **including degraded and real-scan material, not only clean renders** | calibrating I1's reading accuracy | **candidate for reuse** — conditional on Resources clearing it for bounded internal evaluation under `resources/CHARTER.md` (§9.1) |
+| **M1b** | *Capability* item set: prompt → target-string pairs covering conjuncts, matras, nukta and the observed ब/व and य/थ confusion pairs, with native-speaker-verified reference renderings | D1/D5 — feeding generators | the **item set** must be built; the **target strings themselves may be drawn from existing permissible Hindi text resources** (§9.1) |
 | **M2** | Latin string set matched to M1 on word and character count | D2 delta-vs-Latin design | trivially constructible |
 | **M3** | Reference image sets for person identity: ≥12 subjects, multiple views, with declared invariants and allowed-variation | D3 | needs rights clearance — Resources |
 | **M4** | Generic-object prompt set restricted to MS COCO's 80 classes | D4 detector constraint (§6.4) | constructible from GenEval's public prompt list |
@@ -664,23 +716,36 @@ Recorded as requirements, not requests. Nothing here is acquired by Eval.
 An earlier draft stated M1 "cannot be acquired and must be built." **That rested on the over-broad
 claim corrected in §7.1 and is withdrawn.** M1 splits in two:
 
-- **M1a — reusable, pending licence verification.** Published Devanagari recognition resources
-  carry images with human ground-truth transcriptions, which is exactly what calibrating the
-  *reading* instrument needs. arXiv:2606.29213 states its benchmark, code and models are released,
-  and its arXiv page displays a CC BY 4.0 licence icon. **Eval has not verified any licence and
-  must not.** Per Project Contract separation 9 and RES-001's ownership, rights verification is
-  Resources' work, and every reuse here is conditional on it.
-- **M1b — must still be built.** Prompt/target-string pairs to feed generators exist nowhere
-  public, because no benchmark measures Devanagari *generation*. This is the genuinely proprietary
-  piece, and it is smaller than the original M1.
+- **M1a — candidate for reuse, pending a Resources clearance decision.** Published Devanagari
+  recognition resources carry images with human ground-truth transcriptions, which is exactly what
+  calibrating the *reading* instrument needs. arXiv:2606.29213 states its benchmark, code and models
+  are released, and its arXiv page displays a CC BY 4.0 licence icon.
+
+  **Updated 24 Aug 2026 to current Resources policy.** Reuse is conditional on **Resources clearing
+  the material for bounded internal evaluation under `resources/CHARTER.md`** — not on a licence
+  being found. Under that charter, **absence of a stated licence is no longer an automatic block**
+  for public, ungated material used internally: what blocks is an explicit prohibiting term, a
+  gate, or a use beyond internal evaluation. Our use is internal evaluation only. If Resources
+  clears it, rights are recorded as `not_stated` / `not_verified` and the material **may not** be
+  redistributed, used as training data, delivered to customers, or treated as production-cleared.
+  **Eval performs no rights assessment of any kind** — that is Resources' work.
+
+- **M1b — the item set must be built; the strings need not all be authored.** No public resource
+  contains prompt → target-string pairs for Devanagari *generation*, so the pairing, the difficulty
+  laddering and the reference renderings are ours to construct. **The target strings themselves may
+  be drawn from existing permissible Hindi text resources** rather than written from scratch —
+  ordinary Hindi words and phrases are not scarce, and sourcing them reduces authoring to selection
+  plus native-speaker verification. What must be deliberately constructed is the *coverage*:
+  conjuncts, i/u matras, nukta-bearing characters, and the ब/व and य/थ pairs we have observed being
+  confused. Any external text source used is subject to the same Resources clearance as M1a.
 
 **The two may not substitute for each other.** M1a calibrates whether the checker can *read*
 Devanagari. M1b measures whether a generator can *draw* it. Using recognition material as capability
 items would measure the wrong thing.
 
-**Revised effort.** The original estimate assumed building everything. If M1a reuse clears
-licensing, the native-reader requirement narrows to verifying M1b's reference renderings plus a
-smaller local agreement check — see `INSTRUMENT-CALIBRATION-PLAN-V0.md` §3.1.
+**Revised effort.** The original estimate assumed authoring everything. With M1a clearance and
+string sourcing, native-reader time narrows to verifying M1b's reference renderings plus a local
+agreement check — see `INSTRUMENT-CALIBRATION-PLAN-V0.md` §3.1 and §4.
 
 ---
 
@@ -731,8 +796,9 @@ Carried forward from `CAPABILITY-LAB-V0-PLAN.md`, unchanged, with two additions 
 
 1. ~~D2 and D5 as V0 dimensions~~ — **RESOLVED: both approved by Controller, 24 Aug 2026.**
 2. **The approved workflow roster.** §8.3 is an illustrative example only.
-3. **Human verification budget** — `V` and `Ch` in §8.2 dominate cost. The calibration plan's
-   §5 human-hour estimates need a budget decision before any run.
+3. **Human verification budget** — `V` and `Ch` in §8.2 dominate cost. Calibration alone needs
+   **≈ 11–15.5 hours** (calibration plan §4), of which 2–4 must be a Hindi first-language reader;
+   run-time verification is on top. Needs a budget decision before any run.
 4. **M1 ownership, now split** (§9.1). **M1a** — can Resources verify licensing on the published
    Devanagari recognition resources so their material can calibrate our reading instrument?
    **M1b** — who builds the prompt/target-string set that must still be created from scratch?

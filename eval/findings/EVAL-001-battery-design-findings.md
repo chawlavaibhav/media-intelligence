@@ -46,10 +46,26 @@ Devanagari; it says nothing about whether a diffusion model can *draw* it. Our o
 `still_seedream_headline` (gibberish), `frame_wan_*` (character substitution) — are drawing
 failures. No public benchmark scores them.
 
-**NOT VERIFIED.** OneIG-Bench (NeurIPS 2025 D&B) includes a 200-prompt *Multilingualism* set whose
-language list I could not confirm: the repository README does not enumerate it and the OpenReview
-PDF was behind a browser-verification page. **If that set includes Devanagari, the claim above
-needs narrowing further.** Recorded as an open check, not resolved.
+**RESOLVED 24 Aug 2026 — OneIG-Bench does not affect the claim.** The earlier draft left this open.
+Checked against the **released public dataset** rather than the paper prose:
+
+| Evidence from the released files | Value |
+|---|---|
+| Configs published | exactly two: `OneIG-Bench` (English) and `OneIG-Bench-ZH` (Chinese) |
+| Rows, English config | **1,120** — categories Anime_Stylization, Portrait, General Object, Text Rendering, Knowledge and Reasoning. **No Multilingualism category at all.** |
+| Rows, Chinese config | **1,320** — the same five categories plus 200 rows in category `Multilingualism` |
+| Sampled `Multilingualism` rows (6 inspected, offsets 1150–1155) | Simplified Chinese prompts about Chinese cultural subjects — the boxer Zou Shiming, actress Liu Shishi, magician Liu Qian, esports player Uzi, the Chinese women's curling team, actor Wallace Huo |
+
+**"Multilingualism" in OneIG-Bench does not mean many scripts.** It is the Chinese-language,
+Chinese-culture prompt set — consistent with the paper's own description of it as "100
+culture-related prompts and 100 portrait-related prompts," and with its text-rendering score using
+a constant φ defined only for English (100) and Chinese (50).
+
+**What this establishes, and its limits.** The *structural* evidence is decisive: only two configs
+exist, the category is absent from the English config entirely, and there is no config in any third
+script. **No Devanagari, no Indic script.** The *content* evidence is a sample — 6 of 200 rows — so
+I do not claim to have read every prompt, and nothing here is inferred beyond what the released
+files show. The claim in §1.2 stands unchanged.
 
 ### 1.3 What the recognition benchmarks give us instead — and it is a lot
 
@@ -270,6 +286,18 @@ the battery lives, and every record carries a single free-text label, which FIND
 **Consequence:** Registry `result.failed_trials` permits multiple defects per trial, per Project
 Contract separation 13.
 
+**5.9 · V0 calibration sample sizes cannot support error-rate claims.** Added 24 Aug 2026 at
+Controller direction. The thresholds first drafted ("0 false passes in 30", "≤5% false-pass for
+identity") read as error-rate statements but are qualification gates. A false pass can only occur on
+an item whose ground truth is broken, so the denominator is the broken half: 30 items at 50:50 gives
+**~15 opportunities**, and zero observed there is consistent with a true rate **up to ~18%** (95%
+one-sided bound, `1 − 0.05^(1/n)`). For identity at ~20 items and ~50% drift there are ~10
+opportunities, so a **≤5% threshold is not estimable at all** — the finest observable resolution is
+10% — and zero observed is consistent with **up to ~26%**. Supporting a genuine ≤5% claim needs 59
+opportunities; ≤1% needs ~299. Restated as gates with published bounds in
+`INSTRUMENT-CALIBRATION-PLAN-V0.md` §2b, §3.1 and §3.3. **No Registry entry may describe an
+instrument as low-error on V0 evidence.**
+
 ---
 
 ## 6 · Design corrections to `CAPABILITY-LAB-V0-PLAN.md`
@@ -283,7 +311,7 @@ Proposed, not applied to that file.
 | 3 | "Wan / Veo" as one workflow row | Separate entries. The Registry keys on vendor+model+version (clarification 5) |
 | 4 | "20 trials" undefined | item / trial / repeat / observation defined; correlation rule binding |
 | 5 | Difficulty levels named but not defined | Level N+1 = level N plus exactly one named, independently observable stressor |
-| 6 | "Composition placement and count" merges two dimensions with two ladders | Both GenEval and T2I-CompBench++ separate them, and they need different instruments |
+| 6 | "Composition placement and count" merges two dimensions with two ladders | **Applied 24 Aug 2026 at Controller direction:** split into `object_count` (D4) and `spatial_relationship` (D4b). Both GenEval and T2I-CompBench++ separate them; they fail independently; and they need **different detector confidence settings** (0.9 counting, 0.3 relations), so one dimension could not carry one honest `conditions` block. Shared detector, separate capability results. Image run-shape rises from 12 cells to 15 |
 | 7 | Identity ladder cites `invariants` only | `allowed_variation` is mandatory, or the criterion is undecidable |
 | 8 | `audience.language` cited for on-screen Devanagari | Wrong field. SPEC-01 splits language four ways; on-screen script is `audience.language.on_screen_copy` + `copy.script_system`. `spoken` is a different capability |
 | 9 | `static.*` / `video.*` path shorthands | Not SPEC-01 paths. Correct references are `StaticCreativeExtension.*` / `VideoCreativeExtension.*` |
@@ -309,6 +337,7 @@ Per clarification 11. All accessed **24 Aug 2026**. No paid access was used.
 | **T2VTextBench** | arXiv:2505.04946**v1** · 8 May 2025 · only version published | **v1 — all figures cited are v1; no cross-version mixing** | text fidelity and temporal consistency as separate results (73 prompts, 6 categories, 10 systems, 3 annotators, 0/0.25/0.5/1 scale; v1: "the highest average score is reported for Sora, which is only 0.37", all models <0.4) | its Chinese-only multilingual category |
 | **HYPE-EDIT-1** | arXiv:2602.00105 · 25 Jan 2026 · Chan & Allen | v1 | pass@k with retry cap; effective cost per success including human review time; 10 outputs per task; binary pass/fail; 50 public / 50 private split (noted as V1) | its task set (marketing edits, but not our constraints) |
 | **Can OCR-VLMs Read Devanagari? A Stress-Test Benchmark and Post-Correction Study** | arXiv:2606.29213v1 · 28 Jun 2026 · A. P. Singh | v1 | calibration-set design (clean synthetic renders do not discriminate: all 10 systems chrF++ 91–98; real scans spread 76 points); instrument evidence (Gemini 2.5 Flash 86.3, Qwen3-VL-8B 75.2, GPT-5.5 58.5); "strong English OCR does not predict Indic OCR"; catastrophic-repetition screening; chrF++ as graded diagnostic | its scores as our capability numbers — it measures *reading*, not *generation*; licence not verified by Eval |
+| **OneIG-Bench released dataset** | HF `OneIG-Bench/OneIG-Bench`, configs `OneIG-Bench` / `OneIG-Bench-ZH` · NeurIPS 2025 D&B (arXiv:2506.07977) | released files as published, accessed 24 Aug 2026 | resolved the open Multilingualism question from the files themselves: two configs only (EN 1,120 rows, ZH 1,320), `Multilingualism` present only in ZH and Chinese in content (§1.2) | its text-rendering dimension as Devanagari evidence — EN/ZH only |
 | Devanagari recognition resources surveyed | IIIT-ILST arXiv:2104.04437 · IndicSTR12 (CVIT 2023) · BSTD arXiv:2511.23071 · IndicVisionBench arXiv:2511.04727 · MLT-17/19 · DohaScript arXiv:2602.18089 | as cited | candidate reusable calibration material for the *reading* instrument, pending Resources licence verification | as generative-rendering evidence — none measures it |
 | **fal.ai public pricing page** | https://fal.ai/pricing | accessed 24 Aug 2026 | Seedream V4 $0.03/image; Nano Banana $0.0398/image; Wan 2.5 $0.05/s; Veo 3 $0.40/s, normalised to 1MP | ⚠️ Nano Banana **Pro** priced separately and **not confirmed** on the vendor page; the plan's observed ~$0.15 corresponds to the Pro variant |
 
@@ -347,3 +376,41 @@ No assumption was promoted or demoted; EVAL-001 produced no experimental result.
 - Nothing about creative fitness. V0 is A-side by decision, not by finding.
 - Nothing about whether the four V0 dimensions are the *right* four. They are the traceable,
   affordable four. Coverage is not claimed.
+
+---
+
+## 10 · Revision history
+
+Kept here so the Controller Brief stays short and the audit trail stays complete. **No revision
+deleted an earlier claim; withdrawn claims are marked as withdrawn in place.**
+
+### Revision 1 — 24 Aug 2026
+Initial deliverables: battery draft, Registry schema, calibration plan, these findings, Controller
+Brief.
+
+### Revision 2 — 24 Aug 2026, after first Controller review
+Three evidence corrections plus a version pin.
+
+| # | Change | Files |
+|---|---|---|
+| 1 | **"No public benchmark covers Devanagari" withdrawn as too broad.** Devanagari recognition benchmarks exist and are numerous. Narrowed to: no benchmark measures *generative* Devanagari rendering | findings §1; battery §7.1 |
+| 2 | **M1 reassessed and split** into M1a (reusable recognition material) and M1b (capability items). Three design corrections followed from arXiv:2606.29213v1 | battery §9/§9.1; calibration §3.1 |
+| 3 | **Cost ratio demoted** from finding to illustrative scenario with its unapproved assumptions named | battery §8.3; findings §4 |
+| 4 | **T2VTextBench pinned to arXiv:2505.04946v1**, the only published version; no cross-version mixing | findings §4, §7; battery §6.5 |
+| 5 | D2 and D5 recorded as `controller_approved_v0` | battery §6.2, §6.5, §12 |
+| 6 | Corrected an inaccurate claim of my own: `eval/HANDOFF.md` does **not** drop the "correct verdicts" qualifier | findings §5.1–5.2; battery §5.2 |
+
+### Revision 3 — 24 Aug 2026, after second Controller review
+
+| # | Change | Files |
+|---|---|---|
+| 1 | **`object_count_and_spatial_placement` split** into D4 `object_count` and D4b `spatial_relationship`. They fail independently and need different detector confidences (0.9 vs 0.3). Run-shape: image workflows rise from 12 cells / 288 trials to **15 cells / 360 trials** | battery §6.4, new §6.4b, §8.4; findings §6 row 6 |
+| 2 | **Calibration thresholds relabelled as qualification gates** with published 95% bounds (~18% text, ~26% identity). **The ≤5% identity threshold is withdrawn as not estimable** at ~10 drifted items | calibration new §2b, §3.1, §3.3; findings new §5.9 |
+| 3 | **M1a reuse re-conditioned** on Resources *clearing* material for bounded internal evaluation under `resources/CHARTER.md`; licence silence alone is no longer an automatic block | battery §9/§9.1; calibration §3.1 |
+| 4 | **Human hours made consistent** at **≈ 11–15.5 h total, 2–4 h native reader** across calibration §4, battery §9.1 and §12, Handoff and Brief. I4 raised to 2–2.5 h for the two predicates; M1b assembly added at 1–1.5 h | all four files |
+| 5 | **M1b narrowed:** the *item set* must be built, but target strings may be sourced from existing permissible Hindi text rather than authored | battery §9/§9.1; calibration §3.1 |
+| 6 | **OneIG-Bench resolved from its released dataset** rather than left open. Two configs only; `Multilingualism` exists only in the Chinese config and is Chinese in content. Structural evidence decisive; content evidence is a 6-of-200 sample, not extrapolated | findings §1.2, §7 |
+| 7 | D2 and D5 remain approved. Workflow roster, human-time budget and Registry cross-stream architecture remain unapproved/deferred | battery §12; Brief |
+
+**Standing across all revisions:** no benchmark run, no generation call, no money spent, no dataset
+acquired, and no historical finding, script or result file altered.

@@ -48,6 +48,55 @@ changes.
 
 ---
 
+## 2b · What a V0-sized calibration can and cannot establish
+
+**Added 24 Aug 2026 at Controller direction.** The thresholds in §3 are **qualification gates**, not
+error-rate measurements. Stating them without this section would let a practical hurdle read as a
+statistical claim.
+
+**Two different things, kept apart:**
+
+- **Qualification gate** — a pass/fail hurdle at V0 sample sizes. "Zero false passes in this set"
+  is a reasonable bar for *admitting* an instrument, because an instrument that false-passes even
+  once on a small deliberately-adversarial set is clearly unfit.
+- **Error-rate claim** — a statement about the instrument's true underlying rate. This requires
+  enough opportunities to bound it, and V0 does not have them.
+
+**The arithmetic, stated plainly.** A false pass can only occur on an item whose ground truth is
+*broken*, so the denominator is the broken half, not the whole set. With zero events observed in
+*n* opportunities, the one-sided 95% upper bound on the true rate is `1 − 0.05^(1/n)`:
+
+| Opportunities (broken items) | Zero observed → true rate could still be as high as |
+|---:|---:|
+| 10 | **26%** |
+| 15 | **18%** |
+| 20 | 14% |
+| 30 | 9.5% |
+| 59 | 5.0% |
+| 299 | 1.0% |
+
+**Consequences for V0, stated as limits rather than discovered later:**
+
+- **I1 / I2** — 30 items at ~50:50 gives ~15 broken items. "0 false passes in 30" therefore means
+  **0 in ~15 opportunities**, and is consistent with a true false-pass rate **up to ~18%**. It is a
+  usable admission gate. It is **not** evidence of a near-zero rate.
+- **I3** — ~20 items at ~50% drift gives ~10 drifted items. **A ≤5% threshold is not estimable at
+  that size**: the finest observable resolution is 1/10 = 10%, so the threshold cannot be tested
+  even in principle, and zero observed is consistent with a true rate up to **~26%**. Restated as a
+  gate in §3.3.
+- **Supporting a ≤5% claim** would need **59 broken/drifted items** with zero observed (~118 items
+  at 50:50). Supporting ≤1% would need ~299. Neither is proposed for V0.
+
+**Recording rule.** Every calibration result carries its opportunity count and its 95% upper bound
+alongside the observed rate. The Registry's `instrument.calibration_ref` points at a record that
+states both. **No Registry entry may describe an instrument as having a low error rate on V0
+evidence** — only as *having passed the V0 qualification gate at a stated bound*.
+
+**These bounds assume independent opportunities.** Correlated items (frames from one clip, repeats
+of one prompt) do not each count as an opportunity — see §5.4 of the battery draft.
+
+---
+
 ## 3 · Per-instrument calibration requirements
 
 Each instrument below states: what it is, the ground truth it must be measured against, the
@@ -87,13 +136,20 @@ resources carry images with human ground-truth transcriptions, which is exactly 
 and models released; arXiv page shows a CC BY 4.0 icon), the Bharat Scene Text Dataset, IIIT-ILST
 and IndicSTR12.
 
-**All reuse is conditional on Resources verifying licensing.** Eval has not verified any licence
-and must not — per Project Contract separation 9 and RES-001's ownership, rights verification is
-Resources' work. Until it clears, treat M1a as *candidate* material.
+**Reuse is conditional on Resources clearing the material for bounded internal evaluation under
+`resources/CHARTER.md`** (wording updated 24 Aug 2026 to current policy). Under that charter, the
+**absence of a stated licence is not by itself a block** for public, ungated material used
+internally; what blocks is an explicit prohibiting term, an access gate, or a use beyond internal
+evaluation. Our use is internal evaluation only. If cleared, rights are recorded as `not_stated` /
+`not_verified`, and the material may not be redistributed, used as training data, delivered to
+customers or treated as production-cleared. **Eval performs no rights assessment** — that is
+Resources' work, and until it is done M1a is *candidate* material.
 
 **What reuse does not cover.** These resources calibrate whether the checker can *read* Devanagari.
-They cannot serve as capability items, which measure whether a generator can *draw* it. That set
-(M1b) must still be built.
+They cannot serve as capability items, which measure whether a generator can *draw* it. That item
+set (M1b) must be built — though its **target strings may be sourced from existing permissible
+Hindi text** rather than authored, leaving selection, coverage design and native-speaker
+verification as the work.
 
 #### Three material corrections from arXiv:2606.29213v1
 
@@ -131,11 +187,12 @@ external ranking may be adopted as ours.
 | Repeat runs | 3 runs per item on the leading candidate | consistency is currently unmeasured |
 | Readers | 2 independent native readers on a ≥ 10-item overlap | inter-annotator agreement bounds achievable instrument agreement |
 
-**Acceptance thresholds (proposed, asymmetric).**
+**Acceptance thresholds (proposed, asymmetric).** All are **qualification gates at V0 sample
+sizes**, bounded per §2b — not error-rate measurements.
 
 | Measure | Threshold | Reasoning |
 |---|---|---|
-| **False-pass rate (gate)** | **0 in 30** | the disqualifying failure mode. Sonnet produced 6 in 13. Any false pass at this sample size is disqualifying, not a deduction. |
+| **False-pass rate (gate)** | **0 in ~15 broken items** — 95% upper bound **~18%** | the disqualifying failure mode. Sonnet produced 6 in 13, so a single false pass here is disqualifying rather than a deduction. **Passing does not establish a low rate:** it is consistent with up to ~18% true. Supporting a ≤5% claim would need 59 broken items (§2b). |
 | False-fail rate (gate) | ≤ 10% | costs a regeneration, not a customer |
 | Gate agreement with native reader | ≥ 0.90 | |
 | Diagnostic agreement (character-level) | ≥ 0.75, **reported separately** | Qwen caught ब→व but silently corrected चाथ→चाय: gate right, diagnosis incomplete. A gate-qualified instrument may still be diagnosis-disqualified, and the Registry stores `instrument.role` for exactly this. |
@@ -149,16 +206,18 @@ peer-reviewed bar for the same class of task in the same year, and a reasonable 
 It is **not** our threshold — theirs is a graded score across 12 languages, ours is a binary gate
 on one script, and clarification 4 forbids importing their result as ours.
 
-**Human time estimate — revised.** Two cases, because M1a reuse changes the total:
+**Human time estimate — I1: 2–4 hours of Hindi first-language reader time.** Two cases:
 
-- **If M1a reuse clears licensing:** existing resources supply images with ground truth, so
-  native-reader time is needed mainly to verify M1b's reference renderings and to adjudicate a
-  smaller local agreement check — **≈ 2–3 hours**.
-- **If it does not clear:** the full set must be read from scratch — ~30 items × 2 readers × ~2 min
-  plus a 10-item overlap and adjudication — **≈ 3–4 hours**, plus ~1 hour to build the strings.
+- **M1a cleared by Resources: ≈ 2–3 h.** Existing resources supply images with ground truth, so
+  reader time goes to verifying M1b's reference renderings and adjudicating a local agreement check.
+- **M1a not cleared: ≈ 3–4 h.** The full set is read from scratch — ~30 items × 2 readers × ~2 min,
+  plus a 10-item overlap and adjudication.
 
-Either way this remains the most load-bearing human requirement in V0, and **no one currently
-owns it**. The licence question is Resources' and gates which estimate applies.
+String *sourcing* for M1b (selection from existing permissible Hindi text) is non-specialist work
+and is counted in the M1b line of §4, not here.
+
+This is the most load-bearing human requirement in V0 and **no one currently owns it**. The
+Resources clearance decision determines which estimate applies.
 
 **Re-calibration triggers.** Instrument version change (FINDINGS-01: *"re-measured when its
 version changes"*); provider serving-stack change; any script or font family not in the
@@ -191,7 +250,8 @@ than assumed absent**, and I1's cost is not justified by an unreproducible numbe
 character count so the D1↔D2 delta is interpretable.
 
 **Thresholds.** As §3.1, except diagnostic agreement ≥ 0.85 (Latin character confusions are
-easier) and false-pass 0 in 30 (unchanged — the asymmetry argument does not depend on script).
+easier). False-pass gate unchanged at **0 in ~15 broken items, 95% upper bound ~18%** — the
+asymmetry argument does not depend on script, and neither does the sample-size limit (§2b).
 
 **Human time estimate.** ≈ 1–1.5 hours, non-specialist.
 
@@ -227,14 +287,23 @@ changed colour" and "the lighting changed the apparent shade" are the same obser
 the human and the instrument are being asked an undecidable question. SPEC-01 defines both fields;
 `CAPABILITY-LAB-V0-PLAN.md`'s ladder referenced only the first.
 
-**Acceptance thresholds (proposed).**
+**Acceptance thresholds — restated 24 Aug 2026 at Controller direction.**
 
-| Measure | Threshold |
-|---|---|
-| False-pass rate (identity drifted, judged held) | ≤ 5% |
-| False-fail rate | ≤ 15% |
-| Per-invariant agreement with human | ≥ 0.80 |
-| Inter-annotator agreement | reported; instrument threshold may not exceed it |
+The earlier draft set a **≤5% false-pass rate**. **That threshold is withdrawn as not estimable at
+this sample size.** ~20 items at ~50% drift gives ~10 drifted items — ten opportunities to
+false-pass — so the finest rate the design can even observe is 1/10 = 10%. A ≤5% bar cannot be
+tested, passed or failed on this evidence.
+
+| Measure | V0 gate | What it does and does not support |
+|---|---|---|
+| **False-pass (drifted identity judged as held)** | **0 in ~10 drifted items** | qualification gate only. 95% upper bound on the true rate: **~26%**. Explicitly **not** an error-rate claim. |
+| False-fail rate | ≤ 2 in ~10 held items | tolerance for the cheaper error direction |
+| Per-invariant agreement with human | ≥ 0.80 | reported with its item count |
+| Inter-annotator agreement | reported; instrument threshold may not exceed it | you cannot beat your ground truth |
+
+**If a real error-rate claim is wanted for identity**, the design needs ~59 drifted items
+(~118 items at 50:50) — roughly six times the V0 sample and a proportional increase in annotator
+time. Recorded as a V1 option, **not** proposed for V0.
 
 DreamBench++'s 83.31% is the reference point for what is achievable with a well-structured
 multimodal judge on this exact task class. Ours is a stricter per-invariant binary rather than
@@ -248,7 +317,7 @@ different problems); a new invariant vocabulary term.
 
 ---
 
-### 3.4 · I4 — Object detector (D4)
+### 3.4 · I4 — Object detector (D4 `object_count` and D4b `spatial_relationship`)
 
 **Instrument.** Object detector plus rule-based geometric predicates — the GenEval protocol.
 
@@ -264,18 +333,26 @@ on out-of-distribution imagery such as clip art. Commercial creative — studio 
 depth of field, branded packaging, graphic overlays — is closer to that out-of-distribution
 regime than to COCO photographs.
 
-**Local confirmation required (cheap).** ~20 items from our own material, hand-labelled for count
-and spatial relation, agreement measured against the detector. Threshold: **≥ 0.80 agreement**;
-below that, D4 is restricted further or moved to `required_but_no_calibrated_instrument`.
+**Local confirmation required (cheap).** ~20 items from our own material, hand-labelled for **both
+count and spatial relation**, agreement measured against the detector **separately per dimension**.
+One labelled set serves both, but the two agreements are reported apart — they can diverge, and
+that is the reason D4 and D4b are separate dimensions (battery §6.4). Threshold: **≥ 0.80
+agreement** per dimension; below that, the affected dimension is restricted further or moved to
+`required_but_no_calibrated_instrument`. **D4 and D4b may qualify independently** — a detector good
+enough to count is not automatically good enough to judge depth ordering.
 
-**Scope restriction already applied in the battery.** V0 D4 covers only COCO-representable
-generic objects. Brand marks are deferred — reporting a COCO-class result as covering wordmarks
-would be precisely the over-claim this plan exists to prevent.
+Two detector settings are involved and must be confirmed separately: **confidence 0.9 for counting,
+0.3 for relations**, per GenEval. Each is stored in `conditions.detector_confidence`.
 
-**Human time estimate.** ≈ 1.5–2 hours, non-specialist.
+**Scope restriction already applied in the battery.** V0 covers only COCO-representable generic
+objects. Brand marks are deferred — reporting a COCO-class result as covering wordmarks would be
+precisely the over-claim this plan exists to prevent. Contact relations (holding, resting on) are
+not decidable from bounding-box geometry and stay unrun at level 4.
+
+**Human time estimate.** ≈ 2–2.5 hours, non-specialist — one labelled set, two predicates.
 
 **Re-calibration triggers.** Detector or threshold change; a new object class outside COCO; a
-visual style materially unlike the confirmation set.
+visual style materially unlike the confirmation set; a new spatial predicate.
 
 ---
 
@@ -295,28 +372,36 @@ downstream can detect.
 
 ## 4 · Threshold summary
 
-| Instrument | Dimension | State today | False-pass bar | Human hours |
-|---|---|---|---|---:|
-| I1 Devanagari transcription | D1, D5 L2+ | `provisional_uncalibrated` | **0 in 30** + outlier screen | 2–4 (native reader) — depends on M1a licensing |
-| I2 Latin transcription | D2, D5 L1 | `requires_calibration` | 0 in 30 | 1–1.5 |
-| I3 Identity judge | D3 | `requires_calibration` | ≤ 5% | 5–6 |
-| I4 Object detector | D4 | `published_calibration_only` | — (≥0.80 agreement) | 1.5–2 |
-| I5 Operational logging | D6 | `deterministic` | n/a | 0 |
-| *(none)* | logo fidelity, human-object interaction | `required_but_no_calibrated_instrument` | n/a | n/a |
+All false-pass bars are **V0 qualification gates**, bounded per §2b. None is an error-rate claim.
 
-**Total human calibration time: ≈ 11–14 hours**, of which **3–4 must be a Hindi first-language
-reader**. This is one-off setup, not per-run.
+| Instrument | Dimension(s) | State today | V0 false-pass gate | 95% upper bound if passed | Human hours |
+|---|---|---|---|---:|---:|
+| I1 Devanagari transcription | D1, D5 L2+ | `provisional_uncalibrated` | 0 in ~15 broken + outlier screen | ~18% | **2–4** *(native reader)* |
+| I2 Latin transcription | D2, D5 L1 | `requires_calibration` | 0 in ~15 broken | ~18% | 1–1.5 |
+| I3 Identity judge | D3 | `requires_calibration` | 0 in ~10 drifted | ~26% | 5–6 |
+| I4 Object detector | D4, D4b | `published_calibration_only` | n/a — ≥0.80 agreement per dimension | n/a | 2–2.5 |
+| I5 Operational logging | D6 | `deterministic` | n/a | n/a | 0 |
+| — item-set assembly | M1b | — | n/a | n/a | 1–1.5 |
+| *(none)* | logo fidelity, human-object interaction | `required_but_no_calibrated_instrument` | n/a | n/a | n/a |
+
+**Total human calibration time: ≈ 11–15.5 hours**, of which **2–4 must be a Hindi first-language
+reader**. One-off setup, not per-run.
+
+The I1 range and part of the M1b line depend on the Resources clearance decision on M1a (§3.1).
+The upper bounds above are what a *passing* V0 calibration would support — they are deliberately
+wide, and narrowing them is a V1 sample-size decision, not a V0 one.
 
 ---
 
 ## 5 · What blocks a run today
 
 1. **I1 has no native-speaker ground truth.** D1 and D5 levels 2+ cannot produce Registry entries.
-   Requires a Hindi first-language reader plus M1b (must be built) and, ideally, M1a (reusable only
-   once Resources verifies licensing).
-2. **I3 has no frozen rubric and no reference sets.** M3 needs rights clearance from Resources.
-3. **Human calibration time is unbudgeted.** ~11–14 hours is not currently approved anywhere.
-4. **I4's local confirmation set does not exist.** Cheapest of the four to unblock.
+   Requires a Hindi first-language reader plus the M1b item set, and ideally M1a — which Resources
+   must clear for bounded internal evaluation before it can be used.
+2. **I3 has no frozen rubric and no reference sets.** M3 needs Resources clearance.
+3. **Human calibration time is unbudgeted.** ≈ 11–15.5 hours is not approved anywhere.
+4. **I4's local confirmation set does not exist.** Cheapest to unblock, and now covers two
+   dimensions.
 
 **None of these blocked EVAL-001**, because EVAL-001's deliverable is the specification. They
 block the *run*, which is a separate approval.
