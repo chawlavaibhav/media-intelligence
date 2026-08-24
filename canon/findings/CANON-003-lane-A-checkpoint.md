@@ -1,6 +1,7 @@
 # CANON-003 Lane A — checkpoint
 
-**Branch:** `work/canon-003-a` · **Updated:** 24 Aug 2026 (after book 7)
+**Branch:** `work/canon-003-a` · **Updated:** 24 Aug 2026 (after book 7; book 8 reassigned)
+**Lane status:** **COMPLETE.** Both remaining assigned books are done. Book 8 is no longer Lane A's.
 **Purpose:** durable lane state. The branch is memory; the chat is disposable. A fresh session can
 resume from this file alone.
 
@@ -10,7 +11,7 @@ resume from this file alone.
 |---|---|---|
 | 6 | Timothy Samara — *Making and Breaking the Grid* | **complete** |
 | 7 | Michael Freeman — *The Photographer's Eye: A Graphic Guide* | **complete** |
-| 8 | John Alton — *Painting With Light* | not started |
+| 8 | John Alton — *Painting With Light* | **reassigned out of Lane A** — see below |
 
 ## Completed
 
@@ -64,6 +65,9 @@ Worth a second reader's attention before synthesis:
   is too thin to act on.
 - **LA-11 should not be merged with LA-02.** "No page" (EPUB) and "false page" (converted PDF) are
   different problems and the second is the more dangerous.
+- **LA-10's forward inference is now weaker than when written.** It predicted that Lane A's books 7
+  and 8 would both lack a historical comparator. Book 7 confirmed it; book 8 left the lane before it
+  could be checked, so LA-10 now rests on two confirmed books (6 and 7) and one untested prediction.
 
 **LA-08 carries a contamination disclosure** — the production-binding observation is not independent
 of SPEC-04, which I had read and which contains the *Light: Science & Magic* case as a worked
@@ -94,7 +98,35 @@ constraints, with nothing added. A stricter check that had crept in — requirin
 for `source_support: text_and_visual`, which SPEC-03 rule 4 binds only for `visual` — was downgraded
 to a warning so the instrument stays frozen.
 
+## Book 8 — reassigned, not abandoned
+
+**Controller instruction, 24 Aug 2026:** book 8, *Painting With Light*, has been reassigned to
+`work/canon-003-rebalance-d`. Lane A was told to continue with book 7 only and not to start book 8.
+
+**State at the moment of reassignment: nothing had been produced.** Source inspection had begun in
+the session scratchpad — the EPUB was unzipped and its contents page and chapter structure read —
+and then stopped. No extraction was performed, no knowledge object was written, and **nothing
+relating to book 8 exists on this branch.** Verified: `canon/knowledge/current/` contains no Alton
+directory and the working tree is clean.
+
+The lane whose assignment it becomes therefore starts from a genuinely blank slate, with no partial
+work to inspect, reconcile or undo.
+
+**One observation is worth passing on, since it was made before the stop and costs the next worker
+nothing to have.** The local copy is a calibre-produced EPUB (`calibre:timestamp` 2014) of the
+University of California Press reissue of the 1949 original. Its whole text sits in four very large
+HTML files with no per-chapter split and no printed-page anchors, and its 328 images have a median
+size of about 430 × 390 px. Two consequences follow that are relevant to the visual-availability
+classification in the source inventory: chapter boundaries have to be recovered from the contents
+page rather than from the file structure, and there are no printed-page numbers to cite, so
+provenance will need converted-file locators of the kind used for book 7. This is offered as
+context, not as a finding — it was not verified to the standard the frozen procedure requires, and
+the receiving lane should establish it independently.
+
 ## Next action
 
-Begin **book 8 — John Alton, *Painting With Light*** (EPUB, 329 figures per the inventory; a 1949
-practitioner text on cinematography, and the oldest source in this lane by six decades).
+**None. Lane A is complete and stops here**, per the Controller instruction and the CANON-003
+context-window rule to stop at a completed-book boundary.
+
+Everything is committed and pushed to `origin/work/canon-003-a`. This lane does not merge itself
+and does not perform final synthesis.

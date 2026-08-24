@@ -253,9 +253,11 @@ selected beyond those has nothing to compare against. Samara is the third book i
 `no historical comparator`, after Albers and Vignelli, and Lane A's remaining two books are
 unlikely to differ.
 
-**Books:** 6 (Samara), and by inspection of the repository the same will hold for 7 and 8.
-**Status:** OBSERVED for book 6; INFERRED for the rest.
-**Distinct books:** 1 confirmed.
+**Books:** 6 (Samara), 7 (Freeman). **Status:** OBSERVED for both.
+**Distinct books:** 2 confirmed.
+**Updated 24 Aug 2026:** when written this entry predicted the same for Lane A's books 7 and 8.
+Book 7 confirmed it. Book 8 was reassigned out of Lane A before it could be checked, so the
+prediction stands untested for that book and this entry rests on two confirmed cases, not three.
 **Layer:** batch method.
 **New or recurrence:** recurrence first seen inside this batch (Albers, Vignelli).
 
@@ -462,3 +464,33 @@ be counted as one recurrence. LA-02 is a permanent, self-announcing limitation. 
 affordance that a visual pass can walk into while believing it has verified something. Kept separate
 deliberately, so the integrator does not merge them into "ebook formats lose layout" and lose the
 distinction that matters.
+
+
+---
+---
+
+# Lane A close-out — 24 Aug 2026
+
+**Lane A is complete at two books, not three.** Book 8, *Painting With Light*, was reassigned by the
+Controller to `work/canon-003-rebalance-d` while book 7 was closing. Nothing for book 8 was produced
+and nothing relating to it exists on this branch.
+
+**What this file contains:** fifteen issues (LA-01 to LA-15) drawn from two books — Samara's
+*Making and Breaking the Grid* and Freeman's *The Photographer's Eye: A Graphic Guide*.
+
+**How the integrator should weight them.** Almost every entry here rests on one or two distinct
+books, and the file says so entry by entry. Two are worth separating from the rest because a second
+book actually tested them rather than merely adding a mention:
+
+- **LA-01** was raised on book 6 and then genuinely tested by book 7, because the two sections are
+  nearly the same size (57 and 59 pages) and produced very different counts (79 and 34 objects). It
+  moved from a worry to a conclusion: source shape dominates, section size is a secondary confound.
+- **LA-15** rests on two distinct books landing at opposite poles of the same field
+  (`executable_by`) without either needing a vocabulary addition. That is positive evidence with two
+  independent instances behind it.
+
+Everything else here is single-book and should be read as a candidate for recurrence, not as an
+established pattern. **LA-08 additionally carries a contamination disclosure.**
+
+Nothing in this file was applied. No schema, granularity rule, ontology term or relation type, or
+visual-pass method was changed at any point in this lane.
