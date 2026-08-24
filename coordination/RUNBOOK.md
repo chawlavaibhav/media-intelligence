@@ -50,6 +50,26 @@ Any of the 8 triggers in `shared/AUTONOMY-POLICY.md`. On a stop: freeze evidence
 Controller Brief with `STATUS: needs_controller_review`, do not attempt to resolve the trigger and
 continue.
 
+## Controller-review checkpoints — GitHub is the handoff
+A worker must not leave important questions or state only inside its chat transcript. Before any
+planned Controller review or STOP:
+
+1. Write the current status, observations, questions and decisions needed into the task's existing
+   Controller Brief, or into `<stream>/tasks/<TASK-ID>-CHECKPOINT.md` if the Controller Brief does
+   not yet exist.
+2. Commit the checkpoint on `work/<stream>`.
+3. Push `work/<stream>` to GitHub.
+4. Then stop and report only the task ID plus commit SHA to the human operator.
+
+The Controller reads the branch directly from GitHub. The human operator therefore does **not** need
+to copy/paste normal worker reports between Claude and the Controller. Copy/paste is only a fallback
+when the worker cannot write/push the checkpoint or when the question exists before repository
+access is available.
+
+A worker may update its own `HANDOFF.md` when useful, but the task checkpoint / Controller Brief is
+the authoritative review surface. Do not use `HANDOFF.md` as a substitute for recording the actual
+question and evidence.
+
 ## How the Controller reviews a Controller Brief
 Read `OBSERVED` and `INFERRED` as separate claims — the first is evidence, the second is
 interpretation. `RECOMMENDED NEXT STEP` is a suggestion only. Approve, amend, or reject; the
