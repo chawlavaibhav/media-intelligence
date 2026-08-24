@@ -2,7 +2,8 @@
 
 **TASK:** RES-001
 **STATUS:** needs_controller_review
-**STAGE:** Phase 0 — bootstrap and comprehension complete. Acquisition not started.
+**STAGE:** Phase 1 — source discovery, official-source verification and rights assessment complete
+for 8 of 9 approved families. No media downloaded yet.
 **Opened:** 24 Aug 2026 · **Last updated:** 24 Aug 2026
 
 > **Working document.** Completed and finalised at the end of RES-001. Controller amendments are
@@ -76,67 +77,80 @@ Recorded so the arithmetic is auditable rather than improvised mid-run.
 **Effect on Phase-0 blockers:** blocking question **B1 (storage) is resolved.** No disk cleanup is
 required — 22 GB free supports the amended budget. B2–B5 remain open.
 
+### Amendment 02 — RES-001 clarifications 1–5 · issued 24 Aug 2026
+
+Received via the updated `resources/tasks/RES-001.md` (merged at `f41bebc`). These close all four
+Phase-0 blocking questions. Recorded here so the Brief remains a complete record.
+
+| Question | Controller answer | Effect on the work |
+|---|---|---|
+| B2 — which source list governs | `RES-001.md` governs. `CORPUS-SOURCING-PLAN.md` is a candidate pool, not a second approval list. | A plan dataset is usable only if it clearly sits inside an approved family. |
+| B3 — what is PVP | **Personalized Visual Persuasion.** Use only that expansion; if no official distribution verifies, record unavailable rather than guess at a similar name. | Resolved and assessed. |
+| B4 — licence bar | **Internal research and evaluation only.** A `research-only` label is not automatically sufficient. Non-commercial-only, academic-only, entity-excluding or ambiguous terms → `blocked_license` / `metadata_only`, no download. | This is a strict bar and it is what blocked KoNViD-1k and PVP. |
+| B5 — access gates | Do not cross any account/terms/API-key/institutional gate. Record `blocked_access`, continue to the next approved candidate. Escalate the whole task only if the success criterion becomes unreachable, a human permission decision is needed, or ambiguity affects already-downloaded material. | Pitt Ads and LSVQ skipped without escalation; success criterion still met. |
+
+Also confirmed in the amended task file: disk floor is **12 GB** (resolving the 10–12 GB range in
+Amendment 01 in favour of the stricter figure, matching the conservative reading already adopted),
+and archive deletion now explicitly requires the archive to be **fingerprinted before deletion**.
+
+Clarification 5 is load-bearing for how Phase 1 should be read: *"Known blocked candidates are
+evidence, not failure... Do not weaken the rights bar merely to reach three families or a byte
+target."* No source below was admitted by relaxing the bar.
+
 ---
 
 ## WHAT I DID
 
-Phase 0 only. Bootstrapped the Resources worktree, confirmed branch `work/resources`, fetched
-origin, and fast-forwarded cleanly from `0a831ca` to `b891fc3` (9 commits, no conflicts, tree clean
-before and after). Read the Project Contract, Control State, Autonomy Policy, Runbook, Resources
-Charter, Resources Handoff, RES-001 and the Corpus Sourcing Plan, plus `.gitignore`, the Assumptions
-register, Workstream Status and the Capability Lab V0 plan. Verified local tooling and storage
-without contacting any external service. Produced a comprehension report and a blocking-question
-list for the Controller.
+**Phase 0.** Bootstrapped the Resources worktree on `work/resources`, fast-forwarded to `origin/main`,
+read the governing documents, verified tooling and storage locally, and reported four blocking
+questions without starting work.
+
+**Phase 1.** After the Controller answered all four and issued Amendments 01–02, merged `origin/main`
+(`f41bebc`), acknowledged `shared/COMMUNICATION-STANDARD.md`, then resolved 8 of the 9 approved
+source families to their official distribution points and read the licence, terms and access
+conditions directly from those pages. Recorded rights as six separate fields per source. Downloaded
+no media.
 
 ## OBSERVED
 
-- Worktree, branch and fast-forward as above; no local commits, no dirty state, no force operations.
-- `.gitignore` ignores `resources/corpus/raw/`, `staging/` and `tmp/` only — confirmed by
-  `git check-ignore`. `resources/corpus/finding-01-samples/` is **committed raw media** and is not
-  ignored, so path-based protection is narrow rather than blanket.
-- Single internal volume, 228 GB, **22 GB free (89% full)**. No external volume, no Google Drive
-  desktop mount, no other cloud-sync mount.
-- Tooling present: `curl`, `ffmpeg`, `ffprobe`, `shasum`, `tar`, `unzip`, `python3` 3.14.6.
-  Absent: `git-lfs`, `wget`, `aria2c`, `jq`, and the Python libraries `requests`, `PIL`,
-  `huggingface_hub`, `datasets`, `numpy`.
-- `RES-001` approves nine candidate families. Three — KoNViD-1k, LSVQ, YouTube-UGC — appear in no
-  other project document. Approximately ten datasets discussed at length in
-  `CORPUS-SOURCING-PLAN.md` do not appear in RES-001's approved list.
-- The token `PVP` appears exactly once in the repository, in RES-001, and is defined nowhere.
-- `CORPUS-SOURCING-PLAN.md` states its own provenance is prior knowledge with a May 2026 cutoff and
-  marks every licence *unverified*.
-- The plan names Pitt Ads as the highest-priority source and simultaneously records its media as
-  scraped advertising where third-party copyright almost certainly applies.
-- Broken cross-references: `eval/battery/CAPABILITY-LAB-V0-PLAN.md` links a non-existent
-  `EVAL-CORPUS-PLAN.md`; `coordination/ASSUMPTIONS.md` links `CANON-EXPERIMENT-V0.md` and
-  `CAPABILITY-LAB-V0-PLAN.md` as if they were siblings. Both are outside Resources' write scope.
+*Directly read from the named official pages on 24 Aug 2026.*
+
+**Open and licence-clear (Apache-2.0 stated, no gate seen):**
+- `THUDM/ImageRewardDB` — licence `apache-2.0`, code MIT. Subsets 1K/2K/4K/8K at 2.7 / 5.5 / 10.8 / 20.9 GB. Images collected from DiffusionDB.
+- `TIGER-Lab/VideoFeedback` — licence `apache-2.0`; annotation rows only. Media are in a separate repo, `hexuan21/VideoFeedback-videos-mp4`, licence `apache-2.0`, 8.81 GB, 37,662 rows.
+- `KwaiVGI/VideoGen-RewardBench` — licence `apache-2.0`, 13.4 GB, 25,234 rows, actual `.mp4` files, videos from 12 named T2V models.
+
+**Blocked:**
+- Pitt Ads `readme_images.txt` states: *"To obtain the dataset for research purposes, please email us."* Videos supplied as `final_video_id_list.csv`, not media. No licence statement on the page or readme.
+- AVA — official package is image lists and annotations only; media obtainable only by scraping dpchallenge.com or via an academic torrent.
+- LSVQ — free to researchers but a download form must be completed; repo notes the automatic form reply was broken and some videos may no longer be retrievable.
+- PVP — repository LICENSE is MIT (code). Dataset licence **not stated**. Paper describes images as partly DALL-E generated, partly sourced via Google Image Search.
+- KoNViD-1k — direct zip at `datasets.vqa.mmsp-kn.de`, 2.3 GB, 1,200 videos, **no login or form**. No licence stated on the database page or site root; footer is a copyright notice only. Page describes sources as Creative Commons sequences from YFCC100M without identifying the variant per video.
+
+**Not assessed:** YouTube-UGC. No verification performed; no claim made.
+
+**Storage:** 22 GB free before any download. Amended budget is 4–6 GB target / 8 GB stop / 12 GB floor.
 
 ## INFERRED
 
 *Interpretation, not measurement.*
 
-- A material share of the approved candidate list is likely to return `blocked_access` or
-  `blocked_license` rather than media, given how much of this ecosystem sits behind account,
-  token or click-through gates that RES-001 defines as stop conditions.
-- YouTube-UGC in particular looks self-contradicting as specified: approved "if legitimately
-  accessible" while scraping is prohibited, and such datasets typically distribute links rather
-  than media.
-- The KoNViD-1k / LSVQ / YouTube-UGC group is natural-video *technical quality* material, a
-  different research purpose from the sourcing plan's generated-video and creative-preference
-  framing. Their inclusion may be deliberate and undocumented, or may be an error.
-- The absent `git-lfs` may block several sources outright, since it is the standard transport for
-  large dataset repositories.
+- The blocked/open split falls almost exactly along generated-vs-real media. Four real-media sources are blocked for four different reasons, which suggests a structural pattern rather than four coincidences: media that humans own tends to be gated, un-relicensable, or distributed only as links.
+- KoNViD-1k is the highest-value unblock available. It is the only real-media candidate that is ungated, budget-sized and one decision away from usable.
+- Because ImageRewardDB's images come from DiffusionDB (Stable Diffusion era) while the video sets come from 2024–2025 generators, the corpus will skew old on the image side and current on the video side. Relevant to any later claim about "current" model behaviour.
+- The publishers of all three open sets assert Apache-2.0 over outputs of third-party commercial generators. For internal evaluation the stated terms cover us; the publishers' authority to grant that is unverified and would matter for any wider use.
 
 ## SURPRISES
 
-- Disk headroom (22 GB) was smaller than the original 20 GB hard stop assumed. No project document
-  recorded a storage assumption of any kind. Now resolved by Amendment 01.
-- The repository already contains committed raw media, which sits in tension with the instruction
-  that raw payloads must not be committed.
+- The single most important source in `CORPUS-SOURCING-PLAN.md` (Pitt Ads, "the one thing we cannot substitute") is unobtainable under RES-001's rules — and would have been even without the rights question, because the images are distributed as URLs to third-party sites.
+- KoNViD-1k publishes a completely open download link while stating no licence at all. Open access and clear rights turned out to be independent properties.
+- A web search summary confidently asserted the PVP *dataset* is MIT-licensed. It is the repository code that is MIT. This is the precise error `resources/HANDOFF.md` warns against, appearing unprompted in a search result.
 
 ## FAILURES / BLOCKERS
 
-Four blocking questions remain open (see DECISIONS NEEDED). No acquisition has begun.
+None that stop the task. Five candidates are blocked and recorded as evidence per clarification 5.
+The success criterion — at least three distinct usable source families — is met without weakening
+the rights bar. One Controller decision (KoNViD-1k) could materially improve corpus coverage.
 
 ## ASSUMPTIONS CHALLENGED
 
@@ -144,15 +158,30 @@ None yet. Nothing in Phase 0 bears on `coordination/ASSUMPTIONS.md`.
 
 ## LOCAL IMPLICATIONS
 
-Under the amended budget the pilot is firmly a breadth exercise: roughly 1.5–2 GB per family across
-three families. Large video datasets are effectively excluded except as deterministic subsets, and
-subset selection rules become load-bearing — they are the point in this task nearest to the
-selection bias the Resources charter exists to prevent.
+Planned acquisition, ~5.7 GB, inside the 4–6 GB target:
+
+| Source | Plan | Approx |
+|---|---|---|
+| `src_imagerewarddb` | 1K-scale subset whole | 2.7 GB |
+| `src_videofeedback` | bounded deterministic subset | ~1.5 GB |
+| `src_videogen_rewardbench` | bounded deterministic subset | ~1.5 GB |
+
+Two of three need a subset rule, which is the point in this task closest to the selection bias the
+Resources charter exists to prevent. The rule will be content-blind and deterministic — the official
+split where one exists, otherwise a fixed selection over sorted item IDs, with the rule and seed
+recorded in the manifest. Never a content-aware choice.
 
 ## CROSS-STREAM IMPLICATIONS
 
-None to propose. Tagged `LOCAL`. The broken cross-references above are documentation hygiene in
-other streams' directories; raised here rather than edited.
+Tagged **`CROSS_STREAM`**, proposed only, not acted on.
+
+The corpus this pilot can legitimately build contains **no real human-made media at all**. Eval work
+that assumes access to real professional creative for comparison would be planning against media we
+do not have and currently cannot get through open channels. `EVAL-001` is designing the battery now,
+so the constraint is worth knowing before it hardens into a design.
+
+No `PROPOSED-INTEGRATION-CHANGE` filed yet — filing one is proposed, pending the Controller's view
+on whether this rises above information-sharing.
 
 ## ARCHITECTURAL IMPLICATIONS
 
@@ -160,33 +189,45 @@ None. No schema or architecture change is implied, and none would be made withou
 
 ## DECISIONS NEEDED FROM CONTROLLER
 
-**Resolved:** B1 storage — closed by Amendment 01.
+**All Phase-0 blockers closed.** B1 by Amendment 01; B2–B5 by Amendment 02. Acquisition is not
+blocked and proceeds under the amended budget.
 
-**Open, blocking:**
-- **B2** — Does the RES-001 candidate list replace `CORPUS-SOURCING-PLAN.md` or select from it?
-  Are Pick-a-Pic, HPD v2, Persuasion Strategies, VBench, T2VQA-DB, MARIO-Eval and AnyText inside
-  the approved envelope? What is the rationale for KoNViD-1k / LSVQ / YouTube-UGC?
-- **B3** — What dataset does `PVP` refer to?
-- **B4** — Rights assessed against internal-research-only use, or use that may support commercial
-  product development? This determines whether "research use only" passes or blocks.
-- **B5** — Confirm that any free-account, credential or terms-acceptance gate is an automatic stop.
+**One decision worth making, not blocking:**
 
-**Open, non-blocking:** priority order; storage path; deterministic subset rule; local tooling
-installation; bias/coverage axes; confirmation that no holdout or strata are built in RES-001.
+- **D1 — KoNViD-1k.** 1,200 real videos, 2.3 GB, direct download, no login or form. No licence is
+  stated; the official page describes the videos as Creative Commons from YFCC100M without naming
+  the variant per video, and YFCC100M mixes commercially-usable and NonCommercial licences. Under
+  clarification 3 this is ambiguous, so it is blocked and untouched.
+  **This is the only route to real human-made media found in the entire approved list.** Options are
+  (a) leave blocked; (b) authorise checking whether the distributed metadata identifies per-video CC
+  licences, and if so acquire only the commercially-usable ones as a documented deterministic subset;
+  (c) treat the paper's CC provenance as sufficient. (b) is the only one that resolves the ambiguity
+  with evidence rather than assumption; it is proposed, not assumed.
+
+- **D2 — YouTube-UGC.** Not assessed. Assess it, or close it as out of pilot scope?
+
+**Non-blocking, proceeding on stated defaults unless corrected:** subset rule as described under
+LOCAL IMPLICATIONS; raw media into the git-ignored `resources/corpus/raw/<source_id>/`; descriptive
+bias axes only; no holdout or strata built in RES-001.
 
 ## FILES CREATED / MODIFIED
 
-- `resources/tasks/RES-001-CONTROLLER-BRIEF.md` — created (this file)
-- `resources/HANDOFF.md` — budget line updated to reflect Amendment 01
+- `resources/tasks/RES-001-CONTROLLER-BRIEF.md` — this file
+- `resources/HANDOFF.md` — budget line updated for Amendment 01
+- `resources/manifests/source-registry-v0.csv` — 9 sources, all 23 required fields
+- `resources/sources/*.md` — 9 per-source rights records
+- `resources/reports/RES-001-source-assessment.md` — Phase 1 findings
+- created empty: `resources/scripts/`, `resources/corpus/raw/` (git-ignored)
 
-No other file created or modified. No network access. No downloads. No terms accepted. No accounts
-created.
+No media downloaded. No account created, no terms accepted, no gate crossed, no paid API called.
+Public dataset pages and readmes were read; that is the source verification RES-001 puts in scope.
 
 ## RECOMMENDED NEXT STEP
 
-*A recommendation, not an action taken.* Answer B2–B5, then authorise Phase 1 (source discovery and
-official-source verification, no downloads) so that rights assessment can complete before any
-acquisition decision is made.
+*A recommendation, not an action taken.* Proceed to Phase 2 — acquire the three approved sources
+(~5.7 GB), checksum, validate, manifest and report — which is already authorised under the amended
+task and needs no further approval. Separately, answer D1, because the corpus's single largest gap
+(no real human-made media) hangs on that one rights question and it is cheap to resolve.
 
 ## CONFIRMATION
 
