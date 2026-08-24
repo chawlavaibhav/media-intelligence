@@ -46,6 +46,14 @@ with other makers, leave an unresolved thread in each piece, notice how the mate
 responds. Six more remedy terms recording `unknown`, in a completely different book by different
 authors in a different decade. Two of two Lane D books.
 
+**Bounded by book 18.** *Building a StoryBrand*'s remedies are mostly asset changes — cut copy that
+does not serve the story, name the resolved state, put a direct call to action on the page — and
+those carry real `executable_by` values. Only one of its remedies, clarifying the message before
+commissioning design, is a practice change and falls back to `unknown`. So the gap is specific to
+**remedies that change how people work rather than what an asset contains**, not to non-visual
+sources generally. That is a tighter and more useful statement of the problem than two books alone
+supported.
+
 **Consequence if unchanged.** Every process, management, teaching or creative-discipline source will
 land the same way. The Canon will accumulate `unknown` repairs that are not unknown, and the field
 stops carrying information precisely where the Canon is broadening beyond image-making.
@@ -100,7 +108,7 @@ can check it.
 ## D-03 — A source with no visual argument at all, and a one-pixel trap in the visual pass
 
 **Status:** OBSERVED · **Layer:** visual completeness · **New in this batch (Lane D)** ·
-**Books: 1**
+**Books: 2**
 
 **What it is.** Catmull ch.5 contains exactly one image reference. Measured, it is **525 × 1
 pixels** — a decorative horizontal rule repeated under all 28 chapter titles. The book's 21 real
@@ -123,6 +131,15 @@ book supports a claim visually.
 **Consequence if unchanged.** Sources with no visual argument will be recorded either as
 suspiciously unverified or as verified in a way that overstates what was checked. Both distort a
 later reading of which parts of the Canon rest on inspected evidence.
+
+**Recurred in book 17,** which also contains no illustration anywhere — established there by
+measuring the ink coverage of all 136 scanned pages rather than by counting files. Two of two
+non-visual books needed a value the vocabulary does not have.
+
+**Not universal, though: book 18 broke it.** That book's figures carry content the text never
+states, so `verified_figure_level` there means something quite different — figures existed, were
+opened, and changed the extraction. The same recorded value is doing two different jobs across one
+lane, which strengthens rather than weakens the case for distinguishing them.
 
 **Proposed (not applied):** a visual-completeness value meaning "inspected; the source makes no
 visual argument", distinct from both "verified" and "blocked".
@@ -311,9 +328,95 @@ this is — rather than the individual book. If that holds across lanes it is us
 profile is a real signal about a source class and not an artefact of one author's habits. If it does
 not hold, this is a coincidence between two books.
 
-**Status is INFERRED deliberately.** One lane, two books, both hand-classified by the same extractor
-on the same day — which is itself a possible explanation for the similarity. Only the integrator,
-comparing across lanes and extractors, can tell the two apart.
+**Book 18 is consistent with the domain reading.** It comes from a different domain — commercial
+communication rather than creative process — and its profile departs sharply: four uncontrolled
+outcome claims and three visual demonstrations where the first two books had none of either, and
+markedly less arguing. Two books alike within a domain, one book different across a domain
+boundary. That is what the pattern predicts, on a sample far too small to establish it.
+
+**Status is INFERRED deliberately.** One lane, three books, all hand-classified by the same
+extractor on the same day — which is itself a possible explanation for both the similarity and the
+difference. Only the integrator, comparing across lanes and extractors, can tell the two apart.
+
+---
+
+## D-12 — Figure count does not predict visual load, and the pre-batch inventory used count
+
+**Status:** OBSERVED · **Layer:** visual completeness · **New in this batch (Lane D)** ·
+**Books: 2 (as a contrast pair)**
+
+**What it is.** The source inventory, written before the batch, classified book 18 as an EPUB with
+"few figures". Numerically correct — 36 images, against 442 in another EPUB in the library. But
+book 16 has 33 images and **not one of them supports a claim**, while book 18 has 36 and four that
+do, two of which carry content the processed text never states at all: the fork between the last
+two framework elements, and the field schema of the output template including an eighth element in
+a framework named for seven.
+
+**Why it matters.** Count was used as the proxy for visual exposure across the whole inventory, and
+on this pair it is uninformative. What predicts the loss is **whether the source teaches a
+structure** — a form with named slots, an order, a branch. Prose is a poor container for those, so
+an author with a framework draws it regardless of discipline, and an author without one does not,
+however visual their field.
+
+**Consequence if unchanged.** Books get triaged for visual-pass effort by a number that does not
+track the risk. A source could be classed as low-visual and then silently lose its most operational
+content — which is exactly what a text-only pass on book 18 would have done.
+
+**Proposed (not applied):** triage visual effort by whether the source names a framework, a
+sequence or a set of slots, not by image count. Post-batch only.
+
+---
+
+## D-13 — Bindability and evidence quality moved in opposite directions
+
+**Status:** OBSERVED · **Layer:** bindings / Creative IR fit · **New in this batch (Lane D)** ·
+**Books: 3**
+
+**What it is.** Across Lane D:
+
+| Book | Creative IR bindings | Evidence profile |
+|---|---|---|
+| 16 — *Creativity, Inc.* | 0 | practitioner assertion, ~60% with stated mechanism, no outcome claims |
+| 17 — *Art & Fear* | 0 | practitioner assertion, most argued, no outcome claims |
+| 18 — *Building a StoryBrand* | **4** | practitioner assertion, four uncontrolled outcome claims, foundational mechanism from reported conversation, closing position unfalsifiable as stated |
+
+The source that binds best to the product schema is the one with the weakest support.
+
+**Why it matters.** Bindability measures how close a source's subject is to our product's subject.
+It measures nothing about whether the source is right. Those live in different layers by design —
+which is the SPEC-03 / SPEC-04 split working — but **nothing stops a later consumer from reading
+binding count as a quality signal**, and on this lane's evidence that reading would invert the
+ranking. A Canon consumer retrieving "knowledge that fills `message.proposition`" gets this book and
+not the mechanism-bearing ones, because the mechanism-bearing ones fill nothing.
+
+**Consequence if unchanged.** Retrieval by product-schema fit will systematically surface the
+commercially-shaped sources and bury the mechanism-bearing ones, without anything in the system
+being wrong.
+
+**Proposed (not applied):** nothing in the schema — the information is already recorded in
+`evidence.characteristics` and `evidence_basis`. What may be needed is a rule for whatever consumes
+the Canon: never rank by binding count, and carry the evidence profile alongside any retrieved
+binding. That is a consumption-layer question and CANON-003 does not touch consumption.
+
+---
+
+## D-14 — Counter-evidence: a term collision with our own vocabulary was handled by the schema
+
+**Status:** OBSERVED · **Layer:** ontology / bindings · **Evidence *for* the current design** ·
+**Books: 1**
+
+**What it is.** SPEC-01's `entities.role` already has the value `hero`, meaning the primary visual
+subject of an asset. Book 18's central claim is that the customer is the hero and the brand is not.
+The two heroes are different things — a product can be the visual subject of a shot in which the
+customer is still the protagonist of the story being told.
+
+**Why it matters.** This is the near-miss the ontology layer was designed for: a word that matches
+across two vocabularies while the concept does not. The source's term stayed in the source's frame
+in SPEC-05, and the binding recorded the distinction in its `limits` field rather than letting the
+shared word carry it. Nothing was merged and nothing was renamed.
+
+**Recorded as counter-evidence** because it is the first case in Lane D where a source's vocabulary
+collided with our product's, and the separation held without any adjustment to the method.
 
 ---
 
@@ -323,4 +426,4 @@ comparing across lanes and extractors, can tell the two apart.
 |---|---|---|---|
 | 16 — Catmull, *Creativity, Inc.* ch.5 | **complete, validated** | `b7f0d47` | no extraction comparator; a pre-batch curriculum judgement exists and converged — see D-09 |
 | 17 — Bayles & Orland, *Art & Fear* pp.1–21 | **complete, validated** | `75e4da1` | no extraction comparator; same curriculum judgement, converged |
-| 18 — Miller, *Building a StoryBrand* | not started | — | — |
+| 18 — Miller, *Building a StoryBrand* ch.1–3 | **complete, validated** | `f0127e4` | no extraction comparator; two pre-batch coverage-map judgements, one converged and one contradicted — see D-12 |
