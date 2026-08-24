@@ -103,12 +103,30 @@ we currently have no instrument we are entitled to trust.
 
 ## LAST COMPLETED TASK
 
-**EVAL-001 — Capability Battery V0 design.** Completed and Controller-approved 24 Aug 2026.
-Full record: `tasks/EVAL-001-CONTROLLER-BRIEF.md`.
+**EVAL-002 — Calibration & benchmark readiness.** Completed 24 Aug 2026, **awaiting Controller
+review**. Full record: `tasks/EVAL-002-CONTROLLER-BRIEF.md`.
+
+It built plumbing only — no generation, no network call, no calibration, no spend. What it produced:
+
+- **`scripts/check-vlm.mjs` now runs anywhere.** It previously contained a folder path that existed
+  on one machine only. Paths and invocation changed; **what the checker judges did not** — the new
+  code was run offline over all 27 stored transcriptions from the original study and reproduced
+  every verdict exactly (0 mismatches).
+- **`harness/` — a local evaluation harness using fabricated data only.** It proves a test item can
+  flow through evaluation and come out as a countable result obeying the battery's rules. It proves
+  **nothing** about any model. Its outputs are labelled synthetic and are git-ignored.
+- **`rubrics/IDENTITY-CONSISTENCY-RUBRIC-V0-DRAFT.md`** — how a reviewer would judge whether a
+  generated person stays the same. **Draft. Never used. Not calibrated.**
+- **`battery/M1B-DEVANAGARI-GENERATION-ITEM-DESIGN-V0.md`** — the structure and coverage plan for
+  the Hindi generation-test prompts. **Design only: no item exists and no Hindi phrase was selected
+  or authored.**
+
+Earlier: **EVAL-001 — Capability Battery V0 design**, completed and Controller-approved 24 Aug 2026
+(`tasks/EVAL-001-CONTROLLER-BRIEF.md`).
 
 ## CURRENT TASK / QUEUE
 
-**None.** EVAL-002 has not been opened and must not be started without an approved task file.
+**None.** EVAL-003 has not been opened and must not be started without an approved task file.
 
 ---
 
@@ -171,9 +189,15 @@ objects; lower when locating. Shared software, **separate results**.
 **Published benchmarks are method inputs, never our scores.** They did not test our conditions, our
 scripts or our brand constraints.
 
-**`scripts/check-vlm.mjs` cannot be run as committed** — it points at a folder path that does not
-exist on this machine. Fixing it is a prerequisite for any re-calibration, because the rules require
-re-testing a checker whenever its version changes.
+**`scripts/check-vlm.mjs` is now portable** (fixed in EVAL-002). Supply `--input` and `--out`;
+`--dry-run` validates a run with no API key and no network call. The judgement logic is unchanged
+and that was verified, not assumed. Note one remaining limit: the target string is **per run**, not
+per item. Individual per-item targets will be needed once the Hindi item set exists.
+
+**Test evaluation tooling with deliberately-broken inputs, not only correct ones.** EVAL-002 added a
+negative-control fixture and it immediately exposed two real defects: a run that raised integrity
+errors still exited successfully, and a run the harness had *already rejected* still reported a
+result marked eligible for the Registry. Both are fixed. Neither was visible from reading the code.
 
 ---
 

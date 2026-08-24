@@ -1,0 +1,63 @@
+{
+  "SYNTHETIC_EXPECTED": true,
+  "WARNING": "Expected aggregate for a MOCK fixture. Regression guard for the harness only. Not evidence about any model.",
+  "fixture_id": "fx-02-shared-generation",
+  "aggregate": {
+    "run_integrity": "ok",
+    "integrity_errors": 0,
+    "distinct_generations": 1,
+    "dimension_results": 2,
+    "shared_generations": [
+      {
+        "generation_ref": "mock://synthetic/fx02/scene-001",
+        "dimensions": [
+          "object_count",
+          "spatial_relationship"
+        ]
+      }
+    ],
+    "shared_generation_note": "1 generation(s) scored on more than one dimension: 2 dimension-results come from only 1 generation(s). These are NOT 2 independent trials.",
+    "dimensions": [
+      {
+        "dimension": "object_count",
+        "observation_unit": "frame",
+        "n_items": 1,
+        "n_trials": 1,
+        "n_generations": 1,
+        "n_observations": 1,
+        "passes": 0,
+        "fails": 1,
+        "not_measured": 0,
+        "pass_rate": 0,
+        "pass_rate_basis": "0/1 scored trials across 1 independent item(s)",
+        "defect_terms": {
+          "count exceeded": 1
+        },
+        "instrument_states": [
+          "published_calibration_only"
+        ],
+        "registry_eligible": false,
+        "registry_note": "NOT Registry-eligible: instrument is not calibrated/deterministic (EVAL-001 rule)"
+      },
+      {
+        "dimension": "spatial_relationship",
+        "observation_unit": "frame",
+        "n_items": 1,
+        "n_trials": 1,
+        "n_generations": 1,
+        "n_observations": 1,
+        "passes": 1,
+        "fails": 0,
+        "not_measured": 0,
+        "pass_rate": 1,
+        "pass_rate_basis": "1/1 scored trials across 1 independent item(s)",
+        "defect_terms": {},
+        "instrument_states": [
+          "published_calibration_only"
+        ],
+        "registry_eligible": false,
+        "registry_note": "NOT Registry-eligible: instrument is not calibrated/deterministic (EVAL-001 rule)"
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "SYNTHETIC_EXPECTED": true,
+  "WARNING": "Expected aggregate for a MOCK fixture. Regression guard for the harness only. Not evidence about any model.",
+  "fixture_id": "fx-03-sequence-and-unmeasurable",
+  "aggregate": {
+    "run_integrity": "ok",
+    "integrity_errors": 0,
+    "distinct_generations": 2,
+    "dimension_results": 2,
+    "shared_generations": [],
+    "shared_generation_note": "no generation was scored on more than one dimension",
+    "dimensions": [
+      {
+        "dimension": "brand_logo_fidelity",
+        "observation_unit": "frame",
+        "n_items": 1,
+        "n_trials": 1,
+        "n_generations": 1,
+        "n_observations": 1,
+        "passes": 0,
+        "fails": 0,
+        "not_measured": 1,
+        "pass_rate": null,
+        "pass_rate_basis": "no scored trials",
+        "defect_terms": {},
+        "instrument_states": [
+          "required_but_no_calibrated_instrument"
+        ],
+        "registry_eligible": false,
+        "registry_note": "NOT Registry-eligible: instrument is not calibrated/deterministic (EVAL-001 rule)"
+      },
+      {
+        "dimension": "text_stability_across_frames",
+        "observation_unit": "sequence",
+        "n_items": 1,
+        "n_trials": 1,
+        "n_generations": 1,
+        "n_observations": 1,
+        "passes": 0,
+        "fails": 1,
+        "not_measured": 0,
+        "pass_rate": 0,
+        "pass_rate_basis": "0/1 scored trials across 1 independent item(s)",
+        "defect_terms": {
+          "character substitution": 1,
+          "within-clip drift": 1
+        },
+        "instrument_states": [
+          "provisional_uncalibrated"
+        ],
+        "registry_eligible": false,
+        "registry_note": "NOT Registry-eligible: instrument is not calibrated/deterministic (EVAL-001 rule)"
+      }
+    ]
+  }
+}
