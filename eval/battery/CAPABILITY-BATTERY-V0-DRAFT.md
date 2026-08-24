@@ -118,10 +118,11 @@ An instrument has **two** accuracies and they are not interchangeable:
 - **Diagnostic accuracy** — does it correctly say *what broke*? Consumed by repair and by
   Empirical Memory.
 
-FINDINGS-01 is precise about this and the shorthand elsewhere is not. Qwen3-VL is recorded as
-14/14 on **verdicts**, while the same finding records that it "caught सुबह→सुवह but silently
-corrected चाथ→चाय" — verdict right, diagnosis incomplete. `eval/HANDOFF.md`'s "scored 14/14"
-drops the qualifier. Both accuracies must be calibrated and stored separately.
+FINDINGS-01 is precise about this: Qwen3-VL is recorded as 14/14 on **verdicts**, while the same
+finding records that it "caught सुबह→सुवह but silently corrected चाथ→चाय" — verdict right,
+diagnosis incomplete. Any downstream citation that reduces this to a bare "14/14" reads as a
+general accuracy claim and would be wrong. Both accuracies must be calibrated and stored
+separately.
 
 ### 5.3 Observation unit
 

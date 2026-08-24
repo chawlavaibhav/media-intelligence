@@ -3,130 +3,159 @@
 **TASK:** EVAL-001 — Capability Lab V0 battery design
 **STATUS:** needs_controller_review
 
-**WHAT I DID:** Reviewed eight published benchmark methodologies plus the fal.ai public pricing
-page, audited the repository's own evidence against the underlying artifacts, and drafted a V0
-battery specification, a Registry schema, and an instrument-calibration plan. Zero generations,
-zero paid API calls, ₹0 spent, no dataset acquired, no historical file modified. All outputs are
-proposals per Controller clarification 1.
+**HUMAN SUMMARY**
 
----
+No public benchmark covers Devanagari, so the Hindi text test cannot be borrowed and must be
+calibrated locally against a native speaker. The closest published study covers Bengali — the
+nearest script structurally — which came third worst of its twelve languages: corroboration for
+our own Hindi failures, not a substitute for measuring them. Two outside teams independently
+reached designs this project had already reached (transcribe-never-confirm checking, and
+cost-per-success including human review). The second exposed a real gap in our cost model:
+**human verification is roughly 25× generation cost**, so the budget question is people's hours,
+not API spend. Nothing runs until you decide on ~11–14 hours of calibration time, 3–4 of them a
+Hindi first-language reader.
 
-**OBSERVED**
+**WHAT I DID**
 
-1. **No public benchmark covers Devanagari or Hindi text rendering.** The nearest published work,
-   MULTITEXTEDIT (May 2026, 12 languages), covers Bengali but not Devanagari. Bengali is its
-   third-worst-performing language (∆text-accuracy 0.960, ∆script-fidelity 1.172), behind only
-   Hebrew and Arabic. CVTG-2K, ChineseWord, TextAtlasEval, LongText-Bench, MARIO-Eval and AnyText
-   are English/Chinese only.
-2. **MULTITEXTEDIT independently arrived at FINDINGS-01's checker protocol** — a two-stage
-   trace-then-judge design — reporting κ 0.76 against native-speaker annotators.
-3. **T2VTextBench (May 2025) measures on-screen text fidelity and temporal consistency in video.**
-   All 10 systems evaluated scored below 0.4 on a 0–1 scale; best 0.37.
-4. **HYPE-EDIT-1 (Jan 2026) computes effective cost per success including human review time**, and
-   reports that low per-image pricing becomes expensive once retries and review are counted.
-5. **DreamBench++ reports DINO at 50.72% human alignment on concept preservation** against 83.31%
-   for a structured multimodal judge, concluding DINO prioritises shape and colour over detailed
-   features.
-6. **GenEval reports 83% instrument agreement against 88% inter-annotator agreement**, and its
-   authors record that the detector is confined to MS COCO's 80 classes and degrades
-   out-of-distribution.
-7. **Auditing our own material** (detail in findings §5): Devanagari ground truth is unconfirmed by
-   a native reader and is quoted as settled in `eval/HANDOFF.md`; "14/14" is a *verdict* score and
-   the same finding records the diagnosis as incomplete; three files in
-   `eval/runs/finding-01-devanagari-check/` are entirely API errors; the Tesseract 0/14 claim has no
-   supporting artifact; `eval/scripts/check-vlm.mjs` hardcodes a path that does not exist;
-   FINDINGS-01's 14 samples come from 4 independent sources.
-8. **`media-factory/spike/out/scores.json` confirms the cited counts exactly** — 64 records, 10
+Reviewed eight published benchmark methodologies plus one vendor pricing page, audited the
+repository's own evidence against the underlying data files, and drafted the battery
+specification, Registry schema and instrument-calibration plan. Zero generations, zero paid API
+calls, ₹0 spent, no dataset acquired. All outputs are proposals per Controller clarification 1.
+
+**OBSERVED** *(source-supported; sources tabulated in findings §7, detail in §1–§5)*
+
+**From published sources:**
+1. **No public benchmark covers Devanagari or Hindi text rendering.** MULTITEXTEDIT (May 2026)
+   covers 12 languages including Bengali, not Devanagari; Bengali is its third worst
+   (∆text-accuracy 0.960, ∆script-fidelity 1.172), behind Hebrew and Arabic. CVTG-2K, ChineseWord,
+   TextAtlasEval, LongText-Bench, MARIO-Eval and AnyText are English/Chinese only.
+2. MULTITEXTEDIT independently uses FINDINGS-01's two-stage trace-then-judge protocol (κ 0.76 vs
+   native speakers). T2VTextBench (May 2025): all 10 video systems below 0.4 on on-screen text
+   fidelity and temporal consistency. HYPE-EDIT-1 (Jan 2026) computes effective cost per success
+   **including human review time**.
+3. Instrument-choice evidence: DINO reaches 50.72% human alignment on concept preservation against
+   83.31% for a structured multimodal judge (DreamBench++). GenEval reports 83% agreement against
+   88% inter-annotator, with the detector confined to MS COCO's 80 classes.
+
+**From this repository:**
+4. Six provenance problems in our own material, itemised in findings §5: Devanagari ground truth
+   unconfirmed by a native reader, with that caveat not carried into `eval/HANDOFF.md` or the V0
+   plan; "14/14" is verdict accuracy while the same finding records diagnosis as incomplete; three
+   files in `eval/runs/finding-01-devanagari-check/` are entirely API errors; the Tesseract 0/14
+   claim has no artifact; `check-vlm.mjs` hardcodes a non-existent path; the 14 samples come from
+   4 independent sources, not 14.
+5. `media-factory/spike/out/scores.json` confirms the cited counts exactly — 64 records, 10
    failures, nano 7/32, seedream 3/32. Read read-only; not copied, not re-scored.
 
 **INFERRED**
 
-- The Devanagari instrument cannot be borrowed and must be calibrated locally against
-  native-speaker ground truth. This makes the M1 string set the highest-value item in the plan and
-  it currently has no owner.
-- Bengali's poor showing is corroborating context for our observed Devanagari failures, not a
-  substitute measurement.
-- Human verification, not API spend, is the binding cost constraint: generation is 2–4% of a cell's
-  cost in the worked example.
-- The plan's `≈720 generations` figure is both over-counted (operational behaviour generates
-  nothing) and mis-specified (image and video workflows cannot be crossed with the same dimensions).
+The Devanagari instrument cannot be borrowed and must be calibrated locally, which makes the
+string set (media requirement M1) the highest-value unowned item in the plan. Human verification,
+not API spend, is the binding cost constraint. The plan's "≈720 generations" is both over-counted
+(operational behaviour generates nothing) and mis-specified (image and video workflows cannot be
+crossed with the same dimensions).
 
-**SURPRISES**
+**SURPRISES / BELIEF UPDATES**
 
-Two published sources independently reached conclusions this project had derived locally: the
-trace-then-judge checker protocol, and cost-per-success including human review. Convergence from
-outside is stronger evidence for both than our own reasoning was.
+- Two published sources converged on designs we derived locally. External convergence is stronger
+  evidence for the trace-then-judge protocol and for cost-per-success than our own reasoning was.
+- Cost intuition was wrong by an order of magnitude. Generation is 2–4% of a test cell; human
+  checking is nearly all of it.
+- **Do not take at face value:** "qwen3-vl-235b scored 14/14 correct verdicts." The phrasing is
+  accurate, but it is a *verdict* score on labels no Hindi first-language reader has confirmed,
+  from a sample of 4 independent sources. Downgraded to `provisional_uncalibrated` throughout.
 
 **FAILURES / BLOCKERS**
 
-None blocked EVAL-001. Four items block a *run*: no native-speaker ground truth for the Devanagari
+None blocked EVAL-001. Four block a *run*: no native-speaker ground truth for the Devanagari
 instrument; no frozen identity rubric or reference sets; ~11–14 hours of human calibration time
-unbudgeted; and `check-vlm.mjs` not runnable as committed.
+unbudgeted; `check-vlm.mjs` not runnable as committed.
+
+**UNKNOWN / NOT VERIFIED**
+
+- Whether Tesseract genuinely fails on Devanagari — the 0/14 claim has no artifact. Carried as
+  unverified, and deliberately not used to justify the Hindi instrument's cost.
+- Devanagari ground-truth labels — never confirmed by a Hindi first-language reader.
+- Checker run-to-run consistency — one run per sample, never measured.
+- Nano Banana **Pro** pricing — not confirmed on the vendor page. The plan's observed ~$0.15 is
+  consistent with it, but only the base Nano Banana ($0.0398) appears on fal.ai's public page.
+- Whether the four V0 dimensions are the *right* four. They are the traceable, affordable four.
+  Coverage is not claimed.
 
 **ASSUMPTIONS CHALLENGED**
 
 None promoted or demoted — no experiment was run. Three informed (findings §8): **§12** gains
-external support for CpAO's shape and independent confirmation of its stated weakness, the missing
-intelligence-layer cost; **§4**'s observation-unit channel gains a second instance; **§15** remains
-blocked and stays untestable after V0, since V0 is A-side only.
+external support for CpAO's shape and independent confirmation of its stated weakness (missing
+intelligence-layer cost); **§4**'s observation-unit channel gains a second instance; **§15** stays
+blocked and remains untestable after V0, since V0 is A-side only.
 
 **LOCAL IMPLICATIONS**
 
-Four V0 dimensions traceable to the existing plan (Devanagari exact text, person identity across
-prompts, object count and spatial placement, operational behaviour), plus two flagged
-`proposed_addition` requiring your decision. D4 is restricted to COCO-representable objects; brand
-marks are deferred with no calibratable instrument.
+Four V0 dimensions traceable to the existing plan, plus two flagged `proposed_addition` needing
+your decision. D4 restricted to COCO-representable objects; brand marks deferred with no
+calibratable instrument.
 
 **CROSS-STREAM IMPLICATIONS** — proposed, not acted on. No `PROPOSED-INTEGRATION-CHANGE` filed
-pending your direction on which of these you want formalised.
+pending your direction on which to formalise.
 
 - **CROSS_STREAM → Canon.** SPEC-01 open question 1 (element-reference naming) is unresolved, so
-  the battery cannot cite IR paths mechanically. Separately, `CAPABILITY-LAB-V0-PLAN.md` uses
-  `static.*` and `video.*` shorthands that are not SPEC-01 paths, and cites `audience.language` for
-  on-screen Devanagari where the correct fields are `audience.language.on_screen_copy` and
-  `copy.script_system`. Flagged, not invented around.
-- **CROSS_STREAM → Empirical Memory / Planner.** Registry fields `observation_unit`,
-  `failed_trials[].defects[]`, `calibration_status: required_but_no_calibrated_instrument`, and
-  `usd_per_repair_attempt` touch routing or memory semantics. Marked `PROPOSED · CROSS_STREAM` in
-  the schema rather than treated as accepted.
-- **CROSS_STREAM → Resources.** Five media requirements (battery §9). M1 — a native-speaker-verified
-  Devanagari string set — cannot be acquired and must be built. M5 — access to the media-factory
-  spike outputs — is a recorded dependency for a later integration task.
+  the battery cannot cite IR paths mechanically. Nine path mismatches in
+  `CAPABILITY-LAB-V0-PLAN.md` are tabulated in battery §7.2 — including one substantive error:
+  on-screen Devanagari is cited against `audience.language` rather than
+  `audience.language.on_screen_copy` + `copy.script_system`.
+- **CROSS_STREAM → Empirical Memory / Planner.** Four Registry fields touch routing or memory
+  semantics; marked `PROPOSED · CROSS_STREAM` in the schema rather than assumed.
+- **CROSS_STREAM → Resources.** Five media requirements (battery §9). M1 cannot be acquired and
+  must be built; M5 (media-factory spike outputs) is a dependency for a later integration task.
 
 **ARCHITECTURAL IMPLICATIONS**
 
-None requiring an immediate stop. The Registry schema gaps were representable as proposed fields
-rather than as an inability of the architecture to hold the evidence.
+None requiring a stop. Schema gaps were representable as proposed fields, not an inability of the
+architecture to hold the evidence.
 
 **DECISIONS NEEDED FROM CONTROLLER**
 
-1. Approve or hold the two `proposed_addition` dimensions: `exact_text_latin` (control, without
-   which a Devanagari failure rate is uninterpretable) and `text_stability_across_frames`.
-2. The workflow roster. Battery §8.3 is an illustrative example only.
-3. Human calibration budget: ~11–14 hours, of which 3–4 must be a Hindi first-language reader.
-4. Owner for M1, the Devanagari string set.
-5. Which cross-stream items above to formalise as `PROPOSED-INTEGRATION-CHANGE` files.
-6. Whether `eval/HANDOFF.md` should be corrected — it currently carries "qwen3-vl-235b scored
-   14/14" without the verdict-vs-diagnosis qualifier, and the next Eval session will inherit it.
-   **I did not edit it**, since doing so would promote an EVAL-001 conclusion into stream state
-   before your review.
+1. **The two `proposed_addition` dimensions — approve or hold.** `exact_text_latin` is a control:
+   without it a Devanagari failure rate cannot distinguish "bad at text" from "bad at Devanagari",
+   and that distinction changes routing. `text_stability_across_frames` is our most distinctive
+   measurement.
+2. **The workflow roster.** Costing cannot be finalised without it; battery §8.3 is illustrative.
+3. **Human calibration budget:** ~11–14 hours, 3–4 of them a Hindi first-language reader. Gates
+   every Devanagari Registry entry.
+4. **Owner for M1**, the Devanagari string set. Nobody owns it.
+5. **Which cross-stream items to formalise** as `PROPOSED-INTEGRATION-CHANGE` files.
+
+**EVIDENCE WORTH HUMAN INSPECTION**
+
+- `eval/findings/EVAL-001-battery-design-findings.md` §1 — the Devanagari gap and the Bengali
+  proxy table. This is the finding that shapes the roadmap.
+- Battery draft §8.3 — the cost arithmetic showing human verification dominating.
 
 **FILES CREATED / MODIFIED**
 
-Created — `eval/battery/CAPABILITY-BATTERY-V0-DRAFT.md`,
+Created: `eval/battery/CAPABILITY-BATTERY-V0-DRAFT.md`,
 `eval/battery/CAPABILITY-REGISTRY-SCHEMA-V0-DRAFT.yaml`,
 `eval/battery/INSTRUMENT-CALIBRATION-PLAN-V0.md`,
 `eval/findings/EVAL-001-battery-design-findings.md`, this brief.
-**Modified — none.** No historical finding, script or result file was altered (clarification 12).
+Modified: `eval/HANDOFF.md` — added FINDINGS-01's own preliminary-ground-truth caveat, which the
+handoff did not carry forward, and recorded EVAL-001's outputs as drafts pending review. Done under
+the Runbook's provision that a worker may update its own handoff. No historical finding, script or
+result file was altered (clarification 12).
 
-**RECOMMENDED NEXT STEP** *(a recommendation, not an action taken)*
+**RECOMMENDED NEXT STEP** *(recommendation, not an action taken)*
 
-Resolve decisions 1–4, then open a separate task to build M1 and run the I1 and I2 calibrations —
-before any capability run. Calibration is a gate that precedes measurement, and a capability score
-from an uncalibrated instrument is not a weak measurement but a false one.
+Resolve decisions 1–4, then open a separate task to build M1 and run the I1/I2 calibrations before
+any capability run. Calibration is a gate that precedes measurement: a score from an uncalibrated
+instrument is not a weak measurement but a false one.
+
+**EPISTEMIC CHECK**
+
+Every figure is read from a named published source or a file in this repository, attributable via
+findings §7 (sources) or §5 (repository evidence). Interpretations are confined to INFERRED,
+unknowns are listed rather than filled, and no draft dimension, schema field or threshold is
+presented as approved.
 
 **CONFIRMATION**
 
-No unapproved next strategic step was started. No model was benchmarked, no generation call made,
-no money spent, no dataset acquired, no shared architecture changed, and no draft decision promoted
-into shared truth. EVAL-002 was not started.
+No unapproved next strategic step was started. No model benchmarked, no generation call made, no
+money spent, no dataset acquired, no shared architecture changed. EVAL-002 not started.

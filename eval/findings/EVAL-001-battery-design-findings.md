@@ -129,13 +129,15 @@ the drafts rather than repaired in place.
 
 **5.1 · Devanagari ground truth is unconfirmed.** FINDINGS-01 states it directly: *"neither
 reader's first language is Hindi. A Hindi reader should confirm the labels before this is
-quoted."* It is subsequently quoted as settled in `eval/HANDOFF.md` ("qwen3-vl-235b scored 14/14")
-and relied upon in `CAPABILITY-LAB-V0-PLAN.md`. No record of confirmation exists.
+quoted."* `eval/HANDOFF.md` reports the result correctly qualified as "14/14 correct verdicts", but
+neither it nor `CAPABILITY-LAB-V0-PLAN.md` carries forward the caveat that the labels are
+unconfirmed, and both rely on the result. No record of confirmation exists.
 **Downgraded** to `provisional_uncalibrated` throughout the drafts.
 
 **5.2 · "14/14" conflates two accuracies.** FINDINGS-01 is precise — *"14/14 correct verdicts"* —
 and records in the same file that Qwen *"caught सुबह→सुवह but silently corrected चाथ→चाय. Verdict
-right, diagnosis incomplete."* The HANDOFF's shorthand drops the qualifier. Verified against the
+right, diagnosis incomplete."* The risk is that the two get conflated downstream, since a bare
+"14/14" reads as a general accuracy claim. Verified against the
 raw run file: Qwen's transcription of `frame_wan_1`–`4` is सुवह की पहली चा**य** (edit distance 1),
 while FINDINGS-01's stated ground truth is सुवह की पहली चा**थ** — two substitutions, one caught.
 **Consequence:** the Registry schema now carries `instrument.role: gate | diagnosis` so the two
