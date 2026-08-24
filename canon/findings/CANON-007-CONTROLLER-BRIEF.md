@@ -2,7 +2,7 @@
 
 **Task:** CANON-007, Wave 1 pilot — *Effectiveness in Context*
 **Date:** 25 Aug 2026 · **Branch:** `work/canon-007-effectiveness-context` · **Task-base:** `main` at `161a14a`
-**Status:** ingestion complete, source accepted · **needs_controller_review**
+**Status:** ingestion complete plus a Controller merge-gate correction · **needs_controller_review**
 **Severity:** `LOCAL`. No stop condition fired. No spec changed.
 
 ---
@@ -16,8 +16,13 @@ extraction → systems/ontology → bindings → fresh checkpoint → Audit Gate
 without needing any method change. Historical CANON-003/004 remain fixed at 16.
 
 The pilot's real result is that **the gate caught things a text-only ingestion would have shipped
-wrong.** Two representation findings and one evidence-origin correction are described below; each
-was found by looking rather than by parsing, and one was forced by the validator.
+wrong** — and then a Controller correction caught something the first pass had shipped wrong itself.
+
+**§13 records that correction and it is the most important section of this brief.** The first pass
+declared `all_resolved` while leaving seven claim-referenced figures deliberately uninspected. That
+was an overclaim, and precisely the failure this source's own methodological lesson describes. On
+inspection one claim had to be narrowed, one strengthened, and two source-internal inconsistencies
+surfaced that no text-only pass could see.
 
 ---
 
@@ -125,9 +130,8 @@ pass on Figure 03 receives eleven numbers and six category names with nothing co
 bind them by guess, and nothing would signal uncertainty. On printed page 15 a chart axis value,
 `1.5`, appears mid-sentence inside the extracted prose.
 
-**Consequence: all 34 numeric values in this extraction were read from renders. None from the text
-layer.** Seven claim-bearing figures were rendered and read; seven more that support only
-directional claims were not, and that limit is stated in the ledger rather than glossed.
+**Consequence: every numeric value in this extraction was read from a render. None from the text
+layer.** **All sixteen claim-referenced figures in the processed span are now inspected** — see §13.
 
 **The forewords contain phantom text.** The text layer of printed pages 1–3 carries sentences
 printed *nowhere on those pages* — they belong to *In a nutshell* on page 5 — interleaved line by
@@ -247,10 +251,14 @@ A 2018 report whose data window closes in 2016, read in 2026, about an environme
 | 1 | `python canon/validation/validate_canon003_integrated.py --root .` | **0** | `error_count = 0` · **16 books**, 505 objects, 54 systems, 417 terms, 53 concepts, 111 bindings — *identical to `main`* |
 | 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count = 0` · **`record_count = 19`** over 19 source directories |
 | 3 | `python -m pytest tests/ -q` | **0** | **63 passed, 89 subtests passed** |
+| 4 | figure-coverage sweep over printed pp.5–25 and 132–134 | — | **16 claim-referenced figures, 16 inspected, 0 not inspected** |
 
 | Confirmation | Result |
 |---|---|
-| new source's five snapshot artifacts match its audit snapshot | ✅ recomputed clean; all 19 snapshots valid |
+| new source's five snapshot artifacts match its audit snapshot | ✅ regenerated after the correction; recomputed clean; all 19 snapshots valid |
+| no object carries `visually_demonstrated` on an uninspected figure | ✅ NONE |
+| every `figure_refs` entry resolves to an inspected figure | ✅ NONE unresolved |
+| no `figure_not_inspected` uncertainty remains | ✅ NONE |
 | no id collision across the enlarged live corpus | ✅ 0 across 580 / 63 / 470 / 62 / 127 |
 | SPEC-01, SPEC-03, SPEC-04 unchanged from task base | ✅ `git diff --stat` empty |
 | SPEC-05 unchanged | ✅ no stop condition fired |
@@ -268,14 +276,81 @@ A 2018 report whose data window closes in 2016, read in 2026, about an environme
 | **Live accepted Canon** | **19** |
 | Active v0.2 audit records | **19** |
 
+## 13. The Controller correction — what inspecting the rest actually changed
+
+The first pass inspected seven claim-bearing figures and left seven that supported only directional
+claims, while the audit declared `inspected_page_level` and `all_resolved` and five objects carried
+`visually_demonstrated` on a figure nobody had looked at. **That was an overclaim and the Controller
+was right to block on it.**
+
+The same already-verified copy was re-opened — identity re-checked before use, 24,726,437 bytes and
+the same SHA-256, nothing reacquired. A mechanical sweep then found **two more** claim-referenced
+figures beyond the seven named, and those were inspected as well rather than argued out of scope.
+
+### One claim materially narrowed — `sk_eic_0013`
+
+**Figure 09's two panels carry different Y-axis scales**: 0.00–0.20 for emotional consideration and
+0.0–1.2 for rational, a factor of six. Side by side the bars look comparable in height while the
+numbers are not — **every rational value (1.11, 0.43, 0.36) exceeds every emotional value (0.11,
+0.18, 0.19)**.
+
+The claim had read that ESOV Efficiency is "higher where consumers are emotionally involved and
+lower where they consider the purchase rationally". At the absolute level the printed magnitudes
+contradict that. It is now narrowed to the **within-type direction** the figure supports — rising
+with emotional consideration, falling with rational — which is also all the source's own text
+asserts. `extraction_uncertainty: figure_not_inspected` is removed as resolved.
+
+This is the report's own lesson turning back on the report: a chart whose visual pattern points one
+way and whose printed values point the other, invisible to any text-only pass because axis maxima are
+just two more numbers in the layer. **It is the only object whose meaning changed.**
+
+### One claim strengthened — `sk_eic_0012`
+
+Figure 08 is a clean crossover on a shared axis: price effects fall as rational consideration rises
+(8, 6, 5) and rise as emotional consideration rises (4, 7, 8). The first pass had a caveat saying
+the figure showed only price effects by consideration type and not the emotional route itself. That
+understated it — the caveat is withdrawn and the object now carries `visually_demonstrated`.
+
+### Four confirmed outright, two relied on by no object
+
+Figures 02, 05, 06, 10 and 11 confirm their claims and add precision the prose does not give — most
+usefully that Figures 10 and 11 rank high-brand-with-low-activation *above*
+low-brand-with-high-activation, supporting the source's asymmetric phrasing.
+
+Figures 01 and 15 are cited by no object. Figure 15 shows the source's framing is careful rather
+than sweeping: loyalty (13→12) and price sensitivity (7→6) move the *other* way in high-research
+categories.
+
+### Two source-internal inconsistencies, neither visible in the text layer
+
+- The prose supporting the price-premium claim points to **"Fig 04, page 11"**, which is the
+  ESOV/ROMI table and holds no price data. The price figure is Figure 08 on the same page.
+- **Figure 01's legend** labels both series "SALES ACTIVATION /" while the title contrasts brand
+  building with sales activation and the long-term ratchet is brand building. Recorded as a reading,
+  not an established defect. Nothing depends on it.
+
+### One provenance finding
+
+**Figure 01 is the only figure in the processed span whose source note is not the IPA Databank.** It
+is credited "Source: Binet & Field 2013" — the authors' own *The Long and the Short of It*. That is
+direct visual confirmation of the series dependency flagged in §8: the report's founding diagram is
+carried forward from a prior publication rather than produced from the data analysed here.
+
+### `all_resolved` is now truthful
+
+All sixteen claim-referenced figures in the processed span are inspected; every `figure_refs` entry
+resolves to an inspected figure; no object carries `visually_demonstrated` on an uninspected figure;
+no `figure_not_inspected` uncertainty remains. That is the only condition under which the value may
+be used, and it was not met before.
+
 ## 12. Unresolved and worth your attention
 
 1. **The loss-pattern vocabulary has no value for added text**, only for lost text. Recorded, not
    stretched; no change proposed because no extracted claim is affected. Live if the forewords are
    ever processed.
-2. **Seven figures supporting directional claims were not rendered.** `sk_eic_0013` carries
-   `extraction_uncertainty: figure_not_inspected` for exactly this. A bounded, stated limit of the
-   pilot, not a completeness claim.
+2. ~~Seven figures not rendered.~~ **Resolved by the correction pass — see §13.** All sixteen
+   claim-referenced figures in the processed span are inspected and no `figure_not_inspected`
+   uncertainty remains.
 3. **The series dependency** on *The Long and the Short of It* and *Media in Focus* — flagged above,
    must be declared if either is ingested.
 4. **Scope is one chapter of a 139-page report.** The remaining chapters are not in the Canon and
