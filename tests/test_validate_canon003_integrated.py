@@ -150,6 +150,16 @@ class Canon003IntegrationValidatorTests(unittest.TestCase):
             book = self._make_valid_book(Path(td))
             self.assertEqual([], validator.validate_book_dir(book))
 
+    def test_text_and_visual_support_without_inspected_figure_is_allowed(self):
+        with tempfile.TemporaryDirectory() as td:
+            book = self._make_valid_book(Path(td))
+            knowledge_path = book / "source-knowledge.yaml"
+            data = yaml.safe_load(knowledge_path.read_text(encoding="utf-8"))
+            data["source_knowledge"][0]["provenance"]["source_support"] = "text_and_visual"
+            data["source_knowledge"][0]["provenance"]["inspected"]["figures"] = []
+            self._write_yaml(knowledge_path, data)
+            self.assertEqual([], validator.validate_book_dir(book))
+
     def test_unresolved_system_member_is_reported(self):
         with tempfile.TemporaryDirectory() as td:
             book = self._make_valid_book(Path(td))
