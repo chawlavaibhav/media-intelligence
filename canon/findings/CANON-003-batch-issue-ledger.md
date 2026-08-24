@@ -465,6 +465,78 @@ and CANON-002 may carry the same contamination in places neither noticed.
 - **Consequence if unchanged:** contaminated convergence counted as independent corroboration
 - **Proposed fix (NOT APPLIED):** before counting any old-versus-new agreement as independent, check whether the passage appears in a frozen spec; and record which sources the specs quote, once, in one place
 
+### B-18 — A fifth visual-loss pattern: the figure survives, its essential dimension does not *(new)*
+
+**Plain English.** The Albers digitisation is entirely greyscale. Every page renders, every figure is
+present, legible and correctly positioned — and the book's subject is colour. Measured: zero coloured
+pixels out of 4,800 sampled per page, across fifteen pages of the processed span and a six-page
+sample from later in the book.
+
+**Why it ranks as the most deceptive pattern found so far.** Every earlier pattern leaves the
+extractor knowing something is absent. A page showing two grey squares on two grey grounds looks like
+a complete, successfully reproduced figure. Only knowing what the book is about reveals that the
+demonstration has been destroyed. **It survives a visual pass.**
+
+Five books, five patterns, ranked by danger rather than by amount missing:
+
+| Rank | Pattern | Book | Can the extractor tell? |
+|---|---|---|---|
+| 1 | **Dimension destroyed** | Albers | No — and a visual pass does not reveal it |
+| 2 | **Silent** | Williams | No — nothing marks the loss |
+| 3 | **Named** | Grammar of the Shot, LSM | Yes, precisely |
+| 4 | **Announced** | Ogilvy | Yes, unmissably |
+| 5 | **Minimal** | Bang | Little is lost |
+
+**What changes.** A cheap detector exists and was used: measure saturation across sampled pages. On
+Albers it returned zero everywhere; on Vignelli, colour on 9 of 13 spreads. That distinguishes a
+colour-bearing source from a stripped one in seconds.
+
+- **Books:** Albers · **Distinct books: 1** · **Status: OBSERVED**
+- **Layer:** visual completeness · **Consequence if unchanged:** a colour-argued source extracted with confident, unnoticed loss
+- **Proposed fix (NOT APPLIED):** run the saturation check as a routine provenance step for any source whose argument depends on colour
+
+### B-19 — A full-page graphic can bury an entire named section in the text layer *(new)*
+
+**Plain English.** The Vignelli Canon's Part One has twelve named sections. Eleven extract cleanly.
+*Syntactics* — one of the three concepts the book opens by announcing — shares its spread with the New
+York City Subway Diagram, and that diagram's several hundred words of route legend are emitted around
+and through the prose. In the extracted text the section reads as a wall of subway routes.
+
+**Why it matters.** A text-only extractor could plausibly have missed a whole named concept. Nothing
+is corrupted — every word is present and correct — so no character-level quality check would flag it.
+
+**What caught it.** The contents page listed a section the body text did not appear to contain. That
+is a cheap, independent index of what should be present, and it is worth using deliberately.
+
+**Relation to the Lupton block.** Same family, very different consequence. Lupton interleaved columns
+line by line, splicing sentences the author never wrote — unrecoverable, and the book was blocked.
+This merely misplaces a block, and the visual pass recovered it in full.
+
+- **Books:** Vignelli · **Distinct books: 1** · **Status: OBSERVED**
+- **Layer:** source fidelity · **Consequence if unchanged:** silent loss of whole sections adjacent to full-page graphics
+- **Proposed fix (NOT APPLIED):** check the extracted section list against the contents page before extraction begins
+
+### B-20 — OCR damage has two kinds and only one of them blocks a book *(new, clarifies B-03)*
+
+**Plain English.** Albers is an OCR of a scan and carries visible artifacts — `\ery` for "very",
+`^vill` for "will", `conntry` for "country". Measured: 43 mixed-case garbled words in 19,461, about
+0.2%, mostly in front matter. **It was usable.** Lupton was blocked.
+
+The difference is not severity but kind:
+
+- **Character-level damage** (Albers) mangles individual words while leaving sentence structure
+  intact. A reader sees the error and repairs it. Verbatim quotation needs care; meaning survives.
+- **Structural damage** (Lupton) merges two print columns line by line, producing grammatical English
+  sentences that the author never wrote. Nothing looks wrong. Extraction would fabricate.
+
+**What changes.** "OCR quality" is not one measure. A percentage of garbled words does not predict
+usability — Lupton would score well on it. The question is whether the damage can produce
+plausible-looking text that is false.
+
+- **Books:** Albers usable, Lupton blocked · **Distinct books: 2** · **Status: OBSERVED**
+- **Layer:** source fidelity · **Consequence if unchanged:** good books blocked on cosmetic damage, or fabricating books passed on a clean word-error rate
+- **Proposed fix (NOT APPLIED):** classify OCR damage as character-level or structural before deciding usability
+
 ---
 
 ## C. Evidence *against* earlier concerns
@@ -503,12 +575,13 @@ design, which replaced the uncalibrated decimal confidences the historical passe
 
 | | Count |
 |---|---|
-| Books completed under the frozen method | **3** (Grammar of the Shot ch.4; Ogilvy ch.2; Light: Science & Magic ch.3) |
+| Books completed under the frozen method | **5** (Grammar of the Shot ch.4; Ogilvy ch.2; Light: Science & Magic ch.3; Albers ch.I-V; Vignelli Canon Part One) |
 | Books blocked before extraction | 5 (Lupton + 4 image-only/format) |
 | Books now unreachable | **29** (see B-13) |
-| Issues logged | 17 new, 5 carried forward |
+| Issues logged | 20 new, 5 carried forward |
 | **Issues seen in 2+ distinct books** | **4** (B-07 ×5, B-08 ×3, B-14 ×**4 of 4 possible**, B-15 ×5) |
-| **Batch feasibility** | 3 of 15 done; access being restored, see B-13 |
+| **Batch feasibility** | 5 of 15 done; library access restored, see B-13 |
+| Books with no historical comparator | 2 (Albers, Vignelli) |
 
 ### B-14 is now the batch's strongest signal
 Four books have a historical comparator. In **all four**, the older pass caught a product-schema fit
