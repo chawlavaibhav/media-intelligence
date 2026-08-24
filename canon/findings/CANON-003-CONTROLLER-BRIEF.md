@@ -1,7 +1,7 @@
 # CANON-003 — Controller brief
 
 **Date:** 24 Aug 2026  
-**Decision status:** final synthesis decision for the 16-book batch; pending integration PR verification/merge.
+**Decision status:** final synthesis decision for the 16-book batch; integrated to `main` via PR #4 on 24 Aug 2026.
 
 ## Bottom line
 
@@ -60,6 +60,6 @@ The temporary auto-running GitHub Actions workflow used during validator develop
 
 ## Next sequence
 
-1. Complete controlled integration verification and merge PR #4.
+1. **Done:** CANON-003 integration verified and squash-merged to `main` via PR #4.
 2. Open the follow-on CANON Method v0.2 task for the Audit Gate; do not modify SPEC-03/04/05 inside CANON-003.
 3. After the method revision is tested against the integrated corpus, resume Canon-consumption/RAG experiments so they consume the hardened representation rather than the pre-synthesis method.
