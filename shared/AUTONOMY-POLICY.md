@@ -17,8 +17,9 @@ All of these must hold:
 1. **ARCHITECTURE** — the existing schema/architecture appears unable to represent the evidence.
 2. **SCOPE** — the task would require material expansion beyond what was approved.
 3. **MONEY / RESOURCE** — the budget in the task will be exceeded.
-4. **ACCESS / LEGAL** — authentication, payment, licence ambiguity, terms acceptance, or a human
-   permission decision is needed.
+4. **ACCESS / LEGAL** — authentication, payment, click-through terms, explicit licence/terms conflict,
+   access-control bypass, or a legal/permission decision not already covered by an approved task or
+   stream policy is needed.
 5. **DATA INTEGRITY** — source, media, evaluator, or data quality is unreliable enough to
    contaminate results.
 6. **CENTRAL ASSUMPTION** — the result materially contradicts an entry in `coordination/ASSUMPTIONS.md`.
@@ -30,18 +31,32 @@ All of these must hold:
 `needs_controller_review`. Do not solve the problem and continue — that silently promotes a
 worker's judgement call into an architecture decision.**
 
+### Licence silence on public, ungated sources
+
+The absence of a stated licence is **not by itself** an ACCESS / LEGAL stop when the relevant task
+or stream policy explicitly allows public, ungated acquisition for internal research/evaluation.
+In that case the worker must record rights as `not_stated` / `not_verified`, keep the use bounded to
+what was approved, and must not present the material as cleared for redistribution, training,
+customer delivery or production use.
+
+Explicit restrictions still control. A worker may not bypass authentication or technical controls,
+accept terms on the user's behalf, or continue when published terms prohibit the intended access or
+use.
+
 ### Pre-approved blocked-candidate handling
 
 A multi-candidate discovery/acquisition task may explicitly authorize a narrower behaviour for an
 individual candidate: record it as blocked/unavailable and continue to the next already-approved
 candidate **without crossing the gate**. This is allowed only when the task file defines the status,
 the candidate is optional, no terms are accepted, no authentication/payment/manual permission is
-attempted, and no ambiguous material has already been acquired.
+attempted, and no ambiguous material has already been acquired outside an approved rights-unknown
+policy.
 
 This does **not** waive the ACCESS / LEGAL stop gate. The worker must still stop the whole task if
 resolving the gate is necessary to meet the task objective, if a human legal/permission judgement is
-needed to proceed, or if ambiguity affects material already downloaded/used. The exception exists so
-a pre-approved corpus survey does not halt merely because one optional candidate is gated.
+needed to proceed, or if ambiguity affects material already downloaded/used outside an approved
+policy. The exception exists so a pre-approved corpus survey does not halt merely because one
+optional candidate is gated.
 
 ## Autonomous queues
 
