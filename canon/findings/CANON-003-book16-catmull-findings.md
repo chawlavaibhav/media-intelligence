@@ -151,8 +151,29 @@ inside the source's own operation, not a study.
 
 ## 8. Historical comparison
 
-**No historical comparator exists.** Searched after the fresh checkpoint `b7f0d47` was committed
-and pushed. The only files in the repository mentioning this book are the parallel-execution
-amendment and the source inventory, both of which merely assign it. Recorded as `no historical
-comparator` rather than manufacturing one. This is the third such book in the batch, after Albers
-and Vignelli.
+**No historical extraction comparator exists** — there is no earlier pass on this book to compare
+objects against. Recorded as `no historical comparator` rather than manufacturing one. This is the
+third such book in the batch, after Albers and Vignelli.
+
+**But a historical *judgement* does exist, and it converged with the fresh result.** The search was
+run after the checkpoint `b7f0d47` was committed and pushed, and it found
+`canon/experiments/CANON-CURRICULUM-V0.md`, dated 23 August 2026 — before this batch began. That
+document deliberately excludes *Creativity, Inc.* from the planned Canon curriculum, on the grounds
+that it is "aimed at *our own judgement* rather than at creative output".
+
+The fresh extraction, which had not seen that document, produced **zero Creative IR bindings and
+five bindings that are all about how our own evaluators and governance should work**. Two
+independent routes to the same conclusion: this book informs how we judge, not what we make.
+
+**Contamination check, run because the batch has already caught one false convergence.** The
+curriculum and coverage-map documents in `canon/experiments/` were not read before or during this
+extraction. The files opened beforehand were the communication standard, the CANON-003 task, the
+parallel-execution amendment, the source inventory, the handover checkpoint, SPEC-01/03/04/05, and
+the completed Vignelli extraction used as a format reference. The convergence is genuine.
+
+**A correction to my own first search.** The initial post-checkpoint search used the string
+"creativity, inc" with the comma and missed the curriculum document, which writes it without one.
+The lane checkpoint recorded "no comparator" on the strength of that search. The re-run above is the
+accurate result, and the checkpoint has been corrected. Worth recording as a method hazard in its
+own right: a title-string search is only as good as the punctuation the other document happened to
+use.

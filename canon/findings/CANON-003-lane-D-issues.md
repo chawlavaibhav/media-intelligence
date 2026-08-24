@@ -23,7 +23,7 @@ supports or resists it — not to inherit its count.
 
 ## D-01 — The repair vocabulary cannot express a social or organisational action
 
-**Status:** OBSERVED · **Layer:** ontology · **New in this batch (Lane D)** · **Books: 1**
+**Status:** OBSERVED · **Layer:** ontology · **New in this batch (Lane D)** · **Books: 2**
 
 **What it is.** SPEC-05 makes every remedy term declare `executable_by` — who or what could
 actually carry the repair out. The permitted values are `physical_production`,
@@ -41,6 +41,11 @@ when the truth is "this vocabulary has no value for this kind of action". Anyone
 unresolved repairs across the Canon would misread nine representable, well-understood remedies as
 gaps.
 
+**Recurred in book 17.** *Art & Fear*'s remedies are the same kind of thing — share work in progress
+with other makers, leave an unresolved thread in each piece, notice how the material actually
+responds. Six more remedy terms recording `unknown`, in a completely different book by different
+authors in a different decade. Two of two Lane D books.
+
 **Consequence if unchanged.** Every process, management, teaching or creative-discipline source will
 land the same way. The Canon will accumulate `unknown` repairs that are not unknown, and the field
 stops carrying information precisely where the Canon is broadening beyond image-making.
@@ -53,7 +58,7 @@ changing how they work rather than changing an artefact — a working name would
 
 ## D-02 — A claim quoted from a named third party inside a source has nowhere to be recorded
 
-**Status:** OBSERVED · **Layer:** source fidelity · **New in this batch (Lane D)** · **Books: 1**
+**Status:** OBSERVED · **Layer:** source fidelity · **New in this batch (Lane D)** · **Books: 2**
 
 **What it is.** Several of the chapter's most useful claims are not the book's author speaking. The
 two selection criteria for building your own review group, the definition of constructive criticism,
@@ -73,6 +78,14 @@ recorded in a field.
 **What I did instead.** Recorded the attribution in `caveats` with `origin: extractor_observed`.
 That preserves the fact but files an authorship property as an observation of mine, which is the
 wrong shelf.
+
+**Recurred in book 17, more strongly.** *Art & Fear* builds a substantial part of its argument from
+other people's words: a piano teacher's reply, quotations from Joan Didion, Stanley Kunitz and Ben
+Shahn, Charles Eames on where his energy went, Durrell's construction stakes, Forster on the
+Malabar Caves — plus an epigraph from a named person at the head of every chapter. The rendered page
+sets the epigraph apart in italic; the text layer loses the distinction entirely. Two of two Lane D
+books, and the second is the heavier case because the borrowed material carries more of the
+argument.
 
 **Consequence if unchanged.** Interview- and reportage-shaped sources will systematically lose the
 question "whose claim is this?". Lane B's *The Conversations* is an interview transcript, so this
@@ -180,10 +193,134 @@ written down beside it. Whether that holds elsewhere is for the integrator to ju
 
 ---
 
+## D-07 — A source may declare its foundations as chosen assumptions rather than as findings
+
+**Status:** OBSERVED · **Layer:** source fidelity / Creative IR fit · **New in this batch (Lane D)**
+· **Books: 1**
+
+**What it is.** *Art & Fear* rejects the view that art rests on innate talent with the sentence that
+it is fatalistic **even if it is true**, then adopts four premises under its own heading "A Few
+Assumptions", stating that it chose them because they place responsibility in the maker's hands.
+
+**Why it matters.** Every other claim the Canon holds is a candidate for being right or wrong — a
+physical mechanism, a practitioner's report, a claim about how viewers respond. A premise adopted
+for its effect on the person holding it is not that kind of claim and cannot be refuted by evidence
+the way a factual one can. Anything that later weighs Canon sources against each other needs to see
+the difference, or it will either dismiss the source for lacking evidence it never claimed, or
+credit it with evidence it never offered.
+
+**What the schema did and did not do.** It recorded the situation faithfully: the caveats say
+`origin: source_stated` that these are offered as assumptions, and the system's whole-system claim
+is `source_explicit` with the source's own stated purpose. What it does not do is mark the
+**category** — `claim_type` reads `explicit_source_claim` here exactly as it does for a claim about
+polarised light. The distinction survives only in prose a reader has to notice.
+
+**Consequence if unchanged.** Sources of craft philosophy, teaching and creative discipline will be
+weighed as though they had made factual claims and failed to support them, when in fact they made a
+different kind of claim and were explicit about it.
+
+**Proposed (not applied):** a `claim_type` value such as `declared_working_assumption`, or a flag
+alongside it. Post-batch revision task only.
+
+---
+
+## D-08 — The most quotable claim in a source is often the one that binds least honestly
+
+**Status:** INFERRED · **Layer:** bindings · **New in this batch (Lane D)** · **Books: 1**
+
+**What it is.** *Art & Fear*'s best-known line is that vision is always ahead of execution *and it
+should be*. It reads like a ready-made rule for an evaluator scoring how closely a produced asset
+matches its brief: do not treat every residual gap as a defect.
+
+I refused the binding and recorded the refusal in the bindings file. The source's claim is about a
+human maker whose own skill lags their own conception, and its stated reason the gap should persist
+is that the gap pulls the maker forward. A model generating from a specification has no conception
+of its own, and nothing is pulled forward. The resemblance is verbal.
+
+**Why it matters.** Building it would have taken our own tolerance decision — how much brief-drift
+we accept — and dressed it in a source's authority. That is precisely the distortion the SPEC-03 /
+SPEC-04 split exists to prevent, and it arrived in its most persuasive form: a famous sentence, a
+plausible mapping, and a real product question waiting for an answer.
+
+**Consequence if unchanged.** None to the schema; the split worked. The risk is to extractors: an
+aphoristic source offers many such sentences, and the pressure to bind is strongest exactly where
+the source is most memorable. Recorded so the integrator can check whether other lanes refused
+anything, or whether refusals are going unrecorded because nothing asks for them.
+
+**Proposed (not applied):** nothing in the schema. Possibly a convention that considered-and-refused
+bindings are recorded, since SPEC-05 already establishes that negative findings are written down.
+
+---
+
+## D-09 — A title-string search is only as good as the other document's punctuation
+
+**Status:** OBSERVED · **Layer:** provenance / method integrity · **New in this batch (Lane D)** ·
+**Books: 1**
+
+**What it is.** My first post-checkpoint search for historical material on book 16 used the string
+"creativity, inc", with the comma the book's own title carries. `CANON-CURRICULUM-V0.md` writes it
+"Creativity Inc" without one, so the search missed it and I recorded "no comparator" in the lane
+checkpoint. The re-run, prompted by book 17's search surfacing the same file, found it.
+
+**Why it matters.** The sealed-until-checkpoint rule depends on a search that actually finds what
+exists. A missed comparator does not corrupt the fresh extraction — the discipline held, and the
+extraction was already committed and pushed — but it produces a false "no historical material"
+record, which is a claim about the repository that was not true.
+
+**Consequence if unchanged.** Books get recorded as having no comparator when one exists, and the
+integrator's count of compared-versus-uncompared books is wrong in a direction that is invisible.
+
+**What I did:** corrected the book 16 findings and the lane checkpoint, and searched book 17 on
+author surnames as well as title strings. **Recommended for other lanes:** search on author surname,
+on distinctive concept words, and on the title with and without punctuation.
+
+---
+
+## D-10 — Counter-evidence: when a source really does declare a system, the origin fields say so
+
+**Status:** OBSERVED · **Layer:** systems · **Evidence *for* the current design** · **Books: 1**
+
+**What it is.** Both of book 16's concept systems carry `extractor_synthesis` on their whole-system
+claims, because Catmull never assembles his conditions into a mechanism. Two of book 17's three
+carry `source_explicit`, because Bayles and Orland do: "A Few Assumptions" is the source's own
+heading with its own membership, order and stated purpose, and the three inevitabilities — vision,
+uncertainty, knowledge of materials — are named together in one sentence and then given a subsection
+each.
+
+**Why it matters.** The origin-marking machinery is the main defence against a system being read as
+source evidence when it is our hypothesis. Two books in the same domain, days apart, produced
+opposite readings on that field without any adjustment to the method. That is evidence the field
+discriminates rather than defaulting.
+
+---
+
+## D-11 — Two books, different material, near-identical evidence profile
+
+**Status:** INFERRED · **Layer:** other (evidence characteristics) · **New in this batch (Lane D)**
+· **Books: 2**
+
+**What it is.** Book 16 is a 2014 organisational memoir by a studio president. Book 17 is a 1993
+philosophical essay by a painter and a photographer. Their evidence profiles are almost the same:
+every object `explicitly_stated` and `practitioner_assertion`, roughly two thirds carrying a stated
+mechanism, and **zero** controlled comparison, zero visual demonstration, zero outcome claims in
+either. The main difference is that *Art & Fear* argues more (13 of 23 against 9 of 21), which fits
+a book trying to change what the reader believes rather than describe a mechanism already running.
+
+**Why it matters.** It suggests evidence profile may track the **domain** — what kind of knowledge
+this is — rather than the individual book. If that holds across lanes it is useful: it means the
+profile is a real signal about a source class and not an artefact of one author's habits. If it does
+not hold, this is a coincidence between two books.
+
+**Status is INFERRED deliberately.** One lane, two books, both hand-classified by the same extractor
+on the same day — which is itself a possible explanation for the similarity. Only the integrator,
+comparing across lanes and extractors, can tell the two apart.
+
+---
+
 ## Book status — Lane D
 
 | Book | Status | Checkpoint | Historical comparator |
 |---|---|---|---|
-| 16 — Catmull, *Creativity, Inc.* ch.5 | **complete, validated** | `b7f0d47` | none exists — searched after checkpoint |
-| 17 — Bayles & Orland, *Art & Fear* | not started | — | — |
+| 16 — Catmull, *Creativity, Inc.* ch.5 | **complete, validated** | `b7f0d47` | no extraction comparator; a pre-batch curriculum judgement exists and converged — see D-09 |
+| 17 — Bayles & Orland, *Art & Fear* pp.1–21 | **complete, validated** | `75e4da1` | no extraction comparator; same curriculum judgement, converged |
 | 18 — Miller, *Building a StoryBrand* | not started | — | — |
