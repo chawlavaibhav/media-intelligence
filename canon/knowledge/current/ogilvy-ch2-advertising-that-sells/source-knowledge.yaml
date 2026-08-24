@@ -1,0 +1,1046 @@
+# CANON-003 book 2 — Ogilvy on Advertising, ch.2 "How to produce advertising that sells"
+# Fresh SPEC-03 extraction. Historical Ogilvy material sealed until this book's checkpoint exists.
+# Granularity: CANON-001 V0 rule, unchanged.
+# Visual completeness: blocked_visual_validation — see visual-evidence-ledger.yaml. No claim is
+# recorded as visually demonstrated.
+# Section rationale: the complete chapter. It is Ogilvy's general statement of method, from research
+# through positioning, brand image, big ideas and repetition to his attack on the cult of creativity,
+# and is the chapter the rest of the book's specific advice hangs from.
+
+source_id: ogilvy_on_advertising_ch2
+
+source_knowledge:
+
+- sk_id: sk_ogl_c003_0001
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "you may not realize the magnitude of difference between one advertisement and another"
+    - "I have seen one advertisement actually sell not twice as much, not three times as much, but 19½ times as much as another."
+  concept_label: the_performance_gap_between_advertisements_is_very_large
+  label_origin: extractor_assigned
+  claim: >
+    The difference in selling power between one advertisement and another is far larger than
+    practitioners assume. The source quotes John Caples reporting one advertisement selling 19½ times
+    as much as another, with both occupying the same space in the same publication, both with
+    photographic illustrations and carefully written copy — the difference being that one used the
+    right appeal and the other the wrong one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attributed entirely to appeal: the same format, space and craft produced a nineteen-fold
+      difference because one advertisement chose the right appeal.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "print advertisements compared under matched conditions"
+  caveats:
+    - text: "the figure is quoted from John Caples, described as the doyen of direct response copywriters, rather than measured by the author"
+      origin: source_stated
+    - text: "a single reported comparison with no sample size, no replication and no statement of how selling was attributed; the source presents it as an anecdote from an authority, and it is the numerical anchor for the chapter's whole argument"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_ogl_c003_0002, note: "if the range is this wide, the bottom of it can be negative"}
+  evidence:
+    characteristics: [explicitly_stated, outcome_claimed, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — How to produce advertising that sells"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "chapter opening, before 'Do your homework'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0002
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "The wrong advertising can actually reduce the sales of a product."
+    - "consumption of a certain brand of beer was lower among people who remembered its advertising than those who did not"
+  concept_label: advertising_can_reduce_sales
+  label_origin: extractor_assigned
+  claim: >
+    Advertising is not neutral at worst. The source reports that Ford inserted advertisements in
+    every other copy of Reader's Digest and that, at year end, people not exposed to the advertising
+    had bought more Fords than those who were; and that consumption of a brand of beer was lower
+    among people who remembered its advertising. The brewer is described as having spent millions
+    un-selling his beer.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any advertising campaign"
+  caveats:
+    - text: "the Ford case is introduced with 'I am told that', so the author does not claim direct knowledge"
+      origin: source_stated
+    - text: "the beer case is reported as a survey finding correlation between recall and lower consumption; the source treats this as the advertising causing the reduction, which the design described cannot establish"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the wrong advertising can actually reduce the sales of a product"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0001, note: "the negative end of the performance range"}
+    - {relation: qualified_by, target: sk_ogl_c003_0003, note: "the source argues such effects are rarely tested for"}
+  evidence:
+    characteristics: [explicitly_stated, outcome_claimed, anecdotal, empirical_within_source, mechanism_absent]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "chapter opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0003
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "I sometimes wonder if there is a tacit conspiracy among clients, media and agencies to avoid putting advertising to such acid tests."
+    - "Everyone involved has a vested interest in prolonging the myth that all advertising increases sales to some degree. It doesn't."
+  concept_label: the_industry_avoids_testing_whether_advertising_sells
+  label_origin: extractor_assigned
+  claim: >
+    Clients, media and agencies all have a vested interest in not subjecting advertising to tests
+    that could show it failing, and so sustain a myth that all advertising increases sales to some
+    degree. The source states plainly that it does not.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Everyone in the chain is paid whether or not the advertising works, so no party is motivated to
+      run the test that could show it failing.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "the commercial advertising industry as the author found it"
+  caveats:
+    - text: "the author hedges the accusation with 'I sometimes wonder', while stating the underlying claim — that not all advertising increases sales — without hedge"
+      origin: source_stated
+    - text: "an attribution of collective motive to an industry, offered without evidence; it is a claim about incentives rather than about advertisements"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the myth that all advertising increases sales to some degree"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_ogl_c003_0018, note: "the same incentive argument underlies the appeal to direct response"}
+    - {relation: generalises, target: sk_ogl_c003_0016, note: "and the complaint that the field fails to codify what it learns"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "opening"
+    page_start: null
+    page_end: null
+    locator: "chapter opening"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0004
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "You don't stand a tinker's chance of producing successful advertising unless you start by doing your homework."
+    - "study the product you are going to advertise. The more you know about it, the more likely you are to come up with a big idea for selling it."
+  concept_label: study_the_product_before_writing
+  label_origin: extractor_assigned
+  claim: >
+    Successful advertising begins with prolonged study of the product itself, and the more that is
+    known about it the more likely a big selling idea becomes. The source reports spending three
+    weeks reading about Rolls-Royce and finding the sentence that became the headline; sending a team
+    for three weeks of engineer interviews for Mercedes; ten days' reading for a margarine account;
+    and a client briefing that surfaced the ingredient behind the Shell campaign.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Product knowledge is where the selling idea comes from — in each case reported, a specific fact
+      discovered during study became the campaign.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "before beginning creative work on any account"
+  caveats:
+    - text: "the author calls the work extremely tedious and says there is no substitute for it"
+      origin: source_stated
+    - text: "the four cases are the author's own successes, reported by him, with sales outcomes attributed to the campaign; no unsuccessful homework is reported, so the sample is selected on the outcome"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the slippery surface of irrelevant brilliance"
+  source_stated_remedies:
+    - "study the product before writing anything"
+  examples:
+    positive:
+      - {description: "Rolls-Royce: three weeks' reading produced 'at sixty miles an hour, the loudest noise comes from the electric clock', which became the headline over 607 words of factual copy. The advertisement itself is a placeholder in the available text and was not seen", figure_ref: null}
+      - {description: "Mercedes: three weeks of taped engineer interviews produced long factual advertisements, reported as raising US sales from 10,000 to 40,000 cars a year", figure_ref: null}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_ogl_c003_0005, note: "presented as consecutive steps of one preparation routine"}
+    - {relation: generalises, target: sk_ogl_c003_0011, note: "an informed unconscious is what the big idea is said to require"}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Do your homework"
+    page_start: null
+    page_end: null
+    locator: "Do your homework"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0005
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "find out what kind of advertising your competitors have been doing for similar products, and with what success"
+    - "Find out how they think about your kind of product, what language they use when they discuss the subject, what attributes are important to them, and what promise would be most likely to make them buy your brand."
+  concept_label: research_competitors_then_consumers_before_writing
+  label_origin: extractor_assigned
+  claim: >
+    After studying the product, study what competitors have advertised and how well it worked, then
+    research consumers: how they think about the product category, what language they use for it,
+    which attributes matter to them, and what promise would most likely make them buy.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "preparation for a campaign"
+  caveats:
+    - text: "the source states that where professional research is unaffordable it should be done informally, and that informal conversations with half a dozen housewives can help a copywriter more than formal surveys he did not participate in"
+      origin: source_stated
+    - text: "the preference for participated-in informal research over formal surveys is asserted, not evidenced, and cuts against the chapter's general argument for measurement"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "find out the language consumers themselves use for the product category"
+    - "do the research yourself if you cannot afford professionals"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_ogl_c003_0004, note: "consecutive steps of the same routine"}
+    - {relation: generalises, target: sk_ogl_c003_0006, note: "positioning follows from knowing who the product is for"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Do your homework"
+    page_start: null
+    page_end: null
+    locator: "Do your homework"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0006
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "This curious verb is in great favor among marketing experts, but no two of them agree what it means."
+    - "My own definition is 'what the product does, and who it is for.'"
+  concept_label: positioning_is_what_the_product_does_and_who_it_is_for
+  label_origin: extractor_assigned
+  claim: >
+    Positioning decides what the product does and who it is for. The source notes the term is in
+    great favour among marketing experts while no two of them agree what it means, and supplies its
+    own definition. The same product admits different positions: Dove could have been a detergent bar
+    for men with dirty hands and was instead positioned as a toilet bar for women with dry skin.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "before deciding on image or campaign"
+  caveats:
+    - text: "the author explicitly records that the term is used without agreed meaning across the field, and offers a personal definition rather than a settled one"
+      origin: source_stated
+    - text: "a rare case of a source naming a terminology problem in its own field and resolving it by stipulating rather than by adopting a consensus"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "decide what the product does and who it is for before anything else"
+  examples:
+    positive:
+      - {description: "Dove positioned as a toilet bar for women with dry skin, reported as still working 25 years later", figure_ref: null}
+      - {description: "SAAB, which had no measurable profile in Norway, positioned as a car for winter and voted best car for Norwegian winters three years later", figure_ref: null}
+      - {description: "Volkswagen positioned as a protest against the vulgarity of Detroit cars. The advertisement is a placeholder in the available text and was not seen", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0005, note: "follows from knowing the consumer"}
+    - {relation: generalises, target: sk_ogl_c003_0007, note: "image is decided after position"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Positioning"
+    page_start: null
+    page_end: null
+    locator: "Positioning"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0007
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "Image means personality."
+    - "Every advertisement should be thought of as a contribution to the brand image."
+    - "your advertising should consistently project the same image, year after year"
+  concept_label: brand_image_is_a_personality_built_by_consistency
+  label_origin: extractor_assigned
+  claim: >
+    A brand's image is its personality, and that personality is an amalgam of its name, packaging,
+    price, the style of its advertising and above all the product itself. Every advertisement
+    contributes to it, so advertising must project the same image year after year.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any branded product"
+  caveats:
+    - text: "the source names why consistency is hard: a new agency or a new marketing director wanting to make his mark are described as forces always at work to change the advertising"
+      origin: source_stated
+  source_stated_problems:
+    - "there are always forces at work to change the advertising"
+  source_stated_remedies:
+    - "project the same image year after year"
+  examples:
+    positive:
+      - {description: "Commander Whitehead used as the symbol of his own product for 18 years, described as working on a small budget", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0006, note: "decided after positioning"}
+    - {relation: generalises, target: sk_ogl_c003_0009, note: "the whiskey case is this claim's evidence"}
+    - {relation: qualifies, target: sk_ogl_c003_0013, note: "consistency and the thirty-year test point the same way"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Brand image"
+    page_start: null
+    page_end: null
+    locator: "Brand image"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0008
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "It pays to give most products an image of quality – a First Class ticket."
+    - "products you 'wear'"
+  concept_label: give_products_an_image_of_quality_especially_visible_ones
+  label_origin: extractor_assigned
+  claim: >
+    Most products should be given an image of quality, and this matters most for products whose brand
+    name is visible to other people — beer, cigarettes, automobiles — which the source calls products
+    you wear. Advertising that looks cheap or shoddy will rub off on the product.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Social visibility: nobody wants to be seen using shoddy products, so the perceived quality of
+      the advertising transfers to the perceived quality of the product.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "most products; especially those consumed visibly"
+  caveats:
+    - text: "hedged with 'most products', leaving unstated which products it does not apply to"
+      origin: source_stated
+  source_stated_problems:
+    - "if your advertising looks cheap or shoddy, it will rub off on your product"
+  source_stated_remedies:
+    - "give the product an image of quality"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0007, note: "a default direction for the image decision"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Brand image"
+    page_start: null
+    page_end: null
+    locator: "Brand image"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0009
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "It isn't the whiskey they choose, it's the image."
+    - "The brand image is 90 per cent of what the distiller has to sell."
+    - "They are tasting images."
+  concept_label: consumers_perceive_the_image_not_the_product
+  label_origin: extractor_assigned
+  claim: >
+    Where products are hard to distinguish, consumers experience the image rather than the product.
+    The source reports a University of California experiment in which students given distilled water
+    described it as tasteless when told it was distilled and horrible when told it came from the tap,
+    and proposes serving the same whiskey twice under two brand names to show that people report
+    tasting a difference.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The name conjures an association — the word tap conjuring chlorine — and the association is
+      experienced as a property of the thing itself.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "categories where blind differences are small, such as spirits"
+  caveats:
+    - text: "the 90 per cent figure is asserted without derivation"
+      origin: extractor_observed
+    - text: "the whiskey demonstration is described as a procedure the reader could run, not as one the author ran; the distilled-water study is attributed to a named university department without a citation"
+      origin: extractor_observed
+    - text: "the source states that trying to argue a consumer into a whiskey brand with rational facts did not work when the author attempted it"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0007, note: "the evidence offered for image mattering"}
+    - {relation: qualifies, target: sk_ogl_c003_0015, note: "bears on how parity products can be differentiated at all"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, anecdotal, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Brand image"
+    page_start: null
+    page_end: null
+    locator: "Brand image"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0010
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "Unless your advertising contains a big idea, it will pass like a ship in the night."
+    - "I doubt if more than one campaign in a hundred contains a big idea."
+  concept_label: advertising_without_a_big_idea_is_ignored
+  label_origin: extractor_assigned
+  claim: >
+    It takes a big idea to attract attention and get people to buy. Without one an advertisement
+    passes unnoticed. The source estimates fewer than one campaign in a hundred contains one, and
+    reports having had no more than twenty in a long career.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "any campaign"
+  caveats:
+    - text: "both frequency figures are the author's own estimates, offered without method"
+      origin: extractor_observed
+    - text: "the term big idea is never defined; the source supplies a five-question test for recognising one instead"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it will pass like a ship in the night"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: generalises, target: sk_ogl_c003_0012, note: "the five questions are the recognition test for this"}
+    - {relation: depends_on, target: sk_ogl_c003_0011, note: "where big ideas are said to come from"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "What's the big idea?"
+    page_start: null
+    page_end: null
+    locator: "What's the big idea?"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0011
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "Big ideas come from the unconscious. This is true in art, in science and in advertising. But your unconscious has to be well informed , or your idea will be irrelevant."
+    - "Stuff your conscious mind with information, then unhook your rational thought process."
+  concept_label: big_ideas_come_from_an_informed_unconscious
+  label_origin: extractor_assigned
+  claim: >
+    Big ideas arise from the unconscious, but only from a well-informed one, or the idea will be
+    irrelevant. The stated procedure is to fill the conscious mind with information and then disengage
+    rational thought — by a long walk, a hot bath, or half a pint of claret — after which the idea
+    surfaces.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Information is loaded deliberately and then rational processing is suspended so the unconscious
+      can combine it.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "the author extends the claim to art and science as well"
+  caveats:
+    - text: "the source reports a personal instance: a partner's complaint that a Pepperidge Farm commercial lacked imagery, followed by a dream of two white horses pulling a baker's van, an image reported as still in use 27 years later"
+      origin: source_stated
+    - text: "a claim about cognition offered without evidence and extended beyond the author's field to art and science"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "stuff the conscious mind with information, then unhook rational thought"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ogl_c003_0004, note: "explains why homework is the precondition for invention"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "What's the big idea?"
+    page_start: null
+    page_end: null
+    locator: "What's the big idea?"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0012
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "1 Did it make me gasp when I first saw it? 2 Do I wish I had thought of it myself? 3 Is it unique? 4 Does it fit the strategy to perfection? 5 Could it be used for 30 years?"
+    - "It is horribly difficult to recognize a good idea."
+  concept_label: five_questions_for_recognising_a_big_idea
+  label_origin: extractor_assigned
+  claim: >
+    Recognising a big idea is described as horribly difficult, and the source offers five questions as
+    the test: did it make me gasp, do I wish I had thought of it, is it unique, does it fit the
+    strategy to perfection, and could it be used for thirty years.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "judging a proposed campaign idea"
+  caveats:
+    - text: "the source states research cannot help here, because it cannot predict the cumulative value of an idea"
+      origin: source_stated
+    - text: "the author reports having rejected ideas that proved good, and gives a case where an idea he thought dopey ran for decades — which undercuts the reliability of the first two questions, both of which are personal reactions"
+      origin: extractor_observed
+  source_stated_problems:
+    - "I shudder to think how many I have rejected"
+  source_stated_remedies:
+    - "ask the five questions of any proposed idea"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0010, note: "the recognition test"}
+    - {relation: demonstrated_together_with, target: sk_ogl_c003_0013, note: "the fifth question is the durability test"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "What's the big idea?"
+    page_start: null
+    page_end: null
+    locator: "What's the big idea?"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0013
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "no idea is big unless it will work for thirty years"
+    - "You can count on your fingers the number of advertising campaigns that run even for five years."
+  concept_label: durability_over_decades_is_the_test_of_a_big_idea
+  label_origin: extractor_assigned
+  claim: >
+    An idea does not count as big unless it could work for thirty years. The source names campaigns
+    meeting this bar — the Hathaway eyepatch from 1951, the Dove promise from 1955, American Express
+    from 1975, Marlboro for 25 years — and observes that campaigns running even five years can be
+    counted on one's fingers.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Such campaigns keep producing results through boom and recession, against shifting competitive
+      pressure and changes of personnel, which is what makes longevity the discriminating test.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "judging whether an idea is big"
+  caveats:
+    - text: "the examples are campaigns that survived, listed at the time of writing; no campaign that met the test and then failed is discussed, so the criterion is illustrated only by its successes"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0012, note: "the fifth of the five questions"}
+    - {relation: qualifies, target: sk_ogl_c003_0007, note: "durability is what image consistency is for"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "What's the big idea?"
+    page_start: null
+    page_end: null
+    locator: "What's the big idea?"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0014
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "Whenever you can, make the product itself the hero of your advertising."
+    - "there are no dull products, only dull writers"
+  concept_label: make_the_product_the_hero
+  label_origin: extractor_assigned
+  claim: >
+    The product itself should be made the hero of the advertising wherever possible. The source
+    rejects the excuse that a product is too dull, holding that there are no dull products only dull
+    writers, and reports never assigning a product to a writer not personally interested in it,
+    because every bad campaign the author wrote was for a product that did not interest him.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "wherever possible, per the source"
+  caveats:
+    - text: "the source notes that showing the product with utter simplicity takes courage, because the writer will be accused of not being creative"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "make the product itself the hero"
+    - "do not assign a product to a writer who is not interested in it"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_ogl_c003_0020, note: "the source sets this against the cult of creativity"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Make the product the hero"
+    page_start: null
+    page_end: null
+    locator: "Make the product the hero"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0015
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "so many products are no different from their competitors"
+    - "all you can hope to do is explain their virtues more persuasively than your competitors, and to differentiate them by the style of your advertising. This is the 'added value' which advertising contributes"
+  concept_label: parity_products_are_differentiated_by_advertising_style
+  label_origin: extractor_assigned
+  claim: >
+    Many products are not different from their competitors, because manufacturers share technology
+    and use the same research to set colour, size, design and taste. For such parity products the
+    only available moves are to explain their virtues more persuasively and to differentiate by the
+    style of the advertising. The source calls this the added value advertising contributes.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Shared technology and shared research methods converge products on the same attributes, leaving
+      no product-level difference to advertise.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "product categories where competing products are materially alike"
+  caveats:
+    - text: "the author adds that he is not sufficiently puritanical to hate himself for it, marking the practice as one he expects to be criticised"
+      origin: source_stated
+  source_stated_problems:
+    - "so many products are no different from their competitors"
+  source_stated_remedies:
+    - "explain the product's virtues more persuasively than competitors do"
+    - "differentiate by the style of the advertising"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_ogl_c003_0009, note: "rests on image being what consumers experience"}
+    - {relation: qualified_by, target: sk_ogl_c003_0016, note: "the positively good approach is offered as the alternative to claiming superiority"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Make the product the hero"
+    page_start: null
+    page_end: null
+    locator: "Make the product the hero"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0016
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "It may be sufficient to convince consumers that your product is positively good."
+    - "If you and your competitors all make excellent products, don't try to imply that your product is better. Just say what's good about your product"
+  concept_label: convince_that_the_product_is_positively_good_not_superior
+  label_origin: extractor_assigned
+  claim: >
+    Advertisers have generally assumed they must convince consumers their product is superior to
+    competitors'. The source, quoting his partner Joel Raphaelson, proposes this may be unnecessary:
+    if a consumer is certain your product is good and uncertain about the competitor's, they will buy
+    yours. Where all competitors make excellent products, the advice is to say what is good about
+    yours more clearly, honestly and informatively rather than imply it is better.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Certainty about one product set against uncertainty about another is enough to decide the
+      choice, without any comparative claim.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "categories where competing products are all good"
+  caveats:
+    - text: "quoted from a named partner and presented conditionally — 'if this theory is right' — so the source offers it as a proposal rather than an established finding"
+      origin: source_stated
+    - text: "no test of the theory is reported anywhere in the chapter"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "say what is good about your product rather than that it is better"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ogl_c003_0015, note: "an alternative to differentiating by style alone"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "'The positively good'"
+    page_start: null
+    page_end: null
+    locator: "'The positively good'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0017
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "If you are lucky enough to write a good advertisement, repeat it until it stops selling."
+    - "You aren't advertising to a standing army; you are advertising to a moving parade."
+  concept_label: repeat_a_winning_advertisement_until_it_stops_selling
+  label_origin: extractor_assigned
+  claim: >
+    A good advertisement should be repeated until it stops selling, and many good ones are discarded
+    before they lose potency. The source reports research showing readership does not decline across
+    at least four repetitions in the same magazine, and argues the audience is a moving parade rather
+    than a standing army, so an advertisement that sold to last year's newly married couples will
+    work on this year's.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The audience continually renews itself, so a good advertisement functions like a radar sweep
+      picking up new prospects as they enter the market.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "campaigns whose selling effectiveness is being measured"
+  caveats:
+    - text: "the readership research is cited without source, sample or publication"
+      origin: extractor_observed
+    - text: "the source records a counter-pressure rather than a counter-example: Henry Ford asking whether a campaign had to run forever, when it had not yet appeared and he had merely seen it repeatedly in meetings"
+      origin: source_stated
+  source_stated_problems:
+    - "scores of good advertisements have been discarded before they lost their potency"
+  source_stated_remedies:
+    - "measure selling effectiveness at regular intervals and run the campaign until research shows it has worn out"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ogl_c003_0007, note: "the operational form of image consistency"}
+  evidence:
+    characteristics: [explicitly_stated, argued, empirical_within_source, anecdotal, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Repeat your winners"
+    page_start: null
+    page_end: null
+    locator: "Repeat your winners"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0018
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "committees can criticize, but they cannot create"
+    - "Many commercials and many advertisements look like the minutes of a committee."
+  concept_label: campaigns_made_by_committee_achieve_nothing
+  label_origin: extractor_assigned
+  claim: >
+    Most campaigns are too complicated because they try to reconcile a long list of objectives and the
+    divergent views of too many executives, and by attempting to cover too many things they achieve
+    nothing. The source holds that committees can criticise but cannot create.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The parties arguing strategy have a vested interest in prolonging the argument, because it is
+      how they earn their living — the same incentive argument the chapter makes about testing.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "agency and client campaign development"
+  caveats:
+    - text: "the source reports an average of 117 days to produce a campaign, and that the average copywriter gets three commercials a year on air and spends about an hour a week actually writing"
+      origin: source_stated
+    - text: "the production-time figures are given without source; the gestation comparison to hyenas and goats is rhetorical"
+      origin: extractor_observed
+  source_stated_problems:
+    - "by attempting to cover too many things, they achieve nothing"
+    - "advertising agencies have a genius for wheel-spinning"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0003, note: "the same vested-interest mechanism applied to process"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Down with committees"
+    page_start: null
+    page_end: null
+    locator: "Down with committees"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0019
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "What distinguishes the great surgeon is that he knows more than other surgeons.' It is the same with advertising agents. The good ones know more."
+    - "I cannot think of any other profession which gets by on such a small corpus of knowledge."
+    - "Advertising agencies waste their client's money repeating the same mistakes."
+  concept_label: the_field_fails_to_codify_what_it_learns
+  label_origin: extractor_assigned
+  claim: >
+    What distinguishes good practitioners is that they know more, yet the field refuses to learn its
+    own rudiments. Millions are spent testing individual advertisements and next to nothing on
+    analysing those tests for the factors that recur. The source reports counting 49 advertisements
+    set in reverse type in one magazine issue, long after research showed reverse is difficult to
+    read, and reports naming 96 known factors where the head of a major agency named twelve.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "the advertising profession as the author found it"
+  caveats:
+    - text: "the source names historical work it says was abandoned: Gallup accumulating and analysing readership scores at Young & Rubicam, Mills Shepherd on editorial content, Harold Sykes on newspapers, and Harold Rudolph's 1947 finding that photographs with story appeal attract far above average attention — which the author says led him to put an eyepatch on the Hathaway model"
+      origin: source_stated
+    - text: "the author asks whether the failure is because advertising does not attract inquiring minds, or because scientific method is beyond creative people, or because they fear knowledge would impose discipline — posing these as open questions rather than answering them"
+      origin: source_stated
+    - text: "the 96 factors are asserted and never enumerated in this chapter, so the central claim of superior knowledge is not demonstrated here"
+      origin: extractor_observed
+  source_stated_problems:
+    - "this willful refusal to learn the rudiments of the craft"
+    - "agencies which pioneered the search for knowledge now excel in violating the principles their predecessors had discovered"
+  source_stated_remedies:
+    - "analyse the results of tests in search of the factors that recur"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0003, note: "a consequence of nobody being motivated to test"}
+    - {relation: generalises, target: sk_ogl_c003_0020, note: "direct response is offered as the field that did not stop measuring"}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, historical_claim, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Pursuit of knowledge"
+    page_start: null
+    page_end: null
+    locator: "Pursuit of knowledge"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0020
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "direct-response advertisers, who solicit orders by mail or telephone, know to a dollar how much each advertisement sells"
+    - "Who, do you suppose, is more likely to be right?"
+  concept_label: copy_direct_response_because_it_measures
+  label_origin: extractor_assigned
+  claim: >
+    Most advertisers never know whether their advertisements sell, because too many other factors
+    cloud the equation, while direct-response advertisers know to a dollar. The source therefore
+    argues that where the two diverge, the measured party is likelier to be right, and lists three
+    divergences: two-minute rather than thirty-second commercials, late-night rather than prime time,
+    and long rather than short copy.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Direct response closes the feedback loop between advertisement and sale, so its accumulated
+      practice encodes evidence that general advertising's practice does not.
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "general advertisers deciding format, timing and copy length"
+  caveats:
+    - text: "the source recommends every copywriter begin with two years in direct response, and states one glance at a campaign reveals whether its author had that experience"
+      origin: source_stated
+    - text: "the argument transfers conclusions from a context where response is directly attributable to one where the source itself says attribution is impossible; whether practices that pay in direct response also pay in brand advertising is not tested here"
+      origin: extractor_observed
+    - text: "the author concedes he does not always practise what he preaches, and names his most successful advertisement as one that won no awards"
+      origin: source_stated
+  source_stated_problems:
+    - "most advertisers never know for sure whether their advertisements sell"
+  source_stated_remedies:
+    - "watch what direct-response advertisers do and follow it"
+    - "start a copywriting career with two years in direct response"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: specialises, target: sk_ogl_c003_0019, note: "the remedy for the field's failure to measure"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, empirical_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "The lessons of direct response"
+    page_start: null
+    page_end: null
+    locator: "The lessons of direct response"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0021
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "What is a good advertisement? An advertisement which pleases you because of its style, or an advertisement which sells the most? They are seldom the same."
+    - "'if it doesn't sell, it isn't creative.'"
+    - "'Originality is the most dangerous word in advertising.'"
+  concept_label: selling_not_style_is_the_criterion_for_a_good_advertisement
+  label_origin: extractor_assigned
+  claim: >
+    The advertisement a practitioner likes and the advertisement that sells most are seldom the same.
+    The source argues that going through a magazine one will pick advertisements with beautiful
+    illustrations or clever copy, forgetting to ask whether they would make one buy. He endorses the
+    position that if it does not sell it is not creative, and quotes Rosser Reeves that originality is
+    the most dangerous word in advertising, adding Mozart's remark that he never made the slightest
+    effort to compose anything original.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "judging advertisements"
+  caveats:
+    - text: "the source records the cost of holding this position: an agency producing nothing but down-to-earth advertising would never win a reputation for creativity and would wither on the vine"
+      origin: source_stated
+    - text: "the supporting evidence is a list of Clio award winners who lost accounts, went out of business, or withdrew from television — a selected list with no base rate for non-winners"
+      origin: extractor_observed
+    - text: "the author admits using the word creative himself for lack of a better one"
+      origin: source_stated
+  source_stated_problems:
+    - "the cult of 'creativity'"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_ogl_c003_0014, note: "the source sets making the product the hero against the pursuit of style"}
+    - {relation: specialises, target: sk_ogl_c003_0019, note: "the same preference for evidence over taste"}
+  evidence:
+    characteristics: [explicitly_stated, argued, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "The cult of 'creativity'"
+    page_start: null
+    page_end: null
+    locator: "The cult of 'creativity'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ogl_c003_0022
+  source_id: ogilvy_on_advertising_ch2
+  source_terms:
+    - "It sometimes happens that advertising campaigns enter the culture."
+    - "This kind of thing is manna from heaven, but nobody knows how to do it on purpose. At least, I don't."
+  concept_label: campaigns_sometimes_enter_the_culture_and_this_cannot_be_engineered
+  label_origin: extractor_assigned
+  claim: >
+    Campaigns occasionally enter the wider culture — a Maxwell House commercial's musical theme
+    reaching number seven on the hit parade, Commander Whitehead becoming a talk-show guest. The
+    source states this is manna from heaven and that nobody knows how to produce it deliberately,
+    adding "at least, I don't."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism: {stated_by_source: false, text: null}
+  scope:
+    domain_discussed_by_source: [advertising]
+    conditions: "occasional and unpredictable"
+  caveats:
+    - text: "the author explicitly disclaims knowing how to cause it, which is a rare admission of ignorance in a chapter written dogmatically by its own description"
+      origin: extractor_observed
+    - text: "the source reports historical attempts to cultivate word of mouth by spreading anecdotes, without saying whether they worked"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_ogl_c003_0010, note: "bounds what deliberate method can achieve"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2"
+    section: "Word of mouth"
+    page_start: null
+    page_end: null
+    locator: "Word of mouth"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
