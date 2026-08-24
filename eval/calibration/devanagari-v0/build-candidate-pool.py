@@ -13,17 +13,33 @@ WHAT THIS IS NOT
     never promotes them to project truth.
 
 GUARANTEES
-    * Deterministic: same repository state + same seed => byte-identical manifest.
+    * Deterministic: same repository state + same arguments => byte-identical manifest.
     * BSTD is never opened. It is the unseen cross-source reserve.
-    * Files byte-identical across the two CVIT sources are excluded from the pool entirely,
-      so one photograph cannot enter twice under two dataset names.
+    * One photograph is one candidate. It can never be counted twice, under either overlap policy.
     * Duplicate copies inside one source collapse to one candidate.
     * Devanagari is detected by SCRIPT IN THE TRANSCRIPTION, never by language label.
-    * No network call. No model call. No image is modified or rewritten.
+    * No network call. No model call. No source image is modified or rewritten.
+
+OVERLAP POLICIES — a photograph can appear in BOTH CVIT releases:
+    exclude     (generic default) drop such photographs entirely.
+    admit-once  admit each shared photograph ONCE, attributed deterministically to the first
+                source in fixed order. Independence is preserved: one photograph, one item.
+
+COMMITTED V0 CONFIGURATION — this is what the repository's pack was built with, and the defaults
+alone will NOT reproduce it:
+
+    python3 build-candidate-pool.py --corpus-root <PATH> \
+            --overlap-policy admit-once --language-filter hindi --target-n 54
+
+    -> 173 eligible Hindi photographs, 54 selected, 54 distinct hashes, 54 Hindi.
+
+`admit-once` is required rather than optional here: every Hindi-labelled photograph is a shared
+one, so the generic `exclude` default yields a pack containing no Hindi at all.
 
 Usage:
-    python3 build-candidate-pool.py [--corpus-root PATH] [--out-dir PATH]
-                                    [--target-n 54] [--seed 20260824]
+    python3 build-candidate-pool.py [--corpus-root PATH] [--out-dir PATH] [--target-n 54]
+                                    [--overlap-policy exclude|admit-once] [--language-filter LANG]
+    python3 build-candidate-pool.py --self-test        # adversarial matcher regression, no corpus
 """
 import argparse, csv, hashlib, json, os, re, sys, unicodedata
 from pathlib import Path
@@ -315,12 +331,13 @@ def main():
                          "and is how the Controller-approved Hindi-primary V0 pack is built.")
     ap.add_argument("--overlap-policy", choices=("exclude", "admit-once"), default="exclude",
                     help="What to do with photographs present in BOTH CVIT datasets. "
-                         "'exclude' (default, EVAL-003 as written): drop them entirely. "
+                         "'exclude' (generic default): drop them entirely. "
                          "'admit-once': admit each shared photograph ONCE, attributed to the "
                          "first source in fixed order, so one photograph is still one item. "
-                         "This matters because 100%% of Hindi-labelled material sits in the "
-                         "overlap: under 'exclude' the pool is entirely Marathi. PROPOSAL ONLY "
-                         "— do not switch the default without Controller approval.")
+                         "The approved primary V0 pack explicitly invokes 'admit-once' together "
+                         "with --language-filter hindi, because 100%% of Hindi-labelled material "
+                         "sits in the overlap and 'exclude' therefore yields no Hindi at all. "
+                         "The default is generic machinery, NOT the committed V0 configuration.")
     ap.add_argument("--seed", type=int, default=20260824, help="recorded for provenance; selection is sort-based, not RNG-based")
     args = ap.parse_args()
 
@@ -568,8 +585,17 @@ def main():
             "Source annotations are demonstrably unsafe to promote directly to project ground "
             "truth: two releases from one lineage assign different transcriptions to the same "
             "pixels often enough that adopting either arbitrarily would embed unexamined error.",
-        "note": "These files are EXCLUDED from the candidate pool. Evidence about label "
-                "reliability, not a candidate set.",
+        "note": "Evidence about label reliability, not a candidate set.",
+        "relationship_to_candidate_pool": {
+            "superseded_exclude_configuration": "excluded these shared photographs from the "
+                "candidate pool entirely — which also removed 100% of the Hindi-labelled material.",
+            "approved_hindi_primary_configuration": "admits each shared photograph ONCE "
+                "(--overlap-policy admit-once), attributed deterministically to one source record. "
+                "One photograph is one item and can never be counted twice. This is required "
+                "because every Hindi-labelled photograph is a shared one.",
+            "note": "Either way these measurements are about ANNOTATION reliability and are never "
+                    "used as a target, a reference or a threshold.",
+        },
         "byte_identical_files": len(cross_overlap),
         "iou_threshold": IOU_THRESHOLD,
         "matching_method": "strict one-to-one: pairs at IoU >= threshold sorted by descending IoU "

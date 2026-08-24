@@ -8,7 +8,12 @@
     "anything that may legitimately be used to set an evaluator threshold"
   ],
   "supported_conclusion": "Source annotations are demonstrably unsafe to promote directly to project ground truth: two releases from one lineage assign different transcriptions to the same pixels often enough that adopting either arbitrarily would embed unexamined error.",
-  "note": "These files are EXCLUDED from the candidate pool. Evidence about label reliability, not a candidate set.",
+  "note": "Evidence about label reliability, not a candidate set.",
+  "relationship_to_candidate_pool": {
+    "superseded_exclude_configuration": "excluded these shared photographs from the candidate pool entirely — which also removed 100% of the Hindi-labelled material.",
+    "approved_hindi_primary_configuration": "admits each shared photograph ONCE (--overlap-policy admit-once), attributed deterministically to one source record. One photograph is one item and can never be counted twice. This is required because every Hindi-labelled photograph is a shared one.",
+    "note": "Either way these measurements are about ANNOTATION reliability and are never used as a target, a reference or a threshold."
+  },
   "byte_identical_files": 173,
   "iou_threshold": 0.5,
   "matching_method": "strict one-to-one: pairs at IoU >= threshold sorted by descending IoU and accepted greedily; each region on either side matches at most once",

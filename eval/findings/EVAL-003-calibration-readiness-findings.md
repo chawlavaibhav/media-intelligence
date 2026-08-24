@@ -115,8 +115,8 @@ evaluator threshold derived from 67% or 73%.
 are sparse relative to images. Not an error; a consequence of a deliberate, budget-respecting
 acquisition.
 
-**What changes.** Nothing blocking: after exclusions, **202 eligible independent photographs** remain,
-ample for a 45–60 pool. But any later plan assuming "4,476 labelled Devanagari images are available"
+**What changes.** Nothing blocking. Under the committed V0 configuration **173 eligible Hindi
+photographs** remain, ample for the 54-item pack. But any later plan assuming "4,476 labelled Devanagari images are available"
 would be wrong by roughly eight-fold.
 
 ---
@@ -145,17 +145,20 @@ coordinate-encoded synthetic image, which also caught a real `sips` defect at th
 **Deterministic and reproducible.** Selection uses stable sorting on SHA-256, not a random number
 generator. Two consecutive runs produced byte-identical manifests (verified).
 
+**Committed V0 configuration:** `--overlap-policy admit-once --language-filter hindi --target-n 54`.
+
 | Step | Records |
 |---|---:|
 | Labelled source records | 551 |
-| less records removed because **both copies** of each of the 173 shared hashes are excluded | −346 |
+| less second copies of the 173 shared hashes (**admit-once** keeps each photograph once) | −173 |
 | less same-source duplicate records | −3 |
-| **Eligible unique photographs** | **202** |
-| **Selected** | **54** |
+| less records outside the **hindi** language filter | −202 |
+| **Eligible Hindi photographs** | **173** |
+| **Selected** | **54** — all Hindi, 54 distinct hashes |
 
-**Arithmetic corrected.** 173 shared *hashes* remove **346 records**, because each shared photograph
-is a record in both datasets and both copies are dropped. The earlier presentation
-"551 − 173 − 3 = 202" was wrong arithmetic that happened to reach the right total.
+**Counts are records, not hashes.** Under the superseded `exclude` configuration each shared hash
+removed **two** records (both copies), giving `551 − 346 − 3 = 202` eligible **and zero Hindi**. That
+configuration is historical; do not present it as the current pool.
 
 Spread across 12 strata (region size × scene clutter), 4–5 items each. Region area spans 528 px² to
 388,480 px² — a 735× range — and regions occupy 0.21% to 65.7% of their frame.
@@ -163,7 +166,10 @@ Spread across 12 strata (region size × scene clutter), 4–5 items each. Region
 **Devanagari was detected by script in the transcription, never by language label**, per Resources'
 finding that ~5,100 Marathi-labelled images are written in Devanagari.
 
-**Verified:** no excluded overlap file entered the pool; all 54 selected SHA-256 values are distinct.
+**Verified:** all 54 selected SHA-256 values are distinct — one photograph, one item. Under the
+committed V0 configuration shared photographs are **admitted once** rather than excluded, which is
+required because every Hindi-labelled photograph is a shared one; the guarantee enforced is that no
+photograph can enter **twice**, not that shared photographs are absent.
 
 **Gap: nukta coverage is effectively absent** — 1 item in 54, and 1 region in 1,629 across the whole
 eligible pool. The check covers both the combining mark U+093C and the precomposed forms
@@ -219,25 +225,31 @@ items-malformed-bad-json.jsonl          -> rejected: line 2 is not valid JSON
 
 ## 8 · Blinding is mechanically verified, not merely intended
 
-The reviewer pack contains **only** item ID, source image path and crop box. `--verify-blind`
-re-reads every generated file and fails if any Devanagari character appears anywhere.
+The reviewer pack contains **only** item ID and a reference to the materialised crop file (name,
+hash, dimensions). `--verify-blind` re-reads every generated file and fails if any Devanagari
+character appears anywhere.
 
 **Result: no Devanagari character exists anywhere in the generated pack.** Independently re-checked.
 
 **Why it matters.** The auto-correction pull that made one AI checker report six misspelled signs as
 correct acts on people too. A reader shown an expected answer and asked "does this match?" will tend
-to see a match. The measured 33% annotator disagreement is a second reason: a third reading is only
-worth having if it was made independently.
+to see a match. The measured 33% cross-dataset annotation disagreement is a second reason: an
+independent reading is only worth having if it was actually made independently.
 
-No images are copied or transformed — the viewer crops from the original at display time, so storage
-cost is zero and there is no transformed-file provenance risk.
+**Canonical crop files are materialised locally**, and the reviewer interface and the checker input
+both reference those same files — verified identical by hash across all 54 items. Equivalence is by
+identity rather than by two computations agreeing. The crops are derived output: git-ignored, and
+regenerated deterministically by `materialise-crops.py` from the manifest plus the verified crop
+geometry. *(An earlier configuration displayed a browser-side crop of the original and copied no
+images; that is superseded — see §11.7.)*
 
 ---
 
 ## 9 · What remains uncertain
 
-- **Whether crops can be materialised correctly** for the checker stage. Unresolved by choice; the
-  approved run must implement and verify it.
+- ~~Whether crops can be materialised correctly~~ — **RESOLVED.** Crop geometry is proven by
+  self-test against a coordinate-encoded synthetic image, the reviewer and checker read byte-identical
+  files, and the tool refuses to run if the geometry test fails. See §11.7.
 - **How many of the 54 survive the reader.** The pool is oversized precisely because this is unknown.
   A high rejection rate is a fact about the material, to be reported rather than worked around.
 - **Whether deterministic "broken" targets are genuinely broken.** A string edit can accidentally
@@ -257,8 +269,8 @@ cost is zero and there is no transformed-file provenance risk.
 
 No EVAL-003 or `shared/AUTONOMY-POLICY.md` stop condition triggered.
 
-Specifically: the CVIT material **did** produce a varied independent pool (202 eligible, 54 selected
-across 12 strata); the duplicate structure was as Resources reported, with the additional consequence
+Specifically: the CVIT material **did** produce a varied independent pool (173 eligible Hindi
+photographs, 54 selected across 12 strata); the duplicate structure was as Resources reported, with the additional consequence
 in §1 recorded rather than improvised around; source transcriptions joined to images cleanly through
 the documented annotation formats, needing no new interpretation rule; per-item targets did **not**
 change judgement semantics (§7, verified); no native-Hindi judgement was required or made — the one
@@ -285,7 +297,9 @@ the flaw was real, its effect on this corpus nil.
 
 **11.3 · "Convention only" renamed.** §2.2 → `matches_after_selected_diacritic_removal`, marks named.
 
-**11.4 · Candidate arithmetic fixed.** §5 — 551 − 346 − 3 = 202, stated in records not hashes.
+**11.4 · Candidate arithmetic fixed.** §5 — stated in records rather than hashes. *(The figure at
+that time was `551 − 346 − 3 = 202` under the then-current `exclude` configuration; the committed V0
+arithmetic is in §12.)*
 
 **11.5 · Language composition measured, and it is a problem.** The pool is **53 Marathi, 1 unlabelled,
 0 Hindi** — because **all 173 Hindi-labelled records sit inside the excluded overlap**. The smaller

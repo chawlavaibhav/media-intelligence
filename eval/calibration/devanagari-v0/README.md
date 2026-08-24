@@ -28,7 +28,7 @@ project ground truth about what any sign says.
 | `materialise-crops.py` | produces one crop file per item, with a self-test that **proves** crop geometry before writing anything |
 | `_png.py` | dependency-free PNG read/write, used only so crop geometry can be verified |
 | `crops/` | the crop files. **Both the reviewer and the checker read these**, so the region judged is identical by construction. Git-ignored; regenerate with `materialise-crops.py` |
-| `PROPOSED-V0-COMPOSITION.md` | the language-composition problem and options — **needs a Controller decision** |
+| `PROPOSED-V0-COMPOSITION.md` | **decision record** — why the pack is Hindi-primary. Decided 24 Aug 2026; retained as reasoning, not an open question |
 | `candidate-manifest.jsonl` | the 54 selected items, full provenance. **Contains source transcriptions — not for reviewer eyes** |
 | `candidate-manifest.csv` | same, **without** transcriptions, safe to open alongside review work |
 | `selection-summary.json` | exactly how the sample was chosen, and the reserve attestation |
@@ -39,20 +39,41 @@ project ground truth about what any sign says.
 | `HUMAN-REVIEW-GUIDE.md` | operator guide for the reader |
 | `CALIBRATION-RUN-PLAN-V0.md` | the full run plan, costs, and what a clean result would and would not license |
 
-## Reproducing
+## Reproducing the committed V0 pack
+
+**These are the commands that regenerate what is committed.** The builder's own defaults are
+generic and will produce a *different* pack — the Hindi-primary arguments below are required.
 
 ```
-python3 build-candidate-pool.py  --corpus-root <path-to>/resources/corpus/raw
-python3 materialise-crops.py     --corpus-root <path-to>/resources/corpus/raw
-python3 build-review-pack.py     --verify-blind
+CORPUS=<path-to>/resources/corpus/raw
+
+python3 build-candidate-pool.py --corpus-root "$CORPUS"         --overlap-policy admit-once --language-filter hindi --target-n 54
+
+python3 materialise-crops.py    --corpus-root "$CORPUS"
+python3 build-review-pack.py    --verify-blind
 ```
 
-`materialise-crops.py --self-test` verifies crop geometry on its own and exits, without touching the
-corpus. It refuses to materialise anything if that test fails.
+Expected result: **173 eligible Hindi photographs, 54 selected, 54 distinct image hashes, 54 Hindi.**
+`selection-summary.json` records the configuration actually used, so a mismatch is visible.
+
+⚠️ **Do not run `build-candidate-pool.py` without those arguments and expect the committed pack.**
+The script's generic default is `--overlap-policy exclude` with no language filter, which excludes
+every shared photograph — and since all 173 Hindi photographs are shared, that default produces a
+pack with **no Hindi at all**. The default is retained as generic machinery, not as the V0
+configuration.
+
+### Self-tests, which touch no corpus
+
+```
+python3 build-candidate-pool.py --self-test   # adversarial one-to-one region matching
+python3 materialise-crops.py    --self-test   # crop geometry, on a synthetic image
+```
+
+`materialise-crops.py` refuses to materialise anything if its geometry test fails.
 
 The raw corpus is git-ignored and may sit in another worktree, so `--corpus-root` is explicit.
 Selection uses stable sorting on SHA-256, not a random number generator: the same repository state
-always produces a byte-identical manifest.
+and the same arguments always produce a byte-identical manifest.
 
 ---
 
@@ -78,17 +99,27 @@ Under `admit-once` each shared hash removes only the second copy.
 | Selected across 12 difficulty strata | **54** |
 
 **Only ~12% of the acquired images carry annotations at all** (551 of 4,476). That is a consequence
-of Resources acquiring a partial slice of each archive, not an error. 202 eligible is still ample for
-a 45–60 pool.
+of Resources acquiring a partial slice of each archive, not an error. **173 eligible Hindi
+photographs** is ample for a 54-item pack.
 
-**Why exclude the 173.** They are literally the same photograph distributed in both datasets. Kept
-in, one picture could enter twice under two names and be counted as two independent tests.
+**Why the 173 shared photographs are admitted *once*.** They are literally the same photograph
+distributed in both datasets, so admitting each twice would count one picture as two independent
+tests. Admitting each **once** avoids that while keeping the material: the photograph is attributed
+deterministically to one source record for provenance, and the two dataset names are **not** treated
+as independent evidence about it.
+
+This matters because **every Hindi-labelled photograph is a shared one** — all 173 of them. Excluding
+shared files entirely, as the earlier configuration did, removes 100% of the Hindi.
 
 **Independence is by file hash**, not by filename: one photograph, one item.
 
 **Devanagari is detected by script in the transcription, never by language label.** Resources found
 that ~5,100 images labelled `marathi` are written in Devanagari; filtering on language would have
-discarded a fifth of the usable material. Our pool includes Marathi-labelled files for that reason.
+discarded a fifth of the usable material.
+
+The committed V0 pack then applies a **language filter on top of the script test**: all 54 items are
+Hindi-labelled. Marathi-labelled material remains in the corpus and is eligible under a different
+configuration, but it is **not** part of the primary V0 pack.
 
 ---
 
@@ -98,13 +129,16 @@ The approved calibration plan says a set of clean, tidy examples is useless — 
 checker scores the same, the test has separated nothing. So the pool is spread across 12 buckets
 combining **region size** (tiny → large) and **scene clutter** (isolated → cluttered), 4–5 items each.
 
+**Measured on the committed 54-Hindi pack** (recomputed, not carried over from the earlier pack):
+
 | Property | Range across the 54 |
 |---|---|
-| Region area | 528 px² → 388,480 px² (a 735× spread) |
-| Region share of frame | 0.21% → 65.7% (median 3.9%) |
-| Regions in the source photo | 1 → 98 |
-| Containing a conjunct | 22 of 54 |
-| Containing a vowel sign | 51 of 54 |
+| Region area | 864 px² → 182,700 px² (a 211× spread; median 9,372) |
+| Region share of frame | 0.11% → 37.1% (median 3.5%) |
+| Regions in the source photo | 1 → 28 (median 3) |
+| Transcription length | 3 → 12 characters (median 6) |
+| Containing a conjunct | 20 of 54 |
+| Containing a vowel sign | 53 of 54 |
 | Containing a nukta | **1 of 54** |
 
 **This is a spread, not a validated difficulty scale.** The buckets are convenience proxies chosen
@@ -120,8 +154,11 @@ recorded as `null` with `pixel_metrics_state: not_computed_no_image_library` rat
 eligible pool. This is a property of the corpus, not a bug: the check covers both the combining mark
 and the precomposed forms. If nukta behaviour matters, this pool will not tell us about it.
 
-**The pool is effectively single-source.** 53 of 54 come from IndicSTR12, because after removing the
-overlap only 3 labelled IIIT-ILST images remain. See below.
+**The pool is effectively single-source, and unavoidably so.** All 54 items are attributed to
+IndicSTR12 — but every one of them is a photograph that appears in *both* CVIT releases. The
+attribution is a deterministic provenance choice, **not** evidence that the item came from one
+dataset rather than the other, and the two dataset names must not be counted as two sources. BSTD
+remains the only genuinely independent lineage, and it is untouched.
 
 ---
 
@@ -190,8 +227,9 @@ representative of the wider pool.
 
 **100% of Hindi-labelled records sit inside the cross-dataset overlap** (173 of 173). The smaller
 dataset's Devanagari folder *is* the larger dataset's Hindi folder. So an `exclude` policy removes
-every Hindi photograph, and the first pack it produced was 53 Marathi + 1 unlabelled with **no Hindi
-at all**.
+every Hindi photograph. *(Historical, superseded: the pre-finalization `exclude` configuration
+produced a pack of 53 Marathi + 1 unlabelled with no Hindi at all. That configuration is **not** the
+committed V0 and must not be rebuilt as if it were.)*
 
 **Controller decision, 24 Aug 2026: the primary V0 pack is Hindi-focused.** Shared photographs are
 admitted **once** — one photograph, one item, never counted twice — and only Hindi-labelled items are
@@ -203,8 +241,8 @@ assumption.
 
 A result from this pack speaks to **reading Hindi from photographed signage**. It does **not**
 automatically transfer to Marathi or to Devanagari-language use in general. The Marathi stress subset
-is **deferred, not rejected** — see `PROPOSED-V0-COMPOSITION.md` for the options as originally
-presented.
+is **deferred, not rejected** — see `PROPOSED-V0-COMPOSITION.md`, which is now a record of the
+decision taken rather than an open question.
 
 ## What is deliberately held back
 

@@ -1,4 +1,4 @@
-# Proposed V0 language composition — for Controller decision
+# V0 language composition — decision record
 
 **Task:** EVAL-003 · **Status: DECIDED 24 Aug 2026 — retained as the record of the decision.**
 
@@ -63,12 +63,13 @@ coverage, not a finding.
 
 ## Options
 
-### Option A — keep the current default (exclude all overlaps)
+### Option A — exclude all overlaps  ❌ **not adopted**
 - **Pool:** 202 eligible → 54 selected. 53 Marathi, 1 unlabelled. **0 Hindi.**
-- Faithful to EVAL-003 as written.
+- Faithful to EVAL-003 as originally written.
 - Calibrates **script-general Devanagari reading only.** Any claim about Hindi would be unsupported.
+- *This is the superseded pre-finalization configuration. Do not rebuild the pack this way.*
 
-### Option B — admit each shared photograph once *(recommended for Controller consideration)*
+### Option B — admit each shared photograph once  ✅ **ADOPTED (narrowed to Hindi only)**
 Admit a photograph that appears in both datasets **exactly once**, attributed to the first source in
 fixed order.
 
@@ -80,9 +81,11 @@ fixed order.
   transcription. But under this protocol the reference comes from our own readers, not from the
   source label, so a conflicting source annotation costs us nothing — and arguably flags a
   usefully hard item.
-- Already implemented behind `--overlap-policy admit-once`. **Default remains `exclude`.**
+- Implemented as `--overlap-policy admit-once`. **This is what the committed V0 pack uses**,
+  together with `--language-filter hindi`. The script's bare default remains `exclude` as generic
+  machinery — that default is *not* the V0 configuration.
 
-### Option C — deliberate mixed composition with a stress subset
+### Option C — mixed composition with a stress subset  ⏸️ **deferred, not rejected**
 Option B's pool, explicitly partitioned: a Hindi core reported as the primary result, and Marathi
 retained as a **script-general / out-of-language stress subset** reported separately.
 
@@ -92,13 +95,21 @@ retained as a **script-general / out-of-language stress subset** reported separa
 - Needs a target Hindi/Marathi split from the Controller. A roughly 2:1 Hindi:Marathi split would
   give ~36 Hindi and ~18 Marathi within the same 54-item budget.
 
-## Recommendation
+## Recommendation as it stood *(superseded by the decision at the top of this file)*
 
-**Option C, built on Option B's admit-once policy** — but this is a Controller decision and nothing
-has been switched. `--overlap-policy` exists so the rebuild is a one-line change once approved.
+> ⚠️ **Historical.** The text below was the recommendation put to the Controller before the decision
+> was taken. **The language split is no longer open.** It is retained to show the reasoning, not to
+> invite a choice.
+
+The recommendation was **Option C, built on Option B's admit-once policy**.
+
+**What was actually decided:** Option B's admit-once policy, **narrowed to Hindi only** — 54 Hindi of
+173 eligible. Option C's Marathi stress subset is **deferred, not rejected**; it is not part of the
+primary V0 human spend and would require Marathi-competent readers and a separately reported
+result.
 
 ## Not done, deliberately
 
-**No new data was acquired**, and none is needed: the Hindi material is already in the repository
-and was excluded by rule, not missing. Nothing about the battery, ladders, thresholds, observation
-units or Registry architecture is affected by any of these options.
+**No new data was acquired**, and none was needed: the Hindi material was already in the repository
+and had been excluded by rule, not missing. Nothing about the battery, ladders, thresholds,
+observation units or Registry architecture was affected by this decision.

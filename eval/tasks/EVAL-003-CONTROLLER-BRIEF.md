@@ -4,7 +4,12 @@
 explained where they carry a decision.
 
 **TASK:** EVAL-003 — Devanagari checker calibration pack readiness
-**STATUS:** completed — **correction pass applied 24 Aug 2026**, awaiting Controller review.
+**STATUS:** completed — **finalization applied, then documentation-consistency cleanup applied**
+(24 Aug 2026). Awaiting Controller **merge review**.
+
+The language composition is **decided**: the primary V0 pack is Hindi-primary, 54 Hindi of 173
+eligible. Remaining Controller decisions are **spend only** — reader approval, then a checker roster
+and API budget.
 Ten corrections; two were substantive overclaims of mine. See *Correction pass* below and
 findings §11.
 
@@ -378,10 +383,10 @@ is Hindi and the checker prompt says "Devanagari (Hindi) text".
 | **B** — admit each shared photograph **once** | 375 eligible | **19 Hindi, 35 Marathi** |
 | **C** — B, partitioned: Hindi core + Marathi stress subset | 375 eligible | Controller sets the split |
 
-Option B keeps one photograph to one item — verified: 54 items, 54 distinct hashes. It is implemented
-behind `--overlap-policy admit-once`; **the default is unchanged and nothing was switched.**
-
-**I recommend C, built on B** — but it is your call, and no new data is needed either way.
+> ⚠️ **Historical — this table records the options as they were put to you.** The decision has since
+> been taken: **Option B, narrowed to Hindi only.** The committed pack is 54 Hindi of 173 eligible,
+> built with `--overlap-policy admit-once --language-filter hindi --target-n 54`. Option C's Marathi
+> stress subset is **deferred, not rejected**. The language split is no longer open.
 
 ## SURPRISES
 
@@ -419,16 +424,18 @@ behind `--overlap-policy admit-once`; **the default is unchanged and nothing was
 
 ## DECISIONS NEEDED
 
-1. **Decide the language composition** — Option A (script-general only, 0 Hindi), B (19 Hindi /
-   35 Marathi), or C (B, partitioned with a Marathi stress subset). **This is the most consequential
-   decision**, because it determines whether a clean result can say anything about Hindi at all.
-   I recommend C. No new data is needed for any option.
-2. **Approve ≈ 3.5–4.5 hours across two Devanagari-capable readers**, and identify them. Roughly
-   double the single-reader estimate; the reason is in the correction above.
-3. **Approve a checker roster and API spend** for stage 5. Deliberately not selected here.
-4. **Note before results exist** that the first result is a qualification screen bounded at ~18%,
+~~1. Decide the language composition~~ — **DECIDED 24 Aug 2026: Hindi-primary.** 54 Hindi of 173
+eligible, built and committed. No longer open.
+
+1. **Approve ≈ 3.5–4.5 hours across two independent Hindi-competent readers**, and identify them.
+   Every item is Hindi-labelled, so Hindi competence is the requirement; reading Hindi does not
+   automatically qualify someone for Marathi.
+2. **Approve a checker roster and API spend** for stage 5. Deliberately not selected here.
+3. **Note before results exist** that the first result is a qualification screen bounded at ~18%,
    **and** that no threshold may be derived from the 67% cross-dataset figure.
-5. **Action or reject the cross-stream correction** to the Resources source record (item 9).
+4. **Action or reject the cross-stream correction** to the Resources source record.
+
+Nothing else is outstanding. **The remaining decisions are spend, not work.**
 
 ## EVIDENCE WORTH INSPECTING
 
@@ -463,3 +470,61 @@ Resources file edited. No new data acquired. BSTD untouched — 25,252 files, no
 **27/27 historical checker-judgement regression still passes**, along with the harness positive,
 negative and selftest suites.
 **Human calibration not started. EVAL-004 not started.**
+
+---
+
+## DOCUMENTATION CONSISTENCY CLEANUP — 24 Aug 2026
+
+Bounded cleanup only. **No methodology was redesigned or rebuilt**: the 173-eligible / 54-Hindi pack,
+the matcher, the crop pipeline, the two-reader protocol and the Resources proposal are all unchanged.
+The problem was that several operator-facing documents still described the pre-finalization state and
+were therefore followable into rebuilding the wrong pack.
+
+### What was stale, and what it now says
+
+| File | Was | Now |
+|---|---|---|
+| `findings` §3, §5, §10 | `551 − 346 − 3 = 202` presented as the current pool; "no excluded overlap file entered the pool" | committed V0 arithmetic (`551 − 173 − 3 − 202 = 173` eligible Hindi, 54 selected); guarantee restated as *no photograph enters twice*, since shared photographs are deliberately admitted once |
+| `findings` §8 | "no images are copied or transformed — the viewer crops from the original" | canonical materialised crop files, identical by hash for reviewer and checker; old behaviour marked superseded |
+| `findings` §9 | crop materialisation "unresolved by choice" | marked **RESOLVED**, pointing at the geometry self-test |
+| `README` reproduction | bare `build-candidate-pool.py` with no arguments | the **committed V0 command**, with an explicit warning that the bare default is `exclude` and yields **no Hindi**; self-tests listed separately |
+| `README` metrics | region-area/frame-share/region-count/conjunct/matra figures copied from the 202-item pack | **recomputed against the current 54** — see below |
+| `README` narrative | "202 eligible is ample", "why exclude the 173", "our pool includes Marathi-labelled files", "53 of 54 come from IndicSTR12 because only 3 IIIT items remain" | admit-once rationale; all 54 Hindi; attribution described as deterministic provenance, explicitly **not** independent-source evidence |
+| `annotator-disagreement.json` | "these files are EXCLUDED from the candidate pool" | distinguishes the **superseded `exclude`** configuration from the **approved `admit-once`** one. **Measurements untouched** (1,082 matched / 725 identical / 0.6701) |
+| `PROPOSED-V0-COMPOSITION.md` | header said decided, body still said "Controller decision", recommended C, "nothing has been switched" | retitled a **decision record**; options labelled adopted / not adopted / deferred; recommendation section marked historical |
+| `build-candidate-pool.py` docstring & `--overlap-policy` help | guarantees said shared files are "excluded entirely"; help said `admit-once` was "PROPOSAL ONLY" | both policies described; committed V0 command stated in the module docstring; "proposal only" removed and the default identified as **generic machinery, not the V0 configuration** |
+| this brief | asked you to choose A/B/C and recommended C | composition marked decided; remaining decisions are spend only |
+
+**Documentation and help text only.** The matching rule, selection algorithm, source set, target
+count, language decision, crop implementation, checker semantics and human protocol were not touched.
+
+### Recomputed pack metrics
+
+The README previously carried the earlier pack's numbers. Measured against the committed 54:
+
+| Property | Old pack (superseded) | **Committed 54-Hindi pack** |
+|---|---|---|
+| Region area | 528 → 388,480 px² (735×) | **864 → 182,700 px² (211×)**, median 9,372 |
+| Region share of frame | 0.21% → 65.7% | **0.11% → 37.1%**, median 3.5% |
+| Regions in source photo | 1 → 98 | **1 → 28**, median 3 |
+| Transcription length | not reported | **3 → 12 chars**, median 6 |
+| Containing a conjunct | 22 of 54 | **20 of 54** |
+| Containing a vowel sign | 51 of 54 | **53 of 54** |
+| Containing a nukta | 1 of 54 | **1 of 54** |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| `selection-summary.json` — 173 eligible Hindi / 54 selected Hindi | ✓ |
+| Candidate manifest — 54 records, 54 distinct image hashes | ✓ |
+| Review/checker crop identity | 54/54, 0 mismatches ✓ |
+| Matcher `--self-test` | 10/10 PASS ✓ |
+| 27 historical checker cases | **re-run** (builder executable text changed) — 27 re-scored, **0 mismatches** ✓ |
+| Builder determinism under the documented V0 command | byte-identical ✓ |
+| Absolute machine paths in committed evidence | none ✓ |
+| BSTD reserve | 25,252 files, never opened ✓ |
+| Harness selftest / positive / negative suites | all pass ✓ |
+| Human / API / model / generator work | none ✓ |
+
+**Remaining blocker: none.** Awaiting Controller merge review.
