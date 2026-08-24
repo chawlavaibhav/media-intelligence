@@ -42,7 +42,15 @@ and OCR damage, audit blindness until checkpoint) applied in full.
 5. **Bang's visual minimal-pair candidates may go to Eval's deferred creative-evaluation list**,
    marked as source-asserted expected readings, not validated human ground truth.
 
-**LAST COMPLETED TASK:** `CANON-001`. Checkpoint `1383abe` (pre-audit, frozen), completion `21f6e79`.
+**LAST COMPLETED TASK:** `CANON-001` — substantive work approved 24 Aug 2026, all five review
+questions closed, housekeeping corrections applied. Not yet merged to `main`.
+
+- **`1383abe`** — the frozen pre-audit checkpoint. Stable reference. The four extraction files have
+  been byte-identical since this commit and must stay that way.
+- Later commits on `work/canon` carry the historical comparison, the Controller Brief, the approval
+  record and housekeeping only. No SHA for these is quoted here, because it moves; read the tip of
+  `work/canon`.
+
 See `tasks/CANON-001-CONTROLLER-BRIEF.md` and
 `findings/CANON-001-current-schema-extraction-findings.md`.
 
@@ -52,8 +60,9 @@ self-assign a second source or an experiment.
 **IMPORTANT OBSERVATIONS:**
 - **SPEC-03's `scs_mb_001` worked example is factually wrong about Molly Bang.** It states *"The
   source never states this as a general claim."* She states it on page 58 and again across pages
-  58–60. CANON-001 records it as `source_explicit`. The spec has **not** been edited — Controller
-  decision pending. Do not treat SPEC-03's worked examples as verified against their sources.
+  58–60. CANON-001 records it as `source_explicit`. **The Controller has confirmed the error and
+  approved the correction (decision 1); the Controller makes the edit, not Canon.** Until the edit
+  lands, do not treat SPEC-03's worked examples as verified against their sources.
 - **Granularity is now decided (decision 4), and its origin matters.** Two defensible conventions
   produced 19 objects (historical) and 55 objects (CANON-001) from the same fifty pages. The V0 rule
   exists because of that gap; apply it to the next source and report whether it holds.
@@ -70,7 +79,8 @@ self-assign a second source or an experiment.
 - Source knowledge must stay source-faithful; product bindings are separate and optional.
 - Missing coverage in processed material is never a claim about what Canon can never know.
 
-**OPEN QUESTIONS:** (three of the five closed by the 24 Aug review)
+**OPEN QUESTIONS:** All five CANON-001 review questions are **closed** (decisions 1–5 above).
+Nothing below blocks the next task; these are forward-looking items.
 - **Does the V0 granularity rule actually work?** Decision 4 directs that it be tested on the next
   source. NOT VERIFIED whether CANON-001's 55 objects satisfy it — the rule postdates the extraction
   and no re-audit was performed. Do not assume they do.
@@ -88,9 +98,13 @@ remains downstream of Eval's future Capability Registry.
 
 **CROSS-STREAM CHANGES:** `PROPOSED-INTEGRATION-CHANGE-CANON-001.md` — **APPROVED 24 Aug 2026**.
 Four near-minimal picture pairs go to Eval's **deferred** creative-evaluation list, not to Capability
-Battery V0 (EVAL-001 clarification §2 places creative judgement outside V0). Any use must carry
-`expected reading: source-asserted by Molly Bang; NOT validated human ground truth`, and the two
-recorded isolation confounds travel with the pairs.
+Battery V0 (EVAL-001 clarification §2 places creative judgement outside V0).
+
+They are **candidate calibration stimuli, not calibration instruments. None is usable as-is.** The
+expected readings are Molly Bang's assertions and must be independently validated against human
+response data before any evaluator's answer can be scored right or wrong against them. Any use must
+carry `expected reading: source-asserted by Molly Bang; NOT validated human ground truth`. The two
+recorded isolation confounds travel with the pairs and are a separate defect from the validation gap.
 
 **NEXT APPROVED TASK:** None. CANON-001 is approved and closed. Do not start CANON-002, do not touch
 a second source, and do not run or extend an experiment without a new Controller-issued task file.

@@ -70,9 +70,22 @@ asserts what any model can do.
 
 ## EXPECTED BENEFIT
 
-Two of the four pairs are usable as-is for instrument calibration, because they have a known
-expected answer that does not depend on a model's output — useful for asking whether an evaluator
-can detect a difference a human reliably sees.
+**All four pairs are candidate calibration stimuli. None is usable as-is, and none is a calibration
+instrument.**
+
+What they offer: a ready-made pair of images differing in roughly one variable, with the author's
+stated prediction of how a viewer reads the difference. That is a cheaper starting point than
+building stimuli from nothing.
+
+What they do not offer: a correct answer. The expected readings are Molly Bang's assertions. Before
+any pair can function as calibration ground truth — that is, before an evaluator's output can be
+scored right or wrong against it — the expected reading must be independently validated against
+human response data. Until that exists a pair may be shown to an evaluator, but the evaluator's
+answer cannot be marked correct or incorrect.
+
+The isolation confounds on two of the four (below) are a **separate** defect from this validation
+gap. Validating the expected readings would not repair them, and repairing them would not validate
+the readings.
 
 ## RISK
 
@@ -82,6 +95,14 @@ judgement must stay labelled as an unvalidated hypothesis until human response d
 
 Secondary risk: the two confounded pairs could be used as controlled comparisons by a reader who
 does not open the binding. The confounds are recorded in `bnd_mb_c001_0010.applicability.limits`.
+
+**Known loose wording in the frozen extraction, not corrected.** `bnd_mb_c001_0010.applicability.when`
+reads *"calibrating an evaluator on comparisons with a known expected answer"*. "Known" overstates it
+for the same reason corrected above. The binding's own `limits` field immediately below it does state
+that the readings are candidate expected answers requiring independent validation and not ground
+truth, so the object is not uncorrected — but the phrase is wrong on its own. It was left unchanged
+because the CANON-001 extraction artifacts are frozen. Flagged for a future task; this file is
+authoritative where the two disagree.
 
 ## FALSIFIER
 
