@@ -1,0 +1,232 @@
+audit_record_version: v0.2
+audit_id: aud_kenworthy_master_shots_ch8
+source_id: kenworthy_master_shots_frame_and_ch8_directing_attention
+knowledge_dir: canon/knowledge/current/kenworthy-master-shots-ch8
+recorded_at_commit: d57ac7538b97b7979b6cdabe700463f8d5d4138f
+audit_status: complete
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: d8c51fa562eabed6bd4d5c02ea92c51117b04d2d36433a6a80922ab763f9a39b
+    - path: operational-bindings.yaml
+      digest: 2440d784129bfda8db12ed081f7146893e7d554bf50941427fbcf88ce3f2721c
+    - path: source-concept-systems.yaml
+      digest: 1c376e475ab7cb11175fddd68282ca46e3b5a66bbbe3919ec09110bf2e7f0596
+    - path: source-knowledge.yaml
+      digest: a4e136ca26d3643a4e76a50f8f68168462acd29cc6fc5d1f70a42c4c59ebaf1e
+    - path: visual-evidence-ledger.yaml
+      digest: 8ed07235355d5320356db5602f81b54f044b6b4e6a7b79c132e8144c6fba2c43
+  combined_digest: 59caa670aba862663f017980326ba714a2e8260b651aa492a0acc77556eafe34
+source_reopened: false
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/kenworthy-master-shots-ch8/PROVENANCE.md
+  - canon/knowledge/current/kenworthy-master-shots-ch8/visual-evidence-ledger.yaml
+  - canon/knowledge/current/kenworthy-master-shots-ch8/source-knowledge.yaml
+  - canon/knowledge/current/kenworthy-master-shots-ch8/operational-bindings.yaml
+  - canon/knowledge/current/kenworthy-master-shots-ch8/ontology-mappings.yaml
+  - canon/findings/CANON-003-book11-master-shots-findings.md
+  - canon/findings/CANON-003-rebalance-lane-issues.md
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    PROVENANCE states that no printed page numbers exist anywhere in the file, and that unlike some
+    EPUBs in this library the image filenames carry none either. Provenance therefore cites the
+    chapter and the numbered technique, and no page number was invented. 121 navigation points match
+    the book's known structure - front matter, 12 chapters, and each of the 100 techniques as its own
+    entry.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: required_visual_dimension_destroyed
+      affects: >
+        Technique 8.6, "Color Guides", and the object that records it, sk_ms_c003_0016. The claim is
+        that a character established in a strikingly coloured orange jacket stays identifiable while
+        blurred and distant, because the rest of the frame is graded almost entirely to blue. Its
+        illustration is greyscale, and in it the background figure is a small grey smudge on a grey
+        beach - which is the outcome the technique says colour prevents.
+      detectability: silent
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        Colour saturation was measured across all 124 images at roughly 2,000 samples each: zero
+        coloured pixels in any of them. The visual ledger states the consequence exactly - the
+        demonstration does not merely fail to support the claim, it shows the opposite. Nothing in
+        the text layer, the file or the image is anomalous; the image is a legitimate greyscale
+        photograph of a real frame. The loss is visible only in the relation between what the section
+        claims and what its illustration can show, and only to someone reading both. No mechanical
+        check would find it. The object carries extraction_uncertainty: figure_not_inspected in the
+        sense SPEC-03 intends - the figure that would support the claim does not exist in an
+        inspectable form.
+    - pattern: source_evidence_never_printed
+      affects: >
+        The same technique 8.6, under the competing explanation. Recorded as a SECOND pattern rather
+        than replacing the first, because the repository evidence does not settle which one applies
+        and collapsing them would assert a cause that was not established.
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        INFERRED, explicitly not verified, by the original worker: the greyscale may be the printed
+        book's own condition rather than a digitisation artefact. Three things point that way - the
+        arrow notation distinguishes camera from actor by white against black, a choice only a
+        monochrome book needs to make; "About the Images" describes the frame grabs as enhanced "to
+        greatly improve their clarity when printed" and never mentions colour; and the greyscale is
+        uniform across all 124 images rather than patchy. If that inference is right the evidence was
+        never printed and no better copy exists, exactly as with Hopkins. Settling it would need a
+        physical copy, which neither CANON-003 nor CANON-006 permits acquiring.
+    - pattern: no_authored_page
+      affects: Every object in the extraction; none carries a page number.
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        PROVENANCE: no printed page numbers exist anywhere in the file and the image filenames carry
+        none. The source does not argue through page layout, so the practical consequence is limited
+        to citability.
+    - pattern: display_type_ocr_damage
+      affects: One heading, rendered "REST pOINT" with a lowercase p.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        PROVENANCE records the text as continuous with no interleaving and no dropped section, and
+        this as the single display-type artefact seen. It affects a heading, not a claim.
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    A source whose figures are load-bearing by the author's own instruction - the front matter tells
+    the reader to reconstruct each technique from the frame grabs and overhead diagrams first, and
+    says practising that reconstruction matters more than watching the films - and which contains one
+    technique its own production cannot illustrate. The counterpart finding is the mirror image and
+    is evidence FOR the source: the notation survives everything, because white-against-black arrows
+    are tonal rather than chromatic and read through greyscale reproduction, low resolution and a
+    reader with no colour vision. Nineteen of twenty objects are unaffected.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 20 objects reviewed. Every one carries explicitly_stated and practitioner_assertion, and none
+    carries empirical_within_source, outcome_claimed, anecdotal or controlled_comparison. This is the
+    most uniform claim-origin profile in the live corpus.
+  categories:
+    - category: source_author_assertion
+      sk_refs: []
+      evidence: >
+        All 20 objects. Kenworthy instructs in his own voice throughout. He reports no measurement,
+        cites no study, and quotes no third party's claim as a warrant. Only three of the twenty
+        argue from stated premises and none is a controlled comparison.
+  relation_to_evidence_characteristics: >
+    No strain, and one pattern worth naming so a later reader does not mistake it for an origin
+    category. sk_ms_c003_0020 records that each technique is warranted by naming a released film that
+    used it. That is a real and unusual warrant structure, but it is an EXAMPLE type rather than a
+    claim origin - the claim is still Kenworthy's, and the film is the instance he points at. It is
+    already carried by visually_demonstrated and by the object's examples, so no origin category is
+    needed and none was invented for it.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ms_c003_0001, bnd_ms_c003_0002]
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ms_c003_0005]
+      note: >
+        Parked as a production candidate with target_path null. Camera staging is a physical
+        production action and is not rewritten as a generative instruction.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ms_c003_0003, bnd_ms_c003_0004]
+      note: >
+        sk_ms_c003_0018 gives this source an unusual shared success criterion - the audience does not
+        notice the technique - which is a whole-asset judgement rather than a frame property.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ms_c003_0006]
+    - consumer: benchmark
+      outcome: no_current_binding
+      note: >
+        The techniques are recipes with named film exemplars rather than minimal pairs; nothing here
+        yields a controlled comparison a benchmark could use.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        Camera staging geometry constrains where a physical camera and actors go. It is not a
+        computable composite in the sense Samara's layout operations are - there is no exact
+        operation an engine could execute.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        Four objects are about how the reader should work rather than about an asset:
+        sk_ms_c003_0004 ranks the reader's own test above the book's recommendations,
+        sk_ms_c003_0005 claims fluency in technique is what makes invention possible under pressure,
+        sk_ms_c003_0006 says the book is used at two distinct moments with two different purposes,
+        and sk_ms_c003_0007 says the pictures are the primary carrier and visualisation is the skill
+        being trained. That is practitioner-training knowledge with no consumer, and the audit
+        records the fit without creating a binding.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_ms_c003_0016]
+      observation: >
+        The Color Guides claim is unbound and should stay unbound while its only illustration
+        contradicts it. Recorded here so the representation finding and the application finding point
+        at the same object rather than living in separate documents.
+  conclusion: >
+    Four consumers bound from 20 objects, plus a human-workflow candidate. The profile is what a
+    recipe manual for directors should produce: executable staging knowledge, no benchmark material,
+    and a block of knowledge about how to practise rather than what to make.
+
+lineage:
+  authors: [Christopher Kenworthy]
+  publisher: Michael Wiese Productions
+  series: Master Shots
+  first_published: 2011
+  copy_edition: >
+    Volume 1, second edition. ISBN 9781615930876, EPUB, MOBI-ASIN B0087GYZUK, calibre 3.42.0 in
+    dc:contributor. Second edition confirmed internally: the introduction discusses improvements made
+    after volume 2, and "About the Images" describes what was changed "for this second edition". The
+    introduction is signed Perth, June 2011.
+  related_sources_in_corpus:
+    - source_id: grammar_of_the_shot_ch4_continuity
+      relation: no_known_relation
+      evidence: >
+        The question was asked rather than assumed, because both teach shot construction and a naive
+        reader could take agreement between them as convergence. Different author, publisher, series
+        and decade; neither cites the other in the committed extractions. Shared domain and
+        conventional Hollywood shot grammar are not dependence - if they were, no two sources in a
+        craft could ever corroborate each other.
+    - source_id: grammar_of_the_edit_ch3_5_editing_decisions
+      relation: no_known_relation
+      evidence: >
+        Same reasoning. Kenworthy stages for the camera; the Grammar books cut what a camera
+        produced. No shared author, publisher, series or derivation.
+    - source_id: alton_painting_with_light_ch2_motion_picture_illumination
+      relation: no_known_relation
+      evidence: >
+        Both are cinematography craft manuals separated by 62 years, and CANON-003 processed them in
+        the same lane. Same lane is not shared origin. No shared author, publisher, series or
+        derivation, and no citation either way in the committed record.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher or derivation with any source in the live corpus. Michael
+    Wiese Productions appears nowhere else in the corpus, so not even shares_publisher_only applies.
+    The three domain-adjacent sources were checked individually and recorded, so a later promotion
+    can see that the question was examined rather than skipped.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Williams, Lupton, Grammar of the Shot and
+      Light: Science & Magic. This title is not among them. The rebalance lane also processed Alton;
+      the committed record discloses no recognition or carry-over between the two books, unlike the
+      Conversations case where the extractor disclosed one explicitly.
+
+technology_contingency:
+  applicable: false
+  applicability_basis: >
+    A 2011 second edition about where the camera and the actors go. No object carries historical_claim
+    or culturally_bounded - the only two sources in the live corpus with neither. sk_ms_c003_0001
+    states the point directly: the techniques are stated independently of the equipment that executes
+    them, so the source itself declines to depend on a camera generation. The one place age could
+    have bitten - the greyscale illustration of a colour technique - is a representation problem and
+    is recorded in area A, not a durability problem.
+  assessed: false
+  classes: []
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

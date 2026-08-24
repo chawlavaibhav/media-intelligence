@@ -1,0 +1,85 @@
+# Live Canon corpus register
+#
+# Authoritative statement of which sources are in the repository and what each one is allowed to be
+# used for. Introduced by CANON-006, because the Audit Gate created a state the repository could not
+# previously express: a source that is real, validated and worth keeping, but not cleared for
+# downstream use.
+#
+# gate_status:
+#   accepted             passed Audit Gate v0.2. Has exactly one active v0.2 audit record under
+#                        canon/audit/records/. May be used for cross-source promotion, downstream
+#                        product/application use, and Canon-consumption/retrieval.
+#   source_evidence_only present, mechanically valid, and NOT cleared for any of those uses. Must
+#                        have NO audit record and must carry a blocked_reason. This is a legitimate
+#                        adjudication outcome, not a defect and not a lower grade of knowledge.
+#
+# The register is not a ranking. Order is alphabetical by directory and carries no meaning.
+#
+# Historical note: CANON-003 closed at 16 accepted books and CANON-004 tested the Audit Gate against
+# those same 16. Both numbers are fixed forever. This register describes the CURRENT live corpus,
+# which is a different question.
+
+register_version: v1
+historical_method_test_corpus: 16   # CANON-003 accepted / CANON-004 tested. Never changes.
+
+sources:
+  - dir: albers-interaction-of-color
+    gate_status: accepted
+  - dir: alton-painting-with-light-ch2
+    gate_status: accepted
+  - dir: bayles-orland-art-and-fear
+    gate_status: accepted
+  - dir: catmull-creativity-inc-ch5
+    gate_status: accepted
+  - dir: freeman-photographers-eye-graphic-guide
+    gate_status: accepted
+  - dir: grammar-of-the-edit-ch3-5
+    gate_status: accepted
+  - dir: grammar-of-the-shot-ch4
+    gate_status: accepted
+  - dir: heath-made-to-stick-introduction
+    gate_status: accepted
+  - dir: hopkins-scientific-advertising-ch1-7
+    gate_status: accepted
+  - dir: kenworthy-master-shots-ch8
+    gate_status: accepted
+    admitted_by: CANON-006
+  - dir: light-science-magic-ch3
+    gate_status: accepted
+  - dir: miller-storybrand-sb7
+    gate_status: accepted
+  - dir: murch-blink-p1-25
+    gate_status: accepted
+  - dir: ogilvy-ch2-advertising-that-sells
+    gate_status: accepted
+  - dir: ondaatje-conversations-ch3
+    gate_status: source_evidence_only
+    adjudicated_by: CANON-006
+    blocked_reason: >
+      Blocked on a lineage-representation limit, not on any defect in the extraction. The recovered
+      record is complete and passes every current SPEC-03/04/05 mechanical check with zero errors.
+
+      This source is bibliographically authored by Michael Ondaatje and consists substantially of
+      Walter Murch speaking. The live corpus already contains murch-blink-p1-25, which Murch wrote.
+      The same argument appears in both — the Egyptian-painting passage, a footnote in Blink and a
+      full passage here — and so does the concept `planarity`. They are not two independent origins;
+      they are one practitioner recorded twice by two different authors.
+
+      None of Audit Gate v0.2's seven lineage relations states that truthfully. `shared_author` is
+      false — Murch is not the bibliographic author. `derivative_of` is false — neither book derives
+      from the other. `same_series`, `companion_volume` and `shares_publisher_only` are false
+      (Knopf 2002 against Silman-James Press 2001). `cites_source` is not established from committed
+      evidence and, under the adopted SPEC-05 rule, would not defeat independence even if it were —
+      so using it would let the pair pass as independent, which is the exact error the rule exists to
+      prevent. `no_known_relation` is plainly false.
+
+      Writing any of those would be a false statement in an authoritative record. Leaving the source
+      unaudited is truthful, so it stays as source evidence and is blocked from every downstream
+      gate. See canon/findings/CANON-006-CONTROLLER-BRIEF.md and the minimum method-change proposal
+      at canon/PROPOSED-METHOD-CHANGE-CANON-006-LINEAGE.md.
+  - dir: samara-making-breaking-grid-ch1
+    gate_status: accepted
+  - dir: sutherland-alchemy-introduction
+    gate_status: accepted
+  - dir: vignelli-canon-intangibles
+    gate_status: accepted

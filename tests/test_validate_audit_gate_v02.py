@@ -450,16 +450,25 @@ class RealCorpusTests(unittest.TestCase):
         for path in sorted((REPO_ROOT / validator.RECORDS_SUBPATH).glob("*.audit.yaml")):
             cls.records[path.name] = yaml.safe_load(path.read_text(encoding="utf-8"))
 
-    def test_all_sixteen_accepted_books_have_a_record(self):
-        self.assertEqual(len(self.records), 16)
+    def test_every_accepted_source_has_exactly_one_record(self):
+        # Counted from the live-corpus register, not hard-coded. CANON-006 separated two numbers
+        # that used to coincide: the historical CANON-003/004 method-test corpus is fixed at 16
+        # forever, while the live accepted corpus grows or shrinks as sources pass or fail the gate.
+        register = yaml.safe_load(
+            (REPO_ROOT / "canon" / "audit" / "LIVE-CORPUS.yaml").read_text(encoding="utf-8"))
+        accepted = [e["dir"] for e in register["sources"] if e["gate_status"] == "accepted"]
+        self.assertEqual(len(self.records), len(accepted))
+        audited = {Path(r["knowledge_dir"]).name for r in self.records.values()}
+        self.assertEqual(audited, set(accepted))
+        self.assertGreaterEqual(len(accepted), 16, "the live corpus must not lose accepted sources")
 
     def test_committed_corpus_validates_clean(self):
         report = validator.validate_repository(REPO_ROOT)
         self.assertEqual(report["errors"], [])
 
     # ── CANON-005 promotion: one authoritative home, no second active copy ───────────────────
-    def test_all_sixteen_committed_records_declare_the_adopted_version(self):
-        self.assertEqual(len(self.records), 16)
+    def test_every_committed_record_declares_the_adopted_version(self):
+        self.assertTrue(self.records)
         for name, record in self.records.items():
             with self.subTest(record=name):
                 self.assertEqual(
