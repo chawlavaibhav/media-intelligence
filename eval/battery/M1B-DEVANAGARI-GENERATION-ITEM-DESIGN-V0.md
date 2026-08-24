@@ -18,11 +18,19 @@ It must not be confused with **M1a**, which is a different thing for a different
 | | What it contains | What it tests | Where it comes from |
 |---|---|---|---|
 | **M1a** | existing Devanagari images that already have human transcriptions | whether **our checker can read** Hindi | published recognition datasets — reusable if Resources clears them |
-| **M1b** | prompt → target-string pairs | whether **a generator can draw** Hindi | must be built; nothing public contains this |
+| **M1b** | prompt → target-string pairs | whether **a generator can draw** Hindi | must be built for V0 — no suitable public set identified so far |
 
 **Reading and drawing are different capabilities.** Public benchmarks for reading Devanagari out of
-a photo are plentiful; as far as the EVAL-001 review could establish, **no public benchmark measures
-whether a generator correctly draws Devanagari it was told to produce.** That gap is why M1b exists.
+a photo are plentiful. **No suitable public benchmark for generative Devanagari rendering has been
+identified in our search so far**, so our V0 item set still needs to be built.
+
+⚠️ **Wording corrected 24 Aug 2026 at Controller direction.** An earlier draft said such a benchmark
+"does not exist" and that "nothing public contains this." **That is stronger than the evidence
+supports.** What we have is a search that did not find one — a bounded review conducted during
+EVAL-001, not an exhaustive survey of everything published. Absence of evidence in our search is not
+evidence of absence, and the practical conclusion is unchanged either way: **we still have to build
+the set.** If a suitable public set is later identified — including anything Resources surfaces
+under RES-002 — this design should be revisited before items are built, not after.
 
 **They cannot substitute for each other.** Using recognition images as capability items would
 measure the wrong thing entirely — it would tell us about our checker while appearing to tell us

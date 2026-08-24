@@ -235,7 +235,10 @@ run-fixture.mjs — local evaluation harness, SYNTHETIC FIXTURES ONLY
   --fixture <file.json>   run one fixture
   --all                   run every positive fixture in eval/harness/fixtures/
   --negative              run the negative controls in fixtures/negative/ and PASS only if
-                          each one is correctly rejected (proves the guards actually fire)
+                          EVERY one is individually rejected, each raising the error codes it
+                          declares (proves the guards actually fire, per fixture)
+  --selftest              regression coverage for --negative itself: proves the per-fixture check
+                          would catch a negative fixture that was NOT rejected
   --out <dir>             write machine-readable results (default: eval/harness/out/)
   --check                 compare against the stored expected result and exit non-zero on drift
   -h, --help              this text
@@ -243,6 +246,61 @@ run-fixture.mjs — local evaluation harness, SYNTHETIC FIXTURES ONLY
 Makes no network call. Reads no real generated media. Produces no benchmark evidence.
 `);
   process.exit(0);
+}
+
+// ---------------------------------------------------------------------------
+// --selftest : regression coverage for the --negative verdict itself.
+//
+// Why this exists. --negative originally passed when `totalErrors > 0` across the whole run. With
+// a single negative fixture that looks fine. With two or more it is unsound: one fixture's errors
+// cover for another fixture that was silently ACCEPTED, so a broken guard would go unnoticed —
+// exactly the failure the negative controls exist to detect. These cases pin the corrected
+// per-fixture behaviour so the weaker check cannot come back unnoticed.
+// ---------------------------------------------------------------------------
+if (argv.includes("--selftest")) {
+  const cases = [
+    {
+      name: "all fixtures rejected with their declared codes -> PASS",
+      records: [
+        { fixture_id: "a", error_count: 2, codes: ["BAD_OBSERVATION_UNIT", "GENERATION_DOUBLE_COUNTED"], expected_error_codes: ["GENERATION_DOUBLE_COUNTED"] },
+        { fixture_id: "b", error_count: 1, codes: ["BAD_INSTRUMENT_STATE"], expected_error_codes: ["BAD_INSTRUMENT_STATE"] },
+      ],
+      expect: true,
+    },
+    {
+      name: "one fixture NOT rejected while another is -> FAIL (the bug being guarded against)",
+      records: [
+        { fixture_id: "a", error_count: 2, codes: ["BAD_OBSERVATION_UNIT", "GENERATION_DOUBLE_COUNTED"], expected_error_codes: null },
+        { fixture_id: "b-silently-accepted", error_count: 0, codes: [], expected_error_codes: ["BAD_INSTRUMENT_STATE"] },
+      ],
+      expect: false,
+      note: "aggregate totalErrors would be 2 > 0 here, so the OLD check passed this. It must now fail.",
+    },
+    {
+      name: "fixture rejected but for the wrong reason -> FAIL",
+      records: [{ fixture_id: "a", error_count: 1, codes: ["BAD_OBSERVATION_UNIT"], expected_error_codes: ["GENERATION_DOUBLE_COUNTED"] }],
+      expect: false,
+    },
+    {
+      name: "no negative fixtures at all -> FAIL (an empty suite must not read as success)",
+      records: [],
+      expect: false,
+    },
+  ];
+
+  let bad = 0;
+  for (const c of cases) {
+    const got = judgeNegative(c.records).ok;
+    const ok = got === c.expect;
+    if (!ok) bad++;
+    console.log(`  ${ok ? "PASS" : "FAIL"}  ${c.name}`);
+    if (c.note) console.log(`          note: ${c.note}`);
+    if (!ok) console.log(`          expected ok=${c.expect}, got ok=${got}`);
+  }
+  console.log(bad === 0
+    ? `SELFTEST OK — ${cases.length} cases; --negative verifies each fixture individually.`
+    : `SELFTEST FAILED — ${bad} case(s) wrong.`);
+  process.exit(bad === 0 ? 0 : 1);
 }
 
 const fixtureDir = join(HERE, "fixtures");
@@ -255,6 +313,8 @@ const outDir = resolve(arg("--out") ?? join(HERE, "out"));
 mkdirSync(outDir, { recursive: true });
 
 let drift = 0, totalErrors = 0;
+/** Per-fixture record so --negative can verify each one individually, not just in aggregate. */
+const perFixture = [];
 for (const f of files) {
   problems.length = 0;
   const fx = JSON.parse(readFileSync(f, "utf8"));
@@ -268,7 +328,14 @@ for (const f of files) {
     network_calls: 0,
     rows, aggregate: agg, checks: [...problems],
   };
-  totalErrors += problems.filter((p) => p.severity === "error").length;
+  const fixtureErrors = problems.filter((p) => p.severity === "error");
+  totalErrors += fixtureErrors.length;
+  perFixture.push({
+    fixture_id: fx.fixture_id,
+    error_count: fixtureErrors.length,
+    codes: [...new Set(fixtureErrors.map((e) => e.code))],
+    expected_error_codes: fx.expected_error_codes ?? null,
+  });
   const outFile = join(outDir, `${fx.fixture_id}.result.json`);
   writeFileSync(outFile, JSON.stringify(result, null, 2));
   console.log(humanSummary(fx, agg, problems));
@@ -285,13 +352,41 @@ for (const f of files) {
     } else console.log(`CHECK OK — ${fx.fixture_id} matches its expected aggregate.`);
   }
 }
+/**
+ * Verdict for negative-control mode. EVERY fixture must be individually rejected, and where a
+ * fixture declares `expected_error_codes` those specific codes must appear.
+ *
+ * An aggregate `totalErrors > 0` test is NOT sufficient: with two or more negative fixtures it
+ * passes even when one of them was silently accepted, because the other one's errors cover for it.
+ * `--selftest` below is regression coverage for exactly that.
+ */
+export function judgeNegative(records) {
+  const failures = [];
+  for (const r of records) {
+    if (r.error_count === 0) {
+      failures.push(`${r.fixture_id}: expected rejection but the harness raised NO errors`);
+      continue;
+    }
+    if (r.expected_error_codes) {
+      const missing = r.expected_error_codes.filter((c) => !r.codes.includes(c));
+      if (missing.length)
+        failures.push(`${r.fixture_id}: rejected, but missing expected code(s): ${missing.join(", ")}`);
+    }
+  }
+  return { ok: records.length > 0 && failures.length === 0, failures, checked: records.length };
+}
+
 if (negative) {
-  // Inverted expectation: a negative control PASSES by being rejected.
-  const ok = totalErrors > 0 && drift === 0;
-  console.log(ok
-    ? `NEGATIVE CONTROLS OK — ${totalErrors} integrity error(s) raised as intended; the guards fire.`
-    : `NEGATIVE CONTROLS FAILED — expected the harness to reject these fixtures and it did not.`);
-  process.exit(ok ? 0 : 1);
+  const v = judgeNegative(perFixture);
+  for (const r of perFixture)
+    console.log(`  ${r.error_count > 0 ? "REJECTED" : "NOT REJECTED"}  ${r.fixture_id}  codes=[${r.codes.join(", ")}]`);
+  if (v.ok) {
+    console.log(`NEGATIVE CONTROLS OK — all ${v.checked} fixture(s) individually rejected with their declared codes.`);
+  } else {
+    console.error(`NEGATIVE CONTROLS FAILED:`);
+    for (const f of v.failures) console.error(`   ${f}`);
+  }
+  process.exit(v.ok && drift === 0 ? 0 : 1);
 }
 // Exit non-zero on drift OR on integrity errors, so a broken run cannot be mistaken for a clean one.
 process.exit(drift > 0 || totalErrors > 0 ? 1 : 0);

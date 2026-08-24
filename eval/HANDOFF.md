@@ -116,7 +116,10 @@ It built plumbing only — no generation, no network call, no calibration, no sp
   flow through evaluation and come out as a countable result obeying the battery's rules. It proves
   **nothing** about any model. Its outputs are labelled synthetic and are git-ignored.
 - **`rubrics/IDENTITY-CONSISTENCY-RUBRIC-V0-DRAFT.md`** — how a reviewer would judge whether a
-  generated person stays the same. **Draft. Never used. Not calibrated.**
+  generated person is the right person and stays that person. Each declared identity feature is
+  judged on **two** questions: does it match the reference, and is it consistent across the
+  generated set. **Both must hold** — a consistently-produced *wrong* person is a failure, not a
+  pass. **Draft. Never used. Not calibrated.**
 - **`battery/M1B-DEVANAGARI-GENERATION-ITEM-DESIGN-V0.md`** — the structure and coverage plan for
   the Hindi generation-test prompts. **Design only: no item exists and no Hindi phrase was selected
   or authored.**
@@ -153,11 +156,12 @@ be adopted, not reinvented.
 **Frames from one clip are one test, not many.** Near-identical samples inflate apparent confidence.
 Always report the number of *independent items* alongside the number of attempts.
 
-**Hindi text: reading benchmarks exist; drawing benchmarks do not.** There are many public
-benchmarks for *reading* Devanagari out of a photo (text recognition). As far as the EVAL-001 review
-could establish on 24 Aug 2026, there is **no public benchmark measuring whether a generative model
-correctly draws Devanagari it was told to produce**. Reading and drawing are different capabilities.
-**Do not cite a text-recognition benchmark as evidence about a generator.**
+**Hindi text: reading benchmarks are plentiful; a drawing benchmark has not been found.** There are
+many public benchmarks for *reading* Devanagari out of a photo (text recognition). **No suitable
+public benchmark for generative Devanagari rendering was identified in the EVAL-001 search (24 Aug
+2026)** — a bounded review, not an exhaustive survey, so treat this as "not found", not "does not
+exist". Reading and drawing are different capabilities either way: **do not cite a text-recognition
+benchmark as evidence about a generator.**
 
 Those recognition datasets are still useful — for calibrating our *reading* checker, not for scoring
 generators. Using them is conditional on Resources clearing the material for bounded internal
@@ -194,10 +198,16 @@ scripts or our brand constraints.
 and that was verified, not assumed. Note one remaining limit: the target string is **per run**, not
 per item. Individual per-item targets will be needed once the Hindi item set exists.
 
-**Test evaluation tooling with deliberately-broken inputs, not only correct ones.** EVAL-002 added a
-negative-control fixture and it immediately exposed two real defects: a run that raised integrity
-errors still exited successfully, and a run the harness had *already rejected* still reported a
-result marked eligible for the Registry. Both are fixed. Neither was visible from reading the code.
+**Test evaluation tooling with deliberately-broken inputs, not only correct ones.** EVAL-002 added
+negative-control fixtures and they immediately exposed three real defects: a run that raised
+integrity errors still exited successfully; a run the harness had *already rejected* still reported a
+result marked eligible for the Registry; and the negative check itself passed on an aggregate
+"some error was raised somewhere", which with two or more fixtures would pass even when one was
+silently accepted. All fixed, with `--selftest` pinning the last one. **None was visible from reading
+the code** — each appeared only when something was deliberately broken.
+
+**Stability is not identity.** A checker or rubric that only asks "did this stay the same?" will
+certify a consistently *wrong* result. Any consistency test needs a fidelity test beside it.
 
 ---
 
@@ -221,7 +231,9 @@ substitute for each other:
   that a missing licence alone is no longer an automatic block for public, ungated material used
   internally.
 - **M1b — the capability test items.** Prompt-and-target pairs to feed generators. These test
-  whether a model can *draw* Hindi, and nothing public contains them, so the item set must be built.
+  whether a model can *draw* Hindi. **No suitable public set has been identified in our search so
+  far**, so the V0 item set must be built — that is a statement about our search, not proof that
+  none exists, and it should be revisited if Resources surfaces one.
   The **target phrases themselves may be sourced** from existing permissible Hindi text rather than
   written from scratch; what must be deliberately constructed is coverage of the hard cases —
   joined-letter forms, vowel marks, and the specific letter pairs we have watched models confuse.

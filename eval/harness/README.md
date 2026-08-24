@@ -82,11 +82,22 @@ accidental change to the counting rules is caught rather than silently absorbed.
 
 ### The negative controls matter
 
-`fixtures/negative/` contains a fixture that is **deliberately wrong** — it counts one generation as
-two independent trials and uses an invalid observation unit. The harness is expected to reject it.
+`fixtures/negative/` contains fixtures that are **deliberately wrong** — one counts a generation as
+two independent trials and uses an invalid observation unit; another declares an instrument state
+that is not in the approved vocabulary. The harness is expected to reject **each** of them.
 
 This exists because **a check that never fails proves nothing.** Running `--negative` confirms the
 guards actually fire rather than merely staying quiet.
+
+**Each fixture is verified individually** (corrected 24 Aug 2026). An earlier version passed when any
+error was raised anywhere in the run — which, with two or more negative fixtures, would pass even if
+one had been silently *accepted*, because the other's errors covered for it. `--negative` now
+requires every fixture to be rejected, and to raise the specific `expected_error_codes` it declares,
+so a fixture rejected for the wrong reason also fails.
+
+`--selftest` is regression coverage for that check itself. It pins four cases, including the exact
+bug (one fixture rejected, another silently accepted → must FAIL) and an empty suite (→ must FAIL,
+since deleting the fixtures should not read as success).
 
 ---
 

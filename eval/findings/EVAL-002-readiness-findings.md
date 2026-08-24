@@ -180,3 +180,102 @@ was required.
 
 The two harness defects in §2 were **implementation bugs in tooling written during this task**, not
 contradictions in the approved EVAL-001 design.
+
+---
+
+## 8 · Correction pass — 24 Aug 2026, after Controller review
+
+Three corrections were applied after EVAL-002 was substantively approved. The first closed a real
+logical hole; the second closed a real hole in a test; the third corrected an overclaim.
+
+### 8.1 · The identity rubric could have passed the wrong person
+
+**The hole.** The rubric as first written asked, for each declared identity feature, only whether it
+stayed *the same across the generated set*. It never asked whether it matched the **reference** in
+the first place.
+
+**Why that is serious.** A generator that ignores the reference entirely and produces a completely
+different person — but produces them **consistently** — would have scored every feature "held" and
+**passed**. Stability is not identity. The rubric would have certified the wrong person as correct,
+provided the model was wrong in a stable way. And a stably-wrong model is a *likely* failure mode,
+not an exotic one: it is what "the reference conditioning is not taking effect" looks like.
+
+**The fix.** Each declared feature is now judged on **two independent questions**:
+**A · reference fidelity** — does it match the reference? and **B · cross-output consistency** — is
+it the same across the set? Both must hold; either being broken fails the item.
+
+**They are kept separately diagnosable because they imply different responses:**
+
+| Fidelity | Consistency | Meaning |
+|---|---|---|
+| held | broken | right person, drifts — classic identity drift |
+| **broken** | **held** | **the same wrong person throughout** — reference is being ignored |
+| broken | broken | wrong and unstable |
+
+**No battery change.** The approved `person_identity_across_prompts` dimension already defines the
+property against a reference set; the rubric now operationalises what the dimension already implies.
+No dimension, ladder, pass criterion or observation unit was touched.
+
+**Consequence for later work:** an item reviewed **without its reference set** can detect drift only,
+never a wrong person. Such items are now `not_reviewable` rather than silently half-judged.
+
+### 8.2 · The negative-control check was unsound with more than one fixture
+
+**The hole.** `--negative` passed when *any* error was raised anywhere in the run
+(`totalErrors > 0`). With one negative fixture that is adequate. **With two or more it is unsound:**
+one fixture's errors cover for another that was silently *accepted*, so a broken guard passes
+unnoticed — precisely the failure negative controls exist to catch.
+
+This is the same class of error as §2's: a check that looks like it verifies something and does not.
+
+**The fix.** `--negative` now requires **every** negative fixture to be individually rejected, and
+where a fixture declares `expected_error_codes`, those specific codes must appear — so a fixture
+rejected *for the wrong reason* also fails.
+
+**Regression coverage added.** A second negative fixture (`fx-05`, violating a different rule) makes
+the multi-fixture case real rather than hypothetical, and `--selftest` pins the corrected behaviour
+with four cases, including the exact bug:
+
+```
+PASS  all fixtures rejected with their declared codes -> PASS
+PASS  one fixture NOT rejected while another is -> FAIL (the bug being guarded against)
+      note: aggregate totalErrors would be 2 > 0 here, so the OLD check passed this. It must now fail.
+PASS  fixture rejected but for the wrong reason -> FAIL
+PASS  no negative fixtures at all -> FAIL (an empty suite must not read as success)
+```
+
+The last case matters too: an empty negative suite previously reported success, so deleting the
+fixtures would have looked like everything passing.
+
+### 8.3 · An overclaim about public benchmarks, corrected
+
+**What was wrong.** The M1b design said no public generative-Devanagari benchmark **"does not
+exist"** and that **"nothing public contains this."**
+
+**Why that is more than the evidence supports.** What we actually have is a **bounded search
+conducted during EVAL-001 that did not find one.** That is not an exhaustive survey of everything
+published, and absence of evidence in a search is not evidence of absence.
+
+**The supported claim, now used consistently:** *no suitable public generative-Devanagari benchmark
+has been identified in our search so far, therefore our V0 item set still needs to be built.*
+
+**The practical conclusion is unchanged** — we build the set either way. What changes is that the
+design now says the claim should be **revisited if a suitable public set is later identified**,
+including anything Resources surfaces under RES-002, rather than treating the question as closed.
+
+### 8.4 · Flagged, not fixed: the same phrasing survives in EVAL-001
+
+`eval/findings/EVAL-001-battery-design-findings.md` §1.2 still carries the categorical form
+("no public benchmark measures whether a generative image or video model correctly renders
+Devanagari…"), though it is dated and scoped in context.
+
+**I did not edit it.** EVAL-001 is closed and Controller-approved, and correction 3 was scoped to
+the M1b wording. Editing an approved, closed artifact to match a later correction is a Controller
+decision, not a worker one. **Flagged here for that decision.**
+
+### 8.5 · What the correction pass did not change
+
+The seven approved dimensions, their difficulty ladders, pass criteria and observation units; the
+calibration thresholds and their published bounds; and the Registry architecture, which remains a
+proposal with deferred cross-stream fields. No generation, network call, calibration, spend or
+specialist time.
