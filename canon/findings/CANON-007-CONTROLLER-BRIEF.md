@@ -19,7 +19,7 @@ The pilot's real result is that **the gate caught things a text-only ingestion w
 wrong** — and then a Controller correction caught something the first pass had shipped wrong itself.
 
 **§13 records that correction and it is the most important section of this brief.** The first pass
-declared `all_resolved` while leaving seven claim-referenced figures deliberately uninspected. That
+declared `all_resolved` while leaving nine claim-referenced figures uninspected. That
 was an overclaim, and precisely the failure this source's own methodological lesson describes. On
 inspection one claim had to be narrowed, one strengthened, and two source-internal inconsistencies
 surfaced that no text-only pass could see.
@@ -46,8 +46,8 @@ and the PDF file was produced in **October 2019**. Nothing in the document ident
 this reads as a later production of the same report — but the file date is not the publication date
 and the two are kept separate.
 
-**Nothing copyrighted was committed.** The PDF, six ephemeral page renders and all extracted text
-lived only in a workspace outside the repository.
+**Nothing copyrighted was committed.** The PDF, fourteen ephemeral page renders and all extracted
+text lived only in a workspace outside the repository.
 
 ## 2. Slug, scope and counts
 
@@ -251,7 +251,7 @@ A 2018 report whose data window closes in 2016, read in 2026, about an environme
 | 1 | `python canon/validation/validate_canon003_integrated.py --root .` | **0** | `error_count = 0` · **16 books**, 505 objects, 54 systems, 417 terms, 53 concepts, 111 bindings — *identical to `main`* |
 | 2 | `python canon/validation/validate_audit_gate_v02.py --root .` | **0** | `error_count = 0` · **`record_count = 19`** over 19 source directories |
 | 3 | `python -m pytest tests/ -q` | **0** | **63 passed, 89 subtests passed** |
-| 4 | figure-coverage sweep over printed pp.5–25 and 132–134 | — | **16 claim-referenced figures, 16 inspected, 0 not inspected** |
+| 4 | figure-coverage sweep over printed pp.5–25 and 132–134 | — | **16 claim-referenced figures · 16 inspected · 0 uninspected** · 80 numeric values from renders, 0 from the text layer |
 
 | Confirmation | Result |
 |---|---|
@@ -278,10 +278,10 @@ A 2018 report whose data window closes in 2016, read in 2026, about an environme
 
 ## 13. The Controller correction — what inspecting the rest actually changed
 
-The first pass inspected seven claim-bearing figures and left seven that supported only directional
-claims, while the audit declared `inspected_page_level` and `all_resolved` and five objects carried
-`visually_demonstrated` on a figure nobody had looked at. **That was an overclaim and the Controller
-was right to block on it.**
+The first pass inspected **7** claim-bearing figures and left **9** uninspected, while the audit
+declared `inspected_page_level` and `all_resolved` and five objects carried `visually_demonstrated`
+on a figure nobody had looked at. **That was an overclaim and the Controller was right to block on
+it.**
 
 The same already-verified copy was re-opened — identity re-checked before use, 24,726,437 bytes and
 the same SHA-256, nothing reacquired. A mechanical sweep then found **two more** claim-referenced
@@ -348,9 +348,9 @@ be used, and it was not met before.
 1. **The loss-pattern vocabulary has no value for added text**, only for lost text. Recorded, not
    stretched; no change proposed because no extracted claim is affected. Live if the forewords are
    ever processed.
-2. ~~Seven figures not rendered.~~ **Resolved by the correction pass — see §13.** All sixteen
-   claim-referenced figures in the processed span are inspected and no `figure_not_inspected`
-   uncertainty remains.
+2. ~~Figures supporting directional claims not rendered.~~ **Resolved by the correction pass — see
+   §13.** All **16 of 16** claim-referenced figures in the processed span are inspected, across 14
+   page renders, and no `figure_not_inspected` uncertainty remains.
 3. **The series dependency** on *The Long and the Short of It* and *Media in Focus* — flagged above,
    must be declared if either is ingested.
 4. **Scope is one chapter of a 139-page report.** The remaining chapters are not in the Canon and

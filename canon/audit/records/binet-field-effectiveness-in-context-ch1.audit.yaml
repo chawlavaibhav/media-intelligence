@@ -38,19 +38,25 @@ representation_integrity:
     range. File size and SHA-256 both matched the Work acquisition fingerprint exactly on first
     download, so version identity was established rather than assumed.
 
-    The Controller correction pass re-opened this SAME copy to inspect the seven remaining
-    claim-referenced figures. Identity was re-checked before re-opening - 24,726,437 bytes and the
+    The Controller correction pass re-opened this SAME copy to inspect the nine remaining
+    claim-referenced figures - the seven the Controller named plus two more that a mechanical sweep
+    of the processed span found. Identity was re-checked before re-opening - 24,726,437 bytes and the
     same SHA-256 - and nothing was reacquired, so source_reopened: true refers to re-reading the
     verified copy already in hand, not to a second acquisition.
   inspection_state: inspected_page_level
   visual_argument_role: figure_carries_content
   observed_loss_patterns:
-    - pattern: in_figure_text_absent
+    - pattern: figure_semantic_binding_lost
       affects: >
         Every quantitative claim in the processed span. The inversion of the usual case is what
         matters here: the chart text is NOT missing. Axis labels, series names, category names and
         every printed data value extract cleanly from the text layer. What linearised text destroys
         is the BINDING between them - which number belongs to which category in which series.
+
+        Classified as in_figure_text_absent in the first pass, which contradicted that value's own
+        definition, since nothing about the figure text is absent. The Controller approved
+        figure_semantic_binding_lost for exactly this shape - tokens survive, semantic topology does
+        not - and this source is its first observed instance.
       detectability: silent
       recoverability: recovered_in_this_copy
       evidence: >
@@ -58,9 +64,10 @@ representation_integrity:
         28% alongside the words SALES, MARKET SHARE, CUSTOMER ACQUISITION, LOYALTY, PRICE
         SENSITIVITY, PROFIT and two series names, with nothing connecting them. It would bind them
         by guess and nothing would signal that anything was uncertain. On printed page 15 a chart
-        axis value, 1.5, appears mid-sentence inside the extracted prose. Seven claim-bearing
-        figures were rendered and read; all 34 numeric values recorded in this extraction came from
-        those renders and none from the text layer.
+        axis value, 1.5, appears mid-sentence inside the extracted prose. All 16 claim-referenced
+        figures in the processed span were rendered and read across 14 page renders, and all 80
+        numeric values recorded in this extraction came from those renders and none from the text
+        layer.
     - pattern: text_layer_order_damage
       affects: >
         The three foreword pages, printed 1 to 3, which carry PHANTOM TEXT: sentences printed
@@ -117,8 +124,8 @@ representation_integrity:
     show. Both were caught only by rendering pages and reading them.
 
     claim_resolution_after_inspection is recorded as all_resolved, and it is worth saying plainly
-    why that is now truthful when it was not before. The first pass inspected seven claim-bearing
-    figures and left seven uninspected while declaring all_resolved - an overclaim, and exactly the
+    why that is now truthful when it was not before. The first pass inspected 7 claim-bearing
+    figures and left 9 uninspected while declaring all_resolved - an overclaim, and exactly the
     failure this source's own methodological lesson describes. The Controller correction pass
     re-opened the same already-verified copy and inspected all seven remaining figures, and a mechanical sweep then found two more that were
     inspected as well. All sixteen

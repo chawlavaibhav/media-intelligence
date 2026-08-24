@@ -230,6 +230,30 @@ class AuditGateRecordTests(unittest.TestCase):
         errors = validator.validate_record(self.record, self.root)
         self.assertTrue(any("assessed with no classes recorded" in e for e in errors), errors)
 
+    # ── the CANON-007 loss-pattern addition ─────────────────────────────────────────────────
+    def test_figure_semantic_binding_lost_is_accepted(self):
+        self.record["representation_integrity"]["observed_loss_patterns"] = [{
+            "pattern": "figure_semantic_binding_lost",
+            "affects": "every quantitative claim",
+            "detectability": "silent",
+            "recoverability": "recovered_in_this_copy",
+            "evidence": "labels and values survive; their correspondence does not",
+        }]
+        self.assertEqual(validator.validate_record(self.record, self.root), [])
+
+    def test_an_unknown_loss_pattern_still_fails_closed(self):
+        for bad in ("figure_semantics_lost", "chart_binding_broken", "", "in_figure_text_missing"):
+            with self.subTest(pattern=bad):
+                self.record["representation_integrity"]["observed_loss_patterns"] = [{
+                    "pattern": bad, "affects": "x", "detectability": "silent",
+                    "recoverability": "not_applicable", "evidence": "y",
+                }]
+                errors = validator.validate_record(self.record, self.root)
+                self.assertTrue(
+                    any("invalid loss pattern" in e for e in errors),
+                    f"pattern {bad!r} was accepted: {errors}",
+                )
+
     def test_loss_patterns_cannot_be_empty(self):
         self.record["representation_integrity"]["observed_loss_patterns"] = []
         errors = validator.validate_record(self.record, self.root)

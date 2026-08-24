@@ -54,7 +54,7 @@ and the PDF file was generated in **October 2019**. This is a later production o
 not a different edition — nothing in the document identifies a revision — but the file date is not
 the publication date and the two are recorded separately.
 
-**Nothing copyrighted was committed.** The PDF, the six page renders and all extracted text lived
+**Nothing copyrighted was committed.** The PDF, the fourteen page renders and all extracted text lived
 only in a workspace outside the repository. Renders were ephemeral and are gone.
 
 ## Representation and integrity
@@ -65,8 +65,8 @@ fragments and the report's own abbreviations — VL, ESOV, ROMI, SOV), one near-
 cover), no missing page and no dropped section. Every contents-page section title in the processed
 span was found at the page the contents page names.
 
-`visual_completeness: verified_page_level`, with **all fourteen claim-referenced figures in the
-processed span inspected**. Three findings matter, and all are in the visual ledger in full.
+`visual_completeness: verified_page_level`, with **all sixteen claim-referenced figures in the
+processed span inspected**, across fourteen page renders. Three findings matter, and all are in the visual ledger in full.
 
 **Chart values survive and their bindings do not.** Axis labels, series names, category names and
 every printed data value extract cleanly. What linearised text destroys is which number belongs to
@@ -76,11 +76,12 @@ anything was uncertain. On printed page 15 a chart value, `1.5`, appears mid-sen
 extracted prose. **Every numeric value in this extraction was therefore read from a render, and
 none from the text layer.**
 
-**The first pass left seven figures uninspected and that was not good enough.** It inspected the
-seven that carried printed magnitudes into claims and left seven that supported only directional
-ones — while the audit declared `all_resolved`. A Controller correction pass re-opened the same
-already-verified copy (identity re-checked, nothing reacquired) and rendered the remaining six
-pages. What it found is in "What the second pass changed" below, and it changed one claim.
+**The first pass left nine figures uninspected and that was not good enough.** It inspected the
+seven that carried printed magnitudes into claims and left the rest — while the audit declared
+`all_resolved`. A Controller correction pass re-opened the same already-verified copy (identity
+re-checked, nothing reacquired) and rendered eight further pages, bringing coverage to **16 of 16
+claim-referenced figures across 14 page renders**. What it found is in "What the second pass
+changed" below, and it changed one claim.
 
 **The forewords contain phantom text.** The text layer of printed pages 1–3 carries sentences that
 are printed nowhere on those pages — they belong to *In a nutshell* on page 5 — interleaved line by

@@ -86,6 +86,10 @@ VISUAL_ARGUMENT_ROLES = {
 }
 LOSS_PATTERNS = {
     "no_authored_page", "false_page_affordance", "heading_carried_as_image", "in_figure_text_absent",
+    # figure_semantic_binding_lost was added by the CANON-007 Controller decision. It is distinct
+    # from in_figure_text_absent, where the text itself is missing: here the tokens all survive and
+    # the structure that binds them to their categories, series or panels does not.
+    "figure_semantic_binding_lost",
     "required_visual_dimension_destroyed", "figure_inspected_claim_underdetermined",
     "named_loss_with_unstated_content", "announced_loss_placeholder", "text_layer_order_damage",
     "demonstration_performs_the_claim", "caption_coverage_uneven", "source_evidence_never_printed",

@@ -236,6 +236,7 @@ severities. There is deliberately no aggregate risk value.
 | `no_authored_page` | 5 | the format has no page at all; not a fault, and unfixable in this copy |
 | `no_loss_detected` | 3 | the pass ran and found nothing missing |
 | `in_figure_text_absent` | 3 | words typeset inside a figure are missing from the text layer |
+| `figure_semantic_binding_lost` | 1 | the figure's text and values survive; what binds them to their categories, series or panels does not |
 | `text_layer_order_damage` | 3 | reading order disturbed, from cosmetic to a buried section |
 | `named_loss_with_unstated_content` | 3 | the text points at a figure whose content it never states |
 | `heading_carried_as_image` | 2 | section titles exist only as artwork, flattening the structure |
@@ -250,6 +251,27 @@ severities. There is deliberately no aggregate risk value.
 
 Counts are distinct books out of 16, from the committed records. They are an inventory, not a
 severity ordering.
+
+#### `figure_semantic_binding_lost`
+
+> Textual and numeric elements inside a figure survive the extracted representation, but the spatial
+> or structural relationships required to bind those elements to their intended categories, series,
+> panels or labels are lost.
+
+**It describes semantic topology destroyed by linearisation while the tokens survive**, and it is
+deliberately separated from three values it would otherwise be confused with:
+
+| Not this | Because |
+|---|---|
+| `in_figure_text_absent` | there the text itself is missing; here every label and value extracts cleanly |
+| `text_layer_order_damage` | that is general reading-order corruption of prose; this is specific to a figure's internal structure |
+| `figure_inspected_claim_underdetermined` | there the figure was looked at and still does not settle the claim; here the figure settles it perfectly once seen, and only the extracted form is ambiguous |
+
+Added by the Controller decision on CANON-007. **First observed source:** Binet & Field,
+*Effectiveness in Context*. A text-only pass on its Figure 03 receives eleven numbers, six category
+names and two series names with nothing connecting them; it would bind them by guess and nothing
+would signal that anything was uncertain. This is the inverse of the usual visual-loss case and the
+reason every numeric value in that extraction was read from a page render rather than the text layer.
 
 `source_evidence_never_printed` earns its place by being the one pattern that is **not** our problem.
 Hopkins argues from advertisements the 1923 book never reproduced. A 1923 reader was in exactly the
