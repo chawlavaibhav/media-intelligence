@@ -129,11 +129,12 @@ The validator also gained a repository-level check: if any `*.audit.yaml` reappe
 
 ## 5. Verification — fresh from the final branch head
 
-Re-run from the final branch head with a clean working tree. Two SHAs are involved and the
-distinction is stated rather than glossed: `6cb1999` carries every substantive change, and the head
-commit edits **only this brief** — no code, spec, record or test differs between them.
+Re-run from the branch head with a clean working tree, and re-run again after each later commit.
 
-Final head: `07e5850`.
+Every substantive change is in **`6cb1999`**. Any commit after it on this branch edits **only this
+brief** — no spec, record, validator or test differs between `6cb1999` and the head, so the results
+below hold at whatever the head SHA is when you read it. That is stated rather than pinned to a SHA
+because a commit that records its own SHA cannot exist.
 
 | # | Command | Exit | Result |
 |---|---|---|---|
