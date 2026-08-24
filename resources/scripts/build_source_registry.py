@@ -104,8 +104,13 @@ S = [
  dict(source_id="src_indicstr12_devanagari", canonical_name="IndicSTR12 - Devanagari subset", domain="real_scene_text_devanagari",
   origin="CVIT, IIIT Hyderabad", official_url="https://cvit.iiit.ac.in/research/projects/cvit-projects/indicstr",
   citation="Lunia et al., IndicSTR12, ICDAR 2023 (arXiv:2403.08007)", media_type="image",
-  provided_labels="cropped word images with Unicode labels in per-image *_gt.txt", human_annotation_type="manual annotation",
+  provided_labels="TWO kinds of file, corrected 25 Aug 2026 - see supersedes_note. (a) 375 FULL SCENE PHOTOGRAPHS, each with a per-image *_gt.txt in tab-separated format: region index, 8 polygon coordinates, Unicode transcription - ONE LINE PER TEXT REGION. Photographs carry 1-98 annotated regions each (median 4, mean 7.2, 2,711 regions total). (b) 2,711 PRE-CROPPED single-word images under cropped_images/, whose filenames encode parent photo + region index + the same 8 polygon coordinates, so each crop resolves to exactly one transcription in its parent's *_gt.txt.",
+  supersedes_note="SUPERSEDED WORDING, preserved deliberately rather than erased. This record previously read: 'cropped word images with Unicode labels in per-image *_gt.txt'. That was wrong in a specific way: cropped word images do exist and are the majority of the files, but they are NOT the things the *_gt.txt files label. The *_gt.txt files describe the 375 full scene photographs, one line per region. Correction requested by Eval in eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md and independently reverified by Resources against the manifest and the files on disk. See resources/reports/RES-CORRECTION-01-indicstr12-composition.md.",
+  human_annotation_type="manual annotation",
   dataset_size_claimed=">27,000 word images across 12 languages; real.zip = 1,382,967,649 bytes; synthetic companion 62,692,393,572 bytes NOT acquired",
+  media_acquired_count=3086,
+  locally_paired_records=375,
+  paired_note="MEDIA ACQUIRED (3,086) is not the same as LOCALLY PAIRED IMAGE+ANNOTATION RECORDS (375, 12.2%). A 'paired record' means a photograph with its own sidecar *_gt.txt present and parsing to at least one region. The remaining 2,711 files are single-word crops with no sidecar file - but they are NOT unlabelled: 2,711 of 2,713 (99.9%) resolve to exactly one transcription by matching the polygon coordinates in their filename against their parent photograph's *_gt.txt. Resources verified this directly. So: 375 multi-region scene records, 2,711 single-word records, 4 unresolved.",
   access_method="public direct download link on the CVIT project page, no login/form. Host honours HTTP 206. robots.txt disallows Joomla system paths but not /images/datasets/.",
   code_license="not_stated", dataset_annotation_license="not_stated",
   underlying_media_rights="not_stated / not_verified. Photographs of real signage; no rights statement on the project page.",
@@ -117,13 +122,17 @@ S = [
  dict(source_id="src_iiit_ilst_devanagari", canonical_name="IIIT-ILST - Devanagari subset", domain="real_scene_text_devanagari",
   origin="CVIT, IIIT Hyderabad", official_url="https://cvit.iiit.ac.in/research/projects/cvit-projects/iiit-ilst",
   citation="Mathew, Jain, Jawahar, ICDAR MOCR Workshop 2017 (arXiv:2104.04437)", media_type="image",
-  provided_labels="per-image .xml annotations carrying bounding boxes and transcriptions", human_annotation_type="manual annotation",
+  provided_labels="Same two-part structure as IndicSTR12. (a) 176 FULL SCENE PHOTOGRAPHS with a per-image PASCAL-VOC style .xml carrying one <object> per text region - bounding box plus Unicode transcription. 1-64 regions each (median 8, 1,788 regions total). (b) 1,214 pre-cropped single-word images whose filenames encode parent photo + region index + bounding box; 1,210 of 1,215 (99.6%) resolve to exactly one XML transcription. The original wording 'bounding boxes and transcriptions' was accurate but did not distinguish scene photographs from crops.",
+  media_acquired_count=1390,
+  locally_paired_records=176,
+  paired_note="MEDIA ACQUIRED (1,390) is not the same as LOCALLY PAIRED IMAGE+ANNOTATION RECORDS (176, 12.7%). The other 1,214 files are crops that carry no sidecar .xml but resolve to a transcription via the bounding box in their filename.",
+  human_annotation_type="manual annotation",
   dataset_size_claimed="~1,000 real images per script across Devanagari/Telugu/Malayalam; IIIT-ILST.zip = 638,566,321 bytes",
   access_method="public direct download link on the CVIT project page, no login/form. Host honours HTTP 206.",
   code_license="not_stated", dataset_annotation_license="not_stated",
   underlying_media_rights="not_stated / not_verified. Photographs of real signage; no rights statement on the project page.",
   redistribution_status="not_stated - treat as NOT permitted", commercial_use_status_if_explicit="not_stated",
-  terms_access_notes="OVERLAPS IndicSTR12: 173 byte-identical files (12.4% of this source). Member-level range acquisition of the distributor's Devanagari/ folder plus README.txt. All 1,569 members verified present at their exact central-directory sizes with matching SHA256. NOTE: the recorded bytes_transferred_total for this source undercounts - a first attempt failed partway with HTTP/2 framing errors from this host and the rerun skipped members already on disk. The figure is left as measured rather than replaced with an estimate; see _transient_acquisition.json.",
+  terms_access_notes="OVERLAPS IndicSTR12 - TWO VALID DENOMINATORS, both true, same numerator: (1) 173 of 1,390 ACQUIRED images = 12.4%, the correct figure for the source as a whole; (2) 173 of 176 LOCALLY PAIRED records = 98.3%, the figure a consumer actually feels, because only paired records can be scored. Only 3 paired records are genuinely unique to this source. The overlap sits ENTIRELY in the annotated scene photographs - no cropped word image is byte-identical across the two sources. Further, all 173 shared photographs are exactly IndicSTR12's complete Hindi-labelled scene set (173 of 173), so the smaller dataset's Devanagari scene folder is effectively the larger dataset's Hindi scene folder. CONTENT-LEVEL CAVEAT verified by Resources: 1,205 of this source's 1,214 crops (99.3%) are derived from photographs shared with IndicSTR12. They are not byte-identical, so hash-based deduplication does NOT flag them, but they depict the same regions of the same photographs - relevant to any holdout that assumes crop-level independence. Member-level range acquisition of the distributor's Devanagari/ folder plus README.txt. All 1,569 members verified present at their exact central-directory sizes with matching SHA256. NOTE: the recorded bytes_transferred_total for this source undercounts - a first attempt failed partway with HTTP/2 framing errors from this host and the rerun skipped members already on disk. The figure is left as measured rather than replaced with an estimate; see _transient_acquisition.json.",
   version="Devanagari subset, 1,569 of 4,847 real members", status="partial_download",
   reason="Third Devanagari collection, with a different annotation format (XML boxes+transcriptions). NOT independent of IndicSTR12: 173 of this source's 1,390 items (12.4%) are byte-identical to IndicSTR12 items. Both come from CVIT / IIIT Hyderabad. Independent of BSTD."),
 
@@ -185,7 +194,10 @@ FIELDS = ["source_id","canonical_name","domain","origin","official_url","citatio
  "provided_labels","human_annotation_type","dataset_size_claimed","downloaded_item_count",
  "downloaded_bytes","access_method","code_license","dataset_annotation_license",
  "underlying_media_rights","redistribution_status","commercial_use_status_if_explicit",
- "terms_access_notes","version","timestamp","status","reason"]
+ "terms_access_notes","version","timestamp","status","reason",
+ # optional, added 25 Aug 2026 for the EVAL-003 correction. RES-001 defined these as MINIMUM
+ # fields, so extra columns are permitted. Blank where not applicable.
+ "media_acquired_count","locally_paired_records","paired_note","supersedes_note"]
 
 for r in S:
     n, b = actual(r["source_id"])
@@ -220,7 +232,12 @@ for r in S:
       "## Terms / access notes","", r['terms_access_notes'],"",
       "## Determination","", f"**`{r['status']}`** — {r['reason']}","",
       "## Acquisition state","",
-      f"- downloaded_item_count: **{r['downloaded_item_count']}**",
+      *( ["**Media acquired is not the same as usable annotated records — read this before sizing any task.**","",
+          f"- **Media files acquired:** {r.get('media_acquired_count')}",
+          f"- **Locally paired image + sidecar annotation records:** {r.get('locally_paired_records')}",
+          "", r.get("paired_note",""), ""] if r.get("locally_paired_records") else [] ),
+      *( ["## Correction history","", r["supersedes_note"], ""] if r.get("supersedes_note") else [] ),
+      f"- downloaded_item_count (media files): **{r['downloaded_item_count']}**",
       f"- downloaded_bytes: **{r['downloaded_bytes']:,}**",
       f"- version/subset: {r['version']}","",
       "## Permitted use","",

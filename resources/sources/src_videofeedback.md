@@ -39,7 +39,7 @@ No subset rule needed: every mp4 addressable on the media repo's main revision w
 
 ## Acquisition state
 
-- downloaded_item_count: **987**
+- downloaded_item_count (media files): **987**
 - downloaded_bytes: **181,560,342**
 - version/subset: all mp4 on main revision
 

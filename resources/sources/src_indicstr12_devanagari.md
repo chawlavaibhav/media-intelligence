@@ -15,7 +15,7 @@
 
 ## Labels — source observations, never project ground truth
 
-- **Provided labels:** cropped word images with Unicode labels in per-image *_gt.txt
+- **Provided labels:** TWO kinds of file, corrected 25 Aug 2026 - see supersedes_note. (a) 375 FULL SCENE PHOTOGRAPHS, each with a per-image *_gt.txt in tab-separated format: region index, 8 polygon coordinates, Unicode transcription - ONE LINE PER TEXT REGION. Photographs carry 1-98 annotated regions each (median 4, mean 7.2, 2,711 regions total). (b) 2,711 PRE-CROPPED single-word images under cropped_images/, whose filenames encode parent photo + region index + the same 8 polygon coordinates, so each crop resolves to exactly one transcription in its parent's *_gt.txt.
 - **Annotation type:** manual annotation
 
 ## Rights — six separate facts
@@ -39,7 +39,18 @@ Member-level range acquisition: transferred 112 MB of a 1.38 GB archive (8.1%); 
 
 ## Acquisition state
 
-- downloaded_item_count: **3086**
+**Media acquired is not the same as usable annotated records — read this before sizing any task.**
+
+- **Media files acquired:** 3086
+- **Locally paired image + sidecar annotation records:** 375
+
+MEDIA ACQUIRED (3,086) is not the same as LOCALLY PAIRED IMAGE+ANNOTATION RECORDS (375, 12.2%). A 'paired record' means a photograph with its own sidecar *_gt.txt present and parsing to at least one region. The remaining 2,711 files are single-word crops with no sidecar file - but they are NOT unlabelled: 2,711 of 2,713 (99.9%) resolve to exactly one transcription by matching the polygon coordinates in their filename against their parent photograph's *_gt.txt. Resources verified this directly. So: 375 multi-region scene records, 2,711 single-word records, 4 unresolved.
+
+## Correction history
+
+SUPERSEDED WORDING, preserved deliberately rather than erased. This record previously read: 'cropped word images with Unicode labels in per-image *_gt.txt'. That was wrong in a specific way: cropped word images do exist and are the majority of the files, but they are NOT the things the *_gt.txt files label. The *_gt.txt files describe the 375 full scene photographs, one line per region. Correction requested by Eval in eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md and independently reverified by Resources against the manifest and the files on disk. See resources/reports/RES-CORRECTION-01-indicstr12-composition.md.
+
+- downloaded_item_count (media files): **3086**
 - downloaded_bytes: **90,314,024**
 - version/subset: Devanagari subset, 3,465 of 31,242 real members
 

@@ -39,7 +39,7 @@ Acquired under RES-001 clarification 6/7: public, ungated, no explicit term proh
 
 ## Acquisition state
 
-- downloaded_item_count: **1200**
+- downloaded_item_count (media files): **1200**
 - downloaded_bytes: **2,412,945,110**
 - version/subset: full public release
 

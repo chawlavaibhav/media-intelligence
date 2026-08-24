@@ -10,8 +10,8 @@ evaluation media separate from the knowledge being tested.
 | source | what | items |
 |---|---|---:|
 | `src_bstd_devanagari` | Real Devanagari scene text + transcriptions | 25,246 |
-| `src_indicstr12_devanagari` | Real Devanagari scene text + transcriptions | 3,086 |
-| `src_iiit_ilst_devanagari` | Real Devanagari scene text + XML transcriptions | 1,390 |
+| `src_indicstr12_devanagari` | 375 scene photos (1–98 regions each) + 2,711 word crops | 3,086 |
+| `src_iiit_ilst_devanagari` | 176 scene photos (1–64 regions each) + 1,214 word crops | 1,390 |
 | `src_imagerewarddb` | Generated images, expert dimensional preference | 2,584 |
 | `src_konvid1k` | Real natural video, quality MOS | 1,200 |
 | `src_videofeedback` | Generated video, 5-aspect human scores | 987 |
@@ -47,7 +47,14 @@ access terms, explicit commercial-use terms). Licence silence is not a block for
 internal-only acquisition; access gates and explicit terms still are. **Transient acquisition is the
 default for large reliably-reacquirable public archives** (Charter, approved 24 Aug 2026).
 
-**LAST COMPLETED TASK:** `RES-002` (24 Aug 2026), substantively Controller-approved with a
+**LAST COMPLETED WORK:** EVAL-003 correction pass (25 Aug 2026) on branch
+`work/resources-eval003-correction`. Eval found that a Resources description did not match the files
+acquired; the correction is applied, independently reverified, and left as a small PR. **Descriptions
+only — nothing reacquired, no hash recomputed, no integrity or rights conclusion changed.** See
+`reports/RES-CORRECTION-01-indicstr12-composition.md` and
+`PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md`.
+
+**PRIOR TASK:** `RES-002` (24 Aug 2026), substantively Controller-approved with a
 consistency cleanup completed. Two results. (a) **Devanagari gap closed** — 29,722 real photographed
 Devanagari images with human transcriptions. (b) **Transient acquisition proved** —
 VideoGen-RewardBench's 13.42 GB single archive sampled by HTTP range at 5.8% transfer, never staged
@@ -55,16 +62,37 @@ on disk; status moved from `too_large_for_pilot` to `partial_download`. Retained
 2,048 MB budget; free disk never below 14.5 GB. Also completed RES-001 finalization, including the
 approved deletion of KoNViD crowdworker personal data. See `tasks/RES-002-CONTROLLER-BRIEF.md`.
 
-**CURRENT TASK / QUEUE:** none. No RES task is open. RES-002 is closed pending final Controller
-sign-off; RES-003 has not been assigned and must not be started without a Controller-created task
-file.
+**CURRENT TASK / QUEUE:** none. No RES task is open. RES-001/002 are closed and merged; the
+EVAL-003 correction is a documentation pass awaiting PR review.
+
+**DELIBERATE POSTURE — do not accumulate speculatively.** Resources does **not** hunt for more
+Devanagari datasets, books or any other material on spec. Wait for the new Eval battery to produce a
+**concrete resource requirement** — openly licensed Devanagari fonts, a particular script-phenomenon
+corpus, a cross-lineage reserve, controlled generated-text failure material — and source against
+that. A specific request gets a better answer than a larger pile.
 
 **IMPORTANT OBSERVATIONS:**
+- **"Media acquired" is not "usable annotated records".** Of 4,476 Devanagari images across the two
+  CVIT sources, only **551** are photographs with their own sidecar annotation file. The other 3,925
+  are single-word crops. Always state which count is meant — reading one as the other oversizes a
+  task roughly eightfold.
+- **The crops are not unlabelled.** A crop's filename encodes its parent photograph and coordinates,
+  which map to exactly one annotation line: 2,711/2,713 IndicSTR12 crops and 1,210/1,215 IIIT-ILST
+  crops resolve to a transcription. So the usable pool is **3,921 single-word items** or **551
+  multi-region photographs**, depending on the task.
+- **A description can be wrong for months while every integrity check passes.** Our validation proves
+  files decode and hash correctly — it proves nothing about whether our prose describes them. Eval
+  caught this one. Reproducible checks beat prose: see
+  `scripts/verify_devanagari_composition.py`.
+- **Hash-based deduplication cannot see content reuse.** No crop is byte-identical across the two
+  CVIT sources, yet **1,205 of IIIT-ILST's 1,214 crops (99.3%) come from photographs shared with
+  IndicSTR12**. Different tooling, different bytes, same content. No fingerprint check will warn you.
 - **Two of the three Devanagari sources are NOT independent of each other.** IndicSTR12 and IIIT-ILST
   are both CVIT / IIIT Hyderabad releases and share **173 byte-identical files** (12.4% of IIIT-ILST,
   5.6% of IndicSTR12). BSTD is genuinely independent of both. If a held-out Devanagari set is ever
-  wanted, **BSTD is the clean choice** — holding out IIIT-ILST would leave ~1 in 8 of its images not
-  actually unseen.
+  wanted, **BSTD is the clean choice.** Two valid denominators, both true: the overlap is **173 of
+  1,390 acquired images (12.4%)** but **173 of 176 locally paired records (98.3%)** — and a holdout
+  can only contain records it can score. Only **3** paired IIIT-ILST records are genuinely unique.
 - **BSTD's own train/test splits are not perfectly disjoint** — 2 duplicate pairs span them.
 - **A dataset's language label is not its script label.** Marathi is written in Devanagari; filtering
   BSTD by `language == hindi` would have missed 5,109 Marathi images plus 351 more labelled as other
@@ -92,6 +120,11 @@ completing their access forms; which gaps require proprietary collection rather 
 not test. Rights are **internal research and evaluation only** — if Eval's results are ever to be
 published or shown to a customer, the rights question must be reopened first.
 
-**PROPOSED CROSS-STREAM CHANGES:** `PROPOSED-INTEGRATION-CHANGE-RES-002-EVAL.md` filed 24 Aug 2026.
+**PROPOSED CROSS-STREAM CHANGES:** `PROPOSED-INTEGRATION-CHANGE-RES-002-EVAL.md` (24 Aug 2026) and
+`PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md` (25 Aug 2026 — confirms Eval's correction, flags that
+crops carry recoverable transcriptions, and warns that hash dedup cannot see the crop-level content
+reuse). The latter also proposes a replacement Resources row for
+`coordination/WORKSTREAM-STATUS.md`, which is not Resources' file to edit.
 
-**NEXT APPROVED TASK:** none. Await a Controller-assigned task file.
+**NEXT APPROVED TASK:** none. Await a Controller-assigned task file, or a concrete Eval requirement
+to source against. Do not begin broad source discovery.
