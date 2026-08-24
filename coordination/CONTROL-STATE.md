@@ -1,71 +1,76 @@
+# Controller State
+
+**Updated:** 24 Aug 2026
+
+## Architecture state
+
 - Source Knowledge: **SPEC-03 v0**.
 - Operational Bindings: **SPEC-04 v0**.
 - Knowledge Ontology: **SPEC-05 v0**.
-- Capability Battery V0 specification: **Controller-approved under EVAL-001**; seven dimensions and instrument-calibration specification are approved as measurement design, not as empirical results.
+- Capability Battery V0: Controller-approved under EVAL-001 as measurement design, not empirical capability data.
 - Identity rubric V0: frozen under EVAL-002 for later calibration; frozen does not mean calibrated.
-- M1b Devanagari generation-item design V0: approved as a design only; no final linguistically validated item set exists.
-- Capability Registry cross-stream schema: still proposed/deferred; **Registry does not exist yet**.
-- Production IR: does not exist yet.
+- M1b Devanagari generation-item design V0: approved design only; no final linguistically validated generation-item set exists.
+- Capability Registry cross-stream schema remains proposed/deferred; **Registry does not exist yet**.
+- Production IR does not exist yet.
 
-## Canon status — CANON-003 active in parallel
-CANON-003 is the current Canon stress batch under the frozen SPEC-03/04/05 extraction method.
+## Canon status — CANON-003 active
 
-The authoritative pre-parallel checkpoint on `work/canon` records **5 usable books complete** with no partially extracted book: *Grammar of the Shot*, *Ogilvy on Advertising*, *Light: Science & Magic*, *Interaction of Color*, and *The Vignelli Canon*. *Thinking with Type* was blocked by source-structure corruption and is not counted.
+CANON-003 remains a frozen-method 18-usable-book stress batch. The fixed source set has not changed.
 
-Controller approved `canon/tasks/CANON-003-PARALLEL-EXECUTION.md` to finish the remaining fixed assignments through a preferred total of **18 usable books**. Four isolated branches were created from the same common base. Lane D is Controller-audited complete and contributes three usable books: Books 16–18, bringing the currently confirmed usable count to **8** pending audit of other returned books and final integration validation.
+**Controller-accepted usable books: 13 / 18.**
 
-On 24 Aug 2026 the Controller approved `canon/tasks/CANON-003-REBALANCE-01.md` to reduce idle time **without changing the selected 18-book source set**. At the audit point, A had Book 6 complete with Books 7–8 explicitly not started; B had Book 9 complete with Books 10–12 explicitly not started; C had Books 13–14 complete with Book 15 not started; D had finished Books 16–18. The rebalance therefore moves only two preselected, not-yet-started books: **Book 8 _Painting With Light_** from A and **Book 11 _Master Shots_** from B to a fresh worker branch `work/canon-003-rebalance-d` created from the original common parallel base.
+- Five pre-parallel usable books: *Grammar of the Shot*, *Ogilvy on Advertising*, *Light: Science & Magic*, *Interaction of Color*, *The Vignelli Canon*.
+- Lane A accepted: Book 6 *Making and Breaking the Grid*; Book 7 Michael Freeman, *The Photographer's Eye: A Graphic Guide* (2013). The inventory had misidentified the preselected local artifact as the 2007 *The Photographer's Eye*; final integration must preserve the corrected identity.
+- Lane C accepted: Book 13 *Scientific Advertising*; Book 14 *Made to Stick*; Book 15 *Alchemy*.
+- Original Lane D accepted: Books 16–18 — *Creativity, Inc.*, *Art & Fear*, *Building a StoryBrand*.
+- *Thinking with Type* was blocked by structural text corruption and does not count as usable.
 
-Remaining execution ownership is now: A → Book 7; B → Books 10 and 12; C → Book 15; rebalance worker → Books 8 and 11. Lane D's accepted branch remains frozen and untouched. Book 12 deliberately stays with B because Lane D had already predicted that an interview-shaped source such as *The Conversations* might expose its claim-attribution issue, making reassignment of that particular source less clean.
+Execution rebalance remains in force without changing the selected 18-book set:
 
-The rebalance is an execution-only amendment: no source was added or removed; no schema, granularity rule, visual-pass method, ontology vocabulary, or synthesis question changed. The rebalance worker must use fresh book-specific checkpoints before historical comparison and must not read A/B/C fresh findings or use D's issue file as an extraction checklist.
+- Lane A is stopped; Book 8 *Painting With Light* moved to `work/canon-003-rebalance-d`.
+- Lane C is stopped.
+- Lane B owns Books 9, 10 and 12; Book 11 *Master Shots* moved to `work/canon-003-rebalance-d`. Latest worker checkpoint reports Books 9 and 10 complete and Book 12 in progress; those books are not yet Controller-accepted.
+- Rebalance worker owns Books 8 and 11.
+- Accepted A/C/D branches remain untouched until the dedicated final integration session.
 
-Lanes remain isolated during fresh extraction. Shared batch synthesis files stay locked until one fresh integration session merges/reconciles the reviewed lanes and produces the end-of-batch synthesis. Parallel/rebalance workers do not change schemas or run Canon-consumption experiments.
+No schema, granularity, visual-pass, ontology-vocabulary, or Canon-consumption change is permitted during the batch. Final integration must independently revalidate every per-book output before CANON-003 closes.
 
-## Eval status — EVAL-003 finalization pass active
-**EVAL-001 and EVAL-002 are closed and merged to `main`.**
+Durable A/C review: `coordination/CANON-003-LANE-A-C-AUDIT.md`.
 
-EVAL-003's first correction return fixed the major validity problems from the first review. The returned package now correctly treats the 67% figure as **cross-dataset annotation disagreement**, not human performance; uses one-to-one matching; labels the mark-removal diagnostic mechanically; reconciles candidate arithmetic; uses two blind readers in the reference design; materialises canonical hashed crops for both humans and future checkers; removes committed machine-specific paths; and preserves the 27-case checker-regression result.
+## Eval status — EVAL-003 readiness merged
 
-The correction return also exposed a consequential composition fact: under the original cross-dataset-overlap exclusion rule, the selected 54-item pack contains **53 Marathi, 1 language-unstated item, and 0 Hindi**, because all 173 Hindi-labelled IndicSTR12 records are in the shared-image overlap. The checker and observed production failure are Hindi-facing, so spending the first human calibration budget on a zero-Hindi pack would create an avoidable transfer assumption.
+**EVAL-001, EVAL-002 and EVAL-003 readiness are merged to `main`.** EVAL-003 merged through PR #3 on 24 Aug 2026 after Controller audit and final documentation cleanup.
 
-Controller therefore opened `eval/tasks/EVAL-003-FINALIZATION-PASS.md`. **Primary V0 decision: use a Hindi-focused qualification pack, target 54 Hindi-labelled unique photographs, admitting a shared photograph once rather than treating the two dataset copies as independent.** Source labels remain provenance/selection metadata only; the later reference still comes from two independent blind Hindi-competent readers. Marathi stress testing is deferred and must be reported separately if later opened. BSTD remains untouched as the independent lineage reserve.
+Authoritative EVAL-003 state:
 
-The return is **not yet merge-ready and human/API calibration remains unapproved** because final bounded defects remain:
-- `work/eval` did not merge current `main` before its correction work and must synchronize normally without rewriting history;
-- the production matcher is one-to-one, but the required fabricated adversarial regression proving one B region cannot be reused is missing;
-- the returned altered-target confirmation rule is impossible with only the two readers because both establish every agreed reference; finalization fixes this by freezing the reference first, then allowing either reader to perform the non-reference-changing validity check;
-- current EVAL-003 prose still contains stale pre-correction statements about crop materialisation and must be made internally consistent;
-- the Eval→Resources proposal covers the scene-photo discrepancy but still needs the locally paired 375/176 counts and the denominator-specific 173/176 overlap clarification.
+- Primary V0 is Hindi-focused: **173 eligible Hindi-labelled unique photographs → 54 selected → 54 distinct photograph hashes**.
+- Shared CVIT photographs are admitted once, never counted twice. The two CVIT releases are one source lineage for independence claims.
+- Dataset transcriptions are evidence/provenance, **not project ground truth**. On 1,082 one-to-one matched regions the two releases agree 725 times and disagree 357 times; this is cross-dataset disagreement, not human-performance evidence and not an evaluator threshold.
+- Canonical crops are materialised; human reviewers and future checkers reference the same crop bytes/hashes.
+- Reference construction uses **two independent blind Hindi-competent readers**. Exact agreement forms the strict reference. After references are frozen, either reader may perform the separate altered-target validity check; that check cannot change the reference.
+- Agent verification recorded 27/27 historical checker cases re-scored with 0 judgement mismatches; matcher adversarial self-test, crop geometry, crop identity, blinding and local harness checks passed before merge.
+- BSTD remains untouched as the independent Devanagari lineage reserve.
+- No human review, checker API/model run, generator run, capability result, Registry entry, EVAL-004 work or new acquisition was performed by EVAL-003 readiness.
 
-The finalization pass authorizes **zero human/API/model/generation spend**. It must return to Controller after a bounded verification suite. **Do not start readers, checker APIs, EVAL-004, BSTD selection, Registry work, or capability runs.**
+The active findings file is now an authoritative current-state summary; superseded zero-Hindi, single-reader and browser-crop states survive only in Git history.
+
+**Next Eval gate is not more readiness cleanup.** It is a Controller decision whether to authorize approximately **3.5–4.5 hours across two Hindi-competent readers**. Checker roster/API spend remains a separate later approval. EVAL-004 and Registry work remain unopened.
 
 ## Resources status — RES-002 closed
-**RES-001 and RES-002 are closed and merged to `main`.** No Resources task is currently active.
 
-The repository has a bounded external research/evaluation corpus plus provenance, integrity and acquisition records. Standing constraints remain:
-- source labels are observations, not automatic project ground truth;
-- media rights remain **internal research and evaluation only** unless separately cleared;
-- BSTD is the independent Devanagari lineage reserve relative to the two related CVIT / IIIT Hyderabad sources;
-- transient/member-level acquisition is an approved storage method, not a rights grant.
+RES-001/002 are closed and merged. The corpus remains internal research/evaluation material unless separately cleared.
 
-Eval may propose factual corrections through an Eval-owned `PROPOSED-INTEGRATION-CHANGE` file; Eval must not edit Resources-owned records directly.
+EVAL-003 produced `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md`, containing factual downstream corrections about:
 
-## Current approved work
-- `canon/tasks/CANON-003.md`
-- `canon/tasks/CANON-003-PARALLEL-EXECUTION.md`
-- `canon/tasks/CANON-003-REBALANCE-01.md`
-- `eval/tasks/EVAL-003.md`
-- `eval/tasks/EVAL-003-CORRECTION-PASS.md`
-- `eval/tasks/EVAL-003-FINALIZATION-PASS.md`
+1. IndicSTR12 being full scene photographs with multiple annotated regions rather than pre-cropped word images;
+2. 375 IndicSTR12 + 176 IIIT-ILST locally paired image+annotation records versus total media acquired;
+3. the distinction between 173/1,390 full-source overlap and 173/176 overlap within the locally paired IIIT subset.
 
-There is **no active Resources task** and no approved EVAL-004.
-
-## Current central hypotheses
-The assumptions register remains authoritative. Important unresolved items still include whether the Source Knowledge / Binding split earns its complexity over time, whether explicit Canon materially improves planning/evaluation, whether Canon-derived requirements improve routing once a Registry exists, whether Empirical Memory predicts later failures, and whether CpAO is the right operating objective. None should be promoted to fact without the register's evidence bar.
+Eval did not edit Resources-owned evidence. Controller may action or reject that proposal separately.
 
 ## Current integration gates
-1. **Canon:** audit returned books against the frozen method. Rebalanced ownership is A→7, B→10+12, C→15, rebalance worker→8+11; accepted Lane D remains untouched. Do not merge/synthesise until all assigned work is reviewed, then use one fresh integration session.
-2. **Eval:** wait for the EVAL-003 finalization return. Human readers, checker roster, API spend and calibration remain blocked. The primary V0 calibration pack is Controller-directed to be Hindi-focused with unique photograph hashes.
-3. **Resources:** closed; act only on a Controller-approved cross-stream correction or a new sourcing task.
-4. **Architecture:** no Capability Registry, Production IR, routing system, or Canon-consumption experiment is authorized by the current work.
+
+1. **Canon:** finish and audit B plus the rebalance worker, then run one fresh CANON-003 integration/synthesis session. No schema revision or Canon-consumption experiment before that synthesis.
+2. **Eval:** EVAL-003 readiness is complete and merged. Human calibration remains **not started** pending explicit authorization of two Hindi-competent readers. Checker roster/API spend is separately gated.
+3. **Resources:** closed unless the Controller actions the pending EVAL-003 factual correction proposal or opens a new sourcing task.
+4. **Architecture:** Capability Registry, Production IR, routing system and Canon-consumption/training experiments remain unapproved/not implemented.
