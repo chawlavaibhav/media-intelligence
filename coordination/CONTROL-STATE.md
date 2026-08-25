@@ -1,76 +1,130 @@
 # Controller State
 
-**Updated:** 24 Aug 2026
+**Updated:** 25 Aug 2026 by Repository Governor, task GOV-001, against `main` at
+`00ea9b067229cd992b77b7d6e0958df35178b01b`.
+
+**Read `PROJECT-MEMORY.md` first.** This file is the Controller's operational snapshot;
+`PROJECT-MEMORY.md` is the canonical narrative and the authority map.
+
+> **Correction notice.** Before GOV-001 this file described CANON-003 as an in-flight extraction
+> batch with 13 of 18 books accepted, and EVAL-004 as unopened. Both were badly out of date — the
+> repository had moved through CANON-004 to CANON-008 and EVAL-005 in the meantime. The stale text is
+> preserved in Git history; the substantive history it described is preserved in
+> `coordination/CANON-003-LANE-A-C-AUDIT.md`, `coordination/CANON-003-BOOKS-08-10-AUDIT.md`,
+> `canon/decisions/` and `canon/findings/`. This correction was requested by the Canon stream in
+> `canon/PROPOSED-INTEGRATION-CHANGE-CANON-005-COORDINATION.md`, which had not been actioned.
+
+## Global posture — audit freeze
+
+**All new domain work is frozen** pending completion of the governance reset. No Canon, Eval,
+Resources, acquisition, Capability Registry or Production IR task may be opened or self-assigned.
+**No task is currently open in any stream.**
 
 ## Architecture state
 
-- Source Knowledge: **SPEC-03 v0**.
-- Operational Bindings: **SPEC-04 v0**.
-- Knowledge Ontology: **SPEC-05 v0**.
-- Capability Battery V0: Controller-approved under EVAL-001 as measurement design, not empirical capability data.
-- Identity rubric V0: frozen under EVAL-002 for later calibration; frozen does not mean calibrated.
-- M1b Devanagari generation-item design V0: approved design only; no final linguistically validated generation-item set exists.
-- Capability Registry cross-stream schema remains proposed/deferred; **Registry does not exist yet**.
-- Production IR does not exist yet.
+- Source Knowledge: **SPEC-03 v0**. Operational Bindings: **SPEC-04 v0**. Knowledge Ontology:
+  **SPEC-05 v0** — Governance rule 5 amended twice under Controller-approved Canon tasks (CANON-005
+  independence-by-lineage; CANON-006 fifth dependence relation).
+- SPEC-01 Creative IR v0.1 locked. SPEC-02 superseded conceptually by SPEC-03/04/05 and retained as
+  evidence.
+- Capability Battery V0: approved as **measurement design**, not empirical capability data.
+- Identity rubric V0: frozen for later calibration. **Frozen does not mean calibrated or validated.**
+- M1b Devanagari generation-item design V0: approved **design only**. Zero items exist.
+- **Capability Registry does not exist.** Its cross-stream schema remains proposed/deferred.
+- **Production IR does not exist.** Neither does the Production Planner or any routing system.
 
-## Canon status — CANON-003 active
+## Canon status — 19 live sources; no open task
 
-CANON-003 remains a frozen-method 18-usable-book stress batch. The fixed source set has not changed.
+**CANON-003 is closed.** It stopped at **16 Controller-accepted usable books** on 24 Aug 2026 — above
+its minimum of 15, below its 18 target, by deliberate Controller decision
+(`canon/decisions/CANON-003-STOP-AT-16-2026-08-24.md`). It was integrated and merged via PR #4.
 
-**Controller-accepted usable books: 13 / 18.**
+**Two counts exist and must not be confused:**
 
-- Five pre-parallel usable books: *Grammar of the Shot*, *Ogilvy on Advertising*, *Light: Science & Magic*, *Interaction of Color*, *The Vignelli Canon*.
-- Lane A accepted: Book 6 *Making and Breaking the Grid*; Book 7 Michael Freeman, *The Photographer's Eye: A Graphic Guide* (2013). The inventory had misidentified the preselected local artifact as the 2007 *The Photographer's Eye*; final integration must preserve the corrected identity.
-- Lane C accepted: Book 13 *Scientific Advertising*; Book 14 *Made to Stick*; Book 15 *Alchemy*.
-- Original Lane D accepted: Books 16–18 — *Creativity, Inc.*, *Art & Fear*, *Building a StoryBrand*.
-- *Thinking with Type* was blocked by structural text corruption and does not count as usable.
+| Number | Value | Meaning |
+|---|---|---|
+| Historical CANON-003 / CANON-004 method-test corpus | **16** | Frozen forever. |
+| **Live accepted Canon** | **19** | Current, verified below. |
 
-Execution rebalance remains in force without changing the selected 18-book set:
+Mechanically verified by GOV-001 at the baseline SHA: `canon/knowledge/current/` holds 19 source
+directories; `canon/audit/records/` holds 19 audit records; the sets match one-for-one.
+`canon/validation/validate_audit_gate_v02.py` → 19 records, 0 errors.
+`canon/validation/validate_canon003_integrated.py` → 16 books, 0 errors, unchanged.
 
-- Lane A is stopped; Book 8 *Painting With Light* moved to `work/canon-003-rebalance-d`.
-- Lane C is stopped.
-- Lane B owns Books 9, 10 and 12; Book 11 *Master Shots* moved to `work/canon-003-rebalance-d`. Latest worker checkpoint reports Books 9 and 10 complete and Book 12 in progress; those books are not yet Controller-accepted.
-- Rebalance worker owns Books 8 and 11.
-- Accepted A/C/D branches remain untouched until the dedicated final integration session.
+**Audit Gate v0.2 is the authoritative admission method** (adopted CANON-004, applied CANON-005).
+It governs downstream *use*, not storage: an unaudited or stale-audited source stays as evidence but
+may not be used for cross-source promotion, product use or Canon-consumption.
+`evidence_insufficient` is a legitimate completed outcome.
 
-No schema, granularity, visual-pass, ontology-vocabulary, or Canon-consumption change is permitted during the batch. Final integration must independently revalidate every per-book output before CANON-003 closes.
+Since CANON-003 closed:
 
-Durable A/C review: `coordination/CANON-003-LANE-A-C-AUDIT.md`.
+- **CANON-006** admitted both former deferred reserves — *Master Shots* and *The Conversations*.
+  16 → 18. Added the pairwise, symmetric lineage relation `shared_primary_informant`.
+  **The "deferred reserve" status of Books 11–12 is therefore obsolete.**
+- **CANON-007** admitted *Effectiveness in Context*. 18 → 19. Added the representation-loss category
+  `figure_semantic_binding_lost`.
+- **CANON-008 STOPPED at its acquisition gate; nothing was ingested.** The official archive route for
+  Girish Dalvi's Devanagari thesis publishes only a 3-page abstract. Live Canon stays 19. The task is
+  `needs_controller_review`; four options are in `canon/findings/CANON-008-CONTROLLER-BRIEF.md`.
 
-## Eval status — EVAL-003 readiness merged
+**The Canon still has no accepted Devanagari-structure source.** *Thinking with Type* remains blocked
+on structural column interleaving.
 
-**EVAL-001, EVAL-002 and EVAL-003 readiness are merged to `main`.** EVAL-003 merged through PR #3 on 24 Aug 2026 after Controller audit and final documentation cleanup.
+## Eval status — battery human-validated; no checker ever run
 
-Authoritative EVAL-003 state:
+**No checker is qualified. No model has been benchmarked. No Registry entry exists. ₹0 API and
+generation spend.**
 
-- Primary V0 is Hindi-focused: **173 eligible Hindi-labelled unique photographs → 54 selected → 54 distinct photograph hashes**.
-- Shared CVIT photographs are admitted once, never counted twice. The two CVIT releases are one source lineage for independence claims.
-- Dataset transcriptions are evidence/provenance, **not project ground truth**. On 1,082 one-to-one matched regions the two releases agree 725 times and disagree 357 times; this is cross-dataset disagreement, not human-performance evidence and not an evaluator threshold.
-- Canonical crops are materialised; human reviewers and future checkers reference the same crop bytes/hashes.
-- Reference construction uses **two independent blind Hindi-competent readers**. Exact agreement forms the strict reference. After references are frozen, either reader may perform the separate altered-target validity check; that check cannot change the reference.
-- Agent verification recorded 27/27 historical checker cases re-scored with 0 judgement mismatches; matcher adversarial self-test, crop geometry, crop identity, blinding and local harness checks passed before merge.
-- BSTD remains untouched as the independent Devanagari lineage reserve.
-- No human review, checker API/model run, generator run, capability result, Registry entry, EVAL-004 work or new acquisition was performed by EVAL-003 readiness.
+- **EVAL-001/002/003 closed and merged.** EVAL-003's 54-item Hindi-primary photographed-signage pack
+  (173 eligible → 54 selected → 54 distinct hashes) is untouched and still available.
+- **EVAL-004 STOPPED by Controller, 24 Aug 2026** after one 54-item Reader-A pilot. There is no
+  Reader B and no two-reader reference. Reader A is exploratory evidence only; no checker may be
+  qualified, ranked or entered in the Registry from it, and it must not be resumed.
+- **EVAL-005 human validation is COMPLETE and frozen.** One Hindi-competent reviewer answered 98 of
+  98; 5 of 53 base words were rejected, excluding 10 items. Controller decision: **PRUNE, DO NOT
+  REBUILD** — excluded items are not replaced.
 
-The active findings file is now an authoritative current-state summary; superseded zero-Hindi, single-reader and browser-crop states survive only in Git history.
+**Authoritative battery: the 96-item validated view** — 48 match / 48 mismatch, 48 accepted base
+words, 33 hard opportunities on 33 distinct base words, 20 failure classes across 5 groups. The
+original **106-item build is historical source material and is unchanged**.
 
-**Next Eval gate is not more readiness cleanup.** It is a Controller decision whether to authorize approximately **3.5–4.5 hours across two Hindi-competent readers**. Checker roster/API spend remains a separate later approval. EVAL-004 and Registry work remain unopened.
+GOV-001 verified the human-validation record mechanically: `human-validation-v1.json` is status
+`FROZEN`, lists the 10 excluded item IDs and the expected validated state, and both raw response
+artifacts match their recorded SHA-256 hashes.
 
-## Resources status — RES-002 closed
+**One reader is not independent-reader ground truth**, and the record says so. The 8.68% figure is an
+iid *reference* calculation for sizing under an assumption the battery explicitly does not establish.
+The actual qualification gate is deterministic: **zero false passes**.
 
-RES-001/002 are closed and merged. The corpus remains internal research/evaluation material unless separately cleared.
+**Next Eval gate:** Controller approval of a checker roster and API budget (order ₹600–2,100 on an
+old price needing re-verification), plus the proposed thresholds. That is the only thing blocking the
+project's first real measurement.
 
-EVAL-003 produced `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md`, containing factual downstream corrections about:
+## Resources status — closed; no open task
 
-1. IndicSTR12 being full scene photographs with multiple annotated regions rather than pre-cropped word images;
-2. 375 IndicSTR12 + 176 IIIT-ILST locally paired image+annotation records versus total media acquired;
-3. the distinction between 173/1,390 full-source overlap and 173/176 overlap within the locally paired IIIT subset.
+RES-001/002 closed and merged. The EVAL-003 correction pass **is merged** (PR #5).
 
-Eval did not edit Resources-owned evidence. Controller may action or reject that proposal separately.
+**Corpus: 34,786 items / 5.70 GB across 8 acquired sources; 4 blocked.** GOV-001 recomputed this
+directly from `resources/manifests/corpus-pilot-v0.jsonl`: 34,786 records, all `validation_status:
+ok`, 34,586 distinct hashes, 200 duplicates (27 within a source, 173 across two). Every per-source
+count matches.
+
+The corpus is **internal research and evaluation material only** unless separately cleared.
+
+**IndicSTR12 and IIIT-ILST are one source lineage, not two independent sources** — 173 byte-identical
+files, 98.3% of IIIT-ILST's scene photographs. **BSTD is the only genuine cross-lineage reserve and
+stays untouched.**
+
+Pending optional Controller action: `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md` and
+`resources/PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md`.
 
 ## Current integration gates
 
-1. **Canon:** finish and audit B plus the rebalance worker, then run one fresh CANON-003 integration/synthesis session. No schema revision or Canon-consumption experiment before that synthesis.
-2. **Eval:** EVAL-003 readiness is complete and merged. Human calibration remains **not started** pending explicit authorization of two Hindi-competent readers. Checker roster/API spend is separately gated.
-3. **Resources:** closed unless the Controller actions the pending EVAL-003 factual correction proposal or opens a new sourcing task.
-4. **Architecture:** Capability Registry, Production IR, routing system and Canon-consumption/training experiments remain unapproved/not implemented.
+1. **Governance:** GOV-001 is under review. The audit freeze holds until the Controller merges it.
+2. **Canon:** decide CANON-008 — the Devanagari slot is empty and the task is stopped at the
+   acquisition gate. No other Canon work is authorized.
+3. **Eval:** approve a checker roster and API budget, and the proposed thresholds. Optionally decide
+   whether to ask Resources to check held material for ~36–42 more Hindi words.
+4. **Resources:** closed unless the Controller actions a pending proposal or opens a new task.
+5. **Architecture:** Capability Registry, Production IR, routing and Canon-consumption experiments
+   remain unapproved and not implemented.

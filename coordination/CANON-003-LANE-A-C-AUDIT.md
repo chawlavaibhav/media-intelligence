@@ -1,5 +1,12 @@
 # CANON-003 — Controller audit of Lane A and Lane C
 
+> **HISTORICAL — Controller audit record, not current state.** Classified `HISTORICAL` by GOV-001 on
+> 25 Aug 2026. The findings below remain **evidentially valid** for the CANON-003 batch and were not
+> altered. They describe a batch that has since closed at 16 accepted books and been superseded by
+> the Audit Gate v0.2 method; live Canon is now 19 sources. Any lane, branch or in-progress status
+> named below is finished. Current state: `PROJECT-MEMORY.md` and `coordination/CONTROL-STATE.md`.
+
+
 **Date:** 24 Aug 2026  
 **Status:** Controller review complete for returned Lane A and Lane C branches.  
 **Scope:** review only; no lane merge or cross-lane synthesis performed.

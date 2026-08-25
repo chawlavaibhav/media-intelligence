@@ -1,6 +1,7 @@
 # Project Contract
 
-**Read this first, every session, every stream.** Then read `shared/COMMUNICATION-STANDARD.md`.
+**Read `PROJECT-MEMORY.md` first, then this file, every session, every stream.** Then read
+`shared/COMMUNICATION-STANDARD.md`.
 Not autonomously rewritten by workers — proposals go through `PROPOSED-INTEGRATION-CHANGE-<ID>.md` in the proposing stream's folder.
 
 ## Communication and epistemic standard
@@ -89,7 +90,15 @@ contract. Model-independent.
 ## Authority
 
 Controller (human, strategic): product direction, architecture, major experiments, accepting or
-rejecting assumptions, scope changes, schema changes, milestones.
+rejecting assumptions, scope changes, schema changes, milestones. **The Controller merges.**
+
+Repository Governor (fifth, independent role — approved 25 Aug 2026): repository coherence, the
+canonical `PROJECT-MEMORY.md`, per-task integrity review and periodic repository-health audits. It
+does **not** own project strategy or any stream's methodology, and it may write only
+`PROJECT-MEMORY.md`, `governance/**`, and status/supersession corrections in `coordination/**` when
+an approved governance task includes that scope. It flags and routes domain-owned defects rather
+than fixing them. Contract: `governance/GOVERNOR-CONTRACT.md`; approved design:
+`docs/superpowers/specs/2026-08-25-repository-governor-project-memory-design.md`.
 
 Workers (execution): research, ingest, implement, run *approved* experiments, script, collect,
 analyse, report evidence, recommend. **Never** redefine the product, promote a recommendation to a

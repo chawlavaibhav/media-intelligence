@@ -1,5 +1,12 @@
 # CANON-003 Controller audit — Books 8–10
 
+> **HISTORICAL — Controller audit record, not current state.** Classified `HISTORICAL` by GOV-001 on
+> 25 Aug 2026. The findings below remain **evidentially valid** for the CANON-003 batch and were not
+> altered. They describe a batch that has since closed at 16 accepted books and been superseded by
+> the Audit Gate v0.2 method; live Canon is now 19 sources. Any lane, branch or in-progress status
+> named below is finished. Current state: `PROJECT-MEMORY.md` and `coordination/CONTROL-STATE.md`.
+
+
 **Date:** 24 Aug 2026  
 **Decision:** Books 8, 9 and 10 are **Controller-accepted usable CANON-003 books**, subject to the batch-wide final integration requirement that all accepted outputs be independently mechanically revalidated before merge/reconciliation.
 
