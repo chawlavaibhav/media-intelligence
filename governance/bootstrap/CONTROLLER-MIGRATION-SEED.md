@@ -1,3 +1,28 @@
+> # HISTORICAL / SUPERSEDED FOR BOOTSTRAP
+>
+> **Do not bootstrap a session from this file.** Reconciled and superseded by GOV-001 on
+> 25 Aug 2026 against `main` at `00ea9b067229cd992b77b7d6e0958df35178b01b`.
+>
+> **Current project memory is `PROJECT-MEMORY.md`.** This file is retained unedited below as
+> forensic evidence of the migration boundary — the point at which the project stopped depending on
+> chat context. **It was never authoritative and is not authoritative now.**
+>
+> Claim-by-claim reconciliation is in
+> `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` §6. Summary: every material
+> Canon, Eval, Resources and freeze claim in this seed was **confirmed** against committed evidence,
+> several with mechanical verification. Nothing material was contradicted by the repository.
+>
+> **One unresolved migration dependency remains.** Of the four external research artifacts named in
+> §6, two — `creative_production_canon_expansion_report (1).docx` and
+> `creative_production_canon_candidate_universe (1).xlsx` — were located and inspected, and are
+> recorded as an external research snapshot whose central arithmetic is now **stale** (they state
+> live Canon 16; it is 19). The other two — `WAVE-1-ACQUISITION-REPORT.md` and
+> `ACQUISITION-MANIFEST.xlsx` — **were not found and were not inspected**. Any acquisition claim
+> resting on them is **unverified**, and the §6 Wave-1 status leads should be treated as unresolved
+> until the Controller either supplies those artifacts or accepts their content into GitHub.
+
+---
+
 # Controller Migration Seed
 
 **Date:** 2026-08-25

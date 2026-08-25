@@ -1,22 +1,40 @@
 # Runbook
 
-## Parallel work: worktrees, one per stream
+**Updated:** 25 Aug 2026 by Repository Governor, task GOV-001.
+**Read `PROJECT-MEMORY.md` first, then `coordination/PROJECT-CONTRACT.md`.**
 
-Three worktrees exist so Canon, Eval and Resources can run simultaneously without one overwriting
-another:
+## Parallel work: one branch per task
+
+Each task runs on its own branch named after the task, and the Controller merges it to `main` by PR.
 
 ```
-media-intelligence/                              main branch — Controller's view, merge target
-media-intelligence-worktrees/canon/      work/canon branch — Canon sessions work here
-media-intelligence-worktrees/eval/       work/eval branch — Eval sessions work here
-media-intelligence-worktrees/resources/  work/resources branch — Resources sessions work here
+main                                  Controller's view, merge target, the only source of truth
+work/<task-id>                        e.g. work/canon-006-reserves, work/eval-005-review-packet
+work/gov-<nnn>-<slug>                 Governor tasks
 ```
 
-**A worker session `cd`s into its own worktree directory and stays there for the whole session.**
-It never edits files inside another stream's worktree. When a task is done, the worker commits on
-its branch; the Controller reviews the Controller Brief and merges `work/<stream>` into `main`
-(or opens a PR). This is the enforcement mechanism behind "a stream never edits another stream's
-files" — separate working directories on separate branches, not just a convention.
+**A worker stays on its own branch for the whole session and never edits another stream's files.**
+When a task is done the worker commits, pushes, and the Controller reviews the Controller Brief and
+merges via PR.
+
+**The control mechanism is three things together:** stream directory ownership (`canon/**`,
+`eval/**`, `resources/**` each belong to one stream; `coordination/**` and `governance/**` belong to
+the Controller and Governor), the approved scope of the assigned task, and PR review before merge.
+A stream reaches another's territory only through a `PROPOSED-INTEGRATION-CHANGE-<ID>.md` file.
+
+**Worktrees are optional execution convenience only.** Using `git worktree` to keep streams in
+separate directories is fine and often handy. It enforces nothing, and no rule depends on it.
+
+> **Correction notice.** This section previously described three long-lived per-stream worktrees
+> (`work/canon`, `work/eval`, `work/resources`) checked out under a sibling
+> `media-intelligence-worktrees/` directory, and called that arrangement the enforcement mechanism
+> behind stream ownership. Actual practice moved to per-task branches from CANON-003 onward, and the
+> three original branches are stale. **Worktrees never enforced anything** — directory ownership,
+> approved task scope and PR review do.
+
+**Branch hygiene.** Most `work/*` branches on the remote are historical: their content reached `main`
+by squash merge, so `git branch --merged` reports them as unmerged and cannot be trusted to tell you
+what is live. Treat a branch as live only if an open PR or an assigned task file names it.
 
 ## Communication check — mandatory
 
@@ -29,13 +47,13 @@ If the file cannot be found or read, STOP. Do not claim compliance.
 This confirmation is a startup check, not something to repeat in every message.
 
 ## Starting a new Canon session
-Read, in order: `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `canon/CHARTER.md` → `canon/HANDOFF.md` → the assigned task file → only the source material the task names. Do not replay full project history.
+Read, in order: `PROJECT-MEMORY.md` → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `canon/CHARTER.md` → `canon/HANDOFF.md` → the assigned task file → only the source material the task names. Do not replay full project history.
 
 ## Starting a new Eval session
-Read, in order: `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `eval/CHARTER.md` → `eval/HANDOFF.md` → assigned task → named sources.
+Read, in order: `PROJECT-MEMORY.md` → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `eval/CHARTER.md` → `eval/HANDOFF.md` → assigned task → named sources.
 
 ## Starting a new Resources session
-Read, in order: `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `resources/CHARTER.md` → `resources/HANDOFF.md` → assigned task → named sources.
+Read, in order: `PROJECT-MEMORY.md` → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `resources/CHARTER.md` → `resources/HANDOFF.md` → assigned task → named sources.
 
 ## Approving a task
 Controller writes/fills `shared/templates/TASK-TEMPLATE.md`, assigns an ID (`CANON-NNN` /
@@ -93,12 +111,21 @@ Worker tags severity (`LOCAL` / `CROSS_STREAM` / `ARCHITECTURAL`) in its Control
 → immediate stop, no further work in that task until Controller reviews.
 
 ## Starting a fresh Controller chat
-Read `coordination/CONTROL-STATE.md` first, then `shared/COMMUNICATION-STANDARD.md`. Fall back to `coordination/DECISION-LOG.md` only if a CONTROL-STATE claim needs its history checked.
+Read `PROJECT-MEMORY.md` first, then `coordination/PROJECT-CONTRACT.md`, then
+`shared/COMMUNICATION-STANDARD.md`, then `coordination/CONTROL-STATE.md`. Use
+`coordination/DECISION-LOG.md` — including its index of stream decision records — when a
+current-state claim needs its history checked.
+
+## Governor review
+Every meaningful task/PR gets a bounded integrity review by the Repository Governor before merge.
+See `governance/GOVERNOR-CONTRACT.md`. Its verdict is `PASS`, `PASS WITH NON-BLOCKING NOTES` or
+`BLOCK` with evidence. The Governor advises; **the Controller merges.**
 
 ## Merging work safely
-Each stream owns its directory tree exclusively (enforced by worktree, see below, or by
-convention if worktrees aren't in use). A stream never edits another stream's files or
-`coordination/` directly — only via a `PROPOSED-INTEGRATION-CHANGE` file the Controller merges in.
+Each stream owns its directory tree exclusively. **The control mechanism is stream directory
+ownership plus approved task scope plus PR review** — not tooling. A stream never edits another
+stream's files or `coordination/` directly; it reaches them only via a
+`PROPOSED-INTEGRATION-CHANGE` file the Controller actions.
 
 ## Recovering from a blocked task
 Task stays `needs_controller_review`. Controller either unblocks (answers the question, approves

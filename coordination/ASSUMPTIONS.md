@@ -1,6 +1,11 @@
 # Assumptions and Falsification Register
 
 **Date opened:** 23 Aug 2026 · **Purpose:** stop reasonable guesses from hardening into facts.
+**Status reviewed:** 25 Aug 2026 by Repository Governor, task GOV-001 — the register is **live and
+still applies**, but its entries were written before CANON-003 through CANON-008 and EVAL-001
+through EVAL-005 ran. Two broken internal links were repaired. **No entry's status was changed**:
+moving an entry to `empirical_finding` requires actually running its named falsifier, and that is a
+domain judgement, not a governance one. Current project state is in `PROJECT-MEMORY.md`.
 
 Several claims in this project have been repeated often enough to sound established. Some are.
 Most are not. Each entry records what would have to happen for us to stop believing it.
@@ -163,7 +168,7 @@ explicit structured knowledge*, not "books versus no books."
 
 **Supporting:** nothing yet. **Against:** nothing yet. The Canon has never been given to a model.
 
-**Falsifier:** Experiment A in [CANON-EXPERIMENT-V0](CANON-EXPERIMENT-V0.md). Arm B (schema +
+**Falsifier:** Experiment A in [CANON-EXPERIMENT-V0](../canon/experiments/CANON-EXPERIMENT-V0.md). Arm B (schema +
 generic checklist) versus Arm C (schema + retrieved Canon), matched for length and format, blind,
 pre-registered. If C ties B, the structure did the work.
 
@@ -356,7 +361,7 @@ than a brief alone, given the same Registry.
 features. Compare pass rate and cost per accepted outcome.
 
 **Review trigger:** requires a Capability Registry, which does not exist. Blocked on
-[CAPABILITY-LAB-V0-PLAN](CAPABILITY-LAB-V0-PLAN.md).
+[CAPABILITY-LAB-V0-PLAN](../eval/battery/CAPABILITY-LAB-V0-PLAN.md).
 
 ---
 
