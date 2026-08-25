@@ -398,6 +398,15 @@ class Harness:
             d = p.to_dict()
             d["trial_asset_id"] = self.trial_asset_id(aid)
             d["evaluator_result_refs"] = refs
+            # Store the path RELATIVE to the harness root. An absolute working
+            # path is machine-specific noise that makes an otherwise
+            # deterministic manifest look like it changed between runs.
+            if d.get("output_path"):
+                try:
+                    d["output_path"] = str(pathlib.Path(d["output_path"])
+                                           .relative_to(self.root))
+                except ValueError:
+                    pass
             rows.append(d)
         return rows
 
