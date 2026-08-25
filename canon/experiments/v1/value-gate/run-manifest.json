@@ -1,0 +1,310 @@
+{
+  "run_id": "CANON-V1-GATE-001",
+  "status": "PACKAGE_ONLY_NOT_EXECUTED",
+  "generated_outputs": 0,
+  "expected_outputs": 24,
+  "frozen_at": "2026-08-26",
+  "prompt_file": "canon/experiments/v1/value-gate/prompts/planning-prompt.md",
+  "prompt_sha256": "ac16b802b01a179b83323b1424d87124bd6e51db98cfdb4b1435f8543fd5c897",
+  "randomisation": {
+    "seed": 20260826,
+    "library": "python random.Random",
+    "reproducible": true
+  },
+  "length_match": {
+    "tolerance": 0.15,
+    "pairs": [
+      {
+        "brief_id": "BR-F01-HI",
+        "generic_words": 400,
+        "oracle_words": 468,
+        "drift": 0.1453
+      },
+      {
+        "brief_id": "BR-F02-EN",
+        "generic_words": 521,
+        "oracle_words": 515,
+        "drift": 0.0117
+      },
+      {
+        "brief_id": "BR-F03-HG",
+        "generic_words": 565,
+        "oracle_words": 557,
+        "drift": 0.0144
+      },
+      {
+        "brief_id": "BR-F04-EN",
+        "generic_words": 370,
+        "oracle_words": 381,
+        "drift": 0.0289
+      },
+      {
+        "brief_id": "BR-F05-HG",
+        "generic_words": 621,
+        "oracle_words": 594,
+        "drift": 0.0455
+      },
+      {
+        "brief_id": "BR-F06-EN",
+        "generic_words": 545,
+        "oracle_words": 534,
+        "drift": 0.0206
+      },
+      {
+        "brief_id": "BR-F06-HG",
+        "generic_words": 494,
+        "oracle_words": 475,
+        "drift": 0.04
+      },
+      {
+        "brief_id": "BR-F07-HI",
+        "generic_words": 514,
+        "oracle_words": 500,
+        "drift": 0.028
+      },
+      {
+        "brief_id": "BR-F08-EN",
+        "generic_words": 609,
+        "oracle_words": 574,
+        "drift": 0.061
+      },
+      {
+        "brief_id": "BR-F08-HG",
+        "generic_words": 548,
+        "oracle_words": 528,
+        "drift": 0.0379
+      },
+      {
+        "brief_id": "BR-F09-HI",
+        "generic_words": 448,
+        "oracle_words": 459,
+        "drift": 0.024
+      },
+      {
+        "brief_id": "BR-F10-HI",
+        "generic_words": 572,
+        "oracle_words": 585,
+        "drift": 0.0222
+      }
+    ],
+    "max_drift": 0.1453
+  },
+  "blinding": {
+    "balanced": true,
+    "a_side_generic": 6,
+    "a_side_oracle_canon": 6,
+    "note": "Exactly half the pairs present each arm first, so a reviewer order effect cannot favour either arm systematically."
+  },
+  "review_dimensions": [
+    "concept_quality",
+    "hierarchy_reasoning",
+    "proposition_clarity",
+    "objective_fit",
+    "audience_fit",
+    "visual_temporal_strategy",
+    "trade_off_awareness",
+    "contradiction_handling",
+    "appropriate_specificity"
+  ],
+  "gating_dimension": "explicit_intent_preservation",
+  "gate_thresholds": {
+    "continue": ">=9 of 12 clear Canon wins AND no meaningful explicit-intent regression",
+    "mixed": "7-8 of 12 — diagnose before any source expansion",
+    "stop": "<=6 of 12 — stop source expansion, diagnose Canon noise/redundancy/over-prescription first",
+    "note": "This is an engineering continuation gate on 12 briefs. It is NOT a population confidence claim and no rate derived from it describes any wider set of briefs."
+  },
+  "pairs": [
+    {
+      "pair_id": "PAIR-01",
+      "brief_id": "BR-F04-EN",
+      "outputs": [
+        {
+          "output_id": "OUT-001",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F04-EN.md"
+        },
+        {
+          "output_id": "OUT-002",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F04-EN.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-02",
+      "brief_id": "BR-F06-HG",
+      "outputs": [
+        {
+          "output_id": "OUT-003",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F06-HG.md"
+        },
+        {
+          "output_id": "OUT-004",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F06-HG.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-03",
+      "brief_id": "BR-F09-HI",
+      "outputs": [
+        {
+          "output_id": "OUT-005",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F09-HI.md"
+        },
+        {
+          "output_id": "OUT-006",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F09-HI.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-04",
+      "brief_id": "BR-F05-HG",
+      "outputs": [
+        {
+          "output_id": "OUT-007",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F05-HG.md"
+        },
+        {
+          "output_id": "OUT-008",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F05-HG.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-05",
+      "brief_id": "BR-F10-HI",
+      "outputs": [
+        {
+          "output_id": "OUT-009",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F10-HI.md"
+        },
+        {
+          "output_id": "OUT-010",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F10-HI.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-06",
+      "brief_id": "BR-F03-HG",
+      "outputs": [
+        {
+          "output_id": "OUT-011",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F03-HG.md"
+        },
+        {
+          "output_id": "OUT-012",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F03-HG.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-07",
+      "brief_id": "BR-F06-EN",
+      "outputs": [
+        {
+          "output_id": "OUT-013",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F06-EN.md"
+        },
+        {
+          "output_id": "OUT-014",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F06-EN.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-08",
+      "brief_id": "BR-F02-EN",
+      "outputs": [
+        {
+          "output_id": "OUT-015",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F02-EN.md"
+        },
+        {
+          "output_id": "OUT-016",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F02-EN.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-09",
+      "brief_id": "BR-F01-HI",
+      "outputs": [
+        {
+          "output_id": "OUT-017",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F01-HI.md"
+        },
+        {
+          "output_id": "OUT-018",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F01-HI.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-10",
+      "brief_id": "BR-F08-HG",
+      "outputs": [
+        {
+          "output_id": "OUT-019",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F08-HG.md"
+        },
+        {
+          "output_id": "OUT-020",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F08-HG.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-11",
+      "brief_id": "BR-F08-EN",
+      "outputs": [
+        {
+          "output_id": "OUT-021",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F08-EN.md"
+        },
+        {
+          "output_id": "OUT-022",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F08-EN.md"
+        }
+      ]
+    },
+    {
+      "pair_id": "PAIR-12",
+      "brief_id": "BR-F07-HI",
+      "outputs": [
+        {
+          "output_id": "OUT-023",
+          "arm": "generic",
+          "context_file": "generic-contexts/BR-F07-HI.md"
+        },
+        {
+          "output_id": "OUT-024",
+          "arm": "oracle_canon",
+          "context_file": "oracle-contexts/BR-F07-HI.md"
+        }
+      ]
+    }
+  ]
+}
