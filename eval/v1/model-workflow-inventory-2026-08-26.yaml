@@ -1,0 +1,358 @@
+# =============================================================================
+# E2 — Current workflow / API / access / pricing inventory
+# =============================================================================
+# Date: 2026-08-26 · Branch: work/eval-v1-overnight · Task: E2
+#
+# STATUS: PARTIALLY BLOCKED. The lane architecture, roster caps, admission
+# criteria, access-visibility record and forward call counts are COMPLETE.
+# The official model identity / availability / pricing evidence COULD NOT BE
+# OBTAINED in this cloud session. See `blocker` below for the exact evidence.
+#
+# NO ENDPOINT IS ADMITTED BY THIS FILE. Zero API calls were made.
+# =============================================================================
+
+task: E2
+date: 2026-08-26
+status: PARTIALLY_BLOCKED
+api_calls_made: 0
+generations_made: 0
+spend: 0
+endpoints_admitted: 0
+
+# -----------------------------------------------------------------------------
+# THE BLOCKER — stated precisely, with the evidence that establishes it
+# -----------------------------------------------------------------------------
+blocker:
+  id: E2-BLOCK-01
+  stop_condition: "runbook section 10 - official model version/access/pricing cannot be pinned"
+  severity: blocks_admission_only
+  summary: >-
+    E2's admission research rule requires OFFICIAL provider documentation for
+    model identity, current availability and price, and permits secondary
+    sources only as leads. This cloud session's network egress policy blocks
+    almost every official provider domain, so that rule cannot be satisfied.
+
+  evidence:
+    method: >-
+      HTTPS reachability probe of 22 official provider domains from this cloud
+      session, plus two document-fetch attempts against the one reachable
+      domain.
+    domains_probed: 22
+    domains_reachable: 1
+    reachable:
+      - domain: cloud.google.com
+        http_status: 200
+        pricing_table_extractable: false
+        note: >-
+          Reachable but the pricing content is JavaScript-rendered and returned
+          truncated. Two fetch attempts - the Vertex AI generative-AI pricing
+          page and the Cloud Text-to-Speech pricing page - both returned no
+          extractable pricing table.
+    blocked:
+      - ai.google.dev
+      - openai.com
+      - platform.openai.com
+      - elevenlabs.io
+      - fal.ai
+      - replicate.com
+      - runwayml.com
+      - docs.runwayml.com
+      - bfl.ai
+      - sarvam.ai
+      - docs.sarvam.ai
+      - heygen.com
+      - sync.so
+      - lumalabs.ai
+      - klingai.com
+      - minimax.io
+      - deepmind.google
+      - azure.microsoft.com
+      - aws.amazon.com
+      - stability.ai
+      - ideogram.ai
+    web_search_available: true
+    web_search_verdict: >-
+      Web search returns results, but for pricing queries the results were
+      reseller blogs, cost calculators and third-party "cheap access" sites.
+      Those are SECONDARY SOURCES. The runbook permits them as leads and
+      explicitly forbids them as final evidence, so they were not used to
+      populate any price.
+
+  why_training_memory_was_not_used: >-
+    The obvious shortcut is to write prices from the assistant's own training
+    data. That was deliberately NOT done, for a reason this session can
+    demonstrate rather than assert - a search lead indicated that legacy
+    veo-3.0-generate-001 endpoints reached a shutdown date of 30 June 2026,
+    which is AFTER the assistant's May 2026 training cutoff. Model identities
+    and prices in this market change on a timescale shorter than the gap
+    between that cutoff and today. Writing a remembered price into a cost
+    forecast that gates a real budget decision would be inventing evidence.
+
+  what_this_does_and_does_not_block:
+    blocks:
+      - "admitting any endpoint to the Wave-1 roster"
+      - "producing a rupee or dollar cost figure for the later paid waves"
+      - "confirming which models currently exist, are GA, or are region-limited"
+    does_not_block:
+      - "the five-lane architecture and roster caps (frozen by the runbook)"
+      - "the admission criteria and the per-endpoint record schema"
+      - "the access-visibility record"
+      - "the forward call counts, which are arithmetic and are COMPLETE"
+      - "the cost-forecast machinery, which is built and self-tested"
+
+  resolution_required: >-
+    A session with ordinary web access, or the Controller, fills
+    `eval/v1/prices-TEMPLATE.yaml` from official provider pricing pages and runs
+    `python3 eval/v1/cost_forecast.py --prices <file>`. The forecast then
+    computes immediately. Estimated effort - well under an hour for someone who
+    can open the provider pricing pages. This is a lookup task, not a design
+    task, because all the design work around it is finished.
+
+# -----------------------------------------------------------------------------
+# EXECUTION ACCESS — what THIS session can see. Presence booleans only.
+# -----------------------------------------------------------------------------
+# No secret value was read, printed, logged or committed. Only the presence or
+# absence of an environment variable NAME was checked.
+access_visibility:
+  user_laptop_credentials: not_visible_to_cloud_session
+  cloud_session_configured_access: no_or_unknown
+  method: "environment variable name presence check in this container only"
+  media_provider_credentials_present: false
+  checked_absent:
+    - OPENAI_API_KEY
+    - ANTHROPIC_API_KEY
+    - GOOGLE_API_KEY
+    - GEMINI_API_KEY
+    - FAL_KEY
+    - FAL_API_KEY
+    - REPLICATE_API_TOKEN
+    - RUNWAY_API_KEY
+    - ELEVENLABS_API_KEY
+    - LUMAAI_API_KEY
+    - STABILITY_API_KEY
+    - SARVAM_API_KEY
+    - HEYGEN_API_KEY
+    - SYNC_API_KEY
+    - AZURE_OPENAI_API_KEY
+  present_but_not_usable_for_this_purpose:
+    - name: AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY
+      disposition: NOT_USED
+      reason: >-
+        Session harness infrastructure, not an approved project media-generation
+        account. Using it to reach a model API would be spending on an
+        unapproved account and is outside any authorised task. Recorded for
+        completeness and deliberately left untouched.
+    - name: GH_TOKEN / GITHUB_TOKEN / CLOUDSDK_AUTH_ACCESS_TOKEN
+      disposition: NOT_USED
+      reason: "Repository and harness infrastructure. Unrelated to model access."
+  consequence: >-
+    Even if the roster were approved tonight, this session could not execute a
+    paid run. That is consistent with the overnight prohibition and is not a
+    problem to solve - it is recorded so nobody later assumes access exists.
+
+# -----------------------------------------------------------------------------
+# LANE ARCHITECTURE — frozen by the runbook. COMPLETE.
+# -----------------------------------------------------------------------------
+lanes:
+  - id: image
+    label: "image generation / editing"
+    max_endpoints: 4
+    admitted: 0
+    why_this_lane: >-
+      Carries static commercial creatives, product packshots and
+      reference-based campaign edits - the largest share of the first product,
+      and the cheapest per trial, so it should be screened widest.
+    capabilities_it_can_evidence:
+      [object_count, attribute_binding, spatial_relationship,
+       delivery_format_compliance, exact_text_latin, exact_text_devanagari,
+       typography_legibility, logo_wordmark_fidelity,
+       packaging_brand_colour_fidelity, person_identity, product_identity,
+       reference_conditioning, edit_preservation, anatomy_hands,
+       human_object_contact, human_human_interaction,
+       physics_material_appearance, proposition_objective_fit,
+       hierarchy_product_as_hero, composition_brand_register]
+
+  - id: video
+    label: "general text/image-to-video"
+    max_endpoints: 5
+    admitted: 0
+    why_this_lane: >-
+      Carries 6-20 second product and brand videos without visible speech.
+      Widest cap because this lane has the most credible competing providers
+      and the largest quality spread.
+    capabilities_it_can_evidence:
+      [action_adherence, delivery_format_compliance, motion_action_quality,
+       physics_material_appearance, person_stability_in_clip,
+       product_stability_in_clip, text_logo_stability_in_clip,
+       multi_shot_spatial_continuity, hook_pacing_temporal_hierarchy]
+
+  - id: native_av
+    label: "native audio-video (video generated with its own audio)"
+    max_endpoints: 4
+    admitted: 0
+    why_this_lane: >-
+      Distinct from video-plus-external-VO because the audio and picture are
+      produced by one model, so sync and speech correctness are properties of
+      the SAME trial rather than of a compositing step. Must be recorded as a
+      separate workflow even where the underlying model name is shared with the
+      video lane.
+    capabilities_it_can_evidence:
+      [spoken_language_correctness, single_speaker_lip_sync,
+       two_speaker_turn_assignment_and_lip_sync, audio_video_synchronisation,
+       emotional_prosodic_fit, action_adherence, motion_action_quality,
+       person_stability_in_clip, delivery_format_compliance]
+
+  - id: lipsync
+    label: "dedicated lip-sync / digital human"
+    max_endpoints: 3
+    admitted: 0
+    why_this_lane: >-
+      A transformation lane, not a generation lane - it consumes an existing
+      video plus an existing audio track. Its outputs are TRANSFORMATIONS and
+      are counted separately from generations because the input is ours, which
+      also makes some of its checks deterministic.
+    capabilities_it_can_evidence:
+      [single_speaker_lip_sync, two_speaker_turn_assignment_and_lip_sync,
+       audio_video_synchronisation, person_identity, person_stability_in_clip,
+       delivery_format_compliance]
+
+  - id: tts
+    label: "TTS / external voiceover"
+    max_endpoints: 3
+    admitted: 0
+    why_this_lane: >-
+      The cheapest lane per trial and the one where Hindi, Hinglish and Indian
+      English pronunciation matter most for the first product. Should be
+      screened on code-mixed script, brand names and numbers, not on clean
+      English sentences.
+    capabilities_it_can_evidence:
+      [spoken_language_correctness, emotional_prosodic_fit,
+       delivery_format_compliance]
+
+max_endpoint_combinations: 19
+endpoints_currently_admitted: 0
+
+multi_lane_rule: >-
+  One model may occupy more than one lane ONLY where the workflow/endpoint
+  conditions are materially different, and each occupancy is recorded as a
+  separate row with its own conditions. A model used text-to-video and again as
+  native-AV is two rows, never one. One entry = one vendor + model + version +
+  workflow, carried forward from the V0 Registry rule.
+
+# -----------------------------------------------------------------------------
+# PER-ENDPOINT RECORD SCHEMA — every field the runbook requires. COMPLETE.
+# Zero rows are populated. This is the form each admission must fill.
+# -----------------------------------------------------------------------------
+endpoint_record_schema:
+  vendor: "<string>"
+  model_api_id: "<exact id as the provider publishes it>"
+  marketed_name: "<string>"
+  endpoint_or_workflow: "<string>"
+  lane: "<one of the five lane ids>"
+  version_pinning:
+    mechanism: "<explicit version string | dated snapshot | none>"
+    pinnable: "<true | false>"
+    note: >-
+      An endpoint that CANNOT be pinned to a version is still admissible, but
+      its inability to pin must be recorded, because an unpinnable endpoint
+      makes every measurement against it provisional - the model can change
+      underneath a Registry row without any signal.
+  modalities: "<list>"
+  reference_image_support: "<true | false | unknown>"
+  audio_support: "<none | native | input_only>"
+  constraints:
+    max_duration_s: "<number | n/a>"
+    max_resolution: "<string>"
+    supported_aspect_ratios: "<list>"
+    seed_support: "<true | false | unknown>"
+  price:
+    value: "<number>"
+    billing_unit: "<per image | per second | per 1M characters | per call>"
+    currency: "<string>"
+    source_url: "<official provider pricing page>"
+    read_date: "<YYYY-MM-DD>"
+    STATUS: "unresolved_in_this_session"
+  availability:
+    ga_or_preview: "<string>"
+    region_restrictions: "<string | none stated>"
+    account_restrictions: "<string | none stated>"
+  local_execution_environment:
+    credential_present: false
+    note: "presence boolean only; never a secret value"
+  wave1_rationale: "<why this endpoint merits a slot>"
+  disposition: "<admit | reserve | unavailable | reject>"
+
+# -----------------------------------------------------------------------------
+# CANDIDATE LEADS — NOT EVIDENCE, NOT ADMITTED, NOT PRICED.
+# -----------------------------------------------------------------------------
+# Deliberately recorded as vendor/product FAMILIES rather than exact model ids.
+# An exact id from memory would look like verified identity and is exactly what
+# the blocker above forbids. A family name is a research starting point.
+# Each must be replaced by an officially verified record before admission.
+candidate_leads:
+  status: UNVERIFIED_LEADS_ONLY
+  evidential_weight: none
+  instruction: >-
+    Use these only to decide which official pricing pages to open first. Do not
+    carry any name from this list into a Registry row, a cost forecast or an
+    admission decision without official verification of identity, availability
+    and price on that date.
+  image: ["Google Imagen / Gemini image", "OpenAI image", "Black Forest Labs FLUX",
+          "ByteDance Seedream (via aggregator)", "Ideogram", "Stability"]
+  video: ["Google Veo", "OpenAI Sora", "Runway", "Luma", "Kling", "MiniMax Hailuo", "Alibaba Wan"]
+  native_av: ["Google Veo (audio-enabled tiers)", "OpenAI Sora (audio-enabled)", "Kling (audio-enabled)"]
+  lipsync: ["Sync.", "HeyGen", "Hedra", "D-ID"]
+  tts: ["ElevenLabs", "Google Cloud TTS / Chirp", "OpenAI TTS", "Cartesia",
+        "Sarvam AI (Indic-focused)", "Azure Speech"]
+  india_specific_note: >-
+    The first product is Indian-market commercial media in English, Hindi and
+    Hinglish. Indic-specialist TTS vendors deserve a slot in the TTS lane on
+    that basis, not as an afterthought - a globally strong voice model that
+    mispronounces Hindi brand names is not usable for this product. This is a
+    SELECTION CRITERION, which Eval owns, and it stands independently of the
+    pricing blocker.
+  aggregator_note: >-
+    Several models are reachable both directly and through aggregators. These
+    are DIFFERENT endpoints with different prices, different version pinning
+    and different reliability, and must never share a Registry row. Where both
+    are available, prefer the one that can be version-pinned; if only the
+    aggregator can be pinned, that is a reason to prefer the aggregator.
+
+# -----------------------------------------------------------------------------
+# FORWARD CALL COUNTS — COMPLETE. Arithmetic, verified against runbook maxima.
+# -----------------------------------------------------------------------------
+forward_call_counts:
+  verified_by: "python3 eval/v1/cost_forecast.py --selftest"
+  admission_screen_E7:
+    image: {endpoints: 4, items_per_endpoint: 12, outputs: 48}
+    video: {endpoints: 5, items_per_endpoint: 12, outputs: 60}
+    native_av: {endpoints: 4, items_per_endpoint: 12, outputs: 48}
+    lipsync: {endpoints: 3, items_per_endpoint: 8, outputs: 24}
+    tts: {endpoints: 3, items_per_endpoint: 8, outputs: 24}
+    total: 204
+    matches_runbook_hard_max: true
+  deep_qualification_E8:
+    image: {top_n: 2, items: 40, repeats: 2, outputs: 160}
+    video: {top_n: 2, items: 30, repeats: 2, outputs: 120}
+    native_av: {top_n: 2, items: 36, repeats: 2, outputs: 144}
+    lipsync: {top_n: 2, items: 12, repeats: 2, outputs: 48}
+    tts: {top_n: 2, items: 12, repeats: 2, outputs: 48}
+    total: 520
+    matches_runbook_hard_max: true
+  retries:
+    included_above: false
+    rule: >-
+      Retries are budgeted SEPARATELY and must be predeclared before the run.
+      A retry allowance discovered mid-run is a budget change and a MONEY stop.
+  evaluator_calls_implied:
+    status: ESTIMATE_NOT_MEASURED
+    admission: {vlm: 492, ocr: 696, deterministic: 792, asr: 24}
+    deep: {vlm: 1320, ocr: 1744, deterministic: 2016, asr: 48}
+    note: >-
+      Derived from the generate-once fan-out - one asset triggers several
+      evaluator calls with NO extra generation. Evaluator volume therefore
+      EXCEEDS generation volume by roughly 8 to 1. That is the intended
+      economics, but it means evaluator cost cannot be treated as a rounding
+      error, and it must never be hidden inside generation cost.
+      The deterministic evaluator calls are expected to be near-zero marginal
+      cost since they run locally; the VLM/OCR/ASR calls are not.
