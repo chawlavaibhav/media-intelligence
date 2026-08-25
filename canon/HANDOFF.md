@@ -91,8 +91,18 @@ Preceding: `tasks/CANON-004.md` — designed and tested the gate, plus a Control
 25 Aug (retain `deterministic_composition`; close the stale-audit hole with an enforced
 `source_snapshot` content fingerprint; correct the independence test fixtures).
 
-**CURRENT TASK / QUEUE:** none. CANON-007 is `needs_controller_review`. The rest of the Wave 1
-portfolio is **not** started and must not be self-assigned. **Next work is
+**CANON-008 STOPPED AT ITS ACQUISITION GATE, 25 Aug 2026.** The official D'source/IDC record for
+Girish Dalvi's *Conceptual Model for Devanagari Typefaces* (id=1275) exposes only a **3-page
+abstract** — `idc-girish-pdh-abstract.pdf`, 50,197 bytes, SHA-256 `e9baa76c…d92d2cf7`, PDF title
+metadata `Abstract.xps`. The full thesis sits behind IITB SSO, which was not attempted. Neighbouring
+IDC records publish full theses under `-thesis` / `-report` names, so the archive distinguishes the
+two and holds only the abstract for this one. No extraction was performed and no source directory
+was created; live Canon stays at 19. Details and four Controller options in
+`findings/CANON-008-CONTROLLER-BRIEF.md`. **The Canon still has no accepted Devanagari-structure
+source.**
+
+**CURRENT TASK / QUEUE:** none. CANON-008 is `needs_controller_review`, stopped at its acquisition
+gate. The rest of the Wave 1 portfolio is **not** started and must not be self-assigned. **Next work is
 Controller-assigned only** — do not self-assign reserve-book integration, Canon expansion,
 cross-source promotion, RAG/retrieval or Production IR.
 
