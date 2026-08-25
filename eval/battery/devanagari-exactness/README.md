@@ -1,10 +1,8 @@
 # Devanagari exactness battery — design
 
-**Status: PROPOSED DESIGN, revised after Controller review. Not approved.**
-**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
-local construction, rendering and test verification have been run — the build and the test suite in
-*Reproducing* below are exactly that, and they make no network call.
-**No paid checker call · no image/video model spend · no Capability Registry entry · no human time.**
+**Status: design approved and merged. Human validation COMPLETE.**
+**Checker qualification has NOT started** — no checker selected, no checker/model/API call.
+**No paid checker call · no image/video model spend · no Capability Registry entry.**
 
 Authoritative task file: [`eval/tasks/EVAL-005.md`](../../tasks/EVAL-005.md).
 
@@ -93,7 +91,9 @@ ignoring it.
 | `CHECKER-CONTRACT.md` | input/output contract, per shape, and the comparison predicate |
 | `METRICS-AND-QUALIFICATION.md` | metrics, proposed gates, the opportunity model, cost |
 | `NATIVE-VALIDATION.md` | exactly which cases need a Hindi speaker, and which no longer do |
-| `native-validation/` | the prepared, **not executed**, validation sheets and plan |
+| `native-validation/` | the validation sheets and plan |
+| `human-validation/` | **the completed human validation** — frozen record, raw responses, exclusion decision |
+| `apply_human_validation.py` | deterministic fail-closed filter producing the 96-item validated view |
 
 ## Reproducing
 
@@ -135,6 +135,18 @@ network client, a URL or an API key.
 ---
 
 ## Current build
+
+> **Human validation is complete.** One reviewer rejected 5 of the 53 base words, excluding the 10
+> items resting on them. The **authoritative battery for a checker run is the 96-item validated
+> view** — see [`human-validation/HUMAN-VALIDATION-RECORD.md`](human-validation/HUMAN-VALIDATION-RECORD.md)
+> and run `python3 apply_human_validation.py --from-build build`.
+>
+> **96 items · 48 match / 48 mismatch · 33 hard opportunities on 33 distinct base words · 48
+> human-accepted base words · 20/20 classes · 5/5 groups · iid reference figure 8.68%.**
+> Three classes rest on a single item (`NASAL_SUBSTITUTE`, `NUKTA_REMOVE`, `REPH_TO_FULL_RA`) —
+> thin diagnostic coverage, not class loss.
+>
+> The 106-item build below is unchanged and remains the historical source material.
 
 | | |
 |---|---:|

@@ -1,9 +1,13 @@
 # Metrics and proposed qualification rule
 
-**Status: PROPOSED, revised after Controller review.**
-**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
-local construction, rendering and test verification have been run. No checker is qualified, ranked or
-entered anywhere. Every threshold below is a proposal, not an approved standard.
+**Status: PROPOSED, revised after Controller review. Human validation is COMPLETE.**
+**Checker qualification has NOT started** — no checker/model/API call, and no checker is qualified,
+ranked or entered anywhere. Every threshold below is a proposal, not an approved standard.
+
+⚠ **The figures below are stated for the original 106-item build.** After human validation the
+authoritative battery is the **96-item view**: 48/48, **33** hard opportunities on 33 distinct base
+words, iid reference figure **8.68%**. The method is unchanged; only n moved. See
+[`human-validation/HUMAN-VALIDATION-RECORD.md`](human-validation/HUMAN-VALIDATION-RECORD.md).
 
 ---
 

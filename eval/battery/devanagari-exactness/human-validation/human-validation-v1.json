@@ -1,0 +1,152 @@
+{
+  "record": "eval-005-human-validation",
+  "version": 1,
+  "status": "FROZEN — Controller-accepted adjudication; PRUNE, DO NOT REBUILD",
+  "packet_fingerprint": "e1cedf564603a94d",
+  "battery_identity": {
+    "items_jsonl_sha256": "9c69cac28c3123713652a26548eb09aabdd36966a44a433a9069b787fea6d09d",
+    "note": "The 106-item deterministic build this validation was performed against. Any materialisation of the validated view MUST fail closed if this does not match."
+  },
+  "reviewer": {
+    "count": 1,
+    "epistemic_status": "PROVENANCE, NOT GROUND TRUTH. One Hindi-competent reviewer. These judgements record what one reader said; they are not universal linguistic ground truth and no threshold, rate or checker claim may be derived from them.",
+    "cross_question_consistency": "चाँदपोल and लीजिए। were flagged in both the word and the rendering questions. Per Controller decision this is WITHIN-READER cross-question consistency, NOT independent-reader evidence."
+  },
+  "completeness": {
+    "words": {
+      "answered": 53,
+      "total": 53,
+      "counts": {
+        "no": 5,
+        "yes": 48
+      }
+    },
+    "perceptibility": {
+      "answered": 25,
+      "total": 25,
+      "counts": {
+        "yes": 21,
+        "close": 4
+      }
+    },
+    "rendering": {
+      "answered": 20,
+      "total": 20,
+      "counts": {
+        "yes": 18,
+        "no": 2
+      }
+    },
+    "overall_answered": 98,
+    "overall_total": 98,
+    "unanswered": 0,
+    "unsure": 0
+  },
+  "decisions": {
+    "rejected_base_words": [
+      {
+        "word_id": "w-087a06b2a452",
+        "word": "इंग्लीश",
+        "reason_as_supplied": "wrong spelling",
+        "reason_supplied": true
+      },
+      {
+        "word_id": "w-256fc61187e0",
+        "word": "टुंग",
+        "reason_as_supplied": "",
+        "reason_supplied": false
+      },
+      {
+        "word_id": "w-43026df8d365",
+        "word": "चाँदपोल",
+        "reason_as_supplied": "",
+        "reason_supplied": false
+      },
+      {
+        "word_id": "w-803fda438f74",
+        "word": "भेंट-",
+        "reason_as_supplied": "extra punctuation",
+        "reason_supplied": true
+      },
+      {
+        "word_id": "w-ac25b420b8be",
+        "word": "लीजिए।",
+        "reason_as_supplied": "extra punctuation",
+        "reason_supplied": true
+      }
+    ],
+    "excluded_item_ids": [
+      "dx-0000",
+      "dx-0003",
+      "dx-0005",
+      "dx-0020",
+      "dx-0039",
+      "dx-0053",
+      "dx-0056",
+      "dx-0058",
+      "dx-0073",
+      "dx-0092"
+    ],
+    "perceptibility_close_retained": {
+      "item_ids": [
+        "dx-0004",
+        "dx-0010",
+        "dx-0021",
+        "dx-0022"
+      ],
+      "rule": "RETAINED. No pair was judged 'no'. 'close' is a difficulty signal reported separately; it is not a failure and excludes nothing."
+    },
+    "rendering_broken_images": {
+      "images": [
+        "images/img-0039.png",
+        "images/img-0073.png"
+      ],
+      "rule": "No ADDITIONAL exclusions. Both sit on base words already rejected lexically."
+    },
+    "not_reclassified": {
+      "राज -": "Explicitly accepted by the reviewer (yes). Preserved as supplied. An apparent inconsistency with the 'extra punctuation' rejections was raised and the Controller decided not to reclassify."
+    },
+    "replacement_policy": "NONE. Excluded items are not replaced and no alternate items are generated. The original 106-item build remains historical source material and is unchanged."
+  },
+  "expected_validated_state": {
+    "items": 96,
+    "match": 48,
+    "mismatch": 48,
+    "hard_opportunities": 33,
+    "distinct_hard_base_words": 33,
+    "distinct_base_words": 48,
+    "failure_classes": 20,
+    "failure_groups": 5,
+    "iid_reference_upper_bound_if_zero_false_passes_95pct": 0.0868,
+    "iid_reference_caveat": "Reference calculation under an iid/exchangeable Bernoulli model that EVAL-005 does NOT establish. Not a bound on any checker's real error rate.",
+    "thin_diagnostic_classes": {
+      "classes": [
+        "NASAL_SUBSTITUTE",
+        "NUKTA_REMOVE",
+        "REPH_TO_FULL_RA"
+      ],
+      "status": "THIN DIAGNOSTIC COVERAGE, NOT CLASS LOSS. Each retains one surviving item. Per-class figures were already diagnostic signals, never rates."
+    }
+  },
+  "response_artifacts": [
+    {
+      "file": "responses/word-validation-sheet.completed.csv",
+      "sha256": "b3dcebb9140b790ae274ac9cbf5cc8e1e365f68c575e2bc11090be128ac6d486",
+      "carries": "the 53 word responses"
+    },
+    {
+      "file": "responses/eval-005-review-results.completed.json",
+      "sha256": "4f52f93056e89ace2ab6d6266dc872bd0c543b8e2c43bbeeaee1735e0bd7931e",
+      "carries": "the 25 perceptibility and 20 rendering responses. Its own words section is blank: the word answers were exported separately to the CSV above. Together the two artifacts carry 98 of 98."
+    }
+  ],
+  "scope": {
+    "checker_model_api_calls": 0,
+    "generation_spend": 0,
+    "registry_entries": 0,
+    "thresholds_changed": 0,
+    "bstd_used": false,
+    "marathi_used": false,
+    "checker_qualification_started": false
+  }
+}
