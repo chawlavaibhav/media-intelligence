@@ -1,6 +1,8 @@
 # Cross-stream request to Resources — Hindi lexical items for EVAL-005
 
 **From:** Eval / Capability Lab · **Task:** EVAL-005 · **Date:** 25 Aug 2026
+**Updated after human validation:** the baseline is now **48 human-accepted words**, not 53. One
+Hindi-competent reviewer rejected 5 of the original 53, so the shortfall grew.
 **Status: REQUEST, not an approved task.** Only the Controller can open a Resources task. Eval has
 **not** gone looking for material, and must not.
 **Severity tag:** `CROSS_STREAM`.
@@ -16,7 +18,7 @@
 > report the gap and stop. **New acquisition needs separate Controller authorisation** and is not
 > requested here.
 
-The likely shortfall is **~31–37 additional distinct Hindi lexical items** — words as plain text,
+The likely shortfall is **~36–42 additional distinct Hindi lexical items** — words as plain text,
 not images and not new annotations.
 
 ---
@@ -38,7 +40,7 @@ coordinates encoded in the crop filename matching a line of the parent scene ann
 3,924 single-word crops. The **raw lexical strings themselves may still live only in the
 git-ignored Resources corpus** — merged git state contains the counts and the method, not the
 words. Eval cannot read `resources/corpus/raw/`, so how many *distinct* Hindi words those 3,924
-crops actually yield is **unknown**. They may repeat one another and they may repeat the 53 already
+crops actually yield is **unknown**. They may repeat one another and they may repeat the 48 already
 in use.
 
 That is exactly why step 1 is a check. It may cost nothing and close the gap entirely.
@@ -60,9 +62,18 @@ Two structural rules fix how many opportunities a word list yields:
 
 | Validated base words | Hard opportunities | iid reference upper bound, zero false passes |
 |---:|---:|---:|
-| **53 — everything the repository has today** | **37** | **7.8%** |
+| 53 — the pre-validation pool | 37 | 7.8% |
+| **48 — human-accepted, the pool today** | **33** | **8.68%** |
 | 84 | 59 | 4.95% |
 | 90 | 63 | 4.6% |
+
+Human validation moved the baseline **away** from the target, not toward it: 5 of the 53 words were
+rejected as not real / well-formed Hindi, and the 10 items resting on them were excluded and not
+replaced. **48 available, 84–90 needed, ~36–42 short.**
+
+Two of the five rejections were punctuation artifacts (`भेंट-`, `लीजिए।`) and one a spelling error
+(`इंग्लीश`). Candidate strings should be free of trailing punctuation before entering the pool —
+that alone would have saved two of the five.
 
 ⚠ **Read that last column carefully.** It is a **reference calculation under an assumption EVAL-005
 does not establish** — that a checker's outcomes on these opportunities behave like independent,
@@ -73,13 +84,14 @@ and lexical patterns.
 So **more words tighten a calculation; they do not supply the assumption.** 84–90 words is a
 **planning target** for bringing that reference figure below 5%. It is not proof that a checker errs
 on fewer than 5% of real cases, and it must never be reported as such. The actual qualification gate
-is deterministic — *zero false passes* — and needs no probability model at all.
+is deterministic — *zero false passes* — and needs no probability model at all. Human validation did
+not change any of that; it changed only n.
 
 ## What the repository actually holds — checked against merged `main`
 
 | Source in merged `main` | Distinct Hindi strings | Usable as base words? |
 |---|---:|---|
-| `eval/calibration/devanagari-v0/candidate-manifest.jsonl` | **53** | yes — already in use |
+| `eval/calibration/devanagari-v0/candidate-manifest.jsonl` | 53 raw → **48 human-accepted** | yes — the 48 are in use; 5 were rejected at human validation |
 | `eval/calibration/devanagari-v0/annotator-disagreement.json` | ~50 | **no** — see below |
 | `resources/manifests/corpus-pilot-v0.jsonl` (34,786 records) | 0 | no — every record carries `source_labels_ref: null` |
 | Merged Resources records from PR #5 | 1 (a worked example) | no — they carry counts and method, not the lexicon |
@@ -98,13 +110,13 @@ a plausible real word.
 
 | Requirement | Specification |
 |---|---|
-| **Quantity** | 31–37 additional items minimum; 40–50 preferred, because some will be rejected during reader validation |
+| **Quantity** | 36–42 additional items minimum; 45–55 preferred. The preference is not padding: at the one validation we have run, **5 of 53 candidates (≈9%) were rejected**, so a batch sized exactly to the gap will fall short of it |
 | **Form** | **plain text strings**, one lexical item per record. Not images. Not crops. Not new annotations. |
 | **Script** | Devanagari, in Unicode. Any encoding is fine; Eval normalises to NFC. |
 | **Language** | **Hindi.** Marathi is a separate reserve and must not be substituted to make up the count. |
 | **Word form** | single orthographic words preferred; short two-word phrases acceptable. No sentences, no punctuation-heavy strings, no numerals-only strings. |
 | **Length** | 3–12 Devanagari characters. Shorter gives the perturbation operators too little to work on; longer makes a single-line render unwieldy. |
-| **Distinctness** | distinct from each other **and** from the 53 already in use, after NFC. Duplicates add no opportunity. |
+| **Distinctness** | distinct from each other **and** from the 48 already in use, after NFC. Duplicates add no opportunity. Also distinct from the 5 rejected words, which must not return: `इंग्लीश`, `टुंग`, `चाँदपोल`, `भेंट-`, `लीजिए।`. |
 | **Feature coverage** *(desirable, not required)* | the battery covers 20 failure classes and the scarcest need specific features. Items containing **a nukta**, **a visarga (ः)**, **a chandrabindu (ँ)**, **a reph (र् before a consonant)** or **a rakar (्र)** are worth more than generic words, because those classes currently rest on 1–2 items each. |
 | **Provenance** | each item carries its source and access date, per normal Resources bookkeeping. Eval records provenance per base word in the build manifest. |
 | **Rights** | public and ungated is sufficient. `not_stated` / `not_verified` is acceptable under the existing Resources policy: the words are used **internally only**, never redistributed, not training data, not shipped to a customer. That judgement is Resources' to record, not Eval's. |
@@ -112,9 +124,9 @@ a plausible real word.
 ## Two hard constraints
 
 **Do not treat the 3,924 recoverable crop labels as validated Hindi words.** They are *candidate*
-lexical items with exactly the same status as the 53 already in use: one annotation team's
+lexical items with exactly the same status the current 48 had before review: one annotation team's
 observation, reused as a lexicon rather than as ground truth about a photograph. Every candidate
-still has to pass the planned Hindi lexical validation — *"is this a real, well-formed Hindi word as
+still has to pass the same Hindi lexical validation — *"is this a real, well-formed Hindi word as
 written?"* — before it enters the battery. EVAL-003's finding that these annotations are unsafe as
 ground truth stands, and a misread annotation may be a non-word.
 
@@ -136,10 +148,10 @@ a result.
 
 ## What this unblocks, and what it does not
 
-**Unblocks:** a tighter reference calculation — 7.8% → below 5%.
+**Unblocks:** a tighter reference calculation — **8.68% today** → below 5%.
 
-**Does not unblock:** the run itself. A run at 53 words is possible; it simply reports the figure at
-37 opportunities, honestly labelled.
+**Does not unblock:** the run itself. A run at the current 48 accepted words is possible; it simply
+reports the figure at 33 opportunities, honestly labelled.
 
 **Does not change:** what the figure means. It is a sizing calculation under an assumption this
 battery does not establish, at any word count.

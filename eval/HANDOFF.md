@@ -128,7 +128,7 @@ we currently have no instrument we are entitled to trust.
 A replacement for the stopped signage screen. It asks whether a checker reports "matches" when the
 picture is subtly wrong, and it removes the annotator entirely by **rendering the images itself**.
 
-**Built and tested locally; no qualification run.** No checker/model/API call and no human validation have occurred. ₹0 API, ₹0 generation, 0 human hours, 0 Registry entries.
+**Built and tested locally; human validation COMPLETE; no qualification run.** No checker/model/API call has occurred and no checker has been selected. ₹0 API, ₹0 generation, 0 Registry entries.
 Full record: `tasks/EVAL-005.md` and `tasks/EVAL-005-CONTROLLER-BRIEF.md`; design findings in
 `findings/devanagari-exactness-design-findings.md`.
 
@@ -150,10 +150,16 @@ What exists, in `eval/battery/devanagari-exactness/`:
   four correlated perturbations of the same word. Under an iid Bernoulli **reference** model that
   the battery explicitly does **not** establish, zero false passes there corresponds to a 95%
   reference upper bound of **7.8%**. The actual gate is deterministic: zero false passes.
-- **Prepared but blank native-validation sheets** for ~1.5 hours of one Hindi reader.
+- **Human validation, done.** One Hindi-competent reviewer, 98 of 98 answered, 0 unanswered, 0
+  UNSURE. 5 of 53 base words rejected → 10 items excluded, not replaced. Authoritative battery is
+  now the **96-item validated view** (48/48, 33 hard opportunities on 33 distinct base words, 48
+  accepted base words, 20/20 classes, 5/5 groups, iid reference figure 8.68%). Record, raw
+  responses and exclusion decision:
+  `battery/devanagari-exactness/human-validation/HUMAN-VALIDATION-RECORD.md`.
 
 ⚠ **No checker/model/API qualification run has occurred and no checker is qualified.** ⚠ **Bringing the reference figure below 5%
-needs 84–90 base words; after human validation the repository holds 48.** Resources PR #5 (merged) establishes that 3,924
+needs 84–90 base words; after human validation the repository holds 48 accepted words, so the
+outstanding ask is ~36–42.** Resources PR #5 (merged) establishes that 3,924
 single-word crops are transcription-resolvable, but those strings live in the git-ignored corpus and
 their distinct-word yield is unknown — so `tasks/EVAL-005-RESOURCES-REQUEST.md` asks Resources to
 **check existing local material first**, not to acquire anything.
@@ -422,7 +428,7 @@ Two different human figures are now in play and must not be confused:
 | Route | Human time | Status |
 |---|---|---|
 | EVAL-003/004 photographed-signage screen | ≈ **3.5–4.5 h across two** independent Hindi readers | **stopped**, and the Controller judged the items too weak a proxy |
-| **EVAL-005 constructed-exactness battery** | ≈ **1.5 h, one** reader, and **none of it establishes ground truth** | prepared, blank, unauthorised |
+| **EVAL-005 constructed-exactness battery** | ≈ **1.5 h, one** reader, and **none of it establishes ground truth** | **spent and complete** — 98/98 answered, 5 words rejected |
 | All V0 instruments (EVAL-001 estimate) | ≈ 11–15.5 h | unchanged, unbudgeted |
 
 The reason the EVAL-005 figure is so much smaller is structural rather than a shortcut: the images
@@ -477,9 +483,10 @@ In rough order of what each unblocks:
    rejected, 10 items excluded, battery frozen at 96.
 3. **Approve a checker roster and API budget** — order of ₹600–2,100 for a first run across both
    shapes, on an old price that must be re-verified. Blocks the run.
-4. **Decide whether to ask Resources to check for ~31–37 more Hindi words** in material it already
-   holds. Optional: it tightens the reference figure from 7.8% to below 5%, and does not block a run
-   at 53 words. New acquisition is a separate decision and is not being requested.
+4. **Decide whether to ask Resources to check for ~36–42 more Hindi words** in material it already
+   holds. Optional: it tightens the reference figure from **8.68%** to below 5%, and does not block
+   a run at the current 48 accepted words. The gap widened from ~31–37 because human validation
+   rejected 5 of the 53. New acquisition is a separate decision and is not being requested.
 5. **Approve the proposed thresholds** (0.95 repeat consistency, ≤10% false fail, ≤5% refusal).
    They are judgement calls with no empirical backing here.
 6. **Decide separately on the Class B generated-glyph layer.** Specified, not built, needs

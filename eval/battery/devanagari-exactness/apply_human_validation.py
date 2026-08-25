@@ -42,6 +42,7 @@ import argparse
 import collections
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -101,6 +102,24 @@ def apply_exclusions(items: list[dict], record: dict) -> tuple[list[dict], list[
     return survivors, dropped
 
 
+def rebase_image_paths(items: list[dict], out_dir: Path, build_dir: Path) -> list[dict]:
+    """Return copies whose `image_file` resolves against `out_dir` instead of `build_dir`.
+
+    The validated view lives in a subdirectory of the build, but the images do not — and copying
+    them there to make a path work would duplicate bytes and create a second thing that could drift.
+    Recording the root in prose does not help either: the checker payload is what a runner actually
+    reads, and it did not carry the root, so resolving `images/img-0001.png` against the payload's
+    own directory landed on a file that does not exist.
+
+    So the derived projections carry a path that resolves from where they sit — `../images/…` in the
+    default layout, computed rather than hard-coded so a custom `--out-dir` still works. Only the
+    path string changes: `image_file_sha256` is the identity of the bytes and is untouched, and
+    `items.jsonl` keeps the original unrebased records byte for byte.
+    """
+    rel_root = Path(os.path.relpath(build_dir.resolve(), out_dir.resolve()))
+    return [{**i, "image_file": (rel_root / i["image_file"]).as_posix()} for i in items]
+
+
 def summarise(survivors: list[dict], record: dict, build_dir: Path) -> dict:
     mismatches = [i for i in survivors if i["expected_verdict"] == "mismatch"]
     hard = [i for i in mismatches if i["hard_opportunity"]]
@@ -115,7 +134,10 @@ def summarise(survivors: list[dict], record: dict, build_dir: Path) -> dict:
             "note": "A filtered VIEW of the 106-item build. That build is unchanged and remains "
                     "the historical source material.",
         },
-        "image_root_relative_to_this_directory": "..",
+        "image_file_paths": "Relative to THIS directory — resolve `image_file` against the "
+                            "directory holding the checker-input file. The images themselves are "
+                            "not copied here; only the path in the derived projections is rebased, "
+                            "and `image_file_sha256` still identifies the exact bytes.",
         "totals": {
             "items": len(survivors),
             "match": sum(1 for i in survivors if i["expected_verdict"] == "match"),
@@ -165,11 +187,12 @@ def materialise(build_dir: Path, out_dir: Path, record: dict) -> dict:
     items = load_items(build_dir, record)
     survivors, _ = apply_exclusions(items, record)
     out_dir.mkdir(parents=True, exist_ok=True)
+    # items.jsonl keeps the ORIGINAL records, byte for byte — including their original image_file.
     (out_dir / "items.jsonl").write_text(
         "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in survivors), encoding="utf-8")
-    # Checker-facing projections + the evaluator-side scoring key, through the same blind check
-    # that guards the full battery. A leaking file cannot be written.
-    write_checker_inputs(survivors, out_dir)
+    # The derived checker projections get paths that resolve from where they sit. write_checker_inputs
+    # re-runs the blind check on these rebased payloads and refuses to write a leaking file.
+    write_checker_inputs(rebase_image_paths(survivors, out_dir, build_dir), out_dir)
     summary = summarise(survivors, record, build_dir)
     (out_dir / "validated-summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -278,9 +301,48 @@ def verify(build_dir: Path, out_dir: Path, record: dict) -> int:
               [r["item_id"] for r in rows] == surviving_ids, f"{len(rows)} rows")
         has_target = any("target_string" in r for r in rows)
         check(f"{name}: target {'present' if expect_target else 'absent'}", has_target == expect_target)
+    # Every image a checker is told to read must actually be there, and be the right bytes.
+    # This is what the prose "image root" note could not guarantee.
+    for name in ("checker-input-transcribe.jsonl", "checker-input-verdict.jsonl"):
+        rows = [json.loads(l) for l in (out_dir / name).read_text(encoding="utf-8").splitlines() if l.strip()]
+        missing, notfile, wrong = [], [], []
+        for r in rows:
+            p = out_dir / r["image_file"]
+            if not p.exists():
+                missing.append(r["item_id"])
+            elif not p.is_file():
+                notfile.append(r["item_id"])
+            elif sha256_file(p) != r["image_file_sha256"]:
+                wrong.append(r["item_id"])
+        check(f"{name}: every image_file resolves against this directory and EXISTS",
+              not missing, f"{len(missing)} missing, e.g. {missing[:3]}")
+        check(f"{name}: every resolved image_file is a FILE", not notfile, str(notfile[:3]))
+        check(f"{name}: every resolved image matches its recorded image_file_sha256",
+              not wrong, f"{len(wrong)} mismatched, e.g. {wrong[:3]}")
+        check(f"{name}: paths are parent-relative, not the unresolvable build-root form",
+              all(r["image_file"].startswith("../") for r in rows),
+              str([r["image_file"] for r in rows[:2]]))
+
+    # items.jsonl is NOT rebased: it stays byte-equal to the original records.
+    check("items.jsonl keeps the ORIGINAL image_file values, unrebased",
+          all(not s["image_file"].startswith("../") for s in survivors))
+    tr = [json.loads(l) for l in (out_dir / "checker-input-transcribe.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    by_item = {i["item_id"]: i for i in survivors}
+    check("rebasing changed ONLY the path — image_file_sha256 is untouched",
+          all(r["image_file_sha256"] == by_item[r["item_id"]]["image_file_sha256"] for r in tr))
+    check("no image bytes were copied into the validated directory",
+          not (out_dir / "images").exists())
+
     key = [json.loads(l) for l in (out_dir / "scoring-key.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
     check("scoring-key.jsonl covers exactly the 96 surviving items",
           [r["item_id"] for r in key] == surviving_ids)
+
+    # The original 106-item projections sit beside their images and are untouched by any of this.
+    full = build_dir / "checker-input-transcribe.jsonl"
+    if full.exists():
+        rows = [json.loads(l) for l in full.read_text(encoding="utf-8").splitlines() if l.strip()]
+        check("the original 106-item checker projection is unchanged and still resolvable",
+              len(rows) == 106 and all((build_dir / r["image_file"]).exists() for r in rows))
 
     # --- provenance ------------------------------------------------------------------------------
     for art in record["response_artifacts"]:

@@ -1,8 +1,10 @@
 # Failure taxonomy — Devanagari exactness battery
 
-**Status: PROPOSED design, revised after Controller review. Not approved.**
-**No checker/model/API qualification run and no human validation have occurred** — only
-deterministic local construction, rendering and test verification. No model has been called.
+**Status: design approved and merged. Human validation COMPLETE.**
+**Checker qualification has NOT started** — no model has been called. Class counts below describe
+the original 106-item build; after validation all 20 classes remain represented across the 96-item
+view, with `NASAL_SUBSTITUTE`, `NUKTA_REMOVE` and `REPH_TO_FULL_RA` on one item each — thin
+diagnostic coverage, not class loss.
 
 ---
 

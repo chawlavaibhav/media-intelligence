@@ -1,11 +1,16 @@
-# Native-validation pack — PREPARED, NOT EXECUTED
+# Native-validation pack — COMPLETED
 
-**No human has been asked anything. Every answer column in every sheet is blank. Zero human
-specialist hours have been consumed, and none are authorised in EVAL-005.**
+**The review has been done.** One Hindi-competent reviewer answered **98 of 98** against packet
+fingerprint `e1cedf564603a94d`: 53/53 words, 25/25 perceptibility, 20/20 rendering, 0 unanswered,
+0 UNSURE.
 
-This directory is the *ready-to-run* form of the three tasks described in
-[`../NATIVE-VALIDATION.md`](../NATIVE-VALIDATION.md). It exists so that, if and when the Controller
-authorises the ~1.5 hours of reader time, the work can start without another design pass.
+**The completed responses and the frozen decision live in
+[`../human-validation/`](../human-validation/), not here.** The sheets in this directory remain the
+**blank source forms** — they are inputs the packet generator reads, and regenerating the packet
+must not pick up anyone's answers. Do not fill them in.
+
+This directory therefore still describes the three tasks as they were put to the reviewer. It is
+the specification of what was asked, not a to-do list.
 
 ---
 
@@ -49,7 +54,8 @@ the "word" may be a non-word, and an item built on it does not test what we thin
 
 **Word ids are stable** — `w-<12 hex of sha256(NFC(word))>` — so an answer collected today still
 matches its word after the list is expanded. That will happen: the battery needs 84–90 words to
-support a ≤5% bound and the repository currently holds 53.
+bring the iid reference calculation below 5%, and after validation the pool holds **48 accepted
+words**.
 
 ---
 

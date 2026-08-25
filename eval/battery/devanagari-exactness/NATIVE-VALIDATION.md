@@ -1,8 +1,16 @@
 # Which cases actually need a Hindi speaker — and which do not
 
-**Status: PROPOSED, revised after Controller review. No human time has been requested or
-consumed. The sheets are prepared and blank in [`native-validation/`](native-validation/) — see
-that directory's README for how each is filled.**
+**Status: COMPLETE.** One Hindi-competent reviewer worked through the packet with fingerprint
+`e1cedf564603a94d` and answered **98 of 98** — 53/53 words, 25/25 perceptibility, 20/20 rendering,
+**0 unanswered, 0 UNSURE**.
+
+**Outcome: 5 of 53 base words rejected. Controller decision — PRUNE, DO NOT REBUILD.** 10 items
+excluded and not replaced; the authoritative battery is now **96 items · 48 match / 48 mismatch ·
+33 hard opportunities on 33 distinct base words · 48 accepted base words · 20/20 classes · 5/5
+groups**. The frozen record, raw responses and exclusion decision are in
+[`human-validation/`](human-validation/).
+
+This document remains the specification of *what was asked and why*. It is no longer a plan.
 
 ---
 
@@ -56,19 +64,27 @@ The reader is asked, per word, one question:
 > Is this a real, well-formed Hindi word as written? **yes / no / unsure**
 
 No transcription. No images. A flat list — `native-validation/word-validation-sheet.csv`, with a
-stable `word_id` per row and the answer column blank. `no` and `unsure` words are dropped from the
-pool and the battery rebuilt — deterministically, at zero cost.
+stable `word_id` per row.
+
+**What actually happened, and the rule that now governs:** 48 words were accepted, 5 rejected, none
+marked unsure. Rejected words do **not** cause a rebuild. The Controller decided **PRUNE, DO NOT
+REBUILD**: the 106-item build stays as it is — it is what the reviewer saw — and the 10 items
+resting on rejected words are filtered out by `apply_human_validation.py`, which fails closed if the
+battery is not the one that was adjudicated. Rebuilding would produce a different allocation nobody
+has reviewed, while borrowing the authority of a validation performed on something else.
 
 **This is also the moment to expand the list.** `METRICS-AND-QUALIFICATION.md` shows the hard
-stratum needs **84–90 words** to bring the iid reference calculation below 5%, instead of 53. That
-is a planning target for a sizing figure, not a threshold that would demonstrate anything about a
-checker's real error rate. It was recomputed
+stratum needs **84–90 words** to bring the iid reference calculation below 5%. After validation the
+pool stands at **48 accepted words**, so that target is further away, not closer. It is a planning
+target for a sizing figure, not a threshold that would demonstrate anything about a checker's real
+error rate. It was recomputed
 after the corrected one-item-per-base-word construction, not carried over from the earlier draft.
 Validating ~90 words costs barely more than validating 53, and it is the single highest-value
 input to the battery.
 
 ⚠️ **The repository cannot currently supply them.** Merged repo-local material yields **53**
-distinct Hindi lexical items. Closing the gap needs roughly **31–37 more**, which is a request to
+distinct Hindi lexical items — **48 after human validation**. Closing the gap needs roughly
+**36–42 more**, which is a request to
 Resources rather than something Eval should go and find:
 [`eval/tasks/EVAL-005-RESOURCES-REQUEST.md`](../../tasks/EVAL-005-RESOURCES-REQUEST.md). Sheet ids
 are stable across pool changes, so validation done now is not wasted when the list grows.

@@ -1,8 +1,12 @@
 # Checker input/output contract
 
 **Status: PROPOSED, revised after Controller review.**
-**No checker/model/API qualification run and no human validation have occurred.** Only deterministic
-local construction, rendering and test verification have been run.
+**Human validation is COMPLETE** — one Hindi-competent reviewer, 98 of 98 answered, 5 of 53 base
+words rejected. **Checker qualification has NOT started:** no checker has been selected, and no
+checker/model/API call has been made.
+
+**A checker run takes the 96-item human-validated view, not the 106-item build.** See
+[`human-validation/HUMAN-VALIDATION-RECORD.md`](human-validation/HUMAN-VALIDATION-RECORD.md).
 
 ---
 
@@ -61,9 +65,19 @@ showing a model the answer you hope for invites it to agree — not a verdict on
 
 ---
 
-## The build produces three files, and only two of them go to a checker
+## Which files a checker run actually uses
 
-`build_items.py` writes, next to the items manifest:
+**The input for a checker run is `build/validated/` — the 96 human-validated items.** The 106-item
+build in `build/` is historical source material: it is what the reviewer saw, and 10 of its items
+rest on base words the reviewer judged not to be real, well-formed Hindi. Those 10 are excluded and
+are not replaced.
+
+```
+python3 build_items.py --total 120                     # historical 106-item build
+python3 apply_human_validation.py --from-build build   # writes build/validated/  <-- run against this
+```
+
+Both directories carry the same three files, produced by the same projection code:
 
 | File | Goes to a checker? | Contents |
 |---|---|---|
@@ -71,7 +85,12 @@ showing a model the answer you hope for invites it to agree — not a verdict on
 | `checker-input-verdict.jsonl` | **yes**, shape 2 | the above **plus** the target, and a prompt carrying it |
 | `scoring-key.jsonl` | **never** | target, rendered string, expected verdict, direction, plausibility, class, base word, hard-opportunity flag |
 
-`items.jsonl` is the full build manifest and is likewise **never** handed to a checker.
+`items.jsonl` is the full manifest and is likewise **never** handed to a checker.
+
+**`image_file` resolves against the directory holding the checker-input file.** In the validated
+view that means `../images/img-XXXX.png`, because the images are not copied — only the path in the
+derived projection is rebased, and `image_file_sha256` still identifies the exact bytes. A runner
+should resolve the path, read the file, and confirm the hash before sending anything.
 
 ### Payload shapes
 

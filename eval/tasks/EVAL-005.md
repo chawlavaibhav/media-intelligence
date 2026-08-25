@@ -1,9 +1,16 @@
 # Task EVAL-005: Devanagari exactness checker qualification — design hardening
 
 **TASK ID:** EVAL-005 *(Controller-assigned)*
-**STATUS:** **Controller-authorised DESIGN HARDENING ONLY.** No checker/model/API qualification run
-and no human validation have occurred; only deterministic local construction, rendering and test
-verification have been run. No checker has been called, qualified, ranked or entered anywhere.
+**STATUS:** **Controller-authorised DESIGN HARDENING ONLY — task closed and merged.** During this
+task no checker/model/API qualification run and no human validation occurred; only deterministic
+local construction, rendering and test verification were run.
+
+> **Superseded on current state, 25 Aug 2026:** human validation has since been performed and is
+> complete — 98 of 98 answered, 5 of 53 base words rejected, 10 items excluded, authoritative
+> battery now 96 items. This file records the design-hardening task as it was; it is not the
+> current state. See
+> [`../battery/devanagari-exactness/human-validation/HUMAN-VALIDATION-RECORD.md`](../battery/devanagari-exactness/human-validation/HUMAN-VALIDATION-RECORD.md).
+> **Checker qualification has still not started.**
 **OPENED:** 25 Aug 2026 · **BRANCH:** `work/eval-005-controller-review`
 
 **OBJECTIVE:** Fix the defects the Controller identified in the inherited `work/eval-005` proposal,
