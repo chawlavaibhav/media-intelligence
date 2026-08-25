@@ -535,7 +535,7 @@ Every file GOV-001 changed, and why it is inside the write boundary.
 `DECISION-LOG.md`, `RUNBOOK.md`, `AUTOMATION-ROADMAP.md`, `ASSUMPTIONS.md`,
 `CANON-003-LANE-A-C-AUDIT.md` and `CANON-003-BOOKS-08-10-AUDIT.md`.
 
-**Total: 15 files changed, +1,910 / −134 lines.** All 134 deleted lines are control-plane lines,
+**Total: 15 files changed, +1,921 / −134 lines.** All 134 deleted lines are control-plane lines,
 preserved in Git history: `WORKSTREAM-STATUS.md` 52, `CONTROL-STATE.md` 49, `RUNBOOK.md` 19
 (the obsolete worktree/enforcement wording), `AUTOMATION-ROADMAP.md` 5, `governance/README.md` 3,
 `PROJECT-CONTRACT.md` 2, `ASSUMPTIONS.md` 2 (link targets), `DECISION-LOG.md` 1,
