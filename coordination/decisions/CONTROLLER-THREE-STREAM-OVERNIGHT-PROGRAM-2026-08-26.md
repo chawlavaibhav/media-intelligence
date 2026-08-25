@@ -10,11 +10,26 @@ The prior task-by-task direction is replaced, for future work, by one coordinate
 The authoritative planning documents are:
 
 - `coordination/plans/2026-08-26-THREE-STREAM-OVERNIGHT-PROGRAM.md`
+- `coordination/plans/2026-08-26-CLOUD-SESSION-BOOTSTRAP.md`
 - `canon/tasks/CANON-V1-OVERNIGHT-PROGRAM.md`
 - `eval/tasks/EVAL-V1-OVERNIGHT-PROGRAM.md`
 - `resources/tasks/RESOURCES-V1-OVERNIGHT-PROGRAM.md`
 
 The user intends to assign the three stream runbooks independently. **A stream may begin only when the user explicitly assigns that stream's runbook.** Once assigned, the worker may execute every work package marked `RUN TONIGHT` autonomously within the runbook's boundaries and stop conditions.
+
+## Cloud-session execution interpretation
+
+The intended overnight workers are **fresh cloud/browser sessions with zero prior chat context and no access to the user's laptop**. `coordination/plans/2026-08-26-CLOUD-SESSION-BOOTSTRAP.md` is the authoritative execution interpretation for this environment.
+
+Workers must not assume access to laptop-only raw media, Downloads, local books/archives, local environment variables/API keys, or prior hidden/chat context. If a runbook instruction presumes a local code runner or laptop payload that is not available in the cloud session, the worker must complete all independent design/research work, label runtime/raw-byte verification honestly as unavailable in that session, and must not claim it reran checks it could only cite from committed repository evidence.
+
+Before editing, every fresh worker must read the bootstrap sequence and post the required startup acknowledgement explaining: its role, end-state, quantified starting state, tonight's work, prohibitions, cloud constraints and morning deliverable. **It then continues immediately without waiting for a reply.**
+
+Specific consequences:
+
+- **Canon C1–C4** are expected to be substantially cloud-executable from committed Canon evidence plus public web research; local book/PDF access is not required because no ingestion is authorised tonight.
+- **Eval E1–E4** are cloud-executable; **E5** may be implemented/tested only to the extent the cloud session actually exposes a code runner. Laptop credentials are `not_visible_to_cloud_session`, not evidence that the user has no credentials.
+- **Resources** may rebaseline the 34,786-item corpus from committed manifests/reports/source records but may not claim to re-decode/re-hash the git-ignored 5.70 GB raw corpus in cloud. R5 views are logical manifests over committed evidence, not proof that raw payloads are present in the cloud session.
 
 ## EVAL-006 disposition
 
