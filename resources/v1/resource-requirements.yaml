@@ -1,0 +1,887 @@
+# Resource requirements matrix — machine-readable source of truth
+#
+# Owner: Resources. Produced by R1 of RESOURCES-V1-OVERNIGHT-PROGRAM.md on 26 Aug 2026.
+#
+# WHAT THIS IS. One row per thing that Canon or Eval needs material for. It answers a single
+# question per row: does this need media from outside the project, does Eval build it itself,
+# is what we already hold enough, or does it need no media at all?
+#
+# WHAT THIS IS NOT. It is not a shopping list and not an approval. A row marked `missing` is a
+# statement that a named consumer needs something we do not have. Acquiring it needs a separate
+# Controller decision. Resources does not decide thresholds, labels or creative quality.
+#
+# AUTHORITY. Capability ids and counts are taken verbatim from eval/tasks/EVAL-V1-OVERNIGHT-PROGRAM.md
+# and canon/tasks/CANON-V1-OVERNIGHT-PROGRAM.md. Where Resources believes a target is wrong, it is
+# recorded in `resources_note`, never silently changed.
+
+meta:
+  version: v1
+  date: 2026-08-26
+  task: R1
+  branch: work/resources-v1-overnight
+  authored_by: Resources worker (cloud session, no laptop access)
+  capability_source: eval/tasks/EVAL-V1-OVERNIGHT-PROGRAM.md section 1 (36 frozen capabilities)
+  instrument_source: eval/tasks/EVAL-V1-OVERNIGHT-PROGRAM.md section 5 (6 evaluator families)
+  canon_source: canon/tasks/CANON-V1-OVERNIGHT-PROGRAM.md C2, C9, C10
+  states:
+    available: "A named existing source or pack satisfies this row now."
+    partial: "Existing material covers part of the row; a named remainder is missing."
+    missing: "No existing material satisfies this row; acquisition or construction is required."
+    blocked: "Material is identified but access/rights/consent prevent obtaining it under current policy."
+    constructed_by_eval: "Eval builds the material itself; Resources supplies no external media."
+    no_external_resource: "The measurement needs no media beyond the model's own outputs/telemetry."
+  storage_classes:
+    A: "Reacquirable external material. Retain selection rule, hashes, member list, official URL, retrieval script."
+    B: "Controlled/permissioned reference material. Retain durable originals plus permission/provenance records."
+    C: "Irreproducible empirical model output. Never treat as reacquirable; preserve bytes plus full provenance."
+    none: "No stored media."
+
+# ---------------------------------------------------------------------------
+# Shared packs. Several capability rows point at the same pack on purpose.
+# The whole point of doing R1 before R4 is that we buy/build one pack, not six.
+# ---------------------------------------------------------------------------
+packs:
+  - pack_id: PACK-PRODUCT-REF
+    name: Controlled product reference pack
+    target: ">=48 images = 12 products x >=4 controlled views"
+    state: missing
+    storage_class: B
+    serves: [REQ-CAP-10, REQ-CAP-12, REQ-CAP-13, REQ-CAP-14, REQ-CAP-21, REQ-INS-03]
+    why_one_pack: "Product identity, packaging colour, reference conditioning, edit preservation and in-clip product stability are five different measurements of the same physical objects. Acquiring five packs would multiply cost and destroy comparability."
+
+  - pack_id: PACK-PERSON-REF
+    name: Controlled person reference pack
+    target: ">=32 images = 8 identities x >=4 controlled views"
+    state: missing
+    storage_class: B
+    serves: [REQ-CAP-11, REQ-CAP-13, REQ-CAP-14, REQ-CAP-20, REQ-INS-03]
+    why_one_pack: "Same reasoning as product. Also the pack with the highest consent/privacy exposure, so it must be acquired once, deliberately, with documented permission."
+
+  - pack_id: PACK-AV-CLEAN
+    name: Clean AV calibration pack
+    target: "36 clips = 24 single-speaker + 12 two-speaker; transcripts for all; turn boundaries for two-speaker; English/Hindi/Hinglish represented"
+    state: missing
+    storage_class: B
+    serves: [REQ-CAP-24, REQ-CAP-25, REQ-CAP-26, REQ-CAP-27, REQ-CAP-28, REQ-INS-05]
+    why_one_pack: "All five speech/audio capabilities and the entire speech instrument family depend on the same clean recordings plus deterministic perturbations of them."
+    hard_blocker: "The current corpus contains ZERO audio. The YouTube-UGC clips are audio-removed excerpts. This is not a shortfall to top up; it is an empty category."
+
+  - pack_id: PACK-COMMERCIAL
+    name: Commercial creative bank
+    target: "80 assets = 40 static + 40 video; 60 active + 20 untouched reserve; target >=50% Indian-market; >=6 commercial categories"
+    state: missing
+    storage_class: B
+    serves: [REQ-CAP-29, REQ-CAP-30, REQ-CAP-31, REQ-CAP-32, REQ-INS-06, REQ-CAN-03]
+    why_one_pack: "Eval's creative/commercial evaluator qualification and Canon's Experiment B are explicitly told to reuse ONE 60-active-asset bank. Two independent acquisitions would be waste and would make the two results incomparable."
+    resources_constraint: "Selection axes may be product category, media type, market/language, duration or platform. Selection may NEVER be by whether Canon predicts the asset is good or bad — that is the circularity this stream exists to prevent."
+
+  - pack_id: PACK-CV-FIXTURES
+    name: Deterministic CV known-answer fixtures
+    target: ">=100 synthetic fixtures spanning count, bounding/relative position, aspect/duration, simple attribute and relationship checks"
+    state: constructed_by_eval
+    storage_class: none
+    serves: [REQ-CAP-01, REQ-CAP-02, REQ-CAP-03, REQ-CAP-05, REQ-INS-02]
+    why: "Truth is generated, not observed, so no human label and no external media are needed. Resources supplies nothing here and should not be asked to."
+
+  - pack_id: PACK-LATIN-TEXT
+    name: Latin exact-text calibration pack
+    target: "Deterministic, human-auditable rendered-string pack; size set by Eval"
+    state: constructed_by_eval
+    storage_class: none
+    serves: [REQ-CAP-06, REQ-INS-01]
+    resources_constraint: "Must NOT mutate the frozen 96-item Devanagari battery. A separate pack, built the same way."
+
+  - pack_id: PACK-DEVA-READ
+    name: Devanagari reading calibration pools (existing)
+    target: "Existing photographed Devanagari with human transcriptions"
+    state: available
+    storage_class: A
+    serves: [REQ-CAP-07, REQ-INS-01]
+    backing_sources: [src_bstd_devanagari, src_indicstr12_devanagari, src_iiit_ilst_devanagari]
+    lineage_warning: "IndicSTR12 + IIIT-ILST are ONE source lineage. BSTD is the only genuine cross-lineage reserve."
+
+  - pack_id: PACK-DEVA-GEN
+    name: Devanagari generated-defect battery (existing, frozen)
+    target: "96 items = 48 match / 48 mismatch, 48 accepted base words, 33 hard opportunities, 20 failure classes / 5 groups"
+    state: constructed_by_eval
+    storage_class: none
+    serves: [REQ-CAP-07, REQ-INS-01]
+    owner: Eval
+    note: "Frozen and human-validated. Resources neither owns nor may modify it. Listed here so nobody acquires media to duplicate work that is already done."
+    reproducibility_caveat: "Not rebuildable from GitHub alone: built items live under a git-ignored build/ directory and the pinned font is an uncommitted proprietary system asset. Recorded, not solved, by Resources."
+
+  - pack_id: PACK-TEMPORAL-PERTURB-BASE
+    name: Clean base clips for deterministic temporal perturbation
+    target: "Clips clean enough that an introduced discontinuity is the only defect"
+    state: partial
+    storage_class: A
+    serves: [REQ-CAP-23, REQ-INS-04]
+    backing_sources: [src_konvid1k, src_youtube_ugc]
+    limitation: "KoNViD-1k was sampled for DEGRADATION variety (compression, blur, shake). Perturbation calibration wants clips whose only defect is the one introduced. Usable, but the base-clip cleanliness must be screened by Eval before qualification, and Resources cannot screen it in this cloud session."
+
+# ---------------------------------------------------------------------------
+# Capability rows: 36/36
+# ---------------------------------------------------------------------------
+requirements:
+
+  # === A. Constraint fidelity ===
+  - id: REQ-CAP-01
+    consumer: "Eval capability object_count"
+    group: A_constraint_fidelity
+    media: "generated image + video (Eval output); synthetic fixtures for instrument"
+    target_quantity: constructed_by_eval
+    required_metadata: "prompt-declared target count; deterministic ground truth for fixtures"
+    label_trust: deterministically_validated
+    independence: "item-level only; no external lineage risk"
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: [PACK-CV-FIXTURES]
+    state: constructed_by_eval
+    why: "Counting objects has a generated right answer. Downloading a dataset to test counting would import someone else's labels for no gain."
+
+  - id: REQ-CAP-02
+    consumer: "Eval capability attribute_binding"
+    group: A_constraint_fidelity
+    media: "generated image/video; synthetic fixtures for instrument"
+    target_quantity: constructed_by_eval
+    required_metadata: "prompt-declared attribute-to-object bindings"
+    label_trust: deterministically_validated
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: [PACK-CV-FIXTURES]
+    state: constructed_by_eval
+    why: "Same as object_count: the binding is declared by the prompt, so truth is known by construction."
+
+  - id: REQ-CAP-03
+    consumer: "Eval capability spatial_relationship"
+    group: A_constraint_fidelity
+    media: "generated image/video; synthetic fixtures for instrument"
+    target_quantity: constructed_by_eval
+    required_metadata: "declared relative positions; fixture bounding boxes"
+    label_trust: deterministically_validated
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: [PACK-CV-FIXTURES]
+    state: constructed_by_eval
+    why: "Position truth can be rendered exactly. No acquisition justified."
+
+  - id: REQ-CAP-04
+    consumer: "Eval capability action_adherence"
+    group: A_constraint_fidelity
+    media: "generated video (Eval output)"
+    target_quantity: constructed_by_eval
+    required_metadata: "prompt-declared action; observation unit = whole clip"
+    label_trust: "requires human or qualified VLM adjudication; NOT deterministic"
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: constructed_by_eval
+    resources_note: "Flagged for Eval: unlike 01-03 this has no deterministic checker, so its instrument qualification depends on REQ-INS-03/04, which are themselves blocked on missing packs."
+    why: "The stimulus is Eval's own generation. Resources supplies no media."
+
+  - id: REQ-CAP-05
+    consumer: "Eval capability delivery_format_compliance"
+    group: A_constraint_fidelity
+    media: "generated asset container metadata only"
+    target_quantity: no_external_resource
+    required_metadata: "requested duration/aspect/resolution/output contract vs delivered"
+    label_trust: deterministically_validated
+    independence: n/a
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: no_external_resource
+    why: "This is a file-property check against the request. It needs no reference media at all."
+
+  # === B. Text and brand ===
+  - id: REQ-CAP-06
+    consumer: "Eval capability exact_text_latin"
+    group: B_text_brand
+    media: "generated image/video; deterministic rendered calibration pack for instrument"
+    target_quantity: constructed_by_eval
+    required_metadata: "exact target string; rendered ground truth"
+    label_trust: deterministically_validated
+    independence: "string-level; base strings must not be reused between calibration and qualification"
+    geo_language: Latin_script
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: [PACK-LATIN-TEXT]
+    state: constructed_by_eval
+    resources_note: "The corpus holds only 14 English-labelled BSTD images. That is nowhere near a real-world Latin scene-text pool, and it is not needed: the Devanagari battery proved rendered strings are the better instrument."
+    why: "Copying the proven EVAL-005 method to Latin is cheaper and more auditable than acquiring real Latin scene text."
+
+  - id: REQ-CAP-07
+    consumer: "Eval capability exact_text_devanagari"
+    group: B_text_brand
+    media: "real photographed Devanagari (reading) + Eval-generated Devanagari (rendering)"
+    target_quantity: "reading: existing 29,722-item pool; rendering: 96-item frozen battery"
+    required_metadata: "human transcription per item; script-level filter, not language label"
+    label_trust: "source transcriptions are OBSERVATIONS of one annotator group, not project ground truth, until Eval validates them"
+    independence: "source lineage: CVIT pair = one lineage; BSTD = independent"
+    geo_language: Devanagari_India
+    rights_minimum: "internal research/evaluation only; CVIT sources rights not_stated"
+    storage_class: A
+    candidate_sources: [PACK-DEVA-READ, PACK-DEVA-GEN]
+    state: available
+    resources_note: "TWO DIFFERENT ABILITIES, one capability id. Reading real signage is covered. Judging a generator's own Devanagari rendering is covered by the 96-item battery. What is NOT covered is real generated-Devanagari failure material at scale, which only paid generation produces."
+    why: "The single best-covered capability in the project, and the only one where existing material is genuinely sufficient."
+
+  - id: REQ-CAP-08
+    consumer: "Eval capability typography_legibility"
+    group: B_text_brand
+    media: "generated image/video"
+    target_quantity: constructed_by_eval
+    required_metadata: "type size/contrast/placement conditions declared by the item"
+    label_trust: "human or qualified VLM adjudication"
+    independence: item_level
+    geo_language: "Latin + Devanagari"
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: constructed_by_eval
+    resources_note: "Canon holds no accepted Devanagari-structure source (CANON-008 stopped). Resources cannot supply typographic judgement criteria and must not invent them."
+    why: "Legibility is judged on Eval's own outputs against declared conditions."
+
+  - id: REQ-CAP-09
+    consumer: "Eval capability logo_wordmark_fidelity"
+    group: B_text_brand
+    media: "reference logo/wordmark assets + generated output"
+    target_quantity: ">=12 distinct marks with clear ownership (aligned to the 12 products)"
+    required_metadata: "vector or high-resolution original; ownership/permission record; colour spec"
+    label_trust: deterministically_validated
+    independence: "brand-level: a mark used in calibration must not appear in qualification"
+    geo_language: "target >=50% Indian-market brands"
+    rights_minimum: "first-party or explicitly permissioned; third-party trademarks are NOT usable by default"
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF, LEGACY-MF-REFS]
+    state: partial
+    resources_note: "PARTIAL, and this is a real find. Three first-party logo assets are recoverable from chawlavaibhav/media-factory git history (spike/refs/logo_0.png, logo_1.png, aight_logo.png). That is 3 of >=12 marks, from a project-owned source. See LEGACY-EVIDENCE-RECONCILIATION.md."
+    why: "Brand fidelity is the capability most exposed to trademark risk. Using project-owned marks removes that risk entirely for the part it covers."
+
+  - id: REQ-CAP-10
+    consumer: "Eval capability packaging_brand_colour_fidelity"
+    group: B_text_brand
+    media: "controlled product photographs + generated output"
+    target_quantity: "covered by PACK-PRODUCT-REF (>=48 images / 12 products)"
+    required_metadata: "measured or specified brand colour values; lighting conditions recorded"
+    label_trust: deterministically_validated
+    independence: product_level
+    geo_language: "target >=50% Indian-market"
+    rights_minimum: "first-party or permissioned; controlled capture strongly preferred"
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF]
+    state: missing
+    why: "Colour fidelity needs a known reference value. A web image with unknown colour management cannot serve as one."
+
+  # === C. Identity and references ===
+  - id: REQ-CAP-11
+    consumer: "Eval capability person_identity"
+    group: C_identity_references
+    media: "controlled person reference images + generated output"
+    target_quantity: ">=32 images = 8 identities x >=4 views"
+    required_metadata: "identity id, view/pose/lighting condition, capture date, written consent record"
+    label_trust: "known-match/known-nonmatch by construction; similarity is NOT exactness and needs human adjudication"
+    independence: "identity-level: an identity in calibration must not appear in qualification"
+    geo_language: "should include South Asian faces; skin-tone and age spread recorded"
+    rights_minimum: "explicit written consent for internal evaluation use; biometric-data implications documented"
+    storage_class: B
+    candidate_sources: [PACK-PERSON-REF]
+    state: missing
+    resources_note: "HIGHEST-RISK ROW IN THE MATRIX. Consent and biometric exposure make this the one pack that must never be filled opportunistically. 19 images of what appears to be a single identity are recoverable from media-factory history, but I could not establish a consent record for them in this session, so they are recorded as a candidate needing rights confirmation, NOT as supply."
+    why: "Identity consistency is a core commercial requirement (the same spokesperson across a campaign) and cannot be measured without controlled references."
+
+  - id: REQ-CAP-12
+    consumer: "Eval capability product_identity"
+    group: C_identity_references
+    media: "controlled product reference images + generated output"
+    target_quantity: ">=48 images = 12 products x >=4 views"
+    required_metadata: "product id, view/angle, lighting, scale reference, ownership record"
+    label_trust: "known-match/known-nonmatch by construction"
+    independence: product_level
+    geo_language: "target >=50% Indian-market products"
+    rights_minimum: "first-party ownership or explicit permission"
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF]
+    state: missing
+    why: "The single most commercially load-bearing capability: if the generated product is not the customer's product, nothing else about the asset matters."
+
+  - id: REQ-CAP-13
+    consumer: "Eval capability reference_conditioning"
+    group: C_identity_references
+    media: "both reference packs + generated output"
+    target_quantity: "reuses PACK-PRODUCT-REF and PACK-PERSON-REF"
+    required_metadata: "which reference images were supplied to the model; conditioning mode"
+    label_trust: "human or qualified VLM adjudication"
+    independence: "identity and product level"
+    geo_language: inherits_from_packs
+    rights_minimum: inherits_from_packs
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF, PACK-PERSON-REF]
+    state: missing
+    why: "Measures whether the model actually used the reference it was given. Needs no new media beyond the two packs."
+
+  - id: REQ-CAP-14
+    consumer: "Eval capability edit_preservation"
+    group: C_identity_references
+    media: "both reference packs + controlled edit pairs"
+    target_quantity: "reuses PACK-PRODUCT-REF and PACK-PERSON-REF"
+    required_metadata: "before/after pair, declared edit instruction, declared must-not-change regions"
+    label_trust: deterministically_validated
+    independence: "identity and product level"
+    geo_language: inherits_from_packs
+    rights_minimum: inherits_from_packs
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF, PACK-PERSON-REF]
+    state: missing
+    why: "Editing is where the money is in production reuse. Preservation is checkable against a declared unchanged region, so it is cheap once the packs exist."
+
+  # === D. Human and physical realism ===
+  - id: REQ-CAP-15
+    consumer: "Eval capability anatomy_hands"
+    group: D_realism
+    media: "generated image/video"
+    target_quantity: constructed_by_eval
+    required_metadata: "declared hand-involving action; observation unit = frame or image"
+    label_trust: "human adjudication; no deterministic checker exists"
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: constructed_by_eval
+    resources_note: "Instrument qualification for this needs known-defect examples. Those come from Eval's own generations once E7 runs, not from an acquisition."
+    why: "Classic generator failure mode; the stimulus is the generator's own output."
+
+  - id: REQ-CAP-16
+    consumer: "Eval capability human_object_contact"
+    group: D_realism
+    media: "generated image/video"
+    target_quantity: constructed_by_eval
+    required_metadata: "declared contact/grip relationship"
+    label_trust: human_adjudication
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: constructed_by_eval
+    why: "Person-holding-product is the commonest commercial shot and the commonest physical failure. Stimulus is Eval-generated."
+
+  - id: REQ-CAP-17
+    consumer: "Eval capability human_human_interaction"
+    group: D_realism
+    media: "generated image/video"
+    target_quantity: constructed_by_eval
+    required_metadata: "declared interaction"
+    label_trust: human_adjudication
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: constructed_by_eval
+    why: "Same pattern as 15/16."
+
+  - id: REQ-CAP-18
+    consumer: "Eval capability motion_action_quality"
+    group: D_realism
+    media: "generated video; real and generated video for instrument development"
+    target_quantity: "instrument development only: existing pools"
+    required_metadata: "per-clip motion/dynamic-degree scores where available"
+    label_trust: "VideoFeedback dynamic-degree scores are the distributor's human ratings — observations, not our truth"
+    independence: "source lineage: single distributor per pool"
+    geo_language: "unstated; assume Anglosphere-weighted"
+    rights_minimum: "apache-2.0 asserted by publisher; internal evaluation only"
+    storage_class: A
+    candidate_sources: [src_videofeedback, src_konvid1k, src_videogen_rewardbench]
+    state: partial
+    resources_note: "Useful for DEVELOPING a motion evaluator, not for qualifying one against current models: ImageRewardDB is DiffusionDB-era and VideoFeedback does not even name its generators. Generator era is a real limitation, not a caveat to wave through."
+    why: "This is the one realism capability where existing material genuinely helps."
+
+  - id: REQ-CAP-19
+    consumer: "Eval capability physics_material_appearance"
+    group: D_realism
+    media: "generated image/video"
+    target_quantity: constructed_by_eval
+    required_metadata: "declared material/physical condition"
+    label_trust: human_adjudication
+    independence: item_level
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: constructed_by_eval
+    why: "Stimulus is Eval-generated; no reference corpus would establish what 'correct' looks like for an invented scene."
+
+  # === E. Temporal / continuity ===
+  - id: REQ-CAP-20
+    consumer: "Eval capability person_stability_in_clip"
+    group: E_temporal
+    media: "generated video + person references"
+    target_quantity: "reuses PACK-PERSON-REF"
+    required_metadata: "reference identity; sampled-frame observation rule"
+    label_trust: human_or_qualified_VLM
+    independence: identity_level
+    geo_language: inherits_from_pack
+    rights_minimum: inherits_from_pack
+    storage_class: B
+    candidate_sources: [PACK-PERSON-REF]
+    state: missing
+    resources_note: "OBSERVATION-UNIT RULE: frames sampled from one clip are ONE trial, not many. Resources records this because a manifest that lists frames as items would silently inflate every count downstream."
+    why: "Face drift within a single clip is a known, recorded failure in this project's own legacy evidence (see LEGACY-MF-SCORES)."
+
+  - id: REQ-CAP-21
+    consumer: "Eval capability product_stability_in_clip"
+    group: E_temporal
+    media: "generated video + product references"
+    target_quantity: "reuses PACK-PRODUCT-REF"
+    required_metadata: "reference product; sampled-frame observation rule"
+    label_trust: human_or_qualified_VLM
+    independence: product_level
+    geo_language: inherits_from_pack
+    rights_minimum: inherits_from_pack
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF]
+    state: missing
+    why: "Same as 20, for the object rather than the person."
+
+  - id: REQ-CAP-22
+    consumer: "Eval capability text_logo_stability_in_clip"
+    group: E_temporal
+    media: "generated video + mark references"
+    target_quantity: "reuses PACK-PRODUCT-REF logo subset; Devanagari-in-video has no reference pool"
+    required_metadata: "reference mark; target string; per-sampled-frame reading"
+    label_trust: deterministically_validated_for_strings
+    independence: brand_level
+    geo_language: "Latin + Devanagari"
+    rights_minimum: inherits_from_pack
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF]
+    state: missing
+    resources_note: "THE SHARPEST GAP IN THE PROJECT. Text that drifts within a single clip is the named commercial failure mode, and the corpus contains no generated Devanagari at all. No acquisition fixes this — only paid generation produces it. Recorded so nobody tries to buy their way out."
+    why: "Reading real signage (REQ-CAP-07) does not test this and must not be reported as if it did."
+
+  - id: REQ-CAP-23
+    consumer: "Eval capability multi_shot_spatial_continuity"
+    group: E_temporal
+    media: "generated multi-shot video; clean base clips for instrument perturbation"
+    target_quantity: "instrument only: perturbation base clips"
+    required_metadata: "shot boundaries; declared continuity constraints"
+    label_trust: "deterministic for introduced perturbations; human for natural cases"
+    independence: "clip and source lineage"
+    geo_language: n/a
+    rights_minimum: "internal evaluation only"
+    storage_class: A
+    candidate_sources: [PACK-TEMPORAL-PERTURB-BASE]
+    state: partial
+    resources_note: "Existing clips can host a KNOWN introduced discontinuity, which is enough to qualify a temporal instrument. They cannot represent multi-shot branded advertising, which needs PACK-COMMERCIAL."
+    why: "Splits cleanly into an instrument need (covered) and a content need (missing)."
+
+  # === F. Speech / audio ===
+  - id: REQ-CAP-24
+    consumer: "Eval capability spoken_language_correctness"
+    group: F_speech_audio
+    media: "AV clips with trustworthy transcripts"
+    target_quantity: "covered by PACK-AV-CLEAN (36 clips)"
+    required_metadata: "verbatim transcript; language/code-switching marking"
+    label_trust: "transcript must be verified, not distributor-asserted"
+    independence: speaker_level
+    geo_language: "English / Hindi / Hinglish"
+    rights_minimum: "voice and identity permissions recorded SEPARATELY from media rights"
+    storage_class: B
+    candidate_sources: [PACK-AV-CLEAN]
+    state: missing
+    resources_note: "Corpus audio holdings: zero. Not low — zero."
+    why: "Hinglish code-switching is a first-product requirement and no public pack we have reviewed covers it with verified transcripts."
+
+  - id: REQ-CAP-25
+    consumer: "Eval capability single_speaker_lip_sync"
+    group: F_speech_audio
+    media: "24 single-speaker clips + generated/processed output"
+    target_quantity: "covered by PACK-AV-CLEAN (24 of 36)"
+    required_metadata: "transcript; frame-accurate audio alignment; known synthetic offsets for calibration"
+    label_trust: "deterministic for introduced offsets only"
+    independence: speaker_level
+    geo_language: "8 English / 8 Hindi / 8 Hinglish planning balance"
+    rights_minimum: "voice/identity permission"
+    storage_class: B
+    candidate_sources: [PACK-AV-CLEAN]
+    state: missing
+    resources_note: "Eval's own instruction stands: never invent a millisecond tolerance without evidence. Resources supplies the clips and the known offsets; the tolerance is Eval's to derive."
+    why: "Lip-sync is a whole product lane (dedicated lip-sync/digital-human endpoints) with no material behind it."
+
+  - id: REQ-CAP-26
+    consumer: "Eval capability two_speaker_turn_assignment_and_lip_sync"
+    group: F_speech_audio
+    media: "12 two-speaker clips + generated/processed output"
+    target_quantity: "covered by PACK-AV-CLEAN (12 of 36)"
+    required_metadata: "transcript PLUS turn boundaries with speaker attribution"
+    label_trust: "turn boundaries must be verified; a swapped-channel control is deterministic"
+    independence: "speaker-pair level"
+    geo_language: "4 English / 4 Hindi / 4 Hinglish planning balance"
+    rights_minimum: "voice/identity permission for BOTH speakers"
+    storage_class: B
+    candidate_sources: [PACK-AV-CLEAN]
+    state: missing
+    why: "The hardest AV row: turn boundaries are extra annotation that almost no public source ships, and both speakers need permission."
+
+  - id: REQ-CAP-27
+    consumer: "Eval capability emotional_prosodic_fit"
+    group: F_speech_audio
+    media: "AV clips with controlled prosody variants"
+    target_quantity: "derived from PACK-AV-CLEAN"
+    required_metadata: "declared intended register; controlled variants where feasible"
+    label_trust: "human adjudication; Resources must NOT author emotional labels"
+    independence: speaker_level
+    geo_language: "English / Hindi / Hinglish"
+    rights_minimum: "voice/identity permission"
+    storage_class: B
+    candidate_sources: [PACK-AV-CLEAN]
+    state: missing
+    resources_note: "Explicit boundary: judging whether prosody fits an intent is creative/perceptual judgement. Resources supplies the recordings and the declared conditions only."
+    why: "Depends entirely on the AV pack existing first."
+
+  - id: REQ-CAP-28
+    consumer: "Eval capability audio_video_synchronisation"
+    group: F_speech_audio
+    media: "AV clips with deterministic introduced offsets"
+    target_quantity: "derived from PACK-AV-CLEAN"
+    required_metadata: "exact introduced offset in milliseconds; original alignment"
+    label_trust: deterministically_validated
+    independence: clip_level
+    geo_language: n/a
+    rights_minimum: inherits_from_pack
+    storage_class: B
+    candidate_sources: [PACK-AV-CLEAN]
+    state: missing
+    resources_note: "The one speech row with a fully deterministic ground truth — shift the audio by a known amount and you know the answer exactly. It is still blocked, because there is nothing to shift."
+    why: "Cheapest speech capability to measure, and completely blocked by the same empty category."
+
+  # === G. Commercial / creative fitness ===
+  - id: REQ-CAP-29
+    consumer: "Eval capability proposition_objective_fit; Canon C10"
+    group: G_commercial_creative
+    media: "real commercial creative assets"
+    target_quantity: "60 active of PACK-COMMERCIAL"
+    required_metadata: "category, market/language, media type, duration, platform; NO quality label from Resources"
+    label_trust: "fresh independent human review, run later by Eval. Public/source preference labels are NOT our creative truth."
+    independence: "brand and campaign level; 20 reserve frozen before any tuning"
+    geo_language: "target >=50% Indian-market, >=6 commercial categories"
+    rights_minimum: "explicit licence, creator/brand permission, or first-party. Ad creative is dense third-party IP."
+    storage_class: B
+    candidate_sources: [PACK-COMMERCIAL]
+    state: missing
+    resources_note: "Pitt Ads (the obvious public candidate) is blocked on an email/manual-approval gate; AVA is blocked on explicit site terms. Neither blocker is licence silence, so neither is waivable under current policy."
+    why: "Both Eval's creative evaluator and Canon's value-gate experiment depend on this one bank. It is the highest-leverage missing pack."
+
+  - id: REQ-CAP-30
+    consumer: "Eval capability hierarchy_product_as_hero; Canon C10"
+    group: G_commercial_creative
+    media: "real commercial creative (static-weighted)"
+    target_quantity: "shares the 60 active assets"
+    required_metadata: as_REQ-CAP-29
+    label_trust: as_REQ-CAP-29
+    independence: brand_and_campaign_level
+    geo_language: as_REQ-CAP-29
+    rights_minimum: as_REQ-CAP-29
+    storage_class: B
+    candidate_sources: [PACK-COMMERCIAL]
+    state: missing
+    why: "Same bank; a separate measurement, not a separate acquisition."
+
+  - id: REQ-CAP-31
+    consumer: "Eval capability composition_brand_register; Canon C10"
+    group: G_commercial_creative
+    media: "real commercial creative (static-weighted)"
+    target_quantity: "shares the 60 active assets"
+    required_metadata: as_REQ-CAP-29
+    label_trust: as_REQ-CAP-29
+    independence: brand_and_campaign_level
+    geo_language: as_REQ-CAP-29
+    rights_minimum: as_REQ-CAP-29
+    storage_class: B
+    candidate_sources: [PACK-COMMERCIAL]
+    state: missing
+    why: "Same bank."
+
+  - id: REQ-CAP-32
+    consumer: "Eval capability hook_pacing_temporal_hierarchy; Canon C10"
+    group: G_commercial_creative
+    media: "real commercial creative (the 40 video assets)"
+    target_quantity: "shares the video half of the 60 active assets"
+    required_metadata: "as REQ-CAP-29 plus duration and platform cut"
+    label_trust: as_REQ-CAP-29
+    independence: brand_and_campaign_level
+    geo_language: as_REQ-CAP-29
+    rights_minimum: as_REQ-CAP-29
+    storage_class: B
+    candidate_sources: [PACK-COMMERCIAL]
+    state: missing
+    resources_note: "Video ad creative is the hardest half of this bank to licence. If only the static half is obtainable, say so and measure 29-31 rather than pretending 32 is covered."
+    why: "Same bank; the video-specific measurement."
+
+  # === H. Operational / workflow ===
+  - id: REQ-CAP-33
+    consumer: "Eval capability reliability_pass_at_k"
+    group: H_operational
+    media: "none — repeated Eval generations"
+    target_quantity: no_external_resource
+    required_metadata: "attempt id, repeat index, per-attempt outcome"
+    label_trust: derived_from_other_measurements
+    independence: n/a
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: C
+    candidate_sources: []
+    state: no_external_resource
+    resources_note: "No media to acquire, but it DOES create a Resources obligation: every repeat is an irreproducible output that must be archived under storage class C, or pass-at-k cannot be recomputed later."
+    why: "Reliability is measured over the project's own attempts."
+
+  - id: REQ-CAP-34
+    consumer: "Eval capability cost_and_cpao"
+    group: H_operational
+    media: none
+    target_quantity: no_external_resource
+    required_metadata: "per-attempt cost reference; accepted/not-accepted outcome"
+    label_trust: deterministic_from_billing
+    independence: n/a
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: C
+    candidate_sources: []
+    state: no_external_resource
+    resources_note: "Cost per Accepted Outcome is the project's primary metric, and it is only recomputable if BOTH the cost reference and the accept/reject outcome survive next to the output bytes. That is a storage-schema requirement, and it is met by EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml."
+    why: "The metric the whole product optimises. Needs no media and total archive discipline."
+
+  - id: REQ-CAP-35
+    consumer: "Eval capability latency_errors_refusals"
+    group: H_operational
+    media: none
+    target_quantity: no_external_resource
+    required_metadata: "API status, error code, refusal text, latency"
+    label_trust: deterministic_from_api
+    independence: n/a
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: C
+    candidate_sources: []
+    state: no_external_resource
+    resources_note: "A refusal produces NO output bytes but is still evidence. The archive schema therefore allows a record with a null output hash and a populated api_status — otherwise refusals would vanish from the record and reliability would be overstated."
+    why: "Refusals and errors are part of what a workflow costs."
+
+  - id: REQ-CAP-36
+    consumer: "Eval capability reproducibility_repairability"
+    group: H_operational
+    media: none
+    target_quantity: no_external_resource
+    required_metadata: "seed/settings where exposed; version pin; repair attempt chain"
+    label_trust: deterministic_where_seeds_exposed
+    independence: n/a
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: C
+    candidate_sources: []
+    state: no_external_resource
+    resources_note: "This row is effectively a test of Resources' own archive. If provenance is incomplete, this capability becomes unmeasurable regardless of the model."
+    why: "Repairability is what turns a failed generation into a cheap retry instead of a lost job."
+
+  # === Evaluator families: 6/6 ===
+  - id: REQ-INS-01
+    consumer: "Evaluator family 1 — text/OCR"
+    group: instrument_family
+    media: "real photographed Devanagari + rendered exactness batteries"
+    target_quantity: "Devanagari: existing pools + frozen 96-item battery. Latin: pack to be constructed."
+    required_metadata: "transcription per item; known match/mismatch label by construction"
+    label_trust: "battery labels are deterministic by construction; source transcriptions are observations"
+    independence: "source lineage — CVIT pair is one lineage; calibration and qualification pools must not share base words or parent photographs"
+    geo_language: "Devanagari + Latin"
+    rights_minimum: "internal evaluation only"
+    storage_class: A
+    candidate_sources: [PACK-DEVA-READ, PACK-DEVA-GEN, PACK-LATIN-TEXT]
+    state: available
+    resources_note: "THE ONLY EVALUATOR FAMILY WITH SUFFICIENT MATERIAL TODAY. Everything else is partial or blocked."
+    why: "Reading and exactness are the two abilities this family needs, and both have material."
+
+  - id: REQ-INS-02
+    consumer: "Evaluator family 2 — deterministic/CV geometry"
+    group: instrument_family
+    media: "synthetic known-answer fixtures"
+    target_quantity: ">=100 fixtures"
+    required_metadata: "generated ground truth per fixture; unsupported-parse negative controls"
+    label_trust: deterministically_validated
+    independence: "fixture-level; no external lineage"
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: [PACK-CV-FIXTURES]
+    state: constructed_by_eval
+    resources_note: "Resources supplies nothing and should not be asked to. Recorded so this family is not mistaken for a gap."
+    why: "Deterministic truth removes the need for both humans and acquisition."
+
+  - id: REQ-INS-03
+    consumer: "Evaluator family 3 — structured visual VLM"
+    group: instrument_family
+    media: "controlled product and person reference packs"
+    target_quantity: ">=48 product + >=32 person references, with known-match, known-nonmatch and controlled edit cases"
+    required_metadata: "identity/product id; match label by construction; adjudication protocol for similarity"
+    label_trust: "match/nonmatch deterministic; degree of similarity is NOT and needs human adjudication"
+    independence: "identity and product level between calibration and qualification"
+    geo_language: "South Asian representation required for person pack"
+    rights_minimum: "consent (person) / ownership (product)"
+    storage_class: B
+    candidate_sources: [PACK-PERSON-REF, PACK-PRODUCT-REF]
+    state: blocked
+    blocked_reason: "Both reference packs are missing and acquiring either requires Controller-approved capture or sourcing strategy. Person capture additionally requires consent that only a human can obtain."
+    why: "This family qualifies the instrument behind 8 capability rows. It is the biggest single unlock in the matrix."
+
+  - id: REQ-INS-04
+    consumer: "Evaluator family 4 — temporal/video"
+    group: instrument_family
+    media: "clean base clips + deterministic perturbations; identity/text drift cases"
+    target_quantity: "perturbation base: existing clips. Drift cases: need reference packs."
+    required_metadata: "introduced perturbation type and magnitude; clip-level observation rule"
+    label_trust: "deterministic for introduced perturbations only"
+    independence: "clip and source lineage"
+    geo_language: unstated
+    rights_minimum: "internal evaluation only"
+    storage_class: A
+    candidate_sources: [PACK-TEMPORAL-PERTURB-BASE, PACK-PERSON-REF, PACK-PRODUCT-REF]
+    state: partial
+    resources_note: "Partially unblockable TONIGHT in design terms: discontinuity, text-instability and continuity perturbations can be built on clips we already hold. Identity-swap/drift cases cannot, because they need the person pack."
+    why: "The only blocked family with a genuine partial path forward using existing material."
+
+  - id: REQ-INS-05
+    consumer: "Evaluator family 5 — speech/audio/AV"
+    group: instrument_family
+    media: "clean AV clips with transcripts and turn boundaries"
+    target_quantity: "24 single + 12 two-speaker"
+    required_metadata: "transcripts, turn boundaries, known audio offsets, controlled prosody variants"
+    label_trust: "deterministic for introduced perturbations; verified transcripts otherwise"
+    independence: speaker_level
+    geo_language: "English / Hindi / Hinglish"
+    rights_minimum: "media rights AND voice/identity permission, recorded separately"
+    storage_class: B
+    candidate_sources: [PACK-AV-CLEAN]
+    state: blocked
+    blocked_reason: "The corpus contains no audio whatsoever. Nothing can be perturbed, calibrated or qualified until PACK-AV-CLEAN exists."
+    why: "Hardest blocked family: it needs new recording or permissioned material, plus transcript and turn annotation."
+
+  - id: REQ-INS-06
+    consumer: "Evaluator family 6 — creative/commercial"
+    group: instrument_family
+    media: "60 active commercial creative assets"
+    target_quantity: "60 active of PACK-COMMERCIAL"
+    required_metadata: "descriptive axes only from Resources; creative judgement supplied later by independent human review"
+    label_trust: "public/source preference labels are explicitly NOT our creative truth"
+    independence: "brand and campaign level; 20-asset reserve frozen before any tuning"
+    geo_language: ">=50% Indian-market, >=6 categories"
+    rights_minimum: "explicit licence / permission / first-party"
+    storage_class: B
+    candidate_sources: [PACK-COMMERCIAL]
+    state: blocked
+    blocked_reason: "No commercial creative bank exists; the two public candidates are blocked on an access gate and on explicit site terms respectively."
+    why: "Shared with Canon C10. Also the family with the strongest circularity risk, which is why Resources must supply the assets and never the quality labels."
+
+  # === Canon and Eval programme rows ===
+  - id: REQ-CAN-01
+    consumer: "Canon C2 — 30-brief commercial-intent bank"
+    group: canon
+    media: "none (text briefs)"
+    target_quantity: no_external_resource
+    required_metadata: n/a
+    label_trust: n/a
+    independence: n/a
+    geo_language: "10 English / 10 Hindi-Devanagari / 10 Hinglish"
+    rights_minimum: none_external
+    storage_class: none
+    candidate_sources: []
+    state: no_external_resource
+    why: "Briefs are written by Canon. Recorded explicitly so no acquisition is proposed against it."
+
+  - id: REQ-CAN-02
+    consumer: "Canon C9 — planning/consumption Experiment A"
+    group: canon
+    media: "none (text in, text out)"
+    target_quantity: no_external_resource
+    required_metadata: n/a
+    label_trust: n/a
+    independence: n/a
+    geo_language: n/a
+    rights_minimum: none_external
+    storage_class: C
+    candidate_sources: []
+    state: no_external_resource
+    resources_note: "No media, but ~200 model outputs. If those outputs are ever to be re-analysed, they are class C and belong in the empirical archive."
+    why: "Planning lift is measured on text artefacts, not media."
+
+  - id: REQ-CAN-03
+    consumer: "Canon C10 — creative-evaluation Experiment B"
+    group: canon
+    media: "real commercial creative"
+    target_quantity: "the SAME 60 active assets as REQ-INS-06"
+    required_metadata: descriptive_axes_only
+    label_trust: "independent human review, not Resources labels, not source labels"
+    independence: brand_and_campaign_level
+    geo_language: ">=50% Indian-market"
+    rights_minimum: explicit_permission
+    storage_class: B
+    candidate_sources: [PACK-COMMERCIAL]
+    state: missing
+    resources_note: "EXPLICIT ANTI-DUPLICATION ROW. Canon C10 and Eval E3 family 6 must consume one bank. Two banks would double the cost and make the two results non-comparable."
+    why: "Canon's value-gate experiment and Eval's creative evaluator ask different questions of identical material."
+
+  - id: REQ-EVL-01
+    consumer: "Eval E4 — 100-base-item reusable benchmark bank"
+    group: eval_programme
+    media: "mixed; mostly Eval-constructed, plus reference packs for compound items"
+    target_quantity: "40 atomic + 60 compound = 100 base items"
+    required_metadata: "per-item measurement fan-out list"
+    label_trust: mixed
+    independence: "base items must not be reused as repeats"
+    geo_language: "mixed, incl. Devanagari and Hinglish"
+    rights_minimum: inherits_from_packs
+    storage_class: B
+    candidate_sources: [PACK-PRODUCT-REF, PACK-PERSON-REF, PACK-AV-CLEAN, PACK-CV-FIXTURES, PACK-DEVA-GEN]
+    state: partial
+    resources_note: "Of the 10 compound scenario families, 6 require a reference or AV pack that does not exist (packshot, person+product, reference edit, actor+product, one speaker, two-speaker dialogue). Those items can be DESIGNED tonight but cannot be RUN."
+    why: "Tells the Controller exactly how much of the benchmark bank is executable today, which is roughly the atomic half."
+
+  - id: REQ-EVL-02
+    consumer: "Eval E9 — 12-brief end-to-end production benchmark"
+    group: eval_programme
+    media: "Canon briefs + reference packs + commercial reserve for comparison"
+    target_quantity: "12 briefs x <=4 recipes x 2 attempts = <=96 trials"
+    required_metadata: "full provenance per trial; accept/reject; retry chain; cost"
+    label_trust: human_acceptance_judgement
+    independence: "briefs from Canon's bank, not authored by Eval"
+    geo_language: inherits_from_canon_bank
+    rights_minimum: inherits_from_packs
+    storage_class: C
+    candidate_sources: [PACK-PRODUCT-REF, PACK-PERSON-REF, PACK-COMMERCIAL]
+    state: missing
+    resources_note: "This is where Cost per Accepted Outcome first becomes measurable. It is blocked on every missing pack at once, which is why R4's routes matter more than any other overnight output."
+    why: "The end-to-end run the whole programme builds towards."
+
+  - id: REQ-REG-01
+    consumer: "Regression and production-failure retention (R8)"
+    group: regression
+    media: "irreproducible model outputs from Eval runs and production failures"
+    target_quantity: ">=1,000 outputs supported without schema redesign"
+    required_metadata: "trial id, item id, provider/model/version/endpoint, prompt/config hashes, seed, timestamps, output hash, cost refs, api status, evaluator refs"
+    label_trust: "Resources stores evidence; Eval owns interpretation. Resources never decides the failure label."
+    independence: "regression items must be traceable to the exact conditions that produced them"
+    geo_language: n/a
+    rights_minimum: "project-owned outputs; third-party reference material inside them inherits its pack rights"
+    storage_class: C
+    candidate_sources: [LEGACY-MF-SCORES]
+    state: partial
+    resources_note: "The one legacy pool with real recovered evidence: 64 human pass/fail judgements with notes, plus 129 cost lines, recovered from git history tonight. The 64 IMAGES themselves are not in git and are metadata_only."
+    why: "A production failure that is not preserved with its exact conditions cannot become a regression test."
