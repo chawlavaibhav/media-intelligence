@@ -1,7 +1,7 @@
 # Repository Governor + Project Memory Design
 
 Date: 2026-08-25
-Status: DESIGN FOR USER REVIEW
+Status: APPROVED
 Scope: governance/control plane only
 
 ## 1. Problem
@@ -179,19 +179,20 @@ A session is allowed to persist for convenience, but no important project fact m
 
 ## 10. First cleanup / GOV-001 intent
 
-The first Governor task will be a bounded repository hygiene and state-reconstruction pass against the frozen current `main`.
+The first Governor task is an unusually thorough repository hygiene and state-reconstruction pass against the frozen current `main`, not a routine review.
 
-It should:
+It must:
 
 - reconstruct authoritative current state from committed GitHub evidence;
 - create the first `PROJECT-MEMORY.md`;
 - create `governance/GOVERNOR-CONTRACT.md` from this approved design;
-- inventory operational documents that are stale, contradictory, oversized, historical, or still current;
+- exhaustively audit all current operational/state documents for stale, contradictory, oversized, historical, ambiguous, or duplicated current-state claims;
+- explicitly classify each audited operational/state document as current authority, supporting/current, historical, superseded, or requiring correction;
 - add explicit supersession/current-status markers where necessary instead of reorganizing or deleting large portions of history;
 - bring the central coordination layer forward so a fresh session cannot mistake old state for current state;
 - preserve all domain evidence, historical baselines, task records, source knowledge, Eval artifacts, and Resources artifacts;
 - avoid new Canon/Eval/Resources methodology or product architecture work;
-- produce a dated governance audit report describing every material inconsistency found and how it was resolved or routed.
+- produce a dated governance audit report describing every material inconsistency found and how it was resolved, marked historical, or routed back to the owning stream/Controller.
 
 The cleanup must prefer targeted corrections and clear authority markers over large-scale file moves or cosmetic repository reorganization.
 
