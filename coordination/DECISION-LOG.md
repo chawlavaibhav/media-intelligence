@@ -1,14 +1,14 @@
 # Decision Log
 
-**Updated:** 25 Aug 2026 by Repository Governor, task GOV-001.
+**Updated:** 25 Aug 2026 — GOV-001 index plus post-audit Controller disposition.
 
 > **Scope notice.** The two narrative entries below are the project's **23 Aug 2026 architectural
 > decisions** and remain accurate as history. They are **not** a complete decision register: from
-> 24 Aug 2026 onward, Controller decisions were recorded inside the owning stream's folder rather
-> than here. GOV-001 found no index linking them, which meant a fresh Controller session following
-> the runbook could not find them.
+> 24 Aug 2026 onward, Controller decisions were recorded inside the owning stream's folder or in
+> dedicated Controller records.
 >
-> The index below is that link. It records only decisions with committed evidence; it creates none.
+> The index below links those committed decisions. It records only decisions with committed evidence;
+> it creates none.
 
 ## Decision index — 24 Aug 2026 onward
 
@@ -27,13 +27,15 @@
 | 25 Aug 2026 | **CANON-008 stops at its acquisition gate**; no source ingested, live Canon stays 19 | `canon/findings/CANON-008-CONTROLLER-BRIEF.md` | Controller brief (`needs_controller_review`) |
 | 25 Aug 2026 | **Approve the Repository Governor design** and the fifth-agent role | `docs/superpowers/specs/2026-08-25-repository-governor-project-memory-design.md` (Status: APPROVED) | approved spec |
 | 25 Aug 2026 | **Audit freeze** on all new domain work pending the governance reset | `governance/bootstrap/CONTROLLER-MIGRATION-SEED.md` §2, `governance/README.md` | migration seed + README |
+| 25 Aug 2026 | **Post-audit unblock:** close CANON-008 as a legitimate blocked-source adjudication and leave live Canon at 19; accept the Resources correction/lineage disposition; approve EVAL-005 checker gates provisionally; approve the Registry V0 schema for Eval measurement storage; re-scope the audit freeze so EVAL-006 is the only open domain task | `coordination/decisions/CONTROLLER-POST-AUDIT-UNBLOCK-2026-08-25.md` | **decision record** |
+| 25 Aug 2026 | **Authorize EVAL-006**: qualify the checker first, then create the first bounded empirical Capability Registry entries under fixed roster, item rules and ₹16,000 total API cap | `eval/tasks/EVAL-006.md` | **approved task** |
 
 ## What counts as a durable Controller decision
 
 **This repository has never used dedicated decision files exclusively, and this index does not
 pretend otherwise.** A durable Controller decision may currently be recorded in any of:
 
-- a **dedicated decision record** (`canon/decisions/`, `eval/decisions/`);
+- a **dedicated decision record** (`canon/decisions/`, `eval/decisions/`, or Controller-owned decision records);
 - an **approved task file or spec**;
 - a **Controller Brief carrying an explicit Controller disposition**;
 - an **approved proposal**;
@@ -46,12 +48,12 @@ each decision takes so its provenance is visible rather than assumed.
 disposition **is not a decision**, whichever file it sits in. The form of the record varies; the
 requirement that a Controller disposition exists does not.
 
-**Known variation in provenance strength.** Four of the decisions above have a dedicated record; the
-rest are carried by a brief, task file, approved proposal or frozen artifact. A brief mixes decision
-with worker narrative, which is weaker provenance than a dedicated record even when the disposition
-is explicit. **Normalising these into dedicated decision records is a routed improvement, not a
-current requirement** — see `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` R13.
-It must not be done retroactively in a way that rewrites what was actually decided at the time.
+**Known variation in provenance strength.** Some decisions have dedicated records; others are
+carried by a brief, task file, approved proposal or frozen artifact. A brief mixes decision with
+worker narrative, which is weaker provenance than a dedicated record even when the disposition is
+explicit. Normalising these into dedicated decision records is a routed improvement, not a current
+requirement. It must not be done retroactively in a way that rewrites what was actually decided at
+the time.
 
 ---
 
