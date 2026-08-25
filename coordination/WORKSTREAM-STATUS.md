@@ -14,8 +14,9 @@
 
 ## Global posture
 
-**Audit freeze — all new domain work is frozen** pending completion of the governance reset.
-**No task is open in any stream.** Next work in every stream is Controller-assigned only.
+**Audit freeze — all new domain work is frozen.** **No task is open in any stream.** Next work in
+every stream is Controller-assigned only. **The freeze remains in force until the Controller
+explicitly lifts or re-scopes it**; it does not expire when a governance task merges.
 
 | Stream | Status | Current approved work | Blocking item / next gate |
 |---|---|---|---|
@@ -76,8 +77,13 @@ Eye: A Graphic Guide* (2013), not the 2007 *The Photographer's Eye*.
 0 Registry entries. BSTD and the Marathi reserve are untouched.
 
 **EVAL-005 is the live artifact.** It asks whether a checker reports "matches" when the picture is
-subtly wrong, and it removes the annotator by rendering its own images from strings we chose, so what
-each image contains is known by construction.
+subtly wrong. Because the images are rendered from strings we chose, each item's **match/mismatch
+label is known by construction** — no annotator decides whether a picture matches its target.
+
+**This does not remove humans from validation.** Human review was still required, and performed, for
+lexical validity of each base word, perceptibility of the rendered difference and fitness of the
+render surface, and the exclusion decision that followed. The design removes **human annotation from
+determining the match/mismatch label**, not humans from the pipeline.
 
 | View | Contents | Status |
 |---|---|---|

@@ -5,14 +5,34 @@
 **Maintained by:** the Repository Governor (see `governance/GOVERNOR-CONTRACT.md`).
 **Last Governor reset:** 25 Aug 2026, task GOV-001, against `main` at `00ea9b067229cd992b77b7d6e0958df35178b01b`.
 
-This document is a curated synthesis, not a diary. It tells you what is true now and points to the
-committed evidence that proves it. Where it disagrees with the underlying artifact, **the artifact
-wins and the disagreement is a governance defect** — report it.
+## What this document is — and is not
 
-**Provenance labels used below.** `[repo]` = mechanically verified from committed files during
-GOV-001. `[decision]` = a Controller decision record exists in the repository. `[agent-reported]` =
-a worker reported it and GOV-001 did not independently rerun it. `[external]` = external research
-snapshot, not repository truth. `[unresolved]` = not established.
+This is a **map to the truth, not the truth itself.** It is a curated synthesis that tells you what
+is currently the case and points you to the thing that actually establishes it.
+
+**Where project truth comes from, in order:**
+
+1. **Committed evidence and artifacts** establish factual state.
+2. **Deterministic validators and reproducible calculations** establish mechanically checkable
+   invariants.
+3. **Explicit durable Controller decisions** establish project decisions.
+4. **This document** is the canonical entry point to those three. It is **not** a competing source
+   of truth and it establishes nothing on its own.
+
+**If this document conflicts with the underlying evidence, the evidence wins and this document is
+defective.** That is a governance defect to report, not a discrepancy to argue about.
+
+The Repository Governor is **downstream of all three authorities above**. It maintains this map's
+coherence, navigability and honesty about the evidence. **It does not manufacture or certify truth,
+and it does not determine whether Canon, Eval or Resources work is scientifically or technically
+correct** — that judgement belongs to the owning stream and the Controller.
+
+**Provenance labels used below.** Each label says *what owns the fact*, not who vouched for it.
+`[repo]` = established by a committed artifact, and memory was checked against it during GOV-001 —
+the artifact is the authority, and it is named. `[decision]` = a durable Controller decision exists
+in the repository at the path given. `[agent-reported]` = a worker reported it and it has not been
+independently reproduced; it remains agent-reported until it is. `[external]` = external research
+snapshot, not repository truth. `[unresolved]` = not established by anything.
 
 ---
 
@@ -54,8 +74,14 @@ These are not reopened without an approved integration task. Full list: `coordin
 2. **Book knowledge is never evidence about model capability.** The Capability Registry is empirical
    only, and **does not exist yet**. `[repo]`
 3. **Public dataset labels are one source's observations, not our ground truth.** `[decision]`
-4. **A worker's recommendation is not an approved decision.** Only a Controller-written task file or
-   decision record makes something approved.
+4. **A worker's recommendation is not an approved decision.** A recommendation becomes a decision
+   only when the Controller records a disposition. In this repository a durable Controller decision
+   may currently live in any of: a dedicated decision record (`canon/decisions/`, `eval/decisions/`),
+   an approved task file or spec, a Controller Brief carrying an explicit Controller disposition, an
+   approved proposal, or a frozen machine-readable decision artifact. **`coordination/DECISION-LOG.md`
+   is the index for discovering them.** The form varies; what does not vary is that a Controller
+   disposition must exist. Normalising these into dedicated decision records is a routed improvement,
+   not a current requirement.
 5. **Historical baselines are never rewritten to match current numbers.** Superseding is allowed;
    silent mutation is not.
 
@@ -115,9 +141,15 @@ qualified, no model benchmarked, no Capability Registry entry created, ₹0 API/
 
 **EVAL-005 is the live artifact: a Devanagari exactness battery.** It asks the question that costs
 money — we ask a generator for a specific string, it produces something *subtly* wrong, and the
-checker says "matches", shipping a defect with a passing grade. The battery removes the annotator
-entirely by rendering its own images from strings we chose, so what each picture contains is known
-by construction.
+checker says "matches", shipping a defect with a passing grade.
+
+**What the design actually removes.** The images are rendered from strings we chose, so each item's
+**match/mismatch label is known by construction** — no annotator decides whether a picture matches
+its target. **This does not remove humans from the pipeline.** Human review was still required, and
+was performed, for three separate questions: whether each base word is lexically valid Hindi,
+whether the rendered difference is perceptible and the render surface fit for use, and the
+subsequent exclusion decision. So the design removes **human annotation from determining the
+match/mismatch label** — not humans from validation.
 
 Two views exist and must not be confused: `[repo]`
 
@@ -194,7 +226,11 @@ from a schema draft or a plan document; drafts exist, implementations do not.
 
 ## 5. Current gate — the project is under audit freeze
 
-**All new domain work is frozen pending completion of the governance reset.** `[decision]`
+**All new domain work is frozen.** `[decision]`
+
+**The freeze remains in force until the Controller explicitly lifts or re-scopes it.** It is not
+tied to any task or pull request completing, and completing the governance reset did not end it.
+Merging governance work authorizes no domain work.
 (`governance/bootstrap/CONTROLLER-MIGRATION-SEED.md` §2, and `governance/README.md`.)
 
 Do not start, and do not self-assign: CANON-009 or other Canon expansion; EVAL-006 or any
@@ -315,14 +351,18 @@ no capability claim and no Registry entry. `[external]`
 | Per-stream status and next gate | `coordination/WORKSTREAM-STATUS.md` |
 | How do I start a session, approve a task, escalate? | `coordination/RUNBOOK.md` |
 | When may a worker run unattended? | `shared/AUTONOMY-POLICY.md` |
-| What has the Controller actually decided? | `coordination/DECISION-LOG.md` and the stream decision records it indexes |
+| What has the Controller actually decided? | `coordination/DECISION-LOG.md` — the index — and the decision records, approved tasks/specs, dispositioned Controller Briefs, approved proposals and frozen artifacts it points to |
 | What is believed but untested? | `coordination/ASSUMPTIONS.md` |
 | How is a Canon source admitted? | `canon/audit/AUDIT-GATE-v0.2.md` |
 | Which Canon sources are live? | `canon/audit/records/` + `canon/knowledge/current/` (one record per directory) |
 | What is the authoritative Eval battery? | `eval/battery/devanagari-exactness/human-validation/HUMAN-VALIDATION-RECORD.md` and `human-validation-v1.json` |
 | What media do we hold? | `resources/manifests/corpus-pilot-v0.jsonl` and `source-registry-v0.csv` |
-| What does the Governor do? | `governance/GOVERNOR-CONTRACT.md` |
+| What does the Governor do, and what may it write? | `governance/GOVERNOR-CONTRACT.md` |
 | What did the first repository audit find? | `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` |
+
+**Every row above names the thing that owns the fact.** This document summarises them; it does not
+outrank any of them. If a summary here and the file in the right-hand column disagree, the file is
+right and this document needs fixing.
 
 ## 11. How to start a session
 

@@ -8,19 +8,56 @@ Changing it is a Controller decision.
 
 ---
 
+## 0. Where authority comes from — read this before anything else
+
+**The Governor is not a source of project truth.** This section binds every other section below.
+
+Project truth has three sources, in order:
+
+1. **Committed evidence and artifacts** establish factual state.
+2. **Deterministic validators and reproducible calculations** establish mechanically checkable
+   invariants.
+3. **Explicit durable Controller decisions** establish project decisions.
+
+`PROJECT-MEMORY.md` is the **canonical entry point** to those three. It is not a competing source of
+truth and establishes nothing on its own.
+
+**The Governor sits downstream of all of them.** Its job is to keep the map coherent, navigable and
+honest about the evidence — not to manufacture, adjudicate or certify truth.
+
+Concretely, this means:
+
+- **The Governor does not establish whether Canon, Eval or Resources work is correct.** Scientific
+  and technical correctness of domain work belongs to the owning stream and the Controller. A
+  Governor review can say a document contradicts an artifact; it cannot say a method is sound.
+- **The Governor does not certify evidence.** When it recomputes a number from a manifest, the
+  manifest is the authority and the recomputation is a *check that the summary matches it* — not a
+  Governor warrant that the manifest is right.
+- **`PROJECT-MEMORY.md` never overrides an underlying fact.** If memory and evidence disagree,
+  **the evidence wins and memory is defective.** Fixing memory is the remedy; arguing from memory is
+  not.
+- **`PASS` is a narrow claim.** It means only: *no repository-coherence defect was found within this
+  review's scope.* It is **not** a statement that the underlying domain work is scientifically or
+  technically correct, that its results replicate, or that its methodology is sound.
+- **No further review layer.** The Governor does not create, delegate to, or require another
+  reviewer or governance tier. Controller, three domain streams, Governor — that is the whole model.
+
+---
+
 ## 1. The role
 
 The Governor is a **fifth, independent role**, separate from the Controller and from the Canon, Eval
 and Resources workers.
 
-It is not a domain worker and does not own project strategy. It owns one thing: **whether the
-repository still tells the truth about itself.**
+It is not a domain worker and does not own project strategy. It owns one narrow thing: **whether the
+repository's own account of itself stays coherent with its evidence.**
 
 ### Why the role exists
 
 The project's operating invariant is that **GitHub is project memory and chat is execution context
 only**. A fresh competent agent with zero conversation history must be able to reconstruct the
-authoritative project state from GitHub alone.
+authoritative project state from GitHub alone — **by reading the evidence**, with `PROJECT-MEMORY.md`
+telling it where to look.
 
 That invariant decays silently. A task completes, its own records are perfect, and three unrelated
 status documents quietly become wrong. Nobody owns the contradiction, because it belongs to no
@@ -99,13 +136,21 @@ artifact, derive it. A count that appears only in Markdown is a claim, not a fac
 
 ### Verdicts
 
-The Governor's verdict vocabulary is exactly three values.
+The Governor's verdict vocabulary is exactly three values. **All three are claims about repository
+coherence only.**
 
 | Verdict | Meaning |
 |---|---|
-| **PASS** | No integrity defect found within the review's scope. |
-| **PASS WITH NON-BLOCKING NOTES** | Defects found, none of which would mislead a future session about live project state or corrupt evidence. Notes are recorded and routed. |
+| **PASS** | **No repository-coherence defect found within the review's scope.** Nothing more. |
+| **PASS WITH NON-BLOCKING NOTES** | Coherence defects found, none of which would mislead a future session about live project state or corrupt evidence. Notes are recorded and routed. |
 | **BLOCK** | At least one evidence-backed inconsistency that would mislead about current state, mutate a historical baseline, break the evidence chain, or exceed an approved boundary. |
+
+**What `PASS` does not mean.** It is not a certification that the domain work is scientifically or
+technically correct, that a method is sound, that a result would replicate, that a threshold is well
+chosen, or that a measurement means what its author thinks it means. **Those judgements are not the
+Governor's to make and a Governor verdict must never be cited as though they were.** A PASS on a task
+whose methodology is wrong is a correct PASS — the wrongness is the stream's and the Controller's to
+catch.
 
 A BLOCK must name the file, the conflicting claims, the stronger evidence, and the owner. **A verdict
 without evidence is not a verdict.**
@@ -196,8 +241,13 @@ instead be linked to their authoritative artifact; or facts not yet accepted int
 The Governor compresses older sections as the project grows, preserving meaning and links while
 reducing context burden.
 
+**Every material current-state statement in `PROJECT-MEMORY.md` must either point to, or be plainly
+grounded in, the artifact, decision or check that owns it.** A claim with nothing behind it does not
+belong there, however confident it sounds.
+
 **If `PROJECT-MEMORY.md` conflicts with committed evidence, that is a governance defect and the
-evidence wins.** The document is the entry point, not an override.
+evidence wins.** The document is the entry point, not an override. The Governor's job when this
+happens is to fix the map — never to reinterpret the territory.
 
 ---
 

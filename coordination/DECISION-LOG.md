@@ -28,11 +28,30 @@
 | 25 Aug 2026 | **Approve the Repository Governor design** and the fifth-agent role | `docs/superpowers/specs/2026-08-25-repository-governor-project-memory-design.md` (Status: APPROVED) | approved spec |
 | 25 Aug 2026 | **Audit freeze** on all new domain work pending the governance reset | `governance/bootstrap/CONTROLLER-MIGRATION-SEED.md` §2, `governance/README.md` | migration seed + README |
 
-**Known register gap.** Only four of the decisions above have a dedicated decision record; the rest
-are evidenced inside a Controller Brief, task file or approved proposal. That is weaker provenance —
-a brief mixes decision with worker narrative. Whether to normalise this is a Controller call and is
-recorded as a routed finding in
-`governance/audits/2026-08-25-initial-repository-hygiene-audit.md`.
+## What counts as a durable Controller decision
+
+**This repository has never used dedicated decision files exclusively, and this index does not
+pretend otherwise.** A durable Controller decision may currently be recorded in any of:
+
+- a **dedicated decision record** (`canon/decisions/`, `eval/decisions/`);
+- an **approved task file or spec**;
+- a **Controller Brief carrying an explicit Controller disposition**;
+- an **approved proposal**;
+- a **frozen machine-readable decision artifact** (e.g. `human-validation-v1.json`, status `FROZEN`).
+
+**This log is the index for discovering them**, and the "Record type" column above says which form
+each decision takes so its provenance is visible rather than assumed.
+
+**What does not change.** A worker's recommendation, an inference, or a proposal with no Controller
+disposition **is not a decision**, whichever file it sits in. The form of the record varies; the
+requirement that a Controller disposition exists does not.
+
+**Known variation in provenance strength.** Four of the decisions above have a dedicated record; the
+rest are carried by a brief, task file, approved proposal or frozen artifact. A brief mixes decision
+with worker narrative, which is weaker provenance than a dedicated record even when the disposition
+is explicit. **Normalising these into dedicated decision records is a routed improvement, not a
+current requirement** — see `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` R13.
+It must not be done retroactively in a way that rewrites what was actually decided at the time.
 
 ---
 

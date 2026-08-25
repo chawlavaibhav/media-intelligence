@@ -6,7 +6,14 @@
 **Branch:** `work/gov-001-initial-repository-hygiene`
 **Scope:** governance/control plane. Canon, Eval and Resources artifacts were **read-only evidence**.
 
-**Governor verdict: PASS WITH NON-BLOCKING NOTES.**
+**Governor verdict: PASS WITH NON-BLOCKING NOTES — a claim about repository coherence only.**
+
+**What this verdict is not.** It does not certify that Canon, Eval or Resources work is
+scientifically or technically correct, that any method is sound, or that any result would replicate.
+Those judgements belong to the owning stream and the Controller. The Governor is downstream of the
+repository's authorities — committed evidence, deterministic validators, and durable Controller
+decisions — and reports only whether the repository's account of itself stays coherent with them.
+See `governance/GOVERNOR-CONTRACT.md` §0.
 
 The domain evidence layer is in good order and survived every mechanical check run against it. The
 **control plane had drifted badly** — the two documents a fresh Controller session is told to read
@@ -22,6 +29,11 @@ Audited from a fresh clone of `main`, with no reliance on chat history.
 Evidence priority, as required by the task: committed domain artifacts first; committed
 decision/task/findings records second; the one-time Controller migration seed only as a
 reconciliation lead; external research artifacts only with explicit external provenance; chat never.
+
+**Where a number was "verified" below, the artifact is the authority and the check is only that the
+summary matches it.** Recomputing 34,786 items from the manifest establishes that the handoff quotes
+the manifest correctly; it does not establish that the manifest is right, and no Governor check
+could. The same holds for every validator run in §7.
 
 **Numbers were derived from underlying artifacts, not read from Markdown.** Where a document stated
 a count, that count was recomputed from the manifest, the directory tree, or the validator that owns
@@ -266,7 +278,7 @@ evidence-backed, and returned to its owner.
 | **R10** | `resources/HANDOFF.md` says the EVAL-003 correction is "awaiting PR review". It merged as PR #5. | `resources/HANDOFF.md` | Medium | Resources |
 | **R11** | `resources/PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md` proposes a replacement Resources row for `coordination/WORKSTREAM-STATUS.md` and remains unactioned. GOV-001 corrected that row from primary evidence rather than by adopting the proposal, so the proposal still needs a Controller disposition. | `resources/PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md` | Low | Controller |
 | **R12** | Three broken internal links in domain files: `canon/experiments/CANON-EXPERIMENT-V0.md` and `eval/battery/CAPABILITY-LAB-V0-PLAN.md` both link `EVAL-CORPUS-PLAN.md`, **which exists nowhere in the repository**; `canon/knowledge/SPEC-02-atom-schema.md` links `FINDINGS-10-…` as a sibling when it lives in `canon/findings/`. | as listed | Low | Canon / Eval |
-| **R13** | **Only 4 of 13 recorded Controller decisions have a dedicated decision record**; the rest are evidenced inside a Controller Brief, task file or approved proposal, which mixes decision with worker narrative. Whether to normalise this is a Controller call. | `coordination/DECISION-LOG.md` index | Low | Controller |
+| **R13** | **Decision provenance varies in strength.** 4 of the 13 indexed Controller decisions have a dedicated decision record; the rest are carried by a Controller Brief, task file, approved proposal or frozen machine-readable artifact. All are valid durable decisions under the repository's actual practice — a brief simply mixes decision with worker narrative, which is weaker provenance. **Optional normalisation, not a defect**; if ever done it must not rewrite what was decided at the time. | `coordination/DECISION-LOG.md` index | Low | Controller |
 | **R14** | `eval/rubrics/IDENTITY-CONSISTENCY-RUBRIC-V0-DRAFT.md` is frozen V0 but keeps `-DRAFT` in its filename. The file explains why (the approved task names that exact path) and states that the status inside governs. **Recorded as understood, not as a defect.** | as listed | Low | Eval |
 
 ---
@@ -517,17 +529,28 @@ Every file GOV-001 changed, and why it is inside the write boundary.
 
 **Created (3):** `PROJECT-MEMORY.md`, `governance/GOVERNOR-CONTRACT.md`, this audit.
 
-**Modified (11):** `governance/README.md`, `governance/bootstrap/CONTROLLER-MIGRATION-SEED.md`
-(banner only, body unedited), and nine files in `coordination/` — `PROJECT-CONTRACT.md`,
-`CONTROL-STATE.md`, `WORKSTREAM-STATUS.md`, `DECISION-LOG.md`, `RUNBOOK.md`,
-`AUTOMATION-ROADMAP.md`, `ASSUMPTIONS.md`, `CANON-003-LANE-A-C-AUDIT.md` and
-`CANON-003-BOOKS-08-10-AUDIT.md`.
+**Modified (12):** `governance/README.md`, `governance/tasks/GOV-001.md` (status line),
+`governance/bootstrap/CONTROLLER-MIGRATION-SEED.md` (banner only, body unedited), and nine files in
+`coordination/` — `PROJECT-CONTRACT.md`, `CONTROL-STATE.md`, `WORKSTREAM-STATUS.md`,
+`DECISION-LOG.md`, `RUNBOOK.md`, `AUTOMATION-ROADMAP.md`, `ASSUMPTIONS.md`,
+`CANON-003-LANE-A-C-AUDIT.md` and `CANON-003-BOOKS-08-10-AUDIT.md`.
 
-**Total: 14 files changed, +1,758 / −130 lines.** All 130 deleted lines are control-plane lines,
-preserved in Git history: `WORKSTREAM-STATUS.md` 52, `CONTROL-STATE.md` 49, `RUNBOOK.md` 16
-(the obsolete worktree block), `AUTOMATION-ROADMAP.md` 5, `governance/README.md` 3,
-`PROJECT-CONTRACT.md` 2, `ASSUMPTIONS.md` 2 (link targets), `DECISION-LOG.md` 1 (link target).
-**Zero deletions in any domain directory.**
+**Total: 15 files changed, +1,910 / −134 lines.** All 134 deleted lines are control-plane lines,
+preserved in Git history: `WORKSTREAM-STATUS.md` 52, `CONTROL-STATE.md` 49, `RUNBOOK.md` 19
+(the obsolete worktree/enforcement wording), `AUTOMATION-ROADMAP.md` 5, `governance/README.md` 3,
+`PROJECT-CONTRACT.md` 2, `ASSUMPTIONS.md` 2 (link targets), `DECISION-LOG.md` 1,
+`governance/tasks/GOV-001.md` 1. **Zero deletions in any domain directory.**
+
+**Correction pass, same task.** After the Controller's review of the initial GOV-001 submission, a
+bounded correction pass was applied to this branch. It made the authority model explicit — project
+truth comes from committed evidence, deterministic validators and durable Controller decisions, with
+`PROJECT-MEMORY.md` as the entry point to them and the Governor **downstream of all three** — and
+resolved four Controller merge gates: post-merge-state correctness (no document now describes GOV-001
+as in progress, and the audit freeze is durable rather than tied to a merge), the runbook's
+worktree-enforcement contradiction, the over-narrow definition of an approved decision, and the
+imprecise claim that EVAL-005 "removes the annotator". **No domain file was touched in that pass
+either**, and the audit's findings, severities and classification counts are unchanged by it except
+where stated in this section and in R13.
 
 **Confirmed unchanged:**
 
@@ -598,7 +621,8 @@ in the control plane — the layer that had no owner until now.**
 **Recommended next steps for the Controller** (recommendations, not decisions, and explicitly **not**
 authorizations):
 
-1. Merge GOV-001 and lift or re-scope the audit freeze.
+1. Merge GOV-001. **Note that merging does not lift the audit freeze** — the freeze remains in force
+   until the Controller explicitly lifts or re-scopes it, which is a separate decision.
 2. Dispose of R1 and R2 — merge the stranded evidence, or record a decision that it is abandoned.
    Leaving decisions pointing at absent evidence is the worst of the three options.
 3. Route R3 to Resources as a small bounded fix; it is the only finding that can actively destroy
@@ -607,7 +631,8 @@ authorizations):
 5. Supply or formally set aside the two missing external acquisition artifacts before any acquisition
    decision relies on them.
 
-**GOV-002 has not been started, no domain task was opened, and nothing was merged.**
+**GOV-001 opened no domain task, authorized no domain work, and did not start GOV-002. The audit
+freeze it operated under remains in force until the Controller explicitly lifts or re-scopes it.**
 
 ---
 

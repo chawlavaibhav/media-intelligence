@@ -16,9 +16,11 @@
 
 ## Global posture — audit freeze
 
-**All new domain work is frozen** pending completion of the governance reset. No Canon, Eval,
-Resources, acquisition, Capability Registry or Production IR task may be opened or self-assigned.
-**No task is currently open in any stream.**
+**All new domain work is frozen.** No Canon, Eval, Resources, acquisition, Capability Registry or
+Production IR task may be opened or self-assigned. **No task is currently open in any stream.**
+
+**The freeze remains in force until the Controller explicitly lifts or re-scopes it.** It does not
+expire when a governance task completes or merges.
 
 ## Architecture state
 
@@ -120,7 +122,9 @@ Pending optional Controller action: `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-R
 
 ## Current integration gates
 
-1. **Governance:** GOV-001 is under review. The audit freeze holds until the Controller merges it.
+1. **Governance:** the Governor control layer is established (`PROJECT-MEMORY.md`,
+   `governance/GOVERNOR-CONTRACT.md`, `governance/audits/`). **The audit freeze remains in force
+   until the Controller explicitly lifts or re-scopes it.**
 2. **Canon:** decide CANON-008 — the Devanagari slot is empty and the task is stopped at the
    acquisition gate. No other Canon work is authorized.
 3. **Eval:** approve a checker roster and API budget, and the proposed thresholds. Optionally decide

@@ -15,16 +15,22 @@ work/gov-<nnn>-<slug>                 Governor tasks
 
 **A worker stays on its own branch for the whole session and never edits another stream's files.**
 When a task is done the worker commits, pushes, and the Controller reviews the Controller Brief and
-merges via PR. Ownership is enforced by directory: `canon/**`, `eval/**` and `resources/**` each
-belong to one stream, `coordination/**` and `governance/**` belong to the Controller and Governor.
+merges via PR.
+
+**The control mechanism is three things together:** stream directory ownership (`canon/**`,
+`eval/**`, `resources/**` each belong to one stream; `coordination/**` and `governance/**` belong to
+the Controller and Governor), the approved scope of the assigned task, and PR review before merge.
 A stream reaches another's territory only through a `PROPOSED-INTEGRATION-CHANGE-<ID>.md` file.
+
+**Worktrees are optional execution convenience only.** Using `git worktree` to keep streams in
+separate directories is fine and often handy. It enforces nothing, and no rule depends on it.
 
 > **Correction notice.** This section previously described three long-lived per-stream worktrees
 > (`work/canon`, `work/eval`, `work/resources`) checked out under a sibling
-> `media-intelligence-worktrees/` directory. Actual practice moved to per-task branches from
-> CANON-003 onward, and the three original branches are stale. Working in a separate directory per
-> stream is still a useful convenience — `git worktree` remains fine — but it is **not** the
-> ownership mechanism. Directory ownership plus PR review is.
+> `media-intelligence-worktrees/` directory, and called that arrangement the enforcement mechanism
+> behind stream ownership. Actual practice moved to per-task branches from CANON-003 onward, and the
+> three original branches are stale. **Worktrees never enforced anything** — directory ownership,
+> approved task scope and PR review do.
 
 **Branch hygiene.** Most `work/*` branches on the remote are historical: their content reached `main`
 by squash merge, so `git branch --merged` reports them as unmerged and cannot be trusted to tell you
@@ -116,9 +122,10 @@ See `governance/GOVERNOR-CONTRACT.md`. Its verdict is `PASS`, `PASS WITH NON-BLO
 `BLOCK` with evidence. The Governor advises; **the Controller merges.**
 
 ## Merging work safely
-Each stream owns its directory tree exclusively (enforced by worktree, see below, or by
-convention if worktrees aren't in use). A stream never edits another stream's files or
-`coordination/` directly — only via a `PROPOSED-INTEGRATION-CHANGE` file the Controller merges in.
+Each stream owns its directory tree exclusively. **The control mechanism is stream directory
+ownership plus approved task scope plus PR review** — not tooling. A stream never edits another
+stream's files or `coordination/` directly; it reaches them only via a
+`PROPOSED-INTEGRATION-CHANGE` file the Controller actions.
 
 ## Recovering from a blocked task
 Task stays `needs_controller_review`. Controller either unblocks (answers the question, approves
