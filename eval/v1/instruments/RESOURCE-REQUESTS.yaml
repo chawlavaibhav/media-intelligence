@@ -1,0 +1,252 @@
+# =============================================================================
+# E3 — Resource requests from Eval to Resources
+# =============================================================================
+# Date: 2026-08-26 · Task: E3 · Branch: work/eval-v1-overnight
+#
+# STATUS: PROPOSED REQUEST, NOT AN APPROVED TASK.
+# Eval has NOT edited any Resources file and will not. This is Eval stating
+# exactly what evidence each evaluator family needs in order to be qualified.
+# Resources owns discovery, licensing, lineage, rights and integrity; Eval owns
+# only the requirement.
+#
+# These figures MATCH the shared V1 interface targets in
+# coordination/plans/2026-08-26-THREE-STREAM-OVERNIGHT-PROGRAM.md section 3.4.
+# Where Eval proposes an ADDITION, it is flagged `delta_from_shared_contract`.
+# =============================================================================
+
+request_id: EVAL-E3-RESOURCE-REQUESTS
+date: 2026-08-26
+status: PROPOSED_NOT_APPROVED
+acquisition_authorised: false
+note: >-
+  Nothing here authorises acquisition. Several items may already be satisfiable
+  from material Resources holds; Eval cannot tell, because the raw corpus is not
+  committed to GitHub and is therefore not inspectable from this cloud session.
+
+requests:
+
+  # ---------------------------------------------------------------- family 1
+  - family: 1
+    family_name: text_ocr
+    unblocks_capabilities: [exact_text_devanagari, exact_text_latin,
+                            text_logo_stability_in_clip]
+    already_satisfied:
+      - item: "Devanagari checker-qualification battery"
+        state: HELD_AND_FROZEN
+        detail: "96 items, 48/48, 48 accepted base words, 33 hard opportunities."
+        action_required: none
+    needed:
+      - item: "Latin exact-text calibration pack"
+        quantity: "~40 base strings, one mismatch item per string"
+        source: constructed_by_eval
+        resources_action: none
+        human_cost: "low - English word validity is dictionary-checkable"
+        note: >-
+          Eval constructs this. It must NOT mutate the Devanagari pack, which is
+          frozen and whose human validation was performed against those exact
+          bytes.
+      - item: "~36-42 additional validated Hindi base words"
+        priority: OPTIONAL_BLOCKS_NOTHING
+        purpose: >-
+          Would tighten the iid reference figure from 8.68% to below 5% by
+          taking the pool from 48 to 84-90 accepted words. It is a SIZING
+          improvement only - the deterministic zero-false-pass gate is unchanged
+          and a checker can be qualified today at 48 words.
+        resources_action: >-
+          CHECK EXISTING LOCAL MATERIAL FIRST. Do not acquire. A merged
+          Resources finding establishes 3,924 single-word crops are
+          transcription-resolvable, but those strings live in the git-ignored
+          corpus and their DISTINCT-WORD yield is unknown.
+        cross_ref: eval/tasks/EVAL-005-RESOURCES-REQUEST.md
+
+  # ---------------------------------------------------------------- family 2
+  - family: 2
+    family_name: deterministic_cv_geometry
+    unblocks_capabilities: [object_count, spatial_relationship,
+                            attribute_binding, packaging_brand_colour_fidelity,
+                            edit_preservation, delivery_format_compliance]
+    already_satisfied:
+      - item: "Synthetic known-answer geometry pack"
+        state: BUILT_IN_THIS_SESSION
+        detail: >-
+          100 scoreable fixtures + 2 negative controls, 102/102 pixel-distinct,
+          deterministic from a seed, zero human labels, zero spend.
+        location: eval/v1/instruments/fixtures/cv-geometry/
+        action_required: none
+    needed:
+      - item: "Declared brand colour reference values"
+        quantity: "one reference value per product in the product pack"
+        purpose: "packaging_brand_colour_fidelity needs a target to compare against"
+        note: >-
+          A photograph of a product is not a colour reference. The requirement
+          is a stated value in a stated colour space, or a physical reference
+          captured under known lighting.
+        delta_from_shared_contract: >-
+          ADDITION. The shared contract asks for 12 products x >=4 views but
+          does not mention declared colour values. Without them this capability
+          cannot be scored at all, only described.
+
+  # ---------------------------------------------------------------- family 3
+  - family: 3
+    family_name: structured_visual_vlm
+    unblocks_capabilities: [person_identity, product_identity,
+                            reference_conditioning, logo_wordmark_fidelity,
+                            typography_legibility, anatomy_hands,
+                            human_object_contact, human_human_interaction,
+                            physics_material_appearance]
+    priority: HIGHEST
+    priority_reason: "Unblocks more capabilities than any other single family."
+    needed:
+      - item: "Product reference pack"
+        quantity: ">=48 images = 12 products x >=4 views"
+        matches_shared_contract: true
+      - item: "Person reference pack"
+        quantity: ">=32 images = 8 identities x >=4 views"
+        matches_shared_contract: true
+      - item: "SAME-CATEGORY DECOYS"
+        quantity: ">=2 additional distinct products per product category, and >=2 additional distinct people of similar type per identity"
+        delta_from_shared_contract: >-
+          ADDITION, and the single most important one in this file. The shared
+          contract specifies matches only. WITHOUT DECOYS THE QUALIFICATION IS
+          NEARLY WORTHLESS - an instrument that answers "yes, that is a shampoo
+          bottle" would score as though it had verified identity. Decoys are
+          what separate recognising a CATEGORY from recognising an INDIVIDUAL,
+          and permissiveness is the dangerous failure direction.
+      - item: "Controlled brand marks / wordmarks"
+        quantity: ">=8 marks, each flat plus on curved and angled surfaces"
+        delta_from_shared_contract: >-
+          ADDITION. logo_wordmark_fidelity is recorded in prior findings as
+          `required_but_no_calibrated_instrument`. Template matching works flat
+          and fails under perspective and curvature - which is where commercial
+          work lives - so the pack must contain the hard geometry.
+      - item: "Human adjudication time"
+        quantity: "not estimated - depends on final pack size"
+        note: "This family's reference CANNOT be constructed without people."
+
+  # ---------------------------------------------------------------- family 4
+  - family: 4
+    family_name: temporal_video
+    unblocks_capabilities: [person_stability_in_clip, product_stability_in_clip,
+                            text_logo_stability_in_clip,
+                            multi_shot_spatial_continuity,
+                            motion_action_quality, action_adherence]
+    priority: HIGH
+    priority_reason: >-
+      Second-largest unblock, and needs ZERO human labels - truth is injected by
+      perturbation. Cheapest high-value pack after family 2.
+    needed:
+      - item: "Clean base clips suitable for perturbation"
+        quantity: ">=12 clips, 6-20 seconds"
+        must_contain: ["a person", "a product", "on-screen text", ">=2 clips that cut between shots"]
+        delta_from_shared_contract: >-
+          ADDITION. The shared contract lists AV clips for speech work but no
+          clean visual clips for temporal-instrument qualification. These need
+          NOT be generated and need no annotation - any rights-cleared clean
+          footage serves, because we are qualifying the INSTRUMENT, not scoring
+          a generator.
+        human_cost: none
+    eval_will_build: "the perturbation code - deterministic, no external dependency"
+
+  # ---------------------------------------------------------------- family 5
+  - family: 5
+    family_name: speech_audio_av
+    unblocks_capabilities: [spoken_language_correctness, single_speaker_lip_sync,
+                            two_speaker_turn_assignment_and_lip_sync,
+                            emotional_prosodic_fit, audio_video_synchronisation]
+    needed:
+      - item: "Single-speaker clean AV clips"
+        quantity: 24
+        must_include: "English, Hindi and Hinglish represented"
+        matches_shared_contract: true
+      - item: "Two-speaker clean AV clips"
+        quantity: 12
+        matches_shared_contract: true
+      - item: "Transcripts"
+        quantity: "one per clip"
+        matches_shared_contract: true
+      - item: "TURN BOUNDARIES for the two-speaker clips"
+        quantity: "one per clip"
+        matches_shared_contract: true
+        emphasis: >-
+          Already in the shared contract, restated because it is the field most
+          easily dropped in delivery. Turn boundaries are what make a WRONG
+          speaker assignment machine-detectable. Without them the two-speaker
+          capability cannot be scored at all.
+      - item: "First-language Hindi listener time"
+        quantity: "not estimated"
+        note: >-
+          Required for pronunciation acceptability, which a transcript match
+          CANNOT establish - a robust ASR normalises a mispronunciation into the
+          correct word, exactly as a vision checker silently corrects a
+          misspelling.
+
+  # ---------------------------------------------------------------- family 6
+  - family: 6
+    family_name: creative_commercial
+    unblocks_capabilities: [proposition_objective_fit, hierarchy_product_as_hero,
+                            composition_brand_register,
+                            hook_pacing_temporal_hierarchy]
+    priority: LOWEST
+    priority_reason: >-
+      Most expensive to qualify and the least able to gate routing - all four
+      capabilities are descriptive_only. Sequence after the hard-constraint
+      families.
+    needed:
+      - item: "Commercial creative asset bank"
+        quantity: "80 = 40 static + 40 video, split 60 active + 20 untouched reserve"
+        representation: ">=50% Indian-market"
+        matches_shared_contract: true
+        selection_rule: >-
+          Selection MUST be independent of Canon's principles. Choosing assets
+          that illustrate what Canon teaches, then testing whether Canon-derived
+          judgement matches them, is circular - books teach hierarchy, pick
+          hierarchy examples, Canon "wins".
+      - item: "KNOWN-CLEAN assets for false-criticism measurement"
+        quantity: ">=15 of the 60 active, agreed by the human panel to have no issue"
+        delta_from_shared_contract: >-
+          ADDITION. An instrument that flags problems in flawless work is as
+          useless as one that misses real problems, and more insidious because
+          it looks diligent. Without known-clean assets the false-criticism rate
+          cannot be measured.
+      - item: "Fresh independent human reviewer panel"
+        note: >-
+          Public or source preference labels are NEVER our creative truth. Two
+          dataset releases from the same lab already disagree with each other on
+          about a third of matched regions.
+
+# -----------------------------------------------------------------------------
+# SUMMARY OF DELTAS — what Eval proposes ADDING to the shared contract
+# -----------------------------------------------------------------------------
+proposed_additions_to_shared_contract:
+  - id: ADD-01
+    item: "Same-category decoys for the person and product reference packs"
+    severity: CRITICAL
+    reason: "Without decoys, identity qualification cannot detect permissiveness."
+  - id: ADD-02
+    item: ">=12 clean base clips for temporal-instrument perturbation"
+    severity: HIGH
+    reason: "Unblocks 6 capabilities at zero human-labelling cost."
+  - id: ADD-03
+    item: "Declared brand colour reference values"
+    severity: MEDIUM
+    reason: "A photograph is not a colour reference; without values the capability is descriptive only."
+  - id: ADD-04
+    item: "Controlled brand marks on curved and angled surfaces"
+    severity: MEDIUM
+    reason: "Flat marks qualify only the easy case; commercial work is the hard case."
+  - id: ADD-05
+    item: ">=15 known-clean commercial assets"
+    severity: MEDIUM
+    reason: "Required to measure false criticism, which is otherwise unmeasurable."
+
+sequencing_recommendation:
+  rationale: >-
+    Order by capabilities-unblocked per unit of human time. Human time is the
+    dominant cost in this programme, not API spend.
+  order:
+    - "1. Family 2 - pack ALREADY BUILT, zero human time, 6 capabilities"
+    - "2. Family 4 - zero human labels, 6 capabilities, needs only clean clips"
+    - "3. Family 1 - Devanagari pack already frozen; needs a checker roster and budget"
+    - "4. Family 3 - highest unblock count but needs references AND adjudication"
+    - "5. Family 5 - needs AV packs and a first-language listener"
+    - "6. Family 6 - most expensive, gates nothing hard"
