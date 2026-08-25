@@ -1,134 +1,137 @@
 # Controller State
 
-**Updated:** 25 Aug 2026 by Repository Governor, task GOV-001, against `main` at
-`00ea9b067229cd992b77b7d6e0958df35178b01b`.
+**Updated:** 25 Aug 2026 by Controller after GOV-001, against the post-audit decisions recorded in
+`coordination/decisions/CONTROLLER-POST-AUDIT-UNBLOCK-2026-08-25.md`.
 
 **Read `PROJECT-MEMORY.md` first.** This file is the Controller's operational snapshot;
-`PROJECT-MEMORY.md` is the canonical narrative and the authority map.
+`PROJECT-MEMORY.md` is the canonical narrative and authority map. Until the Governor performs the
+next coherence refresh, the newer Controller decision and this file supersede any stale memory text
+that still says the audit freeze is global or that no task is open.
 
-> **Correction notice.** Before GOV-001 this file described CANON-003 as an in-flight extraction
-> batch with 13 of 18 books accepted, and EVAL-004 as unopened. Both were badly out of date — the
-> repository had moved through CANON-004 to CANON-008 and EVAL-005 in the meantime. The stale text is
-> preserved in Git history; the substantive history it described is preserved in
-> `coordination/CANON-003-LANE-A-C-AUDIT.md`, `coordination/CANON-003-BOOKS-08-10-AUDIT.md`,
-> `canon/decisions/` and `canon/findings/`. This correction was requested by the Canon stream in
-> `canon/PROPOSED-INTEGRATION-CHANGE-CANON-005-COORDINATION.md`, which had not been actioned.
+> **Historical correction notice.** Before GOV-001 this file described CANON-003 as an in-flight
+> extraction batch with 13 of 18 books accepted, and EVAL-004 as unopened. Both were badly out of
+> date. GOV-001 corrected that state; Git history preserves the prior text.
 
-## Global posture — audit freeze
+## Global posture — audit freeze re-scoped
 
-**All new domain work is frozen.** No Canon, Eval, Resources, acquisition, Capability Registry or
-Production IR task may be opened or self-assigned. **No task is currently open in any stream.**
+The GOV-001 audit freeze is **not fully lifted**. It is explicitly re-scoped by the Controller.
 
-**The freeze remains in force until the Controller explicitly lifts or re-scopes it.** It does not
-expire when a governance task completes or merges.
+**OPEN:** `EVAL-006` only — checker qualification and a bounded first Capability Registry bootstrap,
+under `eval/tasks/EVAL-006.md` and its stated budgets/stop conditions.
+
+**HOLD:** new Canon expansion, Resources expansion/acquisition, Production IR, Production Planner or
+routing implementation, Canon-consumption/RAG/training, and any Eval model/dimension outside EVAL-006.
+
+Completion of EVAL-006 does not automatically authorize another task.
 
 ## Architecture state
 
 - Source Knowledge: **SPEC-03 v0**. Operational Bindings: **SPEC-04 v0**. Knowledge Ontology:
-  **SPEC-05 v0** — Governance rule 5 amended twice under Controller-approved Canon tasks (CANON-005
-  independence-by-lineage; CANON-006 fifth dependence relation).
+  **SPEC-05 v0**.
 - SPEC-01 Creative IR v0.1 locked. SPEC-02 superseded conceptually by SPEC-03/04/05 and retained as
   evidence.
 - Capability Battery V0: approved as **measurement design**, not empirical capability data.
 - Identity rubric V0: frozen for later calibration. **Frozen does not mean calibrated or validated.**
-- M1b Devanagari generation-item design V0: approved **design only**. Zero items exist.
-- **Capability Registry does not exist.** Its cross-stream schema remains proposed/deferred.
+- M1b Devanagari generation-item design V0: approved **design only**.
+- `eval/battery/CAPABILITY-REGISTRY-SCHEMA-V0-DRAFT.yaml` is now **approved as the basis for Eval
+  measurement storage** under the post-audit Controller decision. Its cross-stream fields may store
+  evidence but carry **no approved Planner/routing semantics yet**.
+- **Capability Registry still has no empirical entries yet.** EVAL-006 is the task authorised to
+  create the first evidence-backed entries.
 - **Production IR does not exist.** Neither does the Production Planner or any routing system.
 
-## Canon status — 19 live sources; no open task
+## Canon status — 19 live sources; CANON-008 closed; no open Canon task
 
-**CANON-003 is closed.** It stopped at **16 Controller-accepted usable books** on 24 Aug 2026 — above
-its minimum of 15, below its 18 target, by deliberate Controller decision
-(`canon/decisions/CANON-003-STOP-AT-16-2026-08-24.md`). It was integrated and merged via PR #4.
+**CANON-003 is closed.** It stopped at **16 Controller-accepted usable books** on 24 Aug 2026 and was
+integrated and merged via PR #4.
 
-**Two counts exist and must not be confused:**
+Two counts remain intentionally distinct:
 
 | Number | Value | Meaning |
 |---|---|---|
 | Historical CANON-003 / CANON-004 method-test corpus | **16** | Frozen forever. |
-| **Live accepted Canon** | **19** | Current, verified below. |
+| **Live accepted Canon** | **19** | Current live Canon. |
 
-Mechanically verified by GOV-001 at the baseline SHA: `canon/knowledge/current/` holds 19 source
-directories; `canon/audit/records/` holds 19 audit records; the sets match one-for-one.
-`canon/validation/validate_audit_gate_v02.py` → 19 records, 0 errors.
-`canon/validation/validate_canon003_integrated.py` → 16 books, 0 errors, unchanged.
-
-**Audit Gate v0.2 is the authoritative admission method** (adopted CANON-004, applied CANON-005).
-It governs downstream *use*, not storage: an unaudited or stale-audited source stays as evidence but
-may not be used for cross-source promotion, product use or Canon-consumption.
-`evidence_insufficient` is a legitimate completed outcome.
+Audit Gate v0.2 remains the authoritative admission method.
 
 Since CANON-003 closed:
 
-- **CANON-006** admitted both former deferred reserves — *Master Shots* and *The Conversations*.
-  16 → 18. Added the pairwise, symmetric lineage relation `shared_primary_informant`.
-  **The "deferred reserve" status of Books 11–12 is therefore obsolete.**
-- **CANON-007** admitted *Effectiveness in Context*. 18 → 19. Added the representation-loss category
-  `figure_semantic_binding_lost`.
-- **CANON-008 STOPPED at its acquisition gate; nothing was ingested.** The official archive route for
-  Girish Dalvi's Devanagari thesis publishes only a 3-page abstract. Live Canon stays 19. The task is
-  `needs_controller_review`; four options are in `canon/findings/CANON-008-CONTROLLER-BRIEF.md`.
+- **CANON-006** admitted *Master Shots* and *The Conversations*: 16 → 18.
+- **CANON-007** admitted *Effectiveness in Context*: 18 → 19.
+- **CANON-008** stopped correctly at its acquisition gate because the official Dalvi archive exposes
+  only a 3-page abstract while the full thesis is behind IIT Bombay authentication.
 
-**The Canon still has no accepted Devanagari-structure source.** *Thinking with Type* remains blocked
-on structural column interleaving.
+**Controller disposition on CANON-008:** close the task as a legitimate blocked-source adjudication
+and leave the Devanagari-structure gap open. No mirror, bypass, substitute identity or replacement
+source is authorised by that decision. A future legitimate full thesis or replacement requires a new
+Canon task.
 
-## Eval status — battery human-validated; no checker ever run
+**The Canon therefore remains at 19 live accepted sources and still has no accepted
+Devanagari-structure source.** There is no open Canon task.
 
-**No checker is qualified. No model has been benchmarked. No Registry entry exists. ₹0 API and
-generation spend.**
+## Eval status — EVAL-006 is the only open domain task
 
-- **EVAL-001/002/003 closed and merged.** EVAL-003's 54-item Hindi-primary photographed-signage pack
-  (173 eligible → 54 selected → 54 distinct hashes) is untouched and still available.
-- **EVAL-004 STOPPED by Controller, 24 Aug 2026** after one 54-item Reader-A pilot. There is no
-  Reader B and no two-reader reference. Reader A is exploratory evidence only; no checker may be
-  qualified, ranked or entered in the Registry from it, and it must not be resumed.
-- **EVAL-005 human validation is COMPLETE and frozen.** One Hindi-competent reviewer answered 98 of
-  98; 5 of 53 base words were rejected, excluding 10 items. Controller decision: **PRUNE, DO NOT
-  REBUILD** — excluded items are not replaced.
+No generator has yet been benchmarked and the Capability Registry has no empirical entry **as of the
+opening of EVAL-006**.
 
-**Authoritative battery: the 96-item validated view** — 48 match / 48 mismatch, 48 accepted base
-words, 33 hard opportunities on 33 distinct base words, 20 failure classes across 5 groups. The
-original **106-item build is historical source material and is unchanged**.
+Completed prior state:
 
-GOV-001 verified the human-validation record mechanically: `human-validation-v1.json` is status
-`FROZEN`, lists the 10 excluded item IDs and the expected validated state, and both raw response
-artifacts match their recorded SHA-256 hashes.
+- EVAL-001/002/003 closed and merged.
+- EVAL-004 stopped by Controller; Reader A remains exploratory only.
+- EVAL-005 human validation complete and frozen. Authoritative battery: **96 items — 48 match / 48
+  mismatch, 48 accepted base words, 33 hard opportunities, 20 failure classes across 5 groups**.
 
-**One reader is not independent-reader ground truth**, and the record says so. The 8.68% figure is an
-iid *reference* calculation for sizing under an assumption the battery explicitly does not establish.
-The actual qualification gate is deterministic: **zero false passes**.
+**Checker qualification gates approved provisionally for EVAL-006:**
 
-**Next Eval gate:** Controller approval of a checker roster and API budget (order ₹600–2,100 on an
-old price needing re-verification), plus the proposed thresholds. That is the only thing blocking the
-project's first real measurement.
+- zero false passes;
+- false-fail rate <= 10%;
+- refusal rate <= 5%;
+- repeat consistency >= 0.95 across at least 3 full passes in both checker shapes.
 
-## Resources status — closed; no open task
+The 10%, 5% and 0.95 values are provisional usability thresholds, not empirical truths. They may be
+revised only by later Controller decision using completed-run evidence. The iid reference figure
+remains a sizing calculation only.
 
-RES-001/002 closed and merged. The EVAL-003 correction pass **is merged** (PR #5).
+**Approved first checker roster:** GPT-5.6 Luna, Gemini 3.7 Flash, Claude Sonnet 5,
+Qwen3-VL-32B-Instruct. Exact API IDs, availability and pricing must be verified from official
+provider documentation before spend. Checker budget cap: **₹4,000**.
 
-**Corpus: 34,786 items / 5.70 GB across 8 acquired sources; 4 blocked.** GOV-001 recomputed this
-directly from `resources/manifests/corpus-pilot-v0.jsonl`: 34,786 records, all `validation_status:
-ok`, 34,586 distinct hashes, 200 duplicates (27 within a source, 173 across two). Every per-source
-count matches.
+**EVAL-006 then bootstraps the first Registry measurements**, only if at least one checker qualifies.
+Its approved first generator/workflow roster and item rules are in `eval/tasks/EVAL-006.md`. Total
+external API cap for the task is **₹16,000**, with a maximum of 260 generated images/clips including
+retries.
 
-The corpus is **internal research and evaluation material only** unless separately cleared.
+EVAL-006 explicitly preserves the broader production-capability mission — product/person identity,
+reference conditioning, human-object interaction, motion/physics, logo fidelity and
+**speech/lip-sync including Hindi and two-speaker cases** remain visible future work rather than being
+dropped because the first empirical Registry cells are narrower.
 
-**IndicSTR12 and IIIT-ILST are one source lineage, not two independent sources** — 173 byte-identical
-files, 98.3% of IIIT-ILST's scene photographs. **BSTD is the only genuine cross-lineage reserve and
-stays untouched.**
+## Resources status — correction accepted; closed/on-demand
 
-Pending optional Controller action: `eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md` and
-`resources/PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md`.
+RES-001/002 are closed and merged. The EVAL-003 correction pass is merged.
+
+**Corpus: 34,786 items / 5.70 GB across 8 acquired sources; 4 blocked.** Existing rights posture
+remains internal research and evaluation only unless separately cleared.
+
+The Controller accepts the correction and reply in
+`resources/PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md` as the disposition of
+`eval/PROPOSED-INTEGRATION-CHANGE-EVAL-003-RESOURCES.md`:
+
+- IndicSTR12 and IIIT-ILST are treated as **one source lineage** for holdout/independence purposes;
+- crop-level transcription recoverability is recorded without promoting source labels to ground truth;
+- BSTD remains the genuine cross-lineage reserve.
+
+**Resources has no unresolved blocker and no open task.** It should source again only against a
+concrete approved Eval requirement; no speculative accumulation is authorised.
 
 ## Current integration gates
 
-1. **Governance:** the Governor control layer is established (`PROJECT-MEMORY.md`,
-   `governance/GOVERNOR-CONTRACT.md`, `governance/audits/`). **The audit freeze remains in force
-   until the Controller explicitly lifts or re-scopes it.**
-2. **Canon:** decide CANON-008 — the Devanagari slot is empty and the task is stopped at the
-   acquisition gate. No other Canon work is authorized.
-3. **Eval:** approve a checker roster and API budget, and the proposed thresholds. Optionally decide
-   whether to ask Resources to check held material for ~36–42 more Hindi words.
-4. **Resources:** closed unless the Controller actions a pending proposal or opens a new task.
-5. **Architecture:** Capability Registry, Production IR, routing and Canon-consumption experiments
-   remain unapproved and not implemented.
+1. **Eval:** execute EVAL-006. First gate is checker qualification. If no checker qualifies, stop.
+   If one does, create the first evidence-backed Registry entries under the frozen task scope.
+2. **Canon:** no open task. Devanagari-structure gap remains explicit; no replacement work is
+   authorised now.
+3. **Resources:** closed/on-demand; no acquisition until Eval produces a concrete approved need.
+4. **Architecture:** Production IR and Planner/routing remain unapproved and unimplemented. Registry
+   storage is approved; operational routing from Registry data is not.
+5. **Governance:** `PROJECT-MEMORY.md` should be refreshed by the Repository Governor after these
+   Controller changes so the canonical entry point reflects the new re-scoped freeze and EVAL-006.
