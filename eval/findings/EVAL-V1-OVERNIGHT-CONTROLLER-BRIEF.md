@@ -395,6 +395,50 @@ coordination, governance or shared file was edited.**
 
 ---
 
+## 11b · ⚠️ The branch could not be pushed — GitHub authorisation
+
+**All six commits exist locally and are complete. `git push` is refused with
+HTTP 403**, and this is an authorisation problem, not a network one — retrying
+does not help.
+
+```
+remote: Claude doesn't have GitHub access to chawlavaibhav/media-intelligence
+        for your organization.
+fatal: ... The requested URL returned error: 403
+```
+
+**What I tried:** the normal push (403); the push with the container's own
+GitHub token (403); the GitHub MCP integration, which has **read** access but
+returns `Resource not accessible by integration` on write; and re-requesting
+push access for the repository, which reported it already attached and still
+403s.
+
+**The remedy is yours, and it is one of these two:**
+
+- an org admin installs the Claude GitHub App at
+  <https://github.com/apps/claude/installations/select_target>, or
+- reconnect GitHub from claude.ai settings:
+  <https://claude.ai/customize/connectors?auth_start=github&auth_start_force=1>
+
+**Nothing was lost.** Because this cloud container is ephemeral, the branch was
+exported as a **git bundle** and delivered to you directly. It contains all six
+commits and all 143 files, including the 102 binary fixture PNGs.
+
+```bash
+git fetch /path/to/eval-v1-overnight.bundle \
+    'refs/heads/work/eval-v1-overnight:refs/heads/work/eval-v1-overnight'
+git checkout work/eval-v1-overnight
+```
+
+**Verified, not assumed:** the bundle was restored into a clean clone in this
+session. All 102 fixtures came back hash-identical to their manifest, and the
+harness self-test passed **38/38** in the restored copy.
+
+Once the authorisation is fixed, the branch pushes normally — the commits are
+already formed and need no reconstruction.
+
+---
+
 ## 12 · What I recommend you decide
 
 These are **recommendations, not decisions**.
