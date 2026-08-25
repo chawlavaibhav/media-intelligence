@@ -1,0 +1,333 @@
+# CANON-V1 / C2 — early-gate 12 selection and hand-picked Canon oracle context.
+#
+# SELECTED BEFORE ANY PLANNING OUTPUT EXISTS. Nothing has been generated for any brief. The runbook
+# requires this ordering because choosing the test set after seeing results is experiment mutation.
+#
+# WHY WHOLE CONCEPT SYSTEMS RATHER THAN LOOSE FACTS. A SourceConceptSystem is a set of claims the
+# source itself presents as one argument — Murch's Rule of Six is six ranked criteria WITH sacrifice
+# rules, not six independent tips. Retrieving one member and dropping the rest would hand the Oracle
+# arm a distorted version of the Canon and would test retrieval damage rather than Canon value. So
+# selection is at system level by default, with individual objects added only where a single claim
+# genuinely stands alone.
+#
+# EVERY SOURCE USED HERE PASSES THE AUDIT GATE. All 19 accepted sources hold an active v0.2 record
+# with audit_status: complete, re-verified this session. No unaudited material is eligible.
+#
+# gate_role: gap_probe    — chosen to test a domain C1 found empty or unusable
+#            coverage_probe — chosen to test a domain C1 found genuinely well covered
+
+meta:
+  task: CANON-V1 / C2 + C3
+  authored: 2026-08-26
+  selected_before_any_generation: true
+  planning_outputs_generated_so_far: 0
+
+early_12:
+
+- brief_id: BR-F01-HI
+  gate_role: gap_probe
+  probes_gaps: [G1]
+  why_selected: >
+    Devanagari-primary typography-led creative with two planted contradictions. The Canon has NO
+    accepted Devanagari source (gap G1), so this brief tests whether general typographic and
+    commercial knowledge still helps when the script-specific knowledge is missing. A Canon arm that
+    wins here wins on hierarchy and contradiction handling, not on script knowledge it does not have.
+  oracle:
+    systems: [scs_sam_c003_004, scs_vig_c003_001, scs_hop_sa_005]
+    objects: [sk_sb_c003_0005]
+    inclusion_reasons:
+      scs_sam_c003_004: >
+        "Regularity is the value and the danger" — the brief demands both traditional and modern
+        register, and this system is the Canon's clearest statement that structural regularity buys
+        coherence at the cost of interest, which is the trade-off the contradiction actually poses.
+      scs_vig_c003_001: >
+        The three-aspect sequential test (semantics, then syntactics, then pragmatics) forces meaning
+        to be settled before form. The brief's conflict — offer most important, shop name largest —
+        is exactly a semantics-versus-syntactics conflict and this gives a procedure for it.
+      scs_hop_sa_005: >
+        Specificity as a credibility mechanism. The offer carries a concrete number (20%) and this
+        system explains why concrete terms outperform general claims of value.
+      sk_sb_c003_0005: >
+        The framework used as a filter that REMOVES material. Directly relevant: the customer wants
+        three required strings plus two registers in one poster.
+    deliberately_excluded:
+      - reason: >
+          No Devanagari or Indic typographic material was included because none exists in the
+          accepted corpus. The Oracle arm is not given a substitute and must not pretend otherwise.
+
+- brief_id: BR-F02-EN
+  gate_role: gap_probe
+  probes_gaps: [G4]
+  why_selected: >
+    The purest packshot brief. C1 rated this domain `present_but_application_unbound` — the Canon
+    holds reflection physics but every binding is a physical-production candidate. This brief tests
+    whether that knowledge helps a planner at all when it cannot be issued as instruction.
+  oracle:
+    systems: [scs_lsm_c003_001, scs_lsm_c003_002, scs_lsm_c003_003, scs_alt_c003_003]
+    objects: []
+    inclusion_reasons:
+      scs_lsm_c003_001: >
+        The three reflection types as a contrast set. A glass bottle reads as glass because of how
+        direct and diffuse reflections behave; the brief explicitly requires it to look like glass.
+      scs_lsm_c003_002: >
+        Family of angles as a placement control — the single most product-relevant piece of physical
+        knowledge in the Canon, predicting where a reflection lands on a glossy surface.
+      scs_lsm_c003_003: >
+        Terminological discipline: the source refuses the ambiguous word "specular" and names the
+        concepts separately. Included because the brief's demand that the label stay legible is a
+        reflection-control problem, and vague vocabulary is how that gets fumbled.
+      scs_alt_c003_003: >
+        What illumination is FOR — keeps lighting subordinate to the communication goal rather than
+        becoming an end in itself.
+    deliberately_excluded:
+      - reason: >
+          Alton's named light functions and working order were excluded as instructions for placing
+          physical lights on a set, with no bearing on planning a generated packshot. Including them
+          would pad the Oracle context with unusable words and inflate the word count unfairly.
+
+- brief_id: BR-F03-HG
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    Person-plus-product with an opposed-register contradiction in a trust-sensitive category.
+    Commercial communication is one of the Canon's strongest packs (six independent origins), so this
+    is a fair test of the Canon at its best.
+  oracle:
+    systems: [scs_ogl_c003_003, scs_sut_alc_002, scs_sb_c003_001, scs_hea_mts_002]
+    objects: []
+    inclusion_reasons:
+      scs_ogl_c003_003: >
+        Image as the thing actually bought — the brief's core conflict is what image the brand
+        projects, and this system argues the image IS the product decision, not decoration.
+      scs_sut_alc_002: >
+        Psycho-logic as a second operating system — why an audience's response can be reasonable
+        without being logical. Directly bears on "serious like a bank" versus "fun for Gen Z".
+      scs_sb_c003_001: >
+        Why marketing fails and what the remedy must do — the failure is in the message, and
+        processing cost drives disengagement. Relevant to a single-image financial-product ad.
+      scs_hea_mts_002: >
+        The curse of knowledge — a fintech company cannot imagine not already understanding
+        investing. This is the mechanism behind most briefing failure in technical categories.
+
+- brief_id: BR-F04-EN
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    Reference-based and underspecified: the customer cites a previous campaign the brief never
+    describes. Tests whether a plan asks what the reference is rather than inventing a house style.
+  oracle:
+    systems: [scs_ogl_c003_001, scs_vig_c003_002, scs_sam_c003_005]
+    objects: [sk_ogl_c003_0007]
+    inclusion_reasons:
+      scs_ogl_c003_001: >
+        The preparation sequence before writing — study the product first. In this brief the "product"
+        includes an existing campaign nobody has described.
+      scs_vig_c003_002: >
+        Values held against style, including the culture of obsolescence and the argument for
+        retouching an established mark rather than replacing it. The brief's whole request is
+        continuity with something that already works.
+      scs_sam_c003_005: >
+        Structure read as signification — a layout structure itself signals a register, which is why
+        "same look and feel" is a structural instruction and not only a colour one.
+      sk_ogl_c003_0007: >
+        Brand image is a personality built by consistency — the single claim most directly on point
+        for a customer asking for continuity with a campaign people have learned to recognise.
+
+- brief_id: BR-F05-HG
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    THE trade-off test of the bank. "Fast cuts for energy" versus "calm morning mood" is a direct
+    pacing contradiction inside twelve seconds. C1 found trade-off reasoning materially better
+    covered than the v0 map recorded; this brief tests that finding.
+  oracle:
+    systems: [scs_murch_c003_001, scs_gote_c003_005, scs_conv_c003_001]
+    objects: []
+    inclusion_reasons:
+      scs_murch_c003_001: >
+        The Rule of Six — six ranked criteria for a cut WITH explicit sacrifice rules. The Canon's
+        clearest piece of trade-off machinery, and it is included whole because a ranking with its
+        sacrifice rules removed is not a ranking.
+      scs_gote_c003_005: >
+        The seven general practices, including describing the shot to set its length — pacing derived
+        from content rather than asserted as a style.
+      scs_conv_c003_001: >
+        The attention economy of the soundtrack: picture and sound compete for one attention budget.
+        This brief has a voiceover over fast cuts, so the competition is real.
+    deliberately_excluded:
+      - reason: >
+          Nothing on feed-native pacing was included because the Canon holds none (gap G2). All three
+          systems concern film-length work; whether they transfer to twelve seconds is exactly what
+          the gate should reveal.
+
+- brief_id: BR-F06-EN
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    Multi-shot identity continuity with no dialogue, stated explicitly by the customer. Continuity is
+    a genuinely strong Canon domain and directly relevant to a known generative weakness.
+  oracle:
+    systems: [scs_gos_c003_001, scs_gos_c003_002, scs_gote_c003_003, scs_ms_c003_002]
+    objects: []
+    inclusion_reasons:
+      scs_gos_c003_001: >
+        Continuity geometry of the action line — the 180-degree arc and screen direction.
+      scs_gos_c003_002: >
+        Defects with no within-frame signature. The load-bearing insight: some failures are invisible
+        in any single frame and exist only across a pair. Essential for a running sequence.
+      scs_gote_c003_003: >
+        The four continuities — content, movement, position, sound — as a checklist across a cut.
+      scs_ms_c003_002: >
+        Seven ways to move attention without a cut. Valuable in short-form where every cut costs
+        attention.
+    lineage_note: >
+      Grammar of the Shot and Grammar of the Edit are companion volumes and are BLOCKED from counting
+      as independent origins with each other. Both are included here because the Oracle context needs
+      their knowledge, not because they corroborate one another. No convergence claim is made.
+
+- brief_id: BR-F06-HG
+  gate_role: gap_probe
+  probes_gaps: [G2, G5]
+  why_selected: >
+    Three narrative beats — need, order, arrival — inside ten seconds. The tightest compression in
+    the bank, and the Canon has no short-form knowledge at all. Expected to expose gap G2 rather than
+    be solved.
+  oracle:
+    systems: [scs_sb_c003_002, scs_murch_c003_003, scs_hea_mts_001]
+    objects: [sk_sb_c003_0003]
+    inclusion_reasons:
+      scs_sb_c003_002: >
+        The SB7 framework — the Canon's most compressed narrative structure, and the closest thing it
+        has to telling a complete story in very little space.
+      scs_murch_c003_003: >
+        Three independent justifications for cutting — with three beats and roughly three seconds
+        each, every cut must earn itself.
+      scs_hea_mts_001: >
+        The success checklist (simple, unexpected, concrete, credentialed, emotional, story) as a
+        design test for a compressed message.
+      sk_sb_c003_0003: >
+        Processing cost causes the audience to disengage — the mechanism that makes ten seconds hard.
+    deliberately_excluded:
+      - reason: >
+          No hook-window, sound-off or safe-zone material exists in the Canon (gaps G2 and G5). The
+          Oracle arm is deliberately not compensated for this.
+
+- brief_id: BR-F07-HI
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    A single visible speaker giving personal testimony in Hindi, in a category where credibility is
+    the whole proposition. Tests the Canon's strongest commercial material against a spoken format.
+  oracle:
+    systems: [scs_hop_sa_002, scs_hop_sa_005, scs_ogl_c003_002]
+    objects: [sk_hea_mts_0002]
+    inclusion_reasons:
+      scs_hop_sa_002: >
+        The salesmanship test as a decision procedure — would a salesperson standing in front of this
+        customer say this? A direct test for a testimonial script.
+      scs_hop_sa_005: >
+        Specificity as a credibility mechanism. The scripted claim ("doubled my crop") is a strong
+        general assertion, and this system argues specific evidenced claims outperform sweeping ones.
+      scs_ogl_c003_002: >
+        The measurement argument — advertising should be judged by whether it sells.
+      sk_hea_mts_0002: >
+        Stickiness is a property of design, not of subject matter.
+    scoring_note: >
+      This brief carries a flagged substantiation issue in its authoritative intent. That flag is for
+      the Controller and for any future execution; it is NOT a scoring dimension for the value gate,
+      and reviewers must not be shown it.
+
+- brief_id: BR-F08-EN
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    The densest continuity requirement in the bank — two identities, two speech turns, a specified
+    shot structure — with an explicit register constraint ("warm, not scary") in a category where
+    fear-based framing is the lazy default.
+  oracle:
+    systems: [scs_gote_c003_001, scs_gote_c003_003, scs_sut_alc_002, scs_sb_c003_002]
+    objects: []
+    inclusion_reasons:
+      scs_gote_c003_001: >
+        The six-element test for a transition — the Canon's most explicit statement that the unit of
+        judgement is the PAIR of shots, not either shot alone.
+      scs_gote_c003_003: >
+        The four continuities, including sound continuity across a dialogue cut.
+      scs_sut_alc_002: >
+        Psycho-logic — why a warm framing can outperform a logically stronger fear appeal.
+      scs_sb_c003_002: >
+        The SB7 framework, which names the internal problem as distinct from the external one. The
+        father's "I thought I did" is an internal-problem line.
+
+- brief_id: BR-F08-HG
+  gate_role: coverage_probe
+  probes_gaps: []
+  why_selected: >
+    Two contradictions at once — opposed tone, and a scope-versus-duration conflict where the stated
+    requirements do not fit in fifteen seconds. Tests whether a plan surfaces an impossible ask
+    instead of silently dropping a requirement.
+  oracle:
+    systems: [scs_murch_c003_001, scs_gos_c003_003, scs_sb_c003_002]
+    objects: [sk_hea_mts_0009]
+    inclusion_reasons:
+      scs_murch_c003_001: >
+        The Rule of Six, again for its sacrifice rules — this brief requires something to be given up
+        and the Canon's ranking says which things cost least.
+      scs_gos_c003_003: >
+        Rules held defeasible by creative intent — the Canon's own statement that its rules yield to
+        a stated purpose, which is what stops it over-prescribing.
+      scs_sb_c003_002: >
+        SB7, in its filter role: the framework removes material rather than adding it.
+      sk_hea_mts_0009: >
+        Simplicity is finding the essential core by exclusion. Included because this brief asks for
+        more than fifteen seconds can hold, and the resolution is subtraction rather than compression.
+
+- brief_id: BR-F09-HI
+  gate_role: gap_probe
+  probes_gaps: [G1]
+  why_selected: >
+    A physical handoff plus Devanagari copy containing a nukta ("तेज़"), where dropping the nukta
+    silently changes the word. Tests exact-copy sensitivity where the Canon has no script knowledge.
+  oracle:
+    systems: [scs_lsm_c003_001, scs_gote_c003_003, scs_hop_sa_005]
+    objects: [sk_vig_c003_0002]
+    inclusion_reasons:
+      scs_lsm_c003_001: >
+        The three reflection types — a uniform and a parcel are surfaces whose material must read
+        correctly for the handover to look real.
+      scs_gote_c003_003: >
+        The four continuities across a twelve-second handover.
+      scs_hop_sa_005: >
+        Specificity as credibility.
+      sk_vig_c003_0002: >
+        Semantics before form — the meaning of the required copy has to survive, which is the whole
+        risk when a diacritic can be dropped.
+    deliberately_excluded:
+      - reason: >
+          Nothing addresses Devanagari orthography, because the Canon holds nothing on it (gap G1).
+
+- brief_id: BR-F10-HI
+  gate_role: gap_probe
+  probes_gaps: [G3, G2]
+  why_selected: >
+    The sharpest brief in the bank: an optical impossibility (necklace detail AND wide shots), an
+    opposed register (royal Rajasthani AND contemporary), and a cultural context the Canon covers
+    nowhere. Expected to expose gap G3.
+  oracle:
+    systems: [scs_fre_c003_002, scs_murch_c003_001, scs_vig_c003_001, scs_gote_c003_003]
+    objects: []
+    inclusion_reasons:
+      scs_fre_c003_002: >
+        How tightly the frame holds the subject — the exact knowledge needed to see that "show fine
+        detail" and "shoot wide" cannot both be satisfied in one shot, and to resolve it across shots.
+      scs_murch_c003_001: >
+        The Rule of Six for its ranked sacrifice logic.
+      scs_vig_c003_001: >
+        The three-aspect sequential test — settle meaning before form when two registers compete.
+      scs_gote_c003_003: >
+        The four continuities across a three-to-four shot bridal sequence.
+    deliberately_excluded:
+      - reason: >
+          Nothing on Indian bridal, festival or regional register was included because the Canon
+          holds none (gap G3). This is the brief most likely to show the Canon's cultural limit, and
+          padding it would hide exactly what the gate should surface.
