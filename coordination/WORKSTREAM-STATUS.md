@@ -1,88 +1,83 @@
 # Workstream Status
 
-**Current snapshot:** 26 Aug 2026 — final pre-execution tranche returned; GOV-004 review active.
-**Refreshed by:** Repository Governor, task GOV-004, against `main` at `74d6b0da0239013269f73804164a92f80c7f1d55`.
+**Current snapshot:** 26 Aug 2026 — pre-execution freeze closed; empirical-tranche planning next.
 
-**Read `PROJECT-MEMORY.md` and `coordination/CONTROL-STATE.md` first.** Detailed historical snapshots remain in Git history; this file is current-state only.
+**Read `PROJECT-MEMORY.md` and `coordination/CONTROL-STATE.md` first.** Project Memory's GOV-004 snapshot predates the final merges; `CONTROL-STATE.md` and the latest Controller closure decision carry the current execution posture.
 
 ## Global posture
 
-**No domain programme is running.** All four pre-execution programmes have returned, the Controller has issued a joint integration disposition, and one bounded Eval correction (EVAL-011) has completed. **No paid model/evaluator work is authorised.**
+**No domain research programme is running. No paid model/evaluator work is authorised.**
+
+GOV-004 returned **PASS WITH NON-BLOCKING NOTES** and the Controller integrated the accepted package. Broad research/design is closed; the next phase is empirical-tranche preparation.
 
 | Stream | Current state | Active approved work | Next gate |
 |---|---|---|---|
-| Canon | 19 live accepted sources; original 30-brief bank byte-identical; CANON-009 merged. **CANON-010 returned, unmerged.** | none | Controller merge, then the request contract is frozen. |
-| Eval | V1 36-capability and 100-item baselines byte-identical; **0 empirical Registry rows; 0 qualified instruments**; EVAL-007 merged. **EVAL-010 and EVAL-011 returned, unmerged.** EVAL-009 is superseded worker output. EVAL-008 remains candidate-universe research, not a paid roster. | none | Controller merge, then Capability v2 / benchmark v2 / staged execution are frozen and a tranche is priced. |
-| Resources | RES-003 merged; v2.1 historical persistence preserved. **RES-004 returned, unmerged.** | none | Controller merge, then topology v3, CpAO v3 and pack requirements are frozen. |
-| Governor | GOV-003 merged with **PASS WITH NON-BLOCKING NOTES**. | **GOV-004** final pre-execution coherence review | Verdict returns to the Controller; then merge and priced-tranche planning. |
+| Canon | 19 live accepted sources; original 30-brief bank preserved; CANON-010 request contract / coverage freeze merged. | none | Stage-Q/A preparation may consume the frozen request contract; Canon value is still empirically unproven. |
+| Eval | Capability v2 **44 = 43 active + 1 dormant** merged; 13 condition families; 12 core + 2 reserve scientific slots; EVAL-010 supply evidence and EVAL-011 staged plan merged. **0 qualified instruments; 0 Registry rows.** | none | Qualify only required Stage-Q evaluator/material units, then price Stage A. |
+| Resources | RES-004 merged; topology v3 / CpAO v3 / four controlled-pack requirements in force for empirical planning; historical v2.1 preserved. | none | Stage only the materials actually needed for the approved first empirical tranche. |
+| Governor | GOV-004 merged with **PASS WITH NON-BLOCKING NOTES**. | none | No new Governor round scheduled before empirical planning. |
 
-## Branches returned and awaiting Controller merge
+## Integrated final pre-execution package
 
-| Package | Branch | Commit |
-|---|---|---|
-| CANON-010 request contract and coverage freeze | `work/canon-010-request-freeze` | `3cf2979` |
-| EVAL-011 corrected Eval freeze proposal (**the live one**) | `work/eval-011-pre-execution-integration` | `e300999` |
-| RES-004 production evidence and persistence readiness | `work/res-004-production-readiness` | `2dc4796` |
-| EVAL-010 model route / version / price verification | `work/eval-010-route-verification` | `8a8fc09` |
+- CANON-010 reviewed head `3cf2979` → PR #27 → merge `bcba5bd`.
+- RES-004 reviewed head `2dc4796` → PR #28 → merge `87c582b`.
+- EVAL-010 reviewed head `8a8fc09` → PR #29 → merge `81b7e3f`.
+- EVAL-011 reviewed worker head `e300999` → Controller-resolved PR #31 → merge `afa647b`.
+- GOV-004 reviewed head `bd6dbd7` → PR #26 → merge `35391e2`.
 
-`work/eval-009-measurement-freeze` @ `718ba01` is **historical worker output**. EVAL-011 carries the corrected live files and is what should be merged.
+EVAL-009 remains historical worker output. EVAL-011 is the corrected live freeze package.
 
-**Merge note:** the EVAL-011 branch is three commits behind `main` and conflicts with it on `coordination/CONTROL-STATE.md`. `main`'s version is the newer Controller-authored one and is the correct side to keep.
+The EVAL-011 merge resolution preserved the newer `main` `CONTROL-STATE.md` and the already-merged EVAL-010 `model-supply` evidence; no Eval methodology was changed during merge resolution.
 
-## Active task and branch
-
-- `governance/tasks/GOV-004.md` → `work/gov-004-final-pre-execution-review`
-
-Authoritative program:
-- `coordination/plans/2026-08-26-FINAL-PRE-EXECUTION-FREEZE-PROGRAM.md`
-
-Authoritative decisions:
-- `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md` — **the current joint disposition**
-- `coordination/decisions/CONTROLLER-FINAL-PRE-EXECUTION-FREEZE-2026-08-26.md`
-- `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md`
+Authoritative closure:
+- `coordination/decisions/CONTROLLER-PRE-EXECUTION-CLOSURE-2026-08-26.md`
 
 ## Durable facts that must remain distinct
 
-- Historical CANON-003 baseline: **16** accepted books. Do not rewrite it to today's live count.
-- Live Canon: **19** accepted sources / 19 active Audit Gate records.
-- Original EVAL-005 build: 106 items; authoritative validated view: **96** items. Preserve both meanings.
-- V1 capability contract: **36** dimensions; V1 bank: **100** items. These remain historical/baseline artifacts and stay byte-identical; the proposed **v2 target is 44 = 43 active + 1 dormant** and does not overwrite them.
-- Condition architecture: **13 families**, a naive two-level product of **8,192** cells. The earlier "12 families / 4,096" figures were an error corrected by EVAL-011 — do not restore them.
-- Staged execution: **Q = 0** model generations, **A = 90**, **B ≤ 404**, **A+B design ceiling 494**; **Stage C = 32 outcome attempts**, counted separately. None of these is an approved budget.
-- Capability Registry: **0 current empirical model/workflow rows**.
+- Historical CANON-003 baseline: **16** accepted books; live Canon: **19** accepted sources.
+- Original EVAL-005 build: 106 items; authoritative validated view: **96** items.
+- V1 capability contract: **36** dimensions; V1 bank: **100** items — historical and immutable.
+- Capability v2: **44 = 43 active + 1 dormant**.
+- Condition architecture: **13 families**; 8,192 is only the naive two-level Cartesian size.
+- Scientific roster: **12 core + 2 reserve** question slots.
+- Staged design: **Q=0 model generations; A=90; B≤404; A+B ceiling=494; C=32 outcome attempts**.
+- Capability Registry: **0 empirical rows**.
+- Qualified subjective/perceptual evaluator families: **0**.
 - One provider/API/transform call = one trial.
 - EVAL-004 remains stopped.
-- `EVAL-006` remains **PAUSED — DO NOT EXECUTE**.
+- EVAL-006 remains **PAUSED — DO NOT EXECUTE**.
 
-## Model research posture
+## Model/supply posture
 
-EVAL-008 proved selection-before-sourcing ordering and is useful as a candidate universe, but does not authorise any model run.
+EVAL-010 is partial supply evidence, not a paid roster. EVAL-011 preserves the 12 core + 2 reserve scientific questions independently of sourcing.
 
-EVAL-010 has since verified supply as **partial evidence**: 2 of 26 candidate rows are execution-ready (identity + route + billing unit + price all verified), 19 more have verified identity and route but **no verified price**. That is an evidence gap, not proof that models are unavailable. Price completeness across the four staged stages is **0 of 4**, and `Frontier Clouds` service identity remains unresolved, so cash outlay after credits cannot be computed.
+Current unresolved items include:
+- `IMG-04` and `AUD-03` identity/version mismatch;
+- incomplete verified prices for the first paid tranche;
+- unresolved `Frontier Clouds` service identity;
+- route/control differences between direct and aggregator wrappers.
 
-Current Controller rule:
-- the scientific roster is **12 core + 2 reserve question slots**, chosen by differentiated product-relevant information value;
-- EVAL-010 verifies exact versions/routes/prices separately;
-- route preference for equivalent versions is `Frontier Clouds credits -> fal -> direct/other`;
-- access/credits do not decide scientific admission;
-- non-primary version/price/availability claims remain provisional;
-- the worker-side claim that “Frontier Clouds” means GCP+AWS+Azure is not a Controller decision on record and must not be assumed without confirmation/verification.
+No model is qualified.
 
 ## Still blocked / not authorised
 
-- no model generation calls;
-- no evaluator/checker API calls;
+- no provider/model generation calls;
+- no paid evaluator/checker calls;
 - no empirical Registry population;
-- no controlled-pack acquisition;
+- no controlled-pack acquisition/capture;
 - no account funding / terms acceptance;
 - no Production IR/Planner implementation;
-- historical E7/E8 execution remains superseded/blocked;
+- no historical E7/E8 execution;
+- no EVAL-006 execution;
 - no paid benchmark budget exists.
 
-## Final pre-paid-run gate
+**Not budgets:** 494 generations, 5,515 evaluator calls, 188 human-review units, 173 pack-acquisition person-hours, or provisional controlled-pack entity totals.
 
-The four programmes have returned and been jointly dispositioned. GOV-004 is the bounded Governor review. After it returns, the Controller merges the accepted branches and then produces a **separately priced** first empirical tranche for explicit approval.
+## Next gate
 
-**Figures that are not budgets and must not be treated as approved:** 494 generations, 5,515 evaluator calls, 188 human review units, 173 pack-acquisition person-hours, and the provisional controlled-pack entity totals.
+Prepare the smallest decision-useful empirical tranche:
+1. Stage-Q evaluator/material qualification required for the first screen;
+2. exact route/version/price verification for Stage-A slots;
+3. a separately priced Stage-A admission screen for explicit user approval.
 
-There is no further broad research round scheduled.
+Only after explicit approval may empirical model/workflow calls and Registry population begin.
