@@ -1,7 +1,8 @@
 # E5 — Generate-once evaluation harness
 
 **Status: IMPLEMENTED AND EXECUTED IN THIS CLOUD SESSION.**
-**72/72** verification checks pass after corrections E-C4 – E-C7 — see
+**95/95** verification checks pass, and the emitted archive passes **Resources'
+own validator, cross-branch, exit 0** — see
 [`VERIFICATION-LOG.md`](VERIFICATION-LOG.md).
 **0 network calls · 0 model calls · ₹0 spend · 0 Registry rows.**
 
@@ -29,10 +30,18 @@ frozen item manifest
 |---|---|
 | **Item** | A frozen benchmark specification from the E4 bank. Not media. |
 | **Attempt** | One call to a provider. Every call is a new attempt, always. |
-| **Asset** | One artifact from one attempt. **This is the trial.** |
-| **Measurement** | One evaluator's verdict about one asset, for one capability. |
+| **Trial** | **One provider call.** Corrected in EI-C2. |
+| **Artifact** | Bytes from an attempt. An attempt may produce none. |
+| **Measurement** | One evaluator's verdict about one artifact, for one capability. |
 
-> **One asset is one trial, however many evaluators inspect it.**
+> **One call is one trial, however many evaluators inspect its bytes.**
+
+**Why the trial moved (EI-C2).** It used to be the root *asset*. That meant a
+call producing nothing had no trial at all, so a refusal silently left the
+denominator. Anchoring the trial to the **call** keeps every refused, errored
+and timed-out call countable — which is what reliability and cost both need.
+Every repeat and every retry is its own trial; derived media adds artifacts,
+never trials.
 
 Twelve measurements of one asset are twelve measurements of **one** trial. Frames
 sampled from a clip carry their parent's trial id and add **no** trials. Repeats
@@ -95,7 +104,21 @@ caller cannot proceed. Verified refusals include:
 | `run_selftest.py` | The required demonstrations + harness negative controls |
 | `out-selftest/` | `attempts` / `artifacts` / `measurements` / `acceptances` + derived views |
 
-## Storage handoff (E-C7)
+## Cross-branch validation (EI-C8)
+
+```bash
+bash eval/v1/harness/run_cross_branch_validation.sh
+```
+
+Runs **Resources' own** `check_empirical_archive.py` from a worktree of their
+branch against the archive this harness emits. The validator is invoked, never
+copied — a local copy would drift, and Eval would then be proving compliance
+against a stale snapshot of somebody else's contract.
+
+Exit **0** valid · **1** schema violation · **2** could not check. *"I found no
+problem"* and *"I could not look"* never share an exit code.
+
+## Storage handoff (E-C7 / EI-C1–C5)
 
 Resources owns the durable storage contract; Eval owns measurement semantics.
 The harness emits the canonical **four** records and keeps **no competing

@@ -2,10 +2,10 @@
 
 **Executed:** 26 Aug 2026 in the cloud session · **Runner:** Python 3.11.15
 **Status:** `implementation_written_AND_executed_in_cloud`
-**Covers corrections:** E-C4 (repeat vs retry), E-C5 (mixed-cell refusal), E-C6 (no synthetic bypass), E-C7 (canonical handoff)
+**Covers:** E-C4–E-C7 corrections and EI-C1–EI-C8 storage integration
 
 All fixtures are dummy/synthetic. No network call, no model call, no paid API call,
-no empirical Registry row. Reproduce with:
+no empirical Registry row.
 
 ```
 python3 eval/v1/harness/run_selftest.py
@@ -29,7 +29,7 @@ DEMO 1 — one generated asset scored by several evaluators, no regeneration
 
 DEMO 2 — an experimental REPEAT creates a new attempt, never a replacement
   [PASS] new attempt id
-         att-d38f3df1b600 -> att-81b678298242
+         att-d58327e0143c -> att-d8f477d94aa3
   [PASS] new asset id (original NOT overwritten)
   [PASS] original asset still on disk with its original hash
   [PASS] repeat linkage recorded as a REPEAT
@@ -42,10 +42,14 @@ DEMO 2b — E-C4: repeat and retry are structurally separate
   [PASS] a retry is counted as a retry, NOT a repeat
          production_retries=1
   [PASS] the two counters are reported separately and never summed
+  [PASS] EI-C2: a repeat gets its OWN trial id, never the original's
+  [PASS] EI-C2: a retry gets its OWN trial id, never the original's
   [PASS] the CpAO retry chain contains the retry and EXCLUDES the repeat
-         chain=['att-d38f3df1b600', 'att-7807f9f3ef8c']
-  [PASS] retry-chain cost and repeat cost are separate lines
-         retry_chain=1.0 repeats=1.0
+         chain=['att-d58327e0143c', 'att-25144b2d0a1f']
+  [PASS] retry-attempt cost and repeat cost are separate, accurately named lines
+         retry_attempts=1.0 repeats=1.0
+  [PASS] a COMPLETE chain cost includes the originator, unlike the retry-only line
+         complete chain=2.0 vs retry-only=1.0 - the old key summed only retries and could never have been a chain cost
   [PASS] an attempt that is BOTH repeat and retry is REFUSED
          raised: An attempt cannot be BOTH an experimental repeat and a production retry. A repeat is decided before the run to measure r
   [PASS] a retry with no reason is REFUSED
@@ -56,14 +60,16 @@ DEMO 2b — E-C4: repeat and retry are structurally separate
 DEMO 3 — frames sampled from a clip keep the parent trial id
   [PASS] 4 child assets created
   [PASS] every frame names its parent
-  [PASS] every frame resolves to the parent TRIAL
+  [PASS] every frame inherits the parent's TRIAL id (EI-C2)
+  [PASS] every frame inherits the parent's ATTEMPT id
   [PASS] 4 frames added 0 new trials
-         assets=6 but trial_assets=2 (2 generations, 4 derived frames). Frames from one clip are ONE trial.
+         assets=6 but trials=2 (2 calls, 4 derived frames). The trial is the CALL.
+  [PASS] trial_id == attempt_id, one-to-one by construction (EI-C2)
   [PASS] frame extraction cost nothing
 
 DEMO 4 — the duplicate-regeneration guard fires
   [PASS] regenerating the same item+config is REFUSED
-         raised: DUPLICATE GENERATION REFUSED for item compound-024 config 5e49a5af55f2: asset ast-16e10d7c249c already exists. Evaluatin
+         raised: DUPLICATE GENERATION REFUSED for item compound-024 config 9ee2cda49772: asset ast-c0475d53d85e already exists. Evaluatin
   [PASS] guard did not create a stray attempt
          attempts still 2
   [PASS] but re-measuring the SAME asset is allowed and free
@@ -112,7 +118,7 @@ DEMO 5b — absence reasons and harness negative controls
   [PASS] 'absent' carries a machine-readable reason
          reason=not_applicable
   [PASS] 'absent' with NO reason is REFUSED
-         raised: absent verdict needs a reason from ('not_applicable', 'not_measured', 'instrument_unqualified', 'generation_failed', 're
+         raised: absent verdict needs a reason from ('not_applicable', 'not_measured', 'instrument_unavailable', 'parse_failure', 'human_
   [PASS] verdict outside the vocabulary is REFUSED
          raised: instrument returned unknown verdict probably_fine
   [PASS] found a capability owned by the instrument but outside the fan-out
@@ -122,9 +128,24 @@ DEMO 5b — absence reasons and harness negative controls
   [PASS] using an instrument outside its judgement family is REFUSED
          raised: instrument dummy-ocr is not specified for capability object_count. Qualification NEVER generalises across judgement fami
 
-DEMO 5c — a refused generation yields 'absent/refused', not a fail
+DEMO 5c — EI-C5: a provider failure lives on the ATTEMPT, not a measurement
   [PASS] refusal recorded as a refusal, not a failed capability
          refusals=1, error_classes={'moderation_block': 1}
+  [PASS] canonical persistent status is 'refusal', not 'refused'
+  [PASS] a refused attempt still has a trial id and a cost_ref
+  [PASS] measuring a failed attempt is REFUSED (no double-counting)
+         raised: unknown asset x
+
+DEMO 5f — EI-C6: cost is summed over ATTEMPTS, not over artifacts
+  [PASS] a refused attempt with non-zero cost SURVIVES the total
+         total=2.25 (1.00 ok + 0.75 refusal + 0.50 error). Summing produced artifacts only would give 1.00.
+  [PASS] the dropped portion is surfaced explicitly
+         failed/refused cost=1.25
+  [PASS] every attempt has a resolvable cost_ref
+         3 ledger lines
+  [PASS] the misleading cost_in_retry_chains key is GONE
+  [PASS] no complete CpAO chain cost is claimed without an acceptance
+         status=not_computed_no_acceptance_exists
 
 DEMO 6 — the Registry schema validates and starts EMPTY
   [PASS] registry file exists
@@ -134,6 +155,22 @@ DEMO 6 — the Registry schema validates and starts EMPTY
   [PASS] schema parses and declares zero entries
          status=PROPOSED_NOT_IN_FORCE
 
+DEMO 6b — EI-C7: repeat structure is DERIVED from provenance
+  [PASS] a BALANCED cell is built from real provenance (2 items x 2 repeats)
+         4 measurements over 4 distinct trials
+  [PASS] EI-C7: declaring 2 repeats while only 1 was observed is REFUSED
+         raised: REGISTRY WRITE REFUSED: declared repeats_per_item=2 but the observed trial structure is {'compound-026': 1}. Items ['com
+  [PASS] EI-C7: two measurements of ONE trial is REFUSED
+         raised: REGISTRY WRITE REFUSED: 1 trial(s) contribute more than one scoreable measurement to this cell (e.g. att-027f9e6ce927). 
+  [PASS] EI-C7: one item with fewer repeats than another is REFUSED
+         raised: REGISTRY WRITE REFUSED: declared repeats_per_item=2 but the observed trial structure is {'compound-028': 1, 'compound-02
+  [PASS] EI-C7: a retry masquerading inside the repeat cell is REFUSED
+         raised: REGISTRY WRITE REFUSED: 1 trial(s) in this cell are production RETRIES. A retry exists because something failed; pooling
+  [PASS] EI-C7: a mis-shaped cell (3 trials over 2 items) is REFUSED
+         raised: REGISTRY WRITE REFUSED: declared repeats_per_item=2 but the observed trial structure is {'compound-024': 2, 'compound-02
+  [PASS] the balance invariant trials == n_items x repeats is enforced in code
+  [PASS] no Registry row was created by any EI-C7 attempt
+
 DEMO 7 — E-C7: canonical Resources storage handoff
   [PASS] canonical record file emitted: attempts.jsonl
   [PASS] canonical record file emitted: artifacts.jsonl
@@ -142,29 +179,29 @@ DEMO 7 — E-C7: canonical Resources storage handoff
   [PASS] no competing Eval-specific persistent manifest is emitted
          the old single manifest is gone; Resources owns the persistent model
   [PASS] every failed/refused call survives as an ATTEMPT record
-         2 non-ok attempts, all with no artifact; statuses=['error', 'refused']
+         2 non-ok attempts, none with a direct artifact, all carrying error_detail; statuses=['error', 'refusal']
   [PASS] attempts without an artifact are NOT dropped from the handoff
          attempts_without_artifact=2
   [PASS] attempt records carry every contract field
-         5 rows, 20 required, missing=none
+         5 rows, 23 required, missing=none
   [PASS] artifact records carry every contract field
-         7 rows, 8 required, missing=none
+         7 rows, 11 required, missing=none
   [PASS] measurement records carry every contract field
-         14 rows, 10 required, missing=none
+         14 rows, 13 required, missing=none
   [PASS] observation units are the CANONICAL vocabulary only
          used: ['frame']
   [PASS] derived artifacts point to a parent and add no trial
-         7 artifacts, 4 derived, 3 trials
+         7 artifacts, 4 derived, 5 trials
   [PASS] acceptance is EMPTY - Eval does not decide it
   [PASS] artifact locations are RELATIVE, not machine-specific
          7 artifacts, absolute paths: none
   [PASS] the handoff emission is deterministic across calls
   [PASS] no routing score or weight was computed
   [PASS] generation and evaluator costs are separate lines
-         gen=3.0 eval=0.121
+         gen=5.0 eval=0.121
 
 ==========================================================================
-RESULT: 74/74 checks passed
+RESULT: 95/95 checks passed
 Registry rows created: 0  (must be 0)
 Paid API calls made:   0
 ==========================================================================

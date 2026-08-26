@@ -25,13 +25,26 @@ def dummy_generator(item, cfg):
 
 
 def refusing_generator(item, cfg):
+    """A refusal that STILL COSTS MONEY.
+
+    EI-C6: a refused call consumed latency and may well have been billed. These
+    adapters previously hardcoded cost 0.0, which meant the self-test could not
+    detect a cost calculation that dropped failed attempts - the bug and the
+    test were blind in the same place.
+    """
     return {"api_status": "refused", "error_class": "moderation_block",
-            "cost_generation": 0.0}
+            "cost_generation": cfg.get("unit_price", 0.0)}
 
 
 def erroring_generator(item, cfg):
+    """An error that STILL COSTS MONEY. See refusing_generator."""
     return {"api_status": "error", "error_class": "timeout",
-            "cost_generation": 0.0}
+            "cost_generation": cfg.get("unit_price", 0.0)}
+
+
+def timeout_generator(item, cfg):
+    return {"api_status": "timeout", "error_class": "deadline_exceeded",
+            "cost_generation": cfg.get("unit_price", 0.0)}
 
 
 # ------------------------------------------------------------------ evaluators

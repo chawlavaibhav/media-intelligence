@@ -97,7 +97,8 @@ def main():
     print("\nDEMO 1 — one generated asset scored by several evaluators, no regeneration")
     h = build_instruments(Harness(tmp / "d1"))
     cfg = {"provider": "DUMMY", "model": "dummy-video-1", "version": "0.0.1",
-           "endpoint": "text-to-video", "workflow": "single_call", "lane": "video",
+           "endpoint": "text-to-video", "workflow": "single_call",
+           "lane": "general_video", "media_kind": "video",
            "seed_policy": "fixed", "seed": 42, "unit_price": 1.00,
            "inject_defects": ["face_drift", "text_mutates_mid_clip"]}
     prov = h.generate(video_item, cfg, A.dummy_generator)
@@ -166,15 +167,23 @@ def main():
     check("the two counters are reported separately and never summed",
           "experimental_repeats" in om4 and "production_retries" in om4
           and "retries" not in om4)
+    check("EI-C2: a repeat gets its OWN trial id, never the original's",
+          rep.trial_id != base.trial_id and rep.trial_id == rep.attempt_id)
+    check("EI-C2: a retry gets its OWN trial id, never the original's",
+          ret.trial_id != base.trial_id and ret.trial_id == ret.attempt_id)
     check("the CpAO retry chain contains the retry and EXCLUDES the repeat",
           hR.retry_chain(ret.attempt_id) == [base.attempt_id, ret.attempt_id]
           and rep.attempt_id not in hR.retry_chain(ret.attempt_id),
           f"chain={hR.retry_chain(ret.attempt_id)}")
-    check("retry-chain cost and repeat cost are separate lines",
-          om4["cost_in_retry_chains"] != om4["cost_in_experimental_repeats"]
-          or om4["cost_in_retry_chains"] == om4["cost_in_experimental_repeats"],
-          f"retry_chain={om4['cost_in_retry_chains']} "
-          f"repeats={om4['cost_in_experimental_repeats']}")
+    check("retry-attempt cost and repeat cost are separate, accurately named lines",
+          "cost_of_retry_attempts" in om4 and "cost_of_experimental_repeats" in om4,
+          f"retry_attempts={om4['cost_of_retry_attempts']} "
+          f"repeats={om4['cost_of_experimental_repeats']}")
+    check("a COMPLETE chain cost includes the originator, unlike the retry-only line",
+          hR.accepted_chain_cost(ret.attempt_id) > om4["cost_of_retry_attempts"],
+          f"complete chain={hR.accepted_chain_cost(ret.attempt_id)} vs "
+          f"retry-only={om4['cost_of_retry_attempts']} - the old key summed "
+          f"only retries and could never have been a chain cost")
     expect_raises("an attempt that is BOTH repeat and retry is REFUSED",
                   lambda: hR.generate(video_item, cfg, A.dummy_generator,
                                       repeat_of=base.attempt_id, repeat_index=2,
@@ -196,12 +205,17 @@ def main():
     check("4 child assets created", len(frames) == 4)
     check("every frame names its parent",
           all(f.parent_asset_id == first_asset for f in frames))
-    check("every frame resolves to the parent TRIAL",
-          all(h.trial_asset_id(f.asset_id) == first_asset for f in frames))
+    check("every frame inherits the parent's TRIAL id (EI-C2)",
+          all(f.trial_id == h.provenance[first_asset].trial_id for f in frames))
+    check("every frame inherits the parent's ATTEMPT id",
+          all(f.attempt_id == h.provenance[first_asset].attempt_id for f in frames))
     om2 = h.operational_metrics()
-    check("4 frames added 0 new trials", om2["trial_assets"] == 2,
-          f"assets={len(h.provenance)} but trial_assets={om2['trial_assets']} "
-          f"(2 generations, 4 derived frames). Frames from one clip are ONE trial.")
+    check("4 frames added 0 new trials", om2["trials"] == 2,
+          f"assets={len(h.provenance)} but trials={om2['trials']} "
+          f"(2 calls, 4 derived frames). The trial is the CALL.")
+    check("trial_id == attempt_id, one-to-one by construction (EI-C2)",
+          all(a.trial_id == a.attempt_id for a in h.attempts.values())
+          and len({a.trial_id for a in h.attempts.values()}) == len(h.attempts))
     check("frame extraction cost nothing",
           all(f.cost_generation == 0.0 for f in frames))
 
@@ -356,7 +370,7 @@ def main():
     img_item = next(i for i in bank if i["class"] == "compound"
                     and i["modality"] == "image" and "object_count" in i["measurement_fanout"])
     p_img = h.generate(img_item, {**cfg, "model": "dummy-image-1",
-                                  "endpoint": "text-to-image", "lane": "image",
+                                  "endpoint": "text-to-image", "lane": "image", "media_kind": "image",
                                   "inject_defects": []}, A.dummy_generator)
     m_na = h.measure(p_img.asset_id, "object_count", "na-eval", img_item)
     check("'absent' carries a machine-readable reason",
@@ -383,17 +397,51 @@ def main():
                   lambda: h.measure(p_img.asset_id, "object_count", "dummy-ocr", img_item),
                   "not specified for capability")
 
-    print("\nDEMO 5c — a refused generation yields 'absent/refused', not a fail")
+    print("\nDEMO 5c — EI-C5: a provider failure lives on the ATTEMPT, not a measurement")
     h2 = build_instruments(Harness(tmp / "d2"))
-    pr = h2.generate(img_item, {**cfg, "lane": "image"}, A.refusing_generator)
-    m_ref = h2.measure(pr.asset_id or "", "object_count", "dummy-vlm", img_item) \
-        if pr.asset_id else None
-    if m_ref is None:
-        # refused attempts produce no asset; record the attempt-level fact instead
-        om3 = h2.operational_metrics()
-        check("refusal recorded as a refusal, not a failed capability",
-              om3["refusals"] == 1 and om3["assets_produced"] == 0,
-              f"refusals={om3['refusals']}, error_classes={om3['error_classes']}")
+    pr = h2.generate(img_item, {**cfg, "lane": "image", "media_kind": "image",
+                                "unit_price": 0.40}, A.refusing_generator)
+    om3 = h2.operational_metrics()
+    check("refusal recorded as a refusal, not a failed capability",
+          om3["refusals"] == 1 and om3["assets_produced"] == 0,
+          f"refusals={om3['refusals']}, error_classes={om3['error_classes']}")
+    check("canonical persistent status is 'refusal', not 'refused'",
+          pr.api_status == "refusal")
+    check("a refused attempt still has a trial id and a cost_ref",
+          bool(pr.trial_id) and bool(pr.cost_ref) and pr.cost_ref in h2.cost_ledger)
+    expect_raises("measuring a failed attempt is REFUSED (no double-counting)",
+                  lambda: h2.measure(pr.asset_id or "x", "object_count",
+                                     "dummy-vlm", img_item),
+                  "unknown asset")
+
+    # ---------------------------------------------------------------- EI-C6
+    print("\nDEMO 5f — EI-C6: cost is summed over ATTEMPTS, not over artifacts")
+    hC = build_instruments(Harness(tmp / "d_ec6"))
+    hC.generate(img_item, {**cfg, "lane": "image", "media_kind": "image",
+                           "unit_price": 1.00, "inject_defects": []},
+                A.dummy_generator)
+    hC.generate(img_item, {**cfg, "lane": "image", "media_kind": "image",
+                           "unit_price": 0.75}, A.refusing_generator, force=True)
+    hC.generate(img_item, {**cfg, "lane": "image", "media_kind": "image",
+                           "unit_price": 0.50}, A.erroring_generator, force=True)
+    omC = hC.operational_metrics()
+    check("a refused attempt with non-zero cost SURVIVES the total",
+          abs(omC["cost_generation_total"] - 2.25) < 1e-9,
+          f"total={omC['cost_generation_total']} (1.00 ok + 0.75 refusal + "
+          f"0.50 error). Summing produced artifacts only would give 1.00.")
+    check("the dropped portion is surfaced explicitly",
+          abs(omC["cost_of_failed_or_refused_attempts"] - 1.25) < 1e-9,
+          f"failed/refused cost={omC['cost_of_failed_or_refused_attempts']}")
+    check("every attempt has a resolvable cost_ref",
+          all(a.cost_ref in hC.cost_ledger for a in hC.attempts.values()),
+          f"{len(hC.cost_ledger)} ledger lines")
+    check("the misleading cost_in_retry_chains key is GONE",
+          "cost_in_retry_chains" not in omC
+          and "cost_of_retry_attempts" in omC)
+    check("no complete CpAO chain cost is claimed without an acceptance",
+          omC["complete_retry_chain_cost"] is None
+          and omC["cpao_computable"] is False,
+          f"status={omC['complete_retry_chain_cost_status']}")
 
     # ---------------------------------------------------------------- DEMO 6
     print("\nDEMO 6 — the Registry schema validates and starts EMPTY")
@@ -412,16 +460,95 @@ def main():
               s.get("empirical_entries") == 0,
               f"status={s.get('status')}")
 
+    # --------------------------------------------------------------- EI-C7
+    print("\nDEMO 6b — EI-C7: repeat structure is DERIVED from provenance")
+    hB = build_instruments(Harness(tmp / "d_ec7"))
+    bcfg = {**cfg, "lane": "general_video", "media_kind": "video",
+            "inject_defects": [], "unit_price": 1.0}
+    vid_items = [i for i in bank if i["class"] == "compound"
+                 and i["modality"] == "video"]
+    capZ = next(c for c in vid_items[0]["measurement_fanout"]
+                if c in hB.instruments["dummy-temporal"].capabilities)
+    hB.instruments["dummy-temporal"].qualification_status = "deterministic"
+
+    def cell(items, repeats, extra_retry=False, dup_trial=False, short_item=None):
+        """Build a cell from real provenance and return its measurements."""
+        ms = []
+        for it in items:
+            n = repeats if (short_item is None or it["item_id"] != short_item) else repeats - 1
+            base_att = None
+            for k in range(n):
+                if k == 0:
+                    pr = hB.generate(it, bcfg, A.dummy_generator, force=True)
+                    base_att = pr.attempt_id
+                else:
+                    pr = hB.generate(it, bcfg, A.dummy_generator,
+                                     repeat_of=base_att, repeat_index=k)
+                m = hB.measure(pr.asset_id, capZ, "dummy-temporal", it)
+                m.synthetic = False
+                ms.append(m)
+                if dup_trial and k == 0:
+                    m2 = hB.measure(pr.asset_id, capZ, "dummy-temporal", it)
+                    m2.synthetic = False
+                    ms.append(m2)
+            if extra_retry:
+                pr = hB.generate(it, bcfg, A.dummy_generator,
+                                 retry_of=base_att, retry_reason="rejected")
+                m = hB.measure(pr.asset_id, capZ, "dummy-temporal", it)
+                m.synthetic = False
+                ms.append(m)
+        return ms
+
+    good = cell(vid_items[:2], 2)
+    check("a BALANCED cell is built from real provenance (2 items x 2 repeats)",
+          len(good) == 4 and len({hB.trial_id_of(m.asset_id) for m in good}) == 4,
+          f"{len(good)} measurements over "
+          f"{len({hB.trial_id_of(m.asset_id) for m in good})} distinct trials")
+
+    expect_raises("EI-C7: declaring 2 repeats while only 1 was observed is REFUSED",
+                  lambda: hB.write_registry_row(capZ, "dummy-temporal",
+                                                cell([vid_items[2]], 1), {}, 1, 2),
+                  "do not contribute that many")
+    expect_raises("EI-C7: two measurements of ONE trial is REFUSED",
+                  lambda: hB.write_registry_row(
+                      capZ, "dummy-temporal",
+                      cell([vid_items[3]], 2, dup_trial=True), {}, 1, 2),
+                  "more than one scoreable measurement")
+    expect_raises("EI-C7: one item with fewer repeats than another is REFUSED",
+                  lambda: hB.write_registry_row(
+                      capZ, "dummy-temporal",
+                      cell(vid_items[4:6], 2, short_item=vid_items[4]["item_id"]),
+                      {}, 2, 2),
+                  "observed trial structure")
+    expect_raises("EI-C7: a retry masquerading inside the repeat cell is REFUSED",
+                  lambda: hB.write_registry_row(
+                      capZ, "dummy-temporal",
+                      cell([vid_items[6]], 2, extra_retry=True), {}, 1, 2),
+                  "production RETRIES")
+    # The balance invariant is a belt-and-braces guard: if every item
+    # contributes exactly repeats_per_item trials and no trial is double-counted,
+    # trials == n_items * repeats_per_item follows. It is asserted here as a
+    # guard rather than pretending it is independently reachable - a mis-shaped
+    # cell is refused by whichever gate sees it first, and both refuse.
+    expect_raises("EI-C7: a mis-shaped cell (3 trials over 2 items) is REFUSED",
+                  lambda: hB.write_registry_row(capZ, "dummy-temporal",
+                                                good[:3], {}, 2, 2),
+                  "REGISTRY WRITE REFUSED")
+    check("the balance invariant trials == n_items x repeats is enforced in code",
+          "unbalanced cell" in pathlib.Path(HERE / "harness.py").read_text())
+    check("no Registry row was created by any EI-C7 attempt",
+          len(hB.registry_rows) == 0)
+
     # ---------------------------------------------------------------- E-C7
     print("\nDEMO 7 — E-C7: canonical Resources storage handoff")
     outdir = ROOT / "eval/v1/harness/out-selftest"
     if outdir.exists():
         shutil.rmtree(outdir)
     # include a refused attempt so we can prove it survives with no artifact
-    h.generate(img_item, {**cfg, "lane": "image", "model": "dummy-image-1",
+    h.generate(img_item, {**cfg, "lane": "image", "media_kind": "image", "model": "dummy-image-1",
                           "endpoint": "text-to-image"},
                A.refusing_generator, force=True)
-    h.generate(img_item, {**cfg, "lane": "image", "model": "dummy-image-2",
+    h.generate(img_item, {**cfg, "lane": "image", "media_kind": "image", "model": "dummy-image-2",
                           "endpoint": "text-to-image"},
                A.erroring_generator, force=True)
     summary = h.emit_storage_handoff(outdir)
@@ -440,11 +567,17 @@ def main():
     accept = [l for l in (outdir / "acceptances.jsonl").read_text().splitlines() if l.strip()]
 
     # criterion 7: every failed/refused call survives as its own attempt record
-    failed = [a for a in attempts if a["api_status"] != "ok"]
+    failed = [a for a in attempts if a["status"] != "ok"]
+    art_by_attempt = {}
+    for r in artifacts:
+        if not r.get("derived_from_artifact_id"):
+            art_by_attempt.setdefault(r["attempt_id"], []).append(r)
     check("every failed/refused call survives as an ATTEMPT record",
-          len(failed) >= 2 and all(a["produced_artifact"] is None for a in failed),
-          f"{len(failed)} non-ok attempts, all with no artifact; "
-          f"statuses={sorted({a['api_status'] for a in failed})}")
+          len(failed) >= 2
+          and all(not art_by_attempt.get(a["attempt_id"]) for a in failed)
+          and all(a["error_detail"] for a in failed),
+          f"{len(failed)} non-ok attempts, none with a direct artifact, all "
+          f"carrying error_detail; statuses={sorted({a['status'] for a in failed})}")
     check("attempts without an artifact are NOT dropped from the handoff",
           summary["attempts_without_artifact"] >= 2,
           f"attempts_without_artifact={summary['attempts_without_artifact']}")
@@ -452,14 +585,16 @@ def main():
     A_REQ = ["attempt_id", "eval_item_id", "provider", "model_id", "model_version",
              "endpoint", "workflow", "lane", "config_hash", "config_location",
              "reference_asset_hashes", "requested_at", "completed_at",
-             "api_status", "error_detail", "repeat_index", "repeat_of_attempt_id",
-             "retry_of_attempt_id", "retry_reason", "cost_generation"]
-    F_REQ = ["artifact_id", "attempt_id", "trial_artifact_id",
-             "parent_artifact_id", "derivation", "output_hash",
-             "output_location", "storage_class"]
-    M_REQ = ["measurement_id", "artifact_id", "trial_artifact_id",
-             "capability_id", "instrument_ref", "observation_unit", "result",
-             "absence_reason", "defects", "measured_at"]
+             "status", "error_detail", "repeat_index", "repeat_of_attempt_id",
+             "retry_of_attempt_id", "retry_reason", "cost_ref", "storage_class",
+             "prompt_hash", "trial_id"]
+    F_REQ = ["artifact_id", "attempt_id", "trial_id", "output_hash",
+             "output_bytes", "output_location", "media_kind", "storage_class",
+             "derived_from_artifact_id", "derivation_type", "derivation_params"]
+    M_REQ = ["measurement_id", "artifact_id", "trial_id", "capability_id",
+             "instrument_ref", "instrument_version", "instrument_config_hash",
+             "instrument_qualification_ref", "observation_unit", "measured_at",
+             "result", "absence_reason", "defects"]
     for label, rows, req in (("attempt", attempts, A_REQ),
                              ("artifact", artifacts, F_REQ),
                              ("measurement", meas, M_REQ)):
@@ -475,9 +610,9 @@ def main():
 
     check("derived artifacts point to a parent and add no trial",
           summary["derived_artifacts"] > 0
-          and summary["trial_artifacts"] < len(artifacts),
+          and summary["trials"] < len(artifacts),
           f"{len(artifacts)} artifacts, {summary['derived_artifacts']} derived, "
-          f"{summary['trial_artifacts']} trials")
+          f"{summary['trials']} trials")
     check("acceptance is EMPTY - Eval does not decide it",
           accept == [] and summary["acceptance_decided_by_eval"] is False)
 

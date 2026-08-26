@@ -4,8 +4,16 @@ TERMINOLOGY, because these words carry the whole design:
 
   ITEM      a frozen benchmark item from the E4 bank. A specification, not media.
   ATTEMPT   one call to a provider. Every call is a new attempt, always.
-  ASSET     one artifact produced by one attempt. THE TRIAL.
-  MEASUREMENT  one evaluator's verdict about one asset.
+  TRIAL     ONE PROVIDER CALL. Corrected in EI-C2: the trial is the CALL, not
+            the bytes. Every repeat and every retry is its own trial. Derived
+            media (a sampled frame) adds ARTIFACTS, never trials.
+  ARTIFACT  bytes produced by an attempt. An attempt may produce none.
+  MEASUREMENT  one evaluator's verdict about one artifact (or whole trial).
+
+  WHY THE TRIAL MOVED. Previously the trial was the root ASSET, which meant a
+  call that produced nothing had no trial at all - so a refusal silently left
+  the denominator. Anchoring the trial to the CALL keeps every refused, errored
+  and timed-out call countable, which is what reliability and cost both need.
 
   REPEAT    a DELIBERATE re-run of the same item+config to estimate how
             reproducible a workflow is. It is part of the experiment design and
@@ -39,17 +47,50 @@ import hashlib
 import json
 
 # -----------------------------------------------------------------------------
-# Result absence is NOT one thing. Collapsing these would let "we could not
-# measure it" read as "it passed" or "it failed" - which is exactly the
-# distinction a router must be able to make.
+# EI-C5 canonical V1 absence vocabulary.
+#
+# TWO THINGS WERE REMOVED, and the removals are the correction:
+#
+#   `generation_failed` / `refused` are GONE. A provider refusal, error or
+#   timeout is a property of the ATTEMPT and lives on the attempt row with its
+#   verbatim error_detail. Recording it a second time as a measurement absence
+#   double-counted one fact and made a failed call look like a failed
+#   measurement.
+#
+#   `instrument_unqualified` is GONE, and this one is subtler. An unqualified
+#   instrument still SAW the artifact and still produced an observation. That
+#   observation is real evidence and must be stored - it simply may not be
+#   reported as a capability score. So the result is stored normally, carrying
+#   instrument_qualification_ref = required_but_no_calibrated_instrument, and
+#   the Registry boundary keeps it out of scores. Calling it an absence would
+#   have thrown away a genuine observation.
 # -----------------------------------------------------------------------------
 ABSENCE_REASONS = (
-    "not_applicable",        # capability does not apply to this asset at all
-    "not_measured",          # applicable, simply not run this time
-    "instrument_unqualified",# an instrument exists but may not be trusted
-    "generation_failed",     # no asset to measure
-    "refused",               # provider declined to produce it
+    "not_applicable",             # capability does not apply to this artifact
+    "not_measured",               # applicable, simply not run this time
+    "instrument_unavailable",     # no instrument existed to run at all
+    "parse_failure",              # the instrument ran but its output was unusable
+    "human_adjudication_pending", # awaiting a person; not a gap, a queue
+    "other",
 )
+
+# Persistent status vocabulary required by Resources v2. The harness internally
+# says "refused"; persistence says "refusal". EI-C3 requires ONE token to reach
+# Resources, so the mapping happens here rather than asking Resources to accept
+# two synonyms for one fact.
+PERSISTENT_STATUS = ("ok", "error", "refusal", "timeout", "cancelled")
+INTERNAL_TO_PERSISTENT_STATUS = {
+    "ok": "ok", "error": "error", "refused": "refusal",
+    "refusal": "refusal", "timeout": "timeout", "cancelled": "cancelled",
+}
+
+# EI-C3 exact lane ids for V1.
+LANES = ("image", "general_video", "native_av", "lipsync", "tts")
+
+# Resources v2 media kinds.
+MEDIA_KINDS = ("image", "video", "audio", "audio_video", "text", "other")
+
+STORAGE_CLASS = "C_irreproducible_empirical"
 
 VERDICTS = ("pass", "fail", "absent")
 
@@ -86,6 +127,10 @@ class GenerationProvenance:
     EXACTLY ONE of these exists per asset. That is invariant 1.
     """
     attempt_id: str
+    # EI-C2: one call = one trial. trial_id equals attempt_id for a root call,
+    # and a derived artifact inherits its parent's. Repeats and retries each get
+    # their own trial because each is its own call.
+    trial_id: str
     asset_id: str
     item_id: str
     provider: str
@@ -95,7 +140,9 @@ class GenerationProvenance:
     workflow: str
     lane: str
     config_hash: str
+    prompt_hash: str                       # SHA-256 of the exact prompt sent
     config_path: str                       # recoverable, not just hashed
+    cost_ref: str = ""                     # points at a ledger line, never a number
     input_hashes: list[str] = field(default_factory=list)
     reference_hashes: list[str] = field(default_factory=list)
     seed: Any = None
@@ -106,6 +153,8 @@ class GenerationProvenance:
     error_class: str | None = None
     output_path: str | None = None
     output_sha256: str | None = None
+    output_bytes: int | None = None
+    media_kind: str = "other"
     # Cost components stay SEPARATE. Folding evaluator cost into generation cost
     # hides a third or more of the true cost of an observation.
     cost_generation: float | None = None
@@ -113,6 +162,8 @@ class GenerationProvenance:
     currency: str = "USD"
     parent_asset_id: str | None = None     # set for frames/derived assets
     derivation: str | None = None          # e.g. "frame_sample@t=1.5s"
+    derivation_type: str | None = None     # Resources v2 derivation contract
+    derivation_params: dict | None = None
 
     # --- EXPERIMENTAL REPEAT (design-time) -----------------------------------
     # Deliberate re-run of the same item+config to estimate reproducibility.
@@ -155,6 +206,9 @@ class Measurement:
     sampled_frames: int | None = None
     defects: list[dict] = field(default_factory=list)   # MULTIPLE per output
     cost_evaluator: float | None = None
+    # Separate from the attempt's cost_ref so evaluator spend can never hide
+    # inside generation spend.
+    evaluator_cost_ref: str | None = None
     latency_s: float | None = None
     measured_at: str = ""
     synthetic: bool = False       # dummy-fixture provenance, never promotable
