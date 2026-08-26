@@ -4,7 +4,6 @@
 **Date:** 26 Aug 2026 · **Branch:** `work/resources-v1-overnight` · **Not merged to `main`**
 **Session:** cloud-browser, zero prior context, **no laptop access**
 **Status:** all six packages complete · **0 new source-family acquisition · ₹0 / $0 spend**
-**⚠ PUSH BLOCKED — this session has read-only GitHub access. See §11a before anything else.**
 
 > The runbook §12 named this file `resources/reports/RESOURCES-V1-OVERNIGHT-CONTROLLER-BRIEF.md`; the
 > session instruction named `resources/findings/`. I followed the session instruction and left a
@@ -352,48 +351,19 @@ All under `resources/v1/` unless noted:
 
 ---
 
-## 11a. DELIVERY BLOCKED — the work is committed locally but could not be pushed
+## 11a. Delivery — pushed after a temporary permission block
 
-**This is the one thing that needs action before anything else in this brief matters.**
+**Resolved.** The branch is on the remote at `ff33bdf`.
 
-The work is committed on `work/resources-v1-overnight` as a single commit on top of `e13d43d`.
-**It could not be pushed.** Both write paths are refused:
+For the record, because it affected how this brief was written: for most of the session both write
+paths were refused — `git push` returned **exit 128 / 403** and the GitHub API returned **403
+`Resource not accessible by integration`** — while reads worked normally. The Claude GitHub App
+installation did not carry write permission on this repository. The operator granted it and the push
+then succeeded on the first attempt, unchanged.
 
-| Route | Result |
-|---|---|
-| `git push -u origin work/resources-v1-overnight` | **exit 128** — `The requested URL returned error: 403` |
-| GitHub API (`push_files` → create tree) | **403** — `Resource not accessible by integration` |
-
-The remote's message: *"Claude doesn't have GitHub access to `chawlavaibhav/media-intelligence` for
-your organization. An org admin can install the Claude GitHub App at
-https://github.com/apps/claude/installations/select_target, or reconnect GitHub from claude.ai
-settings (https://claude.ai/customize/connectors?auth_start=github&auth_start_force=1) to re-link an
-existing installation."*
-
-**Read access works** — the repository cloned, `media-factory` cloned, and the GitHub API
-authenticates as `chawlavaibhav`. Only writes are refused. This is an app-installation permission,
-not something a worker can resolve, and I did not attempt any workaround.
-
-**The work is preserved outside this container.** A git bundle of the commit (2.6 MB, complete
-including views) and a patch excluding the regenerable view files were sent to the operator directly.
-To restore either way:
-
-```bash
-# from the bundle (complete). Verified tonight end-to-end: restored into a fresh clone and the
-# full validator suite passed there with exit 0.
-git fetch /path/to/resources-v1-overnight.bundle \
-    'refs/heads/*:refs/remotes/bundle/*'
-git checkout -b work/resources-v1-overnight bundle/work/resources-v1-overnight
-
-# or from the patch, then regenerate the views deterministically
-git checkout -b work/resources-v1-overnight e13d43d
-git am /path/to/resources-v1-overnight-no-views.patch
-python3 resources/v1/validators/build_views.py
-```
-
-Then verify with `bash resources/v1/validators/run_all.sh` (expect exit 0) and push from a machine
-that has write access. **Nothing was merged to `main`, and no PR could be opened** — opening one
-requires the branch to exist on the remote.
+No workaround was attempted while it was blocked. The commit was preserved outside the container as a
+git bundle and a patch, and the bundle was verified end-to-end: restored into a fresh clone, the full
+validator suite passed there with exit 0. Those artifacts are now redundant.
 
 ---
 
