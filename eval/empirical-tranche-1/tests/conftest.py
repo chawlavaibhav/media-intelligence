@@ -13,6 +13,7 @@ from pathlib import Path
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 REPO_ROOT = PACKAGE_ROOT.parent.parent
 
-for p in (str(PACKAGE_ROOT), str(REPO_ROOT)):
+for p in (str(PACKAGE_ROOT), str(PACKAGE_ROOT / "text_qualification"),
+          str(PACKAGE_ROOT / "atex"), str(REPO_ROOT)):
     if p not in sys.path:
         sys.path.insert(0, p)
