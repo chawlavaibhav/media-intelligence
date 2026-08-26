@@ -1,0 +1,480 @@
+# GENERATED - E9-F. NO INSTRUMENT IS QUALIFIED. PROPOSED, NOT IN FORCE.
+
+task: E9-F
+date: '2026-08-26'
+status: PROPOSED_FOR_CONTROLLER_FREEZE_NOT_IN_FORCE
+instruments_qualified: 0
+hard_rule: No instrument is described as qualified anywhere in this map. A qualification is
+  earned by an EXECUTED protocol, and none has been executed.
+active_capabilities: 43
+measurability_summary:
+  yes_after_qualification_pack_exists: 4
+  blocked_needs_qualification_material_and_human_reference: 24
+  blocked_needs_qualification: 7
+  yes_deterministic: 8
+by_evaluator_family:
+  deterministic_cv_geometry: 5
+  structured_visual_vlm: 12
+  temporal_video: 9
+  text_ocr: 2
+  speech_audio_av: 7
+  creative_commercial: 4
+  operational_logging: 4
+wave1_blockers:
+- blocker: No qualification pack for the visual VLM family (family 3)
+  blocks_capabilities: 12
+  note: Largest single blocker. Needs person/product reference packs WITH same-category decoys
+    - without decoys the qualification cannot detect permissiveness at all.
+- blocker: No AV material of any kind
+  blocks_capabilities: 7
+  note: The project holds no audio. Nothing in family 5 can be qualified or measured.
+- blocker: No clean base clips for temporal perturbation
+  blocks_capabilities: 9
+  note: Truth can be INJECTED (known freeze, known identity swap, known flip) so this needs
+    ZERO human labels - only clean clips. Cheapest large unblock available.
+- blocker: No Latin exact-text pack
+  blocks_capabilities: 1
+  note: Must be built separately and must NOT mutate the frozen Devanagari battery.
+- blocker: No fresh independent reviewer panel for family 6
+  blocks_capabilities: 4
+  note: Public/source preference labels are never our creative truth. Also needs KNOWN-CLEAN
+    assets to measure false criticism.
+capabilities:
+- capability: object_count
+  evaluator_family: deterministic_cv_geometry
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: 100 synthetic CV fixtures (BUILT, exists)
+  existing_instrument_reusable: true
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_after_qualification_pack_exists
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: attribute_binding
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: 100 synthetic CV fixtures (partial)
+  existing_instrument_reusable: true
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_after_qualification_pack_exists
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: spatial_relationship_2d
+  evaluator_family: deterministic_cv_geometry
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: 100 synthetic CV fixtures (BUILT, exists)
+  existing_instrument_reusable: true
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_after_qualification_pack_exists
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: spatial_relationship_depth
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: action_adherence
+  evaluator_family: temporal_video
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: delivery_format_compliance
+  evaluator_family: deterministic_cv_geometry
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: file probe (deterministic, no pack needed)
+  existing_instrument_reusable: true
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: exact_text_latin
+  evaluator_family: text_ocr
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: same autocorrection risk, untested pack.'
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: exact_text_devanagari
+  evaluator_family: text_ocr
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: 96-item validated Devanagari battery (FROZEN, exists)
+  existing_instrument_reusable: true
+  false_pass_risk: 'FALSE PASS: checker autocorrects toward the plausible word. The founding
+    failure.'
+  measurable_in_wave1: yes_after_qualification_pack_exists
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: typography_legibility
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: logo_wordmark_fidelity
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'NO INSTRUMENT: template matching fails under perspective/curvature - where
+    commercial work lives.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: packaging_brand_colour_fidelity
+  evaluator_family: deterministic_cv_geometry
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: person_identity
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: embedding metrics reward shared context. DINO "may risk overfitting
+    identity-irrelevant information". Decoys mandatory.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: wardrobe_invariant_fidelity
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: product_identity
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: recognising a CATEGORY and reporting it as an INDIVIDUAL.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: reference_conditioning
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: edit_preservation
+  evaluator_family: deterministic_cv_geometry
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: masked diff against our own input (no pack needed)
+  existing_instrument_reusable: true
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: human_anatomy_integrity
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: human_object_contact
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: human_human_interaction
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: motion_action_quality
+  evaluator_family: temporal_video
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: a near-static clip scores perfectly on smoothness. Motion load
+    must be recorded.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: physics_material_appearance
+  evaluator_family: structured_visual_vlm
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: person_stability_in_clip
+  evaluator_family: temporal_video
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: product_stability_in_clip
+  evaluator_family: temporal_video
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: text_logo_stability_in_clip
+  evaluator_family: temporal_video
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: multi_shot_spatial_continuity
+  evaluator_family: temporal_video
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: spoken_script_correctness
+  evaluator_family: speech_audio_av
+  judgement_type: model_based
+  human_role: spot_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Same ASR normalisation risk if pronunciation is not split out.
+  measurable_in_wave1: blocked_needs_qualification
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: pronunciation_intelligibility
+  evaluator_family: speech_audio_av
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: a robust ASR NORMALISES a mispronunciation into the correct
+    word.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: single_speaker_lip_sync
+  evaluator_family: speech_audio_av
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'INSTRUMENT CONTESTED: SyncNet LSE-C/LSE-D validity disputed; only LSE-O
+    reported moderately effective.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: two_speaker_turn_assignment_and_lip_sync
+  evaluator_family: speech_audio_av
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: emotional_prosodic_fit
+  evaluator_family: speech_audio_av
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: audio_video_synchronisation
+  evaluator_family: speech_audio_av
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: proposition_objective_fit
+  evaluator_family: creative_commercial
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE CRITICISM: flagging problems in flawless work; more insidious than
+    missing them.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: hierarchy_product_as_hero
+  evaluator_family: creative_commercial
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: composition_brand_register
+  evaluator_family: creative_commercial
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: hook_pacing_temporal_hierarchy
+  evaluator_family: creative_commercial
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: reliability_pass_at_k
+  evaluator_family: operational_logging
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: cost_and_cpao
+  evaluator_family: operational_logging
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: latency_errors_refusals
+  evaluator_family: operational_logging
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: reproducibility
+  evaluator_family: operational_logging
+  judgement_type: deterministic
+  human_role: none
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: yes_deterministic
+  qualified: false
+  fallback_or_adjudication: fail closed on unparseable input
+- capability: camera_framing_fidelity
+  evaluator_family: temporal_video
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: sequence_state_continuity
+  evaluator_family: temporal_video
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: Not yet characterised; must be before any gate.
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: technical_visual_integrity
+  evaluator_family: temporal_video
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: every other capability can pass an asset a customer rejects
+    on sight.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
+- capability: voice_identity_consistency
+  evaluator_family: speech_audio_av
+  judgement_type: model_based_plus_human
+  human_role: required_adjudication
+  qualification_material: NOT_HELD
+  existing_instrument_reusable: false
+  false_pass_risk: 'FALSE PASS: intelligibility and register can pass while the voice changed.'
+  measurable_in_wave1: blocked_needs_qualification_material_and_human_reference
+  qualified: false
+  fallback_or_adjudication: human adjudication on disagreement
