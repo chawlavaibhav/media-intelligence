@@ -1,0 +1,154 @@
+# =============================================================================
+# E9-B — Dependency-aware scoring contract
+# =============================================================================
+# Task: EVAL-009 · Date: 2026-08-26
+# STATUS: PROPOSED FOR CONTROLLER FREEZE. NOT IN FORCE.
+#
+# THE PROBLEM THIS SOLVES
+#
+# Requirements in a real brief are DEPENDENT. Arena-T2I-Hard decomposes real
+# user prompts into a DAG and checks them in BFS order: if a parent is not
+# "yes", its descendants are skipped and counted as FAILED.
+#
+# Our V1 fan-out is FLAT. If the requested product was never rendered, then
+# logo fidelity, brand-colour fidelity and product stability have nothing to be
+# wrong about - and a flat fan-out can score all three PASS. The asset that most
+# completely failed the brief returns the HIGHEST score.
+#
+# The inflation is largest exactly where the output is worst. That is the
+# failure mode this contract exists to make impossible.
+# =============================================================================
+
+contract_version: v1
+task: E9-B
+date: 2026-08-26
+status: PROPOSED_FOR_CONTROLLER_FREEZE_NOT_IN_FORCE
+
+# -----------------------------------------------------------------------------
+# THE FIVE MEASUREMENT STATES. Exactly one applies to any (requirement, asset).
+# -----------------------------------------------------------------------------
+measurement_states:
+
+  - id: pass
+    meaning: "The requirement was inspected and satisfied."
+    outcome_acceptance: satisfied
+    countable_in_pass_rate: true
+
+  - id: fail
+    meaning: "The requirement was inspected and not satisfied."
+    outcome_acceptance: unsatisfied
+    countable_in_pass_rate: true
+
+  - id: not_applicable
+    meaning: >-
+      The requirement GENUINELY DOES NOT APPLY to this asset - it was never part
+      of the brief. A lip-sync requirement on a silent product packshot.
+    outcome_acceptance: not_required
+    countable_in_pass_rate: false
+    guard: >-
+      This state means the requirement WAS NOT ASKED FOR. It must never be used
+      for a requirement that was asked for but could not be inspected. That
+      confusion is the entire reason blocked_by_prerequisite_failure exists.
+
+  - id: not_measured
+    meaning: >-
+      The requirement applies and could in principle be inspected, but was not:
+      no qualified instrument, instrument unavailable, parse failure, or human
+      adjudication still pending.
+    outcome_acceptance: unknown
+    countable_in_pass_rate: false
+    guard: >-
+      `unknown` is NOT `satisfied`. An outcome carrying an unresolved required
+      requirement cannot be accepted on the strength of the ones that passed.
+
+  - id: blocked_by_prerequisite_failure
+    meaning: >-
+      The requirement WAS in the brief and WAS required, but could not be
+      directly inspected because an ancestor requirement failed. The product is
+      absent, so its logo cannot be examined.
+    outcome_acceptance: unsatisfied      # <-- THE LOAD-BEARING LINE
+    countable_in_pass_rate: false
+    rationale: >-
+      At DIAGNOSTIC level this means "not directly inspectable because an
+      ancestor failed". At OUTCOME/BRIEF ACCEPTANCE level it propagates as
+      UNSATISFIED - never a pass, and never genuinely not applicable.
+      THE REQUIREMENT WAS NOT WAIVED BY THE FAILURE OF ITS ANCESTOR. The
+      customer still asked for the logo to be right; we simply cannot see it.
+      Recording it as not_applicable would let a missing product ERASE every
+      requirement that depended on it, which is precisely the inflation above.
+    excluded_from_pass_rate_because: >-
+      It is excluded from the DIAGNOSTIC pass-rate denominator because the
+      instrument never ran and reporting it as an instrument failure would
+      misattribute the fault. It is NOT excluded from outcome acceptance. These
+      two facts must both hold at once, and conflating them is the common error.
+
+# -----------------------------------------------------------------------------
+# PREREQUISITE GRAPH
+# -----------------------------------------------------------------------------
+prerequisite_graph:
+  shape: directed_acyclic_graph
+  declared_on: benchmark_item
+  edge_meaning: >-
+    `B requires A` means B is not directly inspectable unless A passes. It does
+    NOT mean B is unimportant, optional, or waived when A fails.
+  evaluation_order: breadth_first_from_roots
+  cycles: forbidden_build_aborts
+  rules:
+    - "A requirement with no incoming edge is a ROOT and is always inspected."
+    - "If an ancestor is `fail`, every descendant becomes blocked_by_prerequisite_failure."
+    - "If an ancestor is `blocked_by_prerequisite_failure`, blocking PROPAGATES transitively."
+    - "If an ancestor is `not_measured`, descendants become `not_measured`, NOT blocked - we do not know whether the ancestor failed, and asserting a block would claim knowledge we lack."
+    - "If an ancestor is `not_applicable`, descendants are `not_applicable` - the branch was never part of the brief."
+    - "A descendant may NEVER be `pass` while any ancestor is `fail` or blocked."
+
+# -----------------------------------------------------------------------------
+# AGGREGATION - the rules a validator enforces
+# -----------------------------------------------------------------------------
+aggregation:
+  diagnostic_pass_rate:
+    denominator: "states where countable_in_pass_rate is true (pass + fail only)"
+    purpose: "instrument-facing: of the requirements we INSPECTED, how many passed"
+    warning: >-
+      This number ALONE is dangerously optimistic on a badly failed asset,
+      because blocking removes descendants from its denominator. It must NEVER
+      be reported without the outcome-level satisfaction figure beside it.
+
+  outcome_satisfaction:
+    denominator: "every REQUIRED requirement in the brief, whatever its state"
+    satisfied_only_if: "state == pass"
+    purpose: "brief-facing: did the customer get what they asked for"
+    hard_rule: >-
+      A brief is ACCEPTED only if every required requirement is `pass`. Any
+      `fail`, `blocked_by_prerequisite_failure` or `not_measured` on a required
+      requirement makes the outcome unsatisfied.
+
+  forbidden:
+    - "Averaging across states so a blocked descendant improves the mean."
+    - "Treating blocked_by_prerequisite_failure as not_applicable at outcome level."
+    - "Reporting diagnostic_pass_rate without outcome_satisfaction."
+    - "Any weighting that lets a passing sibling compensate for a failed ancestor."
+
+# -----------------------------------------------------------------------------
+# Worked example - the exact case that motivated the contract
+# -----------------------------------------------------------------------------
+worked_example:
+  brief: "Product packshot with the brand logo visible on the pack, in brand colour."
+  graph:
+    product_identity: []
+    logo_wordmark_fidelity: [product_identity]
+    packaging_brand_colour_fidelity: [product_identity]
+  scenario: "The model rendered no recognisable product."
+  states:
+    product_identity: fail
+    logo_wordmark_fidelity: blocked_by_prerequisite_failure
+    packaging_brand_colour_fidelity: blocked_by_prerequisite_failure
+  diagnostic_pass_rate: "0/1 = 0.0  (only product_identity was inspectable)"
+  outcome_satisfaction: "0/3 required requirements satisfied -> UNSATISFIED"
+  under_v1_flat_fanout:
+    logo_wordmark_fidelity: "pass (nothing wrong was visible)"
+    packaging_brand_colour_fidelity: "pass (nothing wrong was visible)"
+    reported_score: "2/3 = 0.67"
+    verdict: >-
+      A completely failed asset scored 0.67 and would have out-ranked a
+      near-perfect asset with one real defect. This is the inflation the
+      contract removes.
