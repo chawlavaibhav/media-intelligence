@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 26 Aug 2026 after Cloud Macro Recalibration.
+**Updated:** 26 Aug 2026 after Cloud Macro Recalibration + model-access research lane.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this state, the decision records and this file govern until Repository Governor refreshes memory.
 
@@ -29,9 +29,9 @@ Their architectural insight remains valid: capability evidence needs explicit pr
 
 The benchmark must not define the product.
 
-The project will first research recurring **media-generation request patterns** from substantial real-user/usage-informed sources; independently research **technical capability/failure/evaluator/workflow patterns**; and independently research **evidence/access/lineage/persistence requirements**.
+The project will first research recurring **media-generation request patterns** from substantial real-user/usage-informed sources; independently research **technical capability/failure/evaluator/workflow patterns**; independently research **evidence/access/lineage/persistence requirements**; and in parallel research the **actual model/provider supply landscape** so account setup and candidate-roster selection do not become a later discovery bottleneck.
 
-Only after those three return will the Controller freeze the next request taxonomy, Capability Contract v2, condition/envelope model and benchmark.
+Only after those returns will the Controller freeze the next request taxonomy, Capability Contract v2, condition/envelope model, candidate model roster and benchmark.
 
 The existing 30 authored briefs are therefore a **designed probe bank**, not evidence of customer prevalence. The current 36 capabilities and 100-item Eval bank are strong **baselines**, not proof of exhaustive scope.
 
@@ -53,16 +53,14 @@ Stable separations remain:
 
 ## Active cloud assignments
 
-All three are substantial autonomous research/design programs and may run in parallel.
+All four are substantial autonomous research/design programs and may run in parallel.
 
 ### Canon — CANON-009
 
 Task:
-
 - `canon/tasks/CANON-009-CLOUD-SCOPE-PROGRAM.md`
 
 Branch:
-
 - `work/canon-009-request-space`
 
 Purpose: research the recurring grammar and co-occurrence structure of actual media-generation requests/use cases; compare the observed space against Creative IR, the synthetic 30-bank and Canon coverage; propose rebalancing/gaps without changing frozen architecture or ingesting sources.
@@ -70,26 +68,36 @@ Purpose: research the recurring grammar and co-occurrence structure of actual me
 ### Eval — EVAL-007
 
 Task:
-
 - `eval/tasks/EVAL-007-CLOUD-EVAL-RESEARCH-PROGRAM.md`
 
 Branch:
-
 - `work/eval-007-capability-workflow`
 
-Purpose: independently research modern capability/failure/evaluator benchmarks; complete the current official provider/workflow/price/feature inventory; audit the current 36 capabilities and important production conditions; propose evaluator qualification and a sparse/adaptive benchmark v2 without making calls or freezing cross-stream architecture.
+Purpose: independently research modern capability/failure/evaluator benchmarks; complete the current official provider/workflow/price/feature inventory where it supports capability/workflow understanding; audit the current 36 capabilities and important production conditions; propose evaluator qualification and a sparse/adaptive benchmark v2 without making calls or freezing cross-stream architecture.
 
 ### Resources — RES-003
 
 Task:
-
 - `resources/tasks/RES-003-CLOUD-EVIDENCE-PROGRAM.md`
 
 Branch:
-
 - `work/res-003-evidence-topology`
 
 Purpose: research access/rights/provenance of request/evaluation sources; rebaseline existing resource fit from committed evidence only; design protected-set/leakage handling; propose multi-parent outcome persistence and whole-outcome CpAO; research controlled-pack routes without acquiring them.
+
+### Eval supply landscape — EVAL-008
+
+Task:
+- `eval/tasks/EVAL-008-CLOUD-MODEL-ACCESS-RESEARCH.md`
+
+Branch:
+- `work/eval-008-model-access`
+
+Purpose: independently build the current model/provider/access universe, deduplicate the same underlying model across fal/direct/other provider routes, propose a compact frontier + specialist + low-cost/open candidate roster, and return an exact user account/action checklist. This is research only; it does not authorize the benchmark roster or any spend.
+
+User-reported access relevant to this lane:
+- fal access: user-reported;
+- “Frontier clouds” access: user-reported, exact provider identity not established in repo evidence and must not be guessed.
 
 ## Cloud environment / budget
 
@@ -102,7 +110,7 @@ Workers must not assume:
 - laptop API keys/provider accounts are available;
 - prior chat context is available.
 
-Across all three programs:
+Across all four programs:
 
 - **₹0 external spend**;
 - no generation/model API calls;
@@ -145,11 +153,11 @@ If a cloud runner is absent, design/research work continues and runtime verifica
 - no materially new Resources acquisition authorised.
 - Canon's real value gate remains unrun and requires separate Controller authorization/human setup.
 
-## One integration gate after all three programs
+## One integration gate after all active research programs
 
 Do **not** proceed stream-by-stream into execution after one worker finishes.
 
-After CANON-009, EVAL-007 and RES-003 return, the Controller jointly decides:
+After CANON-009, EVAL-007, RES-003 and EVAL-008 return, the Controller jointly decides:
 
 1. first-product request/use-case taxonomy;
 2. Media Request Grammar v1;
@@ -161,10 +169,11 @@ After CANON-009, EVAL-007 and RES-003 return, the Controller jointly decides:
 8. whether/how to revise the 100-item Eval bank;
 9. evaluator qualification program;
 10. targeted resource acquisition/controlled-pack program;
-11. current model/workflow admission roster;
-12. exact paid benchmark design and budget.
+11. **current model/workflow admission roster and preferred access routes**;
+12. **which provider accounts the user actually needs to open/fund**;
+13. exact paid benchmark design and budget.
 
-Market/request evidence, technical capability evidence, and benchmark design must remain visibly separate at this gate.
+Market/request evidence, technical capability evidence, model-supply evidence and benchmark design must remain visibly separate at this gate.
 
 ## Likely later macro tranche — not pre-authorised
 
@@ -173,6 +182,7 @@ If the integration gate passes, the next tranche will likely combine:
 - targeted controlled Resources packs;
 - evaluator qualification;
 - Canon value-gate execution;
+- selected provider/account setup;
 - then paid current-model admission and deeper workflow qualification.
 
 That work depends on findings from the active macro program and therefore requires a new Controller decision.
