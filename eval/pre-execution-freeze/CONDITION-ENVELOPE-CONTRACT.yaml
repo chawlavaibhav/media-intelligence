@@ -1,0 +1,270 @@
+# =============================================================================
+# E9-C — Condition / envelope contract
+# =============================================================================
+# Task: EVAL-009 · Date: 2026-08-26
+# STATUS: PROPOSED FOR CONTROLLER FREEZE. NOT IN FORCE.
+#
+# A CONDITION is the circumstance a measurement was taken under. Changing one
+# does not change WHAT was measured - it changes whether two measurements may be
+# compared at all.
+#
+# NO SINGLE COMPLEXITY SCORE. Collapsing these into one scalar would let an item
+# that is hard on duration and an item that is hard on language look identical,
+# destroying the only thing a condition is for: saying WHICH axis moved.
+#
+# THE PROVENANCE RULE THAT MUST NOT BE LOST
+#   requested_operation  = what the CUSTOMER asked for. Customer-side intent.
+#   workflow_mode        = the production route WE actually used. Planner-side.
+# These may correlate and must never be substituted for one another. A customer
+# asking to "animate this photo" has requested `animate`; whether we serve it by
+# I2V, keyframe chain or an edit pipeline is our choice. Recording our choice as
+# their request would attribute a system decision to the customer and corrupt
+# every downstream demand inference.
+# =============================================================================
+
+contract_version: v1
+task: E9-C
+date: 2026-08-26
+status: PROPOSED_FOR_CONTROLLER_FREEZE_NOT_IN_FORCE
+single_complexity_score: FORBIDDEN
+cartesian_sweep: FORBIDDEN
+
+# --- EVAL-011 correction E11-A -----------------------------------------------
+# These two values are the machine-checkable truth about this contract's size.
+# A validator recomputes both from condition_families and fails on mismatch, so
+# a future edit cannot reintroduce the family-count and cell-count drift EVAL-009 had.
+condition_families_count: 13
+two_level_naive_cells: 8192
+two_level_naive_cells_derivation: "2 ** 13 = 8192"
+corrected_by: EVAL-011
+correction_note: >-
+  EVAL-009 shipped declaring 13 families in condition_families while its own
+  sweep_policy and prose carried the previous, smaller count and its derived
+  cell figure. The families were always 13; the count was the error. No family
+  was removed to recover the old number. The full correction record is in
+  eval/pre-execution-integration/CONDITION-CONTRACT-CORRECTION.md.
+
+condition_families:
+
+  - id: COND-DELIVERY
+    name: delivery_duration_size_platform
+    required_on_every_row: true
+    fields: [aspect_ratio, resolution, duration_s, fps, delivery_size_declared, platform_target]
+    why: >-
+      Small text survives at high resolution and disappears at feed size. A
+      legibility or exact-text result without a declared delivery size is not
+      interpretable at all.
+    affects: [typography_legibility, exact_text_latin, exact_text_devanagari,
+              delivery_format_compliance, technical_visual_integrity]
+    dual_role_note: >-
+      This family is simultaneously a CONDITION of every other measurement and
+      the SUBJECT of delivery_format_compliance. Both are true; the Planner must
+      never conflate them.
+    swept_in_wave1: true
+    swept_flag_added_by: >-
+      EVAL-011. sweep_policy.actively_swept_in_wave1 already named COND-DELIVERY
+      as one of the four swept families, but the family itself carried no flag,
+      so a machine count of swept families returned 3 while the prose said 4.
+
+  - id: COND-LOAD
+    name: content_entity_load
+    required_on_every_row: true
+    fields: [n_people, n_products, n_countable_objects, distractor_present, scene_complexity_class]
+    why: >-
+      Best externally evidenced condition in the map. GenEval separates single
+      from two-object prompts; GenEval2 indexes prompts by `atom_count`
+      explicitly so results can be read at different compositional loads.
+    affects: [object_count, attribute_binding, spatial_relationship_2d,
+              spatial_relationship_depth, human_human_interaction, human_anatomy_integrity]
+    swept_in_wave1: true
+
+  - id: COND-REFERENCE
+    name: reference_type_count_quality
+    required_on_every_row: true
+    fields: [reference_type, reference_count, reference_view_diversity, reference_quality_class,
+             decoy_present]
+    reference_type_vocabulary: [none, identity_person, identity_product, style, layout, brand_mark]
+    why: >-
+      DreamBench's DINO metric "may risk overfitting the identity-irrelevant
+      information" - the reference's incidental content leaks into the
+      judgement. Four clean multi-view references and one casual photo are not
+      the same measurement.
+    affects: [person_identity, wardrobe_invariant_fidelity, product_identity,
+              reference_conditioning, logo_wordmark_fidelity]
+    note: >-
+      reference_type=style is how STYLE-REFERENCE FIDELITY is represented. It is
+      a condition on reference_conditioning, not a separate capability.
+    cross_stream: "Resources controls reference quality, so it co-owns this condition."
+
+  - id: COND-INTERACTION
+    name: physical_interaction_action_load
+    required_on_every_row: false
+    applies_when: "a person or an action is present"
+    fields: [contact_class, action_class, n_participants, action_completion_required]
+    why: "Holding differs from touching differs from manipulating; each is a different failure surface."
+    affects: [human_object_contact, human_human_interaction, action_adherence]
+
+  - id: COND-MOTION
+    name: camera_motion_framing_load
+    required_on_every_row: false
+    applies_when: "modality is video or native_av"
+    fields: [camera_motion_class, subject_motion_class, motion_magnitude_class, framing_instruction]
+    why: >-
+      VBench separates dynamic_degree from motion_smoothness because a
+      near-static clip scores perfectly on smoothness. Without motion load
+      recorded, a model producing almost no motion looks like one producing
+      excellent motion.
+    affects: [motion_action_quality, camera_framing_fidelity, person_stability_in_clip,
+              product_stability_in_clip, technical_visual_integrity]
+    controller_direction: "Camera motion is recorded SEPARATELY from subject motion."
+
+  - id: COND-CONSTRAINT
+    name: constraint_exactness_load
+    required_on_every_row: true
+    fields: [n_hard_constraints, exact_string_count, exact_string_length_chars,
+             brand_constraint_count, prerequisite_depth]
+    why: >-
+      Arena-T2I-Hard's prompts are hard precisely because attributes, spatial
+      relations, counts and stylistic constraints STACK. Per-capability rates
+      from isolated atomic probes will not predict performance when six
+      constraints must hold at once.
+    affects: [ALL_constraint_fidelity, ALL_text_and_brand]
+    swept_in_wave1: true
+
+  - id: COND-WORKFLOW
+    name: workflow_mode
+    required_on_every_row: true
+    vocabulary: [t2i, i2v, t2v, edit, extension, reference_conditioned, composite, transform_lipsync, tts]
+    why: >-
+      I2V starts from a fixed first frame, so identity at frame 0 is GIVEN, not
+      generated. Scoring an I2V and a T2V asset in one cell compares a model
+      that had to invent a face with one that was handed it.
+    affects: [person_identity, product_identity, reference_conditioning, edit_preservation]
+    provenance: planner_side
+    hard_rule: "MUST NOT be populated from requested_operation. See COND-OPERATION."
+    # --- EVAL-011 correction E11-C: seed availability is a production condition
+    seed_fields: [seed_support, seed_policy, seed_value]
+    seed_support_vocabulary:
+      exposed: "the route accepts a caller-supplied seed"
+      absent_in_api: >-
+        the provider's own generated API surface enumerates its parameters and no
+        seed is among them (EVAL-010 evidence class: provider SDK)
+      undocumented: "not determinable from any provider-authorised source"
+    seed_policy_vocabulary:
+      held: "one seed fixed across the repeat group - measures variance UNDER A HELD SEED"
+      varied: "seed deliberately varied across the repeat group"
+      unset: "no seed supplied, or none available - measures INHERENT variance"
+    why_seed_is_a_condition: >-
+      EVAL-010 established from provider-authorised SDKs that seed availability
+      differs by ROUTE, not by model family: 12 verified routes expose a seed and
+      7 do not, including OpenAI's image API on both generate and edit, fal's
+      Kling v3 text-to-video, fal's veo3.1 reference-to-video and Sarvam TTS. The
+      same nominal model reached two ways can differ. So it is recorded per row.
+    hard_rule_repeats: >-
+      A repeat group taken under seed_policy `held` and one taken under `unset`
+      measure DIFFERENT QUANTITIES. They MUST NOT be pooled into one consistency
+      figure, compared against a single threshold, or averaged together. See
+      eval/pre-execution-integration/CONDITION-CONTRACT-CORRECTION.md.
+
+  - id: COND-SEQUENCE
+    name: sequence_shot_set_structure
+    required_on_every_row: true
+    fields: [n_shots, shot_boundaries_declared, is_multi_shot, set_size, set_acceptance_basis]
+    why: >-
+      Continuity capabilities are UNDEFINED at one shot and only begin to exist
+      at two. A single-shot asset cannot exhibit a cross-shot failure, so
+      scoring it as a pass would manufacture evidence.
+    affects: [multi_shot_spatial_continuity, sequence_state_continuity,
+              hook_pacing_temporal_hierarchy]
+    hard_floor: "Below 2 shots the continuity capabilities are not_applicable, not pass."
+
+  - id: COND-LANGUAGE
+    name: language_script_speaker_topology
+    required_on_every_row: true
+    fields: [language, script_system, is_code_mixed, n_speakers, speaker_turn_boundaries_present]
+    why: >-
+      IndicVoices-R exists because Indian-language speech needs its own
+      material. Devanagari exactness is a distinct judgement from Latin, and
+      Hinglish code-mixing is arguably hardest and most commercially common for
+      this product.
+    affects: [exact_text_devanagari, spoken_script_correctness, pronunciation_intelligibility,
+              single_speaker_lip_sync, two_speaker_turn_assignment_and_lip_sync,
+              voice_identity_consistency]
+    swept_in_wave1: true
+    hard_rule: "English and Hindi results are NEVER pooled - strong English would hide unusable Hindi."
+
+  - id: COND-INPUT
+    name: input_quality
+    required_on_every_row: false
+    applies_when: "workflow_mode consumes supplied media"
+    fields: [input_source_class, input_resolution, input_degradation_class]
+    why: "A lip-sync result on a clean studio clip says little about a customer's phone video."
+    affects: [single_speaker_lip_sync, edit_preservation, person_identity]
+    unknown: "We hold no degraded-input material for any transform lane."
+
+  - id: COND-PROVENANCE
+    name: decision_provenance
+    required_on_every_row: true
+    fields: [requested_operation, workflow_mode, who_chose_workflow_mode,
+             reference_selection_provenance]
+    why: >-
+      THE FIELD THAT KEEPS THE CUSTOMER/PLANNER LINE VISIBLE. The same workflow
+      mode means different things depending on who chose it: when the customer
+      supplies a starting image it is a property of their request; when WE pick
+      I2V to make a job easier it is our decision.
+    who_chose_vocabulary: [customer_supplied, planner_selected, benchmark_fixed]
+
+  - id: COND-OPERATION
+    name: requested_operation
+    required_on_every_row: true
+    provenance: customer_side
+    vocabulary_status: >-
+      CONSUMED FROM CANON-010, UNCHANGED. EVAL-011 reconciled this field against
+      canon/experiments/pre-execution-freeze/MEDIA-REQUEST-GRAMMAR-v1.yaml
+      (vocabularies.requested_operation.values) on branch
+      work/canon-010-request-freeze. All seven machine ids matched exactly, so
+      nothing was renamed and nothing was added. Canon owns this vocabulary.
+    vocabulary_source: "CANON-010 MEDIA-REQUEST-GRAMMAR-v1.yaml :: vocabularies.requested_operation.values"
+    vocabulary_owner: canon
+    eval_may_extend: false
+    vocabulary: [generate, edit, animate, restore, extend, compose, variants]
+    why: >-
+      Requested operation is CUSTOMER INTENT and is upstream of Creative IR. It
+      is what makes the benchmark cover materially different request shapes
+      instead of treating everything as generate-from-nothing.
+    hard_rule: >-
+      MUST NOT be substituted for workflow_mode, in either direction. A
+      validator enforces that both are present and independently recorded.
+
+  - id: COND-SCALE
+    name: output_scale_set_structure
+    required_on_every_row: true
+    fields: [deliverable_count, is_variant_set, set_acceptance_basis]
+    why: >-
+      Commercial work ships in sets. Per-asset pass rates say nothing about
+      whether twelve assets read as one campaign - a workflow can pass every
+      asset individually and fail the job.
+    affects: [person_identity, product_identity, voice_identity_consistency,
+              composition_brand_register]
+    note: "Campaign/variant-set consistency lives at OUTCOME level, not as a capability."
+
+# -----------------------------------------------------------------------------
+# Sweep policy
+# -----------------------------------------------------------------------------
+sweep_policy:
+  condition_families: 13
+  actively_swept_in_wave1: [COND-LOAD, COND-CONSTRAINT, COND-LANGUAGE, COND-DELIVERY]
+  swept_rationale: >-
+    Chosen on strength of external evidence that behaviour changes materially
+    across the range, AND cheapness of varying them inside an item that already
+    exists. Duration sits inside COND-DELIVERY.
+  all_others: "RECORDED on every eligible row; not swept in Wave 1."
+  why_not_cartesian: >-
+    13 families at two levels each is 8,192 cells before a capability or a model
+    is considered. A full sweep is not fundable and never will be. Recording a
+    condition costs nothing; sweeping one costs a run.
+  adaptive_rule: >-
+    Sweep the next level only where the previous level did NOT already fail.
+    Establishing that a workflow failing at 6 seconds also fails at 20 buys
+    nothing. No saving is CLAIMED in the forecast, because the saving depends on
+    results we do not have.

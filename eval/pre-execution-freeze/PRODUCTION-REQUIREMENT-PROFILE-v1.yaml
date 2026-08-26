@@ -1,0 +1,194 @@
+# =============================================================================
+# E9-D — Production Requirement Profile (PRP) v1 proposal
+# =============================================================================
+# Task: EVAL-009 · Date: 2026-08-26
+# STATUS: PROPOSED FOR CONTROLLER FREEZE. NOT IN FORCE.
+#
+# WHERE IT SITS
+#   Normalized Request -> Creative IR -> [PRODUCTION REQUIREMENT PROFILE]
+#     -> future Production IR / Planner -> production -> accepted outcome
+#
+# WHAT IT IS. The compiled, provider-agnostic statement of WHAT MUST BE TRUE for
+# an outcome to be accepted. It turns a creative description into a checkable
+# requirement set with a dependency graph, the conditions under which each
+# requirement is judged, and the acceptance consequence of each.
+#
+# WHAT IT IS EMPHATICALLY NOT. It contains NO provider, NO model, NO endpoint,
+# NO price, NO routing decision and NO workflow selection. Those belong to the
+# future Production IR / Planner. A validator enforces this by rejecting any
+# forbidden key, because the boundary is the whole value of the object: the
+# moment a model name enters, the requirement stops being a statement about the
+# customer's outcome and becomes a statement about our supply chain.
+# =============================================================================
+
+profile_version: v1
+task: E9-D
+date: 2026-08-26
+status: PROPOSED_FOR_CONTROLLER_FREEZE_NOT_IN_FORCE
+contains_provider_or_routing_decisions: false
+
+# -----------------------------------------------------------------------------
+# Forbidden keys - the validator rejects a PRP containing any of these
+# -----------------------------------------------------------------------------
+forbidden_keys:
+  - provider
+  - model
+  - model_id
+  - endpoint
+  - workflow          # the CHOSEN route; see note
+  - lane
+  - price
+  - cost
+  - route
+  - vendor
+  - api
+  - selected_workflow_mode
+forbidden_key_note: >-
+  `workflow_mode` may appear on a MEASUREMENT (it is a condition of evidence)
+  but never on a REQUIREMENT. The requirement says the founder must be
+  recognisably the same person; it does not say to achieve that with I2V.
+  `requested_operation` MAY appear, because that is customer intent, not a route.
+
+# -----------------------------------------------------------------------------
+# Requirement record
+# -----------------------------------------------------------------------------
+requirement_fields:
+
+  requirement_id:
+    required: true
+    meaning: "Stable id, unique within the profile."
+
+  requirement_type:
+    required: true
+    vocabulary: [exact_content, identity_invariant, structural_constraint,
+                 technical_deliverable, temporal_continuity, audio_property,
+                 creative_fitness, operational_constraint]
+
+  source_operation:
+    required: true
+    meaning: >-
+      The customer-side requested operation this requirement came from
+      (generate/edit/animate/restore/extend/compose/variants).
+    provenance: customer_side
+    hard_rule: "NEVER populated from a chosen workflow mode."
+    vocabulary_status: "PROVISIONAL pending CANON-010, which owns request vocabulary."
+
+  source_provenance:
+    required: true
+    vocabulary: [customer_explicit, customer_implicit, canon_derived,
+                 brand_standing_requirement, regulatory_or_platform]
+    meaning: >-
+      Where the requirement came from. `customer_explicit` and `canon_derived`
+      are not equally negotiable, and acceptance disputes turn on which it was.
+
+  strength:
+    required: true
+    vocabulary: [must, should, may]
+    meaning: >-
+      `must` blocks acceptance if unsatisfied. `should` is recorded and reported
+      but does not block. `may` is preference only.
+    hard_rule: >-
+      Strength is a property of the REQUIREMENT, never of the measurement
+      result. A `must` does not become a `should` because it turned out hard.
+
+  resolved_value:
+    required: true
+    meaning: "The concrete value, or an explicit unresolved state."
+    unresolved_vocabulary: [unresolved_needs_customer, unresolved_needs_canon,
+                            unresolved_needs_asset, unresolved_pending_request_grammar]
+    hard_rule: >-
+      An unresolved requirement is NOT a satisfied one and NOT an absent one. A
+      profile with unresolved `must` requirements cannot be compiled into a
+      production plan, and saying so early is the point.
+
+  observation_scope:
+    required: true
+    vocabulary: [frame, shot, shot_pair, sequence, whole_asset, asset_set_over_time]
+    meaning: "Canon SPEC-04 vocabulary, verbatim. The unit the requirement is judged at."
+
+  required_capabilities:
+    required: true
+    meaning: "Capability ids from the Capability Contract that must hold for this requirement."
+
+  relevant_conditions:
+    required: true
+    meaning: "Condition family ids whose values must be recorded for this requirement's evidence."
+
+  prerequisites:
+    required: true
+    default: []
+    meaning: >-
+      Requirement ids that must be satisfied before this one is directly
+      inspectable. Populates the E9-B dependency graph.
+
+  acceptance_consequence:
+    required: true
+    vocabulary: [blocks_acceptance, degrades_acceptance, informational_only]
+    meaning: "What happens to the OUTCOME if this requirement is unsatisfied."
+    consistency_rule: "strength=must MUST have acceptance_consequence=blocks_acceptance."
+
+# -----------------------------------------------------------------------------
+# Profile-level fields
+# -----------------------------------------------------------------------------
+profile_fields:
+  profile_id: {required: true}
+  outcome_id: {required: true, meaning: "The outcome this profile defines acceptance for."}
+  requested_operation: {required: true, provenance: customer_side}
+  deliverable_set:
+    required: true
+    fields: [deliverable_count, is_variant_set, set_acceptance_basis]
+    meaning: >-
+      One deliverable or a variant/campaign set, and on what basis the SET is
+      accepted. This materially changes CpAO and cannot be inferred later.
+  requirements: {required: true, meaning: "The requirement records."}
+  unresolved_count: {required: true, meaning: "Derived; a profile is not compilable while > 0 for `must`."}
+
+# -----------------------------------------------------------------------------
+# Worked example - illustrative only, not an approved brief
+# -----------------------------------------------------------------------------
+example:
+  profile_id: PRP-EXAMPLE-01
+  outcome_id: OUT-EXAMPLE-01
+  requested_operation: generate
+  deliverable_set: {deliverable_count: 1, is_variant_set: false,
+                    set_acceptance_basis: single_deliverable}
+  requirements:
+    - requirement_id: R1
+      requirement_type: identity_invariant
+      source_operation: generate
+      source_provenance: customer_explicit
+      strength: must
+      resolved_value: "the supplied product, recognisably"
+      observation_scope: frame
+      required_capabilities: [product_identity]
+      relevant_conditions: [COND-REFERENCE, COND-LOAD, COND-DELIVERY]
+      prerequisites: []
+      acceptance_consequence: blocks_acceptance
+    - requirement_id: R2
+      requirement_type: exact_content
+      source_operation: generate
+      source_provenance: brand_standing_requirement
+      strength: must
+      resolved_value: "brand wordmark, correct geometry"
+      observation_scope: frame
+      required_capabilities: [logo_wordmark_fidelity]
+      relevant_conditions: [COND-REFERENCE, COND-DELIVERY]
+      prerequisites: [R1]
+      acceptance_consequence: blocks_acceptance
+    - requirement_id: R3
+      requirement_type: exact_content
+      source_operation: generate
+      source_provenance: customer_explicit
+      strength: must
+      resolved_value: "उत्सव का मौसम"
+      observation_scope: frame
+      required_capabilities: [exact_text_devanagari, typography_legibility]
+      relevant_conditions: [COND-LANGUAGE, COND-DELIVERY, COND-CONSTRAINT]
+      prerequisites: []
+      acceptance_consequence: blocks_acceptance
+  unresolved_count: 0
+  note: >-
+    R2 depends on R1. If the product is absent, R2 becomes
+    blocked_by_prerequisite_failure - which is UNSATISFIED at acceptance, not a
+    pass and not not_applicable. R3 has no prerequisite: the headline can be
+    wrong even when the product is fine, so it is a root.

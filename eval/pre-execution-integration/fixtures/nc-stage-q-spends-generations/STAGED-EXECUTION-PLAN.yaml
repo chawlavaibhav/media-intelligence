@@ -1,0 +1,395 @@
+meta:
+  task: EVAL-011
+  package: E11-E
+  date: 2026-08-26
+  authorises_spend: false
+  design_ceiling_source: EVAL-009 WAVE1-CALL-COUNT-FORECAST.yaml (corrected on this
+    branch)
+count_classes:
+  design_ceiling: 'The full Layers-1-3 design if every slot ran its whole item set.
+    Exact and derivable. NOT a budget. Value: 494 generations / 5,515 evaluator calls
+    / 188 human review units.'
+  first_tranche_candidate: Exactly derivable now, and small enough to be a defensible
+    first authorisation. Stage Q and Stage A carry these.
+  adaptive_conditional: Depends on results we do not have. Stage B carries these.
+    A maximum is given; no pass-rate saving is claimed, because claiming one would
+    invent evidence.
+  formula_only: Structure is known, a required input is not. Stage C generation counts
+    are here, because the number of production steps per recipe depends on a Planner
+    that does not exist.
+stages:
+- stage: Q
+  name: evaluator and material qualification
+  purpose: Make the instruments trustworthy before spending anything on models. The
+    project has run no checker, ever. Every capability number is meaningless until
+    the thing producing it is qualified, so this stage comes first and is the only
+    one that can be started with material already in the repository.
+  eligible_scientific_slots: none
+  why_no_slots: Stage Q scores no model output. It qualifies instruments against material
+    whose truth is known by construction or by capture.
+  model_generations:
+    count: 0
+    count_class: first_tranche_candidate
+    principle: No model-generation spend merely to qualify an evaluator. Every one
+      of the seven evaluator families can be qualified from constructed or captured
+      truth. None requires generated material, so this stage's generation line is
+      zero by design, not by deferral.
+  units:
+  - id: Q1
+    family: deterministic_cv_geometry
+    capabilities_unblocked: 5
+    material: eval/v1/instruments/fixtures/cv-geometry/
+    material_status: IN_REPOSITORY_NOW
+    items_exact: 102
+    items_detail: 100 scoreable + 2 negative controls
+    human_labels_required: 0
+    ground_truth_origin: constructed_by_code_no_human_label
+    model_generations: 0
+    evaluator_calls_formula: 102 * R_q
+    blocker: none
+    note: Cheapest qualification available. Runnable today with no acquisition and
+      no spend beyond evaluator calls.
+  - id: Q2a
+    family: text_ocr_devanagari
+    capabilities_unblocked: 1
+    material: eval/battery/devanagari-exactness/ — FROZEN 96-item validated view
+    material_status: IN_REPOSITORY_NOW_WITH_REBUILD_CAVEAT
+    items_exact: 96
+    items_detail: 48 match / 48 mismatch, 33 hard opportunities, labels known by construction
+    human_labels_required: 0
+    model_generations: 0
+    evaluator_calls_formula: 96 * R_q
+    blocker: The built items live under a git-ignored build/ directory and the pinned
+      font is an uncommitted proprietary system asset. A fresh clone cannot reconstruct
+      the battery. The committed record fingerprints it by SHA-256 so a rebuild can
+      be checked.
+    note: This battery is the instrument for the highest-value question in the roster
+      (IMG-01).
+  - id: Q2b
+    family: text_ocr_latin
+    capabilities_unblocked: 1
+    material: Latin exact-text pack — DOES NOT EXIST
+    material_status: EVAL_BUILDABLE_NO_RESOURCES_PACK_NEEDED
+    model_generations: 0
+    evaluator_calls_formula: N_latin * R_q
+    n_latin_status: NOT_FROZEN
+    blocker: pack must be built
+    note: 'Built the same way as the Devanagari battery: render known strings, so
+      the match/mismatch label is known by construction and no annotator is needed.
+      It MUST NOT mutate the frozen Devanagari battery.'
+  - id: Q3
+    family: temporal_video
+    capabilities_unblocked: 9
+    material: '>=12 clean clips, reused from PACK-AV-CLEAN'
+    material_status: NEEDS_RESOURCES_SUBSET
+    minimum_material: 12 clean single-speaker clips
+    human_labels_required: 0
+    model_generations: 0
+    evaluator_calls_formula: 12 * P * R_q
+    p_status: P = number of perturbation classes. NOT FROZEN.
+    blocker: no clean base clips exist
+    note: The largest cheap unblock in the whole plan. Truth is INJECTED - a known
+      freeze, a known identity swap, a known flip - so it needs zero human labels.
+      Nine capabilities unblock from twelve clips.
+  - id: Q4
+    family: structured_visual_vlm
+    capabilities_unblocked: 12
+    material: PACK-PRODUCT-REF and PACK-PERSON-REF, with same-category decoys
+    material_status: NEEDS_RESOURCES
+    mandatory_structure:
+      same_category_decoys: REQUIRED
+      why: a known-non-match is only meaningful against a plausible confusion; without
+        decoys the qualification cannot detect permissiveness at all
+      disjointness: qualification pool must be disjoint from calibration at PRODUCT-identity
+        and PERSON-identity level, not file level
+    human_reference_required: true
+    model_generations: 0
+    blocker: largest single blocker in the package - 12 capabilities
+  - id: Q5
+    family: speech_audio_av
+    capabilities_unblocked: 7
+    material: PACK-AV-CLEAN
+    material_status: NEEDS_RESOURCES
+    disjointness: qualification disjoint at SPEAKER level
+    model_generations: 0
+    blocker: the project holds no audio of any kind
+  - id: Q6
+    family: creative_commercial
+    capabilities_unblocked: 4
+    material: PACK-COMMERCIAL active assets, plus a fresh independent reviewer panel
+      and known-clean assets
+    material_status: NEEDS_RESOURCES_AND_PANEL
+    disjointness: qualification disjoint at CAMPAIGN level
+    model_generations: 0
+    blocker: no reviewer panel; public or source preference labels are never our creative
+      truth
+    note: known-clean designation is Eval's to make, not Resources'. It measures false
+      criticism.
+  - id: Q7
+    family: operational_logging
+    capabilities_unblocked: 4
+    material: harness logs
+    material_status: NO_MATERIAL_NEEDED
+    model_generations: 0
+    evaluator_calls_formula: 0 external calls - deterministic from run records
+    blocker: none
+  repeats_input:
+    symbol: R_q
+    status: NOT_FROZEN
+    owner: Eval, per instrument, before Stage Q runs
+    rule: must be declared per instrument; EVAL-011 does not invent it and does not
+      reuse the unqualified 0.95 figure
+  promotes: an instrument becomes usable for scoring in Stage A
+  stops: an instrument that fails qualification may not score anything; its capabilities
+    stay unmeasurable and must be reported as such
+  unpriced:
+  - evaluator unit prices for every instrument family (EVAL-010 verified none)
+  - human panel time for Q6
+- stage: A
+  name: scientific admission and discrimination screen
+  purpose: 'The smallest defensible experiment that answers ONE question per slot:
+    does this route deserve deeper spend? It is a screen, not a capability measurement.'
+  eligible_scientific_slots:
+  - IMG-01
+  - IMG-02
+  - IMG-03
+  - IMG-04
+  - VID-01
+  - VID-02
+  - VID-03
+  - VID-04
+  - VID-05
+  - AUD-01
+  - AUD-02
+  - AUD-03
+  reserve_slots_excluded:
+  - IMG-05
+  - IMG-06
+  reserve_note: the two reserve slots are not in the 494 ceiling and are not in Stage
+    A. Adding them is a Controller decision.
+  design:
+    probe_set: the slot's comparability core only - the shared items every slot in
+      its lane runs
+    why_comparability_core: It is the only subset on which slots are directly comparable,
+      which is exactly what an admission screen needs. Slot-specific atomic and compound
+      items are deferred to Stage B.
+    repeats_per_item: 2
+    repeats_preserved: true
+    why_repeats_not_halved: 'The Controller decision is explicit: do not halve repeats
+      to save money if that destroys reliability evidence; reduce by deferring whole
+      questions or later stages instead. Stage A keeps repeats at 2 and defers item
+      breadth.'
+  generation_count_formula: sum over eligible slots of ( comparability_core[slot]
+    * 2 )
+  generation_count_exact: 90
+  count_class: first_tranche_candidate
+  per_slot_generations:
+    IMG-01: 8
+    IMG-02: 8
+    IMG-03: 8
+    IMG-04: 8
+    VID-01: 8
+    VID-02: 8
+    VID-03: 8
+    VID-04: 8
+    VID-05: 8
+    AUD-01: 6
+    AUD-02: 6
+    AUD-03: 6
+  derivation: image and video comparability core = 4 items; tts and lipsync = 3 items;
+    all x 2 repeats
+  evaluator_calls:
+    formula: sum over slots of ( generations_A[slot] * fanout[lane] )
+    exact_value: null
+    why_null: Per-lane evaluator fanout is not published in EVAL-009's forecast, which
+      marks its own aggregate fanout ESTIMATE_NOT_MEASURED. A proportional figure
+      is given below and is an ESTIMATE, not a count.
+    proportional_estimate: 1005
+    proportional_estimate_basis: 5515 * 90/494, assuming uniform fanout across slots
+      - an assumption the source forecast does not support
+    proportional_estimate_status: ESTIMATE_NOT_A_COUNT
+  human_review_units:
+    formula: sum over slots of ( generations_A[slot] * human_units_per_generation[lane]
+      )
+    exact_value: null
+    proportional_estimate: 34.3
+    proportional_estimate_basis: 188 * 90/494, same uniform-fanout assumption
+    proportional_estimate_status: ESTIMATE_NOT_A_COUNT
+  seed_policy_required_before_run:
+    rule: every slot must declare seed_support and seed_policy before its repeat group
+      is run
+    why: Three eligible slots have NO seed on their verified route - IMG-01, VID-02
+      and AUD-01. Their repeats measure inherent variance. Slots with a seed can measure
+      held-seed repeatability. These are different quantities and must not be pooled.
+    open_controller_decision: SUP-3
+  metrics_permitted:
+  - trial cost
+  - reliability and repeat consistency, under a DECLARED seed policy
+  - latency, error rate, refusal rate
+  - cost per benchmark pass, where a pass is defined
+  metrics_forbidden:
+  - customer-outcome CpAO
+  why_forbidden: no accepted customer outcomes exist at this stage, so the CpAO denominator
+    does not exist
+  promotes: a slot whose route clears the screen proceeds to Stage B
+  stops: a slot whose route fails the screen stops. Stopping is a RESULT, not a saving
+    - the scientific question survives and may be re-run against a different route
+    later.
+  deepens: a slot with a mixed result may have its Stage B item set expanded on the
+    failing axis only
+  unpriced:
+  - generation prices for 11 of 12 eligible slots
+  - all evaluator unit prices
+  - human review rate
+- stage: B
+  name: deeper capability and sparse-envelope benchmark
+  purpose: atomic and compound capability measurement plus sparse adaptive condition
+    sweeps, on survivors only
+  eligible_scientific_slots: Stage A survivors only
+  design:
+    layers:
+    - layer1_atomic
+    - layer2_compound
+    - layer3_sweeps
+    swept_condition_families: 4
+    swept_of_total: 4 of 13
+    cartesian: false
+    naive_two_level_product_not_run: 8192
+  generation_count_maximum: 404
+  generation_count_maximum_derivation: 494 design ceiling - 90 already spent in Stage
+    A
+  count_class: adaptive_conditional
+  per_slot_remaining_after_stage_A:
+    IMG-01: 54
+    IMG-02: 45
+    IMG-03: 56
+    IMG-04: 49
+    VID-01: 45
+    VID-02: 31
+    VID-03: 33
+    VID-04: 38
+    VID-05: 4
+    AUD-01: 19
+    AUD-02: 15
+    AUD-03: 15
+  adaptive_expected_structure:
+    formula: sum over SURVIVING slots of per_slot_remaining_after_stage_A[slot]
+    value: null
+    why_null: The survivor set is a Stage A result we do not have. NO pass-rate saving
+      is claimed or assumed. The per-slot table above lets any survivor subset be
+      summed exactly once Stage A returns, which is the honest form of this number.
+    forbidden: asserting an expected survivor count or an expected saving percentage
+  adaptive_sweep_rules_inherited:
+    expansion: expand an axis only where a level PASSED and the next level is materially
+      harder
+    stop: stop expanding a sweep axis after two consecutive failing levels on the
+      same item
+    no_saving_claimed: true
+  metrics_permitted: as Stage A
+  metrics_forbidden:
+  - customer-outcome CpAO
+  promotes: a route with demonstrated capability under recorded conditions becomes
+    eligible for Stage C recipes
+  unpriced: as Stage A
+- stage: C
+  name: end-to-end outcomes and CpAO
+  purpose: The only stage that produces accepted customer outcomes, and therefore
+    the only stage that can compute Cost per Accepted Outcome at all.
+  eligible_scientific_slots: routes surviving Stage B, assembled into production recipes
+  cpao_authority: THIS STAGE ONLY. Layers 1-3 have no accepted customer outcomes and
+    no CpAO denominator. VID-05's premium-vs-fast cost-knee CONCLUSION executes here
+    and nowhere earlier.
+  request_source:
+    rule: EVAL_MUST_NOT_AUTHOR_BRIEFS
+    pool: CANON-010 brief bank (30 items, byte-identical) UNION request-coverage extension
+      items with runnable_wave1 = true (10 items). RX-11 is representation_only and
+      is excluded.
+    pool_size: 40
+    pool_evidence: work/canon-010-request-freeze
+  selection_rule:
+    id: L4-SELECT-v1
+    slots: 8
+    deterministic: true
+    final_ids_owner: Controller
+    steps:
+      1: Eligible pool = the 40 items above. Eval authors nothing and may not add
+        an item.
+      2: Cover all 7 CANON-010 requested_operation values at least once. Only `generate`
+        is available from the brief bank; the other six come from the extension.
+      3: 'Allocate 8 slots as: one slot per operation (7), plus one additional `generate`
+        slot, because generate is the only operation with 30 candidates and the highest-volume
+        production shape.'
+      4: Within an operation, order candidates by language_priority then ascending
+        item_id, where language_priority ranks hindi=0, hinglish=1, english=2.
+      5: Tie-break on ascending item_id.
+    why_language_priority: Stage C is where a language failure becomes an ACCEPTED-OUTCOME
+      failure rather than a capability score. The first product is Hindi and Hinglish,
+      so those items are selected first where an operation offers a choice.
+    derived_candidate_ids_for_controller_review:
+      note: Shown to demonstrate the rule is deterministic and reproducible. These
+        are CANDIDATES. The Controller integrates the final ids; EVAL-011 does not
+        freeze them.
+      edit: RX-02 (hindi)
+      animate: RX-06 (hindi)
+      variants: RX-09 (hinglish)
+      compose: RX-08 (hinglish)
+      restore: RX-04 (english - the only restore item)
+      extend: RX-07 (english - the only extend item)
+      generate_1: lowest-id hindi_devanagari_primary brief in the 30-bank
+      generate_2: lowest-id hinglish_mixed brief in the 30-bank
+      generate_note: brief ids follow BR-Fnn-{EN,HI,HG}; the bank is 10 english /
+        10 hindi / 10 hinglish
+  outcome_attempt_count:
+    formula: 8 briefs * 2 recipes_per_brief * 2 repeats
+    exact_value: 32
+    count_class: first_tranche_candidate
+    meaning: 32 OUTCOME ATTEMPTS, not 32 generations
+  generation_count:
+    formula: sum over outcome attempts of production_steps_per_recipe[recipe]
+    exact_value: null
+    count_class: formula_only
+    why_null: One outcome can consume many generations - a dialogue video may need
+      an image, a video, a TTS pass and a lip-sync transform. The step count per recipe
+      depends on the production recipe, and the Planner that would choose it does
+      not exist. Asserting a number here would be inventing the Planner's behaviour.
+  topology: outcome topology v3 - job -> outcome -> sequence_or_asset_set -> production_unit
+    -> production_step -> attempt -> artifact
+  cpao_views:
+    api_tool_cpao: (generation_cost + evaluator_cost) / accepted_outcomes — diagnostic
+    fully_loaded_cpao: primary business metric; includes outcome-specific labour actually
+      required under the production policy
+    excluded_from_fully_loaded: one-time R&D, benchmark design, pack acquisition,
+      evaluator qualification and general research. Those are program costs, not per-customer
+      production cost, unless a later accounting policy explicitly amortises them.
+    rejected_revisions: count when they belong to the same production journey
+    scope_change: a material customer scope change cuts the journey boundary
+  human_review_units:
+    formula: n_video_outcomes*0.5 + n_static_outcomes*0.15 + n_repairs*0.3 + n_adjudications*0.25
+      (person-hours)
+    rates_source: RES-004 HUMAN-EFFORT-BUDGET-INPUTS.yaml, all marked `indicative`
+    exact_value: null
+    blocked_by_controller_decision: HED-1 — which of these count as REQUIRED human
+      time in fully-loaded CpAO
+  promotes: an accepted-outcome record and the first real CpAO figures the project
+    has ever had
+  unpriced: all generation prices except the two verified Google routes; all evaluator
+    prices; the human rate
+rollup:
+  stage_Q_model_generations: 40
+  stage_A_model_generations: 90
+  stage_B_model_generations_max: 404
+  stage_C_outcome_attempts: 32
+  stage_C_model_generations: null
+  design_ceiling_layers_1_3: 494
+  arithmetic_check: 90 + 404 = 494 = the corrected design ceiling
+  first_tranche_candidate_total_generations: 90
+  first_tranche_note: 'Stage Q + Stage A is a defensible first authorisation: 0 generations
+    to qualify instruments, then 90 generations to decide which routes deserve deeper
+    spend. That is 18% of the design ceiling, and it defers scope by whole questions
+    rather than by weakening repeats.'
+what_this_file_does_not_do:
+- It does not authorise spend.
+- It does not choose Stage C's final request ids.
+- It does not claim a Stage B survivor count or any pass-rate saving.
+- It does not invent a repeat-consistency threshold.
+- It does not treat RES-004's 173 person-hour full acquisition estimate as a prerequisite.
