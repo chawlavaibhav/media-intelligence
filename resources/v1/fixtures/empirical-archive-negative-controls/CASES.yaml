@@ -1,0 +1,248 @@
+# Deliberate negative controls for the canonical empirical-storage contract.
+#
+# The project has already paid for this lesson twice: "test tooling with deliberately broken inputs,
+# not only correct ones" and "an empty check is not a passing check". Each case below breaks exactly
+# one rule of EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml. If any case marked `expect: fail` starts
+# passing, that rule has silently stopped being enforced.
+#
+# Kept small and committed on purpose (R-C3): these are irreplaceable test intent, not bulk generated
+# data. The 1,000-attempt scale archive is generated into build/ and is NOT committed.
+#
+# Runner: ../../validators/run_archive_negative_controls.py
+
+baseline:
+  description: >
+    A minimal but VALID archive: one successful attempt with one artifact and one derived frame, one
+    refused attempt that correctly has no artifact, three measurements over one artifact, and one
+    acceptance whose retry chain contains only the delivered attempt.
+  attempts:
+    - {attempt_id: A-OK, trial_id: T1, eval_item_id: ITEM-1, provider: dummy-vendor, model_id: dummy-m,
+       model_version: v0, endpoint: dummy.generate, workflow: single_call, lane: image,
+       prompt_hash: "aa", config_hash: "bb", config_location: "dummy://cfg/1",
+       reference_asset_hashes: [], requested_at: "2026-01-01T00:00:00Z",
+       completed_at: "2026-01-01T00:00:10Z", status: ok, cost_ref: "dummy-ledger://A-OK",
+       storage_class: C_irreproducible_empirical, repeat_index: 0, repeat_of_attempt_id: null,
+       retry_of_attempt_id: null, retry_reason: null, error_detail: null}
+    - {attempt_id: A-REFUSED, trial_id: T1, eval_item_id: ITEM-1, provider: dummy-vendor, model_id: dummy-m,
+       model_version: v0, endpoint: dummy.generate, workflow: single_call, lane: image,
+       prompt_hash: "aa", config_hash: "cc", config_location: "dummy://cfg/2",
+       reference_asset_hashes: [], requested_at: "2026-01-01T00:01:00Z", completed_at: null,
+       status: refusal, cost_ref: "dummy-ledger://A-REFUSED",
+       storage_class: C_irreproducible_empirical, repeat_index: 1,
+       repeat_of_attempt_id: A-OK, retry_of_attempt_id: null, retry_reason: null,
+       error_detail: "synthetic refusal text preserved verbatim"}
+  artifacts:
+    - {artifact_id: ART-1, attempt_id: A-OK, trial_id: T1, output_hash: "h1", output_bytes: 1024,
+       output_location: "dummy://art/1", media_kind: image,
+       storage_class: C_irreproducible_empirical, derived_from_artifact_id: null,
+       derivation_type: null, derivation_params: null}
+    - {artifact_id: ART-1-FRAME, attempt_id: A-OK, trial_id: T1, output_hash: "h2", output_bytes: 256,
+       output_location: "dummy://art/1f", media_kind: image,
+       storage_class: C_irreproducible_empirical, derived_from_artifact_id: ART-1,
+       derivation_type: frame_sample, derivation_params: {timestamp_s: 1.0}}
+  measurements:
+    - {measurement_id: M-1, artifact_id: ART-1, trial_id: T1, capability_id: exact_text_latin,
+       instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+       instrument_qualification_ref: required_but_no_calibrated_instrument,
+       observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+       measured_at: "2026-01-01T00:00:20Z"}
+    - {measurement_id: M-2, artifact_id: ART-1, trial_id: T1, capability_id: object_count,
+       instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+       instrument_qualification_ref: required_but_no_calibrated_instrument,
+       observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+       measured_at: "2026-01-01T00:00:20Z"}
+    - {measurement_id: M-3, artifact_id: ART-1, trial_id: T1, capability_id: typography_legibility,
+       instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+       instrument_qualification_ref: required_but_no_calibrated_instrument,
+       observation_unit: whole_asset, result: null, absence_reason: instrument_unavailable,
+       measured_at: "2026-01-01T00:00:20Z"}
+  acceptances:
+    - {acceptance_id: ACC-1, trial_id: T1, artifact_id: ART-1, accepted: true,
+       decided_by: dummy-human-reviewer, decided_at: "2026-01-01T00:00:30Z",
+       brief_ref: DUMMY-BRIEF-1, rejection_reasons: [], retry_chain: [A-OK]}
+
+cases:
+  - name: 00-baseline-valid
+    expect: pass
+    why: "Proves the negative controls fail for their stated reason and not because the baseline is broken."
+
+  - name: 01-observation-unit-v1-coinage
+    expect: fail
+    expect_contains: "Resources-local coinage"
+    why: >
+      v1 used image / sampled_clip / whole_clip. R-C2 requires the canonical vocabulary verbatim.
+      A local synonym silently breaks comparability between measurements that should be comparable.
+    override:
+      measurements:
+        - {measurement_id: M-1, artifact_id: ART-1, trial_id: T1, capability_id: exact_text_latin,
+           instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_clip, result: {dummy: true}, absence_reason: null,
+           measured_at: "2026-01-01T00:00:20Z"}
+        - {measurement_id: M-2, artifact_id: ART-1, trial_id: T1, capability_id: object_count,
+           instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+           measured_at: "2026-01-01T00:00:20Z"}
+
+  - name: 02-refusal-carrying-an-artifact
+    expect: fail
+    expect_contains: "must have no artifact row"
+    why: "A call that produced nothing cannot own bytes. This is the v1 null-output-hash conflation, corrected."
+    override:
+      artifacts:
+        - {artifact_id: ART-1, attempt_id: A-OK, trial_id: T1, output_hash: "h1", output_bytes: 1024,
+           output_location: "dummy://art/1", media_kind: image,
+           storage_class: C_irreproducible_empirical, derived_from_artifact_id: null,
+           derivation_type: null, derivation_params: null}
+        - {artifact_id: ART-BAD, attempt_id: A-REFUSED, trial_id: T1, output_hash: "h9",
+           output_bytes: 10, output_location: "dummy://art/9", media_kind: image,
+           storage_class: C_irreproducible_empirical, derived_from_artifact_id: null,
+           derivation_type: null, derivation_params: null}
+
+  - name: 03-failure-without-a-recorded-reason
+    expect: fail
+    expect_contains: "no error_detail"
+    why: "A preserved failure with no reason is a row, not evidence. The provider's words are the point."
+    override:
+      attempts:
+        - {attempt_id: A-OK, trial_id: T1, eval_item_id: ITEM-1, provider: dummy-vendor, model_id: dummy-m,
+           model_version: v0, endpoint: dummy.generate, workflow: single_call, lane: image,
+           prompt_hash: "aa", config_hash: "bb", config_location: "dummy://cfg/1",
+           reference_asset_hashes: [], requested_at: "2026-01-01T00:00:00Z",
+           completed_at: "2026-01-01T00:00:10Z", status: ok, cost_ref: "dummy-ledger://A-OK",
+           storage_class: C_irreproducible_empirical, repeat_index: 0, repeat_of_attempt_id: null,
+           retry_of_attempt_id: null, retry_reason: null, error_detail: null}
+        - {attempt_id: A-REFUSED, trial_id: T1, eval_item_id: ITEM-1, provider: dummy-vendor, model_id: dummy-m,
+           model_version: v0, endpoint: dummy.generate, workflow: single_call, lane: image,
+           prompt_hash: "aa", config_hash: "cc", config_location: "dummy://cfg/2",
+           reference_asset_hashes: [], requested_at: "2026-01-01T00:01:00Z", completed_at: null,
+           status: refusal, cost_ref: "dummy-ledger://A-REFUSED",
+           storage_class: C_irreproducible_empirical, repeat_index: 1,
+           repeat_of_attempt_id: A-OK, retry_of_attempt_id: null, retry_reason: null,
+           error_detail: null}
+
+  - name: 04-aggregate-counter-replaces-preserved-rows
+    expect: fail
+    expect_contains: "may not replace"
+    why: >
+      The archive claims 5 refusals in a summary while holding 1 refusal row. R-C2 requires failed
+      attempts individually; a counter cannot say which item was refused, what it cost, or what the
+      provider said.
+    extra_files:
+      reliability_summary.json: '{"status_counts": {"refusal": 5, "ok": 1}}'
+
+  - name: 05-reliability-repeat-inside-a-retry-chain
+    expect: fail
+    expect_contains: "not a retry"
+    why: >
+      A deliberate reliability repeat is not a production retry. Counting repeats as retries inflates
+      every Cost per Accepted Outcome figure by the experimental design itself.
+    override:
+      acceptances:
+        - {acceptance_id: ACC-1, trial_id: T1, artifact_id: ART-1, accepted: true,
+           decided_by: dummy-human-reviewer, decided_at: "2026-01-01T00:00:30Z",
+           brief_ref: DUMMY-BRIEF-1, rejection_reasons: [], retry_chain: [A-OK, A-REFUSED]}
+
+  - name: 06-derived-artifact-claiming-its-own-trial
+    expect: fail
+    expect_contains: "must inherit its"
+    why: >
+      Ten frames sampled from one clip are ten artifacts of ONE trial. Letting a frame claim its own
+      trial inflates every downstream sample size by an order of magnitude.
+    override:
+      artifacts:
+        - {artifact_id: ART-1, attempt_id: A-OK, trial_id: T1, output_hash: "h1", output_bytes: 1024,
+           output_location: "dummy://art/1", media_kind: image,
+           storage_class: C_irreproducible_empirical, derived_from_artifact_id: null,
+           derivation_type: null, derivation_params: null}
+        - {artifact_id: ART-1-FRAME, attempt_id: A-OK, trial_id: T-SEPARATE, output_hash: "h2",
+           output_bytes: 256, output_location: "dummy://art/1f", media_kind: image,
+           storage_class: C_irreproducible_empirical, derived_from_artifact_id: ART-1,
+           derivation_type: frame_sample, derivation_params: {timestamp_s: 1.0}}
+
+  - name: 07-same-output-stored-twice
+    expect: fail
+    expect_contains: "duplicate media copy"
+    why: "Storing a copy per metric breaks generate-once/measure-many and makes repeats uncountable."
+    override:
+      artifacts:
+        - {artifact_id: ART-1, attempt_id: A-OK, trial_id: T1, output_hash: "h1", output_bytes: 1024,
+           output_location: "dummy://art/1", media_kind: image,
+           storage_class: C_irreproducible_empirical, derived_from_artifact_id: null,
+           derivation_type: null, derivation_params: null}
+        - {artifact_id: ART-1-COPY, attempt_id: A-OK, trial_id: T1, output_hash: "h1",
+           output_bytes: 1024, output_location: "dummy://art/1-SECOND-COPY", media_kind: image,
+           storage_class: C_irreproducible_empirical, derived_from_artifact_id: ART-1,
+           derivation_type: transcode, derivation_params: {}}
+
+  - name: 08-measurement-with-both-result-and-absence
+    expect: fail
+    expect_contains: "exactly one of result and absence_reason"
+    why: "A measurement either has a result or a reason it has none. Both is incoherent; neither is a silent gap."
+    override:
+      measurements:
+        - {measurement_id: M-1, artifact_id: ART-1, trial_id: T1, capability_id: exact_text_latin,
+           instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_asset, result: {dummy: true},
+           absence_reason: instrument_unavailable, measured_at: "2026-01-01T00:00:20Z"}
+        - {measurement_id: M-2, artifact_id: ART-1, trial_id: T1, capability_id: object_count,
+           instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+           measured_at: "2026-01-01T00:00:20Z"}
+
+  - name: 09-measurement-referencing-a-missing-artifact
+    expect: fail
+    expect_contains: "unknown artifact"
+    why: "A dangling measurement is a score with nothing behind it."
+    override:
+      measurements:
+        - {measurement_id: M-1, artifact_id: ART-DOES-NOT-EXIST, trial_id: T1,
+           capability_id: exact_text_latin, instrument_ref: dummy-instr, instrument_version: v0,
+           instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+           measured_at: "2026-01-01T00:00:20Z"}
+        - {measurement_id: M-2, artifact_id: ART-1, trial_id: T1, capability_id: object_count,
+           instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+           measured_at: "2026-01-01T00:00:20Z"}
+
+  - name: 10-no-fan-out
+    expect: fail
+    expect_contains: "not reusing artifacts"
+    why: "One measurement per artifact means the archive is regenerating instead of reusing."
+    override:
+      measurements:
+        - {measurement_id: M-1, artifact_id: ART-1, trial_id: T1, capability_id: exact_text_latin,
+           instrument_ref: dummy-instr, instrument_version: v0, instrument_config_hash: "ii",
+           instrument_qualification_ref: required_but_no_calibrated_instrument,
+           observation_unit: whole_asset, result: {dummy: true}, absence_reason: null,
+           measured_at: "2026-01-01T00:00:20Z"}
+
+  - name: 11-attempt-without-a-cost-reference
+    expect: fail
+    expect_contains: "no cost_ref"
+    why: "Cost must never be reconstructed later. CpAO depends on it surviving next to the attempt."
+    override:
+      attempts:
+        - {attempt_id: A-OK, trial_id: T1, eval_item_id: ITEM-1, provider: dummy-vendor, model_id: dummy-m,
+           model_version: v0, endpoint: dummy.generate, workflow: single_call, lane: image,
+           prompt_hash: "aa", config_hash: "bb", config_location: "dummy://cfg/1",
+           reference_asset_hashes: [], requested_at: "2026-01-01T00:00:00Z",
+           completed_at: "2026-01-01T00:00:10Z", status: ok, cost_ref: "",
+           storage_class: C_irreproducible_empirical, repeat_index: 0, repeat_of_attempt_id: null,
+           retry_of_attempt_id: null, retry_reason: null, error_detail: null}
+
+  - name: 12-acceptance-decided-by-resources
+    expect: fail
+    expect_contains: "never be Resources"
+    why: "Resources stores the acceptance decision. It never makes it."
+    override:
+      acceptances:
+        - {acceptance_id: ACC-1, trial_id: T1, artifact_id: ART-1, accepted: true,
+           decided_by: resources-worker, decided_at: "2026-01-01T00:00:30Z",
+           brief_ref: DUMMY-BRIEF-1, rejection_reasons: [], retry_chain: [A-OK]}

@@ -48,6 +48,26 @@ packs:
     storage_class: B
     serves: [REQ-CAP-10, REQ-CAP-12, REQ-CAP-13, REQ-CAP-14, REQ-CAP-21, REQ-INS-03]
     why_one_pack: "Product identity, packaging colour, reference conditioning, edit preservation and in-clip product stability are five different measurements of the same physical objects. Acquiring five packs would multiply cost and destroy comparability."
+    # Folded in under R-C5 of RESOURCES-V1-CORRECTION-PASS.md. These are composition requirements on
+    # the SAME >=48 images: not a fifth pack, not a larger target.
+    composition_requirements:
+      non_match_decoys: >
+        Choose the 12 products so that same-category non-match decoys exist within the pack - at least
+        two visually similar products per category. A known-non-match comparison is only meaningful
+        against a plausible confusion: an identity checker that distinguishes a shoe from a kettle has
+        demonstrated nothing.
+      declared_brand_colour_reference: >
+        Record a declared brand-colour reference value per product where one applies, plus the capture
+        lighting and any colour reference card in frame. Without a declared value there is nothing for
+        packaging_brand_colour_fidelity to be measured against.
+      difficulty_coverage: >
+        Where feasible, cover curved surfaces, angled/oblique views and logo-on-surface placement. A
+        wordmark on a flat front-facing box is the easy case; the commercially common case is a mark
+        wrapped around a bottle or read at an angle.
+      resources_boundary: >
+        Resources records the declared colour value, the capture conditions and which products are
+        same-category. Resources does NOT decide the tolerance, the match threshold, or what counts as
+        an acceptable colour difference - those are Eval's.
 
   - pack_id: PACK-PERSON-REF
     name: Controlled person reference pack
@@ -56,6 +76,19 @@ packs:
     storage_class: B
     serves: [REQ-CAP-11, REQ-CAP-13, REQ-CAP-14, REQ-CAP-20, REQ-INS-03]
     why_one_pack: "Same reasoning as product. Also the pack with the highest consent/privacy exposure, so it must be acquired once, deliberately, with documented permission."
+    # Folded in under R-C5. Composition requirements on the SAME >=32 images.
+    composition_requirements:
+      known_match_and_decoy: >
+        The 8 identities must themselves support known-match and known-non-match comparisons. Include
+        at least one pair of plausibly confusable identities (similar age, build, skin tone, hair,
+        eyewear) so a non-match is a real test rather than a trivial one.
+      no_public_face_scraping: >
+        Absolute, and reaffirmed by R-C5. Identities come from consented capture or purpose-created
+        synthetic references. No public-face dataset, no scraping, no opportunistic collection.
+      resources_boundary: >
+        Resources records identity ids, capture conditions, which pairs are the intended decoys, and
+        the consent record. Resources does NOT decide how similar is 'too similar', or what similarity
+        score constitutes a match.
 
   - pack_id: PACK-AV-CLEAN
     name: Clean AV calibration pack
@@ -65,6 +98,26 @@ packs:
     serves: [REQ-CAP-24, REQ-CAP-25, REQ-CAP-26, REQ-CAP-27, REQ-CAP-28, REQ-INS-05]
     why_one_pack: "All five speech/audio capabilities and the entire speech instrument family depend on the same clean recordings plus deterministic perturbations of them."
     hard_blocker: "The current corpus contains ZERO audio. The YouTube-UGC clips are audio-removed excerpts. This is not a shortfall to top up; it is an empty category."
+    # Folded in under R-C5. Composition requirements on the SAME 36 clips.
+    composition_requirements:
+      explicit_turn_boundaries: >
+        All 12 two-speaker clips carry explicit turn boundaries with speaker attribution, not merely a
+        transcript. This is the annotation almost no public source ships, and it is what
+        two_speaker_turn_assignment_and_lip_sync actually measures.
+      perturbation_reuse: >
+        Reuse >=12 clean clips from THIS pack as the deterministic temporal-perturbation base rather
+        than acquiring a fifth pack. Scientifically valid because a perturbation base needs only clips
+        whose sole defect is the one introduced, and a controlled recording satisfies that better than
+        KoNViD-1k, which was sampled for degradation variety.
+      lineage_consequence: >
+        Consequence Resources must enforce: clips reused for perturbation qualification share content
+        lineage with their AV originals, so they cannot serve as an independent holdout for any speech
+        measurement that also uses the original. The lineage keys make this checkable rather than a
+        matter of memory.
+      resources_boundary: >
+        Resources supplies the clips, the verified transcripts, the turn boundaries and the exact
+        introduced offsets. Resources does NOT set the millisecond tolerance - Eval derives that from
+        evidence.
 
   - pack_id: PACK-COMMERCIAL
     name: Commercial creative bank
@@ -74,6 +127,19 @@ packs:
     serves: [REQ-CAP-29, REQ-CAP-30, REQ-CAP-31, REQ-CAP-32, REQ-INS-06, REQ-CAN-03]
     why_one_pack: "Eval's creative/commercial evaluator qualification and Canon's Experiment B are explicitly told to reuse ONE 60-active-asset bank. Two independent acquisitions would be waste and would make the two results incomparable."
     resources_constraint: "Selection axes may be product category, media type, market/language, duration or platform. Selection may NEVER be by whether Canon predicts the asset is good or bad — that is the circularity this stream exists to prevent."
+    # Folded in under R-C5. Composition requirements on the SAME 80 assets.
+    composition_requirements:
+      reserve_frozen_first: >
+        The 20-asset reserve is frozen BEFORE any evaluator or Canon tuning touches the 60 active
+        assets. Freezing is one-way: a reserve anyone has inspected is no longer a reserve.
+      known_clean_subset: >
+        Eval or its human reviewers may later establish a >=15 asset known-clean subset for
+        false-criticism calibration - measuring how often an evaluator invents a fault that is not
+        there. Resources supplies candidates, rights and provenance and MUST NOT author that label:
+        'clean' is a creative-quality judgement and belongs to Eval and its human reviewers.
+      resources_boundary: >
+        Resources supplies candidates, rights records and descriptive axes only. No creative labels,
+        no quality judgements, no selection by the theory under test.
 
   - pack_id: PACK-CV-FIXTURES
     name: Deterministic CV known-answer fixtures
@@ -118,6 +184,14 @@ packs:
     serves: [REQ-CAP-23, REQ-INS-04]
     backing_sources: [src_konvid1k, src_youtube_ugc]
     limitation: "KoNViD-1k was sampled for DEGRADATION variety (compression, blur, shake). Perturbation calibration wants clips whose only defect is the one introduced. Usable, but the base-clip cleanliness must be screened by Eval before qualification, and Resources cannot screen it in this cloud session."
+    # R-C5: this is NOT a fifth acquisition. Once PACK-AV-CLEAN exists, >=12 of its controlled clips
+    # become the preferred perturbation base, because a controlled recording is cleaner than material
+    # sampled for degradation variety. This pack then falls back to a stopgap using existing holdings.
+    superseded_by_when_available: PACK-AV-CLEAN
+    lineage_consequence: >
+      Clips reused from PACK-AV-CLEAN for perturbation qualification share content lineage with their
+      AV originals and cannot serve as an independent holdout for a speech measurement that also uses
+      the original.
 
 # ---------------------------------------------------------------------------
 # Capability rows: 36/36

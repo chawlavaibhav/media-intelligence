@@ -47,7 +47,17 @@ access terms, explicit commercial-use terms). Licence silence is not a block for
 internal-only acquisition; access gates and explicit terms still are. **Transient acquisition is the
 default for large reliably-reacquirable public archives** (Charter, approved 24 Aug 2026).
 
-**LAST COMPLETED WORK:** Resources V1 overnight programme (26 Aug 2026) on branch
+**LAST COMPLETED WORK:** Resources V1 **correction pass** (26 Aug 2026) on branch
+`work/resources-v1-overnight`, closing the Controller's five review findings on the overnight work:
+the 15/36 wording made precise; one canonical attempt/artifact/measurement/acceptance storage
+contract with the canonical observation vocabulary and repeats separated from retries; ~34 MB of
+deterministic generated artifacts removed from Git and rebuilt by validation instead; unknown source
+lineage now returns INDETERMINATE rather than being certified independent; and the accepted Eval
+refinements folded into the existing four packs with no new acquisition family. **0 acquisition, ₹0
+spend, not merged.** Brief: `resources/findings/RESOURCES-V1-CORRECTION-CONTROLLER-BRIEF.md`.
+Eval-facing contract: `resources/v1/EVAL-STORAGE-HANDOFF.md`.
+
+**PRIOR WORK:** Resources V1 overnight programme (26 Aug 2026) on branch
 `work/resources-v1-overnight` — R1-R5 plus the R8 schema/legacy tranche, executed from a cloud
 session with no access to the raw corpus. Outputs live under `resources/v1/`; the Controller Brief is
 `resources/findings/RESOURCES-V1-OVERNIGHT-CONTROLLER-BRIEF.md`. **0 acquisition, ₹0 spend, not

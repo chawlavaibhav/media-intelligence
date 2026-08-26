@@ -58,8 +58,17 @@ executed tonight, **exit 0, ALL CHECKS PASSED**.
 | `partial` | 3 |
 | **`missing`** | **17** |
 
-Read the good news first: **15 of 36 capabilities need nothing from Resources, ever.** That stops a
-third of the capability map from generating acquisition work.
+**15 of 36 capabilities require no capability-specific external stimulus pack; some still inherit
+evaluator-calibration dependencies.** That stops a third of the capability map from generating
+acquisition work, which is a real result — but it is not a claim that those rows are independent of
+Resources. Ten have their stimulus built by Eval yet may still need an instrument calibrated on
+material Resources supplies (`REQ-CAP-04` `action_adherence` is the clearest case: no pack of its own,
+no deterministic checker, and therefore blocked behind two evaluator families that are themselves
+blocked). The other five need no media at all but are storage class **C** — measurable only if the
+archive preserves every attempt with its cost reference and outcome.
+
+*(Corrected under R-C1 of `RESOURCES-V1-CORRECTION-PASS.md`. The original wording, "need nothing from
+Resources, ever", overstated the result. The underlying 36-row classification is unchanged.)*
 
 **Three whole capability groups are at zero coverage:** speech/audio (5 of 5 missing), commercial and
 creative fitness (4 of 4), identity and references (4 of 4).

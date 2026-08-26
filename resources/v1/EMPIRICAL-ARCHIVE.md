@@ -19,46 +19,94 @@ scripts here."* They were not regenerable. The 64 human judgements survived only
 whitelisted `scores.json`; **the 64 images did not.** Those failures can no longer be re-annotated,
 which is exactly what the Eval master plan now asks for.
 
-## Two files, and why that separation is the design
+## Four entities, and why the split is the design
 
-**Artifacts** (what was produced) and **measurements** (what was observed about it) are separate.
+**Attempt · Artifact · Measurement · Acceptance.** Four persistent entities, four JSONL files.
 
-One generated asset is scored by many capabilities. Storing a copy per metric would multiply cost,
-break the "generate once, measure many" economy the whole benchmark design rests on, and make
-pass-at-k uncountable — because nobody could tell a genuine repeat from a filing duplicate.
+```
+attempt ──▶ artifact (0 or 1) ──▶ measurement (many)
+   │                          └──▶ artifact (derived: frames, transcodes)
+   └──▶ acceptance (0 or 1, per trial)
+```
 
-**Proven tonight, at scale.** A synthetic 1,000-artifact archive was generated and validated:
+**Attempt and artifact are separate, and v1 got this wrong.** The **call** and the **bytes** are
+different facts. A call always happened, always cost money and latency, and is always evidence; bytes
+may not exist. v1 stored both in one row, so a refused call became an artifact-shaped hole with a
+null hash. Now a refusal is a first-class attempt row with no artifact, and a sampled frame is a
+derived *artifact* rather than a second *attempt*.
+
+**One artifact is scored by many capabilities.** Storing a copy per metric would multiply cost, break
+the generate-once/measure-many economy the benchmark design rests on, and make pass-at-k uncountable
+— nobody could tell a genuine repeat from a filing duplicate.
+
+**Proven at scale, from a clean state.** A synthetic 1,000-attempt archive is generated into
+`build/` and validated:
 
 | | |
 |---|---:|
-| Artifacts | **1,000** |
+| Attempts | **1,000** |
 | — succeeded | 966 |
-| — refusal / error (retained) | 34 |
+| — refused / errored, each preserved individually with its reason | 34 |
+| Artifacts | **1,126** (966 direct + 160 derived frames) |
 | Measurements | **5,796** |
-| Distinct output hashes stored | 966 |
+| Acceptances | 250 |
 | **Duplicate media copies** | **0** |
-| **Mean measurements per scored artifact** | **6.00** (min 5, max 7) |
+| **Mean measurements per artifact** | **6.00** (min 5, max 7) |
 
-**One generation, six measurements, stored once.** The ≥1,000-artifact capacity requirement is
-demonstrated, not asserted. Everything in the fixture is synthetic — fictional vendor and model names
-(`dummy-vendor-a`, `dummy-image-v0`), fixed timestamps, hashes derived from record ids. **No provider
-was called and no money was spent.**
+Everything in the fixture is synthetic — fictional vendor and model names (`dummy-vendor-a`,
+`dummy-image-v0`), fixed timestamps, hashes derived from record ids. **No provider was called and no
+money was spent.** Under R-C3 the archive is a build product: the generator and the expected shape
+are committed, the 3.7 MB of generated rows are not.
+
+## Two vocabularies Resources stores but does not own
+
+**Observation units are canonical and verbatim:**
+
+```
+frame | shot | shot_pair | sequence | whole_asset | asset_set_over_time
+```
+
+v1 used a Resources-invented set — `image`, `sampled_clip`, `whole_clip`. Those are now **explicitly
+rejected** by the validator. A local synonym silently breaks comparability between two measurements
+that should be comparable. Where derived media needs describing, that belongs in
+`artifact.derivation`, not in the observation unit.
+
+**Capability ids are Eval's**, stored exactly as Eval defines them. Resources never renames,
+abbreviates, normalises or maps them.
+
+## Repeat is not retry
+
+| | `repeat_index` | `retry_of_attempt_id` |
+|---|---|---|
+| What it is | A **deliberate experimental repeat**, planned before any result is seen | A **repair attempt caused by a prior failure or rejection** |
+| Measures | Reliability (`pass_at_k`) | Getting to an acceptable outcome |
+| In a retry chain | **Never** | **Always** |
+
+**Why the distinction is load-bearing.** CpAO divides the cost of a retry chain by accepted outcomes.
+Count repeats as retries and **every CpAO figure is inflated by the experimental design itself**.
+Count retries as repeats and `pass_at_k` is computed over attempts that were not independent draws.
+Both errors are silent, and neither is recoverable after the fact.
 
 ## Four rules that exist because omitting them loses evidence
 
-**1. A refusal is evidence.** An artifact row is written when the call is *made*, not when it
-succeeds. A refusal produced no bytes but still cost money and latency. The schema requires
-`api_status != 'ok'` ⟹ `output_hash` is null, and `api_status == 'ok'` ⟹ it is not. Without this,
-refusals silently vanish and reliability is overstated.
+**1. Every failed attempt survives individually.** An *attempt* row is written when the call is
+*made*, not when it succeeds. A refusal produced no bytes but still cost money and latency, so it is
+a first-class row carrying the provider's verbatim `error_detail` and no artifact. **Aggregate
+reliability counters are explicitly not sufficient** — a count of "5 refusals" cannot say which items
+were refused, what they cost, or whether the pattern is systematic. The validator rejects a summary
+that disagrees with the rows.
 
-**2. Never fabricate a hash or a cost.** If bytes were not retained, `output_hash` is null and
-`output_location` says so. `cost_ref` points at a recorded ledger line; a modelled estimate is
-labelled as one. This is the same rule that stopped a full-archive hash being invented for
-VideoGen-RewardBench, which was never downloaded.
+**2. Never fabricate a hash or a cost.** An artifact exists only where bytes exist, and its
+`output_hash` is never null — an artifact *is* its bytes. If bytes were not retained there is no
+artifact row and the attempt records why. `cost_ref` points at a recorded ledger line; a modelled
+estimate is labelled as one. This is the same rule that stopped a full-archive hash being invented
+for VideoGen-RewardBench, which was never downloaded.
 
-**3. Frames of one clip are one trial.** `observation_unit` is mandatory on every measurement so a
-sampled-frame observation can never be miscounted as an independent trial. This is the same
-correlation trap the project has already paid for statistically.
+**3. Frames of one clip are one trial.** A sampled frame is a **derived artifact** that inherits its
+parent's `trial_id` and `attempt_id`; it never gets its own. Ten frames from one clip are ten
+artifacts of one trial, and letting each claim a trial would inflate every downstream sample size by
+an order of magnitude. This is the same correlation trap the project has already paid for
+statistically.
 
 **4. Retention is not conditional on the result.** Deleting rejected outputs after scoring destroys
 the denominator of Cost per Accepted Outcome.
@@ -76,9 +124,9 @@ Evaluator cost is recorded separately from generation cost, so neither can hide 
 
 **Resources identifies candidates mechanically. Eval decides what a failure means.**
 
-A candidate is any artifact that was not accepted, or whose `api_status` was error/refusal/timeout,
-or that carries a measurement the owning stream marks as a failure, or that arrives as a production
-failure with complete provenance.
+A candidate is any trial whose acceptance record says `accepted: false`, any attempt whose `status`
+was error/refusal/timeout, any artifact carrying a measurement the owning stream marks as a failure,
+or any production failure ingested with complete provenance.
 
 Resources supplies the bytes, the complete provenance, the lineage keys and the exact conditions.
 Resources does **not** supply the failure label, its severity, or whether it is worth retesting.
@@ -89,18 +137,30 @@ calibration, qualification or reserve use on anything sharing their lineage.
 
 ## Fail-closed, verified
 
-**Seven negative controls executed tonight.** The validator distinguishes *couldn't check* (exit 2)
-from *found a violation* (exit 1):
+**Thirteen committed negative controls**, each breaking exactly one rule, run by
+`validators/run_archive_negative_controls.py`. The runner asserts both the expected outcome **and**
+that the failure names the right rule — a case that fails for the wrong reason is not a passing
+negative control.
 
-| Broken input | Exit | Detected |
-|---|:--:|---|
-| Empty artifacts file | 2 | refuses to validate an empty archive |
-| Missing file | 2 | file not found |
-| Refusal carrying an output hash | 1 | status/hash contradiction |
-| Same output stored at two locations | 1 | duplicate media copy |
-| Measurement referencing an absent artifact | 1 | dangling reference |
-| One measurement per artifact (no reuse) | 1 | fan-out 1.00 — not reusing generations |
-| Artifact missing its cost reference | 1 | cost must never be invented later |
+| Control | Breaks |
+|---|---|
+| `00-baseline-valid` | nothing — proves the others fail for their stated reason |
+| `01-observation-unit-v1-coinage` | uses `whole_clip` instead of the canonical vocabulary |
+| `02-refusal-carrying-an-artifact` | a call that produced nothing owns bytes |
+| `03-failure-without-a-recorded-reason` | a refusal with no `error_detail` |
+| `04-aggregate-counter-replaces-preserved-rows` | a summary claiming 5 refusals over 1 row |
+| `05-reliability-repeat-inside-a-retry-chain` | a repeat counted as a retry |
+| `06-derived-artifact-claiming-its-own-trial` | a frame becoming an independent trial |
+| `07-same-output-stored-twice` | one hash at two locations |
+| `08-measurement-with-both-result-and-absence` | incoherent measurement |
+| `09-measurement-referencing-a-missing-artifact` | a score with nothing behind it |
+| `10-no-fan-out` | one measurement per artifact — no reuse |
+| `11-attempt-without-a-cost-reference` | cost reconstructable later |
+| `12-acceptance-decided-by-resources` | Resources deciding acceptance |
+
+**13/13 behaved as declared.** The validator separates *could not check* (exit 2) from *found a
+violation* (exit 1): missing directory, missing file and empty file all produce exit 2, never a
+cheerful zero.
 
 ## Not forecast tonight, deliberately
 

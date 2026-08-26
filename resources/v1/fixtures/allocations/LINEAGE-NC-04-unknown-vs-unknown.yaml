@@ -1,0 +1,18 @@
+# R-C4 negative control 4 of 4. EXPECTED: exit 3 (INDETERMINATE).
+# THE CASE THAT MOTIVATES THE WHOLE CORRECTION. Two DIFFERENT unregistered sources produce two
+# DIFFERENT lin_unknown:: keys. A key-comparison alone finds no overlap and would happily certify
+# this split as clean. It is not clean: nothing establishes that these two sources are unrelated.
+# They could be the same lab, the same collection effort, or one derived from the other.
+experiment_id: LINEAGE-NC-04-UNKNOWN-VS-UNKNOWN
+allocation_version: 1
+frozen: false
+independence_level: source_lineage
+manifest: fixtures/lineage/lineage-negative-control-manifest.jsonl
+rationale: "Synthetic. Both roles drawn from sources with no registered lineage."
+assignments:
+  development:
+    - "src_unregistered_example::fixture_0.jpg"
+    - "src_unregistered_example::fixture_1.jpg"
+  qualification:
+    - "src_unregistered_other::fixture_0.jpg"
+    - "src_unregistered_other::fixture_1.jpg"

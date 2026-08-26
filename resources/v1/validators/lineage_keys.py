@@ -56,9 +56,25 @@ LINEAGE_NOTES = {
 }
 
 
+UNKNOWN_LINEAGE_PREFIX = "lin_unknown::"
+
+
 def source_lineage_key(rec):
-    """Level 3. Unknown sources get an explicit unknown marker, never a silent default."""
-    return SOURCE_LINEAGE.get(rec["source_id"], f"lin_unknown::{rec['source_id']}")
+    """Level 3. Unknown sources get an explicit unknown marker, never a silent default.
+
+    R-C4: the marker is deliberately keyed on the source id so it is TRACEABLE, but a caller must
+    NEVER read two different lin_unknown:: keys as two independent lineages. Two unregistered sources
+    that happen to have different ids may well be the same lab, the same collection effort, or one
+    derived from the other - nothing in the id says otherwise. `is_unknown_lineage` exists so callers
+    detect this case explicitly instead of comparing keys and concluding "different, therefore
+    independent", which is how an unregistered source silently gets certified as a clean holdout.
+    """
+    return SOURCE_LINEAGE.get(rec["source_id"], f"{UNKNOWN_LINEAGE_PREFIX}{rec['source_id']}")
+
+
+def is_unknown_lineage(key):
+    """True when a lineage key means 'not established', not 'a distinct lineage'."""
+    return str(key).startswith(UNKNOWN_LINEAGE_PREFIX)
 
 
 def byte_key(rec):

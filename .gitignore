@@ -12,3 +12,9 @@ resources/corpus/tmp/
 # Python bytecode caches - build artefacts, never source of truth.
 __pycache__/
 *.pyc
+
+# Deterministic build products of resources/v1 validators (R-C3 of RESOURCES-V1-CORRECTION-PASS).
+# Views and the synthetic scale archive are rebuilt from the committed manifest + generators; their
+# committed fingerprints prove any rebuild is byte-identical. Irreplaceable class-C model outputs are
+# NOT covered by this rule and must never be git-ignored.
+resources/v1/build/

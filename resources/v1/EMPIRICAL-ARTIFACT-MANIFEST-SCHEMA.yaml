@@ -1,149 +1,248 @@
-# Empirical artifact manifest schema — storage class C
+# Canonical persistent empirical-storage contract
 #
-# Task: R3/R8 of RESOURCES-V1-OVERNIGHT-PROGRAM.md. Owner: Resources.
-# Validator: validators/check_empirical_archive.py (fail-closed, executed 26 Aug 2026).
+# Owner: Resources. Task: R3/R8 of RESOURCES-V1-OVERNIGHT-PROGRAM.md, refactored under R-C2 of
+# RESOURCES-V1-CORRECTION-PASS.md.
+# Validator: validators/check_empirical_archive.py (fail-closed, executed).
+# Field contract for Eval: EVAL-STORAGE-HANDOFF.md
 #
-# WHAT CLASS C IS. Media the project produced by paying a provider, plus processed derivatives and
-# production failures. It is NOT reacquirable. Provider behaviour drifts, versions retire, and the
-# same prompt with the same seed stops returning the same bytes. If it is deleted, every measurement
-# derived from it becomes unverifiable.
+# CONTROLLER DECISION THIS IMPLEMENTS (R-C2)
+#   Resources owns the durable attempt/artifact/measurement/acceptance storage contract.
+#   Eval owns measurement semantics.
+# Resources decides how evidence is persisted and what must never be lost. It does not decide what a
+# capability means, what an instrument's result means, what a threshold is, or whether an outcome was
+# acceptable. Where this file names a capability id, an instrument or an observation unit, it is
+# STORING Eval's vocabulary verbatim, not defining it.
+#
+# WHAT CLASS C IS. Media and telemetry the project produced by paying a provider, plus processed
+# derivatives and production failures. It is NOT reacquirable: provider behaviour drifts, versions
+# retire, and the same prompt with the same seed stops returning the same bytes. If it is deleted,
+# every measurement derived from it becomes unverifiable.
 #
 # THE PROJECT HAS ALREADY LOST MATERIAL THIS WAY. The legacy media-factory spike gitignored its
 # generated media as "expensive to make, wrong to store in git ... regenerable from the scripts
 # here". It was not regenerable. The 64 human judgements survived only because someone whitelisted
 # scores.json; the 64 images did not, and those failures can no longer be re-annotated.
-#
-# TWO FILES, NOT ONE. Artifacts and measurements are separate, and that separation is the whole
-# design. One generated asset is scored by many capabilities. Storing a copy per metric would
-# multiply cost, break "one generation, many measurements", and make pass-at-k uncountable because
-# nobody could tell a repeat from a duplicate.
 
 meta:
-  version: v1
+  version: v2
+  supersedes: "v1 (overnight). v1 conflated the call with its output and used a Resources-invented observation vocabulary."
   date: 2026-08-26
   storage_class: C_irreproducible_empirical
-  capacity_requirement: ">=1,000 artifacts without schema redesign"
-  ownership: "Resources stores the evidence and its provenance. Eval owns every interpretation, label and threshold."
+  capacity_requirement: ">=1,000 attempts without schema redesign"
+  ownership:
+    resources_owns: "Persistence, provenance, integrity, lineage, retention. What must never be lost."
+    eval_owns: "Measurement semantics: what a capability means, what an instrument's result means, thresholds, acceptance criteria."
 
-# ---------------------------------------------------------------------------
-artifact_record:
-  description: "One irreproducible output, or one attempt that produced no output. Stored ONCE."
-  required:
-    artifact_id: "Stable unique id. Never reused, never reassigned."
-    trial_id: "The attempt this belongs to. Repeats of one benchmark item share an item id, not a trial id."
-    attempt_index: "Integer, 0-based. Which repeat this is. Required for pass-at-k."
-    eval_item_id: "The benchmark bank item this attempt was generated for."
-    provider: "Vendor, e.g. the API host."
-    model_id: "Exact model/API id as called, not the marketed name."
-    model_version: "Version string, or the explicit token 'unpinnable' where the provider exposes none."
-    endpoint: "Exact endpoint/workflow called."
-    workflow: "The recipe this call sits inside (single call, or a named multi-step pipeline)."
-    prompt_hash: "SHA-256 of the exact prompt text sent."
-    config_hash: "SHA-256 of the exact request configuration sent."
-    config_location: "Where the full prompt/config is recoverable. A hash alone cannot be read back."
-    reference_asset_hashes: "List of SHA-256 of any reference images/audio supplied. Empty list if none."
-    requested_at: "ISO-8601 UTC."
-    completed_at: "ISO-8601 UTC. Null if the call never completed."
-    api_status: "ok | error | refusal | timeout | cancelled."
-    output_hash: "SHA-256 of the output bytes. NULL when api_status is not 'ok'."
-    output_bytes: "Size in bytes. Null when there is no output."
-    output_location: "Where the bytes are retained. Null when there is no output."
-    cost_ref: "Reference to the cost ledger line for this call. Never an invented number."
-    storage_class: "Always C_irreproducible_empirical."
-  optional:
-    seed: "Where the provider exposes one. Null is a legitimate, informative value."
-    settings: "Provider settings actually sent (resolution, duration, guidance, etc.)."
-    error_detail: "Verbatim provider error or refusal text."
-    parent_artifact_id: "For a processed derivative or a repair attempt: the artifact it came from."
-    repair_of_artifact_id: "Set when this attempt exists because a previous one was rejected."
-  rules:
-    - "An artifact row is written when the call is MADE, not when it succeeds. A refusal or error is evidence."
-    - >
-      api_status != 'ok' REQUIRES a null output_hash, and api_status == 'ok' REQUIRES a non-null one.
-      Without this rule, refusals silently vanish from the record and reliability is overstated -
-      the run cost money, took latency and produced no asset, and all three facts matter.
-    - "Never fabricate a hash. If the bytes were not retained, output_hash is null and output_location says so."
-    - "Never fabricate a cost. cost_ref points at a recorded ledger line; a modelled estimate is labelled as one."
-    - "An artifact is immutable once written. A corrected understanding is a new measurement, not an edited artifact."
-    - "Retention is not conditional on the result. Deleting rejected outputs after scoring destroys the denominator."
+# ===========================================================================
+# THE FOUR PERSISTENT ENTITIES
+#
+# 1 attempt  -> 0 or 1 artifact  -> many measurements
+#                              \-> 0 or 1 acceptance
+#
+# WHY ATTEMPT AND ARTIFACT ARE SEPARATE (the v1 defect this corrects)
+# v1 had one "artifact" row that was written when a call was made and carried a null output hash if
+# the call failed. That conflates two different things: the CALL (which always happened, always cost
+# money and latency, and is always evidence) and the BYTES (which may not exist). Separating them
+# means a refused or errored call is a first-class row rather than an artifact-shaped hole, and it
+# makes the derived-media rule expressible: a sampled frame is a derived ARTIFACT of its parent, not
+# a second ATTEMPT.
+# ===========================================================================
 
-# ---------------------------------------------------------------------------
-measurement_record:
-  description: "One capability measured on one artifact by one instrument. MANY per artifact."
-  required:
-    measurement_id: "Stable unique id."
-    artifact_id: "The artifact observed. Must exist in the artifact manifest."
-    capability_id: "One of Eval's 36 capability ids."
-    instrument_ref: "Exact instrument configuration used, including its version."
-    instrument_qualification_ref: "Reference to the instrument's qualification record, or the explicit token 'required_but_no_calibrated_instrument'."
-    observation_unit: "frame | image | shot | sampled_clip | whole_clip | shot_pair | sequence | asset_set."
-    result: "The instrument's output, in whatever form that capability declares."
-    measured_at: "ISO-8601 UTC."
-  optional:
-    human_adjudication_ref: "Where a person resolved or overrode the instrument."
-    evaluator_cost_ref: "Evaluator cost, recorded SEPARATELY from generation cost so neither hides inside the other."
-    notes: "Observer terms preserved verbatim. Ontology mapping happens later, never by silent rewrite."
-  rules:
-    - "Many measurements per artifact is the normal case, not an exception."
-    - >
-      Frames sampled from one clip are ONE trial with several observations, not several trials.
-      observation_unit exists so this can never be miscounted into an inflated sample size.
-    - "A measurement whose instrument is unqualified is still recorded, carrying 'required_but_no_calibrated_instrument'. It may not be reported as a capability score."
-    - "A capability is never re-measured by regenerating the asset. If the asset exists, measure it again."
-  multi_defect_rule: >
-    Multiple measurements may find multiple defects on one artifact and all are retained. The Project
-    Contract permits multiple defects per output (separation 13), and collapsing an artifact to one
-    salient label is exactly what the Eval master plan says went wrong with the legacy failures.
+entities:
 
-# ---------------------------------------------------------------------------
-acceptance_record:
-  description: "Whether an outcome was accepted. The numerator of Cost per Accepted Outcome."
-  required:
-    acceptance_id: ""
-    artifact_id: ""
-    accepted: "Boolean."
-    decided_by: "Who or what decided. Never Resources."
-    decided_at: "ISO-8601 UTC."
-    brief_ref: "The brief or item this was produced against."
-  optional:
-    rejection_reasons: "List. Multiple reasons allowed."
-    retry_chain: "Ordered artifact_ids of the attempts that led here."
-  rule: >
-    CpAO = total cost of every attempt in the retry chain / accepted outcomes. It is recomputable ONLY
-    if cost, acceptance and the retry chain all survive next to the output bytes. That is why this is
-    a Resources schema requirement and not filing tidiness. Resources records the decision; it never
-    makes it.
+  # -------------------------------------------------------------------------
+  attempt:
+    description: >
+      One provider/API/transform call. Recorded whether it succeeds, errors, times out or is refused.
+      An attempt row is written when the call is MADE, not when it succeeds.
+    required:
+      attempt_id: "Stable unique id. Never reused, never reassigned."
+      trial_id: "Groups the attempts belonging to one experimental trial."
+      eval_item_id: "The benchmark bank item this attempt was made for."
+      provider: "Vendor / API host."
+      model_id: "Exact model or API id as called, not the marketed name."
+      model_version: "Version string, or the explicit token 'unpinnable' where the provider exposes none."
+      endpoint: "Exact endpoint called."
+      workflow: "The recipe this call sits inside: a single call, or a named multi-step pipeline."
+      lane: "Eval's roster lane, stored verbatim (image / general video / native AV / lip-sync / TTS)."
+      prompt_hash: "SHA-256 of the exact prompt text sent."
+      config_hash: "SHA-256 of the exact request configuration sent."
+      config_location: "Where the full prompt/config is recoverable. A hash alone cannot be read back."
+      reference_asset_hashes: "List of SHA-256 of any reference images/audio supplied. Empty list if none."
+      requested_at: "ISO-8601 UTC."
+      completed_at: "ISO-8601 UTC, or null if the call never completed."
+      status: "ok | error | refusal | timeout | cancelled."
+      cost_ref: "Reference to the recorded cost-ledger line for this call. Never an invented number."
+      storage_class: "Always C_irreproducible_empirical."
+    repeat_and_retry:
+      # R-C2: these are DIFFERENT CONCEPTS and must never be interchangeable.
+      repeat_index: >
+        Integer, 0-based. Which deliberate experimental repeat this is. A repeat is planned before any
+        result is seen, and exists to measure reliability. REQUIRED on every attempt.
+      repeat_of_attempt_id: >
+        The first attempt of the same repeat group, or null on the first. Optional convenience link.
+      retry_of_attempt_id: >
+        Set ONLY when this call exists because a PRIOR ATTEMPT FAILED or was rejected. Null otherwise.
+      retry_reason: "Required when retry_of_attempt_id is set. Free text; observer terms preserved."
+      why_they_must_not_be_conflated: >
+        Only retries belong to an accepted-outcome retry chain. Cost per Accepted Outcome divides the
+        cost of a retry chain by accepted outcomes; if deliberate reliability repeats were counted as
+        retries, every CpAO figure would be inflated by the experimental design itself. Conversely, if
+        retries were counted as repeats, pass-at-k would be computed over attempts that were not
+        independent draws. Both errors are silent and neither is recoverable after the fact.
+    optional:
+      seed: "Where the provider exposes one. Null is a legitimate and informative value."
+      settings: "Provider settings actually sent (resolution, duration, guidance, etc.)."
+      error_detail: "Verbatim provider error or refusal text. Never paraphrased."
+      latency_ms: "Measured wall-clock latency."
+    rules:
+      - "Written when the call is MADE. A refusal or error is evidence, not an absence of evidence."
+      - >
+        EVERY FAILED OR REFUSED ATTEMPT IS PRESERVED INDIVIDUALLY. Aggregate reliability counters are
+        NOT sufficient and may never replace the rows. A count of "3 refusals" cannot tell you which
+        items were refused, what the provider said, what it cost, or whether the pattern is systematic.
+      - "status == 'ok' implies exactly one artifact exists for this attempt; any other status implies none."
+      - "Never fabricate a cost. cost_ref points at a recorded ledger line; a modelled estimate is labelled as one."
+      - "Immutable once written. A corrected understanding is a new measurement, not an edited attempt."
+      - "Retention is not conditional on the result. Deleting rejected attempts destroys the denominator of CpAO."
 
-# ---------------------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  artifact:
+    description: >
+      Bytes produced by an attempt, when any exist. Also covers derived media: a sampled frame, a
+      transcoded copy, a cropped region.
+    required:
+      artifact_id: "Stable unique id."
+      attempt_id: "The attempt that produced it. Must exist."
+      trial_id: "Denormalised from the attempt for direct grouping."
+      output_hash: "SHA-256 of the bytes. Never null on an artifact row - an artifact IS its bytes."
+      output_bytes: "Size in bytes."
+      output_location: "Where the bytes are retained."
+      media_kind: "image | video | audio | audio_video | text | other."
+      storage_class: "Always C_irreproducible_empirical."
+    derivation:
+      # R-C2: derived media points at its parent and does NOT become an independent trial.
+      derived_from_artifact_id: "Parent artifact, or null if this is the direct output of the attempt."
+      derivation_type: >
+        How it was derived: frame_sample | transcode | crop | segment | channel_split | other.
+        Null when derived_from_artifact_id is null.
+      derivation_params: "Exact parameters, e.g. the frame timestamp or crop box. Enough to reproduce the derivation."
+      rule: >
+        A derived artifact inherits its parent's trial_id and attempt_id. It NEVER gets its own. Ten
+        frames sampled from one clip are ten artifacts of ONE trial, and counting them as ten trials
+        would inflate every sample size downstream by an order of magnitude.
+    rules:
+      - "An artifact exists only where bytes exist. A refused call has an attempt row and no artifact row."
+      - "Stored ONCE. The same output_hash must not appear at two output_locations - that is a duplicate copy, not two artifacts."
+      - "Never fabricate a hash. If bytes were not retained, there is no artifact row and the attempt records why."
+
+  # -------------------------------------------------------------------------
+  measurement:
+    description: >
+      One capability measured on one artifact or trial by one instrument. MANY per artifact - that is
+      the point of the whole design. Semantically owned by Eval; Resources stores it verbatim.
+    required:
+      measurement_id: "Stable unique id."
+      artifact_id: "The artifact observed. Null only when the measurement is defined over a trial rather than one artifact."
+      trial_id: "The trial this measurement belongs to. Always present."
+      capability_id: >
+        The CANONICAL capability id from Eval's 36-capability map, stored EXACTLY as Eval defines it.
+        Resources never renames, abbreviates, normalises or maps it.
+      instrument_ref: "Exact instrument identity."
+      instrument_version: "Instrument version."
+      instrument_config_hash: "SHA-256 of the exact instrument configuration used."
+      instrument_qualification_ref: >
+        Reference to the instrument's qualification record, or the explicit token
+        'required_but_no_calibrated_instrument'.
+      observation_unit: "One of the canonical vocabulary below, verbatim."
+      measured_at: "ISO-8601 UTC."
+    result_or_absence:
+      # A measurement that could not be taken is evidence too, and must not be a silent gap.
+      result: "The instrument's output, in whatever form that capability declares. Null iff absence_reason is set."
+      absence_reason: >
+        Why no result exists: not_applicable | instrument_unavailable | parse_failure |
+        human_adjudication_pending | other. Null iff result is set.
+      rule: "Exactly one of result and absence_reason is set. Never both, never neither."
+    optional:
+      defects: >
+        List of defects observed. MULTIPLE DEFECTS PER ARTIFACT ARE PERMITTED AND EXPECTED - the
+        Project Contract allows it (separation 13), and collapsing an artifact to one salient label is
+        exactly what the Eval master plan says went wrong with the legacy failures.
+      evaluator_cost_ref: "Evaluator cost, recorded SEPARATELY from generation cost so neither hides inside the other."
+      human_adjudication_ref: "Where a person resolved or overrode the instrument."
+      notes: "Observer terms preserved verbatim. Ontology mapping happens later, never by silent rewrite."
+    rules:
+      - "Many measurements per artifact is the normal case, not an exception."
+      - "A measurement whose instrument is unqualified is still recorded, carrying 'required_but_no_calibrated_instrument'. It may not be reported as a capability score."
+      - "A capability is never re-measured by regenerating the asset. If the artifact exists, measure it again."
+
+  # -------------------------------------------------------------------------
+  acceptance:
+    description: >
+      Whether a production outcome was accepted. The numerator of Cost per Accepted Outcome.
+      Resources STORES this. Resources NEVER DECIDES IT.
+    required:
+      acceptance_id: "Stable unique id."
+      trial_id: "The trial being accepted or rejected."
+      artifact_id: "The artifact actually delivered, or null if the trial ended with no deliverable."
+      accepted: "Boolean."
+      decided_by: "Who or what decided. NEVER Resources."
+      decided_at: "ISO-8601 UTC."
+      brief_ref: "The brief or item this was produced against."
+    optional:
+      rejection_reasons: "List. Multiple reasons allowed."
+      retry_chain: >
+        Ordered attempt_ids of the attempts that led here, built from retry_of_attempt_id links.
+        Deliberate reliability repeats are NOT part of a retry chain.
+    rule: >
+      CpAO = total cost of every attempt in the retry chain / accepted outcomes. Recomputable ONLY if
+      cost, acceptance, the retry chain and the artifact all survive together. That is why acceptance
+      lives in a Resources schema even though Resources never makes the decision.
+
+# ===========================================================================
+# CANONICAL OBSERVATION-UNIT VOCABULARY
+#
+# R-C2: stored VERBATIM from the Canon/Eval canonical vocabulary. Resources does NOT invent its own
+# terms here and does NOT redefine these as image / sampled_clip / whole_clip, which is what v1 did.
+# If a derived-media description is needed, that belongs in artifact.derivation, NOT here.
+# ===========================================================================
+observation_units:
+  allowed: [frame, shot, shot_pair, sequence, whole_asset, asset_set_over_time]
+  authority: "Canon/Eval. Resources stores the value and validates membership; it does not define the terms."
+  do_not_use: >
+    image, sampled_clip, whole_clip, asset_set and any other Resources-local coinage. A local synonym
+    silently breaks comparability between two measurements that should be comparable.
+
+# ===========================================================================
 regression_candidate_rules:
   principle: "Resources identifies candidates mechanically. Eval decides whether a failure is a real defect and what it is called."
   a_candidate_is:
-    - "any artifact with an acceptance_record where accepted == false"
-    - "any artifact with api_status in (error, refusal, timeout)"
-    - "any artifact carrying a measurement whose result the owning stream marks as a failure"
+    - "any trial with an acceptance record where accepted == false"
+    - "any attempt with status in (error, refusal, timeout)"
+    - "any artifact carrying a measurement the owning stream marks as a failure"
     - "any production failure ingested with complete provenance"
   promotion_to_regression_set:
     owner: Eval
-    resources_supplies: [artifact bytes, complete provenance, lineage keys, the exact conditions that produced it]
+    resources_supplies: [artifact bytes, complete attempt provenance, lineage keys, the exact conditions that produced it]
     resources_does_not_supply: [the failure label, its severity, whether it is worth retesting]
-  retention: "A regression candidate is retained indefinitely under class C. Its bytes are what make it retestable; without them it is an anecdote."
+  retention: "Retained indefinitely under class C. The bytes are what make it retestable; without them it is an anecdote."
   contamination_warning: >
-    Regression items are contaminated by construction - somebody already studied them closely. They
-    are valid as regression stimuli and disqualified as calibration, qualification or reserve
-    material for anything that shares their lineage.
+    Regression items are contaminated by construction - somebody already studied them closely. Valid
+    as regression stimuli, disqualified as calibration, qualification or reserve material for anything
+    sharing their lineage.
 
-# ---------------------------------------------------------------------------
+# ===========================================================================
 capacity_and_forecast:
-  requirement: ">=1,000 artifacts without redesign"
-  demonstrated: "The validator was executed against a 1,000-artifact dummy archive."
+  requirement: ">=1,000 attempts without redesign"
+  demonstrated: "The validator is executed against a 1,000-attempt synthetic archive, generated into a build directory and not committed (R-C3)."
   byte_budget: >
-    NOT forecast tonight, deliberately. A byte budget needs per-endpoint duration/resolution from
-    Eval's E2 inventory, which does not exist yet. Guessing one would encode a guess as a plan. The
-    schema carries output_bytes per artifact, so a forecast becomes a sum once E2 lands.
+    NOT forecast. A byte budget needs per-endpoint duration/resolution from Eval's E2 inventory, which
+    does not exist yet. Guessing one would encode a guess as a plan. The schema carries output_bytes
+    per artifact, so a forecast becomes a sum once E2 lands.
   scale_note: >
-    The frozen Eval caps are <=204 admission-screen outputs and <=520 deep-qualification outputs =
-    724 before retries, plus <=96 end-to-end trials. 1,000 is the right order of magnitude for the
-    first wave and the schema imposes no structural limit beyond it.
+    Eval's frozen caps are <=204 admission-screen outputs and <=520 deep-qualification outputs = 724
+    before retries, plus <=96 end-to-end trials. 1,000 is the right order of magnitude for the first
+    wave and the schema imposes no structural limit beyond it.
   operational_rule: >
     Ingest durably as part of execution, not as a tidy-up after scoring. An output that is scored and
     then cleaned up has already been lost.

@@ -31,6 +31,15 @@ pages are reachable.
 
 Serves 11 requirement rows. The highest-leverage pack in the matrix.
 
+**Composition requirements folded in under R-C5** — these constrain *how the same ≥48 images are
+chosen*, they do not raise the target: same-category **non-match decoys** (≥2 visually similar
+products per category, so a non-match test is a real confusion rather than shoe-versus-kettle); a
+**declared brand-colour reference value** per product plus capture lighting, because
+`packaging_brand_colour_fidelity` has nothing to measure against without one; and **difficulty
+coverage** where feasible — curved surfaces, oblique angles, logo-on-surface. All three favour route
+A1 even more strongly, since only controlled capture lets you *choose* the decoys and *record* the
+colour value.
+
 ### A1 — Controlled first-party capture · **RECOMMENDED**
 
 Photograph 12 physical products the project or the operator owns, ≥4 controlled views each: fixed
@@ -86,6 +95,12 @@ deliberate research release; ordinary retail catalogue imagery is not, and scrap
 **The highest-risk pack in the project.** Flagging privacy and biometric implications explicitly, as
 the runbook requires.
 
+**Composition requirement folded in under R-C5:** the 8 identities must themselves support
+known-match and known-non-match comparisons, including **at least one plausibly confusable pair**
+(similar age, build, skin tone, hair, eyewear). Same target, same ≥32 images — but the identities
+have to be *chosen*, which again only routes B1 and B2 permit. **No public-face scraping** is
+reaffirmed as absolute.
+
 ### B1 — Consented internal capture · **RECOMMENDED**
 
 8 consenting colleagues or contacts, ≥4 controlled views each, with **written consent naming internal
@@ -132,6 +147,16 @@ story frames with no identifiable person. See the legacy reconciliation.
 ## C. Clean AV pack — target 36 clips = 24 single-speaker + 12 two-speaker
 
 **The most blocked pack, and tonight's research made it look worse, not better.**
+
+**Composition requirements folded in under R-C5.** All 12 two-speaker clips carry **explicit turn
+boundaries with speaker attribution**, not merely a transcript — that is the annotation almost no
+public source ships, and it is the thing `two_speaker_turn_assignment_and_lip_sync` actually measures.
+And **≥12 clean clips from this pack are reused as the deterministic temporal-perturbation base
+rather than acquiring a fifth pack**: a perturbation base needs clips whose only defect is the one
+introduced, which a controlled recording satisfies better than KoNViD-1k, sampled for degradation
+variety. Resources must then enforce the consequence — those reused clips share content lineage with
+their AV originals and cannot serve as an independent holdout for a speech measurement that also uses
+the original.
 
 ### The finding: the AV gap is harder than the audio gap
 
@@ -190,6 +215,13 @@ none should be acquired on the strength of tonight's research** — all licence 
 
 Shared by Eval's creative evaluator family and Canon's Experiment B. **One bank, not two.**
 
+**Composition requirements folded in under R-C5.** The **20-asset reserve is frozen before** any
+evaluator or Canon tuning touches the 60 active assets — freezing is one-way, and a reserve anyone
+has inspected is no longer a reserve. Eval or its human reviewers may later establish a **≥15 asset
+known-clean subset** for false-criticism calibration (how often an evaluator invents a fault that is
+not there). **Resources supplies candidates, rights and provenance and must not author that label** —
+"clean" is a creative-quality judgement and belongs to Eval and its reviewers.
+
 ### D1 — First-party and permissioned creative · **RECOMMENDED**
 
 Commercial creative the operator produced, commissioned or can obtain written permission to use
@@ -230,6 +262,10 @@ limit, and one that no worker may waive. Not close, and it was never an advertis
 | Person ≥32 | **B1 consented internal capture** | B2 synthetic identities (external-validity cost) | B3 public face datasets — reject |
 | AV 36 clips | **C1 controlled recording with consent** | C2 creator permission | C3 public AV corpora — none recommended |
 | Commercial 80 | **D1 first-party / permissioned** | — | D2 Pitt Ads — email gate, worth a decision; D3 AVA — reject |
+
+**Targets are unchanged by the R-C5 refinements.** Every addition constrains *how* the same ≥48 / ≥32
+/ 36 / 80 assets are composed. **No fifth pack was created**, and the perturbation base is now drawn
+from the AV pack rather than acquired separately.
 
 **The pattern is not an accident.** In all four packs the recommended route is *controlled or
 permissioned first-party material*, because all four requirements demand something public datasets

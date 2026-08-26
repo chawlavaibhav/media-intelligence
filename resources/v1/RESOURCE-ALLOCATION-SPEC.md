@@ -81,18 +81,57 @@ as binding. Every view therefore carries
 
 What is delivered instead is the machinery that makes assigning it later **safe**.
 
+## Unknown lineage cannot be certified independent (R-C4)
+
+At `source_lineage` level, an unregistered source produces a `lin_unknown::<source_id>` key. **A
+comparison that finds two such keys different has established nothing.** Two unregistered sources may
+be the same lab, the same collection effort, or one derived from the other, and nothing in a source
+id says otherwise. Treating "different unknown keys" as "independent" is precisely how an
+unregistered source gets silently certified as a clean holdout.
+
+So the validator refuses to certify, and says so as its own outcome:
+
+| Exit | Meaning |
+|:--:|---|
+| **0** | Checked. No collision found **and every lineage involved was established.** |
+| **1** | Checked. **Leak found** — a DATA INTEGRITY stop under `shared/AUTONOMY-POLICY.md`. |
+| **2** | **Could not check** — bad input, missing view, unknown item id. |
+| **3** | **INDETERMINATE** — independence could not be *established*. **Not clean, and not a leak.** |
+
+Exit 3 is a refusal to certify, which is a different fact from both "clean" and "contaminated", and
+it deserves its own outcome rather than a warning line someone can skim past.
+
+**Four negative controls, executed:**
+
+| Control | Setup | Expected | Result |
+|---|---|:--:|:--:|
+| `LINEAGE-NC-01` | Two registered, genuinely independent lineages | exit 0 | **PASS** |
+| `LINEAGE-NC-02` | One shared registered lineage (the CVIT pair) | exit 1 | **PASS** |
+| `LINEAGE-NC-03` | An unregistered source in a protected role | exit 3 | **PASS** |
+| `LINEAGE-NC-04` | **Two *different* unknown lineages** | exit 3 | **PASS** |
+
+`NC-04` is the case that motivates the correction: a key comparison alone finds no overlap and would
+certify the split as clean. `NC-01` matters just as much — without a case that legitimately passes,
+the other three would be satisfied by a tool that refuses everything.
+
+They run over a **36-row synthetic fixture manifest** (`fixtures/lineage/`), so no real corpus item is
+involved and nothing real is mislabelled to make a test work.
+
+**To register a new source:** add it to `SOURCE_LINEAGE` in `validators/lineage_keys.py` before using
+it in a protected role. That is a deliberate human judgement about provenance, which is exactly what
+it should be.
+
 ## Fail-closed behaviour, and why exit 2 is not exit 1
 
-The validator distinguishes three outcomes, deliberately:
+"I found no leak", "I could not look" and "I cannot establish independence" are three different
+statements and never share an exit code. Six broken inputs
+all produce exit 2 and no verdict: missing file, empty file, missing `independence_level`, reference
+to a view that does not exist, reference to an item id absent from the manifest, and no arguments at
+all. An empty role aborts rather than passing vacuously.
 
-- **exit 0** — checked, no collision found
-- **exit 1** — checked, leak found (a DATA INTEGRITY stop under `shared/AUTONOMY-POLICY.md`)
-- **exit 2** — **could not check**
-
-"I found no leak" and "I could not look" must never produce the same exit code. **Executed tonight**,
-six broken inputs all produced exit 2 and no verdict: missing file, empty file, missing
-`independence_level`, reference to a view that does not exist, reference to an item id absent from
-the manifest, and no arguments at all. An empty role aborts rather than passing vacuously.
+**Views are build products (R-C3).** The validator reads them from `resources/v1/build/views/`, which
+is rebuilt by `build_views.py` and git-ignored. A missing build is exit 2 — "could not check" — never
+a pass.
 
 Two smaller honesty rules the validator follows:
 

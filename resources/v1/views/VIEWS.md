@@ -5,11 +5,29 @@
 
 ## What a view is
 
-A **selection over committed item ids, not a copy of media.** Each `.jsonl` line references an
-`item_id` and `sha256` from `resources/manifests/corpus-pilot-v0.jsonl` and adds the three lineage
-keys plus descriptive attributes. No media byte is copied, moved or relabelled. Nine views, 39,262
-line-references over 34,786 distinct items (the Devanagari items appear in more than one view
-because a view is a lens, not a partition).
+A **selection over committed item ids, not a copy of media.** Each record references an `item_id` and
+`sha256` from `resources/manifests/corpus-pilot-v0.jsonl` and adds the three lineage keys plus
+descriptive attributes. No media byte is copied, moved or relabelled.
+
+**The views are build products and are not committed (R-C3).** They are regenerated into
+`resources/v1/build/views/` by `../validators/build_views.py`. What *is* committed:
+
+| File | What it is |
+|---|---|
+| `view-fingerprints.json` | Per-view item count, content-group count and SHA-256, plus a combined fingerprint. |
+| `SAMPLE-RECORDS.jsonl` | One representative record per view, showing the exact record shape. |
+| `VIEWS.md` | This document: valid uses, invalid uses, label provenance, rights. |
+
+Nine views, 39,262 line-references over 34,786 distinct items (the Devanagari items appear in more
+than one view because a view is a lens, not a partition). Carrying them in git cost ~31 MB of
+rebuildable JSONL; the fingerprints cost 2 KB and prove the same thing.
+
+**This is not the reproducibility hole the project has been bitten by twice.** The EVAL-005 `build/`
+items and the legacy spike's generated media were irreproducible because they depended on assets
+outside git — a proprietary font, raw media. These views depend only on `corpus-pilot-v0.jsonl` and
+`lineage_keys.py`, both committed. The distinguishing test is whether an artifact needs anything git
+does not hold, and this one does not. **Irreplaceable class-C model outputs are explicitly not
+covered by this rule and must never be git-ignored.**
 
 **Every record carries `payload_availability_in_this_session: not_present_git_ignored`,** because the
 raw media is not in GitHub. A manifest implying otherwise would be exactly the "description does not
@@ -49,22 +67,14 @@ is `not_stated` with no per-item licence field in the distributed metadata (KoNV
 one is explicitly and verifiably **CC BY 4.0** (YouTube-UGC). **If any result is ever published or
 shown to a customer, the rights question must be reopened first.**
 
-## A note on size, and why these are committed anyway
-
-The nine views total about 31 MB, and they are **derived** — every field comes from the committed
-manifest plus committed lineage rules. They are committed rather than generated on demand for two
-reasons. First, a view Eval can read directly is more useful than one that requires running a script.
-Second, and more importantly: this project has twice been bitten by artifacts that turned out not to
-be reconstructible (the EVAL-005 `build/` items, which need an uncommitted proprietary font, and the
-legacy spike's generated media, gitignored as "regenerable from the scripts here" when it was not).
-
-The distinguishing test is whether an artifact depends on anything outside git. **These do not** —
-`build_views.py` needs only `corpus-pilot-v0.jsonl` and `lineage_keys.py`, both committed. They are
-genuinely regenerable, and committing them costs 31 MB in a repository that already commits a 21 MB
-manifest. No media byte is duplicated: the raw corpus is untouched and absent.
-
 ## Rebuilding
 
-`python3 resources/v1/validators/build_views.py` — fail-closed. Every view declares an expected
-count; a view that selects zero items, or a count that disagrees with its expectation, aborts the
-whole build and writes nothing.
+```bash
+python3 resources/v1/validators/build_views.py                       # build + verify fingerprints
+python3 resources/v1/validators/build_views.py --update-fingerprints # rewrite the committed fingerprints
+```
+
+Fail-closed. Every view declares an expected count; a view that selects zero items, or a count that
+disagrees with its expectation, aborts the whole build and writes nothing. Without
+`--update-fingerprints` the rebuild is compared against the committed fingerprints and a mismatch is
+exit 1 — verified by tampering with a fingerprint and confirming the check fails.

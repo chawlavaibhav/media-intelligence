@@ -1,0 +1,17 @@
+# R-C4 negative control 3 of 4. EXPECTED: exit 3 (INDETERMINATE).
+# An UNREGISTERED source in a protected role. Its lineage is not established, so independence CANNOT
+# be certified. This must not report clean, and it must not report a leak either - it is a refusal to
+# certify, which is a different fact and deserves its own outcome.
+experiment_id: LINEAGE-NC-03-UNKNOWN
+allocation_version: 1
+frozen: false
+independence_level: source_lineage
+manifest: fixtures/lineage/lineage-negative-control-manifest.jsonl
+rationale: "Synthetic. Qualification set drawn from a source nobody has registered a lineage for."
+assignments:
+  development:
+    - "src_bstd_devanagari::Recognition/train/hindi/fixture_0.jpg"
+    - "src_bstd_devanagari::Recognition/train/hindi/fixture_1.jpg"
+  qualification:
+    - "src_unregistered_example::fixture_0.jpg"
+    - "src_unregistered_example::fixture_1.jpg"
