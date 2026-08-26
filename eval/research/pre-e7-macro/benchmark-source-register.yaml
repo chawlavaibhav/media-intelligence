@@ -1,0 +1,359 @@
+# =============================================================================
+# EVAL-007 E7-A — Benchmark / evaluation source register
+# =============================================================================
+# Task: eval/tasks/EVAL-007-CLOUD-EVAL-RESEARCH-PROGRAM.md
+# Date: 2026-08-26 · Branch: work/eval-007-capability-workflow · Spend: 0
+#
+# EVIDENCE RULE APPLIED. Every row below was retrieved in this session from a
+# FIRST-PARTY repository or project page. Nothing is recorded from memory.
+#
+# ACCESS CONSTRAINT, stated once and applying to the whole register: arxiv.org,
+# huggingface.co, openreview.net and paperswithcode.com are BLOCKED by this
+# session's network egress proxy. Original papers could NOT be read. What could
+# be read is the authors' own GitHub repositories and project pages, which are
+# first-party but are documentation, not the paper.
+#
+# CONSEQUENCE, and it matters for how these rows may be used: a repository
+# README states what its authors CLAIM their benchmark does. It is not the
+# peer-reviewed method section and it rarely states limitations fully. Rows are
+# therefore marked with `claim_basis` so a later reader can see the difference
+# between "the authors say" and "the paper establishes".
+# =============================================================================
+
+register_version: v1
+task: E7-A
+date: 2026-08-26
+sources_recorded: 10
+access_method_note: >-
+  Retrieved via the session's web-fetch tool. arxiv/HuggingFace/OpenReview were
+  unreachable; every row is a first-party repo or project page.
+blocked_surfaces: [arxiv.org, huggingface.co, openreview.net, paperswithcode.com]
+
+sources:
+
+  - id: SRC-01
+    name: GenEval
+    url: https://github.com/djghosh13/geneval
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: image
+    class: atomic_compositional
+    what_it_tests: >-
+      Object-focused text-to-image alignment: "compositional image properties
+      such as object co-occurrence, position, count, and color." Seven
+      dimensions - single object, two object, counting, colours, position,
+      colour attribution, overall.
+    observation_unit_equivalent: frame
+    judge_method: >-
+      Object detection (Mask2Former) plus discriminative vision models for
+      properties such as colour. A DETECTOR, not a human and not a VLM.
+    limitations_stated: >-
+      Reports very low model scores on position (0.03-0.15) and colour
+      attribution (0.00-0.35), i.e. the benchmark exposes where models fail
+      rather than claiming to measure everything.
+    lesson_transfers: >-
+      Our object_count / spatial_relationship / attribute_binding are the same
+      three properties this benchmark isolates, and it judges them with a
+      detector - which supports our family-2 design and our rule that counting
+      and locating need different detector settings.
+    lesson_does_not_transfer: >-
+      GenEval scores are for open-domain object prompts, not commercial media
+      under brand constraints. Its numbers are not our numbers.
+
+  - id: SRC-02
+    name: GenEval2
+    url: https://github.com/facebookresearch/GenEval2
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: image
+    class: atomic_compositional
+    what_it_tests: >-
+      800 prompts across objects, attributes, relations and counting, organised
+      by `atom_count` so results can be read at different compositionality
+      levels.
+    observation_unit_equivalent: frame
+    judge_method: >-
+      Soft-TIFA - a VQA model queried with a list of per-prompt questions;
+      arithmetic mean for atom-level, geometric mean for prompt-level.
+    limitations_stated: >-
+      Positioned explicitly against benchmark drift; the associated paper title
+      is "Addressing Benchmark Drift in Text-to-Image Evaluation".
+    key_quote: >-
+      Soft-TIFA is "better-aligned with human judgment and less likely to drift
+      from human-alignment over time than other evaluation methods."
+    lesson_transfers: >-
+      TWO lessons. (1) Structuring a bank by compositional load - their
+      atom_count - is exactly the difficulty-ladder idea, but indexed on a
+      COUNTABLE property rather than an adjective. (2) A serious current
+      benchmark treats EVALUATOR DRIFT as a first-class design problem, which
+      supports making refresh triggers part of our architecture rather than an
+      afterthought.
+    lesson_does_not_transfer: >-
+      A geometric mean over prompt-level questions is a scoring choice for
+      ranking models. Our gate for exactness is a deterministic COUNT (zero
+      false passes) and must not be replaced by an averaged score.
+
+  - id: SRC-03
+    name: T2I-CompBench
+    url: https://github.com/Karine-Huang/T2I-CompBench
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: image
+    class: atomic_compositional
+    what_it_tests: >-
+      Attribute binding (colour, shape, texture), 2D and 3D spatial
+      relationships, numeracy, non-spatial relationships, and complex
+      compositions.
+    observation_unit_equivalent: frame
+    judge_method: >-
+      Per-category and heterogeneous ON PURPOSE - BLIP-VQA for attribute
+      binding, UniDet detection for spatial and numeracy, CLIPScore for
+      non-spatial relations, a 3-in-1 combination for complex, with MLLM
+      (GPT-4V / ShareGPT4V-CoT) as an alternative.
+    limitations_stated: "Not explicitly listed in the README."
+    lesson_transfers: >-
+      STRONG SUPPORT for a rule we already hold: do not use one instrument for
+      everything. A serious benchmark deliberately routes different properties
+      to different judges. It also separates 2D from 3D spatial relations -
+      which our single `spatial_relationship` capability currently merges,
+      while our own contract already notes depth ordering is not decidable from
+      2D boxes.
+    lesson_does_not_transfer: >-
+      CLIPScore as a relation judge is a similarity proxy, not a verdict. It
+      cannot support a hard gate.
+
+  - id: SRC-04
+    name: VBench
+    url: https://github.com/Vchitect/VBench
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: video
+    class: atomic_dimensional
+    what_it_tests: >-
+      16 dimensions: subject_consistency, background_consistency,
+      temporal_flickering, motion_smoothness, dynamic_degree, aesthetic_quality,
+      imaging_quality, object_class, multiple_objects, human_action, color,
+      spatial_relationship, scene, temporal_style, appearance_style,
+      overall_consistency.
+    observation_unit_equivalent: sequence
+    judge_method: >-
+      Per-dimension pipelines built on CLIP, RAFT, GRiT, IQA-PyTorch, ViCLIP and
+      the LAION aesthetic predictor. The README does not map each model to each
+      dimension.
+    human_alignment_claim: >-
+      Authors "conduct Human Preference Annotation for the generated videos for
+      each dimension, and show that VBench evaluation results are well aligned
+      with human perceptions."
+    limitations_stated: >-
+      Not listed explicitly, but customised video evaluation is supported for
+      only 6 of 16 dimensions, which bounds reuse on your own material.
+    lesson_transfers: >-
+      Three of its dimensions - temporal_flickering, motion_smoothness,
+      imaging_quality - are TECHNICAL VISUAL INTEGRITY properties that our 36
+      currently has no home for. That is a genuine external signal of a gap,
+      not a preference.
+    lesson_does_not_transfer: >-
+      `aesthetic_quality` via a LAION aesthetic predictor is a learned taste
+      proxy. It is not commercial fitness for a brief and must never become one.
+
+  - id: SRC-05
+    name: VBench-2.0
+    url: https://github.com/Vchitect/VBench/tree/master/VBench-2.0
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: video
+    class: atomic_dimensional
+    what_it_tests: >-
+      18 dimensions in five groups - Creativity (diversity, composition);
+      Commonsense (motion rationality, instance preservation); Controllability
+      (dynamic spatial relationship, dynamic attribute, motion order
+      understanding, human interaction, complex landscape, complex plot, camera
+      motion); Human Fidelity (anatomy, identity, clothes); Physics (mechanics,
+      thermotics, material, multi-view consistency).
+    observation_unit_equivalent: sequence
+    key_quote: >-
+      Video models have progressed "from achieving superficial faithfulness in
+      fundamental technical aspects such as pixel fidelity and basic prompt
+      adherence, to addressing more complex challenges associated with intrinsic
+      faithfulness".
+    lesson_transfers: >-
+      THE MOST CONSEQUENTIAL SOURCE IN THIS REGISTER for our capability audit.
+      It independently names four things our 36 either lacks or under-specifies:
+      CAMERA MOTION as its own controllable property; MOTION ORDER
+      UNDERSTANDING (sequence/state ordering, not left-right geometry); HUMAN
+      IDENTITY and HUMAN CLOTHES as separate from anatomy; and MULTI-VIEW
+      CONSISTENCY. Our multi_shot_spatial_continuity is narrower than what the
+      field now measures.
+    lesson_does_not_transfer: >-
+      Its physics group (thermotics, mechanics) is a research frontier. Our
+      product needs plausibility for short commercial media, not physical
+      correctness, and adopting those dimensions would import scope we cannot
+      act on.
+
+  - id: SRC-06
+    name: Arena-T2I-Hard
+    url: https://github.com/banyuanhao/Arena-T2I-Hard
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: image
+    class: real_user_hard_prompt
+    what_it_tests: >-
+      310 real, hard arena user requests - long, multi-entity prompts carrying
+      attributes, spatial relations, counts and stylistic constraints - sampled
+      from a public T2I arena, stated as spanning Jan-Mar 2026.
+    observation_unit_equivalent: frame
+    judge_method: >-
+      Dependency-aware checklist. Each prompt is decomposed into a DAG of
+      yes/no questions; images are checked in BFS order and "If a parent isn't
+      'yes', its descendants are skipped and counted as failed." Score is the
+      fraction answered yes.
+    limitations_stated: "Repo notes it does not include the RL training code."
+    lesson_transfers: >-
+      THE STRUCTURAL LESSON OF THIS PROGRAM. Requirements in a real request are
+      DEPENDENT, not a flat list. If the product is absent, "is the logo on the
+      product" cannot be scored as a pass - and a flat checklist would score it
+      as one, inflating the result exactly where the asset is most broken. Our
+      compound items currently declare a FLAT measurement fan-out and would make
+      that error today.
+    lesson_does_not_transfer: >-
+      Their prompts come from an arena community and are biased by that
+      interface. They are evidence about prompt STRUCTURE, never about our
+      market's demand.
+
+  - id: SRC-07
+    name: HPS v2 / HPD v2
+    url: https://github.com/tgxs002/HPSv2
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: image
+    class: preference_model
+    what_it_tests: "Predicted human preference between images for the same prompt."
+    judge_method: >-
+      A preference model trained on ~798k pairwise comparisons over ~430k images
+      and 107k prompts.
+    limitations_stated: >-
+      Two explicit and both load-bearing for us. "Comparison is only meaningful
+      for images generated by the same prompt." And "Scores can not be directly
+      compared between v2.0 and v2.1."
+    lesson_transfers: >-
+      EXTERNAL EVIDENCE FOR TWO RULES WE ALREADY HOLD. A preference score is
+      RELATIVE, so it can never be a hard gate or an absolute quality claim -
+      supporting family G staying descriptive_only. And an evaluator VERSION
+      BUMP BREAKS COMPARABILITY, which is precisely why our Registry pins
+      instrument version and config hash.
+    lesson_does_not_transfer: >-
+      Trained on open-domain community prompts. It encodes general aesthetic
+      preference, not whether a commercial brief was satisfied.
+
+  - id: SRC-08
+    name: "DreamBench / DreamBench++ (subject-driven identity evaluation)"
+    url: https://dreambooth.github.io/
+    first_party: true
+    claim_basis: project_page_and_secondary_summary
+    accessed: 2026-08-26
+    modality: image
+    class: identity_reference
+    what_it_tests: >-
+      Subject fidelity for personalised generation - 30 subjects (21 objects,
+      9 live), 25 prompts, 4 images each.
+    judge_method: >-
+      DINO and CLIP-I for subject fidelity, CLIP-T for text alignment.
+      DreamBench++ replaces these with an MLLM judge for better human alignment.
+    limitations_stated: >-
+      A higher DINO score "may risk overfitting the identity-irrelevant
+      information" - i.e. the metric can reward background/pose similarity and
+      mistake it for identity. DreamBench++ improves alignment but at roughly
+      20,000 judge API calls and >$400 per model evaluated.
+    lesson_transfers: >-
+      TWO. (1) Embedding similarity is a WEAK identity judge and can pass a
+      wrong subject that shares context - which is exactly the permissiveness
+      our same-category decoy request (ADD-01) exists to catch, now externally
+      corroborated. (2) The MLLM-judge upgrade has a MEASURED PRICE. Evaluator
+      cost is a first-order budget line, not a rounding error.
+    lesson_does_not_transfer: >-
+      DreamBench subjects are pets and household objects. Commercial product
+      identity with brand marks and packaging is a harder case, so their scores
+      are a floor at best.
+    caveat: >-
+      DreamBench++ details here came from a search summary, not a first-party
+      page. Treat the $400/20k-call figure as INDICATIVE and re-verify from the
+      paper before it is used in any approved budget.
+
+  - id: SRC-09
+    name: "SyncNet-based lip-sync metrics (LSE-C / LSE-D / LSE-O)"
+    url: https://github.com/ttsds/ttsds
+    first_party: partial
+    claim_basis: secondary_literature_summary
+    accessed: 2026-08-26
+    modality: audio_video
+    class: metric_family
+    what_it_tests: "Audio-visual lip synchronisation in talking-head video."
+    judge_method: >-
+      Embedding distance (LSE-D), confidence (LSE-C) and temporal offset
+      (LSE-O) computed from a pretrained SyncNet.
+    limitations_stated: >-
+      SERIOUS AND DIRECTLY RELEVANT. Comparative work reports that of the three
+      SyncNet metrics "only LSE-O displays moderate effectiveness, casting
+      doubt on their widespread application as quantitative lip-audio
+      synchronization measures in the literature." All three inherit the
+      pretrained SyncNet's limitations.
+    lesson_transfers: >-
+      The DEFAULT INDUSTRY METRIC FOR OUR LIP-SYNC CAPABILITY IS CONTESTED. If
+      we had adopted LSE-C/LSE-D as a hard gate because they are standard, we
+      would have gated production on a metric whose validity is disputed. This
+      is the strongest external argument in the whole program for our rule that
+      an instrument must be qualified for OUR judgement before it gates
+      anything.
+    lesson_does_not_transfer: "n/a - the warning transfers in full."
+    caveat: >-
+      This row rests on SEARCH-SUMMARISED literature, not a first-party page
+      read in full. The direction of the finding is clear; the specific
+      comparative ranking should be re-verified from the papers.
+
+  - id: SRC-10
+    name: "TTSDS / IndicVoices-R (speech evaluation and Indic material)"
+    url: https://github.com/AI4Bharat/IndicVoices-R
+    first_party: true
+    claim_basis: repository_readme
+    accessed: 2026-08-26
+    modality: audio
+    class: benchmark_and_corpus
+    what_it_tests: >-
+      TTSDS scores synthetic speech on prosody, speaker identity,
+      intelligibility, generic embedding features and environment, comparing
+      against real speech and noise references. IndicVoices-R is 1,704 hours
+      from 10,496 speakers across 22 Indian languages, with an IV-R benchmark
+      for zero/few/many-shot speaker generalisation on Indian voices.
+    judge_method: >-
+      Intelligibility via ASR word error rate; speaker similarity via automatic
+      speaker verification; prosody via pitch/rate features.
+    licence: CC-BY-4.0 (IndicVoices-R)
+    lesson_transfers: >-
+      HIGHLY ACTIONABLE FOR THIS PRODUCT. Our first product is Indian-market
+      media in English, Hindi and Hinglish, and a large, rights-clear,
+      Indic-specific speech resource exists with per-speaker metadata. It is a
+      candidate calibration surface for family 5 and a cross-stream lead for
+      Resources. It also confirms the metric split we assumed: intelligibility
+      (WER) and speaker similarity (ASV) are DIFFERENT instruments.
+    lesson_does_not_transfer: >-
+      It is a TTS-quality corpus of read speech. It is not commercial voiceover
+      delivery, and it says nothing about whether a brand name is pronounced
+      acceptably in an ad read.
+
+# -----------------------------------------------------------------------------
+# What this register does NOT contain, stated so absence is not read as absence
+# of the thing itself
+# -----------------------------------------------------------------------------
+known_gaps:
+  - "No peer-reviewed paper was read. arxiv is blocked from this session."
+  - "No leaderboard was consulted; scores across these benchmarks are NOT comparable and none is quoted."
+  - "Video-audio joint benchmarks beyond lip-sync were not located from reachable surfaces."
+  - "No benchmark was found for brand-mark fidelity or campaign/variant consistency - see the capability audit."
+  - "Contamination/train-test-overlap evidence could not be assessed without the papers."
