@@ -527,6 +527,72 @@ def qualify_candidate(candidate, guard: BudgetGuard) -> dict:
     return result
 
 
+# ------------------------------------------------------------------- persisted qualification
+QUALIFICATION_FILENAME = "qualification-result.json"
+
+# Fields the fingerprint is computed over. Everything that decides whether A-TEXT may open.
+FINGERPRINTED_FIELDS = ("run_id", "tranche_id", "mode", "synthetic", "qualified", "call_records")
+
+
+def qualification_fingerprint(payload: dict) -> str:
+    """SHA-256 over the claim AND the evidence that produced it.
+
+    This is what stops a hand-edited `qualified_scope` from opening a paid stage. The claim is not
+    trusted on its own: it is bound to the call records behind it, so widening the claim without
+    also producing the calls changes the fingerprint and the handoff refuses.
+    """
+    material = {k: payload.get(k) for k in FINGERPRINTED_FIELDS}
+    canonical = json.dumps(material, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                           default=str)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def build_qualification_result(run, results: list[dict], candidates: list) -> dict:
+    """Assemble the persistable qualification record for one EMP-001 run."""
+    call_records = []
+    for r in results:
+        call_records.extend(r["devanagari"]["call_records"])
+        if r["latin"]:
+            call_records.extend(r["latin"]["call_records"])
+
+    qualified = []
+    for result, candidate in zip(results, candidates):
+        if not result["qualified_scope"]:
+            continue
+        qualified.append({
+            "candidate": result["candidate"],
+            "provider": candidate.judge.provider,
+            "model_alias": candidate.judge.model_alias,
+            "resolved_version": candidate.judge.resolved_version,
+            "qualified_scope": sorted(result["qualified_scope"]),
+        })
+
+    payload = {
+        "record": "EMP-001-qualification-result",
+        "run_id": run.run_id,
+        "tranche_id": "EMP-001",
+        "mode": run.mode,
+        "synthetic": run.mode not in ("live",),
+        "qualified": qualified,
+        "candidates": results,
+        "call_records": call_records,
+        "contract_status": contract()["status"],
+        "qualified_scope_excludes": contract()["qualified_scope_excludes"],
+        "note": ("Qualification running is not promotion. A qualified judge may MEASURE the "
+                 "A-TEXT screen; it does not by itself put a row in the Capability Registry."),
+    }
+    payload["evidence_fingerprint"] = qualification_fingerprint(payload)
+    return payload
+
+
+def persist_qualification(run, payload: dict) -> Path:
+    """Write the qualification result into the run's evidence directory."""
+    path = run.evidence_dir / QUALIFICATION_FILENAME
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                               default=str) + "\n", encoding="utf-8")
+    return path
+
+
 # --------------------------------------------------------------------------------------- run
 def _dry_run(out: Path) -> dict:
     guard = BudgetGuard(authorised_usd=Decimal("6.00"))

@@ -194,7 +194,16 @@ def _measure_artifact(judge_instance, image_bytes: bytes, item: dict, seq: int,
     say "wrong": that is an ABSENCE with a reason, not a mismatch, and folding the two would
     corrupt the numerator and the denominator in opposite directions.
     """
-    response = judge_instance.transcribe(image_bytes)
+    # E14-D: the target goes to the BLIND CHECK and nowhere else. It is never placed in the
+    # transcribe payload; it is what the payload is proved not to contain. Same invariant as
+    # qualification, and it must hold for Latin targets as well as Devanagari ones.
+    try:
+        response = judge_instance.transcribe(
+            image_bytes, blind_check_target=item["target_string"])
+    except TypeError:
+        # A judge that predates the blind-check parameter. Still measured, but say so loudly:
+        # a silent fallback here is how an invariant quietly stops being enforced.
+        response = judge_instance.transcribe(image_bytes)
     call = {
         **judge_instance.call_record(response, shape="transcribe"),
         "evaluator_trial_id": f"eval-{seq:04d}",
@@ -296,10 +305,13 @@ def run(judge: dict | None = None, generator=None, routes: dict | None = None,
                 else:
                     response = routes[slot](request)  # exactly one call, no loop
 
-                guard.record(price)
+                # A persistent StageBudget returns the ledger cost_ref that this spend was
+                # written under; the in-memory guard returns None. Using the ledger's reference
+                # is what makes a generation trial reconcilable against actual spend later.
+                recorded_ref = guard.record(price)
                 per_route[slot] += 1
 
-                cost_ref = f"ledger-{seq:04d}"
+                cost_ref = recorded_ref or f"ledger-{seq:04d}"
                 cost_ledger.append({
                     "cost_ref": cost_ref, "attempt_id": attempt_id, "kind": "generation",
                     "amount_usd": str(price), "basis": "provisional_planning_rate",
@@ -423,6 +435,188 @@ def run(judge: dict | None = None, generator=None, routes: dict | None = None,
         "may_populate_registry": False,
         "evidence_class": "partial_admission_screen_only",
     }
+
+
+# ------------------------------------------------------------------------ the paid handoff
+LATIN_SCRIPTS = ("latin", "latin_hinglish", "latin_commercial_claim")
+
+
+def scripts_required_by_atex() -> set[str]:
+    """Which qualified scripts the four frozen items actually need.
+
+    ATEXT-01/02 are Devanagari; ATEXT-03/04 are Latin. So A-TEXT needs BOTH, which means the
+    Latin leg's prerequisites gate the whole screen, not just half of it.
+    """
+    required = set()
+    for item in items():
+        required.add("latin" if item["script"] in LATIN_SCRIPTS else item["script"])
+    return required
+
+
+def latin_perceptibility_resolved(path: Path | str | None = None) -> bool:
+    """True only when every row of the review sheet carries both human verdicts.
+
+    The committed sheet is emitted UNFILLED on purpose — EVAL-012, EVAL-013 and EVAL-014 all
+    refuse to fabricate a human review — so this returns False in the repository as it stands,
+    and A-TEXT refuses. That is the correct state, not a bug.
+    """
+    import csv
+
+    path = Path(path) if path else (PACKAGE_ROOT / "text_qualification"
+                                    / "perceptibility-review.csv")
+    if not path.exists():
+        return False
+    with path.open(encoding="utf-8") as fh:
+        rows = list(csv.DictReader(fh))
+    if not rows:
+        return False
+    return all((r.get("visible_difference") or "").strip()
+               and (r.get("usable_surface") or "").strip() for r in rows)
+
+
+def load_qualification(run, expected_mode: str) -> dict:
+    """Load the persisted qualification for this run, or refuse with the reason.
+
+    Refuses when: the file is absent; it belongs to another run; its declared mode is not the mode
+    A-TEXT is running in; or its fingerprint does not match the evidence it carries.
+
+    The fingerprint check is the one that matters. Without it, opening a paid stage would be a
+    matter of editing one JSON field.
+    """
+    sys.path.insert(0, str(PACKAGE_ROOT / "text_qualification"))
+    import qualify_text as QT
+
+    path = run.evidence_dir / QT.QUALIFICATION_FILENAME
+    if not path.exists():
+        raise GateClosed(
+            f"GATE 2 CLOSED — no qualification result at {path}. A-TEXT consumes the qualification "
+            f"actually run for THIS EMP-001 run; there is no way to assert a judge is qualified.")
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise GateClosed(f"GATE 2 CLOSED — {path} is not readable JSON") from exc
+
+    if payload.get("run_id") != run.run_id:
+        raise GateClosed(
+            f"GATE 2 CLOSED — qualification belongs to run {payload.get('run_id')!r}, not "
+            f"{run.run_id!r}. Spend and evidence are per run and do not travel between them.")
+
+    mode = payload.get("mode")
+    if mode != expected_mode:
+        raise GateClosed(
+            f"GATE 2 CLOSED — qualification evidence is {mode!r} but A-TEXT is running in "
+            f"{expected_mode!r}. A rehearsal may not open a paid stage, and a paid stage may not "
+            f"be scored against rehearsal evidence.")
+
+    if expected_mode == "live" and payload.get("synthetic"):
+        raise GateClosed(
+            "GATE 2 CLOSED — qualification evidence is marked synthetic. Synthetic evidence "
+            "cannot qualify an instrument for paid measurement.")
+
+    expected_fp = payload.get("evidence_fingerprint")
+    actual_fp = QT.qualification_fingerprint(payload)
+    if expected_fp != actual_fp:
+        raise GateClosed(
+            f"GATE 2 CLOSED — qualification fingerprint mismatch.\n"
+            f"  recorded: {expected_fp}\n  recomputed: {actual_fp}\n"
+            f"The claim is bound to the call records that produced it. Widening a qualified scope "
+            f"without also producing the calls changes the fingerprint, which is exactly what "
+            f"this check is for.")
+
+    return payload
+
+
+def select_judge_for_atex(qualification: dict) -> dict:
+    """Pick a candidate qualified for EVERY script the four frozen items need."""
+    required = scripts_required_by_atex()
+    candidates = qualification.get("qualified") or []
+
+    if not candidates:
+        raise GateClosed(
+            "GATE 2 CLOSED — no candidate qualified. If no text judge qualifies, ZERO image "
+            "generations run: there would be nothing to score the output with.")
+
+    for candidate in candidates:
+        if required <= set(candidate.get("qualified_scope") or []):
+            return candidate
+
+    scopes = {c["candidate"]: sorted(c.get("qualified_scope") or []) for c in candidates}
+    raise GateClosed(
+        f"GATE 2 CLOSED — the four frozen A-TEXT items need {sorted(required)} and no candidate "
+        f"covers all of them: {scopes}. Generating images nobody can grade is spend with no "
+        f"measurement attached.")
+
+
+def build_live_judge(chosen: dict, guard, http=None):
+    """Rebuild the EXACT judge that qualified: same provider, alias and resolved version."""
+    judge_cls = P.OpenAITextJudge if chosen["provider"] == "openai" else P.GeminiTextJudge
+    return judge_cls(
+        model_alias=chosen["model_alias"],
+        resolved_version=chosen["resolved_version"],
+        transport=P.transport_for(chosen["provider"], chosen["resolved_version"], http=http),
+        guard=guard)
+
+
+def run_live(tranche_run, mode: str = "live", judge_http=None, fal_http=None,
+             artifact_fetch=None, perceptibility_path: Path | None = None,
+             run_verdict_diagnostic: bool = False) -> dict:
+    """The executable qualification -> A-TEXT handoff.
+
+    Everything a paid run needs, in gate order, with the persistent tranche budget throughout.
+    `judge_http` / `fal_http` / `artifact_fetch` are the injected transport seams: None means the
+    real socket, which is why nothing in this branch ever calls it that way.
+    """
+    sys.path.insert(0, str(PACKAGE_ROOT))
+    import spend_ledger as SL
+
+    # GATE 1 — authorisation, from the run's own record.
+    auth_path = Path(tranche_run.record["authorisation_path"])
+    auth = load_authorisation(auth_path)
+    if auth.refusals:
+        raise GateClosed("GATE 1 CLOSED — authorisation:\n  - " + "\n  - ".join(auth.refusals))
+
+    # GATE 2 — the real, fingerprint-bound qualification for THIS run.
+    qualification = load_qualification(tranche_run, expected_mode=mode)
+    chosen = select_judge_for_atex(qualification)
+
+    # GATE 2b — the Latin human perceptibility prerequisite.
+    required = scripts_required_by_atex()
+    if "latin" in required and not latin_perceptibility_resolved(perceptibility_path):
+        raise GateClosed(
+            "GATE 2b CLOSED — the Latin human perceptibility review is unresolved. Two of the four "
+            "frozen A-TEXT items (ATEXT-03, ATEXT-04) are Latin, so this gates the whole screen. "
+            "The review sheet is emitted unfilled by design and must be completed by a person; it "
+            "must not be fabricated to open this gate.")
+
+    # GATE 3/4/5 — budget, routes, and the run itself.
+    stage = SL.TrancheBudget(tranche_run).stage("atex")
+    judge = build_live_judge(chosen, guard=stage, http=judge_http)
+
+    cfg = config()
+    routes = {slot: P.fal_route_for(slot, cfg, http=fal_http, artifact_fetch=artifact_fetch)
+              for slot in cfg["atex"]["slots"]}
+
+    result = run(judge={"candidate": chosen["candidate"],
+                        "qualified_scope": chosen["qualified_scope"],
+                        "synthetic": qualification.get("synthetic", False)},
+                 routes=routes, judge_instance=judge, preflight_green=True, guard=stage,
+                 authorisation_path=auth_path, dry_run=False,
+                 run_verdict_diagnostic=run_verdict_diagnostic)
+
+    result.update({
+        "mode": mode,
+        "run_id": tranche_run.run_id,
+        "judge": chosen,
+        "qualification_fingerprint": qualification["evidence_fingerprint"],
+        "tranche_spent_usd": str(SL.TrancheBudget(tranche_run).spent_usd()),
+        "atex_spent_usd": str(SL.TrancheBudget(tranche_run).stage_spent_usd("atex")),
+        "qualification_spent_usd": str(SL.TrancheBudget(tranche_run).stage_spent_usd("qualification")),
+    })
+    (tranche_run.evidence_dir / "atex-result.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True, default=str) + "\n",
+        encoding="utf-8")
+    return result
 
 
 # ---------------------------------------------------- the Registry boundary, actually tested
