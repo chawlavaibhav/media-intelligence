@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-013 reviewed BLOCKED; bounded EVAL-014 budget-continuity / paid-handoff correction active. Paid calls remain blocked.
+**Updated:** 27 Aug 2026 — EVAL-014 reviewed BLOCKED on one ambiguous-dispatch accounting defect; bounded EVAL-015 active. Paid calls remain blocked.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -43,64 +43,59 @@ Proposed spend remains:
 
 No part of that spend is approved yet.
 
-## EVAL-013 review
+## EVAL-014 review
 
 Returned branch:
-- `work/eval-013-emp-001-live-path-correction` @ `2b83efd15c1f0fb26d6e7ca8bfbe542071abf577`
+- `work/eval-014-emp-001-budget-continuity` @ `094c24a77737b17067a3e98834c00e3bf2e1fa53`
 
 Worker verdict:
 - `READY_FOR_SPEND_APPROVAL`
 
 Controller verdict:
-- **BLOCKED — preserve EVAL-013; correct only cumulative budget continuity and the paid stage handoff.**
+- **BLOCKED — preserve EVAL-014; correct only ambiguous provider-dispatch exception accounting.**
 
 Authoritative review:
-- `coordination/decisions/CONTROLLER-EVAL-013-REVIEW-2026-08-27.md`
+- `coordination/decisions/CONTROLLER-EVAL-014-REVIEW-2026-08-27.md`
 
-Accepted EVAL-013 work:
-- real qualification orchestration behind injectable transports;
-- provider-correct OpenAI/Gemini auth paths;
-- frozen fal IMG-01 / IMG-02 route adapters;
-- non-dry-run A-TEXT now uses a supplied qualified judge rather than `_fake_transcribe`;
-- positive fake-live controls;
-- live blind-check enforcement and UTF-8 payload inspection;
-- worker-reported 247 EMP-001 tests green, V1 107/107 green, Resources validation PASS, Registry zero, protected baselines intact, zero external calls/spend.
+Accepted EVAL-014 work:
+- durable run ledger carrying spend across separate processes;
+- USD 10 total ceiling and USD 6 qualification sub-cap mechanically enforced;
+- fingerprint-bound qualification → A-TEXT handoff;
+- deterministic evaluator trial/attempt ids and ledger-resolvable cost refs;
+- target-aware blind check parity in A-TEXT;
+- Latin perceptibility review correctly gates the whole four-item A-TEXT screen;
+- worker-reported 315 EMP-001 tests green, V1 107/107 green, Resources validation PASS, Registry zero, protected baselines intact, zero external calls/spend;
+- worker-reported full cross-process rehearsal: qualification USD 0.9763200 persisted across process exit, then A-TEXT USD 0.9142480, cumulative USD 1.8905680 of USD 10.
 
-Controller independently checked current official fal documentation and confirmed the implemented `FAL_KEY` / `Authorization: Key <key>` convention.
+Blocking defect remaining:
+1. **Ambiguous evaluator transport exception:** after reserving budget, `TextJudge._dispatch()` releases the reservation on any transport exception. A timeout/reset can happen after the provider received the request, so releasing can manufacture headroom and erase a potentially billed trial.
+2. **Ambiguous generation transport exception:** A-TEXT currently exits on a fal transport exception before persisting the generation Attempt/trial. The pending reservation is conservative for spend but the failure/timeout attempt is not durable evidence.
 
-Blocking defects remaining:
-1. **Budget reset across processes:** `BudgetGuard.spent_usd` is process-local, so qualification and A-TEXT could each reopen the USD 10 authorisation from zero.
-2. **USD 6 qualification sub-cap not enforced:** live qualification currently uses the general USD 10 authorisation ceiling.
-3. **Paid A-TEXT CLI handoff still refuses:** `run_atex.py --live` has no executable handoff from the real qualification result to the same pinned judge + frozen fal routes.
-4. **Evaluator call identity:** live qualification needs durable unique trial ids and cost references, not only `one_call_one_trial: true` assertions.
-5. **A-TEXT blind defense:** primary live transcription should pass the target only to the evaluator-side `blind_check_target` check, including Latin targets.
+Frozen policy: a reservation may be released only when no provider dispatch can be proven. Ambiguous post-dispatch failures must persist as timeout/error/unknown-billing trials, remain conservatively costed, and receive no automatic retry.
 
-These are implementation/spend-control defects only. Scientific scope is not reopened.
-
-## Active assignment — EVAL-014
+## Active assignment — EVAL-015
 
 Task:
-- `eval/tasks/EVAL-014-EMP-001-BUDGET-CONTINUITY-HANDOFF.md`
+- `eval/tasks/EVAL-015-EMP-001-AMBIGUOUS-DISPATCH-ACCOUNTING.md`
 
 Branch:
-- `work/eval-014-emp-001-budget-continuity`
+- `work/eval-015-emp-001-ambiguous-dispatch`
 
 Base:
-- EVAL-013 returned head `2b83efd15c1f0fb26d6e7ca8bfbe542071abf577`
+- EVAL-014 returned head `094c24a77737b17067a3e98834c00e3bf2e1fa53`
 
 External spend/calls:
 - **USD 0 / INR 0**;
 - **0 provider/model/evaluator calls**.
 
-EVAL-014 may only:
-- persist cumulative EMP-001 spend across separate processes/stages;
-- enforce both USD 10 total and USD 6 qualification sub-cap;
-- implement the real qualification → A-TEXT CLI/orchestrator handoff;
-- give every evaluator call durable unique trial/cost identity;
-- apply target-aware blind pre-dispatch checking in A-TEXT;
-- prove the lifecycle with injected fake transports and zero network.
+EVAL-015 may only:
+- distinguish provably pre-dispatch failures from ambiguous post-dispatch failures;
+- prevent ambiguous evaluator failures from releasing spend headroom;
+- persist ambiguous evaluator and generation failures as one-call-one-trial evidence with cost refs;
+- keep retries at 0 and stop fail-closed;
+- prove the correction with injected fake transports and rerun EVAL-014 regressions.
 
-No model, prompt, threshold, route, repeat, retry, A-TEXT item or budget may change.
+No model, prompt, threshold, route, repeat, retry, A-TEXT item, budget, Latin prerequisite or scientific decision may change.
 
 ## Measurement freeze unchanged
 
@@ -125,13 +120,13 @@ Routes remain:
 
 Primary exactness remains blind transcription followed by code-level comparison. A-TEXT remains partial evidence only.
 
-The Latin human perceptibility review remains unfilled and is a zero-spend prerequisite for the Latin qualification leg. It must not be fabricated.
+The Latin human perceptibility review remains unfilled and is a zero-spend prerequisite for the Latin qualification leg and therefore for the complete four-item A-TEXT screen. It must not be fabricated.
 
 ## Still blocked / not authorised
 
 Not authorised:
 - any paid EMP-001 call;
-- EMP-001 USD 10 tranche until EVAL-014 returns clean and the user explicitly approves;
+- EMP-001 USD 10 tranche until EVAL-015 returns clean and the user explicitly approves;
 - any account funding;
 - full 90-generation Stage A;
 - Stage B / Stage C;
@@ -144,6 +139,6 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-EVAL-014 returns first.
+EVAL-015 returns first.
 
-If it is genuinely `READY_FOR_SPEND_APPROVAL`, Controller will re-review cumulative budget persistence, the USD 6 sub-cap, and the real qualification → A-TEXT handoff before asking the user for any spend approval.
+If it is genuinely `READY_FOR_SPEND_APPROVAL`, Controller will re-review ambiguous failure accounting plus the already-accepted EVAL-014 budget/handoff controls before asking the user for any spend approval.
