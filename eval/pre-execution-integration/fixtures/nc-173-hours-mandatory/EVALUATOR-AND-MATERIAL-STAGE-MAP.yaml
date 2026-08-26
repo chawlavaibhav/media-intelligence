@@ -1,0 +1,215 @@
+# EVAL-011 E11-F — evaluator and material requirements, staged
+#
+# Eval-facing material DELTA against RES-004. This file does not edit any
+# Resources-owned artifact and states no Resources decision.
+#
+# Rs 0. No acquisition authorised. No accounts. No model/evaluator calls.
+
+meta:
+  task: EVAL-011
+  package: E11-F
+  date: 2026-08-26
+  resources_source: "RES-004 CONTROLLED-PACK-REQUIREMENTS-v2.yaml @ work/res-004-production-readiness"
+  evaluator_source: "EVAL-009 EVALUATOR-QUALIFICATION-MAP.yaml (0 instruments qualified, 43 active capabilities)"
+  resources_files_edited_by_this_task: 0
+
+headline:
+  instruments_qualified_today: 0
+  evaluator_families: 7
+  families_qualifiable_with_material_already_in_repository: 2
+  families_qualifiable_with_eval_built_material_no_resources_pack: 1
+  families_blocked_on_resources_material: 4
+  the_173_hour_figure: >-
+    RES-004's 173 person-hours is a FULL provisional acquisition plan under one sizing assumption
+    (R=1) and the provisional entity totals. It is a mandatory prerequisite to the first paid model call
+    and this file does not treat it as one. The minimum material per stage is set out below and is
+    far smaller.
+
+# =========================================================================
+minimum_material_by_stage:
+
+  stage_Q:
+    already_held_no_acquisition:
+      - id: MAT-CV
+        material: "cv-geometry fixture pack"
+        path: "eval/v1/instruments/fixtures/cv-geometry/"
+        exact_count: 102
+        detail: "100 scoreable + 2 negative controls"
+        truth_origin: constructed_by_code_no_human_label
+        unblocks_family: deterministic_cv_geometry
+        capabilities_unblocked: 5
+        acquisition_cost: 0
+      - id: MAT-DEV
+        material: "Devanagari exactness battery, frozen validated view"
+        path: "eval/battery/devanagari-exactness/"
+        exact_count: 96
+        detail: "48 match / 48 mismatch; labels known by construction; 33 hard opportunities"
+        truth_origin: known_by_construction
+        unblocks_family: text_ocr
+        capabilities_unblocked: 1
+        acquisition_cost: 0
+        caveat: >-
+          Not reproducible from a fresh clone: built items are git-ignored and the pinned font is an
+          uncommitted proprietary system asset. The committed record fingerprints the build by
+          SHA-256. This is a rebuild risk, not an acquisition cost.
+      - id: MAT-LOG
+        material: "harness run records"
+        unblocks_family: operational_logging
+        capabilities_unblocked: 4
+        acquisition_cost: 0
+
+    eval_can_build_without_a_fifth_resources_pack:
+      - id: MAT-LAT
+        material: "Latin exact-text pack"
+        method: "render known strings deterministically, exactly as the Devanagari battery was built"
+        truth_origin: known_by_construction
+        human_labels_required: 0
+        unblocks_family: text_ocr
+        capabilities_unblocked: 1
+        hard_rule: "MUST NOT mutate the frozen Devanagari battery. Separate artifact, separate manifest."
+        owner: Eval
+        resources_pack_needed: false
+      - id: MAT-PERT
+        material: "temporal perturbation set"
+        method: >-
+          Inject known defects into clean clips - a known freeze, a known identity swap, a known
+          flip. The truth is the injection, so no annotator is needed.
+        truth_origin: injected_known_by_construction
+        human_labels_required: 0
+        unblocks_family: temporal_video
+        capabilities_unblocked: 9
+        depends_on: "MAT-AV-MIN below - the clean clips themselves"
+        owner: Eval
+        resources_pack_needed: "only the clips, not a new pack"
+        note: >-
+          Best value in the plan: 9 capabilities unblock from 12 clips and zero human labels. RES-004
+          already designates >=12 clips of PACK-AV-CLEAN as the perturbation base and explains why a
+          fifth pack would be worse - a perturbation base needs clips whose ONLY defect is the
+          injected one.
+
+    minimum_resources_subset_required:
+      - id: MAT-AV-MIN
+        from_pack: PACK-AV-CLEAN
+        minimum_for_stage_Q: "12 clean single-speaker clips"
+        full_provisional_pack: "36 clips (24 single-speaker + 12 two-speaker)"
+        deferrable_to_later_stage: "the remaining 24 clips, the two-speaker set and the language balance"
+        why_12_is_enough_here: "RES-004 designates >=12 clips as the perturbation base; that is what Q3 consumes"
+        unblocks: "temporal_video (9 capabilities) via MAT-PERT"
+        disjointness_required: false
+        disjointness_note: "perturbation qualification uses injected truth, so speaker overlap does not create an overfitting path here"
+      - id: MAT-VLM-MIN
+        from_packs: [PACK-PRODUCT-REF, PACK-PERSON-REF]
+        minimum_for_stage_Q: "a decoy-bearing subset sufficient to detect evaluator permissiveness"
+        mandatory_structure:
+          same_category_decoys: MANDATORY
+          why: >-
+            A known-non-match is only meaningful against a plausible confusion. An identity checker
+            that distinguishes a shoe from a kettle has demonstrated nothing. Without decoys this
+            qualification cannot detect permissiveness AT ALL, so a decoy-free subset is not a
+            cheaper version of this - it is a different and useless experiment.
+          product_decoys: ">=2 visually similar products within each represented category"
+          person_decoys: ">=1 pair of plausibly confusable identities"
+        disjointness_required: true
+        disjointness_level: "PRODUCT-identity and PERSON-identity level, never file level"
+        why_disjointness: "two photographs of one person are not independent; a file-level split would leak the identity into both roles"
+        unblocks: "structured_visual_vlm (12 capabilities) - the largest single blocker"
+        full_provisional_pack: "12 products / 48 images; 8 identities / 64 images"
+        sizing_sensitivity: >-
+          RES-004's sizing rule SR-1 carries a protected-role multiplier R. If one pack must both
+          calibrate AND qualify, it roughly doubles. Staged acquisition can satisfy the same
+          independence requirement more cheaply than a blanket multiplier - the Controller should
+          decide this deliberately rather than discover it during acquisition.
+      - id: MAT-AV-SPEECH
+        from_pack: PACK-AV-CLEAN
+        minimum_for_stage_Q: "speaker-disjoint subset for speech/AV instrument qualification"
+        disjointness_required: true
+        disjointness_level: SPEAKER
+        unblocks: "speech_audio_av (7 capabilities)"
+        deferrable: "the >=6 long-form >=20s clips are Stage C material, not Stage Q material"
+      - id: MAT-COMM-MIN
+        from_pack: PACK-COMMERCIAL
+        minimum_for_stage_Q: "enough active assets to qualify the creative/commercial family, plus a fresh independent reviewer panel"
+        disjointness_required: true
+        disjointness_level: CAMPAIGN
+        known_clean_subset:
+          owner: Eval
+          purpose: "measure false criticism - an evaluator that criticises a known-clean asset is not strict, it is wrong"
+          resources_boundary: "Resources supplies candidates, rights and provenance and must NOT author the 'clean' label"
+        unblocks: "creative_commercial (4 capabilities)"
+        full_provisional_pack: "80 assets (60 active + 20 frozen reserve), ~10 campaign groups"
+        deferrable: "the 20-asset frozen reserve is a holdout for later empirical work, not Stage Q material - but it must be frozen AT ACQUISITION TIME, before any evaluator or Canon work touches the 60"
+
+  stage_A:
+    new_material_required: none
+    why: >-
+      Stage A scores model output against instruments qualified in Stage Q. It consumes the same
+      material, plus the model outputs it generates. No new acquisition.
+    prerequisite: "every slot's scoring instrument must have passed Stage Q, or that slot's result is uninterpretable"
+    partial_start_permitted: true
+    partial_start_rule: >-
+      A slot may run in Stage A as soon as ITS instruments are qualified. Slots scored only by
+      deterministic and OCR instruments (Q1, Q2a, Q2b, Q7) can start before the Resources packs
+      exist. That is the cheapest real start available to this project.
+    slots_startable_on_repository_material_alone:
+      candidates: [IMG-01, IMG-02]
+      basis: "text-exactness questions scored primarily by the OCR family and deterministic geometry"
+      caveat: "requires EVAL-009 to confirm the per-slot instrument mapping; EVAL-011 does not decide instrument assignment"
+
+  stage_B:
+    new_material_required: "condition-sweep variants of existing items"
+    note: "sweeps vary a condition inside an item that already exists, which is why they were chosen - varying them is cheap, sweeping them is what costs a run"
+    additional_packs: none
+
+  stage_C:
+    new_material_required:
+      - id: MAT-AV-LONG
+        from_pack: PACK-AV-CLEAN
+        requirement: ">=6 single-speaker clips of >=20 seconds CONTINUOUS"
+        why: >-
+          RES-003 measured the existing corpus topping out at 20.00 seconds with nothing above 30s.
+          If outcomes are 20-second branded videos, shorter material cannot exercise the outcome.
+        stage: C
+        deferrable_from_earlier_stages: true
+      - id: MAT-COMM-FULL
+        from_pack: PACK-COMMERCIAL
+        requirement: "campaign-grouped assets spanning 6s / 15s / 20-30s"
+        why: "campaign and variant-set consistency is an OUTCOME-level acceptance concept and only becomes measurable at Stage C"
+      - id: MAT-HOLDOUT
+        requirement: "frozen holdout reserves across all packs remain untouched"
+        rule: "holdouts are frozen at acquisition and never used for qualification or calibration"
+
+# =========================================================================
+disjointness_requirements_summary:
+  principle: "protected qualification material and empirical holdout material must be disjoint wherever an evaluator could overfit"
+  by_pack:
+    PACK-PRODUCT-REF: {level: product_identity, holdout: ">=2 products frozen before any evaluator work"}
+    PACK-PERSON-REF:  {level: person_identity,  holdout: ">=2 identities frozen before any evaluator work", hard_prohibition: "no public face scraping; no request-corpus user-uploaded identity images"}
+    PACK-AV-CLEAN:    {level: speaker,          holdout: ">=1 single-speaker and >=1 two-speaker clip frozen"}
+    PACK-COMMERCIAL:  {level: campaign,         holdout: "the 20-asset reserve, frozen AT ACQUISITION TIME"}
+  do_not_apply_blanket_multiplier: >-
+    RES-004 warns that mechanically doubling a pack for a second protected role is the largest cost
+    lever in the plan. Staged acquisition can satisfy the same independence requirement more
+    cheaply. This is a Controller decision, not an automatic multiplication.
+
+evaluator_blockers_by_stage:
+  stage_Q:
+    blocking_now: [structured_visual_vlm, speech_audio_av, creative_commercial, temporal_video]
+    not_blocking: [deterministic_cv_geometry, text_ocr_devanagari, operational_logging]
+    largest: {family: structured_visual_vlm, capabilities_blocked: 12, needs: "person and product packs WITH same-category decoys"}
+    cheapest_large_unblock: {family: temporal_video, capabilities_blocked: 9, needs: "12 clean clips; truth injected; zero human labels"}
+  stage_A:
+    blocking: "any slot whose instruments did not pass Stage Q"
+    note: "a slot may not be scored by an unqualified instrument, and an unqualified instrument's output may not be reported as a capability number"
+  stage_B:
+    blocking: "as Stage A, plus any condition axis whose instrument is unqualified for that axis"
+  stage_C:
+    blocking:
+      - "all of the above"
+      - "HED-1 — which human review time counts as REQUIRED in fully-loaded CpAO (Controller decision, RES-004)"
+      - "final Stage C request ids (Controller integration of rule L4-SELECT-v1)"
+
+rights_constraints_carried_forward:
+  - "CC-BY-NC is not authorised as commercial empirical material absent explicit legal/Controller disposition"
+  - "request-corpus and user-uploaded identity/reference images are not usable as protected benchmark material unless rights and consent are positively established"
+  - "consent for likeness and voice must be explicit BEFORE person and AV protected packs are acquired"
+  - "no outreach and no full-pack acquisition is authorised by this task"

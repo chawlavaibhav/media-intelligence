@@ -1,0 +1,2699 @@
+# ===========================================================================
+# Capability Contract v2 - PROPOSAL (E9-A)
+# ===========================================================================
+# GENERATED from eval/v1/capability-contract.yaml by build_capability_v2.py.
+# V1 IS NOT MODIFIED. Every V1 id carries an explicit disposition, so a
+# capability cannot vanish silently - the build aborts if one lacks a mapping.
+# STATUS: PROPOSED FOR CONTROLLER FREEZE. NOT IN FORCE.
+# ===========================================================================
+
+contract_version: v2-proposal
+date: '2026-08-26'
+task: EVAL-009 / E9-A
+status: PROPOSED_FOR_CONTROLLER_FREEZE_NOT_IN_FORCE
+supersedes: null
+v1_source: eval/v1/capability-contract.yaml (36 capabilities, UNMODIFIED)
+v1_preserved_verbatim: true
+counts:
+  v1_capabilities: 36
+  v2_capabilities_total: 44
+  v2_active: 43
+  v2_dormant: 1
+  added: 4
+  from_splits: 4
+  renamed: 1
+  refined: 9
+  unchanged: 22
+no_target_count_was_aimed_at: The count is an OUTPUT of the Controller-approved dispositions,
+  not an input. Nothing was added to reach a number and nothing was dropped to stay under one.
+admission_bar_for_new_capabilities: A new capability is admitted ONLY where existing capability
+  + condition + observation scope cannot represent the failure cleanly. Three candidate concepts
+  were REJECTED under this bar and are recorded in not_capabilities.
+not_capabilities:
+  style_reference_fidelity: RESOLVED INTO reference_conditioning with reference_type=style.
+    The failure is identical in kind - the supplied reference did not control the output - and
+    only the reference type differs. A condition represents that cleanly, so the admission bar
+    is not met.
+  cross_asset_person_or_product_identity: RESOLVED BY OBSERVATION SCOPE. person_identity and
+    product_identity already use asset_set_over_time. Cross-asset is a SCOPE of the same capability,
+    not a different failure. Controller preferred extending existing identity capabilities and
+    no distinct failure was found that scope cannot represent.
+  campaign_variant_set_consistency: DEFERRED AS AN OUTCOME-LEVEL CONCEPT, not a capability.
+    It is a property of a DELIVERABLE SET against an acceptance basis, which lives at outcome
+    acceptance rather than per-asset measurement. Controller directed that its instrument and
+    final boundary be frozen WITH the request-coverage extension. Recorded here so it is not
+    mistaken for solved or forgotten; reconciliation point is CANON-010.
+v1_to_v2_mapping:
+- v1_id: object_count
+  disposition: unchanged
+  v2_ids:
+  - object_count
+  rationale: Externally supported (GenEval, T2I-CompBench). No change.
+- v1_id: attribute_binding
+  disposition: unchanged
+  v2_ids:
+  - attribute_binding
+  rationale: Three of T2I-CompBench's six categories. No change.
+- v1_id: spatial_relationship
+  disposition: split
+  v2_ids:
+  - spatial_relationship_2d
+  - spatial_relationship_depth
+  rationale: T2I-CompBench evaluates 2D and 3D spatial relations SEPARATELY and with different
+    judges. V1's own contract already stated depth ordering 'is NOT decidable from 2D boxes'
+    - the split was documented and then not made. A 2D relation is deterministic given boxes;
+    a depth relation is not. Different instrument, different qualification, different gate.
+- v1_id: action_adherence
+  disposition: unchanged
+  v2_ids:
+  - action_adherence
+  rationale: VBench human_action; VBench-2.0 motion order. No change.
+- v1_id: delivery_format_compliance
+  disposition: refined
+  v2_ids:
+  - delivery_format_compliance
+  rationale: 'Unchanged in meaning. Refined only to state its DUAL ROLE explicitly: the requested
+    format is a CONDITION of every other measurement and simultaneously the subject of this
+    capability.'
+- v1_id: exact_text_latin
+  disposition: unchanged
+  v2_ids:
+  - exact_text_latin
+  rationale: Pack does not exist but the capability is well formed.
+- v1_id: exact_text_devanagari
+  disposition: unchanged
+  v2_ids:
+  - exact_text_devanagari
+  rationale: '96-item validated battery exists. Envelope limit preserved: it perturbs REAL characters
+    and cannot produce malformed generated glyphs.'
+- v1_id: typography_legibility
+  disposition: refined
+  v2_ids:
+  - typography_legibility
+  rationale: 'Controller-directed: legibility is now EXPLICITLY conditioned on delivery size.
+    Previously the delivery size lived inside the prose definition, which made two legibility
+    results silently incomparable. delivery_size becomes a REQUIRED condition.'
+- v1_id: logo_wordmark_fidelity
+  disposition: unchanged
+  v2_ids:
+  - logo_wordmark_fidelity
+  rationale: No external benchmark found for mark fidelity under perspective/curvature. Remains
+    required_but_no_calibrated_instrument.
+- v1_id: packaging_brand_colour_fidelity
+  disposition: refined
+  v2_ids:
+  - packaging_brand_colour_fidelity
+  rationale: 'Controller-directed: brand-colour tolerance is a DECLARED measurement condition
+    and threshold, not generic categorical-colour evidence. External colour benchmarks test
+    ''is it red'', which is a different and easier judgement than matching a declared brand
+    value within tolerance.'
+- v1_id: person_identity
+  disposition: split
+  v2_ids:
+  - person_identity
+  - wardrobe_invariant_fidelity
+  rationale: 'Controller-directed: declared wardrobe/clothing invariants must be VISIBLE rather
+    than silently mixed with face identity. VBench-2.0 independently separates Human Identity
+    from Human Clothes. The production consequence differs: a right face in wrong wardrobe is
+    often repairable by re-prompting; a wrong face needs a different reference. One verdict
+    cannot carry both.'
+- v1_id: product_identity
+  disposition: unchanged
+  v2_ids:
+  - product_identity
+  rationale: DreamBench covers this directly. Cross-asset scope handled by observation unit,
+    not a new id.
+- v1_id: reference_conditioning
+  disposition: refined
+  v2_ids:
+  - reference_conditioning
+  rationale: 'STYLE-REFERENCE BOUNDARY RESOLVED HERE. Style reference is NOT a new capability:
+    it is this capability measured with reference_type=style. The failure - ''the supplied reference
+    did not control the output'' - is identical in kind; only the reference type differs, and
+    a condition represents that cleanly. Adding a capability would duplicate the mechanism.'
+- v1_id: edit_preservation
+  disposition: unchanged
+  v2_ids:
+  - edit_preservation
+  rationale: Deterministic masked diff against our own input.
+- v1_id: anatomy_hands
+  disposition: renamed
+  v2_ids:
+  - human_anatomy_integrity
+  rationale: Controller-directed rename/broaden. V1's own failure vocabulary already covered
+    extra_limb, joint_inversion and facial_feature_misplaced - the NAME was narrower than the
+    capability and invited under-testing of everything that is not a hand. Hand-specific diagnostics
+    are PRESERVED as a required defect sub-vocabulary, not lost in the broadening.
+- v1_id: human_object_contact
+  disposition: unchanged
+  v2_ids:
+  - human_object_contact
+  rationale: No external benchmark; commercially central.
+- v1_id: human_human_interaction
+  disposition: unchanged
+  v2_ids:
+  - human_human_interaction
+  rationale: VBench-2.0 Human Interaction.
+- v1_id: motion_action_quality
+  disposition: refined
+  v2_ids:
+  - motion_action_quality
+  rationale: Refined to REQUIRE motion load as a recorded condition. VBench separates dynamic_degree
+    from motion_smoothness because a near-static clip scores perfectly on smoothness - without
+    motion load recorded, a model that produces almost no motion looks like one that produces
+    excellent motion.
+- v1_id: physics_material_appearance
+  disposition: refined
+  v2_ids:
+  - physics_material_appearance
+  rationale: Scope deliberately bounded DOWNWARD. VBench-2.0's physics group (mechanics, thermotics)
+    is a research frontier; this product needs commercial plausibility for 6-20s media, not
+    physical correctness. Multi-view consistency is extracted into sequence_state_continuity
+    instead.
+- v1_id: person_stability_in_clip
+  disposition: unchanged
+  v2_ids:
+  - person_stability_in_clip
+  rationale: VBench subject_consistency.
+- v1_id: product_stability_in_clip
+  disposition: unchanged
+  v2_ids:
+  - product_stability_in_clip
+  rationale: Same, applied to objects.
+- v1_id: text_logo_stability_in_clip
+  disposition: unchanged
+  v2_ids:
+  - text_logo_stability_in_clip
+  rationale: Our own observed failure (Devanagari drifting within a clip) is stronger evidence
+    than anything external here.
+- v1_id: multi_shot_spatial_continuity
+  disposition: refined
+  v2_ids:
+  - multi_shot_spatial_continuity
+  rationale: Kept as SPATIAL continuity only, deliberately narrowed. Its V1 level-5 ladder example
+    smuggled in product STATE continuity, which its name excludes. That case now belongs to
+    the new sequence_state_continuity capability, so this id becomes honest rather than overloaded.
+- v1_id: spoken_language_correctness
+  disposition: split
+  v2_ids:
+  - spoken_script_correctness
+  - pronunciation_intelligibility
+  rationale: 'Controller-directed. This is the founding Devanagari trap in a different medium:
+    a robust ASR NORMALISES a mispronunciation into the correct word, exactly as the vision
+    checker silently corrected a misspelling. Word correctness is machine-comparable; pronunciation
+    acceptability needs a first-language listener. One instrument cannot answer both, so one
+    capability must not claim to.'
+- v1_id: single_speaker_lip_sync
+  disposition: unchanged
+  v2_ids:
+  - single_speaker_lip_sync
+  rationale: Capability is right; the standard instrument (SyncNet LSE-C/LSE-D) is contested
+    and must be qualified rather than adopted.
+- v1_id: two_speaker_turn_assignment_and_lip_sync
+  disposition: unchanged
+  v2_ids:
+  - two_speaker_turn_assignment_and_lip_sync
+  rationale: No external benchmark covers turn assignment across two visible speakers.
+- v1_id: emotional_prosodic_fit
+  disposition: refined
+  v2_ids:
+  - emotional_prosodic_fit
+  rationale: Refined toward DISCRIMINATION - can the requested register be told apart and correctly
+    identified. TTSDS shows prosody has measurable correlates, so this need not stay purely
+    preference-shaped.
+- v1_id: audio_video_synchronisation
+  disposition: unchanged
+  v2_ids:
+  - audio_video_synchronisation
+  rationale: Distinct from lip-sync in the literature, matching our separation.
+- v1_id: proposition_objective_fit
+  disposition: unchanged
+  v2_ids:
+  - proposition_objective_fit
+  rationale: descriptive_only preserved.
+- v1_id: hierarchy_product_as_hero
+  disposition: unchanged
+  v2_ids:
+  - hierarchy_product_as_hero
+  rationale: descriptive_only preserved.
+- v1_id: composition_brand_register
+  disposition: unchanged
+  v2_ids:
+  - composition_brand_register
+  rationale: descriptive_only preserved.
+- v1_id: hook_pacing_temporal_hierarchy
+  disposition: unchanged
+  v2_ids:
+  - hook_pacing_temporal_hierarchy
+  rationale: descriptive_only preserved.
+- v1_id: reliability_pass_at_k
+  disposition: unchanged
+  v2_ids:
+  - reliability_pass_at_k
+  rationale: 'Counting rule unchanged: confidence on base items.'
+- v1_id: cost_and_cpao
+  disposition: refined
+  v2_ids:
+  - cost_and_cpao
+  rationale: 'Refined to carry the Controller''s TWO CpAO views: api_tool_cpao (diagnostic)
+    and fully_loaded_cpao (primary business metric, including human review time in the operational
+    path). V1 had a single cost view.'
+- v1_id: latency_errors_refusals
+  disposition: unchanged
+  v2_ids:
+  - latency_errors_refusals
+  rationale: Operational; ours to own.
+- v1_id: reproducibility_repairability
+  disposition: split
+  v2_ids:
+  - reproducibility
+  - repairability
+  rationale: Controller-directed. Repeat agreement is measurable now from repeats we already
+    budget. REPAIR requires a repair loop that DOES NOT EXIST, and repair attempts are additional
+    generations. V1 flagged the split in an envelope note; v2 makes it structural. repairability
+    is DORMANT.
+dimensions:
+- id: object_count
+  family: A_constraint_fidelity
+  name_plain: Right number of things
+  definition: The output contains exactly the number of each named object the prompt asked for.
+    Three bottles means three, not two and not four.
+  inside: Cardinality of prompt-named countable objects.
+  outside: Where the objects are (spatial_relationship), what they look like (attribute_binding),
+    and whether they are the RIGHT specific product (product_identity).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; for video, the declared hero frame plus 2 sampled frames.
+  atomic_probe: Prompt names N instances of one plainly countable object on a plain background,
+    no other countable objects present. N is varied across items.
+  compound_reuse:
+  - product_packshot
+  - person_plus_product_static
+  - product_handoff_action
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: 1-3 instances of one object type, plain background, no occlusion
+  - level: 2
+    observable: 4-6 instances of one object type, plain background
+  - level: 3
+    observable: two object types counted simultaneously, e.g. 3 bottles and 2 boxes
+  - level: 4
+    observable: counted objects partially occluding one another
+  - level: 5
+    observable: counted objects in a cluttered commercial scene with distractor objects
+  instrument_family: 2
+  secondary_instrument: 3
+  human_verifier: Adjudicates only when the detector and the VLM disagree, or on partial occlusion.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: exact_pass_fail
+  failure_vocabulary: Observer's own words retained, e.g. "one extra bottle", "shadow counted
+    as object". Multiple defects per output permitted. Ontology mapping later.
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - object_class
+  - target_count
+  - background_complexity
+  - detector_confidence
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Detector-based counting is implementable and its truth is constructed by us.
+    NOTE the known trap - counting and locating need DIFFERENT detector confidence settings.
+    High when counting, so shadows are not counted as extra objects; lower when locating. Shared
+    software, separate results, separate Registry rows. UNBLOCK PATH IS CHEAP - a detector is
+    a model, not an oracle, so this is blocked until family 2 is qualified. Qualification needs
+    no human labels at all - E3's 100 synthetic known-answer fixtures supply the truth by construction.
+  v1_origin: object_count
+  v2_disposition: unchanged
+  v2_rationale: Externally supported (GenEval, T2I-CompBench). No change.
+  status: active
+- id: attribute_binding
+  family: A_constraint_fidelity
+  name_plain: Right property on the right thing
+  definition: When the prompt says "the red bottle and the blue box", the red belongs to the
+    bottle and the blue to the box. Models frequently produce both objects and both colours
+    but swap which is which.
+  inside: Correct assignment of colour, material, size or state to the named object.
+  outside: Whether the colour matches a brand specification (packaging_brand_colour_fidelity)
+    and whether the count is right (object_count).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; for video, the declared hero frame.
+  atomic_probe: Two objects, two attributes, deliberately crossable. The swapped assignment
+    is a distinct, observable failure and is recorded as such rather than as a generic miss.
+  compound_reuse:
+  - product_packshot
+  - typography_led_image
+  - person_plus_product_static
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: one object, one attribute
+  - level: 2
+    observable: two objects, two distinct colours - swap is detectable
+  - level: 3
+    observable: two objects, colour plus material, e.g. matte red bottle and glossy blue box
+  - level: 4
+    observable: three objects, three attributes
+  - level: 5
+    observable: attribute assignment in a cluttered scene with same-class distractors
+  instrument_family: 3
+  secondary_instrument: 2
+  human_verifier: Adjudicates ambiguous material/finish descriptions.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: structured_categorical
+  failure_vocabulary: Distinguish `attribute_swapped`, `attribute_absent`, `attribute_on_extra_object`.
+    Swap and absence are different failures with different repair paths.
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - n_objects
+  - attribute_type
+  - distractor_present
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Colour can be sampled deterministically inside a detected region, which makes
+    part of this dimension instrument-cheap. Material and finish need a VLM and are the uncertain
+    part; the split is recorded per the Registry `deterministic_component` field. UNBLOCK PATH
+    - the colour half can be qualified deterministically; the material/finish half needs the
+    VLM family qualified. Blocked until then, because the dimension reports one verdict and
+    the weaker half governs it.
+  v1_origin: attribute_binding
+  v2_disposition: unchanged
+  v2_rationale: Three of T2I-CompBench's six categories. No change.
+  status: active
+- id: spatial_relationship_2d
+  family: A_constraint_fidelity
+  name_plain: Things in the right places relative to each other
+  definition: The prompt's positional instruction holds - the cup is LEFT OF the laptop, the
+    logo is in the LOWER RIGHT, the product is IN FRONT OF the model.
+  inside: Relative position between named entities, and absolute placement within the frame.
+  outside: How many objects there are (object_count) and continuity across shots (multi_shot_spatial_continuity).
+  modalities: &id001
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; for video, the declared hero frame.
+  atomic_probe: Two unambiguous objects with one stated relation, on a plain background, where
+    the relation is decidable from bounding-box geometry alone.
+  compound_reuse: &id002
+  - product_packshot
+  - typography_led_image
+  - person_plus_product_static
+  - product_hero_video
+  - multi_shot_branded_ad
+  difficulty_ladder: &id003
+  - level: 1
+    observable: left/right of, two objects, plain background
+  - level: 2
+    observable: above/below, and in-frame quadrant placement
+  - level: 3
+    observable: in front of / behind - requires depth ordering, not just 2D boxes
+  - level: 4
+    observable: count and relation together, e.g. three cups to the left of one laptop
+  - level: 5
+    observable: relation preserved under camera movement across a clip
+  instrument_family: 2
+  secondary_instrument: 3
+  human_verifier: Adjudicates depth-ordering cases the detector cannot resolve.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: exact_pass_fail
+  failure_vocabulary: '`relation_inverted`, `relation_absent`, `object_missing`, `depth_ambiguous`.'
+  registry_conditions: &id004
+  - resolution
+  - aspect_ratio
+  - relation_type
+  - n_objects
+  - detector_confidence
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Left/right/above/below are decidable from bounding boxes and need no human
+    label. Depth ordering is NOT decidable from 2D boxes and is escalated to a VLM plus human
+    adjudication; it must not be silently scored by the geometric instrument. UNBLOCK PATH IS
+    CHEAP - synthetic fixtures with known geometry qualify family 2 with no human label. Blocked
+    only because no family is qualified yet, not because the material is hard to build.
+  v1_origin: spatial_relationship
+  v2_disposition: split
+  v2_rationale: T2I-CompBench evaluates 2D and 3D spatial relations SEPARATELY and with different
+    judges. V1's own contract already stated depth ordering 'is NOT decidable from 2D boxes'
+    - the split was documented and then not made. A 2D relation is deterministic given boxes;
+    a depth relation is not. Different instrument, different qualification, different gate.
+  split_sibling:
+  - spatial_relationship_depth
+  status: active
+- id: spatial_relationship_depth
+  family: A_constraint_fidelity
+  name_plain: Things in the right places relative to each other
+  definition: The prompt's positional instruction holds - the cup is LEFT OF the laptop, the
+    logo is in the LOWER RIGHT, the product is IN FRONT OF the model.
+  inside: Relative position between named entities, and absolute placement within the frame.
+  outside: How many objects there are (object_count) and continuity across shots (multi_shot_spatial_continuity).
+  modalities: *id001
+  observation_unit: frame
+  observation_span_detail: Single image; for video, the declared hero frame.
+  atomic_probe: Two unambiguous objects with one stated relation, on a plain background, where
+    the relation is decidable from bounding-box geometry alone.
+  compound_reuse: *id002
+  difficulty_ladder: *id003
+  instrument_family: 2
+  secondary_instrument: 3
+  human_verifier: Adjudicates depth-ordering cases the detector cannot resolve.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: exact_pass_fail
+  failure_vocabulary: '`relation_inverted`, `relation_absent`, `object_missing`, `depth_ambiguous`.'
+  registry_conditions: *id004
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Left/right/above/below are decidable from bounding boxes and need no human
+    label. Depth ordering is NOT decidable from 2D boxes and is escalated to a VLM plus human
+    adjudication; it must not be silently scored by the geometric instrument. UNBLOCK PATH IS
+    CHEAP - synthetic fixtures with known geometry qualify family 2 with no human label. Blocked
+    only because no family is qualified yet, not because the material is hard to build.
+  v1_origin: spatial_relationship
+  v2_disposition: split
+  v2_rationale: T2I-CompBench evaluates 2D and 3D spatial relations SEPARATELY and with different
+    judges. V1's own contract already stated depth ordering 'is NOT decidable from 2D boxes'
+    - the split was documented and then not made. A 2D relation is deterministic given boxes;
+    a depth relation is not. Different instrument, different qualification, different gate.
+  split_sibling:
+  - spatial_relationship_2d
+  status: active
+- id: action_adherence
+  family: A_constraint_fidelity
+  name_plain: The thing actually does what it was told to do
+  definition: The prompted action is the action depicted - pouring, opening, handing over, walking
+    towards camera - rather than a static pose that merely resembles it.
+  inside: Presence and correctness of the prompted action or verb.
+  outside: Whether the motion looks physically plausible (motion_action_quality) and whether
+    hands are anatomically correct (anatomy_hands).
+  modalities:
+  - image
+  - video
+  - native_av
+  - editing
+  observation_unit: sequence
+  observation_span_detail: For video, whole clip - an action is a temporal object. For a still
+    image, `frame`, and the item declares that the still can only test a depicted instant, not
+    the action.
+  atomic_probe: One subject, one unambiguous prompted action, plain setting. For video the action
+    must be one whose completion is observable within the clip length.
+  compound_reuse:
+  - product_handoff_action
+  - product_hero_video
+  - actor_plus_product_vo
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: single-actor gross action, e.g. walking, plain background
+  - level: 2
+    observable: actor plus object action, e.g. picking up a bottle
+  - level: 3
+    observable: action with a required completion state, e.g. pouring until the glass is full
+  - level: 4
+    observable: two-participant action, e.g. handing an object from one person to another
+  - level: 5
+    observable: ordered two-step action, e.g. open the box then lift out the product
+  instrument_family: 4
+  secondary_instrument: 3
+  human_verifier: Decides whether the depicted action is the prompted action when the VLM is
+    uncertain.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: structured_categorical
+  failure_vocabulary: '`action_absent`, `action_substituted`, `action_incomplete`, `action_out_of_order`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - clip_duration_s
+  - fps
+  - action_class
+  - n_participants
+  - sampled_frames
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Requires the temporal evaluator family, which is itself unqualified. A still
+    image cannot establish an action; items must not silently score a still as if it had. Blocked
+    on family 4, which has no qualification record. Deterministic perturbation of clean clips
+    supplies known-answer material without human labels, so the unblock path does not depend
+    on new human time.
+  v1_origin: action_adherence
+  v2_disposition: unchanged
+  v2_rationale: VBench human_action; VBench-2.0 motion order. No change.
+  status: active
+- id: delivery_format_compliance
+  family: A_constraint_fidelity
+  name_plain: The file is the file we asked for
+  definition: Duration, aspect ratio, resolution, frame rate, container, audio track presence
+    and any stated output contract are exactly as requested.
+  inside: Machine-checkable properties of the delivered artifact itself.
+  outside: Anything about what the artifact depicts.
+  modalities:
+  - image
+  - video
+  - native_av
+  - lipsync
+  - tts
+  - editing
+  observation_unit: whole_asset
+  observation_span_detail: The delivered file, probed once.
+  atomic_probe: Request an explicit output contract - e.g. 9:16, 1080x1920, 8.0s, 24fps, with
+    audio - and probe the returned file.
+  compound_reuse:
+  - ALL
+  difficulty_ladder:
+  - level: 1
+    observable: provider default output accepted and probed
+  - level: 2
+    observable: one non-default constraint requested, e.g. 9:16
+  - level: 3
+    observable: resolution and aspect together
+  - level: 4
+    observable: exact duration to within a declared tolerance
+  - level: 5
+    observable: full contract - duration, aspect, resolution, fps and audio track together
+  instrument_family: 2
+  secondary_instrument: null
+  human_verifier: none
+  benchmark_material_readiness: no_external_stimulus_required
+  result_form: exact_pass_fail
+  failure_vocabulary: '`aspect_mismatch`, `duration_mismatch`, `resolution_mismatch`, `fps_mismatch`,
+    `audio_track_absent`, `container_unexpected`.'
+  registry_conditions:
+  - requested_contract
+  - provider_default_contract
+  routing_use: hard_constraint
+  instrument_readiness: deterministic_ready
+  production_envelope_note: Ready and needs no external stimulus. Should ride free on EVERY
+    generated asset from the first paid call onward; not doing so is wasted money.
+  readiness_note: Fully deterministic - it reads file metadata and needs no calibration at all.
+    Its Registry `calibration_status` is `deterministic`. This is the cheapest dimension in
+    the whole contract and should be measured on EVERY generated asset as a free rider, never
+    as its own generation. It must fail closed on an unparseable file rather than reporting
+    a pass.
+  v1_origin: delivery_format_compliance
+  v2_disposition: refined
+  v2_rationale: 'Unchanged in meaning. Refined only to state its DUAL ROLE explicitly: the requested
+    format is a CONDITION of every other measurement and simultaneously the subject of this
+    capability.'
+  status: active
+- id: exact_text_latin
+  family: B_text_brand
+  name_plain: Latin-alphabet text drawn exactly right
+  definition: A requested Latin string appears in the image character-for-character correct
+    after a declared normalisation.
+  inside: Exact character-level correctness of a requested Latin string.
+  outside: Whether it is readable at size (typography_legibility) and whether it is the brand
+    wordmark (logo_wordmark_fidelity).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; for video see text_logo_stability_in_clip, which is
+    a different dimension.
+  atomic_probe: Render-target pairs at increasing string length, plain layout, high contrast,
+    one string per item.
+  compound_reuse:
+  - typography_led_image
+  - product_packshot
+  - person_plus_product_static
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: single word, <=8 characters
+  - level: 2
+    observable: two to four words on one line
+  - level: 3
+    observable: headline plus subline, two text blocks
+  - level: 4
+    observable: text on a product surface or signage within the scene
+  - level: 5
+    observable: text with mixed case, digits and punctuation, e.g. a price and a claim
+  instrument_family: 1
+  secondary_instrument: 3
+  human_verifier: None for the comparison itself; a human confirms only that the reference string
+    is what was requested.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: exact_pass_fail
+  failure_vocabulary: '`char_substitute`, `char_drop`, `char_insert`, `word_drop`, `gibberish`,
+    `prompt_leakage`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - script
+  - string_length_words
+  - string_length_chars
+  - normalisation_ref
+  - surface_type
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Needs a Latin exact-text calibration pack that does NOT exist yet - E3 specifies
+    it. It must be built separately and MUST NOT mutate the frozen Devanagari battery. Like
+    the Devanagari case, the comparison step is deterministic; only the transcription step is
+    uncertain. Blocked on family 1, which is unqualified, AND on a Latin pack that does not
+    exist. The Devanagari battery cannot substitute - it is frozen, and reading Latin is a different
+    judgement.
+  v1_origin: exact_text_latin
+  v2_disposition: unchanged
+  v2_rationale: Pack does not exist but the capability is well formed.
+  status: active
+- id: exact_text_devanagari
+  family: B_text_brand
+  name_plain: Hindi/Devanagari text drawn exactly right
+  definition: A requested Devanagari string appears character-for-character correct after NFC
+    normalisation - including vowel signs, conjuncts, nukta, nasal marks and the two positional
+    forms of the letter र.
+  inside: Exact character-level correctness of a requested Devanagari string.
+  outside: Reading real photographed Hindi signage - that is a checker-calibration question,
+    not a generator capability. The two must never be conflated.
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; drift within a clip is text_logo_stability_in_clip.
+  atomic_probe: Render-target pairs from the frozen validated word pool, using the EVAL-005
+    failure taxonomy's 20 classes across 5 groups as the perturbation space for checker qualification,
+    and as the defect vocabulary for generator scoring.
+  compound_reuse:
+  - typography_led_image
+  - product_packshot
+  - person_plus_product_static
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: single word, no conjunct, no nukta
+  - level: 2
+    observable: single word containing a conjunct or a reph
+  - level: 3
+    observable: two to four words on one line
+  - level: 4
+    observable: headline plus subline, or text on an in-scene surface
+  - level: 5
+    observable: Devanagari and Latin together in one composition
+  instrument_family: 1
+  secondary_instrument: 3
+  human_verifier: A Hindi first-language reader confirms that a TARGET string is valid Hindi.
+    The reader never decides whether an image matches its target - for the qualification battery
+    that label is true by construction.
+  benchmark_material_readiness: available
+  result_form: exact_pass_fail
+  failure_vocabulary: The 20 frozen EVAL-005 failure classes in 5 groups - vowel_signs, letters,
+    conjuncts, dots_marks, ra_forms - retained as the observer vocabulary.
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - script
+  - string_length_words
+  - normalisation_ref
+  - font_or_surface
+  - battery_version
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: The frozen 96-item battery qualifies a checker against CORRECTLY-FORMED
+    WRONG TEXT. It perturbs real characters and cannot produce malformed generated glyphs, so
+    a checker qualified on it is NOT qualified against the failure mode where a generator emits
+    shapes that are not characters at all.
+  readiness_note: The checker-qualification battery EXISTS and is frozen - 96 items, 48 match
+    / 48 mismatch, 48 accepted base words, 33 hard opportunities. What does NOT exist is a checker
+    that has passed it. Until one has, no generator score on this dimension may be written to
+    the Registry. Registry state for now - `required_but_no_calibrated_instrument`. The battery
+    also cannot produce malformed GENERATED glyphs; it perturbs real characters. A generator
+    can fail in a way this battery never shows - see the Class B generated-glyph layer, specified
+    but not built.
+  v1_origin: exact_text_devanagari
+  v2_disposition: unchanged
+  v2_rationale: '96-item validated battery exists. Envelope limit preserved: it perturbs REAL
+    characters and cannot produce malformed generated glyphs.'
+  status: active
+- id: typography_legibility
+  family: B_text_brand
+  name_plain: The text can actually be read at delivery size
+  definition: Correct characters are not enough. Text must survive the size, contrast and placement
+    it will be viewed at - a headline correct at 100% zoom and unreadable in a feed is a commercial
+    failure.
+  inside: Contrast, effective type size, crowding, overlap with busy background, cropping at
+    frame edge.
+  outside: Whether the characters are correct (exact_text_*) and whether the typeface is the
+    brand's.
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image evaluated at the declared delivery size, not at native
+    resolution.
+  atomic_probe: Same string rendered at declining relative type size and declining contrast
+    against a controlled background, with the delivery size declared.
+  compound_reuse:
+  - typography_led_image
+  - product_packshot
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: large text, plain high-contrast background
+  - level: 2
+    observable: text over a photographic background
+  - level: 3
+    observable: small subline text at declared feed delivery size
+  - level: 4
+    observable: text over a busy or low-contrast region
+  - level: 5
+    observable: text near the frame edge where platform-safe-area cropping applies
+  instrument_family: 3
+  secondary_instrument: 2
+  human_verifier: Required. Legibility is a perceptual judgement; a contrast ratio alone does
+    not settle it.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: human_hybrid_score
+  failure_vocabulary: '`too_small_at_delivery`, `low_contrast`, `overlapped_by_subject`, `crops_at_safe_area`,
+    `crowded`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - delivery_size_declared
+  - background_class
+  - type_size_ratio
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Deterministic components exist - measured contrast ratio and type height as
+    a fraction of frame height are both computable. Whether that adds up to "legible" is a perceptual
+    call and needs human calibration first. Do NOT invent a contrast threshold and present it
+    as a finding; propose a calibration curve, per the same rule applied to audio tolerances.
+  v1_origin: typography_legibility
+  v2_disposition: refined
+  v2_rationale: 'Controller-directed: legibility is now EXPLICITLY conditioned on delivery size.
+    Previously the delivery size lived inside the prose definition, which made two legibility
+    results silently incomparable. delivery_size becomes a REQUIRED condition.'
+  status: active
+- id: logo_wordmark_fidelity
+  family: B_text_brand
+  name_plain: The brand mark is the real mark, not a lookalike
+  definition: A supplied logo or wordmark appears with its true geometry, proportions and letterforms,
+    rather than a plausible re-drawing.
+  inside: Shape, proportion, letterform and structural correctness of a supplied mark.
+  outside: Brand colour accuracy (packaging_brand_colour_fidelity) and general text (exact_text_*).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; drift within a clip is text_logo_stability_in_clip.
+  atomic_probe: Supply a controlled reference mark, request placement, compare the rendered
+    mark against the reference under a declared alignment.
+  compound_reuse:
+  - product_packshot
+  - typography_led_image
+  - person_plus_product_static
+  - reference_campaign_edit
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: flat placement on plain background, frontal
+  - level: 2
+    observable: placed on a flat product surface
+  - level: 3
+    observable: on a curved surface, e.g. a bottle
+  - level: 4
+    observable: in perspective at an angle
+  - level: 5
+    observable: in motion within a clip
+  instrument_family: 3
+  secondary_instrument: 2
+  human_verifier: Required. Adjudicates whether a difference is a re-drawing or an acceptable
+    projection.
+  benchmark_material_readiness: partial
+  result_form: human_hybrid_score
+  failure_vocabulary: '`mark_redrawn`, `proportion_distorted`, `letterform_wrong`, `element_missing`,
+    `mark_absent`, `mark_duplicated`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - surface_geometry
+  - mark_ref_hash
+  - placement_request
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: Recorded in prior findings as required_but_no_calibrated_instrument.
+    Template matching handles flat frontal marks and fails under perspective and curvature -
+    which is where commercial work lives, so the easy envelope is the one we could qualify and
+    the hard envelope is the one we need.
+  readiness_note: Recorded in CAPABILITY-BATTERY-V0-DRAFT section 4 as `required_but_no_calibrated_instrument`,
+    and that has not changed. Template matching handles flat frontal cases and fails under perspective
+    and curvature, which is exactly where commercial work lives. Requires controlled brand-mark
+    references from Resources. Keeping this dimension visible with an explicit blocked state
+    is the point - a dimension with no instrument that quietly disappears later reads as "we
+    decided this did not matter".
+  v1_origin: logo_wordmark_fidelity
+  v2_disposition: unchanged
+  v2_rationale: No external benchmark found for mark fidelity under perspective/curvature. Remains
+    required_but_no_calibrated_instrument.
+  status: active
+- id: packaging_brand_colour_fidelity
+  family: B_text_brand
+  name_plain: Brand colours are the actual brand colours
+  definition: A specified brand or packaging colour is reproduced within a declared tolerance
+    in a declared colour space, rather than merely being the right general hue.
+  inside: Measured colour of a specified region against a specified reference value.
+  outside: Whether the colour is on the right object (attribute_binding) and whether the logo
+    shape is right (logo_wordmark_fidelity).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Single image; sampled within a detected or declared region.
+  atomic_probe: Supply a reference swatch and a target region, sample the rendered region and
+    compute a colour difference in a declared space.
+  compound_reuse:
+  - product_packshot
+  - person_plus_product_static
+  - reference_campaign_edit
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: flat colour field, even studio lighting
+  - level: 2
+    observable: colour on a flat packaging face
+  - level: 3
+    observable: colour on a curved surface with a specular highlight
+  - level: 4
+    observable: colour under a deliberately warm or cool lighting setup
+  - level: 5
+    observable: colour held across a clip under changing light
+  instrument_family: 2
+  secondary_instrument: 3
+  human_verifier: Sets the acceptable tolerance once, with reference to commercial practice;
+    does not judge per item.
+  benchmark_material_readiness: missing
+  result_form: structured_categorical
+  failure_vocabulary: '`hue_shift`, `saturation_loss`, `value_shift`, `colour_replaced`, `region_not_found`.'
+  registry_conditions:
+  - resolution
+  - colour_space
+  - tolerance_metric
+  - tolerance_value
+  - lighting_condition
+  - region_definition
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Sampling is deterministic once the region is located, so the instrument cost
+    is low. What is missing is the resource - controlled product references with declared brand
+    colour values. The TOLERANCE is a judgement call and must be declared and Controller-approved
+    before a run, not chosen after seeing results; changing it later is an EXPERIMENT MUTATION
+    stop.
+  v1_origin: packaging_brand_colour_fidelity
+  v2_disposition: refined
+  v2_rationale: 'Controller-directed: brand-colour tolerance is a DECLARED measurement condition
+    and threshold, not generic categorical-colour evidence. External colour benchmarks test
+    ''is it red'', which is a different and easier judgement than matching a declared brand
+    value within tolerance.'
+  status: active
+- id: person_identity
+  family: C_identity_references
+  name_plain: The same person stays the same person
+  definition: A person generated from a reference, or across separate generations, is recognisably
+    the SAME individual - face, hair, build and declared wardrobe invariants - rather than a
+    different person of similar description.
+  inside: Match to a supplied person reference, and consistency of that person across separately
+    generated assets.
+  outside: Drift WITHIN one clip (person_stability_in_clip) and anatomical correctness (anatomy_hands).
+  modalities: &id005
+  - image
+  - video
+  - native_av
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: A set of separately generated assets compared pairwise against the
+    reference and against each other. A single image cannot test this.
+  atomic_probe: One person reference, N separate generations under varied prompts. Include known-match
+    and known-NON-match reference pairs so the instrument can be caught being permissive.
+  compound_reuse: &id006
+  - person_plus_product_static
+  - actor_plus_product_vo
+  - one_visible_speaker
+  - two_person_dialogue
+  - multi_shot_branded_ad
+  difficulty_ladder: &id007
+  - level: 1
+    observable: same person, same prompt, repeated generation
+  - level: 2
+    observable: same person across different prompts, same setting
+  - level: 3
+    observable: same person across different settings and lighting
+  - level: 4
+    observable: same person across separate shots intended to cut together
+  - level: 5
+    observable: same person across separate sessions, days apart, no shared context
+  instrument_family: 3
+  secondary_instrument: null
+  human_verifier: Required for adjudication. Identity similarity is not exact equality and must
+    not be presented as if it were.
+  benchmark_material_readiness: missing
+  result_form: human_hybrid_score
+  failure_vocabulary: '`different_person`, `face_drift`, `wardrobe_change`, `age_shift`, `build_shift`,
+    `hair_change`.'
+  registry_conditions: &id008
+  - resolution
+  - aspect_ratio
+  - reference_count
+  - reference_hashes
+  - prompt_variation_class
+  - session_separation
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: Material target exists but WITHOUT same-category decoys the envelope
+    is category recognition, not individual identity (cross-stream ask ADD-01).
+  readiness_note: Needs the planned >=32 person references, 8 identities x >=4 views. The frozen
+    V0 rubric already encodes the essential rule and must be reused unchanged - each declared
+    identity feature is judged on TWO questions, does it match the reference AND is it consistent
+    across the set, and BOTH must hold. A consistently-produced WRONG person is a failure, not
+    a pass. "Stability is not identity."
+  v1_origin: person_identity
+  v2_disposition: split
+  v2_rationale: 'Controller-directed: declared wardrobe/clothing invariants must be VISIBLE
+    rather than silently mixed with face identity. VBench-2.0 independently separates Human
+    Identity from Human Clothes. The production consequence differs: a right face in wrong wardrobe
+    is often repairable by re-prompting; a wrong face needs a different reference. One verdict
+    cannot carry both.'
+  split_sibling:
+  - wardrobe_invariant_fidelity
+  status: active
+- id: wardrobe_invariant_fidelity
+  family: C_identity_references
+  name_plain: The same person stays the same person
+  definition: A person generated from a reference, or across separate generations, is recognisably
+    the SAME individual - face, hair, build and declared wardrobe invariants - rather than a
+    different person of similar description.
+  inside: Match to a supplied person reference, and consistency of that person across separately
+    generated assets.
+  outside: Drift WITHIN one clip (person_stability_in_clip) and anatomical correctness (anatomy_hands).
+  modalities: *id005
+  observation_unit: asset_set_over_time
+  observation_span_detail: A set of separately generated assets compared pairwise against the
+    reference and against each other. A single image cannot test this.
+  atomic_probe: One person reference, N separate generations under varied prompts. Include known-match
+    and known-NON-match reference pairs so the instrument can be caught being permissive.
+  compound_reuse: *id006
+  difficulty_ladder: *id007
+  instrument_family: 3
+  secondary_instrument: null
+  human_verifier: Required for adjudication. Identity similarity is not exact equality and must
+    not be presented as if it were.
+  benchmark_material_readiness: missing
+  result_form: human_hybrid_score
+  failure_vocabulary: '`different_person`, `face_drift`, `wardrobe_change`, `age_shift`, `build_shift`,
+    `hair_change`.'
+  registry_conditions: *id008
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: Material target exists but WITHOUT same-category decoys the envelope
+    is category recognition, not individual identity (cross-stream ask ADD-01).
+  readiness_note: Needs the planned >=32 person references, 8 identities x >=4 views. The frozen
+    V0 rubric already encodes the essential rule and must be reused unchanged - each declared
+    identity feature is judged on TWO questions, does it match the reference AND is it consistent
+    across the set, and BOTH must hold. A consistently-produced WRONG person is a failure, not
+    a pass. "Stability is not identity."
+  v1_origin: person_identity
+  v2_disposition: split
+  v2_rationale: 'Controller-directed: declared wardrobe/clothing invariants must be VISIBLE
+    rather than silently mixed with face identity. VBench-2.0 independently separates Human
+    Identity from Human Clothes. The production consequence differs: a right face in wrong wardrobe
+    is often repairable by re-prompting; a wrong face needs a different reference. One verdict
+    cannot carry both.'
+  split_sibling:
+  - person_identity
+  status: active
+- id: product_identity
+  family: C_identity_references
+  name_plain: The same product stays the same product
+  definition: A specific product - its shape, proportions, label layout, closure and distinguishing
+    features - is reproduced as that product rather than as a generic member of its category.
+  inside: Match to a supplied product reference across generations.
+  outside: Brand colour value (packaging_brand_colour_fidelity), mark geometry (logo_wordmark_fidelity),
+    drift within a clip (product_stability_in_clip).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: A set of separately generated assets compared against the product
+    reference.
+  atomic_probe: One product reference, N generations at varying pose and context, with known-match
+    and known-non-match pairs including same-category decoys.
+  compound_reuse:
+  - product_packshot
+  - person_plus_product_static
+  - product_hero_video
+  - product_handoff_action
+  - reference_campaign_edit
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: frontal, studio, static
+  - level: 2
+    observable: rotated to a three-quarter view
+  - level: 3
+    observable: held in a hand
+  - level: 4
+    observable: partially occluded or in a cluttered scene
+  - level: 5
+    observable: in motion within a clip
+  instrument_family: 3
+  secondary_instrument: 2
+  human_verifier: Required for adjudication, especially against same-category decoys.
+  benchmark_material_readiness: missing
+  result_form: human_hybrid_score
+  failure_vocabulary: '`different_product`, `label_redrawn`, `shape_drift`, `feature_missing`,
+    `feature_invented`, `category_generic`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - reference_count
+  - reference_hashes
+  - pose_class
+  - occlusion_class
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: 'As person_identity: without same-category decoys the qualification
+    envelope cannot separate recognising a product CATEGORY from recognising THE product.'
+  readiness_note: Needs the planned >=48 product references, 12 products x >=4 views. The same-category
+    decoy is the important design element - without it, an instrument that says "yes, that is
+    a shampoo bottle" scores as if it had verified identity.
+  v1_origin: product_identity
+  v2_disposition: unchanged
+  v2_rationale: DreamBench covers this directly. Cross-asset scope handled by observation unit,
+    not a new id.
+  status: active
+- id: reference_conditioning
+  family: C_identity_references
+  name_plain: The model actually uses the reference images you give it
+  definition: Measures how well a workflow honours supplied reference images at all - one reference,
+    several references, and a reference combined with a requested style or context change. This
+    is the mechanism by which any identity result is achieved.
+  inside: Whether and how strongly supplied references control the output.
+  outside: Whether the resulting identity is correct (person_identity, product_identity) - that
+    is the outcome, this is the mechanism.
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: Generations compared across increasing reference counts and increasing
+    requested divergence.
+  atomic_probe: Hold the prompt fixed and vary only the reference configuration - none, one,
+    three - then measure how the output changes.
+  compound_reuse:
+  - reference_campaign_edit
+  - person_plus_product_static
+  - product_packshot
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: one reference, no requested change
+  - level: 2
+    observable: one reference plus a background change
+  - level: 3
+    observable: multiple references, e.g. person plus product
+  - level: 4
+    observable: reference plus a requested style change
+  - level: 5
+    observable: reference plus a change that conflicts with the reference, testing which wins
+  instrument_family: 3
+  secondary_instrument: 2
+  human_verifier: Adjudicates the conflict case at level 5.
+  benchmark_material_readiness: missing
+  result_form: structured_categorical
+  failure_vocabulary: '`reference_ignored`, `reference_overapplied`, `reference_blended`, `only_first_reference_used`,
+    `reference_rejected_by_api`.'
+  registry_conditions:
+  - resolution
+  - reference_count
+  - reference_hashes
+  - reference_slot_semantics
+  - requested_divergence_class
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Shares the SAME reference packs as person_identity and product_identity -
+    no separate acquisition is needed, and no separate generation either where the same asset
+    serves both. `only_first_reference_used` is called out explicitly because it is a known
+    provider-shaped failure that a generic "reference ignored" label would hide.
+  v1_origin: reference_conditioning
+  v2_disposition: refined
+  v2_rationale: 'STYLE-REFERENCE BOUNDARY RESOLVED HERE. Style reference is NOT a new capability:
+    it is this capability measured with reference_type=style. The failure - ''the supplied reference
+    did not control the output'' - is identical in kind; only the reference type differs, and
+    a condition represents that cleanly. Adding a capability would duplicate the mechanism.'
+  status: active
+- id: edit_preservation
+  family: C_identity_references
+  name_plain: Editing one thing does not quietly change everything else
+  definition: When a workflow is asked to change a specified region or attribute, the rest of
+    the asset survives unchanged - the untouched area is genuinely untouched.
+  inside: Preservation of non-target content during an edit or inpaint operation.
+  outside: Whether the requested change itself is correct - that is scored by whichever dimension
+    the change belongs to.
+  modalities:
+  - editing
+  - image
+  - video
+  observation_unit: frame
+  observation_span_detail: Edited output compared pixel-wise against its own input outside the
+    declared edit region.
+  atomic_probe: Supply a source image and an edit instruction bounded to a declared region;
+    measure change inside and outside that region separately.
+  compound_reuse:
+  - reference_campaign_edit
+  - product_packshot
+  - person_plus_product_static
+  difficulty_ladder:
+  - level: 1
+    observable: background replaced, subject must be untouched
+  - level: 2
+    observable: one object's colour changed, all else untouched
+  - level: 3
+    observable: object removed and background plausibly filled
+  - level: 4
+    observable: text region edited while surrounding layout is preserved
+  - level: 5
+    observable: edit applied across frames of a clip with the rest preserved
+  instrument_family: 2
+  secondary_instrument: 3
+  human_verifier: Adjudicates whether an out-of-region change is a genuine defect or a legitimate
+    lighting consequence of the edit.
+  benchmark_material_readiness: missing
+  result_form: structured_categorical
+  failure_vocabulary: '`out_of_region_change`, `global_restyle`, `identity_lost_in_edit`, `text_corrupted_by_edit`,
+    `edit_not_applied`.'
+  registry_conditions:
+  - resolution
+  - edit_region_definition
+  - edit_class
+  - input_hash
+  - diff_metric
+  - diff_tolerance
+  routing_use: hard_constraint
+  instrument_readiness: deterministic_ready
+  production_envelope_note: Masked pixel difference against our own input needs no calibration,
+    but no production-realistic edit material exists. Ready mechanism, absent material.
+  readiness_note: Largely deterministic - the input is ours, so a masked pixel difference outside
+    the edit region is computable with no human label. The human is needed only for the legitimate-consequence
+    question. A cheap and high-value dimension that is easy to overlook.
+  v1_origin: edit_preservation
+  v2_disposition: unchanged
+  v2_rationale: Deterministic masked diff against our own input.
+  status: active
+- id: human_anatomy_integrity
+  family: D_human_physical_realism
+  name_plain: Hands, fingers and bodies are not broken
+  definition: Human anatomy is structurally correct - finger count and articulation, limb count
+    and joint direction, facial feature placement.
+  inside: Structural anatomical correctness of depicted humans.
+  outside: Whether it is the right person (person_identity) and whether the motion is plausible
+    (motion_action_quality).
+  modalities:
+  - image
+  - video
+  - native_av
+  - editing
+  observation_unit: frame
+  observation_span_detail: Per frame for images. For video, a declared frame sample - an anatomy
+    defect may appear in only part of a clip, so the sample rate is recorded.
+  atomic_probe: Prompts that force hands into the frame at increasing difficulty - visible,
+    holding, manipulating - with a plain background so the defect is unambiguous.
+  compound_reuse:
+  - person_plus_product_static
+  - actor_plus_product_vo
+  - product_handoff_action
+  - one_visible_speaker
+  - two_person_dialogue
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: person present, hands out of frame - control condition
+  - level: 2
+    observable: hands visible and relaxed
+  - level: 3
+    observable: hand holding an object
+  - level: 4
+    observable: hand manipulating an object, fingers articulated around it
+  - level: 5
+    observable: two people, four hands, at least one interaction
+  instrument_family: 3
+  secondary_instrument: null
+  human_verifier: Required. This is a perceptual defect judgement and there is no deterministic
+    oracle.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: structured_categorical
+  failure_vocabulary: '`extra_finger`, `missing_finger`, `fused_digits`, `extra_limb`, `joint_inversion`,
+    `facial_feature_misplaced`, `merged_bodies`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - hand_visibility_class
+  - n_people
+  - sampled_frames
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: No deterministic oracle exists. A VLM can be asked, but whether it RELIABLY
+    detects a six-fingered hand is precisely what qualification must establish - and a false
+    pass here is the dangerous direction. Human adjudication is required for the qualification
+    set.
+  v1_origin: anatomy_hands
+  v2_disposition: renamed
+  v2_rationale: Controller-directed rename/broaden. V1's own failure vocabulary already covered
+    extra_limb, joint_inversion and facial_feature_misplaced - the NAME was narrower than the
+    capability and invited under-testing of everything that is not a hand. Hand-specific diagnostics
+    are PRESERVED as a required defect sub-vocabulary, not lost in the broadening.
+  status: active
+- id: human_object_contact
+  family: D_human_physical_realism
+  name_plain: People hold and touch objects convincingly
+  definition: Contact between a person and an object is physically coherent - the hand encloses
+    the object, the object rests where it is held, there is no floating, interpenetration or
+    impossible grip.
+  inside: Physical plausibility of the contact between person and object.
+  outside: Whether the object is the right product (product_identity) and whether the hand itself
+    is anatomically correct (anatomy_hands).
+  modalities:
+  - image
+  - video
+  - editing
+  observation_unit: frame
+  observation_span_detail: Per frame for images; declared frame sample for video.
+  atomic_probe: One person, one object, one declared contact type, plain background.
+  compound_reuse:
+  - person_plus_product_static
+  - product_handoff_action
+  - actor_plus_product_vo
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: person and object in frame, no contact - control
+  - level: 2
+    observable: touching a static object
+  - level: 3
+    observable: holding an object with a full grip
+  - level: 4
+    observable: manipulating - opening, pouring, rotating
+  - level: 5
+    observable: passing an object between two people
+  instrument_family: 3
+  secondary_instrument: null
+  human_verifier: Required.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: structured_categorical
+  failure_vocabulary: '`object_floating`, `hand_through_object`, `impossible_grip`, `contact_absent`,
+    `object_merged_with_hand`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - contact_class
+  - object_class
+  - sampled_frames
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: Recorded in prior findings as required_but_no_calibrated_instrument.
+    Unchanged.
+  readiness_note: Recorded in CAPABILITY-BATTERY-V0-DRAFT section 4 as `required_but_no_calibrated_instrument`.
+    Unchanged. Human adjudication required to build any qualification reference.
+  v1_origin: human_object_contact
+  v2_disposition: unchanged
+  v2_rationale: No external benchmark; commercially central.
+  status: active
+- id: human_human_interaction
+  family: D_human_physical_realism
+  name_plain: Two or more people occupy one scene coherently
+  definition: Multiple people in one asset are separate, complete individuals with coherent
+    relative scale, gaze and spatial relationship.
+  inside: Multi-person scene coherence - separation, scale, gaze, relative placement.
+  outside: Who the people are (person_identity) and who is speaking (two_speaker_turn_assignment_and_lip_sync).
+  modalities:
+  - image
+  - video
+  - native_av
+  observation_unit: frame
+  observation_span_detail: Per frame for images; declared frame sample for video.
+  atomic_probe: Two people, one declared relationship, plain setting.
+  compound_reuse:
+  - two_person_dialogue
+  - product_handoff_action
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: two people, well separated, no interaction
+  - level: 2
+    observable: two people, mutual gaze
+  - level: 3
+    observable: two people at different depths, correct relative scale
+  - level: 4
+    observable: two people in physical contact, e.g. a handshake
+  - level: 5
+    observable: three or more people with a stated arrangement
+  instrument_family: 3
+  secondary_instrument: 2
+  human_verifier: Required.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: structured_categorical
+  failure_vocabulary: '`bodies_merged`, `limb_shared`, `scale_inconsistent`, `gaze_wrong`, `person_count_wrong`,
+    `duplicate_face`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - n_people
+  - interaction_class
+  - depth_arrangement
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Person COUNT is deterministically checkable with a detector and overlaps object_count's
+    instrument; the coherence judgement is not. Record the split rather than treating the whole
+    dimension as equally uncertain.
+  v1_origin: human_human_interaction
+  v2_disposition: unchanged
+  v2_rationale: VBench-2.0 Human Interaction.
+  status: active
+- id: motion_action_quality
+  family: D_human_physical_realism
+  name_plain: Movement looks like real movement
+  definition: Motion within a clip is temporally coherent - gait, camera movement and object
+    motion proceed plausibly rather than sliding, stuttering, teleporting or reversing.
+  inside: Plausibility and coherence of motion over time.
+  outside: Whether the prompted action happened at all (action_adherence) and whether materials
+    look right (physics_material_appearance).
+  modalities:
+  - video
+  - native_av
+  observation_unit: sequence
+  observation_span_detail: Whole clip. Motion does not exist in a single frame and must never
+    be scored from one.
+  atomic_probe: One moving subject, one declared motion, static camera, plain background.
+  compound_reuse:
+  - product_hero_video
+  - actor_plus_product_vo
+  - product_handoff_action
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: static subject, camera push - camera motion only
+  - level: 2
+    observable: subject walks across frame, static camera
+  - level: 3
+    observable: subject and camera both moving
+  - level: 4
+    observable: object motion with a required trajectory, e.g. liquid pouring
+  - level: 5
+    observable: interaction motion between two entities
+  instrument_family: 4
+  secondary_instrument: 3
+  human_verifier: Required.
+  benchmark_material_readiness: partial
+  result_form: human_hybrid_score
+  failure_vocabulary: '`foot_sliding`, `teleport`, `stutter`, `direction_reversal`, `morphing`,
+    `frame_freeze`, `speed_implausible`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - clip_duration_s
+  - fps
+  - motion_class
+  - camera_motion
+  - sampled_frames
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Some components are deterministically measurable - optical-flow discontinuity
+    and frame-freeze detection do not need a human. Whether the motion is PLAUSIBLE is a perceptual
+    judgement. Deterministic perturbations of clean clips - injected freezes, reversals, jumps
+    - give known-answer qualification material without any human label, and E3 designs exactly
+    that.
+  v1_origin: motion_action_quality
+  v2_disposition: refined
+  v2_rationale: Refined to REQUIRE motion load as a recorded condition. VBench separates dynamic_degree
+    from motion_smoothness because a near-static clip scores perfectly on smoothness - without
+    motion load recorded, a model that produces almost no motion looks like one that produces
+    excellent motion.
+  status: active
+- id: physics_material_appearance
+  family: D_human_physical_realism
+  name_plain: Materials, light and shadow behave believably
+  definition: Surfaces, reflections, shadows, liquids and cloth behave in a way that does not
+    read as wrong - shadows fall consistently with the light, reflective surfaces reflect the
+    scene, liquid has volume.
+  inside: Material and lighting plausibility, including shadow and reflection consistency.
+  outside: Exact brand colour (packaging_brand_colour_fidelity) and motion coherence (motion_action_quality).
+  modalities:
+  - image
+  - video
+  - native_av
+  - editing
+  observation_unit: frame
+  observation_span_detail: Per frame for images; declared frame sample for video, since a lighting
+    defect can appear intermittently.
+  atomic_probe: One object of a declared material under one declared lighting setup on a plain
+    surface.
+  compound_reuse:
+  - product_packshot
+  - product_hero_video
+  - person_plus_product_static
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: matte object, even lighting, visible contact shadow
+  - level: 2
+    observable: glossy object with a specular highlight
+  - level: 3
+    observable: transparent or liquid-containing object
+  - level: 4
+    observable: reflective surface that should reflect the scene
+  - level: 5
+    observable: multiple materials plus a directional key light with consistent shadows
+  instrument_family: 3
+  secondary_instrument: 4
+  human_verifier: Required.
+  benchmark_material_readiness: constructed_by_eval
+  result_form: human_hybrid_score
+  failure_vocabulary: '`shadow_absent`, `shadow_direction_inconsistent`, `reflection_wrong`,
+    `material_reads_wrong`, `liquid_volume_implausible`, `floating_object`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - material_class
+  - lighting_setup
+  - surface_class
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: No deterministic oracle. Shadow-direction consistency across multiple objects
+    is partially computable but was not attempted here and must not be claimed. Treat as descriptive
+    evidence until an instrument is qualified.
+  v1_origin: physics_material_appearance
+  v2_disposition: refined
+  v2_rationale: Scope deliberately bounded DOWNWARD. VBench-2.0's physics group (mechanics,
+    thermotics) is a research frontier; this product needs commercial plausibility for 6-20s
+    media, not physical correctness. Multi-view consistency is extracted into sequence_state_continuity
+    instead.
+  status: active
+- id: person_stability_in_clip
+  family: E_temporal_continuity
+  name_plain: The person does not morph during the clip
+  definition: Within one generated clip, a person's face, hair, build and wardrobe remain the
+    same person from first frame to last.
+  inside: Within-clip identity drift.
+  outside: Identity across SEPARATE generations (person_identity) and identity across cuts (multi_shot_spatial_continuity).
+    Different units, different failures.
+  modalities:
+  - video
+  - native_av
+  - lipsync
+  observation_unit: sequence
+  observation_span_detail: Whole clip, with a declared frame sample rate. A drift that occurs
+    between two sampled frames is invisible - the sample rate is therefore part of the measurement
+    and is recorded in the Registry conditions.
+  atomic_probe: One person, static camera, plain background, clip at the declared maximum duration.
+  compound_reuse:
+  - actor_plus_product_vo
+  - one_visible_speaker
+  - two_person_dialogue
+  - product_handoff_action
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: short clip, static camera, minimal motion
+  - level: 2
+    observable: full-length clip, static camera
+  - level: 3
+    observable: subject turns or moves within the clip
+  - level: 4
+    observable: camera moves around the subject
+  - level: 5
+    observable: subject leaves frame and re-enters
+  instrument_family: 4
+  secondary_instrument: 3
+  human_verifier: Adjudicates borderline drift.
+  benchmark_material_readiness: missing
+  result_form: structured_categorical
+  failure_vocabulary: '`face_drift`, `wardrobe_change_mid_clip`, `hair_change_mid_clip`, `identity_swap`,
+    `age_drift`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - clip_duration_s
+  - fps
+  - sampled_frames
+  - camera_motion
+  - subject_motion_class
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Qualification material can be built WITHOUT human labels by taking clean clips
+    and injecting a known identity swap at a known frame - the answer is then true by construction,
+    the same trick that made the Devanagari battery cheap. "Stability is not identity" - a clip
+    that is perfectly stable on the WRONG person passes this dimension and fails person_identity.
+    Both must be reported.
+  v1_origin: person_stability_in_clip
+  v2_disposition: unchanged
+  v2_rationale: VBench subject_consistency.
+  status: active
+- id: product_stability_in_clip
+  family: E_temporal_continuity
+  name_plain: The product does not change shape during the clip
+  definition: Within one clip, a product's shape, label, proportions and colour remain constant.
+  inside: Within-clip product drift.
+  outside: Product identity across separate generations (product_identity) and brand colour
+    accuracy at a point in time (packaging_brand_colour_fidelity).
+  modalities:
+  - video
+  - native_av
+  observation_unit: sequence
+  observation_span_detail: Whole clip at a declared frame sample rate.
+  atomic_probe: One product, static camera, plain background, full-length clip.
+  compound_reuse:
+  - product_hero_video
+  - actor_plus_product_vo
+  - product_handoff_action
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: static product, static camera
+  - level: 2
+    observable: product rotates
+  - level: 3
+    observable: camera orbits the product
+  - level: 4
+    observable: product is picked up and handled
+  - level: 5
+    observable: product passes behind an occluder and re-emerges
+  instrument_family: 4
+  secondary_instrument: 3
+  human_verifier: Adjudicates borderline drift.
+  benchmark_material_readiness: missing
+  result_form: structured_categorical
+  failure_vocabulary: '`shape_drift`, `label_drift`, `colour_drift_mid_clip`, `feature_appears`,
+    `feature_disappears`, `product_swap`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - clip_duration_s
+  - fps
+  - sampled_frames
+  - camera_motion
+  - occlusion_present
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Same construction trick as person_stability_in_clip - inject a known product
+    swap into a clean clip. Re-emergence after occlusion at level 5 is the commercially important
+    case and the one most likely to fail.
+  v1_origin: product_stability_in_clip
+  v2_disposition: unchanged
+  v2_rationale: Same, applied to objects.
+  status: active
+- id: text_logo_stability_in_clip
+  family: E_temporal_continuity
+  name_plain: On-screen text and logos stay the same through the clip
+  definition: A string or mark rendered in a clip is identical in every frame it appears in
+    - it does not mutate, flicker, re-spell itself or drift.
+  inside: Within-clip constancy of rendered text and marks.
+  outside: Whether the text was correct in the first place (exact_text_latin, exact_text_devanagari).
+  modalities:
+  - video
+  - native_av
+  - editing
+  observation_unit: sequence
+  observation_span_detail: Whole clip at a declared frame sample rate. THIS IS THE DIMENSION
+    THAT PROVES WHY THE UNIT RULE EXISTS - a misspelling that changes partway through a clip
+    does not exist in any single frame. Frame-level scoring cannot see it, however accurate
+    the checker is.
+  atomic_probe: Request a fixed string on screen for the whole clip duration; transcribe every
+    sampled frame; compare the sampled transcriptions to each other AND to the target.
+  compound_reuse:
+  - product_hero_video
+  - multi_shot_branded_ad
+  - actor_plus_product_vo
+  difficulty_ladder:
+  - level: 1
+    observable: short Latin word, static, full duration
+  - level: 2
+    observable: Devanagari word, static, full duration
+  - level: 3
+    observable: text on a moving surface or with camera movement
+  - level: 4
+    observable: text plus logo present together
+  - level: 5
+    observable: text persisting across a shot change
+  instrument_family: 4
+  secondary_instrument: 1
+  human_verifier: None for the comparison; the Devanagari target-validity question is inherited
+    from exact_text_devanagari.
+  benchmark_material_readiness: missing
+  result_form: exact_pass_fail
+  failure_vocabulary: '`text_mutates_mid_clip`, `text_flickers`, `text_disappears`, `logo_drifts`,
+    `text_wrong_from_first_frame`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - clip_duration_s
+  - fps
+  - sampled_frames
+  - script
+  - string_length_words
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Depends on the text/OCR family, which is unqualified, applied per sampled
+    frame. IMPORTANT - two different failures share this dimension and must be recorded apart.
+    Text wrong in EVERY frame is an exact-text failure. Text correct then changing is a STABILITY
+    failure. Collapsing them would credit a model that got it right once and then destroyed
+    it. This is a project-observed failure - Devanagari corruption drifting WITHIN a single
+    clip is recorded in CAPABILITY-LAB-V0-PLAN as a prior observation, which makes it a permanent
+    regression case.
+  v1_origin: text_logo_stability_in_clip
+  v2_disposition: unchanged
+  v2_rationale: Our own observed failure (Devanagari drifting within a clip) is stronger evidence
+    than anything external here.
+  status: active
+- id: multi_shot_spatial_continuity
+  family: E_temporal_continuity
+  name_plain: Separate shots cut together without contradicting each other
+  definition: Across two or more shots intended to sit next to each other, the setting, lighting,
+    wardrobe, product placement and screen direction remain consistent.
+  inside: Continuity BETWEEN shots.
+  outside: Continuity within a single shot (the *_stability_in_clip dimensions).
+  modalities:
+  - video
+  - native_av
+  observation_unit: shot_pair
+  observation_span_detail: Pairs of shots, evaluated as pairs. A single shot cannot exhibit
+    this defect at all - the unit is the pair, and this is the second dimension whose defect
+    is structurally invisible at any smaller unit.
+  atomic_probe: Generate two shots of the same declared setting and subject intended to cut
+    together, then evaluate the pair.
+  compound_reuse:
+  - multi_shot_branded_ad
+  - product_handoff_action
+  - two_person_dialogue
+  difficulty_ladder:
+  - level: 1
+    observable: two shots, same setting, no subject
+  - level: 2
+    observable: two shots with the same subject
+  - level: 3
+    observable: two shots with a required screen-direction match
+  - level: 4
+    observable: three or more shots forming a sequence
+  - level: 5
+    observable: sequence with a required continuity of product state, e.g. box open in shot
+      2 after being opened in shot 1
+  instrument_family: 4
+  secondary_instrument: 3
+  human_verifier: Required. Continuity is a craft judgement with established professional vocabulary.
+  benchmark_material_readiness: partial
+  result_form: human_hybrid_score
+  failure_vocabulary: '`setting_changed`, `lighting_mismatch`, `wardrobe_mismatch`, `screen_direction_flipped`,
+    `product_state_inconsistent`, `subject_identity_changed_across_cut`.'
+  registry_conditions:
+  - resolution
+  - aspect_ratio
+  - n_shots
+  - shot_generation_method
+  - continuity_requirement_class
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Canon owns what good continuity MEANS; Eval measures whether a workflow achieves
+    it. Eval must consume Canon's continuity vocabulary rather than invent its own. Deterministic
+    perturbation is available for some sub-cases - flipping one shot horizontally creates a
+    known screen-direction violation with no human label needed.
+  v1_origin: multi_shot_spatial_continuity
+  v2_disposition: refined
+  v2_rationale: Kept as SPATIAL continuity only, deliberately narrowed. Its V1 level-5 ladder
+    example smuggled in product STATE continuity, which its name excludes. That case now belongs
+    to the new sequence_state_continuity capability, so this id becomes honest rather than overloaded.
+  status: active
+- id: spoken_script_correctness
+  family: F_speech_audio
+  name_plain: The voice says the right words in the right language
+  definition: Generated speech says the requested script, in the requested language, with correct
+    pronunciation - including Hindi and Hinglish code-mixing, where an English word inside a
+    Hindi sentence must still be pronounced correctly.
+  inside: Word-level correctness of the spoken script, language identity and pronunciation.
+  outside: Whether the mouth matches (single_speaker_lip_sync) and whether the emotion fits
+    (emotional_prosodic_fit).
+  modalities: &id009
+  - tts
+  - native_av
+  - lipsync
+  observation_unit: whole_asset
+  observation_span_detail: Audio track of the whole asset, transcribed and compared against
+    the requested script.
+  atomic_probe: Supply an exact script, generate audio, transcribe with a qualified ASR instrument,
+    compare against the script under a declared normalisation.
+  compound_reuse: &id010
+  - one_visible_speaker
+  - two_person_dialogue
+  - actor_plus_product_vo
+  - product_hero_video
+  - multi_shot_branded_ad
+  difficulty_ladder: &id011
+  - level: 1
+    observable: short English sentence
+  - level: 2
+    observable: short Hindi sentence
+  - level: 3
+    observable: Hinglish code-mixed sentence
+  - level: 4
+    observable: script containing a brand name and a number or price
+  - level: 5
+    observable: full 15-20 second voiceover with mixed script and a required emphasis
+  instrument_family: 5
+  secondary_instrument: null
+  human_verifier: A first-language listener confirms pronunciation acceptability. Word correctness
+    is machine-comparable; PRONUNCIATION is not, and must not be inferred from a matching transcript.
+  benchmark_material_readiness: missing
+  result_form: exact_pass_fail
+  failure_vocabulary: '`word_substituted`, `word_dropped`, `wrong_language`, `mispronounced`,
+    `brand_name_mispronounced`, `number_misread`, `code_switch_failed`.'
+  registry_conditions: &id012
+  - language
+  - script_system
+  - script_length_words
+  - sample_rate
+  - normalisation_ref
+  - asr_instrument_ref
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: A TRAP that mirrors the founding Devanagari lesson - a transcript matching
+    the script proves the WORDS were right, not that they were pronounced acceptably. An ASR
+    system trained to be robust will happily normalise a mispronunciation into the correct word,
+    exactly as the vision checker silently corrected a misspelling. Word correctness and pronunciation
+    acceptability are therefore recorded as SEPARATE results with separate instruments, never
+    as one number.
+  v1_origin: spoken_language_correctness
+  v2_disposition: split
+  v2_rationale: 'Controller-directed. This is the founding Devanagari trap in a different medium:
+    a robust ASR NORMALISES a mispronunciation into the correct word, exactly as the vision
+    checker silently corrected a misspelling. Word correctness is machine-comparable; pronunciation
+    acceptability needs a first-language listener. One instrument cannot answer both, so one
+    capability must not claim to.'
+  split_sibling:
+  - pronunciation_intelligibility
+  status: active
+- id: pronunciation_intelligibility
+  family: F_speech_audio
+  name_plain: The voice says the right words in the right language
+  definition: Generated speech says the requested script, in the requested language, with correct
+    pronunciation - including Hindi and Hinglish code-mixing, where an English word inside a
+    Hindi sentence must still be pronounced correctly.
+  inside: Word-level correctness of the spoken script, language identity and pronunciation.
+  outside: Whether the mouth matches (single_speaker_lip_sync) and whether the emotion fits
+    (emotional_prosodic_fit).
+  modalities: *id009
+  observation_unit: whole_asset
+  observation_span_detail: Audio track of the whole asset, transcribed and compared against
+    the requested script.
+  atomic_probe: Supply an exact script, generate audio, transcribe with a qualified ASR instrument,
+    compare against the script under a declared normalisation.
+  compound_reuse: *id010
+  difficulty_ladder: *id011
+  instrument_family: 5
+  secondary_instrument: null
+  human_verifier: A first-language listener confirms pronunciation acceptability. Word correctness
+    is machine-comparable; PRONUNCIATION is not, and must not be inferred from a matching transcript.
+  benchmark_material_readiness: missing
+  result_form: exact_pass_fail
+  failure_vocabulary: '`word_substituted`, `word_dropped`, `wrong_language`, `mispronounced`,
+    `brand_name_mispronounced`, `number_misread`, `code_switch_failed`.'
+  registry_conditions: *id012
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: A TRAP that mirrors the founding Devanagari lesson - a transcript matching
+    the script proves the WORDS were right, not that they were pronounced acceptably. An ASR
+    system trained to be robust will happily normalise a mispronunciation into the correct word,
+    exactly as the vision checker silently corrected a misspelling. Word correctness and pronunciation
+    acceptability are therefore recorded as SEPARATE results with separate instruments, never
+    as one number.
+  v1_origin: spoken_language_correctness
+  v2_disposition: split
+  v2_rationale: 'Controller-directed. This is the founding Devanagari trap in a different medium:
+    a robust ASR NORMALISES a mispronunciation into the correct word, exactly as the vision
+    checker silently corrected a misspelling. Word correctness is machine-comparable; pronunciation
+    acceptability needs a first-language listener. One instrument cannot answer both, so one
+    capability must not claim to.'
+  split_sibling:
+  - spoken_script_correctness
+  status: active
+- id: single_speaker_lip_sync
+  family: F_speech_audio
+  name_plain: The mouth matches the words, one speaker
+  definition: For one visible speaker, mouth movement corresponds to the audio being spoken,
+    in time and in shape.
+  inside: Audio-visual correspondence of mouth movement for a single speaker.
+  outside: Whether the words are right (spoken_language_correctness) and global A/V offset (audio_video_synchronisation).
+  modalities:
+  - lipsync
+  - native_av
+  observation_unit: sequence
+  observation_span_detail: Whole clip; the audio track and the video track evaluated jointly.
+  atomic_probe: One visible speaker, frontal, static camera, known script, clip at declared
+    duration.
+  compound_reuse:
+  - one_visible_speaker
+  - two_person_dialogue
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: frontal, short English utterance
+  - level: 2
+    observable: frontal, Hindi utterance
+  - level: 3
+    observable: three-quarter angle
+  - level: 4
+    observable: speaker moving or camera moving during speech
+  - level: 5
+    observable: full-length utterance with pauses and emphasis
+  instrument_family: 5
+  secondary_instrument: 4
+  human_verifier: Required for the acceptability judgement; deterministic offset is machine-measurable.
+  benchmark_material_readiness: missing
+  result_form: human_hybrid_score
+  failure_vocabulary: '`mouth_static`, `sync_drift`, `viseme_mismatch`, `mouth_moves_without_audio`,
+    `audio_without_mouth_movement`.'
+  registry_conditions:
+  - resolution
+  - fps
+  - clip_duration_s
+  - language
+  - speaker_angle
+  - audio_sample_rate
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Needs the planned 24 single-speaker clean AV clips with transcripts. DO NOT
+    invent a millisecond tolerance for "acceptable sync". Propose a calibration curve from known
+    injected offsets first and let the data say where acceptability breaks down. Inventing a
+    threshold now would encode a guess as a finding - the same error the project already paid
+    for with statistical bounds.
+  v1_origin: single_speaker_lip_sync
+  v2_disposition: unchanged
+  v2_rationale: Capability is right; the standard instrument (SyncNet LSE-C/LSE-D) is contested
+    and must be qualified rather than adopted.
+  status: active
+- id: two_speaker_turn_assignment_and_lip_sync
+  family: F_speech_audio
+  name_plain: With two people, the right person's mouth moves
+  definition: In a two-speaker asset, each line of dialogue is delivered by the correct visible
+    speaker, and only that speaker's mouth moves during their turn.
+  inside: Turn-to-speaker assignment plus per-speaker lip sync.
+  outside: Single-speaker sync (single_speaker_lip_sync) and whether the people are distinct
+    individuals (person_identity, human_human_interaction).
+  modalities:
+  - lipsync
+  - native_av
+  observation_unit: sequence
+  observation_span_detail: Whole clip, segmented by declared turn boundaries.
+  atomic_probe: Two visible speakers, a script with explicit turn boundaries, both speakers
+    in frame throughout so a wrong assignment is observable.
+  compound_reuse:
+  - two_person_dialogue
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: two turns, one each, both speakers in frame
+  - level: 2
+    observable: four alternating turns
+  - level: 3
+    observable: turns with a short overlap or interruption
+  - level: 4
+    observable: turns across a shot change
+  - level: 5
+    observable: turns in Hinglish with differing speaker genders or ages
+  instrument_family: 5
+  secondary_instrument: 4
+  human_verifier: Required.
+  benchmark_material_readiness: missing
+  result_form: structured_categorical
+  failure_vocabulary: '`turn_assigned_to_wrong_speaker`, `both_mouths_move`, `neither_mouth_moves`,
+    `turn_order_wrong`, `turn_merged`, `speaker_voice_swapped`.'
+  registry_conditions:
+  - resolution
+  - fps
+  - clip_duration_s
+  - language
+  - n_turns
+  - both_speakers_in_frame
+  - turn_boundary_ref
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: Turn boundaries are what make a wrong speaker assignment machine-detectable.
+    Without them the envelope collapses to single-speaker sync.
+  readiness_note: Needs the planned 12 two-speaker clean AV clips WITH turn boundaries - the
+    boundaries are what make wrong assignment machine-detectable. Qualification material can
+    be built deterministically by swapping the speaker channels in a clean clip - a known-wrong
+    answer with no human label. A recorded provider-shaped failure already exists in this area
+    - a provider changed valid speaker names between versions - so `error_classes` must be recorded,
+    not treated as noise.
+  v1_origin: two_speaker_turn_assignment_and_lip_sync
+  v2_disposition: unchanged
+  v2_rationale: No external benchmark covers turn assignment across two visible speakers.
+  status: active
+- id: emotional_prosodic_fit
+  family: F_speech_audio
+  name_plain: The delivery sounds right for the ad
+  definition: Tone, pace, emphasis and energy of the delivery suit the requested register -
+    warm and reassuring, urgent and promotional, calm and premium.
+  inside: Suitability of prosodic delivery to the requested register.
+  outside: Word correctness (spoken_language_correctness) and sync (single_speaker_lip_sync).
+  modalities:
+  - tts
+  - native_av
+  - lipsync
+  observation_unit: whole_asset
+  observation_span_detail: Audio track of the whole asset.
+  atomic_probe: One script delivered under several requested registers; the measurable question
+    is whether the registers are DISTINGUISHABLE and correctly identified, not whether one is
+    'good'.
+  compound_reuse:
+  - one_visible_speaker
+  - actor_plus_product_vo
+  - product_hero_video
+  - two_person_dialogue
+  difficulty_ladder:
+  - level: 1
+    observable: neutral read
+  - level: 2
+    observable: two clearly contrasting registers on the same script
+  - level: 3
+    observable: register with a required emphasis on a named word
+  - level: 4
+    observable: register sustained across a full 20-second read
+  - level: 5
+    observable: register shift partway through, e.g. calm then urgent call-to-action
+  instrument_family: 5
+  secondary_instrument: 6
+  human_verifier: Required. This is a preference-shaped judgement, not a right answer.
+  benchmark_material_readiness: missing
+  result_form: pairwise_preference
+  failure_vocabulary: '`register_absent`, `register_wrong`, `flat_delivery`, `emphasis_misplaced`,
+    `pace_wrong`, `register_not_sustained`.'
+  registry_conditions:
+  - language
+  - script_length_words
+  - requested_register
+  - sample_rate
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: There is no right answer here, so this is deliberately DESCRIPTIVE ONLY and
+    may never be a hard routing constraint. The honest measurable form is discrimination - can
+    listeners or a qualified instrument tell the requested registers apart, and does the requested
+    one get identified? That is testable; "is this delivery good" is not.
+  v1_origin: emotional_prosodic_fit
+  v2_disposition: refined
+  v2_rationale: Refined toward DISCRIMINATION - can the requested register be told apart and
+    correctly identified. TTSDS shows prosody has measurable correlates, so this need not stay
+    purely preference-shaped.
+  status: active
+- id: audio_video_synchronisation
+  family: F_speech_audio
+  name_plain: Sound and picture line up
+  definition: Global alignment between the audio track and the video track - the sound of a
+    bottle being placed happens when the bottle lands.
+  inside: Global A/V offset and drift over the clip.
+  outside: Mouth-shape correspondence (single_speaker_lip_sync), which is a finer judgement
+    than global offset.
+  modalities:
+  - native_av
+  - lipsync
+  - video
+  observation_unit: whole_asset
+  observation_span_detail: Both tracks of the whole asset; offset measured at start, middle
+    and end to detect drift.
+  atomic_probe: A clip with a sharp, unambiguous audio-visual event - a clap or an impact -
+    whose visual and audio onsets can both be located precisely.
+  compound_reuse:
+  - one_visible_speaker
+  - two_person_dialogue
+  - product_handoff_action
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: single sharp event, short clip
+  - level: 2
+    observable: single event in a full-length clip
+  - level: 3
+    observable: several events across the clip - detects drift, not just offset
+  - level: 4
+    observable: continuous speech rather than discrete events
+  - level: 5
+    observable: sync maintained across a shot change
+  instrument_family: 5
+  secondary_instrument: null
+  human_verifier: Sets the acceptability threshold once from a calibration curve; does not judge
+    per item.
+  benchmark_material_readiness: missing
+  result_form: operational_metric
+  failure_vocabulary: '`constant_offset`, `progressive_drift`, `audio_absent`, `audio_truncated`,
+    `video_truncated`, `offset_after_cut`.'
+  registry_conditions:
+  - fps
+  - audio_sample_rate
+  - clip_duration_s
+  - event_class
+  - measurement_points
+  routing_use: hard_constraint
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: 'SPLIT ENVELOPE, and the reason this is not `deterministic_ready`.
+    Computing the OFFSET between two located onsets is deterministic arithmetic. LOCATING the
+    visual onset is not: on a constructed fixture with a sharp clap it is trivial, but in arbitrary
+    production content "the moment the bottle lands" needs an event detector, which is a model.
+    So the mechanism is deterministic only inside the fixture envelope, and the qualification
+    must establish event localisation before any production claim. Reported primary result stays
+    the MEASURED OFFSET in milliseconds; any pass/fail line is a separately declared, Controller-approved
+    parameter. Material is additionally missing - the project holds no audio at all.'
+  readiness_note: The most deterministic dimension in family F. Onset detection on both tracks
+    gives a measured offset in milliseconds with no human label, and known offsets can be INJECTED
+    into clean clips to qualify the instrument exactly. What still needs a human decision is
+    the ACCEPTABILITY threshold - report the measured offset as the primary result and treat
+    any pass/fail line as a separately declared, Controller-approved parameter.
+  v1_origin: audio_video_synchronisation
+  v2_disposition: unchanged
+  v2_rationale: Distinct from lip-sync in the literature, matching our separation.
+  status: active
+- id: proposition_objective_fit
+  family: G_commercial_creative
+  name_plain: The ad actually communicates what it was supposed to
+  definition: A viewer takes away the intended proposition and the intended action from the
+    asset - the objective stated in the brief is the objective a viewer perceives.
+  inside: Whether the intended message and objective are conveyed.
+  outside: Whether the copy is spelled right (exact_text_*) and whether the product is the right
+    product (product_identity).
+  modalities:
+  - image
+  - video
+  - native_av
+  observation_unit: whole_asset
+  observation_span_detail: The finished asset as a customer would see it, at delivery size.
+  atomic_probe: NOT atomic. This dimension is only meaningful on a complete commercial asset
+    generated against a real brief, and is therefore compound-only.
+  compound_reuse:
+  - typography_led_image
+  - person_plus_product_static
+  - product_hero_video
+  - multi_shot_branded_ad
+  - actor_plus_product_vo
+  difficulty_ladder:
+  - level: 1
+    observable: single explicit proposition, product plus claim
+  - level: 2
+    observable: proposition plus a specific call to action
+  - level: 3
+    observable: proposition requiring an implied benefit rather than a stated one
+  - level: 4
+    observable: proposition plus audience-appropriate register
+  - level: 5
+    observable: proposition carried across a multi-shot narrative
+  instrument_family: 6
+  secondary_instrument: null
+  human_verifier: Required, and it must be FRESH INDEPENDENT human review. Public or source
+    preference labels are one party's observations and are never our creative truth.
+  benchmark_material_readiness: missing
+  result_form: pairwise_preference
+  failure_vocabulary: '`proposition_absent`, `proposition_wrong`, `cta_absent`, `benefit_unclear`,
+    `audience_mismatch`, `message_contradicted_by_image`.'
+  registry_conditions:
+  - brief_ref
+  - delivery_size_declared
+  - asset_modality
+  - reviewer_pool_ref
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Depends on Canon's 30-brief bank, which Eval must NOT independently author,
+    and on Resources' 60 active commercial assets. Measure by pairwise comparison or structured
+    issue-detection, not by an absolute score - "is this ad any good" has no right answer, but
+    "which of these two better conveys the stated proposition" is answerable and repeatable.
+    FALSE CRITICISM must be measured alongside detection - an instrument that flags problems
+    in flawless work is as useless as one that misses them.
+  v1_origin: proposition_objective_fit
+  v2_disposition: unchanged
+  v2_rationale: descriptive_only preserved.
+  status: active
+- id: hierarchy_product_as_hero
+  family: G_commercial_creative
+  name_plain: The product is the thing you look at first
+  definition: Visual hierarchy places the intended subject - usually the product or the key
+    message - as the dominant element, rather than burying it behind a model, a background or
+    decoration.
+  inside: Whether the intended hero element dominates attention.
+  outside: Whether the product is correctly rendered (product_identity) and whether text is
+    legible (typography_legibility).
+  modalities:
+  - image
+  - video
+  - native_av
+  observation_unit: whole_asset
+  observation_span_detail: The finished asset at delivery size.
+  atomic_probe: NOT atomic in the commercial sense. A controlled probe CAN vary the hero element's
+    size, placement and contrast systematically to test whether an instrument detects the intended
+    hierarchy at all.
+  compound_reuse:
+  - product_packshot
+  - person_plus_product_static
+  - typography_led_image
+  - product_hero_video
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: product isolated, plain background
+  - level: 2
+    observable: product with a supporting element
+  - level: 3
+    observable: product plus person, product must still dominate
+  - level: 4
+    observable: product plus person plus text block
+  - level: 5
+    observable: hero maintained across a multi-shot sequence
+  instrument_family: 6
+  secondary_instrument: 2
+  human_verifier: Required.
+  benchmark_material_readiness: missing
+  result_form: pairwise_preference
+  failure_vocabulary: '`hero_subordinate`, `model_dominates`, `background_dominates`, `text_dominates_product`,
+    `hero_cropped`, `attention_split`.'
+  registry_conditions:
+  - brief_ref
+  - delivery_size_declared
+  - asset_modality
+  - hero_element_declared
+  - reviewer_pool_ref
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Canon owns what hierarchy MEANS - Eval consumes that definition and must not
+    re-derive it. Partially instrumentable - relative area, centrality and contrast of the declared
+    hero region are computable. Whether that constitutes hierarchy is a craft judgement. Record
+    the computable components separately from the judgement so the two are never confused.
+  v1_origin: hierarchy_product_as_hero
+  v2_disposition: unchanged
+  v2_rationale: descriptive_only preserved.
+  status: active
+- id: composition_brand_register
+  family: G_commercial_creative
+  name_plain: It looks like it belongs to this brand, at this quality level
+  definition: Composition, styling, colour treatment and production values sit in the register
+    the brand requires - premium, mass-market, playful, clinical - rather than merely being
+    technically correct.
+  inside: Compositional quality and register appropriateness.
+  outside: Exact brand colour values (packaging_brand_colour_fidelity) and mark geometry (logo_wordmark_fidelity),
+    which are hard-fidelity questions.
+  modalities:
+  - image
+  - video
+  - native_av
+  observation_unit: whole_asset
+  observation_span_detail: The finished asset at delivery size.
+  atomic_probe: NOT atomic. Compound-only.
+  compound_reuse:
+  - typography_led_image
+  - product_packshot
+  - person_plus_product_static
+  - product_hero_video
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: single declared register, simple composition
+  - level: 2
+    observable: register plus a stated compositional constraint
+  - level: 3
+    observable: register maintained with a person in frame
+  - level: 4
+    observable: two contrasting registers on the same product - tests discrimination
+  - level: 5
+    observable: register sustained across a multi-shot sequence
+  instrument_family: 6
+  secondary_instrument: null
+  human_verifier: Required, fresh and independent.
+  benchmark_material_readiness: missing
+  result_form: pairwise_preference
+  failure_vocabulary: '`register_mismatch`, `composition_unbalanced`, `styling_generic`, `production_value_low`,
+    `visual_cliche`, `crop_awkward`.'
+  registry_conditions:
+  - brief_ref
+  - delivery_size_declared
+  - asset_modality
+  - declared_register
+  - reviewer_pool_ref
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: The most subjective dimension in the contract and the one most at risk of
+    producing a confident-looking number that means nothing. Discrimination framing at level
+    4 is the honest test - can the register be told apart and correctly identified. HARD-FIDELITY
+    AND CREATIVE-QUALITY CHECKS ARE SEPARATE INSTRUMENTS AND MUST NOT BE MERGED - one evaluator
+    cannot honestly answer both "is this spelled correctly" and "is this any good".
+  v1_origin: composition_brand_register
+  v2_disposition: unchanged
+  v2_rationale: descriptive_only preserved.
+  status: active
+- id: hook_pacing_temporal_hierarchy
+  family: G_commercial_creative
+  name_plain: The video grabs attention early and holds it
+  definition: A short video establishes its hook in the opening seconds and paces its information
+    so the proposition and call to action land within the duration.
+  inside: Temporal structure of attention and information delivery in a short video.
+  outside: Motion plausibility (motion_action_quality) and shot-to-shot continuity (multi_shot_spatial_continuity).
+  modalities:
+  - video
+  - native_av
+  observation_unit: sequence
+  observation_span_detail: Whole clip, with the opening window evaluated separately from the
+    remainder.
+  atomic_probe: NOT atomic. Compound-only, and only on video.
+  compound_reuse:
+  - product_hero_video
+  - actor_plus_product_vo
+  - one_visible_speaker
+  - multi_shot_branded_ad
+  difficulty_ladder:
+  - level: 1
+    observable: single-shot 6-second clip with one message
+  - level: 2
+    observable: single-shot clip with hook plus call to action
+  - level: 3
+    observable: two-shot 10-15 second clip
+  - level: 4
+    observable: multi-shot 15-20 second clip with a required beat structure
+  - level: 5
+    observable: multi-shot clip with hook, demonstration, proposition and call to action all
+      landing within duration
+  instrument_family: 6
+  secondary_instrument: 4
+  human_verifier: Required, fresh and independent.
+  benchmark_material_readiness: missing
+  result_form: pairwise_preference
+  failure_vocabulary: '`hook_absent`, `hook_late`, `pacing_flat`, `cta_missing`, `cta_too_late`,
+    `information_overloaded`, `dead_opening`.'
+  registry_conditions:
+  - brief_ref
+  - clip_duration_s
+  - n_shots
+  - asset_modality
+  - reviewer_pool_ref
+  routing_use: descriptive_only
+  instrument_readiness: blocked_pending_qualification
+  production_envelope_note: null
+  readiness_note: Canon owns temporal hierarchy as a craft concept. Some structure is computable
+    - shot-boundary timings, when the product first appears, when on-screen text first appears
+    - and those measurements are worth recording independently of the judgement, because they
+    are reproducible and the judgement is not.
+  v1_origin: hook_pacing_temporal_hierarchy
+  v2_disposition: unchanged
+  v2_rationale: descriptive_only preserved.
+  status: active
+- id: reliability_pass_at_k
+  family: H_operational
+  name_plain: How often it works, and how many tries it takes
+  definition: For a given capability and difficulty level, the proportion of attempts that pass,
+    and the probability of at least one pass within k attempts.
+  inside: Pass rate per independent base item, and pass-at-k derived from repeats.
+  outside: What the failures were (each capability's own failure vocabulary) and what they cost
+    (cost_and_cpao).
+  modalities:
+  - image
+  - video
+  - native_av
+  - lipsync
+  - tts
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: Computed across the repeats of each base item. THE COUNTING RULE
+    IS THE DIMENSION - confidence is computed on independent BASE ITEMS, never on trials and
+    never on frames.
+  atomic_probe: None of its own. Derived entirely from the trials that other dimensions already
+    generated.
+  compound_reuse:
+  - ALL
+  difficulty_ladder:
+  - level: 1
+    observable: pass rate at 1 attempt
+  - level: 2
+    observable: pass-at-2
+  - level: 3
+    observable: pass-at-4
+  - level: 4
+    observable: pass rate reported per difficulty level of the parent capability
+  - level: 5
+    observable: pass rate under a full production recipe rather than a single call
+  instrument_family: operational
+  secondary_instrument: null
+  human_verifier: none
+  benchmark_material_readiness: no_external_stimulus_required
+  result_form: operational_metric
+  failure_vocabulary: Inherited from the parent capability. This dimension adds no vocabulary
+    of its own.
+  registry_conditions:
+  - parent_dimension
+  - difficulty_level
+  - n_items
+  - repeats_per_item
+  - seed_policy
+  routing_use: hard_constraint
+  instrument_readiness: deterministic_ready
+  production_envelope_note: Mechanism ready, but it is DERIVED - it has no value until real
+    trials exist. Zero generations have been run, so the envelope is empty rather than blocked.
+  readiness_note: Zero marginal generation cost - it is arithmetic over trials that already
+    exist. THE TRAP - repeats are not independent items. A 96% pass rate over 2 repeats of 3
+    items is not a 96% pass rate. n_items and repeats_per_item are BOTH mandatory in every Registry
+    row so this can never be silently misread. Reporting a pass rate without n_items is a defect,
+    not a style choice.
+  v1_origin: reliability_pass_at_k
+  v2_disposition: unchanged
+  v2_rationale: 'Counting rule unchanged: confidence on base items.'
+  status: active
+- id: cost_and_cpao
+  family: H_operational
+  name_plain: What an ACCEPTED result actually costs
+  definition: Total cost to reach an output that passes its acceptance requirements - including
+    failed attempts, evaluator calls and human review time, not just the price of one generation.
+  inside: Generation cost, transform cost, evaluator cost, human verification cost, retry cost,
+    and cost per accepted outcome.
+  outside: Whether the output was any good - that is every other dimension.
+  modalities:
+  - image
+  - video
+  - native_av
+  - lipsync
+  - tts
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: Aggregated across all attempts required to reach an accepted outcome.
+  atomic_probe: None of its own. Derived from logged costs on trials other dimensions generated.
+  compound_reuse:
+  - ALL
+  difficulty_ladder:
+  - level: 1
+    observable: cost per successful call
+  - level: 2
+    observable: cost per accepted outcome including retries
+  - level: 3
+    observable: including evaluator cost
+  - level: 4
+    observable: including human verification time
+  - level: 5
+    observable: cost per accepted outcome for a complete production recipe end to end
+  instrument_family: operational
+  secondary_instrument: null
+  human_verifier: Supplies the human-time rate; does not judge per item.
+  benchmark_material_readiness: no_external_stimulus_required
+  result_form: operational_metric
+  failure_vocabulary: Not applicable - this dimension records cost, not defects.
+  registry_conditions:
+  - currency
+  - price_source
+  - price_read_date
+  - component_breakdown
+  - human_rate_assumption
+  routing_use: hard_constraint
+  instrument_readiness: deterministic_ready
+  production_envelope_note: 'Mechanism ready and derived. Note the envelope gap that matters:
+    human verification cost is expected to dominate and has no approved rate, so CpAO cannot
+    be completed from generation and evaluator costs alone.'
+  readiness_note: THIS IS THE PROJECT'S PRIMARY LONG-TERM METRIC and the most commonly mis-stated.
+    Three rules carried from prior evidence - (1) HUMAN CHECKING, NOT API SPEND, IS LIKELY TO
+    DOMINATE. The original cost model left it out entirely. Any ratio quoted before we have
+    measured it is an ILLUSTRATIVE SCENARIO, not a finding. (2) EVALUATOR COST IS NOT HIDDEN
+    INSIDE GENERATION COST. At roughly one rupee per VLM check, evaluation can exceed a third
+    of the true cost of observing a cheap generation. (3) THE ZERO-PASS RULE. When passes ==
+    0, cost per pass is null - never infinity, never a large sentinel - and the cell cost goes
+    in a lower-bound field. "Never observed to pass in N trials" and "expensive per pass" are
+    different facts about the world.
+  v1_origin: cost_and_cpao
+  v2_disposition: refined
+  v2_rationale: 'Refined to carry the Controller''s TWO CpAO views: api_tool_cpao (diagnostic)
+    and fully_loaded_cpao (primary business metric, including human review time in the operational
+    path). V1 had a single cost view.'
+  status: active
+- id: latency_errors_refusals
+  family: H_operational
+  name_plain: How slow it is, how often it breaks, how often it says no
+  definition: Wall-clock latency distribution, API error rate by class, and content refusal
+    or moderation-block rate.
+  inside: Latency p50 and p95, error classes and counts, refusal and moderation rates.
+  outside: Whether the returned output was correct.
+  modalities:
+  - image
+  - video
+  - native_av
+  - lipsync
+  - tts
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: Logged on every API interaction, including ones that returned nothing
+    usable.
+  atomic_probe: None of its own. Logged as a free rider on every call any dimension makes.
+  compound_reuse:
+  - ALL
+  difficulty_ladder:
+  - level: 1
+    observable: latency p50 on the default configuration
+  - level: 2
+    observable: p50 and p95 together
+  - level: 3
+    observable: error rate broken down by error class
+  - level: 4
+    observable: refusal rate on commercially ordinary content
+  - level: 5
+    observable: behaviour under sustained load or rate limiting
+  instrument_family: operational
+  secondary_instrument: null
+  human_verifier: none
+  benchmark_material_readiness: no_external_stimulus_required
+  result_form: operational_metric
+  failure_vocabulary: '`4xx`, `5xx`, `timeout`, `rate_limited`, `moderation_block`, `content_refusal`,
+    `malformed_response`, `truncated_output`.'
+  registry_conditions:
+  - region
+  - concurrency
+  - time_of_day_window
+  - retry_policy
+  - request_size
+  routing_use: hard_constraint
+  instrument_readiness: deterministic_ready
+  production_envelope_note: Mechanism ready and derived; every call produces this data, including
+    calls that fail. Empty until real calls are made.
+  readiness_note: Costs nothing extra - every call already produces this data, and a call that
+    FAILS still produces it. A p50 alone hides the timeout tail that decides whether a workflow
+    is usable interactively, so p95 is mandatory. Refusals must be reported separately and never
+    folded into a pass or fail verdict - "the model refused" and "the model tried and got it
+    wrong" are different facts with different routing consequences. A recorded prior failure
+    - a provider changed valid speaker names between versions - shows error classes are schema-shaped
+    information, not noise.
+  v1_origin: latency_errors_refusals
+  v2_disposition: unchanged
+  v2_rationale: Operational; ours to own.
+  status: active
+- id: reproducibility
+  family: H_operational
+  name_plain: Does it do the same thing twice, and can a failure be fixed
+  definition: Whether repeated identical requests produce equivalent results, whether seeds
+    are supported and honoured, and whether a failed output can be repaired by a further call
+    rather than discarded.
+  inside: Repeat agreement, seed support and honouring, and repair success rate and cost.
+  outside: First-attempt pass rate (reliability_pass_at_k).
+  modalities: &id013
+  - image
+  - video
+  - native_av
+  - lipsync
+  - tts
+  - editing
+  observation_unit: asset_set_over_time
+  observation_span_detail: Repeats of one item compared with each other; repair attempts linked
+    to their parent failed attempt.
+  atomic_probe: None of its own. Derived from repeats and from repair attempts on already-generated
+    failures.
+  compound_reuse: &id014
+  - ALL
+  difficulty_ladder: &id015
+  - level: 1
+    observable: seed supported yes or no, as documented and as observed
+  - level: 2
+    observable: repeat agreement with a fixed seed
+  - level: 3
+    observable: repeat agreement with no seed control
+  - level: 4
+    observable: repair success rate on a failed output
+  - level: 5
+    observable: repair success rate by failure class - which defects are cheaply fixable
+  instrument_family: operational
+  secondary_instrument: null
+  human_verifier: none
+  benchmark_material_readiness: no_external_stimulus_required
+  result_form: operational_metric
+  failure_vocabulary: '`seed_unsupported`, `seed_ignored`, `repeat_divergent`, `repair_failed`,
+    `repair_introduced_new_defect`.'
+  registry_conditions: &id016
+  - seed_policy
+  - repeats_per_item
+  - repair_strategy_ref
+  - parent_failure_class
+  routing_use: descriptive_only
+  instrument_readiness: deterministic_ready
+  production_envelope_note: 'SPLIT ENVELOPE. Repeat agreement is deterministic arithmetic over
+    repeats we already budget, and is ready. REPAIR is not: measuring it requires a repair loop
+    that DOES NOT EXIST, and repair attempts are additional generations that must be budgeted
+    explicitly rather than smuggled in under generate-once. The repair fields stay null until
+    that loop exists.'
+  readiness_note: Repeat agreement is cheap and depends only on repeats already budgeted. REPAIR
+    IS DIFFERENT - measuring repair requires a repair loop that DOES NOT EXIST YET, and repair
+    attempts are additional generations that must be budgeted explicitly rather than smuggled
+    in under the generate-once rule. The generate-once rule says do not regenerate to satisfy
+    another EVALUATOR; a repair attempt is a genuinely new trial and is recorded as a new attempt
+    id linked to its parent. Repair matters commercially because a cheaply-repairable failure
+    and a total loss are not equivalent, and routing should be able to prefer the former - but
+    that field stays null until a repair loop exists to measure.
+  v1_origin: reproducibility_repairability
+  v2_disposition: split
+  v2_rationale: Controller-directed. Repeat agreement is measurable now from repeats we already
+    budget. REPAIR requires a repair loop that DOES NOT EXIST, and repair attempts are additional
+    generations. V1 flagged the split in an envelope note; v2 makes it structural. repairability
+    is DORMANT.
+  split_sibling:
+  - repairability
+  status: active
+- id: repairability
+  family: H_operational
+  name_plain: Does it do the same thing twice, and can a failure be fixed
+  definition: Whether repeated identical requests produce equivalent results, whether seeds
+    are supported and honoured, and whether a failed output can be repaired by a further call
+    rather than discarded.
+  inside: Repeat agreement, seed support and honouring, and repair success rate and cost.
+  outside: First-attempt pass rate (reliability_pass_at_k).
+  modalities: *id013
+  observation_unit: asset_set_over_time
+  observation_span_detail: Repeats of one item compared with each other; repair attempts linked
+    to their parent failed attempt.
+  atomic_probe: None of its own. Derived from repeats and from repair attempts on already-generated
+    failures.
+  compound_reuse: *id014
+  difficulty_ladder: *id015
+  instrument_family: operational
+  secondary_instrument: null
+  human_verifier: none
+  benchmark_material_readiness: no_external_stimulus_required
+  result_form: operational_metric
+  failure_vocabulary: '`seed_unsupported`, `seed_ignored`, `repeat_divergent`, `repair_failed`,
+    `repair_introduced_new_defect`.'
+  registry_conditions: *id016
+  routing_use: descriptive_only
+  instrument_readiness: deterministic_ready
+  production_envelope_note: 'SPLIT ENVELOPE. Repeat agreement is deterministic arithmetic over
+    repeats we already budget, and is ready. REPAIR is not: measuring it requires a repair loop
+    that DOES NOT EXIST, and repair attempts are additional generations that must be budgeted
+    explicitly rather than smuggled in under generate-once. The repair fields stay null until
+    that loop exists.'
+  readiness_note: Repeat agreement is cheap and depends only on repeats already budgeted. REPAIR
+    IS DIFFERENT - measuring repair requires a repair loop that DOES NOT EXIST YET, and repair
+    attempts are additional generations that must be budgeted explicitly rather than smuggled
+    in under the generate-once rule. The generate-once rule says do not regenerate to satisfy
+    another EVALUATOR; a repair attempt is a genuinely new trial and is recorded as a new attempt
+    id linked to its parent. Repair matters commercially because a cheaply-repairable failure
+    and a total loss are not equivalent, and routing should be able to prefer the former - but
+    that field stays null until a repair loop exists to measure.
+  v1_origin: reproducibility_repairability
+  v2_disposition: split
+  v2_rationale: Controller-directed. Repeat agreement is measurable now from repeats we already
+    budget. REPAIR requires a repair loop that DOES NOT EXIST, and repair attempts are additional
+    generations. V1 flagged the split in an envelope note; v2 makes it structural. repairability
+    is DORMANT.
+  split_sibling:
+  - reproducibility
+  status: dormant
+  dormant_reason: No repair loop exists. Repair attempts are additional generations that must
+    be budgeted explicitly, not smuggled in under generate-once. Measurable only once a repair
+    loop is built.
+- id: camera_framing_fidelity
+  family: A_constraint_fidelity
+  observation_unit: sequence
+  routing_use: hard_constraint
+  v1_origin: null
+  v2_disposition: added
+  status: active
+  admission_justification: 'action_adherence asks whether the SUBJECT did what was asked. A
+    camera instruction is about the OBSERVER, not the subject: a push-in can be absent while
+    the subject action is perfect, and no existing capability''s verdict changes. No condition
+    can express it either, because a condition records circumstances, not whether an instruction
+    was honoured.'
+  external_evidence: VBench-2.0 names Camera Motion as its own controllable dimension; providers
+    expose camera/motion controls as first-class API parameters.
+  instrument_readiness: blocked_pending_qualification
+  benchmark_material_readiness: missing
+  definition_status: SPECIFIED_IN_V2_PROPOSAL_NOT_YET_FULLY_AUTHORED
+- id: sequence_state_continuity
+  family: E_temporal_continuity
+  observation_unit: shot_pair
+  routing_use: hard_constraint
+  v1_origin: null
+  v2_disposition: added
+  status: active
+  admission_justification: multi_shot_spatial_continuity covers geometry and screen direction.
+    State continuity is ORDERED and causal - the box is open in shot 2 BECAUSE it was opened
+    in shot 1 - and a spatially perfect pair can be state-inconsistent. V1 already asked its
+    spatial capability to carry a state example at level 5, which is the clearest possible evidence
+    that one id was doing two jobs.
+  external_evidence: VBench-2.0 Motion Order Understanding and Multi-View Consistency.
+  instrument_readiness: blocked_pending_qualification
+  benchmark_material_readiness: missing
+  definition_status: SPECIFIED_IN_V2_PROPOSAL_NOT_YET_FULLY_AUTHORED
+- id: technical_visual_integrity
+  family: D_human_physical_realism
+  observation_unit: sequence
+  routing_use: hard_constraint
+  v1_origin: null
+  v2_disposition: added
+  status: active
+  admission_justification: Flicker, transient corruption, warping and sudden softness are not
+    identity drift (the subject is still the same person), not motion quality (the motion may
+    be smooth) and not anatomy (the body is correct). Every existing capability can pass on
+    an asset a customer would reject on sight. Nothing in V1's 36 has a home for it.
+  external_evidence: VBench dedicates temporal_flickering, motion_smoothness and imaging_quality
+    to this space - 3 of its 16 dimensions.
+  instrument_readiness: blocked_pending_qualification
+  benchmark_material_readiness: missing
+  definition_status: SPECIFIED_IN_V2_PROPOSAL_NOT_YET_FULLY_AUTHORED
+- id: voice_identity_consistency
+  family: F_speech_audio
+  observation_unit: asset_set_over_time
+  routing_use: hard_constraint
+  v1_origin: null
+  v2_disposition: added
+  status: active
+  admission_justification: The audio analogue of person_identity, and genuinely absent. spoken_script_correctness
+    checks WHAT was said; pronunciation_intelligibility checks HOW clearly; emotional_prosodic_fit
+    checks register. None asks whether it is the SAME VOICE across a campaign - a brand voice
+    that changes between assets is a commercial failure every one of those three would pass.
+  external_evidence: TTS evaluation measures speaker similarity via automatic speaker verification
+    (ASV) as an instrument distinct from intelligibility (ASR-WER).
+  instrument_readiness: blocked_pending_qualification
+  benchmark_material_readiness: missing
+  definition_status: SPECIFIED_IN_V2_PROPOSAL_NOT_YET_FULLY_AUTHORED

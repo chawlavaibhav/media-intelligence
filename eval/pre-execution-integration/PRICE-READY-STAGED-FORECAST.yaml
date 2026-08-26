@@ -1,0 +1,190 @@
+# EVAL-011 E11-G — price-ready staged forecast
+#
+# Structured so it can CONSUME EVAL-010 verified price records without guessing
+# anything. A missing price stays null and BLOCKS the total for its stage.
+#
+# No budget is approved. Rs 0 spend. No accounts. No model/evaluator calls.
+
+meta:
+  task: EVAL-011
+  package: E11-G
+  date: 2026-08-26
+  authorises_spend: false
+  price_source: "EVAL-010 model-supply/PRICE-VERIFICATION.yaml @ work/eval-010-route-verification"
+
+rules:
+  - "Preserve the source billing unit. Never normalise incompatible units by guesswork."
+  - "A missing price is null. A stage containing any null generation price has NO total."
+  - "Nominal benchmark cost and cash outlay after credits are different numbers and are kept apart."
+  - "A route-specific price is never generalised across sibling APIs or routes of the same model."
+  - "Frontier Clouds identity is NOT inferred. Cash outlay stays unresolved."
+
+controller_price_clarifications_applied:
+  nano_banana_2:
+    correct_reading: "approximately USD 0.067 per generated 1K-RESOLUTION IMAGE"
+    incorrect_reading_explicitly_rejected: "USD 0.067 per one thousand images"
+    billing_unit: "per generated image, resolution-dependent"
+  veo_3_1_lite:
+    correct_reading: "USD 0.05 is a route-specific 720p video+audio COUNT price on the cited Google Cloud pricing surface"
+    incorrect_reading_explicitly_rejected: "a universal price or billing unit for every Google or Veo API route"
+    generalisation_forbidden: true
+
+# =========================================================================
+verified_prices_available_to_this_forecast:
+  count: 2
+  vendors: 1
+  note: "Google is the only vendor with any verified price. These are the ONLY values this forecast may use."
+  records:
+    - id: PRICE-NB2
+      model_display_name: "Gemini 3.1 Flash Image (Nano Banana 2)"
+      api_model_id: "gemini-3.1-flash-image"
+      route: "Google Vertex AI / Gemini API"
+      billing_unit: "per generated image, by output resolution"
+      currency: USD
+      values_per_image: {"512": 0.045, "1K": 0.067, "2K": 0.101, "4K": 0.15}
+      unit_wording_guard: "per ONE image at that resolution, not per thousand images"
+      source: "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+      date_verified_utc: "2026-08-26T09:52:46Z"
+      used_by_any_named_slot_candidate: false
+      note: "not a named candidate on any scientific slot; listed as an IMG-01 equivalent only"
+    - id: PRICE-VEO31LITE
+      model_display_name: "Veo 3.1 Lite"
+      api_model_id: "veo-3.1-lite-generate-001"
+      route: "Google Vertex AI / Gemini API"
+      billing_unit: "per generated video (1 count)"
+      currency: USD
+      values: {"720p_video_plus_audio": 0.05, "1080p_video_plus_audio": 0.08, "720p_silent": 0.03, "1080p_silent": 0.05}
+      route_scope_guard: "this Google Cloud route only; not fal's veo3.1/lite and not Runway's veo3.1_fast"
+      source: "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+      date_verified_utc: "2026-08-26T09:52:46Z"
+      used_by_named_slot_candidate: VID-05
+  additional_verified_google_prices_not_on_any_slot:
+    - {model: "Veo 3.1 (full tier)", unit: "per generated video (count)", usd_720p_1080p_with_audio: 0.40, slot: VID-01, identity_caveat: "only a -preview api id is enumerated"}
+    - {model: "Veo 3.1 Fast", unit: "per generated video (count)", usd_720p_with_audio: 0.10, api_model_id: null}
+    - {model: "Nano Banana Pro", unit: "per generated image", usd_1K_2K: 0.134, usd_4K: 0.24, api_model_id: null}
+    - {model: "Nano Banana 2 Lite", unit: "per generated image", usd_1K: 0.034, api_model_id: null}
+    - {model: "Gemini Omni Flash", unit: "per 1M output tokens", usd: 17.50, tokens_per_second_720p_with_audio: 5792, api_model_id: null}
+
+# =========================================================================
+staged_forecast:
+
+  stage_Q:
+    generations: 0
+    generation_cost:
+      value: 0
+      currency: USD
+      status: STRUCTURALLY_ZERO
+      why: "Stage Q qualifies instruments against constructed or captured truth. No model output is generated, so there is no generation cost to be missing."
+    evaluator_calls:
+      formula: "sum over qualification units of ( items * R_q )"
+      exact_items_known: {Q1: 102, Q2a: 96}
+      exact_items_unknown: [Q2b, Q3, Q4, Q5, Q6]
+      r_q_status: NOT_FROZEN
+      value: null
+    evaluator_cost:
+      value: null
+      status: PRICE_BLOCKED
+      blocker: "EVAL-010 verified NO evaluator unit price for any instrument family"
+      note: "several instruments are themselves model APIs (VLM, OCR, ASR), so this is a real cost line, not a rounding error"
+    human_cost:
+      value: null
+      status: RATE_UNKNOWN
+      blocker: "Q4 and Q6 need human reference and a reviewer panel; RES-004 supplies person-hours but explicitly no rates"
+    stage_total:
+      value: null
+      status: BLOCKED
+      blocked_by: [evaluator_unit_prices, human_rate]
+      honest_summary: "the generation line is a verified zero; the stage total is still unknown"
+
+  stage_A:
+    generations: 90
+    generation_cost:
+      value: null
+      status: BLOCKED
+      priced_slots: 1
+      priced_slot_detail:
+        VID-05:
+          generations: 8
+          unit_price_usd: 0.05
+          billing_unit: "per generated video (1 count), 720p video+audio, Google Cloud route"
+          line_total_usd: 0.40
+          formula: "8 * 0.05"
+          caveat: "this line is exact for this route only and must not be scaled to other slots"
+      unpriced_slots: 11
+      unpriced_slot_ids: [IMG-01, IMG-02, IMG-03, IMG-04, VID-01, VID-02, VID-03, VID-04, AUD-01, AUD-02, AUD-03]
+      why_no_total: >-
+        Eleven of twelve slots have no verified generation price. Totalling the stage from one
+        priced slot would be a fabricated budget. VID-01 has a verified Google price of USD 0.40
+        per count but its api id is only a -preview identifier, so it is not counted as
+        execution-ready here.
+    evaluator_cost:
+      value: null
+      status: PRICE_BLOCKED
+      call_count_status: ESTIMATE_ONLY
+      call_count_estimate: 1005
+      call_count_estimate_caveat: "proportional to 5515*90/494 under a uniform-fanout assumption the source forecast does not support"
+    human_cost:
+      value: null
+      status: RATE_UNKNOWN
+      units_estimate: 34.3
+      units_estimate_caveat: "same proportional assumption"
+    stage_total:
+      value: null
+      status: BLOCKED
+      blocked_by: [generation_prices_for_11_slots, evaluator_unit_prices, human_rate]
+
+  stage_B:
+    generations_max: 404
+    generations_expected: null
+    generations_expected_why_null: "depends on the Stage A survivor set; no pass-rate saving may be claimed"
+    generation_cost:
+      value: null
+      status: BLOCKED
+      blocked_by: [survivor_set_unknown, generation_prices_for_11_slots]
+    evaluator_cost: {value: null, status: PRICE_BLOCKED}
+    human_cost: {value: null, status: RATE_UNKNOWN}
+    stage_total: {value: null, status: BLOCKED}
+
+  stage_C:
+    outcome_attempts: 32
+    generations: null
+    generations_why_null: "production_steps_per_recipe is unknown; the Planner that would choose a recipe does not exist"
+    generation_cost: {value: null, status: BLOCKED, blocked_by: [generation_count_unknown, generation_prices]}
+    evaluator_cost: {value: null, status: PRICE_BLOCKED}
+    human_cost:
+      value: null
+      status: BLOCKED
+      formula: "n_video_outcomes*0.5 + n_static_outcomes*0.15 + n_repairs*0.3 + n_adjudications*0.25 person-hours, times an hourly rate"
+      blocked_by: [HED-1_controller_decision, hourly_rate_unknown]
+    cpao:
+      api_tool_cpao: {value: null, formula: "(generation_cost + evaluator_cost) / accepted_outcomes"}
+      fully_loaded_cpao: {value: null, formula: "(generation_cost + evaluator_cost + human_cost + local_compute_cost) / accepted_outcomes"}
+      computable_only_here: true
+      why: "accepted_outcomes exists only at Stage C. Layers 1-3 have no denominator."
+    stage_total: {value: null, status: BLOCKED}
+
+# =========================================================================
+nominal_vs_cash:
+  nominal_benchmark_cost:
+    definition: "list-price cost of running a stage, from verified prices only"
+    computable_for_any_stage: false
+    reason: "no stage has a complete set of verified generation and evaluator prices"
+  cash_outlay_after_credits:
+    status: UNRESOLVED
+    reason: >-
+      Frontier Clouds service identity remains unresolved in the repository. We do not know which
+      provider holds the user's credits, what those credits cover, or how much remains. Media
+      generation is frequently excluded from credit grants that cover language models.
+    do_not_infer: true
+
+price_completeness_summary:
+  stages_price_complete: 0
+  stages_price_blocked: 4
+  stages_with_a_verified_zero_generation_line: 1
+  stages_with_at_least_one_priced_line: 1
+  the_one_priced_line: "Stage A / VID-05 — 8 generations x USD 0.05 = USD 0.40 on the Google Cloud 720p video+audio route"
+  what_would_unblock_the_most:
+    1: "evaluator unit prices — they block every stage including the one with zero generations"
+    2: "generation prices for the 11 unpriced Stage A slots"
+    3: "the Frontier Clouds identity — the only thing that can turn nominal cost into cash outlay"
+    4: "HED-1 — which human review time counts as required in fully-loaded CpAO"

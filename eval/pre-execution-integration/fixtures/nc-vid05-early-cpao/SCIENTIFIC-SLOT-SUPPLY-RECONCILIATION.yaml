@@ -1,0 +1,504 @@
+meta:
+  task: EVAL-011
+  package: E11-D
+  date: 2026-08-26
+  slot_source: EVAL-009 SCIENTIFIC-WAVE1-MODEL-ROSTER.yaml @ work/eval-009-measurement-freeze
+  supply_source: EVAL-010 model-supply/ @ work/eval-010-route-verification (8a8fc09)
+  core_slots: 12
+  reserve_slots: 2
+  slots_added_by_this_task: 0
+  slots_removed_by_this_task: 0
+  slots_reprioritised_by_this_task: 0
+  sourcing_changed_admission: false
+rules_applied:
+- The scientific question is copied unchanged from EVAL-009.
+- named_candidate is the model EVAL-009 admitted. It is never replaced here.
+- equivalent_candidates are listed ONLY where the alternative genuinely answers the
+  SAME slot question. Listing one is not substituting one. Switching is a Controller
+  decision and must record the route/version difference.
+- A sibling or family version is never silently substituted. Where EVAL-010 found
+  only a different version of the same family, that is recorded as unresolved, not
+  as a match.
+- A slot is never removed because sourcing is hard. Two slots below have no verified
+  identity and both remain.
+supply_status_vocabulary:
+  execution_ready: identity + route + billing unit + current price all verified
+  identity_verified_price_null: exact version and route verified from a provider-authorised
+    source; no price
+  identity_unresolved: the exact selected version could not be confirmed; family-only
+    matches do not count
+  route_unresolved: no provider-authorised route found at all
+slots:
+- slot_id: IMG-01
+  tier: core
+  lane: image
+  question: Is generated exact Devanagari/Hinglish text viable AT ALL from a frontier
+    general image model, at commercial delivery sizes?
+  admission_rationale_preserved: true
+  named_candidate: gpt-image-2 (OpenAI)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    floating_alias: gpt-image-2
+    pinned_snapshot: gpt-image-2-2026-04-21
+    pin_policy: pin the dated snapshot; a floating alias makes every measurement provisional
+    evidence: EVAL-010 SRC-SDK-OPENAI (PyPI openai==3.3.1, types generated from OpenAI's
+      OpenAPI spec)
+  verified_route: OpenAI Images API — images.generate and images.edit
+  alternative_routes_verified:
+  - Runway API model literal 'gpt_image_2' (different aspect-ratio set — not equivalent
+    for framing-sensitive work)
+  route_absent: fal — fal's own client enumerates gpt-image-1, -1-mini and -1.5 only
+  verified_price: null
+  price_blocker: platform.openai.com and developers.openai.com unreachable to EVAL-010
+  seed_support: absent_in_api
+  seed_consequence: no held-seed repeatability is possible on this route; repeats
+    measure inherent variance only
+  equivalent_candidates:
+  - name: Nano Banana 2 (Google) — gemini-3.1-flash-image
+    answers_same_question: true
+    why: also a frontier general image model, so it tests the same 'viable at all'
+      question
+    supply_status: execution_ready
+    verified_price: USD 0.067 per generated 1K-resolution image (per image, NOT per
+      thousand images)
+    controller_note: This is the ONLY image model with a fully verified price, and
+      it is not the named candidate. Adding it is a Controller decision, not a sourcing
+      convenience. It does not replace gpt-image-2, whose vendor typography claim
+      is the specific thing IMG-01 exists to test.
+  rejected_eval008_claim_carried_forward: the ~99% Hindi/Bengali character-accuracy
+    claim is NOT verified and must not be load-bearing
+- slot_id: IMG-02
+  tier: core
+  lane: image
+  question: Does a typography/text-specialist model outperform a frontier generalist
+    on non-Latin script exactness?
+  admission_rationale_preserved: true
+  named_candidate: ideogram-v3 (Ideogram)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    fal_endpoints:
+    - fal-ai/ideogram/v3
+    - fal-ai/ideogram/v3/edit
+    - fal-ai/ideogram/v3/remix
+    - fal-ai/ideogram/v3/reframe
+    - fal-ai/ideogram/v3/replace-background
+    version_pinned_in_path: true
+    evidence: EVAL-010 SRC-SDK-FAL (npm @fal-ai/client==1.10.1 endpoints.d.ts)
+  verified_route: fal
+  route_absent: ideogram.ai direct — unreachable to EVAL-010
+  verified_price: null
+  seed_support: undocumented
+  equivalent_candidates: []
+- slot_id: IMG-03
+  tier: core
+  lane: image
+  question: Does instruction-driven editing preserve everything it was not asked to
+    change?
+  admission_rationale_preserved: true
+  named_candidate: flux2-pro (Black Forest Labs)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    fal_endpoints:
+    - fal-ai/flux-2-pro
+    - fal-ai/flux-2-pro/edit
+    version_pinned_in_path: true
+    evidence: EVAL-010 SRC-SDK-FAL
+  verified_route: fal
+  route_absent: bfl.ai direct — unreachable; the only PyPI client of that name self-declares
+    as unofficial and was rejected
+  verified_price: null
+  seed_support: exposed
+  seed_evidence: fal-ai/flux-2-flex/edit exposes seed; flux-2-pro/edit schema to be
+    confirmed at run time
+  equivalent_candidates: []
+- slot_id: IMG-04
+  tier: core
+  lane: image
+  question: Does a reference-conditioned model hold person AND product identity across
+    a multi-asset set, and are Indian-market subjects handled?
+  admission_rationale_preserved: true
+  named_candidate: seedream-5.0-pro (ByteDance)
+  supply_status: identity_unresolved
+  verified_identity: null
+  what_was_found_instead:
+    fal_versions_present:
+    - seedream/v3
+    - seedream/v4
+    - seedream/v4.5
+    - seedream/v5/lite
+    selected_version_present: false
+    note: v5/lite is NOT v5/pro. A family match is not a match.
+  do_not_substitute: true
+  verified_price: null
+  slot_disposition: RETAINED
+  why_retained: The question — cross-asset identity under reference conditioning —
+    is not answered by any other slot. Sourcing difficulty is not grounds for deletion.
+    If the exact version cannot be confirmed before execution, the Controller may
+    either accept a recorded version difference or defer the whole slot; EVAL-011
+    does neither on its own authority.
+  equivalent_candidates:
+  - name: MiniMax H3 via Runway (VID-03's candidate), image-side equivalent not established
+    answers_same_question: false
+    why_listed: explicitly listed as NOT equivalent so it is not mistaken for a fallback
+- slot_id: IMG-05
+  tier: reserve
+  lane: image
+  question: Does owning the step on open weights change CpAO enough to matter?
+  admission_rationale_preserved: true
+  named_candidate: qwen-image (Alibaba)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    alibaba_first_party_current: qwen-image-2.0-pro
+    fal_endpoints:
+    - fal-ai/qwen-image-2/pro/text-to-image
+    - fal-ai/qwen-image-2/pro/edit
+    - fal-ai/qwen-image-2512
+    evidence: EVAL-010 SRC-SDK-DASHSCOPE (PyPI dashscope==1.27.1, published by Alibaba
+      Cloud) and SRC-SDK-FAL
+    version_caution: qwen-image-2.0-pro and qwen-image-2512 are DIFFERENT versions.
+      EVAL-008 named 2512 as current; Alibaba's own SDK lists 2.0-pro. They must not
+      be pooled.
+  verified_route: fal, and Alibaba Cloud DashScope ImageSynthesis
+  verified_price: null
+  cpao_staging_note: This slot's question names CpAO. Per E11-B, the CpAO CONCLUSION
+    is a Stage C output. In Stage A/B this slot may report trial cost and reliability
+    only. Additionally, running an open-weight model on a hosted route measures the
+    HOST's economics, not ours — the own-the-step question needs self-hosted compute
+    and is not answered by a fal or DashScope run.
+  equivalent_candidates: []
+- slot_id: IMG-06
+  tier: reserve
+  lane: image
+  question: Can type be emitted as editable vector output, so a text defect is REPAIRABLE
+    without regenerating the asset?
+  admission_rationale_preserved: true
+  named_candidate: recraft-v3 (Recraft)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    selected_v3_endpoints:
+    - fal-ai/recraft/v3/text-to-image
+    - fal-ai/recraft/v3/image-to-image
+    newer_version_present:
+    - fal-ai/recraft/v4/text-to-vector
+    - fal-ai/recraft/v4/pro/text-to-vector
+    - fal-ai/recraft/v4/text-to-image
+    evidence: EVAL-010 SRC-SDK-FAL
+  verified_route: fal
+  verified_price: null
+  version_decision_required:
+    id: SUP-1
+    question: Does this slot run v3 as named, or v4 where native text-to-vector is
+      an explicit endpoint?
+    why_it_matters: The slot exists BECAUSE of vector output. On v3 the vector path
+      is a separate vectorize endpoint; on v4 text-to-vector is a first-class endpoint.
+      This is a scientific-fit question, not a sourcing one, so EVAL-011 does not
+      decide it.
+    owner: Controller, on EVAL-009's advice
+  dormant_capability_link: repairability is the 1 dormant capability in Capability
+    Contract v2; this slot is the only one probing a repair path
+  equivalent_candidates: []
+- slot_id: VID-01
+  tier: core
+  lane: video
+  question: Can a frontier video model hold rendered text and logo STABLE across a
+    clip, and produce usable native audio in Hindi/Hinglish?
+  admission_rationale_preserved: true
+  named_candidate: veo-3.1 (Google)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    sdk_enumerated_id_for_full_tier: veo-3.1-generate-preview
+    version_caution: Google's own SDK enumerates only a -preview identifier for the
+      full tier, while the Lite tier has a stable -001 id. A stable GA id may exist;
+      docs.cloud.google.com was unreachable to EVAL-010. Running a -preview id is
+      a recorded version risk, not a blocker.
+    evidence: EVAL-010 SRC-SDK-GOOGLE, SRC-GCP-PRICING
+  verified_route: Vertex AI / Gemini API direct; also fal (fal-ai/veo3.1 + workflow
+    endpoints); also Runway ('veo3.1')
+  verified_price:
+    value: 0.4
+    currency: USD
+    billing_unit: per generated video (1 count), video+audio, 720p or 1080p
+    source: Google Cloud pricing page, verified 2026-08-26T09:52:46Z
+    route_scope: THIS Google Cloud route only. Must not be generalised to fal or Runway
+      routes for the same model.
+  seed_support: exposed
+  seed_evidence: Google GenerateVideosConfig exposes seed; fal veo3.1 first-last-frame
+    and extend expose seed, but fal veo3.1/reference-to-video does NOT
+  resolves_eval009_open_question: 'EVAL-009 could not confirm whether Veo 3.1 exposes
+    advanced frame/extend controls. EVAL-010 confirmed it does: Google''s config carries
+    last_frame, typed reference_images and four video mask modes, and fal exposes
+    veo3.1/first-last-frame-to-video and veo3.1/extend-video.'
+  equivalent_candidates: []
+- slot_id: VID-02
+  tier: core
+  lane: video
+  question: Does state and identity continuity survive across CUTS, not just within
+    a shot?
+  admission_rationale_preserved: true
+  named_candidate: kling-3.0 (Kuaishou)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    fal_endpoints:
+    - fal-ai/kling-video/v3/pro/text-to-video
+    - fal-ai/kling-video/v3/pro/image-to-video
+    - fal-ai/kling-video/v3/pro/motion-control
+    evidence: EVAL-010 SRC-SDK-FAL
+  verified_route: fal
+  route_absent: app.klingai.com direct — unreachable
+  verified_price: null
+  seed_support: absent_in_api
+  control_support_confirmed:
+    multi_prompt: Array of multi-prompt elements — the explicit multi-shot control
+      this slot needs
+    shot_type:
+    - customize
+    - intelligent
+    duration_range_seconds: 3..15
+    generate_audio: true
+  seed_consequence: continuity repeats on this route measure inherent variance; no
+    held-seed comparison is possible
+  equivalent_candidates: []
+- slot_id: VID-03
+  tier: core
+  lane: video
+  question: Can supplied reference images control identity in generated VIDEO?
+  admission_rationale_preserved: true
+  named_candidate: minimax-h3 (MiniMax)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    runway_model_literal: hailuo3
+    evidence: EVAL-010 SRC-SDK-RUNWAY (PyPI runwayml==5.16.0) — the only provider-authorised
+      confirmation found that this model exists as a callable id
+  verified_route: Runway API (text_to_video and video_to_video)
+  route_absent: fal — fal's client enumerates hailuo-02 and hailuo-2.3 only, NOT hailuo3
+  verified_price: null
+  price_blocker: Runway bills in credits; the credit-to-currency rate is unknown because
+    runway.com was unreachable
+  verified_billing_unit: credits per second of output
+  equivalent_candidates:
+  - name: fal-ai/wan/v2.7/reference-to-video (Alibaba Wan 2.7)
+    answers_same_question: true
+    why: reference-conditioned video with reference_image_urls, reference_video_urls
+      and a multi_shots flag; directly tests reference-controlled identity in video
+    supply_status: identity_verified_price_null
+    controller_note: a genuine equivalent for the slot question, at a different vendor
+      and control surface. Listing is not substitution.
+- slot_id: VID-04
+  tier: core
+  lane: video
+  question: Can EXISTING customer footage be edited rather than regenerated?
+  admission_rationale_preserved: true
+  named_candidate: runway-aleph-2.0 (Runway)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    api_model_literal: aleph2
+    also_present: gen4_aleph
+    evidence: EVAL-010 SRC-SDK-RUNWAY
+  verified_route: Runway API video_to_video
+  verified_price: null
+  verified_billing_unit: credits per second of output, with declared surcharges for
+    prores and png_sequence
+  control_support_confirmed:
+    keyframes: list of {uri, seconds|at, optional range{start_seconds,end_seconds}}
+    seed: exposed
+  corrects_earlier_research: EVAL-008 recorded a third-party report that Runway API
+    access became Enterprise-only in January 2026 and called this the hardest access
+    problem on the roster. Runway's own published SDK exposes aleph2 through the standard
+    public API surface, so that concern is withdrawn. Whether a given account is entitled
+    is a separate question this task did not test.
+  equivalent_candidates: []
+- slot_id: VID-05
+  tier: core
+  lane: video
+  question: Where is the cost knee — does the premium tier buy enough additional ACCEPTED
+    outcomes to justify its price over the fast/cheap tier?
+  admission_rationale_preserved: true
+  named_candidate: fast/cheap tier of the VID-01 family
+  supply_status: execution_ready
+  verified_identity:
+    api_model_id: veo-3.1-lite-generate-001
+    stability: stable -001 identifier, not a preview id
+    evidence: EVAL-010 SRC-SDK-GOOGLE
+  verified_route: Vertex AI / Gemini API direct
+  verified_price:
+    value: 0.05
+    currency: USD
+    billing_unit: per generated video (1 count), video+audio, 720p
+    source: Google Cloud pricing page, verified 2026-08-26T09:52:46Z
+    route_scope: THIS Google Cloud route at THIS resolution and audio setting only.
+      It is not the universal price for every Google or Veo API route and must not
+      be generalised across sibling routes.
+    contrast_with_premium: Veo 3.1 full tier is USD 0.40 on the same page and unit
+      — an 8x spread inside one family
+  cpao_staging: STAGE_A
+  cpao_staging_note: THIS IS THE SLOT THE CONTROLLER FLAGGED. VID-05 may run generations
+    in Stage A and Stage B and report trial cost, reliability, latency, errors and
+    refusals there. It may NOT report customer-outcome CpAO in Layers 1-3, because
+    those layers have no accepted customer outcomes and therefore no denominator.
+    The premium-vs-fast ACCEPTED-OUTCOME verdict is a Stage C output and is the only
+    place the cost-knee conclusion may be stated.
+  equivalent_candidates: []
+- slot_id: AUD-01
+  tier: core
+  lane: tts
+  question: Does an India-focused voice model pronounce Hindi, Hinglish code-mixing
+    and Indian brand names acceptably to first-language listeners?
+  admission_rationale_preserved: true
+  named_candidate: sarvam-bulbul-v3 (Sarvam AI)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    api_model_id: bulbul:v3
+    sibling: bulbul:v2
+    version_pinning: explicit in the identifier
+    evidence: EVAL-010 SRC-SDK-SARVAM (PyPI sarvamai==0.1.30)
+  verified_route: Sarvam text-to-speech convert endpoint
+  route_absent: fal — zero sarvam endpoints in fal's client
+  verified_language_support:
+    tts_languages:
+    - bn-IN
+    - en-IN
+    - gu-IN
+    - hi-IN
+    - kn-IN
+    - ml-IN
+    - mr-IN
+    - od-IN
+    - pa-IN
+    - ta-IN
+    - te-IN
+    count: 11
+    hindi_present: true
+  verified_price: null
+  price_blocker: sarvam.ai and docs.sarvam.ai unreachable; the INR 30 per 10,000 characters
+    figure is NOT verified
+  seed_support: absent_in_api
+  seed_alternative: temperature is exposed instead
+  control_support_confirmed:
+    pronunciation_dictionary: dedicated pronunciation_dictionary resource plus a dict_id
+      request parameter
+    why_it_matters: this is the mechanism for forcing correct Indian brand-name pronunciation,
+      which is a large part of what this slot is testing
+  equivalent_candidates: []
+- slot_id: AUD-02
+  tier: core
+  lane: tts
+  question: Does a global frontier voice model match a specialist on Hindi/Hinglish?
+  admission_rationale_preserved: true
+  named_candidate: elevenlabs-v3 (ElevenLabs)
+  supply_status: identity_verified_price_null
+  verified_identity:
+    api_model_id: eleven_v3
+    evidence: EVAL-010 SRC-SDK-ELEVENLABS (PyPI elevenlabs==2.65.0) and SRC-SDK-FAL
+  verified_route: ElevenLabs direct — REQUIRED for this slot, see route_warning
+  alternative_routes_verified:
+  - fal-ai/elevenlabs/tts/eleven-v3
+  route_warning:
+    severity: high
+    finding: fal's ElevenLabs wrapper omits seed, pronunciation_dictionary_locators,
+      previous_text / next_text and previous/next request ids, all of which ElevenLabs
+      direct exposes.
+    consequence: The pronunciation dictionary is the mechanism this slot's comparison
+      with AUD-01 turns on, and the previous/next-text controls are what hold prosody
+      stable across a long script. A measurement taken through fal cannot test either.
+      This slot must run DIRECT, and fal rows must never be pooled with direct rows.
+  verified_price: null
+  seed_support: exposed
+  paired_with: AUD-01
+  reproducibility_warning:
+    finding: AUD-02 exposes seed; AUD-01 does not
+    consequence: The two slots exist to be compared, but their repeat evidence is
+      not like-for-like unless one seed convention is declared and applied to both
+      before Stage A runs. See CONDITION-CONTRACT-CORRECTION.md section 4.
+  equivalent_candidates: []
+- slot_id: AUD-03
+  tier: core
+  lane: lipsync
+  question: Is TTS + lip-sync a viable production route for Hindi dialogue video,
+    as an alternative to native audio-video?
+  admission_rationale_preserved: true
+  named_candidate: sync-3 (sync.so)
+  supply_status: identity_unresolved
+  verified_identity: null
+  what_was_found_instead:
+    fal_versions_present:
+    - fal-ai/sync-lipsync
+    - fal-ai/sync-lipsync/v2
+    - fal-ai/sync-lipsync/v2/pro
+    - fal-ai/sync-lipsync/react-1
+    selected_version_present: false
+    note: v2/pro is NOT Sync-3. A family match is not a match.
+  route_absent_direct: docs.sync.so unreachable; the candidate PyPI package had no
+    verifiable publisher and was rejected
+  do_not_substitute: true
+  verified_price: null
+  slot_disposition: RETAINED
+  why_retained: This slot carries the fallback route for Hindi dialogue video, which
+    matters because the native-audio video models document five or seven languages
+    and Hindi is generally not among them. Deleting it because the exact version is
+    unconfirmed would remove the only probe of the route the product may actually
+    have to use.
+  equivalent_candidates:
+  - name: fal-ai/bytedance/omnihuman/v1.5
+    answers_same_question: partially
+    why: image + audio to video, so it tests an alternative dialogue-video route,
+      but from a still rather than from existing video — a different production shape
+    supply_status: identity_verified_price_null
+  - name: Runway character_performance (act_two)
+    answers_same_question: true
+    why: character (image or video) + reference video performance transfer with body_control,
+      expression_intensity and seed; the same TTS-plus-lipsync production route
+    supply_status: identity_verified_price_null
+    controller_note: genuine equivalent for the slot question. Listing is not substitution.
+rollup:
+  slots_total: 14
+  identity_resolved_by_supply_evidence: 12
+  identity_unresolved: 2
+  unresolved_slot_ids:
+  - IMG-04
+  - AUD-03
+  route_unresolved: 0
+  execution_ready_slots: 1
+  execution_ready_slot_ids:
+  - VID-05
+  slots_with_verified_price: 2
+  slots_with_verified_price_ids:
+  - VID-01
+  - VID-05
+  slots_retained_despite_unresolved_supply: 2
+  slots_deleted_for_sourcing_reasons: 0
+  sibling_substitutions_performed: 0
+  seed_absent_slots:
+  - IMG-01
+  - VID-02
+  - AUD-01
+  slots_requiring_direct_route_not_aggregator:
+  - AUD-02
+controller_decisions_surfaced:
+- id: SUP-1
+  slot: IMG-06
+  question: Recraft v3 as named, or v4 where native text-to-vector is a first-class
+    endpoint?
+  type: scientific_fit
+- id: SUP-2
+  slots:
+  - IMG-04
+  - AUD-03
+  question: 'For the two slots whose exact version is unconfirmed: accept a recorded
+    version difference, defer the slot, or wait for direct catalogue access?'
+  type: scope
+  note: EVAL-011 retained both and did not choose.
+- id: SUP-3
+  slots:
+  - AUD-01
+  - AUD-02
+  question: Which seed convention governs the Indic voice comparison — held seed where
+    available, or unset everywhere?
+  type: measurement
+  note: must be decided before Stage A runs, or the comparison is not like-for-like
+- id: SUP-4
+  slot: IMG-01
+  question: Add Nano Banana 2 as a second IMG-01 candidate? It is the only image model
+    with a verified price.
+  type: scope
+  note: listed as an equivalent candidate only. EVAL-011 did not add it, because sourcing
+    may not change admission.
