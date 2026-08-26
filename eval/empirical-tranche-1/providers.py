@@ -205,8 +205,12 @@ class ProviderHttpTransport:
         body = self.outgoing_body(request)
         headers = {"Content-Type": "application/json", **self.auth_headers(key)}
         self.calls += 1
-        return self.http(self.endpoint(), headers, json.dumps(body).encode("utf-8"),
-                         self.timeout_s)
+        # ensure_ascii=False, deliberately. With ASCII escaping a Devanagari target travels as
+        # \uXXXX, and every leak check that scans for Devanagari characters goes blind in exactly
+        # the place it is supposed to be watching. The wire carries real UTF-8 and the blind check
+        # can therefore see what is actually on it.
+        return self.http(self.endpoint(), headers,
+                         json.dumps(body, ensure_ascii=False).encode("utf-8"), self.timeout_s)
 
 
 class OpenAIHttpTransport(ProviderHttpTransport):
@@ -635,8 +639,8 @@ class FalImageRoute:
         body = self.build_body(request)
         headers = {"Content-Type": "application/json", "Authorization": f"Key {key}"}
         self.calls += 1                 # exactly one, no loop
-        raw = self.http(self.endpoint(), headers, json.dumps(body).encode("utf-8"),
-                        self.timeout_s)
+        raw = self.http(self.endpoint(), headers,
+                        json.dumps(body, ensure_ascii=False).encode("utf-8"), self.timeout_s)
         return self.parse(raw)
 
     def parse(self, raw: dict) -> dict:

@@ -46,6 +46,7 @@ REPO_ROOT = PACKAGE_ROOT.parent.parent
 
 sys.path.insert(0, str(PACKAGE_ROOT))
 from budget_guard import BudgetExceeded, BudgetGuard, NotAuthorised, open_guard  # noqa: E402
+import providers as P  # noqa: E402
 
 import yaml  # noqa: E402
 
@@ -153,6 +154,154 @@ def _script_items(script: str) -> list[dict]:
             for v in load_latin_items()]
 
 
+# --------------------------------------------------------------------------------- images
+LATIN_IMAGES = HERE / "build" / "images"
+DEVANAGARI_CHECKER_INPUT = DEVANAGARI_VIEW / "checker-input-transcribe.jsonl"
+
+
+class ImageIntegrityError(RuntimeError):
+    """The bytes on disk are not the bytes the manifest says they are."""
+
+
+class ImageResolver:
+    """Resolve an item id to the exact image bytes a judge should be shown.
+
+    The checker contract is explicit: resolve the path, read the file, and CONFIRM THE HASH before
+    sending anything. A judge scored against different bytes than we believe we sent is not a weak
+    measurement, it is not a measurement — and the failure is silent, which is the worst kind.
+
+    Devanagari images carry an authoritative `image_file_sha256` in the committed checker-input
+    projection, so they are verified strictly. Latin images are a local render of a committed
+    string; their hash is computed and recorded, and verified against the perceptibility record
+    wherever that record pins one.
+    """
+
+    def __init__(self):
+        self._cache: dict[tuple[str, str], bytes] = {}
+        self._expected: dict[tuple[str, str], str] = {}
+        self._paths: dict[tuple[str, str], Path] = {}
+        self._load_devanagari()
+        self._load_latin()
+
+    def _load_devanagari(self) -> None:
+        if not DEVANAGARI_CHECKER_INPUT.exists():
+            return
+        base = DEVANAGARI_CHECKER_INPUT.parent
+        for line in DEVANAGARI_CHECKER_INPUT.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            key = ("devanagari", row["item_id"])
+            self._paths[key] = (base / row["image_file"]).resolve()
+            self._expected[key] = row["image_file_sha256"]
+
+    def _load_latin(self) -> None:
+        record = HERE / "perceptibility-mechanical.json"
+        pinned = {}
+        if record.exists():
+            for row in json.loads(record.read_text(encoding="utf-8"))["items"]:
+                pinned[row["item_id"]] = row["rendered_image_file_sha256"]
+        for path in sorted(LATIN_IMAGES.glob("lx-*.png")):
+            key = ("latin", path.stem)
+            self._paths[key] = path
+            if path.stem in pinned:
+                self._expected[key] = pinned[path.stem]
+
+    def _key(self, script: str, item_id: str) -> tuple[str, str]:
+        key = (script, item_id)
+        if key not in self._paths:
+            raise FileNotFoundError(
+                f"no rendered image for {script} item {item_id}. Both image sets are reproducible "
+                f"build products; rebuild them with the commands in "
+                f"eval/empirical-tranche-1/README.md.")
+        return key
+
+    def bytes_for(self, script: str, item_id: str) -> bytes:
+        key = self._key(script, item_id)
+        if key not in self._cache:
+            data = self._paths[key].read_bytes()
+            self.verify_bytes(script, item_id, data)
+            self._cache[key] = data
+        return self._cache[key]
+
+    def verify_bytes(self, script: str, item_id: str, data: bytes) -> str:
+        """Return the sha256, raising if it contradicts a pinned expectation."""
+        key = self._key(script, item_id)
+        digest = hashlib.sha256(data).hexdigest()
+        expected = self._expected.get(key)
+        if expected and digest != expected:
+            raise ImageIntegrityError(
+                f"{script} item {item_id}: image on disk hashes {digest[:16]}… but the manifest "
+                f"pins {expected[:16]}…. Refusing to send bytes we cannot identify.")
+        return digest
+
+    def verified(self, script: str, item_id: str) -> bool:
+        """True when this item's bytes were checked against a pinned hash, not merely read."""
+        key = self._key(script, item_id)
+        if key not in self._expected:
+            return False
+        self.bytes_for(script, item_id)
+        return True
+
+    def sha256_for(self, script: str, item_id: str) -> str:
+        return hashlib.sha256(self.bytes_for(script, item_id)).hexdigest()
+
+
+# ------------------------------------------------------------------------------ live candidate
+class LiveCandidate:
+    """A real `TextJudge` participating in the qualification protocol.
+
+    This is the class EVAL-012 was missing. `--live` opened a valid authorisation guard and then
+    raised unconditionally, so the real judges never took part and only `FakeCandidate` was ever
+    scored. Everything downstream — the progressive stop, the gates, the persistence shape — was
+    therefore only ever proved against a fake.
+
+    The judge owns the budget guard and performs its own reserve/record around each dispatch, so
+    `manages_own_budget` is True and the scorer must not double-count. `synthetic` is False:
+    evidence produced here is real evidence about whatever the transport actually talked to.
+    """
+
+    synthetic = False
+    manages_own_budget = True
+
+    def __init__(self, judge: "P.TextJudge", images: ImageResolver, name: str | None = None):
+        self.judge = judge
+        self.images = images
+        self.name = name or f"{judge.provider}:{judge.resolved_version}"
+        self.calls = 0
+        self.retries = 0
+        self.calls_by_script = {s: 0 for s in SCRIPTS}
+
+    def estimate_usd(self) -> Decimal:
+        return self.judge._estimate()
+
+    def call(self, script: str, item: dict, shape: str, pass_index: int) -> dict:
+        """One call. One trial. No loop, no retry — a refusal returns a record and we move on."""
+        self.calls += 1
+        self.calls_by_script[script] += 1
+
+        image_bytes = self.images.bytes_for(script, item["item_id"])
+        if shape == "transcribe":
+            response = self.judge.transcribe(image_bytes)
+        else:
+            response = self.judge.verdict(image_bytes, item["target"])
+
+        record = self.judge.call_record(response, shape=shape)
+        record.update({
+            "item_id": item["item_id"],
+            "script": script,
+            "pass_index": pass_index,
+            "image_sha256": hashlib.sha256(image_bytes).hexdigest(),
+            "synthetic": False,
+        })
+        return {
+            "api_status": response.api_status,
+            "text": response.text,
+            "cost": response.billed_usd if response.billed_usd is not None else Decimal("0"),
+            "call_record": record,
+        }
+
+
 # ------------------------------------------------------------------------------ fake candidate
 class FakeCandidate:
     """A deterministic stand-in for a judge. Makes no network call, ever.
@@ -162,6 +311,8 @@ class FakeCandidate:
     """
 
     COST_PER_CALL = Decimal("0.0021")
+    synthetic = True
+    manages_own_budget = False      # the scorer reserves and records on its behalf
 
     def __init__(self, name: str, false_pass_on_first_mismatch: bool = False,
                  false_fail_rate: float = 0.0, refusal_rate: float = 0.0,
@@ -175,6 +326,9 @@ class FakeCandidate:
         self.retries = 0
         self.calls_by_script = {s: 0 for s in SCRIPTS}
         self._mismatch_seen = 0
+
+    def estimate_usd(self) -> Decimal:
+        return self.COST_PER_CALL
 
     def call(self, script: str, item: dict, shape: str, pass_index: int) -> dict:
         """One call. One trial. No loop anywhere in this method."""
@@ -224,16 +378,27 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
     observations: list[dict] = []
     stopped_reason = None
 
+    # Budget accounting belongs to exactly ONE layer. A live judge reserves and records around
+    # its own dispatch, so the scorer must not do it again — double-counting would exhaust the
+    # ceiling at half the calls and look like a budget stop rather than a bug.
+    owns_budget = getattr(candidate, "manages_own_budget", False)
+    call_records: list[dict] = []
+
     for pass_index in range(repeats):
         for shape in SHAPES:
             for item in items:
                 try:
-                    guard.reserve(FakeCandidate.COST_PER_CALL)
+                    if not owns_budget:
+                        guard.reserve(candidate.estimate_usd())
+                    reply = candidate.call(script, item, shape, pass_index)
+                    if not owns_budget:
+                        guard.record(reply["cost"])
                 except BudgetExceeded:
+                    # Raised either here or inside the judge, before anything was dispatched.
                     stopped_reason = "budget_exhausted"
                     break
-                reply = candidate.call(script, item, shape, pass_index)
-                guard.record(reply["cost"])
+                if reply.get("call_record"):
+                    call_records.append(reply["call_record"])
                 observations.append({
                     "item_id": item["item_id"], "shape": shape, "pass": pass_index,
                     "expected": item["expected"],
@@ -287,6 +452,7 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
         "failed_gates": failed_gates,
         "passed": not failed_gates and stopped_reason is None,
         "stopped_reason": stopped_reason,
+        "call_records": call_records,
     }
 
 
@@ -303,7 +469,9 @@ def qualify_candidate(candidate, guard: BudgetGuard) -> dict:
         "qualified_scope": [],
         "stopped_after": "devanagari",
         "stopped_reason": dev["stopped_reason"],
-        "synthetic": True,
+        # From the CANDIDATE, never a constant. Mislabelling real evidence as synthetic would
+        # discard it; mislabelling synthetic evidence as real would promote it.
+        "synthetic": getattr(candidate, "synthetic", True),
         "may_populate_registry": False,
         "contract_status": c["status"],
         "qualified_scope_excludes": c["qualified_scope_excludes"],
@@ -349,24 +517,194 @@ def _dry_run(out: Path) -> dict:
                  "model, and no result here may reach the Capability Registry."),
     }
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-                   encoding="utf-8")
+    out.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True,
+                              default=str) + "\n", encoding="utf-8")
     return result
+
+
+def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver | None = None,
+                          resolved_versions: dict | None = None) -> list[LiveCandidate]:
+    """Construct the two frozen judge candidates behind whatever transport is supplied.
+
+    `http` is the injected HTTP layer. Passing None means the real socket, which is why nothing in
+    this branch ever calls it that way — every exercise here injects a recorder.
+
+    Versions must be pinned by the caller at execution. The aliases in config.yaml are NOT
+    versions, and a judge refuses to exist without a resolved one.
+    """
+    import yaml as _yaml
+
+    cfg = _yaml.safe_load((PACKAGE_ROOT / "config.yaml").read_text(encoding="utf-8"))
+    images = images or ImageResolver()
+    resolved_versions = resolved_versions or {}
+
+    candidates = []
+    for spec in cfg["qualification"]["judge_candidates"]:
+        provider, alias = spec["provider"], spec["model_alias"]
+        version = resolved_versions.get(provider)
+        if not version:
+            raise NotAuthorised(
+                f"no resolved version pinned for {provider} ({alias}). The exact model snapshot "
+                f"must be pinned at execution; an alias is not a version.")
+        judge_cls = P.OpenAITextJudge if provider == "openai" else P.GeminiTextJudge
+        candidates.append(LiveCandidate(
+            judge=judge_cls(model_alias=alias, resolved_version=version,
+                            transport=P.transport_for(provider, version, http=http),
+                            guard=guard),
+            images=images))
+    return candidates
+
+
+def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = None,
+             mode: str = "live") -> dict:
+    """The real orchestration. Devanagari first; Latin only for survivors; one shared ceiling.
+
+    The guard is shared across BOTH candidates and BOTH scripts, exactly as frozen: the ceiling is
+    a property of the tranche, not of each candidate, so a first candidate that spends most of it
+    correctly starves the second rather than quietly doubling the budget.
+    """
+    images = ImageResolver()
+    candidates = build_live_candidates(guard, http=http, images=images,
+                                       resolved_versions=resolved_versions)
+
+    results = []
+    for candidate in candidates:
+        results.append(qualify_candidate(candidate, guard=guard))
+
+    dispatches = sum(c.calls for c in candidates)
+    return {
+        "record": "EMP-001-text-qualification",
+        "mode": mode,
+        "dry_run": False,
+        "synthetic": False,
+        "may_populate_registry": False,
+        "registry_rows_written": 0,
+        "candidates": results,
+        "dispatches": dispatches,
+        "calls_per_candidate_per_script": CALLS_PER_SCRIPT,
+        "maximum_evaluator_calls_if_all_survive": MAX_EVALUATOR_CALLS,
+        "spend_recorded_usd": str(guard.spent_usd),
+        "authorised_ceiling_usd": str(guard.authorised_usd),
+        "materials": {
+            "devanagari": verify_devanagari_identity(),
+            "latin_pack_sha256": hashlib.sha256(LATIN_PACK.read_bytes()).hexdigest(),
+        },
+        "qualified_candidates": [r["candidate"] for r in results if r["qualified_scope"]],
+        "note": ("Qualification running is not promotion. A qualified judge may measure the "
+                 "A-TEXT screen; it does not by itself put a row in the Capability Registry."),
+    }
+
+
+def _fake_live(guard: BudgetGuard, out: Path) -> dict:
+    """The real orchestration with an injected recorder standing where the socket would be.
+
+    Proves the positive path end to end at zero spend. Its results are labelled `fake_live` and
+    are no more promotable than a dry run: a perfect reader is not a real one.
+    """
+    import os
+
+    from fake_live import FakeJudgeHttp, image_index_for
+
+    os.environ.setdefault("OPENAI_API_KEY", "fake-live-openai-key")
+    os.environ.setdefault("GOOGLE_API_KEY", "fake-live-google-key")
+
+    index = image_index_for("both")
+    http_by_provider = {
+        "openai": FakeJudgeHttp(P.OpenAITextJudge, index),
+        "google": FakeJudgeHttp(P.GeminiTextJudge, index),
+    }
+
+    images = ImageResolver()
+    candidates = [
+        LiveCandidate(judge=P.OpenAITextJudge(
+            model_alias="gpt-5.4-mini", resolved_version="FAKE-LIVE-openai-snapshot",
+            transport=P.OpenAIHttpTransport("FAKE-LIVE-openai-snapshot",
+                                            http=http_by_provider["openai"]),
+            guard=guard), images=images),
+        LiveCandidate(judge=P.GeminiTextJudge(
+            model_alias="gemini-3.5-flash-lite", resolved_version="FAKE-LIVE-google-snapshot",
+            transport=P.GeminiHttpTransport("FAKE-LIVE-google-snapshot",
+                                            http=http_by_provider["google"]),
+            guard=guard), images=images),
+    ]
+
+    results = [qualify_candidate(c, guard=guard) for c in candidates]
+
+    payload = {
+        "record": "EMP-001-text-qualification",
+        "mode": "fake_live",
+        "dry_run": False,
+        "synthetic": False,
+        "may_populate_registry": False,
+        "registry_rows_written": 0,
+        "external_calls": 0,
+        "spend_usd": "0",
+        "candidates": results,
+        "dispatches": sum(len(h.calls) for h in http_by_provider.values()),
+        "simulated_spend_usd": str(guard.spent_usd),
+        "calls_per_candidate_per_script": CALLS_PER_SCRIPT,
+        "maximum_evaluator_calls_if_all_survive": MAX_EVALUATOR_CALLS,
+        "materials": {
+            "devanagari": verify_devanagari_identity(),
+            "latin_pack_sha256": hashlib.sha256(LATIN_PACK.read_bytes()).hexdigest(),
+        },
+        "note": ("The real orchestration, the real judges, the real transports and the real "
+                 "scorer, with an injected recorder standing where the socket would be. It "
+                 "proves the positive path executes. It is NOT evidence about any model: a "
+                 "perfect reader is not a real one, and nothing here may reach the Registry."),
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                              default=str) + "\n", encoding="utf-8")
+    return payload
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="EMP-001 progressive text-judge qualification.")
-    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="synthetic protocol simulation; no judge, no transport")
+    ap.add_argument("--fake-live", action="store_true",
+                    help="the real orchestration with an injected recorder; zero network")
     ap.add_argument("--live", action="store_true",
-                    help="requires an explicit authorisation file; refuses without one")
+                    help="real paid execution; requires explicit authorisation and pinned versions")
+    ap.add_argument("--authorisation", default=None)
+    ap.add_argument("--openai-version", default=None)
+    ap.add_argument("--gemini-version", default=None)
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args(argv)
 
-    if a.live:
-        open_guard()  # raises NotAuthorised, which is the whole point
-        raise NotAuthorised(
-            "EMP-001 live qualification is not implemented in the zero-spend branch. Paid "
-            "execution is Task 9 of the implementation plan and requires explicit user approval.")
+    if a.live or a.fake_live:
+        # Fails closed for BOTH: the fake-live path deliberately walks the same authorisation
+        # gate, so exercising it also exercises the gate a paid run must pass.
+        guard = open_guard(a.authorisation) if a.authorisation else open_guard()
+
+        if a.fake_live:
+            result = _fake_live(guard, Path(a.out))
+            print(f"fake-live: {result['dispatches']} recorded dispatches, 0 network calls")
+            for c in result["candidates"]:
+                latin = c["latin"]["calls"] if c["latin"] else 0
+                print(f"  {c['candidate']:34} devanagari={c['devanagari']['calls']:4} "
+                      f"latin={latin:4} scope={c['qualified_scope'] or 'none'}")
+            print(f"external calls: {result['external_calls']}   spend USD: {result['spend_usd']}")
+            print(f"written: {a.out}")
+            return 0
+
+        versions = {"openai": a.openai_version, "google": a.gemini_version}
+        if not all(versions.values()):
+            raise NotAuthorised(
+                "--live requires --openai-version and --gemini-version. The exact model snapshot "
+                "must be pinned at execution; an alias is not a version and a run that cannot "
+                "name what it called cannot be reproduced.")
+
+        result = run_live(guard, http=None, resolved_versions=versions)
+        out = Path(a.out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True,
+                                  default=str) + "\n", encoding="utf-8")
+        print(f"live: {result['dispatches']} dispatches, "
+              f"spend USD {result['spend_recorded_usd']}")
+        print(f"written: {out}")
+        return 0
 
     result = _dry_run(Path(a.out))
     print(f"dry run: {len(result['candidates'])} synthetic candidates")
