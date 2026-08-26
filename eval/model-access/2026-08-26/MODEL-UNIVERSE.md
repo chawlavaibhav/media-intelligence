@@ -1,7 +1,6 @@
 # E8-A — Independent model universe
 
-**Task:** EVAL-008 · **Date:** 26 Aug 2026 · **Branch:** `claude/eval-008-cloud-model-access-i3fl86`
-(the task file names the logical branch `work/eval-008-model-access`; see the Controller Brief)
+**Task:** EVAL-008 · **Date:** 26 Aug 2026 · **Branch:** `work/eval-008-model-access`
 
 **Status: COMPLETE, with one dominant evidence caveat.**
 **0 API calls · ₹0 spent · no account created · no terms accepted · no Registry row.**

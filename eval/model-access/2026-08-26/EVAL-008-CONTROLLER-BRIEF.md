@@ -2,7 +2,7 @@
 
 **Task:** EVAL-008 — Cloud Model Selection & Sourcing Research
 **Date:** 26 Aug 2026 · **Autonomy:** autonomous · **Environment:** Claude cloud session
-**Branch used:** `claude/eval-008-cloud-model-access-i3fl86`
+**Branch:** `work/eval-008-model-access`
 
 **Status: COMPLETE, with one route blocked as the task file anticipated.**
 **0 API calls · ₹0 spent · no account created · no terms accepted · no Registry row · no merge.**
@@ -189,11 +189,12 @@ The task lists five conditions where I should stop and report rather than decide
 | Evidence materially contradicts the product architecture | **No** | If anything the opposite — Reve 2.1's structured-region editing is convergent with our IR separation. |
 | Completing research requires paid API calls | **No** | Zero calls made; none were needed for selection or availability research. |
 
-**One further thing I chose to report rather than decide:** the branch. The task file names
-`work/eval-008-model-access`; this session's standing instruction designates
-`claude/eval-008-cloud-model-access-i3fl86`. I used the designated branch and am flagging the
-discrepancy rather than pushing to a branch I was not authorised for. The artifacts are identical
-either way; if you want them on the task file's branch name, that is a rename, not rework.
+**One note on delivery, for the record.** The work was first committed on a session-designated
+branch (`claude/eval-008-cloud-model-access-i3fl86`) while the task file's branch name was
+confirmed. It was then delivered on **`work/eval-008-model-access`**, the branch this task file
+specifies, carrying the same commits. No artifact content changed in the move — only the branch
+name recorded in these headers. The three-commit ordering that proves the anti-bias check
+(§2a) is preserved intact on this branch.
 
 ---
 
