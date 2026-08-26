@@ -1,0 +1,513 @@
+# CANON-010 / C10-A — Media Request Grammar v1, READY FOR CONTROLLER FREEZE.
+#
+# STATUS: PROPOSAL PREPARED FOR FREEZE. Not itself an approved schema, and it edits no frozen spec.
+#
+# WHAT CHANGED FROM CANON-009. That task produced a RESEARCH grammar — 14 components, each labelled
+# with how well the evidence supported it. This is the ENGINEERING form of the same thing: every
+# field now carries a machine id, a value domain, a provenance rule and an operation rule, so a
+# validator can check a request against it and a reviewer can see what may and may not be inferred.
+#
+# THE RULE THAT GOVERNS EVERY FIELD BELOW.
+#   requested_operation is CUSTOMER INTENT. It is never a workflow mode.
+#   "Change the background of this photo" -> requested_operation: edit.
+#   Whether the Planner achieves that by inpainting, img2img, or segment-and-composite is a
+#   PRODUCTION choice made later, against a Capability Registry that does not exist yet.
+#   Collapsing the two destroys the ability to tell a misread request from a bad plan, which is the
+#   entire reason Normalized Request and Creative IR are kept as separate objects.
+#
+# EVIDENCE POSTURE. CANON-009's sources are model-interface corpora shaped by who used that
+# interface. They establish that a request STRUCTURE recurs. They do not establish market share, and
+# no field below carries a prevalence claim. The Controller's integration decision says the same
+# thing in its own words: "accepted as request-space research, not as a market-share study".
+#
+# provenance values:
+#   customer_stated   — the customer said it. Never assigned to anything they did not say.
+#   customer_implied  — a direct logical consequence of what they said (Reel -> vertical).
+#   system_derived    — the system worked it out. Must carry a rationale.
+#   absent            — the customer did not address it and nothing derives it.
+#
+# operation values (SPEC-01's six, unchanged and reused deliberately):
+#   preserve | derive | decide | delegate | ask | flag
+
+meta:
+  grammar_id: media_request_grammar
+  version: v1
+  status: PROPOSED_READY_FOR_FREEZE
+  task: CANON-010 / C10-A
+  date: 2026-08-26
+  supersedes_for_engineering_use: canon/research/request-space-v1/MEDIA-REQUEST-GRAMMAR-v1-PROPOSAL.yaml
+  supersedes_note: >
+    The CANON-009 proposal remains the evidence record and is not edited. This file is the
+    engineering form derived from it plus the Controller integration disposition.
+  authority: coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md
+  not_market_share: >
+    No field in this grammar carries a frequency or prevalence claim. Structural recurrence is what
+    the evidence supports; market share is not.
+
+# ── The controlled vocabularies ─────────────────────────────────────────────────
+
+vocabularies:
+
+  requested_operation:
+    description: >
+      What the customer asked the system to DO. Customer intent only. This is the first thing that
+      splits the request space — an edit request is defined by what must NOT change, a generate
+      request has nothing to preserve, an animate request is a motion instruction on something that
+      already exists.
+    closed_for_v1: false
+    extension_rule: >
+      New values require a Controller decision. A value may be added only when a request cannot be
+      represented by an existing value PLUS mutation_intent — not merely because a new production
+      technique exists. Production techniques are not operations.
+    values:
+      generate:
+        meaning: produce a new artefact; no supplied artefact is being changed
+        supplied_asset_required: false
+      edit:
+        meaning: change a supplied artefact while keeping the rest of it
+        supplied_asset_required: true
+        note: the best-evidenced operation in CANON-009 and absent from the original 30-bank
+      animate:
+        meaning: produce motion from a supplied still artefact
+        supplied_asset_required: true
+      restore:
+        meaning: repair degradation in a supplied artefact; intent is to recover, not to alter
+        supplied_asset_required: true
+        why_not_a_kind_of_edit: >
+          The acceptance semantics differ. An edit is judged against the change requested; a
+          restoration is judged against a plausible original that nobody has. Folding it into edit
+          would hide that difference at acceptance time.
+      extend:
+        meaning: continue or enlarge a supplied artefact beyond its current bounds
+        supplied_asset_required: true
+      compose:
+        meaning: combine two or more supplied artefacts into one deliverable
+        supplied_asset_required: true
+      variants:
+        meaning: produce a set of related deliverables from one creative intent
+        supplied_asset_required: false
+        note: interacts with deliverable_set; see the co-occurrence rule below
+    forbidden_values:
+      - inpaint
+      - outpaint
+      - img2img
+      - text2img
+      - controlnet
+      - lora
+      - upscale
+      - segment_and_composite
+    forbidden_reason: >
+      Every one of these is a PRODUCTION ROUTE, not something a customer asks for. A customer asks
+      to remove a person from a photo; inpainting is one way to do that. Admitting any of these
+      would collapse customer intent into workflow mode, which the Controller decision explicitly
+      forbids and which validate_request_freeze.py fails on.
+
+  mutation_intent:
+    description: >
+      For operations acting on a supplied artefact, what is to happen to a named element. Orthogonal
+      to requested_operation: one edit request can carry several mutation intents.
+    values:
+      preserve: this element must survive unchanged
+      change: this element must be different in a stated way
+      remove: this element must not appear
+      add: an element not currently present must appear
+      transform: this element must remain recognisably itself while changing state
+    note: >
+      `preserve` here is about the ARTEFACT. SPEC-01's `preserve` operation is about a FIELD VALUE
+      carried from what the customer said. Same word, two different objects. The validator checks
+      the domains separately so they cannot be confused.
+
+  asset_role:
+    description: >
+      What a supplied asset is FOR. Reused unchanged from SPEC-01 assets[].role, because the spec
+      already distinguishes these more finely than any corpus CANON-009 found.
+    values: [identity_reference, style_reference, composition_reference, brand_asset,
+             previous_campaign, character_sheet, location_reference, inspiration,
+             subject_of_operation]
+    v1_addition: subject_of_operation
+    v1_addition_reason: >
+      SPEC-01's roles all describe a reference that INFORMS a new artefact. An edit/animate/restore
+      request supplies something different: the artefact the operation acts ON. "I like the lighting
+      in this image" and "change this image" are not the same relationship, and SPEC-01's own comment
+      warns that conflating asset meanings is exactly the failure to avoid.
+
+  acceptance_basis:
+    description: How the customer's satisfaction is determined when the deliverable is a set.
+    values:
+      per_deliverable: each output must be acceptable on its own
+      set_level: the set is accepted or rejected as a whole
+      best_n_of_m: the customer will choose from the set; m must be stated
+    why_it_is_here: >
+      This changes Cost per Accepted Outcome directly, which is the product's primary metric. Twelve
+      variants where three must be accepted is a different economic object from one deliverable.
+
+  ambiguity_marker:
+    values:
+      contradiction: two stated requirements cannot both be satisfied
+      underspecification: a decision the deliverable needs and the request does not address
+      unverifiable_claim: a factual assertion the request asks to present that we cannot confirm
+    handling_rule: >
+      A marker is recorded, never silently resolved. Contradiction maps to SPEC-01 operation `flag`;
+      underspecification maps to `ask` or `decide` depending on whether guessing is safe.
+
+# ── The fields ──────────────────────────────────────────────────────────────────
+
+fields:
+
+- id: R01
+  field: requested_operation
+  type: enum
+  domain: vocabularies.requested_operation
+  required: true
+  provenance_rule: customer_stated | customer_implied
+  provenance_forbidden: [system_derived]
+  provenance_forbidden_reason: >
+    If the system decided what operation the customer wanted, the system misread the request. There
+    is no legitimate case where an operation is derived from nothing the customer said.
+  operation_rule: preserve
+  must_not_be_inferred: >
+    Never infer `edit` merely because an asset was supplied. A customer may supply a product photo as
+    a REFERENCE for a new creative — that is `generate` with an identity_reference, and the
+    difference decides what must be preserved.
+  example_customer_stated: '"Remove the guy in the background of this photo" -> edit'
+  example_customer_implied: '"Make this photo move" -> animate'
+  creative_ir_relationship: >
+    Upstream of Creative IR. Creative IR says what should EXIST; this says what was ASKED FOR. A
+    Production IR that does not exist will later choose HOW.
+
+- id: R02
+  field: supplied_assets[]
+  type: list<object>
+  required: conditionally
+  required_when: requested_operation in [edit, animate, restore, extend, compose]
+  object_shape:
+    asset_id: string
+    media_type: enum[image, video, audio, vector, font, document]
+    role: vocabularies.asset_role
+    applies_to: entity_ref
+    applies_to_required_when: role in [identity_reference, subject_of_operation]
+  provenance_rule: customer_stated
+  operation_rule: preserve
+  must_not_be_inferred: >
+    Do not assign `subject_of_operation` to an asset the customer offered as inspiration. When the
+    role is not stated and cannot be derived, the correct operation is `ask`, not `decide`.
+
+- id: R03
+  field: mutation_intents[]
+  type: list<object>
+  required: conditionally
+  required_when: requested_operation in [edit, restore, extend, compose]
+  object_shape:
+    target: string
+    intent: vocabularies.mutation_intent
+    detail: string
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+  must_not_be_inferred: >
+    THE IMPORTANT ONE. An edit request states what should change; everything else is implicitly
+    preserved. Do NOT manufacture an explicit `preserve` intent for every element in the image and
+    then treat those as customer requirements. The implicit background of preservation is real, and
+    recording it as an enumerated list of customer statements is inventing customer intent.
+  representation_of_implicit_preservation: >
+    Use `preservation_default: implicit_everything_not_named`, which the validator recognises, rather
+    than enumerating.
+
+- id: R04
+  field: deliverable_set
+  type: object
+  required: true
+  object_shape:
+    cardinality: integer >= 1
+    variation_axis: enum[none, market, placement, format, message, language, audience]
+    acceptance_basis: vocabularies.acceptance_basis
+    best_n: integer
+    best_n_required_when: acceptance_basis == best_n_of_m
+  default_when_absent:
+    cardinality: 1
+    variation_axis: none
+    acceptance_basis: per_deliverable
+    provenance: customer_implied
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+  cooccurrence_rule: >
+    requested_operation == variants REQUIRES cardinality > 1. The converse is not required: a
+    customer may ask to `generate` three sizes without framing it as a variants job.
+  creative_ir_relationship: >
+    Distinct from delivery.aspect_ratios[], which is ONE artefact delivered several ways. This is
+    several artefacts.
+
+- id: R05
+  field: modality
+  type: enum
+  domain: [static_image, video, audio, image_sequence]
+  required: true
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+
+- id: R06
+  field: entities[]
+  type: list<object>
+  required: false
+  object_shape:
+    entity_id: string
+    entity_type: enum[product, person, mascot, character, venue, object, text_element, brand_mark]
+    role: enum[hero, supporting, background, absent]
+    identity_invariants: list<string>
+    allowed_variation: map<string, bool>
+  provenance_rule: customer_stated | customer_implied | system_derived
+  operation_rule: preserve | derive | decide | ask
+  must_not_be_inferred: >
+    Identity invariants are the sharpest case in the grammar. "Keep her looking the same" does not
+    tell you whether wardrobe is part of identity. Deriving `wardrobe_colourway` from that sentence
+    invents a customer requirement. Correct handling is `ask`.
+  creative_ir_relationship: maps to Creative IR entities[]; the grammar adds no new capability here
+
+- id: R07
+  field: relationships[]
+  type: list<object>
+  required: false
+  object_shape: {subject: entity_ref, relation: string, object: entity_ref}
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+  creative_ir_relationship: maps to Creative IR relationships[] unchanged
+
+- id: R08
+  field: text_requirements[]
+  type: list<object>
+  required: false
+  object_shape:
+    text_id: string
+    content: string
+    exactness: enum[exact, approximate, free]
+    script: enum[latin, devanagari, mixed, other]
+    role: enum[headline, body, cta, price, legal, brand_name, incidental]
+  provenance_rule: customer_stated
+  provenance_forbidden: [system_derived]
+  provenance_forbidden_reason: >
+    Copy the system invented is not copy the customer requires. A generated headline may be a
+    proposal; it is never a customer requirement, and marking it so would let a system-authored
+    string be scored as a preservation failure.
+  operation_rule: preserve
+  must_not_be_inferred: >
+    Do not upgrade `approximate` to `exact`. If the customer did not say the words must appear
+    verbatim, requiring verbatim reproduction invents a constraint and will produce false failures.
+  evidence_note: >
+    CANON-009 found NO real-user frequency figure for text-in-image requests in any corpus. This
+    field exists because it is a first-product requirement, not because prevalence was measured.
+
+- id: R09
+  field: brand_requirements
+  type: object
+  required: false
+  object_shape:
+    assets: list<asset_ref>
+    palette: object
+    palette_tolerance: string
+    mandatories: list<string>
+    prohibitions: list<string>
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve
+  creative_ir_relationship: maps to Creative IR brand
+
+- id: R10
+  field: language_topology
+  type: object
+  required: conditionally
+  required_when: modality in [video, audio] OR text_requirements present
+  object_shape:
+    spoken: string
+    on_screen_copy: string
+    subtitles: string
+    viewer_locale: string
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+  note: >
+    Four separate languages, per SPEC-01. Hindi dialogue with an English CTA and no subtitles is an
+    ordinary Indian brief, and treating "language" as one value loses the distinction.
+
+- id: R11
+  field: speaker_topology
+  type: object
+  required: conditionally
+  required_when: modality in [video, audio] AND speech is requested
+  object_shape:
+    visible_speakers: integer
+    offscreen_voices: integer
+    turn_boundaries_required: bool
+    script_exactness: enum[exact, approximate, free]
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+  evidence_note: >
+    CANON-009 found NO corpus covering speech or voiceover requests at all. This field is
+    scope-derived from the first product, and is labelled so rather than presented as evidenced.
+
+- id: R12
+  field: temporal_structure
+  type: object
+  required: conditionally
+  required_when: modality in [video, image_sequence]
+  object_shape:
+    duration_seconds: number
+    shot_count: integer
+    beats: list<object>
+    continuity_requirements: list<string>
+  provenance_rule: customer_stated | customer_implied | system_derived
+  operation_rule: preserve | derive | decide
+  evidence_note: >
+    No corpus records requested duration, shot count or beat structure. Product constraint, not a
+    discovered pattern.
+
+- id: R13
+  field: subject_motion
+  type: object
+  required: false
+  object_shape:
+    entity_ref: string
+    motion_type: enum[locomotion, gesture, micro_expression, object_motion, state_change]
+    description: string
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve | derive
+  separation_rule: >
+    MUST NOT be merged with R14. The Controller decision requires camera motion separable from
+    subject motion, and CANON-009 found the reason in TIP-I2V: users ask for "zoom" (camera), "walk"
+    (locomotion) and "blink" (micro-expression). Three different production problems and three
+    different failure modes. A benchmark that tests "motion" as one thing misses two of them.
+
+- id: R14
+  field: camera_motion
+  type: object
+  required: false
+  object_shape:
+    motion_type: enum[static, pan, tilt, zoom, dolly, orbit, handheld, crane]
+    description: string
+  provenance_rule: customer_stated | customer_implied | system_derived
+  operation_rule: preserve | derive | decide | delegate
+  separation_rule: see R13
+  note: >
+    Camera motion may legitimately be `system_derived` where subject motion may not. A customer who
+    says nothing about the camera has delegated it; a customer who says nothing about what the
+    subject does has usually not asked for motion at all.
+
+- id: R15
+  field: delivery
+  type: object
+  required: false
+  object_shape:
+    platform: string
+    aspect_ratios: list<string>
+    resolution: string
+    safe_areas: list<string>
+  provenance_rule: customer_stated | customer_implied | system_derived
+  operation_rule: preserve | derive | decide
+  creative_ir_relationship: maps to Creative IR delivery
+
+- id: R16
+  field: specification_provenance
+  type: object
+  required: true
+  object_shape:
+    customer_specified: list<field_id>
+    customer_omitted: list<field_id>
+    derived: list<object>
+  provenance_rule: system_derived
+  provenance_note: >
+    This field is ABOUT provenance, so it is itself system-derived by definition. That is not a
+    contradiction — it is the record of who said what, not a claim about the deliverable.
+  operation_rule: derive
+  why_it_is_required: >
+    It is what makes intervention level measurable — how often we preserved, decided, delegated,
+    asked, or hit a conflict. CANON-009 found independent corroboration in PSR's `creativity level`
+    dimension over 82,976 real requests, which is a coarse one-dimensional version of the same idea.
+  must_not_be_inferred: >
+    A field is `customer_specified` ONLY if the customer said it. This is the rule the validator
+    checks hardest, because assigning customer provenance to a system decision is how a bad plan
+    later gets scored as a misread request.
+
+- id: R17
+  field: ambiguity_markers[]
+  type: list<object>
+  required: false
+  object_shape:
+    marker_type: vocabularies.ambiguity_marker
+    detail: string
+    affected_fields: list<field_id>
+  provenance_rule: system_derived
+  operation_rule: flag | ask
+  handling_rule: recorded, never silently resolved
+
+- id: R18
+  field: acceptance_intent
+  type: object
+  required: false
+  object_shape:
+    stated_success_criteria: list<string>
+    stated_rejection_criteria: list<string>
+    hard_constraints: list<string>
+    soft_preferences: list<string>
+    free_choices: list<string>
+  provenance_rule: customer_stated | customer_implied
+  operation_rule: preserve
+  boundary_rule: >
+    THIS IS THE CUSTOMER'S ACCEPTANCE INTENT, VISIBLE FROM THE REQUEST. It is not an Eval threshold
+    and must never become one. "The label must be readable" is acceptance intent. "OCR character
+    accuracy >= 0.98" is a measurement decision Eval owns, and inventing one here would let Canon
+    set Eval's thresholds through the back door.
+  must_not_be_inferred: >
+    Do not manufacture rejection criteria the customer did not state. An empty
+    stated_rejection_criteria is a fact about the request, not a gap to be filled.
+
+# ── Cross-field rules a validator can check ─────────────────────────────────────
+
+rules:
+
+- id: RULE-01
+  statement: requested_operation must never take a production-route value
+  check: R01 value not in vocabularies.requested_operation.forbidden_values
+  rationale: customer intent is not workflow mode
+
+- id: RULE-02
+  statement: operations acting on a supplied artefact require a supplied asset
+  check: >
+    R01 in [edit, animate, restore, extend, compose] implies R02 present with at least one asset
+    whose role is subject_of_operation
+
+- id: RULE-03
+  statement: variants implies a set
+  check: R01 == variants implies R04.cardinality > 1
+
+- id: RULE-04
+  statement: a set with best_n_of_m acceptance must state m
+  check: R04.acceptance_basis == best_n_of_m implies R04.best_n present
+
+- id: RULE-05
+  statement: customer_specified provenance requires customer text
+  check: every field in R16.customer_specified must be traceable to the request text
+  rationale: the single most consequential provenance error available
+
+- id: RULE-06
+  statement: camera and subject motion are separate fields
+  check: R13 and R14 are never merged into one motion object
+
+- id: RULE-07
+  statement: acceptance intent carries no numeric measurement threshold
+  check: R18 contains no evaluator threshold, metric name or score
+  rationale: Eval owns thresholds; Canon owns what the customer asked to be true
+
+- id: RULE-08
+  statement: implicit preservation is not enumerated as customer statements
+  check: R03 uses preservation_default rather than a manufactured preserve entry per element
+
+- id: RULE-09
+  statement: every field has a provenance rule and an operation rule
+  check: all fields[] define provenance_rule and operation_rule
+  rationale: a field without these cannot be audited for invented intent
+
+deferred_to_controller:
+  - what: the exact machine vocabulary for requested_operation
+    note: >
+      Seven values proposed. The Controller decision says the exact vocabulary is to be frozen in the
+      implementation spec, and this file is that proposal.
+  - what: whether `restore` stays a distinct operation or folds into `edit`
+    note: proposed distinct, on acceptance-semantics grounds stated at the vocabulary
+  - what: multi-turn request history
+    note: deferred by Controller decision; see MULTI-TURN-BOUNDARY in NORMALIZED-REQUEST-DELTA.md
