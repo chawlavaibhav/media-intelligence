@@ -240,7 +240,7 @@ Create under `eval/model-access/2026-08-26/`:
 
 The Controller Brief must explicitly prove that sourcing did not determine selection:
 
-- timestamp/order or artifact structure showing `MODEL-ROSTER-FIRST.md` was completed before provider-route recommendations;
+- artifact structure showing `MODEL-ROSTER-FIRST.md` was completed before provider-route recommendations;
 - list any Must/Should models that are **not** available through Frontier Clouds/fal;
 - list any attractive Frontier Clouds/fal models deliberately excluded because they did not earn a model slot.
 
