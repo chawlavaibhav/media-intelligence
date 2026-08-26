@@ -24,8 +24,12 @@
 # scores.json; the 64 images did not, and those failures can no longer be re-annotated.
 
 meta:
-  version: v2
-  supersedes: "v1 (overnight). v1 conflated the call with its output and used a Resources-invented observation vocabulary."
+  version: v2.1
+  supersedes: >
+    v1 (overnight) conflated the call with its output and used a Resources-invented observation
+    vocabulary. v2 split them. v2.1 (RI-C1..RI-C4 of RESOURCES-EVAL-STORAGE-INTEGRATION-PASS.md)
+    freezes trial semantics, the machine vocabularies, the absence vocabulary and cost provenance so
+    Eval's emitted JSONL can validate against this contract exactly.
   date: 2026-08-26
   storage_class: C_irreproducible_empirical
   capacity_requirement: ">=1,000 attempts without schema redesign"
@@ -55,24 +59,34 @@ entities:
     description: >
       One provider/API/transform call. Recorded whether it succeeds, errors, times out or is refused.
       An attempt row is written when the call is MADE, not when it succeeds.
+
+      ONE CALL = ONE TRIAL (RI-C1). A trial is not a grouping of attempts. Every attempt maps to
+      exactly one trial and no two attempts may share a trial_id. A deliberate repeat is a NEW trial
+      that links back through repeat_of_attempt_id; a production retry is a NEW trial that links back
+      through retry_of_attempt_id. Only derived artifacts add no trial - they inherit the producing
+      attempt's. trial_id == attempt_id is acceptable; a distinct id is acceptable provided the
+      one-to-one mapping holds.
     required:
       attempt_id: "Stable unique id. Never reused, never reassigned."
-      trial_id: "Groups the attempts belonging to one experimental trial."
+      trial_id: >
+        The trial this call IS. Exactly one attempt per trial_id, enforced. May equal attempt_id.
       eval_item_id: "The benchmark bank item this attempt was made for."
       provider: "Vendor / API host."
       model_id: "Exact model or API id as called, not the marketed name."
       model_version: "Version string, or the explicit token 'unpinnable' where the provider exposes none."
       endpoint: "Exact endpoint called."
       workflow: "The recipe this call sits inside: a single call, or a named multi-step pipeline."
-      lane: "Eval's roster lane, stored verbatim (image / general video / native AV / lip-sync / TTS)."
+      lane: "Eval's roster lane, from the frozen machine vocabulary below. Stored verbatim."
       prompt_hash: "SHA-256 of the exact prompt text sent."
       config_hash: "SHA-256 of the exact request configuration sent."
       config_location: "Where the full prompt/config is recoverable. A hash alone cannot be read back."
       reference_asset_hashes: "List of SHA-256 of any reference images/audio supplied. Empty list if none."
       requested_at: "ISO-8601 UTC."
       completed_at: "ISO-8601 UTC, or null if the call never completed."
-      status: "ok | error | refusal | timeout | cancelled."
-      cost_ref: "Reference to the recorded cost-ledger line for this call. Never an invented number."
+      status: "From the frozen machine vocabulary below. Note 'refusal', not 'refused'."
+      cost_ref: >
+        REFERENCE to a ledger_entry_id in cost_ledger.jsonl. Never an inline number, never invented,
+        and it must resolve.
       storage_class: "Always C_irreproducible_empirical."
     repeat_and_retry:
       # R-C2: these are DIFFERENT CONCEPTS and must never be interchangeable.
@@ -80,9 +94,11 @@ entities:
         Integer, 0-based. Which deliberate experimental repeat this is. A repeat is planned before any
         result is seen, and exists to measure reliability. REQUIRED on every attempt.
       repeat_of_attempt_id: >
-        The first attempt of the same repeat group, or null on the first. Optional convenience link.
+        The first attempt of the same repeat group, or null on the first. A repeat is its OWN trial
+        (RI-C1); this link is what relates the trials, not a shared trial_id.
       retry_of_attempt_id: >
         Set ONLY when this call exists because a PRIOR ATTEMPT FAILED or was rejected. Null otherwise.
+        A retry is its OWN trial (RI-C1) and links backward through this field.
       retry_reason: "Required when retry_of_attempt_id is set. Free text; observer terms preserved."
       why_they_must_not_be_conflated: >
         Only retries belong to an accepted-outcome retry chain. Cost per Accepted Outcome divides the
@@ -114,7 +130,7 @@ entities:
     required:
       artifact_id: "Stable unique id."
       attempt_id: "The attempt that produced it. Must exist."
-      trial_id: "Denormalised from the attempt for direct grouping."
+      trial_id: "Inherited from the producing attempt. An artifact never introduces a trial."
       output_hash: "SHA-256 of the bytes. Never null on an artifact row - an artifact IS its bytes."
       output_bytes: "Size in bytes."
       output_location: "Where the bytes are retained."
@@ -130,7 +146,8 @@ entities:
       rule: >
         A derived artifact inherits its parent's trial_id and attempt_id. It NEVER gets its own. Ten
         frames sampled from one clip are ten artifacts of ONE trial, and counting them as ten trials
-        would inflate every sample size downstream by an order of magnitude.
+        would inflate every sample size downstream by an order of magnitude. Derivation is the ONLY
+        thing in this schema that adds artifacts without adding trials.
     rules:
       - "An artifact exists only where bytes exist. A refused call has an attempt row and no artifact row."
       - "Stored ONCE. The same output_hash must not appear at two output_locations - that is a duplicate copy, not two artifacts."
@@ -144,7 +161,7 @@ entities:
     required:
       measurement_id: "Stable unique id."
       artifact_id: "The artifact observed. Null only when the measurement is defined over a trial rather than one artifact."
-      trial_id: "The trial this measurement belongs to. Always present."
+      trial_id: "The trial observed. Must be a trial that exists on some attempt."
       capability_id: >
         The CANONICAL capability id from Eval's 36-capability map, stored EXACTLY as Eval defines it.
         Resources never renames, abbreviates, normalises or maps it.
@@ -160,15 +177,18 @@ entities:
       # A measurement that could not be taken is evidence too, and must not be a silent gap.
       result: "The instrument's output, in whatever form that capability declares. Null iff absence_reason is set."
       absence_reason: >
-        Why no result exists: not_applicable | instrument_unavailable | parse_failure |
-        human_adjudication_pending | other. Null iff result is set.
+        Why no result exists, from measurement_absence_reasons.allowed below. Null iff result is set.
+        A provider refusal/error/timeout is NOT an absence - it lives on the attempt. Nor is
+        'instrument_unqualified'.
       rule: "Exactly one of result and absence_reason is set. Never both, never neither."
     optional:
       defects: >
         List of defects observed. MULTIPLE DEFECTS PER ARTIFACT ARE PERMITTED AND EXPECTED - the
         Project Contract allows it (separation 13), and collapsing an artifact to one salient label is
         exactly what the Eval master plan says went wrong with the legacy failures.
-      evaluator_cost_ref: "Evaluator cost, recorded SEPARATELY from generation cost so neither hides inside the other."
+      evaluator_cost_ref: >
+        REFERENCE to a ledger_entry_id. Separate entry from the attempt's generation cost so neither
+        hides inside the other.
       human_adjudication_ref: "Where a person resolved or overrode the instrument."
       notes: "Observer terms preserved verbatim. Ontology mapping happens later, never by silent rewrite."
     rules:
@@ -183,7 +203,7 @@ entities:
       Resources STORES this. Resources NEVER DECIDES IT.
     required:
       acceptance_id: "Stable unique id."
-      trial_id: "The trial being accepted or rejected."
+      trial_id: "The trial whose output was delivered. Must exist on some attempt."
       artifact_id: "The artifact actually delivered, or null if the trial ended with no deliverable."
       accepted: "Boolean."
       decided_by: "Who or what decided. NEVER Resources."
@@ -198,6 +218,92 @@ entities:
       CpAO = total cost of every attempt in the retry chain / accepted outcomes. Recomputable ONLY if
       cost, acceptance, the retry chain and the artifact all survive together. That is why acceptance
       lives in a Resources schema even though Resources never makes the decision.
+
+# ===========================================================================
+# FROZEN MACHINE VOCABULARIES (RI-C2)
+#
+# These are machine ids, not display names. Resources stores them and validates membership; it does
+# not invent variants, prettify them, or accept near-misses. A near-miss is the failure mode this
+# section exists to stop: 'refused' vs 'refusal' and 'video' vs 'general_video' both look harmless
+# to a reader and break every join that groups by them.
+# ===========================================================================
+machine_vocabularies:
+  lane:
+    allowed: [image, general_video, native_av, lipsync, tts]
+    authority: "Eval's E2 roster. Resources stores the id verbatim."
+    not_allowed_examples: [video, general video, "native AV", lip-sync, lip_sync, TTS, audio]
+  attempt_status:
+    allowed: [ok, error, refusal, timeout, cancelled]
+    authority: "Resources, as the persistence owner."
+    not_allowed_examples: [refused, REFUSAL, failed, success, blocked, moderation_block]
+    note: >
+      'refusal' is the persistent id. 'refused' is not accepted. The provider's own wording belongs
+      in error_detail, verbatim, where it is evidence rather than a status.
+
+# ===========================================================================
+# CANONICAL MEASUREMENT ABSENCE VOCABULARY (RI-C3)
+#
+# An absence is 'the measurement could not be taken'. It is NOT a place to record that the provider
+# call failed - that already has its own first-class attempt row with a status and an error_detail.
+# Encoding a provider failure as a measurement absence would double-count it and would make the
+# reliability numbers depend on how many capabilities happened to be listed for the item.
+# ===========================================================================
+measurement_absence_reasons:
+  allowed: [not_applicable, not_measured, instrument_unavailable, parse_failure,
+            human_adjudication_pending, other]
+  authority: "Eval owns measurement semantics; this V1 set is agreed with Resources for persistence."
+  not_allowed:
+    provider_failures: [refusal, refused, error, timeout, cancelled, provider_error, api_error, moderation_block]
+    why: >
+      A provider refusal/error/timeout belongs on the ATTEMPT, not on a fake measurement. When a call
+      fails there is no artifact, so there is nothing to have measured.
+    instrument_unqualified:
+      why: >
+        NOT an absence. An unqualified instrument may still emit an observational result; it simply
+        cannot create a Registry score. Record the result and carry
+        instrument_qualification_ref: required_but_no_calibrated_instrument. Turning it into an
+        absence would discard a real observation and hide how much was actually measured.
+
+# ===========================================================================
+# COST LEDGER (RI-C4)
+#
+# cost_ref is a REFERENCE, not a number. A number written next to an attempt can be silently
+# recomputed, rounded or re-derived from a price list that has since changed; a reference to an
+# immutable recorded entry cannot. Cost per Accepted Outcome is only auditable if the cost that was
+# actually incurred survives unchanged next to the call that incurred it.
+#
+# The legacy media-factory ledger is the cautionary example: its dollar figures were July-2026 list
+# prices hardcoded in the script, not billed amounts, and its own comment records that it
+# over-counted failed video attempts. It is a useful historical reference and it is not a cost record.
+# ===========================================================================
+cost_ledger:
+  file: cost_ledger.jsonl
+  accepted_filename_aliases: [cost-ledger.jsonl]
+  accepted_field_aliases:
+    cost_ref: "Accepted as an alias for ledger_entry_id - it names the same value attempts point at."
+  alias_note: >
+    Filename and id-field aliases are cosmetic interoperability accommodations agreed during the
+    RI-C5 integration pass. No content rule below is relaxed by them.
+  purpose: "The target of every cost_ref on an attempt and every evaluator_cost_ref on a measurement."
+  required_fields:
+    ledger_entry_id: "Stable unique id. This is what cost_ref points at."
+    amount: "Numeric amount actually recorded."
+    currency: "ISO currency code."
+    unit: "What the amount is per: call | second | token | image | minute | other."
+    recorded_at: "ISO-8601 UTC."
+    basis: "provider_invoice | provider_api_response | published_price_estimate | synthetic_test"
+    immutable: "Must be true. A ledger entry is never edited; a correction is a new entry."
+  optional:
+    attempt_id: "The attempt this entry costs, where it is a generation/transform cost."
+    measurement_id: "The measurement this entry costs, where it is an evaluator cost."
+    synthetic: "Required true when basis is synthetic_test."
+    note: "Free text, e.g. which price list an estimate came from."
+  rules:
+    - "Every cost_ref on an attempt MUST resolve to exactly one ledger_entry_id."
+    - "basis 'published_price_estimate' is a MODELLED figure and must be labelled as one; it is not a billed amount."
+    - "basis 'synthetic_test' requires synthetic: true. Synthetic tests may never carry a fabricated real-provider cost."
+    - "immutable must be true. Superseding is allowed; silent mutation is not."
+    - "Generation cost and evaluator cost are separate entries so neither can hide inside the other."
 
 # ===========================================================================
 # CANONICAL OBSERVATION-UNIT VOCABULARY

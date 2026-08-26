@@ -21,6 +21,7 @@ T0, T1 = "2026-01-01T00:00:00Z", "2026-01-01T00:00:30Z"
 
 # capability ids are Eval's canonical ids, stored verbatim; observation units are the canonical
 # vocabulary, stored verbatim. Resources invents neither.
+# lane ids are the FROZEN machine vocabulary (RI-C2): image | general_video | native_av | lipsync | tts
 LANES = [
     ("dummy-vendor-a", "dummy-image-v0", "images.generate", "single_call", "image", "image",
      [("exact_text_latin", "whole_asset"), ("object_count", "whole_asset"),
@@ -43,13 +44,15 @@ def h(s):
 
 
 def build():
-    attempts, artifacts, measurements, acceptances = [], [], [], []
+    attempts, artifacts, measurements, acceptances, ledger = [], [], [], [], []
     for i in range(N_ITEMS):
         vendor, model, endpoint, workflow, lane, kind, caps = LANES[i % len(LANES)]
         item = f"DUMMY-ITEM-{i:04d}"
-        trial = f"DUMMY-TRIAL-{i:04d}"
         for k in range(N_REPEATS):
             aid = f"DUMMY-ATT-{i:04d}-{k}"
+            # RI-C1: ONE CALL = ONE TRIAL. Each repeat is its own trial, linked backward by
+            # repeat_of_attempt_id rather than by sharing a trial id.
+            trial = f"DUMMY-TRIAL-{i:04d}-{k}"
             n = i * N_REPEATS + k
             status = "refusal" if n % 47 == 0 else ("error" if n % 83 == 0 else "ok")
             ok = status == "ok"
@@ -61,7 +64,7 @@ def build():
                 "config_location": f"dummy://configs/{item}/{k}.json",
                 "reference_asset_hashes": [h("ref|" + item)] if i % 5 == 0 else [],
                 "requested_at": T0, "completed_at": T1 if ok else None,
-                "status": status, "cost_ref": f"dummy-ledger://{aid}",
+                "status": status, "cost_ref": f"LEDGER-GEN-{i:04d}-{k}",
                 "storage_class": "C_irreproducible_empirical",
                 # A deliberate reliability repeat. NOT a retry.
                 "repeat_index": k,
@@ -74,6 +77,14 @@ def build():
                 "latency_ms": 30000 if ok else None,
             }
             attempts.append(att)
+            # RI-C4: cost is a REFERENCE to an immutable entry. Clearly synthetic basis - a synthetic
+            # test may never carry a fabricated real-provider cost.
+            ledger.append({
+                "ledger_entry_id": f"LEDGER-GEN-{i:04d}-{k}", "attempt_id": aid,
+                "amount": 0.0, "currency": "XTS", "unit": "call", "recorded_at": T1,
+                "basis": "synthetic_test", "immutable": True, "synthetic": True,
+                "note": "synthetic placeholder; no provider was called and no money was spent",
+            })
             if not ok:
                 continue                       # no artifact: the call produced nothing
             art_id = f"DUMMY-ART-{i:04d}-{k}"
@@ -106,14 +117,22 @@ def build():
                     "observation_unit": unit,
                     "result": {"dummy": True}, "absence_reason": None,
                     "defects": [], "measured_at": T1,
-                    "evaluator_cost_ref": f"dummy-ledger://eval/{art_id}/{cap}",
+                    "evaluator_cost_ref": f"LEDGER-EVAL-{art_id}-{cap}",
+                })
+                ledger.append({
+                    "ledger_entry_id": f"LEDGER-EVAL-{art_id}-{cap}",
+                    "measurement_id": f"DUMMY-MEAS-{art_id}-{cap}",
+                    "amount": 0.0, "currency": "XTS", "unit": "call", "recorded_at": T1,
+                    "basis": "synthetic_test", "immutable": True, "synthetic": True,
+                    "note": "synthetic evaluator cost, recorded separately from generation cost",
                 })
         # Acceptance references only the FIRST attempt; retry_chain holds retries only, and this
         # synthetic run has none, so the chain is the single delivered attempt.
-        if any(a["trial_id"] == trial and a["status"] == "ok" for a in attempts):
-            first_ok = next(a for a in attempts if a["trial_id"] == trial and a["status"] == "ok")
+        item_ok = [a for a in attempts if a["eval_item_id"] == item and a["status"] == "ok"]
+        if item_ok:
+            first_ok = item_ok[0]
             acceptances.append({
-                "acceptance_id": f"DUMMY-ACC-{item}", "trial_id": trial,
+                "acceptance_id": f"DUMMY-ACC-{item}", "trial_id": first_ok["trial_id"],
                 "artifact_id": f"DUMMY-ART-{first_ok['attempt_id'].split('-',2)[2]}".replace(
                     "DUMMY-ART-", "DUMMY-ART-"),
                 "accepted": (i % 3 != 0), "decided_by": "dummy-human-reviewer",
@@ -126,7 +145,7 @@ def build():
                       if r["derived_from_artifact_id"] is None}
     for c in acceptances:
         c["artifact_id"] = art_by_attempt.get(c["retry_chain"][0])
-    return attempts, artifacts, measurements, acceptances
+    return attempts, artifacts, measurements, acceptances, ledger
 
 
 def main():
@@ -134,7 +153,7 @@ def main():
     ap.add_argument("--out", default=DEFAULT_OUT)
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    sets = dict(zip(("attempts", "artifacts", "measurements", "acceptances"), build()))
+    sets = dict(zip(("attempts", "artifacts", "measurements", "acceptances", "cost_ledger"), build()))
     for name, rows in sets.items():
         with open(os.path.join(a.out, name + ".jsonl"), "w") as fh:
             for r in rows:

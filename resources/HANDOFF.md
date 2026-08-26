@@ -47,7 +47,21 @@ access terms, explicit commercial-use terms). Licence silence is not a block for
 internal-only acquisition; access gates and explicit terms still are. **Transient acquisition is the
 default for large reliably-reacquirable public archives** (Charter, approved 24 Aug 2026).
 
-**LAST COMPLETED WORK:** Resources V1 **correction pass** (26 Aug 2026) on branch
+**LAST COMPLETED WORK:** Resources–Eval **storage integration pass** (26 Aug 2026) on branch
+`work/resources-v1-overnight`. Tightened the one canonical persistence contract to v2.1 so Eval's
+emitted JSONL can validate against it exactly: one call = one trial; frozen lane and attempt-status
+machine vocabularies; a canonical measurement-absence set that excludes provider failures and
+`instrument_unqualified`; and cost as a reference to an immutable ledger entry rather than an inline
+number. **Cross-branch gate status: `BLOCKED_WAITING_FOR_EVAL_INTERFACE`** — at
+`origin/work/eval-v1-overnight@adac747` the attempts, artifacts, measurements and acceptances files
+all validate, and the only remaining defect class is four missing cost-ledger fields (`unit`,
+`recorded_at`, `basis`, `immutable`). Re-check with
+`bash resources/v1/validators/validate_eval_archive.sh`. Brief:
+`resources/findings/RESOURCES-EVAL-STORAGE-INTEGRATION-CONTROLLER-BRIEF.md`; exact delta:
+`resources/v1/EVAL-ARCHIVE-INTERFACE-DELTA.md`. **0 acquisition, ₹0 spend, no Eval file edited, not
+merged.**
+
+**PRIOR WORK:** Resources V1 **correction pass** (26 Aug 2026) on branch
 `work/resources-v1-overnight`, closing the Controller's five review findings on the overnight work:
 the 15/36 wording made precise; one canonical attempt/artifact/measurement/acceptance storage
 contract with the canonical observation vocabulary and repeats separated from retries; ~34 MB of

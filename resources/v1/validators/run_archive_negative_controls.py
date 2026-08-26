@@ -18,7 +18,7 @@ except ImportError:
 HERE = os.path.dirname(os.path.abspath(__file__))
 CASES = os.path.join(os.path.dirname(HERE), "fixtures", "empirical-archive-negative-controls", "CASES.yaml")
 VALIDATOR = os.path.join(HERE, "check_empirical_archive.py")
-LISTS = ["attempts", "artifacts", "measurements", "acceptances"]
+LISTS = ["attempts", "artifacts", "measurements", "acceptances", "cost_ledger"]
 
 
 def fatal(m):

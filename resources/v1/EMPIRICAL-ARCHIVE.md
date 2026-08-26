@@ -137,7 +137,7 @@ calibration, qualification or reserve use on anything sharing their lineage.
 
 ## Fail-closed, verified
 
-**Thirteen committed negative controls**, each breaking exactly one rule, run by
+**Twenty-two committed negative controls**, each breaking (or deliberately satisfying) exactly one rule, run by
 `validators/run_archive_negative_controls.py`. The runner asserts both the expected outcome **and**
 that the failure names the right rule — a case that fails for the wrong reason is not a passing
 negative control.
@@ -157,8 +157,18 @@ negative control.
 | `10-no-fan-out` | one measurement per artifact — no reuse |
 | `11-attempt-without-a-cost-reference` | cost reconstructable later |
 | `12-acceptance-decided-by-resources` | Resources deciding acceptance |
+| `13-two-attempts-sharing-one-trial` | RI-C1: a trial grouping two calls |
+| `14-repeat-and-retry-each-get-their-own-trial` | nothing — the positive half of RI-C1 |
+| `15-status-refused-not-refusal` | RI-C2: a near-miss status id |
+| `16-lane-display-name-not-machine-id` | RI-C2: `video` instead of `general_video` |
+| `17-provider-failure-as-a-measurement-absence` | RI-C3: laundering an attempt failure |
+| `18-instrument-unqualified-as-an-absence` | RI-C3: discarding a real observation |
+| `19-cost-ref-that-does-not-resolve` | RI-C4: unresolvable cost reference |
+| `20-inline-cost-instead-of-a-ledger-reference` | RI-C4: cost as a number |
+| `21-mutable-cost-ledger-entry` | RI-C4: an editable ledger |
 
-**13/13 behaved as declared.** The validator separates *could not check* (exit 2) from *found a
+**22/22 behaved as declared.** Two are deliberately *positive* — a suite with no passing case would
+be satisfied by a validator that rejects everything. The validator separates *could not check* (exit 2) from *found a
 violation* (exit 1): missing directory, missing file and empty file all produce exit 2, never a
 cheerful zero.
 

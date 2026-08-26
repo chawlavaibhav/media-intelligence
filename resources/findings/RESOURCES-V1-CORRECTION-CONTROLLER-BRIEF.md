@@ -207,6 +207,11 @@ All executed in this cloud session, from a clean state (`resources/v1/build/` de
 | Empirical archive at 1,000 attempts | exit 0, fan-out 6.00, 0 duplicate copies |
 | Archive negative controls | **13/13 as declared, each failing for its declared reason** |
 
+*(Superseded count: the integration pass RI-C1–RI-C4 added nine more, taking the archive suite to
+22/22. This table records what the correction pass itself ran and is left as-is — historical results
+are not rewritten to match later numbers. See
+`RESOURCES-EVAL-STORAGE-INTEGRATION-CONTROLLER-BRIEF.md`.)*
+
 **Total: 17 deliberate negative controls, all behaving as declared.** The archive runner asserts not
 just that a case fails but that the failure names the right rule — a case failing for the wrong
 reason is not a passing negative control.
