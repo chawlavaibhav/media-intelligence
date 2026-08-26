@@ -1,0 +1,338 @@
+# CANON-009 / C9-A — register of media-generation request sources.
+#
+# WHAT THIS IS. One row per candidate source of evidence about what people actually ask
+# media-generation systems to make. It records what each source IS, what it can support, and — just
+# as important — what it cannot.
+#
+# THE PROVENANCE CAVEAT THAT APPLIES TO EVERY ROW. Outbound web *fetching* is blocked in this cloud
+# session; every attempt to open a page returned EGRESS_BLOCKED, and direct curl to arxiv.org,
+# huggingface.co and openreview.net all returned nothing. Web *search* works. So every fact below was
+# established from search results that surfaced first-party pages (arXiv listings, project sites,
+# dataset cards, GitHub repos) — but NO primary page was opened and read in this session.
+#
+# Consequence, stated once and applying throughout: figures here are `search_verified`, not
+# `primary_read`. They are consistent across multiple independent result sets, which is meaningful,
+# and they are not the same as having read the paper. Any figure that would drive a spend decision
+# must be re-verified against the primary source before use.
+#
+# evidence_class:
+#   real_user_requests   — produced by people trying to get something they wanted
+#   benchmark_authored   — written by researchers/annotators to test models. NOT demand evidence.
+#   practitioner_report  — professional/industry accounts of use. Qualitative.
+#   derived_analysis     — a study OF one of the above
+
+meta:
+  task: CANON-009 / C9-A
+  compiled: 2026-08-26
+  fetch_status: EGRESS_BLOCKED — search only, no primary page opened
+  verification_level: search_verified
+  standing_rule: >
+    No single corpus is a proxy for total market demand. Every distribution below is shaped by the
+    interface and community it came from, and those differ enormously.
+
+sources:
+
+# ── Text-to-image ───────────────────────────────────────────────────────────────
+- id: SRC-01
+  name: DiffusionDB
+  modality: text_to_image
+  evidence_class: real_user_requests
+  population: >
+    Users of the official Stable Diffusion Discord server. Hobbyist and enthusiast heavy; people who
+    joined a Discord to generate images.
+  scale: 14M images, 1.8M unique prompts, 6.5TB
+  time_period: 2022 (Stable Diffusion public-Discord era)
+  fields_available: [prompt, image, seed, step, cfg_scale, sampler, image_size]
+  language: mostly English; also Spanish, Chinese, Russian
+  frequency_inferable: true
+  cooccurrence_inferable: partially
+  cooccurrence_note: >
+    Prompt text supports co-occurrence of *described elements*. It does not record what the user
+    actually wanted, whether they got it, or whether they iterated — the prompt is the input, not the
+    request. There is no brief, no objective and no acceptance criterion.
+  rights_visible: CC0 1.0; collection and analysis code open sourced
+  access: public dataset card and paper; large payload not downloaded (task rule)
+  supports:
+    - what enthusiast T2I users type into a model interface
+    - subject and modifier vocabulary at scale
+  does_not_support:
+    - commercial demand
+    - what a paying customer would accept
+    - anything about editing, video or multi-asset work
+  citations:
+    - https://poloclub.github.io/diffusiondb/
+    - https://arxiv.org/abs/2210.14896
+    - https://huggingface.co/datasets/poloclub/diffusiondb
+
+- id: SRC-02
+  name: "No Longer Trending on Artstation (McCormack, Llano, Krol, Rajcic — Monash)"
+  modality: text_to_image
+  evidence_class: derived_analysis
+  analyses: [SRC-01, other prompt galleries]
+  population: ">3M prompts and their images"
+  time_period: 2022–2023 comparison
+  frequency_inferable: true
+  key_findings:
+    - >
+      Top subjects after removing adjectives and aesthetic/style words: woman 22.26% of images,
+      man 16.2%, dress 6.92%, hair 5.51%, room 5.44%, flower 5.33%.
+    - >
+      Prompting focuses largely on surface aesthetics and conventional imagery; the authors conclude
+      the dominant use of the systems analysed is RECREATIONAL RATHER THAN ARTISTIC.
+    - >
+      "artstation" / "trending on artstation" were prominent in 2022 and had left the top 10 by 2023
+      — prompt conventions decay as models change.
+  why_this_matters_here: >
+    This is the single most load-bearing bias finding in the register. The largest, most-cited T2I
+    request corpora are dominated by recreational use. Treating their distribution as commercial
+    demand would be a category error, and the third finding shows even their vocabulary is
+    time-bound.
+  citations:
+    - https://arxiv.org/abs/2401.14425
+    - https://link.springer.com/chapter/10.1007/978-3-031-56992-0_18
+
+# ── Image editing ───────────────────────────────────────────────────────────────
+- id: SRC-03
+  name: "PSR — Understanding Generative AI Capabilities in Everyday Image Editing Tasks"
+  modality: image_editing
+  evidence_class: real_user_requests
+  population: >
+    r/PhotoshopRequest posters — ordinary people asking human editors for a specific outcome on
+    their own photograph. NOT people prompting a model.
+  scale: 82,976 requests; 305,806 human-edited images
+  time_period: 2013–2025
+  fields_available: [request_text, input_image, human_edited_outputs, taxonomy_annotations]
+  frequency_inferable: true
+  cooccurrence_inferable: true
+  taxonomy_dimensions:
+    - subject (element modified; WordNet synsets → 5 main categories, 12 subcategories)
+    - action_verb (modification type)
+    - creativity_level (routine vs open-ended interpretation)
+  rights_visible: not_verified
+  supports:
+    - a validated taxonomy of real editing requests
+    - the request/outcome distinction — these are briefs, not prompts
+    - which requests current AI can and cannot satisfy
+  does_not_support:
+    - commercial brand work specifically
+    - video, speech or campaign-set requirements
+  why_this_matters_here: >
+    The strongest source in the register for C9-B. It is the only one whose unit is a REQUEST FOR AN
+    OUTCOME on the requester's own material, which is the shape our product actually receives. Its
+    three-dimension taxonomy is close to independent corroboration of a grammar rather than a
+    vocabulary of prompt modifiers.
+  citations:
+    - https://psrdataset.github.io/
+
+- id: SRC-04
+  name: RealEdit
+  modality: image_editing
+  evidence_class: real_user_requests
+  population: r/PhotoshopRequest (261K posts, 1.1M comments) and r/estoration (20K posts, 126K comments)
+  scale: 57,000+ editing examples; 48K train / 9,300 test
+  time_period: not_verified
+  frequency_inferable: true
+  cooccurrence_inferable: partially
+  rights_visible: not_verified
+  key_framing: >
+    The authors' stated motivation is that existing editing datasets rely on synthetic or
+    hypothetical edits and "lack the necessary ecological validity to represent real user needs."
+    That is the same distinction this task draws between prompts and requests.
+  overlap_warning: >
+    SHARES A POPULATION WITH SRC-03 and with part 2 of SRC-05 — all draw on r/PhotoshopRequest.
+    These are NOT independent corroboration of each other. Treat as one source lineage, exactly as
+    the Canon treats companion volumes and shared informants.
+  citations:
+    - https://arxiv.org/abs/2502.03629
+    - https://peter-sushko.github.io/RealEdit/
+
+- id: SRC-05
+  name: SEED-Data-Edit
+  modality: image_editing
+  evidence_class: mixed
+  composition:
+    part_1: automated pipeline-generated pairs — benchmark_authored
+    part_2: 52K pairs from real photography communities — real_user_requests
+    part_3: 95K multi-turn sequences, up to five rounds — expert-performed
+  real_request_sources: [Photoshopbattles, Photoshop gurus, PhotoshopRequest, Zhopped]
+  frequency_inferable: partially
+  overlap_warning: shares the r/PhotoshopRequest population with SRC-03 and SRC-04
+  why_part_3_matters: >
+    Multi-turn editing up to five rounds is direct evidence that a real request is often a SEQUENCE,
+    not a single instruction. Nothing in our Creative IR or our 30-brief bank represents a request
+    that arrives in rounds.
+  citations:
+    - https://arxiv.org/html/2405.04007v1
+    - https://huggingface.co/datasets/AILab-CVC/SEED-Data-Edit
+
+- id: SRC-06
+  name: "Instruction-editing benchmark family (MagicBrush, HumanEdit, ImgEdit)"
+  modality: image_editing
+  evidence_class: benchmark_authored
+  scale: MagicBrush 5K+ sessions / 10K+ turns; HumanEdit 5,751 images
+  frequency_inferable: false
+  frequency_note: >
+    EXPLICITLY NOT DEMAND EVIDENCE. These instructions were written by annotators to exercise models.
+    Their category balance reflects benchmark design intent, never user demand. Recorded because
+    their OPERATION VOCABULARY is useful corroboration for the grammar — not their proportions.
+  operation_vocabulary_observed:
+    - HumanEdit: [action, add, counting, relation, remove, replace]
+    - ImgEdit: [add, remove, replace, alter, background_change, motion_change, style,
+                object_extraction, visual_edit, hybrid_edit]
+    - MagicBrush: [object add/replace/remove, action change, colour, text or pattern modification,
+                   object quantity]
+  citations:
+    - https://arxiv.org/html/2306.10012v3
+    - https://arxiv.org/abs/2412.04280
+    - https://arxiv.org/html/2505.20275v1
+
+# ── Text-to-video ───────────────────────────────────────────────────────────────
+- id: SRC-07
+  name: VidProM
+  modality: text_to_video
+  evidence_class: real_user_requests
+  population: Official Pika Discord channels — again an enthusiast Discord population
+  scale: 1.67M unique prompts; 6.69M generated videos across four models
+  time_period: not_verified
+  fields_available: [prompt, uuid, timestamp, embeddings, nsfw_probability, generated_videos]
+  frequency_inferable: true
+  cooccurrence_inferable: partially
+  venue: NeurIPS 2024
+  supports: [what enthusiast T2V users type, temporal/motion vocabulary at scale]
+  does_not_support: [commercial video demand, duration or platform requirements, speech requirements]
+  citations:
+    - https://vidprom.github.io/
+    - https://neurips.cc/virtual/2024/poster/97505
+    - https://huggingface.co/datasets/WenhaoWang/VidProM
+
+# ── Image-to-video ──────────────────────────────────────────────────────────────
+- id: SRC-08
+  name: TIP-I2V
+  modality: image_to_video
+  evidence_class: real_user_requests
+  population: users supplying BOTH an image and a text instruction
+  scale: 1.70M+ unique text-and-image prompt pairs; videos from five I2V models
+  time_period: dataset released Nov 2024; ICCV 2025
+  fields_available: [text_prompt, image_prompt, generated_videos, annotations]
+  annotation_dimensions: [I2V subject, I2V background, action, camera motion]
+  frequency_inferable: true
+  cooccurrence_inferable: true
+  key_findings:
+    - >
+      Top-3 subjects — "person", "astronaut", "portrait painting" — are all human-related, and user
+      preferences are explicitly described as unbalanced.
+    - >
+      Beyond the generic "move", users request specific movements: "zoom", "walk", "blink".
+    - >
+      Structurally distinct from T2V: each text focuses on how to bring the static elements of the
+      SUPPLIED IMAGE to life, rather than describing a scene from nothing.
+  why_this_matters_here: >
+    Closest large real-user corpus to our actual product shape — a customer supplies an asset and
+    asks for motion on it. And the structural finding is the one with architectural consequences:
+    an I2V request is an OPERATION ON A SUPPLIED ASSET, which Creative IR has no field for.
+    The "astronaut / portrait painting" subjects are a reminder the population is still hobbyist.
+  citations:
+    - https://arxiv.org/abs/2411.04709
+    - https://tip-i2v.github.io/
+    - https://huggingface.co/datasets/WenhaoWang/TIP-I2V
+
+# ── Arena / benchmark comparison surfaces ───────────────────────────────────────
+- id: SRC-09
+  name: Artificial Analysis Image Arena / Text-to-Image Leaderboard
+  modality: text_to_image
+  evidence_class: benchmark_authored
+  population: >
+    Voters comparing two models on an identical prompt. The VOTERS are real; the PROMPTS are the
+    benchmark's own.
+  scale: ">45,000 human image preferences informing Elo; >700 images generated per model"
+  frequency_inferable: false
+  frequency_note: >
+    The task's research standard forbids treating benchmark-authored prompts as evidence of user
+    demand, and that applies squarely here. This is a model-comparison surface, useful to Eval as a
+    methodology reference, and it is NOT request-space evidence.
+  unknowns:
+    - >
+      HOW the prompt set is selected, and what use-case categories it spans, could not be
+      established from search results. Recorded as UNKNOWN rather than guessed — the claim that it
+      "reflects a wide range of use-cases" is the publisher's, unaccompanied by a visible taxonomy.
+  citations:
+    - https://artificialanalysis.ai/image/arena
+    - https://huggingface.co/blog/leaderboard-artificial-analysis2
+
+- id: SRC-10
+  name: Arena-T2I-Hard
+  modality: text_to_image
+  evidence_class: benchmark_authored
+  status: NAMED_IN_TASK_NOT_ESTABLISHED
+  note: >
+    Named as a seed source in the runbook. Search did not return a first-party page or paper that
+    would let me describe its population, scale or construction with any confidence, and inventing a
+    description would be worse than leaving the row empty. Recorded as unresolved. If it is a
+    hard-subset of an arena prompt set, it is benchmark_authored by construction and carries the same
+    limitation as SRC-09.
+
+# ── Commercial / practitioner ───────────────────────────────────────────────────
+- id: SRC-11
+  name: "Journal of Advertising Research — generative AI in advertising agencies (2025)"
+  modality: commercial_creative_process
+  evidence_class: practitioner_report
+  method: interviews with industry professionals; focus on text-to-image tools
+  frequency_inferable: false
+  key_finding: >
+    A co-creative process model with four stages — readiness, co-creativity, validation, execution —
+    and a finding that adoption requires balancing human creativity against AI capability.
+  why_this_matters_here: >
+    Qualitative, and the only peer-reviewed commercial-process source found. Its value is structural:
+    it puts VALIDATION as a named stage between generation and execution, which is our evaluation
+    layer's reason to exist. It says nothing about request frequency.
+  citations:
+    - https://www.tandfonline.com/doi/full/10.1080/00218499.2024.2445362
+
+- id: SRC-12
+  name: Industry adoption surveys (marketing/agency press)
+  modality: commercial_creative_process
+  evidence_class: practitioner_report
+  frequency_inferable: false
+  deliberately_not_quantified: >
+    Search surfaced figures such as "copywriting 34%, image generation 25%, creative versioning 25%"
+    attributed only to unnamed "recent survey data". NO TRACEABLE PRIMARY SOURCE was established in
+    this session, so those numbers are NOT recorded as facts anywhere in this deliverable. They are
+    noted here solely so a later reader does not rediscover them and assume they were missed.
+  qualitative_signal_worth_keeping: >
+    "Creative versioning" recurs as a named activity across these reports — producing many variants
+    of one creative for different markets, formats or placements. Our 30-brief bank has no concept of
+    a request whose output is a SET.
+  citations:
+    - https://www.aaaa.org/resource/the-state-of-generative-ai-inside-us-marketing-agencies-2025/
+
+# ── Text-in-image ───────────────────────────────────────────────────────────────
+- id: SRC-13
+  name: "Visual text rendering benchmark family (BTR-bench, WeGenBench-Text, CVTG-2K)"
+  modality: text_to_image
+  evidence_class: benchmark_authored
+  frequency_inferable: false
+  what_it_establishes: >
+    That the research community treats text rendering as important, and that benchmark authors
+    describe advertising and brand-name rendering as a motivating application. One benchmark
+    enumerates ten "visual-text carriers" said to cover use cases observed in real deployment:
+    poster, advertisement, cover, logo, sticker, handwriting, scene, basic, artistic, academic.
+  what_it_does_not_establish: >
+    HOW OFTEN real users ask for text in an image. That number was not found in any real-request
+    corpus in this session, and its absence is recorded as an explicit UNKNOWN in the coverage audit
+    because our 30-brief bank requires exact strings in 28 of 30 briefs.
+  citations:
+    - https://arxiv.org/html/2412.00136v1
+    - https://arxiv.org/pdf/2606.20100
+
+unresolved:
+  - id: SRC-10
+    what: Arena-T2I-Hard could not be characterised from search results
+  - what: >
+      No real-user corpus was found that records COMMERCIAL BRIEFS — objective, audience, brand
+      constraints, acceptance criteria. Every real-user source in this register captures either a
+      model prompt or a single-asset edit request. This is the largest hole in the evidence base and
+      it is a hole in the world, not only in this session's access.
+  - what: >
+      Measured frequency of text-in-image requirements in any real-user corpus.
+  - what: >
+      Any India-specific or Hinglish/Devanagari request corpus. Nothing found.
