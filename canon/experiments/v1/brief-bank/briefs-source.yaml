@@ -1,0 +1,1060 @@
+# CANON-V1 / C2 — the 30-underlying-brief commercial bank (authored source).
+#
+# WHAT THIS IS. Thirty commercial intents a real Indian business might bring to the product. It is
+# the stable bank reused by Canon's planning experiments (C5, C9, C10) and later sampled by Eval for
+# its end-to-end production-workflow benchmark. Canon owns it; Eval must not build a competing one.
+#
+# THE ONE RULE THAT PROTECTS THE EXPERIMENT. `customer_brief` is what the customer said. It is
+# deliberately incomplete, sometimes vague, and in eight cases self-contradictory, because real
+# briefs are. `authoritative_intent` records ONLY what must survive — explicit facts, exact strings,
+# hard constraints, and the contradictions we planted — and is used exclusively for later scoring.
+#
+# WHAT IS DELIBERATELY ABSENT. No finished Creative IR. No hierarchy decision, no chosen proposition,
+# no acceptance contract, no craft direction. Producing those from the brief is exactly what
+# Experiment A measures; writing them here would answer the question the experiment is asking.
+#
+# LANGUAGE DESIGN. Each of the ten scenario families carries one English-primary, one
+# Hindi/Devanagari-primary and one Hinglish/mixed brief. That yields exactly 10/10/10 AND keeps
+# language from being confounded with scenario family — if a Canon arm wins, the win cannot be an
+# artifact of which families happened to be Hindi.
+#
+# specification_quality: clear | underspecified | contradictory
+# product_prominence: hero | present | incidental
+
+meta:
+  task: CANON-V1 / C2
+  authored: 2026-08-26
+  owner: canon
+  scope: canon/tasks/CANON-V1-OVERNIGHT-PROGRAM.md section 3; first-product scope per
+    coordination/plans/2026-08-26-THREE-STREAM-OVERNIGHT-PROGRAM.md section 3.1
+  language_conditions: [english_primary, hindi_devanagari_primary, hinglish_mixed]
+  note_on_devanagari: >
+    Devanagari strings in this file are the customer's exact required copy. They are held as exact
+    strings because exactness is the measurable property — Eval's existing battery exists precisely
+    because a generator can produce something subtly wrong that a checker calls a match.
+
+briefs:
+
+# ══ Family 1 · typography-led / offer static creative ═══════════════════════════
+- brief_id: BR-F01-EN
+  scenario_family: typography_led_offer_static
+  media_class: static
+  language_condition: english_primary
+  business: independent gym, Indiranagar Bengaluru
+  product_category: fitness_services
+  objective: offer
+  product_prominence: incidental
+  people_count: 0
+  brand_assets: [logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    We need an Instagram post for our New Year offer. It has to say "FLAT 40% OFF" and "First 100
+    members only" and our gym name AlphaFit. Offer ends 15 January. Make it bold and energetic,
+    something people notice while scrolling. Use our brand colours, black and neon yellow. No
+    pictures of people, we do not have good photos of the gym yet.
+  authoritative_intent:
+    must_appear_exactly: ["FLAT 40% OFF", "First 100 members only", "AlphaFit"]
+    must_communicate: [the offer expires 15 January]
+    hard_constraints:
+      - no human figures may appear — the customer stated they lack usable photography
+      - brand colours black and neon yellow
+    explicit_user_intent_to_preserve:
+      - the discount figure is 40 and must not be restated as any other number
+      - the 100-member cap is a scarcity term, not decoration, and must remain legible
+    contradictions_planted: []
+    notes: >
+      Clean baseline for the family. Tests whether a plan can build a typography-led creative with
+      no imagery to lean on, which is the honest condition of most small Indian businesses.
+
+- brief_id: BR-F01-HI
+  scenario_family: typography_led_offer_static
+  media_class: static
+  language_condition: hindi_devanagari_primary
+  business: sweet shop, Jaipur
+  product_category: food_retail
+  objective: offer
+  product_prominence: present
+  people_count: 0
+  brand_assets: [logo]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    Diwali ke liye poster chahiye. Likha hona chahiye "दीपावली की शुभकामनाएं" aur offer "सभी मिठाइयों पर 20% छूट".
+    Shop ka naam "श्री गणेश मिष्ठान भंडार" bada dikhna chahiye. Traditional feel ho, but modern bhi lage.
+    Sabse important cheez offer hai, lekin shop ka naam sabse bada hona chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", "श्री गणेश मिष्ठान भंडार"]
+    must_communicate: [a Diwali greeting, a 20% discount across all sweets]
+    hard_constraints:
+      - all three required strings are Devanagari and must render exactly, including the matras and
+        the conjunct in "मिष्ठान"
+    explicit_user_intent_to_preserve:
+      - the customer asked for both traditional and modern feel and did not choose between them
+      - the customer named the offer most important AND the shop name largest
+    contradictions_planted:
+      - id: c1
+        text: >
+          "the offer is the most important thing, but the shop name should be the biggest" — a direct
+          conflict between stated importance and stated visual size.
+        correct_handling: >
+          Surface the conflict and propose a resolution, or state the assumption taken. Silently
+          picking one and presenting it as the brief is the failure mode being tested.
+      - id: c2
+        text: "traditional feel but also modern — an unresolved register instruction."
+        correct_handling: Name it as a choice to be made, do not average the two into blandness.
+
+- brief_id: BR-F01-HG
+  scenario_family: typography_led_offer_static
+  media_class: static
+  language_condition: hinglish_mixed
+  business: mobile phone repair chain, Pune
+  product_category: consumer_services
+  objective: conversion
+  product_prominence: incidental
+  people_count: 0
+  brand_assets: [logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    Post banao for our screen replacement service. Headline "Screen टूट गया?" and below "30 minute
+    mein ready". Phone number 98765 43210 dalna hai. Kuch aisa jo local logo ko turant samajh aaye.
+  authoritative_intent:
+    must_appear_exactly: ["Screen टूट गया?", "30 minute mein ready", "98765 43210"]
+    must_communicate: [screen replacement service, completed in 30 minutes, this contact number]
+    hard_constraints:
+      - the headline mixes Latin and Devanagari inside ONE line and must render both correctly
+      - the phone number digits must be exact — a single wrong digit makes the creative useless
+    explicit_user_intent_to_preserve:
+      - '"turant samajh aaye" — immediate comprehension is the customer''s stated priority'
+    contradictions_planted: []
+    underspecified_aspects:
+      - no brand colours given beyond "our" colours, never named
+      - no format or placement given
+      - '"local logo" (local people) is the only audience description'
+    notes: >
+      Tests intra-line script mixing, which is the normal way Indian small businesses write and a
+      known hard case for text rendering.
+
+# ══ Family 2 · product packshot / product-hero static ═══════════════════════════
+- brief_id: BR-F02-EN
+  scenario_family: product_packshot_static
+  media_class: static
+  language_condition: english_primary
+  business: cold-pressed juice brand, Mumbai
+  product_category: packaged_beverage
+  objective: awareness
+  product_prominence: hero
+  people_count: 0
+  brand_assets: [product_bottle, label_artwork, brand_colours]
+  copy_requirement: minimal_copy
+  specification_quality: clear
+  customer_brief: >
+    We want a clean product shot of our 250ml cold-pressed orange juice bottle for our launch. Just
+    the bottle, premium feel, light background. The label should be readable — that is the whole
+    point, people need to see it is cold-pressed and not from concentrate. Only text on the image
+    should be "Cold-pressed. Nothing else." Glass bottle, so it should look like glass.
+  authoritative_intent:
+    must_appear_exactly: ["Cold-pressed. Nothing else."]
+    must_communicate: [the product is a 250ml glass bottle of cold-pressed orange juice]
+    hard_constraints:
+      - the label must be legible — the customer stated this is the whole point
+      - the bottle is glass and must read as glass, not plastic
+      - single product, no other objects
+    explicit_user_intent_to_preserve:
+      - '"not from concentrate" is a product truth claim; the creative must not contradict it'
+      - premium register
+    contradictions_planted: []
+    notes: >
+      The purest packshot test. Directly exercises gap G4 — the Canon holds reflection physics
+      (which is what makes glass read as glass) but no packshot convention.
+
+- brief_id: BR-F02-HI
+  scenario_family: product_packshot_static
+  media_class: static
+  language_condition: hindi_devanagari_primary
+  business: mustard oil brand, Kanpur
+  product_category: packaged_food
+  objective: consideration
+  product_prominence: hero
+  people_count: 0
+  brand_assets: [product_tin, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Hamare sarson tel ke 1 litre tin ka photo chahiye. Upar likha ho "शुद्ध सरसों तेल" aur neeche
+    "कच्ची घानी". Tin peela hai, product traditional hai lekin packaging saaf dikhni chahiye. Aisa lage
+    ki ghar mein use hone wala bharosemand product hai.
+  authoritative_intent:
+    must_appear_exactly: ["शुद्ध सरसों तेल", "कच्ची घानी"]
+    must_communicate: [1 litre tin of cold-pressed mustard oil, trustworthy household product]
+    hard_constraints:
+      - the tin is yellow
+      - '"कच्ची घानी" is a specific extraction method claim and must not be altered or dropped'
+    explicit_user_intent_to_preserve:
+      - trust and household familiarity are the stated register, not luxury
+      - traditional product, clean packaging presentation — the customer distinguished these
+    contradictions_planted: []
+    notes: >
+      Metal tin rather than glass — a different reflection problem. "कच्ची घानी" carries a nukta-free
+      conjunct and is a compact exactness test.
+
+- brief_id: BR-F02-HG
+  scenario_family: product_packshot_static
+  media_class: static
+  language_condition: hinglish_mixed
+  business: artisanal chocolate startup, Goa
+  product_category: packaged_food
+  objective: brand
+  product_prominence: hero
+  people_count: 0
+  brand_assets: [product_bar, wrapper_artwork]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    Chocolate bar ka packshot chahiye, premium luxury feel. Text "Bean to bar, बिल्कुल भारतीय" hona
+    chahiye. Wrapper ka design already hai, wo clearly dikhe. Minimal aur clean rakhna, but festive
+    bhi lagna chahiye kyunki Diwali gifting ke liye hai. Bar ko tod ke bhi dikhana hai texture ke liye.
+  authoritative_intent:
+    must_appear_exactly: ["Bean to bar, बिल्कुल भारतीय"]
+    must_communicate: [premium Indian-origin chocolate, suitable as a Diwali gift]
+    hard_constraints:
+      - existing wrapper artwork must be visible and identifiable
+      - a broken piece must show interior texture
+    explicit_user_intent_to_preserve:
+      - the tagline mixes scripts within one line and must render both correctly
+      - Diwali gifting is the stated occasion
+    contradictions_planted:
+      - id: c1
+        text: "minimal and clean, but also festive — two opposed visual registers, unresolved."
+        correct_handling: Name the tension; propose how minimal and festive can coexist, or ask.
+      - id: c2
+        text: >
+          "the wrapper design must clearly show" AND "break the bar to show texture" — a broken bar
+          partly destroys the wrapper presentation. Physical conflict, not just stylistic.
+        correct_handling: Surface the physical conflict and propose a composition that serves both.
+
+# ══ Family 3 · person + product static ad ═══════════════════════════════════════
+- brief_id: BR-F03-EN
+  scenario_family: person_product_static
+  media_class: static
+  language_condition: english_primary
+  business: D2C skincare brand, Bengaluru
+  product_category: personal_care
+  objective: consideration
+  product_prominence: present
+  people_count: 1
+  brand_assets: [product_tube, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    We need an ad with a real-looking Indian woman in her late twenties holding our sunscreen tube.
+    Text: "SPF 50. No white cast." She should look like she actually uses it — not a stock photo
+    smile. Daylight, outdoors.
+  authoritative_intent:
+    must_appear_exactly: ["SPF 50. No white cast."]
+    must_communicate: [a sunscreen product, SPF 50, leaves no white cast]
+    hard_constraints:
+      - one adult woman, late twenties, Indian
+      - the product tube must be identifiable and held
+      - outdoor daylight
+    explicit_user_intent_to_preserve:
+      - '"not a stock photo smile" — the customer explicitly rejected a generic expression'
+      - '"no white cast" is a product claim; if the person''s skin shows a white cast the creative contradicts its own copy'
+    contradictions_planted: []
+    underspecified_aspects: [no location specified, no wardrobe, no framing, no format]
+    notes: >
+      The "no white cast" claim creates a rare self-checking creative: the image can visibly
+      contradict its own headline. Useful for later evaluation work.
+
+- brief_id: BR-F03-HI
+  scenario_family: person_product_static
+  media_class: static
+  language_condition: hindi_devanagari_primary
+  business: regional tea brand, Lucknow
+  product_category: packaged_food
+  objective: brand
+  product_prominence: present
+  people_count: 1
+  brand_assets: [product_pack, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Ek middle-aged aadmi chai ki pyali haath mein liye, subah ki roshni mein. Saath mein hamara pack
+    dikhe. Likha ho "हर सुबह की शुरुआत" aur brand name "स्वाद चाय". Warm aur apnapan wala feel chahiye,
+    over-styled nahi.
+  authoritative_intent:
+    must_appear_exactly: ["हर सुबह की शुरुआत", "स्वाद चाय"]
+    must_communicate: [morning tea ritual, warmth and familiarity]
+    hard_constraints:
+      - one middle-aged man holding a cup of tea
+      - morning light
+      - the product pack is visible alongside
+    explicit_user_intent_to_preserve:
+      - '"over-styled nahi" — the customer explicitly rejected a polished advertising look'
+      - warmth and belonging over aspiration
+    contradictions_planted: []
+
+- brief_id: BR-F03-HG
+  scenario_family: person_product_static
+  media_class: static
+  language_condition: hinglish_mixed
+  business: fintech app, Gurugram
+  product_category: financial_services
+  objective: conversion
+  product_prominence: incidental
+  people_count: 1
+  brand_assets: [app_ui_screenshot, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    Young professional, phone haath mein, app screen dikh raha ho. Headline "Ab investing हुआ आसान"
+    aur CTA "Download karo". Trustworthy lagna chahiye, bank jaisa serious. But young aur fun bhi,
+    Gen Z ko target kar rahe hain. App screenshot exactly hamara wala hona chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["Ab investing हुआ आसान", "Download karo"]
+    must_communicate: [an investing app, easy to use, download action]
+    hard_constraints:
+      - the app UI shown must be the customer's actual interface, not an invented one
+      - one young adult holding a phone
+    explicit_user_intent_to_preserve:
+      - a call to action is present and is the point of the creative
+      - financial trust cannot be sacrificed — this is a regulated-adjacent category
+    contradictions_planted:
+      - id: c1
+        text: >
+          "trustworthy like a bank, serious" AND "young and fun, targeting Gen Z" — opposed register
+          instructions in a category where the wrong choice has real consequences.
+        correct_handling: >
+          Name the tension explicitly. Financial trust is the constraint that should not be traded
+          away silently; propose how to be approachable without undermining it.
+
+# ══ Family 4 · reference-based campaign / edit brief ════════════════════════════
+- brief_id: BR-F04-EN
+  scenario_family: reference_based_campaign
+  media_class: static
+  language_condition: english_primary
+  business: boutique hotel, Udaipur
+  product_category: hospitality
+  objective: awareness
+  product_prominence: hero
+  people_count: 0
+  brand_assets: [property_photographs, logo, existing_campaign]
+  copy_requirement: minimal_copy
+  specification_quality: underspecified
+  customer_brief: >
+    We ran a campaign last year that worked well — same look, same feel, but for the monsoon season
+    this time. Our property photos are attached. Just the tagline "Stay a while." Keep it consistent
+    with what we did before, people recognise it now.
+  authoritative_intent:
+    must_appear_exactly: ["Stay a while."]
+    must_communicate: [the hotel property, monsoon season]
+    hard_constraints:
+      - visual continuity with an existing campaign is the stated requirement
+      - the customer's own property photographs are the source material
+    explicit_user_intent_to_preserve:
+      - recognisability is the point — the customer said people now recognise the look
+      - the season changes; the identity does not
+    contradictions_planted: []
+    underspecified_aspects:
+      - the previous campaign is referenced but never described in the brief
+      - no palette, type or layout carried over in words
+    notes: >
+      Tests whether a plan asks what the reference actually is, rather than inventing a house style
+      and calling it consistent. Reference dependence is a real production constraint.
+
+- brief_id: BR-F04-HI
+  scenario_family: reference_based_campaign
+  media_class: static
+  language_condition: hindi_devanagari_primary
+  business: coaching institute, Patna
+  product_category: education
+  objective: consideration
+  product_prominence: incidental
+  people_count: 1
+  brand_assets: [topper_photographs, logo, previous_year_creative]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Pichle saal ka result poster tha, usi format mein naya banao. Topper ka photo, naam, aur rank.
+    Likha ho "हमारे छात्रों की सफलता" aur institute ka naam "सफलता क्लासेस". Format same rakhna, sirf
+    content badalna hai.
+  authoritative_intent:
+    must_appear_exactly: ["हमारे छात्रों की सफलता", "सफलता क्लासेस"]
+    must_communicate: [student results, a named topper with rank, the institute]
+    hard_constraints:
+      - the layout format of the previous year's creative is to be retained
+      - a real student photograph, name and rank are involved
+    explicit_user_intent_to_preserve:
+      - '"sirf content badalna hai" — only the content changes; the structure is fixed'
+      - a named individual's likeness and claimed rank are factual assertions
+    contradictions_planted: []
+    notes: >
+      Carries a real-world caution worth recording: this brief involves a named individual's photo
+      and a factual achievement claim. Any later execution must use genuine supplied material.
+
+- brief_id: BR-F04-HG
+  scenario_family: reference_based_campaign
+  media_class: static
+  language_condition: hinglish_mixed
+  business: cloud kitchen, Hyderabad
+  product_category: food_services
+  objective: conversion
+  product_prominence: hero
+  people_count: 0
+  brand_assets: [competitor_reference, food_photographs, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    Zomato pe jo top brands ke creatives hote hain, waise chahiye. "Biryani starting ₹199" likhna
+    hai. Hamara khana ka photo use karo. Unke jaisa premium lagna chahiye but hamara pricing budget
+    hai, toh cheap bhi nahi lagna chahiye. Bilkul unke jaisa mat banao, apna alag lagna chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["Biryani starting ₹199"]
+    must_communicate: [biryani, price starting at 199 rupees]
+    hard_constraints:
+      - the customer's own food photography is the source material
+      - the rupee figure must be exact
+    explicit_user_intent_to_preserve:
+      - value pricing is a fact of the business and must not be hidden
+    contradictions_planted:
+      - id: c1
+        text: >
+          "make it like the top brands" AND "do not make it like them, it should look distinct" —
+          a direct instruction conflict about reference use.
+        correct_handling: Surface it. Distinguish borrowing a quality bar from copying a look.
+      - id: c2
+        text: "premium but budget-priced, and must not look cheap — a positioning tension."
+        correct_handling: Name it; propose how value can be presented without reading as cheap.
+
+# ══ Family 5 · product-hero video, external / no visible speech VO ══════════════
+- brief_id: BR-F05-EN
+  scenario_family: product_hero_video_vo
+  media_class: video
+  language_condition: english_primary
+  business: electric scooter brand, Chennai
+  product_category: vehicles
+  objective: awareness
+  product_prominence: hero
+  people_count: 0
+  duration_seconds: 15
+  brand_assets: [product_photographs, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Fifteen second video of our new electric scooter. No people, just the scooter. Voiceover in
+    English, calm male voice, saying "Zero petrol. Zero noise. All city." End with our logo and the
+    text "Book now at velo.in". Show it moving through a city, morning. Colour is matte grey, that
+    matters, it is our signature colour.
+  authoritative_intent:
+    must_appear_exactly: ["Book now at velo.in"]
+    voiceover_script_exact: "Zero petrol. Zero noise. All city."
+    must_communicate: [an electric scooter, no petrol, quiet, for city use]
+    hard_constraints:
+      - no human figures
+      - matte grey body colour is a brand signature and must be correct
+      - approximately 15 seconds
+      - voiceover only; no visible speaker
+    explicit_user_intent_to_preserve:
+      - the three-part VO structure and its exact wording
+      - the closing action is a booking URL
+    contradictions_planted: []
+
+- brief_id: BR-F05-HI
+  scenario_family: product_hero_video_vo
+  media_class: video
+  language_condition: hindi_devanagari_primary
+  business: detergent brand, Indore
+  product_category: home_care
+  objective: demonstration
+  product_prominence: hero
+  people_count: 0
+  duration_seconds: 10
+  brand_assets: [product_pack, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    Das second ka video, sirf product aur kapde. Voiceover Hindi mein - "एक धुलाई में दाग गायब".
+    End mein pack dikhe aur likha ho "उजाला डिटर्जेंट". Stain hatate hue dikhana hai clearly.
+  authoritative_intent:
+    must_appear_exactly: ["उजाला डिटर्जेंट"]
+    voiceover_script_exact: "एक धुलाई में दाग गायब"
+    must_communicate: [detergent removes stains in one wash, the product pack]
+    hard_constraints:
+      - no people
+      - approximately 10 seconds
+      - a stain removal must be visibly demonstrated
+    explicit_user_intent_to_preserve:
+      - the one-wash claim is a specific efficacy claim, not general praise
+    contradictions_planted: []
+    underspecified_aspects:
+      - no stain type given, no fabric given, no setting given
+      - '"clearly" is the only quality bar offered for the demonstration'
+    notes: >
+      A before/after demonstration inside 10 seconds is a temporal-continuity problem: the same
+      garment must be recognisably the same across the change.
+
+- brief_id: BR-F05-HG
+  scenario_family: product_hero_video_vo
+  media_class: video
+  language_condition: hinglish_mixed
+  business: instant coffee brand, Bengaluru
+  product_category: packaged_food
+  objective: consideration
+  product_prominence: hero
+  people_count: 0
+  duration_seconds: 12
+  brand_assets: [product_jar, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    12 second video, coffee jar hero shot, steam aur pouring dikhana hai. VO - "Subah ki pehli sip,
+    perfectly brewed". End card "अब हर घर में". Premium cafe jaisa feel, but ghar ka warm feel bhi.
+    Fast cuts chahiye energy ke liye, lekin calm morning mood bhi banana hai.
+  authoritative_intent:
+    must_appear_exactly: ["अब हर घर में"]
+    voiceover_script_exact: "Subah ki pehli sip, perfectly brewed"
+    must_communicate: [instant coffee, morning occasion, quality brew, now widely available]
+    hard_constraints:
+      - the jar is the hero
+      - steam and pouring must appear
+      - approximately 12 seconds
+    explicit_user_intent_to_preserve:
+      - the VO is Hinglish within one sentence and the end card is Devanagari
+    contradictions_planted:
+      - id: c1
+        text: "premium cafe feel AND homely warm feel — opposed registers."
+        correct_handling: Name the tension; propose which leads.
+      - id: c2
+        text: >
+          "fast cuts for energy" AND "calm morning mood" — a direct pacing contradiction, and in a
+          12-second piece the choice materially changes the edit.
+        correct_handling: >
+          Surface it as a pacing decision with consequences, not a style preference. This is the
+          clearest trade-off-reasoning test in the bank.
+
+# ══ Family 6 · actor + product video, no visible dialogue ═══════════════════════
+- brief_id: BR-F06-EN
+  scenario_family: actor_product_video_no_dialogue
+  media_class: video
+  language_condition: english_primary
+  business: running shoe brand, Delhi
+  product_category: apparel_footwear
+  objective: brand
+  product_prominence: present
+  people_count: 1
+  duration_seconds: 15
+  brand_assets: [product_shoe, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Fifteen seconds. One runner, early morning, empty city street. No dialogue, just music and
+    ambient sound. She laces up, starts running, we see the shoes. End text "Made for the long
+    road." Should feel real, not a fashion film. Same runner throughout.
+  authoritative_intent:
+    must_appear_exactly: ["Made for the long road."]
+    must_communicate: [running shoes, endurance, an ordinary early-morning run]
+    hard_constraints:
+      - exactly one person, the same identity in every shot
+      - no dialogue and no visible speech
+      - the shoes must be identifiable
+      - approximately 15 seconds
+    explicit_user_intent_to_preserve:
+      - '"real, not a fashion film" — the customer explicitly rejected a glossy register'
+      - the same runner throughout is stated, making identity continuity a requirement not a nicety
+    contradictions_planted: []
+    notes: >
+      Identity continuity across a multi-shot sequence with no dialogue is a known generative
+      weakness; the customer stated it explicitly, so it is a brief requirement, not an inference.
+
+- brief_id: BR-F06-HI
+  scenario_family: actor_product_video_no_dialogue
+  media_class: video
+  language_condition: hindi_devanagari_primary
+  business: pressure cooker brand, Ahmedabad
+  product_category: home_appliances
+  objective: demonstration
+  product_prominence: hero
+  people_count: 1
+  duration_seconds: 15
+  brand_assets: [product_cooker, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Ek gharelu mahila kitchen mein cooker use kar rahi hai. Koi dialogue nahi, sirf background music
+    aur kitchen ki awaaz. Cooker ka safety feature dikhana hai. End mein likha ho "सुरक्षित खाना,
+    हर दिन" aur brand "रसोई प्लस". Real kitchen lagna chahiye, studio set nahi.
+  authoritative_intent:
+    must_appear_exactly: ["सुरक्षित खाना, हर दिन", "रसोई प्लस"]
+    must_communicate: [a pressure cooker, a safety feature, everyday domestic use]
+    hard_constraints:
+      - one woman, consistent identity across shots
+      - no dialogue
+      - the safety feature must be visibly demonstrated
+      - approximately 15 seconds
+    explicit_user_intent_to_preserve:
+      - '"real kitchen, not a studio set" — an explicit rejection of a staged look'
+      - safety is the claim; the demonstration must actually show it
+    contradictions_planted: []
+
+- brief_id: BR-F06-HG
+  scenario_family: actor_product_video_no_dialogue
+  media_class: video
+  language_condition: hinglish_mixed
+  business: quick-commerce grocery app, Mumbai
+  product_category: consumer_services
+  objective: conversion
+  product_prominence: incidental
+  people_count: 1
+  duration_seconds: 10
+  brand_assets: [app_ui, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    10 second video. Ek ladka ghar pe hai, kuch khatam ho gaya hai, app kholta hai, order karta hai,
+    delivery aa jaati hai. No dialogue. End card "10 minute mein delivery" aur "Order करो अभी".
+    Fast aur snappy chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["10 minute mein delivery", "Order करो अभी"]
+    must_communicate: [a grocery delivery app, ten-minute delivery, order now]
+    hard_constraints:
+      - one person, same identity throughout
+      - no dialogue
+      - a complete narrative beat sequence — need, order, arrival
+      - approximately 10 seconds
+    explicit_user_intent_to_preserve:
+      - the ten-minute figure is a specific service claim
+      - a call to action closes the piece
+    contradictions_planted: []
+    underspecified_aspects:
+      - '"kuch khatam ho gaya hai" — the missing item is never named'
+      - no age, wardrobe or home setting given
+    notes: >
+      Three narrative beats inside ten seconds is the tightest compression in the bank, and directly
+      exercises gap G2 — no accepted source covers storytelling at this scale.
+
+# ══ Family 7 · one visible speaker ══════════════════════════════════════════════
+- brief_id: BR-F07-EN
+  scenario_family: one_visible_speaker
+  media_class: video
+  language_condition: english_primary
+  business: SaaS company for small retailers, Bengaluru
+  product_category: business_software
+  objective: consideration
+  product_prominence: incidental
+  people_count: 1
+  duration_seconds: 20
+  brand_assets: [logo, brand_colours, product_ui]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Twenty seconds, one founder-type person talking directly to camera, plain background. Script:
+    "We built this because we ran a shop too. Everything in one place. Try it free for thirty days."
+    Lower third with their name and title. End card with logo and "Free for 30 days". Honest and
+    plain, no hard sell.
+  authoritative_intent:
+    must_appear_exactly: ["Free for 30 days"]
+    spoken_script_exact: "We built this because we ran a shop too. Everything in one place. Try it free for thirty days."
+    must_communicate: [software for small retailers, founder credibility, a 30-day free trial]
+    hard_constraints:
+      - one visible speaker addressing camera, speech visible on the face
+      - the spoken script is exact
+      - approximately 20 seconds
+    explicit_user_intent_to_preserve:
+      - '"no hard sell" — an explicit register constraint'
+      - the thirty-day figure appears in both speech and end card and must agree
+    contradictions_planted: []
+    notes: >
+      Spoken words and on-screen text state the same offer; a mismatch between them is a detectable
+      failure, which makes this brief useful for later evaluation work.
+
+- brief_id: BR-F07-HI
+  scenario_family: one_visible_speaker
+  media_class: video
+  language_condition: hindi_devanagari_primary
+  business: agricultural inputs dealer, Nashik
+  product_category: agriculture
+  objective: consideration
+  product_prominence: present
+  people_count: 1
+  duration_seconds: 20
+  brand_assets: [product_pack, logo]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    Ek kisan camera ke saamne baat kar raha hai, khet mein khade hoke. Bolega - "इस दवाई से मेरी फसल
+    दोगुनी हुई". Product haath mein dikhe. End mein "किसान भरोसा" likha ho. Simple aur bharosemand
+    lagna chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["किसान भरोसा"]
+    spoken_script_exact: "इस दवाई से मेरी फसल दोगुनी हुई"
+    must_communicate: [an agricultural input product, a farmer's own account, trust]
+    hard_constraints:
+      - one visible speaker, speech visible on the face, Hindi
+      - the product is held and identifiable
+      - approximately 20 seconds
+    explicit_user_intent_to_preserve:
+      - the speaker is presented as a farmer giving a personal account
+    contradictions_planted: []
+    underspecified_aspects: [no crop named, no season, no location detail beyond a field]
+    flagged_for_controller: >
+      The scripted line is a strong efficacy claim ("doubled my crop") presented as personal
+      testimony. Recorded as the customer said it, because this bank records intents rather than
+      approving executions. If this brief is ever executed as real advertising, the claim needs
+      substantiation and the testimony needs to be genuine. Flagged, not silently softened.
+
+- brief_id: BR-F07-HG
+  scenario_family: one_visible_speaker
+  media_class: video
+  language_condition: hinglish_mixed
+  business: online upskilling platform, Noida
+  product_category: education
+  objective: conversion
+  product_prominence: incidental
+  people_count: 1
+  duration_seconds: 15
+  brand_assets: [logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    15 second video, ek young instructor camera ko address kar raha hai. Bolega - "Job chahiye? Toh
+    skill upgrade karo. Aaj hi enroll करो." End card "Batch starts Monday". Energetic aur
+    motivational chahiye. But calm aur trustworthy bhi, kyunki education hai. Instructor ko fast
+    bolna chahiye but clearly samajh aana chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["Batch starts Monday"]
+    spoken_script_exact: "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो."
+    must_communicate: [an upskilling platform, employment outcome, enrol now, batch starts Monday]
+    hard_constraints:
+      - one visible speaker, speech visible on the face
+      - the spoken line mixes Hinglish and Devanagari
+      - approximately 15 seconds
+    explicit_user_intent_to_preserve:
+      - the deadline is a specific day and drives the action
+    contradictions_planted:
+      - id: c1
+        text: "energetic and motivational AND calm and trustworthy — opposed delivery registers."
+        correct_handling: Name it; propose which leads for a category where trust matters.
+      - id: c2
+        text: >
+          "speak fast, but be clearly understood" — a real production trade-off, sharper because the
+          line is script-mixed and fifteen seconds is short.
+        correct_handling: Treat as a constraint on pace, not a style note.
+
+# ══ Family 8 · two-person dialogue ══════════════════════════════════════════════
+- brief_id: BR-F08-EN
+  scenario_family: two_person_dialogue
+  media_class: video
+  language_condition: english_primary
+  business: health insurance provider, Mumbai
+  product_category: financial_services
+  objective: consideration
+  product_prominence: incidental
+  people_count: 2
+  duration_seconds: 20
+  brand_assets: [logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Twenty seconds, two people, a father and his adult daughter, at home on a sofa. She asks "Dad,
+    do you have health cover?" He says "I thought I did." Then end card: "Check your cover today."
+    Warm, not scary. Two shots, one on each of them, then a wider one.
+  authoritative_intent:
+    must_appear_exactly: ["Check your cover today."]
+    dialogue_exact:
+      - {speaker: daughter, line: "Dad, do you have health cover?"}
+      - {speaker: father, line: "I thought I did."}
+    must_communicate: [health insurance, uncertainty about existing cover, a prompt to check]
+    hard_constraints:
+      - exactly two people, identities consistent across all shots
+      - turn boundaries are explicit — the daughter speaks first
+      - approximately 20 seconds
+    explicit_user_intent_to_preserve:
+      - '"warm, not scary" — an explicit rejection of fear-based framing in an insurance category'
+      - the shot structure the customer specified
+    contradictions_planted: []
+    notes: >
+      Two identities, two speech turns and a shot structure — the densest continuity requirement in
+      the bank. Turn boundaries are recorded explicitly because Eval's AV work needs them.
+
+- brief_id: BR-F08-HI
+  scenario_family: two_person_dialogue
+  media_class: video
+  language_condition: hindi_devanagari_primary
+  business: paint brand, Jaipur
+  product_category: home_improvement
+  objective: brand
+  product_prominence: present
+  people_count: 2
+  duration_seconds: 20
+  brand_assets: [product_can, logo, colour_swatches]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    Do log - pati patni - naye ghar mein deewar ka rang choose kar rahe hain. Woh kehti hai "यह रंग
+    कैसा लगेगा?" Woh kehta hai "घर जैसा". Paint can dikhe. End card "रंग जो घर बनाए". Emotional
+    lagna chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["रंग जो घर बनाए"]
+    dialogue_exact:
+      - {speaker: wife, line: "यह रंग कैसा लगेगा?"}
+      - {speaker: husband, line: "घर जैसा"}
+    must_communicate: [interior paint, choosing a colour for a new home, emotional warmth]
+    hard_constraints:
+      - exactly two people, consistent identities
+      - two Hindi speech turns in a stated order
+      - the paint can is visible
+      - approximately 20 seconds
+    explicit_user_intent_to_preserve:
+      - the husband's reply is a pun on "home" and must not be paraphrased away
+    contradictions_planted: []
+    underspecified_aspects: [no paint colour named, no room specified, no ages given]
+
+- brief_id: BR-F08-HG
+  scenario_family: two_person_dialogue
+  media_class: video
+  language_condition: hinglish_mixed
+  business: used-car marketplace, Hyderabad
+  product_category: vehicles
+  objective: conversion
+  product_prominence: present
+  people_count: 2
+  duration_seconds: 15
+  brand_assets: [logo, app_ui, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    Do dost, ek car ke paas khade hain. Pehla bolta hai "Yaar, second-hand mein risk hota hai na?"
+    Doosra bolta hai "Nahi, अब नहीं". Phir app dikhe. End card "Certified cars, zero tension".
+    Funny aur casual chahiye. But serious bhi lagna chahiye kyunki paisa involved hai. 15 second mein
+    dono characters ki personality establish karni hai.
+  authoritative_intent:
+    must_appear_exactly: ["Certified cars, zero tension"]
+    dialogue_exact:
+      - {speaker: friend_1, line: "Yaar, second-hand mein risk hota hai na?"}
+      - {speaker: friend_2, line: "Nahi, अब नहीं"}
+    must_communicate: [a used-car marketplace, certification removes risk, an app]
+    hard_constraints:
+      - exactly two people, consistent identities
+      - the second line mixes Latin and Devanagari within one spoken turn
+      - approximately 15 seconds
+    explicit_user_intent_to_preserve:
+      - the objection-and-answer structure is the whole idea
+    contradictions_planted:
+      - id: c1
+        text: "funny and casual AND serious because money is involved — opposed tones."
+        correct_handling: Name it; propose which carries the objection and which carries the answer.
+      - id: c2
+        text: >
+          "establish both characters' personalities" in 15 seconds that also contains two lines, a
+          product reveal and an end card — a scope-versus-duration conflict.
+        correct_handling: >
+          Surface it as a duration problem with options (cut a beat, extend, simplify), rather than
+          silently dropping one requirement.
+
+# ══ Family 9 · product handoff / action interaction sequence ════════════════════
+- brief_id: BR-F09-EN
+  scenario_family: product_handoff_action
+  media_class: video
+  language_condition: english_primary
+  business: artisanal bakery chain, Bengaluru
+  product_category: food_retail
+  objective: awareness
+  product_prominence: hero
+  people_count: 2
+  duration_seconds: 10
+  brand_assets: [product_bread, logo, store_photographs]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Ten seconds. A baker hands a loaf across the counter to a customer. Close on the hands and the
+    bread. That is it. End text "Baked this morning." The bread must look like real sourdough, crust
+    and all. Warm light.
+  authoritative_intent:
+    must_appear_exactly: ["Baked this morning."]
+    must_communicate: [a bakery, freshly baked sourdough, a handover to a customer]
+    hard_constraints:
+      - two people, but the focus is the hands and the product
+      - a physical handoff must actually read as a handoff
+      - the bread must read as sourdough with a crust
+      - approximately 10 seconds
+    explicit_user_intent_to_preserve:
+      - the freshness claim is time-specific
+    contradictions_planted: []
+    notes: >
+      A hand-to-hand object transfer is a known hard case for generated video — hands, contact and
+      object permanence at once. The Canon's material-appearance knowledge is directly relevant.
+
+- brief_id: BR-F09-HI
+  scenario_family: product_handoff_action
+  media_class: video
+  language_condition: hindi_devanagari_primary
+  business: courier and logistics company, Delhi
+  product_category: consumer_services
+  objective: brand
+  product_prominence: present
+  people_count: 2
+  duration_seconds: 12
+  brand_assets: [uniform, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Delivery wala ek parcel customer ko de raha hai, ghar ke darwaze pe. Dono muskura rahe hain.
+    Uniform pe hamara logo dikhe. End card "हर पैकेट, हर घर" aur brand "तेज़ कूरियर". Simple aur real.
+  authoritative_intent:
+    must_appear_exactly: ["हर पैकेट, हर घर", "तेज़ कूरियर"]
+    must_communicate: [a courier service, a doorstep parcel handover, reliability]
+    hard_constraints:
+      - two people, a parcel physically transferred at a doorway
+      - the branded uniform must be visible and consistent
+      - approximately 12 seconds
+    explicit_user_intent_to_preserve:
+      - '"तेज़" carries a nukta and must render exactly; dropping it changes the word'
+    contradictions_planted: []
+
+- brief_id: BR-F09-HG
+  scenario_family: product_handoff_action
+  media_class: video
+  language_condition: hinglish_mixed
+  business: street-food QSR chain, Delhi
+  product_category: food_services
+  objective: offer
+  product_prominence: hero
+  people_count: 2
+  duration_seconds: 10
+  brand_assets: [product_food, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    10 second video. Vendor plate customer ko de raha hai, steam nikal rahi ho, chutney dikhe. VO ya
+    text - "गरम गरम, sirf ₹99". Logo end mein. Mouth-watering lagna chahiye, bas.
+  authoritative_intent:
+    must_appear_exactly: ["गरम गरम, sirf ₹99"]
+    must_communicate: [hot street food, priced at 99 rupees, appetite appeal]
+    hard_constraints:
+      - a plate is physically handed over
+      - visible steam
+      - the price figure must be exact
+      - approximately 10 seconds
+    explicit_user_intent_to_preserve:
+      - the required string mixes Devanagari, Latin and a currency symbol in one line
+    contradictions_planted: []
+    underspecified_aspects:
+      - the dish is never named
+      - the customer left VO-or-text open, which is a real planning decision
+      - '"bas" (that is all) is the entire quality brief'
+
+# ══ Family 10 · multi-shot branded 6–20 second ad ═══════════════════════════════
+- brief_id: BR-F10-EN
+  scenario_family: multi_shot_branded_ad
+  media_class: video
+  language_condition: english_primary
+  business: premium mattress brand, Bengaluru
+  product_category: home_furnishing
+  objective: consideration
+  product_prominence: hero
+  people_count: 1
+  duration_seconds: 20
+  brand_assets: [product_mattress, logo, brand_colours]
+  copy_requirement: exact_strings_required
+  specification_quality: clear
+  customer_brief: >
+    Twenty seconds, four or five shots. Someone unable to sleep, then the mattress, then them
+    sleeping well, then our logo. VO: "Some nights are long. They do not have to be." End card
+    "100 nights. Risk free." Calm, dark to light progression. Same person in the first and third
+    shots.
+  authoritative_intent:
+    must_appear_exactly: ["100 nights. Risk free."]
+    voiceover_script_exact: "Some nights are long. They do not have to be."
+    must_communicate: [a mattress, sleep problem then relief, a 100-night trial]
+    hard_constraints:
+      - four to five shots
+      - the same person in shots one and three — stated by the customer
+      - a dark-to-light visual progression across the sequence
+      - approximately 20 seconds
+    explicit_user_intent_to_preserve:
+      - the problem-then-resolution structure
+      - the trial figure is 100 nights
+    contradictions_planted: []
+    notes: >
+      Multi-shot identity continuity plus a deliberate lighting arc — exercises both the Canon's
+      continuity knowledge and its lighting knowledge in one brief.
+
+- brief_id: BR-F10-HI
+  scenario_family: multi_shot_branded_ad
+  media_class: video
+  language_condition: hindi_devanagari_primary
+  business: regional jewellery retailer, Jaipur
+  product_category: jewellery
+  objective: brand
+  product_prominence: hero
+  people_count: 1
+  duration_seconds: 20
+  brand_assets: [product_jewellery, logo, store_photographs]
+  copy_requirement: exact_strings_required
+  specification_quality: contradictory
+  customer_brief: >
+    20 second ka ad, teen-chaar shots. Ek dulhan taiyaar ho rahi hai, necklace pehen rahi hai,
+    parivaar dekh raha hai. VO - "हर रिश्ता, हर पल". End mein "राज ज्वैलर्स" aur showroom ka address.
+    Grand aur royal lagna chahiye, Rajasthani feel. Modern couples ko bhi attract karna hai toh
+    contemporary bhi rakhna. Necklace ka detail clearly dikhna chahiye but shots wide hone chahiye
+    taaki grandeur aaye.
+  authoritative_intent:
+    must_appear_exactly: ["राज ज्वैलर्स"]
+    voiceover_script_exact: "हर रिश्ता, हर पल"
+    must_communicate: [a jewellery retailer, a bridal occasion, family, a showroom location]
+    hard_constraints:
+      - three to four shots
+      - one bride, consistent identity across shots
+      - jewellery detail must be visible
+      - approximately 20 seconds
+    explicit_user_intent_to_preserve:
+      - the Rajasthani and bridal context is explicit customer intent, not decoration
+    contradictions_planted:
+      - id: c1
+        text: "grand, royal, Rajasthani AND contemporary for modern couples — opposed registers."
+        correct_handling: Name it; propose which leads rather than blending into neither.
+      - id: c2
+        text: >
+          "necklace detail clearly visible" AND "shots should be wide for grandeur" — a direct
+          optical conflict: a wide shot cannot show fine jewellery detail.
+        correct_handling: >
+          Surface the physical conflict and resolve it across shots rather than within one. This is
+          the sharpest hierarchy/trade-off test in the bank.
+    notes: >
+      Directly exercises gap G3 — no accepted source covers Indian bridal or festival register, so
+      this brief is expected to expose the gap rather than be solved by the Canon.
+
+- brief_id: BR-F10-HG
+  scenario_family: multi_shot_branded_ad
+  media_class: video
+  language_condition: hinglish_mixed
+  business: budget airline, Mumbai
+  product_category: travel
+  objective: offer
+  product_prominence: incidental
+  people_count: 2
+  duration_seconds: 15
+  brand_assets: [logo, brand_colours, aircraft_livery]
+  copy_requirement: exact_strings_required
+  specification_quality: underspecified
+  customer_brief: >
+    15 second, multi-shot. Do friends trip plan kar rahe hain, phir airport, phir destination. VO -
+    "Plan kam, travel zyada". End card "फ्लाइट्स ₹1,499 से" aur logo. Young aur fun vibe. Livery
+    hamari exact honi chahiye.
+  authoritative_intent:
+    must_appear_exactly: ["फ्लाइट्स ₹1,499 से"]
+    voiceover_script_exact: "Plan kam, travel zyada"
+    must_communicate: [a budget airline, spontaneous travel, fares starting at 1,499 rupees]
+    hard_constraints:
+      - multiple shots spanning planning, airport and destination
+      - two people, consistent identities across all shots
+      - the aircraft livery must match the customer's actual livery
+      - approximately 15 seconds
+    explicit_user_intent_to_preserve:
+      - the fare figure and its comma formatting are exact
+      - '"starting from" is a qualifier and must not become a flat price claim'
+    contradictions_planted: []
+    underspecified_aspects:
+      - the destination is never named
+      - no shot count given for a three-location journey in 15 seconds

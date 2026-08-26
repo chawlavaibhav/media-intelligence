@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Canon V1 value-gate planning output",
+  "description": "One planning output. 12 briefs x 2 arms = 24 of these when the gate is executed. The arm field is recorded here and stripped before review; reviewers see review-packet items, never this object.",
+  "type": "object",
+  "required": ["output_id", "brief_id", "arm", "run_id", "model", "generated_at", "plan_text"],
+  "additionalProperties": false,
+  "properties": {
+    "output_id": {"type": "string", "pattern": "^OUT-[0-9]{3}$"},
+    "brief_id": {"type": "string", "pattern": "^BR-F[0-9]{2}-(EN|HI|HG)$"},
+    "arm": {"enum": ["generic", "oracle_canon"]},
+    "run_id": {"type": "string"},
+    "model": {
+      "type": "object",
+      "required": ["name", "version", "settings"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "settings": {"type": "object"}
+      }
+    },
+    "context_file": {"type": "string"},
+    "context_words": {"type": "integer", "minimum": 1},
+    "prompt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "generated_at": {"type": "string"},
+    "plan_text": {"type": "string", "minLength": 1},
+    "generation_notes": {"type": ["string", "null"]}
+  }
+}

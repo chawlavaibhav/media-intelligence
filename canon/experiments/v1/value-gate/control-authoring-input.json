@@ -1,0 +1,130 @@
+{
+  "packet_id": "CANON-V1-GENERIC-CONTROL-AUTHORING-INPUT",
+  "version": 1,
+  "authoring_session_requirement": "FRESH SESSION WITH NO ACCESS TO canon/knowledge/, canon/audit/ OR canon/experiments/v1/value-gate/oracle-contexts/.",
+  "task": "For each brief below, write one generic professional craft-guidance context.",
+  "rules": [
+    "Write strong, genuinely useful professional craft guidance. A weak control invalidates the experiment it is part of; do not soften it.",
+    "Do not name, cite or allude to any specific book, author, framework or published source. No attributions of any kind.",
+    "Do not use headings or structure that imply a source's own organisation of ideas.",
+    "Write only from general professional practice.",
+    "Stay within min_words and max_words for that brief. This is a hard requirement.",
+    "Match the house format: a '# Craft context' title, then '## ' sections of short paragraphs, ending with a '## Before finishing' checklist section.",
+    "Address what the brief actually needs. A context that would suit any brief equally is not doing its job."
+  ],
+  "output": {
+    "one_file_per_brief": "generic-contexts-real/<brief_id>.md",
+    "format": "markdown"
+  },
+  "planning_procedure_the_context_will_be_used_with": "\nYou are planning a commercial media production for a client. You will be given the client's brief\nand a block of craft guidance. Produce a production plan.\n\nWork only from what the brief actually says. Where the brief is unclear, incomplete or\nself-contradictory, say so explicitly rather than resolving it silently. Do not invent facts about\nthe client, the product or the audience.\n\nCLIENT BRIEF\n------------\n{{CUSTOMER_BRIEF}}\n\nCRAFT GUIDANCE\n--------------\n{{CONTEXT_BLOCK}}\n\nPRODUCE A PLAN WITH THESE SECTIONS\n----------------------------------\n1. OBJECTIVE — what this piece has to achieve, and for whom.\n2. CORE PROPOSITION — the single thing the audience should take away.\n3. HIERARCHY — what must be noticed first, second and third, and why in that order.\n4. EXPLICIT CLIENT REQUIREMENTS — every requirement the client actually stated, listed exactly,\n   including any copy that must appear verbatim. Do not paraphrase these.\n5. CONFLICTS AND GAPS — anything in the brief that contradicts itself, is missing, or cannot be\n   satisfied as stated. For each, say what you propose and why, or what you would need to know.\n6. VISUAL OR TEMPORAL STRATEGY — how the piece is constructed. For video, the shot progression.\n7. TRADE-OFFS — where two things you would want cannot both be had, which you chose and what it\n   costs.\n8. WHAT TO INSPECT — how someone would judge whether a finished version of this succeeded.\n\nBe specific. A plan that would apply equally to any other brief is not a plan.\n",
+  "briefs": [
+    {
+      "brief_id": "BR-F01-HI",
+      "customer_brief": "Diwali ke liye poster chahiye. Likha hona chahiye \"दीपावली की शुभकामनाएं\" aur offer \"सभी मिठाइयों पर 20% छूट\". Shop ka naam \"श्री गणेश मिष्ठान भंडार\" bada dikhna chahiye. Traditional feel ho, but modern bhi lage. Sabse important cheez offer hai, lekin shop ka naam sabse bada hona chahiye.",
+      "media_class": "static",
+      "duration_seconds": null,
+      "target_words": 468,
+      "min_words": 398,
+      "max_words": 538
+    },
+    {
+      "brief_id": "BR-F02-EN",
+      "customer_brief": "We want a clean product shot of our 250ml cold-pressed orange juice bottle for our launch. Just the bottle, premium feel, light background. The label should be readable — that is the whole point, people need to see it is cold-pressed and not from concentrate. Only text on the image should be \"Cold-pressed. Nothing else.\" Glass bottle, so it should look like glass.",
+      "media_class": "static",
+      "duration_seconds": null,
+      "target_words": 515,
+      "min_words": 438,
+      "max_words": 592
+    },
+    {
+      "brief_id": "BR-F03-HG",
+      "customer_brief": "Young professional, phone haath mein, app screen dikh raha ho. Headline \"Ab investing हुआ आसान\" aur CTA \"Download karo\". Trustworthy lagna chahiye, bank jaisa serious. But young aur fun bhi, Gen Z ko target kar rahe hain. App screenshot exactly hamara wala hona chahiye.",
+      "media_class": "static",
+      "duration_seconds": null,
+      "target_words": 557,
+      "min_words": 473,
+      "max_words": 641
+    },
+    {
+      "brief_id": "BR-F04-EN",
+      "customer_brief": "We ran a campaign last year that worked well — same look, same feel, but for the monsoon season this time. Our property photos are attached. Just the tagline \"Stay a while.\" Keep it consistent with what we did before, people recognise it now.",
+      "media_class": "static",
+      "duration_seconds": null,
+      "target_words": 381,
+      "min_words": 324,
+      "max_words": 438
+    },
+    {
+      "brief_id": "BR-F05-HG",
+      "customer_brief": "12 second video, coffee jar hero shot, steam aur pouring dikhana hai. VO - \"Subah ki pehli sip, perfectly brewed\". End card \"अब हर घर में\". Premium cafe jaisa feel, but ghar ka warm feel bhi. Fast cuts chahiye energy ke liye, lekin calm morning mood bhi banana hai.",
+      "media_class": "video",
+      "duration_seconds": 12,
+      "target_words": 594,
+      "min_words": 505,
+      "max_words": 683
+    },
+    {
+      "brief_id": "BR-F06-EN",
+      "customer_brief": "Fifteen seconds. One runner, early morning, empty city street. No dialogue, just music and ambient sound. She laces up, starts running, we see the shoes. End text \"Made for the long road.\" Should feel real, not a fashion film. Same runner throughout.",
+      "media_class": "video",
+      "duration_seconds": 15,
+      "target_words": 534,
+      "min_words": 454,
+      "max_words": 614
+    },
+    {
+      "brief_id": "BR-F06-HG",
+      "customer_brief": "10 second video. Ek ladka ghar pe hai, kuch khatam ho gaya hai, app kholta hai, order karta hai, delivery aa jaati hai. No dialogue. End card \"10 minute mein delivery\" aur \"Order करो अभी\". Fast aur snappy chahiye.",
+      "media_class": "video",
+      "duration_seconds": 10,
+      "target_words": 475,
+      "min_words": 404,
+      "max_words": 546
+    },
+    {
+      "brief_id": "BR-F07-HI",
+      "customer_brief": "Ek kisan camera ke saamne baat kar raha hai, khet mein khade hoke. Bolega - \"इस दवाई से मेरी फसल दोगुनी हुई\". Product haath mein dikhe. End mein \"किसान भरोसा\" likha ho. Simple aur bharosemand lagna chahiye.",
+      "media_class": "video",
+      "duration_seconds": 20,
+      "target_words": 500,
+      "min_words": 425,
+      "max_words": 575
+    },
+    {
+      "brief_id": "BR-F08-EN",
+      "customer_brief": "Twenty seconds, two people, a father and his adult daughter, at home on a sofa. She asks \"Dad, do you have health cover?\" He says \"I thought I did.\" Then end card: \"Check your cover today.\" Warm, not scary. Two shots, one on each of them, then a wider one.",
+      "media_class": "video",
+      "duration_seconds": 20,
+      "target_words": 574,
+      "min_words": 488,
+      "max_words": 660
+    },
+    {
+      "brief_id": "BR-F08-HG",
+      "customer_brief": "Do dost, ek car ke paas khade hain. Pehla bolta hai \"Yaar, second-hand mein risk hota hai na?\" Doosra bolta hai \"Nahi, अब नहीं\". Phir app dikhe. End card \"Certified cars, zero tension\". Funny aur casual chahiye. But serious bhi lagna chahiye kyunki paisa involved hai. 15 second mein dono characters ki personality establish karni hai.",
+      "media_class": "video",
+      "duration_seconds": 15,
+      "target_words": 528,
+      "min_words": 449,
+      "max_words": 607
+    },
+    {
+      "brief_id": "BR-F09-HI",
+      "customer_brief": "Delivery wala ek parcel customer ko de raha hai, ghar ke darwaze pe. Dono muskura rahe hain. Uniform pe hamara logo dikhe. End card \"हर पैकेट, हर घर\" aur brand \"तेज़ कूरियर\". Simple aur real.",
+      "media_class": "video",
+      "duration_seconds": 12,
+      "target_words": 459,
+      "min_words": 390,
+      "max_words": 528
+    },
+    {
+      "brief_id": "BR-F10-HI",
+      "customer_brief": "20 second ka ad, teen-chaar shots. Ek dulhan taiyaar ho rahi hai, necklace pehen rahi hai, parivaar dekh raha hai. VO - \"हर रिश्ता, हर पल\". End mein \"राज ज्वैलर्स\" aur showroom ka address. Grand aur royal lagna chahiye, Rajasthani feel. Modern couples ko bhi attract karna hai toh contemporary bhi rakhna. Necklace ka detail clearly dikhna chahiye but shots wide hone chahiye taaki grandeur aaye.",
+      "media_class": "video",
+      "duration_seconds": 20,
+      "target_words": 585,
+      "min_words": 497,
+      "max_words": 673
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Canon V1 value-gate verdict file (two independent reviewers per pair)",
+  "description": "Human verdicts for a value-gate run. C-C5: EXACTLY TWO distinct reviewers must judge every pair, independently. Reviewer judgements are never averaged into a pseudo-continuous score; they are combined by unanimity or reported as disagreement. Produced by humans. Never produced by an agent.",
+  "type": "object",
+  "required": [
+    "run_id",
+    "reviewers_required",
+    "verdicts"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "reviewers_required": {
+      "const": 2
+    },
+    "dummy": {
+      "type": "boolean",
+      "description": "true marks synthetic fixtures. Synthetic input is never evidence."
+    },
+    "verdicts": {
+      "type": "array",
+      "description": "One entry per (pair, reviewer). With 12 pairs and 2 reviewers, 24.",
+      "items": {
+        "type": "object",
+        "required": [
+          "pair_id",
+          "reviewer_id",
+          "reviewed_at",
+          "dimensions",
+          "explicit_intent_preservation",
+          "overall"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "pair_id": {
+            "type": "string",
+            "pattern": "^PAIR-[0-9]{2}$"
+          },
+          "reviewer_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reviewed_at": {
+            "type": "string"
+          },
+          "dimensions": {
+            "type": "object",
+            "description": "Per dimension, which presented plan the reviewer judged better. A and B are blinded labels whose arm mapping is held in the sealed key.",
+            "required": [
+              "concept_quality",
+              "hierarchy_reasoning",
+              "proposition_clarity",
+              "objective_fit",
+              "audience_fit",
+              "visual_temporal_strategy",
+              "trade_off_awareness",
+              "contradiction_handling",
+              "appropriate_specificity"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^[a-z_]+$": {
+                "enum": [
+                  "A",
+                  "B",
+                  "neither",
+                  "cannot_tell"
+                ]
+              }
+            }
+          },
+          "explicit_intent_preservation": {
+            "type": "object",
+            "description": "GATING dimension, scored per plan and never averaged into creative quality. A plan that drops or alters an explicit client requirement fails this regardless of how good it is.",
+            "required": [
+              "A",
+              "B"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "A": {
+                "$ref": "#/definitions/intent"
+              },
+              "B": {
+                "$ref": "#/definitions/intent"
+              }
+            }
+          },
+          "overall": {
+            "enum": [
+              "A",
+              "B",
+              "neither",
+              "cannot_tell"
+            ]
+          },
+          "reviewer_comment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "intent": {
+      "type": "object",
+      "required": [
+        "verdict",
+        "violations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {
+          "enum": [
+            "preserved",
+            "degraded",
+            "violated"
+          ]
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "kind",
+              "detail"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "enum": [
+                  "exact_string_altered",
+                  "requirement_dropped",
+                  "constraint_broken",
+                  "fact_invented",
+                  "contradiction_resolved_silently"
+                ]
+              },
+              "detail": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
