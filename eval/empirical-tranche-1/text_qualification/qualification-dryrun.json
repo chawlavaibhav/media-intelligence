@@ -1,0 +1,95 @@
+{
+  "calls_per_candidate_per_script": 576,
+  "candidates": [
+    {
+      "candidate": "fake-openai-candidate",
+      "contract_status": "PROVISIONAL_FIRST_RUN_GATE",
+      "devanagari": {
+        "calls": 576,
+        "failed_gates": [],
+        "false_fails": 0,
+        "false_passes": 0,
+        "match_false_fail_rate": 0.0,
+        "passed": true,
+        "refusal_rate": 0.0,
+        "refusals": 0,
+        "repeat_consistency": 1.0,
+        "script": "devanagari",
+        "stopped_reason": null
+      },
+      "latin": {
+        "calls": 576,
+        "failed_gates": [],
+        "false_fails": 0,
+        "false_passes": 0,
+        "match_false_fail_rate": 0.0,
+        "passed": true,
+        "refusal_rate": 0.0,
+        "refusals": 0,
+        "repeat_consistency": 1.0,
+        "script": "latin",
+        "stopped_reason": null
+      },
+      "may_populate_registry": false,
+      "qualified_scope": [
+        "devanagari",
+        "latin"
+      ],
+      "qualified_scope_excludes": [
+        "malformed_generated_glyphs"
+      ],
+      "stopped_after": "latin",
+      "stopped_reason": null,
+      "synthetic": true
+    },
+    {
+      "candidate": "fake-google-candidate",
+      "contract_status": "PROVISIONAL_FIRST_RUN_GATE",
+      "devanagari": {
+        "calls": 576,
+        "failed_gates": [
+          "mismatch_false_pass"
+        ],
+        "false_fails": 0,
+        "false_passes": 1,
+        "match_false_fail_rate": 0.0,
+        "passed": false,
+        "refusal_rate": 0.0,
+        "refusals": 0,
+        "repeat_consistency": 0.9948,
+        "script": "devanagari",
+        "stopped_reason": null
+      },
+      "latin": null,
+      "may_populate_registry": false,
+      "qualified_scope": [],
+      "qualified_scope_excludes": [
+        "malformed_generated_glyphs"
+      ],
+      "stopped_after": "devanagari",
+      "stopped_reason": null,
+      "synthetic": true
+    }
+  ],
+  "dry_run": true,
+  "external_calls": 0,
+  "materials": {
+    "devanagari": {
+      "actual_items_jsonl_sha256": "9c69cac28c3123713652a26548eb09aabdd36966a44a433a9069b787fea6d09d",
+      "expected_items_jsonl_sha256": "9c69cac28c3123713652a26548eb09aabdd36966a44a433a9069b787fea6d09d",
+      "expected_validated_state": 96,
+      "note": "The 106-item build is the material the reviewer saw; the 96-item validated view is what a checker run uses.",
+      "ok": true,
+      "validated_items": 96
+    },
+    "latin_pack_sha256": "320323ff84dd9c0d3ea3e9110eead1a3b789516de43c5f31c4f414fa022f1fcb"
+  },
+  "maximum_evaluator_calls_if_all_survive": 2304,
+  "may_populate_registry": false,
+  "note": "Every candidate above is a deterministic local fake. This run proves the protocol executes and stops where it should. It says NOTHING about any real model, and no result here may reach the Capability Registry.",
+  "record": "EMP-001-text-qualification",
+  "registry_rows_written": 0,
+  "simulated_spend_usd": "3.6288",
+  "spend_usd": "0",
+  "synthetic": true
+}
