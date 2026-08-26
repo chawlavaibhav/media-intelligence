@@ -61,7 +61,8 @@ import yaml  # noqa: E402
 
 from budget_guard import (  # noqa: E402
     AUTHORISATION_EXAMPLE_PATH, AUTHORISATION_LOCAL_PATH, BudgetExceeded, BudgetGuard,
-    NotAuthorised, load_authorisation)
+    NotAuthorised, load_authorisation, open_guard)
+import providers as P  # noqa: E402
 from qualify_text import transcription_matches  # noqa: E402
 
 MANIFEST = HERE / "atex-items-v1.jsonl"
@@ -159,11 +160,75 @@ def _check_route_ceiling(n_items: int, repeats: int, cfg: dict) -> None:
 
 
 # --------------------------------------------------------------------------------------- run
-def run(judge: dict | None = None, generator=None, preflight_green: bool = False,
+# Populated in dry-run mode so the fake judge can "read" the fake generator's artifact. Never
+# consulted on the live path.
+_TARGET_BY_ARTIFACT: dict[str, str] = {}
+
+
+class PartialEvidenceOnly(RuntimeError):
+    """A-TEXT is a partial admission screen. It cannot promote a complete scientific slot."""
+
+
+def promote_slot(result: dict):
+    """Refuse, always, and say why.
+
+    A-TEXT asks one narrow question on four items. Full Stage-A survival requires every instrument
+    family the route's slot depends on, and none of them is qualified. This exists so the boundary
+    is a mechanical refusal rather than a paragraph everybody agrees with and nobody enforces.
+    """
+    raise PartialEvidenceOnly(
+        f"REFUSED: {result.get('evidence_class', 'partial_admission_screen_only')}. A-TEXT is "
+        f"partial evidence from four frozen items on one prompt style. It may eliminate a route "
+        f"from deeper text spend; it may never promote a complete Stage-A slot, and a non-zero "
+        f"score is not promotion. This holds whether the evidence is synthetic or real.")
+
+
+def _measure_artifact(judge_instance, image_bytes: bytes, item: dict, seq: int,
+                      attempt_id: str) -> tuple[dict, dict]:
+    """One blind transcription. Returns (evaluator_call_record, measurement).
+
+    The judge never sees the target. It commits to what it believes is drawn and OUR code performs
+    the exact comparison — `transcription_matches`, the same frozen rule the qualification used.
+
+    The evaluator call is its own trial with its own cost. A judge that refused or errored did not
+    say "wrong": that is an ABSENCE with a reason, not a mismatch, and folding the two would
+    corrupt the numerator and the denominator in opposite directions.
+    """
+    response = judge_instance.transcribe(image_bytes)
+    call = {
+        **judge_instance.call_record(response, shape="transcribe"),
+        "evaluator_trial_id": f"eval-{seq:04d}",
+        "attempt_id": attempt_id,
+        "item_id": item["item_id"],
+        "synthetic": False,
+    }
+
+    if response.api_status != "ok":
+        absent = ("evaluator_refused" if response.api_status == "refusal"
+                  else f"evaluator_{response.api_status}")
+        return call, {"transcription": None, "exact_match": None, "absent_reason": absent}
+
+    exact = transcription_matches(item["target_string"], response.text)
+    return call, {"transcription": response.text, "exact_match": exact, "absent_reason": None}
+
+
+def run(judge: dict | None = None, generator=None, routes: dict | None = None,
+        judge_instance=None, preflight_green: bool = False,
         guard: BudgetGuard | None = None, authorisation_path: Path | None = None,
         dry_run: bool = False, repeats_override: int | None = None,
-        stop_on_budget: bool = False) -> dict:
-    """Execute the A-TEXT screen behind all five gates. Returns persistable records."""
+        stop_on_budget: bool = False, run_verdict_diagnostic: bool = False) -> dict:
+    """Execute the A-TEXT screen behind all five gates.
+
+    Two execution modes, and the difference is real rather than cosmetic:
+
+      dry_run=True   a fake generator and a stub reader. Everything is marked synthetic.
+      dry_run=False  the supplied frozen fal routes, and the supplied QUALIFIED judge's blind
+                     transcribe. Records carry synthetic=False, because they are real evidence
+                     about whatever the transports actually talked to.
+
+    `synthetic` is derived from the execution mode. It was previously a constant `True`, which
+    meant a paid run would have been scored by the stub and then filed as synthetic.
+    """
     cfg = config()
     manifest = items()
     repeats = repeats_override or cfg["atex"]["repeats_per_item"]
@@ -176,10 +241,23 @@ def run(judge: dict | None = None, generator=None, preflight_green: bool = False
 
     if guard is None:
         raise GateClosed("GATE 4 CLOSED — no budget guard.")
-    if generator is None:
-        raise GateClosed("no generator supplied; this runner never constructs a live one itself.")
+
+    if dry_run:
+        if generator is None:
+            raise GateClosed("a dry run needs a fake generator; none was supplied.")
+    else:
+        if not routes:
+            raise GateClosed(
+                "GATE 5 CLOSED — no generation routes supplied. This runner never constructs a "
+                "live route itself; the caller injects the frozen adapters.")
+        if judge_instance is None:
+            raise GateClosed(
+                "GATE 2 CLOSED — a real run needs the QUALIFIED judge instance, not merely a "
+                "qualification record. Generating images nobody measures is spend with no "
+                "evidence attached.")
 
     attempts: list[dict] = []
+    evaluator_calls: list[dict] = []
     measurements: list[dict] = []
     cost_ledger: list[dict] = []
     per_route = {slot: 0 for slot in cfg["atex"]["slots"]}
@@ -200,8 +278,7 @@ def run(judge: dict | None = None, generator=None, preflight_green: bool = False
 
                 seq += 1
                 attempt_id = f"atex-{slot}-{item['item_id']}-r{repeat_index}"
-                # One call = one trial. trial_id equals attempt_id for a root call, always.
-                trial_id = attempt_id
+                trial_id = attempt_id          # one call = one trial, always
 
                 request = {
                     "route": meta["route"],
@@ -213,7 +290,12 @@ def run(judge: dict | None = None, generator=None, preflight_green: bool = False
                     "seed": None,                    # unseeded, deliberately
                     "seed_policy": "unseeded",
                 }
-                response = generator(request)        # exactly one call, no loop
+
+                if dry_run:
+                    response = generator(request)    # exactly one call, no loop
+                else:
+                    response = routes[slot](request)  # exactly one call, no loop
+
                 guard.record(price)
                 per_route[slot] += 1
 
@@ -234,6 +316,7 @@ def run(judge: dict | None = None, generator=None, preflight_green: bool = False
                     "api_status": response["api_status"],
                     "error_class": response.get("error_class"),
                     "provider_request_id": response.get("provider_request_id"),
+                    "artifact_url": response.get("artifact_url"),
                     "seed": None,
                     "seed_policy": "unseeded",
                     "repeat_index": repeat_index,
@@ -245,14 +328,9 @@ def run(judge: dict | None = None, generator=None, preflight_green: bool = False
                     "synthetic": bool(dry_run),
                 })
 
-                # The Attempt record exists BEFORE anything asks whether an artifact came back,
-                # so a refusal cannot silently vanish from the denominator.
-                artifact = response.get("artifact")
-                transcription = _fake_transcribe(artifact)
-                exact = bool(artifact) and transcription_matches(
-                    item["target_string"], transcription)
-
-                measurements.append({
+                # The Attempt record exists BEFORE anything asks whether an artifact came back, so
+                # a refusal cannot silently vanish from the denominator.
+                measurement = {
                     "measurement_id": f"m-{seq:04d}",
                     "attempt_id": attempt_id,
                     "trial_id": trial_id,
@@ -260,31 +338,86 @@ def run(judge: dict | None = None, generator=None, preflight_green: bool = False
                     "shape": "transcribe",
                     "role": "primary",
                     "judge": judge.get("candidate"),
-                    "transcription": transcription,
-                    "exact_match": exact,
-                    "absent_reason": None if artifact else "no_artifact_produced",
-                    "synthetic": True,
+                    "transcription": None,
+                    "exact_match": None,
+                    "absent_reason": "no_artifact_produced",
+                    "synthetic": bool(dry_run),
                     "may_populate_registry": False,
-                })
+                }
+
+                if dry_run:
+                    artifact = response.get("artifact")
+                    if artifact:
+                        transcription = _fake_transcribe(artifact)
+                        measurement.update({
+                            "transcription": transcription,
+                            "exact_match": transcription_matches(item["target_string"],
+                                                                 transcription),
+                            "absent_reason": None,
+                        })
+                elif response["api_status"] == "ok" and response.get("fetch_artifact"):
+                    image_bytes = response["fetch_artifact"]()
+                    _TARGET_BY_ARTIFACT[response["artifact_url"]] = item["target_string"]
+                    call, outcome = _measure_artifact(judge_instance, image_bytes, item, seq,
+                                                      attempt_id)
+                    evaluator_calls.append(call)
+                    measurement.update(outcome)
+                    measurement["evaluator_trial_id"] = call["evaluator_trial_id"]
+
+                    if run_verdict_diagnostic:
+                        # Diagnostic ONLY, and explicitly budgeted. It measures how much
+                        # false-pass behaviour comes from showing a judge the answer we hope for.
+                        # It can never overturn the primary transcription result.
+                        vresp = judge_instance.verdict(image_bytes, item["target_string"])
+                        vcall = {
+                            **judge_instance.call_record(vresp, shape="verdict"),
+                            "evaluator_trial_id": f"eval-verdict-{seq:04d}",
+                            "attempt_id": attempt_id, "item_id": item["item_id"],
+                            "synthetic": False,
+                        }
+                        evaluator_calls.append(vcall)
+                        measurements.append({
+                            "measurement_id": f"m-verdict-{seq:04d}",
+                            "attempt_id": attempt_id, "trial_id": trial_id,
+                            "item_id": item["item_id"], "shape": "verdict",
+                            "role": "diagnostic",
+                            "judge": judge.get("candidate"),
+                            "reply": vresp.text,
+                            "may_override_primary": False,
+                            "absent_reason": None if vresp.api_status == "ok" else "evaluator_"
+                                             + vresp.api_status,
+                            "synthetic": False,
+                            "may_populate_registry": False,
+                        })
+
+                measurements.append(measurement)
             if stopped_reason:
                 break
         if stopped_reason:
             break
 
-    scoreable = [m for m in measurements if m["absent_reason"] is None]
+    primary = [m for m in measurements if m["role"] == "primary"]
+    scoreable = [m for m in primary if m["absent_reason"] is None]
+    exact_matches = sum(1 for m in scoreable if m["exact_match"])
+
     return {
         "record": "EMP-001-atex-screen",
         "dry_run": dry_run,
-        "synthetic": True,
+        # From the execution MODE, never a constant.
+        "synthetic": bool(dry_run),
         "generations": len(attempts),
         "trials": len({a["trial_id"] for a in attempts}),
         "per_route": per_route,
         "retries": 0,
         "attempts": attempts,
+        "evaluator_calls": evaluator_calls,
         "measurements": measurements,
         "cost_ledger": cost_ledger,
-        "exact_matches": sum(1 for m in scoreable if m["exact_match"]),
+        "exact_matches": exact_matches,
         "scoreable_opportunities": len(scoreable),
+        # The frozen hard elimination rule. Eligibility to STOP deeper spend, stated only as a
+        # result on this screen — never as a universal model incapability.
+        "text_specific_stop_eligible": bool(scoreable) and exact_matches == 0,
         "stopped_reason": stopped_reason,
         "registry_rows_written": 0,
         "may_populate_registry": False,
@@ -327,19 +460,127 @@ def attempt_registry_write_with_dry_run_evidence() -> dict:
             "registry_rows": len(h.registry_rows)}
 
 
+def _fake_live(guard: BudgetGuard, authorisation_path: Path, out: Path) -> dict:
+    """The real measurement path with injected recorders where the sockets would be.
+
+    Real frozen fal route adapters, real request bodies, real blind transcription, real code-level
+    comparison. The only substitutions are the HTTP layer, the artifact store and the reader — and
+    the reader is a PERFECT one, which is precisely why this proves the path executes and proves
+    nothing whatsoever about any model.
+    """
+    import os
+
+    sys.path.insert(0, str(PACKAGE_ROOT / "text_qualification"))
+    from fake_live import FakeFalHttp
+
+    os.environ.setdefault("FAL_KEY", "fake-live-fal-key")
+
+    http = FakeFalHttp()
+    artifacts: dict[str, bytes] = {}
+
+    def fetch(url: str) -> bytes:
+        artifacts.setdefault(url, b"\x89PNG\r\n\x1a\n" + url.encode("utf-8"))
+        return artifacts[url]
+
+    cfg = config()
+    routes = {slot: P.fal_route_for(slot, cfg, http=http, artifact_fetch=fetch)
+              for slot in cfg["atex"]["slots"]}
+
+    class PerfectReader:
+        """Reads back whatever was rendered. A stand-in for a qualified judge, not a model."""
+
+        provider, model_alias = "fake-live", "fake-live-perfect-reader"
+        resolved_version = "FAKE-LIVE-reader-v1"
+
+        def __init__(self):
+            self.transcribe_calls = 0
+
+        def transcribe(self, image_bytes):
+            self.transcribe_calls += 1
+            url = image_bytes.split(b"\x1a\n", 1)[1].decode("utf-8")
+            return P.EvaluatorResponse(
+                text=_TARGET_BY_ARTIFACT.get(url, ""), input_tokens=800, output_tokens=6,
+                billed_usd=Decimal("0.0021"),
+                provider_request_id=f"fake-judge-{self.transcribe_calls:04d}")
+
+        def identity(self):
+            return {"provider": self.provider, "model_alias": self.model_alias,
+                    "resolved_version": self.resolved_version,
+                    "version_pinned_at_execution": True}
+
+        def call_record(self, response, shape):
+            return {**self.identity(), "shape": shape, "api_status": response.api_status,
+                    "error_class": response.error_class,
+                    "provider_request_id": response.provider_request_id,
+                    "input_tokens": response.input_tokens,
+                    "output_tokens": response.output_tokens,
+                    "billed_usd": str(response.billed_usd),
+                    "cost_basis": response.cost_basis, "retries": 0,
+                    "one_call_one_trial": True}
+
+    reader = PerfectReader()
+    result = run(judge={"candidate": "fake-live-perfect-reader",
+                        "qualified_scope": ["devanagari", "latin"], "synthetic": False},
+                 routes=routes, judge_instance=reader, preflight_green=True, guard=guard,
+                 authorisation_path=authorisation_path, dry_run=False)
+
+    payload = {
+        **result,
+        "mode": "fake_live",
+        "maximum_future_generations": (len(items()) * cfg["atex"]["repeats_per_item"]
+                                       * len(cfg["atex"]["slots"])),
+        "external_calls": 0,
+        "spend_usd": "0",
+        "recorded_dispatches": len(http.calls),
+        "evaluator_dispatches": reader.transcribe_calls,
+        "simulated_spend_usd": str(guard.spent_usd),
+        "manifest_sha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+        "note": ("Real frozen fal adapters, real request bodies, real blind transcription and "
+                 "real code-level comparison, with injected recorders where the sockets would "
+                 "be. The reader is PERFECT, so the exact-match count says nothing about any "
+                 "model. It proves the positive path executes and stays inside its ceiling."),
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                              default=str) + "\n", encoding="utf-8")
+    return payload
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="EMP-001 gated A-TEXT screen.")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--fake-live", action="store_true",
+                    help="the real measurement path with injected recorders; zero network")
     ap.add_argument("--live", action="store_true")
+    ap.add_argument("--authorisation", default=None)
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args(argv)
 
     if a.live:
-        auth = load_authorisation(AUTHORISATION_LOCAL_PATH)
-        print("REFUSED: EMP-001 paid A-TEXT generation is not authorised.", file=sys.stderr)
+        auth = load_authorisation(a.authorisation or AUTHORISATION_LOCAL_PATH)
+        print("REFUSED: EMP-001 paid A-TEXT generation requires an explicit authorisation and a "
+              "qualified judge produced by a real qualification run.", file=sys.stderr)
         for r in auth.refusals:
             print(f"  - {r}", file=sys.stderr)
+        if not auth.refusals:
+            print("  - authorisation is valid, but no qualified judge record was supplied; run "
+                  "qualification first and pass its result.", file=sys.stderr)
         return 2
+
+    if a.fake_live:
+        path = Path(a.authorisation) if a.authorisation else AUTHORISATION_LOCAL_PATH
+        guard = open_guard(path)          # the same gate a paid run must pass
+        result = _fake_live(guard, path, Path(a.out))
+        print(f"fake-live: {result['generations']} generations "
+              f"({result['per_route']}), {result['evaluator_dispatches']} evaluator dispatches, "
+              f"0 network calls")
+        print(f"exact matches: {result['exact_matches']}/{result['scoreable_opportunities']}  "
+              f"(perfect reader — not evidence about any model)")
+        print(f"synthetic: {result['synthetic']}   registry rows: "
+              f"{result['registry_rows_written']}")
+        print(f"external calls: {result['external_calls']}   spend USD: {result['spend_usd']}")
+        print(f"written: {a.out}")
+        return 0
 
     gen = FakeGenerator()
     result = run(judge={"candidate": "dry-run-fake-judge",
@@ -352,6 +593,7 @@ def main(argv: list[str] | None = None) -> int:
 
     payload = {
         **result,
+        "mode": "dry_run",
         "maximum_future_generations": (len(items()) * cfg["atex"]["repeats_per_item"]
                                        * len(cfg["atex"]["slots"])),
         "external_calls": 0,
@@ -359,13 +601,14 @@ def main(argv: list[str] | None = None) -> int:
         "simulated_spend_usd": str(sum(Decimal(c["amount_usd"]) for c in result["cost_ledger"])),
         "registry_boundary_check": registry_boundary,
         "manifest_sha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
-        "note": ("Fake generator, fake judge. This proves the gate order, the 16-call ceiling and "
-                 "the Registry refusal. It is not evidence about IMG-01, IMG-02 or any model."),
+        "note": ("Fake generator, fake reader. This proves the gate order, the 16-call ceiling "
+                 "and the Registry refusal. It is not evidence about IMG-01, IMG-02 or any "
+                 "model."),
     }
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-                   encoding="utf-8")
+    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                              default=str) + "\n", encoding="utf-8")
 
     print(f"generations: {payload['generations']}  per route: {payload['per_route']}  "
           f"retries: {payload['retries']}")
