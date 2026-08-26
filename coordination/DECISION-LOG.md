@@ -1,6 +1,6 @@
 # Decision Log
 
-**Updated:** 25 Aug 2026 — GOV-001 index plus post-audit Controller disposition.
+**Updated:** 26 Aug 2026 — current Controller decision index.
 
 > **Scope notice.** The two narrative entries below are the project's **23 Aug 2026 architectural
 > decisions** and remain accurate as history. They are **not** a complete decision register: from
@@ -24,11 +24,18 @@
 | 25 Aug 2026 | Approve the lineage relation **`shared_primary_informant`**, applied pairwise and symmetrically; incidental quotation does not qualify. Both reserve sources admitted — live Canon 16 → 18 | `canon/PROPOSED-METHOD-CHANGE-CANON-006-LINEAGE.md`, `canon/findings/CANON-006-CONTROLLER-BRIEF.md` | approved proposal + brief |
 | 25 Aug 2026 | Approve the representation-loss category **`figure_semantic_binding_lost`**; *Effectiveness in Context* admitted — live Canon 18 → 19 | `canon/findings/CANON-007-CONTROLLER-BRIEF.md` | Controller brief |
 | 25 Aug 2026 | **EVAL-005 human validation: PRUNE, DO NOT REBUILD.** 5 base words rejected, 10 items excluded and not replaced; authoritative battery is the 96-item validated view | `eval/battery/devanagari-exactness/human-validation/human-validation-v1.json` (status `FROZEN`), `.../HUMAN-VALIDATION-RECORD.md` | **machine-readable frozen record** |
-| 25 Aug 2026 | **CANON-008 stops at its acquisition gate**; no source ingested, live Canon stays 19 | `canon/findings/CANON-008-CONTROLLER-BRIEF.md` | Controller brief (`needs_controller_review`) |
-| 25 Aug 2026 | **Approve the Repository Governor design** and the fifth-agent role | `docs/superpowers/specs/2026-08-25-repository-governor-project-memory-design.md` (Status: APPROVED) | approved spec |
-| 25 Aug 2026 | **Audit freeze** on all new domain work pending the governance reset | `governance/bootstrap/CONTROLLER-MIGRATION-SEED.md` §2, `governance/README.md` | migration seed + README |
-| 25 Aug 2026 | **Post-audit unblock:** close CANON-008 as a legitimate blocked-source adjudication and leave live Canon at 19; accept the Resources correction/lineage disposition; approve EVAL-005 checker gates provisionally; approve the Registry V0 schema for Eval measurement storage; re-scope the audit freeze so EVAL-006 is the only open domain task | `coordination/decisions/CONTROLLER-POST-AUDIT-UNBLOCK-2026-08-25.md` | **decision record** |
-| 25 Aug 2026 | **Authorize EVAL-006**: qualify the checker first, then create the first bounded empirical Capability Registry entries under fixed roster, item rules and ₹16,000 total API cap | `eval/tasks/EVAL-006.md` | **approved task** |
+| 25 Aug 2026 | **CANON-008 stops at its acquisition gate**; no source ingested, live Canon stays 19 | `canon/findings/CANON-008-CONTROLLER-BRIEF.md` | Controller brief |
+| 25 Aug 2026 | **Approve the Repository Governor design** and fifth-agent role | `docs/superpowers/specs/2026-08-25-repository-governor-project-memory-design.md` | approved spec |
+| 25 Aug 2026 | **Audit freeze** on new domain work pending governance reset | `governance/bootstrap/CONTROLLER-MIGRATION-SEED.md`, `governance/README.md` | historical bootstrap decision |
+| 25 Aug 2026 | **Post-audit unblock:** close CANON-008 as legitimate blocked-source adjudication; accept Resources correction; provisionally approve EVAL-005 checker gates/Registry schema; open EVAL-006 | `coordination/decisions/CONTROLLER-POST-AUDIT-UNBLOCK-2026-08-25.md` | **decision record** |
+| 25 Aug 2026 | **Authorize EVAL-006** under a ₹16,000 cap | `eval/tasks/EVAL-006.md` | approved task, later paused |
+| 26 Aug 2026 | **Three-stream overnight program** authorised to build V1 Canon/Eval/Resources architecture in parallel | `coordination/decisions/CONTROLLER-THREE-STREAM-OVERNIGHT-PROGRAM-2026-08-26.md` | **decision record** |
+| 26 Aug 2026 | **V1 overnight integration accepted:** Creative IR/30-bank, 36-capability/100-item Eval baseline and Resources V2.1 architecture accepted; paid model evidence still absent | `coordination/decisions/CONTROLLER-V1-OVERNIGHT-INTEGRATION-2026-08-26.md` | **decision record** |
+| 26 Aug 2026 | **EVAL-006 paused and spend authority withdrawn** pending master-plan re-scope | `coordination/decisions/CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md`, `eval/tasks/EVAL-006.md` | **decision record + paused task** |
+| 26 Aug 2026 | **Pre-E7 scope rebase:** native model duration is a production constraint rather than a product limit; explicit conditions/outcome topology required; historical E7/E8 counts no longer authorised | `coordination/decisions/CONTROLLER-PRE-E7-SCOPE-REBASE-2026-08-26.md` | **decision record** |
+| 26 Aug 2026 | **Cloud macro recalibration:** replace synthetic-brief-first discovery with independent request-space, capability/workflow and evidence/topology research; E7 remains blocked | `coordination/decisions/CONTROLLER-CLOUD-MACRO-RECALIBRATION-2026-08-26.md` | **decision record** |
+| 26 Aug 2026 | **Macro research integration accepted with corrections:** explicit requested operation, Capability-v2 direction, dependency-aware scoring, topology-v3 direction, whole-outcome CpAO and request-lineage rules adopted for specification work | `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md` | **decision record** |
+| 26 Aug 2026 | **Final pre-execution freeze tranche authorised:** CANON-010, EVAL-009, RES-004 and EVAL-010 run in parallel; EVAL-008 is candidate-universe research, not a paid roster; scientific model selection remains independent of sourcing | `coordination/decisions/CONTROLLER-FINAL-PRE-EXECUTION-FREEZE-2026-08-26.md` | **decision record** |
 
 ## What counts as a durable Controller decision
 
