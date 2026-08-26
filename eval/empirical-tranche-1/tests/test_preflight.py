@@ -136,7 +136,7 @@ def test_dry_run_writes_explicit_booleans(tmp_path):
     assert r['spend_usd'] == '0'
     for key in ('geometry_fixtures', 'registry_empirical_rows', 'protected_baselines',
                 'one_call_one_trial', 'synthetic_cannot_reach_registry', 'authorisation_blocked',
-                'harness_selftest'):
+                'adapter_path_blocked', 'harness_selftest'):
         assert r['checks'][key]['ok'] is True, key
 
 
@@ -151,3 +151,20 @@ def test_harness_selftest_runs_and_is_green():
     assert r['exit_code'] == 0
     assert r['checks_passed'] == r['checks_total'] > 0
     assert r['registry_rows_created'] == 0
+
+
+# ------------------------------------------- the adapter path is closed while unauthorised
+def test_the_real_adapter_path_is_blocked_while_authorisation_is_absent():
+    r = preflight.check_adapter_path_blocked()
+    assert r['ok'] is True
+    assert r['transcribe_dispatch_refused'] is True
+    assert r['verdict_dispatch_refused'] is True
+    assert r['guardless_dispatch_refused'] is True
+    assert r['reason']
+
+
+def test_dry_run_includes_the_adapter_path_check(tmp_path):
+    out = tmp_path / 'preflight-result.json'
+    preflight.main(['--dry-run', '--out', str(out)])
+    r = json.loads(out.read_text())
+    assert r['checks']['adapter_path_blocked']['ok'] is True

@@ -224,6 +224,47 @@ def check_authorisation_blocked(path: Path | str = AUTHORISATION_LOCAL_PATH) -> 
     }
 
 
+# --------------------------------------------------------------- the live adapter path is shut
+def check_adapter_path_blocked() -> dict:
+    """A real judge adapter must refuse to dispatch while EMP-001 is unauthorised.
+
+    This is the control that matters most: everything else could be green while a live adapter
+    quietly had a default transport. So construct the real classes — the same ones a paid run
+    would use — and confirm that both shapes refuse, with and without a budget guard.
+    """
+    import providers as P
+
+    outcomes = {}
+    judge = P.OpenAITextJudge(model_alias="gpt-5.4-mini", resolved_version="preflight-unpinned")
+
+    for name, call in (("transcribe_dispatch_refused", lambda: judge.transcribe(b"x")),
+                       ("verdict_dispatch_refused", lambda: judge.verdict(b"x", "t"))):
+        try:
+            call()
+            outcomes[name] = False
+        except P.DispatchRefused:
+            outcomes[name] = True
+
+    # ...and a judge that HAS a transport but no guard must still refuse, so that a transport
+    # arriving by accident is not on its own enough to spend money.
+    with_transport = P.OpenAITextJudge(
+        model_alias="gpt-5.4-mini", resolved_version="preflight-unpinned",
+        transport=P.FakeTransport(P.OPENAI_OK_FIXTURE))
+    try:
+        with_transport.transcribe(b"x")
+        outcomes["guardless_dispatch_refused"] = False
+    except P.DispatchRefused:
+        outcomes["guardless_dispatch_refused"] = True
+
+    return {
+        "ok": all(outcomes.values()),
+        **outcomes,
+        "reason": ("a judge refuses without an injected transport, and refuses again without a "
+                   "budget guard opened from an explicit authorisation file"),
+        "live_adapters_in_synthetic_harness": False,
+    }
+
+
 # --------------------------------------------------------------------------------------- run
 def run_preflight(dry_run: bool) -> dict:
     checks = {
@@ -233,6 +274,7 @@ def run_preflight(dry_run: bool) -> dict:
         "one_call_one_trial": check_one_call_one_trial(),
         "synthetic_cannot_reach_registry": check_synthetic_cannot_reach_registry(),
         "authorisation_blocked": check_authorisation_blocked(),
+        "adapter_path_blocked": check_adapter_path_blocked(),
         "harness_selftest": check_harness_selftest(),
     }
     green = all(c["ok"] for c in checks.values())
