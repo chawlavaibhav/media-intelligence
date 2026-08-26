@@ -330,3 +330,62 @@ def test_dry_run_is_still_synthetic_and_untouched(tmp_path):
     r = json.loads(out.read_text())
     assert r['synthetic'] is True
     assert all(c['synthetic'] is True for c in r['candidates'])
+
+
+# ------------------------------------------- the blind check runs BEFORE the wire, every time
+def test_a_leaking_transcribe_request_is_refused_before_dispatch(keys):
+    """The checker contract says the blind check must run and return no violations before ANY
+    call is made. On the live path it must therefore be enforced in the code, not only asserted
+    in a test — a leak that reaches the wire has already destroyed the measurement.
+    """
+    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
+    judge = _openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00')))
+    target = Q._script_items('devanagari')[0]['target']
+
+    # Simulate the leak this guard exists to catch: a builder that appends the target.
+    def leaking(image_bytes):
+        return {'model': OPENAI_VERSION,
+                'input': [{'role': 'user', 'content': [
+                    {'type': 'input_text', 'text': f'Transcribe. TARGET: {target}'}]}]}
+
+    judge.build_transcribe_request = leaking
+
+    with pytest.raises(P.BlindnessViolation) as e:
+        judge.transcribe(b'anything')
+
+    assert http.calls == []               # nothing reached the wire
+    assert 'devanagari' in str(e.value).lower() or 'target' in str(e.value).lower()
+
+
+def test_a_leaking_request_costs_nothing_because_it_never_dispatched(keys):
+    guard = BudgetGuard(authorised_usd=Decimal('10.00'))
+    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
+    judge = _openai_judge(http, guard)
+    target = Q._script_items('devanagari')[0]['target']
+    judge.build_transcribe_request = lambda b: {'model': OPENAI_VERSION, 'input': [
+        {'role': 'user', 'content': [{'type': 'input_text', 'text': target}]}]}
+
+    with pytest.raises(P.BlindnessViolation):
+        judge.transcribe(b'anything')
+    assert guard.spent_usd == Decimal('0')
+
+
+def test_a_verdict_request_that_lost_its_target_is_also_refused(keys):
+    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
+    judge = _openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00')))
+    judge.build_verdict_request = lambda b, t: {'model': OPENAI_VERSION, 'input': [
+        {'role': 'user', 'content': [{'type': 'input_text', 'text': 'Does it match?'}]}]}
+
+    with pytest.raises(P.BlindnessViolation):
+        judge.verdict(b'anything', 'शुभ दीपावली')
+    assert http.calls == []
+
+
+def test_the_ordinary_live_path_passes_the_blind_check_every_call(keys):
+    """The guard must not be so strict that the real path cannot run."""
+    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('both'))
+    guard = BudgetGuard(authorised_usd=Decimal('10.00'))
+    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    result = Q.qualify_candidate(candidate, guard=guard)
+    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert result['latin']['calls'] == CALLS_PER_SCRIPT

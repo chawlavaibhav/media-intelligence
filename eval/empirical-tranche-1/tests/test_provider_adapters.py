@@ -255,3 +255,30 @@ def test_provisional_cost_is_labelled_provisional_not_invoiced():
     j = _judge(P.OpenAITextJudge, P.OPENAI_OK_FIXTURE, 'gpt-5.4-mini')
     row = j.call_record(j.transcribe(IMAGE), shape='transcribe')
     assert row['cost_basis'] == 'provisional_published_rate'
+
+
+# ------------------------------------------- the blind check must not misfire on short targets
+def test_a_short_verdict_target_is_not_falsely_flagged():
+    """REGRESSION. The check once counted raw substring hits across the whole serialised body, so
+    a one-character target matched inside ordinary structural words like "text" and "type" and a
+    perfectly good payload was refused. A control that cries wolf on a short target is a control
+    that will be switched off."""
+    j = P.OpenAITextJudge(model_alias='gpt-5.4-mini', resolved_version='v')
+    for target in ('t', 'A', '20%', 'Aaj ki Deal'):
+        assert P.verify_blind_payload(j.build_verdict_request(IMAGE, target),
+                                      shape='verdict', target=target) == [], target
+
+
+def test_a_verdict_payload_carrying_ground_truth_in_a_field_is_flagged():
+    """The realistic smuggling vector: the target reaches a verdict payload through the PROMPT and
+    through nothing else. A dedicated ground-truth field is how a blind item becomes a sighted
+    one, and it is caught by key name rather than by scanning prose."""
+    smuggled = {'model': 'x', 'expected_verdict': 'match',
+                'input': [{'content': [{'text': 'TARGET: शुभ दीपावली'}]}]}
+    assert P.verify_blind_payload(smuggled, shape='verdict', target='शुभ दीपावली')
+
+
+def test_a_transcribe_payload_carrying_ground_truth_in_a_field_is_flagged():
+    smuggled = {'model': 'x', 'rendered_string': 'Flat 5O% Off',
+                'input': [{'content': [{'text': 'Transcribe.'}]}]}
+    assert P.verify_blind_payload(smuggled, shape='transcribe', target='Flat 50% Off')

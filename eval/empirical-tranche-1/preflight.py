@@ -238,7 +238,7 @@ def check_adapter_path_blocked() -> dict:
     judge = P.OpenAITextJudge(model_alias="gpt-5.4-mini", resolved_version="preflight-unpinned")
 
     for name, call in (("transcribe_dispatch_refused", lambda: judge.transcribe(b"x")),
-                       ("verdict_dispatch_refused", lambda: judge.verdict(b"x", "t"))):
+                       ("verdict_dispatch_refused", lambda: judge.verdict(b"x", "PREFLIGHT-TARGET"))):
         try:
             call()
             outcomes[name] = False

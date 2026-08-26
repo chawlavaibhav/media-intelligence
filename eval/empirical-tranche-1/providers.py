@@ -103,6 +103,10 @@ class ProviderResponseError(RuntimeError):
     """A provider response could not be parsed into the declared shape."""
 
 
+class BlindnessViolation(RuntimeError):
+    """A payload failed its shape's blind check. It was NOT sent."""
+
+
 @dataclass(frozen=True)
 class EvaluatorResponse:
     """One provider call. One trial. Whatever happened to it."""
@@ -274,6 +278,17 @@ GROUND_TRUTH_KEYS = frozenset({
 })
 
 
+def _walk_keys(obj: Any):
+    """Every dict KEY in a payload, at any depth."""
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            yield k
+            yield from _walk_keys(v)
+    elif isinstance(obj, (list, tuple)):
+        for v in obj:
+            yield from _walk_keys(v)
+
+
 def _walk_strings(obj: Any):
     if isinstance(obj, str):
         yield obj
@@ -301,23 +316,32 @@ def verify_blind_payload(payload: dict, shape: str, target: str) -> list[str]:
     blob = json.dumps(payload, ensure_ascii=False)
     violations: list[str] = []
 
+    # Ground-truth keys are forbidden in BOTH shapes. The target legitimately reaches a verdict
+    # payload through the PROMPT and through nothing else; a dedicated field carrying it is how a
+    # blind item quietly becomes a sighted one.
+    for key in _walk_keys(payload):
+        if key in GROUND_TRUTH_KEYS:
+            violations.append(f"{shape} payload carries ground-truth key {key!r}")
+
+    prompt = prompt_text_of(payload) or ""
+
     if shape == "transcribe":
         if target and target in blob:
             violations.append("transcribe payload contains the target string")
-        for key in _walk_strings(payload):
-            if key in GROUND_TRUTH_KEYS:
-                violations.append(f"transcribe payload carries ground-truth key {key!r}")
         if any("ऀ" <= ch <= "ॿ" for ch in blob):
             violations.append(
                 "transcribe payload contains Devanagari text — every target in this battery is "
                 "Devanagari, so its presence is decisive regardless of the field name")
     else:
-        count = blob.count(target) if target else 0
-        if count == 0:
-            violations.append("verdict payload is missing the target string")
-        elif count > 1:
-            violations.append(f"verdict payload repeats the target {count} times; expected once")
-        elif target not in (prompt_text_of(payload) or ""):
+        # PRESENCE in the prompt, which is the rule the Devanagari checker contract already
+        # settled on. An earlier version here also demanded the target appear exactly once across
+        # the whole serialised body; that is not an invariant. Short targets occur incidentally in
+        # ordinary prompt prose, in structural enum values like "input_text", and inside base64
+        # image data, so the stricter rule refused perfectly good payloads. A control that cries
+        # wolf is a control that gets switched off.
+        if not target:
+            violations.append("verdict blind check needs the target to check against")
+        elif target not in prompt:
             violations.append("verdict payload does not carry the target inside its prompt")
 
     return sorted(set(violations))
@@ -394,11 +418,31 @@ class TextJudge:
         self.guard.record(response.billed_usd if response.billed_usd is not None else Decimal("0"))
         return response
 
-    def transcribe(self, image_bytes: bytes) -> EvaluatorResponse:
-        return self._dispatch(self.build_transcribe_request(image_bytes), self._estimate())
+    def _check_shape(self, request: dict, shape: str, target: str) -> None:
+        """Run the blind check and REFUSE rather than dispatch.
+
+        The checker contract requires this before any call is made, and it has to be enforced
+        here rather than in a test: a target that reaches the wire has already destroyed the
+        measurement, and no later assertion can undo it. Refusing costs nothing, because nothing
+        was reserved or sent.
+        """
+        violations = verify_blind_payload(request, shape=shape, target=target)
+        if violations:
+            raise BlindnessViolation(
+                f"{shape} payload refused before dispatch — nothing was sent:\n  - "
+                + "\n  - ".join(violations))
+
+    def transcribe(self, image_bytes: bytes, blind_check_target: str = "") -> EvaluatorResponse:
+        """Blind. `blind_check_target` is EVALUATOR-SIDE ONLY: it is never put in the payload,
+        it is used to prove the payload does not contain it."""
+        request = self.build_transcribe_request(image_bytes)
+        self._check_shape(request, "transcribe", blind_check_target)
+        return self._dispatch(request, self._estimate())
 
     def verdict(self, image_bytes: bytes, target: str) -> EvaluatorResponse:
-        return self._dispatch(self.build_verdict_request(image_bytes, target), self._estimate())
+        request = self.build_verdict_request(image_bytes, target)
+        self._check_shape(request, "verdict", target)
+        return self._dispatch(request, self._estimate())
 
     def _estimate(self) -> Decimal:
         """Conservative pre-call reservation from the published rate."""

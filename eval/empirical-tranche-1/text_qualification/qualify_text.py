@@ -282,7 +282,9 @@ class LiveCandidate:
 
         image_bytes = self.images.bytes_for(script, item["item_id"])
         if shape == "transcribe":
-            response = self.judge.transcribe(image_bytes)
+            # The target is passed for the BLIND CHECK only. It is never placed in the payload;
+            # it is what the payload is proved not to contain.
+            response = self.judge.transcribe(image_bytes, blind_check_target=item["target"])
         else:
             response = self.judge.verdict(image_bytes, item["target"])
 
