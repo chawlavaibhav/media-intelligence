@@ -1,5 +1,11 @@
 # EVAL-012 — EMP-001 zero-spend readiness
 
+> **SUPERSEDED — 27 Aug 2026.** The Controller rejected this `READY_FOR_SPEND_APPROVAL` verdict
+> in `coordination/decisions/CONTROLLER-EVAL-012-REVIEW-2026-08-26.md`: the branch was dry-run
+> ready, but the positive paid execution path was not wired. The zero-spend work below stands and
+> was preserved. The current verdict is in
+> [`EVAL-013-LIVE-PATH-READINESS.md`](EVAL-013-LIVE-PATH-READINESS.md).
+
 **Verdict:** `READY_FOR_SPEND_APPROVAL`
 
 **Branch:** `work/eval-012-emp-001-zero-spend` · **not merged**

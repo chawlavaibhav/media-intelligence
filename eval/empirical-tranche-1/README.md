@@ -16,11 +16,31 @@ and each one has a test that confirms it refuses.
 |---|---|---|
 | 0 | Preflight green — geometry, persistence, Registry-zero, baselines | `preflight.py` |
 | 1 | An explicit authorisation file naming EMP-001 and its exact ceiling | `budget_guard.open_guard` |
-| 2 | A text judge qualified on **both** scripts the A-TEXT items span | `atex/run_atex.py` |
+| 2 | A text judge qualified on **both** scripts, supplied as a real instance | `atex/run_atex.py` |
 | 3 | A budget reservation that succeeds **before** dispatch | `budget_guard.BudgetGuard.reserve` |
 | 4 | A per-route ceiling of 8 generations, not raisable at runtime | `atex/run_atex.py` |
 
 A failed gate stops downstream spend automatically. Retries authorised: **0**.
+
+A sixth guard sits below all of them: every payload is run through its shape's blind check
+**before dispatch**, and a payload that fails is refused rather than sent. A target that reaches
+the wire has already destroyed the measurement, and no later assertion can undo it.
+
+## Three execution modes
+
+| Mode | Generator / judge | Transport | Records | Spend |
+|---|---|---|---|---|
+| `--dry-run` | fake generator, stub reader | none | `synthetic: true` | 0 |
+| `--fake-live` | **real** adapters and judges | injected recorder | `synthetic: false` | 0 |
+| `--live` | real adapters and judges | real socket | `synthetic: false` | metered, gated |
+
+`--fake-live` is the positive control. It runs the **same orchestration, the same request
+builders, the same auth headers, the same parsers and the same scorer** as a paid run, with an
+injected recorder standing exactly where the socket would be. It walks the same authorisation gate
+too, so exercising it also exercises the gate a paid run must pass.
+
+It proves the positive path executes. It proves **nothing about any model**: the fake readers are
+perfect, and a perfect reader is not a real one. Its output is no more promotable than a dry run's.
 
 ## Commands (all zero-spend)
 
@@ -33,6 +53,13 @@ python3 eval/empirical-tranche-1/text_qualification/qualify_text.py --dry-run
 
 # the gated 16-generation A-TEXT screen, simulated
 python3 eval/empirical-tranche-1/atex/run_atex.py --dry-run
+
+# POSITIVE CONTROLS — the real live path, zero network, zero spend.
+# Needs a valid authorisation file; the gate is real even here.
+python3 eval/empirical-tranche-1/text_qualification/qualify_text.py \
+  --fake-live --authorisation <path> --out <path>
+python3 eval/empirical-tranche-1/atex/run_atex.py \
+  --fake-live --authorisation <path> --out <path>
 
 # the tests
 python3 -m pytest -q eval/empirical-tranche-1/tests
@@ -68,8 +95,11 @@ view is proved to be the one the reviewer actually validated.
 No key, token or credential belongs in any committed file. Provider credentials are read from the
 environment **at dispatch time only**, never at import or construction:
 
-- `OPENAI_API_KEY`
-- `GOOGLE_API_KEY`
+- `OPENAI_API_KEY` — sent as `Authorization: Bearer …` to the OpenAI Responses API
+- `GOOGLE_API_KEY` — sent as `x-goog-api-key: …` to the Gemini REST route, **not** as a Bearer
+  token; the two providers have different auth contracts and there is no generic fallback
+  transport
+- `FAL_KEY` — sent as `Authorization: Key …` to the frozen fal image routes
 
 `authorization.local.yaml` is gitignored and must never be committed. The committed
 `authorization.example.yaml` carries `authorised: false` and a zero ceiling.
@@ -88,7 +118,8 @@ which exercises the real harness boundary rather than asserting the rule in pros
 | `config.yaml` | frozen versions, ceiling, repeats, seed policy, item ids |
 | `authorization.example.yaml` | schema only, `authorised: false`, zero secrets |
 | `budget_guard.py` | fail-closed authorisation gate + cumulative spend guard |
-| `providers.py` | judge request builders/parsers; fail-closed dispatch |
+| `providers.py` | judge builders/parsers, per-provider transports, frozen fal routes |
+| `text_qualification/fake_live.py` | injected recorders that stand where the sockets would be |
 | `preflight.py` | Q1/Q7/Registry/baseline/authorisation preflight |
 | `protected-baselines.sha256` | pre-EMP-001 fingerprints of every protected artifact |
 | `text_qualification/` | Latin pack builder, renderer, perceptibility, qualification runner |
