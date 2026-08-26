@@ -1,0 +1,163 @@
+# EVAL-010 E10-E — direct and other legitimate production routes
+# Only provider-authorised evidence populates verified fields.
+# No bypasses, no unofficial mirrors, no scraped or resold endpoints.
+
+meta:
+  task: EVAL-010
+  package: E10-E
+  date: 2026-08-26
+
+google:
+  provider: Google
+  surfaces:
+    - {name: "Vertex AI (Gemini Enterprise Agent Platform)", enterprise_sla: true, evidence: SRC-GCP-NB-GA}
+    - {name: "Gemini API", enterprise_sla: false, evidence: SRC-GCP-NB-GA}
+  models:
+    - candidate: "Nano Banana 2"
+      api_model_id: "gemini-3.1-flash-image"
+      id_evidence: "console deep-link on Google's own GA blog post (SRC-GCP-NB-GA)"
+      availability: GA
+      ga_date: 2026-05-28
+      resolutions: {ga: ["1K", "2K"], preview: ["4K"]}
+      billing_unit: "tokens, with vendor-published per-image USD by resolution"
+      price_verified: true
+      status: execution_ready_preferred_route
+    - candidate: "Nano Banana Pro"
+      api_model_id: null
+      id_evidence: "display name only — 'Gemini 3 Pro Image (Nano Banana Pro)' on the pricing page; no API id found on a reachable Google host"
+      availability: GA
+      ga_date: 2026-05-28
+      billing_unit: "tokens, with vendor-published per-image USD by resolution"
+      price_verified: true
+      status: verified_fallback_only
+      blocker: api_model_id
+    - candidate: "Veo 3.1 Lite"
+      api_model_id: "veo-3.1-lite-generate-001"
+      id_evidence: SRC-SDK-GOOGLE
+      availability: "stable -001 identifier (a -preview sibling also exists)"
+      billing_unit: "per generated video (count)"
+      price_verified: true
+      status: execution_ready_preferred_route
+    - candidate: "Veo 3.1 (full tier)"
+      api_model_id: "veo-3.1-generate-preview"
+      id_evidence: SRC-SDK-GOOGLE
+      availability: "only a -preview identifier is enumerated in Google's own SDK; a stable GA id may exist but was not found on a reachable host"
+      billing_unit: "per generated video (count)"
+      price_verified: true
+      status: verified_fallback_only
+      blocker: "stable version identity"
+    - candidate: "Veo 3.1 Fast"
+      api_model_id: null
+      billing_unit: "per generated video (count)"
+      price_verified: true
+      status: verified_fallback_only
+      blocker: api_model_id
+    - candidate: "Gemini Omni Flash"
+      api_model_id: null
+      billing_unit: "tokens; 5792 tokens per second of 720p video output with audio"
+      price_verified: true
+      status: verified_fallback_only
+      blocker: api_model_id
+  caveat: >
+    docs.cloud.google.com is blocked by this session's egress policy, so the authoritative
+    Vertex model catalogue could not be read. Model ids above come from Google's own SDK and
+    from a console deep-link on Google's own blog. Both are provider-authorised, but neither is
+    the catalogue, and SDK enumerations may be illustrative rather than exhaustive.
+
+openai:
+  provider: OpenAI
+  models:
+    - candidate: "GPT Image 2"
+      api_model_ids: {floating: "gpt-image-2", pinned: "gpt-image-2-2026-04-21"}
+      id_evidence: "SRC-SDK-OPENAI — types generated from OpenAI's OpenAPI spec"
+      endpoints: ["images.generate", "images.edit"]
+      version_pinning: "dated snapshot available; pin gpt-image-2-2026-04-21"
+      billing_unit: null
+      price_verified: false
+      blocker: "platform.openai.com and developers.openai.com unreachable"
+      status: verified_fallback_only
+  rejected_claim:
+    claim: "~99% Hindi/Bengali character accuracy"
+    verdict: REJECTED_AS_UNVERIFIED
+    reason: >
+      No primary OpenAI source was reachable and no provider-authorised artifact carries any
+      such figure. Per the Controller correction this claim must not be treated as load-bearing.
+      Nothing found here refutes it either; it is simply unevidenced.
+
+runway:
+  provider: Runway
+  evidence: SRC-SDK-RUNWAY
+  api_surface_note: >
+    Runway's own published Python SDK exposes a full public API: text_to_video, image_to_video,
+    video_to_video, text_to_image, character_performance, text_to_speech, video_upscale,
+    voice_dubbing and more. This directly contradicts EVAL-008's recorded concern that Runway
+    API access is Enterprise-only. Account entitlement is a separate matter and was not tested.
+  models:
+    - {candidate: "Runway Aleph 2.0", api_model_literal: "aleph2", workflow: video_to_video, also: "gen4_aleph", status: verified_fallback_only}
+    - {candidate: "Runway Gen-4.5", api_model_literal: "gen4.5", workflows: [text_to_video, image_to_video], status: verified_fallback_only}
+    - {candidate: "Runway act_two", api_model_literal: "act_two", workflow: character_performance, status: verified_fallback_only}
+  aggregated_third_party_models:
+    note: "Runway is itself an aggregator. These are alternative routes to models on the candidate list."
+    models:
+      - {model_literal: "veo3.1", workflows: [text_to_video, image_to_video]}
+      - {model_literal: "veo3.1_fast", workflows: [text_to_video, image_to_video]}
+      - {model_literal: "hailuo3", workflows: [text_to_video, video_to_video], significance: "the only provider-authorised confirmation found that MiniMax H3 exists as a callable model"}
+      - {model_literal: "gpt_image_2", workflow: text_to_image, significance: "third route to GPT Image 2, with a different aspect-ratio set from OpenAI direct"}
+  billing_unit: "credits; the SDK documents per-second credit surcharges (e.g. 5 credits/sec for prores and png_sequence, 20 and 40 credits/sec tiers)"
+  price_verified: false
+  blocker: "runway.com and dev.runwayml.com unreachable, so the credit-to-currency rate is unknown"
+
+sarvam:
+  provider: Sarvam AI
+  evidence: SRC-SDK-SARVAM
+  models:
+    - candidate: "Bulbul v3"
+      api_model_id: "bulbul:v3"
+      sibling: "bulbul:v2"
+      version_pinning: "explicit in the identifier"
+      endpoint: "text-to-speech convert (and a streaming variant)"
+      verified_languages: ["bn-IN", "en-IN", "gu-IN", "hi-IN", "kn-IN", "ml-IN", "mr-IN", "od-IN", "pa-IN", "ta-IN", "te-IN"]
+      billing_unit: null
+      price_verified: false
+      blocker: "www.sarvam.ai and docs.sarvam.ai unreachable"
+      status: verified_fallback_only
+  unverified_eval008_claims: ["Hinglish code-switching", "INR 30 per 10,000 characters", "sub-250ms streaming", "30+ voices", "India data residency"]
+
+elevenlabs:
+  provider: ElevenLabs
+  evidence: SRC-SDK-ELEVENLABS
+  models:
+    - {candidate: "ElevenLabs v3", api_model_id: "eleven_v3", billing_unit: null, price_verified: false, status: verified_fallback_only}
+  blocker: "elevenlabs.io unreachable"
+
+alibaba:
+  provider: Alibaba Cloud (DashScope)
+  evidence: SRC-SDK-DASHSCOPE
+  models:
+    - {candidate: "Wan 2.7", api_model_ids: ["wan2.7-t2v", "wan2.7-i2v", "wan2.7-image-pro"], api_class: [VideoSynthesis, ImageSynthesis], status: verified_fallback_only}
+    - {candidate: "Qwen-Image", api_model_id: "qwen-image-2.0-pro", api_class: ImageSynthesis, status: verified_fallback_only}
+    - {candidate: "HappyHorse", api_model_ids: ["happyhorse-1.0-t2v", "happyhorse-1.0-i2v"], api_class: VideoSynthesis, status: identity_or_version_unresolved, note: "version 1.0, not the selected 1.1"}
+  blocker: "prices not carried in the SDK; DashScope pricing pages not reachable"
+
+byteplus:
+  provider: BytePlus (ByteDance international)
+  evidence: SRC-SDK-BYTEPLUS
+  api_surface: >
+    Ark content-generation task API accepts multimodal content parts — text, image_url,
+    audio_url, video_url — each with a role field, plus a draft_task reference. This corroborates
+    the unified multimodal input shape EVAL-008 described for Seedance.
+  models: []
+  blocker: >
+    The SDK enumerates no model identifiers; model is supplied as a caller-provided endpoint id.
+    docs.byteplus.com is unreachable, so no Seedance or Seedream version could be pinned.
+
+no_route_established:
+  - {candidate: "Reve 2.1", vendor: "Reve AI", reason: "reve.com and blog.reve.com unreachable; candidate PyPI package rejected for unverifiable provenance; absent from fal SDK"}
+  - {candidate: "MAI-Image-2.5-Pro", vendor: Microsoft, reason: "all Microsoft hosts unreachable; no vendor-published SDK found; absent from fal SDK"}
+  - {candidate: "Kling 3.0 direct", vendor: Kuaishou, reason: "app.klingai.com unreachable; no vendor-published SDK found — fal route verified instead"}
+  - {candidate: "Ideogram direct", vendor: Ideogram, reason: "ideogram.ai unreachable — fal route verified instead"}
+  - {candidate: "Recraft direct", vendor: Recraft, reason: "recraft.ai unreachable — fal route verified instead"}
+  - {candidate: "Moonvalley direct", vendor: Moonvalley, reason: "moonvalley.com unreachable — fal route verified instead"}
+  - {candidate: "Lightricks direct", vendor: Lightricks, reason: "ltx.io and lightricks.com unreachable — fal route verified instead"}
+  - {candidate: "sync.so direct", vendor: "sync.so", reason: "docs.sync.so unreachable; candidate PyPI package rejected for unverifiable provenance"}
+  - {candidate: "Black Forest Labs direct", vendor: BFL, reason: "bfl.ai unreachable; only an explicitly unofficial PyPI client exists, which was rejected"}

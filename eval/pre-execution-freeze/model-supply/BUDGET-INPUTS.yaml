@@ -1,0 +1,87 @@
+# EVAL-010 E10-H — budget inputs
+# Contains ONLY execution-grade verified values. Every unverified figure is null.
+# This is not a budget and authorises no spend.
+
+meta:
+  task: EVAL-010
+  package: E10-H
+  date: 2026-08-26
+  authorises_spend: false
+  currency: USD
+  tax_excluded: true
+  credits_excluded: true
+
+hard_separation_required_by_task:
+  nominal_benchmark_cost:
+    definition: "list-price cost of running a wave, computed only from verified prices"
+    computable_for: "Google models only"
+    computable_for_full_roster: false
+  actual_cash_outlay_after_credits:
+    status: UNRESOLVED
+    reason: >
+      Frontier Clouds could not be identified from reliable evidence, so we do not know which
+      provider holds the user's credits, what those credits cover, or how much remains.
+      Nominal cost therefore cannot be converted into cash outlay for any row.
+
+per_generation_verified_costs:
+  images:
+    - {model: "Nano Banana 2", api_model_id: "gemini-3.1-flash-image", unit: per_image, usd: {"512": 0.045, "1K": 0.067, "2K": 0.101, "4K": 0.15}}
+    - {model: "Nano Banana Pro", api_model_id: null, unit: per_image, usd: {"1K_2K": 0.134, "4K": 0.24}}
+    - {model: "Nano Banana 2 Lite", api_model_id: null, unit: per_image, usd: {"1K": 0.034}}
+    - {model: "Imagen 4", api_model_id: null, unit: per_image, usd: {standard: 0.04, fast: 0.02, ultra: 0.06}}
+  video:
+    - {model: "Veo 3.1", api_model_id: "veo-3.1-generate-preview", unit: per_generated_video, usd_with_audio: {"720p_1080p": 0.40, "4k": 0.60}, usd_silent: {"720p_1080p": 0.20, "4k": 0.40}}
+    - {model: "Veo 3.1 Fast", api_model_id: null, unit: per_generated_video, usd_with_audio: {"720p": 0.10, "1080p": 0.12, "4k": 0.30}}
+    - {model: "Veo 3.1 Lite", api_model_id: "veo-3.1-lite-generate-001", unit: per_generated_video, usd_with_audio: {"720p": 0.05, "1080p": 0.08}, usd_silent: {"720p": 0.03, "1080p": 0.05}}
+    - {model: "Gemini Omni Flash", api_model_id: null, unit: per_1M_output_tokens, usd: 17.50, tokens_per_second_720p_with_audio: 5792, derived_usd_per_second: 0.10136}
+  audio:
+    - {model: "Lyria 3", api_model_id: null, unit: per_count_30s_clip, usd: 0.04}
+    - {model: "Lyria 3 Pro", api_model_id: null, unit: per_count_full_song, usd: 0.08}
+
+worked_cost_examples:
+  purpose: "show what a verified price actually buys, so the Controller can size a wave. Illustrative arithmetic, not an approved plan."
+  examples:
+  - scenario: "100 images at 1K on Nano Banana 2"
+    formula: "100 * 0.067"
+    usd: 6.70
+  - scenario: "100 images at 1K/2K on Nano Banana Pro"
+    formula: "100 * 0.134"
+    usd: 13.40
+  - scenario: "100 videos with audio at 720p on Veo 3.1 Lite"
+    formula: "100 * 0.05"
+    usd: 5.00
+  - scenario: "100 videos with audio at 720p/1080p on Veo 3.1"
+    formula: "100 * 0.40"
+    usd: 40.00
+  - scenario: "100 ten-second clips on Gemini Omni Flash at 720p with audio"
+    formula: "100 * 10 * 0.10136"
+    usd: 101.36
+    caveat: "uses an EVAL-010-derived per-second value, not a vendor-published one"
+  observation: >
+    The verified Veo ladder spans 8x within one family (0.05 to 0.40 per generation) and the
+    verified Google image ladder spans about 3.6x (0.034 to 0.134 at comparable resolution).
+    Those two spreads are the only cost/quality gradients this project can currently price at all.
+
+cost_unknown_for_the_rest_of_the_roster:
+  count_of_candidate_rows_with_no_verified_price: 22
+  includes: [GPT Image 2, Seedream, Reve 2.1, FLUX.2 pro, FLUX.2 klein, Qwen-Image, Seedance,
+             HappyHorse, Kling 3.0, MiniMax H3, Runway Aleph 2.0, Sarvam Bulbul v3,
+             ElevenLabs v3, Sync-3, MAI-Image-2.5-Pro, Ideogram V3, Recraft, Wan 2.7, LTX-2,
+             Marey, OmniHuman v1.5]
+  consequence: >
+    No wave that includes any of these rows can be costed today. A budget built from this file
+    alone would cover Google models and nothing else.
+
+evaluator_and_human_costs:
+  status: OUT_OF_SCOPE_FOR_THIS_TASK
+  note: >
+    EVAL-010 verifies generation supply only. Evaluator-call cost, human-review cost and
+    resource cost are not in this file and must not be inferred from it. Also unchanged:
+    no checker has been qualified, so generation cost is not the whole cost of an accepted outcome.
+
+what_would_unblock_a_real_budget:
+  1: "identify Frontier Clouds, then establish what its credits cover and how much remains"
+  2: "reach fal to obtain per-endpoint prices for the 12 rows fal verifiably carries at the selected version"
+  3: "reach OpenAI, Sarvam, ElevenLabs and Runway pricing pages for the remaining execution rows"
+  4: "obtain Runway's credit-to-currency rate, without which no Runway route can be costed"
+  5: "EVAL-009's scientific Wave-1 roster, which sets how many rows actually need pricing"

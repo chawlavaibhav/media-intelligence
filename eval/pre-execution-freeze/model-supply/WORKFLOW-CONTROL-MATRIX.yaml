@@ -1,0 +1,322 @@
+# EVAL-010 E10-B — workflow and control verification
+# Every control below is declared in a provider-authorised artifact.
+# "absent" and "undocumented" are recorded separately and never conflated.
+
+meta:
+  task: EVAL-010
+  package: E10-B
+  date: 2026-08-26
+
+semantics:
+  present: "declared in the provider's own type definition or config class"
+  absent_in_api: >
+    the provider's generated API types enumerate the surface and this control is not among
+    them. Meaningful because these types are generated from the provider's API definition.
+  undocumented: "not determinable from any reachable provider-authorised source"
+
+controls:
+
+  - route: "OpenAI images.generate / images.edit"
+    model: "gpt-image-2 (pin gpt-image-2-2026-04-21)"
+    evidence: SRC-SDK-OPENAI
+    workflows: [text_to_image, edit]
+    present:
+      multi_reference_images: "edit accepts a single file or a sequence of files; count limit undocumented"
+      mask_inpainting: "mask file parameter on edit"
+      identity_preservation_control: "input_fidelity: high | low"
+      background_control: "transparent | opaque | auto"
+      size: ["256x256", "512x512", "1024x1024", "1536x1024", "1024x1536", "auto"]
+      quality: ["standard", "low", "medium", "high", "auto"]
+      output_format: ["png", "jpeg", "webp"]
+      output_compression: integer
+      n_images: integer
+      streaming_partial_images: integer
+      moderation: ["low", "auto"]
+    absent_in_api:
+      seed: "no seed parameter on either images.generate or images.edit"
+    consequence_for_measurement: >
+      Without a seed there is no run-to-run reproducibility control on this route. Any
+      repeat-consistency measurement against GPT Image 2 measures inherent variance, not
+      controlled variance, and cannot be compared like-for-like with seeded routes.
+
+  - route: "Google GenerateImagesConfig (Vertex AI / Gemini API)"
+    model: "Google image generation"
+    evidence: SRC-SDK-GOOGLE
+    workflows: [text_to_image]
+    present:
+      seed: integer
+      negative_prompt: string
+      aspect_ratio: string
+      image_size: string
+      number_of_images: integer
+      guidance_scale: float
+      person_generation: enum
+      safety_filter_level: enum
+      language: "ImagePromptLanguage"
+      add_watermark: boolean
+      output_mime_type: string
+      output_compression_quality: integer
+      enhance_prompt: boolean
+    undocumented: [mask_inpainting, multi_reference_count_limit]
+
+  - route: "Google GenerateVideosConfig (Vertex AI / Gemini API)"
+    model: "Veo family"
+    evidence: SRC-SDK-GOOGLE
+    workflows: [text_to_video, image_to_video, reference_conditioned, masked_edit]
+    present:
+      seed: integer
+      duration_seconds: integer
+      fps: integer
+      aspect_ratio: string
+      resolution: string
+      generate_audio: boolean
+      last_frame: "Image — end-frame control"
+      reference_images: "list of VideoGenerationReferenceImage with reference_type ASSET | STYLE"
+      mask: "VideoGenerationMask with modes INSERT | REMOVE | REMOVE_STATIC | OUTPAINT"
+      negative_prompt: string
+      person_generation: string
+      number_of_videos: integer
+      compression_quality: enum
+      resize_mode: enum
+    significance: >
+      This is the primary-evidence answer to EVAL-008's open question about whether Veo 3.1
+      exposes advanced frame and edit controls. The config class carries last_frame,
+      typed reference images and four video mask modes.
+    caveat: "which Veo version honours which field is model-level and was not determinable from the SDK alone"
+
+  - route: "fal-ai/veo3.1/first-last-frame-to-video"
+    evidence: SRC-SDK-FAL
+    workflows: [first_last_frame_to_video]
+    present:
+      first_frame_url: required
+      last_frame_url: required
+      duration: ["4s", "6s", "8s"]
+      resolution: ["720p", "1080p", "4k"]
+      aspect_ratio: ["auto", "16:9", "9:16"]
+      generate_audio: boolean
+      negative_prompt: string
+      seed: integer
+      safety_tolerance: "1..6 (string enum)"
+
+  - route: "fal-ai/veo3.1/extend-video"
+    evidence: SRC-SDK-FAL
+    workflows: [extend]
+    present: {video_url: required, duration: string, generate_audio: boolean, seed: integer, negative_prompt: string}
+
+  - route: "fal-ai/veo3.1/reference-to-video"
+    evidence: SRC-SDK-FAL
+    workflows: [reference_conditioned]
+    present:
+      image_urls: "Array<string> — multiple references; count limit undocumented"
+      resolution: ["720p", "1080p", "4k"]
+      generate_audio: boolean
+    absent_in_api: {seed: "no seed on this specific endpoint, unlike the first-last-frame and extend endpoints"}
+
+  - route: "fal-ai/nano-banana-2/edit"
+    evidence: SRC-SDK-FAL
+    workflows: [edit, multi_reference]
+    present:
+      image_urls: "Array<string>"
+      seed: integer
+      resolution: ["0.5K", "1K", "2K", "4K"]
+      aspect_ratio: 15 options from 21:9 to 1:8
+      thinking_level: ["minimal", "high"]
+      num_images: integer
+      output_format: ["jpeg", "png", "webp"]
+      enable_web_search: boolean
+    note: "thinking_level is a reasoning-effort control with no counterpart on the other image routes"
+
+  - route: "fal-ai/nano-banana-pro/edit"
+    evidence: SRC-SDK-FAL
+    workflows: [edit, multi_reference]
+    present: {image_urls: "Array<string>", seed: integer, resolution: ["1K", "2K", "4K"], aspect_ratio: 10 options, num_images: integer, enable_web_search: boolean}
+    absent_in_api: {thinking_level: "present on nano-banana-2/edit, absent here"}
+
+  - route: "fal-ai/kling-video/v3/pro/text-to-video"
+    evidence: SRC-SDK-FAL
+    workflows: [text_to_video, multi_shot, native_audio]
+    present:
+      multi_prompt: "Array<KlingV3MultiPromptElement> — explicit multi-shot control"
+      shot_type: ["customize", "intelligent"]
+      duration: "3..15 seconds"
+      generate_audio: boolean
+      cfg_scale: number
+      aspect_ratio: ["16:9", "9:16", "1:1"]
+      negative_prompt: string
+    absent_in_api: {seed: "no seed parameter"}
+    significance: "provider-authorised confirmation of the multi-shot continuity capability"
+
+  - route: "fal-ai/kling-video/v3/pro/motion-control"
+    evidence: SRC-SDK-FAL
+    workflows: [motion_transfer, reference_conditioned]
+    present: {image_url: required, video_url: required, elements: "Array<KlingV3ImageElementInput>", character_orientation: ["image", "video"], keep_original_sound: boolean}
+
+  - route: "fal-ai/bytedance/seedance/v1.5/pro/text-to-video"
+    evidence: SRC-SDK-FAL
+    note: "NOT the selected 2.0 version — recorded for control reference only"
+    present: {seed: integer, duration: "4..12", resolution: ["480p", "720p", "1080p"], generate_audio: boolean, camera_fixed: boolean, aspect_ratio: 7 options}
+
+  - route: "fal-ai/wan/v2.7/reference-to-video"
+    evidence: SRC-SDK-FAL
+    workflows: [reference_conditioned, multi_shot]
+    present:
+      reference_image_urls: "Array<string>"
+      reference_video_urls: "Array<string>"
+      multi_shots: boolean
+      seed: integer
+      duration: "2..10"
+      resolution: ["720p", "1080p"]
+      negative_prompt: string
+
+  - route: "fal-ai/ltx-2-19b/extend-video"
+    evidence: SRC-SDK-FAL
+    workflows: [extend, native_audio, video_to_video]
+    present:
+      extend_direction: ["forward", "backward"]
+      end_image_url: "file"
+      end_image_strength: number
+      camera_lora: ["dolly_in", "dolly_out", "dolly_left", "dolly_right", "jib_up", "jib_down", "static", "none"]
+      camera_lora_scale: number
+      generate_audio: boolean
+      audio_strength: number
+      seed: integer
+      fps: integer
+      num_frames: integer
+      num_context_frames: integer
+      guidance_scale: number
+      num_inference_steps: integer
+      video_quality: ["low", "medium", "high", "maximum"]
+      video_output_type: ["X264 (.mp4)", "VP9 (.webm)", "PRORES4444 (.mov)", "GIF (.gif)"]
+    significance: "the richest camera-motion and inference-level control surface of any verified route"
+
+  - route: "fal-ai/sync-lipsync/v2/pro"
+    evidence: SRC-SDK-FAL
+    note: "NOT the selected Sync-3 — recorded for control reference only"
+    present: {video_url: required, audio_url: required, sync_mode: ["cut_off", "loop", "bounce", "silence", "remap"]}
+    absent_in_api: {seed: null, resolution: null}
+
+  - route: "fal-ai/bytedance/omnihuman/v1.5"
+    evidence: SRC-SDK-FAL
+    workflows: [image_plus_audio_to_video]
+    present: {image_url: required, audio_url: required, prompt: optional, resolution: ["720p", "1080p"], turbo_mode: boolean}
+    absent_in_api: {seed: null}
+
+  - route: "moonvalley/marey/motion-transfer"
+    evidence: SRC-SDK-FAL
+    workflows: [motion_transfer, reference_conditioned]
+    present: {video_url: required, first_frame_image_url: optional, reference_image_url: optional, seed: integer, negative_prompt: string}
+
+  - route: "fal-ai/recraft/v4/pro/text-to-vector"
+    evidence: SRC-SDK-FAL
+    workflows: [text_to_vector]
+    present: {colors: "Array<RGBColor>", background_color: RGBColor, image_size: enum}
+    absent_in_api: {seed: null}
+    significance: "provider-authorised confirmation of native vector output, at v4 rather than the selected v3"
+
+  - route: "fal-ai/qwen-image-2/pro/edit"
+    evidence: SRC-SDK-FAL
+    workflows: [edit, multi_reference]
+    present: {image_urls: "Array<string>", seed: integer, negative_prompt: string, enable_prompt_expansion: boolean, num_images: integer, output_format: ["jpeg", "png", "webp"]}
+
+  - route: "fal-ai/flux-2-flex/edit"
+    evidence: SRC-SDK-FAL
+    workflows: [edit, multi_reference]
+    present: {image_urls: "Array<string>", seed: integer, guidance_scale: number, num_inference_steps: integer, safety_tolerance: "1..5 (string enum)"}
+
+  - route: "fal-ai/elevenlabs/tts/eleven-v3"
+    evidence: SRC-SDK-FAL
+    workflows: [tts]
+    present: {text: required, voice: string, language_code: string, stability: number, timestamps: boolean, apply_text_normalization: ["auto", "on", "off"]}
+    note: "the fal wrapper exposes fewer controls than ElevenLabs direct — see ROUTE-EQUIVALENCE-RISKS.md RE-4"
+
+  - route: "ElevenLabs text_to_speech.convert (direct)"
+    evidence: SRC-SDK-ELEVENLABS
+    workflows: [tts]
+    present:
+      model_id: "eleven_v3"
+      seed: integer
+      voice_settings: object
+      pronunciation_dictionary_locators: "list"
+      language_code: string
+      previous_text: string
+      next_text: string
+      previous_request_ids: list
+      next_request_ids: list
+      apply_text_normalization: enum
+      apply_language_text_normalization: boolean
+      optimize_streaming_latency: integer
+      output_format: enum
+    significance: "seed plus long-form continuity controls (previous/next text and request ids) that the fal wrapper does not expose"
+
+  - route: "Sarvam text_to_speech.convert (direct)"
+    evidence: SRC-SDK-SARVAM
+    workflows: [tts]
+    present:
+      model: ["bulbul:v2", "bulbul:v3"]
+      language_code: ["bn-IN", "en-IN", "gu-IN", "hi-IN", "kn-IN", "ml-IN", "mr-IN", "od-IN", "pa-IN", "ta-IN", "te-IN"]
+      speaker: enum
+      pitch: float
+      pace: float
+      loudness: float
+      temperature: float
+      speech_sample_rate: enum
+      output_audio_codec: enum
+      enable_preprocessing: boolean
+      dict_id: "pronunciation dictionary id — a dedicated pronunciation_dictionary resource exists"
+      enable_cached_responses: boolean
+    absent_in_api: {seed: "temperature is exposed instead; no seed"}
+    significance: >
+      The pronunciation dictionary is directly relevant to the product's Indian brand-name
+      problem. Note the reproducibility asymmetry: ElevenLabs exposes seed, Sarvam exposes
+      temperature. A repeat-consistency comparison between them is not like-for-like.
+
+  - route: "Runway video_to_video (aleph2)"
+    evidence: SRC-SDK-RUNWAY
+    workflows: [video_to_video, keyframed_edit]
+    present:
+      model: "aleph2"
+      video_uri: required
+      keyframes: "list of {uri, seconds|at, optional range{start_seconds,end_seconds}}"
+      prompt_text: string
+      seed: integer
+      ratio: string
+      target_aspect_ratio: enum
+      output_format: "includes prores and png_sequence, with declared credit surcharges"
+      content_moderation: "public_figure_threshold auto | low"
+
+  - route: "Runway text_to_image (gen4_image / gen4_image_turbo)"
+    evidence: SRC-SDK-RUNWAY
+    workflows: [text_to_image, reference_conditioned]
+    present:
+      reference_images: "list of {uri, tag} — tagged references for identity conditioning"
+      seed: integer
+      ratio: enum
+    note: "gen4_image_turbo requires reference_images; gen4_image treats them as optional"
+
+  - route: "Runway character_performance (act_two)"
+    evidence: SRC-SDK-RUNWAY
+    workflows: [lipsync, performance_transfer]
+    present:
+      character: "image or video"
+      reference: "video"
+      body_control: boolean
+      expression_intensity: integer
+      seed: integer
+      ratio: enum
+
+  - route: "BytePlus Ark content_generation task"
+    evidence: SRC-SDK-BYTEPLUS
+    workflows: [multimodal_task]
+    present:
+      content_parts: ["text", "image_url", "audio_url", "video_url"]
+      role_per_part: string
+      draft_task_reference: "id"
+    undocumented: [model_ids, durations, resolutions, seed]
+
+reproducibility_summary:
+  seed_present: ["Google images", "Google videos", "fal nano-banana-2/edit", "fal nano-banana-pro/edit", "fal veo3.1 first-last-frame and extend", "fal wan v2.7", "fal ltx-2-19b", "fal qwen-image-2", "fal flux-2-flex", "moonvalley marey", "Runway aleph2 / gen4 / act_two", "ElevenLabs direct"]
+  seed_absent_in_api: ["OpenAI images (generate and edit)", "fal kling v3 text-to-video", "fal veo3.1 reference-to-video", "fal sync-lipsync v2 pro", "fal omnihuman v1.5", "fal recraft v4 text-to-vector", "Sarvam TTS (temperature instead)"]
+  consequence: >
+    The project's proposed 0.95 repeat-consistency threshold cannot mean the same thing across
+    these routes. On seeded routes it can be measured under a held seed; on unseeded routes only
+    inherent variance is observable. EVAL-009 should treat these as two different measurements.
