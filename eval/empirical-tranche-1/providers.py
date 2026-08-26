@@ -42,10 +42,15 @@ COST
 
 LIVE EXECUTION
 
-    `HttpTransport` is the real dispatch path. It is NOT exercised in this branch and has never
-    been run against a provider. It reads its key from the environment at DISPATCH time only, and
-    the exact model snapshot must be pinned by the caller at execution. Treat it as untested until
-    the first authorised run proves it.
+    Dispatch is PER PROVIDER: `OpenAIHttpTransport` (Bearer, model in the body) and
+    `GeminiHttpTransport` (`x-goog-api-key`, model in the URL). There is no generic fallback
+    transport, because a provider without an explicit auth contract must not inherit somebody
+    else's — that is exactly the defect the EVAL-012 branch shipped.
+
+    Every one of them reads its key from the environment at DISPATCH time only, and derives its
+    endpoint from the exact resolved version rather than a floating alias. None has been run
+    against a live provider; every exercise in this branch goes through an injected recorder.
+    Treat the real path as unproven until the first authorised call.
 """
 from __future__ import annotations
 
@@ -84,6 +89,10 @@ PRICE_BOOK = {
     "openai": {"input_per_1m": Decimal("0.75"), "output_per_1m": Decimal("4.50")},
     "google": {"input_per_1m": Decimal("0.30"), "output_per_1m": Decimal("2.50")},
 }
+
+# Nominal per-generation prices for the two frozen fal routes, from the route price refresh.
+# Provisional planning figures: they size a pre-call reservation and are NOT invoice evidence.
+NOMINAL_FAL_PRICE_USD = {"IMG-01": Decimal("0.053"), "IMG-02": Decimal("0.060")}
 
 
 class DispatchRefused(RuntimeError):
@@ -124,34 +133,134 @@ class FakeTransport:
         return json.loads(json.dumps(self.fixture))
 
 
-class HttpTransport:
-    """The real dispatch path. UNTESTED AGAINST A PROVIDER — see the module docstring.
+def _urllib_post(url: str, headers: dict, body: bytes, timeout_s: float) -> dict:
+    """The only place in this package that opens a socket.
 
-    Reads its API key from the environment at call time. Constructing it does nothing.
+    It is injected as `http=` everywhere so that every test can stand exactly here and record the
+    URL, headers and body without a network existing at all.
+    """
+    import urllib.request
+
+    req = urllib.request.Request(url, data=body, headers=headers)
+    with urllib.request.urlopen(req, timeout=timeout_s) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+class ProviderHttpTransport:
+    """Base for a provider-specific dispatch path.
+
+    WHY THIS IS NOT ONE GENERIC TRANSPORT
+
+        The EVAL-012 branch sent `Authorization: Bearer <key>` to every provider. That is correct
+        for OpenAI and simply wrong for the Gemini API-key route, which Google documents as
+        `x-goog-api-key`. One generic transport was hiding two different contracts, and the first
+        real Gemini call would have failed on authentication — after being counted as a trial and
+        possibly billed. Auth is now per provider, and the emitted headers are tested.
+
+        Constructing a transport opens no socket and reads no key. The key is read from the
+        environment at DISPATCH time and never enters a request body or a persisted record.
+
+    UNTESTED AGAINST A LIVE PROVIDER. Every exercise of this class in this branch goes through an
+    injected recorder. Treat the real path as unproven until the first authorised call.
     """
 
-    def __init__(self, url: str, key_env: str, timeout_s: float = 60.0):
-        self.url = url
-        self.key_env = key_env
+    KEY_ENV = ""
+    AUTH_HEADER = ""
+
+    def __init__(self, resolved_version: str, http: Callable | None = None,
+                 timeout_s: float = 60.0):
+        if not resolved_version:
+            raise ValueError(
+                "resolved_version is required. The endpoint and the recorded provenance are both "
+                "derived from the exact version, never from a floating alias.")
+        self.resolved_version = resolved_version
+        self.http = http or _urllib_post
         self.timeout_s = timeout_s
         self.calls = 0
 
-    def __call__(self, request: dict) -> dict:
-        import os
-        import urllib.request
+    # -- provider-specific ------------------------------------------------------------------
+    def endpoint(self) -> str:
+        raise NotImplementedError
 
-        key = os.environ.get(self.key_env)
+    def auth_headers(self, key: str) -> dict:
+        raise NotImplementedError
+
+    def outgoing_body(self, request: dict) -> dict:
+        return request
+
+    # -- dispatch ----------------------------------------------------------------------------
+    def _read_key(self) -> str:
+        import os
+
+        key = os.environ.get(self.KEY_ENV)
         if not key:
             raise DispatchRefused(
-                f"{self.key_env} is not set. Keys are read from the environment at dispatch time "
-                f"and are never committed.")
+                f"{self.KEY_ENV} is not set. Keys are read from the environment at dispatch time "
+                f"and are never committed, logged or persisted.")
+        return key
+
+    def __call__(self, request: dict) -> dict:
+        """Exactly one dispatch. No loop, no retry — not even on an error response."""
+        key = self._read_key()          # raises BEFORE anything is sent
+        body = self.outgoing_body(request)
+        headers = {"Content-Type": "application/json", **self.auth_headers(key)}
         self.calls += 1
-        body = json.dumps(request).encode("utf-8")
-        req = urllib.request.Request(
-            self.url, data=body,
-            headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
-        with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+        return self.http(self.endpoint(), headers, json.dumps(body).encode("utf-8"),
+                         self.timeout_s)
+
+
+class OpenAIHttpTransport(ProviderHttpTransport):
+    """OpenAI Responses API. Bearer token; the exact model version travels in the body."""
+
+    KEY_ENV = OPENAI_KEY_ENV
+    ENDPOINT = "https://api.openai.com/v1/responses"
+
+    def endpoint(self) -> str:
+        return self.ENDPOINT
+
+    def auth_headers(self, key: str) -> dict:
+        return {"Authorization": f"Bearer {key}"}
+
+
+class GeminiHttpTransport(ProviderHttpTransport):
+    """Gemini REST generateContent. API-key header, and the model lives in the URL.
+
+    `x-goog-api-key`, not `Authorization: Bearer`. The model path segment is built from this
+    transport's own `resolved_version`, and a request body naming a different model is REFUSED
+    rather than silently dispatched to the URL's version — two disagreeing model names in one
+    call is a run nobody can reproduce.
+    """
+
+    KEY_ENV = GOOGLE_KEY_ENV
+    BASE = "https://generativelanguage.googleapis.com/v1beta/models"
+
+    def endpoint(self) -> str:
+        return f"{self.BASE}/{self.resolved_version}:generateContent"
+
+    def auth_headers(self, key: str) -> dict:
+        return {"x-goog-api-key": key}
+
+    def outgoing_body(self, request: dict) -> dict:
+        declared = request.get("model")
+        if declared and declared != self.resolved_version:
+            raise DispatchRefused(
+                f"request body names model {declared!r} but this transport is pinned to "
+                f"{self.resolved_version!r}. Refusing rather than dispatching a call whose two "
+                f"model names disagree.")
+        # The REST route names the model in the URL; repeating it in the body is duplicate truth.
+        return {k: v for k, v in request.items() if k != "model"}
+
+
+def transport_for(provider: str, resolved_version: str, http: Callable | None = None,
+                  timeout_s: float = 60.0) -> ProviderHttpTransport:
+    """Pick the provider-correct transport. There is no generic fallback, by design."""
+    if provider == "openai":
+        return OpenAIHttpTransport(resolved_version, http=http, timeout_s=timeout_s)
+    if provider == "google":
+        return GeminiHttpTransport(resolved_version, http=http, timeout_s=timeout_s)
+    raise ValueError(
+        f"no transport is defined for provider {provider!r}. A provider without an explicit "
+        f"auth contract must not inherit somebody else's.")
 
 
 # ------------------------------------------------------------------------------ blind check
@@ -437,6 +546,141 @@ class GeminiTextJudge(TextJudge):
         return EvaluatorResponse("".join(parts), in_tok, out_tok, cost, req_id, "ok")
 
 
+# --------------------------------------------------------------------------- fal image routes
+FAL_KEY_ENV = "FAL_KEY"
+
+# The two frozen A-TEXT routes and their frozen request configuration. These are Controller
+# decisions (config.yaml, CONTROL-STATE); they are not tunable at runtime, and a route that
+# disagrees with the frozen config is refused rather than dispatched.
+#
+# NOTE ON SEEDS: neither body carries a seed, deliberately, even where a route exposes one.
+# A-TEXT repeats are UNSEEDED on both routes so the first comparison is an inherent-variance
+# comparison. A seed leaking in would silently make the two halves incomparable.
+FAL_ROUTES = {
+    "IMG-01": {
+        "route": "openai/gpt-image-2",
+        "body": {"image_size": {"width": 1024, "height": 1024},
+                 "quality": "medium", "num_images": 1},
+    },
+    "IMG-02": {
+        "route": "fal-ai/ideogram/v3",
+        "body": {"rendering_speed": "BALANCED", "num_images": 1},
+    },
+}
+
+
+def _urllib_get_bytes(url: str, timeout_s: float = 60.0) -> bytes:
+    """The only artifact fetch that touches a network. Injected everywhere as `artifact_fetch`."""
+    import urllib.request
+
+    with urllib.request.urlopen(url, timeout=timeout_s) as resp:
+        return resp.read()
+
+
+class FalImageRoute:
+    """One frozen fal generation route. Reaching fal is an injected concern, never a default.
+
+    Construction opens no socket and reads no key. `FAL_KEY` is read at DISPATCH time only and
+    never enters a request body or a persisted record.
+
+    One attempt is exactly one dispatch — including an attempt that refuses or errors. There is no
+    retry path, and `num_images` is pinned to 1 so one call can never quietly become several
+    trials' worth of evidence.
+
+    UNTESTED AGAINST fal. Every exercise in this branch goes through an injected recorder.
+    """
+
+    ENDPOINT_BASE = "https://fal.run"
+
+    def __init__(self, slot: str, route: str, http: Callable | None = None,
+                 artifact_fetch: Callable | None = None, timeout_s: float = 120.0):
+        frozen = FAL_ROUTES.get(slot)
+        if frozen is None:
+            raise ValueError(
+                f"unknown A-TEXT slot {slot!r}. The frozen slots are {sorted(FAL_ROUTES)}.")
+        if route != frozen["route"]:
+            raise ValueError(
+                f"slot {slot} is frozen to route {frozen['route']!r}, not {route!r}. The route is "
+                f"a Controller decision and is not changeable at runtime.")
+        self.slot = slot
+        self.route = route
+        self.http = http or _urllib_post
+        self.artifact_fetch = artifact_fetch or _urllib_get_bytes
+        self.timeout_s = timeout_s
+        self.calls = 0
+
+    def endpoint(self) -> str:
+        return f"{self.ENDPOINT_BASE}/{self.route}"
+
+    def _read_key(self) -> str:
+        import os
+
+        key = os.environ.get(FAL_KEY_ENV)
+        if not key:
+            raise DispatchRefused(
+                f"{FAL_KEY_ENV} is not set. Keys are read from the environment at dispatch time "
+                f"and are never committed, logged or persisted.")
+        return key
+
+    def build_body(self, request: dict) -> dict:
+        """Frozen configuration plus the prompt. Nothing the caller passes can widen it."""
+        if not request.get("prompt"):
+            raise ValueError("a generation request needs a prompt")
+        # Built from the frozen table, NOT from the caller's dict: an unexpected key — a seed, a
+        # different size — cannot reach fal merely by being passed in.
+        return {"prompt": request["prompt"], **FAL_ROUTES[self.slot]["body"]}
+
+    def __call__(self, request: dict) -> dict:
+        key = self._read_key()          # raises BEFORE anything is sent
+        body = self.build_body(request)
+        headers = {"Content-Type": "application/json", "Authorization": f"Key {key}"}
+        self.calls += 1                 # exactly one, no loop
+        raw = self.http(self.endpoint(), headers, json.dumps(body).encode("utf-8"),
+                        self.timeout_s)
+        return self.parse(raw)
+
+    def parse(self, raw: dict) -> dict:
+        """Map a fal response onto the persistence vocabulary. A refusal is not an error."""
+        base = {
+            "slot": self.slot,
+            "route": self.route,
+            "provider_surface": "fal",
+            "provider_request_id": raw.get("request_id"),
+            "artifact_url": None,
+            "fetch_artifact": None,
+            "error_class": None,
+            "cost_usd": str(NOMINAL_FAL_PRICE_USD[self.slot]),
+            "cost_basis": "provisional_planning_rate",
+        }
+
+        if raw.get("error"):
+            err = raw["error"]
+            code = err.get("type") or err.get("code") or "provider_error"
+            # A content-policy block is a REFUSAL: the provider understood and declined. An
+            # infrastructure failure is an ERROR. Both consume their trial; only one is about the
+            # prompt, and folding them together would corrupt both numbers.
+            refusal = code in ("content_policy_violation", "moderation_block", "safety")
+            return {**base, "api_status": "refusal" if refusal else "error",
+                    "error_class": "moderation_block" if refusal else code,
+                    "raw_note": str(err)[:200]}
+
+        images = raw.get("images") or []
+        if not images or not images[0].get("url"):
+            return {**base, "api_status": "error", "error_class": "no_artifact_returned",
+                    "raw_note": "ok-looking response carried no image url"}
+
+        url = images[0]["url"]
+        return {**base, "api_status": "ok", "artifact_url": url,
+                "fetch_artifact": lambda: self.artifact_fetch(url)}
+
+
+def fal_route_for(slot: str, config: dict, http: Callable | None = None,
+                  artifact_fetch: Callable | None = None) -> FalImageRoute:
+    """Build the frozen route for a slot straight from config.yaml."""
+    return FalImageRoute(slot=slot, route=config["atex"]["slots"][slot]["route"],
+                         http=http, artifact_fetch=artifact_fetch)
+
+
 # ------------------------------------------------------------------------------- fixtures
 # Deterministic provider-SHAPED JSON for tests. Not captured from any provider; no call was made
 # to produce them, and they are not evidence about any provider's behaviour.
@@ -469,4 +713,20 @@ GEMINI_ERROR_FIXTURE = {
     "responseId": "gen-req-101",
     "error": {"status": "UNAVAILABLE", "message": "backend overloaded"},
     "usageMetadata": {"promptTokenCount": 630, "candidatesTokenCount": 0},
+}
+
+# fal-shaped fixtures. Not captured from fal; no call was made to produce them, and they are not
+# evidence about fal or about either route's behaviour.
+FAL_OK_FIXTURE = {
+    "request_id": "fal-req-001",
+    "images": [{"url": "https://fal.media/files/fake/atex-0001.png",
+                "width": 1024, "height": 1024, "content_type": "image/png"}],
+}
+FAL_REFUSAL_FIXTURE = {
+    "request_id": "fal-req-002",
+    "error": {"type": "content_policy_violation", "message": "blocked by content policy"},
+}
+FAL_ERROR_FIXTURE = {
+    "request_id": "fal-req-003",
+    "error": {"type": "internal_server_error", "message": "upstream failure"},
 }
