@@ -1,128 +1,178 @@
 # Controller State
 
-**Updated:** 26 Aug 2026 by Controller after Pre-E7 scope rebase.
+**Updated:** 26 Aug 2026 after Cloud Macro Recalibration.
 
-**Read `PROJECT-MEMORY.md` first.** Where older freeze/task wording conflicts with this newer Controller state, this file and the underlying decision/task artifacts govern until the Governor refreshes memory.
+**Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this state, the decision records and this file govern until Repository Governor refreshes memory.
 
-## Global posture — Pre-E7 rebase in force
+## Global posture — cloud macro research/design tranche active
 
-The Canon / Eval / Resources V1 overnight architecture was accepted and merged. A subsequent Controller zoom-out identified a pre-paid-run scope gap: Eval defined **what capabilities can fail**, but had not frozen the **production conditions under which capability evidence is valid**, and the persistence model did not yet represent one customer outcome assembled from many production units/calls/transforms/repairs.
+The V1 overnight architecture remains accepted and merged, but the immediately-following Pre-E7 execution plan has been superseded **before execution**.
 
-Authoritative rebase artifacts:
+Authoritative decision:
 
-- `coordination/decisions/CONTROLLER-PRE-E7-SCOPE-REBASE-2026-08-26.md`
-- `docs/superpowers/specs/2026-08-26-pre-e7-scope-rebase-design.md`
-- `docs/superpowers/plans/2026-08-26-pre-e7-scope-rebase.md`
+- `coordination/decisions/CONTROLLER-CLOUD-MACRO-RECALIBRATION-2026-08-26.md`
+
+Shared active program:
+
+- `coordination/plans/2026-08-26-CLOUD-MACRO-SCOPE-AND-READINESS-PROGRAM.md`
+
+### Superseded — do not execute as active assignments
+
 - `canon/tasks/CANON-PRE-E7-SCOPE-AUDIT.md`
 - `eval/tasks/EVAL-PRE-E7-SCOPE-REBASE.md`
 - `resources/tasks/RESOURCES-PRE-E7-SCOPE-REBASE.md`
+- branches `work/canon-pre-e7-scope-audit`, `work/eval-pre-e7-scope-rebase`, `work/resources-pre-e7-scope-rebase`
 
-## Immediate gates
+Their architectural insight remains valid: capability evidence needs explicit production conditions, and one customer outcome may contain many production calls/transforms/repairs. What is superseded is using the Controller-authored 30-brief bank as the primary discovery surface for request scope.
 
-- **E7 paid admission benchmark: BLOCKED.**
-- **E8 deep qualification: BLOCKED.**
-- Historical E7=204 and E8=520 generation counts remain pre-rebase calculations only; they are not authorised budgets.
-- No paid current-model generation/checker/evaluator calls are authorised.
-- No empirical current-model Capability Registry entries may be written.
-- `EVAL-006` remains **PAUSED — DO NOT EXECUTE**.
-- Production Planner / Production IR implementation remains out of scope during this rebase.
+## Why the macro plan changed
 
-## Product / architecture state
+The benchmark must not define the product.
 
-The product is an API-native commercial-media production intelligence layer optimising **Cost per Accepted Outcome**.
+The project will first research recurring **media-generation request patterns** from substantial real-user/usage-informed sources; independently research **technical capability/failure/evaluator/workflow patterns**; and independently research **evidence/access/lineage/persistence requirements**.
 
-Stable separation remains:
+Only after those three return will the Controller freeze the next request taxonomy, Capability Contract v2, condition/envelope model and benchmark.
 
-`Normalized Request -> Creative IR -> Production Requirement Profile -> future Production IR -> execution/evaluation/repair`
+The existing 30 authored briefs are therefore a **designed probe bank**, not evidence of customer prevalence. The current 36 capabilities and 100-item Eval bank are strong **baselines**, not proof of exhaustive scope.
 
-- Creative IR says what should exist and preserves/derives/decides/asks/flags customer intent.
-- **Production Requirement Profile** will be a model-agnostic compiled view of what production must satisfy.
-- Eval Registry stores empirical workflow evidence; it does not route.
-- Production IR / Planner will later choose how to make the outcome using Canon + Registry evidence.
+## Product / architecture still frozen
 
-A model's native duration is a production constraint, not a customer-product limit. Customer outcomes may be multi-shot, multi-step and multi-model.
+The product remains an API-native media production intelligence layer optimising **Cost per Accepted Outcome**.
 
-## Four interfaces being refrozen
+Stable separations remain:
 
-Before E7, the project must freeze:
+`Normalized Request -> Creative IR -> future Production Requirement Profile -> future Production IR -> execution/evaluation/repair -> accepted outcome`
 
-1. **Production Requirement Profile** — capability/acceptance/delivery/planner requirements derived from customer intent without provider choices.
-2. **Condition / Envelope Contract** — delivery, content load, reference load, physical/cinematic complexity, constraint load, workflow mode, sequence structure, language/audio, input quality, decision provenance and scale.
-3. **Outcome / Production Topology Contract** — `job -> outcome -> sequence_or_asset_set -> production_unit -> production_step -> attempt -> artifact`, including multi-parent composition lineage and outcome-level CpAO.
-4. **Capability Contract v2** — current 36 audited against all 30 Canon customer briefs; add a capability only where existing capability + condition is genuinely insufficient.
+- Normalized Request preserves what the customer said.
+- Creative IR defines what should exist, model-independently.
+- A future Production Requirement Profile should compile production requirements without choosing providers.
+- Eval's Capability Registry stores empirical evidence, not routing scores.
+- Future Production IR/Planner will choose how to make the outcome.
+- Canon knowledge is never evidence of current model capability.
+- A provider/model's native duration is a production constraint, not a customer-product duration limit.
+
+## Active cloud assignments
+
+All three are substantial autonomous research/design programs and may run in parallel.
+
+### Canon — CANON-009
+
+Task:
+
+- `canon/tasks/CANON-009-CLOUD-SCOPE-PROGRAM.md`
+
+Branch:
+
+- `work/canon-009-request-space`
+
+Purpose: research the recurring grammar and co-occurrence structure of actual media-generation requests/use cases; compare the observed space against Creative IR, the synthetic 30-bank and Canon coverage; propose rebalancing/gaps without changing frozen architecture or ingesting sources.
+
+### Eval — EVAL-007
+
+Task:
+
+- `eval/tasks/EVAL-007-CLOUD-EVAL-RESEARCH-PROGRAM.md`
+
+Branch:
+
+- `work/eval-007-capability-workflow`
+
+Purpose: independently research modern capability/failure/evaluator benchmarks; complete the current official provider/workflow/price/feature inventory; audit the current 36 capabilities and important production conditions; propose evaluator qualification and a sparse/adaptive benchmark v2 without making calls or freezing cross-stream architecture.
+
+### Resources — RES-003
+
+Task:
+
+- `resources/tasks/RES-003-CLOUD-EVIDENCE-PROGRAM.md`
+
+Branch:
+
+- `work/res-003-evidence-topology`
+
+Purpose: research access/rights/provenance of request/evaluation sources; rebaseline existing resource fit from committed evidence only; design protected-set/leakage handling; propose multi-parent outcome persistence and whole-outcome CpAO; research controlled-pack routes without acquiring them.
+
+## Cloud environment / budget
+
+Assume fresh Claude Web sessions with GitHub and public web, **no laptop access**.
+
+Workers must not assume:
+
+- the 5.70GB git-ignored Resources corpus is available;
+- local Downloads/books/media/fonts are available;
+- laptop API keys/provider accounts are available;
+- prior chat context is available.
+
+Across all three programs:
+
+- **₹0 external spend**;
+- no generation/model API calls;
+- no checker/evaluator API calls;
+- no empirical Capability Registry rows;
+- no new Canon ingestion;
+- no materially new dataset/media acquisition;
+- no login/account creation/payment/click-through terms/access-control bypass;
+- no Production IR/Planner implementation;
+- no worker merge.
+
+If a cloud runner is absent, design/research work continues and runtime verification is marked honestly rather than invented.
 
 ## What remains accepted from V1
 
-- live accepted Canon: 19 sources;
-- Canon 30-commercial-brief bank;
-- corrected Canon value-gate package;
-- 36-capability V1 contract as the audit baseline;
-- six evaluator-family architecture;
-- 100-base-item atomic/compound bank as the benchmark baseline;
-- generate-once / measure-many;
+- 19 live accepted Canon sources and Audit Gate v0.2;
+- Creative IR v0.1 as the current experimental Creative IR;
+- 30-commercial-brief bank as an authored/design artifact;
+- corrected Canon value-gate design, still unrun;
+- current 36-capability Eval contract as baseline;
+- six evaluator-family architecture as baseline;
+- current 100-base-item atomic/compound Eval bank as baseline;
+- generate once / measure many;
 - one provider/API/transform call = one trial;
-- repeat vs retry separation;
-- Resources V2.1 attempt/artifact/measurement/acceptance/cost persistence;
+- repeat != retry;
+- Resources V2.1 attempt/artifact/measurement/cost persistence;
 - immutable failed/refused-attempt evidence;
-- Registry stores evidence, not routing scores.
+- Registry stores empirical evidence, never routing scores.
 
-The 36 capabilities are temporarily open only for the bounded Pre-E7 audit. They are not discarded. The 100-item bank is not to be wholesale rebuilt without a concrete capability-v2 or envelope reason.
+## Still blocked / not authorised
 
-## Stream assignments
+- **E7 historical paid-admission execution: BLOCKED.**
+- **E8 historical deep qualification: BLOCKED.**
+- Historical 204 / 520 generation counts are superseded pre-recalibration calculations, not budgets.
+- `EVAL-006` remains **PAUSED — DO NOT EXECUTE**.
+- 0 qualified subjective/perceptual evaluator families.
+- 0 current model/workflow benchmarks.
+- 0 empirical current-model Registry entries.
+- no paid benchmark budget authorised.
+- no materially new Resources acquisition authorised.
+- Canon's real value gate remains unrun and requires separate Controller authorization/human setup.
 
-### Canon
+## One integration gate after all three programs
 
-Execute `canon/tasks/CANON-PRE-E7-SCOPE-AUDIT.md`.
+Do **not** proceed stream-by-stream into execution after one worker finishes.
 
-Audit all 30 unchanged customer briefs and classify every meaningful requirement as:
+After CANON-009, EVAL-007 and RES-003 return, the Controller jointly decides:
 
-`existing_capability | condition | planner_decision | acceptance_constraint | operational_variable | genuine_gap`.
+1. first-product request/use-case taxonomy;
+2. Media Request Grammar v1;
+3. Production Requirement Profile shape;
+4. Capability Contract v2;
+5. condition/envelope taxonomy;
+6. outcome/production-topology contract;
+7. whether/how to rebalance the 30-brief bank;
+8. whether/how to revise the 100-item Eval bank;
+9. evaluator qualification program;
+10. targeted resource acquisition/controlled-pack program;
+11. current model/workflow admission roster;
+12. exact paid benchmark design and budget.
 
-Canon must not choose models/workflows or author Production IR.
+Market/request evidence, technical capability evidence, and benchmark design must remain visibly separate at this gate.
 
-### Eval
+## Likely later macro tranche — not pre-authorised
 
-Execute `eval/tasks/EVAL-PRE-E7-SCOPE-REBASE.md`.
+If the integration gate passes, the next tranche will likely combine:
 
-Own Production Requirement Profile semantics, Condition/Envelope Contract, capability-v2 refreeze, Registry condition semantics, E2 production-operation fields, revised sparse benchmark and fresh cost forecast.
+- targeted controlled Resources packs;
+- evaluator qualification;
+- Canon value-gate execution;
+- then paid current-model admission and deeper workflow qualification.
 
-### Resources
-
-Execute `resources/tasks/RESOURCES-PRE-E7-SCOPE-REBASE.md`.
-
-Own whole-outcome persistence/lineage/CpAO, multi-parent artifact composition and any justified resource-pack delta. Preserve one-call-one-trial and do not define Eval measurement semantics.
-
-## Benchmark posture after rebase
-
-Do not test the cartesian product of all conditions.
-
-Target evidence layers:
-
-1. evaluator qualification;
-2. primitive atomic/compound baseline;
-3. sparse production-envelope sweeps to locate failure boundaries;
-4. workflow-topology comparisons for equivalent outcomes;
-5. end-to-end customer-outcome benchmark using Canon briefs.
-
-## Existing blockers still true
-
-- no subjective/perceptual evaluator family is yet qualified;
-- no current generator/workflow is benchmarked;
-- Capability Registry has 0 empirical current-model entries;
-- E2 current official model/API/access/pricing inventory is incomplete;
-- controlled product/person/AV/commercial packs are not yet acquired;
-- Canon's real value gate remains unrun and needs fresh Canon-naive controls + two independent reviewers;
-- raw 5.70 GB Resources corpus was not revalidated in the cloud; BSTD 351-vs-364 discrepancy and GOV-001 R3 remain open.
-
-## Controller integration gate
-
-E7 may be re-authorised only after Controller verifies:
-
-1. all 30 Canon briefs have no unexplained requirement fall-through;
-2. Eval freezes the Production Requirement Profile, condition taxonomy and Capability Contract v2;
-3. Resources can persist a multi-step, multi-parent accepted outcome and recompute whole-outcome CpAO;
-4. the revised benchmark remains sparse/adaptive rather than combinatorial;
-5. E2 contains a current official workflow roster with production-operation features and complete prices for the proposed run;
-6. a fresh generation/evaluator/human-cost forecast is reviewed and explicitly approved.
-
-This is a scope-correction milestone before empirical spend, not evidence about any current model's quality.
+That work depends on findings from the active macro program and therefore requires a new Controller decision.
