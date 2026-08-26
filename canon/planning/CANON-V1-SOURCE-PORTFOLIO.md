@@ -6,6 +6,17 @@
 
 ---
 
+> ### Correction-pass re-check, 26 Aug 2026 (C-C8)
+>
+> Outbound web access was **re-tested during the correction pass and is still blocked**.
+> `support.google.com`, `thinkwithgoogle.com`, `doi.org` and `w3.org` all returned
+> `EGRESS_BLOCKED`, and direct `curl` to each returned no response. **No access route could be
+> upgraded from `not_verified`, and none was guessed.** Every disposition below stands unchanged.
+>
+> **No candidate is approved.** `recommended` here means "worth the Controller's attention", never
+> "cleared to acquire". Nothing has been ingested; **live Canon remains 19**. Dalvi, ABCD, Cayla &
+> Elson and the rest are research leads, and a lead that looks promising is still a lead.
+
 ## 0. Read this before anything else — what this session could and could not verify
 
 **Outbound web fetching is blocked in this cloud session.** Web *search* works; opening a page does

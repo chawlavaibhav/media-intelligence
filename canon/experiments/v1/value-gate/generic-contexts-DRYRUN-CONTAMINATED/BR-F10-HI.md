@@ -1,3 +1,21 @@
+<!-- ============================================================================
+  DRY-RUN ONLY - CONTAMINATED FOR THE REAL GATE. DO NOT USE IN A REAL RUN.
+
+  This control context was authored by the same worker session that had already
+  read the Oracle Canon material for this brief. Even authored carefully, that
+  is a contamination risk: the control cannot be shown to be independent of the
+  Canon it is meant to be compared against, so a Canon win measured against it
+  would not be interpretable.
+
+  Retained ONLY as a dry-run fixture and as evidence of what was done. The
+  real-run builder (prepare_real_run.py) refuses to start if this directory is
+  used.
+
+  Replacement controls must be authored per
+  GENERIC-CONTROL-AUTHORING-PACKET.md by a fresh session with no Canon access,
+  and written to generic-contexts-real/.
+============================================================================= -->
+
 # Craft context
 
 ## When two requirements cannot both be met in one shot

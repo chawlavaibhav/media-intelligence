@@ -6,7 +6,14 @@
 # `scope.domain_discussed_by_source` values, the SourceConceptSystems, and the ontology terms — and
 # NOT by the book's title or its shelf position.
 #
-# WHAT THIS IS NOT. It is not a quality score. A domain with four contributors is not "better" than
+# WHAT THIS IS NOT. It is NOT machine-discovered truth. Every `contributors` list, every
+# `importance`, every `gap` and both `state_override` entries in this file are AUTHORED CANON
+# JUDGEMENTS. `build_live19_coverage.py` validates them for completeness and for naming only real
+# accepted source directories, and fails closed on a breach — but it cannot check whether a
+# judgement is right. Whether a different Canon worker reading the same 19 directories would assign
+# the same contributors is untested.
+#
+# It is also not a quality score. A domain with four contributors is not "better" than
 # one with two; it holds knowledge from more places. Bindability is not evidence quality
 # (canon/HANDOFF.md), so nothing here ranks a source by how many bindings it has.
 #

@@ -1,7 +1,12 @@
 {
+  "status": "DRY_RUN_ONLY_INVALIDATED_FOR_REAL_USE",
+  "invalidated_on": "2026-08-26",
+  "invalidated_by": "Controller decision C-C4",
+  "why": "Derived from a seed committed in the repository and committed as plain JSON, so the arm mapping is recomputable by anyone who can read the branch. This is not blinding.",
+  "replacement": "prepare_real_run.py \u2014 fresh OS entropy at preparation time, key stored outside the repository, only a salted SHA-256 commitment committed.",
+  "retained_because": "the synthetic dry-run fixtures are scored against this mapping.",
   "run_id": "CANON-V1-GATE-001",
   "seed": 20260826,
-  "warning": "SEALED. Do not open before all verdicts are recorded. Reviewers must never receive this file.",
   "mapping": [
     {
       "pair_id": "PAIR-01",
@@ -12,8 +17,8 @@
     {
       "pair_id": "PAIR-02",
       "brief_id": "BR-F06-HG",
-      "A": "generic",
-      "B": "oracle_canon"
+      "A": "oracle_canon",
+      "B": "generic"
     },
     {
       "pair_id": "PAIR-03",
@@ -24,26 +29,26 @@
     {
       "pair_id": "PAIR-04",
       "brief_id": "BR-F05-HG",
-      "A": "oracle_canon",
-      "B": "generic"
-    },
-    {
-      "pair_id": "PAIR-05",
-      "brief_id": "BR-F10-HI",
       "A": "generic",
       "B": "oracle_canon"
     },
     {
-      "pair_id": "PAIR-06",
-      "brief_id": "BR-F03-HG",
+      "pair_id": "PAIR-05",
+      "brief_id": "BR-F10-HI",
       "A": "oracle_canon",
       "B": "generic"
     },
     {
+      "pair_id": "PAIR-06",
+      "brief_id": "BR-F03-HG",
+      "A": "generic",
+      "B": "oracle_canon"
+    },
+    {
       "pair_id": "PAIR-07",
       "brief_id": "BR-F06-EN",
-      "A": "oracle_canon",
-      "B": "generic"
+      "A": "generic",
+      "B": "oracle_canon"
     },
     {
       "pair_id": "PAIR-08",
@@ -54,26 +59,26 @@
     {
       "pair_id": "PAIR-09",
       "brief_id": "BR-F01-HI",
-      "A": "oracle_canon",
-      "B": "generic"
+      "A": "generic",
+      "B": "oracle_canon"
     },
     {
       "pair_id": "PAIR-10",
       "brief_id": "BR-F08-HG",
-      "A": "generic",
-      "B": "oracle_canon"
+      "A": "oracle_canon",
+      "B": "generic"
     },
     {
       "pair_id": "PAIR-11",
       "brief_id": "BR-F08-EN",
-      "A": "generic",
-      "B": "oracle_canon"
+      "A": "oracle_canon",
+      "B": "generic"
     },
     {
       "pair_id": "PAIR-12",
       "brief_id": "BR-F07-HI",
-      "A": "oracle_canon",
-      "B": "generic"
+      "A": "generic",
+      "B": "oracle_canon"
     }
   ]
 }

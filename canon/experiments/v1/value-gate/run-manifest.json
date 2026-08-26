@@ -91,9 +91,14 @@
   },
   "blinding": {
     "balanced": true,
-    "a_side_generic": 6,
-    "a_side_oracle_canon": 6,
-    "note": "Exactly half the pairs present each arm first, so a reviewer order effect cannot favour either arm systematically."
+    "stratified_by": "gate_role",
+    "a_side_generic": 7,
+    "a_side_oracle_canon": 5,
+    "canon_first_by_role": {
+      "coverage_probe": 3,
+      "gap_probe": 2
+    },
+    "note": "Balanced WITHIN each probe stratum, not merely overall. Only coverage probes vote, so an overall 6/6 split is not sufficient: it once left Canon shown first on 5 of 7 coverage probes, which a pure position effect would have turned into `continue`. With 7 coverage probes a perfect split is impossible; 4/3 is the floor and any leftover goes to the control arm."
   },
   "review_dimensions": [
     "concept_quality",

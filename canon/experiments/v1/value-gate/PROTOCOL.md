@@ -2,9 +2,26 @@
 
 **Task:** CANON-V1 overnight program, work package C3 · **Date:** 26 Aug 2026
 **Status: PACKAGE ONLY. NOT EXECUTED.** 0 of 24 planning outputs generated. 0 model calls made.
-0 human verdicts exist. **Do not run this before the morning integration gate.**
+0 human verdicts exist.
+**Corrected 26 Aug 2026** under `canon/tasks/CANON-V1-CORRECTION-PASS.md` (C-C3 to C-C7).
+**The real gate cannot be run yet — see §0.**
 
 ---
+
+## 0. What the correction pass changed, and the one blocker that remains
+
+Four things about the first version would have produced a result that could not be interpreted.
+
+| Was | Now |
+|---|---|
+| Controls authored by the same session that had read the Canon | Those controls are **quarantined and unusable in a real run**. Replacements must come from a fresh session with no Canon access, via `GENERIC-CONTROL-AUTHORING-PACKET.md`. |
+| Blinding key derived from a committed seed and committed as plain JSON | Fresh OS entropy at preparation time, key stored **outside** the repository, only a salted SHA-256 commitment committed |
+| One reviewer | **Two independent reviewers**, combined by unanimity, never averaged |
+| All 12 pairs voted on continuation | **Only the 7 coverage probes vote.** The 5 gap probes are diagnostics |
+
+**Blocker: `FRESH_CONTROL_SESSION_REQUIRED`.** `prepare_real_run.py` refuses to start until
+`generic-contexts-real/` exists. Until an independent session authors those controls, the real gate
+cannot run. That refusal is deliberate and is covered by a test.
 
 ## 1. The question
 
@@ -48,12 +65,27 @@ more than **15%**.
 > that no reviewer could have seen. The generic contexts were extended until the maximum drift was
 > **14.5%**.
 
-**Position bias.** Reviewers favour whichever plan they read first. The A/B assignment is therefore
-**balanced, not randomised per pair**: exactly 6 pairs present each arm first.
+**Position bias.** Reviewers favour whichever plan they read first, so the A/B assignment is
+**balanced, not randomised per pair** — and balanced **within each probe stratum**, which is a
+stronger condition than it first appears.
 
-> This also earned its place. An unconstrained shuffle on the fixed seed put Canon in position A for
-> **9 of 12** pairs. The dry run confirms the fix: a synthetic reviewer who always picks whatever is
-> shown first now scores exactly **6/12** — a tie, in the `stop` band — rather than a Canon win.
+> This check earned its place twice.
+>
+> First, an unconstrained shuffle put Canon in position A for **9 of 12** pairs.
+>
+> Then, after fixing that to a tidy 6/6 overall, the negative control **failed again** — and the
+> reason is the interesting part. Only the 7 coverage probes vote on continuation, and the 6/6 split
+> happened to show Canon first on **5 of those 7**. A reviewer with a pure position effect would have
+> scored 5/7 and reached `continue` without reading a word. **Overall balance was the wrong
+> invariant.** Balance now applies inside each stratum, and because 7 is odd, any leftover pair is
+> given to the *control* arm rather than to Canon. Canon is now shown first on 3 of 7 coverage
+> probes, and pure position bias lands in `stop`.
+>
+> Neither of these was visible by reading the code. Both were found by asking what a lazy reviewer
+> would score.
+
+**Control contamination.** The most serious of the four, because no amount of care inside one session
+fixes it. See §0 and the authoring packet.
 
 ## 4. Review dimensions
 
@@ -65,7 +97,36 @@ visual/temporal strategy · trade-off awareness · contradiction handling · app
 **A "clear Canon win" requires all three of:** a majority of the nine dimensions (≥5), more than the
 other arm, and the reviewer's overall preference. One dimension is not a win.
 
-### Explicit intent preservation is a gate, not a tenth score
+### Two independent reviewers, combined by unanimity (C-C5)
+
+Every pair is judged by **exactly two distinct reviewers**, independently. A pair counts as a clear
+Canon win only when **both** satisfy the per-reviewer rule above.
+
+One clear win plus one non-win is **not** a win. Neither is `cannot_tell`. Those are **disagreement**,
+and disagreement is reported explicitly rather than resolved by arithmetic.
+
+**Reviewer judgements are never averaged.** Averaging two people's preferences into a number invents a
+precision neither of them expressed, and it would let a strong opinion and a shrug combine into a
+confident-looking half-win. The scorer keeps each reviewer's raw judgement and rejects any pair that
+does not carry two distinct reviewer ids.
+
+### Coverage probes vote; gap probes diagnose (C-C6)
+
+The early-12 splits **7 coverage probes / 5 gap probes**, and they answer different questions.
+
+| | Question |
+|---|---|
+| **Coverage probe** | Where the live Canon actually holds relevant accepted knowledge, does explicit Canon beat an independent generic control? |
+| **Gap probe** | How far does general Canon knowledge carry into a known hole, and what failure remains attributable to missing knowledge? |
+
+**Only the 7 coverage probes vote on continuation.** Letting a gap probe vote to stop expansion would
+be perverse: it would use the *absence* of a source as an argument against *acquiring* one. A gap
+probe losing is close to the expected result — that is what a gap is.
+
+Gap probes are reported separately, and two tests hold the line: gap wins cannot rescue a failing
+band, and gap losses cannot sink a passing one.
+
+### Explicit intent preservation is a gate, not a tenth score — and it is global
 
 Judged **per plan**, separately, and **never averaged into creative quality**. The question is: did
 the plan keep every requirement the client actually stated, including copy that must appear exactly?
@@ -81,17 +142,25 @@ violations returns `intent_regression`, not `continue`.
 
 ## 5. Predeclared gate — frozen before any output exists
 
-| Result | Band | Decision |
-|---|---|---|
-| ≥9/12 clear Canon wins, no meaningful intent regression | `continue` | Canon expansion may proceed to Controller review |
-| 7–8/12 | `mixed` | Diagnose before any source expansion |
-| ≤6/12 | `stop` | Stop expansion; diagnose Canon noise, redundancy or over-prescription first |
-| any Canon intent regression where generic preserved | `intent_regression` | Overrides the count |
+**Over the 7 coverage probes only:**
 
-**This is an engineering continuation gate, not a population claim.** Twelve briefs support a
-decision about whether to keep going. They support no rate, no confidence interval and no statement
-about briefs outside this set — and independence across briefs is not established. The scorer emits
-no such number, deliberately, and says so in its own output.
+| Unanimous Canon wins | Band | Decision |
+|---|---|---|
+| **5–7 of 7** | `continue` | Canon expansion may proceed to Controller review |
+| **4 of 7** | `mixed` | Diagnose before any source expansion |
+| **0–3 of 7** | `stop` | Stop expansion; diagnose Canon noise, redundancy or over-prescription first |
+| any Canon intent regression on **any** pair | `intent_regression` | **Overrides the band.** Blocks automatic continuation pending Controller diagnosis |
+
+The 5 gap probes are reported as diagnostics and never move the band.
+
+**This is an engineering continuation gate, not a population claim.** Seven briefs support a decision
+about whether to keep going. They support no rate, no confidence interval and no statement about
+briefs outside this set — and independence across briefs is not established. The scorer emits no such
+number, deliberately, and says so in its own output.
+
+The scorer refuses to rescale these thresholds if the probe count ever differs; it returns
+`undefined_probe_count` instead. Adjusting a frozen threshold to fit a changed denominator is how a
+predeclared gate quietly stops being predeclared.
 
 **Changing these thresholds after seeing results is experiment mutation** and voids the run.
 
@@ -99,7 +168,11 @@ no such number, deliberately, and says so in its own output.
 
 - **No agent may produce a verdict.** Reviews are human. `score_value_gate.py` contains no verdicts,
   no defaults and no imputation. A missing verdict is an error, never a tie.
-- The blinding key is sealed until every verdict is recorded.
+- **The contaminated controls may never be used in a real run.** Enforced by refusal, not by
+  convention.
+- The blinding key is generated at preparation time from OS entropy, stored outside the repository,
+  and revealed only after every verdict is frozen. `--verify-key` then proves the revealed key
+  matches the commitment frozen beforehand, so a mapping altered mid-review is detectable.
 - `authoritative_intent` is never shown to a planning arm. A run that exposes it is void.
 - The prompt is hashed in the run manifest; editing it after generation is detectable.
 
@@ -109,8 +182,13 @@ no such number, deliberately, and says so in its own output.
 |---|---|
 | `prompts/planning-prompt.md` | Frozen prompt, identical across arms |
 | `oracle-contexts/*.md` | 12 Canon contexts, rendered from committed extraction by id |
-| `generic-contexts/*.md` | 12 matched control contexts |
-| `generic-source.yaml` | Authored control source |
+| `generic-contexts-DRYRUN-CONTAMINATED/` | **Invalidated controls.** Dry-run fixtures only |
+| `generic-contexts-real/` | **Does not exist yet.** Independent controls go here |
+| `GENERIC-CONTROL-AUTHORING-PACKET.md` | Instructions for the fresh authoring session |
+| `control-authoring-input.json` | Self-contained input, proven free of Canon |
+| `build_control_packet.py` | Builds that input and fails closed on leakage |
+| `prepare_real_run.py` | Real-run preparation: refuses contaminated controls, sealed key |
+| `generic-source.yaml` | Authored source of the contaminated controls |
 | `output-schema.json` | One planning output |
 | `verdict-schema.json` | One human verdict |
 | `build_run_manifest.py` | Length match, balanced blinding, prompt hash, reviewer packet |
@@ -118,7 +196,7 @@ no such number, deliberately, and says so in its own output.
 | `score_value_gate.py` | Aggregation from human verdicts |
 | `dry-run/` | Synthetic fixtures — **not evidence** |
 
-## 8. Verification performed in this session
+## 8. Verification performed
 
 All executed here; a code runner with Python 3.11 and PyYAML was available.
 
@@ -127,11 +205,19 @@ All executed here; a code runner with Python 3.11 and PyYAML was available.
 | `build_oracle_contexts.py` | exit 0 — 12 contexts, 35 Canon refs, 15 audited sources |
 | `build_run_manifest.py` | exit 0 — max length drift **14.5%**, blinding **6/6** |
 | Scorer, no verdicts file | `NO_VERDICTS` — refuses to infer a result |
-| Scorer, always-picks-A fixture | **6/12, band `stop`** — position bias yields a tie, as intended |
-| Scorer, always-picks-B fixture | **6/12, band `stop`** — symmetric, as intended |
-| Scorer, mixed fixture | 0/12, band `stop` |
-| Scorer, intent-regression fixture | 12/12 wins but band **`intent_regression`** — override fires |
-| Scorer, incomplete fixture | `INCOMPLETE`, **exit 1** — missing verdicts named, not defaulted |
+| **`tests/test_value_gate_corrections.py`** | **26 negative controls, all passing** |
+| Coverage bands 5/7, 4/7, 3/7 | `continue` / `mixed` / `stop` respectively |
+| Gap probes winning on a 3/7 coverage result | still `stop` — gaps cannot rescue |
+| Gap probes losing on a 5/7 coverage result | still `continue` — gaps cannot sink |
+| One reviewer, or the same reviewer twice | `INCOMPLETE`, **exit 1** |
+| Reviewer disagreement on a winning pair | not counted; drops 5/7 to 4/7, `mixed` |
+| Intent regression on a **gap** probe with 5/7 coverage | `intent_regression` — global, overrides |
+| Missing pair / missing dimension | `INCOMPLETE`, **exit 1** |
+| Position bias, both reviewers always pick first | does **not** reach `continue` |
+| Real-run preparation with no independent controls | **REFUSED** |
+| Real-run preparation writing the key inside the repo | **REFUSED** |
+| Committed real-run artifacts disclosing the mapping | none — asserted by test |
+| Control-authoring packet containing Canon | none — asserted by test, and the leakage check is itself tested to fire |
 
 **What has NOT been verified:** nothing was generated, so the prompt has never been run against a
 model, and no reviewer has ever seen the packet. The pipeline is verified on synthetic labels only.

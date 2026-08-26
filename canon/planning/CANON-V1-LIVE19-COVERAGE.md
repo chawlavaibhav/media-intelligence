@@ -59,7 +59,30 @@ Conversations* are Walter Murch speaking in both. This is not an estimate — it
 calling `independent_origins_ok()` from the committed Audit Gate validator, which fails closed.
 Counting titles would have said nineteen.
 
-## 3. How to read the coverage state
+## 3. Which parts of this document are evidence, and which are judgement
+
+**This distinction is load-bearing and was not explicit in the first version.** Read it before using
+any figure below.
+
+| Class | What it covers | How far it can be trusted |
+|---|---|---|
+| **Mechanical** | Source and audit-record counts; per-source object/system/term/binding counts; every `audit_status`; whether two sources are dependent, via the committed `independent_origins_ok()`; the independent-origin maxima | Reproducible from committed artifacts. Re-run the builder and you get the same answer. |
+| **Authored, then validated** | **Which sources contribute to which domain**; each domain's first-product importance; the gap statements; the two `coverage_state` overrides | **Canon judgements**, made by reading the committed extraction — the source's own declared subject matter, its concept systems, its ontology terms. |
+
+**The source→domain assignments in `live19_domain_map.yaml` are authored Canon judgements, not
+machine-discovered truths.** The generator validates them for *completeness* — every domain
+accounted for, every domain in exactly one pack, every named contributor a real accepted source
+directory — and **fails closed** on any breach. What it cannot do is check whether a judgement is
+*correct*. That another Canon worker reading the same 19 directories would assign the same
+contributors is **untested**, and it is the same open question the handoff already records about
+whether two workers writing an audit record produce the same record.
+
+Coverage states are therefore **derived from an authored input**. A domain marked
+`present_multi_origin` means *someone judged that two independently-originated accepted sources
+contribute*, mechanically confirmed to be two independent origins. It does not mean a machine
+discovered the knowledge is there.
+
+## 4. How to read the coverage state
 
 These are **inventory terms, not grades.** They say where knowledge came from, not how good it is.
 
@@ -81,7 +104,7 @@ Three warnings, all of them lessons this project has already paid for:
 - **No decimal "Canon quality" score exists here, deliberately.** Inventing one would encode a guess
   as a finding.
 
-## 4. Full domain table
+## 5. Full domain table
 
 #### A · Static visual craft
 
@@ -205,11 +228,20 @@ Three warnings, all of them lessons this project has already paid for:
 | indian indic context | 1 | 0 | 0 | absent |
 | critique and effectiveness | 10 | 18 | 16 | covered |
 
-`Indep` is the largest set of contributors that are mutually independent origins. Where it is lower
-than `Contrib`, a dependence relation is blocking — the machine-readable companion names which pair
-and why, per domain.
+`Indep` is the **maximum** number of contributors that can be mutually independent origins at once,
+**computed by exhaustive enumeration** — every subset is tested, so the figure is a proven maximum
+rather than the result of a greedy walk. The machine-readable companion records
+`independent_origin_count_method: exact_exhaustive` on every row. Where `Indep` is lower than
+`Contrib`, a dependence relation is blocking, and the companion names which pair and why.
 
-## 5. What changed against the v0 map
+> **Corrected 26 Aug 2026 (C-C1).** The first version of this document called this "the largest set"
+> while computing it greedily. A greedy maximal independent set is **not** in general the maximum
+> one, so that wording asserted something unproven. The computation is now exhaustive. **No number
+> changed** — for this corpus the greedy answer happened to be optimal, and the corpus total remains
+> **17**. The wording was wrong; the figure was not, and it has not been adjusted to suit the
+> correction.
+
+## 6. What changed against the v0 map
 
 ### Corrections — v0 was right for the wrong reason
 
@@ -258,7 +290,7 @@ requirement as a superset.
 and this is a defect in a historical artifact, not a discrepancy to argue about. It is recorded here
 and routed in the Controller Brief.
 
-## 6. What this means for the first product
+## 7. What this means for the first product
 
 **The Canon is strong where craft is old, stable and Anglo-American. It is weakest exactly where the
 first product lives.** That was true in August and it is still true — but the shape has changed.
@@ -284,7 +316,7 @@ And three that are not:
    than an entire 6–20 second commercial. The knowledge is real; the scale is wrong. Whether it
    transfers is a question for the C5 value gate, not an assumption to make now.
 
-## 7. Verification
+## 8. Verification
 
 Everything in this document was produced and checked in this session.
 
@@ -296,6 +328,8 @@ Everything in this document was produced and checked in this session.
 | 10/10 packs accounted for | pass — every domain in exactly one pack, enforced |
 | Every named contributor is a real accepted directory | pass — generator fails closed on an unknown name |
 | Independence via the committed validator, not by author name | pass — `independent_origins_ok()` imported, not reimplemented |
+| Independent-origin counts are proven maxima, not greedy estimates | pass — `exact_exhaustive` on every domain, pack and the corpus total; the builder asserts greedy ≤ exact |
+| Authored judgements are validated for completeness and real source ids | pass — builder fails closed on an unknown contributor or an unpacked domain |
 | No domain status rests on a title or library assumption | pass by construction — contributors assigned from committed extraction only |
 
 Reproduce with `python3 canon/planning/build_live19_coverage.py`. Authored input is

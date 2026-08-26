@@ -11,6 +11,21 @@ summary:
   total_terms: 470
   total_bindings: 127
   corpus_independent_origins: 17
+  corpus_independent_origins_method: exact_exhaustive
+  evidence_class:
+    mechanical:
+    - accepted source count and audit record count
+    - per-source object/system/term/binding counts
+    - audit_status of every record
+    - the dependence relation between any two sources, via the committed independent_origins_ok()
+    - independent-origin counts, exhaustively maximised
+    authored_then_validated:
+    - which sources contribute to which domain (live19_domain_map.yaml)
+    - each domain's first-product importance
+    - gap statements and the two coverage_state overrides
+    note: The authored assignments are Canon judgements, made by reading the committed extraction. The
+      generator checks them for completeness and for naming only real accepted sources; it cannot check
+      whether a judgement is correct. They are not machine-discovered facts and must not be cited as such.
   domains_total: 56
   packs_total: 10
   by_state:
@@ -259,6 +274,7 @@ packs:
     - vignelli-canon-intangibles
     contributor_count: 8
     independent_origin_count: 7
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - A01
     - A02
@@ -282,6 +298,7 @@ packs:
     - vignelli-canon-intangibles
     contributor_count: 5
     independent_origin_count: 5
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - A06
     - A14
@@ -305,6 +322,7 @@ packs:
     - light-science-magic-ch3
     contributor_count: 4
     independent_origin_count: 4
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - A09
     - A10
@@ -328,6 +346,7 @@ packs:
     - vignelli-canon-intangibles
     contributor_count: 6
     independent_origin_count: 6
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - A05
     critical_absent: []
@@ -349,6 +368,7 @@ packs:
     - ondaatje-conversations-ch3
     contributor_count: 6
     independent_origin_count: 4
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - B01
     - B03
@@ -372,6 +392,7 @@ packs:
     - ondaatje-conversations-ch3
     contributor_count: 4
     independent_origin_count: 3
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - B04
     - B05
@@ -401,6 +422,7 @@ packs:
     - sutherland-alchemy-introduction
     contributor_count: 6
     independent_origin_count: 6
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - C01
     - C02
@@ -437,6 +459,7 @@ packs:
     - vignelli-canon-intangibles
     contributor_count: 11
     independent_origin_count: 10
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - B07
     - D01
@@ -450,6 +473,7 @@ packs:
     contributors: []
     contributor_count: 0
     independent_origin_count: 0
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - C13
     critical_absent:
@@ -490,6 +514,7 @@ packs:
     - vignelli-canon-intangibles
     contributor_count: 18
     independent_origin_count: 16
+    independent_origin_count_method: exact_exhaustive
     critical_domains:
     - D05
     - E01
@@ -510,6 +535,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - kenworthy_master_shots_frame_and_ch8_directing_attention
@@ -544,6 +570,7 @@ domains:
   - vignelli-canon-intangibles
   contributor_count: 6
   independent_origin_count: 6
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - samara_making_breaking_grid_ch1
@@ -577,6 +604,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - alton_painting_with_light_ch2_motion_picture_illumination
@@ -606,6 +634,7 @@ domains:
   - samara-making-breaking-grid-ch1
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - samara_making_breaking_grid_ch1
@@ -637,6 +666,7 @@ domains:
   - vignelli-canon-intangibles
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - albers_interaction_of_color_ch1_5
   - alton_painting_with_light_ch2_motion_picture_illumination
@@ -670,6 +700,7 @@ domains:
   - albers-interaction-of-color
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - samara_making_breaking_grid_ch1
   - vignelli_canon_part_one_intangibles
@@ -700,6 +731,7 @@ domains:
   - vignelli-canon-intangibles
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - samara_making_breaking_grid_ch1
   - vignelli_canon_part_one_intangibles
@@ -730,6 +762,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - hopkins_scientific_advertising_ch1_7
@@ -760,6 +793,7 @@ domains:
   - light-science-magic-ch3
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - alton_painting_with_light_ch2_motion_picture_illumination
   - light_science_and_magic_ch3
@@ -790,6 +824,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - light_science_and_magic_ch3
   - alton_painting_with_light_ch2_motion_picture_illumination
@@ -820,6 +855,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - light_science_and_magic_ch3
@@ -851,6 +887,7 @@ domains:
   - grammar-of-the-shot-ch4
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - freeman_photographers_eye_graphic_guide_parts1_3
   - kenworthy_master_shots_frame_and_ch8_directing_attention
@@ -881,6 +918,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - light_science_and_magic_ch3
   - alton_painting_with_light_ch2_motion_picture_illumination
@@ -912,6 +950,7 @@ domains:
   contributors: []
   contributor_count: 0
   independent_origin_count: 0
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set: []
   dependence_blocks: []
   concept_systems_exist: false
@@ -936,6 +975,7 @@ domains:
   - kenworthy-master-shots-ch8
   contributor_count: 3
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - grammar_of_the_shot_ch4_continuity
   - kenworthy_master_shots_frame_and_ch8_directing_attention
@@ -967,6 +1007,7 @@ domains:
   - alton-painting-with-light-ch2
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - kenworthy_master_shots_frame_and_ch8_directing_attention
   - grammar_of_the_shot_ch4_continuity
@@ -998,6 +1039,7 @@ domains:
   - ondaatje-conversations-ch3
   contributor_count: 4
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - grammar_of_the_shot_ch4_continuity
   - murch_blink_p1_25_editing_decisions
@@ -1031,6 +1073,7 @@ domains:
   - ondaatje-conversations-ch3
   contributor_count: 3
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - grammar_of_the_edit_ch3_5_editing_decisions
   - murch_blink_p1_25_editing_decisions
@@ -1061,6 +1104,7 @@ domains:
   - ondaatje-conversations-ch3
   contributor_count: 3
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - murch_blink_p1_25_editing_decisions
   - grammar_of_the_edit_ch3_5_editing_decisions
@@ -1089,6 +1133,7 @@ domains:
   - grammar-of-the-edit-ch3-5
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - murch_blink_p1_25_editing_decisions
   - grammar_of_the_edit_ch3_5_editing_decisions
@@ -1118,6 +1163,7 @@ domains:
   - miller-storybrand-sb7
   contributor_count: 4
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - murch_blink_p1_25_editing_decisions
   - kenworthy_master_shots_frame_and_ch8_directing_attention
@@ -1148,6 +1194,7 @@ domains:
   - ondaatje-conversations-ch3
   contributor_count: 2
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - kenworthy_master_shots_frame_and_ch8_directing_attention
   - ondaatje_conversations_third_conversation
@@ -1176,6 +1223,7 @@ domains:
   - kenworthy-master-shots-ch8
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - grammar_of_the_edit_ch3_5_editing_decisions
   - ondaatje_conversations_third_conversation
@@ -1207,6 +1255,7 @@ domains:
   - murch-blink-p1-25
   contributor_count: 3
   independent_origin_count: 2
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ondaatje_conversations_third_conversation
   - grammar_of_the_edit_ch3_5_editing_decisions
@@ -1234,6 +1283,7 @@ domains:
   contributors: []
   contributor_count: 0
   independent_origin_count: 0
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set: []
   dependence_blocks: []
   concept_systems_exist: false
@@ -1255,6 +1305,7 @@ domains:
   contributors: []
   contributor_count: 0
   independent_origin_count: 0
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set: []
   dependence_blocks: []
   concept_systems_exist: false
@@ -1276,6 +1327,7 @@ domains:
   contributors: []
   contributor_count: 0
   independent_origin_count: 0
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set: []
   dependence_blocks: []
   concept_systems_exist: false
@@ -1303,6 +1355,7 @@ domains:
   - sutherland-alchemy-introduction
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ogilvy_on_advertising_ch2
   - hopkins_scientific_advertising_ch1_7
@@ -1336,6 +1389,7 @@ domains:
   - hopkins-scientific-advertising-ch1-7
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ogilvy_on_advertising_ch2
   - binet_field_effectiveness_in_context_ch1_consideration
@@ -1367,6 +1421,7 @@ domains:
   - heath-made-to-stick-introduction
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - sutherland_alchemy_introduction
   - hopkins_scientific_advertising_ch1_7
@@ -1400,6 +1455,7 @@ domains:
   - heath-made-to-stick-introduction
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ogilvy_on_advertising_ch2
   - miller_storybrand_sb7_framework_ch1_3
@@ -1433,6 +1489,7 @@ domains:
   - ogilvy-ch2-advertising-that-sells
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - sutherland_alchemy_introduction
   - heath_made_to_stick_introduction
@@ -1464,6 +1521,7 @@ domains:
   - miller-storybrand-sb7
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ogilvy_on_advertising_ch2
   - vignelli_canon_part_one_intangibles
@@ -1494,6 +1552,7 @@ domains:
   - miller-storybrand-sb7
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - hopkins_scientific_advertising_ch1_7
   - ogilvy_on_advertising_ch2
@@ -1524,6 +1583,7 @@ domains:
   - miller-storybrand-sb7
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - binet_field_effectiveness_in_context_ch1_consideration
   - sutherland_alchemy_introduction
@@ -1554,6 +1614,7 @@ domains:
   - ogilvy-ch2-advertising-that-sells
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - heath_made_to_stick_introduction
   - hopkins_scientific_advertising_ch1_7
@@ -1587,6 +1648,7 @@ domains:
   - ogilvy-ch2-advertising-that-sells
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - heath_made_to_stick_introduction
   - sutherland_alchemy_introduction
@@ -1615,6 +1677,7 @@ domains:
   - binet-field-effectiveness-in-context-ch1
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - miller_storybrand_sb7_framework_ch1_3
   - hopkins_scientific_advertising_ch1_7
@@ -1645,6 +1708,7 @@ domains:
   - freeman-photographers-eye-graphic-guide
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - samara_making_breaking_grid_ch1
   - vignelli_canon_part_one_intangibles
@@ -1673,6 +1737,7 @@ domains:
   contributors: []
   contributor_count: 0
   independent_origin_count: 0
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set: []
   dependence_blocks: []
   concept_systems_exist: false
@@ -1697,6 +1762,7 @@ domains:
   - ogilvy-ch2-advertising-that-sells
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - binet_field_effectiveness_in_context_ch1_consideration
   - hopkins_scientific_advertising_ch1_7
@@ -1730,6 +1796,7 @@ domains:
   - bayles-orland-art-and-fear
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ogilvy_on_advertising_ch2
   - heath_made_to_stick_introduction
@@ -1762,6 +1829,7 @@ domains:
   - heath-made-to-stick-introduction
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ondaatje_conversations_third_conversation
   - vignelli_canon_part_one_intangibles
@@ -1793,6 +1861,7 @@ domains:
   - vignelli-canon-intangibles
   contributor_count: 4
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - sutherland_alchemy_introduction
   - heath_made_to_stick_introduction
@@ -1825,6 +1894,7 @@ domains:
   - murch-blink-p1-25
   contributor_count: 4
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - vignelli_canon_part_one_intangibles
   - bayles_orland_art_and_fear_part_one_opening
@@ -1858,6 +1928,7 @@ domains:
   - freeman-photographers-eye-graphic-guide
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - murch_blink_p1_25_editing_decisions
   - binet_field_effectiveness_in_context_ch1_consideration
@@ -1894,6 +1965,7 @@ domains:
   - samara-making-breaking-grid-ch1
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - vignelli_canon_part_one_intangibles
   - ogilvy_on_advertising_ch2
@@ -1926,6 +1998,7 @@ domains:
   - murch-blink-p1-25
   contributor_count: 5
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - samara_making_breaking_grid_ch1
   - grammar_of_the_shot_ch4_continuity
@@ -1961,6 +2034,7 @@ domains:
   - grammar-of-the-edit-ch3-5
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - ogilvy_on_advertising_ch2
   - binet_field_effectiveness_in_context_ch1_consideration
@@ -1995,6 +2069,7 @@ domains:
   - samara-making-breaking-grid-ch1
   contributor_count: 5
   independent_origin_count: 4
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - grammar_of_the_shot_ch4_continuity
   - murch_blink_p1_25_editing_decisions
@@ -2033,6 +2108,7 @@ domains:
   - vignelli-canon-intangibles
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - catmull_creativity_inc_ch5_honesty_and_candor
   - grammar_of_the_edit_ch3_5_editing_decisions
@@ -2072,6 +2148,7 @@ domains:
   - heath-made-to-stick-introduction
   contributor_count: 10
   independent_origin_count: 9
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - grammar_of_the_edit_ch3_5_editing_decisions
   - samara_making_breaking_grid_ch1
@@ -2112,6 +2189,7 @@ domains:
   - light-science-magic-ch3
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - binet_field_effectiveness_in_context_ch1_consideration
   - grammar_of_the_shot_ch4_continuity
@@ -2146,6 +2224,7 @@ domains:
   - light-science-magic-ch3
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - murch_blink_p1_25_editing_decisions
   - albers_interaction_of_color_ch1_5
@@ -2180,6 +2259,7 @@ domains:
   - light-science-magic-ch3
   contributor_count: 3
   independent_origin_count: 3
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - catmull_creativity_inc_ch5_honesty_and_candor
   - vignelli_canon_part_one_intangibles
@@ -2215,6 +2295,7 @@ domains:
   - heath-made-to-stick-introduction
   contributor_count: 5
   independent_origin_count: 5
+  independent_origin_count_method: exact_exhaustive
   independent_origin_set:
   - sutherland_alchemy_introduction
   - catmull_creativity_inc_ch5_honesty_and_candor

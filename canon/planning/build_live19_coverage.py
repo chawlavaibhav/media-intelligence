@@ -14,9 +14,17 @@ Walter Murch speaking while the corpus already holds Murch's own book. Counting 
 those four sources four origins. They are two. This script therefore never counts titles: it calls
 `independent_origins_ok()` from the committed Audit Gate validator, which fails closed.
 
-The greedy maximum-independent-set below is deliberate and stated: it reports the LARGEST set of
-mutually independent contributors, and because it is greedy it can only ever UNDER-report, never
-over-report. Under-reporting independence is the safe direction.
+INDEPENDENT-ORIGIN COUNTING IS NOT A GREEDY GUESS ANY MORE. An earlier version of this file
+described a greedy walk as "the largest set". That was wrong as stated: a greedy maximal independent
+set is not in general the maximum independent set, and calling it one asserted something that had not
+been proven.
+
+What runs now is EXACT. The dependence graph here is tiny — at most 19 nodes for the whole corpus and
+at most ten for any single domain — so `independent_origin_count()` enumerates every subset and
+returns a true maximum, with `method: "exact_exhaustive"`. It also computes the greedy result and
+asserts greedy <= exact, which is the direction that must always hold. Above `EXACT_MAX_NODES` nodes
+exhaustive search is refused and the greedy value is returned labelled `method: "greedy_lower_bound"`
+so a future larger corpus degrades into an honest under-report rather than a false claim.
 
 Run: python3 canon/planning/build_live19_coverage.py
 """
@@ -90,23 +98,55 @@ def load_records() -> dict:
     return {p.name: yaml.safe_load(p.read_text()) for p in sorted(RECORDS.glob("*.audit.yaml"))}
 
 
-def max_independent_set(source_ids: list[str], records: dict, vmod) -> tuple[list[str], list[str]]:
-    """Greedy largest set of mutually independent origins, plus the blocked pairs found.
+EXACT_MAX_NODES = 22  # 2**22 subsets is still trivial; above this, refuse and say so.
 
-    Greedy, so it can under-report and never over-report. Independence is decided ONLY by
-    `independent_origins_ok()` from the committed validator.
+
+def independent_origin_count(source_ids: list[str], records: dict, vmod):
+    """Maximum set of mutually independent origins, plus the dependence blocks found.
+
+    Returns (chosen, blocked, method). Independence between any two sources is decided ONLY by
+    `independent_origins_ok()` from the committed Audit Gate validator — never by author, publisher
+    or id. This function only decides how many of them can be held at once.
+
+    `method` is "exact_exhaustive" when every subset was enumerated and the answer is a proven
+    maximum, or "greedy_lower_bound" when the set was too large to enumerate and the answer is only
+    a lower bound. Callers must not describe a greedy_lower_bound result as a maximum.
     """
     blocked = []
+    pair_ok: dict[tuple[str, str], bool] = {}
     for i, a in enumerate(source_ids):
         for b in source_ids[i + 1:]:
             ok, reason = vmod.independent_origins_ok(a, b, records)
+            pair_ok[(a, b)] = pair_ok[(b, a)] = ok
             if not ok:
                 blocked.append(reason)
-    chosen: list[str] = []
+
+    def is_independent_set(members: list[str]) -> bool:
+        for i, a in enumerate(members):
+            for b in members[i + 1:]:
+                if not pair_ok[(a, b)]:
+                    return False
+        return True
+
+    greedy: list[str] = []
     for sid in source_ids:
-        if all(vmod.independent_origins_ok(sid, c, records)[0] for c in chosen):
-            chosen.append(sid)
-    return chosen, blocked
+        if all(pair_ok[(sid, c)] for c in greedy):
+            greedy.append(sid)
+
+    n = len(source_ids)
+    if n > EXACT_MAX_NODES:
+        return greedy, blocked, "greedy_lower_bound"
+
+    best = greedy
+    for mask in range(1 << n):
+        if bin(mask).count("1") <= len(best):
+            continue
+        subset = [source_ids[i] for i in range(n) if mask >> i & 1]
+        if is_independent_set(subset):
+            best = subset
+    # The greedy walk can never beat an exhaustive maximum. If it did, the search is broken.
+    assert len(greedy) <= len(best), "greedy exceeded the exhaustive maximum"
+    return best, blocked, "exact_exhaustive"
 
 
 def coverage_state(entry: dict, contributors: list[str], independent: int) -> tuple[str, str]:
@@ -160,7 +200,7 @@ def main() -> int:
     for e in domains:
         contributors = e.get("contributors", [])
         sids = [dirmap[c] for c in contributors]
-        chosen, blocked = max_independent_set(sids, records, vmod)
+        chosen, blocked, method = independent_origin_count(sids, records, vmod)
         state, basis = coverage_state(e, contributors, len(chosen))
         consumers = collections.Counter()
         objects = 0
@@ -177,6 +217,7 @@ def main() -> int:
             "contributors": contributors,
             "contributor_count": len(contributors),
             "independent_origin_count": len(chosen),
+            "independent_origin_count_method": method,
             "independent_origin_set": chosen,
             "dependence_blocks": sorted(set(blocked)),
             "concept_systems_exist": any(sources[c]["systems"] > 0 for c in contributors),
@@ -196,7 +237,8 @@ def main() -> int:
     for pack, ids in PACKS.items():
         rows = [d for d in out_domains if d["id"] in ids]
         contribs = sorted({c for r in rows for c in r["contributors"]})
-        chosen, _ = max_independent_set([dirmap[c] for c in contribs], records, vmod)
+        chosen, _, pack_method = independent_origin_count(
+            [dirmap[c] for c in contribs], records, vmod)
         crit = [r for r in rows if r["importance"] == "critical"]
         crit_absent = [r["id"] for r in crit if r["coverage_state"] == "absent"]
         crit_limited = [r["id"] for r in crit
@@ -208,6 +250,7 @@ def main() -> int:
             "contributors": contribs,
             "contributor_count": len(contribs),
             "independent_origin_count": len(chosen),
+            "independent_origin_count_method": pack_method,
             "critical_domains": [r["id"] for r in crit],
             "critical_absent": crit_absent,
             "critical_limited": crit_limited,
@@ -218,7 +261,7 @@ def main() -> int:
         }
 
     live_ids = [v["source_id"] for v in sources.values()]
-    all_chosen, _ = max_independent_set(live_ids, records, vmod)
+    all_chosen, _, corpus_method = independent_origin_count(live_ids, records, vmod)
     summary = {
         "accepted_sources": len(sources),
         "audit_records": len(records),
@@ -228,6 +271,26 @@ def main() -> int:
         "total_terms": sum(v["terms"] for v in sources.values()),
         "total_bindings": sum(v["bindings"] for v in sources.values()),
         "corpus_independent_origins": len(all_chosen),
+        "corpus_independent_origins_method": corpus_method,
+        "evidence_class": {
+            "mechanical": [
+                "accepted source count and audit record count",
+                "per-source object/system/term/binding counts",
+                "audit_status of every record",
+                "the dependence relation between any two sources, via the committed "
+                "independent_origins_ok()",
+                "independent-origin counts, exhaustively maximised",
+            ],
+            "authored_then_validated": [
+                "which sources contribute to which domain (live19_domain_map.yaml)",
+                "each domain's first-product importance",
+                "gap statements and the two coverage_state overrides",
+            ],
+            "note": "The authored assignments are Canon judgements, made by reading the committed "
+                    "extraction. The generator checks them for completeness and for naming only "
+                    "real accepted sources; it cannot check whether a judgement is correct. They "
+                    "are not machine-discovered facts and must not be cited as such.",
+        },
         "domains_total": len(out_domains),
         "packs_total": len(packs_out),
         "by_state": dict(collections.Counter(d["coverage_state"] for d in out_domains)),

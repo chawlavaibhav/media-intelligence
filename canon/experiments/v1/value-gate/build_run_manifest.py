@@ -33,7 +33,10 @@ import yaml
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 GEN_SRC = HERE / "generic-source.yaml"
-GEN_DIR = HERE / "generic-contexts"
+# The dry-run controls are contaminated for a real gate (C-C3): they were authored by a
+# session that had already read the Oracle Canon. They stay usable as synthetic fixtures
+# and the directory name says what they are, so nothing can pick them up by accident.
+GEN_DIR = HERE / "generic-contexts-DRYRUN-CONTAMINATED"
 ORA_DIR = HERE / "oracle-contexts"
 MANIFEST = HERE / "early-12-manifest.json"
 PROMPT = HERE / "prompts/planning-prompt.md"
@@ -51,8 +54,56 @@ DIMENSIONS = [
 GATING_DIMENSION = "explicit_intent_preservation"
 
 
+CONTAMINATION_BANNER = """<!-- ============================================================================
+  DRY-RUN ONLY - CONTAMINATED FOR THE REAL GATE. DO NOT USE IN A REAL RUN.
+
+  This control context was authored by the same worker session that had already
+  read the Oracle Canon material for this brief. Even authored carefully, that
+  is a contamination risk: the control cannot be shown to be independent of the
+  Canon it is meant to be compared against, so a Canon win measured against it
+  would not be interpretable.
+
+  Retained ONLY as a dry-run fixture and as evidence of what was done. The
+  real-run builder (prepare_real_run.py) refuses to start if this directory is
+  used.
+
+  Replacement controls must be authored per
+  GENERIC-CONTROL-AUTHORING-PACKET.md by a fresh session with no Canon access,
+  and written to generic-contexts-real/.
+============================================================================= -->
+
+"""
+
+
 def words(t: str) -> int:
     return len(t.split())
+
+def stratified_a_side(pairs_by_role: dict, rng) -> dict:
+    """Balance which arm is shown first WITHIN each probe stratum, not just overall.
+
+    WHY THIS IS NOT MERELY OVERALL BALANCE. Only the 7 coverage probes vote on continuation. An
+    assignment that is a tidy 6/6 across all 12 pairs can still show Canon first on 5 of the 7
+    coverage probes — and it did, on the first corrected build. A reviewer with a pure position
+    effect would then have scored 5/7 and reached `continue` without reading anything. Overall
+    balance is the wrong invariant; balance inside the stratum that votes is the right one.
+
+    With an odd stratum a perfect split is impossible. 7 coverage probes give at best 4/3, so a pure
+    position effect reaches 4/7 -> `mixed`, never `continue`. That is the floor, and it is stated
+    rather than glossed.
+    """
+    a_side = {}
+    for role, pids in sorted(pairs_by_role.items()):
+        n = len(pids)
+        # Canon-first on floor(n/2) of them; the leftover always goes to the control arm, so the
+        # residual position advantage can never favour Canon.
+        sides = ["oracle_canon"] * (n // 2) + ["generic"] * (n - n // 2)
+        rng.shuffle(sides)
+        order = list(pids)
+        rng.shuffle(order)
+        for pid, side in zip(order, sides):
+            a_side[pid] = side
+    return a_side
+
 
 
 def main() -> int:
@@ -71,7 +122,9 @@ def main() -> int:
         if bid not in gen:
             continue
         body = gen[bid]
-        (GEN_DIR / f"{bid}.md").write_text(body)
+        # Re-stamp the banner on every write so a regeneration can never quietly produce a file
+        # that looks like a usable control.
+        (GEN_DIR / f"{bid}.md").write_text(CONTAMINATION_BANNER + body)
         gw = words(body)
         ow = words((ORA_DIR / f"{bid}.md").read_text())
         drift = abs(gw - ow) / ow
@@ -92,17 +145,20 @@ def main() -> int:
     order = list(ids)
     rng.shuffle(order)
 
-    # BALANCED A/B assignment, not per-pair coin flips. An unconstrained shuffle put the Canon arm
-    # in position A for 9 of 12 pairs on this seed. Reviewers show real order effects, so that would
-    # have been a systematic advantage to one arm, invisible in the results. Exactly half the pairs
-    # present each arm first.
-    a_side = ["generic"] * (len(order) // 2) + ["oracle_canon"] * (len(order) - len(order) // 2)
-    rng.shuffle(a_side)
+    # STRATIFIED balanced A/B assignment (see stratified_a_side). Balancing overall is not enough:
+    # only coverage probes vote, and a 6/6 overall split once left Canon shown first on 5 of the 7
+    # coverage probes, which a pure position effect would have turned into `continue`.
+    early = json.loads((HERE / "early-12-manifest.json").read_text())
+    roles = {b["brief_id"]: b["gate_role"] for b in early["briefs"]}
+    by_role: dict[str, list[str]] = {}
+    for bid in order:
+        by_role.setdefault(roles[bid], []).append(bid)
+    a_side_by_brief = stratified_a_side(by_role, rng)
 
     run, key, packet = [], [], []
     for i, bid in enumerate(order, 1):
         pair_id = f"PAIR-{i:02d}"
-        a_arm = a_side[i - 1]
+        a_arm = a_side_by_brief[bid]
         b_arm = "oracle_canon" if a_arm == "generic" else "generic"
         run.append({
             "pair_id": pair_id, "brief_id": bid,
@@ -143,10 +199,19 @@ def main() -> int:
                          "max_drift": max(p["drift"] for p in pairs_len)},
         "blinding": {
             "balanced": True,
-            "a_side_generic": a_side.count("generic"),
-            "a_side_oracle_canon": a_side.count("oracle_canon"),
-            "note": "Exactly half the pairs present each arm first, so a reviewer order effect "
-                    "cannot favour either arm systematically.",
+            "stratified_by": "gate_role",
+            "a_side_generic": sum(1 for v in a_side_by_brief.values() if v == "generic"),
+            "a_side_oracle_canon": sum(1 for v in a_side_by_brief.values()
+                                       if v == "oracle_canon"),
+            "canon_first_by_role": {
+                role: sum(1 for b in bids if a_side_by_brief[b] == "oracle_canon")
+                for role, bids in sorted(by_role.items())
+            },
+            "note": "Balanced WITHIN each probe stratum, not merely overall. Only coverage probes "
+                    "vote, so an overall 6/6 split is not sufficient: it once left Canon shown "
+                    "first on 5 of 7 coverage probes, which a pure position effect would have "
+                    "turned into `continue`. With 7 coverage probes a perfect split is impossible; "
+                    "4/3 is the floor and any leftover goes to the control arm.",
         },
         "review_dimensions": DIMENSIONS,
         "gating_dimension": GATING_DIMENSION,
@@ -161,11 +226,21 @@ def main() -> int:
         "pairs": run,
     }
     (HERE / "run-manifest.json").write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n")
+    # This key is DERIVED FROM A COMMITTED SEED and is itself committed, so it provides no blinding
+    # whatsoever: anyone who can read the branch can recompute it. That is fine for scoring
+    # synthetic fixtures and unusable for a real run, so the file says so about itself. A real run
+    # uses prepare_real_run.py, which draws fresh OS entropy and keeps the key outside the repo.
     (HERE / "blinding-key.json").write_text(json.dumps(
-        {"run_id": RUN_ID, "seed": SEED,
-         "warning": "SEALED. Do not open before all verdicts are recorded. Reviewers must never "
-                    "receive this file.",
-         "mapping": key}, indent=2) + "\n")
+        {"status": "DRY_RUN_ONLY_INVALIDATED_FOR_REAL_USE",
+         "invalidated_on": "2026-08-26",
+         "invalidated_by": "Controller decision C-C4",
+         "why": "Derived from a seed committed in the repository and committed as plain JSON, so "
+                "the arm mapping is recomputable by anyone who can read the branch. This is not "
+                "blinding.",
+         "replacement": "prepare_real_run.py — fresh OS entropy at preparation time, key stored "
+                        "outside the repository, only a salted SHA-256 commitment committed.",
+         "retained_because": "the synthetic dry-run fixtures are scored against this mapping.",
+         "run_id": RUN_ID, "seed": SEED, "mapping": key}, indent=2) + "\n")
     (HERE / "reviewer-packet-template.json").write_text(json.dumps(
         {"run_id": RUN_ID,
          "status": "TEMPLATE — plan text is placeholder because nothing has been generated",
@@ -177,6 +252,7 @@ def main() -> int:
         "tolerance": TOLERANCE, "prompt_sha256": prompt_hash[:16] + "...",
         "arm_A_is_generic_in_pairs": sum(1 for k in key if k["A"] == "generic"),
         "arm_A_is_oracle_in_pairs": sum(1 for k in key if k["A"] == "oracle_canon"),
+        "canon_first_by_role": out["blinding"]["canon_first_by_role"],
     }, indent=2))
     return 0
 
