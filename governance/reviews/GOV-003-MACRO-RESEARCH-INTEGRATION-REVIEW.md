@@ -14,7 +14,7 @@ integration decision, and the current-state documents that those two could have 
 
 **What this verdict means, and only means.** No repository-coherence defect was found that would
 mislead a future zero-context session about live project state, corrupt or overwrite evidence, or
-exceed an approved boundary. Seven coherence defects were found and are recorded in §7; each is
+exceed an approved boundary. Eight coherence defects were found and are recorded in §7; each is
 either corrected here inside the Governor's own files, or routed to its owner.
 
 **What this verdict does not mean.** It is not a statement that CANON-009's request-space reading,
@@ -52,7 +52,8 @@ repository and confirmed to be the merge base of all three branches.
 | `work/canon-009-request-space` | `3ca6e675dbbaa5359d0b67967a536e3c6ce01ead` | 1 | 9 | **0** |
 | `work/eval-007-capability-workflow` | `714630419e2cf077189679f5f3e5c04be8b654ec` | 1 | 11 | **0** |
 | `work/res-003-evidence-topology` | `2632016895ecd8a460eb4e23b43d8e24287de5ef` | 1 | 21 | **1** (`resources/HANDOFF.md`) |
-| `work/eval-008-model-access` | `9e3d0080592403511003d03ae8809d23bdd0ad79` | 3 | 1 | 1 — **see §7 finding N-3** |
+| `work/eval-008-model-access` | `9e3d0080592403511003d03ae8809d23bdd0ad79` | 3 | 1 | 1 — Controller-designated EVAL-008 branch, **no research work on it** — see finding N-3 |
+| `claude/eval-008-cloud-model-access-i3fl86` | `9cbb641376db93ccb2933c15fab3bb2c2610bd0a` | 3 | 9 | 0 — **where EVAL-008's work actually is**, open draft PR #21 — see §6 |
 
 **Authoritative disposition used as the reference for what was accepted:**
 `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md`.
@@ -187,7 +188,7 @@ fetching blocked, all three recorded it, and none upgraded a search result into 
 
 | Question | Evidence |
 |---|---|
-| Did any branch freeze a paid model roster? | **No.** `eval/model-access/2026-08-26/` — where EVAL-008's roster is required to live — **does not exist on any branch.** |
+| Did any of the three branches under review freeze a paid model roster? | **No.** None of them names a model roster at all. EVAL-008's proposed roster lives on a separate unmerged branch and authorises nothing — see §6. |
 | Did any branch admit a provider endpoint or price? | **No.** `endpoints_admitted: 0`; all nine forecast price cells `null`. |
 | Did any unqualified instrument become evidence? | **No.** EVAL-007 states *"No instrument is declared qualified by this document"* and *"No instrument is qualified. No threshold is proposed."* |
 | Did any benchmark score reach the Registry? | **No.** `registry-v1.jsonl` is byte-identical to base and holds 0 data rows. |
@@ -270,29 +271,76 @@ business metric look better than reality.
 
 ## 6. Fourth lane — EVAL-008, from GitHub evidence only
 
-**Status: assigned and active. No deliverable exists.**
+**Status: complete. All nine deliverables exist, on an unmerged branch, in open draft PR #21.**
+
+**A correction to an earlier reading in this same review session, recorded rather than quietly
+fixed.** This review's first pass reported EVAL-008 as having produced nothing. That was true of the
+repository as this session first fetched it and is no longer true: the work branch
+`claude/eval-008-cloud-model-access-i3fl86` was pushed **during** this review (last commit
+2026-08-26 08:33 UTC) and only appeared on a re-fetch prompted by reading the open pull-request list.
+**The lesson is the general one, not a one-off:** a branch listing is a snapshot, and a long review
+must re-check it before reporting a negative. The finding below is the corrected one.
 
 | Question | GitHub evidence |
 |---|---|
-| Is the task assigned? | Yes. `eval/tasks/EVAL-008-CLOUD-MODEL-ACCESS-RESEARCH.md` is on `main`, and `coordination/CONTROL-STATE.md` lists it as the single active assignment. |
-| Has any deliverable been produced? | **No.** The task requires nine files under `eval/model-access/2026-08-26/`. That directory **does not exist on `main`, on `work/eval-008-model-access`, or on any other branch.** **0 of 9 delivered.** |
-| Does the branch contain research work? | **No.** Its three commits are all Controller/task-authoring commits. It contains no research output. |
-| Is a paid model roster frozen anywhere? | **No.** No roster file exists. No branch names a selected model set. |
+| Is the task assigned? | Yes. `eval/tasks/EVAL-008-CLOUD-MODEL-ACCESS-RESEARCH.md` on `main`; the single active assignment in `CONTROL-STATE.md`. |
+| Have the deliverables been produced? | **Yes — 9 of 9**, all under `eval/model-access/2026-08-26/` on `claude/eval-008-cloud-model-access-i3fl86`. |
+| Is it merged? | **No.** Open **draft PR #21**, three commits ahead of the merge base `db13e4e`. |
+| Did it touch anything outside its own scope? | **No.** Every file it adds is under `eval/model-access/2026-08-26/`. The 36-capability contract, the 100-item bank, the Registry and the 30-brief bank are all byte-unchanged. |
+| Would merging it damage `main`? | **No.** Its merge base is on `main`, and a simulated merge is clean: the integration decision and the GOV-003 task both survive. **The branch is merely three commits behind, not destructive.** This was checked because the raw diff against `main` shows those two files as deletions — that is an artifact of comparing a behind-branch to `main`, not a deletion the branch performs. |
 
-**The model-selection-before-sourcing rule is intact in the task text** on both `main` and the
-branch: select models independently first, then check Frontier Clouds, then fal, then direct or
-other providers, and the Controller Brief must prove sourcing did not drive selection.
+### Was the model-selection-before-sourcing rule honoured?
 
-**GOV-003 has not frozen, implied or pre-empted any model roster.** This review makes no statement
-about which models should be tested.
+**Yes, and it is evidenced mechanically rather than asserted** — which is the correct standard for a
+rule whose whole purpose is to stop available credits from deciding what the project studies.
 
-One divergence between the two copies of the EVAL-008 task file is recorded as finding N-3.
+The roster files were committed in `9583864` at 08:26:47 UTC with no provider-route content; the five
+sourcing artifacts followed in `469331e` at 08:31:36 UTC and **changed none of the selection files**.
+The ordering is therefore checkable in git rather than taken on trust. The machine-readable evidence
+file records `selection_independent_of_sourcing: true` and `authorises_spend: false`.
 
----
+### Does any of it represent a paid model roster as frozen or authorised?
+
+**No.** This was the specific thing GOV-003 was told to check, and it holds.
+
+- The brief states in terms: *"This task authorises nothing. No model is qualified, ranked, admitted
+  or entered in any Registry. No budget is approved, no account created, no terms accepted, ₹0 spent,
+  no merge requested."*
+- `model-selection-evidence.yaml` carries `authorises_spend: false` and `registry_rows_created: 0`.
+- The Registry is byte-unchanged and still holds zero rows.
+- Prices are explicitly not usable as a budget: the brief demonstrates two third-party sources giving
+  "$0.03/sec" and "$0.40/sec" for the same model where the provider's own page says $0.40 **per
+  video, billed per count, not per second** — and concludes *"Do not budget from any price in these
+  artifacts except the Google ones."*
+
+**GOV-003 itself has frozen nothing and takes no position on which models should be tested.**
+
+### One wording risk, recorded as finding N-8
+
+`MODEL-ROSTER-FIRST.md` opens with **"Status: FROZEN for this task."** In context this plainly means
+*committed before sourcing began, so the ordering is provable* — the next paragraph says exactly that.
+Read alone by a skimming zero-context agent, "FROZEN" is the project's word for a Controller-settled
+artifact. Low severity: every surrounding artifact contradicts the wrong reading. Recorded so the
+Controller can decide whether to ask for a rewording before merge.
+
+### Two things EVAL-008 reported honestly that the Controller should act on
+
+Recorded here as observations of the record, not as Governor judgements about model choice.
+
+- **"Frontier Clouds" could not be identified.** Three searches returned no public service by that
+  name, so the availability pass could not run. The task permitted this outcome and the roster was
+  completed anyway; a 26-row checklist sits ready. **The single cheapest unblock available to the
+  Controller is naming what that service is.**
+- **Almost nothing was read from a provider's own site.** 37 domains probed, **one answered**
+  (`cloud.google.com`); the rest returned 403 under the session's network policy. Most sourcing
+  therefore rests on a search tool's reading, is labelled with an evidence tier saying so, and
+  version identity is genuinely ambiguous for five models. The brief makes version-pinning from the
+  provider's own catalogue a precondition of measurement rather than treating the ambiguity as
+  resolved.
 
 ## 7. Findings
 
-All seven are non-blocking. Severity follows the contract's test: *what would a future zero-context
+All eight are non-blocking. Severity follows the contract's test: *what would a future zero-context
 session wrongly believe?* — not how untidy the file looks.
 
 | ID | Finding | Severity | Owner | Status |
@@ -304,6 +352,7 @@ session wrongly believe?* — not how untidy the file looks.
 | N-5 | Pre-existing BSTD 351-vs-364 documentation discrepancy still open | **Low** | Resources | routed — already visible |
 | N-6 | The "authoritative" 36-capability contract is internally labelled `PROPOSED_FOR_CONTROLLER_REVIEW` | **Low** | Eval / Controller | routed |
 | N-7 | `PROJECT-MEMORY.md` never described the accepted V1 architecture baseline at all | **Medium** | Governor | **corrected here** |
+| N-8 | EVAL-008's roster file is headed "Status: FROZEN for this task" | **Low** | Eval / Controller | routed |
 
 ### N-1 — the stale workstream status document · Medium · Controller
 
@@ -335,6 +384,13 @@ wrong action, and this task adds the third:
 
 That makes the misleading path closed for anyone following the documented bootstrap, which is why
 the severity is Medium rather than High. It is a mitigation, not a repair.
+
+**Evidence that the stale wording is actively propagating, not merely sitting there.** EVAL-008's
+Controller Brief — written during this review, by a worker with no access to this session — closes
+with *"The project's audit freeze is untouched."* Nothing turns on it there, and the statement is
+harmless in its context. But it shows a current worker reproducing a framing the Controller re-scoped
+twice, which is what a stale current-state document does. **This is the concrete argument for
+refreshing `WORKSTREAM-STATUS.md` rather than leaving it to be superseded implicitly.**
 
 **Why the Governor did not simply fix it.** Writing factual current-state corrections into
 `coordination/**` requires an approved governance task that includes that scope
@@ -393,9 +449,23 @@ on `main`: the macro-research integration decision and the GOV-003 task. **A zer
 agent that bootstraps from its own branch would never see the Controller decision that currently
 governs the project**, and would read a `CONTROL-STATE.md` that predates the integration.
 
-**Recommended, and for the Controller to do, not the Governor:** bring `work/eval-008-model-access`
-up to date with `main`, and decide which wording of the anti-bias clause stands. Neither is a
-Governor call — the task file is Eval-owned and the wording is a Controller decision.
+**A third branch name is now in play, and it is the one that matters.** EVAL-008's actual work is on
+`claude/eval-008-cloud-model-access-i3fl86` (§6), not on either copy above. The EVAL-008 worker
+**identified this discrepancy itself and reported it rather than acting on it**: the task file names
+`work/eval-008-model-access`, its session instruction designated the `claude/...` branch, it used the
+designated one and flagged the difference — *"if you want them on the task file's branch name, that
+is a rename, not rework."* Its machine-readable evidence file records both names side by side. That
+is the correct handling of a conflicting instruction and no defect attaches to the worker.
+
+**The defect that remains is on the repository side:** three branch names now refer to one task, and
+`coordination/CONTROL-STATE.md` names only the one that holds no work. A zero-context agent asked to
+review EVAL-008 would look in the wrong place.
+
+**Recommended, and for the Controller to do, not the Governor:** settle which branch name is
+canonical for EVAL-008 and update `CONTROL-STATE.md` to point at it; bring
+`work/eval-008-model-access` up to date with `main` or retire it; and decide which wording of the
+anti-bias clause stands. None is a Governor call — the task file is Eval-owned and the wording is a
+Controller decision.
 
 ### N-4 — GOV-002 was assigned but never run · Low · Governor · **corrected in this task**
 
@@ -447,6 +517,25 @@ empirical evidence about any model**. Each count in it was verified mechanically
 dropped the "What remains accepted from V1" inventory that its predecessor at the research base
 carried. No harm follows now that memory carries it, and the V1 integration decision remains the
 owning record either way.
+
+### N-8 — "FROZEN for this task" on the EVAL-008 roster · Low · Eval / Controller
+
+**File:** `eval/model-access/2026-08-26/MODEL-ROSTER-FIRST.md`, on the unmerged EVAL-008 branch.
+
+**The wording.** Its header reads **"Status: FROZEN for this task."** The document explains itself
+immediately — it was committed before any sourcing analysis so the ordering is provable — and the
+brief and the machine-readable evidence file both state that nothing is authorised. In context the
+meaning is clear and correct.
+
+**Why it is recorded at all.** In this repository "frozen" is the word used for artifacts the
+Controller has settled: the 96-item validated battery, the identity rubric V0, the 30-brief bank.
+A skimming reader who sees "FROZEN" on a page listing 26 models and 16 "Must" rows could take it for
+a settled roster. Everything around it says otherwise, so this is self-correcting on contact and
+therefore Low.
+
+**Not a Governor edit.** The file is Eval-owned and unmerged. Routed so the Controller can ask for
+"committed before sourcing, for ordering proof" instead of "FROZEN" if it wants the ambiguity gone
+before merge.
 
 ### N-5 — BSTD 351 vs 364 · Low · Resources · already visible, not introduced here
 

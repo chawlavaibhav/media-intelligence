@@ -346,16 +346,41 @@ changes are metadata and grouping — reference-to-production-step lineage, more
 person identity, longer continuous speech, commercial Hinglish and brand-name material, grouped
 campaign examples, and both short and longer video durations. **Exact pack sizes are not frozen.**
 
-### EVAL-008 — model selection first, sourcing second
+### EVAL-008 — model selection first, sourcing second · returned, unmerged
 
-A fourth lane is open: `eval/tasks/EVAL-008-CLOUD-MODEL-ACCESS-RESEARCH.md`, branch
-`work/eval-008-model-access`. Its governing rule is that **which models to test is decided
-independently of where credits happen to be available**; only then is sourcing checked, in the order
-Frontier Clouds → fal → direct or other provider.
+A fourth lane ran alongside the three research programmes: `eval/tasks/EVAL-008-CLOUD-MODEL-ACCESS-RESEARCH.md`.
+Its governing rule is that **which models to test is decided independently of where credits happen to
+be available**; only then is sourcing checked, in the order Frontier Clouds → fal → direct or other
+provider. Credits may optimise what execution costs; they must never shape what the project chooses
+to learn about.
 
-**Status from GitHub evidence, checked in GOV-003: assigned and active, with 0 of its 9 deliverables
-produced.** The directory they must live in, `eval/model-access/2026-08-26/`, **does not exist on any
-branch.** `[repo]` **No paid model roster is frozen anywhere in this repository.**
+**Status as of 26 Aug 2026: complete, all nine deliverables produced, not merged.** `[repo]` They
+live under `eval/model-access/2026-08-26/` on branch `claude/eval-008-cloud-model-access-i3fl86`,
+open as **draft PR #21**. Note the branch name: the task file names `work/eval-008-model-access`,
+which holds no research work. Three branch names now refer to this one task and the Controller has
+not yet settled which is canonical.
+
+**The ordering rule was honoured, and provably so.** The roster was committed at 08:26 UTC with no
+provider-route content; the sourcing artifacts followed at 08:31 and changed none of the selection
+files, so the independence is checkable in git rather than asserted. Verified in GOV-003.
+
+**Nothing about it is authorised.** `[repo]` **26 rows were proposed — 16 Must, 10 Should — and no
+model is selected, admitted, qualified or budgeted.** The brief states that the task authorises
+nothing; the machine-readable evidence records `authorises_spend: false` and zero Registry rows; the
+Registry is still empty. **No paid model roster is frozen anywhere in this repository**, and the
+"FROZEN for this task" heading on the roster file means only "committed before sourcing began".
+
+**Two open items it reported rather than decided.** `[unresolved]`
+
+- **"Frontier Clouds" could not be identified** — three searches found no public service by that
+  name, so the first sourcing step never ran. A 26-row checklist is written and waiting. Naming that
+  service is the cheapest unblock available.
+- **Almost no provider page could be read.** 37 domains probed, **one answered**; the rest returned
+  403. Most sourcing rests on a search tool's reading and is labelled as such, and version identity is
+  ambiguous for five models. **Do not budget from any price in those artifacts** — the brief
+  demonstrates two third-party sources disagreeing by more than tenfold on one model where the
+  provider's own page uses a different billing unit entirely. Every row must be version-pinned from
+  the provider's own catalogue before it is measured.
 
 ### Architecture objects — what does not exist yet
 
@@ -376,7 +401,9 @@ which was flagged in GOV-003 and is the Controller's to refresh.
 
 ### What is authorised now
 
-- **EVAL-008 only** — model selection, then sourcing. Research and documentation; no calls, no spend.
+**Nothing new.** EVAL-008 — the last assigned domain task — has returned. Four research programmes
+(CANON-009, EVAL-007, RES-003, EVAL-008) are complete and **all four are unmerged**. The next move
+in every direction is a Controller decision.
 
 ### What is blocked, and is not made authorised by any older file
 
@@ -405,7 +432,8 @@ From the Controller's integration decision, in the order it gives:
 
 1. Governor coherence review of the three research branches, then merge of the accepted evidence —
    **the review is done (GOV-003); the merge is the Controller's.**
-2. EVAL-008 returns a model roster and a sourcing map.
+2. EVAL-008 returns a model roster and a sourcing map — **done, unmerged**, with the Frontier Clouds
+   identity and the version-pinning of each row still open.
 3. Formal specifications for the Normalized Request additions, Capability Contract v2, the condition
    contract and outcome topology v3.
 4. The request-coverage brief extension is defined.
@@ -531,6 +559,7 @@ capability claim and no Registry entry. `[external]`
 | 26 Aug 2026 | EVAL-006 paused before execution; its spend authority withdrawn | `coordination/decisions/CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md` |
 | 26 Aug 2026 | Macro reset: paid benchmarking paused, three independent research programmes commissioned | `coordination/decisions/CONTROLLER-CLOUD-MACRO-RECALIBRATION-2026-08-26.md` |
 | 26 Aug 2026 | CANON-009, EVAL-007 and RES-003 return; Controller issues the joint integration disposition | `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md` |
+| 26 Aug 2026 | EVAL-008 returns a 26-row proposed model roster with sourcing; nothing authorised | `eval/model-access/2026-08-26/` (unmerged, draft PR #21) |
 | 26 Aug 2026 | GOV-003 coherence review of the three research branches — PASS with non-blocking notes; branches unmerged at review | `governance/reviews/GOV-003-MACRO-RESEARCH-INTEGRATION-REVIEW.md` |
 
 ## 10. Authority map — which file proves what
