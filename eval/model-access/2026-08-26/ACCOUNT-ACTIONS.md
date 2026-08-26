@@ -8,65 +8,87 @@
 
 ## The short version
 
-**You need to do one thing before anything else, and it is not creating an account.**
+**Frontier Clouds is resolved: it means GCP, AWS and Azure.** That answer alone moved seven
+roster rows onto credits you already hold, and removed one model from the "new account" list.
 
-Tell us what **Frontier Clouds** actually is — the URL you sign in at, or a screenshot of its
-model list. Three searches could not identify any public service by that name, and until we
-know what it is, we cannot tell you which of the 26 models you are already paying for. That
-one answer could remove most of the rest of this page.
+Where that leaves you:
 
-Everything below assumes Frontier Clouds stays unknown. If it turns out to carry a lot of the
-roster, several of these actions disappear.
+- **7 of 26 rows — no action.** Already on your Google Cloud and Azure credits.
+- **~15 rows — no new account.** Covered by your existing fal access, pending a version check.
+- **2 rows — new access needed.** Sarvam AI, and Runway subject to one check.
+- **AWS contributes nothing** to this roster, and that is worth knowing before a budget.
 
-**Nothing on this page needs money today.** Every account named can be created, or at least
-inspected, without a payment commitment, and no paid run is authorised by this task anyway.
-Prepaid credits are deliberately not recommended — that decision belongs after a budget is
-approved, not before.
-
----
+**Nothing on this page needs money today.** Every account named can be created, or inspected,
+without a payment commitment, and no paid run is authorised by this task anyway. Prepaid
+credits are deliberately not recommended — that decision belongs after a budget is approved.
 
 ## Bucket 1 — No action, covered by your existing Frontier Clouds credits
 
-**Currently: cannot be filled. 0 of 26 rows.**
+**7 of 26 rows.** Full detail in `FRONTIER-CLOUDS-AVAILABILITY.md`.
 
-This is not "none of your credits are useful". It is "we do not know what your credits buy",
-which is a different and much more fixable problem. `FRONTIER-CLOUDS-VERIFY.md` holds the exact
-26-row checklist to run against that catalogue once you tell us where it is; it is a lookup of
-well under an hour, not a research task.
+**Google Cloud — Vertex AI (4 rows, prices verified from Google's own pages):**
 
-Two questions worth answering at the same time, because both are cheap now and expensive later:
+> **Nano Banana 2** · **Veo 3.1** (plus its Fast and Lite tiers) · **Nano Banana Pro** ·
+> **Gemini Omni Flash**
 
-- **Do the credits cover image and video generation, or only text models?** Many credit grants
-  quietly exclude media generation, which is where essentially all our cost sits.
-- **Is it a first-party host or a reseller?** If it resells someone else's endpoints, its version
-  pinning and controls are inherited, and a Capability Registry row has to name whatever actually
-  ran the generation.
+These are the only rows in the whole task with exact identities, GA dates and printed prices we
+read ourselves. Veo's three tiers also give us the cost-ladder experiment — **$0.05 to $0.40 per
+generation, an 8× spread inside one family** — priced by the vendor.
 
----
+**Microsoft Azure — Microsoft Foundry (3 rows, needs console confirmation):**
+
+> **GPT Image 2** (`gpt-image-2`) · **FLUX.2 [pro]** (FLUX 2 Pro) · **MAI-Image-2.5-Pro**
+
+**MAI-Image-2.5-Pro is a correction to our first pass.** We previously recorded it as having no
+evidenced route at all and recommended taking no action. That was wrong. It is a Microsoft model,
+so it lives on Microsoft's cloud: released on Foundry 23 July 2026, deployable from the portal or
+Azure CLI at model version 2026-06-02 or later, with **South India** among its regions. It needs
+no new vendor account.
+
+**AWS — Bedrock: 0 rows, and a warning.**
+
+Bedrock carries none of this roster. Its media catalogue is Stability AI and Luma Ray v2, and
+Amazon's own models are being retired rather than expanded — **Nova Canvas is Legacy with an
+end-of-life of 30 September 2026**, Nova Reel is Legacy across all regions. None of those earned a
+roster slot, and a Registry entry against a model with a published end-of-life would expire almost
+immediately.
+
+**Practical consequence: if a large share of your credits sits on AWS, they will not buy this
+programme.** Worth checking the split before a budget is set.
+
+**Two things to confirm in your own console** — this session could not reach AWS or Azure pages:
+
+1. **The three Azure rows**, recording the exact deployed version string for each.
+2. **Whether your credits actually cover media generation.** Credit grants frequently cover
+   language models and exclude image and video, which is where all of this programme's cost sits.
+   This is the largest remaining unknown in the task.
 
 ## Bucket 2 — Covered by your existing fal access, no new account
 
-**Currently: up to 20 of 26 rows, at varying confidence. No new signup needed for any of them.**
+**14 of the 19 rows your cloud credits do not cover, at varying confidence. No new signup needed.**
 
-Your existing fal access appears to be the single most valuable thing you already have for this
-work: one key, one bill, and most of the roster behind it.
+fal appears to carry more of this roster than all three hyperscalers combined — one key, one bill,
+and the entire video and voice middle of the list. Six rows that fal also carries (GPT Image 2,
+Nano Banana 2 and Pro, FLUX.2 [pro], Veo 3.1, Gemini Omni Flash) are routed to your cloud credits
+instead, per your stated preference; fal remains their fallback.
 
-**High confidence — fal's own model pages describe these (13 rows):**
+Three further rows — **Qwen-Image, Recraft V3, FLUX.2 [klein]** — we could not confirm either way,
+and two (**Runway Aleph 2.0, Sarvam Bulbul v3**) appear genuinely absent.
 
-> GPT Image 2 · Reve 2.1 · Seedance 2.0 Pro · HappyHorse 1.1 · Veo 3.1 · Kling 3.0 ·
-> MiniMax H3 · ElevenLabs v3 · Sync-3 · Ideogram V3 · Gemini Omni Flash ·
-> Marey Realism V1.5 · OmniHuman v1.5
+**High confidence — fal's own model pages describe these (10 rows):**
 
-**Present but the version needs pinning before use (7 rows):**
+> Reve 2.1 · Seedance 2.0 Pro · HappyHorse 1.1 · Kling 3.0 · MiniMax H3 · ElevenLabs v3 ·
+> Sync-3 · Ideogram V3 · Marey Realism V1.5 · OmniHuman v1.5
 
-> Nano Banana 2 · Nano Banana Pro · Seedream 5.0 Pro · FLUX.2 [pro] · Seedance 2.0 Fast ·
-> Wan 2.7 (2.6 also appears) · LTX-2 (fal's page says 2.3)
+**Present but the version needs pinning before use (4 rows):**
+
+> Seedream 5.0 Pro · Seedance 2.0 Fast · Wan 2.7 (2.6 also appears) · LTX-2 (fal's page says 2.3)
 
 **The one action here is not a signup — it is a look.** From any machine that can reach
 `fal.ai`, open each model page and write down the **exact endpoint id and version**. That
 converts this whole bucket from "probably fine" to "confirmed", and it is the difference between
 a Registry row that means something and one that does not. fal reportedly also offers a model
-search API, which would make this a single scripted call rather than 20 page visits.
+search API, which would make this a single scripted call rather than a page-by-page trawl.
 
 **Why this matters more than it sounds.** We could not open a single fal page from this session
 — the network policy blocked it. Everything above comes from a search tool reading fal's pages
@@ -76,7 +98,8 @@ on our behalf. It is good enough to plan with. It is not good enough to spend wi
 
 ## Bucket 3 — New access genuinely required
 
-**Three rows. One is a Must, and it is the difficult one.**
+**Two rows, down from three.** MAI-Image-2.5-Pro left this bucket when Frontier Clouds resolved
+to the hyperscalers — it is on Azure, on credits you already have.
 
 ### 3a. Sarvam AI — for Bulbul v3 · *recommended, low friction*
 
@@ -119,17 +142,16 @@ quietly swap in the product and call it the same measurement.
 **Can payment wait?** Yes for a standard signup. If it is enterprise-only, cost is unknown and
 that is itself the finding.
 
-### 3c. Microsoft / Azure — for MAI-Image-2.5-Pro · *do not act yet*
+### 3c. Microsoft / Azure — *no longer needed*
 
-**What to do: nothing, until the route exists.** We found this model only through leaderboard
-reporting — currently first on blind-preference image *editing* — and **no documented API route
-at all**. Azure AI Foundry is the plausible home, but that is an inference, not a finding.
+**Previously in this bucket; now resolved.** MAI-Image-2.5-Pro was recorded as having no evidenced
+route, with a recommendation to take no action. Resolving Frontier Clouds to the three hyperscalers
+fixed it: it is a Microsoft model on Microsoft Foundry, released 23 July 2026, available in a South
+India region, on your existing Azure access. It has moved to Bucket 1.
 
-**Recommendation: leave it.** It is a Should row, not a Must, and two other editing models on the
-roster (Reve 2.1 and FLUX.2) cover the same hypothesis. Establish the route first; create an
-account only if the row survives that check.
-
----
+**Worth stating plainly, because it cuts both ways.** This is the clearest case in the task of an
+answer improving once the route question was settled — and also a reminder that our first pass was
+confidently wrong about it. Confirm it in your own catalogue before relying on it.
 
 ## A fourth kind of account, which is not an API signup
 
@@ -152,11 +174,12 @@ from a hosted route, we must label it as hosted economics — not as open econom
 
 | When | Action | Effort | Cost |
 |---|---|---|---|
-| **First** | Tell us what Frontier Clouds is — URL or model-list screenshot | Minutes | ₹0 |
-| **Second** | From a machine that can reach `fal.ai`, capture exact endpoint ids and versions for the ~20 rows in Bucket 2 | Under an hour, or one API call | ₹0 |
-| **Third** | Check whether Runway's API is still open to standard signups | Minutes | ₹0 |
-| **Fourth** | Create a Sarvam AI account and read its current pricing and terms | Minutes | ₹0 |
-| **Fifth** | Confirm the exact version of every row from the provider's own catalogue | A few hours | ₹0 |
+| **First** | Check whether your GCP/AWS/Azure credits cover **media generation**, not just language models — and how the credit is split across the three | Minutes | ₹0 |
+| **Second** | Confirm the three Azure rows in Microsoft Foundry (`gpt-image-2`, FLUX 2 Pro, MAI-Image-2.5-Pro at version 2026-06-02+), recording exact version strings | Minutes | ₹0 |
+| **Third** | From a machine that can reach `fal.ai`, capture exact endpoint ids and versions for the ~15 rows in Bucket 2 | Under an hour, or one API call | ₹0 |
+| **Fourth** | Check whether Runway's API is still open to standard signups | Minutes | ₹0 |
+| **Fifth** | Create a Sarvam AI account and read its current pricing and terms | Minutes | ₹0 |
+| **Sixth** | Version-pin every remaining row from the provider's own catalogue | A few hours | ₹0 |
 | **Later, and only with Controller approval** | Reconcile 26 roster rows against the previously planned 19-slot capacity, approve a budget, then run | — | Not authorised by this task |
 
 ---
