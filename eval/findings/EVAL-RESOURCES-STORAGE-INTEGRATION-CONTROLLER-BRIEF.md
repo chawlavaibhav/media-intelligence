@@ -362,7 +362,8 @@ smuggled into a micro-fix.
 
 | | |
 |---|---|
-| Eval commit | `d48d46c` |
+| Eval commit carrying the micro-fix | `9458dea` |
+| This SHA recorded by | the follow-up commit below (a commit cannot contain its own hash) |
 | Branch | `work/eval-v1-overnight` — **not merged** |
 | Cross-branch gate | **exit 0**, zero violations in all five categories |
 | Spend | ₹0 · 0 paid calls · 0 Registry entries · 0 instruments qualified |
