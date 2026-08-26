@@ -1,0 +1,332 @@
+# CANON-009 / C9-B — Media Request Grammar v1, PROPOSED.
+#
+# STATUS: PROPOSAL. Nothing here is an approved schema, and nothing here edits a frozen spec.
+#
+# WHAT A "GRAMMAR" MEANS HERE. Not a syntax for writing prompts. A set of COMPONENTS that recur
+# across real media-generation requests, each of which a production system either has to satisfy,
+# decide, or ask about. The test of a component is: could a request be right or wrong on this axis?
+#
+# DELIBERATELY NOT COLLAPSED INTO A COMPLEXITY SCORE. The runbook forbids it and the reason is
+# substantive: "exact text + person identity" and "six variants of a simple packshot" are both hard,
+# in ways that need entirely different production routes. One number would hide the difference that
+# matters.
+#
+# EVIDENCE LABELS, applied per component:
+#   source_supported_quantitative — a real-user corpus reports a figure
+#   source_supported_qualitative  — a real-user corpus or peer-reviewed study shows the component
+#                                   exists and recurs, without a usable frequency
+#   corroborated_benchmark_vocab  — the component appears in benchmark taxonomies. Vocabulary
+#                                   evidence only; benchmark proportions are NOT demand evidence.
+#   inferred                      — reasoned from the above, not directly observed
+#   unknown                       — we do not know, and say so
+#
+# THE STANDING CAVEAT. No corpus in the register captures a COMMERCIAL BRIEF. Every real-user source
+# captures a model prompt or a single-asset edit request. So components below marked commercial
+# (objective, brand mandatories, acceptance) rest on qualitative practitioner evidence or on our own
+# product scope — never on measured demand. That gap is the headline finding of C9-A.
+
+meta:
+  task: CANON-009 / C9-B
+  version: v1-proposal
+  status: PROPOSED_NOT_APPROVED
+  date: 2026-08-26
+  verification_level: search_verified (no primary page opened — see register meta)
+
+components:
+
+# ── 1 · Requested operation ─────────────────────────────────────────────────────
+- id: G01
+  component: requested_operation
+  question_it_answers: What is the system being asked to DO?
+  evidence: source_supported_qualitative
+  values_observed:
+    generate_from_nothing:
+      evidence: SRC-01, SRC-07 — entire corpora are text-only generation
+    edit_supplied_asset:
+      evidence: SRC-03, SRC-04, SRC-05 — 82,976 real requests in SRC-03 alone
+      sub_operations_corroborated: [add, remove, replace, alter, background_change, style_change,
+                                    action_change, object_extraction, restoration, counting_change,
+                                    relation_change]
+      sub_operation_evidence: corroborated_benchmark_vocab (SRC-06) plus SRC-03 action-verb dimension
+    animate_supplied_asset:
+      evidence: SRC-08 — 1.70M+ real text+image pairs; the text instructs motion on the image
+    extend_or_continue: unknown
+    compose_multiple_assets: source_supported_qualitative (SRC-05 multi-turn; SRC-06 hybrid_edit)
+    produce_variant_set: source_supported_qualitative (SRC-12 "creative versioning"); frequency unknown
+  why_this_is_component_one: >
+    Because it changes everything downstream. A generate request has no asset to preserve; an edit
+    request is defined by what must NOT change; an animate request is a motion instruction on
+    something that already exists. SRC-08 states this structurally — its prompts focus on bringing
+    the supplied image's static elements to life rather than describing a scene.
+  project_status: >
+    NOT REPRESENTED in Creative IR. See CREATIVE-IR-AND-CANON-GAPS.md G-IR-01. This is the single
+    highest-consequence finding of CANON-009.
+
+# ── 2 · Output media type ───────────────────────────────────────────────────────
+- id: G02
+  component: output_media_type
+  evidence: source_supported_qualitative
+  values_observed: [static_image, video, image_sequence_multi_turn, audio_or_speech_track]
+  notes: >
+    Separate corpora exist per modality (SRC-01 image, SRC-07 T2V, SRC-08 I2V), which is itself
+    evidence that the modalities are distinct request populations rather than one space.
+    No real-user corpus in the register covers speech/voiceover requests.
+  project_status: represented — Creative IR has static and video extensions
+
+# ── 3 · Subject / entity types ──────────────────────────────────────────────────
+- id: G03
+  component: subject_entity_types
+  evidence: source_supported_quantitative
+  quantitative_findings:
+    - source: SRC-02
+      finding: >
+        woman 22.26% of images, man 16.2%, dress 6.92%, hair 5.51%, room 5.44%, flower 5.33%,
+        after removing adjectives and aesthetic/style words.
+      population_caveat: enthusiast T2I Discord users; recreational-dominant
+    - source: SRC-08
+      finding: >
+        Top-3 I2V subjects — "person", "astronaut", "portrait painting" — all human-related; the
+        paper describes user preferences as unbalanced.
+      population_caveat: >
+        "astronaut" and "portrait painting" are a clear hobbyist signature. The HUMAN dominance is
+        the transferable finding; the specific subjects are not.
+  the_transferable_finding: >
+    PEOPLE DOMINATE, across two independent corpora, two different modalities and two different
+    interfaces. Roughly 38% of SRC-02 images are woman-or-man as primary subject, and all three of
+    SRC-08's top subjects are human-related.
+  what_it_does_not_show: >
+    Nothing about PRODUCTS. No corpus in the register reports product or packaged-good frequency,
+    which is the subject our first product exists to serve. Recorded as unknown, not inferred.
+  project_status: represented — Creative IR entities[] with type product|mascot|person|character|venue|object
+
+# ── 4 · References supplied and their role ──────────────────────────────────────
+- id: G04
+  component: supplied_references_and_role
+  evidence: source_supported_qualitative
+  findings:
+    - SRC-08 — an image prompt IS a supplied reference, in 1.70M+ real requests
+    - SRC-03, SRC-04 — the input photograph is the thing to be preserved and modified
+  role_distinction_status: unknown
+  role_distinction_note: >
+    No corpus distinguishes "keep this person's face" from "match this lighting" from "use this as
+    inspiration". SPEC-01 already draws that distinction, and does so more finely than any evidence
+    source found — the spec is AHEAD of the corpora here, which is worth recording as a strength
+    rather than a gap.
+  project_status: represented — assets[].role with six values, and applies_to for identity_reference
+
+# ── 5 · Entity relationships and actions ────────────────────────────────────────
+- id: G05
+  component: entity_relationships_and_actions
+  evidence: source_supported_qualitative
+  findings:
+    - SRC-03 taxonomy carries an action_verb dimension over 82,976 real requests
+    - SRC-06 vocabulary includes explicit relation and action categories
+    - SRC-08 annotates action separately from camera motion
+  project_status: represented — Creative IR relationships[] with subject/relation/object
+
+# ── 6 · Identity and preservation requirements ──────────────────────────────────
+- id: G06
+  component: identity_and_preservation
+  evidence: source_supported_qualitative
+  findings:
+    - >
+      SRC-03/04/05 are entirely constituted by this: an edit request is a statement about what must
+      change against an implied background of everything that must not.
+    - >
+      SRC-04's stated motivation is ecological validity — that synthetic edits fail to represent
+      real user needs, which are anchored to the user's own image.
+  strength_of_evidence: >
+    Strong on existence and centrality. NO source quantifies WHICH dimensions of identity users
+    expect preserved — face, garment, packaging geometry, label. That is exactly the distinction
+    SPEC-01 makes with entities[].invariants, and no corpus tests it.
+  project_status: represented and unusually well specified — invariants + allowed_variation
+
+# ── 7 · Text, logo and brand requirements ───────────────────────────────────────
+- id: G07
+  component: text_logo_brand_requirements
+  evidence: corroborated_benchmark_vocab
+  frequency_in_real_requests: unknown
+  what_is_established:
+    - >
+      A dedicated benchmark family exists (SRC-13), and its authors motivate it with advertising and
+      brand-name rendering.
+    - >
+      One benchmark enumerates ten visual-text carriers said to cover use cases observed in real
+      deployment: poster, advertisement, cover, logo, sticker, handwriting, scene, basic, artistic,
+      academic.
+    - SRC-06 (MagicBrush) includes "text or pattern modification" as an edit category.
+  what_is_NOT_established: >
+    HOW OFTEN real users request text in an image. No figure was found in any real-user corpus.
+    This matters directly: 28 of our 30 briefs require exact strings. Whether that is correct for a
+    commercial product or a serious over-weighting CANNOT BE SETTLED from the evidence found.
+    Recorded as the sharpest open question in the audit.
+  project_status: represented — copy.exactness (exact|approximate|free), brand.mandatories, script_system
+
+# ── 8 · Visual / camera / style requirements ────────────────────────────────────
+- id: G08
+  component: visual_camera_style
+  evidence: source_supported_quantitative
+  findings:
+    - source: SRC-02
+      finding: >
+        Style and quality modifiers DOMINATE prompt text — "cinematic", "highly detailed", "8k" —
+        reflecting folklore that such qualifiers improve output.
+    - source: SRC-02
+      finding: >
+        "artstation" / "trending on artstation" were top-prominent in 2022 and out of the top 10 by
+        2023.
+      why_it_matters: >
+        Style vocabulary is MODEL-CONTINGENT AND TIME-BOUND. It decays as models improve. This is
+        the clearest evidence in the whole register that a request component can be an artifact of
+        the tool rather than of the customer's want — and therefore that it belongs in Production IR,
+        not in a durable statement of what should exist.
+    - source: SRC-08
+      finding: camera motion is annotated as its own dimension, separate from subject action
+  project_status: partially represented — Creative IR has visual_language; camera motion sits in
+    VideoCreativeExtension only implicitly
+
+# ── 9 · Motion and temporal requirements ────────────────────────────────────────
+- id: G09
+  component: motion_and_temporal
+  evidence: source_supported_qualitative
+  findings:
+    - >
+      SRC-08: beyond the generic "move", users request specific movements — "zoom", "walk", "blink".
+      Note "zoom" is camera, "walk" is subject, "blink" is micro-expression: three different
+      production problems inside one component.
+    - SRC-08 annotates action and camera motion as separate dimensions
+  duration_and_beats: unknown
+  duration_note: >
+    No real-user corpus in the register records requested DURATION, shot count or beat structure.
+    Our brief bank specifies 6–20s durations and beat structures throughout. That is a product-scope
+    decision, not an evidence-backed one, and should be labelled as such.
+  project_status: represented — VideoCreativeExtension temporal_structure and temporal_hierarchy
+
+# ── 10 · Speech and audio requirements ──────────────────────────────────────────
+- id: G10
+  component: speech_and_audio
+  evidence: unknown
+  finding: >
+    NO real-user corpus in the register covers speech, voiceover or dialogue requests. Every source
+    is silent, image or video-without-audio.
+  consequence: >
+    Twelve of our 30 briefs carry exact spoken scripts. That has NO external support as a recurring
+    request pattern — which does not make it wrong (it follows from the first-product scope), but it
+    must not be presented as evidence-backed.
+  project_status: partially represented — dialogue_intent exists; language.spoken is separate
+
+# ── 11 · Delivery, platform and format ──────────────────────────────────────────
+- id: G11
+  component: delivery_platform_format
+  evidence: inferred
+  finding: >
+    SRC-01 records image_size as a hyperparameter, which is an interface setting rather than a
+    customer requirement. No corpus records a requested PLATFORM or aspect ratio as an intent.
+  why_the_absence_is_expected: >
+    These corpora come from model interfaces where format is a control, not a brief. A customer
+    asking for "an Instagram Reel" is stating a delivery constraint; a Discord user setting 512x768
+    is operating a tool. The absence is a property of the sources, not of the world.
+  project_status: represented — delivery.platform, aspect_ratios[], duration, resolution
+
+# ── 12 · Number of outputs / variants / campaign sets ───────────────────────────
+- id: G12
+  component: output_cardinality_and_variants
+  evidence: source_supported_qualitative
+  findings:
+    - >
+      SRC-05 part 3: 95K multi-turn editing sequences, up to five rounds. A real request is often a
+      SEQUENCE, refined across turns, not a single specification.
+    - >
+      SRC-12: "creative versioning" recurs as a named commercial activity — many variants of one
+      creative for different markets, formats or placements.
+  frequency: unknown
+  project_status: >
+    NOT REPRESENTED. Creative IR describes one artefact. It has no field for "six variants", "one per
+    market", or "this is round three of a conversation". See G-IR-02 and G-IR-03.
+
+# ── 13 · Customer-specified vs commonly omitted ─────────────────────────────────
+- id: G13
+  component: specified_vs_omitted_decisions
+  evidence: source_supported_qualitative
+  findings:
+    - >
+      SRC-03 annotates a CREATIVITY LEVEL distinguishing routine requests from those admitting
+      multiple open-ended interpretations. That is, in effect, a measure of how much the requester
+      left to the executor — over 82,976 real requests.
+    - >
+      SRC-02: prompts concentrate on surface aesthetics; objective, audience and acceptance criteria
+      are absent from prompt corpora entirely.
+  why_this_is_the_most_useful_component: >
+    It is the closest external corroboration of SPEC-01's six operations (preserve / derive / decide /
+    delegate / ask / flag). SRC-03's creativity level is a coarse version of the same idea: how much
+    latitude did the requester grant? Our spec is finer-grained and per-field, and it was designed
+    independently. That is meaningful convergence.
+  project_status: represented, and more finely than the evidence — the six operations
+
+# ── 14 · Objective, audience and acceptance ─────────────────────────────────────
+- id: G14
+  component: objective_audience_acceptance
+  evidence: unknown
+  finding: >
+    ABSENT FROM EVERY REAL-USER CORPUS IN THE REGISTER. Not rare — structurally absent. A Discord
+    prompt has no objective field; a PhotoshopRequest post has no audience; neither has an
+    acceptance contract.
+  do_not_conclude: >
+    That customers do not have objectives. The correct reading is that PROMPT CORPORA CANNOT SEE
+    THEM, because a prompt is what someone types after they have already decided what they want.
+    Concluding "no evidence of objectives" from prompt corpora would be the same error as inferring
+    demand from a benchmark.
+  what_would_settle_it: >
+    A corpus of commercial briefs — agency intake forms, marketplace job posts, RFP text. None was
+    found. This is the register's largest hole.
+  project_status: represented — objective.class, audience, acceptance contract, success_criteria
+
+grammar_level_findings:
+
+- id: F1
+  finding: The request space splits by OPERATION before it splits by anything else.
+  evidence: source_supported_qualitative
+  detail: >
+    Generate / edit / animate are served by different corpora, different model families and
+    different user populations. An edit request is defined by preservation; a generate request has
+    nothing to preserve. Treating them as one space with an optional reference field understates how
+    different they are.
+
+- id: F2
+  finding: Every large real-user corpus is a MODEL-INTERFACE corpus, not a BRIEF corpus.
+  evidence: source_supported_qualitative
+  detail: >
+    Prompts are what people type into a tool. Briefs are what customers ask for. The task's research
+    standard draws this line, and the evidence confirms it is a real gap rather than a definitional
+    nicety: objective, audience and acceptance are structurally absent from all of them.
+  consequence: >
+    Our 30-brief bank is not validated by these corpora and CANNOT be. It occupies a space no public
+    corpus covers. That is an argument for keeping it, and against claiming it is evidence-backed.
+
+- id: F3
+  finding: The dominant real-user population is recreational, not commercial.
+  evidence: source_supported_quantitative
+  detail: >
+    SRC-02 concludes the dominant use is recreational rather than artistic, with woman/man/dress/hair
+    as top subjects; SRC-08's top I2V subjects include "astronaut" and "portrait painting".
+  consequence: >
+    Frequency in these corpora is NOT a proxy for commercial priority. A component can be rare in
+    DiffusionDB and central to our product, and vice versa. Any rebalancing of our bank toward corpus
+    frequency would be a mistake.
+
+- id: F4
+  finding: Style vocabulary is model-contingent and decays.
+  evidence: source_supported_quantitative
+  detail: '"trending on artstation" went from top-prominent in 2022 to outside the top 10 by 2023.'
+  consequence: >
+    Strong support for SPEC-01's existing refusal to put render_method in Creative IR. Style
+    incantations are Production IR concerns. This is external corroboration of a decision the project
+    already made on its own reasoning.
+
+- id: F5
+  finding: Requests arrive in rounds.
+  evidence: source_supported_qualitative
+  detail: SRC-05 part 3 — 95K multi-turn sequences, up to five rounds.
+  consequence: >
+    Neither Creative IR nor the 30-brief bank represents a request that evolves across turns. Every
+    brief we hold is a single complete statement, which may be the least realistic thing about it.
