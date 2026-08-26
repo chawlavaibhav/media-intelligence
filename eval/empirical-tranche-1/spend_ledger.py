@@ -178,6 +178,11 @@ class TrancheBudget:
 
     def __init__(self, run: TrancheRun):
         self.run = run
+        # The ledger is append-only, so bytes already parsed can never change. Caching the parse
+        # and resuming from a byte offset keeps a full 2,304-call qualification linear instead of
+        # quadratic; re-reading the whole file per append cost 72 seconds at that scale.
+        self._cache: list[dict] = []
+        self._offset: int = 0
 
     # -- locking -------------------------------------------------------------------------
     @contextmanager
@@ -200,8 +205,22 @@ class TrancheBudget:
         if not path.exists():
             return []
 
-        rows: list[dict] = []
-        for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        size = path.stat().st_size
+        if size < self._offset:
+            raise LedgerCorrupt(
+                f"{path} shrank from {self._offset} to {size} bytes. The spend ledger is "
+                f"append-only; a shorter file means history was rewritten or truncated.")
+        if size == self._offset:
+            return self._cache
+
+        with path.open("r", encoding="utf-8") as fh:
+            fh.seek(self._offset)
+            fresh = fh.read()
+            consumed = self._offset + len(fresh.encode("utf-8"))
+
+        rows = self._cache
+        start_n = len(rows) + 1
+        for n, line in enumerate(fresh.splitlines(), start=start_n):
             if not line.strip():
                 continue
             try:
@@ -224,11 +243,16 @@ class TrancheBudget:
                     raise LedgerCorrupt(f"{path} line {n}: {row['type']} record has no amount")
                 _decimal(row["amount_usd"], f"line {n} amount_usd")
             rows.append(row)
+
+        self._offset = consumed
         return rows
 
     def _totals(self) -> tuple[Decimal, Decimal, dict[str, Decimal]]:
         """Return (committed, pending, per-stage total including pending)."""
         rows = self.records()
+        cached = getattr(self, "_totals_cache", None)
+        if cached is not None and cached[0] == len(rows):
+            return cached[1]
         settled = {r["reservation_id"] for r in rows
                    if r["type"] in ("spend", "release") and r.get("reservation_id")}
 
@@ -247,6 +271,7 @@ class TrancheBudget:
                 pending += amount
                 by_stage[stage] = by_stage.get(stage, Decimal("0")) + amount
 
+        self._totals_cache = (len(rows), (committed, pending, by_stage))
         return committed, pending, by_stage
 
     def committed_usd(self) -> Decimal:

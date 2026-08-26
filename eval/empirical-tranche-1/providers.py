@@ -371,6 +371,10 @@ class TextJudge:
     transport: Callable[[dict], dict] | None = None
     guard: BudgetGuard | None = None
     provider: str = field(init=False, default="")
+    # Set by the caller immediately before a call so the ledger row and the call record carry the
+    # same trial identity. Never part of any request payload.
+    call_context: dict = field(default_factory=dict)
+    _last_cost_ref: str | None = field(init=False, default=None)
 
     def __post_init__(self) -> None:
         if not self.model_alias:
@@ -401,6 +405,25 @@ class TextJudge:
         raise NotImplementedError
 
     # -- dispatch ---------------------------------------------------------------------------
+    def _reserve(self, estimated_usd: Decimal):
+        """Reserve against whichever guard we were given.
+
+        A persistent `StageBudget` accepts call context and writes it onto the ledger row; the
+        in-memory `BudgetGuard` does not. Both are supported, because the dry-run path still uses
+        the simple one and there is no reason to make it durable.
+        """
+        try:
+            self.guard.reserve(estimated_usd, **(self.call_context or {}))
+        except TypeError:
+            self.guard.reserve(estimated_usd)
+        self._last_cost_ref = getattr(self.guard, "cost_ref", None)
+
+    def _settle(self, billed: Decimal) -> None:
+        try:
+            self.guard.record(billed, **(self.call_context or {}))
+        except TypeError:
+            self.guard.record(billed)
+
     def _dispatch(self, request: dict, estimated_usd: Decimal) -> EvaluatorResponse:
         """One call. One trial. No loop, no retry, no second chance — by construction."""
         if self.transport is None:
@@ -412,10 +435,18 @@ class TextJudge:
                 "no budget guard. A paid call must be reserved against an explicit authorised "
                 "ceiling before it is dispatched.")
 
-        self.guard.reserve(estimated_usd)          # raises BEFORE anything is sent
-        raw = self.transport(request)              # exactly one call
+        self._reserve(estimated_usd)               # raises BEFORE anything is sent
+        try:
+            raw = self.transport(request)          # exactly one call
+        except Exception:
+            # The dispatch never happened. Give the headroom back rather than burning it; a
+            # reservation that outlives its call is budget nobody can ever spend.
+            release = getattr(self.guard, "release", None)
+            if release:
+                release()
+            raise
         response = self.parse(raw)
-        self.guard.record(response.billed_usd if response.billed_usd is not None else Decimal("0"))
+        self._settle(response.billed_usd if response.billed_usd is not None else Decimal("0"))
         return response
 
     def _check_shape(self, request: dict, shape: str, target: str) -> None:
@@ -462,6 +493,8 @@ class TextJudge:
             raise ValueError(f"unknown shape {shape!r}")
         return {
             **self.identity(),
+            **{k: v for k, v in (self.call_context or {}).items()},
+            "cost_ref": self._last_cost_ref,
             "shape": shape,
             "api_status": response.api_status,
             "error_class": response.error_class,

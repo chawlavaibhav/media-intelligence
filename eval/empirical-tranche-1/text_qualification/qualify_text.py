@@ -275,10 +275,49 @@ class LiveCandidate:
     def estimate_usd(self) -> Decimal:
         return self.judge._estimate()
 
+    def _run(self):
+        budget = getattr(self.judge.guard, "budget", None)
+        return getattr(budget, "run", None)
+
+    def run_id(self) -> str:
+        """The EMP-001 run this candidate's spend belongs to, if it has a persistent budget."""
+        return getattr(self._run(), "run_id", "no-run")
+
+    def evidence_mode(self) -> str:
+        """`live` or `fake_live`, taken from the RUN record.
+
+        Never hard-coded. A-TEXT refuses to be handed fake-live evidence, so this label is load
+        bearing: if it lied, a rehearsal could open a paid stage.
+        """
+        return getattr(self._run(), "mode", "live")
+
+    def trial_id(self, script: str, item: dict, shape: str, pass_index: int) -> str:
+        """Durable, unique and DETERMINISTIC.
+
+        Derived from the run, the exact model version and the experimental coordinates rather
+        than from a counter, so the same call in a resumed process gets the same id and a
+        duplicate is visible as a duplicate instead of appearing to be a new trial.
+        """
+        return (f"{self.run_id()}:{self.judge.provider}:{self.judge.resolved_version}"
+                f":{script}:{item['item_id']}:{shape}:p{pass_index}")
+
     def call(self, script: str, item: dict, shape: str, pass_index: int) -> dict:
         """One call. One trial. No loop, no retry — a refusal returns a record and we move on."""
         self.calls += 1
         self.calls_by_script[script] += 1
+
+        trial_id = self.trial_id(script, item, shape, pass_index)
+        # One provider call is one trial, and for a root call the trial IS the attempt
+        # (eval/v1/harness/models.py). Both are carried so the record stays topology-compatible.
+        self.judge.call_context = {
+            "trial_id": trial_id,
+            "attempt_id": trial_id,
+            "script": script,
+            "item_id": item["item_id"],
+            "shape": shape,
+            "pass_index": pass_index,
+            "stage": "qualification",
+        }
 
         image_bytes = self.images.bytes_for(script, item["item_id"])
         if shape == "transcribe":
@@ -290,11 +329,9 @@ class LiveCandidate:
 
         record = self.judge.call_record(response, shape=shape)
         record.update({
-            "item_id": item["item_id"],
-            "script": script,
-            "pass_index": pass_index,
             "image_sha256": hashlib.sha256(image_bytes).hexdigest(),
             "synthetic": False,
+            "evidence_mode": self.evidence_mode(),
         })
         return {
             "api_status": response.api_status,
