@@ -595,6 +595,16 @@ class Harness:
         and add NO independent trial."""
         out = []
         for aid, p in sorted(self.provenance.items()):
+            # output_location is recorded RELATIVE to the harness root. An
+            # absolute working path is machine-specific noise that makes an
+            # otherwise deterministic handoff differ on every run, and would
+            # be meaningless to Resources when it archives these rows.
+            loc = p.output_path
+            if loc:
+                try:
+                    loc = str(pathlib.Path(loc).relative_to(self.root))
+                except ValueError:
+                    pass
             out.append({
                 "artifact_id": aid,
                 "attempt_id": p.attempt_id,
@@ -604,7 +614,7 @@ class Harness:
                 "derivation": p.derivation,
                 "is_derived": bool(p.parent_asset_id),
                 "output_hash": p.output_sha256,
-                "output_location": p.output_path,
+                "output_location": loc,
                 "storage_class": self.STORAGE_CLASS,
             })
         return out

@@ -156,12 +156,15 @@ DEMO 7 — E-C7: canonical Resources storage handoff
   [PASS] derived artifacts point to a parent and add no trial
          7 artifacts, 4 derived, 3 trials
   [PASS] acceptance is EMPTY - Eval does not decide it
+  [PASS] artifact locations are RELATIVE, not machine-specific
+         7 artifacts, absolute paths: none
+  [PASS] the handoff emission is deterministic across calls
   [PASS] no routing score or weight was computed
   [PASS] generation and evaluator costs are separate lines
          gen=3.0 eval=0.121
 
 ==========================================================================
-RESULT: 72/72 checks passed
+RESULT: 74/74 checks passed
 Registry rows created: 0  (must be 0)
 Paid API calls made:   0
 ==========================================================================

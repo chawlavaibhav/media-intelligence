@@ -481,6 +481,19 @@ def main():
     check("acceptance is EMPTY - Eval does not decide it",
           accept == [] and summary["acceptance_decided_by_eval"] is False)
 
+    # The handoff must be REPRODUCIBLE. An absolute working path makes an
+    # otherwise deterministic emission differ on every run and is meaningless
+    # to Resources when archiving. This regressed once when emit_artifacts()
+    # replaced the earlier manifest, so it is pinned here.
+    abs_paths = [a["artifact_id"] for a in artifacts
+                 if a["output_location"] and
+                 (a["output_location"].startswith("/") or ":\\" in a["output_location"])]
+    check("artifact locations are RELATIVE, not machine-specific", not abs_paths,
+          f"{len(artifacts)} artifacts, absolute paths: {abs_paths or 'none'}")
+    _first = h.emit_artifacts()
+    _second = h.emit_artifacts()
+    check("the handoff emission is deterministic across calls", _first == _second)
+
     om = h.operational_metrics()
     check("no routing score or weight was computed",
           om["routing_scores_computed"] == 0)
