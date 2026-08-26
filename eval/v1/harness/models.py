@@ -7,6 +7,21 @@ TERMINOLOGY, because these words carry the whole design:
   ASSET     one artifact produced by one attempt. THE TRIAL.
   MEASUREMENT  one evaluator's verdict about one asset.
 
+  REPEAT    a DELIBERATE re-run of the same item+config to estimate how
+            reproducible a workflow is. It is part of the experiment design and
+            is decided BEFORE the run.
+  RETRY     a later attempt caused by a PREVIOUS attempt failing or being
+            rejected. It is part of a production/repair chain and is decided
+            AFTER seeing a result.
+
+  THESE ARE NOT THE SAME THING (correction E-C4). Conflating them corrupts two
+  different numbers in opposite directions:
+    - counting a repeat as a retry inflates the apparent failure rate and makes
+      a reliable workflow look like it needed rescuing;
+    - counting a retry as a repeat hides real production cost, because only
+      retries belong in the retry chain that Cost per Accepted Outcome divides
+      by. CpAO would then be computed over too few attempts and read too cheap.
+
 The rule the whole system exists to enforce:
 
     ONE ASSET IS ONE TRIAL, however many evaluators inspect it.
@@ -98,8 +113,24 @@ class GenerationProvenance:
     currency: str = "USD"
     parent_asset_id: str | None = None     # set for frames/derived assets
     derivation: str | None = None          # e.g. "frame_sample@t=1.5s"
+
+    # --- EXPERIMENTAL REPEAT (design-time) -----------------------------------
+    # Deliberate re-run of the same item+config to estimate reproducibility.
+    # repeat_index 0 is the first attempt of a repeat set, not a repeat itself.
+    repeat_index: int = 0
+    repeat_of_attempt_id: str | None = None
+
+    # --- PRODUCTION RETRY (result-time) --------------------------------------
+    # Caused by a prior attempt failing or being rejected. Belongs to the
+    # accepted-outcome retry chain; a repeat NEVER does.
     retry_of_attempt_id: str | None = None
     retry_reason: str | None = None
+
+    def is_experimental_repeat(self) -> bool:
+        return self.repeat_of_attempt_id is not None
+
+    def is_production_retry(self) -> bool:
+        return self.retry_of_attempt_id is not None
 
     def to_dict(self):
         return asdict(self)
@@ -166,6 +197,16 @@ class RegistryRow:
     usd_per_pass: float | None = None
     usd_per_pass_lower_bound: float | None = None
     battery_version: str = ""
+    # E-C8: uncertainty provenance. `status` is mandatory; a row carries either
+    # an interval WITH its method and assumptions, or an explicit reason it was
+    # not computed. Never a bare point estimate presented as exact.
+    uncertainty: dict = field(default_factory=lambda: {
+        "status": "not_computed",
+        "not_computed_reason": "instrument_unqualified",
+        "not_computed_note": (
+            "No instrument is qualified, so no interval could be attached to "
+            "any number. This is the honest state, not a gap."),
+    })
     run_ref: str = ""
     tested_date: str = ""
     sample_source: str = "lab"

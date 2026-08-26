@@ -2,6 +2,7 @@
 
 **Executed:** 26 Aug 2026 in the cloud session · **Runner:** Python 3.11.15
 **Status:** `implementation_written_AND_executed_in_cloud`
+**Covers corrections:** E-C4 (repeat vs retry), E-C5 (mixed-cell refusal), E-C6 (no synthetic bypass), E-C7 (canonical handoff)
 
 All fixtures are dummy/synthetic. No network call, no model call, no paid API call,
 no empirical Registry row. Reproduce with:
@@ -26,13 +27,31 @@ DEMO 1 — one generated asset scored by several evaluators, no regeneration
   [PASS] multiple defects recorded on one output
          co-occurrence: ['face_drift + text_mutates_mid_clip']
 
-DEMO 2 — a retry creates a NEW attempt and never replaces the output
+DEMO 2 — an experimental REPEAT creates a new attempt, never a replacement
   [PASS] new attempt id
          att-d38f3df1b600 -> att-81b678298242
   [PASS] new asset id (original NOT overwritten)
   [PASS] original asset still on disk with its original hash
-  [PASS] retry linkage recorded
+  [PASS] repeat linkage recorded as a REPEAT
+  [PASS] a repeat is NOT a retry
   [PASS] each asset has exactly one provenance record
+
+DEMO 2b — E-C4: repeat and retry are structurally separate
+  [PASS] a repeat is counted as a repeat, NOT a retry
+         experimental_repeats=1
+  [PASS] a retry is counted as a retry, NOT a repeat
+         production_retries=1
+  [PASS] the two counters are reported separately and never summed
+  [PASS] the CpAO retry chain contains the retry and EXCLUDES the repeat
+         chain=['att-d38f3df1b600', 'att-7807f9f3ef8c']
+  [PASS] retry-chain cost and repeat cost are separate lines
+         retry_chain=1.0 repeats=1.0
+  [PASS] an attempt that is BOTH repeat and retry is REFUSED
+         raised: An attempt cannot be BOTH an experimental repeat and a production retry. A repeat is decided before the run to measure r
+  [PASS] a retry with no reason is REFUSED
+         raised: A production retry requires retry_reason. An unexplained retry is indistinguishable from an experimental repeat.
+  [PASS] a repeat with repeat_index 0 is REFUSED
+         raised: An experimental repeat requires a repeat_index >= 1. repeat_index 0 is the first attempt of a repeat set, not a repeat o
 
 DEMO 3 — frames sampled from a clip keep the parent trial id
   [PASS] 4 child assets created
@@ -57,10 +76,37 @@ DEMO 5 — an unqualified instrument cannot write a Registry row
          status=screened_not_qualified
   [PASS] file-probe IS writable (deterministic needs no calibration)
   [PASS] even a QUALIFIED instrument is refused on synthetic data
-         raised: REGISTRY WRITE REFUSED: synthetic/dummy measurements may never become empirical Registry rows.
+         raised: REGISTRY WRITE REFUSED: synthetic/dummy measurements may never become empirical Registry rows. There is no override.
   [PASS] empty measurement set is REFUSED
          raised: REGISTRY WRITE REFUSED: no measurements. An empty check is not a passing check.
   [PASS] registry still empty
+
+DEMO 5d — E-C6: there is NO synthetic promotion bypass
+  [PASS] write_registry_row exposes NO override parameter
+         parameters: ['capability', 'instrument_id', 'measurements', 'conditions', 'difficulty_level', 'repeats_per_item']
+  [PASS] no allow_synthetic anywhere in the harness source
+  [PASS] no call shape promotes synthetic measurements
+         2/2 call shapes refused
+  [PASS] registry STILL empty after bypass attempts
+
+DEMO 5e — E-C5: a Registry row must be ONE coherent cell
+  [PASS] mixing TWO MODELS in one cell is REFUSED
+         raised: REGISTRY WRITE REFUSED: mixed cell. Trials disagree on 'model': ['model-A', 'model-B']. Two providers, models, versions,
+  [PASS] mixing TWO CAPABILITIES in one cell is REFUSED
+         raised: REGISTRY WRITE REFUSED: mixed cell. Measurements disagree on 'capability': ['action_adherence', 'text_logo_stability_in_
+  [PASS] mixing TWO INSTRUMENTS in one cell is REFUSED
+         raised: REGISTRY WRITE REFUSED: mixed cell. Measurements disagree on 'capability': ['action_adherence', 'text_logo_stability_in_
+  [PASS] a capability that is not the requested one is REFUSED
+         raised: REGISTRY WRITE REFUSED: requested capability 'text_logo_stability_in_clip' but measurements are for 'action_adherence'.
+  [PASS] an instrument that is not the requested one is REFUSED
+         raised: REGISTRY WRITE REFUSED: requested instrument 'dummy-ocr' but measurements came from 'dummy-temporal'.
+  [PASS] a declared condition contradicting the trials is REFUSED
+         raised: REGISTRY WRITE REFUSED: declared condition model='model-Z' contradicts the trials, which carry 'model-A'.
+  [PASS] an over-declared repeats_per_item is not trusted
+         raised: REGISTRY WRITE REFUSED: repeats_per_item must be >= 1.
+  [PASS] pooling a production RETRY into a pass-rate cell is REFUSED
+         raised: REGISTRY WRITE REFUSED: 1 trial(s) in this cell are production RETRIES. A retry exists because something failed; pooling
+  [PASS] no Registry row was created by any mixed-cell attempt
 
 DEMO 5b — absence reasons and harness negative controls
   [PASS] 'absent' carries a machine-readable reason
@@ -88,15 +134,34 @@ DEMO 6 — the Registry schema validates and starts EMPTY
   [PASS] schema parses and declares zero entries
          status=PROPOSED_NOT_IN_FORCE
 
-STORAGE HANDOFF
-  [PASS] artifact manifest carries every required field
-         7 asset rows, 20 required fields, missing=none
+DEMO 7 — E-C7: canonical Resources storage handoff
+  [PASS] canonical record file emitted: attempts.jsonl
+  [PASS] canonical record file emitted: artifacts.jsonl
+  [PASS] canonical record file emitted: measurements.jsonl
+  [PASS] canonical record file emitted: acceptances.jsonl
+  [PASS] no competing Eval-specific persistent manifest is emitted
+         the old single manifest is gone; Resources owns the persistent model
+  [PASS] every failed/refused call survives as an ATTEMPT record
+         2 non-ok attempts, all with no artifact; statuses=['error', 'refused']
+  [PASS] attempts without an artifact are NOT dropped from the handoff
+         attempts_without_artifact=2
+  [PASS] attempt records carry every contract field
+         5 rows, 20 required, missing=none
+  [PASS] artifact records carry every contract field
+         7 rows, 8 required, missing=none
+  [PASS] measurement records carry every contract field
+         14 rows, 10 required, missing=none
+  [PASS] observation units are the CANONICAL vocabulary only
+         used: ['frame']
+  [PASS] derived artifacts point to a parent and add no trial
+         7 artifacts, 4 derived, 3 trials
+  [PASS] acceptance is EMPTY - Eval does not decide it
   [PASS] no routing score or weight was computed
   [PASS] generation and evaluator costs are separate lines
          gen=3.0 eval=0.121
 
 ==========================================================================
-RESULT: 38/38 checks passed
+RESULT: 72/72 checks passed
 Registry rows created: 0  (must be 0)
 Paid API calls made:   0
 ==========================================================================

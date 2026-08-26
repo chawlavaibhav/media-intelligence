@@ -85,6 +85,32 @@ def c8(x):
     y[-1]["measurement_fanout"] = y[-1]["measurement_fanout"] + ["vibes_score"]
     return y
 
+@ctl("E-C3: bank grown beyond 100 must FAIL")
+def c10(x):
+    return x + [dict(x[0], item_id="atomic-999")]
+
+@ctl("E-C3: a two-speaker capability faked onto a scenario without two visible speakers must FAIL")
+def c11(x):
+    y = [dict(i) for i in x]
+    for i in y:
+        # typography_led_image has no speakers at all; claiming the two-speaker
+        # capability there would inflate the denominator with an opportunity
+        # that cannot possibly exhibit a wrong turn assignment.
+        if i["class"] == "compound" and i["scenario_family"] == "typography_led_image":
+            i["measurement_fanout"] = sorted(
+                i["measurement_fanout"] + ["two_speaker_turn_assignment_and_lip_sync"])
+            break
+    return y
+
+@ctl("E-C3: a two-speaker ATOMIC probe on a non-speaker modality must FAIL")
+def c12(x):
+    y = [dict(i) for i in x]
+    for i in y:
+        if i.get("primary_capability") == "two_speaker_turn_assignment_and_lip_sync":
+            i["modality"] = "image"          # cannot show two speakers taking turns
+            break
+    return y
+
 @ctl("scenario family with 5 items must FAIL")
 def c9(x):
     for idx, i in enumerate(x):

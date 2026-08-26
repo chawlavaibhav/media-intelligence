@@ -14,6 +14,7 @@
 task: E2
 date: 2026-08-26
 status: PARTIALLY_BLOCKED
+correction: E-C2 (26 Aug 2026) - roster now enumerated row by row; reachability re-tested
 api_calls_made: 0
 generations_made: 0
 spend: 0
@@ -32,11 +33,19 @@ blocker:
     sources only as leads. This cloud session's network egress policy blocks
     almost every official provider domain, so that rule cannot be satisfied.
 
+  retested_under_correction_E_C2: >-
+    RE-TESTED 26 Aug 2026 after GitHub access was restored. The network egress
+    policy is UNCHANGED: 21 of 22 official provider domains remain unreachable.
+    The single reachable domain, cloud.google.com, now 301-redirects its model
+    and pricing documentation to docs.cloud.google.com, which is ALSO blocked.
+    So the one partial route that existed before is now closed too. No price and
+    no exact model identity could be obtained by any available means.
+
   evidence:
     method: >-
       HTTPS reachability probe of 22 official provider domains from this cloud
-      session, plus two document-fetch attempts against the one reachable
-      domain.
+      session, plus document-fetch attempts against the one reachable domain
+      and its documentation redirect target.
     domains_probed: 22
     domains_reachable: 1
     reachable:
@@ -281,6 +290,73 @@ endpoint_record_schema:
     note: "presence boolean only; never a secret value"
   wave1_rationale: "<why this endpoint merits a slot>"
   disposition: "<admit | reserve | unavailable | reject>"
+
+# -----------------------------------------------------------------------------
+# E-C2 ROSTER — all 19 slots enumerated, every one UNRESOLVED
+# -----------------------------------------------------------------------------
+# The runbook caps the roster at 19 endpoint/workflow rows. Correction E-C2
+# requires each to be either officially evidenced or EXPLICITLY UNRESOLVED,
+# row by row. None could be evidenced, so all 19 are enumerated as unresolved
+# slots rather than summarised as one blocker.
+#
+# A slot is a reserved position, NOT a candidate. It names no model, because
+# naming one from memory would be the invented certainty E-C2 forbids.
+#
+# Every field a slot must carry before admission is listed once in
+# `endpoint_record_schema` above; each slot repeats only its state.
+
+roster:
+  slots_total: 19
+  slots_resolved: 0
+  slots_unresolved: 19
+  endpoints_admitted: 0
+  resolution_blocker: E2-BLOCK-01
+  per_slot_state: &unresolved
+    vendor: unresolved
+    model_api_id: unresolved
+    marketed_name: unresolved
+    endpoint_or_workflow: unresolved
+    version_pinning: unresolved
+    modalities: unresolved
+    constraints: unresolved
+    price_value: unresolved
+    price_billing_unit: unresolved
+    price_source_url: unresolved
+    price_read_date: null
+    availability: unresolved
+    region_restrictions: unresolved
+    credential_present: false
+    disposition: unresolved
+    blocked_by: E2-BLOCK-01
+
+  slots:
+    - {slot: image-1,     lane: image,     state: *unresolved}
+    - {slot: image-2,     lane: image,     state: *unresolved}
+    - {slot: image-3,     lane: image,     state: *unresolved}
+    - {slot: image-4,     lane: image,     state: *unresolved}
+    - {slot: video-1,     lane: video,     state: *unresolved}
+    - {slot: video-2,     lane: video,     state: *unresolved}
+    - {slot: video-3,     lane: video,     state: *unresolved}
+    - {slot: video-4,     lane: video,     state: *unresolved}
+    - {slot: video-5,     lane: video,     state: *unresolved}
+    - {slot: native_av-1, lane: native_av, state: *unresolved}
+    - {slot: native_av-2, lane: native_av, state: *unresolved}
+    - {slot: native_av-3, lane: native_av, state: *unresolved}
+    - {slot: native_av-4, lane: native_av, state: *unresolved}
+    - {slot: lipsync-1,   lane: lipsync,   state: *unresolved}
+    - {slot: lipsync-2,   lane: lipsync,   state: *unresolved}
+    - {slot: lipsync-3,   lane: lipsync,   state: *unresolved}
+    - {slot: tts-1,       lane: tts,       state: *unresolved}
+    - {slot: tts-2,       lane: tts,       state: *unresolved}
+    - {slot: tts-3,       lane: tts,       state: *unresolved}
+
+  what_a_partially_filled_roster_would_look_like: >-
+    E-C2 states a partially filled roster is preferable to invented certainty.
+    That remains true and is the intended outcome - it simply could not be
+    reached here, because ZERO slots could be evidenced rather than some. If a
+    later session reaches even one official pricing page, that slot is filled
+    and the other eighteen stay exactly as they are. The roster does not need to
+    be completed in one pass.
 
 # -----------------------------------------------------------------------------
 # CANDIDATE LEADS — NOT EVIDENCE, NOT ADMITTED, NOT PRICED.

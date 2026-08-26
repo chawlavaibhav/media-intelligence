@@ -80,6 +80,63 @@ row_fields:
     from "the provider refused". Collapsing them routes as if unmeasured risk
     were absent.
 
+  # --- E-C8: UNCERTAINTY. Preserve provenance, never manufacture precision --
+  #
+  # A cell must be able to say EITHER what its uncertainty is and how that was
+  # derived, OR that it was not computed and why. What it must never do is
+  # present a bare point estimate as though it were exact, or carry an interval
+  # whose assumptions are unstated.
+  #
+  # THE PROJECT HAS ALREADY PAID FOR THIS TWICE. A binomial bound was quoted
+  # over four perturbations of one word (correlated items). Then, after that was
+  # fixed, distinct base words were called "independent chances" when a checker
+  # blind to one diacritic is blind to it on every word carrying that diacritic.
+  # Both times the number looked like evidence and was not.
+  uncertainty:
+    status: >-
+      <computed | not_computed>  MANDATORY. There is no third option and no
+      default. A row with neither an interval nor a stated reason is malformed.
+
+    # --- when status == computed ---------------------------------------------
+    method: >-
+      <string>  The exact procedure, e.g. `clopper_pearson_95` or
+      `bootstrap_percentile_95_over_base_items`. A named method, never "95% CI".
+    interval_low: "<float>"
+    interval_high: "<float>"
+    interval_level: "<float>  e.g. 0.95"
+    computed_over: >-
+      <base_items | opportunities>  WHAT the interval was computed over.
+      NEVER trials and NEVER frames. Frames sampled from one clip are one trial;
+      repeats are not independent items.
+    n_used: "<int>  the denominator actually used, stated explicitly"
+    assumptions: >-
+      <list of strings>  Every assumption the method requires, written out.
+      An unstated assumption is the mechanism by which a sizing calculation
+      becomes quoted as a real-world error rate.
+    independence_status: >-
+      <ESTABLISHED | NOT ESTABLISHED>  MANDATORY whenever status == computed.
+      `ESTABLISHED` requires naming the evidence that established it. Absent
+      such evidence the value is `NOT ESTABLISHED`, and then the interval is a
+      REFERENCE CALCULATION FOR SIZING, not a bound on anything.
+    is_reference_calculation_only: >-
+      <bool>  TRUE whenever independence_status is NOT ESTABLISHED. Such a
+      figure may never be quoted as the instrument's or the model's real-world
+      error rate.
+
+    # --- when status == not_computed -----------------------------------------
+    not_computed_reason: >-
+      <independence_not_established | sample_too_small | descriptive_only_result
+       | deterministic_gate_no_probability_model | instrument_unqualified
+       | no_accepted_method>
+      MANDATORY when status == not_computed. `not_computed` is an HONEST and
+      expected outcome, not a defect. In particular:
+      - `deterministic_gate_no_probability_model` is correct for a gate that is
+        a COUNT (zero false passes). It needs no probability model at all, and
+        attaching one would imply an inference nobody made.
+      - `descriptive_only_result` is correct for every capability whose
+        routing_use is descriptive_only - a preference score has no error bar.
+    not_computed_note: "<string>  plain-English explanation for a human reader"
+
   # --- instrument: the reason this schema exists ---------------------------
   instrument:
     id: "<string>"

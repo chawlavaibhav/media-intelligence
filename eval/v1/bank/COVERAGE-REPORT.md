@@ -27,11 +27,11 @@ Atomic items test **one capability with nothing else in the frame**, so a failur
 | Group | Items | Capabilities isolated |
 |---|---:|---|
 | exact text | 10 | `exact_text_latin`×5, `exact_text_devanagari`×5 |
-| count attribute spatial | 6 | `object_count`×2, `attribute_binding`×2, `spatial_relationship`×2 |
-| identity reference preservation | 6 | `person_identity`×2, `product_identity`×2, `reference_conditioning`×1, `edit_preservation`×1 |
-| anatomy human object | 6 | `anatomy_hands`×3, `human_object_contact`×2, `human_human_interaction`×1 |
+| count attribute spatial | 5 | `object_count`×2, `attribute_binding`×2, `spatial_relationship`×1 |
+| identity reference preservation | 5 | `person_identity`×2, `product_identity`×1, `reference_conditioning`×1, `edit_preservation`×1 |
+| anatomy human object | 5 | `anatomy_hands`×2, `human_object_contact`×2, `human_human_interaction`×1 |
 | motion camera physics | 6 | `motion_action_quality`×2, `action_adherence`×2, `physics_material_appearance`×2 |
-| speech lipsync speaker | 6 | `spoken_language_correctness`×2, `single_speaker_lip_sync`×2, `two_speaker_turn_assignment_and_lip_sync`×1, `audio_video_synchronisation`×1 |
+| speech lipsync speaker | 9 | `spoken_language_correctness`×2, `single_speaker_lip_sync`×2, `two_speaker_turn_assignment_and_lip_sync`×4, `audio_video_synchronisation`×1 |
 | **Total** | **40** | |
 
 ## Compound 60 — one generation, many measurements
@@ -63,12 +63,12 @@ Target: **≥10 distinct base-item opportunities** each.
 | `exact_text_latin` | 5 | 24 | **29** | ✅ |
 | `logo_wordmark_fidelity` | 0 | 30 | **30** | ✅ |
 | `person_identity` | 2 | 30 | **32** | ✅ |
-| `product_identity` | 2 | 36 | **38** | ✅ |
+| `product_identity` | 1 | 36 | **37** | ✅ |
 | `reference_conditioning` | 1 | 24 | **25** | ✅ |
 | `object_count` | 2 | 24 | **26** | ✅ |
 | `attribute_binding` | 2 | 24 | **26** | ✅ |
-| `spatial_relationship` | 2 | 30 | **32** | ✅ |
-| `anatomy_hands` | 3 | 36 | **39** | ✅ |
+| `spatial_relationship` | 1 | 30 | **31** | ✅ |
+| `anatomy_hands` | 2 | 36 | **38** | ✅ |
 | `human_object_contact` | 2 | 24 | **26** | ✅ |
 | `person_stability_in_clip` | 0 | 30 | **30** | ✅ |
 | `product_stability_in_clip` | 0 | 24 | **24** | ✅ |
@@ -76,21 +76,30 @@ Target: **≥10 distinct base-item opportunities** each.
 | `multi_shot_spatial_continuity` | 0 | 18 | **18** | ✅ |
 | `spoken_language_correctness` | 2 | 12 | **14** | ✅ |
 | `single_speaker_lip_sync` | 2 | 12 | **14** | ✅ |
-| `two_speaker_turn_assignment_and_lip_sync` | 1 | 6 | **7** | ⚠️ |
+| `two_speaker_turn_assignment_and_lip_sync` | 4 | 6 | **10** | ✅ |
 | `audio_video_synchronisation` | 1 | 24 | **25** | ✅ |
 | `delivery_format_compliance` | 40 | 60 | **100** | ✅ |
 
-**19 of 20 critical capabilities meet the target.**
+**20 of 20 critical capabilities meet the target.**
 
-### The one that does not, and why it was not padded
+### How the last one was repaired — correction E-C3
 
-**`two_speaker_turn_assignment_and_lip_sync` — 7 opportunities, not 10.**
+`two_speaker_turn_assignment_and_lip_sync` previously reached only **7**, because exactly one compound scenario has two visible speakers exchanging turns. Both cheap repairs were ruled out by the Controller: do not re-declare `multi_shot_branded_ad` as `native_av` merely to fix a denominator, and do not grow the bank past 100.
 
-- **Exact denominator:** 7 = 1 atomic + 6 compound.
-- **Why it cannot reach 10:** it is only meaningful where two visible speakers exchange turns, which requires a modality of `lipsync` or `native_av`. 1 scenario family qualifies (`two_person_dialogue`), giving 6 compound opportunities at six items each.
-- **Listed but excluded by modality:** `multi_shot_branded_ad` is modality `video`. The contract permits the reuse, but the scenario as defined has no visible on-camera dialogue, so the capability cannot be exhibited. **This is a real design choice worth the Controller's attention:** if a multi-shot branded ad should contain on-camera dialogue, its modality should be `native_av`, which would raise this capability to 13 opportunities and change nothing else. Left as-is tonight because changing a scenario's modality alters the frozen compound-60 design.
-- **What was deliberately not done:** adding two-speaker items to scenarios that do not have two visible speakers. That would manufacture opportunities that cannot exhibit the failure, inflating the denominator while measuring nothing. The runbook requires recording the real denominator instead, and that is what this row does.
-- **If the Controller wants 10:** the honest route is to widen the two-person dialogue family from 6 items to 10, which is a scope change to the frozen 60 and therefore a Controller decision, not a worker one.
+So three atomic slots were **reallocated**, not added:
+
+| Donor | Atomic | Opportunities | Still above target? |
+|---|---|---|:--:|
+| `anatomy_hands` | 3 → 2 | 39 → 38 | ✅ |
+| `product_identity` | 2 → 1 | 38 → 37 | ✅ |
+| `spatial_relationship` | 2 → 1 | 32 → 31 | ✅ |
+| **`two_speaker…`** | **1 → 4** | **7 → 10** | ✅ |
+
+Donors are the three capabilities with the largest margin that still keep an isolation probe after donating. **No capability lost its atomic probe entirely** — causal isolation is the only reason the atomic tier exists.
+
+The four two-speaker probes sit at **distinct ladder levels** and every one has two visible speakers, so each can actually exhibit a wrong turn assignment. **No fake opportunity was created**: the count rose because real probes were added, not because the denominator was widened.
+
+Cost: three atomic **group** counts shift by one (`count_attribute_spatial` 6→5, `identity_reference_preservation` 6→5, `anatomy_human_object` 6→5, `speech_lipsync_speaker` 6→9). Bank totals are unchanged at 100 = 40 + 60.
 
 ## Full coverage, all 36
 
@@ -101,10 +110,10 @@ Target: **≥10 distinct base-item opportunities** each.
 | `cost_and_cpao` | 100 |  |
 | `latency_errors_refusals` | 100 |  |
 | `reproducibility_repairability` | 100 |  |
-| `anatomy_hands` | 39 | ● |
-| `product_identity` | 38 | ● |
-| `spatial_relationship` | 32 | ● |
+| `anatomy_hands` | 38 | ● |
+| `product_identity` | 37 | ● |
 | `person_identity` | 32 | ● |
+| `spatial_relationship` | 31 | ● |
 | `logo_wordmark_fidelity` | 30 | ● |
 | `person_stability_in_clip` | 30 | ● |
 | `proposition_objective_fit` | 30 |  |
@@ -131,7 +140,7 @@ Target: **≥10 distinct base-item opportunities** each.
 | `spoken_language_correctness` | 14 | ● |
 | `single_speaker_lip_sync` | 14 | ● |
 | `emotional_prosodic_fit` | 12 |  |
-| `two_speaker_turn_assignment_and_lip_sync` | 7 | ● |
+| `two_speaker_turn_assignment_and_lip_sync` | 10 | ● |
 
 **Capabilities with zero opportunities: 0** — none. Every one of the 36 is exercised by at least one base item.
 

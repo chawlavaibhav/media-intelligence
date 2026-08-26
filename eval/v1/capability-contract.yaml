@@ -65,28 +65,52 @@
 # instrument_family      primary family id (1..6) or `operational`
 # secondary_instrument   corroborating instrument, or null
 # human_verifier         what a human must decide, or `none`
-# resource_requirement   required | constructed_by_eval | no_external_resource
+# benchmark_material_readiness
+#                        available | constructed_by_eval | partial | missing |
+#                        no_external_stimulus_required
+#                        DO WE POSSESS THE MATERIAL to exercise this property
+#                        under the intended conditions? Independent of whether
+#                        the instrument can be trusted.
 # result_form            exact_pass_fail | structured_categorical |
 #                        pairwise_preference | human_hybrid_score |
 #                        operational_metric
 # failure_vocabulary     how defects are recorded (observer's own words kept)
 # registry_conditions    what must be held fixed for two rows to be comparable
 # routing_use            hard_constraint | descriptive_only
-# measurability_status   measurable_now | blocked_pending_resource |
-#                        blocked_pending_instrument | currently_unmeasurable
+# instrument_readiness   deterministic_ready | qualified | provisional |
+#                        blocked_pending_qualification | unmeasurable
+#                        CAN THE MECHANISM BE TRUSTED for this property?
 #
-#   STRICT MEANING - `measurable_now` means the measurement could be taken AND
-#   TRUSTED today, with no instrument qualification outstanding. It is reserved
-#   for deterministic measurements whose truth we construct ourselves.
-#   A dimension judged by ANY of the six evaluator families is
-#   `blocked_pending_instrument`, because NO family is qualified. A detector or
-#   a VLM is a model, not a deterministic oracle, and calling its output
-#   "measurable now" would be exactly the error this project already paid for -
-#   attaching false confidence to an unqualified checker.
-#   `blocked_pending_resource` is used when test MATERIAL is the binding
-#   constraint; those dimensions usually need a qualified instrument too.
+#   `deterministic_ready` - the mechanism needs no calibration at all (a file
+#     probe, a masked pixel difference against our own input, onset detection,
+#     arithmetic over logged values). Reserved for these.
+#   `blocked_pending_qualification` - a mechanism exists but its family holds no
+#     qualification record. A detector or a VLM is a MODEL, not a deterministic
+#     oracle; treating its output as ready would be the exact error this project
+#     already paid for - attaching false confidence to an unqualified checker.
+#   `qualified` / `provisional` - reserved. NOTHING carries these today.
+#   `unmeasurable` - no known mechanism at all. Nothing carries this today.
 #
-# measurability_note     why, in plain English
+# production_envelope_note
+#                        Optional prose. NOT a third scalar and NOT a score.
+#                        Records envelope caveats that neither readiness axis
+#                        expresses - e.g. a mechanism that is ready but has
+#                        never met production-realistic material.
+#
+# readiness_note         why, in plain English
+#
+# -----------------------------------------------------------------------------
+# WHY TWO AXES AND NOT ONE (correction E-C1)
+# -----------------------------------------------------------------------------
+# A single `measurability_status` conflated two independent questions and could
+# not express the most common real state. `audio_video_synchronisation` has a
+# fully deterministic mechanism AND no audio material whatsoever. The old scalar
+# had to call that either "measurable now" (false - there is nothing to measure)
+# or "blocked on instrument" (false - the instrument is fine). Both readings
+# misdirect the next decision: one wastes qualification effort, the other buys
+# material we may not need yet.
+#
+# The two axes are INDEPENDENT. Readiness on one says nothing about the other.
 # =============================================================================
 
 contract_version: v1-draft
@@ -136,15 +160,16 @@ dimensions:
     instrument_family: 2
     secondary_instrument: 3
     human_verifier: "Adjudicates only when the detector and the VLM disagree, or on partial occlusion."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: exact_pass_fail
     failure_vocabulary: >-
       Observer's own words retained, e.g. "one extra bottle", "shadow counted as
       object". Multiple defects per output permitted. Ontology mapping later.
     registry_conditions: [resolution, aspect_ratio, object_class, target_count, background_complexity, detector_confidence]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Detector-based counting is implementable and its truth is constructed by
       us. NOTE the known trap - counting and locating need DIFFERENT detector
       confidence settings. High when counting, so shadows are not counted as
@@ -189,15 +214,16 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 2
     human_verifier: "Adjudicates ambiguous material/finish descriptions."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: structured_categorical
     failure_vocabulary: >-
       Distinguish `attribute_swapped`, `attribute_absent`, `attribute_on_extra_object`.
       Swap and absence are different failures with different repair paths.
     registry_conditions: [resolution, aspect_ratio, n_objects, attribute_type, distractor_present]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Colour can be sampled deterministically inside a detected region, which
       makes part of this dimension instrument-cheap. Material and finish need a
       VLM and are the uncertain part; the split is recorded per the Registry
@@ -235,13 +261,14 @@ dimensions:
     instrument_family: 2
     secondary_instrument: 3
     human_verifier: "Adjudicates depth-ordering cases the detector cannot resolve."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: exact_pass_fail
     failure_vocabulary: "`relation_inverted`, `relation_absent`, `object_missing`, `depth_ambiguous`."
     registry_conditions: [resolution, aspect_ratio, relation_type, n_objects, detector_confidence]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Left/right/above/below are decidable from bounding boxes and need no human
       label. Depth ordering is NOT decidable from 2D boxes and is escalated to a
       VLM plus human adjudication; it must not be silently scored by the
@@ -283,13 +310,14 @@ dimensions:
     instrument_family: 4
     secondary_instrument: 3
     human_verifier: "Decides whether the depicted action is the prompted action when the VLM is uncertain."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: structured_categorical
     failure_vocabulary: "`action_absent`, `action_substituted`, `action_incomplete`, `action_out_of_order`."
     registry_conditions: [resolution, aspect_ratio, clip_duration_s, fps, action_class, n_participants, sampled_frames]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Requires the temporal evaluator family, which is itself unqualified. A
       still image cannot establish an action; items must not silently score a
       still as if it had.
@@ -326,13 +354,17 @@ dimensions:
     instrument_family: 2
     secondary_instrument: null
     human_verifier: none
-    resource_requirement: no_external_resource
+    benchmark_material_readiness: no_external_stimulus_required
     result_form: exact_pass_fail
     failure_vocabulary: "`aspect_mismatch`, `duration_mismatch`, `resolution_mismatch`, `fps_mismatch`, `audio_track_absent`, `container_unexpected`."
     registry_conditions: [requested_contract, provider_default_contract]
     routing_use: hard_constraint
-    measurability_status: measurable_now
-    measurability_note: >-
+    instrument_readiness: deterministic_ready
+    production_envelope_note: >-
+      Ready and needs no external stimulus. Should ride free on EVERY
+      generated asset from the first paid call onward; not doing so is wasted
+      money.
+    readiness_note: >-
       Fully deterministic - it reads file metadata and needs no calibration at
       all. Its Registry `calibration_status` is `deterministic`. This is the
       cheapest dimension in the whole contract and should be measured on EVERY
@@ -373,13 +405,14 @@ dimensions:
     instrument_family: 1
     secondary_instrument: 3
     human_verifier: "None for the comparison itself; a human confirms only that the reference string is what was requested."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: exact_pass_fail
     failure_vocabulary: "`char_substitute`, `char_drop`, `char_insert`, `word_drop`, `gibberish`, `prompt_leakage`."
     registry_conditions: [resolution, aspect_ratio, script, string_length_words, string_length_chars, normalisation_ref, surface_type]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Needs a Latin exact-text calibration pack that does NOT exist yet - E3
       specifies it. It must be built separately and MUST NOT mutate the frozen
       Devanagari battery. Like the Devanagari case, the comparison step is
@@ -425,15 +458,21 @@ dimensions:
       A Hindi first-language reader confirms that a TARGET string is valid
       Hindi. The reader never decides whether an image matches its target - for
       the qualification battery that label is true by construction.
-    resource_requirement: required
+    benchmark_material_readiness: available
     result_form: exact_pass_fail
     failure_vocabulary: >-
       The 20 frozen EVAL-005 failure classes in 5 groups - vowel_signs, letters,
       conjuncts, dots_marks, ra_forms - retained as the observer vocabulary.
     registry_conditions: [resolution, aspect_ratio, script, string_length_words, normalisation_ref, font_or_surface, battery_version]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      The frozen 96-item battery qualifies a checker against CORRECTLY-FORMED
+      WRONG TEXT. It perturbs real characters and cannot produce malformed
+      generated glyphs, so a checker qualified on it is NOT qualified against
+      the failure mode where a generator emits shapes that are not characters
+      at all.
+    readiness_note: >-
       The checker-qualification battery EXISTS and is frozen - 96 items, 48
       match / 48 mismatch, 48 accepted base words, 33 hard opportunities. What
       does NOT exist is a checker that has passed it. Until one has, no
@@ -473,13 +512,14 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 2
     human_verifier: "Required. Legibility is a perceptual judgement; a contrast ratio alone does not settle it."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: human_hybrid_score
     failure_vocabulary: "`too_small_at_delivery`, `low_contrast`, `overlapped_by_subject`, `crops_at_safe_area`, `crowded`."
     registry_conditions: [resolution, aspect_ratio, delivery_size_declared, background_class, type_size_ratio]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Deterministic components exist - measured contrast ratio and type height
       as a fraction of frame height are both computable. Whether that adds up to
       "legible" is a perceptual call and needs human calibration first. Do NOT
@@ -515,13 +555,19 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 2
     human_verifier: "Required. Adjudicates whether a difference is a re-drawing or an acceptable projection."
-    resource_requirement: required
+    benchmark_material_readiness: partial
     result_form: human_hybrid_score
     failure_vocabulary: "`mark_redrawn`, `proportion_distorted`, `letterform_wrong`, `element_missing`, `mark_absent`, `mark_duplicated`."
     registry_conditions: [resolution, aspect_ratio, surface_geometry, mark_ref_hash, placement_request]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      Recorded in prior findings as required_but_no_calibrated_instrument.
+      Template matching handles flat frontal marks and fails under perspective
+      and curvature - which is where commercial work lives, so the easy
+      envelope is the one we could qualify and the hard envelope is the one we
+      need.
+    readiness_note: >-
       Recorded in CAPABILITY-BATTERY-V0-DRAFT section 4 as
       `required_but_no_calibrated_instrument`, and that has not changed.
       Template matching handles flat frontal cases and fails under perspective
@@ -561,13 +607,14 @@ dimensions:
     instrument_family: 2
     secondary_instrument: 3
     human_verifier: "Sets the acceptable tolerance once, with reference to commercial practice; does not judge per item."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: structured_categorical
     failure_vocabulary: "`hue_shift`, `saturation_loss`, `value_shift`, `colour_replaced`, `region_not_found`."
     registry_conditions: [resolution, colour_space, tolerance_metric, tolerance_value, lighting_condition, region_definition]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Sampling is deterministic once the region is located, so the instrument
       cost is low. What is missing is the resource - controlled product
       references with declared brand colour values. The TOLERANCE is a
@@ -615,13 +662,16 @@ dimensions:
     human_verifier: >-
       Required for adjudication. Identity similarity is not exact equality and
       must not be presented as if it were.
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: human_hybrid_score
     failure_vocabulary: "`different_person`, `face_drift`, `wardrobe_change`, `age_shift`, `build_shift`, `hair_change`."
     registry_conditions: [resolution, aspect_ratio, reference_count, reference_hashes, prompt_variation_class, session_separation]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      Material target exists but WITHOUT same-category decoys the envelope is
+      category recognition, not individual identity (cross-stream ask ADD-01).
+    readiness_note: >-
       Needs the planned >=32 person references, 8 identities x >=4 views. The
       frozen V0 rubric already encodes the essential rule and must be reused
       unchanged - each declared identity feature is judged on TWO questions,
@@ -659,13 +709,17 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 2
     human_verifier: "Required for adjudication, especially against same-category decoys."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: human_hybrid_score
     failure_vocabulary: "`different_product`, `label_redrawn`, `shape_drift`, `feature_missing`, `feature_invented`, `category_generic`."
     registry_conditions: [resolution, aspect_ratio, reference_count, reference_hashes, pose_class, occlusion_class]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      As person_identity: without same-category decoys the qualification
+      envelope cannot separate recognising a product CATEGORY from recognising
+      THE product.
+    readiness_note: >-
       Needs the planned >=48 product references, 12 products x >=4 views. The
       same-category decoy is the important design element - without it, an
       instrument that says "yes, that is a shampoo bottle" scores as if it had
@@ -702,13 +756,14 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 2
     human_verifier: "Adjudicates the conflict case at level 5."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: structured_categorical
     failure_vocabulary: "`reference_ignored`, `reference_overapplied`, `reference_blended`, `only_first_reference_used`, `reference_rejected_by_api`."
     registry_conditions: [resolution, reference_count, reference_hashes, reference_slot_semantics, requested_divergence_class]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Shares the SAME reference packs as person_identity and product_identity -
       no separate acquisition is needed, and no separate generation either where
       the same asset serves both. `only_first_reference_used` is called out
@@ -745,13 +800,17 @@ dimensions:
     instrument_family: 2
     secondary_instrument: 3
     human_verifier: "Adjudicates whether an out-of-region change is a genuine defect or a legitimate lighting consequence of the edit."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: missing
     result_form: structured_categorical
     failure_vocabulary: "`out_of_region_change`, `global_restyle`, `identity_lost_in_edit`, `text_corrupted_by_edit`, `edit_not_applied`."
     registry_conditions: [resolution, edit_region_definition, edit_class, input_hash, diff_metric, diff_tolerance]
     routing_use: hard_constraint
-    measurability_status: measurable_now
-    measurability_note: >-
+    instrument_readiness: deterministic_ready
+    production_envelope_note: >-
+      Masked pixel difference against our own input needs no calibration, but
+      no production-realistic edit material exists. Ready mechanism, absent
+      material.
+    readiness_note: >-
       Largely deterministic - the input is ours, so a masked pixel difference
       outside the edit region is computable with no human label. The human is
       needed only for the legitimate-consequence question. A cheap and
@@ -794,13 +853,14 @@ dimensions:
     instrument_family: 3
     secondary_instrument: null
     human_verifier: "Required. This is a perceptual defect judgement and there is no deterministic oracle."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: structured_categorical
     failure_vocabulary: "`extra_finger`, `missing_finger`, `fused_digits`, `extra_limb`, `joint_inversion`, `facial_feature_misplaced`, `merged_bodies`."
     registry_conditions: [resolution, aspect_ratio, hand_visibility_class, n_people, sampled_frames]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       No deterministic oracle exists. A VLM can be asked, but whether it
       RELIABLY detects a six-fingered hand is precisely what qualification must
       establish - and a false pass here is the dangerous direction. Human
@@ -834,13 +894,16 @@ dimensions:
     instrument_family: 3
     secondary_instrument: null
     human_verifier: "Required."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: structured_categorical
     failure_vocabulary: "`object_floating`, `hand_through_object`, `impossible_grip`, `contact_absent`, `object_merged_with_hand`."
     registry_conditions: [resolution, aspect_ratio, contact_class, object_class, sampled_frames]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      Recorded in prior findings as required_but_no_calibrated_instrument.
+      Unchanged.
+    readiness_note: >-
       Recorded in CAPABILITY-BATTERY-V0-DRAFT section 4 as
       `required_but_no_calibrated_instrument`. Unchanged. Human adjudication
       required to build any qualification reference.
@@ -872,13 +935,14 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 2
     human_verifier: "Required."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: structured_categorical
     failure_vocabulary: "`bodies_merged`, `limb_shared`, `scale_inconsistent`, `gaze_wrong`, `person_count_wrong`, `duplicate_face`."
     registry_conditions: [resolution, aspect_ratio, n_people, interaction_class, depth_arrangement]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Person COUNT is deterministically checkable with a detector and overlaps
       object_count's instrument; the coherence judgement is not. Record the
       split rather than treating the whole dimension as equally uncertain.
@@ -911,13 +975,14 @@ dimensions:
     instrument_family: 4
     secondary_instrument: 3
     human_verifier: "Required."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: partial
     result_form: human_hybrid_score
     failure_vocabulary: "`foot_sliding`, `teleport`, `stutter`, `direction_reversal`, `morphing`, `frame_freeze`, `speed_implausible`."
     registry_conditions: [resolution, aspect_ratio, clip_duration_s, fps, motion_class, camera_motion, sampled_frames]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Some components are deterministically measurable - optical-flow
       discontinuity and frame-freeze detection do not need a human. Whether the
       motion is PLAUSIBLE is a perceptual judgement. Deterministic
@@ -953,13 +1018,14 @@ dimensions:
     instrument_family: 3
     secondary_instrument: 4
     human_verifier: "Required."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: constructed_by_eval
     result_form: human_hybrid_score
     failure_vocabulary: "`shadow_absent`, `shadow_direction_inconsistent`, `reflection_wrong`, `material_reads_wrong`, `liquid_volume_implausible`, `floating_object`."
     registry_conditions: [resolution, aspect_ratio, material_class, lighting_setup, surface_class]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       No deterministic oracle. Shadow-direction consistency across multiple
       objects is partially computable but was not attempted here and must not be
       claimed. Treat as descriptive evidence until an instrument is qualified.
@@ -1001,13 +1067,14 @@ dimensions:
     instrument_family: 4
     secondary_instrument: 3
     human_verifier: "Adjudicates borderline drift."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: missing
     result_form: structured_categorical
     failure_vocabulary: "`face_drift`, `wardrobe_change_mid_clip`, `hair_change_mid_clip`, `identity_swap`, `age_drift`."
     registry_conditions: [resolution, aspect_ratio, clip_duration_s, fps, sampled_frames, camera_motion, subject_motion_class]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Qualification material can be built WITHOUT human labels by taking clean
       clips and injecting a known identity swap at a known frame - the answer is
       then true by construction, the same trick that made the Devanagari battery
@@ -1042,13 +1109,14 @@ dimensions:
     instrument_family: 4
     secondary_instrument: 3
     human_verifier: "Adjudicates borderline drift."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: missing
     result_form: structured_categorical
     failure_vocabulary: "`shape_drift`, `label_drift`, `colour_drift_mid_clip`, `feature_appears`, `feature_disappears`, `product_swap`."
     registry_conditions: [resolution, aspect_ratio, clip_duration_s, fps, sampled_frames, camera_motion, occlusion_present]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Same construction trick as person_stability_in_clip - inject a known
       product swap into a clean clip. Re-emergence after occlusion at level 5 is
       the commercially important case and the one most likely to fail.
@@ -1087,13 +1155,14 @@ dimensions:
     instrument_family: 4
     secondary_instrument: 1
     human_verifier: "None for the comparison; the Devanagari target-validity question is inherited from exact_text_devanagari."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: missing
     result_form: exact_pass_fail
     failure_vocabulary: "`text_mutates_mid_clip`, `text_flickers`, `text_disappears`, `logo_drifts`, `text_wrong_from_first_frame`."
     registry_conditions: [resolution, aspect_ratio, clip_duration_s, fps, sampled_frames, script, string_length_words]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Depends on the text/OCR family, which is unqualified, applied per sampled
       frame. IMPORTANT - two different failures share this dimension and must be
       recorded apart. Text wrong in EVERY frame is an exact-text failure.
@@ -1136,13 +1205,14 @@ dimensions:
     instrument_family: 4
     secondary_instrument: 3
     human_verifier: "Required. Continuity is a craft judgement with established professional vocabulary."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: partial
     result_form: human_hybrid_score
     failure_vocabulary: "`setting_changed`, `lighting_mismatch`, `wardrobe_mismatch`, `screen_direction_flipped`, `product_state_inconsistent`, `subject_identity_changed_across_cut`."
     registry_conditions: [resolution, aspect_ratio, n_shots, shot_generation_method, continuity_requirement_class]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Canon owns what good continuity MEANS; Eval measures whether a workflow
       achieves it. Eval must consume Canon's continuity vocabulary rather than
       invent its own. Deterministic perturbation is available for some
@@ -1188,13 +1258,14 @@ dimensions:
       A first-language listener confirms pronunciation acceptability. Word
       correctness is machine-comparable; PRONUNCIATION is not, and must not be
       inferred from a matching transcript.
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: exact_pass_fail
     failure_vocabulary: "`word_substituted`, `word_dropped`, `wrong_language`, `mispronounced`, `brand_name_mispronounced`, `number_misread`, `code_switch_failed`."
     registry_conditions: [language, script_system, script_length_words, sample_rate, normalisation_ref, asr_instrument_ref]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       A TRAP that mirrors the founding Devanagari lesson - a transcript matching
       the script proves the WORDS were right, not that they were pronounced
       acceptably. An ASR system trained to be robust will happily normalise a
@@ -1230,13 +1301,14 @@ dimensions:
     instrument_family: 5
     secondary_instrument: 4
     human_verifier: "Required for the acceptability judgement; deterministic offset is machine-measurable."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: human_hybrid_score
     failure_vocabulary: "`mouth_static`, `sync_drift`, `viseme_mismatch`, `mouth_moves_without_audio`, `audio_without_mouth_movement`."
     registry_conditions: [resolution, fps, clip_duration_s, language, speaker_angle, audio_sample_rate]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Needs the planned 24 single-speaker clean AV clips with transcripts.
       DO NOT invent a millisecond tolerance for "acceptable sync". Propose a
       calibration curve from known injected offsets first and let the data say
@@ -1273,13 +1345,17 @@ dimensions:
     instrument_family: 5
     secondary_instrument: 4
     human_verifier: "Required."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: structured_categorical
     failure_vocabulary: "`turn_assigned_to_wrong_speaker`, `both_mouths_move`, `neither_mouth_moves`, `turn_order_wrong`, `turn_merged`, `speaker_voice_swapped`."
     registry_conditions: [resolution, fps, clip_duration_s, language, n_turns, both_speakers_in_frame, turn_boundary_ref]
     routing_use: hard_constraint
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      Turn boundaries are what make a wrong speaker assignment
+      machine-detectable. Without them the envelope collapses to
+      single-speaker sync.
+    readiness_note: >-
       Needs the planned 12 two-speaker clean AV clips WITH turn boundaries -
       the boundaries are what make wrong assignment machine-detectable.
       Qualification material can be built deterministically by swapping the
@@ -1318,13 +1394,14 @@ dimensions:
     instrument_family: 5
     secondary_instrument: 6
     human_verifier: "Required. This is a preference-shaped judgement, not a right answer."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: pairwise_preference
     failure_vocabulary: "`register_absent`, `register_wrong`, `flat_delivery`, `emphasis_misplaced`, `pace_wrong`, `register_not_sustained`."
     registry_conditions: [language, script_length_words, requested_register, sample_rate]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       There is no right answer here, so this is deliberately DESCRIPTIVE ONLY
       and may never be a hard routing constraint. The honest measurable form is
       discrimination - can listeners or a qualified instrument tell the
@@ -1360,13 +1437,25 @@ dimensions:
     instrument_family: 5
     secondary_instrument: null
     human_verifier: "Sets the acceptability threshold once from a calibration curve; does not judge per item."
-    resource_requirement: constructed_by_eval
+    benchmark_material_readiness: missing
     result_form: operational_metric
     failure_vocabulary: "`constant_offset`, `progressive_drift`, `audio_absent`, `audio_truncated`, `video_truncated`, `offset_after_cut`."
     registry_conditions: [fps, audio_sample_rate, clip_duration_s, event_class, measurement_points]
     routing_use: hard_constraint
-    measurability_status: measurable_now
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: >-
+      SPLIT ENVELOPE, and the reason this is not `deterministic_ready`.
+      Computing the OFFSET between two located onsets is deterministic
+      arithmetic. LOCATING the visual onset is not: on a constructed fixture
+      with a sharp clap it is trivial, but in arbitrary production content
+      "the moment the bottle lands" needs an event detector, which is a model.
+      So the mechanism is deterministic only inside the fixture envelope, and
+      the qualification must establish event localisation before any
+      production claim. Reported primary result stays the MEASURED OFFSET in
+      milliseconds; any pass/fail line is a separately declared,
+      Controller-approved parameter.
+      Material is additionally missing - the project holds no audio at all.
+    readiness_note: >-
       The most deterministic dimension in family F. Onset detection on both
       tracks gives a measured offset in milliseconds with no human label, and
       known offsets can be INJECTED into clean clips to qualify the instrument
@@ -1415,13 +1504,14 @@ dimensions:
       Required, and it must be FRESH INDEPENDENT human review. Public or source
       preference labels are one party's observations and are never our creative
       truth.
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: pairwise_preference
     failure_vocabulary: "`proposition_absent`, `proposition_wrong`, `cta_absent`, `benefit_unclear`, `audience_mismatch`, `message_contradicted_by_image`."
     registry_conditions: [brief_ref, delivery_size_declared, asset_modality, reviewer_pool_ref]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Depends on Canon's 30-brief bank, which Eval must NOT independently
       author, and on Resources' 60 active commercial assets. Measure by pairwise
       comparison or structured issue-detection, not by an absolute score - "is
@@ -1461,13 +1551,14 @@ dimensions:
     instrument_family: 6
     secondary_instrument: 2
     human_verifier: "Required."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: pairwise_preference
     failure_vocabulary: "`hero_subordinate`, `model_dominates`, `background_dominates`, `text_dominates_product`, `hero_cropped`, `attention_split`."
     registry_conditions: [brief_ref, delivery_size_declared, asset_modality, hero_element_declared, reviewer_pool_ref]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Canon owns what hierarchy MEANS - Eval consumes that definition and must
       not re-derive it. Partially instrumentable - relative area, centrality and
       contrast of the declared hero region are computable. Whether that
@@ -1502,13 +1593,14 @@ dimensions:
     instrument_family: 6
     secondary_instrument: null
     human_verifier: "Required, fresh and independent."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: pairwise_preference
     failure_vocabulary: "`register_mismatch`, `composition_unbalanced`, `styling_generic`, `production_value_low`, `visual_cliche`, `crop_awkward`."
     registry_conditions: [brief_ref, delivery_size_declared, asset_modality, declared_register, reviewer_pool_ref]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       The most subjective dimension in the contract and the one most at risk of
       producing a confident-looking number that means nothing. Discrimination
       framing at level 4 is the honest test - can the register be told apart
@@ -1544,13 +1636,14 @@ dimensions:
     instrument_family: 6
     secondary_instrument: 4
     human_verifier: "Required, fresh and independent."
-    resource_requirement: required
+    benchmark_material_readiness: missing
     result_form: pairwise_preference
     failure_vocabulary: "`hook_absent`, `hook_late`, `pacing_flat`, `cta_missing`, `cta_too_late`, `information_overloaded`, `dead_opening`."
     registry_conditions: [brief_ref, clip_duration_s, n_shots, asset_modality, reviewer_pool_ref]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_resource
-    measurability_note: >-
+    instrument_readiness: blocked_pending_qualification
+    production_envelope_note: null
+    readiness_note: >-
       Canon owns temporal hierarchy as a craft concept. Some structure is
       computable - shot-boundary timings, when the product first appears, when
       on-screen text first appears - and those measurements are worth recording
@@ -1594,13 +1687,17 @@ dimensions:
     instrument_family: operational
     secondary_instrument: null
     human_verifier: none
-    resource_requirement: no_external_resource
+    benchmark_material_readiness: no_external_stimulus_required
     result_form: operational_metric
     failure_vocabulary: "Inherited from the parent capability. This dimension adds no vocabulary of its own."
     registry_conditions: [parent_dimension, difficulty_level, n_items, repeats_per_item, seed_policy]
     routing_use: hard_constraint
-    measurability_status: measurable_now
-    measurability_note: >-
+    instrument_readiness: deterministic_ready
+    production_envelope_note: >-
+      Mechanism ready, but it is DERIVED - it has no value until real trials
+      exist. Zero generations have been run, so the envelope is empty rather
+      than blocked.
+    readiness_note: >-
       Zero marginal generation cost - it is arithmetic over trials that already
       exist. THE TRAP - repeats are not independent items. A 96%
       pass rate over 2 repeats of 3 items is not a 96% pass rate. n_items and
@@ -1636,13 +1733,17 @@ dimensions:
     instrument_family: operational
     secondary_instrument: null
     human_verifier: "Supplies the human-time rate; does not judge per item."
-    resource_requirement: no_external_resource
+    benchmark_material_readiness: no_external_stimulus_required
     result_form: operational_metric
     failure_vocabulary: "Not applicable - this dimension records cost, not defects."
     registry_conditions: [currency, price_source, price_read_date, component_breakdown, human_rate_assumption]
     routing_use: hard_constraint
-    measurability_status: measurable_now
-    measurability_note: >-
+    instrument_readiness: deterministic_ready
+    production_envelope_note: >-
+      Mechanism ready and derived. Note the envelope gap that matters: human
+      verification cost is expected to dominate and has no approved rate, so
+      CpAO cannot be completed from generation and evaluator costs alone.
+    readiness_note: >-
       THIS IS THE PROJECT'S PRIMARY LONG-TERM METRIC and the most commonly
       mis-stated. Three rules carried from prior evidence -
       (1) HUMAN CHECKING, NOT API SPEND, IS LIKELY TO DOMINATE. The original
@@ -1683,13 +1784,16 @@ dimensions:
     instrument_family: operational
     secondary_instrument: null
     human_verifier: none
-    resource_requirement: no_external_resource
+    benchmark_material_readiness: no_external_stimulus_required
     result_form: operational_metric
     failure_vocabulary: "`4xx`, `5xx`, `timeout`, `rate_limited`, `moderation_block`, `content_refusal`, `malformed_response`, `truncated_output`."
     registry_conditions: [region, concurrency, time_of_day_window, retry_policy, request_size]
     routing_use: hard_constraint
-    measurability_status: measurable_now
-    measurability_note: >-
+    instrument_readiness: deterministic_ready
+    production_envelope_note: >-
+      Mechanism ready and derived; every call produces this data, including
+      calls that fail. Empty until real calls are made.
+    readiness_note: >-
       Costs nothing extra - every call already produces this data, and a call
       that FAILS still produces it. A p50 alone hides the timeout tail that
       decides whether a workflow is usable interactively, so p95 is mandatory.
@@ -1727,13 +1831,20 @@ dimensions:
     instrument_family: operational
     secondary_instrument: null
     human_verifier: none
-    resource_requirement: no_external_resource
+    benchmark_material_readiness: no_external_stimulus_required
     result_form: operational_metric
     failure_vocabulary: "`seed_unsupported`, `seed_ignored`, `repeat_divergent`, `repair_failed`, `repair_introduced_new_defect`."
     registry_conditions: [seed_policy, repeats_per_item, repair_strategy_ref, parent_failure_class]
     routing_use: descriptive_only
-    measurability_status: blocked_pending_instrument
-    measurability_note: >-
+    instrument_readiness: deterministic_ready
+    production_envelope_note: >-
+      SPLIT ENVELOPE. Repeat agreement is deterministic arithmetic over
+      repeats we already budget, and is ready. REPAIR is not: measuring it
+      requires a repair loop that DOES NOT EXIST, and repair attempts are
+      additional generations that must be budgeted explicitly rather than
+      smuggled in under generate-once. The repair fields stay null until that
+      loop exists.
+    readiness_note: >-
       Repeat agreement is cheap and depends only on repeats already budgeted.
       REPAIR IS DIFFERENT - measuring repair requires a repair loop that DOES
       NOT EXIST YET, and repair attempts are additional generations that must be

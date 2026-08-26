@@ -1,7 +1,8 @@
 # E5 — Generate-once evaluation harness
 
 **Status: IMPLEMENTED AND EXECUTED IN THIS CLOUD SESSION.**
-38/38 verification checks pass — see [`VERIFICATION-LOG.md`](VERIFICATION-LOG.md).
+**72/72** verification checks pass after corrections E-C4 – E-C7 — see
+[`VERIFICATION-LOG.md`](VERIFICATION-LOG.md).
 **0 network calls · 0 model calls · ₹0 spend · 0 Registry rows.**
 
 ---
@@ -46,12 +47,16 @@ to this project, and one it has already made twice.
 | 1 | Exactly one provenance record per asset | An asset whose origin is ambiguous |
 | 2 | Many measurements may point at one asset | Regenerating per metric |
 | 3 | A retry is a new attempt, never a replacement | Silently overwriting evidence |
+| 3b | **Experimental repeats and production retries are separate** (E-C4) | A repeat counted as a retry inflates the failure rate; a retry counted as a repeat hides real CpAO cost |
 | 4 | Frames keep the parent trial id | Inflating trial counts by sampling |
 | 5 | Every Registry row names an exact instrument configuration | A number without its judge |
 | 6 | Absence distinguishes five reasons | "Could not measure" reading as "passed" |
 | 7 | Generation, transform and evaluator costs stay separate | Hiding a third of true cost |
 | 8 | No routing score or weight is computed | Eval doing the Planner's job |
 | 9 | Registry starts and stays empty of empirical rows | Fake evidence |
+| 10 | **A Registry row is ONE coherent cell** (E-C5) | An average across two models or two instruments that describes nothing |
+| 11 | **No synthetic promotion bypass exists** (E-C6) | Dummy data becoming evidence via a call option |
+| 12 | **The canonical four-record handoff is Resources'** (E-C7) | Two competing persistent schemas |
 
 ## It fails closed
 
@@ -87,8 +92,21 @@ caller cannot proceed. Verified refusals include:
 | `models.py` | Provenance, Measurement, RegistryRow; absence reasons; qualification statuses |
 | `harness.py` | The orchestrator and every invariant check |
 | `adapters.py` | Dummy generators and evaluators, including deliberately broken ones |
-| `run_selftest.py` | The six required demonstrations + harness negative controls |
-| `out-selftest/` | Artifact manifest, measurements, operational metrics, co-occurrence |
+| `run_selftest.py` | The required demonstrations + harness negative controls |
+| `out-selftest/` | `attempts` / `artifacts` / `measurements` / `acceptances` + derived views |
+
+## Storage handoff (E-C7)
+
+Resources owns the durable storage contract; Eval owns measurement semantics.
+The harness emits the canonical **four** records and keeps **no competing
+persistent manifest**:
+
+| Record | Rule |
+|---|---|
+| **Attempt** | Written because the call was *made*. Refusals, errors and timeouts survive as their own records **with no artifact**. |
+| **Artifact** | Bytes from an attempt. Derived frames point to their parent and add **no** trial. |
+| **Measurement** | Many per artifact. Canonical observation units only. |
+| **Acceptance** | **Always empty here.** Eval does not decide acceptance; inventing one would manufacture the numerator of CpAO. |
 
 ## Relationship to the existing harness
 

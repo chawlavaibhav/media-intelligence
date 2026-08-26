@@ -27,15 +27,45 @@ missing and how cheaply it can be finished.
 
 ---
 
-## The blocker, with its evidence
+## Correction E-C2 — re-tested, and the route that half-worked is now closed
+
+The environment was **re-probed on 26 August** after GitHub access was restored.
 
 | Check | Result |
 |---|---|
 | Official provider domains probed | **22** |
 | Reachable from this session | **1** (`cloud.google.com`, HTTP 200) |
 | Of those, yielding an extractable pricing table | **0** |
+| Model/pricing docs on the reachable domain | **301 → `docs.cloud.google.com`, which is also blocked** |
 | Web search available | Yes |
 | Web search results usable as price evidence | **No** — reseller blogs and cost calculators |
+
+The one partial route that existed before has closed: Google's model and pricing
+documentation now redirects to a host this session cannot reach. Neither a price
+**nor an exact model identity** could be obtained by any available means.
+
+## The roster — all 19 slots, each explicitly unresolved
+
+E-C2 requires each row to be officially evidenced **or explicitly unresolved**,
+row by row. None could be evidenced, so all 19 are enumerated as unresolved
+slots in the YAML rather than summarised as a single blocker.
+
+| Lane | Slots | Resolved |
+|---|---:|---:|
+| Image | 4 | 0 |
+| General video | 5 | 0 |
+| Native audio-video | 4 | 0 |
+| Lip-sync | 3 | 0 |
+| TTS | 3 | 0 |
+| **Total** | **19** | **0** |
+
+A slot is a **reserved position, not a candidate**. It names no model, because
+naming one from memory is exactly the invented certainty E-C2 forbids.
+
+**A partially filled roster remains the intended outcome** — it simply could not
+be reached, because zero slots could be evidenced rather than some. If a later
+session reaches even one official pricing page, that slot fills and the other
+eighteen stay as they are. This does not have to be completed in one pass.
 
 Blocked domains included every one that matters for this roster: the Gemini
 developer site, OpenAI, ElevenLabs, fal, Replicate, Runway, Black Forest Labs,

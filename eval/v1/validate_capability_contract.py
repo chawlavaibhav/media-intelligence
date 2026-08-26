@@ -45,23 +45,27 @@ MANDATORY = [
     "id", "family", "name_plain", "definition", "inside", "outside",
     "modalities", "observation_unit", "observation_span_detail",
     "atomic_probe", "compound_reuse", "difficulty_ladder",
-    "instrument_family", "human_verifier", "resource_requirement",
+    "instrument_family", "human_verifier", "benchmark_material_readiness",
     "result_form", "failure_vocabulary", "registry_conditions",
-    "routing_use", "measurability_status", "measurability_note",
+    "routing_use", "instrument_readiness", "readiness_note",
 ]
-# secondary_instrument is mandatory as a KEY but may be null.
-MANDATORY_NULLABLE = ["secondary_instrument"]
+# Mandatory as KEYS but may be null.
+MANDATORY_NULLABLE = ["secondary_instrument", "production_envelope_note"]
 
 # Canon's vocabulary, adopted unchanged. SPEC-04-operational-bindings.md:105
 CANON_UNITS = {"frame", "shot", "shot_pair", "sequence", "whole_asset",
                "asset_set_over_time"}
-RESOURCE_REQ = {"required", "constructed_by_eval", "no_external_resource"}
+# --- E-C1: two INDEPENDENT readiness axes, never one conflated scalar ------
+# Can the mechanism be trusted?
+INSTRUMENT_READINESS = {"deterministic_ready", "qualified", "provisional",
+                        "blocked_pending_qualification", "unmeasurable"}
+# Do we hold the material to exercise it under the intended conditions?
+BENCHMARK_MATERIAL_READINESS = {"available", "constructed_by_eval", "partial",
+                                "missing", "no_external_stimulus_required"}
 RESULT_FORMS = {"exact_pass_fail", "structured_categorical",
                 "pairwise_preference", "human_hybrid_score",
                 "operational_metric"}
 ROUTING = {"hard_constraint", "descriptive_only"}
-MEASURABILITY = {"measurable_now", "blocked_pending_resource",
-                 "blocked_pending_instrument", "currently_unmeasurable"}
 INSTRUMENT_FAMILIES = {1, 2, 3, 4, 5, 6, "operational"}
 MODALITIES = {"image", "video", "native_av", "lipsync", "tts", "editing"}
 
@@ -107,14 +111,16 @@ def main():
             errors.append(
                 f"{did}: observation_unit '{d.get('observation_unit')}' is not in "
                 f"Canon's SPEC-04 vocabulary {sorted(CANON_UNITS)}")
-        if d.get("resource_requirement") not in RESOURCE_REQ:
-            errors.append(f"{did}: bad resource_requirement '{d.get('resource_requirement')}'")
+        if d.get("instrument_readiness") not in INSTRUMENT_READINESS:
+            errors.append(f"{did}: bad instrument_readiness "
+                          f"'{d.get('instrument_readiness')}'")
+        if d.get("benchmark_material_readiness") not in BENCHMARK_MATERIAL_READINESS:
+            errors.append(f"{did}: bad benchmark_material_readiness "
+                          f"'{d.get('benchmark_material_readiness')}'")
         if d.get("result_form") not in RESULT_FORMS:
             errors.append(f"{did}: bad result_form '{d.get('result_form')}'")
         if d.get("routing_use") not in ROUTING:
             errors.append(f"{did}: bad routing_use '{d.get('routing_use')}'")
-        if d.get("measurability_status") not in MEASURABILITY:
-            errors.append(f"{did}: bad measurability_status '{d.get('measurability_status')}'")
         if d.get("instrument_family") not in INSTRUMENT_FAMILIES:
             errors.append(f"{did}: bad instrument_family '{d.get('instrument_family')}'")
         for m in d.get("modalities") or []:
@@ -130,10 +136,39 @@ def main():
             if not lvl.get("observable"):
                 errors.append(f"{did}: ladder level {i} has no observable change")
 
-        # Every dimension must reach a measurement path or an explicit blocked state.
-        if d.get("measurability_status") == "currently_unmeasurable" and \
-                len(str(d.get("measurability_note", ""))) < 40:
-            errors.append(f"{did}: currently_unmeasurable requires a substantive note")
+        # Every dimension must reach a measurement path or an explicit state.
+        if d.get("instrument_readiness") == "unmeasurable" and \
+                len(str(d.get("readiness_note", ""))) < 40:
+            errors.append(f"{did}: unmeasurable requires a substantive readiness_note")
+
+        # E-C1: nothing may claim a qualification that does not exist. No
+        # instrument family holds a qualification record, so `qualified` and
+        # `provisional` are reserved and must not appear.
+        if d.get("instrument_readiness") in ("qualified", "provisional"):
+            errors.append(
+                f"{did}: instrument_readiness '{d.get('instrument_readiness')}' "
+                f"claims a qualification record that does not exist. Zero "
+                f"instrument families are qualified.")
+
+        # E-C1: a model-based instrument is never `deterministic_ready`. A
+        # detector or a VLM is a model, not a deterministic oracle.
+        if d.get("instrument_readiness") == "deterministic_ready" and \
+                d.get("instrument_family") in (1, 3, 4, 5, 6):
+            errors.append(
+                f"{did}: instrument_family {d.get('instrument_family')} is a "
+                f"model-based evaluator and cannot be deterministic_ready.")
+
+        # E-C1: the axes are INDEPENDENT. Material state must never be inferred
+        # from instrument state, so no combination is forbidden - but a
+        # deterministic mechanism with absent material MUST say so, because that
+        # is precisely the case the old single scalar could not express.
+        if d.get("instrument_readiness") == "deterministic_ready" and \
+                d.get("benchmark_material_readiness") in ("missing", "partial") and \
+                not d.get("production_envelope_note"):
+            errors.append(
+                f"{did}: deterministic mechanism with "
+                f"'{d.get('benchmark_material_readiness')}' material requires a "
+                f"production_envelope_note saying so.")
 
         # Family G is descriptive only, by contract.
         if str(d.get("family", "")).startswith("G_") and d.get("routing_use") != "descriptive_only":
@@ -147,10 +182,19 @@ def main():
     print(f"dimensions loaded            : {len(dims)}")
     print(f"frozen scope ids matched     : {len(FROZEN_36) - len(missing)}/36")
     print(f"mandatory fields per dim     : {len(MANDATORY) + len(MANDATORY_NULLABLE)}")
-    print(f"measurable_now               : {sum(1 for d in dims if d.get('measurability_status')=='measurable_now')}")
-    print(f"blocked_pending_instrument   : {sum(1 for d in dims if d.get('measurability_status')=='blocked_pending_instrument')}")
-    print(f"blocked_pending_resource     : {sum(1 for d in dims if d.get('measurability_status')=='blocked_pending_resource')}")
-    print(f"currently_unmeasurable       : {sum(1 for d in dims if d.get('measurability_status')=='currently_unmeasurable')}")
+    import collections as _c
+    ir = _c.Counter(d.get("instrument_readiness") for d in dims)
+    mr = _c.Counter(d.get("benchmark_material_readiness") for d in dims)
+    # sort by str(): a dimension missing the field yields None, and the summary
+    # must still PRINT so the collected errors are visible. Crashing here would
+    # hide the very errors this validator exists to report.
+    print("instrument_readiness         : "
+          + ", ".join(f"{k}={v}" for k, v in sorted(ir.items(), key=lambda kv: str(kv[0]))))
+    print("benchmark_material_readiness : "
+          + ", ".join(f"{k}={v}" for k, v in sorted(mr.items(), key=lambda kv: str(kv[0]))))
+    print(f"both-axes-ready (measurable) : "
+          f"{sum(1 for d in dims if d.get('instrument_readiness') in ('deterministic_ready','qualified') and d.get('benchmark_material_readiness') in ('available','constructed_by_eval','no_external_stimulus_required'))}")
+    print(f"production_envelope_notes    : {sum(1 for d in dims if d.get('production_envelope_note'))}")
     print(f"hard_constraint / descriptive: "
           f"{sum(1 for d in dims if d.get('routing_use')=='hard_constraint')} / "
           f"{sum(1 for d in dims if d.get('routing_use')=='descriptive_only')}")

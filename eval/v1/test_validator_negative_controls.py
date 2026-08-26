@@ -111,6 +111,54 @@ def c_bad_modality(d):
     d["dimensions"][8]["modalities"] = ["hologram"]
     return d
 
+# ---------------------------------------------------------------------------
+# E-C1 controls: the two readiness axes must stay separate and honest.
+# ---------------------------------------------------------------------------
+
+@control("E-C1: unknown instrument_readiness value must FAIL")
+def c_bad_instr_readiness(d):
+    d["dimensions"][1]["instrument_readiness"] = "probably_fine"
+    return d
+
+@control("E-C1: unknown benchmark_material_readiness value must FAIL")
+def c_bad_mat_readiness(d):
+    d["dimensions"][2]["benchmark_material_readiness"] = "we_have_some"
+    return d
+
+@control("E-C1: claiming instrument_readiness 'qualified' must FAIL (none is)")
+def c_claim_qualified(d):
+    d["dimensions"][3]["instrument_readiness"] = "qualified"
+    return d
+
+@control("E-C1: claiming instrument_readiness 'provisional' must FAIL (none is)")
+def c_claim_provisional(d):
+    d["dimensions"][4]["instrument_readiness"] = "provisional"
+    return d
+
+@control("E-C1: a model-based family claiming deterministic_ready must FAIL")
+def c_model_deterministic(d):
+    for x in d["dimensions"]:
+        if x["id"] == "exact_text_devanagari":      # family 1, model-based OCR
+            x["instrument_readiness"] = "deterministic_ready"
+    return d
+
+@control("E-C1: deterministic mechanism + missing material with NO envelope note must FAIL")
+def c_silent_envelope(d):
+    for x in d["dimensions"]:
+        if x["id"] == "edit_preservation":
+            x["production_envelope_note"] = None
+    return d
+
+@control("E-C1: dropping the production_envelope_note KEY must FAIL")
+def c_drop_envelope_key(d):
+    del d["dimensions"][5]["production_envelope_note"]
+    return d
+
+@control("E-C1: the retired single scalar must not be reintroduced as mandatory cover")
+def c_missing_new_axis(d):
+    del d["dimensions"][6]["benchmark_material_readiness"]
+    return d
+
 
 def main():
     print("Negative controls for validate_capability_contract.py\n")

@@ -30,12 +30,22 @@ INSTRUMENT_NAMES = {
     4: "temporal/video", 5: "speech/audio/AV", 6: "creative/commercial",
     "operational": "operational logging (no instrument)",
 }
-STATUS_LABEL = {
-    "measurable_now": "measurable now",
-    "blocked_pending_instrument": "blocked — no qualified instrument",
-    "blocked_pending_resource": "blocked — resource missing",
-    "currently_unmeasurable": "currently unmeasurable",
+INSTR_LABEL = {
+    "deterministic_ready": "deterministic — ready",
+    "qualified": "qualified",
+    "provisional": "provisional",
+    "blocked_pending_qualification": "blocked — not qualified",
+    "unmeasurable": "no known mechanism",
 }
+MAT_LABEL = {
+    "available": "held",
+    "constructed_by_eval": "Eval constructs it",
+    "partial": "partial",
+    "missing": "missing",
+    "no_external_stimulus_required": "none needed",
+}
+READY_INSTR = {"deterministic_ready", "qualified"}
+READY_MAT = {"available", "constructed_by_eval", "no_external_stimulus_required"}
 
 
 def main():
@@ -80,20 +90,37 @@ def main():
         "evaluator wants to look. Reuse never turns one asset into multiple independent trials.\n")
 
     o.append("## Summary\n")
-    ms = collections.Counter(d["measurability_status"] for d in dims)
-    o.append("| | Count |\n|---|---:|")
+    ir = collections.Counter(d["instrument_readiness"] for d in dims)
+    mr = collections.Counter(d["benchmark_material_readiness"] for d in dims)
+    both = sum(1 for d in dims if d["instrument_readiness"] in READY_INSTR
+               and d["benchmark_material_readiness"] in READY_MAT)
+    o.append("Readiness is **two independent questions**, not one score "
+             "(correction E-C1).\n")
+    o.append("**Can the mechanism be trusted?**\n")
+    o.append("| `instrument_readiness` | Count |\n|---|---:|")
+    for k, v in sorted(ir.items(), key=lambda kv: -kv[1]):
+        o.append(f"| {INSTR_LABEL[k]} | {v} |")
+    o.append("\n**Do we hold the material to exercise it?**\n")
+    o.append("| `benchmark_material_readiness` | Count |\n|---|---:|")
+    for k, v in sorted(mr.items(), key=lambda kv: -kv[1]):
+        o.append(f"| {MAT_LABEL[k]} | {v} |")
+    o.append(f"\n| | |\n|---|---:|")
     o.append(f"| Capabilities defined | **{len(dims)} / 36** |")
-    o.append(f"| Measurable now | {ms['measurable_now']} |")
-    o.append(f"| Blocked — no qualified instrument | {ms['blocked_pending_instrument']} |")
-    o.append(f"| Blocked — resource missing | {ms['blocked_pending_resource']} |")
+    o.append(f"| **Ready on BOTH axes** | **{both}** |")
     o.append(f"| Usable as a hard routing constraint | {sum(1 for d in dims if d['routing_use']=='hard_constraint')} |")
     o.append(f"| Descriptive evidence only | {sum(1 for d in dims if d['routing_use']=='descriptive_only')} |")
     o.append(f"| Empirical results contained | **0** |\n")
-    o.append("**Read that middle block plainly:** of 36 capabilities, "
-             f"**{ms['measurable_now']} could be measured with what we have today**. "
-             f"**{ms['blocked_pending_instrument']}** are waiting on a checker nobody has yet "
-             f"proven trustworthy, and **{ms['blocked_pending_resource']}** are waiting on test "
-             "material we do not hold. That is the real shape of the gap.\n")
+    o.append(
+        "**Why two axes.** A single score had to misreport one of them. "
+        "`audio_video_synchronisation` and `edit_preservation` have mechanisms "
+        "that need no calibration *and* no material to run on — a state the old "
+        "scalar could only call \"measurable now\" (false: there is nothing to "
+        "measure) or \"blocked on instrument\" (false: the instrument is fine). "
+        "Each misreading sends the next decision the wrong way: one wastes "
+        "qualification effort, the other buys material we may not need yet.\n")
+    o.append(f"**Only {both} of 36 are ready on both axes**, and every one of "
+             "them is operational or deterministic — none reports fidelity or "
+             "creative quality.\n")
 
     for fam, items in by_family.items():
         o.append(f"\n---\n\n## {FAMILY_TITLES.get(fam, fam)}\n")
@@ -112,16 +139,23 @@ def main():
             sec_s = f", corroborated by {INSTRUMENT_NAMES.get(sec, sec)}" if sec else ""
             o.append(f"- **Instrument:** {INSTRUMENT_NAMES.get(d['instrument_family'], d['instrument_family'])}{sec_s}")
             o.append(f"- **Human verifier:** {d['human_verifier'].strip() if d['human_verifier']!='none' else '*none*'}")
-            o.append(f"- **External resource:** `{d['resource_requirement']}`")
+            o.append(f"- **Instrument readiness:** `{d['instrument_readiness']}` "
+                     f"— {INSTR_LABEL[d['instrument_readiness']]}")
+            o.append(f"- **Benchmark material:** `{d['benchmark_material_readiness']}` "
+                     f"— {MAT_LABEL[d['benchmark_material_readiness']]}")
             o.append(f"- **Result form:** `{d['result_form']}`")
             o.append(f"- **Routing use:** `{d['routing_use']}`")
-            o.append(f"- **Status:** **{STATUS_LABEL[d['measurability_status']]}**")
+
             o.append(f"\n  **Difficulty ladder**\n")
             for lvl in d["difficulty_ladder"]:
                 o.append(f"  {lvl['level']}. {lvl['observable']}")
             o.append(f"\n  **Failure vocabulary:** {d['failure_vocabulary'].strip()}")
             o.append(f"\n  **Held fixed for comparability:** {', '.join(f'`{c}`' for c in d['registry_conditions'])}")
-            o.append(f"\n  **Note:** {d['measurability_note'].strip()}\n")
+            o.append(f"\n  **Note:** {d['readiness_note'].strip()}")
+            if d.get("production_envelope_note"):
+                o.append(f"\n  **Production envelope:** {d['production_envelope_note'].strip()}\n")
+            else:
+                o.append("")
 
     o.append("\n---\n\n## Proposed changes — raised, not applied\n")
     o.append("The 36 capability ids remain exactly as the Controller froze them. "
@@ -140,18 +174,19 @@ def main():
              "can actually be measured?** It is the shopping list behind the whole programme.\n")
 
     m.append("\n## Full matrix\n")
-    m.append("| Capability | Unit | Instrument | Resource | Routing | Status |")
+    m.append("| Capability | Unit | Instrument family | Instrument readiness | "
+             "Benchmark material | Routing |")
     m.append("|---|---|---|---|---|---|")
     for d in dims:
         m.append(f"| `{d['id']}` | `{d['observation_unit']}` | "
                  f"{INSTRUMENT_NAMES.get(d['instrument_family'], d['instrument_family'])} | "
-                 f"`{d['resource_requirement']}` | `{d['routing_use']}` | "
-                 f"{STATUS_LABEL[d['measurability_status']]} |")
+                 f"`{d['instrument_readiness']}` | "
+                 f"`{d['benchmark_material_readiness']}` | `{d['routing_use']}` |")
 
     m.append("\n## Blockers, grouped by what would unblock them\n")
     inst = collections.defaultdict(list)
     for d in dims:
-        if d["measurability_status"] == "blocked_pending_instrument":
+        if d["instrument_readiness"] == "blocked_pending_qualification":
             inst[INSTRUMENT_NAMES.get(d["instrument_family"], d["instrument_family"])].append(d["id"])
     m.append("### Waiting on an instrument nobody has qualified yet\n")
     m.append("| Instrument family | Capabilities it unblocks | Count |")
@@ -162,13 +197,27 @@ def main():
              "unblocks every capability in its row at once. That is the cheapest possible "
              "ordering of the work.\n")
 
-    res = [d["id"] for d in dims if d["measurability_status"] == "blocked_pending_resource"]
+    res = [d["id"] for d in dims
+           if d["benchmark_material_readiness"] in ("missing", "partial")]
     m.append("### Waiting on test material we do not hold\n")
-    m.append(f"{len(res)} capabilities: " + ", ".join(f"`{x}`" for x in res) + "\n")
+    m.append(f"{len(res)} capabilities have `missing` or `partial` material: "
+             + ", ".join(f"`{x}`" for x in res) + "\n")
+    m.append("**These two lists overlap, and that is the point.** A capability "
+             "can appear in both, in one, or in neither. Fixing an instrument "
+             "does not deliver material, and buying material does not qualify "
+             "an instrument.\n")
+    cross = [d["id"] for d in dims
+             if d["instrument_readiness"] == "deterministic_ready"
+             and d["benchmark_material_readiness"] in ("missing", "partial")]
+    if cross:
+        m.append("### Mechanism ready, material absent\n")
+        m.append("The state the single scalar could not express: "
+                 + ", ".join(f"`{x}`" for x in cross)
+                 + ". Qualification effort here buys nothing until material exists.\n")
 
     m.append("\n## Free riders — measurable on assets other dimensions already generate\n")
     free = [d["id"] for d in dims
-            if d["resource_requirement"] == "no_external_resource"
+            if d["benchmark_material_readiness"] == "no_external_stimulus_required"
             or d["compound_reuse"] == ["ALL"]]
     m.append("These cost **no additional generation at all**. They should be attached to every "
              "eligible asset by default; not doing so is wasted money.\n")

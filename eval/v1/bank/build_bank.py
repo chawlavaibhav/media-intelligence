@@ -36,19 +36,39 @@ ATOMIC_GROUPS = {
         "count": 10,
         "allocation": {"exact_text_latin": 5, "exact_text_devanagari": 5},
     },
+    # --- E-C3 rebalance: three atomic slots moved to two-speaker probes ------
+    # two_speaker_turn_assignment_and_lip_sync reached only 7 opportunities
+    # because exactly ONE compound scenario has two visible speakers exchanging
+    # turns. The Controller ruled out both cheap repairs - do not change
+    # multi_shot_branded_ad's modality merely to fix a denominator, and do not
+    # grow the bank past 100. So three atomic slots are REALLOCATED.
+    #
+    # Donors are the three capabilities with the LARGEST margin above the >=10
+    # target that still retain an isolation probe after donating:
+    #   anatomy_hands        39 -> 38   (3 atomic -> 2)
+    #   product_identity     38 -> 37   (2 atomic -> 1)
+    #   spatial_relationship 32 -> 31   (2 atomic -> 1)
+    # None approaches the target. Every capability keeps >=1 atomic probe, so
+    # no capability loses causal isolation - which is the only reason the
+    # atomic tier exists.
+    #
+    # This shifts three GROUP counts by one. The runbook froze those counts
+    # "unless E1 proves a material invalidity"; E-C3 supersedes that for these
+    # three slots by explicit Controller direction, and the change is recorded
+    # in the correction brief rather than made silently.
     "count_attribute_spatial": {
-        "count": 6,
+        "count": 5,
         "allocation": {"object_count": 2, "attribute_binding": 2,
-                       "spatial_relationship": 2},
+                       "spatial_relationship": 1},          # E-C3 donor: was 2
     },
     "identity_reference_preservation": {
-        "count": 6,
-        "allocation": {"person_identity": 2, "product_identity": 2,
+        "count": 5,
+        "allocation": {"person_identity": 2, "product_identity": 1,  # E-C3 donor: was 2
                        "reference_conditioning": 1, "edit_preservation": 1},
     },
     "anatomy_human_object": {
-        "count": 6,
-        "allocation": {"anatomy_hands": 3, "human_object_contact": 2,
+        "count": 5,
+        "allocation": {"anatomy_hands": 2, "human_object_contact": 2,  # E-C3 donor: was 3
                        "human_human_interaction": 1},
     },
     "motion_camera_physics": {
@@ -57,10 +77,14 @@ ATOMIC_GROUPS = {
                        "physics_material_appearance": 2},
     },
     "speech_lipsync_speaker": {
-        "count": 6,
+        "count": 9,                                     # E-C3: was 6, +3 slots
         "allocation": {"spoken_language_correctness": 2,
                        "single_speaker_lip_sync": 2,
-                       "two_speaker_turn_assignment_and_lip_sync": 1,
+                       # E-C3: 1 -> 4. Four DISTINCT ladder levels, each a real
+                       # two-visible-speaker probe. No fake opportunity is
+                       # created: every one of these can actually exhibit a
+                       # wrong turn assignment, which is the whole failure mode.
+                       "two_speaker_turn_assignment_and_lip_sync": 4,
                        "audio_video_synchronisation": 1},
     },
 }
@@ -171,7 +195,8 @@ def build():
                     "measurement_fanout": sorted([cap] + free),
                     "fanout_primary": cap,
                     "fanout_free_riders": sorted(free),
-                    "resource_requirement": d["resource_requirement"],
+                    "benchmark_material_readiness": d["benchmark_material_readiness"],
+                    "instrument_readiness": d["instrument_readiness"],
                     "prompt_spec": (
                         f"Isolated probe for {cap} at level {lvl}: "
                         f"{ladder[lvl-1]['observable']}. Plain background, no "
@@ -280,6 +305,33 @@ def validate(verbose=True):
     for s, c in sc.items():
         if c != 6:
             errors.append(f"scenario {s}: expected 6 items, got {c}")
+
+    # E-C3: ATOMIC items were previously unchecked for modality applicability,
+    # so an atomic probe could claim a capability its modality cannot exhibit -
+    # a fake opportunity, which is precisely what the >=10 target must never be
+    # padded with. Atomic items are now checked on the same footing as compound.
+    for it in atomic:
+        cap = it.get("primary_capability")
+        d = dims.get(cap)
+        if d is None:
+            errors.append(f"{it['item_id']}: unknown primary_capability {cap}")
+            continue
+        if d["instrument_family"] != "operational" and \
+                it["modality"] not in d["modalities"]:
+            errors.append(
+                f"{it['item_id']}: primary capability {cap} cannot be exhibited "
+                f"in modality {it['modality']} (declared modalities: "
+                f"{d['modalities']}). This would be a FAKE opportunity.")
+        for c in it.get("measurement_fanout", []):
+            dd = dims.get(c)
+            if dd is None:
+                errors.append(f"{it['item_id']}: unknown capability {c} in fan-out")
+                continue
+            if dd["instrument_family"] != "operational" and \
+                    it["modality"] not in dd["modalities"]:
+                errors.append(
+                    f"{it['item_id']}: fan-out capability {c} not applicable to "
+                    f"modality {it['modality']}")
 
     # every compound item must declare a fan-out, and it must be VALID
     for it in compound:

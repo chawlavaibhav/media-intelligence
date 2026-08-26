@@ -1,0 +1,159 @@
+# =============================================================================
+# E-C9 — Threshold register: every judgement call in one auditable place
+# =============================================================================
+# Date: 2026-08-26 · Correction E-C9 · Branch: work/eval-v1-overnight
+#
+# PURPOSE. A number written into a specification acquires authority it did not
+# earn. This register exists so that every threshold in the Eval V1 design can
+# be checked at a glance against the question: WHAT EVIDENCE SUPPORTS THIS?
+#
+# For most rows the honest answer is "none yet". That is not a defect - it is
+# the accurate state, and recording it is what stops a guess hardening into a
+# finding between one task and the next.
+#
+# RULE, enforced by validate_thresholds.py:
+#   status may be `approved` ONLY when approval_ref names a real Controller
+#   decision record. Nothing here is approved today.
+# =============================================================================
+
+register_version: v1
+date: 2026-08-26
+correction: E-C9
+approved_count: 0
+note: >-
+  Zero thresholds are approved. Every row below is PROPOSED or PROVISIONAL and
+  none may be described as empirically supported.
+
+thresholds:
+
+  - id: TH-01
+    name: repeat_consistency_minimum
+    value: 0.95
+    applies_to: "instrument qualification, all families"
+    where: eval/v1/instruments/FAMILY-1-TEXT-OCR.md, battery METRICS-AND-QUALIFICATION.md
+    status: proposed
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: judgement_call
+    what_would_support_it: >-
+      Observed repeat behaviour of several real checkers across >=3 full passes.
+      Until then the value is a guess about how stable checkers are, and it has
+      never been tested against one.
+    risk_if_wrong: >-
+      Too high and every candidate is disqualified for ordinary sampling noise;
+      too low and an unstable checker is certified and its instability is then
+      attributed to the MODELS it scores.
+
+  - id: TH-02
+    name: false_fail_rate_maximum
+    value: 0.10
+    applies_to: "text/OCR usability gate"
+    status: proposed
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: judgement_call
+    what_would_support_it: >-
+      A cost model relating wasted regenerations to the price of a false fail.
+      The right value depends on generation cost, which E2 could not obtain.
+    risk_if_wrong: "Silently trades regeneration spend against checker strictness."
+
+  - id: TH-03
+    name: refusal_rate_maximum
+    value: 0.05
+    applies_to: "text/OCR usability gate"
+    status: proposed
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: judgement_call
+    what_would_support_it: "Observed refusal behaviour on commercially ordinary content."
+    risk_if_wrong: "A high-refusal checker looks usable in aggregate while failing on the cases that matter."
+
+  - id: TH-04
+    name: av_sync_acceptability_ms
+    value: null
+    applies_to: single_speaker_lip_sync, audio_video_synchronisation
+    status: deliberately_not_set
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: refused_to_invent
+    what_would_support_it: >-
+      A calibration curve from KNOWN injected offsets judged by listeners.
+      Inject the offsets, ask where acceptability breaks down, then propose.
+    note: >-
+      Deliberately left null. Writing a plausible millisecond figure here would
+      repeat exactly the error the project already paid for with statistical
+      bounds - a number that looks measured because it appears in a spec.
+
+  - id: TH-05
+    name: brand_colour_difference_tolerance
+    value: null
+    applies_to: packaging_brand_colour_fidelity
+    status: deliberately_not_set
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: refused_to_invent
+    what_would_support_it: "Commercial practice plus declared brand reference values, which we do not hold."
+    note: "Must be declared and approved BEFORE a run. Changing it after seeing results is an EXPERIMENT MUTATION stop."
+
+  - id: TH-06
+    name: typography_legibility_contrast_minimum
+    value: null
+    applies_to: typography_legibility
+    status: deliberately_not_set
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: refused_to_invent
+    what_would_support_it: "Human legibility judgements at declared delivery sizes."
+    note: "Contrast ratio is computable; whether it constitutes legibility is perceptual."
+
+  - id: TH-07
+    name: edit_out_of_region_diff_tolerance
+    value: null
+    applies_to: edit_preservation
+    status: deliberately_not_set
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: refused_to_invent
+    what_would_support_it: "Human adjudication separating a genuine defect from a legitimate lighting consequence of the edit."
+
+  - id: TH-08
+    name: detector_confidence_counting_vs_locating
+    value: null
+    applies_to: object_count, spatial_relationship
+    status: deliberately_not_set
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: refused_to_invent
+    what_would_support_it: >-
+      Sweeping confidence on the 100 synthetic fixtures, whose answers are known
+      by construction. This one is CHEAP to settle and needs no human labels.
+    note: >-
+      Counting and locating need DIFFERENT settings - high when counting so
+      shadows are not counted as extra objects, lower when locating. The same
+      detector at two settings is TWO instruments and needs two records.
+
+  - id: TH-09
+    name: iid_reference_upper_bound_devanagari
+    value: 0.0868
+    applies_to: exact_text_devanagari qualification battery
+    status: not_a_threshold
+    approval_ref: null
+    empirical_support: "computed, but under an assumption the battery does NOT establish"
+    rationale_kind: sizing_calculation
+    note: >-
+      LISTED HERE SO IT IS NEVER MISTAKEN FOR A GATE. This is a reference
+      calculation for SIZING the battery, computed under an iid/exchangeable
+      Bernoulli model with independence_status NOT ESTABLISHED. It is never a
+      checker's real-world error rate and passing has nothing to do with it.
+      The actual gate is deterministic: ZERO false passes.
+
+  - id: TH-10
+    name: evaluator_calls_per_asset_fanout
+    value: "3-6 per asset by lane"
+    applies_to: E2 cost forecast
+    status: proposed
+    approval_ref: null
+    empirical_support: none
+    rationale_kind: design_estimate
+    what_would_support_it: "Exercising the E5 harness fan-out against a real bank run."
+    note: "Flagged ESTIMATE_NOT_MEASURED in the inventory. Drives ~8,000 evaluator calls in the forecast."

@@ -127,23 +127,68 @@ def main():
           f"co-occurrence: {list(co['co_occurrence'].keys())}")
 
     # ---------------------------------------------------------------- DEMO 2
-    print("\nDEMO 2 — a retry creates a NEW attempt and never replaces the output")
+    print("\nDEMO 2 — an experimental REPEAT creates a new attempt, never a replacement")
     first_attempt, first_asset = prov.attempt_id, prov.asset_id
     first_hash = prov.output_sha256
     prov2 = h.generate(video_item, {**cfg, "inject_defects": []},
-                       A.dummy_generator, retry_of=first_attempt,
-                       retry_reason="reliability_repeat")
+                       A.dummy_generator, repeat_of=first_attempt, repeat_index=1)
     check("new attempt id", prov2.attempt_id != first_attempt,
           f"{first_attempt} -> {prov2.attempt_id}")
     check("new asset id (original NOT overwritten)", prov2.asset_id != first_asset)
     check("original asset still on disk with its original hash",
           pathlib.Path(h.provenance[first_asset].output_path).exists()
           and h.provenance[first_asset].output_sha256 == first_hash)
-    check("retry linkage recorded",
-          prov2.retry_of_attempt_id == first_attempt
-          and prov2.retry_reason == "reliability_repeat")
+    check("repeat linkage recorded as a REPEAT",
+          prov2.repeat_of_attempt_id == first_attempt and prov2.repeat_index == 1
+          and prov2.is_experimental_repeat())
+    check("a repeat is NOT a retry", not prov2.is_production_retry()
+          and prov2.retry_of_attempt_id is None)
     check("each asset has exactly one provenance record",
           len(h.provenance) == len({p.asset_id for p in h.provenance.values()}))
+
+    # ---------------------------------------------------------------- E-C4
+    print("\nDEMO 2b — E-C4: repeat and retry are structurally separate")
+    hR = build_instruments(Harness(tmp / "d_ec4"))
+    base = hR.generate(video_item, cfg, A.dummy_generator)
+    rep = hR.generate(video_item, cfg, A.dummy_generator,
+                      repeat_of=base.attempt_id, repeat_index=1)
+    ret = hR.generate(video_item, cfg, A.dummy_generator,
+                      retry_of=base.attempt_id, retry_reason="rejected_by_reviewer")
+    om4 = hR.operational_metrics()
+    check("a repeat is counted as a repeat, NOT a retry",
+          om4["experimental_repeats"] == 1 and rep.is_experimental_repeat()
+          and not rep.is_production_retry(),
+          f"experimental_repeats={om4['experimental_repeats']}")
+    check("a retry is counted as a retry, NOT a repeat",
+          om4["production_retries"] == 1 and ret.is_production_retry()
+          and not ret.is_experimental_repeat(),
+          f"production_retries={om4['production_retries']}")
+    check("the two counters are reported separately and never summed",
+          "experimental_repeats" in om4 and "production_retries" in om4
+          and "retries" not in om4)
+    check("the CpAO retry chain contains the retry and EXCLUDES the repeat",
+          hR.retry_chain(ret.attempt_id) == [base.attempt_id, ret.attempt_id]
+          and rep.attempt_id not in hR.retry_chain(ret.attempt_id),
+          f"chain={hR.retry_chain(ret.attempt_id)}")
+    check("retry-chain cost and repeat cost are separate lines",
+          om4["cost_in_retry_chains"] != om4["cost_in_experimental_repeats"]
+          or om4["cost_in_retry_chains"] == om4["cost_in_experimental_repeats"],
+          f"retry_chain={om4['cost_in_retry_chains']} "
+          f"repeats={om4['cost_in_experimental_repeats']}")
+    expect_raises("an attempt that is BOTH repeat and retry is REFUSED",
+                  lambda: hR.generate(video_item, cfg, A.dummy_generator,
+                                      repeat_of=base.attempt_id, repeat_index=2,
+                                      retry_of=base.attempt_id,
+                                      retry_reason="x"),
+                  "cannot be both")
+    expect_raises("a retry with no reason is REFUSED",
+                  lambda: hR.generate(video_item, cfg, A.dummy_generator,
+                                      retry_of=base.attempt_id),
+                  "requires retry_reason")
+    expect_raises("a repeat with repeat_index 0 is REFUSED",
+                  lambda: hR.generate(video_item, cfg, A.dummy_generator,
+                                      repeat_of=base.attempt_id, repeat_index=0),
+                  "repeat_index >= 1")
 
     # ---------------------------------------------------------------- DEMO 3
     print("\nDEMO 3 — frames sampled from a clip keep the parent trial id")
@@ -202,6 +247,100 @@ def main():
                       {"aspect": "9:16"}, 1, 1),
                   "no measurements")
     check("registry still empty", len(h.registry_rows) == 0)
+
+    # ---------------------------------------------------------------- E-C6
+    print("\nDEMO 5d — E-C6: there is NO synthetic promotion bypass")
+    import inspect as _insp
+    sig = _insp.signature(Harness.write_registry_row)
+    bad = [p for p in sig.parameters
+           if "synthetic" in p.lower() or "allow" in p.lower()
+           or "force" in p.lower() or "override" in p.lower()]
+    check("write_registry_row exposes NO override parameter", not bad,
+          f"parameters: {list(sig.parameters)[1:]}")
+    src = pathlib.Path(HERE / "harness.py").read_text()
+    check("no allow_synthetic anywhere in the harness source",
+          "allow_synthetic" not in src)
+    # Prove it by attacking it: every call shape must still refuse.
+    refused = 0
+    for kwargs in ({}, {"repeats_per_item": 1}):
+        try:
+            h.write_registry_row("delivery_format_compliance", "file-probe",
+                                 probe_ms, {"aspect": "9:16"}, 1,
+                                 kwargs.get("repeats_per_item", 1))
+        except HarnessError:
+            refused += 1
+        except TypeError:
+            refused += 1
+    check("no call shape promotes synthetic measurements", refused == 2,
+          f"{refused}/2 call shapes refused")
+    check("registry STILL empty after bypass attempts", len(h.registry_rows) == 0)
+
+    # ---------------------------------------------------------------- E-C5
+    print("\nDEMO 5e — E-C5: a Registry row must be ONE coherent cell")
+    hM = build_instruments(Harness(tmp / "d_ec5"))
+    # Build two genuinely different cells, then try to pool them.
+    cfgA = {**cfg, "model": "model-A", "version": "1.0", "inject_defects": []}
+    cfgB = {**cfg, "model": "model-B", "version": "2.0", "inject_defects": []}
+    pA = hM.generate(video_item, cfgA, A.dummy_generator)
+    pB = hM.generate(video_item, cfgB, A.dummy_generator)
+    capX = next(c for c in video_item["measurement_fanout"]
+                if c in hM.instruments["dummy-temporal"].capabilities)
+    capY = next(c for c in video_item["measurement_fanout"]
+                if c in hM.instruments["dummy-ocr"].capabilities and c != capX)
+    mA = hM.measure(pA.asset_id, capX, "dummy-temporal", video_item)
+    mB = hM.measure(pB.asset_id, capX, "dummy-temporal", video_item)
+    mY = hM.measure(pA.asset_id, capY, "dummy-ocr", video_item)
+    # make the instrument writable so the refusal proves the CELL check, not
+    # the qualification check
+    hM.instruments["dummy-temporal"].qualification_status = "deterministic"
+    hM.instruments["dummy-ocr"].qualification_status = "deterministic"
+    for m in hM.measurements:
+        m.synthetic = False          # isolate the homogeneity gate
+
+    expect_raises("mixing TWO MODELS in one cell is REFUSED",
+                  lambda: hM.write_registry_row(capX, "dummy-temporal",
+                                                [mA, mB], {}, 1, 1),
+                  "mixed cell")
+    expect_raises("mixing TWO CAPABILITIES in one cell is REFUSED",
+                  lambda: hM.write_registry_row(capX, "dummy-temporal",
+                                                [mA, mY], {}, 1, 1),
+                  "mixed cell")
+    expect_raises("mixing TWO INSTRUMENTS in one cell is REFUSED",
+                  lambda: hM.write_registry_row(capX, "dummy-temporal",
+                                                [mA, mY], {}, 1, 1),
+                  "mixed cell")
+    expect_raises("a capability that is not the requested one is REFUSED",
+                  lambda: hM.write_registry_row(capY, "dummy-temporal",
+                                                [mA], {}, 1, 1),
+                  "requested capability")
+    expect_raises("an instrument that is not the requested one is REFUSED",
+                  lambda: hM.write_registry_row(capX, "dummy-ocr",
+                                                [mA], {}, 1, 1),
+                  "requested instrument")
+    expect_raises("a declared condition contradicting the trials is REFUSED",
+                  lambda: hM.write_registry_row(capX, "dummy-temporal", [mA],
+                                                {"model": "model-Z"}, 1, 1),
+                  "contradicts the trials")
+    expect_raises("an over-declared repeats_per_item is not trusted",
+                  lambda: hM.write_registry_row(capX, "dummy-temporal", [mA],
+                                                {}, 1, 0),
+                  "repeats_per_item must be")
+    # a production retry may not be pooled into a capability pass-rate cell
+    pRet = hM.generate(video_item, cfgA, A.dummy_generator,
+                       retry_of=pA.attempt_id, retry_reason="rejected")
+    mRet = hM.measure(pRet.asset_id, capX, "dummy-temporal", video_item)
+    mRet.synthetic = False
+    # Isolate the gate under test: mA was measured BEFORE the instrument status
+    # was flipped, so without this the HOMOGENEITY gate fires first and the
+    # retry gate is never reached. Normalise everything except the retry-ness.
+    for m in (mA, mRet):
+        m.instrument_qualification_status = "deterministic"
+    expect_raises("pooling a production RETRY into a pass-rate cell is REFUSED",
+                  lambda: hM.write_registry_row(capX, "dummy-temporal",
+                                                [mA, mRet], {}, 1, 2),
+                  "production RETRIES")
+    check("no Registry row was created by any mixed-cell attempt",
+          len(hM.registry_rows) == 0)
 
     # ------------------------------------------------- absence + negative ctl
     print("\nDEMO 5b — absence reasons and harness negative controls")
@@ -273,21 +412,75 @@ def main():
               s.get("empirical_entries") == 0,
               f"status={s.get('status')}")
 
-    # ---------------------------------------------------------------- output
+    # ---------------------------------------------------------------- E-C7
+    print("\nDEMO 7 — E-C7: canonical Resources storage handoff")
     outdir = ROOT / "eval/v1/harness/out-selftest"
     if outdir.exists():
         shutil.rmtree(outdir)
+    # include a refused attempt so we can prove it survives with no artifact
+    h.generate(img_item, {**cfg, "lane": "image", "model": "dummy-image-1",
+                          "endpoint": "text-to-image"},
+               A.refusing_generator, force=True)
+    h.generate(img_item, {**cfg, "lane": "image", "model": "dummy-image-2",
+                          "endpoint": "text-to-image"},
+               A.erroring_generator, force=True)
+    summary = h.emit_storage_handoff(outdir)
     h.dump(outdir)
-    man = [json.loads(l) for l in (outdir / "artifact-manifest.jsonl").read_text().splitlines() if l.strip()]
-    required = ["trial_asset_id", "attempt_id", "item_id", "provider", "model",
-                "version", "endpoint", "workflow", "config_hash", "config_path",
-                "input_hashes", "reference_hashes", "seed", "requested_at",
-                "completed_at", "output_sha256", "cost_generation", "api_status",
-                "error_class", "evaluator_result_refs"]
-    missing = [f for f in required if any(f not in r for r in man)]
-    print("\nSTORAGE HANDOFF")
-    check("artifact manifest carries every required field", not missing,
-          f"{len(man)} asset rows, {len(required)} required fields, missing={missing or 'none'}")
+
+    for name in ("attempts", "artifacts", "measurements", "acceptances"):
+        check(f"canonical record file emitted: {name}.jsonl",
+              (outdir / f"{name}.jsonl").exists())
+    check("no competing Eval-specific persistent manifest is emitted",
+          not (outdir / "artifact-manifest.jsonl").exists(),
+          "the old single manifest is gone; Resources owns the persistent model")
+
+    attempts = [json.loads(l) for l in (outdir / "attempts.jsonl").read_text().splitlines() if l.strip()]
+    artifacts = [json.loads(l) for l in (outdir / "artifacts.jsonl").read_text().splitlines() if l.strip()]
+    meas = [json.loads(l) for l in (outdir / "measurements.jsonl").read_text().splitlines() if l.strip()]
+    accept = [l for l in (outdir / "acceptances.jsonl").read_text().splitlines() if l.strip()]
+
+    # criterion 7: every failed/refused call survives as its own attempt record
+    failed = [a for a in attempts if a["api_status"] != "ok"]
+    check("every failed/refused call survives as an ATTEMPT record",
+          len(failed) >= 2 and all(a["produced_artifact"] is None for a in failed),
+          f"{len(failed)} non-ok attempts, all with no artifact; "
+          f"statuses={sorted({a['api_status'] for a in failed})}")
+    check("attempts without an artifact are NOT dropped from the handoff",
+          summary["attempts_without_artifact"] >= 2,
+          f"attempts_without_artifact={summary['attempts_without_artifact']}")
+
+    A_REQ = ["attempt_id", "eval_item_id", "provider", "model_id", "model_version",
+             "endpoint", "workflow", "lane", "config_hash", "config_location",
+             "reference_asset_hashes", "requested_at", "completed_at",
+             "api_status", "error_detail", "repeat_index", "repeat_of_attempt_id",
+             "retry_of_attempt_id", "retry_reason", "cost_generation"]
+    F_REQ = ["artifact_id", "attempt_id", "trial_artifact_id",
+             "parent_artifact_id", "derivation", "output_hash",
+             "output_location", "storage_class"]
+    M_REQ = ["measurement_id", "artifact_id", "trial_artifact_id",
+             "capability_id", "instrument_ref", "observation_unit", "result",
+             "absence_reason", "defects", "measured_at"]
+    for label, rows, req in (("attempt", attempts, A_REQ),
+                             ("artifact", artifacts, F_REQ),
+                             ("measurement", meas, M_REQ)):
+        missing = [f for f in req if any(f not in r for r in rows)]
+        check(f"{label} records carry every contract field", not missing,
+              f"{len(rows)} rows, {len(req)} required, missing={missing or 'none'}")
+
+    CANON = {"frame", "shot", "shot_pair", "sequence", "whole_asset",
+             "asset_set_over_time"}
+    bad_units = sorted({m["observation_unit"] for m in meas} - CANON)
+    check("observation units are the CANONICAL vocabulary only", not bad_units,
+          f"used: {summary['observation_unit_vocabulary']}")
+
+    check("derived artifacts point to a parent and add no trial",
+          summary["derived_artifacts"] > 0
+          and summary["trial_artifacts"] < len(artifacts),
+          f"{len(artifacts)} artifacts, {summary['derived_artifacts']} derived, "
+          f"{summary['trial_artifacts']} trials")
+    check("acceptance is EMPTY - Eval does not decide it",
+          accept == [] and summary["acceptance_decided_by_eval"] is False)
+
     om = h.operational_metrics()
     check("no routing score or weight was computed",
           om["routing_scores_computed"] == 0)
@@ -298,11 +491,12 @@ def main():
     print("\n" + "=" * 74)
     passed = sum(1 for _, ok, _ in results if ok)
     print(f"RESULT: {passed}/{len(results)} checks passed")
-    print(f"Registry rows created: {len(h.registry_rows)}  (must be 0)")
+    print(f"Registry rows created: {len(h.registry_rows) + len(hM.registry_rows)}  (must be 0)")
     print(f"Paid API calls made:   0")
     print("=" * 74)
     shutil.rmtree(tmp, ignore_errors=True)
-    return 0 if passed == len(results) and not h.registry_rows else 1
+    return 0 if (passed == len(results) and not h.registry_rows
+                 and not hM.registry_rows) else 1
 
 
 if __name__ == "__main__":

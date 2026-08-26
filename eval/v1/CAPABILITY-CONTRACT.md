@@ -23,17 +23,36 @@ This is the **measurement contract**: it says what each of the 36 frozen capabil
 
 ## Summary
 
-| | Count |
+Readiness is **two independent questions**, not one score (correction E-C1).
+
+**Can the mechanism be trusted?**
+
+| `instrument_readiness` | Count |
+|---|---:|
+| blocked — not qualified | 30 |
+| deterministic — ready | 6 |
+
+**Do we hold the material to exercise it?**
+
+| `benchmark_material_readiness` | Count |
+|---|---:|
+| missing | 17 |
+| Eval constructs it | 10 |
+| none needed | 5 |
+| partial | 3 |
+| held | 1 |
+
+| | |
 |---|---:|
 | Capabilities defined | **36 / 36** |
-| Measurable now | 6 |
-| Blocked — no qualified instrument | 20 |
-| Blocked — resource missing | 10 |
+| **Ready on BOTH axes** | **5** |
 | Usable as a hard routing constraint | 27 |
 | Descriptive evidence only | 9 |
 | Empirical results contained | **0** |
 
-**Read that middle block plainly:** of 36 capabilities, **6 could be measured with what we have today**. **20** are waiting on a checker nobody has yet proven trustworthy, and **10** are waiting on test material we do not hold. That is the real shape of the gap.
+**Why two axes.** A single score had to misreport one of them. `audio_video_synchronisation` and `edit_preservation` have mechanisms that need no calibration *and* no material to run on — a state the old scalar could only call "measurable now" (false: there is nothing to measure) or "blocked on instrument" (false: the instrument is fine). Each misreading sends the next decision the wrong way: one wastes qualification effort, the other buys material we may not need yet.
+
+**Only 5 of 36 are ready on both axes**, and every one of them is operational or deterministic — none reports fidelity or creative quality.
 
 
 ---
@@ -52,10 +71,10 @@ The output contains exactly the number of each named object the prompt asked for
 - **Reusable from:** `product_packshot`, `person_plus_product_static`, `product_handoff_action`, `multi_shot_branded_ad`
 - **Instrument:** deterministic CV/geometry, corroborated by structured visual VLM
 - **Human verifier:** Adjudicates only when the detector and the VLM disagree, or on partial occlusion.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -83,10 +102,10 @@ When the prompt says "the red bottle and the blue box", the red belongs to the b
 - **Reusable from:** `product_packshot`, `typography_led_image`, `person_plus_product_static`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by deterministic CV/geometry
 - **Human verifier:** Adjudicates ambiguous material/finish descriptions.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -114,10 +133,10 @@ The prompt's positional instruction holds - the cup is LEFT OF the laptop, the l
 - **Reusable from:** `product_packshot`, `typography_led_image`, `person_plus_product_static`, `product_hero_video`, `multi_shot_branded_ad`
 - **Instrument:** deterministic CV/geometry, corroborated by structured visual VLM
 - **Human verifier:** Adjudicates depth-ordering cases the detector cannot resolve.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -145,10 +164,10 @@ The prompted action is the action depicted - pouring, opening, handing over, wal
 - **Reusable from:** `product_handoff_action`, `product_hero_video`, `actor_plus_product_vo`, `multi_shot_branded_ad`
 - **Instrument:** temporal/video, corroborated by structured visual VLM
 - **Human verifier:** Decides whether the depicted action is the prompted action when the VLM is uncertain.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -176,10 +195,10 @@ Duration, aspect ratio, resolution, frame rate, container, audio track presence 
 - **Reusable from:** every compound scenario
 - **Instrument:** deterministic CV/geometry
 - **Human verifier:** *none*
-- **External resource:** `no_external_resource`
+- **Instrument readiness:** `deterministic_ready` — deterministic — ready
+- **Benchmark material:** `no_external_stimulus_required` — none needed
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **measurable now**
 
   **Difficulty ladder**
 
@@ -194,6 +213,8 @@ Duration, aspect ratio, resolution, frame rate, container, audio track presence 
   **Held fixed for comparability:** `requested_contract`, `provider_default_contract`
 
   **Note:** Fully deterministic - it reads file metadata and needs no calibration at all. Its Registry `calibration_status` is `deterministic`. This is the cheapest dimension in the whole contract and should be measured on EVERY generated asset as a free rider, never as its own generation. It must fail closed on an unparseable file rather than reporting a pass.
+
+  **Production envelope:** Ready and needs no external stimulus. Should ride free on EVERY generated asset from the first paid call onward; not doing so is wasted money.
 
 
 ---
@@ -212,10 +233,10 @@ A requested Latin string appears in the image character-for-character correct af
 - **Reusable from:** `typography_led_image`, `product_packshot`, `person_plus_product_static`, `multi_shot_branded_ad`
 - **Instrument:** text/OCR, corroborated by structured visual VLM
 - **Human verifier:** None for the comparison itself; a human confirms only that the reference string is what was requested.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -243,10 +264,10 @@ A requested Devanagari string appears character-for-character correct after NFC 
 - **Reusable from:** `typography_led_image`, `product_packshot`, `person_plus_product_static`, `multi_shot_branded_ad`
 - **Instrument:** text/OCR, corroborated by structured visual VLM
 - **Human verifier:** A Hindi first-language reader confirms that a TARGET string is valid Hindi. The reader never decides whether an image matches its target - for the qualification battery that label is true by construction.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `available` — held
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -262,6 +283,8 @@ A requested Devanagari string appears character-for-character correct after NFC 
 
   **Note:** The checker-qualification battery EXISTS and is frozen - 96 items, 48 match / 48 mismatch, 48 accepted base words, 33 hard opportunities. What does NOT exist is a checker that has passed it. Until one has, no generator score on this dimension may be written to the Registry. Registry state for now - `required_but_no_calibrated_instrument`. The battery also cannot produce malformed GENERATED glyphs; it perturbs real characters. A generator can fail in a way this battery never shows - see the Class B generated-glyph layer, specified but not built.
 
+  **Production envelope:** The frozen 96-item battery qualifies a checker against CORRECTLY-FORMED WRONG TEXT. It perturbs real characters and cannot produce malformed generated glyphs, so a checker qualified on it is NOT qualified against the failure mode where a generator emits shapes that are not characters at all.
+
 ### `typography_legibility` — The text can actually be read at delivery size
 
 Correct characters are not enough. Text must survive the size, contrast and placement it will be viewed at - a headline correct at 100% zoom and unreadable in a feed is a commercial failure.
@@ -274,10 +297,10 @@ Correct characters are not enough. Text must survive the size, contrast and plac
 - **Reusable from:** `typography_led_image`, `product_packshot`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by deterministic CV/geometry
 - **Human verifier:** Required. Legibility is a perceptual judgement; a contrast ratio alone does not settle it.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -305,10 +328,10 @@ A supplied logo or wordmark appears with its true geometry, proportions and lett
 - **Reusable from:** `product_packshot`, `typography_led_image`, `person_plus_product_static`, `reference_campaign_edit`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by deterministic CV/geometry
 - **Human verifier:** Required. Adjudicates whether a difference is a re-drawing or an acceptable projection.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `partial` — partial
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -324,6 +347,8 @@ A supplied logo or wordmark appears with its true geometry, proportions and lett
 
   **Note:** Recorded in CAPABILITY-BATTERY-V0-DRAFT section 4 as `required_but_no_calibrated_instrument`, and that has not changed. Template matching handles flat frontal cases and fails under perspective and curvature, which is exactly where commercial work lives. Requires controlled brand-mark references from Resources. Keeping this dimension visible with an explicit blocked state is the point - a dimension with no instrument that quietly disappears later reads as "we decided this did not matter".
 
+  **Production envelope:** Recorded in prior findings as required_but_no_calibrated_instrument. Template matching handles flat frontal marks and fails under perspective and curvature - which is where commercial work lives, so the easy envelope is the one we could qualify and the hard envelope is the one we need.
+
 ### `packaging_brand_colour_fidelity` — Brand colours are the actual brand colours
 
 A specified brand or packaging colour is reproduced within a declared tolerance in a declared colour space, rather than merely being the right general hue.
@@ -336,10 +361,10 @@ A specified brand or packaging colour is reproduced within a declared tolerance 
 - **Reusable from:** `product_packshot`, `person_plus_product_static`, `reference_campaign_edit`, `multi_shot_branded_ad`
 - **Instrument:** deterministic CV/geometry, corroborated by structured visual VLM
 - **Human verifier:** Sets the acceptable tolerance once, with reference to commercial practice; does not judge per item.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -372,10 +397,10 @@ A person generated from a reference, or across separate generations, is recognis
 - **Reusable from:** `person_plus_product_static`, `actor_plus_product_vo`, `one_visible_speaker`, `two_person_dialogue`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM
 - **Human verifier:** Required for adjudication. Identity similarity is not exact equality and must not be presented as if it were.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -391,6 +416,8 @@ A person generated from a reference, or across separate generations, is recognis
 
   **Note:** Needs the planned >=32 person references, 8 identities x >=4 views. The frozen V0 rubric already encodes the essential rule and must be reused unchanged - each declared identity feature is judged on TWO questions, does it match the reference AND is it consistent across the set, and BOTH must hold. A consistently-produced WRONG person is a failure, not a pass. "Stability is not identity."
 
+  **Production envelope:** Material target exists but WITHOUT same-category decoys the envelope is category recognition, not individual identity (cross-stream ask ADD-01).
+
 ### `product_identity` — The same product stays the same product
 
 A specific product - its shape, proportions, label layout, closure and distinguishing features - is reproduced as that product rather than as a generic member of its category.
@@ -403,10 +430,10 @@ A specific product - its shape, proportions, label layout, closure and distingui
 - **Reusable from:** `product_packshot`, `person_plus_product_static`, `product_hero_video`, `product_handoff_action`, `reference_campaign_edit`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by deterministic CV/geometry
 - **Human verifier:** Required for adjudication, especially against same-category decoys.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -422,6 +449,8 @@ A specific product - its shape, proportions, label layout, closure and distingui
 
   **Note:** Needs the planned >=48 product references, 12 products x >=4 views. The same-category decoy is the important design element - without it, an instrument that says "yes, that is a shampoo bottle" scores as if it had verified identity.
 
+  **Production envelope:** As person_identity: without same-category decoys the qualification envelope cannot separate recognising a product CATEGORY from recognising THE product.
+
 ### `reference_conditioning` — The model actually uses the reference images you give it
 
 Measures how well a workflow honours supplied reference images at all - one reference, several references, and a reference combined with a requested style or context change. This is the mechanism by which any identity result is achieved.
@@ -434,10 +463,10 @@ Measures how well a workflow honours supplied reference images at all - one refe
 - **Reusable from:** `reference_campaign_edit`, `person_plus_product_static`, `product_packshot`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by deterministic CV/geometry
 - **Human verifier:** Adjudicates the conflict case at level 5.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -465,10 +494,10 @@ When a workflow is asked to change a specified region or attribute, the rest of 
 - **Reusable from:** `reference_campaign_edit`, `product_packshot`, `person_plus_product_static`
 - **Instrument:** deterministic CV/geometry, corroborated by structured visual VLM
 - **Human verifier:** Adjudicates whether an out-of-region change is a genuine defect or a legitimate lighting consequence of the edit.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `deterministic_ready` — deterministic — ready
+- **Benchmark material:** `missing` — missing
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **measurable now**
 
   **Difficulty ladder**
 
@@ -483,6 +512,8 @@ When a workflow is asked to change a specified region or attribute, the rest of 
   **Held fixed for comparability:** `resolution`, `edit_region_definition`, `edit_class`, `input_hash`, `diff_metric`, `diff_tolerance`
 
   **Note:** Largely deterministic - the input is ours, so a masked pixel difference outside the edit region is computable with no human label. The human is needed only for the legitimate-consequence question. A cheap and high-value dimension that is easy to overlook.
+
+  **Production envelope:** Masked pixel difference against our own input needs no calibration, but no production-realistic edit material exists. Ready mechanism, absent material.
 
 
 ---
@@ -501,10 +532,10 @@ Human anatomy is structurally correct - finger count and articulation, limb coun
 - **Reusable from:** `person_plus_product_static`, `actor_plus_product_vo`, `product_handoff_action`, `one_visible_speaker`, `two_person_dialogue`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM
 - **Human verifier:** Required. This is a perceptual defect judgement and there is no deterministic oracle.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -532,10 +563,10 @@ Contact between a person and an object is physically coherent - the hand enclose
 - **Reusable from:** `person_plus_product_static`, `product_handoff_action`, `actor_plus_product_vo`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM
 - **Human verifier:** Required.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -551,6 +582,8 @@ Contact between a person and an object is physically coherent - the hand enclose
 
   **Note:** Recorded in CAPABILITY-BATTERY-V0-DRAFT section 4 as `required_but_no_calibrated_instrument`. Unchanged. Human adjudication required to build any qualification reference.
 
+  **Production envelope:** Recorded in prior findings as required_but_no_calibrated_instrument. Unchanged.
+
 ### `human_human_interaction` — Two or more people occupy one scene coherently
 
 Multiple people in one asset are separate, complete individuals with coherent relative scale, gaze and spatial relationship.
@@ -563,10 +596,10 @@ Multiple people in one asset are separate, complete individuals with coherent re
 - **Reusable from:** `two_person_dialogue`, `product_handoff_action`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by deterministic CV/geometry
 - **Human verifier:** Required.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -594,10 +627,10 @@ Motion within a clip is temporally coherent - gait, camera movement and object m
 - **Reusable from:** `product_hero_video`, `actor_plus_product_vo`, `product_handoff_action`, `multi_shot_branded_ad`
 - **Instrument:** temporal/video, corroborated by structured visual VLM
 - **Human verifier:** Required.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `partial` — partial
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -625,10 +658,10 @@ Surfaces, reflections, shadows, liquids and cloth behave in a way that does not 
 - **Reusable from:** `product_packshot`, `product_hero_video`, `person_plus_product_static`, `multi_shot_branded_ad`
 - **Instrument:** structured visual VLM, corroborated by temporal/video
 - **Human verifier:** Required.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `constructed_by_eval` — Eval constructs it
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -661,10 +694,10 @@ Within one generated clip, a person's face, hair, build and wardrobe remain the 
 - **Reusable from:** `actor_plus_product_vo`, `one_visible_speaker`, `two_person_dialogue`, `product_handoff_action`, `multi_shot_branded_ad`
 - **Instrument:** temporal/video, corroborated by structured visual VLM
 - **Human verifier:** Adjudicates borderline drift.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -692,10 +725,10 @@ Within one clip, a product's shape, label, proportions and colour remain constan
 - **Reusable from:** `product_hero_video`, `actor_plus_product_vo`, `product_handoff_action`, `multi_shot_branded_ad`
 - **Instrument:** temporal/video, corroborated by structured visual VLM
 - **Human verifier:** Adjudicates borderline drift.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -723,10 +756,10 @@ A string or mark rendered in a clip is identical in every frame it appears in - 
 - **Reusable from:** `product_hero_video`, `multi_shot_branded_ad`, `actor_plus_product_vo`
 - **Instrument:** temporal/video, corroborated by text/OCR
 - **Human verifier:** None for the comparison; the Devanagari target-validity question is inherited from exact_text_devanagari.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -754,10 +787,10 @@ Across two or more shots intended to sit next to each other, the setting, lighti
 - **Reusable from:** `multi_shot_branded_ad`, `product_handoff_action`, `two_person_dialogue`
 - **Instrument:** temporal/video, corroborated by structured visual VLM
 - **Human verifier:** Required. Continuity is a craft judgement with established professional vocabulary.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `partial` — partial
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -790,10 +823,10 @@ Generated speech says the requested script, in the requested language, with corr
 - **Reusable from:** `one_visible_speaker`, `two_person_dialogue`, `actor_plus_product_vo`, `product_hero_video`, `multi_shot_branded_ad`
 - **Instrument:** speech/audio/AV
 - **Human verifier:** A first-language listener confirms pronunciation acceptability. Word correctness is machine-comparable; PRONUNCIATION is not, and must not be inferred from a matching transcript.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `exact_pass_fail`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -821,10 +854,10 @@ For one visible speaker, mouth movement corresponds to the audio being spoken, i
 - **Reusable from:** `one_visible_speaker`, `two_person_dialogue`, `multi_shot_branded_ad`
 - **Instrument:** speech/audio/AV, corroborated by temporal/video
 - **Human verifier:** Required for the acceptability judgement; deterministic offset is machine-measurable.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `human_hybrid_score`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -852,10 +885,10 @@ In a two-speaker asset, each line of dialogue is delivered by the correct visibl
 - **Reusable from:** `two_person_dialogue`, `multi_shot_branded_ad`
 - **Instrument:** speech/audio/AV, corroborated by temporal/video
 - **Human verifier:** Required.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `structured_categorical`
 - **Routing use:** `hard_constraint`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -871,6 +904,8 @@ In a two-speaker asset, each line of dialogue is delivered by the correct visibl
 
   **Note:** Needs the planned 12 two-speaker clean AV clips WITH turn boundaries - the boundaries are what make wrong assignment machine-detectable. Qualification material can be built deterministically by swapping the speaker channels in a clean clip - a known-wrong answer with no human label. A recorded provider-shaped failure already exists in this area - a provider changed valid speaker names between versions - so `error_classes` must be recorded, not treated as noise.
 
+  **Production envelope:** Turn boundaries are what make a wrong speaker assignment machine-detectable. Without them the envelope collapses to single-speaker sync.
+
 ### `emotional_prosodic_fit` — The delivery sounds right for the ad
 
 Tone, pace, emphasis and energy of the delivery suit the requested register - warm and reassuring, urgent and promotional, calm and premium.
@@ -883,10 +918,10 @@ Tone, pace, emphasis and energy of the delivery suit the requested register - wa
 - **Reusable from:** `one_visible_speaker`, `actor_plus_product_vo`, `product_hero_video`, `two_person_dialogue`
 - **Instrument:** speech/audio/AV, corroborated by creative/commercial
 - **Human verifier:** Required. This is a preference-shaped judgement, not a right answer.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `pairwise_preference`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -914,10 +949,10 @@ Global alignment between the audio track and the video track - the sound of a bo
 - **Reusable from:** `one_visible_speaker`, `two_person_dialogue`, `product_handoff_action`, `multi_shot_branded_ad`
 - **Instrument:** speech/audio/AV
 - **Human verifier:** Sets the acceptability threshold once from a calibration curve; does not judge per item.
-- **External resource:** `constructed_by_eval`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `operational_metric`
 - **Routing use:** `hard_constraint`
-- **Status:** **measurable now**
 
   **Difficulty ladder**
 
@@ -932,6 +967,8 @@ Global alignment between the audio track and the video track - the sound of a bo
   **Held fixed for comparability:** `fps`, `audio_sample_rate`, `clip_duration_s`, `event_class`, `measurement_points`
 
   **Note:** The most deterministic dimension in family F. Onset detection on both tracks gives a measured offset in milliseconds with no human label, and known offsets can be INJECTED into clean clips to qualify the instrument exactly. What still needs a human decision is the ACCEPTABILITY threshold - report the measured offset as the primary result and treat any pass/fail line as a separately declared, Controller-approved parameter.
+
+  **Production envelope:** SPLIT ENVELOPE, and the reason this is not `deterministic_ready`. Computing the OFFSET between two located onsets is deterministic arithmetic. LOCATING the visual onset is not: on a constructed fixture with a sharp clap it is trivial, but in arbitrary production content "the moment the bottle lands" needs an event detector, which is a model. So the mechanism is deterministic only inside the fixture envelope, and the qualification must establish event localisation before any production claim. Reported primary result stays the MEASURED OFFSET in milliseconds; any pass/fail line is a separately declared, Controller-approved parameter. Material is additionally missing - the project holds no audio at all.
 
 
 ---
@@ -950,10 +987,10 @@ A viewer takes away the intended proposition and the intended action from the as
 - **Reusable from:** `typography_led_image`, `person_plus_product_static`, `product_hero_video`, `multi_shot_branded_ad`, `actor_plus_product_vo`
 - **Instrument:** creative/commercial
 - **Human verifier:** Required, and it must be FRESH INDEPENDENT human review. Public or source preference labels are one party's observations and are never our creative truth.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `pairwise_preference`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -981,10 +1018,10 @@ Visual hierarchy places the intended subject - usually the product or the key me
 - **Reusable from:** `product_packshot`, `person_plus_product_static`, `typography_led_image`, `product_hero_video`, `multi_shot_branded_ad`
 - **Instrument:** creative/commercial, corroborated by deterministic CV/geometry
 - **Human verifier:** Required.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `pairwise_preference`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -1012,10 +1049,10 @@ Composition, styling, colour treatment and production values sit in the register
 - **Reusable from:** `typography_led_image`, `product_packshot`, `person_plus_product_static`, `product_hero_video`, `multi_shot_branded_ad`
 - **Instrument:** creative/commercial
 - **Human verifier:** Required, fresh and independent.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `pairwise_preference`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -1043,10 +1080,10 @@ A short video establishes its hook in the opening seconds and paces its informat
 - **Reusable from:** `product_hero_video`, `actor_plus_product_vo`, `one_visible_speaker`, `multi_shot_branded_ad`
 - **Instrument:** creative/commercial, corroborated by temporal/video
 - **Human verifier:** Required, fresh and independent.
-- **External resource:** `required`
+- **Instrument readiness:** `blocked_pending_qualification` — blocked — not qualified
+- **Benchmark material:** `missing` — missing
 - **Result form:** `pairwise_preference`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — resource missing**
 
   **Difficulty ladder**
 
@@ -1079,10 +1116,10 @@ For a given capability and difficulty level, the proportion of attempts that pas
 - **Reusable from:** every compound scenario
 - **Instrument:** operational logging (no instrument)
 - **Human verifier:** *none*
-- **External resource:** `no_external_resource`
+- **Instrument readiness:** `deterministic_ready` — deterministic — ready
+- **Benchmark material:** `no_external_stimulus_required` — none needed
 - **Result form:** `operational_metric`
 - **Routing use:** `hard_constraint`
-- **Status:** **measurable now**
 
   **Difficulty ladder**
 
@@ -1098,6 +1135,8 @@ For a given capability and difficulty level, the proportion of attempts that pas
 
   **Note:** Zero marginal generation cost - it is arithmetic over trials that already exist. THE TRAP - repeats are not independent items. A 96% pass rate over 2 repeats of 3 items is not a 96% pass rate. n_items and repeats_per_item are BOTH mandatory in every Registry row so this can never be silently misread. Reporting a pass rate without n_items is a defect, not a style choice.
 
+  **Production envelope:** Mechanism ready, but it is DERIVED - it has no value until real trials exist. Zero generations have been run, so the envelope is empty rather than blocked.
+
 ### `cost_and_cpao` — What an ACCEPTED result actually costs
 
 Total cost to reach an output that passes its acceptance requirements - including failed attempts, evaluator calls and human review time, not just the price of one generation.
@@ -1110,10 +1149,10 @@ Total cost to reach an output that passes its acceptance requirements - includin
 - **Reusable from:** every compound scenario
 - **Instrument:** operational logging (no instrument)
 - **Human verifier:** Supplies the human-time rate; does not judge per item.
-- **External resource:** `no_external_resource`
+- **Instrument readiness:** `deterministic_ready` — deterministic — ready
+- **Benchmark material:** `no_external_stimulus_required` — none needed
 - **Result form:** `operational_metric`
 - **Routing use:** `hard_constraint`
-- **Status:** **measurable now**
 
   **Difficulty ladder**
 
@@ -1129,6 +1168,8 @@ Total cost to reach an output that passes its acceptance requirements - includin
 
   **Note:** THIS IS THE PROJECT'S PRIMARY LONG-TERM METRIC and the most commonly mis-stated. Three rules carried from prior evidence - (1) HUMAN CHECKING, NOT API SPEND, IS LIKELY TO DOMINATE. The original cost model left it out entirely. Any ratio quoted before we have measured it is an ILLUSTRATIVE SCENARIO, not a finding. (2) EVALUATOR COST IS NOT HIDDEN INSIDE GENERATION COST. At roughly one rupee per VLM check, evaluation can exceed a third of the true cost of observing a cheap generation. (3) THE ZERO-PASS RULE. When passes == 0, cost per pass is null - never infinity, never a large sentinel - and the cell cost goes in a lower-bound field. "Never observed to pass in N trials" and "expensive per pass" are different facts about the world.
 
+  **Production envelope:** Mechanism ready and derived. Note the envelope gap that matters: human verification cost is expected to dominate and has no approved rate, so CpAO cannot be completed from generation and evaluator costs alone.
+
 ### `latency_errors_refusals` — How slow it is, how often it breaks, how often it says no
 
 Wall-clock latency distribution, API error rate by class, and content refusal or moderation-block rate.
@@ -1141,10 +1182,10 @@ Wall-clock latency distribution, API error rate by class, and content refusal or
 - **Reusable from:** every compound scenario
 - **Instrument:** operational logging (no instrument)
 - **Human verifier:** *none*
-- **External resource:** `no_external_resource`
+- **Instrument readiness:** `deterministic_ready` — deterministic — ready
+- **Benchmark material:** `no_external_stimulus_required` — none needed
 - **Result form:** `operational_metric`
 - **Routing use:** `hard_constraint`
-- **Status:** **measurable now**
 
   **Difficulty ladder**
 
@@ -1160,6 +1201,8 @@ Wall-clock latency distribution, API error rate by class, and content refusal or
 
   **Note:** Costs nothing extra - every call already produces this data, and a call that FAILS still produces it. A p50 alone hides the timeout tail that decides whether a workflow is usable interactively, so p95 is mandatory. Refusals must be reported separately and never folded into a pass or fail verdict - "the model refused" and "the model tried and got it wrong" are different facts with different routing consequences. A recorded prior failure - a provider changed valid speaker names between versions - shows error classes are schema-shaped information, not noise.
 
+  **Production envelope:** Mechanism ready and derived; every call produces this data, including calls that fail. Empty until real calls are made.
+
 ### `reproducibility_repairability` — Does it do the same thing twice, and can a failure be fixed
 
 Whether repeated identical requests produce equivalent results, whether seeds are supported and honoured, and whether a failed output can be repaired by a further call rather than discarded.
@@ -1172,10 +1215,10 @@ Whether repeated identical requests produce equivalent results, whether seeds ar
 - **Reusable from:** every compound scenario
 - **Instrument:** operational logging (no instrument)
 - **Human verifier:** *none*
-- **External resource:** `no_external_resource`
+- **Instrument readiness:** `deterministic_ready` — deterministic — ready
+- **Benchmark material:** `no_external_stimulus_required` — none needed
 - **Result form:** `operational_metric`
 - **Routing use:** `descriptive_only`
-- **Status:** **blocked — no qualified instrument**
 
   **Difficulty ladder**
 
@@ -1190,6 +1233,8 @@ Whether repeated identical requests produce equivalent results, whether seeds ar
   **Held fixed for comparability:** `seed_policy`, `repeats_per_item`, `repair_strategy_ref`, `parent_failure_class`
 
   **Note:** Repeat agreement is cheap and depends only on repeats already budgeted. REPAIR IS DIFFERENT - measuring repair requires a repair loop that DOES NOT EXIST YET, and repair attempts are additional generations that must be budgeted explicitly rather than smuggled in under the generate-once rule. The generate-once rule says do not regenerate to satisfy another EVALUATOR; a repair attempt is a genuinely new trial and is recorded as a new attempt id linked to its parent. Repair matters commercially because a cheaply-repairable failure and a total loss are not equivalent, and routing should be able to prefer the former - but that field stays null until a repair loop exists to measure.
+
+  **Production envelope:** SPLIT ENVELOPE. Repeat agreement is deterministic arithmetic over repeats we already budget, and is ready. REPAIR is not: measuring it requires a repair loop that DOES NOT EXIST, and repair attempts are additional generations that must be budgeted explicitly rather than smuggled in under generate-once. The repair fields stay null until that loop exists.
 
 
 ---

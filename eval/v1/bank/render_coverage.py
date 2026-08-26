@@ -81,6 +81,35 @@ for c in CRITICAL:
 under = {c: cov.get(c, 0) for c in CRITICAL if cov.get(c, 0) < 10}
 o.append(f"\n**{len(CRITICAL)-len(under)} of {len(CRITICAL)} critical capabilities meet the target.**\n")
 
+if not under:
+    o.append("### How the last one was repaired — correction E-C3\n")
+    o.append(
+        "`two_speaker_turn_assignment_and_lip_sync` previously reached only **7**, "
+        "because exactly one compound scenario has two visible speakers exchanging "
+        "turns. Both cheap repairs were ruled out by the Controller: do not "
+        "re-declare `multi_shot_branded_ad` as `native_av` merely to fix a "
+        "denominator, and do not grow the bank past 100.\n")
+    o.append("So three atomic slots were **reallocated**, not added:\n")
+    o.append("| Donor | Atomic | Opportunities | Still above target? |\n|---|---|---|:--:|")
+    o.append("| `anatomy_hands` | 3 → 2 | 39 → 38 | ✅ |")
+    o.append("| `product_identity` | 2 → 1 | 38 → 37 | ✅ |")
+    o.append("| `spatial_relationship` | 2 → 1 | 32 → 31 | ✅ |")
+    o.append("| **`two_speaker…`** | **1 → 4** | **7 → 10** | ✅ |")
+    o.append("")
+    o.append("Donors are the three capabilities with the largest margin that still "
+             "keep an isolation probe after donating. **No capability lost its "
+             "atomic probe entirely** — causal isolation is the only reason the "
+             "atomic tier exists.\n")
+    o.append("The four two-speaker probes sit at **distinct ladder levels** and "
+             "every one has two visible speakers, so each can actually exhibit a "
+             "wrong turn assignment. **No fake opportunity was created**: the "
+             "count rose because real probes were added, not because the "
+             "denominator was widened.\n")
+    o.append("Cost: three atomic **group** counts shift by one "
+             "(`count_attribute_spatial` 6→5, `identity_reference_preservation` "
+             "6→5, `anatomy_human_object` 6→5, `speech_lipsync_speaker` 6→9). "
+             "Bank totals are unchanged at 100 = 40 + 60.\n")
+
 if under:
     o.append("### The one that does not, and why it was not padded\n")
     for c, v in under.items():
