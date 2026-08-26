@@ -1,0 +1,126 @@
+# Known-answer CpAO fixture: one accepted 3-shot outcome with a SHARED intermediate.
+#
+# EVERYTHING HERE IS SYNTHETIC. Fictional provider, fictional model, ledger basis synthetic_test,
+# currency XTS (the ISO code reserved for testing). No provider was called and no money was spent.
+#
+# THE POINT OF THIS FIXTURE: art-logo is generated ONCE and used by TWO shots. A naive walk of the
+# provenance tree visits it twice and double-counts its cost. The correct answer counts it once.
+#
+#   HAND-COMPUTED EXPECTED TOTAL
+#     gen shot1                        10.00
+#     gen shot2 (attempt 1, ERROR)      4.00   <- failed attempt still cost money
+#     gen shot2 (retry, ok)            10.00
+#     gen logo  (SHARED by shot1+shot3) 6.00   <- counted ONCE, not twice
+#     gen shot3                        10.00
+#     refused attempt (no artifact)     1.00   <- refusal cost, no bytes produced
+#     local concat (recorded compute)   0.50
+#     local overlay                     0.00   <- free local step, entry exists with amount 0
+#     evaluator measurements 3 x 0.25   0.75   <- three separate ledger entries
+#     human review                      3.00
+#                                    -------
+#     TOTAL                            45.25
+#     accepted outcomes                    1
+#     CpAO                             45.25
+#
+#   DISTINCT LEDGER ENTRIES COUNTED = 12
+#     6 provider attempts (incl. 1 error, 1 refusal) + 2 local + 1 human + 3 evaluator.
+#     NOTE: LED-LOCAL-OVERLAY is referenced by TWO steps (S-7 and S-8) and LED-LOGO is consumed by
+#     TWO composites - both are counted ONCE. That is two independent demonstrations of the dedup.
+#
+#   A naive tree-walk that double-counts the shared logo would report 51.25. The negative control
+#   fixture asserts the engine does NOT produce that.
+
+expected:
+  total_cost: 45.25
+  accepted_outcomes: 1
+  cpao: 45.25
+  currency: XTS
+  distinct_cost_entries_counted: 12
+  shared_intermediate_counted_once: art-logo
+
+job:
+  job_id: JOB-1
+  received_at: "2026-01-01T00:00:00Z"
+  brief_ref: BRIEF-DUMMY-1
+
+outcomes:
+  - outcome_id: OUT-1
+    job_id: JOB-1
+    outcome_kind: video_asset
+    created_at: "2026-01-01T01:00:00Z"
+
+sets:
+  - set_id: SET-1
+    outcome_id: OUT-1
+    ordering: ordered
+
+units:
+  - {unit_id: U-SHOT1, set_id: SET-1, unit_kind: shot, position: 1}
+  - {unit_id: U-SHOT2, set_id: SET-1, unit_kind: shot, position: 2}
+  - {unit_id: U-SHOT3, set_id: SET-1, unit_kind: shot, position: 3}
+  - {unit_id: U-LOGO,  set_id: SET-1, unit_kind: overlay, position: 4}
+  - {unit_id: U-FINAL, set_id: SET-1, unit_kind: shot, position: 5}
+
+steps:
+  - {step_id: S-1, unit_id: U-SHOT1, step_kind: provider_call, step_index: 0, executed_at: "2026-01-01T00:10:00Z", attempt_id: ATT-SHOT1}
+  - {step_id: S-2, unit_id: U-SHOT2, step_kind: provider_call, step_index: 0, executed_at: "2026-01-01T00:11:00Z", attempt_id: ATT-SHOT2-FAIL}
+  - {step_id: S-3, unit_id: U-SHOT2, step_kind: provider_call, step_index: 1, executed_at: "2026-01-01T00:12:00Z", attempt_id: ATT-SHOT2-RETRY}
+  - {step_id: S-4, unit_id: U-LOGO,  step_kind: provider_call, step_index: 0, executed_at: "2026-01-01T00:13:00Z", attempt_id: ATT-LOGO}
+  - {step_id: S-5, unit_id: U-SHOT3, step_kind: provider_call, step_index: 0, executed_at: "2026-01-01T00:14:00Z", attempt_id: ATT-SHOT3}
+  - {step_id: S-6, unit_id: U-SHOT3, step_kind: provider_call, step_index: 1, executed_at: "2026-01-01T00:15:00Z", attempt_id: ATT-REFUSED}
+  - {step_id: S-7, unit_id: U-SHOT1, step_kind: local_transform, step_index: 1, executed_at: "2026-01-01T00:20:00Z", transform_ref: TR-OVERLAY, cost_ref: LED-LOCAL-OVERLAY}
+  - {step_id: S-8, unit_id: U-SHOT3, step_kind: local_transform, step_index: 1, executed_at: "2026-01-01T00:21:00Z", transform_ref: TR-OVERLAY, cost_ref: LED-LOCAL-OVERLAY}
+  - {step_id: S-9, unit_id: U-FINAL, step_kind: local_transform, step_index: 0, executed_at: "2026-01-01T00:30:00Z", transform_ref: TR-CONCAT, cost_ref: LED-LOCAL-CONCAT}
+  - {step_id: S-10, unit_id: U-FINAL, step_kind: human_edit, step_index: 1, executed_at: "2026-01-01T00:40:00Z", operator_ref: OP-1, cost_ref: LED-HUMAN}
+
+transform_recipes:
+  - {transform_ref: TR-OVERLAY, tool: ffmpeg, tool_version: "7.0.1", operation: overlay, params_hash: "aaa", params_location: "dummy://params/overlay"}
+  - {transform_ref: TR-CONCAT, tool: ffmpeg, tool_version: "7.0.1", operation: concat, params_hash: "bbb", params_location: "dummy://params/concat"}
+
+attempts:
+  - {attempt_id: ATT-SHOT1, trial_id: T-SHOT1, status: ok, cost_ref: LED-SHOT1, repeat_index: 0, retry_of_attempt_id: null}
+  - {attempt_id: ATT-SHOT2-FAIL, trial_id: T-SHOT2-A, status: error, cost_ref: LED-SHOT2-FAIL, repeat_index: 0, retry_of_attempt_id: null, error_detail: "synthetic error"}
+  - {attempt_id: ATT-SHOT2-RETRY, trial_id: T-SHOT2-B, status: ok, cost_ref: LED-SHOT2-RETRY, repeat_index: 0, retry_of_attempt_id: ATT-SHOT2-FAIL, retry_reason: "prior attempt errored"}
+  - {attempt_id: ATT-LOGO, trial_id: T-LOGO, status: ok, cost_ref: LED-LOGO, repeat_index: 0, retry_of_attempt_id: null}
+  - {attempt_id: ATT-SHOT3, trial_id: T-SHOT3, status: ok, cost_ref: LED-SHOT3, repeat_index: 0, retry_of_attempt_id: null}
+  - {attempt_id: ATT-REFUSED, trial_id: T-REFUSED, status: refusal, cost_ref: LED-REFUSED, repeat_index: 0, retry_of_attempt_id: null, error_detail: "synthetic refusal"}
+
+artifacts:
+  - {artifact_id: art-shot1, attempt_id: ATT-SHOT1, trial_id: T-SHOT1, parents: []}
+  - {artifact_id: art-shot2, attempt_id: ATT-SHOT2-RETRY, trial_id: T-SHOT2-B, parents: []}
+  # art-logo is generated ONCE and consumed by TWO composites. This is the shared intermediate.
+  - {artifact_id: art-logo, attempt_id: ATT-LOGO, trial_id: T-LOGO, parents: []}
+  - {artifact_id: art-shot3, attempt_id: ATT-SHOT3, trial_id: T-SHOT3, parents: []}
+  - {artifact_id: art-shot1-branded, attempt_id: null, trial_id: null, step_id: S-7,
+     parents: [{parent_artifact_id: art-shot1, role: source, position: 0},
+               {parent_artifact_id: art-logo, role: overlay, position: 1}]}
+  - {artifact_id: art-shot3-branded, attempt_id: null, trial_id: null, step_id: S-8,
+     parents: [{parent_artifact_id: art-shot3, role: source, position: 0},
+               {parent_artifact_id: art-logo, role: overlay, position: 1}]}
+  - {artifact_id: art-final, attempt_id: null, trial_id: null, step_id: S-9,
+     parents: [{parent_artifact_id: art-shot1-branded, role: source, position: 0},
+               {parent_artifact_id: art-shot2, role: source, position: 1},
+               {parent_artifact_id: art-shot3-branded, role: source, position: 2}]}
+
+measurements:
+  - {measurement_id: M-1, artifact_id: art-shot1, evaluator_cost_ref: LED-EVAL-1}
+  - {measurement_id: M-2, artifact_id: art-shot2, evaluator_cost_ref: LED-EVAL-2}
+  - {measurement_id: M-3, artifact_id: art-shot3, evaluator_cost_ref: LED-EVAL-3}
+
+outcome_acceptance:
+  - {acceptance_id: ACC-1, outcome_id: OUT-1, delivered_artifact_id: art-final, accepted: true,
+     decided_by: dummy-customer-proxy, decided_at: "2026-01-01T02:00:00Z", brief_ref: BRIEF-DUMMY-1}
+
+cost_ledger:
+  - {ledger_entry_id: LED-SHOT1, amount: 10.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:10:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-SHOT2-FAIL, amount: 4.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:11:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-SHOT2-RETRY, amount: 10.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:12:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-LOGO, amount: 6.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:13:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-SHOT3, amount: 10.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:14:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-REFUSED, amount: 1.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:15:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-LOCAL-OVERLAY, amount: 0.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:20:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-LOCAL-CONCAT, amount: 0.5, currency: XTS, unit: call, recorded_at: "2026-01-01T00:30:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-HUMAN, amount: 3.0, currency: XTS, unit: call, recorded_at: "2026-01-01T00:40:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-EVAL-1, amount: 0.25, currency: XTS, unit: call, recorded_at: "2026-01-01T00:50:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-EVAL-2, amount: 0.25, currency: XTS, unit: call, recorded_at: "2026-01-01T00:50:00Z", basis: synthetic_test, immutable: true, synthetic: true}
+  - {ledger_entry_id: LED-EVAL-3, amount: 0.25, currency: XTS, unit: call, recorded_at: "2026-01-01T00:50:00Z", basis: synthetic_test, immutable: true, synthetic: true}

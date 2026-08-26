@@ -1,0 +1,234 @@
+# Outcome / production topology — PROPOSAL extending the accepted V2.1 persistence contract
+#
+# Task: R3-D of resources/tasks/RES-003-CLOUD-EVIDENCE-PROGRAM.md. Owner: Resources.
+# Status: PROPOSED. NOT authoritative architecture.
+#
+# READ THIS FIRST.
+# resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml (v2.1) REMAINS AUTHORITATIVE and is NOT
+# modified by this file. This is a proposal for the Controller's integration gate. If accepted it
+# becomes v3; until then v2.1 stands and any archive is validated against v2.1.
+#
+# THE PROBLEM. v2.1 models one call and what it produced:
+#     attempt -> artifact -> measurement, plus acceptance
+# A real customer outcome is not one call. It is a 20-second branded video assembled from several
+# generated shots, a voice-over, a logo overlay and a colour grade - some of those steps are paid
+# provider calls, some are local ffmpeg operations that cost no money and still create artifacts, and
+# the final asset has SEVERAL parents in a SPECIFIC ORDER. v2.1 cannot express any of that, so it
+# cannot answer "what did this accepted outcome cost".
+#
+# WHAT IS PRESERVED UNCHANGED. Every accepted invariant survives:
+#   * one provider/API/transform CALL = one trial (RI-C1);
+#   * failed and refused attempts persist individually, with their reasons (RI-C2/C3);
+#   * repeat != retry, and only retries enter a retry chain (RI-C1/C4);
+#   * measurements are Eval-owned; Resources stores capability ids verbatim;
+#   * costs reference immutable ledger entries, never inline numbers (RI-C4);
+#   * derived artifacts inherit their producing attempt's trial and add no trials.
+
+meta:
+  version: v3-proposal
+  date: 2026-08-26
+  status: PROPOSED_NOT_AUTHORITATIVE
+  extends: resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml (v2.1)
+  authoritative_until_controller_integration: v2.1
+  owner_split:
+    resources: "persistence, provenance, lineage, cost integrity, retention"
+    eval: "measurement semantics, capability ids, instrument semantics, thresholds"
+    canon: "what a good outcome must achieve"
+    nobody_yet: "routing - Production Planner does not exist"
+
+# ===========================================================================
+# THE TOPOLOGY
+#
+#   job
+#    └─ outcome                     (what the customer receives; acceptance lives HERE)
+#        └─ sequence_or_asset_set   (an ordered sequence, or an unordered set of deliverables)
+#            └─ production_unit     (one deliverable component: a shot, a VO track, an overlay)
+#                └─ production_step (one operation: provider call OR local deterministic transform)
+#                    └─ attempt     (v2.1, unchanged - one provider call = one trial)
+#                        └─ artifact(v2.1, extended with MULTI-PARENT lineage)
+#
+# Every level above `attempt` is NEW. Everything from `attempt` down is v2.1 as accepted.
+# ===========================================================================
+
+new_entities:
+
+  job:
+    description: "One customer request as received. The Normalized Request's persistence counterpart."
+    required:
+      job_id: "Stable unique id."
+      received_at: "ISO-8601 UTC."
+      brief_ref: "The brief or request this job serves."
+    optional:
+      customer_ref: "Opaque reference. NEVER customer PII in the archive."
+    rules:
+      - "A job may produce several outcomes (variants, revisions, campaign members)."
+      - "Resources stores the reference, never the customer's identifying data."
+
+  outcome:
+    description: >
+      One complete thing the customer receives and judges. THE UNIT CpAO DIVIDES BY.
+    required:
+      outcome_id: "Stable unique id."
+      job_id: "Parent job."
+      outcome_kind: "static_asset | video_asset | av_asset | asset_set | campaign_variant"
+      created_at: "ISO-8601 UTC."
+    optional:
+      supersedes_outcome_id: "For a revision: the outcome this replaces. Never edit the superseded one."
+      variant_group_id: "Groups campaign variants that are alternatives to each other."
+    rules:
+      - "An outcome is the ONLY level at which customer acceptance is recorded."
+      - "A revision is a NEW outcome that supersedes; historical outcomes are never rewritten."
+
+  sequence_or_asset_set:
+    description: >
+      The structure of an outcome: an ORDERED sequence (a video's shots) or an UNORDERED set (three
+      aspect-ratio crops of one ad).
+    required:
+      set_id: ""
+      outcome_id: ""
+      ordering: "ordered | unordered"
+    rules:
+      - "ordering: ordered REQUIRES every member production_unit to carry a position."
+      - "ordering: unordered FORBIDS positions, so nobody can infer meaning from file order."
+
+  production_unit:
+    description: "One component of the deliverable: a shot, a VO track, a logo overlay, a grade pass."
+    required:
+      unit_id: ""
+      set_id: ""
+      unit_kind: "shot | audio_track | overlay | grade | still | caption | other"
+    optional:
+      position: "Integer, REQUIRED iff the parent set is ordered. Null otherwise."
+      unit_acceptance_ref: >
+        DIAGNOSTIC acceptance of this component only. Explicitly NOT customer acceptance - see
+        acceptance_levels below.
+    rules:
+      - "A unit may take many steps and many attempts before it is usable."
+      - "A unit is not an outcome. Accepting a shot is not accepting the film."
+
+  production_step:
+    description: >
+      One operation that moves a unit forward. EITHER a provider call (which has an attempt) OR a
+      LOCAL DETERMINISTIC operation (which has none).
+    required:
+      step_id: ""
+      unit_id: ""
+      step_kind: "provider_call | local_transform | human_edit"
+      step_index: "Integer. Order of steps within the unit."
+      executed_at: "ISO-8601 UTC."
+    conditional:
+      attempt_id: "REQUIRED iff step_kind == provider_call. NULL otherwise."
+      transform_ref: >
+        REQUIRED iff step_kind == local_transform. Points at a transform_recipe entry so the
+        operation is reproducible - the tool, its version and its exact parameters.
+      operator_ref: "REQUIRED iff step_kind == human_edit. Who did it. Not their PII."
+    rules:
+      - >
+        A LOCAL TRANSFORM MAY CREATE ARTIFACTS WITHOUT A PROVIDER ATTEMPT. An ffmpeg concat, a colour
+        grade, a logo composite: these produce real bytes, cost no provider money, and are part of the
+        outcome. v2.1 could not express them at all, so their artifacts had nowhere to live.
+      - "A local transform creates NO trial. One call = one trial is unaffected: there was no call."
+      - "A human_edit step may carry a cost_ref - human time is a real cost of an accepted outcome."
+
+  transform_recipe:
+    description: "Recoverable provenance for a local deterministic step."
+    required:
+      transform_ref: ""
+      tool: "e.g. ffmpeg"
+      tool_version: "Exact version string."
+      operation: "concat | overlay | mix | crop | grade | encode | other"
+      params_hash: "SHA-256 of the exact parameters."
+      params_location: "Where the full parameters are recoverable. A hash cannot be read back."
+    rules:
+      - "Deterministic in principle is not reproducible in practice without the tool VERSION."
+      - "Never fabricate a params_hash. If parameters were not captured, say so and mark the step unreproducible."
+
+# ===========================================================================
+# MULTI-PARENT ARTIFACT LINEAGE — the core extension
+# ===========================================================================
+artifact_extension:
+  v2_1_today: >
+    An artifact has at most ONE parent: derived_from_artifact_id, for a frame sample or transcode.
+    That is a strict tree and it cannot represent assembly.
+  proposed_change:
+    parents: >
+      A LIST of parent references, replacing the single optional parent. Each entry:
+        {parent_artifact_id, role, position}
+      role: "source | overlay | audio | mask | reference | grade_source | other"
+      position: "Integer. REQUIRED where parent order is semantically meaningful (concatenation),
+                 NULL where it is not (a mix of simultaneous audio tracks)."
+    why_ordered_parents_matter: >
+      Concatenating shot A then shot B is a different film from B then A. If parents are an unordered
+      set, the archive cannot distinguish them and the composition is not reproducible.
+    backward_compatibility:
+      rule: >
+        An artifact with a single-element parents list and role "source" is EXACTLY equivalent to a
+        v2.1 derived_from_artifact_id. Legacy readers keep working, and legacy archives need no
+        rewriting.
+      legacy_state: >
+        Archives written under v2.1 have NO outcome metadata. They must be marked
+        outcome_topology: legacy_v2_1_no_outcome_context - NOT back-filled with invented parents,
+        units or outcomes. Pretending an old archive had outcome structure would be fabricating
+        provenance, which is the one thing this contract exists to prevent.
+    trial_invariant_preserved: >
+      A multi-parent composed artifact produced by a LOCAL step has NO attempt and NO trial. A
+      multi-parent artifact produced by a PROVIDER call inherits that one call's single trial. Under
+      no arrangement does composition create a trial.
+
+# ===========================================================================
+# ACCEPTANCE AT TWO LEVELS — deliberately different things
+# ===========================================================================
+acceptance_levels:
+  outcome_acceptance:
+    scope: "The whole thing the customer receives."
+    decided_by: "The customer, or a human acting for them. NEVER Resources."
+    is_the_numerator_of: cost_per_accepted_outcome
+    required: [acceptance_id, outcome_id, accepted, decided_by, decided_at, brief_ref]
+    optional: [rejection_reasons, revision_of_outcome_id]
+  unit_acceptance:
+    scope: "One component. DIAGNOSTIC ONLY."
+    decided_by: "Eval, an instrument, or an internal reviewer."
+    is_the_numerator_of: nothing
+    warning: >
+      UNIT ACCEPTANCE MUST NEVER BE COUNTED AS OUTCOME ACCEPTANCE. Eight accepted shots inside one
+      rejected film are eight diagnostic passes and ZERO accepted outcomes. Conflating them would
+      inflate the acceptance rate by roughly the number of components per outcome and make CpAO look
+      an order of magnitude better than it is. This is the single most dangerous confusion the
+      topology introduces, which is why the two are different entities with different owners.
+  legacy: >
+    v2.1 acceptance rows are TRIAL-level. Map them to unit_acceptance (diagnostic), never to
+    outcome_acceptance, because no v2.1 archive recorded whether a customer accepted anything.
+
+# ===========================================================================
+# WHAT DOES NOT CHANGE
+# ===========================================================================
+preserved_invariants:
+  - "One provider/API/transform CALL = one trial. Local steps and composition create no trials."
+  - "Failed and refused attempts persist individually with their verbatim reasons. Aggregate counters never substitute."
+  - "repeat != retry. Only retries enter a retry chain. Repeats measure reliability."
+  - "Measurements stay Eval-owned; capability ids stored verbatim, never renamed or normalised."
+  - "Costs reference immutable ledger entries. Never inline numbers, never fabricated."
+  - "Observation units use the canonical vocabulary: frame | shot | shot_pair | sequence | whole_asset | asset_set_over_time."
+  - "Class C material is never treated as reacquirable and is never git-ignored."
+  - "Resources stores acceptance; it never decides it."
+
+open_questions_for_the_controller:
+  - id: OQ-1
+    question: "Is human review time counted in CpAO?"
+    why_it_matters: >
+      It changes the metric's meaning. Counting it measures the true cost to the business; excluding it
+      measures the API cost of the production route. Both are defensible; they are different numbers.
+      The schema RECORDS human cost either way so the decision can be made later without re-running
+      anything - but it cannot be made by Resources.
+  - id: OQ-2
+    question: "Does a superseded outcome's cost count toward the accepted revision?"
+    why_it_matters: >
+      If a customer rejects v1 and accepts v2, the honest total cost of the accepted outcome probably
+      includes v1. If revisions are excluded, CpAO systematically understates the cost of hard briefs.
+      Resources persists the supersedes link so either rule is computable; the choice is the project's.
+  - id: OQ-3
+    question: "Is an outcome with an unreproducible local step still auditable?"
+    why_it_matters: >
+      If a local transform's parameters were not captured, the outcome's bytes exist but its
+      construction cannot be replayed. Proposed: mark the outcome reproducibility_status: partial
+      rather than silently treating it as fully reproducible.

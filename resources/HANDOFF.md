@@ -47,7 +47,19 @@ access terms, explicit commercial-use terms). Licence silence is not a block for
 internal-only acquisition; access gates and explicit terms still are. **Transient acquisition is the
 default for large reliably-reacquirable public archives** (Charter, approved 24 Aug 2026).
 
-**LAST COMPLETED WORK:** Resources–Eval **storage integration pass** (26 Aug 2026) on branch
+**LAST COMPLETED WORK:** **RES-003 cloud evidence programme** (26 Aug 2026) on branch
+`work/res-003-evidence-topology`, executed as one programme (R3-A…R3-F). Outputs under
+`resources/research/pre-e7-macro/`; brief at `.../RES-003-CONTROLLER-BRIEF.md`. Re-verify with
+`bash resources/research/pre-e7-macro/validators/run_all_res003.sh` (exit 0).
+Headlines: **request evidence is obtainable and legally clean** (LMArena CC-BY-4.0, DiffusionDB CC0)
+while **controlled evidence is not** — **ABO resolves to CC BY-NC 4.0**, closing the V1 contradiction
+unfavourably and ruling it out as the commercial product pack. **Arena-T2I-Hard shares a lineage with
+the arena pool**, so discovery there spends it as a holdout. The **four-pack plan survives** with six
+deltas, five costing no volume. **Whole-outcome CpAO is not computable under v2.1**; a topology and a
+working fail-closed recomputation engine are proposed (9/9 controls, DAG dedup prevents a +13.3%
+overstatement). **v2.1 remains authoritative.** 0 acquisition, ₹0 spend, not merged.
+
+**PRIOR WORK:** Resources–Eval **storage integration pass** (26 Aug 2026) on branch
 `work/resources-v1-overnight`. Tightened the one canonical persistence contract to v2.1 so Eval's
 emitted JSONL can validate against it exactly: one call = one trial; frozen lane and attempt-status
 machine vocabularies; a canonical measurement-absence set that excludes provider failures and
