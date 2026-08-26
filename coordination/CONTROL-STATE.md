@@ -1,91 +1,114 @@
 # Controller State
 
-**Updated:** 26 Aug 2026 after Cloud Macro Recalibration + model-access research lane.
+**Updated:** 26 Aug 2026 after CANON-009 / EVAL-007 / RES-003 joint integration review.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this state, the decision records and this file govern until Repository Governor refreshes memory.
 
-## Global posture — cloud macro research/design tranche active
+## Global posture — three-stream macro research complete; model-selection/sourcing lane active
 
-The V1 overnight architecture remains accepted and merged, but the immediately-following Pre-E7 execution plan has been superseded **before execution**.
+CANON-009, EVAL-007 and RES-003 have returned and received a joint Controller disposition.
 
-Authoritative decision:
+Authoritative integration decision:
 
-- `coordination/decisions/CONTROLLER-CLOUD-MACRO-RECALIBRATION-2026-08-26.md`
+- `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md`
 
-Shared active program:
+Their worker branches are **not yet merged** and require one bounded Repository Governor integrity review before merge.
 
-- `coordination/plans/2026-08-26-CLOUD-MACRO-SCOPE-AND-READINESS-PROGRAM.md`
+EVAL-008 remains active on `work/eval-008-model-access`. Its required order is:
 
-### Superseded — do not execute as active assignments
+`select models independently -> Frontier Clouds -> fal -> other/direct source`
 
-- `canon/tasks/CANON-PRE-E7-SCOPE-AUDIT.md`
-- `eval/tasks/EVAL-PRE-E7-SCOPE-REBASE.md`
-- `resources/tasks/RESOURCES-PRE-E7-SCOPE-REBASE.md`
-- branches `work/canon-pre-e7-scope-audit`, `work/eval-pre-e7-scope-rebase`, `work/resources-pre-e7-scope-rebase`
+Model availability/credits may affect sourcing, never admission to the candidate list.
 
-Their architectural insight remains valid: capability evidence needs explicit production conditions, and one customer outcome may contain many production calls/transforms/repairs. What is superseded is using the Controller-authored 30-brief bank as the primary discovery surface for request scope.
+## What the macro research established
 
-## Why the macro plan changed
+### Request / customer-intent axis
 
-The benchmark must not define the product.
+The original 30 authored briefs are a useful generation-core/value-gate bank but are not a discovery universe. Research exposed material blind spots in request-operation coverage, especially edit-a-supplied-asset and animate-a-supplied-image; variant/campaign-set and multi-turn request shapes also need explicit treatment.
 
-The project will first research recurring **media-generation request patterns** from substantial real-user/usage-informed sources; independently research **technical capability/failure/evaluator/workflow patterns**; independently research **evidence/access/lineage/persistence requirements**; and in parallel research the **actual model/provider supply landscape** so account setup and candidate-roster selection do not become a later discovery bottleneck.
+Controller-approved consequences:
 
-Only after those returns will the Controller freeze the next request taxonomy, Capability Contract v2, condition/envelope model, candidate model roster and benchmark.
+- add explicit **requested operation** upstream of Creative IR in the Normalized Request;
+- keep requested operation distinct from the Planner's chosen workflow mode;
+- add output-cardinality / deliverable-set semantics;
+- separate camera motion from subject motion;
+- recognise multi-turn as a request shape but do not freeze its schema or let it block the first paid benchmark;
+- keep the original 30 briefs byte-identical and later add a separate request-coverage extension before end-to-end paid benchmarking.
 
-The existing 30 authored briefs are therefore a **designed probe bank**, not evidence of customer prevalence. The current 36 capabilities and 100-item Eval bank are strong **baselines**, not proof of exhaustive scope.
+### Eval / capability axis
 
-## Product / architecture still frozen
+The current 36 remain the baseline, not the final contract.
 
-The product remains an API-native media production intelligence layer optimising **Cost per Accepted Outcome**.
+Controller-approved v2 direction:
 
-Stable separations remain:
+- dependency-aware prerequisite graph for compound requirements;
+- a dedicated `blocked_by_prerequisite_failure`-type state rather than ordinary `not_applicable`; blocked descendants remain unsatisfied at brief/outcome acceptance level;
+- separate 2D spatial relationship from depth/3D relationship;
+- separate spoken content/script correctness from pronunciation/intelligibility;
+- separate reproducibility from repairability;
+- broaden/rename `anatomy_hands` to human-anatomy integrity;
+- refine person identity around declared clothing/wardrobe invariants;
+- add camera/framing instruction fidelity;
+- add sequence/state continuity beyond spatial continuity;
+- add technical visual integrity;
+- add voice identity/consistency across relevant audio assets;
+- resolve style-reference fidelity, campaign-set consistency and cross-asset identity boundaries during formal v2 specification rather than adding dimensions blindly.
 
-`Normalized Request -> Creative IR -> future Production Requirement Profile -> future Production IR -> execution/evaluation/repair -> accepted outcome`
+No target capability count is frozen yet.
 
-- Normalized Request preserves what the customer said.
-- Creative IR defines what should exist, model-independently.
-- A future Production Requirement Profile should compile production requirements without choosing providers.
-- Eval's Capability Registry stores empirical evidence, not routing scores.
-- Future Production IR/Planner will choose how to make the outcome.
-- Canon knowledge is never evidence of current model capability.
-- A provider/model's native duration is a production constraint, not a customer-product duration limit.
+### Production-condition axis
 
-## Active cloud assignments
+No synthetic complexity score.
 
-All four are substantial autonomous research/design programs and may run in parallel.
+Every empirical row must record applicable production conditions, including delivery/duration/size, entity/content load, reference type/count/quality, shot/sequence structure, motion/camera load, constraint/exactness load, language/script/speaker topology, workflow mode, input quality, decision provenance and output scale/set structure.
 
-### Canon — CANON-009
+Requested operation and workflow mode are separate fields with separate provenance.
 
-Task:
-- `canon/tasks/CANON-009-CLOUD-SCOPE-PROGRAM.md`
+Benchmark v2 direction:
 
-Branch:
-- `work/canon-009-request-space`
+1. atomic probes;
+2. compound scenarios with prerequisite graph;
+3. sparse/adaptive condition sweeps;
+4. end-to-end accepted outcomes;
 
-Purpose: research the recurring grammar and co-occurrence structure of actual media-generation requests/use cases; compare the observed space against Creative IR, the synthetic 30-bank and Canon coverage; propose rebalancing/gaps without changing frozen architecture or ingesting sources.
+crossed by materially different request-operation coverage. No cartesian-product testing is authorised.
 
-### Eval — EVAL-007
+### Resources / outcome axis
 
-Task:
-- `eval/tasks/EVAL-007-CLOUD-EVAL-RESEARCH-PROGRAM.md`
+Controller approves the v3 outcome-topology direction:
 
-Branch:
-- `work/eval-007-capability-workflow`
+`job -> outcome -> sequence_or_asset_set -> production_unit -> production_step`
 
-Purpose: independently research modern capability/failure/evaluator benchmarks; complete the current official provider/workflow/price/feature inventory where it supports capability/workflow understanding; audit the current 36 capabilities and important production conditions; propose evaluator qualification and a sparse/adaptive benchmark v2 without making calls or freezing cross-stream architecture.
+Production steps may have zero or more provider attempts as appropriate; artifacts may have ordered multi-parent lineage; deterministic local transforms may produce artifacts without manufacturing trials. One provider/API/transform call = one trial remains unchanged.
 
-### Resources — RES-003
+Whole-outcome CpAO includes all material costs attributable to reaching the accepted outcome: successful/failed/refused/retried calls, paid transforms/evaluators, repairs, material local compute, required human review/production time, and rejected revisions within the same production journey. Report API/tool CpAO and fully-loaded CpAO separately when both are available; fully-loaded CpAO is the primary business metric.
 
-Task:
-- `resources/tasks/RES-003-CLOUD-EVIDENCE-PROGRAM.md`
+Strict request-lineage tracking is adopted. Discovery and benchmark material descended from the same request pool cannot be presented as independent generalisation evidence. Preserve Arena-T2I-Hard for Eval methodology/benchmark use; do not make raw LMArena prompt data load-bearing discovery evidence for the integrated request grammar.
 
-Branch:
-- `work/res-003-evidence-topology`
+The four controlled-pack architecture survives; exact pack sizes will be refrozen after Capability Contract v2 and benchmark integration.
 
-Purpose: research access/rights/provenance of request/evaluation sources; rebaseline existing resource fit from committed evidence only; design protected-set/leakage handling; propose multi-parent outcome persistence and whole-outcome CpAO; research controlled-pack routes without acquiring them.
+## Rights/source posture
 
-### Eval supply landscape — EVAL-008
+- CC-BY-NC request/benchmark datasets are not authorised as empirical project material for the commercial product without explicit legal/Controller disposition.
+- Published aggregate findings may be cited as external research evidence with limitations; that is not acquisition/use of the underlying dataset.
+- Verify load-bearing licences on the actual distribution page before acquisition.
+- User-uploaded images from request corpora are not assumed cleared for identity/reference benchmarking.
+
+## Independent Controller verification
+
+Before adopting the integration direction, the Controller independently verified load-bearing external claims on primary/high-quality surfaces, including:
+
+- PSR/WACV 2026: 82,976 final real editing requests and 305,806 human-edited images;
+- TIP-I2V/ICCV 2025: >1.70M unique user-provided text+image prompts;
+- Arena-T2I-Hard: 310 real arena prompts with dependency-aware DAG checklists;
+- GenEval2: 800 prompts, `atom_count`, and benchmark-drift motivation;
+- VBench-2.0: separate Camera Motion, Motion Order Understanding, Human Identity, Human Clothes and Multi-View Consistency dimensions.
+
+These support the architecture direction, not commercial-market prevalence claims.
+
+## Active assignment
+
+### EVAL-008 — model selection and sourcing
 
 Task:
 - `eval/tasks/EVAL-008-CLOUD-MODEL-ACCESS-RESEARCH.md`
@@ -93,96 +116,40 @@ Task:
 Branch:
 - `work/eval-008-model-access`
 
-Purpose: independently build the current model/provider/access universe, deduplicate the same underlying model across fal/direct/other provider routes, propose a compact frontier + specialist + low-cost/open candidate roster, and return an exact user account/action checklist. This is research only; it does not authorize the benchmark roster or any spend.
+Required sequence:
+1. decide which models should be tested and why, independent of access;
+2. check Frontier Clouds first for every selected model;
+3. if absent, check fal;
+4. if absent, identify the best legitimate direct/other provider;
+5. only then produce account/funding actions.
 
-User-reported access relevant to this lane:
-- fal access: user-reported;
-- “Frontier clouds” access: user-reported, exact provider identity not established in repo evidence and must not be guessed.
-
-## Cloud environment / budget
-
-Assume fresh Claude Web sessions with GitHub and public web, **no laptop access**.
-
-Workers must not assume:
-
-- the 5.70GB git-ignored Resources corpus is available;
-- local Downloads/books/media/fonts are available;
-- laptop API keys/provider accounts are available;
-- prior chat context is available.
-
-Across all four programs:
-
-- **₹0 external spend**;
-- no generation/model API calls;
-- no checker/evaluator API calls;
-- no empirical Capability Registry rows;
-- no new Canon ingestion;
-- no materially new dataset/media acquisition;
-- no login/account creation/payment/click-through terms/access-control bypass;
-- no Production IR/Planner implementation;
-- no worker merge.
-
-If a cloud runner is absent, design/research work continues and runtime verification is marked honestly rather than invented.
-
-## What remains accepted from V1
-
-- 19 live accepted Canon sources and Audit Gate v0.2;
-- Creative IR v0.1 as the current experimental Creative IR;
-- 30-commercial-brief bank as an authored/design artifact;
-- corrected Canon value-gate design, still unrun;
-- current 36-capability Eval contract as baseline;
-- six evaluator-family architecture as baseline;
-- current 100-base-item atomic/compound Eval bank as baseline;
-- generate once / measure many;
-- one provider/API/transform call = one trial;
-- repeat != retry;
-- Resources V2.1 attempt/artifact/measurement/cost persistence;
-- immutable failed/refused-attempt evidence;
-- Registry stores empirical evidence, never routing scores.
+User-reported sourcing preference: `Frontier Clouds credits -> fal -> new/direct accounts`.
 
 ## Still blocked / not authorised
 
-- **E7 historical paid-admission execution: BLOCKED.**
-- **E8 historical deep qualification: BLOCKED.**
-- Historical 204 / 520 generation counts are superseded pre-recalibration calculations, not budgets.
-- `EVAL-006` remains **PAUSED — DO NOT EXECUTE**.
-- 0 qualified subjective/perceptual evaluator families.
-- 0 current model/workflow benchmarks.
-- 0 empirical current-model Registry entries.
-- no paid benchmark budget authorised.
-- no materially new Resources acquisition authorised.
-- Canon's real value gate remains unrun and requires separate Controller authorization/human setup.
+- historical E7 paid-admission execution: **BLOCKED**;
+- historical E8 deep qualification: **BLOCKED**;
+- historical 204 / 520 generation counts remain superseded calculations, not budgets;
+- `EVAL-006` remains **PAUSED — DO NOT EXECUTE**;
+- 0 qualified subjective/perceptual evaluator families;
+- 0 current model/workflow empirical benchmarks;
+- 0 empirical current-model Registry entries;
+- no paid benchmark budget authorised;
+- no new controlled-pack acquisition authorised;
+- Canon value gate remains unrun.
 
-## One integration gate after all active research programs
+## Next integration gate after EVAL-008 + Governor review
 
-Do **not** proceed stream-by-stream into execution after one worker finishes.
+The Controller will freeze the executable pre-paid-run package only after:
 
-After CANON-009, EVAL-007, RES-003 and EVAL-008 return, the Controller jointly decides:
+1. Governor integrity review of CANON-009 / EVAL-007 / RES-003 and merge of accepted research evidence;
+2. EVAL-008 model roster + sourcing map returns;
+3. formal specification package resolves Normalized Request additions, Capability Contract v2, condition contract and outcome topology v3;
+4. request-coverage bank extension is defined;
+5. evaluator qualification needs are mapped to the v2 capabilities;
+6. controlled-pack exact requirements are refrozen;
+7. current model/workflow roster and access routes are fixed;
+8. fresh generation + evaluator + human-cost forecast is produced;
+9. Controller explicitly approves the paid budget.
 
-1. first-product request/use-case taxonomy;
-2. Media Request Grammar v1;
-3. Production Requirement Profile shape;
-4. Capability Contract v2;
-5. condition/envelope taxonomy;
-6. outcome/production-topology contract;
-7. whether/how to rebalance the 30-brief bank;
-8. whether/how to revise the 100-item Eval bank;
-9. evaluator qualification program;
-10. targeted resource acquisition/controlled-pack program;
-11. **current model/workflow admission roster and preferred access routes**;
-12. **which provider accounts the user actually needs to open/fund**;
-13. exact paid benchmark design and budget.
-
-Market/request evidence, technical capability evidence, model-supply evidence and benchmark design must remain visibly separate at this gate.
-
-## Likely later macro tranche — not pre-authorised
-
-If the integration gate passes, the next tranche will likely combine:
-
-- targeted controlled Resources packs;
-- evaluator qualification;
-- Canon value-gate execution;
-- selected provider/account setup;
-- then paid current-model admission and deeper workflow qualification.
-
-That work depends on findings from the active macro program and therefore requires a new Controller decision.
+Until then, no paid empirical execution begins.
