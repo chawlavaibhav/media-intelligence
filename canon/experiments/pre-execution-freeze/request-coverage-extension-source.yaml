@@ -1,0 +1,565 @@
+# CANON-010 / C10-D — request-coverage extension bank (authored source).
+#
+# WHAT THIS IS AND IS NOT. Eleven controlled probe items covering request operations the original
+# 30-brief bank does not contain. It is a CONTROLLED PROBE BANK, not demand evidence, and the
+# Controller decision says so explicitly. Nothing here measures market share.
+#
+# THE ORIGINAL 30 ARE UNTOUCHED. This is a separate file. `validate_request_freeze.py` fails the
+# build if a single byte of `canon/experiments/v1/brief-bank/` changes.
+#
+# SIZED BY COVERAGE, NOT BY SYMMETRY. Eleven items because eleven is what covers the operations and
+# the co-occurrences that matter. No target was set and no item exists to round a number.
+#
+# LANGUAGE IS EARNED, NOT BALANCED. English 5, Hindi 2, Hinglish 4. Every non-English item states a
+# `language_dependency` — a requirement that genuinely changes with the script or language. The
+# validator fails any item whose language differs from a sibling with no such dependency, because a
+# translated duplicate tests nothing except translation.
+#
+# runnable_wave1: false means the item is a representation probe. It must not enter a paid run.
+
+meta:
+  bank_id: request_coverage_extension
+  version: v1
+  status: PROPOSED_READY_FOR_FREEZE
+  task: CANON-010 / C10-D
+  date: 2026-08-26
+  authority: coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md
+  relationship_to_30_bank: >
+    Separate and additive. The original 30 remain the frozen generation-core / value-gate bank and
+    are byte-identical. This bank exists because CANON-009 measured the 30 against real request
+    patterns and found zero coverage of edit, animate, variant-set and multi-turn requests.
+  not_demand_evidence: >
+    These are authored probes covering a discovered space. Authoring them does not make them
+    evidence about what customers ask for, and no frequency claim attaches to any item.
+
+items:
+
+# ══ EDIT a supplied asset ═══════════════════════════════════════════════════════
+- item_id: RX-01
+  requested_operation: edit
+  language: english
+  media_class: static
+  business: furniture retailer, Bengaluru
+  request_text: >
+    We shot this sofa in our showroom but there's a staff member in the background on the left.
+    Can you take him out? Everything else should stay exactly as it is — same sofa, same room, same
+    light. We're using it on the product page tomorrow.
+  supplied_inputs:
+    - asset_id: rx01_photo
+      media_type: image
+      role: subject_of_operation
+      description: showroom photograph containing the sofa and an unintended person
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "staff member in left background", intent: remove, detail: "must not appear"}
+  constraints:
+    hard:
+      - the sofa must be unchanged in shape, colour and position
+      - room and lighting must remain the same
+      - no person may appear in the result
+    soft: []
+    free:
+      - how the vacated background area is filled
+  preservation_semantics: >
+    THE DEFINING PROPERTY OF THIS ITEM. One named element is removed; everything else is implicitly
+    preserved. The customer enumerated nothing to keep, and the system must not manufacture a list of
+    preserve statements and attribute them to the customer.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - the removed person is absent
+    - the sofa is recognisably the same object
+    - no visible artefact where the person was
+  grammar_features: [R01, R02, R03, R04, R05, R16, R18]
+  covers_cooccurrence: [edit_plus_preservation]
+  runnable_wave1: true
+  language_dependency: null
+
+- item_id: RX-02
+  requested_operation: edit
+  language: hindi
+  media_class: static
+  business: spice brand, Indore
+  request_text: >
+    इस पैक फोटो का background बदल कर सफेद कर दीजिए, e-commerce listing के लिए चाहिए. पैक पर जो लिखा है
+    "शुद्ध मसाले" और "५०० ग्राम" वो बिल्कुल वैसा ही रहना चाहिए, एक भी अक्षर बदलना नहीं चाहिए. पैक का रंग भी वही रहे.
+  supplied_inputs:
+    - asset_id: rx02_photo
+      media_type: image
+      role: subject_of_operation
+      description: spice pack photographed against a cluttered background
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "background", intent: change, detail: "plain white for marketplace listing"}
+      - {target: "pack label text", intent: preserve, detail: "customer named this explicitly",
+         evidence_quote: "पैक पर जो लिखा है"}
+  constraints:
+    hard:
+      - "the Devanagari strings \"शुद्ध मसाले\" and \"५०० ग्राम\" must survive byte-exact"
+      - pack colour unchanged
+      - background becomes plain white
+    soft: []
+    free: [shadow treatment under the pack]
+  preservation_semantics: >
+    Text preservation under an edit is a DIFFERENT requirement from text generation. The characters
+    already exist in the supplied image and must survive the operation intact — including the
+    conjunct in "शुद्ध" and the Devanagari digits in "५००", which are exactly the characters most
+    likely to be damaged or silently re-rendered when the surrounding area changes.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - both Devanagari strings render byte-exact and legible
+    - background is uniformly white
+    - pack colour unchanged
+  grammar_features: [R01, R02, R03, R04, R05, R08, R10, R16, R18]
+  covers_cooccurrence: [edit_plus_preservation, edit_plus_exact_text_survival]
+  runnable_wave1: true
+  language_dependency: >
+    Devanagari conjuncts and Devanagari digits are the hard case for text SURVIVAL under an edit, and
+    the failure mode differs from Latin: a damaged matra produces a plausible-looking wrong word
+    rather than obvious garbage. An English version of this item would not test the same thing.
+
+- item_id: RX-03
+  requested_operation: edit
+  language: hinglish
+  media_class: static
+  business: electronics retailer, Pune
+  request_text: >
+    Ye wala creative pichle month ka hai. Bas price change karna hai — "₹24,999" ki jagah
+    "₹21,499" kar do, aur "Limited offer" ko "अभी खरीदें" se replace kar do. Baaki sab same rahe,
+    layout, colours, product photo, sab kuch. Font bhi wahi rakhna.
+  supplied_inputs:
+    - asset_id: rx03_creative
+      media_type: image
+      role: subject_of_operation
+      description: finished promotional creative from a previous campaign
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "price string", intent: change, detail: "₹24,999 becomes ₹21,499"}
+      - {target: "offer line", intent: change, detail: "Limited offer becomes अभी खरीदें"}
+      - {target: "layout, colours, product photo, typeface", intent: preserve,
+         detail: "customer named these explicitly",
+         evidence_quote: "Baaki sab same rahe"}
+  constraints:
+    hard:
+      - '"₹21,499" appears exactly, comma included'
+      - '"अभी खरीदें" appears exactly'
+      - layout, palette, product photograph and typeface unchanged
+    soft: []
+    free: []
+  preservation_semantics: >
+    A targeted text substitution inside a finished creative. Two elements change; everything else is
+    named as preserved by the customer, unusually — most edit requests leave preservation implicit.
+    Recorded as customer_specified here BECAUSE THEY SAID IT, which is the distinction the
+    provenance rule exists to protect.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - new price string exact, including the comma
+    - Devanagari replacement string exact
+    - the replaced line occupies the original position without disturbing layout
+  grammar_features: [R01, R02, R03, R04, R05, R08, R09, R10, R16, R18]
+  covers_cooccurrence: [edit_plus_exact_text_change, edit_plus_script_switch]
+  runnable_wave1: true
+  language_dependency: >
+    The substitution switches SCRIPT — a Latin/currency string and a Devanagari string in the same
+    creative, replacing a Latin phrase with a Devanagari one. Script-switching inside an existing
+    layout is a distinct requirement: the replacement has different metrics and must still fit.
+
+# ══ RESTORE ═════════════════════════════════════════════════════════════════════
+- item_id: RX-04
+  requested_operation: restore
+  language: english
+  media_class: static
+  business: heritage jewellery house, Chennai
+  request_text: >
+    This is a photo of our founder from 1961 for our anniversary campaign. It's got creases, a
+    water stain across the bottom right, and the whole thing has faded. Can you clean it up? Please
+    don't change his face or make him look younger — it should still look like a photograph from
+    1961, just an undamaged one.
+  supplied_inputs:
+    - asset_id: rx04_photo
+      media_type: image
+      role: subject_of_operation
+      description: damaged monochrome photograph, creased, stained and faded
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "creases and water stain", intent: remove, detail: "physical damage"}
+      - {target: "overall fading", intent: transform, detail: "recover tonal range"}
+      - {target: "facial identity and apparent age", intent: preserve,
+         detail: "customer named this explicitly",
+         evidence_quote: "don't change his face or make him look younger"}
+  constraints:
+    hard:
+      - facial identity unchanged
+      - the result must still read as a 1961 photograph
+      - no apparent de-aging or modernisation
+    soft: [damage removal as complete as possible]
+    free: [degree of contrast recovery]
+  preservation_semantics: >
+    WHY RESTORE IS NOT A KIND OF EDIT, made concrete. An edit is judged against the change requested.
+    A restoration is judged against a plausible original THAT NOBODY HAS. The customer's real
+    constraint is negative — do not invent detail, do not modernise — and that acceptance semantic
+    has no equivalent in an edit request.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - damage removed
+    - facial identity preserved
+    - period character retained; no invented detail
+  grammar_features: [R01, R02, R03, R04, R05, R06, R16, R18]
+  covers_cooccurrence: [restore_plus_identity_preservation]
+  runnable_wave1: true
+  language_dependency: null
+
+# ══ ANIMATE a supplied image ════════════════════════════════════════════════════
+- item_id: RX-05
+  requested_operation: animate
+  language: english
+  media_class: video
+  business: premium water bottle brand, Mumbai
+  request_text: >
+    Take this packshot of our steel bottle and give me a six-second clip for the website hero. I
+    want the camera to move slowly around it, nothing else. The bottle shouldn't move or change —
+    same bottle, same label, same reflections behaving properly. No text, no music.
+  supplied_inputs:
+    - asset_id: rx05_packshot
+      media_type: image
+      role: subject_of_operation
+      description: studio packshot of a brushed-steel bottle
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "bottle geometry and label", intent: preserve,
+         detail: "customer named this explicitly",
+         evidence_quote: "The bottle shouldn't move or change"}
+  motion_intent:
+    camera_motion: {motion_type: orbit, detail: "slow move around the object", provenance: customer_stated}
+    subject_motion: []
+  constraints:
+    hard:
+      - the bottle does not move or deform
+      - label remains legible and unchanged
+      - approximately 6 seconds
+      - no on-screen text, no audio
+    soft: [reflections behave plausibly for a brushed metal surface]
+    free: [orbit speed and arc length]
+  preservation_semantics: >
+    THE CAMERA/SUBJECT SEPARATION TEST, in its cleanest form. Camera motion is requested; subject
+    motion is explicitly refused. A system that models "motion" as one property cannot express this
+    request at all, and cannot diagnose the most likely failure — the object drifting or warping
+    while the camera moves.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - camera moves, object does not
+    - label legible throughout
+    - no warping or identity drift across frames
+  grammar_features: [R01, R02, R03, R04, R05, R12, R13, R14, R16, R18]
+  covers_cooccurrence: [animate_plus_identity_preservation, camera_motion_without_subject_motion]
+  runnable_wave1: true
+  language_dependency: null
+
+- item_id: RX-06
+  requested_operation: animate
+  language: hindi
+  media_class: video
+  business: tea brand, Lucknow
+  request_text: >
+    इस फोटो को आठ सेकंड का वीडियो बना दीजिए. चाय की भाप ऊपर उठती दिखे और आदमी हल्का सा मुस्कुराए, बस इतना ही —
+    कैमरा स्थिर रहे. आखिर में नीचे "स्वाद चाय" लिखा रहे, पूरे वीडियो में स्थिर और साफ़ पढ़ने लायक.
+  supplied_inputs:
+    - asset_id: rx06_photo
+      media_type: image
+      role: subject_of_operation
+      description: still photograph of a man holding a cup of tea
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "facial identity", intent: preserve, detail: "same person throughout"}
+  motion_intent:
+    camera_motion: {motion_type: static, detail: "camera must not move", provenance: customer_stated}
+    subject_motion:
+      - {entity_ref: steam, motion_type: object_motion, detail: "steam rises"}
+      - {entity_ref: man, motion_type: micro_expression, detail: "slight smile"}
+  constraints:
+    hard:
+      - camera static
+      - '"स्वाद चाय" remains stable and legible for the whole clip'
+      - facial identity consistent across all frames
+      - approximately 8 seconds
+    soft: [steam motion looks natural]
+    free: [timing of the smile]
+  preservation_semantics: >
+    The inverse of RX-05: subject motion requested, camera motion refused. Two different subject
+    motion types in one item — object motion and micro-expression — which the grammar separates
+    because they fail differently.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - camera does not move
+    - Devanagari text stable and legible in every frame
+    - face remains the same person across frames
+  grammar_features: [R01, R02, R03, R04, R05, R08, R10, R12, R13, R14, R16, R18]
+  covers_cooccurrence: [animate_plus_text_stability, subject_motion_without_camera_motion,
+                        animate_plus_identity_continuity]
+  runnable_wave1: true
+  language_dependency: >
+    Text STABILITY UNDER MOTION is a distinct requirement from static text rendering, and Devanagari
+    is the hard case: a conjunct or matra that flickers between frames produces a different word
+    frame-to-frame while each frame looks individually plausible. Latin text does not fail this way.
+
+# ══ EXTEND ══════════════════════════════════════════════════════════════════════
+- item_id: RX-07
+  requested_operation: extend
+  language: english
+  media_class: static
+  business: travel agency, Kochi
+  request_text: >
+    We have this landscape banner but we need a vertical version for Stories. Can you extend the
+    image top and bottom so it works at 9:16? Don't crop the boat or the headline — they need to stay
+    fully visible and in the same relationship to each other.
+  supplied_inputs:
+    - asset_id: rx07_banner
+      media_type: image
+      role: subject_of_operation
+      description: horizontal banner containing a boat and a headline
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "boat and headline", intent: preserve, detail: "fully visible, same relationship"}
+      - {target: "canvas bounds", intent: transform, detail: "extend vertically to 9:16"}
+  constraints:
+    hard:
+      - final aspect ratio 9:16
+      - boat fully visible, not cropped
+      - headline fully visible, not cropped
+      - spatial relationship between boat and headline preserved
+    soft: [extended area consistent with the existing scene]
+    free: [what appears in the newly created area]
+  preservation_semantics: >
+    Extend differs from edit in what is at risk: nothing existing should change, but new area must be
+    invented, and the customer has constrained what must survive rather than what must appear. Note
+    the customer asked to EXTEND, not to crop or reframe — a system that satisfied 9:16 by cropping
+    would have substituted a different operation for the one requested.
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - 9:16 achieved by extension, not by cropping
+    - both named elements fully present
+    - extended region plausible
+  grammar_features: [R01, R02, R03, R04, R05, R15, R16, R18]
+  covers_cooccurrence: [extend_plus_element_preservation, extend_plus_delivery_constraint]
+  runnable_wave1: true
+  language_dependency: null
+
+# ══ COMPOSE ═════════════════════════════════════════════════════════════════════
+- item_id: RX-08
+  requested_operation: compose
+  language: hinglish
+  media_class: static
+  business: cosmetics brand, Delhi
+  request_text: >
+    Do photos bhej raha hoon — ek model ka portrait hai, doosra hamare lipstick pack ka packshot.
+    Dono ko ek creative mein combine karna hai, model haath mein product pakde hue dikhe. Model ka
+    face bilkul same rehna chahiye aur pack ka shade bhi exactly same — wo hamara signature colour hai.
+    Upar likha ho "नया शेड, वही भरोसा".
+  supplied_inputs:
+    - asset_id: rx08_model
+      media_type: image
+      role: identity_reference
+      applies_to: entity.model
+      description: portrait of a model
+    - asset_id: rx08_pack
+      media_type: image
+      role: identity_reference
+      applies_to: entity.product
+      description: packshot of a lipstick
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "model facial identity", intent: preserve, detail: "customer named this",
+         evidence_quote: "Model ka face bilkul same rehna chahiye"}
+      - {target: "product shade", intent: preserve, detail: "signature colour, customer named this",
+         evidence_quote: "pack ka shade bhi exactly same"}
+      - {target: "holding relationship", intent: add, detail: "model holds the product"}
+  constraints:
+    hard:
+      - model's face identical to the supplied portrait
+      - product shade exactly as supplied
+      - model is holding the product
+      - '"नया शेड, वही भरोसा" appears exactly'
+    soft: [natural-looking hand contact]
+    free: [background, pose beyond the holding relationship]
+  preservation_semantics: >
+    TWO IDENTITY REFERENCES AT ONCE, from two separate supplied assets, with a NEW RELATIONSHIP that
+    exists in neither. Note the asset role here is identity_reference and NOT subject_of_operation —
+    neither supplied image is being modified; both inform a new artefact. That is the distinction
+    RX-01 through RX-04 would get wrong if roles were assigned by "an asset was attached".
+  deliverable_set: {cardinality: 1, variation_axis: none, acceptance_basis: per_deliverable}
+  acceptance_relevant:
+    - face matches the supplied portrait
+    - shade matches the supplied packshot
+    - the holding relationship is physically plausible
+    - Devanagari headline exact
+  grammar_features: [R01, R02, R03, R04, R05, R06, R07, R08, R10, R16, R18]
+  covers_cooccurrence: [compose_plus_dual_identity, compose_plus_new_relationship,
+                        product_plus_person_plus_reference]
+  runnable_wave1: true
+  language_dependency: >
+    The headline is Devanagari while the request is Hinglish, which is the ordinary way this customer
+    writes — and it separates the SPOKEN/instruction language from the ON-SCREEN COPY language, a
+    distinction R10 exists to carry and which a single-language item cannot exercise.
+
+# ══ VARIANTS / campaign set ═════════════════════════════════════════════════════
+- item_id: RX-09
+  requested_operation: variants
+  language: hinglish
+  media_class: static
+  business: quick-service restaurant chain, multi-city
+  request_text: >
+    Ek hi offer creative chahiye but chaar alag versions — Hindi, Tamil, Bengali aur English. Offer
+    same hai, "Buy 1 Get 1" aur price "₹199". Visual bilkul identical rehna chahiye chaaron mein, sirf
+    language badle. Hum chaaron use karenge, koi choose nahi karna.
+  supplied_inputs:
+    - asset_id: rx09_product
+      media_type: image
+      role: identity_reference
+      applies_to: entity.product
+      description: food photograph
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "visual composition", intent: preserve, detail: "identical across all four"}
+      - {target: "copy language", intent: change, detail: "one per target language"}
+  constraints:
+    hard:
+      - exactly four deliverables
+      - visual composition identical across all four
+      - '"₹199" appears in all four'
+      - one variant per named language
+    soft: [copy reads naturally in each language]
+    free: []
+  preservation_semantics: >
+    Preservation ACROSS a set rather than within one artefact. The invariant is the composition, and
+    it must hold between deliverables — a requirement with no analogue in any single-output item.
+  deliverable_set:
+    cardinality: 4
+    variation_axis: language
+    acceptance_basis: per_deliverable
+    note: >
+      "koi choose nahi karna" — the customer will use all four, so every one must be acceptable.
+      This is per_deliverable, NOT best_n_of_m, and the difference changes the cost of acceptance
+      by a factor of four.
+  acceptance_relevant:
+    - four deliverables produced
+    - composition identical across the set
+    - each language rendered correctly, including three different scripts
+    - price string exact in all four
+  grammar_features: [R01, R02, R03, R04, R05, R08, R10, R16, R18]
+  covers_cooccurrence: [variant_set_plus_cross_deliverable_invariant, variant_set_plus_multiscript]
+  runnable_wave1: true
+  language_dependency: >
+    LANGUAGE IS THE VARIATION AXIS ITSELF. The item spans three non-Latin scripts (Devanagari, Tamil,
+    Bengali) plus Latin, and the requirement is that a fixed layout accommodate all four — different
+    text metrics, different line-breaking, different glyph heights. This cannot be tested in one
+    language by construction.
+
+- item_id: RX-10
+  requested_operation: variants
+  language: english
+  media_class: mixed
+  business: fitness app, Bengaluru
+  request_text: >
+    We're launching a new programme and need a small campaign set from one idea: one square static
+    for the feed, one vertical static for Stories, and one six-second vertical video. Same concept,
+    same colours, same headline across all three. Show us the set — we'll take it or leave it as a
+    whole, we don't want to mix and match with something else.
+  supplied_inputs:
+    - asset_id: rx10_brand
+      media_type: vector
+      role: brand_asset
+      description: logo and palette
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "concept, palette, headline", intent: preserve, detail: "consistent across the set"}
+      - {target: "format", intent: change, detail: "three different deliverable formats"}
+  constraints:
+    hard:
+      - exactly three deliverables — 1:1 static, 9:16 static, 9:16 video ~6s
+      - same headline across all three
+      - same palette across all three
+      - concept recognisably the same
+    soft: [video shares visual language with the statics]
+    free: [how the concept is adapted per format]
+  preservation_semantics: >
+    A campaign set spanning MODALITIES — two statics and a video from one concept. Consistency must
+    hold across media types, not just across crops.
+  deliverable_set:
+    cardinality: 3
+    variation_axis: format
+    acceptance_basis: set_level
+    note: >
+      "take it or leave it as a whole" makes acceptance SET-LEVEL. One weak deliverable fails the
+      set. This is the sharpest CpAO case in the bank: the cost of acceptance is not the sum of three
+      independent acceptances.
+  acceptance_relevant:
+    - three deliverables in the stated formats
+    - headline identical across all three
+    - palette consistent
+    - the set reads as one campaign
+  grammar_features: [R01, R02, R04, R05, R09, R12, R15, R16, R18]
+  covers_cooccurrence: [campaign_set_plus_cross_modality, set_level_acceptance]
+  runnable_wave1: true
+  language_dependency: null
+
+# ══ MULTI-TURN — representation probe only ══════════════════════════════════════
+- item_id: RX-11
+  requested_operation: edit
+  language: hinglish
+  media_class: static
+  business: bakery, Hyderabad
+  request_text: >
+    ROUND 1 — "Is cake photo ka background thoda brighten kar do."
+    ROUND 2 — "Achha hua, but ab thoda zyada warm kar do."
+    ROUND 3 — "Perfect. Ab isme "Fresh Daily" bhi add kar do upar."
+  supplied_inputs:
+    - asset_id: rx11_photo
+      media_type: image
+      role: subject_of_operation
+      description: photograph of a cake
+  mutation_intents:
+    preservation_default: implicit_everything_not_named
+    intents:
+      - {target: "background brightness", intent: change, detail: "round 1"}
+      - {target: "colour temperature", intent: change, detail: "round 2, relative to round 1 output"}
+      - {target: "headline text", intent: add, detail: "round 3"}
+  constraints:
+    hard:
+      - '"Fresh Daily" appears exactly'
+    soft: []
+    free: [placement of the added text beyond "upar"]
+  preservation_semantics: >
+    THE REASON THIS ITEM IS NOT RUNNABLE. Round 2 says "thoda zyada warm" — MORE warm than what?
+    Than the round-1 output, which is not the supplied asset. Round 3's "isme" refers to the round-2
+    result. Neither round is interpretable against the original input alone, and the project has no
+    frozen contract for what a later round inherits from an earlier one.
+  deliverable_set:
+    cardinality: 1
+    variation_axis: none
+    acceptance_basis: per_deliverable
+    note: cardinality applies to the final deliverable; intermediate rounds are not deliverables
+  acceptance_relevant:
+    - NOT DEFINED. Acceptance semantics across rounds are exactly what is deferred.
+  grammar_features: [R01, R02, R03, R04, R05, R08, R16, R17]
+  covers_cooccurrence: [multi_turn_inheritance]
+  runnable_wave1: false
+  representation_only: true
+  representation_only_reason: >
+    Included to test whether the representation can HOLD a multi-turn request, not to execute one.
+    The Controller decision defers multi-turn history and excludes it from the first paid benchmark.
+    The validator fails the build if any item with representation_only is ever marked runnable, so
+    this cannot drift into a paid run by accident.
+  language_dependency: >
+    Relative-degree revisions ("thoda zyada warm") are how this customer population actually issues
+    follow-ups, and the referring expressions ("isme") carry the inheritance problem in a way a
+    formal English rewrite would smooth away — which would hide the very thing the probe exists to
+    expose.
