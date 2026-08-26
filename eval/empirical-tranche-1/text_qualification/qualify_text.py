@@ -700,7 +700,7 @@ def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = Non
     }
 
 
-def _fake_live(guard: BudgetGuard, out: Path) -> dict:
+def _fake_live(guard, out: Path, run=None) -> dict:
     """The real orchestration with an injected recorder standing where the socket would be.
 
     Proves the positive path end to end at zero spend. Its results are labelled `fake_live` and
@@ -734,6 +734,13 @@ def _fake_live(guard: BudgetGuard, out: Path) -> dict:
     ]
 
     results = [qualify_candidate(c, guard=guard) for c in candidates]
+
+    # Persist the qualification into the run so a LATER, SEPARATE process can consume it.
+    # This is the whole point of the handoff: the next stage reads evidence off disk, not out of
+    # a variable that died with the process that made it.
+    if run is not None:
+        payload = build_qualification_result(run, results, candidates)
+        persist_qualification(run, payload)
 
     payload = {
         "record": "EMP-001-text-qualification",
@@ -773,6 +780,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--live", action="store_true",
                     help="real paid execution; requires explicit authorisation and pinned versions")
     ap.add_argument("--authorisation", default=None)
+    ap.add_argument("--run-root", default=None,
+                    help="persistent EMP-001 run root; enables the durable tranche ledger")
+    ap.add_argument("--run-id", default=None)
     ap.add_argument("--openai-version", default=None)
     ap.add_argument("--gemini-version", default=None)
     ap.add_argument("--out", default=str(DEFAULT_OUT))
@@ -781,10 +791,26 @@ def main(argv: list[str] | None = None) -> int:
     if a.live or a.fake_live:
         # Fails closed for BOTH: the fake-live path deliberately walks the same authorisation
         # gate, so exercising it also exercises the gate a paid run must pass.
-        guard = open_guard(a.authorisation) if a.authorisation else open_guard()
+        authorisation = open_guard(a.authorisation) if a.authorisation else open_guard()
+
+        run = None
+        guard = authorisation
+        if a.run_root and a.run_id:
+            import spend_ledger as SL
+
+            root = Path(a.run_root)
+            mode = "fake_live" if a.fake_live else "live"
+            try:
+                run = SL.TrancheRun.open(root, a.run_id)
+            except SL.LedgerCorrupt:
+                run = SL.TrancheRun.create(root, a.run_id,
+                                           authorisation_path=a.authorisation or "", mode=mode)
+            # The stage cap lives here, not in the authorisation file: USD 6 for qualification
+            # even when the authorisation names the full USD 10.
+            guard = SL.TrancheBudget(run).stage("qualification")
 
         if a.fake_live:
-            result = _fake_live(guard, Path(a.out))
+            result = _fake_live(guard, Path(a.out), run=run)
             print(f"fake-live: {result['dispatches']} recorded dispatches, 0 network calls")
             for c in result["candidates"]:
                 latin = c["latin"]["calls"] if c["latin"] else 0

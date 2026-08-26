@@ -747,8 +747,67 @@ def main(argv: list[str] | None = None) -> int:
                     help="the real measurement path with injected recorders; zero network")
     ap.add_argument("--live", action="store_true")
     ap.add_argument("--authorisation", default=None)
+    ap.add_argument("--run-root", default=None,
+                    help="persistent EMP-001 run root; required for the qualification handoff")
+    ap.add_argument("--run-id", default=None)
+    ap.add_argument("--perceptibility-review", default=None,
+                    help="path to the Latin human perceptibility sheet")
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args(argv)
+
+    if a.live or (a.fake_live and a.run_root and a.run_id):
+        # The executable handoff. Identical code path for both modes; only the transports and the
+        # declared mode differ, and load_qualification refuses to mix them.
+        sys.path.insert(0, str(PACKAGE_ROOT))
+        import spend_ledger as SL
+
+        if not (a.run_root and a.run_id):
+            print("REFUSED: --run-root and --run-id are required. A-TEXT consumes the persisted "
+                  "qualification for a specific EMP-001 run and spends against that run's "
+                  "ledger.", file=sys.stderr)
+            return 2
+
+        mode = "live" if a.live else "fake_live"
+        try:
+            tranche_run = SL.TrancheRun.open(Path(a.run_root), a.run_id)
+        except SL.LedgerCorrupt as exc:
+            print(f"REFUSED: {exc}", file=sys.stderr)
+            return 2
+
+        judge_http = fal_http = artifact_fetch = None
+        if mode == "fake_live":
+            sys.path.insert(0, str(PACKAGE_ROOT / "text_qualification"))
+            from fake_live import FakeFalHttp, FakeJudgeHttp
+
+            judge_http = FakeJudgeHttp(P.OpenAITextJudge, {})
+            fal_http = FakeFalHttp()
+
+            def artifact_fetch(url):
+                return b"\x89PNG\r\n\x1a\n" + url.encode("utf-8")
+
+        try:
+            result = run_live(
+                tranche_run, mode=mode, judge_http=judge_http, fal_http=fal_http,
+                artifact_fetch=artifact_fetch,
+                perceptibility_path=(Path(a.perceptibility_review)
+                                     if a.perceptibility_review else None))
+        except GateClosed as exc:
+            print(f"REFUSED: {exc}", file=sys.stderr)
+            return 2
+
+        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.out).write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True,
+                                          default=str) + "\n", encoding="utf-8")
+        print(f"{mode}: {result['generations']} generations {result['per_route']}, "
+              f"{len(result['evaluator_calls'])} evaluator dispatches, retries "
+              f"{result['retries']}")
+        print(f"tranche spent USD {result['tranche_spent_usd']} "
+              f"(qualification {result['qualification_spent_usd']}, "
+              f"atex {result['atex_spent_usd']})")
+        print(f"synthetic: {result['synthetic']}   registry rows: "
+              f"{result['registry_rows_written']}")
+        print(f"written: {a.out}")
+        return 0
 
     if a.live:
         auth = load_authorisation(a.authorisation or AUTHORISATION_LOCAL_PATH)
@@ -756,9 +815,6 @@ def main(argv: list[str] | None = None) -> int:
               "qualified judge produced by a real qualification run.", file=sys.stderr)
         for r in auth.refusals:
             print(f"  - {r}", file=sys.stderr)
-        if not auth.refusals:
-            print("  - authorisation is valid, but no qualified judge record was supplied; run "
-                  "qualification first and pass its result.", file=sys.stderr)
         return 2
 
     if a.fake_live:
