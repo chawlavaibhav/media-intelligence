@@ -1,143 +1,128 @@
 # Controller State
 
-**Updated:** 26 Aug 2026 by Controller after V1 overnight integration.
+**Updated:** 26 Aug 2026 by Controller after Pre-E7 scope rebase.
 
-**Read `PROJECT-MEMORY.md` first.** Where its older freeze/task wording conflicts with this newer Controller state, this file and the underlying decision/task artifacts govern until the Governor refreshes memory.
+**Read `PROJECT-MEMORY.md` first.** Where older freeze/task wording conflicts with this newer Controller state, this file and the underlying decision/task artifacts govern until the Governor refreshes memory.
 
-## Global posture — overnight V1 program accepted and merged
+## Global posture — Pre-E7 rebase in force
 
-The coordinated Canon / Eval / Resources overnight program has completed its review, correction and integration cycle.
+The Canon / Eval / Resources V1 overnight architecture was accepted and merged. A subsequent Controller zoom-out identified a pre-paid-run scope gap: Eval defined **what capabilities can fail**, but had not frozen the **production conditions under which capability evidence is valid**, and the persistence model did not yet represent one customer outcome assembled from many production units/calls/transforms/repairs.
 
-Authoritative integration decision:
+Authoritative rebase artifacts:
 
-- `coordination/decisions/CONTROLLER-V1-OVERNIGHT-INTEGRATION-2026-08-26.md`
+- `coordination/decisions/CONTROLLER-PRE-E7-SCOPE-REBASE-2026-08-26.md`
+- `docs/superpowers/specs/2026-08-26-pre-e7-scope-rebase-design.md`
+- `docs/superpowers/plans/2026-08-26-pre-e7-scope-rebase.md`
+- `canon/tasks/CANON-PRE-E7-SCOPE-AUDIT.md`
+- `eval/tasks/EVAL-PRE-E7-SCOPE-REBASE.md`
+- `resources/tasks/RESOURCES-PRE-E7-SCOPE-REBASE.md`
 
-Merged PRs:
+## Immediate gates
 
-- Resources PR #19 → merge commit `4bfb4fe2ec103ea11e246fb930e6e0c5eda9ef91`
-- Eval PR #17 → merge commit `f17e2587989232bea47b8f86acdc76e3ba499794`
-- Canon PR #18 → merge commit `ae540c6bf5855e6cc4c09e8d2c28ff53666c2377`
+- **E7 paid admission benchmark: BLOCKED.**
+- **E8 deep qualification: BLOCKED.**
+- Historical E7=204 and E8=520 generation counts remain pre-rebase calculations only; they are not authorised budgets.
+- No paid current-model generation/checker/evaluator calls are authorised.
+- No empirical current-model Capability Registry entries may be written.
+- `EVAL-006` remains **PAUSED — DO NOT EXECUTE**.
+- Production Planner / Production IR implementation remains out of scope during this rebase.
 
-Post-merge Controller integration record: `9845cff1b74888a874dc5638ffcc128036d93248`.
+## Product / architecture state
 
-The overnight branches are no longer authoritative execution state; `main` is.
+The product is an API-native commercial-media production intelligence layer optimising **Cost per Accepted Outcome**.
 
-## Architecture state
+Stable separation remains:
 
-- Product goal remains an API-native media production intelligence layer optimising **Cost per Accepted Outcome**.
-- Creative IR v0.1 remains locked for experiment use.
-- Production IR / Production Planner / routing do not exist yet.
-- **Canon** defines durable creative/production requirements and craft reasoning; it does not rank current models.
-- **Eval** defines and measures current model/workflow capability empirically; the Capability Registry still has **zero empirical current-model entries**.
-- **Resources** supplies independent, rights/integrity/lineage-controlled evidence and owns durable empirical artifact persistence; it does not define creative quality.
+`Normalized Request -> Creative IR -> Production Requirement Profile -> future Production IR -> execution/evaluation/repair`
 
-### Shared V1 ownership
+- Creative IR says what should exist and preserves/derives/decides/asks/flags customer intent.
+- **Production Requirement Profile** will be a model-agnostic compiled view of what production must satisfy.
+- Eval Registry stores empirical workflow evidence; it does not route.
+- Production IR / Planner will later choose how to make the outcome using Canon + Registry evidence.
 
-- **Canon owns** the accepted 30-underlying-brief commercial bank.
-- **Eval owns** the 36-capability measurement contract, 100-base-item capability bank, evaluator semantics and Registry semantics.
-- **Resources owns** evidence/reference packs, protected-set mechanics, rights/integrity/lineage and the persistent empirical attempt/artifact/measurement/acceptance contract.
-- Eval's later 12 end-to-end production-workflow briefs must come from Canon's 30-bank.
-- Canon and Eval must reuse one shared Resources commercial-creative pool where both need independent creative material.
+A model's native duration is a production constraint, not a customer-product limit. Customer outcomes may be multi-shot, multi-step and multi-model.
 
-## Canon current state
+## Four interfaces being refrozen
 
-Accepted/merged:
+Before E7, the project must freeze:
 
-- live accepted Canon remains **19 sources**;
-- live-19 first-product coverage rebaseline;
-- 30-commercial-brief bank;
-- corrected early Canon value-gate package;
-- bounded source-gap portfolio research.
+1. **Production Requirement Profile** — capability/acceptance/delivery/planner requirements derived from customer intent without provider choices.
+2. **Condition / Envelope Contract** — delivery, content load, reference load, physical/cinematic complexity, constraint load, workflow mode, sequence structure, language/audio, input quality, decision provenance and scale.
+3. **Outcome / Production Topology Contract** — `job -> outcome -> sequence_or_asset_set -> production_unit -> production_step -> attempt -> artifact`, including multi-parent composition lineage and outcome-level CpAO.
+4. **Capability Contract v2** — current 36 audited against all 30 Canon customer briefs; add a capability only where existing capability + condition is genuinely insufficient.
 
-Important gates:
+## What remains accepted from V1
 
-- Canon's central planning/evaluation-lift hypothesis remains **untested**;
-- the real generic controls must be authored in a fresh Canon-naive session;
-- the real value gate requires **two independent reviewers**;
-- only the 7 `coverage_probe` briefs vote on continuation; 5 `gap_probe` briefs are diagnostic only;
-- any Canon intent regression blocks automatic continuation;
-- no gap candidate is approved for ingestion/acquisition merely because it appears in the source portfolio.
-
-## Eval current state
-
-Accepted/merged:
-
-- 36-capability V1 measurement contract;
-- six evaluator-family qualification designs;
-- 100-base-item generate-once / measure-many benchmark bank;
-- generate-once harness and empty Registry interface;
-- repeat vs retry separation;
-- fail-closed Registry cell controls;
-- Resources v2.1 storage handoff integration.
-
-Final integration evidence accepted by Controller:
-
-- harness self-test **107/107**;
-- 11 Eval verification suites, **0 failing**;
-- Eval dummy archive → latest Resources empirical-archive validator: **exit 0**;
-- attempts/artifacts/measurements/acceptances/cost-ledger violations: **0 / 0 / 0 / 0 / 0**.
-
-Still true:
-
-- no subjective/perceptual instrument family is qualified;
-- no current generator/workflow is benchmarked;
-- Capability Registry has **0 empirical entries**;
-- **E2 current official model/API/access/pricing inventory remains incomplete** and must be completed from current official provider documentation before paid empirical execution.
-
-## Resources current state
-
-Accepted/merged:
-
-- requirement matrix across Eval capabilities/evaluator families;
-- existing-corpus and legacy-evidence rebaseline from committed evidence;
-- protected-set roles and three-level independence model: byte identity / content lineage / source lineage;
-- unknown lineage is indeterminate, never silently independent;
-- supply-route research for missing packs;
-- Eval-facing logical resource views;
-- empirical archive v2.1 and validators.
-
-Existing corpus remains reported as **34,786 items / 5.70 GB across 8 acquired sources; 4 blocked**, based on prior committed evidence. The cloud worker did **not** re-open or re-validate the raw git-ignored corpus.
-
-Canonical persistence semantics:
-
+- live accepted Canon: 19 sources;
+- Canon 30-commercial-brief bank;
+- corrected Canon value-gate package;
+- 36-capability V1 contract as the audit baseline;
+- six evaluator-family architecture;
+- 100-base-item atomic/compound bank as the benchmark baseline;
+- generate-once / measure-many;
 - one provider/API/transform call = one trial;
-- persistent entities: attempt → optional artifact → many measurements, plus optional acceptance;
-- failed/refused attempts survive individually;
-- provider failure is not duplicated as a measurement absence;
-- costs resolve through immutable ledger records;
-- Resources stores Eval's measurement vocabulary rather than inventing a second one.
+- repeat vs retry separation;
+- Resources V2.1 attempt/artifact/measurement/acceptance/cost persistence;
+- immutable failed/refused-attempt evidence;
+- Registry stores evidence, not routing scores.
 
-Missing controlled material remains:
+The 36 capabilities are temporarily open only for the bounded Pre-E7 audit. They are not discarded. The 100-item bank is not to be wholesale rebuilt without a concrete capability-v2 or envelope reason.
 
-- product references;
-- person identity references;
-- AV/speaker material;
-- commercial-creative bank.
+## Stream assignments
 
-No materially new Resources acquisition has been authorised by the merge itself.
+### Canon
 
-## EVAL-006
+Execute `canon/tasks/CANON-PRE-E7-SCOPE-AUDIT.md`.
 
-`EVAL-006` remains **PAUSED — DO NOT EXECUTE**. Preserve it as historical evidence. Its previous autonomous paid bootstrap is superseded by the accepted V1 architecture.
+Audit all 30 unchanged customer briefs and classify every meaningful requirement as:
 
-## Next Controller gates
+`existing_capability | condition | planner_decision | acceptance_constraint | operational_variable | genuine_gap`.
 
-The following are **not automatically authorised** by the merge:
+Canon must not choose models/workflows or author Production IR.
 
-- paid generation/checker/evaluator/model calls;
-- empirical Capability Registry population;
-- Canon value-gate execution;
-- new Canon source ingestion/acquisition;
-- materially new Resources acquisition/capture;
-- Production IR / Planner / routing implementation.
+### Eval
 
-Recommended sequence before material paid benchmarking:
+Execute `eval/tasks/EVAL-PRE-E7-SCOPE-REBASE.md`.
 
-1. complete Eval E2 from current official provider docs;
-2. approve and collect only the controlled Resources packs actually required;
-3. arrange independent Canon generic-control authoring and run the small Canon value gate;
-4. qualify evaluator families using protected calibration/qualification material;
-5. review and explicitly approve the paid-run budget;
-6. then begin current-model empirical qualification and Registry population.
+Own Production Requirement Profile semantics, Condition/Envelope Contract, capability-v2 refreeze, Registry condition semantics, E2 production-operation fields, revised sparse benchmark and fresh cost forecast.
 
-This is an **architecture/design integration milestone**, not evidence that Canon improves outcomes or that any current model/workflow meets production quality.
+### Resources
+
+Execute `resources/tasks/RESOURCES-PRE-E7-SCOPE-REBASE.md`.
+
+Own whole-outcome persistence/lineage/CpAO, multi-parent artifact composition and any justified resource-pack delta. Preserve one-call-one-trial and do not define Eval measurement semantics.
+
+## Benchmark posture after rebase
+
+Do not test the cartesian product of all conditions.
+
+Target evidence layers:
+
+1. evaluator qualification;
+2. primitive atomic/compound baseline;
+3. sparse production-envelope sweeps to locate failure boundaries;
+4. workflow-topology comparisons for equivalent outcomes;
+5. end-to-end customer-outcome benchmark using Canon briefs.
+
+## Existing blockers still true
+
+- no subjective/perceptual evaluator family is yet qualified;
+- no current generator/workflow is benchmarked;
+- Capability Registry has 0 empirical current-model entries;
+- E2 current official model/API/access/pricing inventory is incomplete;
+- controlled product/person/AV/commercial packs are not yet acquired;
+- Canon's real value gate remains unrun and needs fresh Canon-naive controls + two independent reviewers;
+- raw 5.70 GB Resources corpus was not revalidated in the cloud; BSTD 351-vs-364 discrepancy and GOV-001 R3 remain open.
+
+## Controller integration gate
+
+E7 may be re-authorised only after Controller verifies:
+
+1. all 30 Canon briefs have no unexplained requirement fall-through;
+2. Eval freezes the Production Requirement Profile, condition taxonomy and Capability Contract v2;
+3. Resources can persist a multi-step, multi-parent accepted outcome and recompute whole-outcome CpAO;
+4. the revised benchmark remains sparse/adaptive rather than combinatorial;
+5. E2 contains a current official workflow roster with production-operation features and complete prices for the proposed run;
+6. a fresh generation/evaluator/human-cost forecast is reviewed and explicitly approved.
+
+This is a scope-correction milestone before empirical spend, not evidence about any current model's quality.
