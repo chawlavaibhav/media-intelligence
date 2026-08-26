@@ -1,8 +1,8 @@
 # Controller State
 
-**Updated:** 26 Aug 2026 — EVAL-012 reviewed BLOCKED; bounded EVAL-013 live-path correction active. Paid calls remain blocked.
+**Updated:** 27 Aug 2026 — EVAL-013 reviewed BLOCKED; bounded EVAL-014 budget-continuity / paid-handoff correction active. Paid calls remain blocked.
 
-**Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording or the GOV-004 snapshot conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
+**Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
 ## Global posture
 
@@ -28,79 +28,79 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-## EMP-001 — prepared, NOT authorised for paid execution
+## EMP-001 — prepared, NOT authorised
 
-Authoritative preparation:
-- `coordination/decisions/CONTROLLER-FIRST-EMPIRICAL-TRANCHE-PREPARATION-2026-08-26.md`
-- `coordination/plans/2026-08-26-FIRST-EMPIRICAL-TRANCHE-PROPOSAL.md`
-- `docs/superpowers/plans/2026-08-26-first-empirical-tranche.md`
-
-Frozen later paid shape remains:
-1. qualify the text measurement path;
-2. only if a judge qualifies on required scripts, run A-TEXT;
+Frozen paid shape remains:
+1. qualify text judges progressively: Devanagari first, Latin only for survivors;
+2. only with a judge qualified on all required scripts, run A-TEXT;
 3. four frozen items × two repeats × two routes = **16 image generations maximum**.
 
-Proposed ceiling remains **USD 10.00 / approximately ₹954 consumed API spend**, excluding taxes, no retries, no account pre-funding above the ceiling. It is **not approved**.
+Proposed spend remains:
+- total consumed-API ceiling **USD 10.00** / approximately ₹954 planning reference, excluding taxes;
+- qualification sub-cap **USD 6.00** inside that total;
+- retries **0**;
+- no account pre-funding above the approved ceiling.
 
-## EVAL-012 review
+No part of that spend is approved yet.
+
+## EVAL-013 review
 
 Returned branch:
-- `work/eval-012-emp-001-zero-spend` @ `d092be097cbc143cb1a5ad51ea5dc819a9a57486`
+- `work/eval-013-emp-001-live-path-correction` @ `2b83efd15c1f0fb26d6e7ca8bfbe542071abf577`
 
 Worker verdict:
 - `READY_FOR_SPEND_APPROVAL`
 
 Controller verdict:
-- **BLOCKED — preserve the dry-run work, correct only the positive live path.**
+- **BLOCKED — preserve EVAL-013; correct only cumulative budget continuity and the paid stage handoff.**
 
 Authoritative review:
-- `coordination/decisions/CONTROLLER-EVAL-012-REVIEW-2026-08-26.md`
+- `coordination/decisions/CONTROLLER-EVAL-013-REVIEW-2026-08-27.md`
 
-Accepted worker evidence includes:
-- 162 EMP-001 tests reported green;
-- V1 self-test 107/107 reported green;
-- cross-branch Resources validation reported PASS;
-- zero provider/model/evaluator calls and zero spend;
-- Registry remained empty;
-- 96-item Latin pack built separately;
-- protected baselines reported byte-identical;
-- dry-run paths and 16-generation ceiling exercised.
+Accepted EVAL-013 work:
+- real qualification orchestration behind injectable transports;
+- provider-correct OpenAI/Gemini auth paths;
+- frozen fal IMG-01 / IMG-02 route adapters;
+- non-dry-run A-TEXT now uses a supplied qualified judge rather than `_fake_transcribe`;
+- positive fake-live controls;
+- live blind-check enforcement and UTF-8 payload inspection;
+- worker-reported 247 EMP-001 tests green, V1 107/107 green, Resources validation PASS, Registry zero, protected baselines intact, zero external calls/spend.
 
-The Controller could not independently rerun the suite because the local Controller runtime cannot resolve GitHub. The Controller did inspect the returned code directly.
+Controller independently checked current official fal documentation and confirmed the implemented `FAL_KEY` / `Authorization: Key <key>` convention.
 
-Blocking implementation defects:
-1. `qualify_text.py --live` is not implemented; it unconditionally refuses after authorisation.
-2. `run_atex.py --live` is not implemented and no route-specific fal generator adapter exists.
-3. A-TEXT always uses the fake transcription helper and hard-codes real/dry-run results as synthetic.
-4. No positive fake-live control proves valid authorisation can actually dispatch one call and persist non-synthetic evidence.
-5. Gemini API-key transport semantics must use provider-correct authentication rather than the generic Bearer-key transport.
+Blocking defects remaining:
+1. **Budget reset across processes:** `BudgetGuard.spent_usd` is process-local, so qualification and A-TEXT could each reopen the USD 10 authorisation from zero.
+2. **USD 6 qualification sub-cap not enforced:** live qualification currently uses the general USD 10 authorisation ceiling.
+3. **Paid A-TEXT CLI handoff still refuses:** `run_atex.py --live` has no executable handoff from the real qualification result to the same pinned judge + frozen fal routes.
+4. **Evaluator call identity:** live qualification needs durable unique trial ids and cost references, not only `one_call_one_trial: true` assertions.
+5. **A-TEXT blind defense:** primary live transcription should pass the target only to the evaluator-side `blind_check_target` check, including Latin targets.
 
-These are implementation defects only. Scientific scope, prices, candidate questions, thresholds and budgets are not reopened.
+These are implementation/spend-control defects only. Scientific scope is not reopened.
 
-## Active assignment — EVAL-013
+## Active assignment — EVAL-014
 
-Task on the correction branch:
-- `eval/tasks/EVAL-013-EMP-001-LIVE-PATH-CORRECTION.md`
+Task:
+- `eval/tasks/EVAL-014-EMP-001-BUDGET-CONTINUITY-HANDOFF.md`
 
 Branch:
-- `work/eval-013-emp-001-live-path-correction`
+- `work/eval-014-emp-001-budget-continuity`
 
 Base:
-- EVAL-012 returned head `d092be097cbc143cb1a5ad51ea5dc819a9a57486`
+- EVAL-013 returned head `2b83efd15c1f0fb26d6e7ca8bfbe542071abf577`
 
 External spend/calls:
 - **USD 0 / INR 0**;
 - **0 provider/model/evaluator calls**.
 
-EVAL-013 must only:
-- wire real qualification orchestration behind injected fake transports;
-- make OpenAI/Gemini transport/auth provider-correct;
-- implement frozen fal IMG-01/IMG-02 generation adapters behind fake transports;
-- make non-dry-run A-TEXT use the qualified blind transcription judge and non-synthetic labeling;
-- add positive fake-live controls;
-- rerun the full zero-spend verification suite.
+EVAL-014 may only:
+- persist cumulative EMP-001 spend across separate processes/stages;
+- enforce both USD 10 total and USD 6 qualification sub-cap;
+- implement the real qualification → A-TEXT CLI/orchestrator handoff;
+- give every evaluator call durable unique trial/cost identity;
+- apply target-aware blind pre-dispatch checking in A-TEXT;
+- prove the lifecycle with injected fake transports and zero network.
 
-No real provider call is allowed in EVAL-013.
+No model, prompt, threshold, route, repeat, retry, A-TEXT item or budget may change.
 
 ## Measurement freeze unchanged
 
@@ -109,10 +109,9 @@ Text qualification:
 - Latin pack: 96 items = 48 match + 48 controlled mismatch;
 - 3 repeats per shape;
 - shapes: `transcribe`, `verdict`;
-- proposed candidates: OpenAI `gpt-5.4-mini` and Google `gemini-3.5-flash-lite`, exact versions pinned at execution;
-- max 2,304 evaluator calls if both reach both scripts;
-- Devanagari failure stops that candidate before Latin;
-- evaluator API consumption guard: USD 6.00 within the proposed tranche.
+- candidates: OpenAI `gpt-5.4-mini` and Google `gemini-3.5-flash-lite`, exact versions pinned at execution;
+- maximum 2,304 evaluator calls if both reach both scripts;
+- Devanagari failure stops that candidate before Latin.
 
 A-TEXT strings remain exactly:
 - `शुभ दीपावली`
@@ -120,9 +119,11 @@ A-TEXT strings remain exactly:
 - `Aaj ki Deal`
 - `SAVE 20% • ₹999`
 
-Future image routes remain:
+Routes remain:
 - IMG-01: fal `openai/gpt-image-2`, 8 unseeded generations;
 - IMG-02: fal `fal-ai/ideogram/v3`, BALANCED, 8 unseeded generations.
+
+Primary exactness remains blind transcription followed by code-level comparison. A-TEXT remains partial evidence only.
 
 The Latin human perceptibility review remains unfilled and is a zero-spend prerequisite for the Latin qualification leg. It must not be fabricated.
 
@@ -130,20 +131,19 @@ The Latin human perceptibility review remains unfilled and is a zero-spend prere
 
 Not authorised:
 - any paid EMP-001 call;
-- the USD 10 tranche until EVAL-013 returns clean and the user explicitly approves it;
+- EMP-001 USD 10 tranche until EVAL-014 returns clean and the user explicitly approves;
+- any account funding;
 - full 90-generation Stage A;
 - Stage B / Stage C;
 - EVAL-006;
 - Registry population from unqualified instruments;
 - broad controlled-pack acquisition;
-- provider account funding above an explicitly approved ceiling;
 - Production IR/Planner implementation.
 
 Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-EVAL-013 returns first.
+EVAL-014 returns first.
 
-- If `BLOCKED`, route only the exact defect.
-- If genuinely `READY_FOR_SPEND_APPROVAL`, the Controller re-reviews the positive fake-live path and only then asks the user to approve or reject the bounded USD 10 EMP-001 spend.
+If it is genuinely `READY_FOR_SPEND_APPROVAL`, Controller will re-review cumulative budget persistence, the USD 6 sub-cap, and the real qualification → A-TEXT handoff before asking the user for any spend approval.
