@@ -1,0 +1,222 @@
+# Controller empirical-planning price refresh — 26 Aug 2026
+# PLANNING ONLY. NO MODEL/EVALUATOR CALL OR SPEND IS AUTHORISED BY THIS FILE.
+# Current provider-authorised/official sources were rechecked on 2026-08-26.
+
+meta:
+  status: PLANNING_ONLY_NOT_AUTHORISED
+  date: 2026-08-26
+  source_stage_plan: eval/pre-execution-integration/STAGED-EXECUTION-PLAN.yaml
+  source_scientific_roster: eval/pre-execution-freeze/SCIENTIFIC-WAVE1-MODEL-ROSTER.yaml
+  scientific_slots_changed: 0
+  price_or_route_refresh_may_change_admission: false
+  usd_inr_reference:
+    rate: 95.4211
+    as_of: '2026-08-26T16:51:00Z'
+    purpose: display-only planning conversion; provider invoices remain in source currency
+
+execution_assumptions:
+  image_default:
+    resolution: 'approximately 1 megapixel / 1024-class where the route exposes that choice'
+    reason: common commercial-screen resolution without paying for delivery-resolution outputs during admission
+  video_default:
+    duration_seconds: 6
+    reason: 'common supported duration across the planned Veo/Kling/Runway routes; short enough for admission while preserving temporal evidence'
+  audio_default:
+    max_input_characters_per_item: 250
+    stage_A_items_per_tts_slot: 3
+    repeats_per_item: 2
+    max_billed_characters_per_tts_slot: 1500
+  repeats_per_item: 2
+  retry_budget: 0
+  rule: 'A failed/refused/timed-out paid call is still a trial. No retry is authorised by this planning file.'
+
+pricing_correction:
+  id: VEO-UNIT-2026-08-26
+  previous_repo_reading_withdrawn: 'Veo 3.1 / Lite USD values interpreted as per generated video count'
+  current_execution_budget_unit: per_generated_second
+  basis:
+    - source: https://fal.ai/models/fal-ai/veo3.1
+      evidence: 'Veo 3.1 lists USD 0.40/sec with audio and USD 0.20/sec silent for the planned hosted route.'
+    - source: https://fal.ai/models/fal-ai/veo3.1/lite
+      evidence: 'Veo 3.1 Lite lists 720p audio USD 0.05/sec and silent USD 0.03/sec for the planned hosted route.'
+    - source: https://ai.google.dev/gemini-api/docs/video
+      evidence: 'Current Veo API documentation supports discrete 4/6/8 second durations; route/version details must remain pinned.'
+  hard_rule: 'Do not use the old per-count shorthand for execution budgeting.'
+
+stage_A_slots:
+  - slot_id: IMG-01
+    scientific_candidate: gpt-image-2
+    planned_route: fal
+    route_id: openai/gpt-image-2
+    route_status: provider_authorised_current
+    quality_or_size: '1024x1024 medium projection'
+    generations: 8
+    unit_price_usd: 0.053
+    billing_unit: per_image_projection
+    nominal_line_usd: 0.424
+    source: https://fal.ai/models/openai/gpt-image-2
+    note: 'fal states token-metered billing and gives this projection; final metered amount may vary slightly.'
+
+  - slot_id: IMG-02
+    scientific_candidate: ideogram-v3
+    planned_route: fal
+    route_id: fal-ai/ideogram/v3
+    route_status: provider_authorised_current
+    quality_or_size: BALANCED
+    generations: 8
+    unit_price_usd: 0.06
+    billing_unit: per_request
+    nominal_line_usd: 0.48
+    source: https://fal.ai/models/fal-ai/ideogram/v3
+
+  - slot_id: IMG-03
+    scientific_candidate: flux2-pro
+    planned_route: fal
+    route_id: fal-ai/flux-2-pro
+    route_status: provider_authorised_current
+    quality_or_size: 'first output megapixel; approximately 1024-class'
+    generations: 8
+    unit_price_usd: 0.03
+    billing_unit: first_output_megapixel
+    nominal_line_usd: 0.24
+    source: https://fal.ai/models/fal-ai/flux-2-pro
+
+  - slot_id: IMG-04
+    scientific_candidate: seedream-5.0-pro
+    planned_route: fal
+    route_id: bytedance/seedream/v5/pro/text-to-image
+    route_status: 'provider-authorised current; resolves EVAL-010 exact-version gap'
+    quality_or_size: '<=1536-class'
+    generations: 8
+    unit_price_usd: 0.0675
+    billing_unit: per_image
+    nominal_line_usd: 0.54
+    price_status: tentative_provider_price
+    source: https://fal.ai/models/bytedance/seedream/v5/pro/text-to-image
+    note: 'Reference-conditioned execution must use the corresponding current edit/reference route and retain any extra-reference charges; this line is only the text-to-image planning floor.'
+
+  - slot_id: VID-01
+    scientific_candidate: veo-3.1
+    planned_route: fal
+    route_id: fal-ai/veo3.1
+    route_status: provider_authorised_current
+    duration_seconds: 6
+    audio: true
+    generations: 8
+    unit_price_usd_per_second: 0.40
+    nominal_line_usd: 19.20
+    source: https://fal.ai/models/fal-ai/veo3.1
+
+  - slot_id: VID-02
+    scientific_candidate: kling-3.0-pro
+    planned_route: fal
+    route_id: fal-ai/kling-video/v3/pro/text-to-video
+    route_status: provider_authorised_current
+    duration_seconds: 6
+    audio: false
+    audio_reason: 'slot tests cross-cut continuity/control; native audio is not the discriminating variable'
+    generations: 8
+    unit_price_usd_per_second: 0.112
+    nominal_line_usd: 5.376
+    source: https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video
+
+  - slot_id: VID-03
+    scientific_candidate: minimax-h3
+    planned_route: runway
+    route_id: hailuo3
+    route_status: provider_authorised_current
+    duration_seconds: 6
+    resolution: 768p
+    reference_images_per_call: 1
+    generations: 8
+    credits_per_second: 10
+    credits_per_reference_image: 2
+    usd_per_credit: 0.01
+    nominal_usd_per_call: 0.62
+    nominal_line_usd: 4.96
+    source: https://docs.dev.runwayml.com/guides/pricing/
+    note: 'Uses the exact Runway model literal already reconciled to the scientific slot. Account cash-funding minimum is separate from usage cost.'
+
+  - slot_id: VID-04
+    scientific_candidate: runway-aleph-2.0
+    planned_route: runway
+    route_id: aleph2
+    route_status: provider_authorised_current
+    duration_seconds: 6
+    generations: 8
+    credits_per_second: 28
+    usd_per_credit: 0.01
+    nominal_usd_per_call: 1.68
+    nominal_line_usd: 13.44
+    source: https://docs.dev.runwayml.com/guides/pricing/
+
+  - slot_id: VID-05
+    scientific_candidate: 'fast/cheap tier of VID-01 family'
+    planned_route: fal
+    route_id: fal-ai/veo3.1/lite
+    route_status: provider_authorised_current
+    duration_seconds: 6
+    resolution: 720p
+    audio: true
+    generations: 8
+    unit_price_usd_per_second: 0.05
+    nominal_line_usd: 2.40
+    source: https://fal.ai/models/fal-ai/veo3.1/lite
+    staging_guard: 'Stage A may compare benchmark-pass cost/reliability only. Accepted-outcome cost-knee/CpAO conclusion remains Stage C.'
+
+  - slot_id: AUD-01
+    scientific_candidate: sarvam-bulbul-v3
+    planned_route: direct
+    route_id: bulbul:v3
+    route_status: provider_authorised_current
+    generations: 6
+    max_billed_characters: 1500
+    price_inr_per_10000_characters: 30
+    nominal_line_inr_max: 4.50
+    source: https://www.sarvam.ai/api-pricing
+    note: 'Actual line is lower if the three frozen scripts total under 750 characters before repeats.'
+
+  - slot_id: AUD-02
+    scientific_candidate: elevenlabs-v3
+    planned_route: direct
+    route_id: eleven_v3
+    route_status: provider_authorised_current
+    generations: 6
+    max_billed_characters: 1500
+    unit_price_usd_per_1000_characters: 0.10
+    nominal_line_usd_max: 0.15
+    source: https://elevenlabs.io/pricing/api
+
+  - slot_id: AUD-03
+    scientific_candidate: sync-3
+    planned_route: fal
+    route_id: fal-ai/sync-lipsync/v3
+    route_status: 'provider-authorised current; resolves EVAL-010 exact-version gap'
+    duration_seconds: 6
+    generations: 6
+    unit_price_usd_per_minute: 8.00
+    unit_price_usd_per_second_derived: 0.1333333333
+    nominal_line_usd: 4.80
+    source: https://fal.ai/models/fal-ai/sync-lipsync/v3
+
+stage_A_generation_nominal:
+  usd_lines_total: 52.01
+  inr_native_lines_total_max: 4.50
+  usd_to_inr_reference_total: 4962.85
+  combined_reference_inr_total: 4967.35
+  excludes:
+    - evaluator/checker API usage
+    - human review labour
+    - taxes
+    - account/wallet pre-funding above consumed usage
+    - retries
+    - controlled-pack acquisition
+  status: PRICE_REFRESH_ONLY_NOT_AN_AUTHORISED_BUDGET
+
+first_tranche_candidate:
+  scope: A-TEXT partial admission screen only
+  slots: [IMG-01, IMG-02]
+  generations_max: 16
+  generation_nominal_usd_max: 0.904
+  prerequisite: 'At least one text/OCR checker qualifies on the frozen Devanagari + Latin protocol; deterministic geometry/logging preflight must also be green.'
+  important_limit: 'This is partial evidence. It can eliminate a route on text exactness; it cannot promote the entire scientific slot until every required instrument family for that slot is qualified.'
