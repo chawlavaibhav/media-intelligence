@@ -1,0 +1,507 @@
+# Request / evaluation source access & rights register
+#
+# Task: R3-A of resources/tasks/RES-003-CLOUD-EVIDENCE-PROGRAM.md. Owner: Resources.
+# Companion narrative: SOURCE-ACCESS-RIGHTS-REPORT.md
+# Validator: validators/check_source_register.py (fail-closed)
+#
+# WHAT THIS IS. One row per public source that Canon's request-space work or Eval's capability work
+# is likely to want. Each row separates the facts that this project has learned to keep separate,
+# because collapsing them is how it has been burned before:
+#   * a CODE licence is not a MEDIA licence (the PVP trap: a search asserted the dataset was MIT; it
+#     was the repository's code licence);
+#   * a dataset/annotation licence is not the underlying-media rights;
+#   * "publicly reachable" is not "ungated";
+#   * useful for DISCOVERY is not automatically usable for CALIBRATION or HOLDOUT.
+#
+# EVIDENCE LEVEL - READ THIS BEFORE QUOTING ANY ROW.
+# This session's network egress proxy BLOCKS the official pages: huggingface.co, arxiv.org,
+# poloclub.github.io and vidprom.github.io all returned EGRESS_BLOCKED on direct fetch. Web SEARCH
+# worked. So every rights fact below is `search_supported` - drawn from search results that quote or
+# summarise the official source - and NOT `officially_verified`. No row may drive an acquisition
+# decision until a human reads the actual licence file on the actual distribution page.
+#
+# NO ACQUISITION OCCURRED. No dataset was downloaded, no account created, no terms accepted, ZERO
+# spend. This is a documentation/metadata survey only.
+
+meta:
+  version: v1
+  date: 2026-08-26
+  task: R3-A
+  branch: work/res-003-evidence-topology
+  session: cloud-only, no laptop, no raw corpus, no provider credentials
+  evidence_levels:
+    officially_verified: "Read directly from the creator/publisher/distributor page in this session."
+    search_supported: "From search results quoting or summarising the official source. NOT read directly."
+    inferred: "Reasoned from other recorded facts. Labelled as inference wherever it appears."
+    unknown: "Not established."
+  egress_limitation: >
+    huggingface.co, arxiv.org, poloclub.github.io and vidprom.github.io are BLOCKED by this session's
+    egress proxy (confirmed by direct fetch attempts returning EGRESS_BLOCKED). Therefore NOTHING in
+    this register is officially_verified. Official rights verification must happen where those pages
+    are reachable.
+  suitability_vocabulary:
+    request_discovery: "Learning what people ask for. Tolerates bias and staleness; needs scale and realism."
+    benchmark_construction: "Authoring or tuning benchmark tasks. Contaminates anything downstream that shares its lineage."
+    evaluator_calibration: "Setting an instrument's operating point. Same contamination consequence."
+    active_benchmark: "Scoring current models."
+    final_holdout: "Untouched reserve. One look and it is no longer a holdout."
+
+# ===========================================================================
+# A. Request-space corpora (Canon's likely Axis A inputs)
+# ===========================================================================
+sources:
+
+  - source_id: src_diffusiondb
+    name: DiffusionDB
+    category: request_space_text_to_image
+    publisher: "Polo Club of Data Science, Georgia Tech (poloclub)"
+    distributor: "Hugging Face (poloclub/diffusiondb); project site poloclub.github.io/diffusiondb"
+    access_route: "Public Hugging Face dataset; subset-selectable (2M / 14M variants reported)"
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence:
+      value: "CC0 1.0 Universal (dataset released under CC0)"
+      evidence_level: search_supported
+    underlying_media_rights:
+      value: >
+        Generated IMAGES stated as CC0 1.0 Public Domain Dedication. The images are Stable Diffusion
+        outputs, so there is no photographer/rightsholder in the usual sense.
+      evidence_level: search_supported
+    prompt_text_rights:
+      value: >
+        Prompts are user-written text scraped from the official Stable Diffusion Discord. The stated
+        basis for treating them as free is the Discord server's terms of service, under which users
+        "forfeit all intellectual property rights claims, worldwide, including forfeiture of any/all
+        copyright claim(s)" to content provided through the service.
+      evidence_level: search_supported
+      resources_caution: >
+        This is a THIRD-PARTY PLATFORM TERMS argument, not a per-author licence grant. It is the
+        strongest such argument we have seen and it is still an argument. Record it as the publisher's
+        position; do not restate it as settled law.
+    redistribution_status: "CC0 permits redistribution; we do not redistribute."
+    prompt_text_accessible: yes_full_text
+    internal_research_evaluation_suitability: suitable
+    suitable_for: [request_discovery]
+    NOT_suitable_for: [active_benchmark, final_holdout]
+    why_not:
+      - "Images are 2022-era Stable Diffusion. Useless as evidence about current model capability."
+      - "Distribution is shaped by one Discord community's interface, culture and moderation rules."
+    source_lineage: "lin_diffusiondb — SHARED with src_imagerewarddb, which is already in our corpus."
+    known_derivation_relationships:
+      - "ImageRewardDB (already acquired, 2,584 items) draws its images from DiffusionDB."
+      - "Numerous derivative subsets exist on Hugging Face (e.g. pixel-art slices)."
+    approximate_scale:
+      value: "14 million prompt-image pairs; ~1.8 million unique prompts reported"
+      evidence_level: search_supported
+    demographic_or_domain_skew: >
+      Mostly English with Spanish, Chinese and Russian present. Discord-community skew: hobbyist and
+      artistic generation, NOT commercial brief-shaped requests. Server rules forbid NSFW and personal
+      information, so the distribution is moderated, not raw.
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_vidprom
+    name: VidProM
+    category: request_space_text_to_video
+    publisher: "Wenhao Wang et al. (NeurIPS 2024)"
+    distributor: "Hugging Face (WenhaoWang/VidProM); GitHub WangWenhao0716/VidProM"
+    access_route: "Public Hugging Face dataset"
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence:
+      value: "CC BY-NC 4.0"
+      evidence_level: search_supported
+    underlying_media_rights:
+      value: >
+        6.69M videos generated by Pika, Text2Video-Zero, VideoCraft2 and ModelScope from the collected
+        prompts. Rights in those outputs are not separately stated beyond the dataset licence.
+      evidence_level: search_supported
+    prompt_text_rights:
+      value: "Prompts extracted from official Pika Discord channels; covered by the CC BY-NC 4.0 release."
+      evidence_level: search_supported
+    redistribution_status: "CC BY-NC permits redistribution with attribution, non-commercially. We do not redistribute."
+    commercial_use_status:
+      value: "NON-COMMERCIAL ONLY. This is a hard constraint, not a caveat."
+      evidence_level: search_supported
+    prompt_text_accessible: yes_full_text
+    internal_research_evaluation_suitability: >
+      Suitable for internal, non-commercial research use ONLY. Our product is commercial, so the NC
+      term must be resolved before any output derived from it informs a shipped system. Using it to
+      LEARN a taxonomy and using it to BUILD a commercial product are different acts and a human must
+      decide where the line sits.
+    suitable_for: [request_discovery]
+    NOT_suitable_for: [active_benchmark, final_holdout]
+    source_lineage: "lin_pika_discord — SHARED with src_tip_i2v. Same platform, same community, same collection method."
+    known_derivation_relationships:
+      - "Same authors and same Pika Discord origin as TIP-I2V. Treat the two as ONE lineage."
+    approximate_scale:
+      value: "1.67M unique text-to-video prompts; 6.69M generated videos"
+      evidence_level: search_supported
+    demographic_or_domain_skew: "Pika Discord community. Text-to-video hobbyist skew."
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_tip_i2v
+    name: TIP-I2V
+    category: request_space_image_to_video
+    publisher: "Wenhao Wang et al. (ICCV 2025)"
+    distributor: "Hugging Face (WenhaoWang/TIP-I2V); GitHub WangWenhao0716/TIP-I2V"
+    access_route: "Public Hugging Face dataset"
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence:
+      value: "CC BY-NC 4.0, stated as following from Pika's terms of service making chat messages publicly available"
+      evidence_level: search_supported
+    underlying_media_rights:
+      value: >
+        NOT ESTABLISHED, and this is the register's most serious rights gap. Each record includes a
+        USER-SUPPLIED IMAGE PROMPT. Those images were uploaded by members of the public and their
+        provenance is not stated: they may be third-party copyright works, and they may depict
+        identifiable people.
+      evidence_level: unknown
+    prompt_text_rights:
+      value: "Text prompts covered by the CC BY-NC 4.0 release."
+      evidence_level: search_supported
+    redistribution_status: "Non-commercial redistribution with attribution; we do not redistribute."
+    commercial_use_status: "NON-COMMERCIAL ONLY."
+    prompt_text_accessible: yes_full_text_plus_user_uploaded_images
+    internal_research_evaluation_suitability: >
+      TEXT prompts and metadata: usable for internal non-commercial discovery, same caveat as VidProM.
+      USER-UPLOADED IMAGE PROMPTS: treat as NOT cleared. The dataset records NSFW status for images,
+      which tells us the publisher expected problematic uploads. Even with an anonymised UserID,
+      arbitrary user-uploaded photographs are exactly the material this project has repeatedly refused
+      to collect.
+    suitable_for: [request_discovery]
+    NOT_suitable_for: [active_benchmark, final_holdout, person_reference_material]
+    source_lineage: "lin_pika_discord — SHARED with src_vidprom."
+    approximate_scale:
+      value: "1.70M+ unique text-and-image prompt pairs; videos from 5 image-to-video models"
+      evidence_level: search_supported
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_arena_leaderboard_data
+    name: "LMArena open data (leaderboard dataset, VisionArena, arena-human-preference)"
+    category: request_space_and_preference
+    publisher: "LMArena / lmarena-ai"
+    distributor: "Hugging Face (lmarena-ai/*); news.lmarena.ai; arena.ai"
+    access_route: "Public Hugging Face datasets"
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence:
+      value: >
+        VARIES BY DATASET, and the variation matters:
+          * user prompts: CC-BY-4.0;
+          * model OUTPUTS: governed by each model provider's terms of use, NOT by a single dataset licence;
+          * VisionArena: a bespoke limited, non-exclusive, non-transferable, non-sublicensable licence
+            stated to cover research AND commercial use;
+          * arena-human-preference: Apache-2.0;
+          * Arena-Rank leaderboard code: Apache-2.0.
+      evidence_level: search_supported
+    underlying_media_rights:
+      value: >
+        Model outputs are under provider terms, which differ per provider and can change. There is no
+        single answer for the image/video content in these datasets.
+      evidence_level: search_supported
+    prompt_text_rights:
+      value: "User prompts CC-BY-4.0 — the most permissive prompt position of any source here."
+      evidence_level: search_supported
+    redistribution_status: "CC-BY-4.0 for prompts permits redistribution with attribution; outputs do not."
+    commercial_use_status: "Prompts: CC-BY-4.0 imposes no non-commercial restriction. Outputs: per provider."
+    prompt_text_accessible: yes_full_text
+    internal_research_evaluation_suitability: >
+      The best-positioned request-space source in this register: real user prompts, permissively
+      licensed, from a multi-model competitive setting rather than one vendor's community.
+    suitable_for: [request_discovery]
+    NOT_suitable_for: [final_holdout]
+    conditional_use:
+      benchmark_construction: >
+        PERMITTED ONLY IF Arena-T2I-Hard is excluded from active benchmark and holdout use, because
+        they share a lineage. See src_arena_t2i_hard.
+    source_lineage: "lin_lmarena — SHARED with src_arena_t2i_hard."
+    approximate_scale:
+      value: "Full published leaderboard history across ~10 arenas; arena-human-preference-55k is one named slice"
+      evidence_level: search_supported
+    demographic_or_domain_skew: >
+      Arena users are self-selected model evaluators. Their prompts skew toward comparison-provoking
+      and stress-testing content, not routine commercial production briefs.
+    acquisition_status: not_acquired_documentation_only
+
+# ===========================================================================
+# B. Evaluation / benchmark resources (Eval's likely Axis B inputs)
+# ===========================================================================
+
+  - source_id: src_arena_t2i_hard
+    name: Arena-T2I-Hard
+    category: evaluation_benchmark_text_to_image
+    publisher: "banyuanhao et al.; distributed under lmarena-ai"
+    distributor: "Hugging Face (lmarena-ai/Arena-T2I-Hard); GitHub banyuanhao/Arena-T2I-Hard"
+    access_route: public_hugging_face
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence:
+      value: "Not separately established in this session. The prompts derive from the arena pool (CC-BY-4.0 for user prompts)."
+      evidence_level: unknown
+    underlying_media_rights: {value: "No media distributed with the prompt benchmark per available description.", evidence_level: search_supported}
+    prompt_text_rights: {value: "Derived from arena user prompts.", evidence_level: search_supported}
+    prompt_text_accessible: yes_full_text
+    redistribution_status: unknown
+    internal_research_evaluation_suitability: "Suitable as an external benchmark reference."
+    suitable_for: [active_benchmark]
+    NOT_suitable_for: [final_holdout]
+    critical_leakage_warning: >
+      THE SHARPEST LEAKAGE RISK IN THIS REGISTER. Arena-T2I-Hard's 310 prompts are sampled from the
+      SAME public arena pool that src_arena_leaderboard_data exposes. If Canon learns its request
+      grammar from arena prompts and Eval then benchmarks on Arena-T2I-Hard, the benchmark is a
+      descendant of the discovery set and any "generalisation" claim is circular. They are ONE
+      LINEAGE and must not occupy both a discovery role and a holdout role in the same experiment.
+    methodology_notes:
+      value: >
+        310-prompt stress benchmark of real hard arena requests (long, multi-entity, with attributes,
+        spatial relations, counts, stylistic constraints). Prompts span Jan-Mar 2026. NSFW, PII and
+        invalid-prompt filtering applied, each prompt manually checked. Evaluator is a dependency-aware
+        checklist: each prompt decomposed into a DAG of yes/no questions, failing a parent zeroes its
+        descendants. ~13.9k questions across 310 prompts (9.6k faithfulness, ~4.4k aesthetics).
+        Separately, a 10k training set and a disjoint 1k test set are sampled from the arena pool.
+      evidence_level: search_supported
+    resources_note_for_eval: >
+      The dependency-aware DAG structure is methodologically interesting to Eval and is NOT a Resources
+      decision. Recorded as observed methodology, not endorsed. Note also that its own 10k/1k split is
+      an example of exactly the discipline R3-C proposes.
+    source_lineage: "lin_lmarena — SHARED with src_arena_leaderboard_data."
+    approximate_scale: {value: "310 benchmark prompts; 13.9k checklist questions", evidence_level: search_supported}
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_t2i_compbench
+    name: "T2I-CompBench / T2I-CompBench++"
+    category: evaluation_benchmark_text_to_image
+    publisher: "Huang et al. (NeurIPS 2023; TPAMI 2025)"
+    distributor: "GitHub Karine-Huang/T2I-CompBench"
+    access_route: public_github
+    authentication_or_terms_gate: none_reported
+    code_licence: {value: "MIT", evidence_level: search_supported}
+    dataset_annotation_licence:
+      value: "NOT ESTABLISHED SEPARATELY FROM THE CODE LICENCE."
+      evidence_level: unknown
+    resources_caution: >
+      DO NOT RECORD THIS AS "MIT-licensed dataset". MIT is the repository's CODE licence. This project
+      has already been caught by exactly this substitution once, with PVP, where a search asserted the
+      dataset was MIT and it was the repository code licence. The benchmark is largely prompt text, so
+      the practical risk is lower than for media - but the discipline is the point.
+    underlying_media_rights: {value: "n/a for the prompt set; any generated images are the evaluator's own outputs.", evidence_level: inferred}
+    prompt_text_accessible: yes_full_text
+    redistribution_status: unknown
+    internal_research_evaluation_suitability: suitable_as_reference
+    suitable_for: [benchmark_construction, active_benchmark]
+    NOT_suitable_for: [final_holdout]
+    methodology_notes:
+      value: "Eight aspects: colour, texture and shape binding; non-spatial relations; 2D and 3D spatial relations; counting; complex multi-attribute compositions."
+      evidence_level: search_supported
+    source_lineage: lin_t2i_compbench
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_geneval
+    name: GenEval
+    category: evaluation_benchmark_text_to_image
+    publisher: "Ghosh et al."
+    distributor: "GitHub djghosh13/geneval"
+    access_route: public_github
+    authentication_or_terms_gate: none_reported
+    code_licence: {value: "not established in this session", evidence_level: unknown}
+    dataset_annotation_licence: {value: "not established", evidence_level: unknown}
+    underlying_media_rights: {value: "n/a for the prompt/task definitions", evidence_level: inferred}
+    prompt_text_accessible: yes_full_text
+    redistribution_status: unknown
+    internal_research_evaluation_suitability: suitable_as_reference
+    suitable_for: [benchmark_construction, active_benchmark]
+    NOT_suitable_for: [final_holdout]
+    methodology_notes:
+      value: "Object-focused framework evaluating compositional image properties: object co-occurrence, position, count, colour."
+      evidence_level: search_supported
+    resources_note: >
+      Object-focused and deterministic in shape, so it maps onto Resources' existing
+      PACK-CV-FIXTURES row: truth is generated, not observed, and no external media acquisition is
+      implied by adopting it.
+    source_lineage: lin_geneval
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_vbench
+    name: VBench
+    category: evaluation_benchmark_text_to_video
+    publisher: "Vchitect / Huang et al."
+    distributor: "GitHub Vchitect/VBench"
+    access_route: public_github
+    authentication_or_terms_gate: none_reported
+    code_licence: {value: "not established in this session", evidence_level: unknown}
+    dataset_annotation_licence: {value: "not established", evidence_level: unknown}
+    underlying_media_rights: {value: "not established", evidence_level: unknown}
+    prompt_text_accessible: yes_full_text
+    redistribution_status: unknown
+    internal_research_evaluation_suitability: suitable_as_reference
+    suitable_for: [benchmark_construction, active_benchmark]
+    NOT_suitable_for: [final_holdout]
+    methodology_notes:
+      value: "Hierarchical evaluation-dimension suite decomposing video generation quality into defined dimensions; 946 prompts."
+      evidence_level: search_supported
+    source_lineage: lin_vbench
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_t2v_compbench
+    name: T2V-CompBench
+    category: evaluation_benchmark_text_to_video
+    publisher: "Sun et al. (CVPR 2025)"
+    distributor: "GitHub KaiyueSun98/T2V-CompBench"
+    access_route: public_github
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence: {value: "not established", evidence_level: unknown}
+    underlying_media_rights: {value: "not established", evidence_level: unknown}
+    prompt_text_accessible: yes_full_text
+    redistribution_status: unknown
+    internal_research_evaluation_suitability: suitable_as_reference
+    suitable_for: [benchmark_construction, active_benchmark]
+    NOT_suitable_for: [final_holdout]
+    methodology_notes:
+      value: >
+        Compositional text-to-video: consistent attribute binding, dynamic attribute binding, spatial
+        relationships, motion binding, action binding, object interactions, generative numeracy.
+      evidence_level: search_supported
+    resources_note: >
+      DYNAMIC attribute binding and MOTION binding are the closest external analogue to our
+      REQ-CAP-20/21/22 in-clip stability rows, which remain our sharpest uncovered gap.
+    source_lineage: lin_t2v_compbench
+    acquisition_status: not_acquired_documentation_only
+
+# ===========================================================================
+# C. Controlled-pack candidate routes carried forward from Resources V1
+# ===========================================================================
+
+  - source_id: src_abo
+    name: "Amazon Berkeley Objects (ABO)"
+    category: controlled_product_reference_candidate
+    publisher: "Amazon / UC Berkeley"
+    distributor: "AWS Registry of Open Data; S3 arn:aws:s3:::amazon-berkeley-objects (us-east-1)"
+    access_route: public_s3_no_login_reported
+    authentication_or_terms_gate: "No login reported. The collection ships LICENSE-CC-BY-NC-4.0.txt which users must read, agree to and comply with."
+    dataset_annotation_licence:
+      value: "CC BY-NC 4.0"
+      evidence_level: search_supported
+    underlying_media_rights:
+      value: "Catalog product photography; covered by the CC BY-NC 4.0 release per the publisher."
+      evidence_level: search_supported
+    commercial_use_status: "NON-COMMERCIAL ONLY."
+    redistribution_status: "Non-commercial redistribution with attribution."
+    prompt_text_accessible: n/a
+    internal_research_evaluation_suitability: >
+      Suitable for internal NON-COMMERCIAL research/evaluation only. NOT suitable as the product
+      reference pack for a commercial system.
+    suitable_for: [evaluator_calibration]
+    NOT_suitable_for: [commercial_product_reference_pack]
+    RESOLVES_OPEN_QUESTION: >
+      The Resources V1 supply-route research recorded a CONTRADICTION on this source: the AWS Open
+      Data registry reported CC BY-NC 4.0 while the dataset's own documentation was reported as
+      CC BY 4.0, and it was marked "blocked pending human verification" rather than guessed.
+      Tonight's search returns CC BY-NC 4.0 consistently, together with a named licence file
+      (LICENSE-CC-BY-NC-4.0.txt) that users must accept. The contradiction resolves to the
+      RESTRICTIVE reading. Still search_supported, not officially_verified - but the direction is now
+      clear and it is the unfavourable one.
+    approximate_scale:
+      value: "147,702 listings; 398,212 catalog images; 8,222 listings with 24- or 72-view turntable sequences (586,584 images); 7,953 3D models"
+      evidence_level: search_supported
+    source_lineage: lin_abo
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_google_scanned_objects
+    name: Google Scanned Objects
+    category: controlled_product_reference_candidate
+    publisher: "Google Research"
+    distributor: "Open robotics model repositories; Google Research announcement"
+    access_route: public_no_login_reported
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence: {value: "CC BY 4.0", evidence_level: search_supported}
+    underlying_media_rights:
+      value: "Objects scanned by the publisher on its own controlled rig; no third-party photographer."
+      evidence_level: search_supported
+    commercial_use_status: "CC BY 4.0 imposes no non-commercial restriction."
+    redistribution_status: "Permitted with attribution; we do not redistribute."
+    prompt_text_accessible: n/a
+    internal_research_evaluation_suitability: suitable
+    suitable_for: [evaluator_calibration, active_benchmark]
+    NOT_suitable_for: [brand_or_packaging_fidelity_material]
+    limitation_carried_forward: >
+      GENERIC HOUSEHOLD OBJECTS, NOT BRANDED PACKAGED GOODS. They carry no wordmark and no brand
+      colour specification, so they cannot serve REQ-CAP-09 logo_wordmark_fidelity or REQ-CAP-10
+      packaging_brand_colour_fidelity at all. Unchanged from the V1 assessment.
+    approximate_scale: {value: "~1,030 scanned objects, ~13 GB", evidence_level: search_supported}
+    source_lineage: lin_google_scanned_objects
+    acquisition_status: not_acquired_documentation_only
+
+  - source_id: src_pitt_ads
+    name: "Pitt Image and Video Ads"
+    category: commercial_creative_candidate
+    publisher: "University of Pittsburgh, Kovashka group"
+    distributor: "people.cs.pitt.edu/~kovashka/ads/"
+    access_route: "Media by EMAIL REQUEST. Annotation archives separately downloadable."
+    authentication_or_terms_gate: >
+      EMAIL REQUEST GATE, confirmed again this session from the official readme text via search:
+      "To obtain the dataset for research purposes, please email us."
+    dataset_annotation_licence: {value: "not stated", evidence_level: search_supported}
+    underlying_media_rights:
+      value: "Advertisements collected from the web; third-party brand copyright applies. Not cleared."
+      evidence_level: search_supported
+    commercial_use_status: "not stated; research-purpose framing may not cover commercial-product evaluation"
+    redistribution_status: not_stated
+    prompt_text_accessible: n/a
+    internal_research_evaluation_suitability: blocked_pending_human_permission_decision
+    suitable_for: []
+    NOT_suitable_for: [request_discovery, benchmark_construction, evaluator_calibration, active_benchmark, final_holdout]
+    stop_condition_applied: >
+      ACCESS/LEGAL gate under shared/AUTONOMY-POLICY.md. An email request is a human permission
+      decision. Not attempted, and it remains the only public candidate that addresses the commercial
+      creative bank at all.
+    approximate_scale: {value: "64,832 image ads; 3,477 video ads", evidence_level: search_supported}
+    source_lineage: lin_pitt_ads
+    acquisition_status: blocked_not_attempted
+
+  - source_id: src_hiacc
+    name: "HiACC (Hinglish adult & children code-switched corpus)"
+    category: av_speech_candidate
+    publisher: "academic; distributed via Zenodo per prior search"
+    distributor: zenodo
+    access_route: public_no_login_reported
+    authentication_or_terms_gate: none_reported
+    dataset_annotation_licence: {value: "CC BY-NC 4.0", evidence_level: search_supported}
+    underlying_media_rights: {value: "recorded speech; consent terms not established", evidence_level: unknown}
+    commercial_use_status: "NON-COMMERCIAL ONLY."
+    redistribution_status: "non-commercial with attribution"
+    prompt_text_accessible: n/a
+    internal_research_evaluation_suitability: >
+      AUDIO ONLY. Four of the five speech capabilities need video of a speaking face, so this cannot
+      serve lip-sync or two-speaker turn assignment. It addresses spoken_language_correctness at most,
+      and its NC term blocks commercial use.
+    suitable_for: []
+    NOT_suitable_for: [av_pack_substitute]
+    approximate_scale: {value: "3,318 adult + 1,858 child segments, ~5.24 hours", evidence_level: search_supported}
+    source_lineage: lin_hiacc
+    acquisition_status: not_acquired_documentation_only
+
+# ===========================================================================
+# Lineage groups — sources sharing a group are NOT independent of each other
+# ===========================================================================
+lineage_groups:
+  lin_diffusiondb:
+    members: [src_diffusiondb, src_imagerewarddb]
+    note: >
+      src_imagerewarddb IS ALREADY IN OUR ACQUIRED CORPUS (2,584 items) and its images come from
+      DiffusionDB. Acquiring DiffusionDB would therefore NOT add an independent lineage; it would
+      enlarge one we already hold.
+  lin_pika_discord:
+    members: [src_vidprom, src_tip_i2v]
+    note: "Same authors, same Pika Discord origin, same collection method. One lineage."
+  lin_lmarena:
+    members: [src_arena_leaderboard_data, src_arena_t2i_hard]
+    note: >
+      Arena-T2I-Hard prompts are sampled from the arena pool. Discovery on one and holdout on the
+      other is circular.
+  lin_abo: {members: [src_abo]}
+  lin_google_scanned_objects: {members: [src_google_scanned_objects]}
+  lin_pitt_ads: {members: [src_pitt_ads]}
+  lin_hiacc: {members: [src_hiacc]}
+  lin_t2i_compbench: {members: [src_t2i_compbench]}
+  lin_geneval: {members: [src_geneval]}
+  lin_vbench: {members: [src_vbench]}
+  lin_t2v_compbench: {members: [src_t2v_compbench]}
+  unregistered_source_policy: >
+    A source with no registered lineage is INDETERMINATE, never independent. Carried forward from the
+    accepted R-C4 rule: two different lin_unknown keys are not evidence of two different lineages.
