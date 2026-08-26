@@ -1,5 +1,12 @@
 # EVAL-013 — EMP-001 live-path readiness
 
+> **SUPERSEDED — 27 Aug 2026.** The Controller rejected this `READY_FOR_SPEND_APPROVAL` verdict in
+> `coordination/decisions/CONTROLLER-EVAL-013-REVIEW-2026-08-27.md` on B6–B10: tranche spend was
+> not cumulative across processes, the USD 6 sub-cap was unenforced, and the paid A-TEXT handoff
+> still refused. The work below stands and was preserved. Current verdict:
+> [`EVAL-014-BUDGET-HANDOFF-READINESS.md`](EVAL-014-BUDGET-HANDOFF-READINESS.md).
+
+
 **Verdict:** `READY_FOR_SPEND_APPROVAL`
 
 **Branch:** `work/eval-013-emp-001-live-path-correction` · **not merged**

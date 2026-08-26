@@ -1,21 +1,14 @@
 # EMP-001 pre-spend verification record
 
 **Date:** 27 Aug 2026
-**Branch:** `work/eval-013-emp-001-live-path-correction`
-**Supersedes:** the EVAL-012 record on `work/eval-012-emp-001-zero-spend`
+**Branch:** `work/eval-014-emp-001-budget-continuity`
+**Supersedes:** the EVAL-013 record
 **External calls made producing this record: 0. Spend: USD 0 / INR 0.**
 
-Every block below is **copied from a fresh run in this branch**, not written from expectation.
-Environment: macOS (Darwin 23.6.0), Python 3.14.6, pytest 9.1.1, PyYAML 6.0.3 in a throwaway
-virtualenv outside the repository. `hb-view` is a local rendering tool; nothing here reaches a
-network.
-
-## What changed since the EVAL-012 record
-
-The Controller blocked EVAL-012 on five defects (B1–B5). The suite then proved refusal
-exhaustively and never proved dispatch, which is how a missing live orchestration and a
-mislabelled measurement path both survived a green run. This record therefore leads with the
-**positive** controls.
+Copied from fresh runs in this branch. Environment: macOS (Darwin 23.6.0), Python 3.14.6,
+pytest 9.1.1, PyYAML 6.0.3 in a throwaway virtualenv outside the repository. No API key was used;
+the rehearsal sets `OPENAI_API_KEY`/`GOOGLE_API_KEY`/`FAL_KEY` to the literal string
+`REHEARSAL-NOT-A-REAL-KEY`.
 
 ---
 
@@ -23,10 +16,12 @@ mislabelled measurement path both survived a green run. This record therefore le
 
 ```
 $ python3 -m pytest -q eval/empirical-tranche-1/tests
-...............................                                          [100%]
-247 passed in 2.15s
+...........................                                              [100%]
+315 passed in 24.96s
 EXIT=0
 ```
+
+Up from 247 at the EVAL-013 head; 68 new controls.
 
 ## Step 2 — inherited V1 harness verification
 
@@ -41,13 +36,12 @@ EXIT=0
 
 ```
 $ bash eval/v1/harness/run_cross_branch_validation.sh
-[PASS] fan-out 7.00 measurements per artifact — one generation, many measurements
 
 RESULT: PASS — Eval's emission satisfies the current Resources contract (exit 0)
 EXIT=0
 ```
 
-## Step 3 — dry runs, network disabled
+## Step 3 — dry-run preflight
 
 ```
 $ python3 eval/empirical-tranche-1/preflight.py --dry-run
@@ -61,34 +55,11 @@ verdict: PREFLIGHT_GREEN
   [PASS] registry_empirical_rows
   [PASS] synthetic_cannot_reach_registry
 external calls: 0   spend USD: 0
-written: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-013/eval/empirical-tranche-1/preflight-result.json
+written: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-014/eval/empirical-tranche-1/preflight-result.json
 EXIT=0
 ```
 
-```
-$ python3 eval/empirical-tranche-1/text_qualification/qualify_text.py --dry-run
-dry run: 2 synthetic candidates
-  fake-openai-candidate      devanagari= 576 latin= 576 scope=['devanagari', 'latin']
-  fake-google-candidate      devanagari= 576 latin=   0 scope=none
-external calls: 0   spend USD: 0
-written: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-013/eval/empirical-tranche-1/text_qualification/qualification-dryrun.json
-EXIT=0
-```
-
-```
-$ python3 eval/empirical-tranche-1/atex/run_atex.py --dry-run
-generations: 16  per route: {'IMG-01': 8, 'IMG-02': 8}  retries: 0
-registry rows written: 0  boundary refused synthetic evidence: True
-external calls: 0   spend USD: 0
-written: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-013/eval/empirical-tranche-1/atex/atex-dryrun.json
-EXIT=0
-```
-
-## Step 4 — POSITIVE fake-live paths
-
-The correction the Controller asked for. Same orchestration, same request builders, same
-provider-specific auth headers, same parsers, same scorer — with an injected recorder standing
-exactly where the socket would be. Both walk the real authorisation gate.
+## Step 4 — positive fake-live qualification
 
 ```
 $ python3 .../qualify_text.py --fake-live --authorisation <valid> --out <path>
@@ -96,13 +67,11 @@ fake-live: 2304 recorded dispatches, 0 network calls
   openai:FAKE-LIVE-openai-snapshot   devanagari= 576 latin= 576 scope=['devanagari', 'latin']
   google:FAKE-LIVE-google-snapshot   devanagari= 576 latin= 576 scope=['devanagari', 'latin']
 external calls: 0   spend USD: 0
-written: /tmp/q-fl.json
+written: /tmp/w-qual.json
 EXIT=0
 ```
 
-2,304 dispatches is the frozen maximum: 2 candidates x 2 scripts x 96 items x 2 shapes x 3 passes.
-Both fake candidates are perfect readers, so both survive to Latin. That is a property of the
-fake, not a finding about any model.
+## Step 5 — positive fake-live A-TEXT
 
 ```
 $ python3 .../run_atex.py --fake-live --authorisation <valid> --out <path>
@@ -110,32 +79,78 @@ fake-live: 16 generations ({'IMG-01': 8, 'IMG-02': 8}), 16 evaluator dispatches,
 exact matches: 16/16  (perfect reader — not evidence about any model)
 synthetic: False   registry rows: 0
 external calls: 0   spend USD: 0
-written: /tmp/a-fl.json
+written: /tmp/w-atex.json
 EXIT=0
 ```
 
-`synthetic: False` on a run that cost nothing is the point: the label now tracks the EXECUTION
-MODE rather than being a constant. 16 exact matches out of 16 is what a perfect reader scores and
-says nothing whatever about IMG-01 or IMG-02.
+## Step 6 — cross-process budget / handoff rehearsal
 
-### The refusal paths still refuse
-
-```
-$ python3 eval/empirical-tranche-1/preflight.py          # no --dry-run, no authorisation
-REFUSED: EMP-001 paid execution is not authorised, so there is no non-dry-run preflight to perform. Reasons:
-  - no authorisation file exists at that path
-Re-run with --dry-run.
-EXIT=2
-```
+The control this task exists for. Real `subprocess` interpreters: qualification runs and exits,
+and A-TEXT is a fresh process that knows only what is on disk.
 
 ```
-$ python3 eval/empirical-tranche-1/atex/run_atex.py --live
-REFUSED: EMP-001 paid A-TEXT generation requires an explicit authorisation and a qualified judge produced by a real qualification run.
-  - no authorisation file exists at that path
-EXIT=2
+$ python3 eval/empirical-tranche-1/rehearse_cross_process.py
+EMP-001 cross-process rehearsal — fake-live, zero network, zero spend
+
+[1] create a valid fake authorisation
+    /var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/tmpzbu06i7q/authorization.local.yaml
+
+[2] initialise the persistent run and spend state
+    run rehearsal-run  ledger runs/rehearsal-run/spend-ledger.jsonl
+
+[3] PROCESS A — fake-live qualification (separate interpreter)
+    fake-live: 2304 recorded dispatches, 0 network calls
+
+[4] PROCESS A exits — reopen the budget from disk only
+    qualification spend reconstructed from the ledger: USD 0.9763200
+    tranche total so far:                              USD 0.9763200
+
+[5] the persisted qualification handoff
+    qualified candidates: ['openai:FAKE-LIVE-openai-snapshot', 'google:FAKE-LIVE-google-snapshot']
+    fingerprint: b8cf6bcf60a2862563bda5fd310b4f92…
+
+[6] PROCESS B — A-TEXT with the Latin perceptibility gate UNRESOLVED
+    exit 2: REFUSED: GATE 2b CLOSED — the Latin human perceptibility review is unresolved. Two of the four froze
+
+[7] PROCESS C — A-TEXT with a REHEARSAL-ONLY perceptibility fixture
+    fake_live: 16 generations {'IMG-01': 8, 'IMG-02': 8}, 16 evaluator dispatches, retries 0
+    tranche spent USD 1.8905680 (qualification 0.9763200, atex 0.9142480)
+    synthetic: False   registry rows: 0
+    written: /var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/tmpzbu06i7q/atex.json
+
+[8] verify the invariants against the reconstructed ledger
+    [PASS] cumulative_spend_did_not_reset
+    [PASS] total_within_10
+    [PASS] qualification_within_6
+    [PASS] retries_zero
+    [PASS] generations_sixteen
+    [PASS] per_route_eight_each
+    [PASS] cost_refs_unique
+    [PASS] trial_ids_unique
+    [PASS] generation_and_evaluator_costed_separately
+    [PASS] atex_not_synthetic
+    [PASS] registry_rows_written
+    [PASS] not_promotable
+
+    qualification USD 0.9763200  +  A-TEXT USD 0.9142480  =  USD 1.8905680 of 10.00
+    spend records 2336, all cost refs unique: True
+
+RESULT: PASS   external calls 0   spend USD 0
+EXIT=0
 ```
 
-## Step 5 — protected baselines, byte for byte
+Read the numbers rather than the PASS lines:
+
+- qualification spent **USD 0.9763200** in process A and, after that process exited, process B
+  reconstructed exactly that from the ledger — **not** a fresh USD 10;
+- A-TEXT then spent **USD 0.9142480** against the remaining headroom;
+- cumulative **USD 1.8905680** of 10.00, with qualification inside its 6.00 sub-cap;
+- **2,336** spend records — 2,304 qualification dispatches + 16 generations + 16 evaluator calls
+  — every cost reference and trial id unique;
+- step 6 of the rehearsal ran A-TEXT against the **committed, unfilled** perceptibility sheet and
+  was **refused**. The gate is demonstrated closed before it is demonstrated open.
+
+## Step 7 — protected baselines, byte for byte
 
 ```
 $ shasum -a 256 -c <(grep -v '^#' eval/empirical-tranche-1/protected-baselines.sha256)
@@ -162,65 +177,55 @@ $ grep -v '^#' eval/registry/registry-v1.jsonl | grep -c '[^[:space:]]'
 0
 ```
 
-Zero empirical rows, before and after every run above, including both fake-live runs.
+Zero empirical rows, before and after every run above including the full cross-process rehearsal.
 
-### Nothing outside the tranche package was touched
+### The committed perceptibility sheet is still unfilled
 
 ```
-$ git diff --name-only origin/main...HEAD | grep -v '^eval/empirical-tranche-1/'
-.gitignore
-eval/tasks/EVAL-013-EMP-001-LIVE-PATH-CORRECTION.md
+$ python3 -c "import csv; rows=list(csv.DictReader(open('.../perceptibility-review.csv'))); \
+print(len(rows), sum(1 for r in rows if r['visible_difference'] or r['usable_surface']))"
+96 rows; 0 filled verdicts
 ```
 
-`.gitignore` carries the EVAL-012 entries; the EVAL-013 task file is the Controller's own commit.
+A test asserts this, so a rehearsal fixture can never leak back into the repository.
+
+### No key material in committed code
+
+```
+$ grep -rInE "sk-[A-Za-z0-9]{12,}|AIza[A-Za-z0-9_-]{20,}" eval/empirical-tranche-1/
+(no matches)
+```
+
+### Runtime spend state is not committed
+
+```
+$ git status --porcelain | grep -c 'eval/runs'
+0
+```
+
+`eval/runs/` is gitignored: it is machine-local runtime state about money.
 
 ---
 
-## Rebuilding the derived material first
+## What EVAL-014 changed
 
-Both image sets are gitignored build products, so a fresh checkout must materialise them before
-the suite can run. This is not optional and it costs nothing:
+| Blocker | Correction |
+|---|---|
+| **B6** tranche spend not cumulative across processes | durable ledger keyed by RUN id, reconstructed from disk on every read |
+| **B7** USD 6 evaluator sub-cap not enforced | stage caps enforced in one place; qualification refused at 6.00 even when the authorisation names 10.00 |
+| **B8** A-TEXT paid CLI still refused | fingerprint-bound qualification handoff; `--live` and `--fake-live` share one code path |
+| **B9** evaluator calls lacked durable trial/cost identity | deterministic trial id + ledger-resolvable cost_ref on every dispatch |
+| **B10** A-TEXT blind check not target-aware | `blind_check_target` passed evaluator-side only; Devanagari and Latin leak controls |
 
-```bash
-python3 eval/empirical-tranche-1/text_qualification/render_latin_pack.py
-cd eval/battery/devanagari-exactness
-python3 build_items.py --total 120 \
-  --out-dir ../../empirical-tranche-1/text_qualification/build/devanagari
-python3 apply_human_validation.py \
-  --from-build ../../empirical-tranche-1/text_qualification/build/devanagari \
-  --out-dir    ../../empirical-tranche-1/text_qualification/build/devanagari/validated
-```
+## Deviations and honesty notes
 
-The rebuilt `items.jsonl` hashes to `9c69cac2…`, the `battery_identity` pinned in the frozen human
-validation record, which is how the materialised view is proved to be the one the reviewer
-actually validated. The battery itself is read and never written to.
-
-## Defects this correction found in its own predecessor
-
-Beyond the five the Controller identified, writing the positive controls surfaced three more:
-
-1. **The blind check never ran on the live path.** The checker contract requires it before any
-   call; it was enforced only in tests. A leak would have reached the wire. It is now a
-   pre-dispatch refusal.
-
-2. **The blindness scan was blind.** The transport serialised with `ensure_ascii=True`, so a
-   Devanagari target would have travelled as `\uXXXX` and every check scanning for Devanagari
-   characters would have passed while seeing nothing. The wire now carries UTF-8 and the scan
-   parses first.
-
-3. **The verdict blind rule cried wolf.** It demanded the target appear exactly once across the
-   whole serialised body — not an invariant, since short targets occur incidentally in prompt
-   prose, in enum values like `input_text` and inside base64. It fired on the preflight's own
-   probe. Replaced with the rule the Devanagari checker contract already settled on.
-
-## Deviations from the implementation plan, and why
-
-Carried forward from the EVAL-012 record and still true: the hyphenated package directory is
-authoritative so modules are imported via `tests/conftest.py`; `shasum -a 256` replaces
-`sha256sum` on macOS; `pytest` and `PyYAML` live in a throwaway virtualenv outside the repository.
-
-**The human perceptibility review remains NOT performed and NOT fabricated.**
-`text_qualification/perceptibility-review.csv` is still emitted with all 96 verdict columns blank.
-Latin paid qualification remains gated on that zero-spend human review.
-
-Task 9 (paid execution) was not executed. No provider, model or evaluator was contacted.
+- **The human perceptibility review is still NOT performed and NOT fabricated.** The rehearsal's
+  filled sheet is written to a temporary directory, is labelled `REHEARSAL FIXTURE - NOT A HUMAN
+  REVIEW`, and never enters the repository.
+- **The fake-live reader is perfect.** `16/16 exact matches` is a property of the fake. It says
+  nothing about IMG-01, IMG-02 or either judge candidate.
+- **The live transports remain unproven against real providers.** Their URLs, headers and bodies
+  are asserted against documented contracts, not observed responses.
+- Carried forward: hyphenated package directory with `tests/conftest.py`; `shasum -a 256` in place
+  of `sha256sum`; pytest/PyYAML in a throwaway virtualenv outside the repository.
+- No provider, model or evaluator was contacted. No account was funded and no terms accepted.

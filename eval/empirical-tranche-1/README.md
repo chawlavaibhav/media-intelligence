@@ -22,6 +22,12 @@ and each one has a test that confirms it refuses.
 
 A failed gate stops downstream spend automatically. Retries authorised: **0**.
 
+Spend is **cumulative across processes**. It lives in a gitignored append-only ledger under
+`eval/runs/tranche-1/<run-id>/`, keyed to the RUN rather than to the authorisation file, and is
+reconstructed from disk on every read. Two ceilings apply: **USD 10.00** total, absolute, and
+**USD 6.00** for qualification inside it — enforced even when the authorisation names the full
+ten. A-TEXT gets only what qualification left.
+
 A sixth guard sits below all of them: every payload is run through its shape's blind check
 **before dispatch**, and a payload that fails is refused rather than sent. A target that reaches
 the wire has already destroyed the measurement, and no later assertion can undo it.
@@ -60,6 +66,9 @@ python3 eval/empirical-tranche-1/text_qualification/qualify_text.py \
   --fake-live --authorisation <path> --out <path>
 python3 eval/empirical-tranche-1/atex/run_atex.py \
   --fake-live --authorisation <path> --out <path>
+
+# THE CROSS-PROCESS REHEARSAL — the full lifecycle in real separate interpreters.
+python3 eval/empirical-tranche-1/rehearse_cross_process.py
 
 # the tests
 python3 -m pytest -q eval/empirical-tranche-1/tests
@@ -124,6 +133,8 @@ which exercises the real harness boundary rather than asserting the rule in pros
 | `protected-baselines.sha256` | pre-EMP-001 fingerprints of every protected artifact |
 | `text_qualification/` | Latin pack builder, renderer, perceptibility, qualification runner |
 | `atex/` | four frozen items, their contract, the gated runner |
-| `tests/` | budget, pack, perceptibility, preflight, blind-payload, gate-order controls |
+| `spend_ledger.py` | durable cumulative tranche budget; both ceilings; fail-closed |
+| `rehearse_cross_process.py` | the full lifecycle across real subprocesses, zero network |
+| `tests/` | budget, ledger, pack, perceptibility, preflight, blindness, gate-order, handoff |
 | `VERIFICATION-PRE-SPEND.md` | fresh command output from the pre-spend gate |
 | `EVAL-012-ZERO-SPEND-READINESS.md` | the readiness verdict returned to the Controller |
