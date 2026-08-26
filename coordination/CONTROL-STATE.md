@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 26 Aug 2026 — four pre-execution programs reviewed; one bounded Eval integration correction active.
+**Updated:** 26 Aug 2026 — EVAL-011 correction complete; final Repository Governor review active.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with current Controller decisions and this file, the latest Controller decision governs until the next Repository Governor refresh.
 
@@ -14,16 +14,17 @@ Merged research/state already on `main`:
 - RES-003 evidence/topology research;
 - GOV-003 repository-coherence review.
 
-Four final pre-execution programs returned unmerged:
+Final pre-execution branches returned unmerged:
 - CANON-010 @ `3cf29790dfc0ae34a9ded2a42ad5b8774fb36d58`;
-- EVAL-009 @ `718ba01927d11632c4957096f2d0144d8095c488`;
+- EVAL-009 historical worker output @ `718ba01927d11632c4957096f2d0144d8095c488`;
 - RES-004 @ `2dc4796ff0916172855e29d0fc02a17a9d9a4201`;
-- EVAL-010 @ `8a8fc0915bbf8acfe193cef854e9e0fbe64239dc`.
+- EVAL-010 @ `8a8fc0915bbf8acfe193cef854e9e0fbe64239dc`;
+- EVAL-011 corrected live Eval proposal @ `e300999b6e02c58e1d9bfd48a3963b3e5293ff51`.
 
-Authoritative joint disposition:
+Authoritative joint Controller disposition:
 - `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md`
 
-The architecture is accepted far enough to stop broad design work. One bounded Eval reconciliation is required before Governor review.
+EVAL-011 completed the bounded integration correction required by that decision. No broad research round is open.
 
 ## Accepted request-side freeze target
 
@@ -59,12 +60,21 @@ Accepted v2 semantics include:
 
 Production Requirement Profile remains provider/model/routing free.
 
-Condition architecture has **13 families**. No synthetic complexity score. Requested operation and workflow mode are separate condition/provenance axes.
+Condition architecture is corrected to **13 families**; a naive binary cartesian product would be **8,192 cells**. No synthetic complexity score. Requested operation and workflow mode remain separate.
 
 Scientific hypothesis roster target:
 - **12 core question slots + 2 reserve slots**;
 - slots are scientific questions, not provider commitments;
 - sourcing cannot silently add/delete questions.
+
+Staged execution from EVAL-011:
+- **Q:** evaluator/material qualification — 0 model generations;
+- **A:** admission/discrimination screen — 90 model generations;
+- **B:** deeper benchmark — up to 404 additional generations for survivors;
+- **A+B ceiling:** 494 generations;
+- **C:** end-to-end outcomes/CpAO — 32 outcome attempts, with generation count dependent on the selected production topology.
+
+The old 494/5,515/188 figures remain design ceilings/forecast inputs, not an approved paid tranche.
 
 ## Accepted Resources freeze target
 
@@ -90,38 +100,38 @@ Four controlled-pack families survive. Structural requirements are accepted, but
 
 CC-BY-NC remains unauthorised for commercial empirical material absent explicit disposition. Request-corpus/UGC identity images require positive rights/consent before protected benchmark use.
 
-## EVAL-010 supply state
+## EVAL-010 / EVAL-011 supply state
 
-EVAL-010 is accepted as **partial supply evidence**:
-- 2/26 candidate rows currently have fully verified identity + route + billing unit + price under its strict evidence rule;
-- that does NOT mean only two models are accessible;
-- 19 further rows have substantial provider-authorised route/identity evidence but incomplete verified pricing;
-- fal/direct wrapper equivalence cannot be assumed;
-- the reported ~99% Hindi/Bengali OpenAI accuracy claim remains unverified and non-load-bearing;
-- seeded and unseeded routes require different reproducibility interpretation;
-- `Frontier Clouds` service identity remains unresolved in repository evidence.
+EVAL-010 remains **partial supply evidence**. EVAL-011 reconciles it to the scientific roster without changing admission:
+- 12 of 14 slot identities are provider-authorised/resolved;
+- IMG-04 and AUD-03 remain unresolved/version-mismatched rather than silently substituted;
+- 0 scientific slots were deleted for sourcing convenience;
+- price completeness remains insufficient for a paid tranche;
+- `Frontier Clouds` service identity remains unresolved;
+- seeded and unseeded routes require distinct reproducibility semantics;
+- direct and aggregator wrappers may expose materially different controls.
 
-Controller independently clarified the Google shorthand: `$0.067 per 1K image` means approximately $0.067 per **generated 1K-resolution image**, not per thousand images. Route-specific billing units must remain route-specific.
+The reported ~99% Hindi/Bengali OpenAI accuracy claim remains unverified and non-load-bearing.
 
-## Active assignment — EVAL-011 only
+Controller price clarification remains:
+- Nano Banana 2 `$0.067` is approximately per **generated 1K-resolution image**, not per thousand images;
+- Veo 3.1 Lite `$0.05` is route-specific and must not be generalized across sibling APIs/routes.
+
+## Active assignment — GOV-004 only
 
 Task:
-- `eval/tasks/EVAL-011-PRE-EXECUTION-INTEGRATION-CORRECTION.md`
+- `governance/tasks/GOV-004.md`
 
 Branch:
-- `work/eval-011-pre-execution-integration`
+- `work/gov-004-final-pre-execution-review`
 
 Purpose:
-- reconcile EVAL-009's 13-vs-12 condition count inconsistency;
-- consume CANON-010's exact request vocabulary;
-- stage the `VID-05` CpAO question to the end-to-end outcome layer;
-- reconcile seeded/unseeded reproducibility semantics;
-- map scientific slots to EVAL-010 supply evidence without changing admission;
-- replace one monolithic first-run interpretation with staged Q/A/B/C execution counts;
-- separate minimum stage materials from RES-004's full-pack acquisition plan;
-- produce a price-ready staged forecast without guessing missing prices.
+- perform the final bounded repository-coherence review across CANON-010, corrected Eval/EVAL-011, RES-004, EVAL-010 and the Controller integration decision;
+- mechanically check cross-stream counts/invariants where possible;
+- refresh `PROJECT-MEMORY.md` and Governor-authorised current-state documents;
+- return `PASS | PASS WITH NON-BLOCKING NOTES | BLOCK` under the Governor contract.
 
-This is a bounded correction, not another research round.
+The Governor does not certify scientific correctness and may not redesign domain work.
 
 ## Paid execution remains blocked
 
@@ -137,8 +147,12 @@ Not authorised:
 - acquisition/account funding/terms acceptance;
 - Production IR/Planner implementation.
 
+No model is qualified. No subjective/perceptual instrument family is qualified. No current empirical Capability Registry row exists.
+
 ## Next gate
 
-After EVAL-011 returns, one Repository Governor review must inspect CANON-010, corrected Eval, RES-004, EVAL-010 and the Controller integration decision jointly.
+After GOV-004 returns:
+- if `BLOCK`, the Controller routes only the exact coherence defect;
+- if coherence-safe, the Controller integrates/merges the accepted branches and then produces a separately priced first empirical tranche for explicit user approval.
 
-Only after a coherence-safe review may the Controller merge the accepted branches and propose an explicitly priced paid tranche for user approval.
+There is no further broad research round scheduled before that decision.
