@@ -44,7 +44,7 @@ python3 "$VALIDATOR" "$ARCHIVE"
 RC=$?
 echo
 case $RC in
-  0) echo "RESULT: PASS — Eval's emission satisfies the Resources v2 contract (exit 0)";;
+  0) echo "RESULT: PASS — Eval's emission satisfies the current Resources contract (exit 0)";;
   1) echo "RESULT: FAIL — schema violation (exit 1)";;
   2) echo "RESULT: COULD NOT CHECK (exit 2) — this is NOT a pass";;
   *) echo "RESULT: unexpected exit $RC";;

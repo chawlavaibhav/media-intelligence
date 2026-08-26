@@ -2,7 +2,7 @@
 
 **Executed:** 26 Aug 2026 in the cloud session · **Runner:** Python 3.11.15
 **Status:** `implementation_written_AND_executed_in_cloud`
-**Covers:** E-C4–E-C7 corrections and EI-C1–EI-C8 storage integration
+**Covers:** E-C4–E-C7, EI-C1–EI-C8, and the v2.1 cost-ledger micro-fix
 
 All fixtures are dummy/synthetic. No network call, no model call, no paid API call,
 no empirical Registry row.
@@ -196,12 +196,36 @@ DEMO 7 — E-C7: canonical Resources storage handoff
   [PASS] artifact locations are RELATIVE, not machine-specific
          7 artifacts, absolute paths: none
   [PASS] the handoff emission is deterministic across calls
+
+DEMO 8 — cost ledger satisfies the Resources v2.1 minimum contract
+  [PASS] cost ledger file is emitted
+  [PASS] cost ledger is non-empty
+         19 entries
+  [PASS] every ledger entry carries the v2.1 required fields
+         19 entries; missing counts: none
+  [PASS] every ledger entry has an entry id (ledger_entry_id or cost_ref alias)
+         0 entries without an id
+  [PASS] synthetic entries declare basis 'synthetic_test'
+         0 entries with basis ok
+  [PASS] synthetic entries declare synthetic: true
+         0 entries not marked synthetic
+  [PASS] every ledger entry declares immutable: true
+         0 entries not marked immutable; a correction must be a NEW entry, never an edit
+  [PASS] every attempt cost_ref resolves to a ledger entry
+         0 unresolved
+  [PASS] every measurement evaluator_cost_ref resolves
+         0 unresolved
+  [PASS] no cost_ref is an inline number
+         cost is a REFERENCE to an immutable entry, never a number that can be silently recomputed from a price list that has since changed
+  [PASS] generation and evaluator costs are SEPARATE ledger entries
+         kinds: ['evaluator', 'generation']
+  [PASS] the fabricated-amount disclaimer survives in the data
   [PASS] no routing score or weight was computed
   [PASS] generation and evaluator costs are separate lines
          gen=5.0 eval=0.121
 
 ==========================================================================
-RESULT: 95/95 checks passed
+RESULT: 107/107 checks passed
 Registry rows created: 0  (must be 0)
 Paid API calls made:   0
 ==========================================================================

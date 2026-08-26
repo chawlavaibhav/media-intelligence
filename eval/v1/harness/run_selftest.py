@@ -629,6 +629,61 @@ def main():
     _second = h.emit_artifacts()
     check("the handoff emission is deterministic across calls", _first == _second)
 
+    # ---------------------------------------------------------------- RI-C4
+    print("\nDEMO 8 — cost ledger satisfies the Resources v2.1 minimum contract")
+    ledger_path = outdir / "cost-ledger.jsonl"
+    check("cost ledger file is emitted", ledger_path.exists())
+    ledger = [json.loads(l) for l in ledger_path.read_text().splitlines() if l.strip()]
+    check("cost ledger is non-empty", bool(ledger), f"{len(ledger)} entries")
+
+    # Resources v2.1 REQ_LEDGER. `cost_ref` is an accepted alias for the entry
+    # id, so either satisfies the id requirement.
+    L_REQ = ["amount", "currency", "unit", "recorded_at", "basis", "immutable"]
+    missing = {f: sum(1 for r in ledger if f not in r) for f in L_REQ}
+    missing = {f: n for f, n in missing.items() if n}
+    check("every ledger entry carries the v2.1 required fields", not missing,
+          f"{len(ledger)} entries; missing counts: {missing or 'none'}")
+
+    no_id = [r for r in ledger
+             if "ledger_entry_id" not in r and "cost_ref" not in r]
+    check("every ledger entry has an entry id (ledger_entry_id or cost_ref alias)",
+          not no_id, f"{len(no_id)} entries without an id")
+
+    bad_basis = [r for r in ledger if r.get("basis") != "synthetic_test"]
+    check("synthetic entries declare basis 'synthetic_test'", not bad_basis,
+          f"{len(bad_basis)} entries with basis "
+          f"{sorted({str(r.get('basis')) for r in bad_basis}) if bad_basis else 'ok'}")
+
+    not_synth = [r for r in ledger if r.get("synthetic") is not True]
+    check("synthetic entries declare synthetic: true", not not_synth,
+          f"{len(not_synth)} entries not marked synthetic")
+
+    not_imm = [r for r in ledger if r.get("immutable") is not True]
+    check("every ledger entry declares immutable: true", not not_imm,
+          f"{len(not_imm)} entries not marked immutable; "
+          f"a correction must be a NEW entry, never an edit")
+
+    # Every reference must resolve, and no reference may be an inline number.
+    ids = {r.get("ledger_entry_id", r.get("cost_ref")) for r in ledger}
+    unresolved = [a["attempt_id"] for a in attempts if a["cost_ref"] not in ids]
+    check("every attempt cost_ref resolves to a ledger entry", not unresolved,
+          f"{len(unresolved)} unresolved")
+    ev_unresolved = [m["measurement_id"] for m in meas
+                     if m.get("evaluator_cost_ref") and m["evaluator_cost_ref"] not in ids]
+    check("every measurement evaluator_cost_ref resolves", not ev_unresolved,
+          f"{len(ev_unresolved)} unresolved")
+    inline = [a["attempt_id"] for a in attempts if isinstance(a["cost_ref"], (int, float))]
+    check("no cost_ref is an inline number", not inline,
+          "cost is a REFERENCE to an immutable entry, never a number that can "
+          "be silently recomputed from a price list that has since changed")
+
+    check("generation and evaluator costs are SEPARATE ledger entries",
+          len({r.get("kind") for r in ledger}) >= 2,
+          f"kinds: {sorted({str(r.get('kind')) for r in ledger})}")
+    check("the fabricated-amount disclaimer survives in the data",
+          all("SYNTHETIC" in str(r.get("source", "")).upper()
+              or "synthetic" in str(r.get("note", "")).lower() for r in ledger))
+
     om = h.operational_metrics()
     check("no routing score or weight was computed",
           om["routing_scores_computed"] == 0)

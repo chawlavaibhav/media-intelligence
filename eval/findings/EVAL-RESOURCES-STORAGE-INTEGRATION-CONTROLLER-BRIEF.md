@@ -216,3 +216,153 @@ contract is merge-ready without E2** — that was the point of separating them.
 
 Nothing here authorises spend, and **no instrument may be described as
 qualified**.
+
+---
+
+# Final v2.1 ledger closure
+
+**Task:** `eval/tasks/EVAL-RESOURCES-LEDGER-MICROFIX.md` · **Date:** 26 Aug 2026
+**₹0 spent · 0 paid calls · 0 Registry entries · 0 instruments qualified · not merged.**
+
+## What this was
+
+A **branch-order race, not a new defect.** Eval `adac747` validated cleanly against Resources
+`e974c81` (schema v2). Resources then tightened the cost-ledger contract in `db54e97` (schema
+**v2.1**) and re-validated Eval's existing archive against the newer rules.
+
+All four core entity files — attempts, artifacts, measurements, acceptances — still validated
+cleanly. Every remaining violation was in the synthetic cost ledger.
+
+## SHAs
+
+| | |
+|---|---|
+| Previous Eval SHA | `adac747` |
+| Resources SHA validated against | `db54e972a8a0d593e3c3455f630641906e7a58f6` |
+| Resources schema version | **v2.1** |
+| Required minimum | `db54e972a8a0d593e3c3455f630641906e7a58f6` ✅ met exactly |
+
+## RED — test written first, and it failed for the predicted reason
+
+The self-test was extended **before** `_ledger_line()` was touched, asserting the v2.1 minimum
+ledger contract. It failed, and the failure reproduced Resources' arithmetic exactly:
+
+```text
+DEMO 8 — cost ledger satisfies the Resources v2.1 minimum contract
+  [PASS] cost ledger file is emitted
+  [PASS] cost ledger is non-empty                     19 entries
+  [FAIL] every ledger entry carries the v2.1 required fields
+         19 entries; missing counts: {'unit': 19, 'recorded_at': 19,
+                                      'basis': 19, 'immutable': 19}
+  [FAIL] synthetic entries declare basis 'synthetic_test'
+         19 entries with basis ['None']
+  [FAIL] synthetic entries declare synthetic: true     19 entries not marked synthetic
+  [FAIL] every ledger entry declares immutable: true   19 entries not marked immutable
+  ...
+RESULT: 103/107 checks passed        (exit 1)
+```
+
+**4 failing checks over 19 entries → 4 missing fields + 2 consequent invalidities = Resources'
+reported 19 × 6 = 114 violations.** The RED test reproduced their count independently before any
+fix was written, which is the point of writing it first.
+
+## GREEN — the minimal change
+
+One function, `_ledger_line()` in `eval/v1/harness/harness.py`:
+
+```python
+"unit": "call",
+"recorded_at": self._synthetic_timestamp(),   # deterministic ISO-8601 UTC
+"basis": "synthetic_test",
+"synthetic": True,
+"immutable": True,
+```
+
+plus a small `_synthetic_timestamp()` helper: a **fixed base date plus the harness clock tick**.
+Never wall-clock — the handoff must stay byte-identical across runs, and a real timestamp would put
+nondeterministic drift into the very file whose reproducibility is under test. **Confirmed
+byte-stable across consecutive runs.**
+
+The existing disclaimer is unchanged and now sits in contract-named fields rather than only in prose:
+`basis: synthetic_test`, `synthetic: true`, `source: SYNTHETIC_SELFTEST_LEDGER`, and the note
+*"Fabricated for harness self-tests. NOT a provider price. No real rate has been obtained — see
+E2-BLOCK-01."* **No real-provider cost source was invented.**
+
+Nothing else was touched. Attempts, artifacts, measurements and acceptances were already conformant
+and were not modified.
+
+## Self-test result
+
+```text
+python3 eval/v1/harness/run_selftest.py
+RESULT: 107/107 checks passed        (exit 0)
+```
+
+## Cross-branch gate — the completion criterion
+
+```text
+bash eval/v1/harness/run_cross_branch_validation.sh
+
+cost-ledger entries:   19
+trials:                5  (one call = one trial)
+
+[PASS] one call = one trial: every attempt_id maps to a unique trial_id
+[PASS] lane and status use the frozen machine vocabularies
+[PASS] every cost_ref resolves to an immutable cost-ledger entry
+[PASS] no provider failure is laundered into a measurement absence
+[PASS] every failed/refused attempt is preserved individually with its reason
+[PASS] status 'ok' <=> exactly one artifact; any other status <=> none
+[PASS] repeats and retries are distinct; no repeat appears in a retry chain
+[PASS] observation units use the canonical vocabulary verbatim
+[PASS] derived artifacts inherit their parent's trial and attempt
+[PASS] no output is stored more than once
+[PASS] every attempt carries a cost reference
+[PASS] fan-out 7.00 measurements per artifact
+
+check_empirical_archive.py EXIT = 0
+```
+
+**Violations by category, counted from the validator's own output:**
+
+| Category | Violations |
+|---|---:|
+| attempts | **0** |
+| artifacts | **0** |
+| measurements | **0** |
+| acceptances | **0** |
+| cost ledger | **0** |
+| **Total `[FAIL]` lines** | **0** |
+
+The validator was invoked from a detached worktree of the Resources branch. It was **not copied into
+Eval and not weakened**.
+
+## All prior suites re-run
+
+11 Eval suites, **0 failing**: capability contract (36/36) and its 20 controls; threshold register
+(0 approved) and its 7 controls; cost calculator self-test; CV fixture pack (102/102); bank (100
+items, 20/20 criticals) and its 12 controls; Registry schema and its 9 controls; harness self-test
+(107/107).
+
+## One recommendation put back to you
+
+Resources noted — as a **suggestion, not a gate** — that synthetic entries carrying
+`currency: "USD"` with amounts like `0.01` "read as a real dollar figure at a glance", and
+suggested the ISO test code `XTS`.
+
+**I left currency unchanged**, because the micro-fix task states `USD` is not a merge blocker and
+directs switching to `XTS` only if already supported by the self-test — it is not; currency was
+previously unasserted — and not to broaden the task.
+
+**My recommendation is to accept it later.** The disclaimer would then live in the data rather than
+beside it, which is the same principle that motivated `basis` and `immutable`. It is a one-line
+change plus a self-test assertion, and it belongs in whichever pass next touches the ledger — not
+smuggled into a micro-fix.
+
+## Final state
+
+| | |
+|---|---|
+| Eval commit | `d48d46c` |
+| Branch | `work/eval-v1-overnight` — **not merged** |
+| Cross-branch gate | **exit 0**, zero violations in all five categories |
+| Spend | ₹0 · 0 paid calls · 0 Registry entries · 0 instruments qualified |

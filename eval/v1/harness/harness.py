@@ -14,6 +14,7 @@ produces a number that LOOKS like evidence and is not.
 """
 from __future__ import annotations
 import collections, json, pathlib, uuid
+from datetime import datetime, timedelta, timezone
 from typing import Callable
 
 from models import (GenerationProvenance, Measurement, RegistryRow,
@@ -96,13 +97,40 @@ class Harness:
         """
         ref = self._new_id("cost", f"{attempt_id}|{kind}|{len(self.cost_ledger)}")
         self.cost_ledger[ref] = {
+            # `cost_ref` is the entry's own id. Resources v2.1 names the field
+            # `ledger_entry_id` and accepts `cost_ref` as an agreed alias.
             "cost_ref": ref, "attempt_id": attempt_id, "kind": kind,
             "amount": amount, "currency": currency,
+            # --- Resources v2.1 required ledger fields (RI-C4) ---------------
+            # An amount without a unit is not a cost: 0.01 per call, per second
+            # and per image are three different numbers.
+            "unit": "call",
+            # Deterministic synthetic timestamp. Derived from the harness clock
+            # against a FIXED base, so the emission stays byte-stable across
+            # runs - a wall-clock value would put nondeterministic drift into a
+            # file whose reproducibility is itself under test.
+            "recorded_at": self._synthetic_timestamp(),
+            # The field that stops a fabricated figure being read as a bill.
+            "basis": "synthetic_test",
+            "synthetic": True,
+            # A correction is a NEW entry, never an edit to this one.
+            "immutable": True,
             "source": "SYNTHETIC_SELFTEST_LEDGER",
             "note": ("Fabricated for harness self-tests. NOT a provider price. "
                      "No real rate has been obtained - see E2-BLOCK-01."),
         }
         return ref
+
+    def _synthetic_timestamp(self) -> str:
+        """Deterministic ISO-8601 UTC value for synthetic ledger entries.
+
+        A fixed base plus the current clock tick. Never wall-clock: the handoff
+        must be byte-identical across runs, and a real timestamp would break
+        that on every emission.
+        """
+        base = datetime(2026, 8, 26, tzinfo=timezone.utc)
+        return (base + timedelta(seconds=self._t)).isoformat().replace(
+            "+00:00", "Z")
 
     # ---------------------------------------------------------------- register
     def register_instrument(self, instrument: Instrument):
