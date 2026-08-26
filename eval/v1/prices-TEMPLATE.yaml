@@ -1,0 +1,61 @@
+# =============================================================================
+# PRICE INPUT TEMPLATE for eval/v1/cost_forecast.py
+# =============================================================================
+# Fill each `value` from the OFFICIAL provider pricing page, record the source
+# URL and the date you read it, then run:
+#
+#     python3 eval/v1/cost_forecast.py --prices eval/v1/prices-<date>.yaml
+#
+# RULES
+# 1. Official provider pricing pages only. Reseller blogs, cost calculators and
+#    "cheap access" sites are leads, never evidence.
+# 2. Record source_url and read_date for every cell. A price without a date is
+#    not usable - these prices move.
+# 3. Leave a cell null if you cannot verify it. The calculator refuses to total
+#    a partially-resolved forecast rather than quietly under-reporting.
+# 4. Normalise to ONE unit per lane before entering (see unit_note per lane).
+# 5. Currency: enter in USD and record the INR conversion separately. Budgets
+#    are set in INR and providers quote in USD; an unlabelled number is a bug.
+# =============================================================================
+
+currency: USD
+inr_per_usd:
+  value: null
+  source_url: null
+  read_date: null
+
+generation:
+  # unit_note: cost of ONE output at the benchmark's declared conditions.
+  image: null       # per image, at benchmark resolution
+  video: null       # per output clip - convert per-second pricing x clip length
+  native_av: null   # per output clip WITH audio - often a different tier
+  lipsync: null     # per transformation, at benchmark clip length
+  tts: null         # per output read - convert per-character pricing x script length
+
+generation_sources:
+  image: {source_url: null, read_date: null, model_api_id: null, billing_unit: null}
+  video: {source_url: null, read_date: null, model_api_id: null, billing_unit: null}
+  native_av: {source_url: null, read_date: null, model_api_id: null, billing_unit: null}
+  lipsync: {source_url: null, read_date: null, model_api_id: null, billing_unit: null}
+  tts: {source_url: null, read_date: null, model_api_id: null, billing_unit: null}
+
+evaluator:
+  # Cost per SINGLE evaluator call. Kept separate from generation on purpose.
+  vlm: null            # one structured visual VLM judgement
+  ocr: null            # one transcription call (per image or per sampled frame)
+  asr: null            # one speech-to-text call
+  deterministic: 0.0   # local CV/geometry/file probing - no external API cost
+
+evaluator_sources:
+  vlm: {source_url: null, read_date: null, model_api_id: null}
+  ocr: {source_url: null, read_date: null, model_api_id: null}
+  asr: {source_url: null, read_date: null, model_api_id: null}
+
+# Expected to DOMINATE every other line. Do not omit it.
+# hours x hourly rate, including any first-language reader time.
+human_verification_total: null
+human_verification_basis:
+  hours: null
+  hourly_rate: null
+  currency: null
+  includes_first_language_reader: null

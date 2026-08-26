@@ -1,0 +1,146 @@
+# =============================================================================
+# Qualification result schema — the record an instrument earns, or fails to
+# =============================================================================
+# Task: E3 · Date: 2026-08-26 · STATUS: PROPOSED SCHEMA, NOT IN FORCE
+#
+# This describes a record ABOUT AN INSTRUMENT (a checker), never about a
+# generator. A qualification record says "we may trust this judge, for this
+# judgement, under these conditions". It says nothing about any model's ability.
+#
+# NO REAL RECORD EXISTS. Zero instruments are qualified.
+# =============================================================================
+
+schema_version: v1-draft
+record_type: instrument_qualification
+status: PROPOSED_NOT_IN_FORCE
+
+fields:
+
+  # --- identity of the instrument ------------------------------------------
+  record_id: "<string>  e.g. qual_0001"
+  instrument_id: "<string>  exact model/tool identifier as published"
+  instrument_version: >-
+    <string>  Version, not just name. A checker must be re-measured when its
+    version changes. An instrument that cannot be version-pinned may only ever
+    reach `provisional`.
+  configuration_hash: >-
+    <sha256>  Covers prompt text, thresholds, parameters, normalisation rule
+    and payload shape. CHANGING ANY OF THESE MAKES A DIFFERENT INSTRUMENT.
+    This field is what stops a modified evaluator prompt being reported as the
+    same experiment - an EXPERIMENT MUTATION stop made durable in the data.
+  instrument_family: "<1..6>"
+  judgement_family: >-
+    <string>  The specific judgement qualified, e.g. `devanagari_exactness`,
+    `person_identity_match`, `within_clip_text_stability`. Qualification NEVER
+    generalises beyond this value.
+
+  # --- what it was qualified on --------------------------------------------
+  pack_ref: "<path>  the qualification pack used"
+  pack_version: "<string>"
+  pack_hash: "<sha256>  the exact bytes judged"
+  conditions:
+    description: >-
+      Everything held fixed. A qualification is only valid inside these
+      conditions. Clean studio renders do not transfer to degraded material.
+    example_fields: [resolution, script, surface_type, clip_duration_s, fps,
+                     language, lighting, degradation_class]
+
+  # --- GATE results: does it correctly say pass or fail? --------------------
+  gate:
+    n_opportunities: >-
+      <int>  INDEPENDENT opportunities, not items and not trials. Four
+      perturbations of one base word are ONE opportunity. Count opportunities.
+    false_passes: "<int>  called broken work correct. The dangerous direction."
+    false_fails: "<int>  called correct work broken. Expensive, not dangerous."
+    refusals: "<int>  declined to answer. Reported separately, never folded in."
+    gate_verdict: "<pass | fail>"
+    gate_rule_ref: "<path#section>  the exact predicate applied"
+
+  # --- DIAGNOSIS results: does it correctly say WHAT broke? ----------------
+  diagnosis:
+    description: >-
+      Stored SEPARATELY from gate. A checker recorded at 14/14 on verdicts also
+      silently corrected a misspelling - gate perfect, diagnosis incomplete.
+      Routing consumes the gate; repair consumes the diagnosis. They may never
+      share one number.
+    n_scored: "<int>"
+    correct_class: "<int>"
+    wrong_class: "<int>"
+    no_class_offered: "<int>"
+    silent_correction: >-
+      <int>  Instrument reported the INTENDED string rather than the string
+      actually present. Tracked as its own count because it is invisible in a
+      gate score and is the mechanism behind false passes.
+
+  # --- stability ------------------------------------------------------------
+  repeats:
+    full_passes: "<int>  >=3 required for any status above `screened`"
+    shapes_covered: "<list>  e.g. [transcribe, verdict]"
+    repeat_consistency: "<float 0-1>  proportion of items answered identically"
+    consistency_threshold_applied: "<float>"
+    threshold_status: >-
+      PROPOSED_NOT_EMPIRICALLY_BACKED unless a Controller approval ref is given.
+
+  # --- statistical honesty --------------------------------------------------
+  reference_calculation:
+    description: >-
+      OPTIONAL and never part of what passing means. Present only for sizing.
+    iid_reference_upper_bound_95pct: "<float | null>"
+    independence_status: >-
+      NOT ESTABLISHED   # This literal value is expected. If any record ever
+                        # claims independence IS established, it must name the
+                        # evidence that established it.
+    caveat: >-
+      A sizing calculation under an iid/exchangeable Bernoulli model the pack
+      does not establish. NOT the checker's real-world error rate. Errors may
+      remain correlated across words, marks, classes and lexical patterns.
+
+  # --- blind verification ---------------------------------------------------
+  blind_check:
+    required: "<true | false>"
+    performed_before_run: "<true | false>"
+    method: "<allow-list failing closed, plus forbidden-script sweep>"
+    result: "<clean | leak_detected>"
+    note: >-
+      A leak cannot be detected after the fact from responses. If this was not
+      performed BEFORE the run, the run is void, not merely caveated.
+
+  # --- human involvement ----------------------------------------------------
+  human_reference:
+    used: "<true | false>"
+    n_reviewers: "<int>"
+    qualification: "<e.g. Hindi first-language reader>"
+    what_the_human_decided: >-
+      <string>  Be precise. In the Devanagari pack the human decided whether a
+      TARGET WORD is valid Hindi and whether a rendered difference is
+      perceptible - NOT whether an image matched its target. That label is true
+      by construction.
+    epistemic_status: >-
+      <string>  One reviewer is PROVENANCE, NOT GROUND TRUTH. Within-reader
+      cross-question agreement is not a second reader.
+
+  # --- outcome --------------------------------------------------------------
+  status: >-
+    <qualified | provisional | screened_not_qualified | disqualified | unmeasurable>
+  status_rules:
+    qualified: "Passed the family gate AND completed >=3 full repeats."
+    provisional: "Instrument exists, calibration incomplete or disputed. MAY NOT score the Registry."
+    screened_not_qualified: "One pass only. A ranking, never a status. MAY NOT score the Registry."
+    disqualified: "Failed a disqualifying gate. Record WHY - a failure is informative."
+    unmeasurable: "Protocol could not be run; material or human reference does not exist. Honest outcome."
+  registry_use_permitted: >-
+    <true | false>  TRUE only when status == qualified. No Registry row may cite
+    an instrument whose status is provisional, screened_not_qualified or
+    required_but_no_calibrated_instrument.
+  qualified_date: "<YYYY-MM-DD>"
+  requalification_triggers:
+    - instrument_version_change
+    - configuration_hash_change
+    - pack_version_change
+    - conditions_outside_qualified_range
+    - scheduled_interval_elapsed
+  cost:
+    calls: "<int>"
+    currency: "<string>"
+    spend: "<number>"
+    human_hours: "<number>"

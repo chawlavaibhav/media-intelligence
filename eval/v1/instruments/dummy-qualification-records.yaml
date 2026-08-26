@@ -1,0 +1,137 @@
+# =============================================================================
+# DUMMY qualification records — SYNTHETIC. NOT EVIDENCE. NOT A REAL RESULT.
+# =============================================================================
+# Purpose: show the schema populated across every outcome, so the harness and a
+# reviewer can both see what each status looks like BEFORE any real run.
+#
+# Every instrument_id below is a fabricated placeholder. No checker was called.
+# No model was called. These records must never be read as results, and the
+# harness must refuse to promote any record carrying `SYNTHETIC: true`.
+# =============================================================================
+
+SYNTHETIC: true
+authorises_nothing: true
+real_qualifications_in_this_repository: 0
+
+records:
+
+  # --- a PASS, and what it does and does not license ------------------------
+  - record_id: dummy_qual_0001
+    SYNTHETIC: true
+    instrument_id: "PLACEHOLDER-vision-checker-A"
+    instrument_version: "0.0.0-dummy"
+    configuration_hash: "0000000000000000000000000000000000000000000000000000000000000000"
+    instrument_family: 1
+    judgement_family: devanagari_exactness
+    pack_ref: eval/battery/devanagari-exactness/
+    pack_version: "validated-96"
+    conditions: {script: devanagari, surface_type: rendered_clean, resolution: "1600x900"}
+    gate:
+      n_opportunities: 33
+      false_passes: 0
+      false_fails: 2
+      refusals: 0
+      gate_verdict: pass
+      gate_rule_ref: "battery/devanagari-exactness/METRICS-AND-QUALIFICATION.md#rule-1"
+    diagnosis:
+      n_scored: 48
+      correct_class: 41
+      wrong_class: 5
+      no_class_offered: 2
+      silent_correction: 3
+    repeats:
+      full_passes: 3
+      shapes_covered: [transcribe, verdict]
+      repeat_consistency: 0.97
+      consistency_threshold_applied: 0.95
+      threshold_status: PROPOSED_NOT_EMPIRICALLY_BACKED
+    reference_calculation:
+      iid_reference_upper_bound_95pct: 0.0868
+      independence_status: NOT ESTABLISHED
+    blind_check: {required: true, performed_before_run: true, method: allowlist_fail_closed_plus_script_sweep, result: clean}
+    status: qualified
+    registry_use_permitted: true
+    what_this_would_license: >-
+      Naming this instrument as the gate for devanagari_exactness on CLEAN
+      RENDERED surfaces only. It would NOT license calling it accurate, would
+      NOT transfer to photographed signage or to malformed generated glyphs, and
+      the 3 silent corrections would be a standing warning on its DIAGNOSIS use
+      even though its gate passed.
+
+  # --- a DISQUALIFICATION: one false pass ends it ---------------------------
+  - record_id: dummy_qual_0002
+    SYNTHETIC: true
+    instrument_id: "PLACEHOLDER-vision-checker-B"
+    instrument_version: "0.0.0-dummy"
+    configuration_hash: "1111111111111111111111111111111111111111111111111111111111111111"
+    instrument_family: 1
+    judgement_family: devanagari_exactness
+    pack_version: "validated-96"
+    gate:
+      n_opportunities: 33
+      false_passes: 4
+      false_fails: 0
+      refusals: 0
+      gate_verdict: fail
+      gate_rule_ref: "battery/devanagari-exactness/METRICS-AND-QUALIFICATION.md#rule-1"
+    diagnosis: {n_scored: 48, correct_class: 30, wrong_class: 8, no_class_offered: 10, silent_correction: 9}
+    repeats: {full_passes: 1, shapes_covered: [verdict], repeat_consistency: null}
+    status: disqualified
+    registry_use_permitted: false
+    why_informative: >-
+      A checker that autocorrects cannot be a gate however good its other
+      numbers look. Note the shape - low false FAILS and high false PASSES is
+      the signature of a permissive checker, and permissiveness reads as
+      accuracy on any test made only of correct examples. This is why a
+      qualification pack must be half broken.
+
+  # --- SCREENED ONLY: a ranking is not a status ----------------------------
+  - record_id: dummy_qual_0003
+    SYNTHETIC: true
+    instrument_id: "PLACEHOLDER-ocr-engine-C"
+    instrument_version: "0.0.0-dummy"
+    configuration_hash: "2222222222222222222222222222222222222222222222222222222222222222"
+    instrument_family: 1
+    judgement_family: devanagari_exactness
+    gate: {n_opportunities: 33, false_passes: 0, false_fails: 1, refusals: 0, gate_verdict: pass}
+    repeats: {full_passes: 1, shapes_covered: [transcribe], repeat_consistency: null}
+    status: screened_not_qualified
+    registry_use_permitted: false
+    why: >-
+      Zero false passes on ONE pass. That is a shortlisting signal, not a
+      status. Stability is a property of the instrument and is not inherited
+      from leading a screen. Three full repeats in both shapes are required
+      before any status is assigned.
+
+  # --- UNMEASURABLE: an honest outcome, not a failure ----------------------
+  - record_id: dummy_qual_0004
+    SYNTHETIC: true
+    instrument_id: "PLACEHOLDER-vlm-D"
+    instrument_version: "0.0.0-dummy"
+    instrument_family: 3
+    judgement_family: logo_wordmark_fidelity
+    status: unmeasurable
+    registry_use_permitted: false
+    blocker: "No controlled brand-mark reference pack exists. The protocol cannot be run at all."
+    registry_consequence: >-
+      Every capability judged by this instrument carries
+      calibration_status: required_but_no_calibrated_instrument. The Planner
+      must treat "measured to fail" and "cannot be measured" as DIFFERENT
+      routing inputs. Collapsing them routes as if unmeasured risk were absent.
+
+  # --- PROVISIONAL: exists, cannot be pinned -------------------------------
+  - record_id: dummy_qual_0005
+    SYNTHETIC: true
+    instrument_id: "PLACEHOLDER-hosted-vlm-E"
+    instrument_version: "unpinnable"
+    instrument_family: 3
+    judgement_family: person_identity_match
+    gate: {n_opportunities: 24, false_passes: 0, false_fails: 3, refusals: 1, gate_verdict: pass}
+    repeats: {full_passes: 3, shapes_covered: [match, nonmatch], repeat_consistency: 0.96}
+    status: provisional
+    registry_use_permitted: false
+    why: >-
+      Passed its gate and its repeats, but the endpoint offers no version
+      pinning, so the model can change underneath the record with no signal.
+      Provisional is the correct ceiling for an unpinnable instrument - and a
+      concrete reason to prefer a pinnable endpoint even at higher cost.

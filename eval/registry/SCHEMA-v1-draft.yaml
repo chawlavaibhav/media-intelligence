@@ -1,0 +1,222 @@
+# =============================================================================
+# Capability Registry — Schema v1 DRAFT
+# =============================================================================
+# Task: E5 · Date: 2026-08-26 · Branch: work/eval-v1-overnight
+#
+# STATUS: PROPOSED. NOT IN FORCE. NOT APPROVED.
+# A compatible EXTENSION of eval/battery/CAPABILITY-REGISTRY-SCHEMA-V0-DRAFT.yaml,
+# which itself remains unapproved and deferred by Controller direction. Nothing
+# in V0 is removed or renamed; v1 adds only what the E1 contract and the E5
+# harness make necessary.
+#
+# ZERO ENTRIES HAVE EVER BEEN WRITTEN.
+# =============================================================================
+
+schema_version: v1-draft
+extends: eval/battery/CAPABILITY-REGISTRY-SCHEMA-V0-DRAFT.yaml
+status: PROPOSED_NOT_IN_FORCE
+empirical_entries: 0
+data_file: eval/registry/registry-v1.jsonl
+
+# -----------------------------------------------------------------------------
+# WHAT A ROW IS
+# -----------------------------------------------------------------------------
+# One row = one vendor + model + version + workflow + capability + conditions.
+# Two providers may never share a row. Change any condition -> a new row.
+#
+# A row is a JOINT STATEMENT about the model AND the instrument that judged it.
+# Change the checker and the number changes without the model changing at all.
+# -----------------------------------------------------------------------------
+
+row_fields:
+
+  entry_id: "<string>"
+
+  # --- what was measured against (unchanged from V0) ----------------------
+  provider: "<string>"
+  model: "<string>"
+  version: "<string>   exact version; never 'latest'"
+  endpoint: "<string>"
+  workflow: "<single_call | i2v | keyframe_chain | ref_conditioned | composite>"
+  lane: "<image | video | native_av | lipsync | tts>   # ADDED in v1"
+
+  # --- what property was measured ------------------------------------------
+  capability: "<one of the 36 frozen ids in eval/v1/capability-contract.yaml>"
+  contract_version: "<string>  # ADDED in v1 - which capability contract defined it"
+  difficulty_level: "<int, per that capability's ladder>"
+  observation_unit: "<frame | shot | shot_pair | sequence | whole_asset | asset_set_over_time>"
+  conditions: "<dict - everything held fixed; change any -> new row>"
+  battery_version: "<string>"
+  bank_item_ids: "<list  # ADDED in v1 - exactly which base items produced this>"
+
+  # --- result ---------------------------------------------------------------
+  n_items: >-
+    <int>  INDEPENDENT base items. NOT trials. NOT frames. NOT repeats.
+    MANDATORY. A pass rate reported without n_items is a defect, not a style
+    choice - 14 samples drawn from 4 independent sources overstates confidence
+    roughly threefold, and our own founding study says so about itself.
+  repeats_per_item: "<int>  MANDATORY"
+  trials: "<int>  = distinct trial assets. Frames from one clip are ONE trial."
+  passes: "<int>"
+  pass_rate: "<float | null>"
+  pass_criterion_ref: "<path#predicate>  a tolerance change is a DIFFERENT measurement"
+
+  failed_trials:                 # multiple defects per output permitted
+    - trial_id: "<string>"
+      defects:
+        - term: "<observer's own words>"
+          observed_by: "<instrument | human>"
+  failure_type_counts: "<derived view, generated from failed_trials, never authored>"
+  failure_cooccurrence: >-
+    <derived  # ADDED in v1>  Which defect terms appear TOGETHER on one output.
+    Counting term frequencies cannot express two defects on one output, and a
+    real recorded case was lost that way. Repair selection depends on it.
+
+  # --- absence is not one thing (ADDED in v1) ------------------------------
+  absence_reason: >-
+    <not_applicable | not_measured | instrument_unqualified | generation_failed
+     | refused | null>
+    The Planner must distinguish "measured to fail" from "cannot be measured"
+    from "the provider refused". Collapsing them routes as if unmeasured risk
+    were absent.
+
+  # --- E-C8: UNCERTAINTY. Preserve provenance, never manufacture precision --
+  #
+  # A cell must be able to say EITHER what its uncertainty is and how that was
+  # derived, OR that it was not computed and why. What it must never do is
+  # present a bare point estimate as though it were exact, or carry an interval
+  # whose assumptions are unstated.
+  #
+  # THE PROJECT HAS ALREADY PAID FOR THIS TWICE. A binomial bound was quoted
+  # over four perturbations of one word (correlated items). Then, after that was
+  # fixed, distinct base words were called "independent chances" when a checker
+  # blind to one diacritic is blind to it on every word carrying that diacritic.
+  # Both times the number looked like evidence and was not.
+  uncertainty:
+    status: >-
+      <computed | not_computed>  MANDATORY. There is no third option and no
+      default. A row with neither an interval nor a stated reason is malformed.
+
+    # --- when status == computed ---------------------------------------------
+    method: >-
+      <string>  The exact procedure, e.g. `clopper_pearson_95` or
+      `bootstrap_percentile_95_over_base_items`. A named method, never "95% CI".
+    interval_low: "<float>"
+    interval_high: "<float>"
+    interval_level: "<float>  e.g. 0.95"
+    computed_over: >-
+      <base_items | opportunities>  WHAT the interval was computed over.
+      NEVER trials and NEVER frames. Frames sampled from one clip are one trial;
+      repeats are not independent items.
+    n_used: "<int>  the denominator actually used, stated explicitly"
+    assumptions: >-
+      <list of strings>  Every assumption the method requires, written out.
+      An unstated assumption is the mechanism by which a sizing calculation
+      becomes quoted as a real-world error rate.
+    independence_status: >-
+      <ESTABLISHED | NOT ESTABLISHED>  MANDATORY whenever status == computed.
+      `ESTABLISHED` requires naming the evidence that established it. Absent
+      such evidence the value is `NOT ESTABLISHED`, and then the interval is a
+      REFERENCE CALCULATION FOR SIZING, not a bound on anything.
+    is_reference_calculation_only: >-
+      <bool>  TRUE whenever independence_status is NOT ESTABLISHED. Such a
+      figure may never be quoted as the instrument's or the model's real-world
+      error rate.
+
+    # --- when status == not_computed -----------------------------------------
+    not_computed_reason: >-
+      <independence_not_established | sample_too_small | descriptive_only_result
+       | deterministic_gate_no_probability_model | instrument_unqualified
+       | no_accepted_method>
+      MANDATORY when status == not_computed. `not_computed` is an HONEST and
+      expected outcome, not a defect. In particular:
+      - `deterministic_gate_no_probability_model` is correct for a gate that is
+        a COUNT (zero false passes). It needs no probability model at all, and
+        attaching one would imply an inference nobody made.
+      - `descriptive_only_result` is correct for every capability whose
+        routing_use is descriptive_only - a preference score has no error bar.
+    not_computed_note: "<string>  plain-English explanation for a human reader"
+
+  # --- instrument: the reason this schema exists ---------------------------
+  instrument:
+    id: "<string>"
+    version: "<string>  version, not just name"
+    config_hash: >-
+      <sha256  # ADDED in v1>  Covers prompt, thresholds, parameters and
+      normalisation. CHANGING ANY OF THESE MAKES A DIFFERENT INSTRUMENT.
+      This is Autonomy Policy stop condition 8 - "changing an evaluator prompt
+      and reporting the rerun as the original experiment" - made durable in the
+      data rather than left to worker discipline.
+    role: "<gate | diagnosis>   two accuracies, never one number"
+    deterministic_component: "<string>  which part needs no calibration"
+    calibration_ref: "<qualification record id>"
+    calibration_date: "<date>"
+    calibration_status: >-
+      <calibrated | provisional_uncalibrated | published_calibration_only |
+       deterministic | required_but_no_calibrated_instrument>
+    qualification_record_ref: "<path  # ADDED in v1>"
+
+  registry_write_rule: >-
+    HARD RULE, enforced in code by eval/v1/harness/harness.py: no row may be
+    written while calibration_status is provisional_uncalibrated,
+    screened_not_qualified or required_but_no_calibrated_instrument. Only
+    `calibrated`/`qualified` and `deterministic` may produce a row.
+
+  human_verified_subset:
+    n_trials: "<int>"
+    verifier_qualification: "<e.g. Hindi first-language reader>"
+    agreement_with_instrument: "<float>"
+
+  # --- cost -----------------------------------------------------------------
+  cost:
+    currency: "<string>  MANDATORY - providers quote USD, budgets are INR"
+    price_source: "<url>"
+    price_read_date: "<date>"
+    generation_total: "<float>"
+    transform_total: "<float  # ADDED in v1 - lipsync lane consumes, not generates>"
+    evaluator_total: "<float>  NEVER folded into generation cost"
+    human_verification_total: "<float>  expected to dominate"
+    repair_total: "<float | null>  null until a repair loop exists to measure"
+    usd_per_pass: "<float | null>"
+    usd_per_pass_lower_bound: "<float | null>"
+  zero_pass_rule: >-
+    When passes == 0, usd_per_pass is null - never infinity, never a large
+    sentinel - and usd_per_pass_lower_bound carries the cell cost. "Never
+    observed to pass in N trials" and "expensive per pass" are different facts.
+
+  # --- operational ----------------------------------------------------------
+  latency_s: {p50: "<float>", p95: "<float>  mandatory - p50 hides the timeout tail"}
+  reliability:
+    api_error_rate: "<float>"
+    error_classes: "<list of {class, n}>"
+    moderation_block_rate: "<float>"
+    refusal_rate: "<float>  reported separately, never folded into a verdict"
+    reproducibility: {seed_supported: "<bool>", seed_honoured: "<bool>", repeat_agreement: "<float|null>"}
+
+  # --- provenance and freshness --------------------------------------------
+  tested_date: "<date>"
+  sample_source: "<lab | production>"
+  run_ref: "<path to the frozen experiment-run record>"
+  raw_outputs_ref: "<path>"
+  artifact_manifest_ref: "<path  # ADDED in v1 - the E5 storage handoff>"
+  freshness:
+    status: "<current | ageing | stale>   assigned by TRIGGER, not by formula"
+    model_version_at_test: "<string>"
+    retest_triggers: [provider_version_change, instrument_version_change,
+                      scheduled_interval_elapsed, production_failure_spike,
+                      vendor_capability_announcement]
+  no_decay_formula: >-
+    Deliberately absent. Inventing one now would encode a guess about model
+    drift rates as though it were a finding. A rule may be proposed later FROM
+    DRIFT WE HAVE ACTUALLY OBSERVED.
+
+  # --- integrity ------------------------------------------------------------
+  synthetic: >-
+    <bool>  MUST be false for any real row. The harness refuses to promote a
+    synthetic/dummy measurement into a Registry row under any circumstances.
+  routing_use: "<hard_constraint | descriptive_only>  from the capability contract"
+
+no_routing_scores: >-
+  The Registry stores EVIDENCE, never routing scores, weights or rankings.
+  Combining these numbers into a routing decision is the future Production
+  Planner's job and is explicitly out of Eval's scope.
