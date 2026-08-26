@@ -1,0 +1,156 @@
+# Human capture / review / annotation effort — BUDGET INPUTS
+#
+# Task: R4-F of RES-004. Owner: Resources.
+#
+# WHAT THIS IS. Effort inputs for the Controller's budget, expressed in PERSON-HOURS with the
+# assumption behind each figure stated. It is NOT a cost estimate: Resources does not know rates, and
+# inventing one would turn an effort input into a fabricated financial figure.
+#
+# HOW THE NUMBERS WERE DERIVED. Each is a bounded engineering estimate from the work described in
+# CONTROLLED-PACK-REQUIREMENTS-v2.yaml - count of items x a stated per-item time, plus named fixed
+# setup. Every row carries `basis` (what the estimate is built from) and `confidence` as a plain word.
+# No row asserts statistical precision.
+#
+# WHY IT MATTERS BEYOND ACQUISITION. Under the accepted CpAO contract, REQUIRED human review time in
+# the operational path is part of FULLY-LOADED CpAO - the primary business metric. So human effort is
+# not only an acquisition cost; the per-outcome review figure at the bottom feeds the metric itself.
+
+meta:
+  version: v1
+  date: 2026-08-26
+  task: R4-F
+  unit: person_hours
+  currency_rates: NOT_SUPPLIED
+  why_no_currency: >
+    Resources does not know contractor or staff rates, and a made-up rate would convert an honest
+    effort input into a fabricated cost. The Controller applies rates.
+  confidence_vocabulary:
+    firm: "Derived from a count in the frozen requirements times a defensible per-item time."
+    indicative: "Reasonable engineering estimate; the true figure could differ materially."
+    unknown: "Not estimable without information Resources does not have."
+  provisional_dependency: >
+    Every quantity-driven row scales with the PROVISIONAL pack counts. If EVAL-009 sets the
+    protected-role multiplier R=2 (see sizing rule SR-1), the product and person rows roughly DOUBLE.
+
+# ===========================================================================
+acquisition_effort:
+
+  product_pack:
+    pack_id: PACK-PRODUCT-REF
+    quantity_basis: "12 products x 4 controlled views = 48 images (provisional)"
+    line_items:
+      - {activity: "source/borrow 12 products across >=6 categories incl. same-category decoys", hours: 8, confidence: indicative,
+         basis: "sourcing and logistics, not photography"}
+      - {activity: "set up controlled capture rig: fixed lighting, colour reference card, marked angles", hours: 4, confidence: firm,
+         basis: "one-time setup, reused across all products"}
+      - {activity: "capture 48 views", hours: 6, confidence: firm,
+         basis: "~7.5 min per view including repositioning and curved-surface angles"}
+      - {activity: "record declared brand-colour values, lighting, camera/lens per product", hours: 3, confidence: firm,
+         basis: "~15 min per product; this is what makes colour fidelity measurable at all"}
+      - {activity: "manifest, hashing, lineage metadata, reference-to-production-step fields", hours: 3, confidence: firm,
+         basis: "scripted; time is verification not typing"}
+    subtotal_hours: 24
+    doubles_if: "EVAL-009 requires disjoint calibration + qualification pools (R=2)"
+
+  person_pack:
+    pack_id: PACK-PERSON-REF
+    quantity_basis: "8 identities x 4 views x 2 framings = 64 images (provisional)"
+    line_items:
+      - {activity: "recruit 8 consenting identities with recorded diversity and >=1 confusable pair", hours: 10, confidence: indicative,
+         basis: "recruitment is the dominant cost and is people-dependent"}
+      - {activity: "draft and review the consent instrument (internal evaluation use, retention, withdrawal)", hours: 6, confidence: indicative,
+         basis: "MAY REQUIRE LEGAL REVIEW - see RIGHTS-ACQUISITION-PLAN.md. Hours exclude external counsel."}
+      - {activity: "capture sessions, 8 identities", hours: 8, confidence: firm,
+         basis: "~1 hour per identity including setup, 4 views x 2 framings, and consent walkthrough"}
+      - {activity: "consent records stored WITH media; retention and withdrawal handling", hours: 4, confidence: firm,
+         basis: "losing the consent record makes the media unusable even if the media survives"}
+      - {activity: "manifest, hashing, identity-level lineage metadata", hours: 3, confidence: firm}
+    subtotal_hours: 31
+    doubles_if: "R=2 requires identity-level disjointness (~16 identities)"
+    blocked_on: "a human consent decision; Resources cannot obtain consent"
+
+  av_pack:
+    pack_id: PACK-AV-CLEAN
+    quantity_basis: "36 clips = 24 single-speaker + 12 two-speaker (provisional)"
+    line_items:
+      - {activity: "recruit speakers covering English / Hindi / Hinglish incl. 2-speaker pairs", hours: 12, confidence: indicative,
+         basis: "three language conditions plus pairs; harder than the person pack"}
+      - {activity: "script preparation incl. brand names and English-loanword pronunciation", hours: 6, confidence: firm,
+         basis: "the commercially relevant Hinglish content must be deliberately written, not improvised"}
+      - {activity: "recording sessions incl. >=6 clips at >=20s continuous", hours: 14, confidence: firm,
+         basis: "~25 min per clip including retakes; long-form clips cost more"}
+      - {activity: "VERBATIM TRANSCRIPTION, verified, 36 clips", hours: 18, confidence: firm,
+         basis: "~30 min per clip. Distributor-asserted transcripts are not acceptable, so this cannot be skipped."}
+      - {activity: "TURN-BOUNDARY ANNOTATION with speaker attribution, 12 two-speaker clips", hours: 9, confidence: indicative,
+         basis: "~45 min per clip. THE ANNOTATION ALMOST NO PUBLIC SOURCE SHIPS, and what REQ-CAP-26 actually measures."}
+      - {activity: "voice + likeness consent for every speaker, recorded separately", hours: 6, confidence: indicative,
+         basis: "voice is separately protected in several regimes; two facts, not one"}
+      - {activity: "deterministic perturbation set: known audio offsets, channel swaps", hours: 5, confidence: firm,
+         basis: "scripted; produces the only exactly-known ground truth in the speech family"}
+      - {activity: "manifest, hashing, speaker-level lineage metadata", hours: 3, confidence: firm}
+    subtotal_hours: 73
+    note: "THE LARGEST HUMAN-EFFORT ITEM IN THE PLAN. Transcription and turn annotation alone are 27 hours."
+    blocked_on: "consent for likeness AND voice; Resources cannot obtain either"
+
+  commercial_pack:
+    pack_id: PACK-COMMERCIAL
+    quantity_basis: "80 assets = 40 static + 40 video, ~10 campaign groups (provisional)"
+    line_items:
+      - {activity: "identify and approach rights holders for permissioned creative", hours: 20, confidence: unknown,
+         basis: "per-relationship negotiation; genuinely not estimable in advance"}
+      - {activity: "rights/permission documentation per asset or campaign group", hours: 12, confidence: indicative,
+         basis: "ad creative is dense third-party IP: marks, music, talent likeness, stock, often separately licensed"}
+      - {activity: "descriptive metadata: category, market/language, duration, platform, campaign group", hours: 8, confidence: firm,
+         basis: "~6 min per asset. DESCRIPTIVE ONLY - no creative labels."}
+      - {activity: "freeze the 20-asset reserve before any evaluator or Canon work", hours: 1, confidence: firm,
+         basis: "one-way action; cheap to do and impossible to undo"}
+      - {activity: "manifest, hashing, campaign-level lineage metadata", hours: 4, confidence: firm}
+    subtotal_hours: 45
+    largest_uncertainty: "rights-holder outreach - could be far higher or, with first-party material, far lower"
+
+  totals:
+    acquisition_person_hours: 173
+    confidence: indicative
+    caveat: >
+      Sum of the four subtotals under PROVISIONAL counts and R=1. Recruitment and rights outreach are
+      the two rows most likely to move, and both move upward.
+
+# ===========================================================================
+# Ongoing human effort that feeds FULLY-LOADED CpAO, not acquisition
+# ===========================================================================
+operational_effort_feeding_cpao:
+  note: >
+    Under the accepted CpAO contract, REQUIRED human review in the operational path is part of
+    fully-loaded CpAO. These are the inputs the Controller needs to decide what "required" means and
+    to forecast the metric before spending anything.
+  line_items:
+    - {activity: "human acceptance review of one composed video outcome", hours_per_outcome: 0.5, confidence: indicative,
+       basis: "watch, compare against brief, record accept/reject with reasons"}
+    - {activity: "human acceptance review of one static outcome", hours_per_outcome: 0.15, confidence: indicative}
+    - {activity: "human adjudication where an instrument is unqualified or disagrees", hours_per_item: 0.25, confidence: indicative,
+       basis: "applies to REQ-INS-03/05/06 families while they remain unqualified"}
+    - {activity: "repair/re-direction decision after a rejected outcome", hours_per_repair: 0.3, confidence: indicative}
+  controller_decision_required:
+    id: HED-1
+    question: "Which of these count as REQUIRED human time in fully-loaded CpAO?"
+    why_it_matters: >
+      It changes what the primary business metric means. Counting all of it measures the true cost to
+      the business; counting none of it measures the API cost of the production route. The schema
+      records every class either way, so the decision can be made later without re-running anything -
+      but it cannot be made by Resources.
+  worked_illustration:
+    basis: "the v3 positive fixture: one accepted composed video outcome"
+    api_tool_cpao: "50.00 XTS"
+    fully_loaded_cpao: "71.50 XTS"
+    human_share_of_fully_loaded: "28%"
+    reading: >
+      SYNTHETIC ILLUSTRATION ONLY - the amounts are test-currency placeholders, not forecasts. It shows
+      the shape of the problem: a system optimised on API/tool CpAO alone would happily trade human
+      review for API spend and report an improvement.
+
+# ===========================================================================
+what_resources_cannot_estimate:
+  - {item: "external legal review of the consent instrument", why: "no visibility into counsel arrangements or rates"}
+  - {item: "rights-holder negotiation duration", why: "per-relationship and outside our control"}
+  - {item: "any currency figure", why: "no rates supplied; a made-up rate would fabricate a financial fact"}
+  - {item: "effort under R=2", why: "depends on EVAL-009's protected-role assignment, which does not exist yet"}

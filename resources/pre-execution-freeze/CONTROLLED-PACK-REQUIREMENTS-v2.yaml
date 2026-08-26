@@ -1,0 +1,311 @@
+# Controlled-pack requirements v2 — minimum evidence requirements
+#
+# Task: R4-E of RES-004. Owner: Resources.
+# Controller basis: integration decision §4.4 - "Retain the four-pack architecture; do not create a
+# fifth speculative family... Exact pack sizes are not reauthorised by this decision; they will be
+# frozen against the integrated Capability Contract v2 and benchmark."
+# Validator: validators/check_pack_requirements.py (fail-closed)
+#
+# FOUR PACKS. NO FIFTH. Every requirement below constrains material the four families were already
+# going to acquire. Where the widened scope needs something new, it is a metadata, grouping or
+# composition constraint - not a new acquisition family.
+#
+# COUNTS: EXACT vs PROVISIONAL.
+#   exact       - the number follows from the architecture and does not move when EVAL-009 lands.
+#   provisional - the number depends on EVAL-009's final capability/benchmark choices. Each carries a
+#                 DETERMINISTIC SIZING RULE plus the SMALLEST SAFE provisional count.
+# No count below claims statistical confidence. These are coverage minima derived from named
+# consumers, not power calculations, and saying otherwise would invent precision the design has not
+# earned.
+
+meta:
+  version: v2
+  date: 2026-08-26
+  task: R4-E
+  status: PROPOSED_PENDING_EVAL009_AND_CONTROLLER_FREEZE
+  pack_families: 4
+  fifth_family_created: false
+  sizing_disclaimer: >
+    Provisional counts are the smallest set that satisfies the stated coverage requirement. They are
+    NOT sample sizes for a statistical claim. No confidence interval, power level or detectable effect
+    size is asserted, because the design establishes none.
+
+# ===========================================================================
+sizing_rule:
+  id: SR-1
+  statement: >
+    For any pack dimension driven by Eval's benchmark, the required count is
+      N = ceil( C * V * R )
+    where
+      C = number of DISTINCT capability rows in Capability Contract v2 that consume this pack
+          and require a controlled reference;
+      V = minimum distinct reference variants each such capability needs (views, framings, or
+          conditions) to distinguish a real match from a plausible confusion;
+      R = protected-role multiplier: 1 if the pack serves only one role in one experiment;
+          2 if the SAME pack must supply BOTH a calibration pool and a disjoint qualification pool.
+  why_R_exists: >
+    A pack used to calibrate an instrument cannot also qualify it. If EVAL-009 assigns both roles to
+    one pack family, the pack must be large enough to split disjointly, at the lineage level, not just
+    the file level. Halving a contaminated pack does not decontaminate it.
+  when_it_resolves: "When EVAL-009 freezes Capability Contract v2 and the benchmark, C and V become known."
+  interim_policy: >
+    Until then use the smallest_safe_provisional count recorded per pack, which assumes R = 1 and the
+    minimum defensible V. If EVAL-009 later requires R = 2, the pack roughly doubles - this is the
+    single largest cost sensitivity in the whole acquisition plan and is flagged for the Controller.
+
+# ===========================================================================
+packs:
+
+  - pack_id: PACK-PRODUCT-REF
+    name: Product reference pack
+    status: missing
+    storage_class: B_controlled_permissioned
+    consumers_named:
+      - REQ-CAP-09 logo_wordmark_fidelity
+      - REQ-CAP-10 packaging_brand_colour_fidelity
+      - REQ-CAP-12 product_identity
+      - REQ-CAP-13 reference_conditioning
+      - REQ-CAP-14 edit_preservation
+      - REQ-CAP-21 product_stability_in_clip
+      - REQ-INS-03 structured visual VLM qualification
+    required_entities:
+      count: 12
+      count_status: provisional
+      smallest_safe_provisional: 12
+      sizing_basis: "SR-1 with C=7 consuming capabilities, V=4 views, R=1. 12 distinct products is the smallest set giving >=2 same-category decoys across >=6 commercial categories."
+      requirement: ">=12 distinct products spanning >=6 commercial categories"
+    views_and_framing:
+      per_entity_views: 4
+      count_status: exact
+      requirement: >
+        >=4 controlled views per product: front-facing flat, oblique/angled, curved-surface where the
+        product has one, and one in-context/scale view. EXACT because it follows from the capability
+        set: identity needs multiple angles, colour fidelity needs a flat reference, and
+        logo-on-surface needs curvature.
+    same_category_decoys:
+      required: true
+      requirement: ">=2 visually similar products within each represented category"
+      why: >
+        A known-non-match is only meaningful against a plausible confusion. An identity checker that
+        distinguishes a shoe from a kettle has demonstrated nothing.
+    reference_quality:
+      requirement: >
+        Declared brand-colour reference value per product where one applies; colour reference card in
+        frame; recorded lighting; recorded camera and lens. Without a declared value,
+        packaging_brand_colour_fidelity has nothing to measure against.
+    sequence_or_campaign_grouping:
+      required: false
+      note: "Products do not group into campaigns. Grouping lives in PACK-COMMERCIAL."
+    duration_speech_language: not_applicable
+    lineage_metadata:
+      media_lineage: "byte + content + source. Controlled capture = its own source lineage, independent by construction."
+      request_lineage: not_applicable
+      v3_topology_link:
+        required: true
+        requirement: >
+          Record WHICH reference view was supplied to WHICH production_step. This is the
+          reference-to-production-step lineage the Controller adopted; it is a field on the v3
+          topology, not extra photographs.
+    protected_roles:
+      calibration: permitted
+      qualification: "permitted ONLY if disjoint at product-identity level from the calibration pool"
+      holdout: "reserve >=2 products, frozen before any evaluator work touches the pack"
+    minimum_viable_quantity:
+      images: 48
+      count_status: provisional
+      derivation: "12 products x 4 views"
+      assumption_it_rests_on: >
+        That EVAL-009 assigns this pack ONE role per experiment (R=1). If it must both calibrate and
+        qualify, SR-1 gives ~24 products / ~96 images.
+
+  - pack_id: PACK-PERSON-REF
+    name: Person reference pack
+    status: missing
+    storage_class: B_controlled_permissioned
+    consumers_named:
+      - REQ-CAP-11 person_identity
+      - REQ-CAP-13 reference_conditioning
+      - REQ-CAP-14 edit_preservation
+      - REQ-CAP-20 person_stability_in_clip
+      - REQ-INS-03 structured visual VLM qualification
+    required_entities:
+      count: 8
+      count_status: provisional
+      smallest_safe_provisional: 8
+      sizing_basis: "SR-1 with C=5, V=4, R=1. 8 identities is the smallest set allowing >=1 plausibly confusable pair while spanning age, skin tone and eyewear."
+      requirement: ">=8 consenting identities with recorded diversity across age, skin tone, hair and eyewear"
+    views_and_framing:
+      per_entity_views: 4
+      per_entity_framings: 2
+      count_status: exact
+      requirement: >
+        >=4 controlled views per identity AND >=2 distinct framings (close and mid). EXACT because
+        identity drift between a close-up and a wide shot is a DIFFERENT failure from drift within one
+        framing, and cross-asset tests need both.
+    same_category_decoys:
+      required: true
+      requirement: ">=1 pair of plausibly confusable identities (similar age, build, skin tone, hair, eyewear)"
+    reference_quality:
+      requirement: "Recorded lighting, camera, lens, distance. Consent record stored WITH the media."
+    sequence_or_campaign_grouping:
+      required: true
+      requirement: "Capture must support the same identity appearing across multiple shots of one outcome."
+    duration_speech_language: not_applicable
+    lineage_metadata:
+      media_lineage: "identity-level, not file-level. Two photographs of one person are NOT independent."
+      request_lineage: not_applicable
+    protected_roles:
+      calibration: permitted
+      qualification: "permitted ONLY if disjoint at IDENTITY level - not at file level"
+      holdout: ">=2 identities reserved and frozen before any evaluator work"
+    hard_prohibition:
+      no_public_face_scraping: >
+        ABSOLUTE. Identities come from consented capture or purpose-created synthetic references.
+        User-uploaded reference images from request corpora (e.g. TIP-I2V's 1.7M+ user-supplied image
+        prompts) are NOT assumed cleared and must not be used - provenance unstated, possibly
+        identifiable people, and the publisher's own NSFW flagging indicates they expected problematic
+        uploads.
+    minimum_viable_quantity:
+      images: 64
+      count_status: provisional
+      derivation: "8 identities x 4 views x 2 framings"
+      assumption_it_rests_on: "R=1. Identity-level disjointness for a second role would need ~16 identities."
+
+  - pack_id: PACK-AV-CLEAN
+    name: AV / speaker pack
+    status: missing
+    storage_class: B_controlled_permissioned
+    consumers_named:
+      - REQ-CAP-24 spoken_language_correctness
+      - REQ-CAP-25 single_speaker_lip_sync
+      - REQ-CAP-26 two_speaker_turn_assignment_and_lip_sync
+      - REQ-CAP-27 emotional_prosodic_fit
+      - REQ-CAP-28 audio_video_synchronisation
+      - REQ-INS-04 temporal evaluator perturbation base
+      - REQ-INS-05 speech/audio/AV qualification
+    required_entities:
+      single_speaker_clips: 24
+      two_speaker_clips: 12
+      count_status: provisional
+      smallest_safe_provisional: 36
+      sizing_basis: "SR-1 with C=5 speech capabilities, V=~2 conditions each, R=1, across 3 language conditions."
+    views_and_framing:
+      requirement: "Speaker's face visible and lip-readable throughout. Audio-only material cannot serve 4 of the 5 speech capabilities."
+    duration_speech_language:
+      long_form_clips:
+        count: 6
+        count_status: exact
+        requirement: ">=6 of the 24 single-speaker clips run >=20 seconds CONTINUOUS"
+        why: >
+          EXACT and evidence-driven. The entire existing corpus tops out at 20.00 seconds and holds
+          NOTHING above 30s (fresh measurement, RES-003 R3-B). If outcomes are 20-second branded
+          videos, a VO pack of 5-second utterances cannot support lip-sync or drift measurement over a
+          real deliverable's length.
+      language_balance:
+        requirement: "single: 8 English / 8 Hindi / 8 Hinglish; two-speaker: 4 / 4 / 4"
+        count_status: exact
+      pronunciation_coverage:
+        required: true
+        requirement: >
+          Hinglish clips must deliberately include BRAND NAMES and English-loanword pronunciation.
+          "Reads the script correctly" and "says the brand name correctly" are different capabilities
+          and only the second matters commercially.
+      turn_boundaries:
+        required: true
+        requirement: "All 12 two-speaker clips carry explicit turn boundaries WITH speaker attribution, not merely a transcript."
+        why: "This is the annotation almost no public source ships, and it is what REQ-CAP-26 actually measures."
+      transcripts:
+        required: true
+        requirement: "Verified verbatim transcript per clip. Distributor-asserted transcripts are not sufficient."
+    perturbation_reuse:
+      required: true
+      requirement: ">=12 clean clips from THIS pack serve as the deterministic temporal-perturbation base."
+      why_not_a_fifth_pack: >
+        A perturbation base needs clips whose only defect is the one introduced. A controlled recording
+        satisfies that better than KoNViD-1k, which was sampled for degradation variety. Reusing this
+        pack avoids a fifth family.
+      lineage_consequence: >
+        Clips reused for perturbation qualification SHARE CONTENT LINEAGE with their AV originals and
+        cannot be an independent holdout for any speech measurement that also uses the original.
+    lineage_metadata:
+      media_lineage: "speaker-level and clip-level. Two clips of one speaker are NOT independent."
+      request_lineage: not_applicable
+    protected_roles:
+      calibration: permitted
+      qualification: "disjoint at SPEAKER level"
+      holdout: ">=1 single-speaker and >=1 two-speaker clip reserved, frozen before evaluator work"
+    minimum_viable_quantity:
+      clips: 36
+      count_status: provisional
+      assumption_it_rests_on: "R=1 and 3 language conditions. Speaker-level disjointness for two roles would need more speakers, not more clips per speaker."
+
+  - pack_id: PACK-COMMERCIAL
+    name: Commercial / campaign pack
+    status: missing
+    storage_class: B_controlled_permissioned
+    consumers_named:
+      - REQ-CAP-29 proposition_objective_fit
+      - REQ-CAP-30 hierarchy_product_as_hero
+      - REQ-CAP-31 composition_brand_register
+      - REQ-CAP-32 hook_pacing_temporal_hierarchy
+      - REQ-INS-06 creative/commercial evaluator qualification
+      - "Canon Experiment B (shares the SAME 60 active assets - one bank, not two)"
+    required_entities:
+      total_assets: 80
+      active: 60
+      reserve: 20
+      count_status: provisional
+      smallest_safe_provisional: 80
+      sizing_basis: "SR-1 with C=4 creative capabilities + 1 evaluator family, V=~3 category conditions, R=2 (active + frozen reserve is a built-in two-role split)."
+      requirement: "40 static + 40 video; >=6 commercial categories; target >=50% Indian-market"
+    campaign_grouping:
+      required: true
+      requirement: "The 40 video assets are acquired as ~10 CAMPAIGN GROUPS of related deliverables, not 40 unrelated ads."
+      count_status: provisional
+      why: >
+        Campaign/variant consistency is now in scope and the existing corpus has NO field that could
+        express "these assets belong to one campaign" (RES-003 R3-B). Same count, organised so the
+        question is answerable at all.
+    duration_speech_language:
+      duration_spread:
+        required: true
+        requirement: "The 40 video assets span 6s / 15s / 20-30s, matching real platform cuts."
+        why: "Acquiring 40 six-second ads would leave the longer composed-outcome question unanswerable."
+    reference_quality:
+      requirement: "Descriptive axes only from Resources: category, media type, market/language, duration, platform."
+    lineage_metadata:
+      media_lineage: "brand-level and campaign-level. Two assets from one campaign are NOT independent."
+      request_lineage: "record the brief population where known; unknown is INDETERMINATE."
+    protected_roles:
+      calibration: "permitted on the 60 active assets"
+      qualification: "permitted on the 60 active assets if disjoint at CAMPAIGN level"
+      holdout: "the 20-asset reserve, FROZEN AT ACQUISITION TIME before any evaluator or Canon work touches the 60"
+    known_clean_subset:
+      owner: Eval
+      requirement: ">=15 assets may later be designated known-clean for false-criticism calibration"
+      resources_boundary: >
+        Resources supplies candidates, rights and provenance and MUST NOT author that label. 'Clean' is
+        a creative-quality judgement and belongs to Eval and its human reviewers.
+    minimum_viable_quantity:
+      assets: 80
+      count_status: provisional
+      assumption_it_rests_on: "That 60 active assets across >=6 categories give each creative capability >=10 distinct scoring opportunities. If EVAL-009's benchmark needs more categories, SR-1 grows this first."
+
+# ===========================================================================
+what_is_exact_vs_provisional:
+  exact:
+    - "product: >=4 controlled views per product"
+    - "person: >=4 views AND >=2 framings per identity"
+    - "AV: >=6 single-speaker clips >=20s continuous"
+    - "AV: 8/8/8 and 4/4/4 language balance"
+    - "AV: turn boundaries on all two-speaker clips"
+    - "commercial: 40 static / 40 video split and 60 active / 20 reserve split"
+  provisional_pending_EVAL009:
+    - "product: 12 entities / 48 images"
+    - "person: 8 identities / 64 images"
+    - "AV: 36 clips"
+    - "commercial: 80 assets / ~10 campaign groups"
+  largest_single_sensitivity: >
+    The protected-role multiplier R in SR-1. If EVAL-009 requires one pack to both calibrate and
+    qualify an instrument, that pack roughly DOUBLES. This is the biggest cost lever in the plan and
+    the Controller should decide it deliberately rather than discover it during acquisition.

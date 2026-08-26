@@ -1,0 +1,300 @@
+# Outcome / production topology v3 — IMPLEMENTATION-READY
+#
+# Task: R4-A of resources/tasks/RES-004-PRODUCTION-EVIDENCE-AND-PERSISTENCE-READINESS.md
+# Controller disposition: coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md §4.1
+# Validator: validators/validate_topology_v3.py (fail-closed)
+# Compatibility: V21-V3-COMPATIBILITY.md   Lineage rules: LINEAGE-CONTRACT-v3.md   Cost: CPAO-CONTRACT-v3.md
+#
+# STATUS. v3 is the FORWARD contract for records written from now on. It does not rewrite, migrate or
+# reinterpret anything already written. resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml (v2.1)
+# remains the historical truth for archives written under it, and v3 readers ingest those archives
+# WITHOUT MUTATING THEM.
+#
+# WHY v3 EXISTS. v2.1 models one call and what it produced: attempt -> artifact -> measurement, plus
+# acceptance. A real customer outcome is a 20-second branded video assembled from several generated
+# shots, a voice-over, a logo overlay and a grade. Some of those steps are paid provider calls; some
+# are local ffmpeg operations that cost no provider money and still create real bytes. The delivered
+# asset has SEVERAL parents in a SPECIFIC ORDER. v2.1 cannot express any of that, so under v2.1 the
+# question "what did this accepted outcome cost" has no answer.
+#
+# WHAT IS PRESERVED, EXACTLY. Every accepted invariant survives v3 unchanged:
+#   * ONE provider/API/transform CALL = ONE TRIAL = ONE ATTEMPT;
+#   * failed, refused, timed-out and cancelled attempts persist INDIVIDUALLY with their reasons;
+#   * repeat != retry, and only retries enter a retry chain;
+#   * attempt and artifact stay SEPARATE entities;
+#   * measurements remain Eval-owned; capability ids stored verbatim;
+#   * costs reference immutable ledger entries, never inline numbers;
+#   * request lineage is tracked SEPARATELY from byte/content/media lineage.
+
+meta:
+  version: v3
+  date: 2026-08-26
+  status: IMPLEMENTATION_READY_PENDING_CONTROLLER_FREEZE
+  task: R4-A
+  extends: resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml (v2.1)
+  historical_truth_for_pre_v3_archives: v2.1
+  ownership:
+    resources: "persistence, provenance, lineage, cost integrity, retention, pack evidence"
+    eval: "measurement semantics, capability ids, instrument semantics, thresholds"
+    canon: "what a good outcome must achieve"
+    controller: "acceptance criteria, budget, architecture"
+
+# ===========================================================================
+#   job
+#    └─ outcome                     acceptance and CpAO live HERE
+#        └─ sequence_or_asset_set   ordered video sequence OR grouped campaign/variant set
+#            └─ production_unit     shot | layer | end_card | audio | static | caption | grade
+#                └─ production_step provider_generation | transform | composition | edit |
+#                                   assembly | repair | human_review
+#                    └─ attempt     v2.1 unchanged - ONE CALL = ONE TRIAL
+#                        └─ artifact v2.1, extended with ORDERED MULTI-PARENT lineage
+# ===========================================================================
+
+entities:
+
+  # -------------------------------------------------------------------------
+  job:
+    description: "One customer request as received. Persistence counterpart of the Normalized Request."
+    required:
+      job_id: "Stable unique id."
+      received_at: "ISO-8601 UTC."
+      brief_ref: "The brief/request this job serves."
+      request_lineage_id: >
+        Which request population this brief came from. TRACKED SEPARATELY FROM MEDIA LINEAGE - a
+        brief's provenance and a photograph's provenance are different facts and must never share a
+        field. Unknown is INDETERMINATE, never independent.
+    optional:
+      customer_ref: "Opaque reference only. NEVER customer PII in the archive."
+    rules:
+      - "One job MAY produce MULTIPLE independently acceptable outcomes (variants, revisions, campaign members)."
+      - "Resources stores the reference, never the customer's identifying data."
+
+  # -------------------------------------------------------------------------
+  outcome:
+    description: >
+      One complete thing the customer receives and judges. THE UNIT CpAO DIVIDES BY, and the only
+      level at which customer acceptance exists.
+    required:
+      outcome_id: ""
+      job_id: ""
+      outcome_kind: "static_asset | video_asset | av_asset | asset_set | campaign_variant"
+      created_at: "ISO-8601 UTC."
+      final_artifact_id: >
+        The artifact actually delivered. MAY be null ONLY while the outcome is unaccepted. An ACCEPTED
+        outcome with a null final_artifact_id is a hard validation failure: you cannot accept nothing.
+    optional:
+      supersedes_outcome_id: "For a revision: the outcome this replaces. The superseded one is never edited."
+      variant_group_id: "Groups campaign variants that are alternatives to one another."
+      scope_change_boundary: >
+        Set true when this outcome exists because the CUSTOMER MATERIALLY CHANGED THE BRIEF. This is
+        the boundary that stops earlier work being retroactively charged to unrelated new work. See
+        CPAO-CONTRACT-v3.md.
+      reproducibility_status: "full | partial | not_reproducible. 'partial' where a local step's config was not captured."
+    rules:
+      - "Customer acceptance exists ONLY here. Unit-level acceptance is diagnostic and is a different entity."
+      - "A revision is a NEW outcome that supersedes; historical outcomes are never rewritten."
+
+  # -------------------------------------------------------------------------
+  sequence_or_asset_set:
+    description: "The structure of an outcome: an ORDERED sequence, or an UNORDERED grouped set."
+    required:
+      set_id: ""
+      outcome_id: ""
+      ordering: "ordered | unordered"
+      set_kind: "video_sequence | campaign_set | variant_set | multi_format_set"
+    rules:
+      - "ordering: ordered REQUIRES every member production_unit to carry a unique position."
+      - "ordering: unordered FORBIDS positions, so nobody can infer meaning from file order."
+      - "Duplicate positions inside one ordered set are a hard failure - the order would be ambiguous."
+
+  # -------------------------------------------------------------------------
+  production_unit:
+    description: "One component of the deliverable."
+    required:
+      unit_id: ""
+      set_id: ""
+      unit_kind: "shot | layer | end_card | audio | static | caption | grade | overlay | other"
+    optional:
+      position: "Integer. REQUIRED iff the parent set is ordered; FORBIDDEN otherwise."
+      unit_acceptance_ref: "DIAGNOSTIC acceptance of this component only. NEVER customer acceptance."
+    rules:
+      - "A unit may take many steps and many attempts before it is usable."
+      - "Accepting a shot is not accepting the film."
+
+  # -------------------------------------------------------------------------
+  production_step:
+    description: >
+      One operation that moves a unit forward. THE CRITICAL DISTINCTION IN v3: a step either calls a
+      provider (and therefore has attempts) or it does not (and therefore must not manufacture one).
+    required:
+      step_id: ""
+      unit_id: ""
+      step_kind: >
+        provider_generation | transform | composition | edit | assembly | repair | human_review
+      step_index: "Integer. Order of steps within the unit."
+      executed_at: "ISO-8601 UTC."
+      execution_mode: "provider_call | local_deterministic | human"
+    conditional:
+      attempt_ids: >
+        List. REQUIRED and non-empty iff execution_mode == provider_call. MUST BE EMPTY otherwise.
+        A step may hold MORE THAN ONE attempt (repeats, retries) - each is still its own trial.
+      transform_ref: >
+        REQUIRED iff execution_mode == local_deterministic. Points at a transform_recipe so the
+        operation is reconstructible.
+      operator_ref: "REQUIRED iff execution_mode == human. Who did it - a role reference, not PII."
+    optional:
+      cost_ref: "Ledger reference for material local compute or required human time."
+      repair_of_step_id: "Set when this step exists to repair a prior step's output."
+    rules:
+      - >
+        A LOCAL DETERMINISTIC STEP MAY CREATE ARTIFACTS WITHOUT ANY PROVIDER ATTEMPT. This is the
+        whole point: an ffmpeg concat, a colour grade, a logo composite produce real bytes, cost no
+        provider money and are part of the outcome. Under v2.1 they had nowhere to live, which is why
+        implementations were tempted to fake an attempt for them.
+      - >
+        MANUFACTURING A PROVIDER ATTEMPT FOR A LOCAL STEP IS A HARD VALIDATION FAILURE. It would
+        create a trial that never happened, corrupting reliability, pass-at-k and every per-trial count.
+      - "A local or human step creates NO trial. 'One call = one trial' is untouched: there was no call."
+      - "A human_review step may carry a cost_ref - required human time is a real cost of an accepted outcome."
+
+  # -------------------------------------------------------------------------
+  transform_recipe:
+    description: "Reconstructible provenance for a local deterministic step."
+    required:
+      transform_ref: ""
+      tool: "e.g. ffmpeg, imagemagick"
+      tool_version: "Exact version string. Deterministic in principle is not reproducible without the version."
+      operation: "concat | overlay | mix | crop | grade | encode | resize | other"
+      params_hash: "SHA-256 of the exact parameters."
+      params_location: "Where the full parameters are recoverable. A hash cannot be read back."
+    rules:
+      - "Never fabricate a params_hash. If parameters were not captured, mark the step unreproducible and let the outcome inherit reproducibility_status: partial."
+
+  # -------------------------------------------------------------------------
+  attempt:
+    description: "UNCHANGED FROM v2.1. One provider/API/transform call = one trial."
+    inherits: "resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml entities.attempt"
+    v3_additions:
+      step_id: "The production_step this attempt belongs to. Null for pre-v3 archives."
+    preserved:
+      - "attempt_id maps one-to-one onto trial_id. No two attempts share a trial_id."
+      - "status in {ok, error, refusal, timeout, cancelled}, frozen machine vocabulary."
+      - "lane in {image, general_video, native_av, lipsync, tts}, frozen machine vocabulary."
+      - "Failed/refused attempts persist individually with verbatim error_detail. Aggregate counters never substitute."
+      - "repeat_index / repeat_of_attempt_id = deliberate reliability repeat. retry_of_attempt_id + retry_reason = repair after failure. NEVER interchangeable."
+      - "cost_ref references an immutable ledger entry. Never an inline number."
+
+  # -------------------------------------------------------------------------
+  artifact:
+    description: "Bytes. UNCHANGED FROM v2.1 except for ORDERED MULTI-PARENT lineage."
+    inherits: "resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml entities.artifact"
+    required_v3:
+      artifact_id: ""
+      output_hash: "SHA-256. Never null - an artifact IS its bytes."
+      output_bytes: ""
+      output_location: ""
+      media_kind: "image | video | audio | audio_video | text | other"
+      storage_class: "Always C_irreproducible_empirical."
+      producing_step_id: "The step that produced it. ALWAYS present in v3."
+    conditional:
+      attempt_id: >
+        REQUIRED iff the producing step's execution_mode == provider_call. NULL for artifacts produced
+        by local deterministic or human steps - those genuinely have no attempt.
+      trial_id: "Inherited from the attempt where one exists; NULL otherwise. An artifact never introduces a trial."
+    ordered_multi_parent_lineage:
+      parents: >
+        A LIST replacing v2.1's single optional parent. Each entry:
+          {parent_artifact_id, role, position}
+        role: source | overlay | audio | mask | reference | grade_source | other
+        position: >
+          Integer. REQUIRED where parent order is semantically meaningful (concatenation, layer
+          stacking). NULL where it is not (simultaneous audio mix). Within one artifact, positions
+          must be UNIQUE and CONTIGUOUS from 0 - a gap or duplicate makes the order ambiguous and is a
+          hard failure.
+      why_order_matters: >
+        Concatenating shot A then shot B is a different film from B then A. If parents are an
+        unordered set the archive cannot distinguish them and the composition is not reconstructible.
+      acyclicity: >
+        The parent graph MUST be a DAG. A cycle is a hard failure: it would mean an artifact is its own
+        ancestor, and every provenance walk and cost recomputation over it would not terminate.
+      backward_compatibility: >
+        A single-element parents list with role 'source' and position null is EXACTLY equivalent to a
+        v2.1 derived_from_artifact_id. Legacy readers keep working; legacy archives need no rewriting.
+
+  # -------------------------------------------------------------------------
+  measurement:
+    description: "UNCHANGED FROM v2.1. Eval-owned semantics; Resources stores verbatim."
+    inherits: "resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml entities.measurement"
+    preserved:
+      - "capability_id stored EXACTLY as Eval defines it. Never renamed, normalised or mapped."
+      - "observation_unit from the canonical vocabulary: frame | shot | shot_pair | sequence | whole_asset | asset_set_over_time."
+      - "Exactly one of result and absence_reason is non-null."
+      - "A provider failure is NOT a measurement absence; instrument_unqualified is NOT an absence."
+      - "evaluator_cost_ref is separate from the attempt's cost_ref."
+
+  # -------------------------------------------------------------------------
+  acceptance:
+    description: "TWO LEVELS, deliberately different things."
+    outcome_acceptance:
+      scope: "The whole thing the customer receives."
+      required: [acceptance_id, outcome_id, accepted, decided_by, decided_at, brief_ref]
+      optional: [rejection_reasons, revision_of_outcome_id]
+      decided_by: "The customer or a human acting for them. NEVER Resources."
+      is_the_numerator_of: "cost_per_accepted_outcome, both views"
+      hard_rule: "An accepted outcome MUST reference a non-null final_artifact_id that exists in its own provenance."
+    unit_acceptance:
+      scope: "One component. DIAGNOSTIC ONLY."
+      decided_by: "Eval, an instrument, or an internal reviewer."
+      is_the_numerator_of: nothing
+      warning: >
+        UNIT ACCEPTANCE MUST NEVER BE COUNTED AS OUTCOME ACCEPTANCE. Eight accepted shots inside one
+        rejected film are eight diagnostic passes and ZERO accepted outcomes. Conflating them inflates
+        the acceptance rate by roughly the component count and makes CpAO look an order of magnitude
+        better than it is. This is the single most dangerous confusion v3 introduces, which is why the
+        two are separate entities with separate owners.
+
+# ===========================================================================
+# LINEAGE NAMESPACES — kept separate on purpose
+# ===========================================================================
+lineage_namespaces:
+  media_lineage:
+    levels: [byte, content, source_lineage]
+    about: "Where a PIECE OF MEDIA came from: the same file, the same parent photograph, the same lab."
+    implemented_by: resources/v1/validators/lineage_keys.py
+  request_lineage:
+    about: "Where a REQUEST/BRIEF came from: the same prompt population, platform, community, period."
+    carried_by: "job.request_lineage_id"
+    rule: >
+      NEVER merged with media lineage. A brief's provenance and a photograph's provenance are
+      different facts. Unknown request lineage is INDETERMINATE, never independent.
+    controller_constraint: >
+      Per the integration decision: Arena-T2I-Hard is preserved for Eval methodology/benchmark use,
+      and raw LMArena prompt data is NOT to be used as a load-bearing request-discovery source for the
+      integrated request grammar. Recorded here so the constraint travels with the schema.
+
+# ===========================================================================
+mechanical_gates:
+  description: "Conditions the validator treats as hard failures. Each has a negative-control fixture."
+  gates:
+    - id: G1
+      rule: "One provider/API/transform call maps to exactly one trial; no two attempts share a trial_id."
+    - id: G2
+      rule: "A local deterministic or human step MUST NOT carry attempt_ids."
+    - id: G3
+      rule: "An artifact must not reference a parent that does not exist."
+    - id: G4
+      rule: "The artifact parent graph must be acyclic."
+    - id: G5
+      rule: "Within one artifact, parent positions must be unique and contiguous from 0 where ordering applies."
+    - id: G6
+      rule: "An artifact must not claim an attempt/trial that does not exist."
+    - id: G7
+      rule: "An accepted outcome must have a non-null final_artifact_id present in its own provenance."
+    - id: G8
+      rule: "A local_deterministic step must carry a transform_ref resolving to a complete recipe."
+    - id: G9
+      rule: "A v3 record must not assert outcome/job context for a pre-v3 archive (no historical backfill)."
+    - id: G10
+      rule: "Failed/refused attempts must persist individually with a reason."
+    - id: G11
+      rule: "request_lineage_id must never be populated from a media lineage id."

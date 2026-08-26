@@ -47,7 +47,20 @@ access terms, explicit commercial-use terms). Licence silence is not a block for
 internal-only acquisition; access gates and explicit terms still are. **Transient acquisition is the
 default for large reliably-reacquirable public archives** (Charter, approved 24 Aug 2026).
 
-**LAST COMPLETED WORK:** **RES-003 cloud evidence programme** (26 Aug 2026) on branch
+**LAST COMPLETED WORK:** **RES-004 production evidence & persistence readiness** (26 Aug 2026) on
+branch `work/res-004-production-readiness`, executed as one programme (R4-A…R4-G). Outputs under
+`resources/pre-execution-freeze/`; brief at `.../RES-004-CONTROLLER-BRIEF.md`. Re-verify with
+`bash resources/pre-execution-freeze/validators/run_all_res004.sh` (exit 0).
+**The persistence layer is ready for the first paid run; acquisition is not, and is blocked on human
+decisions.** Topology v3 (`job→outcome→set→unit→step→attempt→artifact`) is implementation-ready with
+11 mechanical gates and 18/18 lineage controls; whole-outcome CpAO reports API/tool and fully-loaded
+views with 13/13 controls and no double counting over a DAG. v2.1 remains historical truth — no
+migration, no backfill, no trial acceptance promoted to customer acceptance. Four packs retained, no
+fifth; exact vs provisional counts separated with deterministic sizing rule SR-1, whose protected-role
+multiplier R is the largest cost lever. 173 person-hours of acquisition effort estimated, AV largest at
+73. 0 acquisition, ₹0 spend, not merged.
+
+**PRIOR WORK:** **RES-003 cloud evidence programme** (26 Aug 2026) on branch
 `work/res-003-evidence-topology`, executed as one programme (R3-A…R3-F). Outputs under
 `resources/research/pre-e7-macro/`; brief at `.../RES-003-CONTROLLER-BRIEF.md`. Re-verify with
 `bash resources/research/pre-e7-macro/validators/run_all_res003.sh` (exit 0).
