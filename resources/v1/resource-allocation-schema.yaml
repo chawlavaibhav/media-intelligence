@@ -1,0 +1,130 @@
+# Resource allocation, leakage and lineage schema
+#
+# Task: R3 of RESOURCES-V1-OVERNIGHT-PROGRAM.md. Owner: Resources.
+# Enforced by: validators/check_allocation_leakage.py (fail-closed).
+#
+# CORE IDEA. A role is not a property of a file. It is an allocation of a file inside a NAMED
+# experiment at a NAMED version. The same photograph may be development material in one experiment
+# and reserve in another. Nothing is copied on disk to represent a second role: an allocation is a
+# reference to committed item ids, never a duplicate of the media.
+
+meta:
+  version: v1
+  date: 2026-08-26
+  status: design_frozen_and_validator_executed
+
+# ---------------------------------------------------------------------------
+roles:
+  development:
+    definition: "Material a person may look at freely while building an instrument or a design."
+    contamination_risk: "None to itself. It contaminates everything downstream that shares lineage with it."
+  calibration:
+    definition: "Material used to set an instrument's operating point (thresholds, prompts, config)."
+    contamination_risk: "An instrument calibrated on an item cannot be honestly qualified on the same item, or on anything sharing its content or source lineage."
+  qualification:
+    definition: "Material used to decide whether an instrument may be trusted. Must be unseen at calibration time."
+    protected: true
+  reserve:
+    definition: "Held untouched. Not looked at, not calibrated on, not qualified on. Exists so a later question can be asked cleanly."
+    protected: true
+    note: "A reserve that anyone has inspected is no longer a reserve. Freezing it is a one-way action."
+  regression:
+    definition: "Material retained because a specific failure occurred on it, re-run when something changes."
+    protected: false
+    note: "Regression items are usually contaminated by construction - somebody already looked hard at them. That is fine for their purpose and disqualifying for every other purpose."
+
+# ---------------------------------------------------------------------------
+independence_levels:
+  byte:
+    check: "Two items share a SHA-256."
+    catches: "Literal file reuse across or within sources."
+    measured_on_this_corpus: "173 hashes shared between the two CVIT sources; all 173 are scene photographs."
+    blind_spot: "Sees nothing when the same content is re-encoded, cropped or transformed."
+  content:
+    check: "Two items resolve to the same content group - typically the same parent photograph or clip."
+    catches: "Crops, re-encodes and transforms of shared material that share no bytes."
+    measured_on_this_corpus: >
+      173 content groups span the two CVIT sources and contain 2,633 items - 1,378 of IIIT-ILST's
+      1,390 (99.1%) and 1,255 of IndicSTR12's 3,086. Byte identity alone reports the same overlap as
+      12.4% of IIIT-ILST. The two numbers differ by a factor of eight and the smaller one is the
+      misleading one.
+    blind_spot: "Requires ancestry to be derivable. Where it is not, the item is 'unproven', not 'independent'."
+  source_lineage:
+    check: "Two items come from the same collection, lab, project or derivative ancestry."
+    catches: "Different content, shared provenance - the case where neither hashes nor content links overlap but the material still is not independent evidence."
+    measured_on_this_corpus: "IndicSTR12 and IIIT-ILST are one lineage (lin_cvit_iiit_hyderabad). BSTD is the only independent Devanagari lineage."
+    blind_spot: "Depends on a maintained lineage registry. An unregistered new source defaults to lin_unknown::<source_id> and must not be silently treated as independent."
+
+# ---------------------------------------------------------------------------
+allocation_record:
+  required_fields:
+    experiment_id: "The named experiment this allocation belongs to, e.g. EVAL-00X."
+    allocation_version: "Increments when the allocation changes. Never rewritten in place."
+    frozen: "Boolean. Once true, membership of protected roles may not change."
+    independence_level: "byte | content | source_lineage - the level this experiment requires."
+    assignments: "role -> list of view ids or explicit item ids."
+    rationale: "Why this split. Must not reference the theory under test."
+  rules:
+    - "A file appears in at most one role per experiment version."
+    - "Roles are per experiment. The same item may hold different roles in different experiments."
+    - "No media is duplicated on disk to express a second role."
+    - "A frozen allocation is superseded, never edited. Historical baselines are not rewritten."
+    - "Resources assigns roles only when an experiment names them. Until then: unassigned_pending_eval_experiment_split."
+
+# ---------------------------------------------------------------------------
+leakage_policy:
+  principle: "Fail closed. A protected role that collides with development or calibration at the experiment's required independence level is an ERROR, not a warning."
+  checks_performed:
+    - "protected (qualification, reserve) vs development: no shared key at the required level"
+    - "protected vs calibration: no shared key at the required level"
+    - "qualification vs reserve: no shared key at the required level"
+    - "within-role duplication reported (not fatal, but never silently deduplicated)"
+    - "unresolved content ancestry reported explicitly as unproven"
+  escalation: >
+    A leak is a DATA INTEGRITY stop under shared/AUTONOMY-POLICY.md. Freeze the evidence, write a
+    Controller Brief, do not quietly re-split and continue - re-splitting after seeing a result is
+    experiment mutation.
+  what_this_does_not_do: >
+    It cannot prove independence. It can only fail when it finds a collision it knows how to look
+    for. An item whose ancestry cannot be resolved is reported as unproven, and treating unproven as
+    independent is the caller's judgement call, not a validator result.
+
+# ---------------------------------------------------------------------------
+storage_classes:
+  A_reacquirable_external:
+    applies_to: "Public datasets that remain reliably reacquirable from their official source."
+    retain: [selected members, per-item hashes, complete remote member list, selection rule, official URL, remote archive size, retrieval script]
+    do_not_retain: "The full archive once bounded extraction and validation have succeeded. Log every deletion."
+    hash_rule: >
+      Fingerprint an archive BEFORE deleting it. If range access meant it was never downloaded,
+      record NO full-archive hash - a hash of a file we never held would be fabricated evidence.
+    current_members: [src_bstd_devanagari, src_indicstr12_devanagari, src_iiit_ilst_devanagari, src_imagerewarddb, src_konvid1k, src_videofeedback, src_videogen_rewardbench, src_youtube_ugc]
+  B_controlled_permissioned:
+    applies_to: "Controlled reference and commercial material used repeatedly for identity, product, audio or creative work."
+    retain: [durable originals, permission and provenance records, capture conditions, consent records where people appear]
+    rule: "Not reacquirable on demand: the permission is as important as the pixels. Losing the consent record makes the media unusable even if the media survives."
+    current_members: []
+    note: "Empty today. Every pack in this class is missing."
+  C_irreproducible_empirical:
+    applies_to: "Model outputs and processed derivatives produced by our own paid runs, and production failures."
+    rule: >
+      NEVER treat as reacquirable. Provider and model behaviour drifts, versions are retired and
+      identical inputs stop producing identical outputs. If it is deleted it is gone, and every
+      measurement derived from it becomes unverifiable.
+    schema: EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml
+    current_members: [LEGACY-MF-SCORES, LEGACY-MF-COSTS, LEGACY-FINDING-01]
+    warning: >
+      The project has already lost material to this: the 64 generated images behind the legacy
+      scored set were gitignored as "regenerable from the scripts here". They were not. Their
+      judgements survived; the images did not.
+
+# ---------------------------------------------------------------------------
+lineage_registry:
+  lin_cvit_iiit_hyderabad: [src_indicstr12_devanagari, src_iiit_ilst_devanagari]
+  lin_bhashini_iitj: [src_bstd_devanagari]
+  lin_diffusiondb_imagereward: [src_imagerewarddb]
+  lin_konstanz_yfcc100m: [src_konvid1k]
+  lin_tigerlab_videofeedback: [src_videofeedback]
+  lin_kwaivgi_videogen: [src_videogen_rewardbench]
+  lin_google_youtube_ugc: [src_youtube_ugc]
+  unregistered_source_policy: "Defaults to lin_unknown::<source_id>. An unknown lineage is never treated as independent."

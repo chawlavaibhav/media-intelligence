@@ -47,9 +47,41 @@ access terms, explicit commercial-use terms). Licence silence is not a block for
 internal-only acquisition; access gates and explicit terms still are. **Transient acquisition is the
 default for large reliably-reacquirable public archives** (Charter, approved 24 Aug 2026).
 
-**LAST COMPLETED WORK:** EVAL-003 correction pass (25 Aug 2026) on branch
+**LAST COMPLETED WORK:** Resources–Eval **storage integration pass** (26 Aug 2026) on branch
+`work/resources-v1-overnight`. Tightened the one canonical persistence contract to v2.1 so Eval's
+emitted JSONL can validate against it exactly: one call = one trial; frozen lane and attempt-status
+machine vocabularies; a canonical measurement-absence set that excludes provider failures and
+`instrument_unqualified`; and cost as a reference to an immutable ledger entry rather than an inline
+number. **Cross-branch gate status: `BLOCKED_WAITING_FOR_EVAL_INTERFACE`** — at
+`origin/work/eval-v1-overnight@adac747` the attempts, artifacts, measurements and acceptances files
+all validate, and the only remaining defect class is four missing cost-ledger fields (`unit`,
+`recorded_at`, `basis`, `immutable`). Re-check with
+`bash resources/v1/validators/validate_eval_archive.sh`. Brief:
+`resources/findings/RESOURCES-EVAL-STORAGE-INTEGRATION-CONTROLLER-BRIEF.md`; exact delta:
+`resources/v1/EVAL-ARCHIVE-INTERFACE-DELTA.md`. **0 acquisition, ₹0 spend, no Eval file edited, not
+merged.**
+
+**PRIOR WORK:** Resources V1 **correction pass** (26 Aug 2026) on branch
+`work/resources-v1-overnight`, closing the Controller's five review findings on the overnight work:
+the 15/36 wording made precise; one canonical attempt/artifact/measurement/acceptance storage
+contract with the canonical observation vocabulary and repeats separated from retries; ~34 MB of
+deterministic generated artifacts removed from Git and rebuilt by validation instead; unknown source
+lineage now returns INDETERMINATE rather than being certified independent; and the accepted Eval
+refinements folded into the existing four packs with no new acquisition family. **0 acquisition, ₹0
+spend, not merged.** Brief: `resources/findings/RESOURCES-V1-CORRECTION-CONTROLLER-BRIEF.md`.
+Eval-facing contract: `resources/v1/EVAL-STORAGE-HANDOFF.md`.
+
+**PRIOR WORK:** Resources V1 overnight programme (26 Aug 2026) on branch
+`work/resources-v1-overnight` — R1-R5 plus the R8 schema/legacy tranche, executed from a cloud
+session with no access to the raw corpus. Outputs live under `resources/v1/`; the Controller Brief is
+`resources/findings/RESOURCES-V1-OVERNIGHT-CONTROLLER-BRIEF.md`. **0 acquisition, ₹0 spend, not
+merged.** Re-verify everything mechanical with `bash resources/v1/validators/run_all.sh`.
+Headline: of Eval's 36 capabilities only **1** is served by material we already hold; 17 are
+`missing`, and four packs (product, person, AV, commercial) unblock nearly all of them.
+
+**PRIOR COMPLETED WORK:** EVAL-003 correction pass (25 Aug 2026) on branch
 `work/resources-eval003-correction`. Eval found that a Resources description did not match the files
-acquired; the correction is applied, independently reverified, and left as a small PR. **Descriptions
+acquired; the correction is applied, independently reverified, and **merged as PR #5**. **Descriptions
 only — nothing reacquired, no hash recomputed, no integrity or rights conclusion changed.** See
 `reports/RES-CORRECTION-01-indicstr12-composition.md` and
 `PROPOSED-INTEGRATION-CHANGE-RES-003-EVAL.md`.
@@ -62,8 +94,9 @@ on disk; status moved from `too_large_for_pilot` to `partial_download`. Retained
 2,048 MB budget; free disk never below 14.5 GB. Also completed RES-001 finalization, including the
 approved deletion of KoNViD crowdworker personal data. See `tasks/RES-002-CONTROLLER-BRIEF.md`.
 
-**CURRENT TASK / QUEUE:** none. No RES task is open. RES-001/002 are closed and merged; the
-EVAL-003 correction is a documentation pass awaiting PR review.
+**CURRENT TASK / QUEUE:** none open. RES-001/002 are closed and merged, and the EVAL-003
+correction **merged as PR #5** (this line previously said "awaiting PR review" — corrected 26 Aug
+2026; GOV-001 R10). The Resources V1 overnight branch is complete and awaits Controller review.
 
 **DELIBERATE POSTURE — do not accumulate speculatively.** Resources does **not** hunt for more
 Devanagari datasets, books or any other material on spec. Wait for the new Eval battery to produce a

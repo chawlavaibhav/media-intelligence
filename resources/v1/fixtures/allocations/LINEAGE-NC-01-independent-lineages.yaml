@@ -1,0 +1,18 @@
+# R-C4 negative control 1 of 4. EXPECTED: exit 0 (clean).
+# Two REGISTERED, genuinely independent lineages. Establishes that the check is not simply refusing
+# everything - without this case, the other three prove nothing.
+experiment_id: LINEAGE-NC-01-INDEPENDENT
+allocation_version: 1
+frozen: false
+independence_level: source_lineage
+manifest: fixtures/lineage/lineage-negative-control-manifest.jsonl
+rationale: "Synthetic. Development on one registered lineage, qualification on another."
+assignments:
+  development:
+    - "src_bstd_devanagari::Recognition/train/hindi/fixture_0.jpg"
+    - "src_bstd_devanagari::Recognition/train/hindi/fixture_1.jpg"
+    - "src_bstd_devanagari::Recognition/train/hindi/fixture_2.jpg"
+  qualification:
+    - "src_konvid1k::fixture_0.jpg"
+    - "src_konvid1k::fixture_1.jpg"
+    - "src_konvid1k::fixture_2.jpg"

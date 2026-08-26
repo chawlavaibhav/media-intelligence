@@ -1,0 +1,19 @@
+# DUMMY ALLOCATION 02 — NEGATIVE CONTROL. THIS MUST FAIL.
+#
+# It is the mistake a reasonable person makes: hold out the scene photographs, develop on the crops.
+# The two sets share NO bytes, so a hash-based dedup reports them as clean. They are not clean:
+# almost every crop is cut from a photograph in the held-out set.
+#
+# If this file ever passes, the content-lineage check has stopped working.
+experiment_id: DUMMY-EXPERIMENT-02-NEGATIVE-CONTROL
+allocation_version: 1
+frozen: false
+independence_level: content
+rationale: >
+  Deliberately broken. Develops on crops and qualifies on the parent photographs those crops were
+  cut from. Retained as a negative control, exactly as the Eval harness retains its own.
+assignments:
+  development:
+    - view: deva_cvit_word_crops
+  qualification:
+    - view: deva_cvit_scene_photographs

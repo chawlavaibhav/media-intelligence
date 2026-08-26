@@ -1,0 +1,19 @@
+# R-C4 negative control 2 of 4. EXPECTED: exit 1 (LEAK).
+# A REGISTERED dependent pair: IndicSTR12 and IIIT-ILST are one lineage (lin_cvit_iiit_hyderabad).
+# These fixture items share no bytes and no content ancestry, so ONLY the source-lineage level can
+# catch this - which is exactly why the third level exists.
+experiment_id: LINEAGE-NC-02-DEPENDENT
+allocation_version: 1
+frozen: false
+independence_level: source_lineage
+manifest: fixtures/lineage/lineage-negative-control-manifest.jsonl
+rationale: "Synthetic. Deliberately holds out one CVIT source against the other."
+assignments:
+  development:
+    - "src_indicstr12_devanagari::verified_twice__hindi__900.jpeg"
+    - "src_indicstr12_devanagari::verified_twice__hindi__901.jpeg"
+    - "src_indicstr12_devanagari::verified_twice__hindi__902.jpeg"
+  qualification:
+    - "src_iiit_ilst_devanagari::IIIT-ILST__Devanagari__900.jpg"
+    - "src_iiit_ilst_devanagari::IIIT-ILST__Devanagari__901.jpg"
+    - "src_iiit_ilst_devanagari::IIIT-ILST__Devanagari__902.jpg"
