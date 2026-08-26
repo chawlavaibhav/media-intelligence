@@ -1,0 +1,293 @@
+# =============================================================================
+# EVAL-007 E7-D — Condition / production-envelope evidence map
+# =============================================================================
+# Date: 2026-08-26 · Spend: 0 · No API call of any kind.
+#
+# THE THREE-WAY SEPARATION THIS FILE EXISTS TO PROTECT
+#
+#   CAPABILITY        what can succeed or fail.
+#   CONDITION         the circumstances a measurement was taken under. Changing
+#                     one does not change what was measured - it changes whether
+#                     two measurements may be compared at all.
+#   PLANNER DECISION  a production choice the SYSTEM makes, which may be absent
+#                     from the customer's request entirely.
+#
+# The third is the one most easily lost. A customer asking for "a 15-second ad
+# with our founder talking" has not chosen native-AV versus video-plus-lip-sync.
+# That is a route the Planner picks, and it changes which capabilities are even
+# applicable. Recording it as a condition of the customer's request would
+# attribute a system choice to the customer.
+#
+# EXPLICIT NON-GOAL, per E7-D: these are NOT collapsed into one complexity
+# score. A single scalar would let a hard-on-one-axis item and a hard-on-another
+# item look identical, and the whole point of a condition is that it says which
+# axis moved.
+#
+# EVIDENCE HONESTY: conditions are hypotheses about what changes behaviour. Most
+# rows below are INFERRED from benchmark structure or provider interface shape,
+# not measured by us. `evidence_strength` says which is which. None of this is
+# an empirical finding about any model.
+# =============================================================================
+
+map_version: v1
+task: E7-D
+date: 2026-08-26
+conditions_recorded: 11
+empirically_measured_by_us: 0
+collapse_into_single_complexity_score: FORBIDDEN
+
+conditions:
+
+  - id: COND-01
+    name: duration
+    applies_to_lanes: [general_video, native_av, lipsync, tts]
+    evidence_strength: inferred_from_provider_interface_and_benchmark_design
+    basis: >-
+      Duration is a first-class, priced API parameter across video providers
+      (billing is commonly per second of output), and our own first-product
+      scope is 6-20 seconds. Longer generation gives more frames over which
+      drift, flicker and identity failure can accumulate.
+    why_it_changes_interpretation: >-
+      A stability score at 6 seconds and one at 20 seconds are not the same
+      measurement. Drift is cumulative, so a short clip flatters every
+      within-clip stability capability.
+    capabilities_most_affected: [person_stability_in_clip, product_stability_in_clip,
+                                 text_logo_stability_in_clip, motion_action_quality]
+    must_be_recorded_in_registry: true
+    unknown: "The shape of the relationship. We have not measured whether drift is linear in duration."
+
+  - id: COND-02
+    name: shot_count_and_sequence_structure
+    applies_to_lanes: [general_video, native_av]
+    evidence_strength: inferred_from_benchmark_design
+    basis: >-
+      VBench-2.0 introduces Motion Order Understanding and Complex Plot as
+      distinct dimensions, which implies multi-beat structure is a materially
+      different regime from single-shot generation.
+    why_it_changes_interpretation: >-
+      Continuity capabilities are UNDEFINED at one shot and only begin to exist
+      at two. A single-shot asset cannot exhibit a cross-shot failure, so
+      scoring it as a pass would manufacture evidence.
+    capabilities_most_affected: [multi_shot_spatial_continuity, hook_pacing_temporal_hierarchy]
+    must_be_recorded_in_registry: true
+    note: >-
+      This condition has a HARD FLOOR, unlike the others: below two shots the
+      capability is not merely easier, it is inapplicable.
+
+  - id: COND-03
+    name: reference_type_count_and_quality
+    applies_to_lanes: [image, general_video, native_av, lipsync]
+    evidence_strength: source_supported
+    basis: >-
+      DreamBench's protocol is built on reference images, and its DINO metric
+      "may risk overfitting the identity-irrelevant information" - i.e. the
+      reference's incidental content (background, pose) leaks into the judgement.
+      Reference COUNT is also a provider interface parameter that varies by
+      endpoint.
+    why_it_changes_interpretation: >-
+      An identity score obtained from four clean multi-view references is not
+      comparable to one from a single casual photo. Reference quality is part of
+      the measurement, not part of the model's ability.
+    capabilities_most_affected: [person_identity, product_identity, reference_conditioning,
+                                 logo_wordmark_fidelity]
+    must_be_recorded_in_registry: true
+    cross_stream: >-
+      Resources supplies the packs, so reference QUALITY is a Resources-controlled
+      condition of every Eval identity measurement. Neither stream owns it alone.
+
+  - id: COND-04
+    name: resolution_and_aspect_ratio
+    applies_to_lanes: [image, general_video, native_av, lipsync]
+    evidence_strength: inferred_from_provider_interface
+    basis: >-
+      Priced, constrained API parameters on essentially every image and video
+      endpoint; also the delivery contract for the first product.
+    why_it_changes_interpretation: >-
+      Small text survives at high resolution and disappears at feed size. A
+      legibility or exact-text result without a declared delivery size is not
+      interpretable.
+    capabilities_most_affected: [typography_legibility, exact_text_latin,
+                                 exact_text_devanagari, delivery_format_compliance]
+    must_be_recorded_in_registry: true
+    note: >-
+      This is the condition with the clearest DUAL ROLE: it is a condition of
+      every other measurement AND the subject of delivery_format_compliance.
+
+  - id: COND-05
+    name: entity_count_people_products_objects
+    applies_to_lanes: [image, general_video, native_av]
+    evidence_strength: source_supported
+    basis: >-
+      GenEval separates single-object from two-object prompts and reports
+      counting as its own dimension; T2I-CompBench has a numeracy category.
+      GenEval2 indexes prompts by `atom_count` explicitly so results can be read
+      at different compositional loads.
+    why_it_changes_interpretation: >-
+      This is the best externally evidenced condition in the map. A benchmark
+      that structures itself by compositional load is stating that load changes
+      behaviour materially enough to need separate reporting.
+    capabilities_most_affected: [object_count, attribute_binding, spatial_relationship,
+                                 human_human_interaction, anatomy_hands]
+    must_be_recorded_in_registry: true
+
+  - id: COND-06
+    name: action_and_camera_motion_complexity
+    applies_to_lanes: [general_video, native_av]
+    evidence_strength: source_supported
+    basis: >-
+      VBench separates motion_smoothness from dynamic_degree - i.e. HOW MUCH
+      motion is present is tracked separately from how good it is. VBench-2.0
+      adds Camera Motion as a controllable dimension.
+    why_it_changes_interpretation: >-
+      A near-static clip scores well on smoothness trivially. Without recording
+      motion load, a model that produces almost no motion looks like a model
+      that produces excellent motion.
+    capabilities_most_affected: [motion_action_quality, action_adherence,
+                                 person_stability_in_clip, product_stability_in_clip]
+    must_be_recorded_in_registry: true
+    note: >-
+      This is the condition most likely to produce a FALSE POSITIVE reading of
+      overall quality if omitted.
+
+  - id: COND-07
+    name: constraint_and_exactness_load
+    applies_to_lanes: [image, general_video, native_av]
+    evidence_strength: source_supported
+    basis: >-
+      Arena-T2I-Hard's prompts are hard precisely because they stack "attributes,
+      spatial relations, counts, and stylistic constraints" in one request.
+      GenEval2's `atom_count` is the same idea made countable.
+    why_it_changes_interpretation: >-
+      Per-capability pass rates measured on isolated atomic probes will NOT
+      predict performance when six constraints must hold simultaneously. This is
+      the gap between our atomic tier and real briefs.
+    capabilities_most_affected: [ALL_constraint_fidelity, ALL_text_and_brand]
+    must_be_recorded_in_registry: true
+    architectural_consequence: >-
+      This condition is the reason the benchmark needs compound scenarios at
+      DIFFERENT constraint loads, not just atomic probes plus one realistic tier.
+
+  - id: COND-08
+    name: language_script_and_speaker_topology
+    applies_to_lanes: [image, native_av, lipsync, tts]
+    evidence_strength: source_supported
+    basis: >-
+      IndicVoices-R exists because Indian-language speech needs its own
+      material (22 languages, 10,496 speakers, per-speaker metadata). Our own
+      prior evidence establishes Devanagari exactness as a distinct judgement
+      from Latin.
+    why_it_changes_interpretation: >-
+      An English result does not transfer to Hindi, and neither transfers to
+      Hinglish code-mixing - which is arguably the hardest case and the most
+      commercially common for this product. Speaker count (one vs two) changes
+      which capabilities apply at all.
+    capabilities_most_affected: [exact_text_devanagari, spoken_language_correctness,
+                                 single_speaker_lip_sync,
+                                 two_speaker_turn_assignment_and_lip_sync]
+    must_be_recorded_in_registry: true
+    note: "Pooling English and Hindi results would let strong English hide unusable Hindi."
+
+  - id: COND-09
+    name: workflow_mode
+    applies_to_lanes: [image, general_video, native_av, lipsync]
+    evidence_strength: inferred_from_provider_interface
+    basis: >-
+      T2V, I2V, extension, edit, reference-conditioned and composite are
+      distinct API surfaces with distinct parameters and prices.
+    why_it_changes_interpretation: >-
+      I2V starts from a fixed first frame, so identity at frame 0 is GIVEN, not
+      generated. Scoring identity on an I2V asset and a T2V asset in one cell
+      would compare a model that had to invent a face with one that was handed it.
+    capabilities_most_affected: [person_identity, product_identity, reference_conditioning,
+                                 edit_preservation]
+    must_be_recorded_in_registry: true
+    planner_boundary_warning: >-
+      CAUTION - workflow mode sits on the line between condition and Planner
+      decision. When WE choose I2V to make a job easier, that is a Planner
+      decision. When the customer supplies a starting image, it is a condition of
+      their request. The same field means different things depending on who
+      chose it, and the Registry must record WHICH.
+
+  - id: COND-10
+    name: input_quality
+    applies_to_lanes: [image, general_video, lipsync, native_av]
+    evidence_strength: inferred
+    basis: >-
+      Lip-sync and edit workflows consume customer-supplied media. Our own prior
+      calibration evidence establishes that degraded real-world material behaves
+      very differently from clean renders.
+    why_it_changes_interpretation: >-
+      A lip-sync result on a clean studio clip says little about the same
+      workflow on a customer's phone video, which is the realistic input.
+    capabilities_most_affected: [single_speaker_lip_sync, edit_preservation,
+                                 person_identity]
+    must_be_recorded_in_registry: true
+    unknown: "We hold no degraded-input material for any transform lane."
+
+  - id: COND-11
+    name: single_asset_vs_variant_or_campaign_scale
+    applies_to_lanes: [image, general_video, native_av]
+    evidence_strength: inferred_from_product_scope
+    basis: >-
+      Commercial work ships in sets - sizes, placements, variants. No external
+      benchmark was found that measures set-level consistency.
+    why_it_changes_interpretation: >-
+      Per-asset pass rates say nothing about whether twelve assets read as one
+      campaign. A workflow could pass every asset individually and fail the job.
+    capabilities_most_affected: [person_identity, product_identity,
+                                 composition_brand_register]
+    must_be_recorded_in_registry: true
+    note: >-
+      This condition is currently UNMEASURABLE for us and has no candidate
+      instrument. It is recorded so it is not mistaken for solved.
+
+# -----------------------------------------------------------------------------
+# PLANNER DECISIONS - deliberately NOT conditions
+# -----------------------------------------------------------------------------
+# These are production choices the future Planner makes. They are recorded here
+# ONLY to keep them out of the condition set. Eval does not implement routing and
+# takes no position on how these should be chosen.
+planner_decisions_not_conditions:
+  - id: PD-01
+    decision: "native audio-video vs video generated separately then lip-synced"
+    why_not_a_condition: >-
+      The customer asks for a talking founder. They do not choose the topology.
+      It changes which capabilities apply - native AV makes sync a property of
+      one trial, the composite route makes it a property of a transform - so it
+      must be recorded on the MEASUREMENT, but attributing it to the request
+      would misdescribe what the customer asked for.
+  - id: PD-02
+    decision: "single-call generation vs multi-step recipe (keyframe chain, edit passes)"
+    why_not_a_condition: "A route, not a request property. Changes cost and failure surface."
+  - id: PD-03
+    decision: "how many retries before abandoning an outcome"
+    why_not_a_condition: >-
+      Purely a production policy. It belongs to the acceptance/CpAO chain and
+      must never enter a capability pass-rate cell.
+  - id: PD-04
+    decision: "which reference pack or conditioning strategy to use"
+    why_not_a_condition: >-
+      When the Planner selects references, the resulting reference quality is a
+      consequence of OUR choice, not of the customer's brief.
+  - id: PD-05
+    decision: "aggregator vs direct endpoint for the same underlying model"
+    why_not_a_condition: "Invisible to the customer; materially different price, pinning and limits."
+
+# -----------------------------------------------------------------------------
+# Why not a cartesian product
+# -----------------------------------------------------------------------------
+combinatorics_warning:
+  conditions: 11
+  note: >-
+    Even at two levels each, 11 conditions is 2,048 cells before a single
+    capability or model is considered. A full sweep is not fundable and never
+    will be. The benchmark proposal therefore uses SPARSE, ADAPTIVE sweeps on
+    the conditions with the strongest evidence, and records the rest as declared
+    context rather than as swept axes. Recording a condition costs nothing;
+    sweeping it costs a run.
+  conditions_recommended_for_active_sweep: [COND-01, COND-05, COND-07, COND-08]
+  why_those_four: >-
+    Duration, entity count, constraint load and language/script are the four
+    with the strongest external evidence that behaviour changes materially
+    across their range, and all four are cheap to vary within an existing item.
+  all_others: "Recorded as declared conditions on every measurement; not swept in the first wave."
