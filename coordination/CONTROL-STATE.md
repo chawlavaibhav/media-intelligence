@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 28 Aug 2026 — User corrected the programme architecture: mandatory human confirmation is withdrawn, EVAL-028 is superseded, and exact Hindi text is now a non-blocking measured capability rather than a global gate. A separate benchmark-grade OCR contract is being prepared in EVAL-029; strict zero-false-pass results remain preserved as research evidence.
+**Updated:** 28 Aug 2026 — EVAL-024 generation-only implementation returned with zero live spend because `FAL_KEY` was unavailable. Core design is accepted in principle, but the returned branch is behind current main and includes two unrelated regenerated evidence files plus a media-extension issue. One bounded cleanup/sync pass is required before live generation. EVAL-029 benchmark-grade OCR remains the text-evaluation lane.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
