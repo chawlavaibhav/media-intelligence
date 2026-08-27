@@ -202,11 +202,13 @@ def test_the_key_never_appears_in_the_request_body(openai_key, anthropic_key, go
     cls(resolved_version=version, http=http)({'model': version, 'contents': [], 'input': []})
     body = http.calls[0]['body'].decode('utf-8')
     assert 'sk-test-openai-key' not in body
+    assert 'sk-ant-test-key' not in body
     assert 'AIza-test-google-key' not in body
 
 
 @pytest.mark.parametrize('cls,version,fixture', [
     (P.OpenAIHttpTransport, OPENAI_VERSION, P.OPENAI_OK_FIXTURE),
+    (P.AnthropicHttpTransport, ANTHROPIC_VERSION, P.ANTHROPIC_OK_FIXTURE),
     (P.GeminiHttpTransport, GEMINI_VERSION, P.GEMINI_OK_FIXTURE),
 ])
 def test_no_key_reaches_a_persisted_call_record(openai_key, anthropic_key, google_key, cls, version, fixture):
@@ -221,12 +223,13 @@ def test_no_key_reaches_a_persisted_call_record(openai_key, anthropic_key, googl
                   transport=cls(resolved_version=version, http=RecordingHttp(fixture)),
                   guard=BudgetGuard(authorised_usd=Decimal('10.00')))
     blob = json.dumps(j.call_record(j.transcribe(IMAGE), shape='transcribe'))
-    assert 'sk-test-openai-key' not in blob and 'AIza-test-google-key' not in blob
+    assert 'sk-test-openai-key' not in blob and 'sk-ant-test-key' not in blob and 'AIza-test-google-key' not in blob
 
 
 # ---------------------------------------------------------------- one dispatch, no retry
 @pytest.mark.parametrize('cls,version,fixture', [
     (P.OpenAIHttpTransport, OPENAI_VERSION, P.OPENAI_OK_FIXTURE),
+    (P.AnthropicHttpTransport, ANTHROPIC_VERSION, P.ANTHROPIC_OK_FIXTURE),
     (P.GeminiHttpTransport, GEMINI_VERSION, P.GEMINI_OK_FIXTURE),
 ])
 def test_one_call_produces_exactly_one_http_dispatch(openai_key, anthropic_key, google_key, cls, version,
