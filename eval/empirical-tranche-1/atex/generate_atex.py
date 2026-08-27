@@ -227,10 +227,11 @@ def generate_only(tranche_run, routes: dict, artifact_root: Path | str,
             continue
 
         blob = response["fetch_artifact"]()
-        relative = f"{coord['slot']}/{coord['item_id']}-r{coord['repeat_index']}.png"
+        media_type, extension, dimensions = detect_media(blob)
+        relative = f"{coord['slot']}/{coord['item_id']}-r{coord['repeat_index']}{extension}"
         target = artifact_root / relative
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(blob)
+        target.write_bytes(blob)          # exactly as returned; never transcoded
 
         digest = hashlib.sha256(blob).hexdigest()
         record["artifact_sha256"] = digest
@@ -239,8 +240,8 @@ def generate_only(tranche_run, routes: dict, artifact_root: Path | str,
             "relative_path": relative,
             "sha256": digest,
             "bytes": len(blob),
-            "media_type": _media_type(blob),
-            "dimensions": _png_dimensions(blob),
+            "media_type": media_type,
+            "dimensions": dimensions,
             "artifact_url": response.get("artifact_url"),
             "provider_request_id": response.get("provider_request_id"),
             "cost_ref": cost_ref,
@@ -282,16 +283,80 @@ def _frozen_request_config(slot: str) -> dict:
     return {"route": P.FAL_ROUTES[slot]["route"], **P.FAL_ROUTES[slot]["body"]}
 
 
-def _media_type(blob: bytes) -> str:
-    return "image/png" if blob.startswith(b"\x89PNG\r\n\x1a\n") else "application/octet-stream"
+def detect_media(blob: bytes) -> tuple[str, str, dict | None]:
+    """Return (media_type, extension, dimensions) read from the BYTES, never assumed.
+
+    An extension is a claim about content. Writing JPEG bytes to a `.png` path misleads every
+    later reader — the evaluator, a person opening the folder, any tool that dispatches on
+    extension — using evidence we sealed ourselves. So the name follows the bytes.
+
+    Dimensions are reported only where they can be parsed safely. A truncated or unfamiliar file
+    yields None rather than a guess: no dimensions is a fact, and a wrong number is not.
+
+    Nothing here transcodes or normalises. The bytes are written exactly as the provider returned
+    them, and the seal is taken over those bytes.
+    """
+    if blob.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png", ".png", _png_dimensions(blob)
+    if blob.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg", ".jpg", _jpeg_dimensions(blob)
+    if len(blob) >= 12 and blob[:4] == b"RIFF" and blob[8:12] == b"WEBP":
+        return "image/webp", ".webp", _webp_dimensions(blob)
+    # Unknown is a legitimate outcome, recorded honestly with a content-neutral name.
+    return "application/octet-stream", ".bin", None
 
 
 def _png_dimensions(blob: bytes) -> dict | None:
-    """Width/height straight out of the IHDR chunk. None when the bytes are not a PNG."""
-    if not blob.startswith(b"\x89PNG\r\n\x1a\n") or len(blob) < 24:
+    """Width/height from the IHDR chunk."""
+    if len(blob) < 24 or blob[12:16] != b"IHDR":
         return None
     return {"width": int.from_bytes(blob[16:20], "big"),
             "height": int.from_bytes(blob[20:24], "big")}
+
+
+def _jpeg_dimensions(blob: bytes) -> dict | None:
+    """Walk the JPEG marker segments to the frame header. Returns None on anything unexpected."""
+    i, n = 2, len(blob)
+    while i + 9 < n:
+        if blob[i] != 0xFF:
+            return None
+        marker = blob[i + 1]
+        if marker in (0xD8, 0xD9) or 0xD0 <= marker <= 0xD7:
+            i += 2
+            continue
+        length = int.from_bytes(blob[i + 2:i + 4], "big")
+        if length < 2:
+            return None
+        # SOF0..SOF15, excluding the non-frame markers DHT (C4), JPG (C8) and DAC (CC).
+        if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+            if i + 9 > n:
+                return None
+            return {"width": int.from_bytes(blob[i + 7:i + 9], "big"),
+                    "height": int.from_bytes(blob[i + 5:i + 7], "big")}
+        i += 2 + length
+    return None
+
+
+def _webp_dimensions(blob: bytes) -> dict | None:
+    """Handle the three WebP chunk layouts: VP8 (lossy), VP8L (lossless) and VP8X (extended)."""
+    if len(blob) < 30:
+        return None
+    chunk = blob[12:16]
+    try:
+        if chunk == b"VP8 ":
+            # Frame header follows the 3-byte tag and the 3-byte start code.
+            base = 20 + 3 + 3
+            return {"width": int.from_bytes(blob[base:base + 2], "little") & 0x3FFF,
+                    "height": int.from_bytes(blob[base + 2:base + 4], "little") & 0x3FFF}
+        if chunk == b"VP8L":
+            bits = int.from_bytes(blob[21:25], "little")
+            return {"width": (bits & 0x3FFF) + 1, "height": ((bits >> 14) & 0x3FFF) + 1}
+        if chunk == b"VP8X":
+            return {"width": int.from_bytes(blob[24:27], "little") + 1,
+                    "height": int.from_bytes(blob[27:30], "little") + 1}
+    except (IndexError, ValueError):
+        return None
+    return None
 
 
 # ------------------------------------------------------------------------------ the manifest

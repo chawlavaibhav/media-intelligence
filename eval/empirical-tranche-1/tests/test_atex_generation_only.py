@@ -61,7 +61,7 @@ class Artifacts:
 
 def _generate(tmp_path, http=None, run=None, artifacts=None):
     run = run or _run(tmp_path)
-    artifacts = artifacts or Artifacts()
+    artifacts = artifacts if artifacts is not None else Artifacts()
     cfg = G.config()
     routes = {slot: P.fal_route_for(slot, cfg, http=http or FakeFalHttp(),
                                     artifact_fetch=artifacts)
@@ -355,3 +355,101 @@ def test_live_mode_refuses_without_a_valid_authorisation(tmp_path, monkeypatch):
     monkeypatch.delenv('FAL_KEY', raising=False)
     assert G.main(['--live', '--run-root', str(tmp_path / 'runs'),
                    '--run-id', 'nope']) != 0
+
+
+# ============================================================ media type honesty (EVAL-024 cleanup)
+"""The filename must not claim PNG when fal returned something else.
+
+An extension is a claim about bytes. If a `.png` path holds JPEG bytes, every later reader — the
+evaluator, a human opening the folder, any tooling that dispatches on extension — is misled by
+evidence we sealed ourselves. Detect from the bytes, name accordingly, and never transcode: the
+sealed hash must be over exactly what the provider returned.
+"""
+
+PNG_1x1 = (b'\x89PNG\r\n\x1a\n' + b'\x00\x00\x00\rIHDR'
+           + (1).to_bytes(4, 'big') + (1).to_bytes(4, 'big') + b'\x08\x06\x00\x00\x00'
+           + b'\x00' * 20)
+
+# JPEG: SOI, APP0, then SOF0 declaring 40 high x 30 wide.
+JPEG_30x40 = (b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00'
+              + b'\xff\xc0\x00\x11\x08' + (40).to_bytes(2, 'big') + (30).to_bytes(2, 'big')
+              + b'\x03\x01\x22\x00\x02\x11\x01\x03\x11\x01' + b'\xff\xd9')
+
+# WebP (lossy VP8): RIFF container, VP8 chunk with a 16x8 frame header.
+_VP8 = (b'\x9d\x01\x2a' + (16).to_bytes(2, 'little') + (8).to_bytes(2, 'little'))
+WEBP_16x8 = (b'RIFF' + (4 + 8 + len(_VP8) + 3).to_bytes(4, 'little') + b'WEBP'
+             + b'VP8 ' + (len(_VP8) + 3).to_bytes(4, 'little') + b'\x00\x00\x00' + _VP8)
+
+
+def test_png_bytes_are_detected_with_dimensions():
+    media, ext, dims = G.detect_media(PNG_1x1)
+    assert media == 'image/png' and ext == '.png'
+    assert dims == {'width': 1, 'height': 1}
+
+
+def test_jpeg_bytes_are_detected_with_dimensions():
+    media, ext, dims = G.detect_media(JPEG_30x40)
+    assert media == 'image/jpeg' and ext == '.jpg'
+    assert dims == {'width': 30, 'height': 40}
+
+
+def test_webp_bytes_are_detected_with_dimensions():
+    media, ext, dims = G.detect_media(WEBP_16x8)
+    assert media == 'image/webp' and ext == '.webp'
+    assert dims == {'width': 16, 'height': 8}
+
+
+def test_unknown_bytes_get_a_content_neutral_name_and_no_invented_dimensions():
+    media, ext, dims = G.detect_media(b'not an image at all')
+    assert media == 'application/octet-stream'
+    assert ext == '.bin'
+    assert dims is None
+
+
+def test_truncated_bytes_do_not_produce_guessed_dimensions():
+    """Better to record no dimensions than a number nobody can trust."""
+    media, ext, dims = G.detect_media(b'\x89PNG\r\n\x1a\n')
+    assert media == 'image/png'
+    assert dims is None
+
+
+@pytest.mark.parametrize('blob,expected_ext,expected_media', [
+    (PNG_1x1, '.png', 'image/png'),
+    (JPEG_30x40, '.jpg', 'image/jpeg'),
+    (WEBP_16x8, '.webp', 'image/webp'),
+    (b'mystery bytes', '.bin', 'application/octet-stream'),
+])
+def test_the_sealed_filename_matches_the_actual_bytes(tmp_path, fal_key, blob, expected_ext,
+                                                      expected_media):
+    """The regression the Controller flagged: a .png path holding non-PNG bytes."""
+    result, run, _ = _generate(tmp_path, artifacts=lambda url: blob)
+
+    a = result['artifacts'][0]
+    assert a['relative_path'].endswith(expected_ext)
+    assert a['media_type'] == expected_media
+
+    on_disk = (tmp_path / 'sealed' / a['relative_path']).read_bytes()
+    assert on_disk == blob                      # byte-identical: nothing was transcoded
+    assert a['sha256'] == hashlib.sha256(blob).hexdigest()
+    assert a['bytes'] == len(blob)
+
+
+def test_jpeg_returned_by_fal_is_never_written_to_a_png_path(tmp_path, fal_key):
+    result, run, _ = _generate(tmp_path, artifacts=lambda url: JPEG_30x40)
+    assert not any(a['relative_path'].endswith('.png') for a in result['artifacts'])
+    assert all(a['media_type'] == 'image/jpeg' for a in result['artifacts'])
+
+
+def test_the_seal_still_verifies_for_non_png_media(tmp_path, fal_key):
+    result, run, _ = _generate(tmp_path, artifacts=lambda url: WEBP_16x8)
+    m = G.build_manifest(run, result, artifact_root=tmp_path / 'sealed')
+    report = G.verify_sealed_artifacts(m, artifact_root=tmp_path / 'sealed')
+    assert report['ok'] is True and report['verified'] == 16
+
+
+def test_media_type_and_dimensions_reach_the_manifest(tmp_path, fal_key):
+    result, run, _ = _generate(tmp_path, artifacts=lambda url: JPEG_30x40)
+    m = G.build_manifest(run, result, artifact_root=tmp_path / 'sealed')
+    for a in m['artifacts']:
+        assert a['media_type'] == 'image/jpeg'
+        assert a['dimensions'] == {'width': 30, 'height': 40}
