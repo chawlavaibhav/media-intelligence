@@ -729,7 +729,7 @@ def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = Non
     }
 
 
-def _fake_live(guard, out: Path, run=None) -> dict:
+def _fake_live(guard, out: Path, run=None, only_provider: str | None = None) -> dict:
     """The real orchestration with an injected recorder standing where the socket would be.
 
     Proves the positive path end to end at zero spend. Its results are labelled `fake_live` and
@@ -749,18 +749,20 @@ def _fake_live(guard, out: Path, run=None) -> dict:
     }
 
     images = ImageResolver()
-    candidates = [
-        LiveCandidate(judge=P.AnthropicTextJudge(
+    all_candidates = {
+        "anthropic": LiveCandidate(judge=P.AnthropicTextJudge(
             model_alias="claude-sonnet-5", resolved_version="claude-sonnet-5",
             transport=P.AnthropicHttpTransport("claude-sonnet-5",
                                                http=http_by_provider["anthropic"]),
             guard=guard), images=images),
-        LiveCandidate(judge=P.GeminiTextJudge(
+        "google": LiveCandidate(judge=P.GeminiTextJudge(
             model_alias="gemini-3.5-flash-lite", resolved_version="FAKE-LIVE-google-snapshot",
             transport=P.GeminiHttpTransport("FAKE-LIVE-google-snapshot",
                                             http=http_by_provider["google"]),
             guard=guard), images=images),
-    ]
+    }
+    selected = [only_provider] if only_provider else ["anthropic", "google"]
+    candidates = [all_candidates[p] for p in selected]
 
     results = [qualify_candidate(c, guard=guard) for c in candidates]
 
@@ -781,10 +783,11 @@ def _fake_live(guard, out: Path, run=None) -> dict:
         "external_calls": 0,
         "spend_usd": "0",
         "candidates": results,
-        "dispatches": sum(len(h.calls) for h in http_by_provider.values()),
+        "dispatches": sum(len(http_by_provider[p].calls) for p in selected),
         "simulated_spend_usd": str(guard.spent_usd),
         "calls_per_candidate_per_script": CALLS_PER_SCRIPT,
-        "maximum_evaluator_calls_if_all_survive": MAX_EVALUATOR_CALLS,
+        "selected_providers": selected,
+        "maximum_evaluator_calls_if_all_survive": CALLS_PER_SCRIPT * 2 * len(candidates),
         "materials": {
             "devanagari": verify_devanagari_identity(),
             "latin_pack_sha256": hashlib.sha256(LATIN_PACK.read_bytes()).hexdigest(),
@@ -841,7 +844,7 @@ def main(argv: list[str] | None = None) -> int:
             guard = SL.TrancheBudget(run).stage("qualification")
 
         if a.fake_live:
-            result = _fake_live(guard, Path(a.out), run=run)
+            result = _fake_live(guard, Path(a.out), run=run, only_provider=a.only_provider)
             print(f"fake-live: {result['dispatches']} recorded dispatches, 0 network calls")
             for c in result["candidates"]:
                 latin = c["latin"]["calls"] if c["latin"] else 0
