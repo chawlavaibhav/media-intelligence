@@ -1,34 +1,40 @@
 # Workstream Status
 
-**Current snapshot:** 28 Aug 2026 — EMP-001 is **authorised and live**. The first paid tranche has
-run; five exact-text checkers were tested and all five failed the strict zero-false-pass standard.
-**Exact text is now a non-blocking measured capability**, so unrelated work is no longer held up by
-it. Three lanes are open in parallel.
+**Current snapshot:** 28 Aug 2026 — **the five parallel domain lanes have settled and merged, and no
+domain lane is currently open.** EMP-001's paid work is complete: text-judge qualification ran, 16
+A-TEXT images were generated and sealed, and those exact images were scored. **Exact text is a
+non-blocking measured capability**, and the Capability Registry still holds **0 rows** by deliberate
+Controller decision.
 
-**Refreshed by the Repository Governor under GOV-005**
-(`governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md`), resynced against `main` at
-`8990a7a` after the Controller's disposition
-(`coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`).
+**Refreshed by the Repository Governor under GOV-006**
+(`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`), against `main` at
+`91984f50b294f11aefc7065f5ad11f9e0d3e2b9a`. The previous refresh was GOV-005 at `8990a7a`; its
+figures were correct when written and are superseded here, not erased.
 
 **Read `PROJECT-MEMORY.md` and `coordination/CONTROL-STATE.md` first.** `CONTROL-STATE.md` is the
 current execution posture and **governs where this file and it differ**.
 
 ## Global posture
 
-**Broad research and design are closed. Paid execution is authorised, bounded and in progress.**
+**Broad research and design are closed. EMP-001's authorised paid work has been executed and
+integrated.**
 
 The user approved EMP-001 at **USD 10 total consumed API spend**, with a **USD 6 text-judge
 qualification sub-cap**, **zero retries** and no account pre-funding above the ceiling.
 `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`.
 
-**USD 1.3037905 has been consumed.** No image has been generated and no Registry row exists.
+**Recorded spend:** cumulative **USD 2.6397905** through the EVAL-024 generation tranche, plus a
+separately recorded **USD 0.024** for EVAL-030's evaluator calls. **16 images have been generated and
+scored. No Registry row exists** — and none should, because `benchmark_qualified` is intentionally
+weaker than the Registry's admission bar. *(No committed artifact states a consolidated total that
+includes the EVAL-030 figure — GOV-006 finding G6-02.)*
 
 | Stream | Current state | Active approved work | Next gate |
 |---|---|---|---|
-| Canon | 19 live accepted sources; request grammar and coverage frozen; Canon value remains empirically unproven. User-supplied Upwork/Fiverr marketplace demand research committed as external research — **not** a Canon source. | **CANON-011** — marketplace-derived brief bank, USD 0 | Return the derived bank for Controller review. Live Canon stays 19 unless a source passes the Audit Gate. |
-| Eval | Capability v2 44 = 43 active + 1 dormant; 13 condition families; 12 core + 2 reserve slots. **0 qualified instruments, 0 Registry rows** — now after testing five exact-text configurations, not before testing any. | **EVAL-029** — benchmark-grade text OCR, ≤ USD 0.432. **EVAL-024** — generate and seal the 16 A-TEXT images; behind a cleanup gate, USD 0 spent so far. | EVAL-029 recomputation, then the Cloud Vision Latin screen. |
-| Resources | Topology v3 / CpAO v3 / four-pack structure frozen; historical v2.1 preserved. | No broad acquisition | Acquire or capture only material demanded by a separately approved later tranche. |
-| Governor | GOV-005 resynced to current main, awaiting merge — **PASS WITH NON-BLOCKING NOTES**; one High finding (F-1, completed live evidence not sealed into GitHub) routed and unresolved. | none | No new Governor round scheduled. |
+| Canon | 19 live accepted sources, unchanged. Request grammar and coverage frozen and **not reopened**. **CANON-011 merged:** 18 marketplace-derived buyer cases, 16 runnable without contacting the buyer — the preferred real-demand pool for Stage-C and compound sourcing. It is external research in `canon/research/`, **not** a Canon source, and did not change the count of 19. | **None.** | Live Canon stays 19 unless a source passes the Audit Gate. GG-01…GG-04 stay observations; the grammar reopens only if a selected case actually needs the missing representation. |
+| Eval | Capability v2 44 = 43 active + 1 dormant; 13 condition families; 12 core + 2 reserve slots. **Cloud Vision `TEXT_DETECTION` is `benchmark_qualified` on Devanagari and Latin, and `strict_exactness_qualified: false`.** Its evidence is sealed in Git and recomputable from a fresh clone. **16 A-TEXT images generated, sealed and scored: 7/16 exact.** **EVAL-026 landed temporal machinery only — no temporal evaluator is qualified and no pass mark exists.** **0 Registry rows.** | **None.** | Registry text rows remain blocked; admission semantics must not be weakened to create a first row. Temporal qualification needs all four prerequisites below. |
+| Resources | Corpus posture unchanged. **RES-005 merged:** 12 clips from 12 distinct works, 12/12 passing the cleanliness screen, rights limited to CC BY / CC BY-SA / CC0 / US-Gov public domain. Only a **representative 3/3** passed EVAL-026 ingest. Material is **`MAT-TEMPORAL-BASE`, not `PACK-AV-CLEAN`**. | **None.** | Full 12-clip ingest under a recorded execution condition, before any temporal qualification. No broad acquisition authorised. |
+| Governor | **GOV-005 closed and merged** (PR #48, `c794694`); **GOV-006** is the current round — PASS WITH NON-BLOCKING NOTES. GOV-005's High finding **F-1 (live evidence not in GitHub) is resolved** for the text-OCR lane. | GOV-006, complete and pushed, not merged. | Seven GOV-006 findings routed to their owning streams. |
 
 ## What EMP-001 found
 
@@ -79,6 +85,10 @@ carries its evaluator's measured error rate and contract id.
 0.0208, consistency 1.0, zero empties, zero infrastructure failures) **fail** the strict screen and
 **meet** the benchmark thresholds. Different questions, different answers.
 
+**Since then the Latin screen has also run** (false-pass 0.1042, false-fail 0.0000, consistency 1.0),
+so Cloud Vision is `benchmark_qualified` on **both** scripts and still `strict_exactness_qualified:
+false` on both. GOV-006 re-derived all six figures from the sealed observations.
+
 **What follows:**
 
 - **EVAL-028 is cancelled and must not be executed.** `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md`.
@@ -87,48 +97,95 @@ carries its evaluator's measured error rate and contract id.
   that measurement needs are ready.
 - **The strict results are preserved as valid research** under `strict_exactness_certification`.
 
-## Active lanes
+## Settled lanes — all merged, none active
 
-**EVAL-029 — benchmark-grade text OCR.** `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md`. Build
-`benchmark_text_ocr_v1`; **recompute** (not rerun) the existing Cloud Vision Devanagari evidence
-against it, mechanically from stored observations, and stop and return if it disagrees; then, only if
-that passes, run the missing Latin screen — 288 calls, retries 0, reservation **USD 0.432**, on the
-existing ledger, no language hints. If both scripts pass, Cloud Vision is **benchmark-qualified** for
-comparison, still not strict-certified. If EVAL-024's sealed artifacts exist, score those exact
-images without humans or regeneration. **Registry text rows stay blocked** pending Controller review.
+**Every lane that was open at GOV-005 has returned, been accepted and been merged.** Nothing below is
+work to do; it is the record of what was done. **Do not restart, re-run or regenerate any of it.**
 
-> **Check before spending:** the recomputation step needs stored per-trial observations that are
-> **not on `main`** (GOV-005 F-1). If they are not reachable locally, that step cannot be performed
-> as written.
+**CANON-011 — marketplace-derived benchmark brief bank.** 18 cases derived from real Upwork buyer
+postings, 16 of them runnable without contacting the buyer. Upwork buyer jobs are customer-intent
+evidence; **Fiverr seller gigs are not**, and none was used as a case. `MKT-015` is retained only as
+blocked market evidence and must not be promoted to a runnable Stage-C case without a new decision.
+The four grammar gaps GG-01…GG-04 are **observed representation gaps, recorded and routed with no
+change made** — the Media Request Grammar was not reopened and the 30 authored briefs are
+byte-identical. USD 0.
+`coordination/decisions/CONTROLLER-CANON-011-INTEGRATION-2026-08-28.md`
 
-**EVAL-024 — A-TEXT generation-only, returned at USD 0, behind a cleanup gate.**
-`coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md`
+**EVAL-024 — A-TEXT generation, closed.** All 16 frozen coordinates generated and sealed as committed
+bytes: 8 from fal `openai/gpt-image-2` and 8 from fal `fal-ai/ideogram/v3`, 1024×1024 PNG, unseeded,
+0 retries, 0 missing coordinates, 0 evaluator calls. Generation spend **USD 0.904**; manifest
+fingerprint `1e124343…`. **These exact bytes are durable evidence. Do not regenerate them.**
+`coordination/decisions/CONTROLLER-EVAL-024-INTEGRATION-2026-08-28.md`
 
-`FAL_KEY` was unavailable and the runner correctly treated that as a **pre-dispatch** failure, so no
-provider call and no spend occurred. The design is accepted in principle. Before live dispatch:
+**EVAL-029 — benchmark-grade text OCR, with durable evidence.** Cloud Vision `TEXT_DETECTION`, no
+language hints, is **`benchmark_qualified`** for Devanagari (false-pass 0.1250, false-fail 0.0208,
+consistency 1.0) and Latin (false-pass 0.1042, false-fail 0.0000, consistency 1.0), and remains
+**`strict_exactness_qualified: false`**. Incremental spend USD 0.4320.
 
-1. sync the branch to current `main`;
-2. restore `preflight-result.json` and `perceptibility-mechanical.json` byte-for-byte from `main`;
-3. stop writing non-PNG bytes to `.png` paths — detect media type from the returned bytes, preserve
-   and hash the raw bytes, never transcode for a convenient extension;
-4. restore the pinned Tesseract traineddata so the full suite is green again.
+The completed evidence is now **sealed into Git** under
+`eval/empirical-tranche-1/evidence/EMP-001/text-ocr/` — the exact source observations, the completed
+result, and a bounded cost/ledger excerpt, all hash-fingerprinted, with no machine-local path
+required. **A fresh clone can recompute both scripts' metrics from committed bytes alone.** That
+closes GOV-005's High finding **F-1** for this lane.
+`coordination/decisions/CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md`
 
-If `FAL_KEY` is present after cleanup, the 16 generations may run from that exact pushed head on the
-existing ledger. If not, stop pre-dispatch and return. Committing the 16 sealed image bytes is a
-**bounded EMP-001 exception**, not a general policy for generated media.
+**EVAL-030 — the 16 sealed images scored, without regeneration.** The scorer consumed the exact
+sealed hashes; nothing was regenerated.
 
-**CANON-011 — marketplace-derived brief bank, USD 0.** Turn the committed Upwork/Fiverr research into
-provenance-preserving benchmark briefs. Upwork buyer jobs may be used as customer-intent briefs;
-**Fiverr seller gigs may not** — a seller's package is not a customer's request.
+| | Exact matches |
+|---|---|
+| GPT Image 2 | **6 / 8** (0.750) |
+| Ideogram v3 | **1 / 8** (0.125) |
+| **Overall** | **7 / 16** (0.4375) |
+| Devanagari | 5 / 8 |
+| Latin / Hinglish | 2 / 4 |
+| Commercial claim with ₹ | 0 / 4 |
 
-**Authority chains, settled 28 Aug 2026** (GOV-005 F-4 resolved):
-`coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`
+Evaluator spend **USD 0.024**; A-TEXT generation + evaluation **USD 0.928**.
 
-| Lane | Governing | Historical, preserved, not governing |
-|---|---|---|
-| EVAL-024 | `CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md` → `CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md` → `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md` | `CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`; `eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md` |
-| CANON-011 | `CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md` → `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md` → `canon/research/marketplace-demand-v1/README.md` | `CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`; `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md` |
+**Read this correctly.** It is a **directional benchmark signal on a small slice**, not a production
+certification and not a population rate. The sample is small, the evaluator's own error is non-zero
+and is carried on every row, and the ₹ failures cannot be cleanly attributed to the generator versus
+the OCR from this evidence alone. **The Registry stays at 0** — `benchmark_qualified` is deliberately
+weaker than the Registry's `qualified`/`deterministic` admission bar, and **weakening admission to
+create a first row is forbidden**.
+`coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md`
 
+**EVAL-026 — temporal qualification machinery only.** 13 deterministic perturbation types covering
+all 9 frozen `temporal_video` capabilities: **7 with full injected-truth coverage**, and **2 —
+`action_adherence` and `camera_framing_fidelity` — negative-direction-only**, because proving a
+checker notices a destroyed action does not prove it can confirm a requested one. **No temporal
+evaluator is qualified, no numeric pass mark exists, and none may be invented to let a run
+conclude.** Constructed stand-in material can never qualify an instrument. USD 0.
+`coordination/decisions/CONTROLLER-EVAL-026-INTEGRATION-2026-08-28.md`
+
+**RES-005 — the real temporal perturbation base.** 12 clips from 12 distinct source works, all
+free and legally acquired (CC BY, CC BY-SA, CC0 or US-Government public domain), **12/12 passing the
+Resources cleanliness screen** with zero pre-existing freezes, black intervals or interlacing. USD 0.
+
+**Two limits that must not be blurred:**
+
+- **Only a representative 3/3 clips passed EVAL-026 ingest.** The full 12-clip ingest was attempted
+  and **not completed** — per-frame materialisation exhausted local disk. **This is not 12/12
+  ingest.**
+- **This material is not `PACK-AV-CLEAN`** and satisfies no speech/audio pack obligation. Use the
+  semantic role **`MAT-TEMPORAL-BASE`**; paths containing `MAT-AV-MIN` are historical names.
+
+**The temporal content requirement is pack-level**, not a requirement that every clip contain a
+person, a product and on-screen text at once. Current opportunity counts — **coverage counts, not
+statistical-precision claims** — are: general freeze/reversal base 12, multi-shot 6, on-screen text 6,
+product region 5, rendered-character identity 4, photographed-face identity 3. **Rendered-character
+and photographed-face identity are separate populations and must not be pooled.**
+
+**Before any real temporal checker qualification observation:** select the actual checker; complete
+the full 12-clip ingest under a recorded execution condition; freeze Controller-approved numeric pass
+marks *before* observations are run or inspected; and preserve human adjudication wherever the frozen
+map says `model_based_plus_human`.
+`coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md`
+
+> **A-TEXT manual review is not project evidence.** Any human re-reading of the 16 images done outside
+> GitHub is not durable truth, must not be recorded here, and must not produce a Registry row unless a
+> later explicit Controller decision authorises it. The accepted result is the OCR-observed 7/16.
 
 ## Still blocked / not authorised
 
@@ -136,7 +193,13 @@ provenance-preserving benchmark briefs. Upwork buyer jobs may be used as custome
   28 Aug 2026; not to be reintroduced without a new decision.
 - **Treating benchmark-grade OCR as a perfect exactness certifier.** It is a confidence signal with
   a measured error rate, never a guarantee.
-- Registry population from text metrics until the benchmark-grade handoff is reviewed.
+- **Registry population from text metrics — now decided, and the answer is no.** The Controller
+  reviewed the sealed EVAL-029 evidence and the actual A-TEXT scoring result and ruled the Registry
+  **stays at 0 rows**, because `benchmark_qualified` is intentionally weaker than the Registry's
+  `qualified`/`deterministic` admission bar. **Weakening admission to create a first row is
+  forbidden.**
+- **Any temporal checker qualification run.** No checker is selected, no pass mark exists, and the
+  full 12-clip ingest is incomplete.
 - Further Tesseract or OCR configuration sweeps without a new mechanism-level rationale.
 - Broad Stage-B and Stage-C execution without their own instrument readiness.
 - Broad controlled-pack acquisition.
@@ -165,35 +228,64 @@ Still zero:
 - qualified models or workflows: **0**;
 - qualified subjective or perceptual evaluator families: **0**;
 - exact-text evaluators qualified under the **strict** zero-false-pass standard: **0** — five tested,
-  five disqualified;
-- text evaluators holding **`benchmark_qualified`** status: **0** — Cloud Vision meets the benchmark
-  thresholds on Devanagari, but its Latin screen has not been run;
-- empirical Registry rows: **0** (mechanically verified);
-- A-TEXT image generations: **0**;
-- customer CpAO observations: **0**.
+  five disqualified, and that result stands unrewritten;
+- **qualified temporal-video evaluators: 0** — EVAL-026 delivered machinery, not a qualification, and
+  no numeric pass mark exists;
+- empirical Registry rows: **0** (mechanically verified at GOV-006: 0 data rows, validator passes);
+- customer CpAO observations: **0** — Stage C only, and Stage C is not authorised;
+- Production IR and Planner: **do not exist**.
 
 No longer zero:
 
-- consumed API spend: **USD 1.3037905** of a USD 10 ceiling;
-- live evaluator calls: roughly **2,500**, plus about 1,150 zero-cost local Tesseract executions;
-- instrument configurations scientifically disqualified: **5**, with a mechanism finding attached.
+- **text evaluators holding `benchmark_qualified` status: 1.** Cloud Vision `TEXT_DETECTION`, no
+  language hints, on **both** Devanagari and Latin — and still **not** strict-exactness qualified;
+- **A-TEXT image generations: 16**, sealed as committed bytes and scored **7/16** exact;
+- recorded consumed API spend: **USD 2.6397905** through EVAL-024, plus **USD 0.024** for EVAL-030,
+  against a USD 10 ceiling;
+- instrument configurations scientifically disqualified under the strict standard: **5**, with a
+  mechanism finding attached;
+- **real temporal base material: 12 clips**, 12/12 clean, rights-cleared.
 
-> **How solid are those spend and result figures?** `eval/runs/` is git-ignored and no per-trial
-> record, ledger or qualification result from any live run is committed. They exist only inside
-> Controller decision records and cannot be recomputed from GitHub. GOV-005 finding **F-1**, routed
-> to Eval and the Controller, **unresolved**.
+> **How solid are those figures now?** Substantially more solid than at GOV-005. The completed
+> EVAL-029, EVAL-024 and EVAL-030 evidence is **sealed into Git with fingerprinted manifests**, and
+> GOV-006 independently re-derived the benchmark metrics, the 6/8 · 1/8 · 7/16 arithmetic, the sealed
+> artifact hashes and the manifest fingerprint from committed bytes alone. **GOV-005 finding F-1 is
+> resolved for the text-OCR lane.** The mutable live ledger remains local by design, and no single
+> committed artifact states a cumulative total that includes EVAL-030's USD 0.024 (GOV-006 **G6-02**).
 
 ## Next gate
 
-**Exact text is no longer a programme-wide blocker.** The next moves, in order of leverage:
+**Every lane open at GOV-005 has settled**, and **no worker may infer authorisation from any of those
+completed task files.**
 
-1. **EVAL-029** — recompute the Cloud Vision Devanagari evidence against the benchmark contract,
-   then run the Latin screen if it passes.
-2. **Seal the completed EMP-001 evidence into GitHub (F-1).** Accepted as High by the Controller and
-   still unresolved. EVAL-029's first step already depends on it.
-3. **EVAL-024 cleanup**, so 16 sealed images exist for a benchmark-qualified evaluator to score.
-4. **Open Eval corrections for F-2, F-6, F-7 and F-8** — the stale handoff, the regenerated
-   `NOT IN FORCE` status fields, machine-absolute preflight paths, and the hand-maintained
-   prior-spend default.
+**Post-GOV-006 parallel work was authorised and then narrowed by a newer Controller correction.**
+`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` supersedes the original five-lane programme where stated:
+- **EVAL-032** continues only as 12/12 real-clip ingest/materialisation closure;
+- **EVAL-033** continues only as the minimum temporal checker-stack/precommit design;
+- **EVAL-031** must not start as written;
+- **EVAL-034** is cancelled;
+- **RES-006** is deferred.
+
+GOV-006 did not audit these post-snapshot decisions. The correction also sets a real customer
+vertical-slice pilot as the next Controller planning priority; it does not by itself authorise pilot
+execution. **GOV-007 is not authorised.**
+
+What the settled state leaves genuinely open:
+
+1. **Registry text rows stay blocked.** The Controller has reviewed both the sealed EVAL-029 evidence
+   and the A-TEXT scoring result and ruled the Registry stays at **0**. Admission semantics must not
+   be weakened to manufacture a first row.
+2. **Temporal qualification is not authorised** — it needs a selected checker, the full 12-clip
+   ingest, Controller-approved pass marks frozen *before* observations, and preserved human
+   adjudication where the frozen map requires it.
+3. **Prices remain incomplete** — 0 of 4 stages is price-complete and `Frontier Clouds` is still
+   unidentified.
+4. **HED-1 is undecided** — which human review time counts as required cost in fully-loaded CpAO.
+5. **Any tranche beyond EMP-001 needs explicit user approval.**
+6. **Stream-owned staleness routed by GOV-006** — `eval/HANDOFF.md` still claims ₹0 API spend and no
+   checker run (**G6-05**, escalated); `resources/HANDOFF.md` still calls RES-005 unmerged
+   (**G6-04**); `canon/HANDOFF.md` omits CANON-011 (**G6-06**); the temporal spec understates the
+   human-adjudication requirement as four capabilities where the frozen map says five (**G6-01**).
+   These are the streams' to fix; the Governor routed them rather than editing them.
 
 **EVAL-028 is superseded and must not be executed.**
