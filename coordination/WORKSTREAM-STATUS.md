@@ -258,12 +258,17 @@ No longer zero:
 **Every lane open at GOV-005 has settled**, and **no worker may infer authorisation from any of those
 completed task files.**
 
-**Five new lanes were authorised immediately after the GOV-006 audit point** — EVAL-031, EVAL-032,
-EVAL-033, EVAL-034 and RES-006, under
-`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`. **GOV-006 did not audit
-them** and this file makes no claim about their state; the Controller recorded that they sit outside
-the audit snapshot and are for later governance. Each works on its own branch and does not merge.
-**GOV-007 is not authorised.**
+**Post-GOV-006 parallel work was authorised and then narrowed by a newer Controller correction.**
+`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` supersedes the original five-lane programme where stated:
+- **EVAL-032** continues only as 12/12 real-clip ingest/materialisation closure;
+- **EVAL-033** continues only as the minimum temporal checker-stack/precommit design;
+- **EVAL-031** must not start as written;
+- **EVAL-034** is cancelled;
+- **RES-006** is deferred.
+
+GOV-006 did not audit these post-snapshot decisions. The correction also sets a real customer
+vertical-slice pilot as the next Controller planning priority; it does not by itself authorise pilot
+execution. **GOV-007 is not authorised.**
 
 What the settled state leaves genuinely open:
 
