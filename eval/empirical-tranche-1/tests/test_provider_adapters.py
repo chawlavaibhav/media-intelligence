@@ -233,6 +233,19 @@ def test_one_call_is_one_trial_and_there_is_no_retry_path():
     assert not any('retry' in name for name in dir(j))
 
 
+def test_full_anthropic_plus_gemini_qualification_reservation_fits_six_dollar_cap():
+    calls_per_candidate = 96 * 2 * 3 * 2  # 96 items × 2 shapes × 3 passes × 2 scripts
+    anthropic = P.AnthropicTextJudge(
+        model_alias='claude-haiku-4-5-20251001',
+        resolved_version='claude-haiku-4-5-20251001')
+    gemini = P.GeminiTextJudge(
+        model_alias='gemini-3.5-flash-lite',
+        resolved_version='gemini-3.5-flash-lite')
+    worst_case = (anthropic._estimate() + gemini._estimate()) * calls_per_candidate
+    assert worst_case == Decimal('3.548160')
+    assert worst_case <= Decimal('6.00')
+
+
 # ------------------------------------------------------------------ persistence shape
 def test_a_response_can_be_persisted_with_every_field_the_contract_needs():
     j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-haiku-4-5-20251001')
