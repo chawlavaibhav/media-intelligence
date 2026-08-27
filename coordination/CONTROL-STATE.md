@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-020 is accepted and integrated (PR #43, merge `45dbcdebd4326e42cef0ee72f999cf6665e60ac1`). Contract v2 now qualifies on blind transcription only, persists per-call outcomes, and binds them into the handoff. Fresh Sonnet 5 v3 qualification is the active authorised run.
+**Updated:** 27 Aug 2026 — Sonnet 5 v3 completed a clean contract-v2 Devanagari screen and is genuinely disqualified on 20 blind false passes across 7 unique corrupted items. EVAL-021 now prepares reporting alignment plus Gemini 3.5 Flash-Lite contract-v2 readiness; A-TEXT remains blocked.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -30,7 +30,7 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The execution machinery is now live. Historical v1 results are preserved but are not final contract-v2 qualification evidence: Haiku 4.5 failed the pooled provisional v1 gate; corrected Sonnet 5 v2 also failed the pooled provisional v1 gate; Gemini remains unresolved after a 429 halt. No judge has yet qualified under contract v2.
+The execution machinery is now live. Contract-v2 Sonnet 5 is now genuinely disqualified for Devanagari exact-text judging because blind transcription silently auto-corrected corrupted text (20 false passes / 144 mismatch opportunities). Historical Haiku/Sonnet-v2 pooled-v1 evidence remains preserved; Gemini remains scientifically unresolved after its earlier 429 halt.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
@@ -76,7 +76,7 @@ Configured candidates are now:
 - Anthropic `claude-sonnet-5`;
 - Google `gemini-3.5-flash-lite`.
 
-For the active continuation, **Sonnet 5 v3 only** is authorised under qualification contract v2. Gemini and Haiku are not part of this run.
+For the next candidate, **Gemini 3.5 Flash-Lite only** is planned under qualification contract v2, but paid execution waits on zero-spend EVAL-021 verification. Sonnet is no longer an active candidate.
 
 The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
 
@@ -277,28 +277,26 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run the fresh **Sonnet 5 v3** qualification under contract v2, authorised in
-`coordination/decisions/CONTROLLER-EVAL-020-VERIFICATION-AND-SONNET-V3-2026-08-27.md`.
+Verify EVAL-021 on branch `controller/eval-021-gemini-v2-readiness` with zero spend.
 
-Requirements:
-1. use current `origin/main` at or after merge `45dbcdebd4326e42cef0ee72f999cf6665e60ac1`;
-2. Anthropic `claude-sonnet-5` only;
-3. `thinking: {"type":"disabled"}`;
-4. start at Devanagari call 1;
-5. 96 items × 2 shapes × 3 repeats;
-6. contract v2 pass/fail uses blind `transcribe` only; `verdict` is diagnostic only;
-7. numerical thresholds unchanged;
-8. persist per-call observations and canonical fingerprint-bound `qualification-result.json`;
-9. preserve all v1/v2 historical evidence byte-identically;
-10. same persistent EMP-001 ledger;
-11. already-counted qualification spend: USD 0.3112678;
-12. fresh Sonnet two-script worst-case reservation: USD 5.345280;
-13. cumulative worst case: USD 5.6565478 <= USD 6;
-14. retries 0; true ambiguous post-dispatch failure stops the run;
-15. if Devanagari primary gate fails, stop before Latin;
-16. if Devanagari primary gate passes, run Latin automatically;
-17. if both script gates pass, stop before A-TEXT and return to Controller;
-18. no Gemini, Haiku or fal calls in this run.
+Authoritative decision:
+- `coordination/decisions/CONTROLLER-EVAL-021-SONNET-DISPOSITION-GEMINI-READINESS-2026-08-27.md`
+
+Required before merge/live Gemini execution:
+1. top-level script `calls` aligns to the primary transcribe metric scope; `total_dispatches` reports both shapes;
+2. Gemini `gemini-3.5-flash-lite` requests explicitly pin `thinkingLevel: minimal`;
+3. Gemini cost accounting includes visible output + `thoughtsTokenCount`;
+4. documented no-text `finishReason` is a model/evaluator error, not transport ambiguity;
+5. optional dispatch pacing works without introducing retries;
+6. focused tests and preflight pass with keys unset, external calls 0, spend USD 0;
+7. all prior empirical evidence remains byte-identical.
+
+After green verification, merge EVAL-021 and run fresh Gemini 3.5 Flash-Lite qualification from Devanagari call 1 under contract v2 with a minimum 7-second interval between dispatch starts.
+
+Current counted qualification spend: USD 0.5016018.
+Gemini worst-case two-script reservation: USD 0.875520.
+Cumulative worst case: USD 1.3771218 <= USD 6.
+
 
 
 
