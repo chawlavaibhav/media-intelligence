@@ -8,9 +8,9 @@ DECODED RASTER.
 This module applies the same rule to Latin, and keeps two things strictly apart:
 
   MECHANICAL perceptibility  — decided on pixels, by code, here, at zero spend. Committed.
-  HUMAN perceptibility       — 'can a person reading a real surface tell?' NOT performed by this
-                               worker and NOT fabricated. The sheet is emitted UNFILLED and the
-                               record says so.
+  HUMAN perceptibility       — 'can a person reading a real surface tell?' completed by a real
+                               reviewer after rendering. The answers are now durable evidence and
+                               routine rebuilds must preserve them.
 """
 import csv
 import json
@@ -19,6 +19,7 @@ from pathlib import Path
 import pytest
 
 import render_latin_pack as rlp
+import human_review as HR
 
 PKG = Path(__file__).resolve().parents[1]
 TQ = PKG / 'text_qualification'
@@ -78,31 +79,47 @@ def test_record_declares_zero_spend_and_zero_calls():
     assert r['spend_usd'] == '0'
 
 
-# ------------------------------------------- the human review is NOT fabricated
+# ------------------------------------------------ the completed human review
 def test_human_sheet_has_the_required_columns():
     with HUMAN_SHEET.open(encoding='utf-8') as fh:
         header = next(csv.reader(fh))
     assert header == ['item_id', 'visible_difference', 'usable_surface', 'reviewer_note']
 
 
-def test_human_sheet_is_emitted_unfilled():
-    """No verdict in this file may be pre-answered.
+def test_committed_human_review_satisfies_the_frozen_rule_and_pack_binding():
+    status = HR.review_status(HUMAN_SHEET)
+    assert status['ok'] is True
+    assert status['items_reviewed'] == 96
+    assert status['usable_yes'] == 96
+    assert status['mismatch_visible_yes'] == 48
+    assert status['bound_rows'] == 96
 
-    EVAL-012 is explicit: if a human perceptibility review cannot honestly be performed in the
-    worker environment, do not fabricate one. A sheet arriving pre-filled with 'yes' is exactly
-    the fabrication that rule forbids.
-    """
+
+def test_match_rows_do_not_need_a_visible_difference_verdict():
     with HUMAN_SHEET.open(encoding='utf-8') as fh:
         rows = list(csv.DictReader(fh))
-    assert len(rows) == 96
-    assert all(r['visible_difference'] == '' for r in rows)
-    assert all(r['usable_surface'] == '' for r in rows)
+    assert any(r['visible_difference'] == '' for r in rows)
+    assert HR.resolved(HUMAN_SHEET) is True
 
 
-def test_record_marks_human_review_outstanding():
+def test_renderer_preserves_an_existing_completed_review(tmp_path, monkeypatch):
+    p = tmp_path / 'review.csv'
+    p.write_text('item_id,visible_difference,usable_surface,reviewer_note\n'
+                 'sentinel,,yes,do-not-overwrite\n')
+    monkeypatch.setattr(rlp, 'HUMAN_SHEET', p)
+    before = p.read_bytes()
+    rlp._ensure_human_sheet([])
+    assert p.read_bytes() == before
+
+
+def test_record_marks_human_review_complete():
     r = record()
-    assert r['human_perceptibility_review']['status'] == 'OUTSTANDING_ZERO_SPEND_HUMAN_PREREQUISITE'
-    assert r['human_perceptibility_review']['performed_by_this_worker'] is False
+    human = r['human_perceptibility_review']
+    assert human['status'] == 'COMPLETE_HUMAN_REVIEW'
+    assert human['resolved'] is True
+    assert human['usable_yes'] == 96
+    assert human['mismatch_visible_yes'] == 48
+    assert human['performed_by_this_worker'] is False
 
 
 # ------------------------------------------------------------------ isolation
