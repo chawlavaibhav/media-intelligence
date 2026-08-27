@@ -30,7 +30,7 @@ ANTHROPIC_VERSION = 'claude-sonnet-5'
 GEMINI_VERSION = 'gemini-3.5-flash-lite-001'
 
 CALLS_PER_SCRIPT = 576
-PRIMARY_CALLS_PER_SCRIPT = 288          # 96 items x 2 shapes x 3 passes
+PRIMARY_CALLS_PER_SCRIPT = 288  # 96 items x 1 primary shape x 3 passes
 
 
 @pytest.fixture
@@ -368,7 +368,7 @@ def test_cli_fake_live_runs_the_real_orchestration_without_a_network(monkeypatch
     assert r['synthetic'] is False
     assert r['registry_rows_written'] == 0
     assert r['dispatches'] > 0
-    assert r['candidates'][0]['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert r['candidates'][0]['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
 
 
 def test_cli_fake_live_honors_anthropic_only_provider(monkeypatch, tmp_path, keys):
