@@ -235,7 +235,7 @@ def check_adapter_path_blocked() -> dict:
     import providers as P
 
     outcomes = {}
-    judge = P.OpenAITextJudge(model_alias="gpt-5.4-mini", resolved_version="preflight-unpinned")
+    judge = P.AnthropicTextJudge(model_alias="claude-haiku-4-5-20251001", resolved_version="claude-haiku-4-5-20251001")
 
     for name, call in (("transcribe_dispatch_refused", lambda: judge.transcribe(b"x")),
                        ("verdict_dispatch_refused", lambda: judge.verdict(b"x", "PREFLIGHT-TARGET"))):
@@ -247,9 +247,9 @@ def check_adapter_path_blocked() -> dict:
 
     # ...and a judge that HAS a transport but no guard must still refuse, so that a transport
     # arriving by accident is not on its own enough to spend money.
-    with_transport = P.OpenAITextJudge(
-        model_alias="gpt-5.4-mini", resolved_version="preflight-unpinned",
-        transport=P.FakeTransport(P.OPENAI_OK_FIXTURE))
+    with_transport = P.AnthropicTextJudge(
+        model_alias="claude-haiku-4-5-20251001", resolved_version="claude-haiku-4-5-20251001",
+        transport=P.FakeTransport(P.ANTHROPIC_OK_FIXTURE))
     try:
         with_transport.transcribe(b"x")
         outcomes["guardless_dispatch_refused"] = False
