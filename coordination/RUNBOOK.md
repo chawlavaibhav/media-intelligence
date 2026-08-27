@@ -1,7 +1,8 @@
 # Runbook
 
-**Updated:** 25 Aug 2026 by Repository Governor, task GOV-001.
-**Read `PROJECT-MEMORY.md` first, then `coordination/PROJECT-CONTRACT.md`.**
+**Updated:** 28 Aug 2026, context-architecture migration (Controller-assigned cross-project task).
+Previous update: 25 Aug 2026 by Repository Governor, task GOV-001.
+**Read `PROJECT-MEMORY.md` first, then `coordination/CONTROL-STATE.md`.**
 
 ## Parallel work: one branch per task
 
@@ -46,14 +47,29 @@ If the file cannot be found or read, STOP. Do not claim compliance.
 
 This confirmation is a startup check, not something to repeat in every message.
 
-## Starting a new Canon session
-Read, in order: `PROJECT-MEMORY.md` → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `canon/CHARTER.md` → `canon/HANDOFF.md` → the assigned task file → only the source material the task names. Do not replay full project history.
+## Starting a new worker session — default bootstrap (all streams)
 
-## Starting a new Eval session
-Read, in order: `PROJECT-MEMORY.md` → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `eval/CHARTER.md` → `eval/HANDOFF.md` → assigned task → named sources.
+Read, in order:
 
-## Starting a new Resources session
-Read, in order: `PROJECT-MEMORY.md` → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md` → `resources/CHARTER.md` → `resources/HANDOFF.md` → assigned task → named sources.
+1. `PROJECT-MEMORY.md` — compact project map and authority map
+2. `coordination/CONTROL-STATE.md` — what is currently authorised, active, blocked, cancelled
+3. `coordination/PROJECT-CONTRACT.md`
+4. `shared/COMMUNICATION-STANDARD.md`
+5. `shared/CONTEXT-SUFFICIENCY-POLICY.md`
+6. your own stream `CHARTER.md` (`canon/`, `eval/` or `resources/`)
+7. the assigned task file
+8. the task's named dependencies (its Context Contract)
+9. **expand context whenever `shared/CONTEXT-SUFFICIENCY-POLICY.md` requires it** — and stop with
+   `STOP — CONTEXT_INSUFFICIENT` rather than guess when sufficiency cannot be established.
+
+**Stream `HANDOFF.md` files are NOT compulsory startup reading.** Read your stream's handoff only
+when: the assigned task explicitly names it; recent technical continuity in that stream is relevant
+to your task; necessary context cannot be obtained from current state plus the task's dependencies;
+or an expansion trigger leads you into it. Handoffs are stream-owned working notes and may be
+stale — `coordination/CONTROL-STATE.md` governs current state wherever they disagree.
+
+Do not replay full project history. Historical narrative lives under `history/` and in decision
+records; read it when an expansion trigger requires it, not by default.
 
 ## Approving a task
 Controller writes/fills `shared/templates/TASK-TEMPLATE.md`, assigns an ID (`CANON-NNN` /
@@ -111,15 +127,43 @@ Worker tags severity (`LOCAL` / `CROSS_STREAM` / `ARCHITECTURAL`) in its Control
 → immediate stop, no further work in that task until Controller reviews.
 
 ## Starting a fresh Controller chat
-Read `PROJECT-MEMORY.md` first, then `coordination/PROJECT-CONTRACT.md`, then
-`shared/COMMUNICATION-STANDARD.md`, then `coordination/CONTROL-STATE.md`. Use
-`coordination/DECISION-LOG.md` — including its index of stream decision records — when a
-current-state claim needs its history checked.
+Read `PROJECT-MEMORY.md` first, then `coordination/CONTROL-STATE.md`, then
+`coordination/PROJECT-CONTRACT.md`, then `shared/COMMUNICATION-STANDARD.md`, then
+`shared/CONTEXT-SUFFICIENCY-POLICY.md`. Discover decisions by listing `coordination/decisions/`
+directly; `coordination/DECISION-LOG.md` is a curated historical/navigation index, not an
+exhaustive post-26-Aug source.
+
+## Controller sessions: one Writer, any number of Advisory
+
+Parallel Controller chats are allowed, but **changes to the strategic control plane are
+serialized**. Every Controller session operates in exactly one of two modes, declared at session
+start:
+
+**WRITER CONTROLLER** — at most **one at a time** across the whole project. Only a Writer may:
+- create durable decisions (`coordination/decisions/`, decision records elsewhere);
+- mutate `coordination/CONTROL-STATE.md` or other programme state;
+- authorise, cancel or defer tasks;
+- merge to `main`.
+
+**ADVISORY CONTROLLER** — any number in parallel. An Advisory session may inspect GitHub, analyse,
+challenge, critique, research, plan, and **draft** proposed decisions or tasks — but must **not**
+mutate durable programme state. A draft becomes real only when a Writer Controller commits it.
+
+Notes:
+- This serializes only the strategic control plane. It does **not** serialize domain workers and
+  does **not** prohibit multiple parallel analysis sessions.
+- An Advisory session working from an older snapshot must re-check `CONTROL-STATE.md` and the
+  newest decisions before its drafts are acted on — a parallel Writer may have moved the state.
+- If two sessions have both been acting as Writer, stop: the later state wins only after an
+  explicit reconciliation against `coordination/decisions/` — never assume.
 
 ## Governor review
 Every meaningful task/PR gets a bounded integrity review by the Repository Governor before merge.
-See `governance/GOVERNOR-CONTRACT.md`. Its verdict is `PASS`, `PASS WITH NON-BLOCKING NOTES` or
-`BLOCK` with evidence. The Governor advises; **the Controller merges.**
+See `governance/GOVERNOR-CONTRACT.md`, including its three review modes: **Level 1** task/PR
+integrity review (default, dependency-bounded), **Level 2** state reconciliation (after a batch of
+integrated work, delta-bounded), **Level 3** deep audit (deliberately authorised broad inspection).
+Its verdict is `PASS`, `PASS WITH NON-BLOCKING NOTES` or `BLOCK` with evidence. The Governor
+advises; **the Controller merges.**
 
 ## Merging work safely
 Each stream owns its directory tree exclusively. **The control mechanism is stream directory

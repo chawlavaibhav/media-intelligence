@@ -1,7 +1,8 @@
 # Project Contract
 
-**Read `PROJECT-MEMORY.md` first, then this file, every session, every stream.** Then read
-`shared/COMMUNICATION-STANDARD.md`.
+**Part of every session's default bootstrap — see `coordination/RUNBOOK.md` for the full order**
+(`PROJECT-MEMORY.md` → `coordination/CONTROL-STATE.md` → this file →
+`shared/COMMUNICATION-STANDARD.md` → `shared/CONTEXT-SUFFICIENCY-POLICY.md`).
 Not autonomously rewritten by workers — proposals go through `PROPOSED-INTEGRATION-CHANGE-<ID>.md` in the proposing stream's folder.
 
 ## Communication and epistemic standard
