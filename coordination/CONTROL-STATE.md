@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EMP-001 explicitly authorised for bounded live execution: USD 10 total consumed API spend, USD 6 qualification sub-cap, retries 0, no prefunding above USD 10.
+**Updated:** 27 Aug 2026 — First EMP-001 live qualification run returned one valid disqualification (Anthropic Haiku 4.5) and one non-scientific Gemini 429 halt. Gemini-only paced continuation is authorised under remaining qualification headroom.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -274,16 +274,18 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-EMP-001 is now authorised for live execution under the exact bounded spend decision recorded in `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`.
+Run the authorised Gemini-only paced qualification continuation recorded in `coordination/decisions/CONTROLLER-EMP-001-GEMINI-CONTINUATION-2026-08-27.md`.
 
-Execution requirements:
-1. local runtime keys available: `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, `FAL_KEY`;
-2. create only a gitignored local `authorization.local.yaml` matching the approved ceiling;
-3. run progressive text-judge qualification: Devanagari first, Latin survivors only;
-4. run A-TEXT only if at least one judge qualifies on both scripts;
-5. maximum 16 image generations;
-6. retries 0;
-7. cumulative consumed API spend <= USD 10 and qualification <= USD 6;
-8. ambiguous post-dispatch failures remain counted and stop the run;
-9. persist run ledger/evidence; do not commit secrets.
+Frozen continuation constraints:
+1. Google `gemini-3.5-flash-lite` only; do not rerun Anthropic.
+2. Devanagari first; Latin only if Devanagari passes.
+3. Same 96-item batteries, 2 shapes, 3 repeats, prompts and thresholds.
+4. Minimum 7 seconds between Gemini dispatches; no concurrency.
+5. Retries 0.
+6. Preserve the first run, including the 17-call 429 and its provisional reservation.
+7. Remaining qualification headroom before continuation: USD 5.9145782.
+8. No billing-tier upgrade or prefunding is authorised.
+9. On any new ambiguous dispatch failure, count it, persist it, stop.
+10. Do not run A-TEXT unless Gemini qualifies on both scripts.
+
 
