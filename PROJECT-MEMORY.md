@@ -880,23 +880,25 @@ stale.
 EVAL-029, EVAL-026, EVAL-030 and RES-005 have returned, been accepted and been merged, and GOV-005 is
 closed. **No worker may infer authorisation from any of those completed task files.**
 
-**A new five-lane programme was authorised immediately after the GOV-006 audit point**, and GOV-006
-did not audit it. `[decision]`
-`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`
+**A parallel empirical programme was authorised immediately after the GOV-006 audit point**, then narrowed by a newer Controller correction. GOV-006 did not audit either decision. `[decision]`
 
-| Lane | What it does |
+Authority:
+- `coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`
+- `coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` — **newer and governing where it supersedes the first**
+
+Current execution posture from the correction:
+
+| Lane | Current disposition |
 |---|---|
-| **EVAL-031** | Local Stage-Q and Stage-A harness closure; geometry-detector screening only; a 90-call fake-live rehearsal |
-| **EVAL-032** | Rehydrate the RES-005 base and complete the **12/12** real temporal ingest — **no checker observations** |
-| **EVAL-033** | Temporal checker candidate research and a **precommit package**; must stop **before** any qualification observation |
-| **EVAL-034** | Stage-A route, price and seed refresh — no provider calls, no roster substitutions |
-| **RES-006** | Structured-visual Stage-Q minimum material; partial acquisition must stay visibly partial |
+| **EVAL-031** | **DO NOT START AS WRITTEN.** Most of the proposed rehearsal duplicated settled harness work; learned geometry-detector qualification is deferred. |
+| **EVAL-032** | **CONTINUE, narrowed:** complete 12/12 real temporal ingest and prove the existing perturbation machinery materialises on the real pack. No checker observations. |
+| **EVAL-033** | **CONTINUE, reframed:** design the minimum temporal checker stack and proposed precommitted gates. Stop before protected qualification observations. |
+| **EVAL-034** | **CANCELLED.** Existing Stage-A route/price evidence is sufficient until execution-time preflight. |
+| **RES-006** | **DEFERRED.** Structured-visual protected material remains a future need but is not the immediate blocker to a first vertical slice. |
 
-**That decision and its task files govern those lanes.** The Controller recorded explicitly that they
-sit outside GOV-006's audit snapshot and are for later governance to reconcile after integration, so
-**nothing in this document is a statement about their state.** Still not authorised in that
-programme: Production IR, a Planner, Stage B or C, paid calls, any Registry weakening, temporal
-qualification before the Controller freezes candidate and pass marks — and **GOV-007**.
+The correction also makes a **real customer vertical-slice pilot the next Controller planning priority**; it is an integration/product-learning exercise, not Registry-grade evidence or Stage-C CpAO. No pilot execution is authorised merely by this memory text.
+
+These post-audit decisions sit outside GOV-006's audited snapshot. **GOV-007 remains unauthorised.**
 
 | Lane | Outcome | Spend |
 |---|---|---|
