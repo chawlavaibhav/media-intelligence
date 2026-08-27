@@ -628,6 +628,78 @@ def run_local_tesseract(runner=None, run=None, images=None) -> dict:
     return payload
 
 
+def run_script_routed_tesseract(runner=None, images=None) -> dict:
+    """EVAL-025. Two independent script-specific legs, neither contingent on the other.
+
+    WHY THERE IS NO PROGRESSIVE STOP HERE
+
+        `qualify_ocr_candidate` runs Latin only for a Devanagari survivor, because there it is ONE
+        candidate advancing through scripts. These are TWO candidates, each defined for exactly
+        one script. Gating `eng`-on-Latin behind `hin`-on-Devanagari would make one candidate's
+        result depend on a different candidate's, which measures nothing.
+
+    Each leg is scored under the unchanged OCR contract gates. Neither leg, nor both together,
+    constitutes a composite evaluator identity — that would need a Controller decision defining
+    what the composite is and how A-TEXT should treat it.
+    """
+    import tesseract_ocr as TESS
+
+    resolver = images or QT.ImageResolver()
+    contract_ = ocr_contract()
+    repeats = contract_["repeats_per_shape"]
+    legs = {}
+
+    for script, spec in TESS.SCRIPT_ROUTED_LEGS.items():
+        engine = TESS.TesseractLiteralOcr(
+            config_alias=spec["alias"], languages=spec["languages"], runner=runner)
+        engine.version()
+        engine.traineddata_hashes()
+        candidate = TesseractCandidate(engine, images=resolver,
+                                       name=f"local_tesseract:{spec['alias']}")
+        guard = BudgetGuard(authorised_usd=Decimal("6.00"))
+
+        started = time.monotonic()
+        scored = _score_script(candidate, script, guard, repeats)
+        elapsed = time.monotonic() - started
+
+        if guard.spent_usd != Decimal("0"):
+            raise RuntimeError(
+                f"local leg {spec['alias']} recorded {guard.spent_usd} of provider spend.")
+
+        legs[script] = {
+            "script": script,
+            "candidate": candidate.name,
+            "identity": candidate.identity(),
+            "config_sha256": candidate.config_sha256(),
+            "elapsed_seconds": round(elapsed, 2),
+            "result": scored,
+        }
+
+    payload = {
+        "record": "EMP-001-ocr-script-routed-legs",
+        "tranche_id": "EMP-001",
+        "family": "ocr",
+        "contract_version": contract_["contract_version"],
+        "contract_sha256": ocr_contract_sha256(),
+        "legs": legs,
+        "is_composite_evaluator": False,
+        "composite_note": ("Two independent script-specific candidates. They are not a composite "
+                           "evaluator identity and may not open A-TEXT; defining a fingerprinted "
+                           "composite is a Controller decision."),
+        "may_open_atext": False,
+        "may_populate_registry": False,
+        "api_calls": 0,
+        "api_spend_usd": "0",
+        "local_executions": sum(len(v["result"]["call_records"]) for v in legs.values()),
+    }
+    payload["evidence_fingerprint"] = hashlib.sha256(
+        json.dumps({k: payload.get(k) for k in
+                    ("record", "tranche_id", "family", "legs", "contract_sha256")},
+                   sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                   default=str).encode("utf-8")).hexdigest()
+    return payload
+
+
 def _fake_live(out: Path, run=None) -> dict:
     """The positive control: a clean synthetic OCR candidate across BOTH scripts, zero network."""
     guard = BudgetGuard(authorised_usd=Decimal("6.00"))

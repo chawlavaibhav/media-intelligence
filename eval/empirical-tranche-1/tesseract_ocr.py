@@ -52,6 +52,15 @@ from providers import AmbiguousDispatch, DispatchRefused, EvaluatorResponse, ver
 
 CANDIDATE_ALIAS = "tesseract5-hin-eng-literal-psm13-v1"
 LANGUAGES = "hin+eng"
+
+# EVAL-025 script-routed legs. Same binary, same pinned traineddata, same OEM/PSM/DAWG settings —
+# the ONLY variable is which model is loaded. The requested script is known upstream of the
+# checker, so routing to a script-specific model is an evaluator workflow decision and not
+# knowledge of the answer: nothing here reads the target.
+SCRIPT_ROUTED_LEGS = {
+    "devanagari": {"languages": "hin", "alias": "tesseract5-hin-literal-psm13-v1"},
+    "latin": {"languages": "eng", "alias": "tesseract5-eng-literal-psm13-v1"},
+}
 OEM = "1"          # LSTM only
 PSM = "13"         # raw line: one text line, no Tesseract-specific hacks
 
@@ -117,6 +126,7 @@ class TesseractLiteralOcr:
     family: str = field(init=False, default="ocr")
     provider: str = field(init=False, default="local_tesseract")
     config_alias: str = CANDIDATE_ALIAS
+    languages: str = LANGUAGES
     binary: str = "tesseract"
     tessdata_dir: Path = field(default_factory=lambda: DEFAULT_TESSDATA_DIR)
     timeout_s: float = 120.0
@@ -135,7 +145,7 @@ class TesseractLiteralOcr:
     def traineddata_hashes(self) -> dict:
         if self._hashes is None:
             files = {}
-            for lang in LANGUAGES.split("+"):
+            for lang in self.languages.split("+"):
                 p = self.tessdata_dir / f"{lang}.traineddata"
                 if not p.exists():
                     raise TesseractUnavailable(
@@ -151,7 +161,7 @@ class TesseractLiteralOcr:
             "provider": self.provider,
             "config_alias": self.config_alias,
             "tesseract_version": self.version(),
-            "languages": LANGUAGES,
+            "languages": self.languages,
             "oem": OEM,
             "psm": PSM,
             "dawg_flags": {k: v for k, v in DAWG_FLAGS},
@@ -180,7 +190,7 @@ class TesseractLiteralOcr:
         """
         cmd = [self.binary, image_path, "stdout",
                "--tessdata-dir", str(self.tessdata_dir),
-               "-l", LANGUAGES, "--oem", OEM, "--psm", PSM]
+               "-l", self.languages, "--oem", OEM, "--psm", PSM]
         for key, value in DAWG_FLAGS:
             cmd += ["-c", f"{key}={value}"]
         return cmd
