@@ -363,9 +363,17 @@ Not authorised:
 - Production IR/Planner implementation before sufficient empirical capability evidence exists.
 
 Authorised / active:
-- **nothing.** EVAL-029, EVAL-024, EVAL-030, EVAL-026, CANON-011 and RES-005 have all returned, been
-  accepted and been merged — see "Settled lanes" above. **No domain lane is currently open**, and a
-  worker may not infer authorisation from any of those task files;
+- **the five-lane parallel empirical unblock programme, authorised after the GOV-006 audit point.**
+  `coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md` — EVAL-031 (local
+  Stage-Q and harness closure), EVAL-032 (complete the 12/12 real temporal ingest), EVAL-033
+  (temporal checker candidate and precommit package), EVAL-034 (Stage-A route/price/seed refresh) and
+  RES-006 (structured-visual Stage-Q minimum material). **That decision governs those lanes; GOV-006
+  did not audit them and makes no claim about them.** Each works on its own branch and does not merge;
+  **no paid call, no Registry weakening, and no temporal qualification before the Controller freezes
+  the candidate and pass marks**;
+- **none of the six previously open lanes.** EVAL-029, EVAL-024, EVAL-030, EVAL-026, CANON-011 and
+  RES-005 have all returned, been accepted and been merged — see "Settled lanes" above. **A worker may
+  not infer authorisation from any of those completed task files;**
 - the standing posture is unchanged: unrelated evaluator/capability lanes **may** proceed
   independently of exact Hindi text once the Controller opens them.
 
@@ -378,8 +386,14 @@ EVAL-024 generation closure were executed, returned, accepted and merged — see
 Their requirement lists are preserved in their own decision records as history; they are no longer
 open work.
 
-**There is currently no active domain lane.** Nothing in this file authorises a worker to start
-anything. The next tranche of work is the Controller's to open.
+**The six lanes this file previously tracked are all closed.** Nothing in the "Settled lanes" section
+authorises a worker to start anything.
+
+**Five new lanes were authorised after the GOV-006 audit point** —
+`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`. **That decision, and the
+task files it names, govern them.** GOV-006 deliberately did not audit them: the Controller recorded
+that they sit outside its audit snapshot and are for later governance to reconcile after integration.
+**GOV-007 is explicitly not authorised.**
 
 **What the settled state leaves genuinely open:**
 

@@ -33,9 +33,35 @@ Yes, exactly.
 
 The Controller authorised GOV-006 against `main` at `91984f50b294f11aefc7065f5ad11f9e0d3e2b9a`.
 At worker start `origin/main` was at that same commit and
-`origin/work/gov-006-post-parallel-reconciliation` pointed at it too. **`main` has not advanced since
-authorisation**, so there were no newer Controller decisions to reconcile or to stop for. The whole
-audit is against that single tree.
+`origin/work/gov-006-post-parallel-reconciliation` pointed at it too. **The whole audit is against
+that single tree.**
+
+### `main` advanced during the review — and the Controller had already ruled on that
+
+While this audit was running, `main` moved from `91984f5` to `d9f79e8` across six Controller commits.
+They add **one decision record and five task files** and change nothing else — no evidence, no
+contract, no result, no artifact was touched:
+
+`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md` authorises five new
+lanes — **EVAL-031** (local Stage-Q and harness closure), **EVAL-032** (complete the 12/12 real
+temporal ingest), **EVAL-033** (temporal checker candidate and precommit package), **EVAL-034**
+(Stage-A route/price/seed refresh) and **RES-006** (structured-visual Stage-Q minimum material).
+
+**The Controller pre-resolved the reconciliation question in that decision's own words:** *"GOV-006
+continues independently on its already-authorised audit point. These new lanes are intentionally
+outside that audit snapshot and may be reconciled by later governance after Controller integration."*
+
+**So this review does not audit them, does not verify them, and makes no claim about their state.**
+There is nothing here to stop for: the new commits add authorisations, and **they do not change a
+single fact this review verified** — the sealed artifacts, the metrics, the counts and the Registry
+are all untouched by them.
+
+**One thing they did change is the wording this review had to write.** Before these commits, "no
+domain lane is open" was true of the audited tree. It is no longer true of `main`. Rather than let a
+correct-at-the-time statement become the next staleness defect the moment this branch merges, the
+current-state documents now say plainly that six lanes closed **and** that five new lanes were
+authorised after the audit point, governed by their own decision and left for later governance.
+**GOV-007 is explicitly not authorised**, so that reconciliation is the Controller's to schedule.
 
 ---
 
@@ -523,7 +549,14 @@ can now find, and independently re-derive from committed bytes:
 - RES-005's 12 clips, their cleanliness screen and every documented opportunity count;
 - that the Registry holds 0 rows and why.
 
-**Three honest limits on that "yes":**
+**Four honest limits on that "yes":**
+
+0. **This answer is about the audited tree.** Five further lanes (EVAL-031…034, RES-006) were
+   authorised after the audit point and are not covered by this review. A Controller reading `main`
+   today must take those from
+   `coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`, which the
+   current-state documents now point to.
+
 
 1. **Stream handoffs still mislead** (G6-04, G6-05, G6-06). A worker who follows the prescribed
    reading order — charter, then handoff — reaches a stale document before a current one. The
@@ -546,6 +579,7 @@ is why those three findings are routed rather than fixed.
 | **Verdict** | **PASS WITH NON-BLOCKING NOTES** |
 | **Audited `main`** | `91984f50b294f11aefc7065f5ad11f9e0d3e2b9a` |
 | **Branch** | `work/gov-006-post-parallel-reconciliation` — pushed, **not merged** |
+| **`main` at return** | `d9f79e87bdd1cc11284da41c2e5c7dccecbf1e71` — six later Controller commits adding one decision and five task files; explicitly outside this audit snapshot by the Controller's own instruction (§1) |
 | **Blocking findings** | **None** |
 | **Non-blocking findings** | 7 — G6-01 … G6-07 (§6), all routed |
 | **Registry rows** | 0, unchanged |

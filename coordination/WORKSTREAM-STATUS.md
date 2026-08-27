@@ -255,8 +255,15 @@ No longer zero:
 
 ## Next gate
 
-**There is no active domain lane.** Every lane open at GOV-005 has settled. The next tranche is the
-Controller's to open, and **no worker may infer authorisation from any of the completed task files.**
+**Every lane open at GOV-005 has settled**, and **no worker may infer authorisation from any of those
+completed task files.**
+
+**Five new lanes were authorised immediately after the GOV-006 audit point** — EVAL-031, EVAL-032,
+EVAL-033, EVAL-034 and RES-006, under
+`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`. **GOV-006 did not audit
+them** and this file makes no claim about their state; the Controller recorded that they sit outside
+the audit snapshot and are for later governance. Each works on its own branch and does not merge.
+**GOV-007 is not authorised.**
 
 What the settled state leaves genuinely open:
 

@@ -872,11 +872,31 @@ is the map to it, refreshed 28 Aug 2026 against `main` at `91984f5`.
 Any document still saying "all new domain work is frozen", or that no paid call is authorised, is
 stale.
 
-### What is running now — nothing
+### What is running now
 
-**All five parallel domain lanes have returned, been accepted and been merged, and GOV-005 is
-closed.** `[decision]` As of `91984f5` **no domain lane is open**, and **no worker may infer
-authorisation from any of the completed task files.** The next tranche is the Controller's to open.
+**Two different things are true and must not be mixed up.**
+
+**The six lanes that were open at GOV-005 are all closed.** `[decision]` CANON-011, EVAL-024,
+EVAL-029, EVAL-026, EVAL-030 and RES-005 have returned, been accepted and been merged, and GOV-005 is
+closed. **No worker may infer authorisation from any of those completed task files.**
+
+**A new five-lane programme was authorised immediately after the GOV-006 audit point**, and GOV-006
+did not audit it. `[decision]`
+`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`
+
+| Lane | What it does |
+|---|---|
+| **EVAL-031** | Local Stage-Q and Stage-A harness closure; geometry-detector screening only; a 90-call fake-live rehearsal |
+| **EVAL-032** | Rehydrate the RES-005 base and complete the **12/12** real temporal ingest — **no checker observations** |
+| **EVAL-033** | Temporal checker candidate research and a **precommit package**; must stop **before** any qualification observation |
+| **EVAL-034** | Stage-A route, price and seed refresh — no provider calls, no roster substitutions |
+| **RES-006** | Structured-visual Stage-Q minimum material; partial acquisition must stay visibly partial |
+
+**That decision and its task files govern those lanes.** The Controller recorded explicitly that they
+sit outside GOV-006's audit snapshot and are for later governance to reconcile after integration, so
+**nothing in this document is a statement about their state.** Still not authorised in that
+programme: Production IR, a Planner, Stage B or C, paid calls, any Registry weakening, temporal
+qualification before the Controller freezes candidate and pass marks — and **GOV-007**.
 
 | Lane | Outcome | Spend |
 |---|---|---|
