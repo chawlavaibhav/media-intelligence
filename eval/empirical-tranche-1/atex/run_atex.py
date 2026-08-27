@@ -570,7 +570,14 @@ def select_judge_for_atex(qualification: dict) -> dict:
             "GATE 2 CLOSED — no candidate qualified. If no text judge qualifies, ZERO image "
             "generations run: there would be nothing to score the output with.")
 
+    active_roster = {
+        (spec["provider"], spec["model_alias"])
+        for spec in config()["qualification"]["judge_candidates"]
+    }
     for candidate in candidates:
+        identity = (candidate.get("provider"), candidate.get("model_alias"))
+        if identity not in active_roster:
+            continue
         if required <= set(candidate.get("qualified_scope") or []):
             return candidate
 
@@ -818,7 +825,7 @@ def main(argv: list[str] | None = None) -> int:
             sys.path.insert(0, str(PACKAGE_ROOT / "text_qualification"))
             from fake_live import FakeFalHttp, FakeJudgeHttp
 
-            judge_http = FakeJudgeHttp(P.OpenAITextJudge, {})
+            judge_http = FakeJudgeHttp(P.AnthropicTextJudge, {})
             fal_http = FakeFalHttp()
 
             def artifact_fetch(url):
