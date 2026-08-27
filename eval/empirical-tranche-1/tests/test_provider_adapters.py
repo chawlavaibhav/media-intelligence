@@ -219,13 +219,35 @@ def test_anthropic_max_tokens_without_text_is_well_formed_model_failure_not_ambi
     assert guard.spent_usd == r.billed_usd
 
 
-def test_gemini_response_preserves_request_id_tokens_and_cost():
+def test_gemini_response_preserves_request_id_and_bills_visible_plus_thought_tokens():
     j = _judge(P.GeminiTextJudge, P.GEMINI_OK_FIXTURE, 'gemini-3.5-flash-lite')
     r = j.transcribe(IMAGE)
     assert r.text == 'Flat 50% Off'
     assert r.provider_request_id == 'gen-req-99'
-    assert r.input_tokens == 640 and r.output_tokens == 6
-    assert r.billed_usd is not None and r.billed_usd > 0
+    assert r.input_tokens == 640 and r.output_tokens == 10
+    assert r.billed_usd == j.provisional_cost(640, 10)
+
+
+def test_gemini_requests_pin_minimal_thinking_for_this_simple_judge_workload():
+    j = P.GeminiTextJudge(model_alias='gemini-3.5-flash-lite',
+                          resolved_version='gemini-3.5-flash-lite')
+    for req in (j.build_transcribe_request(IMAGE),
+                j.build_verdict_request(IMAGE, TARGET_DEV)):
+        assert req['generationConfig']['thinkingConfig'] == {'thinkingLevel': 'minimal'}
+
+
+def test_gemini_documented_empty_finish_is_model_error_not_dispatch_ambiguity():
+    guard = BudgetGuard(authorised_usd=Decimal('10.00'))
+    j = P.GeminiTextJudge(
+        model_alias='gemini-3.5-flash-lite', resolved_version='gemini-3.5-flash-lite',
+        transport=P.FakeTransport(P.GEMINI_EMPTY_MAX_TOKENS_FIXTURE), guard=guard)
+    r = j.verdict(IMAGE, TARGET_DEV)
+    assert r.api_status == 'error'
+    assert r.error_class == 'empty_response_max_tokens'
+    assert r.provider_request_id == 'gen-req-max'
+    assert r.output_tokens == 16
+    assert r.ambiguous_dispatch is False
+    assert r.billing_state == 'reported'
 
 
 def test_a_refusal_is_recorded_as_a_refusal_not_a_transcription():
@@ -284,6 +306,17 @@ def test_corrected_sonnet_rerun_with_all_prior_spend_fits_six_dollar_cap():
     already_counted = Decimal('0.1206238')
     cumulative_worst_case = already_counted + sonnet._estimate() * calls
     assert cumulative_worst_case == Decimal('5.4659038')
+    assert cumulative_worst_case <= Decimal('6.00')
+
+
+def test_gemini_v2_continuation_with_all_prior_spend_fits_six_dollar_cap():
+    calls = 96 * 2 * 3 * 2
+    gemini = P.GeminiTextJudge(
+        model_alias='gemini-3.5-flash-lite',
+        resolved_version='gemini-3.5-flash-lite')
+    already_counted = Decimal('0.5016018')
+    cumulative_worst_case = already_counted + gemini._estimate() * calls
+    assert cumulative_worst_case == Decimal('1.3771218')
     assert cumulative_worst_case <= Decimal('6.00')
 
 

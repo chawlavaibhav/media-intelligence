@@ -36,6 +36,7 @@ import argparse
 import hashlib
 import json
 import sys
+import time
 import unicodedata
 from decimal import Decimal
 from pathlib import Path
@@ -271,13 +272,28 @@ class LiveCandidate:
     synthetic = False
     manages_own_budget = True
 
-    def __init__(self, judge: "P.TextJudge", images: ImageResolver, name: str | None = None):
+    def __init__(self, judge: "P.TextJudge", images: ImageResolver, name: str | None = None,
+                 min_dispatch_interval_seconds: float = 0.0, clock=None, sleeper=None):
         self.judge = judge
         self.images = images
         self.name = name or f"{judge.provider}:{judge.resolved_version}"
         self.calls = 0
         self.retries = 0
         self.calls_by_script = {s: 0 for s in SCRIPTS}
+        self.min_dispatch_interval_seconds = max(0.0, float(min_dispatch_interval_seconds))
+        self._clock = clock or time.monotonic
+        self._sleeper = sleeper or time.sleep
+        self._last_dispatch_at = None
+
+    def _pace(self) -> None:
+        if self.min_dispatch_interval_seconds <= 0:
+            return
+        now = self._clock()
+        if self._last_dispatch_at is not None:
+            remaining = self.min_dispatch_interval_seconds - (now - self._last_dispatch_at)
+            if remaining > 0:
+                self._sleeper(remaining)
+        self._last_dispatch_at = self._clock()
 
     def estimate_usd(self) -> Decimal:
         return self.judge._estimate()
@@ -327,6 +343,7 @@ class LiveCandidate:
         }
 
         image_bytes = self.images.bytes_for(script, item["item_id"])
+        self._pace()
         if shape == "transcribe":
             # The target is passed for the BLIND CHECK only. It is never placed in the payload;
             # it is what the payload is proved not to contain.
@@ -531,7 +548,8 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
 
     return {
         "script": script,
-        "calls": len(observations),
+        "calls": primary["calls"],
+        "total_dispatches": len(observations),
         "primary_shape": primary_shape,
         # Top-level gate metrics are intentionally the PRIMARY blind-shape metrics.
         "false_passes": primary["false_passes"],
@@ -694,7 +712,8 @@ def _dry_run(out: Path) -> dict:
 
 def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver | None = None,
                           resolved_versions: dict | None = None,
-                          only_provider: str | None = None) -> list[LiveCandidate]:
+                          only_provider: str | None = None,
+                          min_dispatch_interval_seconds: float = 0.0) -> list[LiveCandidate]:
     """Construct the two frozen judge candidates behind whatever transport is supplied.
 
     `http` is the injected HTTP layer. Passing None means the real socket, which is why nothing in
@@ -730,12 +749,14 @@ def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver |
             judge=judge_cls(model_alias=alias, resolved_version=version,
                             transport=P.transport_for(provider, version, http=http),
                             guard=guard),
-            images=images))
+            images=images,
+            min_dispatch_interval_seconds=min_dispatch_interval_seconds))
     return candidates
 
 
 def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = None,
-             mode: str = "live", only_provider: str | None = None, run=None) -> dict:
+             mode: str = "live", only_provider: str | None = None, run=None,
+             min_dispatch_interval_seconds: float = 0.0) -> dict:
     """The real orchestration. Devanagari first; Latin only for survivors; one shared ceiling.
 
     The guard is shared across BOTH candidates and BOTH scripts, exactly as frozen: the ceiling is
@@ -743,9 +764,11 @@ def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = Non
     correctly starves the second rather than quietly doubling the budget.
     """
     images = ImageResolver()
-    candidates = build_live_candidates(guard, http=http, images=images,
-                                       resolved_versions=resolved_versions,
-                                       only_provider=only_provider)
+    candidates = build_live_candidates(
+        guard, http=http, images=images,
+        resolved_versions=resolved_versions,
+        only_provider=only_provider,
+        min_dispatch_interval_seconds=min_dispatch_interval_seconds)
 
     results = []
     for candidate in candidates:
@@ -868,6 +891,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--gemini-version", default=None)
     ap.add_argument("--only-provider", choices=["anthropic", "google"], default=None,
                     help="bounded continuation: run only one configured judge provider")
+    ap.add_argument("--min-dispatch-interval-seconds", type=float, default=0.0,
+                    help="minimum spacing between evaluator dispatch starts; operational only")
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args(argv)
 
@@ -911,8 +936,10 @@ def main(argv: list[str] | None = None) -> int:
                 f"--live is missing exact model ID(s) for: {missing}. A run that cannot name "
                 "what it called cannot be reproduced.")
 
-        result = run_live(guard, http=None, resolved_versions=versions,
-                          only_provider=a.only_provider, run=run)
+        result = run_live(
+            guard, http=None, resolved_versions=versions,
+            only_provider=a.only_provider, run=run,
+            min_dispatch_interval_seconds=a.min_dispatch_interval_seconds)
         out = Path(a.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True,

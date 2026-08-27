@@ -29,7 +29,8 @@ PKG = Path(__file__).resolve().parents[1]
 ANTHROPIC_VERSION = 'claude-sonnet-5'
 GEMINI_VERSION = 'gemini-3.5-flash-lite-001'
 
-CALLS_PER_SCRIPT = 576          # 96 items x 2 shapes x 3 passes
+CALLS_PER_SCRIPT = 576
+PRIMARY_CALLS_PER_SCRIPT = 288  # 96 items x 1 primary shape x 3 passes
 
 
 @pytest.fixture
@@ -198,8 +199,10 @@ def test_a_faithful_fake_live_candidate_completes_both_scripts(keys):
 
     result = Q.qualify_candidate(candidate, guard=guard)
 
-    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
-    assert result['latin']['calls'] == CALLS_PER_SCRIPT
+    assert result['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['devanagari']['total_dispatches'] == CALLS_PER_SCRIPT
+    assert result['latin']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['latin']['total_dispatches'] == CALLS_PER_SCRIPT
     assert len(http.calls) == 2 * CALLS_PER_SCRIPT
     assert result['qualified_scope'] == ['devanagari', 'latin']
     assert result['synthetic'] is False
@@ -214,7 +217,8 @@ def test_a_live_candidate_that_false_passes_stops_before_latin(keys):
 
     result = Q.qualify_candidate(candidate, guard=guard)
 
-    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert result['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['devanagari']['total_dispatches'] == CALLS_PER_SCRIPT
     assert result['latin'] is None
     assert len(http.calls) == CALLS_PER_SCRIPT      # zero Latin dispatches
     assert result['synthetic'] is False
@@ -304,6 +308,31 @@ def test_run_live_persists_canonical_fingerprint_bound_qualification(tmp_path, k
     assert result['qualified_candidates'] == [f'anthropic:{ANTHROPIC_VERSION}']
 
 
+def test_live_candidate_paces_dispatch_starts_without_retries(keys):
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('latin'))
+    guard = BudgetGuard(authorised_usd=Decimal('10.00'))
+    timeline = [0.0]
+    sleeps = []
+
+    def clock():
+        return timeline[0]
+
+    def sleeper(seconds):
+        sleeps.append(seconds)
+        timeline[0] += seconds
+
+    candidate = Q.LiveCandidate(
+        judge=_anthropic_judge(http, guard), images=Q.ImageResolver(),
+        min_dispatch_interval_seconds=7.0, clock=clock, sleeper=sleeper)
+    items = Q._script_items('latin')
+    candidate.call('latin', items[0], 'transcribe', 0)
+    candidate.call('latin', items[1], 'transcribe', 0)
+
+    assert len(http.calls) == 2
+    assert sleeps == [7.0]
+    assert candidate.retries == 0
+
+
 # ------------------------------------------------- CLI still fails closed
 def test_cli_live_refuses_without_authorisation():
     with pytest.raises(NotAuthorised):
@@ -339,7 +368,7 @@ def test_cli_fake_live_runs_the_real_orchestration_without_a_network(monkeypatch
     assert r['synthetic'] is False
     assert r['registry_rows_written'] == 0
     assert r['dispatches'] > 0
-    assert r['candidates'][0]['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert r['candidates'][0]['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
 
 
 def test_cli_fake_live_honors_anthropic_only_provider(monkeypatch, tmp_path, keys):
@@ -435,5 +464,5 @@ def test_the_ordinary_live_path_passes_the_blind_check_every_call(keys):
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
     candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
     result = Q.qualify_candidate(candidate, guard=guard)
-    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
-    assert result['latin']['calls'] == CALLS_PER_SCRIPT
+    assert result['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['latin']['calls'] == PRIMARY_CALLS_PER_SCRIPT

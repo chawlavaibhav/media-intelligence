@@ -802,7 +802,11 @@ class GeminiTextJudge(TextJudge):
             "model": self.resolved_version,
             "contents": [{"role": "user", "parts": [
                 {"text": PROMPT_TRANSCRIBE}, self._image_part(image_bytes)]}],
-            "generationConfig": {"maxOutputTokens": 128, "temperature": 0},
+            "generationConfig": {
+                "maxOutputTokens": 128,
+                "temperature": 0,
+                "thinkingConfig": {"thinkingLevel": "minimal"},
+            },
         }
 
     def build_verdict_request(self, image_bytes: bytes, target: str) -> dict:
@@ -810,13 +814,22 @@ class GeminiTextJudge(TextJudge):
             "model": self.resolved_version,
             "contents": [{"role": "user", "parts": [
                 {"text": PROMPT_VERDICT.format(target=target)}, self._image_part(image_bytes)]}],
-            "generationConfig": {"maxOutputTokens": 16, "temperature": 0},
+            "generationConfig": {
+                "maxOutputTokens": 16,
+                "temperature": 0,
+                "thinkingConfig": {"thinkingLevel": "minimal"},
+            },
         }
 
     def parse(self, raw: dict) -> EvaluatorResponse:
         usage = raw.get("usageMetadata") or {}
         in_tok = usage.get("promptTokenCount")
-        out_tok = usage.get("candidatesTokenCount")
+        visible_out = usage.get("candidatesTokenCount")
+        thought_out = usage.get("thoughtsTokenCount")
+        if visible_out is None and thought_out is None:
+            out_tok = None
+        else:
+            out_tok = (visible_out or 0) + (thought_out or 0)
         cost = self.provisional_cost(in_tok, out_tok)
         req_id = raw.get("responseId")
 
@@ -838,9 +851,17 @@ class GeminiTextJudge(TextJudge):
                                      "moderation_block", raw_status_note=c0["finishReason"])
 
         parts = [p.get("text", "") for p in (c0.get("content", {}).get("parts") or [])]
-        if not any(parts):
-            raise ProviderResponseError("no text and no refusal in an ok-looking response")
-        return EvaluatorResponse("".join(parts), in_tok, out_tok, cost, req_id, "ok")
+        if any(parts):
+            return EvaluatorResponse("".join(parts), in_tok, out_tok, cost, req_id, "ok")
+
+        finish_reason = c0.get("finishReason")
+        if finish_reason:
+            return EvaluatorResponse(
+                "", in_tok, out_tok, cost, req_id, "error",
+                f"empty_response_{str(finish_reason).lower()}",
+                raw_status_note=f"finishReason={finish_reason}"[:200])
+
+        raise ProviderResponseError("Gemini response had no text and no documented finishReason")
 
 
 # --------------------------------------------------------------------------- fal image routes
@@ -1041,7 +1062,14 @@ ANTHROPIC_ERROR_FIXTURE = {
 GEMINI_OK_FIXTURE = {
     "responseId": "gen-req-99",
     "candidates": [{"content": {"parts": [{"text": "Flat 50% Off"}]}, "finishReason": "STOP"}],
-    "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 6},
+    "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 6,
+                      "thoughtsTokenCount": 4},
+}
+GEMINI_EMPTY_MAX_TOKENS_FIXTURE = {
+    "responseId": "gen-req-max",
+    "candidates": [{"content": {"parts": []}, "finishReason": "MAX_TOKENS"}],
+    "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 0,
+                      "thoughtsTokenCount": 16},
 }
 GEMINI_REFUSAL_FIXTURE = {
     "responseId": "gen-req-100",
