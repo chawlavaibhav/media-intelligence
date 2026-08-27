@@ -8,9 +8,9 @@ qualification:
   latin_items: 96
   shapes: [transcribe, verdict]
   judge_candidates:
-    - provider: openai
-      model_alias: gpt-5.4-mini
-      snapshot_required: true
+    - provider: anthropic
+      model_alias: claude-sonnet-5
+      exact_model_id_required: true
     - provider: google
       model_alias: gemini-3.5-flash-lite
       snapshot_or_exact_version_required: true
