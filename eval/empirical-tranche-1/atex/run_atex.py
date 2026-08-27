@@ -583,7 +583,13 @@ def select_judge_for_atex(qualification: dict) -> dict:
 
 def build_live_judge(chosen: dict, guard, http=None):
     """Rebuild the EXACT judge that qualified: same provider, alias and resolved version."""
-    judge_cls = P.OpenAITextJudge if chosen["provider"] == "openai" else P.GeminiTextJudge
+    judge_cls = {
+        "anthropic": P.AnthropicTextJudge,
+        "google": P.GeminiTextJudge,
+        "openai": P.OpenAITextJudge,
+    }.get(chosen["provider"])
+    if judge_cls is None:
+        raise GateClosed(f"unsupported qualified judge provider {chosen['provider']!r}")
     return judge_cls(
         model_alias=chosen["model_alias"],
         resolved_version=chosen["resolved_version"],
