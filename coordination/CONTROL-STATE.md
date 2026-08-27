@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — Post-two-candidate review found the v1 scorer pooled the diagnostic verdict shape into qualification and discarded per-call outcomes. EVAL-020 prepares a contract-v2 primary-transcription gate plus complete outcome persistence; paid rerun waits on focused zero-spend verification.
+**Updated:** 27 Aug 2026 — EVAL-020 is accepted and integrated (PR #43, merge `45dbcdebd4326e42cef0ee72f999cf6665e60ac1`). Contract v2 now qualifies on blind transcription only, persists per-call outcomes, and binds them into the handoff. Fresh Sonnet 5 v3 qualification is the active authorised run.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -30,7 +30,7 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The execution machinery is now live. Haiku 4.5 is validly disqualified for Devanagari judging. Gemini remains unresolved after a 429 halt. The first Sonnet 5 attempt is non-scientific because the adapter omitted Sonnet 5's required no-thinking compatibility setting for this terse judge workload and misclassified documented no-text stop responses as transport ambiguity.
+The execution machinery is now live. Historical v1 results are preserved but are not final contract-v2 qualification evidence: Haiku 4.5 failed the pooled provisional v1 gate; corrected Sonnet 5 v2 also failed the pooled provisional v1 gate; Gemini remains unresolved after a 429 halt. No judge has yet qualified under contract v2.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
@@ -76,7 +76,7 @@ Configured candidates are now:
 - Anthropic `claude-sonnet-5`;
 - Google `gemini-3.5-flash-lite`.
 
-For the active continuation, **Sonnet 5 only** is authorised. The pending Gemini continuation is superseded for now.
+For the active continuation, **Sonnet 5 v3 only** is authorised under qualification contract v2. Gemini and Haiku are not part of this run.
 
 The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
 
@@ -263,8 +263,9 @@ These are reproducible gitignored build products. The live execution worker may 
 ## Still blocked / not authorised
 
 Not authorised:
-- any paid EMP-001 call;
-- any account funding;
+- account funding above the approved ceiling;
+- any qualification call outside the active Sonnet 5 v3 bounded continuation;
+- A-TEXT until a contract-v2 judge qualifies on both scripts;
 - full 90-generation Stage A;
 - Stage B / Stage C;
 - EVAL-006;
@@ -276,25 +277,29 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Verify EVAL-020 on branch `controller/eval-020-primary-gate-evidence-persistence` with zero spend.
+Run the fresh **Sonnet 5 v3** qualification under contract v2, authorised in
+`coordination/decisions/CONTROLLER-EVAL-020-VERIFICATION-AND-SONNET-V3-2026-08-27.md`.
 
-Authoritative decision:
-- `coordination/decisions/CONTROLLER-EVAL-020-PRIMARY-SHAPE-QUALIFICATION-2026-08-27.md`
+Requirements:
+1. use current `origin/main` at or after merge `45dbcdebd4326e42cef0ee72f999cf6665e60ac1`;
+2. Anthropic `claude-sonnet-5` only;
+3. `thinking: {"type":"disabled"}`;
+4. start at Devanagari call 1;
+5. 96 items × 2 shapes × 3 repeats;
+6. contract v2 pass/fail uses blind `transcribe` only; `verdict` is diagnostic only;
+7. numerical thresholds unchanged;
+8. persist per-call observations and canonical fingerprint-bound `qualification-result.json`;
+9. preserve all v1/v2 historical evidence byte-identically;
+10. same persistent EMP-001 ledger;
+11. already-counted qualification spend: USD 0.3112678;
+12. fresh Sonnet two-script worst-case reservation: USD 5.345280;
+13. cumulative worst case: USD 5.6565478 <= USD 6;
+14. retries 0; true ambiguous post-dispatch failure stops the run;
+15. if Devanagari primary gate fails, stop before Latin;
+16. if Devanagari primary gate passes, run Latin automatically;
+17. if both script gates pass, stop before A-TEXT and return to Controller;
+18. no Gemini, Haiku or fal calls in this run.
 
-Required before merge/live rerun:
-1. qualification contract v2 uses blind `transcribe` only for pass/fail;
-2. target-aware `verdict` remains diagnostic and cannot fail qualification;
-3. numerical thresholds remain unchanged;
-4. per-call observations are persisted and fingerprint-bound;
-5. live qualification persists canonical `qualification-result.json`;
-6. A-TEXT rejects old/different contract evidence;
-7. focused tests and preflight pass with external calls 0 and spend USD 0;
-8. prior empirical evidence remains byte-identical.
-
-After green verification, merge EVAL-020 and run fresh Sonnet 5-only qualification from Devanagari call 1.
-Current counted qualification spend: USD 0.3112678.
-Fresh Sonnet two-script worst-case reservation: USD 5.345280.
-Cumulative worst case: USD 5.6565478 <= USD 6.
 
 
 
