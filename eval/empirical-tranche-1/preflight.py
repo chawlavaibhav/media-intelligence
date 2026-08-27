@@ -235,7 +235,7 @@ def check_adapter_path_blocked() -> dict:
     import providers as P
 
     outcomes = {}
-    judge = P.AnthropicTextJudge(model_alias="claude-haiku-4-5-20251001", resolved_version="claude-haiku-4-5-20251001")
+    judge = P.AnthropicTextJudge(model_alias="claude-sonnet-5", resolved_version="claude-sonnet-5")
 
     for name, call in (("transcribe_dispatch_refused", lambda: judge.transcribe(b"x")),
                        ("verdict_dispatch_refused", lambda: judge.verdict(b"x", "PREFLIGHT-TARGET"))):
@@ -248,7 +248,7 @@ def check_adapter_path_blocked() -> dict:
     # ...and a judge that HAS a transport but no guard must still refuse, so that a transport
     # arriving by accident is not on its own enough to spend money.
     with_transport = P.AnthropicTextJudge(
-        model_alias="claude-haiku-4-5-20251001", resolved_version="claude-haiku-4-5-20251001",
+        model_alias="claude-sonnet-5", resolved_version="claude-sonnet-5",
         transport=P.FakeTransport(P.ANTHROPIC_OK_FIXTURE))
     try:
         with_transport.transcribe(b"x")
