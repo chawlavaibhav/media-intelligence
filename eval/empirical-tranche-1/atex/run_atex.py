@@ -64,6 +64,7 @@ from budget_guard import (  # noqa: E402
     NotAuthorised, load_authorisation, open_guard)
 import providers as P  # noqa: E402
 from qualify_text import transcription_matches  # noqa: E402
+import human_review as HR  # noqa: E402
 
 MANIFEST = HERE / "atex-items-v1.jsonl"
 CONFIG = PACKAGE_ROOT / "config.yaml"
@@ -498,24 +499,12 @@ def scripts_required_by_atex() -> set[str]:
 
 
 def latin_perceptibility_resolved(path: Path | str | None = None) -> bool:
-    """True only when every row of the review sheet carries both human verdicts.
+    """Apply the frozen human-review rule to the exact current Latin pack.
 
-    The committed sheet is emitted UNFILLED on purpose — EVAL-012, EVAL-013 and EVAL-014 all
-    refuse to fabricate a human review — so this returns False in the repository as it stands,
-    and A-TEXT refuses. That is the correct state, not a bug.
+    All 96 items need usable_surface=yes. Only the 48 mismatch items need
+    visible_difference=yes. The review notes must bind the answers to the current pack SHA.
     """
-    import csv
-
-    path = Path(path) if path else (PACKAGE_ROOT / "text_qualification"
-                                    / "perceptibility-review.csv")
-    if not path.exists():
-        return False
-    with path.open(encoding="utf-8") as fh:
-        rows = list(csv.DictReader(fh))
-    if not rows:
-        return False
-    return all((r.get("visible_difference") or "").strip()
-               and (r.get("usable_surface") or "").strip() for r in rows)
+    return HR.resolved(path)
 
 
 def load_qualification(run, expected_mode: str) -> dict:
