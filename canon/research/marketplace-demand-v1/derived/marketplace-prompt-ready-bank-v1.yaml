@@ -1,0 +1,1061 @@
+# ===========================================================================
+# CANON-011 - Marketplace-derived prompt-ready envelope bank v1
+# ===========================================================================
+# STATUS: PROPOSED WORKER OUTPUT. NOT FROZEN. GENERATED FILE - DO NOT HAND-EDIT.
+#
+# GENERATED from marketplace-brief-bank-v1.yaml by build_prompt_ready_bank.py.
+# Edit the brief bank and regenerate. validate_marketplace_bank.py fails if this
+# file and the brief bank disagree.
+#
+# WHAT AN ENVELOPE IS. A structured, model-neutral statement of what must be made,
+# ready for a later adapter to turn into a real provider prompt. It is NOT a prompt.
+# It names no model, no vendor and no production technique, and it never will - that
+# translation belongs to a Production IR the project has not built.
+#
+# WHAT TO DO WITH IT. Read it with its case in the brief bank. The envelope says what
+# must be true of the output; the case says which parts of that the customer asked for
+# and which parts the benchmark supplied. Using an envelope without its case loses the
+# provenance, and the provenance is the point.
+#
+# FIELDS ENDING `_provenance` mark where a value that looks like a customer requirement
+# actually came from. Where an envelope value is a benchmark fixture, the field says so.
+# ===========================================================================
+
+meta:
+  bank_id: marketplace_prompt_ready_bank
+  version: v1
+  status: PROPOSED_WORKER_OUTPUT_NOT_FROZEN
+  task: CANON-011
+  generated_from: canon/research/marketplace-demand-v1/derived/marketplace-brief-bank-v1.yaml
+  generated_by: canon/research/marketplace-demand-v1/derived/build_prompt_ready_bank.py
+  source_bank_sha256: 4ca85ce4e1bb18e6cbf2e5cd5419196e57f6e1cc1fd76f54107a9bc5be736e27
+  route_neutral: true
+  model_specific_adapters_exist: false
+  model_specific_adapters_note: 'Every envelope carries model_specific_fields: null. That is deliberate
+    and it is the boundary of this task. Turning an envelope into a provider prompt requires a Production
+    IR and a Capability Registry with rows in it; the project has neither.'
+  envelope_count: 18
+envelopes:
+- case_id: MKT-001
+  source_marketplace: upwork
+  source_record_id: UW-008
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'This is a whole commercial outcome with several capabilities entangled, which is what
+      Stage C is for. It does not decompose into a single-capability probe, so forcing it into Stage A
+      would measure nothing cleanly. Its person-plus-product-plus-speech co-occurrence makes it good raw
+      material for a Layer-2 compound scenario later.
+
+      '
+  envelope:
+    objective: sell a men's dog-care supplement to a Meta audience in a single 40-second ad
+    output_modality: video
+    duration_seconds: 40
+    aspect_ratio: '9:16'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: meta_feed_or_reels
+    audience: dog owners, adult, general market
+    audience_provenance: customer_implied
+    entities:
+    - id: presenter_avatar
+      type: person
+      role: hero
+      must_stay_constant:
+      - face
+      - hair
+      - wardrobe
+    - id: product_supplement
+      type: product
+      role: hero
+      must_stay_constant:
+      - pack_form
+      - label_artwork
+      - label_colourway
+    supplied_assets:
+    - FX-001-product
+    - FX-001-avatar
+    identity_invariants:
+    - the presenter is one continuous person for the whole 40 seconds
+    - the product matches its reference stills wherever it appears
+    product_fidelity: the pack must be recognisable as the referenced pack, not a similar pack
+    script_or_dialogue: FX-001-script, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: commercial, direct-response
+    visual_tone_provenance: customer_implied
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints:
+    - FX-001-format brand kit applies where branding appears
+    prohibited_failures:
+    - presenter changes appearance mid-clip
+    - product changes pack form, label or colour between shots
+    - spoken words differ from the supplied script
+    - visible hand or face deformation
+    - runtime other than 40 seconds
+    model_specific_fields: null
+- case_id: MKT-002
+  source_marketplace: upwork
+  source_record_id: UW-074
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'The strongest Stage-C candidate in the bank. It is the only case where the buyer states
+      a per-approved-unit price, a revision allowance, a duration band, a master format and export formats
+      - which means a real Cost per Accepted Outcome can be computed against a real commercial unit price
+      rather than an invented one.
+
+      '
+  envelope:
+    objective: sell individual furniture catalogue items through short retail product video
+    output_modality: video
+    duration_seconds:
+      min: 15
+      max: 30
+    aspect_ratio: '1:1'
+    additional_deliverable_formats:
+    - '9:16'
+    - '16:9'
+    placement: ecommerce_product_page_and_social
+    placement_provenance: customer_implied
+    audience: furniture shoppers
+    audience_provenance: customer_implied
+    entities:
+    - id: catalogue_item
+      type: product
+      role: hero
+      must_stay_constant:
+      - silhouette
+      - material
+      - upholstery_colour
+      - hardware_finish
+    supplied_assets:
+    - FX-002-catalogue
+    identity_invariants:
+    - the item matches its own reference photography, not a similar product
+    - the item does not change within the clip
+    product_fidelity: highest priority requirement in this case
+    script_or_dialogue: none
+    exact_on_screen_text: []
+    language:
+      spoken: none
+      on_screen: none
+      subtitles: none
+    visual_tone: retail catalogue, clean, product-forward
+    visual_tone_provenance: customer_implied
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints:
+    - no watermark in any delivered file
+    deliverable_set:
+      cardinality: 8
+      one_per: catalogue_item
+      acceptance: per_deliverable
+    prohibited_failures:
+    - a different piece of furniture than the reference
+    - material, colour or hardware changing mid-clip
+    - watermark present
+    - runtime outside 15-30 seconds
+    - master not 1080x1080
+    model_specific_fields: null
+- case_id: MKT-003
+  source_marketplace: upwork
+  source_record_id: UW-031
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: secondary
+    rationale: 'Secondary rather than primary for Stage C, because its length puts it beyond anything
+      the project can attempt without a Planner. Its real present value is as evidence that ordinary,
+      cheap, supplied-script batch work is structurally out of reach today.
+
+      '
+  envelope:
+    objective: turn ten supplied scripts into ten finished narrated videos
+    output_modality: video
+    duration_seconds: 180
+    duration_qualifier: approximate
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: unspecified_by_customer
+    entities: []
+    supplied_assets:
+    - FX-003-scripts
+    identity_invariants:
+    - one narration voice across all ten deliverables
+    product_fidelity: not_applicable
+    script_or_dialogue: FX-003-scripts, one per deliverable, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: unspecified_by_customer
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 10
+      one_per: supplied_script
+      acceptance: per_deliverable
+    prohibited_failures:
+    - spoken words differ from the supplied script
+    - narration voice changes between or within deliverables
+    - speech and picture drift out of alignment
+    - runtime materially short of three minutes
+    model_specific_fields: null
+- case_id: MKT-004
+  source_marketplace: upwork
+  source_record_id: UW-063
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: false
+    stage_c_end_to_end: secondary
+    rationale: 'Secondary for Stage C because its central acceptance condition has no evaluator family
+      at all. Its main value now is as the clearest evidence that document-to-media content fidelity is
+      an uncovered requirement that real buyers pay for.
+
+      '
+  envelope:
+    objective: turn supplied course documents into narrated lecture videos
+    output_modality: video
+    duration_seconds: unspecified_by_customer
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: course_delivery_platform
+    placement_provenance: customer_implied
+    audience: enrolled students
+    audience_provenance: customer_implied
+    entities: []
+    supplied_assets:
+    - FX-004-pdf
+    identity_invariants:
+    - one narration voice across the course
+    product_fidelity: not_applicable
+    script_or_dialogue: derived from FX-004-pdf, approximate not verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: instructional
+    visual_tone_provenance: customer_implied
+    temporal_beats: unspecified_by_customer
+    cta: none
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 48
+      one_per: course_week
+      acceptance: per_deliverable
+    prohibited_failures:
+    - narration that contradicts or omits the supplied material
+    - narration voice changing across the course
+    - unintelligible narration
+    - speech and picture drifting apart
+    model_specific_fields: null
+- case_id: MKT-005
+  source_marketplace: upwork
+  source_record_id: UW-088
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'Short, single-deliverable, fully specified and attemptable today. The cheapest genuine
+      end-to-end commercial outcome in the bank, which makes it the natural first Stage-C case.
+
+      '
+  envelope:
+    objective: drive mobile app installs with a single 35-second promotional video
+    output_modality: video
+    duration_seconds: 35
+    aspect_ratio: '9:16'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: prospective app users
+    audience_provenance: customer_implied
+    entities:
+    - id: mobile_app
+      type: product
+      role: hero
+      must_stay_constant:
+      - interface_layout
+      - app_name
+      - brand_colours
+    supplied_assets:
+    - FX-005-app
+    - FX-005-script
+    identity_invariants:
+    - the interface matches the supplied screens
+    - the app name is spelled correctly every time it appears
+    product_fidelity: the app shown must be the supplied app, not a plausible-looking substitute
+    script_or_dialogue: FX-005-script, spoken verbatim
+    exact_on_screen_text:
+    - app name as supplied
+    language:
+      spoken: en
+      on_screen: en
+      subtitles: none
+    visual_tone: bright, product-demonstrative
+    visual_tone_provenance: system_derived
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints:
+    - app icon and palette as supplied
+    prohibited_failures:
+    - app name misspelled or malformed on screen
+    - interface elements warping or changing layout between shots
+    - spoken words differ from the supplied script
+    - runtime other than 35 seconds
+    model_specific_fields: null
+- case_id: MKT-006
+  source_marketplace: upwork
+  source_record_id: UW-021
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: primary_source_material
+    stage_c_end_to_end: primary
+    rationale: 'A top Stage-C candidate and the best compound-scenario source in the bank. It carries
+      the one thing the research identifies as flipping an AI-video job from routine to hard - identity
+      that must hold across a series - and it carries it in both the visual and the vocal channel at once,
+      which no item in the existing authored bank or its extension does.
+
+      '
+  envelope:
+    objective: build a recurring-character video series for a B2B SaaS product
+    output_modality: video
+    duration_seconds: unspecified_by_customer
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: business software buyers
+    audience_provenance: customer_implied
+    entities:
+    - id: character_thomas
+      type: character
+      role: hero
+      must_stay_constant:
+      - face
+      - build
+      - voice
+      - wardrobe
+      scope: across_the_whole_series
+    - id: character_anna
+      type: character
+      role: hero
+      must_stay_constant:
+      - face
+      - build
+      - voice
+      - wardrobe
+      scope: across_the_whole_series
+    - id: saas_product
+      type: product
+      role: supporting
+      must_stay_constant:
+      - dashboard_interface
+    supplied_assets:
+    - FX-006-characters
+    - FX-006-dashboard
+    - FX-006-scripts
+    identity_invariants:
+    - Thomas is one person across all ten deliverables, in look and in voice
+    - Anna is one person across all ten deliverables, in look and in voice
+    - the dashboard shown is the supplied dashboard
+    product_fidelity: the supplied dashboard recordings must appear, not a recreation of them
+    script_or_dialogue: FX-006-scripts, two-hander, turn boundaries marked
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: subtle comedy
+    visual_tone_provenance: customer_stated
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 10
+      acceptance: per_deliverable_with_set_level_invariant
+    prohibited_failures:
+    - a character who is not the same person as in the previous deliverable
+    - a character whose voice changes between deliverables
+    - the static AI-avatar-talking-into-camera look, which the customer explicitly rejected
+    - the wrong character's lips moving on a line
+    - a recreated or approximated dashboard instead of the supplied footage
+    model_specific_fields: null
+- case_id: MKT-007
+  source_marketplace: upwork
+  source_record_id: UW-025
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'The best case in the bank for the operational half of Stage C - throughput, reliability
+      and cost per accepted outcome over a batch - because throughput is a stated buyer requirement here
+      rather than an internal concern.
+
+      '
+  envelope:
+    objective: sustained batch production of scripted video at volume
+    output_modality: video
+    duration_seconds:
+      min: 30
+      max: 300
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: unspecified_by_customer
+    entities: []
+    supplied_assets:
+    - FX-007-scripts
+    identity_invariants: []
+    product_fidelity: not_applicable
+    script_or_dialogue: FX-007-scripts, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: as specified per item by the supplied visual guidance
+    visual_tone_provenance: customer_stated
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 12
+      stated_weekly_volume: 75-100
+      acceptance: per_deliverable
+    prohibited_failures:
+    - output that ignores the supplied visual guidance
+    - spoken words differing from the supplied script
+    - duration outside the 30-300 second range
+    - quality that degrades across the batch
+    model_specific_fields: null
+- case_id: MKT-008
+  source_marketplace: upwork
+  source_record_id: UW-069
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: primary_source_material
+    stage_c_end_to_end: primary
+    rationale: 'Valuable because of what it lacks. Every identity item in the authored bank and its extension
+      supplies a reference and asks whether the output matches it. This buyer supplies nothing and asks
+      for an identity to be INVENTED and then held - a different problem with a different failure mode,
+      and one no existing item tests.
+
+      '
+  envelope:
+    objective: establish and hold a persistent brand presenter persona across a set of videos
+    output_modality: video
+    duration_seconds: unspecified_by_customer
+    aspect_ratio: '9:16'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: social
+    placement_provenance: customer_implied
+    audience: athletes and sports performance customers
+    audience_provenance: customer_implied
+    entities:
+    - id: brand_persona
+      type: person
+      role: hero
+      must_stay_constant:
+      - face
+      - build
+      - hair
+      - voice
+      scope: across_the_whole_set
+      reference_exists: false
+    supplied_assets:
+    - FX-008-scripts
+    identity_invariants:
+    - identity is established by the first accepted output and held thereafter
+    product_fidelity: not_applicable
+    script_or_dialogue: FX-008-scripts, one per deliverable, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: realistic, sports-adjacent
+    visual_tone_provenance: customer_stated
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 4
+      acceptance: per_deliverable_with_set_level_invariant
+    prohibited_failures:
+    - a different person in a later deliverable
+    - voice changing between deliverables
+    - facial or anatomical breakdown that makes the figure read as generated
+    model_specific_fields: null
+- case_id: MKT-009
+  source_marketplace: upwork
+  source_record_id: UW-024
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: candidate
+    stage_b_compound: candidate
+    stage_c_end_to_end: secondary
+    rationale: 'The only case in the bank that comes close to a Stage-A atomic probe, because it isolates
+      one capability - does a supplied person identity survive across outputs - with very little else
+      attached. Its Stage-C value is lower because the buyer states almost nothing else.
+
+      '
+  envelope:
+    objective: produce recurring social content around one established character
+    output_modality: video
+    duration_seconds: unspecified_by_customer
+    aspect_ratio: '9:16'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: social
+    audience: unspecified_by_customer
+    entities:
+    - id: established_character
+      type: character
+      role: hero
+      must_stay_constant:
+      - face
+      - hair
+      - build
+      scope: across_the_whole_set
+      reference_exists: true
+    supplied_assets:
+    - FX-009-character
+    - FX-009-scenarios
+    identity_invariants:
+    - the character matches her supplied reference in every deliverable
+    product_fidelity: not_applicable
+    script_or_dialogue: none
+    exact_on_screen_text: []
+    language:
+      spoken: none
+      on_screen: none
+      subtitles: none
+    visual_tone: social, native to the platform
+    visual_tone_provenance: customer_implied
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 5
+      acceptance: per_deliverable_with_set_level_invariant
+    prohibited_failures:
+    - a similar-looking but different person
+    - facial features changing within a deliverable
+    model_specific_fields: null
+- case_id: MKT-010
+  source_marketplace: upwork
+  source_record_id: UW-061
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'A cheap, complete, attemptable end-to-end case with a real hard capability inside it -
+      hands interacting with a real object - and one genuinely interesting acceptance condition: the buyer
+      wants output that looks LESS produced, which inverts the usual quality direction.
+
+      '
+  envelope:
+    objective: produce recurring user-generated-style product ads for Meta placement
+    output_modality: video
+    duration_seconds: 20
+    duration_provenance: experiment_supplied_fixture
+    aspect_ratio: '9:16'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: meta_feed_or_reels
+    audience: general consumer
+    audience_provenance: customer_implied
+    entities:
+    - id: ugc_presenter
+      type: person
+      role: hero
+      must_stay_constant:
+      - face
+      - hair
+    - id: advertised_product
+      type: product
+      role: hero
+      must_stay_constant:
+      - pack_form
+      - label_artwork
+    supplied_assets:
+    - FX-010-product
+    - FX-010-presenter
+    identity_invariants:
+    - the product matches its reference stills
+    - the presenter is one person for the whole clip
+    product_fidelity: the product must be the supplied product, held and shown
+    script_or_dialogue: benchmark-supplied, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: user-generated, handheld, unpolished
+    visual_tone_provenance: mixed_customer_stated_format_and_fixture_register
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 2
+      stated_recurrence: two per week minimum
+      acceptance: per_deliverable
+    prohibited_failures:
+    - the product changing form or label between shots
+    - hands passing through or deforming around the product
+    - the presenter changing appearance mid-clip
+    - output that reads as a polished studio commercial rather than as user content
+    model_specific_fields: null
+- case_id: MKT-011
+  source_marketplace: upwork
+  source_record_id: UW-018
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: primary_source_material
+    stage_c_end_to_end: primary
+    rationale: 'The only genuine `variants` case in the bank sourced from a real buyer, and the only one
+      where the variation axis is placement rather than message. The existing coverage extension has two
+      variants items, both authored; this is the same operation attested by someone paying for it.
+
+      '
+  envelope:
+    objective: produce paired social and retail product videos across a product range
+    output_modality: video
+    duration_seconds: unspecified_by_customer
+    aspect_ratio:
+      social_variant: '9:16'
+      retail_variant: '1:1'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement:
+    - tiktok
+    - amazon_listing
+    audience: sports consumers
+    audience_provenance: customer_implied
+    entities:
+    - id: sports_product
+      type: product
+      role: hero
+      must_stay_constant:
+      - product_form
+      - branding
+      - colourway
+      scope: across_both_variants
+    - id: ugc_presenter
+      type: person
+      role: hero
+      appears_in: social_variant_only
+      must_stay_constant:
+      - face
+      - hair
+    supplied_assets:
+    - FX-011-products
+    - FX-011-presenter
+    identity_invariants:
+    - the product matches its reference in every deliverable
+    - the product is the same object in its social and its retail variant
+    product_fidelity: the central requirement of the case
+    script_or_dialogue: benchmark-supplied for the social variant only
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone:
+      social_variant: user-generated
+      retail_variant: clean catalogue
+    visual_tone_provenance: customer_stated_placements_with_fixture_registers
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints:
+    - invented brands only; no licensed third-party mark may be reproduced
+    deliverable_set:
+      cardinality: 6
+      structure: 3 products x 2 placements
+      acceptance: per_deliverable
+    prohibited_failures:
+    - the product differing between its two variants
+    - the product not matching its reference
+    - a retail deliverable that reads as social content or the reverse
+    - hands deforming around the product in the social variant
+    model_specific_fields: null
+- case_id: MKT-012
+  source_marketplace: upwork
+  source_record_id: UW-036
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: candidate
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'The cheapest complete commercial outcome in the bank and therefore a natural first Stage-C
+      attempt. It is also close enough to atomic - one product, no speech, no text, no people - to serve
+      as a Stage-A style probe of product identity under motion.
+
+      '
+  envelope:
+    objective: present a single product attractively in a short cinematic advertisement
+    output_modality: video
+    duration_seconds:
+      min: 10
+      max: 20
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: unspecified_by_customer
+    entities:
+    - id: advertised_product
+      type: product
+      role: hero
+      must_stay_constant:
+      - form
+      - finish
+      - colourway
+    supplied_assets:
+    - FX-012-product
+    identity_invariants:
+    - the product matches its reference stills throughout
+    product_fidelity: the central requirement of the case
+    script_or_dialogue: none
+    exact_on_screen_text: []
+    language:
+      spoken: none
+      on_screen: none
+      subtitles: none
+    visual_tone: cinematic
+    visual_tone_provenance: customer_stated
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    prohibited_failures:
+    - the product changing form, finish or colour within the clip
+    - materials that do not behave like the materials they depict
+    - runtime outside 10-20 seconds
+    model_specific_fields: null
+- case_id: MKT-013
+  source_marketplace: upwork
+  source_record_id: UW-015
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: primary_source_material
+    stage_b_compound: candidate
+    stage_c_end_to_end: secondary
+    rationale: 'The one case here with real Stage-A value. Edit preservation is isolable, its truth is
+      held by construction, and its evaluator family is the cheapest to qualify. If the project wants
+      a marketplace-grounded item it could actually measure soonest, this is it.
+
+      '
+  envelope:
+    objective: replace the content of four monitor screens inside an existing promotional video
+    output_modality: video
+    requested_operation: edit
+    duration_seconds: inherited_from_supplied_asset
+    aspect_ratio: inherited_from_supplied_asset
+    placement: unspecified_by_customer
+    audience: unspecified_by_customer
+    entities:
+    - id: monitor_screens
+      type: object
+      role: hero
+      count: 4
+      must_stay_constant:
+      - position
+      - geometry
+      - count
+      must_change:
+      - displayed_content
+    supplied_assets:
+    - FX-013-basevideo
+    - FX-013-screencontent
+    identity_invariants:
+    - every element not named in the request is preserved exactly
+    - four screens before, four screens after
+    product_fidelity: not_applicable
+    script_or_dialogue: none
+    exact_on_screen_text: []
+    language:
+      spoken: inherited_from_supplied_asset
+      on_screen: none
+      subtitles: none
+    visual_tone: inherited_from_supplied_asset
+    temporal_beats: inherited_from_supplied_asset
+    cta: unspecified_by_customer
+    brand_constraints: []
+    preservation_semantics: 'One named element changes. Everything else is implicitly preserved. The customer
+      enumerated nothing to keep and the system must not manufacture a list of preserve statements and
+      attribute them to the customer.
+
+      '
+    prohibited_failures:
+    - any change outside the four screens
+    - a screen count other than four
+    - screens moving or changing shape
+    - replacement content that flickers or drifts between frames
+    model_specific_fields: null
+- case_id: MKT-014
+  source_marketplace: upwork
+  source_record_id: UW-049
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: primary_source_material
+    stage_b_compound: candidate
+    stage_c_end_to_end: secondary
+    rationale: 'Strong Stage-A material for animate, which the authored 30-brief bank does not cover at
+      all and the coverage extension covers with two authored items. This one is attested by a buyer.
+
+      '
+  envelope:
+    objective: turn a supplied product still into a short video advertisement
+    output_modality: video
+    requested_operation: animate
+    duration_seconds: 8
+    duration_provenance: experiment_supplied_fixture
+    aspect_ratio: '9:16'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: unspecified_by_customer
+    entities:
+    - id: advertised_product
+      type: product
+      role: hero
+      must_stay_constant:
+      - everything visible in the source frame
+    supplied_assets:
+    - FX-014-sourceimage
+    - FX-014-motionspec
+    identity_invariants:
+    - the source frame's content survives the motion unchanged in form and colour
+    product_fidelity: the source image is the fidelity reference
+    script_or_dialogue: none
+    exact_on_screen_text: []
+    language:
+      spoken: none
+      on_screen: none
+      subtitles: none
+    visual_tone: inherited_from_source_image
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    prohibited_failures:
+    - the object deforming or changing as it moves
+    - motion other than the motion specified
+    - camera movement supplied where subject movement was asked for, or the reverse
+    - visible warping or morphing artefacts
+    model_specific_fields: null
+- case_id: MKT-015
+  source_marketplace: upwork
+  source_record_id: UW-095+UW-089
+  runnable_now: false
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: false
+    stage_c_end_to_end: blocked
+    rationale: 'Not a Stage-C candidate today, and it should not be forced into one. Its value is as evidence:
+      it is the single marketplace-attested case where an Indic language is part of producing a video
+      rather than a separate voice-over service, and the project can neither run it nor judge it.
+
+      '
+  envelope:
+    objective: produce a multilingual industrial safety induction video
+    output_modality: video
+    duration_seconds:
+      min: 900
+      max: 1200
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: internal workforce induction
+    placement_provenance: customer_implied
+    audience: industrial workforce, multilingual
+    audience_provenance: customer_stated
+    entities: []
+    supplied_assets:
+    - FX-015-scripts
+    identity_invariants:
+    - one narration voice character within each language version
+    product_fidelity: not_applicable
+    script_or_dialogue: FX-015-scripts, one per language, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken:
+      - en
+      - hi
+      - ur
+      on_screen: unspecified_by_customer
+      subtitles: unspecified_by_customer
+    visual_tone: instructional, compliance
+    visual_tone_provenance: customer_implied
+    temporal_beats: unspecified_by_customer
+    cta: none
+    brand_constraints: []
+    deliverable_set:
+      cardinality: 3
+      variation_axis: language
+      acceptance: per_deliverable
+    prohibited_failures:
+    - narration that departs from its language's script
+    - Hindi or Urdu narration a competent speaker cannot follow
+    - narration voice changing within a language version
+    - speech and picture drifting apart over a long runtime
+    model_specific_fields: null
+- case_id: MKT-016
+  source_marketplace: upwork
+  source_record_id: UW-083
+  runnable_now: false
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: false
+    stage_c_end_to_end: false
+    rationale: 'Not fit for any stage as it stands. Retained as source evidence and as a worked example
+      of a posting too thin to derive a benchmark case from, which is a distinction the bank should be
+      able to demonstrate rather than only assert.
+
+      '
+  envelope:
+    objective: faceless Hinglish channel content, mystery/explainer/historical register
+    output_modality: video
+    requested_operation: edit
+    requested_operation_confidence: low
+    duration_seconds: unspecified_by_customer
+    aspect_ratio: unspecified_by_customer
+    placement: youtube
+    placement_provenance: customer_implied
+    audience: Hinglish-speaking Indian channel audience
+    audience_provenance: customer_implied
+    entities: []
+    supplied_assets:
+    - unrecorded
+    identity_invariants: []
+    product_fidelity: not_applicable
+    script_or_dialogue: unspecified_by_customer
+    exact_on_screen_text: []
+    language:
+      spoken: hi-Latn
+      on_screen: unspecified_by_customer
+      subtitles: unspecified_by_customer
+    visual_tone: mystery / explainer / historical
+    visual_tone_provenance: customer_stated
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints:
+    - no presenter face appears
+    prohibited_failures:
+    - a presenter's face appearing
+    - narration that is not Hinglish
+    envelope_completeness: incomplete_by_design
+    model_specific_fields: null
+- case_id: MKT-017
+  source_marketplace: upwork
+  source_record_id: UW-064
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: false
+    stage_c_end_to_end: secondary
+    rationale: 'A clean supplied-script case with a non-commercial register, which is worth having because
+      every other case in this bank and every brief in the authored 30 is commercial. It tests whether
+      an "objective" that is not a sale is represented at all.
+
+      '
+  envelope:
+    objective: turn a supplied script into an explainer video for a community organisation
+    output_modality: video
+    duration_seconds: 90
+    duration_provenance: experiment_supplied_fixture
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: a local community
+    audience_provenance: customer_implied
+    entities: []
+    supplied_assets:
+    - FX-017-script
+    identity_invariants: []
+    product_fidelity: not_applicable
+    script_or_dialogue: FX-017-script, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: warm, community, non-commercial
+    visual_tone_provenance: customer_implied
+    temporal_beats: unspecified_by_customer
+    cta: unspecified_by_customer
+    brand_constraints: []
+    prohibited_failures:
+    - spoken words differing from the supplied script
+    - unintelligible narration
+    - imagery that contradicts the script
+    model_specific_fields: null
+- case_id: MKT-018
+  source_marketplace: upwork
+  source_record_id: UW-047
+  runnable_now: true
+  stage_fit:
+    stage_a_atomic: false
+    stage_b_compound: candidate
+    stage_c_end_to_end: primary
+    rationale: 'A strong Stage-C candidate for one specific reason: the customer supplies the concept,
+      so the thing being measured is execution fidelity to a stated creative intention rather than creative
+      taste. That is a far more tractable version of the creative-quality question than "is this good",
+      and no item in the authored bank frames it that way.
+
+      '
+  envelope:
+    objective: execute a customer-supplied creative concept as a high-end commercial advertisement
+    output_modality: video
+    duration_seconds: 30
+    duration_provenance: experiment_supplied_fixture
+    aspect_ratio: '16:9'
+    aspect_ratio_provenance: experiment_supplied_fixture
+    placement: unspecified_by_customer
+    audience: unspecified_by_customer
+    entities:
+    - id: advertised_product
+      type: product
+      role: hero
+      must_stay_constant:
+      - form
+      - branding
+    supplied_assets:
+    - FX-018-concept
+    - FX-018-script
+    - FX-018-product
+    identity_invariants:
+    - the product matches its reference
+    - every element named in the supplied concept appears
+    product_fidelity: required
+    script_or_dialogue: FX-018-script, spoken verbatim
+    exact_on_screen_text: []
+    language:
+      spoken: en
+      on_screen: none
+      subtitles: none
+    visual_tone: high-end cinematic
+    visual_tone_provenance: customer_stated
+    temporal_beats: as set out in the supplied concept
+    temporal_beats_provenance: customer_stated
+    cta: unspecified_by_customer
+    brand_constraints: []
+    prohibited_failures:
+    - an element the concept names being absent
+    - spoken words differing from the script
+    - the product not matching its reference
+    - output that reads as generic stock advertising rather than as the supplied concept
+    model_specific_fields: null
