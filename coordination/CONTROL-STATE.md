@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — Gemini 3.5 Flash-Lite completed the full contract-v2 primary Devanagari screen and is disqualified on 18 blind false passes plus false-fail/consistency gate failures. The later diagnostic 429 does not change qualification. General-purpose VLM text judges are now frozen; EVAL-022 opens a zero-spend OCR-family readiness pass.
+**Updated:** 27 Aug 2026 — User explicitly overrode the prior Gemini smoke-only limitation and authorised full qualification of both Gemini 3.5 Flash-Lite and Google Cloud Vision OCR. Gemini mandatory pacing is now 0 seconds; retries remain 0. Combined conservative new reservation USD 1.739520; prospective qualification spend USD 2.4107615 <= USD 6.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -279,31 +279,45 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run **EVAL-022 OCR-family qualification readiness** at zero external spend.
+Execute:
+- `coordination/decisions/CONTROLLER-FULL-GEMINI-AND-VISION-QUALIFICATION-NO-PACING-2026-08-27.md`
+- `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RUNNER-WIRING-CORRECTION-2026-08-27.md`
 
-Authoritative decision:
-- `coordination/decisions/CONTROLLER-EVAL-022-OCR-FAMILY-PIVOT-2026-08-27.md`
+Required sequence:
+1. bring current `origin/main` into `eval/eval-022-ocr-family-readiness`;
+2. finish real OCR `--live` persistent-ledger wiring;
+3. run all zero-network verification and preflight; if anything fails, stop before spend;
+4. push exact tested head; do not merge;
+5. run fresh full Gemini `gemini-3.5-flash-lite` qualification:
+   - VLM contract v2;
+   - `thinkingLevel: minimal`;
+   - retries 0;
+   - **minimum mandatory pacing 0 seconds**;
+   - Devanagari from call 1;
+   - Latin only if Devanagari passes;
+   - max 1,152 calls / USD 0.875520 reservation;
+6. regardless of Gemini scientific failure or clean provider failure, run full Cloud Vision OCR qualification if persistent budget remains healthy;
+7. Cloud Vision:
+   - `TEXT_DETECTION`;
+   - `GOOGLE_CLOUD_VISION_API_KEY`;
+   - no language hints;
+   - retries 0;
+   - Devanagari 288 calls;
+   - Latin only if Devanagari scientifically passes;
+   - max 576 calls / USD 0.864 reservation;
+8. infrastructure failure in one provider stops only that provider's run, provided billing is persisted and the ledger remains safe;
+9. combined max new reservation USD 1.739520;
+10. prior qualification spend USD 0.6712415;
+11. prospective cumulative USD 2.4107615 <= USD 6;
+12. preserve all prior evidence byte-identically; append only to ledger;
+13. Gemini prior disqualification remains historical; an unexpected new full pass creates conflicting evidence and does not auto-promote;
+14. if OCR passes both scripts, record OCR-family qualification but keep A-TEXT blocked;
+15. no fal calls; Registry unchanged.
 
-Task:
-- `eval/tasks/EVAL-022-OCR-FAMILY-READINESS.md`
 
-Key requirements:
-1. preserve LLM qualification contracts v1/v2 and all historical evidence;
-2. create a separate OCR-family qualification contract;
-3. first candidate config: Google Cloud Vision `TEXT_DETECTION`, no language hints;
-4. transcription-only evaluator; do not fabricate an LLM-style verdict shape;
-5. exact equality remains local code after NFC + surrounding whitespace trim;
-6. zero mismatch false passes remains the safety gate;
-7. 3 repeats, Devanagari first, Latin only for survivors;
-8. adapter behind an injected HTTP seam; target never sent to provider;
-9. persist and fingerprint-bind OCR outcomes/config/call records;
-10. conservative price basis USD 0.0015/image, regardless of free tier;
-11. max prospective OCR qualification: 576 calls = USD 0.864 reservation;
-12. current qualification spend: USD 0.6712415;
-13. prospective cumulative: USD 1.5352415 <= USD 6;
-14. zero provider/model/evaluator calls during readiness;
-15. A-TEXT remains blocked;
-16. return for Controller review before any Cloud Vision live call.
+
+
+
 
 
 
