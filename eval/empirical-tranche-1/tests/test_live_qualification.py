@@ -262,7 +262,9 @@ def test_a_refusing_live_judge_is_never_retried(keys):
     result = Q.qualify_candidate(candidate, guard=guard)
 
     assert len(http.calls) == CALLS_PER_SCRIPT    # not one more
-    assert result['devanagari']['refusals'] == CALLS_PER_SCRIPT
+    # Top-level qualification metrics are primary-shape only under contract v2.
+    # All 576 calls still dispatch, but only the 288 transcribe calls contribute to this metric.
+    assert result['devanagari']['refusals'] == CALLS_PER_SCRIPT // 2
     assert 'refusal_rate' in result['devanagari']['failed_gates']
     assert result['latin'] is None
     assert all(r['retries'] == 0 for r in result['devanagari']['call_records'])
