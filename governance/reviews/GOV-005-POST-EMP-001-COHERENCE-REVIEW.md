@@ -8,6 +8,19 @@
 **Range reviewed:** `74d6b0d..0e24d6a` — **188 commits**, **33 new Controller decision records**
 (29 of them dated 27 Aug 2026).
 
+> ### Read §10 before acting on anything in this review
+>
+> **Sections 1–9 below are a historical audit of `main` at `0e24d6a`, 28 Aug 2026.** They are
+> preserved exactly as written and are accurate *for that tree*. They have **not** been rewritten
+> against later commits.
+>
+> The Controller reviewed this audit, accepted its findings, and then landed changes that make some
+> of its current-state prose stale on arrival — most importantly, **EVAL-028 is now superseded and
+> must not run**, and **exact text is no longer a programme-wide blocker**.
+>
+> **§10 is the Controller disposition and current-state update**, written against `main` at
+> `8990a7a`. **Where §10 and any earlier section disagree, §10 governs.**
+
 **Communication check:** I will explain technical ideas in plain English, including what they mean,
 why they matter, and their practical consequence; use minimum sufficient wording without sacrificing
 understandability; separate evidence from inference; and never invent facts. I have read
@@ -451,5 +464,152 @@ Offered as options, not recommendations promoted into decisions.
 
 ---
 
-**Verdict recorded: PASS WITH NON-BLOCKING NOTES.** This is a claim about repository coherence only.
-The Governor merges nothing; this branch returns to the Controller.
+**Verdict recorded at `0e24d6a`: PASS WITH NON-BLOCKING NOTES.** This is a claim about repository
+coherence only. The Governor merges nothing; this branch returns to the Controller.
+
+**End of the historical audit of `0e24d6a`.** Everything above this line is preserved as written on
+28 Aug 2026 against that tree. The section below was added afterwards.
+
+
+---
+
+# 10. Controller disposition and current-state update
+
+**Added:** 28 August 2026, after the Controller's review of this audit.
+**Written against `main` at:** `8990a7afe3d31038bc01dae531e771df12e49870`
+**Audit base of §§1–9, unchanged:** `0e24d6a1a4acce5e83b90fa7fe198db94a92dec5`
+**Controller disposition:** `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`
+
+**This section governs where it and §§1–9 disagree.** Sections 1–9 remain a correct account of what
+was true at `0e24d6a` and are deliberately not rewritten. Nothing in them was retracted by the
+Controller — six commits simply landed after the audit closed.
+
+## 10.1 Verdict
+
+**Unchanged: PASS WITH NON-BLOCKING NOTES**, now recorded against `8990a7a`.
+
+The Controller accepted the audit's findings in substance and confirmed the Governor stayed within
+governance scope. The verdict does not move, because nothing found in the newer tree changes it: the
+Controller's own commits resolved two findings and re-scoped a third, and no new coherence defect
+was introduced.
+
+**What still stands behind the verdict:** F-1 remains High and unresolved. This is not a clean pass.
+
+## 10.2 What changed on `main` after the audit closed
+
+Six Controller commits, `0e24d6a..8990a7a`. Three of them change project posture materially.
+
+**Exact text stopped being a gate on everything else.** `[decision]`
+`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md`
+
+The programme had reached a position where no image or video capability could be measured until an
+exact-Hindi-text checker reached zero false passes — a standard nothing tested could meet. The
+Controller separated two different jobs that had been conflated:
+
+- **Certifying** that customer-facing text is exactly right. Still requires zero false passes;
+  nothing has passed that bar, and the strict results in §2 stand untouched.
+- **Benchmarking** — knowing well enough which generation route handles text better, in order to
+  compare and rank them. That tolerates a known, measured error rate.
+
+A separate evaluator class, `benchmark_text_ocr_v1`, now exists for the second job, with thresholds
+of false-pass ≤ 0.15, false-fail ≤ 0.10, repeat consistency ≥ 0.95 and execution-failure ≤ 0.05.
+`benchmark_qualified` and `strict_exactness_qualified` are explicitly distinct statuses and must
+stay distinct in the Registry.
+
+**The consequence that matters for reading §2 correctly:** every strict result in the qualification
+history is preserved and none was rewritten. Cloud Vision still **fails** the strict zero-false-pass
+screen. Its same Devanagari numbers (false-pass 0.125, false-fail 0.0208, consistency 1.0, zero
+empties, zero infrastructure failures) **meet the benchmark-grade thresholds**. Both statements are
+true at once because they are answers to different questions. §2 of this review describes the strict
+screen only, and remains correct as such.
+
+**EVAL-028 is cancelled.** `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md`. The two-independent-blind-human
+composite described in §2 and §3 of this audit **must not be executed**, and **no mandatory
+human-in-the-loop step exists in the production API architecture**. Anywhere §§1–9 present EVAL-028
+as the next direction, read EVAL-029 instead.
+
+**EVAL-029 is the active text-evaluator lane.** `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md`.
+It recomputes the existing Cloud Vision Devanagari evidence against the benchmark contract, then — only
+if that passes — runs the one missing Latin screen: 288 calls, retries 0, conservative reservation
+**USD 0.432**, inside the existing EMP-001 ceilings.
+
+**EVAL-024 returned with zero live spend.**
+`coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md`. `FAL_KEY` was
+unavailable, the runner correctly treated that as a **pre-dispatch** failure, and no provider call
+and no spend occurred. The design is accepted in principle; the branch is **not** cleared to
+dispatch from `e4e4d39`. A bounded cleanup gate applies first: sync to current `main`; restore
+`preflight-result.json` and `perceptibility-mechanical.json` byte-for-byte from `main`; stop writing
+non-PNG bytes to `.png` paths; and restore the pinned Tesseract traineddata so the full suite is
+green again.
+
+## 10.3 Status of every finding after the disposition
+
+| # | Finding | Severity | Disposition | Status now |
+|---|---|---|---|---|
+| **F-1** | Live EMP-001 evidence is not on `main` | **High** | **Accepted as High and must be fixed.** Live mutable ledger stays local; **completed** evidence must be sealed immutably into GitHub after a bounded screen finishes, sufficient for a fresh session to recompute metrics, inspect item identities, verify candidate/contract identity and trace costs. No keys, no secrets, no rights-restricted provider artifacts. A bounded Eval correction opens once active Eval work is safely isolated. | **UNRESOLVED — routed to Eval + Controller.** Nothing sealed yet. |
+| **F-2** | `eval/HANDOFF.md` says no API call has occurred | High | Accepted; Eval must refresh it. May be combined with the F-1 correction. | **Routed, open.** Verified still stale on `8990a7a`. |
+| **F-3** | `WORKSTREAM-STATUS.md` stale | High | Accepted; Governor correction appropriate. Refresh again against current `main`. | **Corrected** — refreshed to `8990a7a` in this branch. |
+| **F-4** | Duplicate EVAL-024 / CANON-011 authorities | Medium | **Resolved by Controller decision.** Governing chains named; duplicates preserved as historical but non-governing. | **RESOLVED.** Reflected in §10.4 and in `PROJECT-MEMORY.md`. |
+| **F-5** | Decision index incomplete | Medium | Accepted, **but re-scoped**: `DECISION-LOG.md` is a **curated historical/navigation index, not an exhaustive post-26-Aug source**. Current authorisation comes from `CONTROL-STATE.md`; detailed records are discovered directly under `coordination/decisions/`. No manual 30-row transcription. A mechanical index may replace it later. | **RESOLVED as re-scoped.** The Governor's coverage notice was rewritten to state the curated role rather than to imply a missing index. |
+| **F-6** | Merged v2 contracts still say `NOT IN FORCE` | Medium | Accepted. Fix the **generating source**, regenerate, and prove semantic content unchanged except status/authority metadata. **Do not hand-edit generated YAML** — which is exactly why the Governor did not. | **Routed, open.** Verified still present on `8990a7a`. |
+| **F-7** | `preflight-result.json` holds machine-absolute paths | Low | Accepted. Generator must emit repository-relative or machine-neutral paths. | **Routed, open.** |
+| **F-8** | `qualify_ocr.py` prior-spend default drifted | Low | Accepted. **Derive** it from the persistent run/evidence input rather than hand-updating a number. Must not alter the live budget guard, which already reads the ledger. | **Routed, open.** |
+| **F-9** | EVAL-024 branch re-serialises the human-review artifact | Low | Handled by the EVAL-024 cleanup gate: the worker must restore the file byte-for-byte from current `main`. | **RESOLVED into the EVAL-024 cleanup gate.** |
+| **F-10** | Task-numbering gaps | Low | **No action.** Task-number continuity is not an invariant. | **CLOSED.** |
+
+**Summary:** F-4, F-5, F-9 and F-10 are closed. F-3 is corrected in this branch. **F-1, F-2, F-6,
+F-7 and F-8 remain open and routed to Eval**, with F-1 the only High.
+
+## 10.4 The authority chains F-4 asked about
+
+Recorded here because §5 of this audit left them open. `[decision]`
+
+**EVAL-024 — governing:**
+1. `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md`
+2. `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`
+3. `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md`
+
+**EVAL-024 — historical, preserved, not governing:**
+`coordination/decisions/CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`;
+`eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md`.
+
+**CANON-011 — governing:**
+1. `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`
+2. `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`
+3. `canon/research/marketplace-demand-v1/README.md` (source provenance)
+
+**CANON-011 — historical, preserved, not governing:**
+`coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`;
+`canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md`.
+
+The Controller's stated reason for choosing the later pair: it binds the committed marketplace-source
+provenance and preserves the route-neutral separation between a brief and a prompt-ready envelope.
+
+## 10.5 One coherence note arising from the newer tree
+
+**Recorded as an observation, not a methodology judgement.** `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md`
+instructs the worker to *"mechanically verify from stored observations rather than copying prose"*
+when recomputing the Cloud Vision Devanagari result against the benchmark contract, and to stop and
+return to the Controller if recomputation differs.
+
+That instruction depends on the stored per-trial observations — which, per **F-1**, are **not on
+`main`**. Whether they exist in the worker's local run root is outside what the Governor can verify
+from the repository.
+
+**Consequence, stated plainly:** if those observations are reachable locally, EVAL-029 proceeds and
+sealing them under the F-1 correction becomes cheap and obvious. If they are not, EVAL-029's first
+step cannot be performed as written, and that is a blocker the Controller would want to know about
+before any Latin spend. **Severity: Medium. Owner: Eval + Controller. Routed, not adjudicated here.**
+
+## 10.6 What this update did and did not touch
+
+**Governor-owned files refreshed to `8990a7a` in this branch:** `PROJECT-MEMORY.md`,
+`coordination/WORKSTREAM-STATUS.md`, `coordination/DECISION-LOG.md` (coverage notice only),
+`governance/README.md`, and this review.
+
+**Not touched, deliberately:** every Canon, Eval and Resources artifact; every stream `CHARTER.md`
+and `HANDOFF.md`; every task file; `coordination/CONTROL-STATE.md`; `.gitignore`; all domain code;
+and every generated artifact. **F-1 was not fixed by the Governor** — sealing evidence is Eval's
+work under a Controller-opened task, and the Governor opens no tasks.
+
+**No branch was merged.** This branch returns to the Controller.

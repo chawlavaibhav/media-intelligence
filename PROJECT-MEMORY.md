@@ -4,9 +4,11 @@
 
 **Maintained by:** the Repository Governor (see `governance/GOVERNOR-CONTRACT.md`).
 **Last Governor reset:** 25 Aug 2026, task GOV-001, against `main` at `00ea9b067229cd992b77b7d6e0958df35178b01b`.
-**Last refresh:** **28 Aug 2026, task GOV-005**, against `main` at
-`0e24d6a1a4acce5e83b90fa7fe198db94a92dec5`
-(`governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md`).
+**Last refresh:** **28 Aug 2026, task GOV-005**, resynced against `main` at
+`8990a7afe3d31038bc01dae531e771df12e49870` after the Controller's disposition
+(`coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`).
+The review itself is `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md`; its §§1–9 are a
+historical audit of `0e24d6a` and its §10 is the current-state update.
 Previous refresh: 26 Aug 2026, GOV-004, at `74d6b0d`
 (`governance/reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md`). Task GOV-002 was assigned but
 never executed and is superseded — `governance/status/2026-08-26-GOV-002-SUPERSEDED.md`.
@@ -17,8 +19,14 @@ never executed and is superseded — `governance/status/2026-08-26-GOV-002-SUPER
 > silently repaired misspelled words instead of reading what was actually there. The project
 > therefore still has **zero qualified evaluators, zero measured models and zero Registry rows** —
 > but that is now a *tested* zero, not an untested one. Roughly **USD 1.30** of the approved USD 10
-> ceiling has been consumed. Full detail in §4 under "EMP-001"; current authorisation lives in
-> `coordination/CONTROL-STATE.md`.
+> ceiling has been consumed.
+>
+> **And then the Controller changed what that failure means.** As of 28 Aug 2026, exact text is
+> **no longer a gate on the rest of the programme**. Certifying text as perfect and *benchmarking*
+> which model handles text better are now separate jobs with separate standards. Unrelated image,
+> video and audio work may proceed. **EVAL-028's two-human architecture is cancelled and must not
+> run**; **EVAL-029** is the live text-evaluator lane. Full detail in §4 under "EMP-001"; current
+> authorisation lives in `coordination/CONTROL-STATE.md`.
 
 ## What this document is — and is not
 
@@ -198,7 +206,9 @@ records real demand rather than authored probes.
 been through the Audit Gate, and does not change the count of 19. `[repo]`
 
 **CANON-011 is the open lane** that turns this research into a benchmark brief and prompt bank at
-zero spend. **No derived output is committed** as of `0e24d6a`, and no branch has been pushed.
+zero spend. **No derived output is committed** as of `8990a7a`, and no branch has been pushed.
+Governing authority: `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`
+and `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`.
 
 ### Eval — the battery has now been run against five checkers, and all five failed
 
@@ -508,7 +518,13 @@ qualification sub-cap**, **zero retries**, and **no account pre-funding above th
 **Any document in this repository still saying paid execution is unauthorised or has not happened is
 stale.** GOV-005 found and routed the remaining instances.
 
-#### The qualification history — five configurations, five failures
+#### The qualification history — five configurations, five failures *against the strict standard*
+
+**The standard these were judged against matters, and it changed afterwards.** Every result below
+was scored under **strict exactness certification**: mismatch false passes must be **zero**. That is
+the right bar for certifying customer-facing text and it is the bar all five failed. Since 28 Aug
+2026 a second, looser standard also exists for a different job — see "Exact text stops being a
+gate" below. **The results here are unchanged and were not rewritten** under the new standard.
 
 Every row is a **Controller decision on record carrying worker-reported measurement**. `[decision]`
 `[agent-reported]` None of it was independently reproduced by the Governor, for the reason in the
@@ -553,8 +569,10 @@ Turning that knowledge off proved the mechanism and produced the trade-off:
 So a floor remains after the dictionaries are gone: Devanagari glyph confusion, and Latin
 homoglyph confusion (`O`/`0`, `5`/`S`, `Z`/`2`).
 
-**The Controller did not relax the zero-false-pass gate at any point.** That is the decision that
-makes this evidence worth having.
+**The Controller did not relax the zero-false-pass standard for any of these runs.** That is what
+makes the evidence worth having — a bar that moves when candidates fail measures nothing. The bar
+was later kept intact *and set aside for a different purpose*, which is not the same as relaxing
+it; see below.
 
 **Tesseract configuration search is CLOSED.** No further page-segmentation, engine-mode, language or
 preprocessing sweeps are authorised without a new mechanism-level rationale.
@@ -583,17 +601,79 @@ authorised.
 > is the one place where the project's own rule — that a fresh session reconstructs state from
 > GitHub *by reading the evidence* — is currently not satisfied.
 
-#### Where the exact-text line goes next
+#### Exact text stops being a gate — the 28 August course correction
 
-**EVAL-028 — a fail-closed human-confirmed composite, preparation only.** `[decision]` An automated
-stage (Cloud Vision preferred, for its stability and low false-fail rate) is allowed only to
-**reject**. Anything it would pass goes to **two independent blind human readers** who never see the
-target, the OCR output, or each other's answer; both transcribe exactly what is drawn; code compares
-characters. Any disagreement, ambiguity or "cannot read" **fails closed**.
+**This is the most consequential decision since the spend approval, and it is easy to misread.**
+`[decision]` `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md`
 
-Boundaries the task carries: no human time is consumed, no API call is made, A-TEXT is not scored,
-and the Registry does not change. Cloud Vision being the preferred first stage **does not make it
-qualified**.
+**The problem it solved.** The programme had reached a state where nothing could be measured about
+any model until an exact-Hindi-text checker reached zero false passes — a bar nothing tested could
+clear. One imperfect capability was holding the entire benchmark hostage.
+
+**The insight.** Two different jobs had been treated as one:
+
+| Job | Question it answers | Standard | Status |
+|---|---|---|---|
+| **Strict exactness certification** | "Can I promise the customer this text is exactly right?" | zero mismatch false passes | **Nothing has ever passed.** All five results above stand. |
+| **Benchmark-grade text OCR** | "Which generation route handles text better?" | a known, bounded error rate | New contract `benchmark_text_ocr_v1` |
+
+Comparing two models does not need a perfect judge — it needs a judge whose error you can measure
+and report alongside the result.
+
+**`benchmark_text_ocr_v1` thresholds:** mismatch false-pass ≤ **0.15**; match false-fail ≤ **0.10**;
+repeat consistency ≥ **0.95**; empty/refusal/infrastructure failure ≤ **0.05**; 3 repeats; blind
+transcription only; retries 0; **no human review in the contract**.
+
+**`benchmark_qualified` and `strict_exactness_qualified` are different statuses and must stay
+visibly different.** Any metric scored by a benchmark-grade evaluator carries that evaluator's
+measured error rate and contract id. Benchmark-grade OCR **must never be presented as a guaranteed
+exactness certifier**.
+
+**What this does to Cloud Vision, stated carefully because it looks contradictory.** Its Devanagari
+numbers did not change: false-pass 0.125, false-fail 0.0208, repeat consistency 1.0, zero empty
+transcriptions, zero infrastructure failures. Under the **strict** screen it **fails** — 0.125 is
+not zero. Under the **benchmark** contract those same numbers **pass** — 0.125 ≤ 0.15. Both
+statements are true, because they answer different questions.
+
+**Four rules that follow, and a fresh session gets these wrong most often:** `[decision]`
+
+1. **EVAL-028 is cancelled and must not run.** `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md`.
+2. **No mandatory human-in-the-loop step exists in the production API architecture.** The
+   two-independent-blind-reader composite was a proposal, and it was withdrawn.
+3. **Exact-text imperfection blocks nothing else.** A Stage-A slot may proceed as soon as the
+   instruments *that measurement* needs are ready. Temporal/video evaluator work, deterministic
+   instruments, marketplace-derived Stage-C brief preparation and A-TEXT generation all run
+   independently.
+4. **The strict results are preserved as valid research**, reclassified as
+   `strict_exactness_certification`, and must not be rewritten to look like passes.
+
+**If a customer ever needs near-zero text risk**, that is a production-recipe problem — compositing
+text deterministically rather than asking a generative model to paint it, or a separate stricter
+verifier — not a prerequisite for learning which media models are useful.
+
+#### Where the exact-text line goes next — EVAL-029
+
+**EVAL-029 is the live lane.** `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md`. `[decision]`
+
+1. Build the separate `benchmark_text_ocr_v1` contract without mutating any historical strict
+   contract or result.
+2. **Recompute** — not rerun — the existing Cloud Vision Devanagari evidence against it, mechanically
+   from stored observations. If recomputation disagrees with the accepted numbers, stop and return
+   to the Controller before any paid call.
+3. If Devanagari passes, run the **one missing Latin screen**: Cloud Vision `TEXT_DETECTION`, no
+   language hints, 96 items × 3 repeats = **288 calls**, retries 0, conservative reservation
+   **USD 0.432**, on the existing persistent ledger. No Devanagari rerun; no Gemini, Anthropic,
+   Tesseract or fal calls.
+4. If both scripts pass, Cloud Vision is **benchmark-qualified** for model comparison — and still
+   **not** strict-exactness qualified.
+5. If EVAL-024's sealed artifacts exist, score those exact images with no humans and no
+   regeneration. If they do not, prepare the handoff and stop.
+6. **Registry text rows stay blocked** pending Controller review of the A-TEXT result.
+
+> **A dependency worth checking before spending.** Step 2 requires the stored per-trial Cloud Vision
+> observations, which — per **F-1** — are **not on `main`**. Whether they are reachable in the
+> worker's local run root is not verifiable from the repository. If they are not, EVAL-029's first
+> step cannot be performed as written. GOV-005 §10.5, routed to Eval and the Controller.
 
 ### Numbers in this repository that are NOT approved budgets
 
@@ -626,42 +706,65 @@ stale. GOV-005 corrected the instances it owns and routed the rest.
 
 ### What is authorised and running now
 
-Three lanes are open in parallel. All three were authorised by explicit Controller decisions on
-27 Aug 2026. `[decision]`
+Three lanes are open in parallel. `[decision]`
 
 | Lane | What it does | Spend |
 |---|---|---|
-| **EVAL-028** | Prepare and freeze the fail-closed human-confirmed exact-text composite and its blind two-reader tooling. Preparation only — no human time, no API call. | USD 0 |
-| **EVAL-024** | Generate and **seal** the 16 frozen A-TEXT images now, so generation is not blocked on evaluator qualification. **Scoring them is not authorised.** | Bounded by the existing USD 10 EMP-001 ceiling |
+| **EVAL-029** | Benchmark-grade text OCR: build `benchmark_text_ocr_v1`, recompute the existing Cloud Vision Devanagari evidence against it, then run the one missing Latin screen if it passes. | ≤ **USD 0.432**, inside the existing EMP-001 ceilings |
+| **EVAL-024** | Generate and **seal** the 16 frozen A-TEXT images. **Scoring them is not part of this task.** Currently behind a cleanup gate — see below. | Bounded by the existing USD 10 EMP-001 ceiling; **USD 0 spent so far** |
 | **CANON-011** | Turn the Upwork/Fiverr marketplace research into a provenance-preserving benchmark brief and prompt bank. | USD 0 |
 
+> **EVAL-028 is CANCELLED and must not be executed.** `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md`.
+> Its two-independent-blind-human composite was withdrawn on 28 Aug 2026, and **no mandatory
+> human-in-the-loop step exists in the production API architecture.** If you find a document
+> describing EVAL-028 as the next direction, it predates the course correction. EVAL-029 replaced it.
+
 **EVAL-024 reverses the original ordering deliberately.** EMP-001 originally required a qualified
-judge before spending on generation, so that a failed qualification would save the generation money.
-The Controller overrode that so the images exist while the judge problem is worked on. **The
-scientific gate was not relaxed** — the images may not be interpreted, scored or promoted until a
-qualified evaluator and an accepted handoff exist.
+judge before spending on generation, so a failed qualification would save the generation money. The
+Controller overrode that so the images exist while the judge problem is worked on. The images may
+not be interpreted, scored or promoted until a qualified evaluator and an accepted handoff exist.
 
-**Lane state on the remote, checked during GOV-005:** `[repo]`
+**EVAL-024 returned with zero live spend, and is not cleared to dispatch.** `[decision]`
+`coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md`
 
-- EVAL-024 — `origin/work/eval-024-parallel-atext-generation-only` @ `e4e4d39`, one commit ahead of
-  `main` and five behind. It adds the generation-only orchestrator and its tests. **No generation
-  result is committed, so no image has demonstrably been produced.**
+`FAL_KEY` was unavailable. The runner correctly classified that as a **pre-dispatch** failure —
+meaning no provider call was made, so no reservation was consumed and **no money was spent**. That is
+the accounting rule working as designed, not a failure.
+
+The design is accepted in principle. Before any live dispatch, four cleanup items apply:
+
+1. **sync the branch to current `main`** — it predates the exact-text course correction and EVAL-029;
+2. **restore `preflight-result.json` and `perceptibility-mechanical.json` byte-for-byte from `main`** —
+   the branch rewrote both incidentally and neither is an EVAL-024 output;
+3. **stop writing non-PNG bytes to `.png` paths** — determine media type from the returned bytes,
+   preserve and hash the raw bytes, never transcode to make an extension convenient;
+4. **restore the pinned Tesseract traineddata** so the full suite is green again — this is
+   environment restoration, not a reopening of the Tesseract research line.
+
+If `FAL_KEY` is available after cleanup, the 16 generations may run from that exact pushed and tested
+head, on the existing ledger. If it is still unavailable, the worker stops pre-dispatch and returns.
+**Committing the 16 sealed image bytes to the repository is accepted as a bounded EMP-001 exception**
+and must not be generalised into storing future generated media in Git.
+
+**Lane state on the remote, checked against `8990a7a`:** `[repo]`
+
+- EVAL-024 — `origin/work/eval-024-parallel-atext-generation-only` @ `e4e4d39`, behind current
+  `main`. Orchestrator and tests only. **No generation result and no image is committed.**
 - CANON-011 — local branch only, nothing pushed, no derived output committed.
-- EVAL-028 — task file merged; no worker branch yet.
+- EVAL-029 — task file merged; no worker branch yet.
 
-> **Open ambiguity a fresh session will hit.** EVAL-024 and CANON-011 each have **two** authorising
-> Controller decisions and **two** different task files, and **neither pair carries a supersession
-> marker**. Which one governs is a Controller decision and the Governor did not choose one. GOV-005
-> finding **F-4**, routed. `[unresolved]`
->
-> - EVAL-024: `coordination/decisions/CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`
->   vs `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`;
->   `eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md` vs
->   `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md`.
-> - CANON-011: `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`
->   vs `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`;
->   `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md` vs
->   `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`.
+**Which authority governs each lane** — settled by the Controller on 28 Aug 2026, closing GOV-005
+finding F-4. `[decision]`
+`coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`
+
+| Lane | Governing | Historical, preserved, **not** governing |
+|---|---|---|
+| **EVAL-024** | `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md` → `.../CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md` → `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md` | `.../CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`; `eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md` |
+| **CANON-011** | `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md` → `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md` → `canon/research/marketplace-demand-v1/README.md` | `.../CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`; `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md` |
+
+The duplicates are kept as history and are **not instructions**. The later pair won because it binds
+the committed marketplace-source provenance and keeps a brief separate from a prompt-ready envelope.
+
 
 ### The current empirical floor — what is still zero, and what no longer is
 
@@ -669,7 +772,10 @@ qualified evaluator and an accepted handoff exist.
 
 - **0 qualified models or workflows.**
 - **0 qualified subjective or perceptual evaluator families.**
-- **0 qualified exact-text evaluators** — five configurations tested, five disqualified.
+- **0 exact-text evaluators qualified under the strict zero-false-pass standard** — five
+  configurations tested, five disqualified. **0 benchmark-qualified as well, so far**: Cloud Vision
+  meets the new benchmark-grade thresholds on Devanagari, but its Latin screen has not been run, so
+  no candidate holds `benchmark_qualified` status yet.
 - **0 rows in the Capability Registry.** Verified: the file holds zero data rows and the validator
   passes.
 - **0 A-TEXT image generations.**
@@ -686,21 +792,24 @@ qualified evaluator and an accepted handoff exist.
 - **Five instrument configurations scientifically disqualified**, with a mechanism finding attached.
 
 **Read the difference correctly.** "Zero qualified evaluators" meant *untested* at GOV-004. It now
-means *tested and failed*, which is a far stronger and more useful statement — and it is the reason
-the next step is an architecture change rather than another candidate.
+means *tested and failed against the strict standard*, which is a far stronger and more useful
+statement — and it is why the Controller separated certification from benchmarking rather than
+queueing another candidate.
 
 ### What is still blocked, and is not made authorised by any older file
 
 `[decision]` `coordination/CONTROL-STATE.md`, "Still blocked / not authorised".
 
-- **A-TEXT scoring or evaluation** until a qualified evaluator workflow covers the required scripts
-  and its handoff is accepted.
-- **Registry population** from any current unqualified text instrument.
-- **Further paid text-judge candidate sweeps** without a new Controller decision. General-purpose
-  multimodal LLMs are frozen as the primary exact-text judge family; the Tesseract line is closed.
-- **The full 90-generation Stage A**, and **Stages B and C**.
+- **Mandatory human-in-the-loop exact-text review as part of the production API architecture.**
+  Withdrawn on 28 Aug 2026 and not to be reintroduced without a new decision.
+- **Treating benchmark-grade OCR as a perfect exactness certifier.** It is a confidence signal with
+  a measured error rate, and must never be described as a guarantee.
+- **Registry population from text metrics** until the benchmark-grade handoff is reviewed.
+- **Further Tesseract or OCR configuration sweeps** without a new mechanism-level rationale.
+  General-purpose multimodal LLMs remain frozen as the strict exact-text judge family.
+- **Broad Stage-B and Stage-C execution** without their own instrument readiness.
 - **Broad controlled-pack acquisition.**
-- **Production IR / Planner implementation.**
+- **Production IR / Planner implementation** before sufficient empirical capability evidence exists.
 - **`EVAL-006` remains PAUSED — DO NOT EXECUTE**, spend authority explicitly withdrawn. It must not
   be resumed or repurposed.
 - **Historical E7 paid admission and E8 deep qualification remain blocked.**
@@ -711,16 +820,19 @@ decision disagree, the decision wins and the task file is stale.
 
 ### What still has to happen before the programme can scale
 
-1. **Qualify at least one exact-text evaluator.** This is still the single largest gate, and it is
-   now the hardest known problem in the project rather than an unstarted chore. EVAL-028 prepares
-   the architecture; the Controller must separately approve the human review time it will need.
-2. **Decide the evidence question in GOV-005 F-1** — whether completed qualification results get
-   sealed into `main`. Every further run makes this more expensive to fix.
-3. **Resolve the prices.** 0 of 4 stages is price-complete, and `Frontier Clouds` must be identified
+1. **Benchmark-qualify one text evaluator — EVAL-029.** No longer a gate on everything else, but
+   still the thing that decides whether A-TEXT can be scored at all. It needs the Cloud Vision Latin
+   screen and, before that, the stored Devanagari observations F-1 says are missing from `main`.
+2. **Seal the completed EMP-001 evidence into GitHub — GOV-005 F-1.** The Controller has accepted
+   this must be fixed. It gets more expensive with every run, and EVAL-029's first step already
+   depends on it.
+3. **Get EVAL-024 through its cleanup gate**, so 16 sealed images exist for a benchmark-qualified
+   evaluator to score.
+4. **Resolve the prices.** 0 of 4 stages is price-complete, and `Frontier Clouds` must be identified
    before cash outlay after credits can be computed at all.
-4. **Controller decides HED-1** — which human review time counts as required in fully-loaded CpAO.
-   The human-confirmed composite makes this question load-bearing rather than theoretical.
-5. **The Controller explicitly approves any tranche beyond EMP-001.** The USD 10 approval covers
+5. **Controller decides HED-1** — which human review time counts as required in fully-loaded CpAO.
+   Less urgent than it was, now that no mandatory human step sits in the production architecture.
+6. **The Controller explicitly approves any tranche beyond EMP-001.** The USD 10 approval covers
    EMP-001 only.
 
 ## 6. Lessons already paid for — do not rediscover these
@@ -792,6 +904,12 @@ decision disagree, the decision wins and the task file is stale.
 - **Money spent buys a mechanism, or it buys nothing.** USD 1.30 produced no qualified evaluator and
   is still the best-value spend in the project, because it replaced "we have not tested a checker"
   with "we know why checkers fail here."
+- **Check what a standard is *for* before letting it block everything.** A zero-false-pass bar is
+  right for promising a customer their text is exact, and wrong as a precondition for finding out
+  which model draws text better. Holding one imperfect capability's certification standard over the
+  whole programme froze work that had nothing to do with it. The fix was to name the two jobs
+  separately and give each its own threshold — **not** to lower the bar. Both standards still exist,
+  and a result must always say which one it was measured against.
 
 ## 7. Known limitations and unresolved questions
 
@@ -826,10 +944,11 @@ decision disagree, the decision wins and the task file is stale.
   by the Controller on 27 Aug 2026 and are recorded in
   `coordination/decisions/CONTROLLER-EMP-001-PRE-SPEND-VERIFICATION-2026-08-27.md`. That is a
   verification of four routes, not of the supply table. `[decision]`
-- **No evaluator has been qualified, so no capability number can be trusted yet.** This remains the
-  single largest gate: `instruments_qualified: 0`. It is no longer an unstarted chore — it is the
-  hardest known open problem in the project, and EVAL-028's human-confirmed composite is the current
-  attempt at it. `[repo]` `[decision]`
+- **No evaluator has been qualified, so no capability number can be trusted yet.**
+  `instruments_qualified: 0`. This is **no longer a gate on the whole programme** — since 28 Aug
+  2026 a capability may proceed as soon as the instruments *that measurement* needs are ready. For
+  text specifically, **EVAL-029** is the current attempt, at benchmark-grade rather than strict
+  thresholds. `[repo]` `[decision]`
 - **No provider price is complete for any stage** — 0 of 4 — and `Frontier Clouds` is still an
   unidentified service, so the cash cost of any tranche after credits is genuinely unknown rather
   than merely unstated. `[unresolved]`
@@ -853,23 +972,36 @@ decision disagree, the decision wins and the task file is stale.
 - **The live EMP-001 evidence is not in the repository.** `eval/runs/` is git-ignored, and no
   per-trial record, spend ledger or qualification result from any paid run is committed. Every
   qualification figure and the cumulative spend exist only as prose inside Controller decision
-  records, so none of them can be recomputed, re-checked or re-analysed from GitHub. GOV-005 finding
-  **F-1**, routed to Eval and the Controller. `[unresolved]`
-- **EVAL-024 and CANON-011 each have two authorising decisions and two task files, with no
-  supersession marker.** Which governs is undecided. GOV-005 finding **F-4**. `[unresolved]`
+  records, so none of them can be recomputed, re-checked or re-analysed from GitHub. **The Controller
+  accepted this as High and ruled that completed evidence must be sealed immutably into GitHub after
+  a bounded screen finishes** — the live mutable ledger stays local, and no keys, secrets or
+  rights-restricted provider artifacts are ever committed. A bounded Eval correction opens once
+  active Eval work is safely isolated. GOV-005 **F-1**, still **unresolved**. `[unresolved]`
+- **EVAL-029's first step depends on those missing observations.** It must recompute the Cloud
+  Vision Devanagari result mechanically from stored per-trial records, which are not on `main`.
+  Whether they exist in a worker's local run root cannot be verified from the repository. GOV-005
+  §10.5. `[unresolved]`
+- ~~EVAL-024 and CANON-011 duplicate authorities~~ — **RESOLVED** on 28 Aug 2026 by
+  `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`. The governing
+  chains are in §5; the duplicates are preserved as history and are not instructions. `[decision]`
 - **`eval/HANDOFF.md` contradicts the spend record**, stating ₹0 API spend and that no model or API
   call has occurred. Stream-owned, routed as GOV-005 finding **F-2**; do not treat it as current for
   spend or qualification state. `[repo]`
 - **Several merged v2 contracts still declare themselves `NOT IN FORCE`** in their own status
   fields, because the generators that emit that string have not been rerun since the merge. GOV-005
   finding **F-6**. `coordination/CONTROL-STATE.md` governs. `[repo]`
-- **`coordination/DECISION-LOG.md` indexes only 10 of the 42 committed decision records.** A dated
-  coverage notice was added; the index itself was not extended, because summarising a decision is
-  the Controller's to write. GOV-005 finding **F-5**. `[repo]`
-- **Whether the human-confirmed composite is affordable is unknown.** It requires two independent
-  blind human readers on every item an automated stage would pass. Nobody has costed that against
-  fully-loaded CpAO, and HED-1 — which human time counts as required cost — is still undecided.
-  `[unresolved]`
+- **`coordination/DECISION-LOG.md` is a curated historical and navigation index, not an exhaustive
+  record of decisions after 26 Aug 2026** — settled by Controller decision, not a defect to fix.
+  Current authorisation comes from `coordination/CONTROL-STATE.md`; detailed decisions are
+  discovered by listing `coordination/decisions/` directly. No manual transcription is required, and
+  a mechanical index may replace it later. GOV-005 **F-5**, closed as re-scoped. `[decision]`
+- **No evaluator can currently certify exact text, and none is expected to.** Strict zero-false-pass
+  certification remains unmet by everything tested, and the programme no longer waits on it. If a
+  customer ever needs near-zero text risk, that is a production-recipe problem — deterministic text
+  compositing, or a separate stricter verifier — not a benchmark prerequisite. `[decision]`
+- **HED-1 — which human review time counts as required cost in fully-loaded CpAO — is still
+  undecided.** Less urgent since no mandatory human step sits in the production architecture, but
+  still open. `[unresolved]`
 
 ## 8. External research — context, not authority
 
@@ -935,8 +1067,11 @@ capability claim and no Registry entry. `[external]`
 | 27 Aug 2026 | User-supplied Upwork/Fiverr marketplace demand research committed; CANON-011 opened to derive real-demand briefs at USD 0 | `canon/research/marketplace-demand-v1/README.md` |
 | 27 Aug 2026 | EVAL-023 integrated: Tesseract with dictionaries disabled cuts false passes to 3 but rejects 67% of valid text — the literalness/accuracy trade-off is demonstrated, not hypothesised | PR #46, merge `0ecbf5f`; `coordination/decisions/CONTROLLER-EVAL-023-DISPOSITION-AND-SCRIPT-ROUTED-OCR-2026-08-27.md` |
 | 27 Aug 2026 | A-TEXT generation is decoupled from evaluator qualification: EVAL-024 may generate and seal the 16 images but may not score them | `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md` |
-| 27 Aug 2026 | EVAL-025 integrated; script routing removes wrong-script errors but not false passes. **Tesseract line closed.** Next direction: a fail-closed human-confirmed composite, prepared by EVAL-028 | PR #47, merge `711aa8c`; `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md` |
+| 27 Aug 2026 | EVAL-025 integrated; script routing removes wrong-script errors but not false passes. **Tesseract line closed.** Next direction *as decided that day*: a fail-closed human-confirmed composite, prepared by EVAL-028 — **superseded the following day, see below** | PR #47, merge `711aa8c`; `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md` |
 | 28 Aug 2026 | GOV-005 post-EMP-001 coherence review and project-memory refresh — PASS with non-blocking notes; the missing live-evidence problem (F-1) routed | `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` |
+| **28 Aug 2026** | **Course correction: exact text becomes a non-blocking measured capability.** Strict zero-false-pass certification is preserved as research but stops gating the programme; a separate `benchmark_text_ocr_v1` contract is created; **EVAL-028 and its two-human architecture are cancelled**; EVAL-029 opens | `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md`, `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md`, `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md` |
+| 28 Aug 2026 | EVAL-024 returns with **zero live spend** — `FAL_KEY` unavailable, correctly treated as pre-dispatch. Design accepted in principle behind a cleanup/sync gate | `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md` |
+| 28 Aug 2026 | Controller reviews GOV-005: findings accepted, F-1 accepted as High and must be fixed, F-4 resolved with named authority chains, F-5 re-scoped, F-9/F-10 closed; Governor branch must resync to current `main` | `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md` |
 
 ## 10. Authority map — which file proves what
 
@@ -948,9 +1083,13 @@ capability claim and no Registry entry. `[external]`
 | Per-stream status and next gate | `coordination/WORKSTREAM-STATUS.md` — refreshed by GOV-005; `CONTROL-STATE.md` still governs where the two differ |
 | How do I start a session, approve a task, escalate? | `coordination/RUNBOOK.md` |
 | When may a worker run unattended? | `shared/AUTONOMY-POLICY.md` |
-| What has the Controller actually decided? | **The records under `coordination/decisions/` are the authority.** `coordination/DECISION-LOG.md` is the index, but it currently covers only 10 of the 42 records — everything from 27 Aug 2026 is unindexed, including every spend and disqualification decision. Decisions also live in approved tasks/specs, dispositioned Controller Briefs, approved proposals and frozen artifacts. |
+| What has the Controller actually decided? | **List `coordination/decisions/` directly — those records are the authority**, together with stream-owned decision records that Controller state references. `coordination/DECISION-LOG.md` is a **curated historical and navigation index, not an exhaustive post-26-Aug source**, by Controller decision. Current authorisation comes from `coordination/CONTROL-STATE.md`. |
 | What is currently authorised, blocked and running? | `coordination/CONTROL-STATE.md` — **this is the single most important file for a new session after this one** |
-| Why is the exact-text line where it is? | `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md`, and the EVAL-022 / EVAL-023 dispositions it builds on |
+| **What is the current exact-text posture?** | `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md` — **this supersedes the human-confirmed-gate direction** |
+| Is EVAL-028 running? | **No — cancelled.** `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md` |
+| What is the active text-evaluator lane? | `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md` |
+| What is EVAL-024's current state? | `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md` — returned at USD 0, cleanup gate before live |
+| How did the exact-text line reach that point? | The EVAL-022 / EVAL-023 / EVAL-025 dispositions under `coordination/decisions/` — **historical research, still valid, no longer the current direction** |
 | What paid spend was approved, and by whom? | `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
 | What did the first paid tranche measure? | The Controller decision records under `coordination/decisions/` — **not** a committed evidence artifact. See §7, GOV-005 finding F-1. |
 | What was the pre-execution integration direction? | `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md`, closed by `.../CONTROLLER-PRE-EXECUTION-CLOSURE-2026-08-26.md` |
@@ -969,7 +1108,8 @@ capability claim and no Registry entry. `[external]`
 | What did the first repository audit find? | `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` |
 | What did the Governor find in the macro-research branches? | `governance/reviews/GOV-003-MACRO-RESEARCH-INTEGRATION-REVIEW.md` |
 | What did the Governor find in the pre-execution packages? | `governance/reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md` |
-| What did the Governor find after the first paid tranche? | `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` |
+| What did the Governor find after the first paid tranche? | `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` — §§1–9 audit `0e24d6a`; **§10 is the current-state update and governs** |
+| How did the Controller dispose of the GOV-005 findings? | `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md` |
 | Which governance documents are superseded? | `governance/status/` |
 
 **Every row above names the thing that owns the fact.** This document summarises them; it does not
@@ -981,20 +1121,27 @@ right and this document needs fixing.
 **Every role:** this document → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md`.
 
 Then:
-- **Controller:** `coordination/CONTROL-STATE.md`, then the decision records it links. Because the
-  decision index is incomplete, **list `coordination/decisions/` directly** rather than trusting
-  `DECISION-LOG.md` to have caught everything since 27 Aug 2026.
+- **Controller:** `coordination/CONTROL-STATE.md`, then the decision records it links. **List
+  `coordination/decisions/` directly** to discover decisions — `DECISION-LOG.md` is a curated
+  historical and navigation index by design, not an exhaustive post-26-Aug source.
 - **Worker:** your stream `CHARTER.md` → your stream `HANDOFF.md` → your assigned task file → only
   the sources that task names. Do not replay full project history. **Eval workers: your handoff is
   stale on spend and qualification state** (GOV-005 F-2) — take those from `CONTROL-STATE.md`.
 - **Governor:** `governance/GOVERNOR-CONTRACT.md` → current `main` → the task/PR under review →
   the most recent file in `governance/reviews/`.
 
-**Two traps specific to right now**, both worth thirty seconds to avoid:
+**Four traps specific to right now**, each worth thirty seconds to avoid:
 
 1. **Do not conclude that paid execution is unauthorised** because a task file, handoff or plan says
    so. Several still do. The spend authorisation is real and recorded; `CONTROL-STATE.md` governs.
-2. **Do not conclude that a v2 contract is only a proposal** because its own status field says
+2. **Do not start EVAL-028 or design anything around a mandatory human reviewer.** EVAL-028 is
+   cancelled and no human-in-the-loop step belongs in the production API architecture. Several
+   documents written on 27 Aug still describe that direction; they predate the 28 Aug course
+   correction.
+3. **Do not read a strict zero-false-pass failure as "unusable".** Cloud Vision fails strict
+   certification and meets the benchmark-grade thresholds on Devanagari. Always say which standard a
+   text result was measured against.
+4. **Do not conclude that a v2 contract is only a proposal** because its own status field says
    `NOT IN FORCE`. Those fields were not regenerated after the merge.
 
 **Before acting on any authorisation, check `coordination/CONTROL-STATE.md`.** Several task files in

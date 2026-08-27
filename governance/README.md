@@ -31,14 +31,21 @@ Controller since it was written, so any freeze wording kept here would go stale 
 **`coordination/CONTROL-STATE.md` is authoritative for what is currently authorised**, and the
 decision records under `coordination/decisions/` establish it.
 
-**As of 28 Aug 2026 (GOV-005): paid empirical execution is authorised and has happened.** The user
-approved a bounded EMP-001 tranche — USD 10 total consumed API spend, a USD 6 text-judge
+**As of 28 Aug 2026, `main` at `8990a7a`: paid empirical execution is authorised and has happened.**
+The user approved a bounded EMP-001 tranche — USD 10 total consumed API spend, a USD 6 text-judge
 qualification sub-cap, zero retries — and roughly USD 1.30 has been consumed. Five exact-text
-checkers were measured and all five were disqualified, so there is **still no qualified evaluator
-and the Capability Registry still holds zero rows**. Three lanes run in parallel: EVAL-028,
-EVAL-024 and CANON-011.
+checkers were measured and all five failed the strict zero-false-pass standard, so there is **still
+no qualified evaluator and the Capability Registry still holds zero rows**.
 
-**Any statement elsewhere that paid execution is unauthorised or has never occurred is stale.**
+**Exact text is no longer a programme-wide gate.** Certifying text as exact and benchmarking which
+model handles text better are now separate jobs with separate standards. **EVAL-028 and its
+two-human architecture are cancelled and must not run**; **no mandatory human-in-the-loop step
+exists in the production API architecture.** Three lanes run in parallel: **EVAL-029** (benchmark-grade
+text OCR), **EVAL-024** (A-TEXT generation-only, returned at USD 0 and behind a cleanup gate) and
+**CANON-011**.
+
+**Any statement elsewhere that paid execution is unauthorised, that exact text blocks the programme,
+or that EVAL-028 is the next direction, is stale.**
 
 ## Governor task history
 
@@ -48,6 +55,6 @@ EVAL-024 and CANON-011.
 | **GOV-002** | Assigned, **never executed**. Its premise — that EVAL-006 was open — was reversed when the Controller paused EVAL-006 on 26 Aug. | Superseded — `status/2026-08-26-GOV-002-SUPERSEDED.md` |
 | **GOV-003** | Bounded integrity review of the three completed macro-research branches and the Controller's integration decision, plus a project-memory refresh. | `reviews/GOV-003-MACRO-RESEARCH-INTEGRATION-REVIEW.md` |
 | **GOV-004** | Final pre-execution coherence review of the four freeze packages before merge, plus a project-memory refresh. | PASS WITH NON-BLOCKING NOTES — `reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md` |
-| **GOV-005** | Post-EMP-001 coherence review and project-memory refresh, after the first paid tranche: qualification history, EVAL-022/023/025 integrations, active lanes, the marketplace-demand source, and every stale claim that paid execution had not been authorised. | PASS WITH NON-BLOCKING NOTES — `reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md`. One High finding routed and unresolved: the live tranche evidence is not committed to `main`. |
+| **GOV-005** | Post-EMP-001 coherence review and project-memory refresh, after the first paid tranche: qualification history, EVAL-022/023/025 integrations, active lanes, the marketplace-demand source, and every stale claim that paid execution had not been authorised. Audited `0e24d6a`, then resynced to `8990a7a` after the Controller's disposition. | PASS WITH NON-BLOCKING NOTES — `reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` (§§1–9 audit `0e24d6a`; **§10 is the current-state update and governs**). Disposition: `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`. F-4, F-5, F-9 and F-10 closed; **F-1 remains High and unresolved** — completed live evidence is not yet sealed into GitHub; F-2, F-6, F-7 and F-8 routed to Eval. |
 
 **No Governor task may be self-started.** Only the Controller opens tasks, Governor tasks included.
