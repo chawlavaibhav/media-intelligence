@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-017 judge-roster switch prepared: Anthropic Haiku 4.5 + Gemini replace OpenAI + Gemini. Fresh zero-spend verification is required before integration or spend approval.
+**Updated:** 27 Aug 2026 — EVAL-017 integrated: Anthropic Haiku 4.5 + Gemini replace OpenAI + Gemini. User explicitly waived the additional post-switch zero-spend macOS rerun; paid execution still requires runtime keys and explicit bounded spend approval.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -274,9 +274,9 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-1. Complete fresh zero-spend verification of EVAL-017 on macOS and integrate only if green.
-2. Confirm runtime availability of `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, and `FAL_KEY` without pre-funding above the proposed ceiling.
-3. Present the user the explicit bounded EMP-001 spend decision.
+1. Confirm runtime availability of `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, and `FAL_KEY` without pre-funding above the proposed ceiling.
+2. Present the user the explicit bounded EMP-001 spend decision.
+3. Only after explicit approval, create the gitignored local authorisation and execute progressively.
 3. Only after explicit approval, create the gitignored local authorisation and execute progressively: Devanagari qualification → Latin for survivors → A-TEXT only if a judge qualifies on both scripts.
 
 **No paid provider/model/evaluator call may occur until the user explicitly approves the bounded EMP-001 USD 10 ceiling.**
