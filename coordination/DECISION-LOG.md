@@ -2,6 +2,32 @@
 
 **Updated:** 26 Aug 2026 — current Controller decision index.
 
+> ### Coverage notice — added by the Repository Governor, 28 Aug 2026 (GOV-005)
+>
+> **This index is incomplete and must not be read as a full list of what the Controller has decided.**
+>
+> Checked mechanically against `main` at `0e24d6a`: the directory `coordination/decisions/` holds
+> **42 decision records; this index references 10 of them.** The 32 unreferenced records are 29
+> dated 27 Aug 2026, plus `CONTROLLER-EVAL-012-REVIEW-2026-08-26.md`,
+> `CONTROLLER-FIRST-EMPIRICAL-TRANCHE-PREPARATION-2026-08-26.md` and
+> `CONTROLLER-VEO-PRICING-UNIT-CORRECTION-2026-08-26.md`.
+>
+> **What that means in practice.** Every decision that authorised spending real money, switched the
+> judge roster, disqualified an evaluator candidate or opened one of the currently running lanes is
+> **absent from the table below**. A session that stops at this index will conclude that the last
+> thing the Controller decided was to close the pre-execution freeze — which is two days and one
+> completed paid tranche out of date.
+>
+> **Until this is re-indexed:**
+> - **`coordination/CONTROL-STATE.md` is authoritative** for what is currently authorised;
+> - **list `coordination/decisions/` directly** to discover decisions, rather than relying on this
+>   table.
+>
+> **Why the Governor did not simply add the missing rows.** Each row summarises what was decided,
+> and writing that summary is a characterisation of a Controller decision — the Controller's to
+> author, not the Governor's. Recorded as GOV-005 finding **F-5** and routed.
+> `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md`.
+
 > **Scope notice.** The two narrative entries below are the project's **23 Aug 2026 architectural
 > decisions** and remain accurate as history. They are **not** a complete decision register: from
 > 24 Aug 2026 onward, Controller decisions were recorded inside the owning stream's folder or in

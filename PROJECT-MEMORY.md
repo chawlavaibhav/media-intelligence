@@ -4,9 +4,21 @@
 
 **Maintained by:** the Repository Governor (see `governance/GOVERNOR-CONTRACT.md`).
 **Last Governor reset:** 25 Aug 2026, task GOV-001, against `main` at `00ea9b067229cd992b77b7d6e0958df35178b01b`.
-**Last refresh:** 26 Aug 2026, task GOV-004, against `main` at `74d6b0da0239013269f73804164a92f80c7f1d55`
+**Last refresh:** **28 Aug 2026, task GOV-005**, against `main` at
+`0e24d6a1a4acce5e83b90fa7fe198db94a92dec5`
+(`governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md`).
+Previous refresh: 26 Aug 2026, GOV-004, at `74d6b0d`
 (`governance/reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md`). Task GOV-002 was assigned but
 never executed and is superseded — `governance/status/2026-08-26-GOV-002-SUPERSEDED.md`.
+
+> **If you read nothing else, read this.** The project has **spent real money and run its first
+> paid experiment.** Five different systems were tested on whether they can tell that the text drawn
+> in an image is exactly the text that was asked for. **All five failed the same way** — they
+> silently repaired misspelled words instead of reading what was actually there. The project
+> therefore still has **zero qualified evaluators, zero measured models and zero Registry rows** —
+> but that is now a *tested* zero, not an untested one. Roughly **USD 1.30** of the approved USD 10
+> ceiling has been consumed. Full detail in §4 under "EMP-001"; current authorisation lives in
+> `coordination/CONTROL-STATE.md`.
 
 ## What this document is — and is not
 
@@ -31,8 +43,8 @@ and it does not determine whether Canon, Eval or Resources work is scientificall
 correct** — that judgement belongs to the owning stream and the Controller.
 
 **Provenance labels used below.** Each label says *what owns the fact*, not who vouched for it.
-`[repo]` = established by a committed artifact, and memory was checked against it during GOV-001 —
-the artifact is the authority, and it is named. `[decision]` = a durable Controller decision exists
+`[repo]` = established by a committed artifact, and memory was checked against it during a Governor
+review — the artifact is the authority, and it is named. `[decision]` = a durable Controller decision exists
 in the repository at the path given. `[agent-reported]` = a worker reported it and it has not been
 independently reproduced; it remains agent-reported until it is. `[external]` = external research
 snapshot, not repository truth. `[unresolved]` = not established by anything.
@@ -160,12 +172,48 @@ How the Canon got from 16 to 19:
 **The Canon still has no accepted Devanagari-structure source.** *Thinking with Type* remains
 blocked on structural column interleaving and is not in the 19.
 
-Stream detail: `canon/HANDOFF.md`. CANON-009 is merged and CANON-010 has returned; neither added a source, so live Canon is still 19.
+Stream detail: `canon/HANDOFF.md`. CANON-009 and CANON-010 are merged; neither added a source, so
+live Canon is still 19.
 
-### Eval — a battery built and human-validated; no checker has ever been run
+**New on 27 Aug: the first record of what real buyers actually ask for.** `[external]` Three
+user-supplied research files were committed under `canon/research/marketplace-demand-v1/sources/` —
+a read-only Upwork job-market sweep (11 search queries, 114 unique job postings, 4 detail pages), a
+read-only Fiverr demand and competition sweep (10 listing pages, 42 gig pages), and the raw capture
+notes behind the Fiverr sweep. Provenance and boundaries: `canon/research/marketplace-demand-v1/README.md`.
 
-**Nothing in this stream currently licenses trusting any evaluator's numbers.** No checker qualified,
-no model benchmarked, no Capability Registry entry, ₹0 API/generation spend. `[repo]`
+**This matters because of the gap CANON-009 measured** — the 30 authored briefs test almost none of
+what real requests most demonstrably ask for. This is the first material in the repository that
+records real demand rather than authored probes.
+
+**Three boundaries that must not be blurred**, all stated by the source README itself:
+
+- **Upwork buyer jobs may be used as customer-intent source briefs. Fiverr seller gigs may not** — a
+  seller's package description is not a customer's request.
+- Volume and market-size figures in the sweep are **research estimates from one capture**, not
+  market-share facts.
+- This is **external research**, not repository-derived evidence, and it carries an explicit
+  no-redistribution-without-rights-review boundary.
+
+**It is not a Canon source.** It sits in `canon/research/`, not `canon/knowledge/current/`, has not
+been through the Audit Gate, and does not change the count of 19. `[repo]`
+
+**CANON-011 is the open lane** that turns this research into a benchmark brief and prompt bank at
+zero spend. **No derived output is committed** as of `0e24d6a`, and no branch has been pushed.
+
+### Eval — the battery has now been run against five checkers, and all five failed
+
+**Nothing in this stream currently licenses trusting any evaluator's numbers.** No checker is
+qualified, no model has been benchmarked, and the Capability Registry holds zero rows —
+mechanically verified in GOV-005. `[repo]`
+
+**What changed on 27 Aug 2026, and it is the most important change in the project so far.** The
+₹0-spend statement that stood here through GOV-004 is **no longer true**. The user approved a
+bounded USD 10 tranche, the machinery ran, and five distinct exact-text checkers were measured
+against the frozen Devanagari battery. All five were disqualified. **Roughly USD 1.30 has been
+consumed.** `[decision]` Full history below under "EMP-001 — the first paid tranche".
+
+The historical EVAL-003/004/005 material below is unchanged and remains the foundation the paid
+runs were measured on.
 
 **EVAL-005 is the live artifact: a Devanagari exactness battery.** It targets the failure that costs
 money — we ask a generator for a specific string, it produces something *subtly* wrong, and the
@@ -205,13 +253,15 @@ An early study gave 14 Hindi images to three checkers; one AI vision model retur
 passes** — it looked at visibly misspelled signs and called them correct. That study is explicitly
 preliminary. `eval/findings/FINDINGS-01-can-we-check.md`.
 
-Stream detail: `eval/HANDOFF.md`. EVAL-007 is merged; EVAL-008, EVAL-010 and EVAL-011 have returned
-and are unmerged — see the pre-execution sections below.
+Stream detail: `eval/HANDOFF.md`. **Warning: that handoff is stale.** It still states "₹0 API/model"
+and "No checker/model/API call has occurred", which the spend authorisation and eight subsequent
+decision records contradict. Routed to Eval as GOV-005 finding F-2; until it is refreshed, use
+`coordination/CONTROL-STATE.md` and this document for spend and qualification state. `[repo]`
 
-### Resources — corpus acquired and closed; RES-003 merged, RES-004 returned
+### Resources — corpus acquired and closed; RES-003 and RES-004 both merged
 
 **34,786 items / 5.70 GB across 8 acquired sources; 4 blocked.** `[repo]`
-GOV-001 recomputed every headline figure directly from `resources/manifests/corpus-pilot-v0.jsonl`:
+Recomputed directly from `resources/manifests/corpus-pilot-v0.jsonl` at GOV-001 and again at GOV-005:
 34,786 records, all `validation_status: ok`, 34,586 distinct SHA-256 hashes, 200 duplicates
 (27 within a single source, 173 spanning two sources), 5,702,337,356 bytes. Every per-source count
 matches the handoff table exactly.
@@ -229,7 +279,9 @@ photographs plus 3,925 single-word crops, of which 3,924 resolve to a transcript
 **Rights posture: internal research and evaluation only.** If any result is ever published or shown
 to a customer, the rights question must be reopened first.
 
-Stream detail: `resources/HANDOFF.md`. RES-003's rebaseline reconfirmed every headline figure above from the committed manifest on 26 Aug; GOV-003 and GOV-004 both reran it.
+Stream detail: `resources/HANDOFF.md`. RES-003's rebaseline reconfirmed every headline figure above
+from the committed manifest on 26 Aug; GOV-003, GOV-004 and GOV-005 each re-derived them. **Nothing
+in Resources has changed since GOV-004** — no acquisition is authorised and none has occurred.
 
 ### The 26 August macro reset — why the plan changed, and where the three streams now stand
 
@@ -278,72 +330,39 @@ script against the committed bank.
 ### What the Controller adopted from the three programmes
 
 Authoritative record: `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md`.
-`[decision]` Summarised below; that file governs, and the worker branches remain **proposals** except
-where it says otherwise.
+`[decision]` That file governs.
 
-**On what the customer asked for.**
-- **The requested operation becomes an explicit field** on the Normalized Request — did the customer
-  ask to generate, edit, animate, restore, extend, compose or produce variants. The exact machine
-  vocabulary is not frozen yet.
-- **It must stay separate from the production route.** If a customer says *"change the background of
-  this photo"*, the requested operation is **edit**. Whether the Planner later does that by
-  inpainting, image-to-image or segment-and-composite is a **production choice**, not customer
-  intent. Collapsing the two destroys the ability to tell a misread request from a bad plan.
-- **Output sets are first-class:** one deliverable, several variants, or a campaign set — and whether
-  acceptance is per output or for the set. This changes the cost per accepted outcome directly.
-- **Multi-turn requests are recognised but not solved.** No schema is frozen, and it must not block
-  the first paid benchmark.
-- **The 30 briefs stay byte-identical** as the frozen generation-core / value-gate bank. A separate
-  **request-coverage extension** is authorised before end-to-end paid benchmarking, covering at
-  minimum edit-a-supplied-asset, animate-a-supplied-image and variant/campaign-set requests.
+**Compressed at GOV-005.** These were *directions* for specification work, and the specification
+work is done — every direction below was turned into a frozen contract in the pre-execution freeze
+two sections down, which is where the binding detail now lives. Kept here are the distinctions that
+still trip people up.
 
-**On what gets measured.** The 36 stay as the baseline; specification work is approved for a v2 that
-splits 2D from depth relationships, separates spoken-word correctness from pronunciation, separates
-reproducibility from repairability, broadens hand anatomy into human-anatomy integrity, makes
-wardrobe invariants explicit within person identity, and adds four capabilities: camera/framing
-fidelity, sequence and state continuity, technical visual integrity, and voice identity across
-assets. **No target capability count is frozen.** Style-reference fidelity, cross-asset identity and
-campaign-set consistency are deliberately *not* yet separate capabilities.
-
-**One correction the Controller made to Eval's proposal, worth understanding.** Compound briefs get
-prerequisite links, so a requirement that depends on a failed one is not scored as though it passed.
-But a blocked requirement must **not** be recorded as ordinary "not applicable". If the product was
-never rendered, the logo cannot be inspected — yet the customer still asked for the logo. A distinct
-state (something like `blocked_by_prerequisite_failure`) will be specified: at diagnostic level it
-means *not directly inspectable because something it depended on failed*; at outcome level the
-requirement stays **unsatisfied**. Never a pass.
-
-**On production conditions.** No single "complexity score". Every empirical result must carry the
-conditions it was produced under — duration and delivery size, how much content was asked for,
-reference type and quality, shot structure, motion and camera load, constraint load, language and
-speaker topology, workflow mode, input quality, decision provenance and output-set structure.
-Benchmark v2 has four separate layers — atomic probes, compound scenarios with prerequisites, sparse
-condition sweeps, and end-to-end accepted outcomes. **No cartesian product is authorised**; 11
-conditions at two levels each is already 2,048 combinations before a model is chosen.
-
-**On evidence and cost.** The outcome topology direction is approved:
-`job → outcome → sequence_or_asset_set → production_unit → production_step`. Artifacts may have
-several parents in a defined order; local deterministic transforms may create artifacts **without
-inventing a provider trial**; and **one call = one trial is unchanged**. Historical v2.1 records are
-never backfilled with outcome context they never had.
-
-**Fully-loaded Cost per Accepted Outcome is the primary business metric** — successful, failed and
-refused calls, retries, paid transforms, evaluator calls, repairs, material local compute, required
-human review time, and rejected revisions belonging to the same journey. Report API/tool-only cost
-alongside it as a diagnostic. **Shared upstream costs are counted once**: RES-003 demonstrated that a
-naive walk over a reused artifact overstates cost by 13.3% on its own worked example.
-
-**On dataset independence.** `request_discovery` becomes its own evidence role, and request lineage
-is tracked separately from media lineage. A discovery corpus and a benchmark drawn from the same
-request pool **cannot** be presented as independent generalisation evidence — rephrasing prompts
-does not erase ancestry, and a taxonomy derived from a source inherits that source's lineage.
-Unknown lineage is **indeterminate**, not independent. The Controller chose to preserve
-Arena-T2I-Hard for Eval methodology rather than make raw LMArena data load-bearing for discovery.
-
-**On resource packs.** The existing four-pack architecture stands; **no fifth pack.** Expected
-changes are metadata and grouping — reference-to-production-step lineage, more framing diversity for
-person identity, longer continuous speech, commercial Hinglish and brand-name material, grouped
-campaign examples, and both short and longer video durations. **Exact pack sizes are not frozen.**
+- **The requested operation is an explicit field on the Normalized Request**, and it must stay
+  separate from the production route. "Change the background of this photo" is an **edit**; whether
+  the Planner does that by inpainting or img2img is a production choice. Collapsing the two destroys
+  the ability to tell a misread request from a bad plan.
+- **Output sets are first-class** — one deliverable, several variants, or a campaign set — and
+  whether acceptance is per output or for the whole set changes cost per accepted outcome directly.
+- **Multi-turn requests are recognised but not solved**, and must not block a paid benchmark.
+- **The 30 briefs stay byte-identical** as the frozen generation-core bank; a separate
+  request-coverage extension covers what they never exercised.
+- **A requirement blocked by a failed prerequisite is never a pass and never "not applicable".** If
+  the product was never rendered, its logo cannot be inspected — but the customer still asked for
+  the logo, so at outcome level it stays **unsatisfied**. Scoring it as "not applicable" makes the
+  most complete failure return the highest number.
+- **Every empirical result carries the conditions it was produced under**, and there is **no single
+  complexity score**. No cartesian product is authorised: 11 conditions at two levels is already
+  2,048 combinations before a model is chosen.
+- **Fully-loaded Cost per Accepted Outcome is the primary business metric** — failed and refused
+  calls, retries, evaluator calls, repairs, required human review time and rejected revisions in the
+  same journey all count. API-only cost is a diagnostic reported alongside it. **Shared upstream
+  costs count once**: RES-003 showed a naive walk over a reused artifact overstates cost by 13.3% on
+  its own worked example.
+- **A discovery corpus and a benchmark drawn from the same request pool are not independent
+  evidence.** Rephrasing prompts does not erase ancestry; a taxonomy inherits its source's lineage;
+  unknown lineage is **indeterminate**, not independent.
+- **Four controlled resource packs, no fifth.** Expected changes are metadata and grouping, not new
+  pack families.
 
 ### EVAL-008 — model selection first, sourcing second · superseded as supply evidence
 
@@ -364,19 +383,27 @@ EVAL-010 governs.** Nothing in EVAL-008 is authorised: no model is selected, adm
 budgeted, and the "FROZEN for this task" heading on its roster means only "committed before sourcing
 began".
 
-### The final pre-execution freeze — four packages returned, awaiting merge
+### The final pre-execution freeze — four packages, now merged and in force
 
 After the macro reset was integrated, the Controller ran one more ₹0 tranche: turn the adopted
-*directions* into contracts precise enough to price. Four programmes returned. **As of this refresh —
-`main` at `74d6b0d`, 26 Aug 2026 — none is merged**, and GOV-004 is the coherence review that
-precedes merge. `[repo]`
+*directions* into contracts precise enough to price. Four programmes returned, GOV-004 reviewed them
+for coherence, and **the Controller merged all four into `main` on 26 Aug 2026**. `[decision]`
+(`coordination/decisions/CONTROLLER-PRE-EXECUTION-CLOSURE-2026-08-26.md`.) Their contents are on
+`main`; the branches are history.
 
-| Package | Branch @ commit | What it froze |
+| Package | Merged from | What it froze |
 |---|---|---|
 | **CANON-010** | `work/canon-010-request-freeze` @ `3cf2979` | The request contract: the seven-value operation vocabulary, the Normalized Request delta, and an 11-item coverage extension |
 | **EVAL-011** (corrects EVAL-009) | `work/eval-011-pre-execution-integration` @ `e300999` | Capability Contract v2, the condition contract, dependency scoring, the scientific roster and the staged execution plan |
 | **RES-004** | `work/res-004-production-readiness` @ `2dc4796` | Outcome topology v3, the CpAO v3 accounting contract and the four controlled-pack requirements |
 | **EVAL-010** | `work/eval-010-route-verification` @ `8a8fc09` | Verified model identities, routes and prices — deliberately **partial** |
+
+> **A trap for a fresh session.** Several of these artifacts still carry
+> `status: PROPOSED_FOR_CONTROLLER_FREEZE_NOT_IN_FORCE` in their own header — including
+> `eval/pre-execution-freeze/CAPABILITY-CONTRACT-v2.yaml`. **That status field is stale, not
+> authoritative.** It was correct before the merge and the generator that emits it has not been
+> rerun. `coordination/CONTROL-STATE.md` lists these contracts among the project's frozen
+> foundations, and it governs. Routed to Eval as GOV-005 finding F-6. `[repo]`
 
 **`work/eval-009-measurement-freeze` is historical.** EVAL-009 shipped with an internal contradiction
 — its own contract declared 13 condition families while parts of the package still said 12, making a
@@ -452,6 +479,122 @@ identity and route but **no verified price**. That is an evidence gap caused by 
 pages, **not** a finding that only two models are usable. `Frontier Clouds` remains unidentified, so
 cash outlay after credits cannot be computed at all.
 
+### EMP-001 — the first paid tranche, and what it actually found
+
+**This is the section that changed most since GOV-004. Read it before assuming anything about spend
+or evaluators.**
+
+#### What EMP-001 is
+
+A deliberately small first experiment, designed so that a bad outcome costs almost nothing. It asks
+one question before it asks any other: **can any available system reliably tell whether the text
+drawn inside an image is exactly the text that was requested?** Until something can, no image-quality
+number the project produces means anything, because there is nothing trustworthy to judge with.
+
+The shape, frozen and unchanged: qualify a text judge on Devanagari first; run Latin only for
+candidates that survive; and only if a judge qualifies for every script needed, generate **16 images
+maximum** (4 strings × 2 repeats × 2 routes) as a partial admission screen called A-TEXT.
+
+The measurement is deliberately crude and unarguable: **the judge transcribes what it sees without
+being told the answer, and code checks exact character equality.** A judge that "passes" a
+deliberately misspelled word has done the one thing that costs money in production.
+
+#### The spend approval — this is real, and it is on record
+
+The user explicitly approved **USD 10 total consumed API spend**, with a **USD 6 text-judge
+qualification sub-cap**, **zero retries**, and **no account pre-funding above the ceiling**.
+`[decision]` `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`.
+
+**Any document in this repository still saying paid execution is unauthorised or has not happened is
+stale.** GOV-005 found and routed the remaining instances.
+
+#### The qualification history — five configurations, five failures
+
+Every row is a **Controller decision on record carrying worker-reported measurement**. `[decision]`
+`[agent-reported]` None of it was independently reproduced by the Governor, for the reason in the
+box below.
+
+| # | Candidate configuration | Devanagari primary result | Disposition |
+|---|---|---|---|
+| 1 | Anthropic `claude-haiku-4-5-20251001` | 576 calls; 43 false passes; 118 false fails; match false-fail rate 0.4097; consistency 0.9271 | Disqualified (contract-v1 pooled gate) |
+| 2 | Google `gemini-3.5-flash-lite`, first attempt | stopped at 17 calls on HTTP 429 | **Not a verdict** — ambiguous post-dispatch failure; preserved, not retried |
+| 3 | Anthropic `claude-sonnet-5`, corrected | 576 calls; 29 false passes; 6 false fails; false-fail rate 0.0208; consistency 0.9843 | Triggered the contract-v1 calibration review |
+| 4 | Anthropic `claude-sonnet-5` under contract v2 | 288 blind transcribe calls; **20 false passes / 7 unique items**; false-fail rate 0.0278; consistency 0.9792 | **Disqualified** |
+| 5 | Google `gemini-3.5-flash-lite` under contract v2, 7s pacing | 288/288 primary; **18 false passes / 7 unique**; false-fail rate 0.1111; consistency 0.9375 | **Disqualified** |
+| 6 | Google `gemini-3.5-flash-lite` repeat, no pacing | 576/576, zero errors, zero 429s; **16 false passes / 8 unique**; consistency 0.9167 | **Disqualified** — second complete screen; the pacing rule was withdrawn |
+| 7 | Google Cloud Vision `TEXT_DETECTION`, no language hints | 288/288; **18 false passes / 6 unique**; false-fail rate 0.0208; consistency **1.0**; zero infrastructure failures | **Disqualified** — best operational stability tested, still fails the safety gate |
+| 8 | Tesseract 5.5.3 `hin+eng`, all six lexical dictionaries off (USD 0) | 288/288; **3 false passes / 1 unique**; false-fail rate **0.6667**; consistency 1.0 | **Disqualified** |
+| 9 | Tesseract `hin` script-routed leg (USD 0) | 3 false passes / 1 unique; false-fail rate 0.6042; consistency 1.0 | **Disqualified** |
+| 10 | Tesseract `eng` script-routed leg (USD 0) | 12 false passes / 4 unique; false-fail rate 0.5000; consistency 1.0 | **Disqualified** |
+
+**Contract v1 versus contract v2, since the table depends on it.** Under v1 the gate pooled two
+question shapes: blind transcription and a target-aware yes/no verdict. EVAL-020 corrected this so
+that **only the blind transcription decides qualification** and the target-aware verdict is a
+diagnostic. That is why rows 3 and 4 are the same model with different numbers — the instrument was
+corrected between them, not the model.
+
+#### The finding that is worth more than the money it cost
+
+**Modern text recognisers repair broken words on purpose, and that is exactly the wrong behaviour
+here.** `[decision]`
+
+Both technology families failed the same way. Vision-language models and purpose-built OCR alike use
+language and dictionary knowledge to guess what a word *should* be. Shown a deliberately corrupted
+Hindi word, they returned the correct word. Sonnet, Gemini and Cloud Vision even failed on
+overlapping items, and Cloud Vision repeated every one of its six false-pass items in all three
+repeats — this is stable behaviour, not noise.
+
+Turning that knowledge off proved the mechanism and produced the trade-off:
+
+- Tesseract with all six dictionaries disabled cut false passes from ~18 to **3**;
+- but its false-fail rate rose to **0.67** — it started rejecting perfectly correct text;
+- routing by script removed wrong-script mistakes but **did not reduce false passes**.
+
+So a floor remains after the dictionaries are gone: Devanagari glyph confusion, and Latin
+homoglyph confusion (`O`/`0`, `5`/`S`, `Z`/`2`).
+
+**The Controller did not relax the zero-false-pass gate at any point.** That is the decision that
+makes this evidence worth having.
+
+**Tesseract configuration search is CLOSED.** No further page-segmentation, engine-mode, language or
+preprocessing sweeps are authorised without a new mechanism-level rationale.
+`coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md`.
+
+**A naive machine ensemble is not an escape either.** At least one residual Tesseract false-pass
+item also appears among the false passes of the stronger candidates, so "pass only if two engines
+agree" cannot be assumed to reach zero false passes. Any ensemble must qualify empirically; none is
+authorised.
+
+#### Spend consumed
+
+| | |
+|---|---|
+| Cumulative paid qualification spend | **USD 1.3037905** `[decision]` |
+| Qualification sub-cap | USD 6.00 |
+| Total EMP-001 ceiling | USD 10.00 |
+| Image generations run | **0** — fal spend USD 0 |
+| Retries authorised, and used | 0 |
+
+> **How solid are these numbers? Read this before quoting them.** `eval/runs/` is git-ignored. **No
+> per-trial record, spend ledger or qualification result from any live run is committed to `main`.**
+> Every figure above exists only as prose inside a Controller decision record. Nobody reading GitHub
+> can recompute a false-pass rate, re-derive the cumulative spend, or re-analyse the false-pass
+> items. That is GOV-005 finding **F-1**, routed to Eval and the Controller and **unresolved**. It
+> is the one place where the project's own rule — that a fresh session reconstructs state from
+> GitHub *by reading the evidence* — is currently not satisfied.
+
+#### Where the exact-text line goes next
+
+**EVAL-028 — a fail-closed human-confirmed composite, preparation only.** `[decision]` An automated
+stage (Cloud Vision preferred, for its stability and low false-fail rate) is allowed only to
+**reject**. Anything it would pass goes to **two independent blind human readers** who never see the
+target, the OCR output, or each other's answer; both transcribe exactly what is drawn; code compares
+characters. Any disagreement, ambiguity or "cannot read" **fails closed**.
+
+Boundaries the task carries: no human time is consumed, no API call is made, A-TEXT is not scored,
+and the Registry does not change. Cloud Vision being the preferred first stage **does not make it
+qualified**.
+
 ### Numbers in this repository that are NOT approved budgets
 
 Worth stating flatly, because they are the ones most likely to be mistaken for authorisations. `[decision]`
@@ -472,60 +615,113 @@ experiment are unapproved and not implemented.** The Capability Registry exists 
 empty file. `[repo]` Do not assume otherwise from a schema draft or a plan document; drafts exist,
 implementations do not.
 
-## 5. Current gate — everything is specified and unmerged; paid execution is still blocked
+## 5. Current gate — paid execution is live, bounded, and mid-experiment
 
-**The GOV-001 audit freeze has been re-scoped twice and no longer reads as written.** `[decision]`
-It was re-scoped on 25 Aug (`coordination/decisions/CONTROLLER-POST-AUDIT-UNBLOCK-2026-08-25.md` §6)
-and again on 26 Aug when the Controller assigned four domain research tasks. **Any document still
-saying "all new domain work is frozen" is stale** — including `coordination/WORKSTREAM-STATUS.md`,
-which was flagged in GOV-003 and is the Controller's to refresh.
+**`coordination/CONTROL-STATE.md` is authoritative for what is currently authorised.** This section
+is the map to it, refreshed on 28 Aug 2026 against `main` at `0e24d6a`.
 
-**`coordination/CONTROL-STATE.md` is authoritative for what is currently authorised.**
+**The GOV-001 audit freeze has been re-scoped repeatedly and no longer reads as written.** `[decision]`
+Any document still saying "all new domain work is frozen", or that no paid call is authorised, is
+stale. GOV-005 corrected the instances it owns and routed the rest.
 
-### What is authorised now
+### What is authorised and running now
 
-**No domain programme is running.** Everything assigned has returned: the three macro-research
-programmes (merged), EVAL-008, and the four pre-execution packages (unmerged). The only open task is
-the Governor review, GOV-004. **The next move in every direction is a Controller decision** — merge,
-then price a tranche.
+Three lanes are open in parallel. All three were authorised by explicit Controller decisions on
+27 Aug 2026. `[decision]`
 
-### What is blocked, and is not made authorised by any older file
+| Lane | What it does | Spend |
+|---|---|---|
+| **EVAL-028** | Prepare and freeze the fail-closed human-confirmed exact-text composite and its blind two-reader tooling. Preparation only — no human time, no API call. | USD 0 |
+| **EVAL-024** | Generate and **seal** the 16 frozen A-TEXT images now, so generation is not blocked on evaluator qualification. **Scoring them is not authorised.** | Bounded by the existing USD 10 EMP-001 ceiling |
+| **CANON-011** | Turn the Upwork/Fiverr marketplace research into a provenance-preserving benchmark brief and prompt bank. | USD 0 |
 
-**No paid empirical work may begin.** `[decision]` `[repo]`
+**EVAL-024 reverses the original ordering deliberately.** EMP-001 originally required a qualified
+judge before spending on generation, so that a failed qualification would save the generation money.
+The Controller overrode that so the images exist while the judge problem is worked on. **The
+scientific gate was not relaxed** — the images may not be interpreted, scored or promoted until a
+qualified evaluator and an accepted handoff exist.
 
-- **0 qualified evaluators.** No checker or perceptual instrument has ever been qualified, so no
-  automated judgement can currently gate anything.
-- **0 empirical Registry entries.** No current model has ever been measured. Verified: the registry
-  file holds 0 rows.
-- **No paid benchmark budget is authorised.** Any earlier figure — the ₹600–2,100 checker roster,
-  the ₹16,000 EVAL-006 cap, the historical 204 / 520 generation counts — is a **superseded
-  calculation, not a budget.**
-- **`EVAL-006` is PAUSED — DO NOT EXECUTE**, and its spend authority was explicitly withdrawn.
-  (`coordination/decisions/CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md`; the task
-  file itself opens with the pause.) It must not be resumed or repurposed.
+**Lane state on the remote, checked during GOV-005:** `[repo]`
+
+- EVAL-024 — `origin/work/eval-024-parallel-atext-generation-only` @ `e4e4d39`, one commit ahead of
+  `main` and five behind. It adds the generation-only orchestrator and its tests. **No generation
+  result is committed, so no image has demonstrably been produced.**
+- CANON-011 — local branch only, nothing pushed, no derived output committed.
+- EVAL-028 — task file merged; no worker branch yet.
+
+> **Open ambiguity a fresh session will hit.** EVAL-024 and CANON-011 each have **two** authorising
+> Controller decisions and **two** different task files, and **neither pair carries a supersession
+> marker**. Which one governs is a Controller decision and the Governor did not choose one. GOV-005
+> finding **F-4**, routed. `[unresolved]`
+>
+> - EVAL-024: `coordination/decisions/CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`
+>   vs `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`;
+>   `eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md` vs
+>   `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md`.
+> - CANON-011: `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`
+>   vs `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`;
+>   `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md` vs
+>   `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`.
+
+### The current empirical floor — what is still zero, and what no longer is
+
+**Still zero, and mechanically verified where it can be:** `[repo]`
+
+- **0 qualified models or workflows.**
+- **0 qualified subjective or perceptual evaluator families.**
+- **0 qualified exact-text evaluators** — five configurations tested, five disqualified.
+- **0 rows in the Capability Registry.** Verified: the file holds zero data rows and the validator
+  passes.
+- **0 A-TEXT image generations.**
+- **0 accepted evidence that Canon improves model outcomes.**
+- **0 customer-outcome CpAO observations.** Those are Stage C only, and Stage C is not authorised.
+- **No Production IR and no Planner exists.**
+
+**No longer zero:** `[decision]`
+
+- Paid execution **has been authorised** and **has happened**.
+- **USD 1.3037905** of consumed API spend, against a USD 10 ceiling.
+- Roughly **2,500 live evaluator calls** across the screens above, plus about 1,150 zero-cost local
+  Tesseract executions.
+- **Five instrument configurations scientifically disqualified**, with a mechanism finding attached.
+
+**Read the difference correctly.** "Zero qualified evaluators" meant *untested* at GOV-004. It now
+means *tested and failed*, which is a far stronger and more useful statement — and it is the reason
+the next step is an architecture change rather than another candidate.
+
+### What is still blocked, and is not made authorised by any older file
+
+`[decision]` `coordination/CONTROL-STATE.md`, "Still blocked / not authorised".
+
+- **A-TEXT scoring or evaluation** until a qualified evaluator workflow covers the required scripts
+  and its handoff is accepted.
+- **Registry population** from any current unqualified text instrument.
+- **Further paid text-judge candidate sweeps** without a new Controller decision. General-purpose
+  multimodal LLMs are frozen as the primary exact-text judge family; the Tesseract line is closed.
+- **The full 90-generation Stage A**, and **Stages B and C**.
+- **Broad controlled-pack acquisition.**
+- **Production IR / Planner implementation.**
+- **`EVAL-006` remains PAUSED — DO NOT EXECUTE**, spend authority explicitly withdrawn. It must not
+  be resumed or repurposed.
 - **Historical E7 paid admission and E8 deep qualification remain blocked.**
-- **No new controlled-pack acquisition is authorised.**
 - **The Canon value gate remains unrun.**
 
 **No worker may infer authorisation from an old task file.** If a task file and a current Controller
 decision disagree, the decision wins and the task file is stale.
 
-### What has to happen before any money is spent
+### What still has to happen before the programme can scale
 
-Most of the specification work the earlier decision listed is now **done and awaiting merge**. What
-remains:
-
-1. **Governor coherence review** of the four pre-execution packages — **done (GOV-004)**.
-2. **Controller merges** the accepted branches. One trivial merge conflict exists on the EVAL-011
-   branch; `main`'s `CONTROL-STATE.md` is the correct side to keep.
-3. **Qualify at least one evaluator family.** Stage Q needs **0 model generations** and the
-   cheapest units are runnable against material already held. Until this happens no capability
-   number means anything.
-4. **Resolve the prices.** 0 of 4 stages is price-complete, and `Frontier Clouds` must be identified
+1. **Qualify at least one exact-text evaluator.** This is still the single largest gate, and it is
+   now the hardest known problem in the project rather than an unstarted chore. EVAL-028 prepares
+   the architecture; the Controller must separately approve the human review time it will need.
+2. **Decide the evidence question in GOV-005 F-1** — whether completed qualification results get
+   sealed into `main`. Every further run makes this more expensive to fix.
+3. **Resolve the prices.** 0 of 4 stages is price-complete, and `Frontier Clouds` must be identified
    before cash outlay after credits can be computed at all.
-5. **Controller decides HED-1** — which human review time counts as required in fully-loaded CpAO.
-6. **The Controller explicitly approves a priced tranche.** Nothing in the repository does this, and
-   no figure in it should be read as having done it.
+4. **Controller decides HED-1** — which human review time counts as required in fully-loaded CpAO.
+   The human-confirmed composite makes this question load-bearing rather than theoretical.
+5. **The Controller explicitly approves any tranche beyond EMP-001.** The USD 10 approval covers
+   EMP-001 only.
 
 ## 6. Lessons already paid for — do not rediscover these
 
@@ -569,10 +765,40 @@ remains:
   rather than by halving repeats, because halving repeats destroys the reliability evidence that
   justified running at all.
 
+**Added after the first paid tranche, 27–28 Aug 2026:**
+
+- **Accuracy is not literalness, and for a checker they are opposite virtues.** Every recogniser
+  tested — two vision-language models and two OCR engines — used language knowledge to repair
+  corrupted words. That makes them *better* at reading ordinary text and *useless* as a judge of
+  whether the exact requested text was drawn. A checker must be optimised for literal glyph
+  fidelity under adversarial misspelling, which is not what any general recogniser is sold on.
+- **Turning off the language priors moves the failure, it does not remove it.** Disabling all six
+  Tesseract dictionaries cut false passes from ~18 to 3, and pushed the false-fail rate to 0.67. A
+  residual floor remains: Devanagari glyph confusion, Latin homoglyph confusion. Cheap literalness
+  buys expensive rejection of correct work.
+- **Cycling through more candidates in the same family is not evidence-gathering.** Once two
+  independent models failed by the same mechanism, the Controller froze the family rather than
+  trying a third. The next move was an architecture change, not another candidate.
+- **A repeated failure across three repeats is behaviour; a single one is noise.** Cloud Vision
+  false-passed all six of its items in 3/3 repeats. That is what made a 288-call screen decisive
+  rather than suggestive.
+- **Do not relax the gate when the gate is what is producing the finding.** Every candidate failed
+  the zero-false-pass rule. Loosening it would have manufactured a qualified evaluator and destroyed
+  the one result the tranche actually bought.
+- **A "correction" between two runs of the same model makes their numbers incomparable.** Sonnet was
+  measured twice with different results because the *instrument* changed between them (contract v1
+  pooled two question shapes; v2 scores only the blind one). Always say which contract a number was
+  produced under.
+- **Money spent buys a mechanism, or it buys nothing.** USD 1.30 produced no qualified evaluator and
+  is still the best-value spend in the project, because it replaced "we have not tested a checker"
+  with "we know why checkers fail here."
+
 ## 7. Known limitations and unresolved questions
 
 - **The Canon has no accepted Devanagari-structure source.** `[repo]`
-- **No checker is qualified; the project has taken no empirical capability measurement.** `[repo]`
+- **No checker is qualified.** Five exact-text configurations have now been measured and all five
+  were disqualified; the project has still taken **no empirical capability measurement of any
+  generation model**. `[repo]` `[decision]`
 - **The EVAL-005 battery is not reproducible from GitHub alone.** Its built items live under a
   git-ignored `build/` directory and the pinned font is a proprietary system asset that is not
   committed (provenance is recorded instead). The committed record fingerprints the build by SHA-256
@@ -593,11 +819,17 @@ remains:
   worker recorded this. The Controller separately verified the load-bearing figures on primary
   surfaces before deciding. Any figure that would drive a spend decision must be re-verified.
   `[external]`
-- **No provider price, endpoint, limit or model identity is established anywhere in this
-  repository.** EVAL-007 probed 22 official provider domains and resolved **zero** rows; its cost
-  forecast returns `null` for all nine price cells and refuses to produce a total. `[repo]`
-- **No evaluator has ever been qualified, so no capability number can be trusted yet.** This is now
-  the single largest gate: `instruments_qualified: 0`, and Stage Q exists to change it. `[repo]`
+- **Provider prices remain largely unestablished in the repository.** EVAL-007 probed 22 official
+  provider domains and resolved **zero** rows; its cost forecast returns `null` for all nine price
+  cells and refuses to produce a total. `[repo]` **The exception is the EMP-001 execution set** —
+  the fal image routes, Anthropic, Gemini and Cloud Vision prices used in the tranche were verified
+  by the Controller on 27 Aug 2026 and are recorded in
+  `coordination/decisions/CONTROLLER-EMP-001-PRE-SPEND-VERIFICATION-2026-08-27.md`. That is a
+  verification of four routes, not of the supply table. `[decision]`
+- **No evaluator has been qualified, so no capability number can be trusted yet.** This remains the
+  single largest gate: `instruments_qualified: 0`. It is no longer an unstarted chore — it is the
+  hardest known open problem in the project, and EVAL-028's human-confirmed composite is the current
+  attempt at it. `[repo]` `[decision]`
 - **No provider price is complete for any stage** — 0 of 4 — and `Frontier Clouds` is still an
   unidentified service, so the cash cost of any tranche after credits is genuinely unknown rather
   than merely unstated. `[unresolved]`
@@ -616,6 +848,29 @@ remains:
   "other language" items where committed prose says 351. Resolving it needs raw annotation files no
   cloud session can reach. Deliberately not corrected in either direction. `[repo]`
 
+**New or changed at GOV-005, 28 Aug 2026:**
+
+- **The live EMP-001 evidence is not in the repository.** `eval/runs/` is git-ignored, and no
+  per-trial record, spend ledger or qualification result from any paid run is committed. Every
+  qualification figure and the cumulative spend exist only as prose inside Controller decision
+  records, so none of them can be recomputed, re-checked or re-analysed from GitHub. GOV-005 finding
+  **F-1**, routed to Eval and the Controller. `[unresolved]`
+- **EVAL-024 and CANON-011 each have two authorising decisions and two task files, with no
+  supersession marker.** Which governs is undecided. GOV-005 finding **F-4**. `[unresolved]`
+- **`eval/HANDOFF.md` contradicts the spend record**, stating ₹0 API spend and that no model or API
+  call has occurred. Stream-owned, routed as GOV-005 finding **F-2**; do not treat it as current for
+  spend or qualification state. `[repo]`
+- **Several merged v2 contracts still declare themselves `NOT IN FORCE`** in their own status
+  fields, because the generators that emit that string have not been rerun since the merge. GOV-005
+  finding **F-6**. `coordination/CONTROL-STATE.md` governs. `[repo]`
+- **`coordination/DECISION-LOG.md` indexes only 10 of the 42 committed decision records.** A dated
+  coverage notice was added; the index itself was not extended, because summarising a decision is
+  the Controller's to write. GOV-005 finding **F-5**. `[repo]`
+- **Whether the human-confirmed composite is affordable is unknown.** It requires two independent
+  blind human readers on every item an automated stage would pass. Nobody has costed that against
+  fully-loaded CpAO, and HED-1 — which human time counts as required cost — is still undecided.
+  `[unresolved]`
+
 ## 8. External research — context, not authority
 
 Some source-discovery and acquisition work was done outside GitHub. It is an **external research
@@ -633,6 +888,13 @@ unverified. `[unresolved]`
 **Everything external in the 26 Aug macro research is search-verified, not read** — see §7. The
 Controller performed a separate independent verification pass on the load-bearing figures before
 deciding; that is recorded in the integration decision and is the Controller's evidence.
+
+**The 26 Aug Upwork/Fiverr marketplace research is external too**, but unlike the artifacts above it
+**is committed** — under `canon/research/marketplace-demand-v1/`, with a provenance README stating
+its origin, its evidence hierarchy and its interpretation boundary. It is the first material in the
+repository describing real buyer demand rather than authored probes. It is **not** a Canon source,
+has not been through the Audit Gate, and its volume figures are one capture's research estimates,
+never market-share facts. `[external]`
 
 **One qualitative experiment is recorded for completeness and is not a benchmark.** A small informal
 comparison of advertising concepts, one arm using Canon-derived principles and one not, was judged by
@@ -662,6 +924,19 @@ capability claim and no Registry entry. `[external]`
 | 26 Aug 2026 | Final pre-execution freeze tranche returns: CANON-010, EVAL-009, RES-004, EVAL-010 | `coordination/decisions/CONTROLLER-FINAL-PRE-EXECUTION-FREEZE-2026-08-26.md` |
 | 26 Aug 2026 | Controller integrates the tranche and orders one bounded Eval correction; EVAL-011 delivers it | `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md` |
 | 26 Aug 2026 | GOV-004 final pre-execution coherence review — PASS with non-blocking notes; four packages unmerged at review | `governance/reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md` |
+| 26 Aug 2026 | Pre-execution freeze closed; CANON-010, RES-004, EVAL-010 and corrected EVAL-011 merged into `main`; the v2 contracts become frozen foundations | `coordination/decisions/CONTROLLER-PRE-EXECUTION-CLOSURE-2026-08-26.md` |
+| 26–27 Aug 2026 | EMP-001 execution machinery built and corrected across EVAL-012 → EVAL-016: persistent spend ledger, mechanical caps, ambiguous-dispatch accounting, fingerprint-bound handoff | `coordination/decisions/CONTROLLER-EVAL-01{2,3,4,5,6}-REVIEW-*.md` |
+| 27 Aug 2026 | Latin human perceptibility review completed — 96/96 usable, 48/48 mismatch visible, 0 rejected | `coordination/decisions/CONTROLLER-EMP-001-LATIN-HUMAN-REVIEW-2026-08-27.md` |
+| **27 Aug 2026** | **The user approves EMP-001: USD 10 total, USD 6 qualification sub-cap, 0 retries. The project's first paid execution authority.** | `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
+| 27 Aug 2026 | First live run: Haiku 4.5 disqualified on a complete Devanagari screen; Gemini stops at 17 calls on a 429 | `coordination/decisions/CONTROLLER-EMP-001-GEMINI-CONTINUATION-2026-08-27.md` |
+| 27 Aug 2026 | Qualification contract corrected to v2 — blind transcription decides, target-aware verdict becomes diagnostic | `coordination/decisions/CONTROLLER-EVAL-020-PRIMARY-SHAPE-QUALIFICATION-2026-08-27.md` |
+| 27 Aug 2026 | Sonnet 5 disqualified under contract v2; general-purpose multimodal LLMs frozen as the exact-text judge family after Gemini fails the same way | `coordination/decisions/CONTROLLER-EVAL-021-SONNET-DISPOSITION-GEMINI-READINESS-2026-08-27.md`, `.../CONTROLLER-EVAL-022-OCR-FAMILY-PIVOT-2026-08-27.md` |
+| 27 Aug 2026 | EVAL-022 integrated: Gemini disqualified again on a clean unpaced screen; Cloud Vision TEXT_DETECTION disqualified despite perfect repeat consistency | PR #45, merge `afe866c`; `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RESULTS-AND-EVAL-023-2026-08-27.md` |
+| 27 Aug 2026 | User-supplied Upwork/Fiverr marketplace demand research committed; CANON-011 opened to derive real-demand briefs at USD 0 | `canon/research/marketplace-demand-v1/README.md` |
+| 27 Aug 2026 | EVAL-023 integrated: Tesseract with dictionaries disabled cuts false passes to 3 but rejects 67% of valid text — the literalness/accuracy trade-off is demonstrated, not hypothesised | PR #46, merge `0ecbf5f`; `coordination/decisions/CONTROLLER-EVAL-023-DISPOSITION-AND-SCRIPT-ROUTED-OCR-2026-08-27.md` |
+| 27 Aug 2026 | A-TEXT generation is decoupled from evaluator qualification: EVAL-024 may generate and seal the 16 images but may not score them | `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md` |
+| 27 Aug 2026 | EVAL-025 integrated; script routing removes wrong-script errors but not false passes. **Tesseract line closed.** Next direction: a fail-closed human-confirmed composite, prepared by EVAL-028 | PR #47, merge `711aa8c`; `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md` |
+| 28 Aug 2026 | GOV-005 post-EMP-001 coherence review and project-memory refresh — PASS with non-blocking notes; the missing live-evidence problem (F-1) routed | `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` |
 
 ## 10. Authority map — which file proves what
 
@@ -670,23 +945,31 @@ capability claim and no Registry entry. `[external]`
 | What is the product and what are the frozen separations? | `coordination/PROJECT-CONTRACT.md` |
 | How must every worker communicate? | `shared/COMMUNICATION-STANDARD.md` |
 | What is live in each stream right now? | `coordination/CONTROL-STATE.md`, then this document |
-| Per-stream status and next gate | `coordination/WORKSTREAM-STATUS.md` |
+| Per-stream status and next gate | `coordination/WORKSTREAM-STATUS.md` — refreshed by GOV-005; `CONTROL-STATE.md` still governs where the two differ |
 | How do I start a session, approve a task, escalate? | `coordination/RUNBOOK.md` |
 | When may a worker run unattended? | `shared/AUTONOMY-POLICY.md` |
-| What has the Controller actually decided? | `coordination/DECISION-LOG.md` — the index — and the records under `coordination/decisions/` it points to. Decisions also live in approved tasks/specs, dispositioned Controller Briefs, approved proposals and frozen artifacts. |
-| What is the current integration direction? | `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md` |
-| What are the proposed v2 contracts — request, capability, condition, topology, CpAO? | The four unmerged pre-execution branches. Nothing there is in force until the Controller merges and freezes it. |
-| What would a first paid tranche actually cost? | **Not answerable from this repository yet.** 0 of 4 stages is price-complete and `Frontier Clouds` is unidentified. |
+| What has the Controller actually decided? | **The records under `coordination/decisions/` are the authority.** `coordination/DECISION-LOG.md` is the index, but it currently covers only 10 of the 42 records — everything from 27 Aug 2026 is unindexed, including every spend and disqualification decision. Decisions also live in approved tasks/specs, dispositioned Controller Briefs, approved proposals and frozen artifacts. |
+| What is currently authorised, blocked and running? | `coordination/CONTROL-STATE.md` — **this is the single most important file for a new session after this one** |
+| Why is the exact-text line where it is? | `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md`, and the EVAL-022 / EVAL-023 dispositions it builds on |
+| What paid spend was approved, and by whom? | `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
+| What did the first paid tranche measure? | The Controller decision records under `coordination/decisions/` — **not** a committed evidence artifact. See §7, GOV-005 finding F-1. |
+| What was the pre-execution integration direction? | `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md`, closed by `.../CONTROLLER-PRE-EXECUTION-CLOSURE-2026-08-26.md` |
+| What are the v2 contracts — request, capability, condition, topology, CpAO? | `canon/experiments/pre-execution-freeze/`, `eval/pre-execution-freeze/`, `eval/pre-execution-integration/`, `resources/pre-execution-freeze/` — **all merged into `main` and in force**. Several still say `NOT IN FORCE` in their own status fields; that wording is stale and `CONTROL-STATE.md` governs. |
+| What did EMP-001 actually cost? | **USD 1.3037905** consumed, against a USD 10 ceiling — recorded in the Controller decisions, not in a committed ledger. |
+| What would a *full* tranche cost? | **Still not answerable.** 0 of 4 stages is price-complete and `Frontier Clouds` is unidentified. |
 | What are the 36 capabilities, the 100-item bank, the 30 briefs and the persistence contract? | `eval/v1/capability-contract.yaml`, `eval/v1/bank/`, `canon/experiments/v1/brief-bank/`, `resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml` |
 | What is believed but untested? | `coordination/ASSUMPTIONS.md` |
 | How is a Canon source admitted? | `canon/audit/AUDIT-GATE-v0.2.md` |
 | Which Canon sources are live? | `canon/audit/records/` + `canon/knowledge/current/` (one record per directory) |
 | What is the authoritative Eval battery? | `eval/battery/devanagari-exactness/human-validation/HUMAN-VALIDATION-RECORD.md` and `human-validation-v1.json` |
+| What is the Latin exact-text pack and its human review? | `eval/empirical-tranche-1/text_qualification/latin-pack-v1.jsonl` (+ `.sha256`) and `perceptibility-mechanical.json` |
+| Where does real customer demand evidence live? | `canon/research/marketplace-demand-v1/` — external research with a stated interpretation boundary, **not** a Canon source |
 | What media do we hold? | `resources/manifests/corpus-pilot-v0.jsonl` and `source-registry-v0.csv` |
 | What does the Governor do, and what may it write? | `governance/GOVERNOR-CONTRACT.md` |
 | What did the first repository audit find? | `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` |
 | What did the Governor find in the macro-research branches? | `governance/reviews/GOV-003-MACRO-RESEARCH-INTEGRATION-REVIEW.md` |
 | What did the Governor find in the pre-execution packages? | `governance/reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md` |
+| What did the Governor find after the first paid tranche? | `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` |
 | Which governance documents are superseded? | `governance/status/` |
 
 **Every row above names the thing that owns the fact.** This document summarises them; it does not
@@ -698,11 +981,21 @@ right and this document needs fixing.
 **Every role:** this document → `coordination/PROJECT-CONTRACT.md` → `shared/COMMUNICATION-STANDARD.md`.
 
 Then:
-- **Controller:** `coordination/CONTROL-STATE.md`, then the decision records it links.
+- **Controller:** `coordination/CONTROL-STATE.md`, then the decision records it links. Because the
+  decision index is incomplete, **list `coordination/decisions/` directly** rather than trusting
+  `DECISION-LOG.md` to have caught everything since 27 Aug 2026.
 - **Worker:** your stream `CHARTER.md` → your stream `HANDOFF.md` → your assigned task file → only
-  the sources that task names. Do not replay full project history.
+  the sources that task names. Do not replay full project history. **Eval workers: your handoff is
+  stale on spend and qualification state** (GOV-005 F-2) — take those from `CONTROL-STATE.md`.
 - **Governor:** `governance/GOVERNOR-CONTRACT.md` → current `main` → the task/PR under review →
   the most recent file in `governance/reviews/`.
+
+**Two traps specific to right now**, both worth thirty seconds to avoid:
+
+1. **Do not conclude that paid execution is unauthorised** because a task file, handoff or plan says
+   so. Several still do. The spend authorisation is real and recorded; `CONTROL-STATE.md` governs.
+2. **Do not conclude that a v2 contract is only a proposal** because its own status field says
+   `NOT IN FORCE`. Those fields were not regenerated after the merge.
 
 **Before acting on any authorisation, check `coordination/CONTROL-STATE.md`.** Several task files in
 this repository were written under plans that have since been superseded, and a task file is not an
