@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-015 accepted and integrated into `main`; paid EMP-001 execution remains blocked pending zero-spend prerequisites and explicit user approval.
+**Updated:** 27 Aug 2026 — EVAL-015 accepted/integrated and live model/route/price metadata re-verified; paid EMP-001 execution remains blocked on human/material prerequisites and explicit user approval.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -195,15 +195,26 @@ No secret belongs in GitHub.
 
 If any provider requires account funding above an approved ceiling, execution must stop and return.
 
-### 3. Exact execution-time model/version pins
+### 3. Exact execution-time model/version pins — PUBLIC METADATA VERIFIED
 
-The live path mechanically refuses floating aliases without exact version pins.
+Authoritative verification:
+- `coordination/decisions/CONTROLLER-EMP-001-PRE-SPEND-VERIFICATION-2026-08-27.md`
 
-Current exact available versions must be verified immediately before execution.
+Current execution identifiers:
+- OpenAI: `gpt-5.4-mini-2026-03-17` immutable snapshot;
+- Google: `gemini-3.5-flash-lite` current documented stable exact model ID.
 
-### 4. Current route availability and planning prices
+Do not use the synthetic test fixture `gemini-3.5-flash-lite-001` as though it were a published provider version. Do not use a `*-latest` alias or silently substitute a sibling model.
 
-The frozen scientific routes remain unchanged, but current provider availability and planning prices must be checked before approval so the USD 10 ceiling is still credible.
+### 4. Current route availability and planning prices — VERIFIED
+
+Verified on 27 Aug 2026:
+- fal `openai/gpt-image-2`, 1024×1024 medium: USD 0.053/image;
+- fal `fal-ai/ideogram/v3`, BALANCED: USD 0.060/image;
+- OpenAI GPT-5.4 Mini: USD 0.75/M input, USD 4.50/M output;
+- Gemini 3.5 Flash-Lite: USD 0.30/M input, USD 2.50/M output.
+
+These exactly match the committed EMP-001 planning price book. No price-book correction is required before the spend decision.
 
 ### 5. Rebuild gitignored generated image sets
 
@@ -226,9 +237,8 @@ Customer-outcome CpAO remains Stage C only.
 ## Next gate
 
 1. Complete the Latin human perceptibility review with a real person.
-2. Verify current exact model/version availability plus frozen route availability/prices.
-3. Rebuild the generated zero-spend image sets.
-4. Confirm execution secrets can be supplied without pre-funding beyond the proposed ceiling.
-5. Only then present the user the explicit bounded EMP-001 spend decision.
+2. Rebuild the generated zero-spend image sets.
+3. Confirm execution secrets can be supplied without pre-funding beyond the proposed ceiling.
+4. Only then present the user the explicit bounded EMP-001 spend decision.
 
 **No paid provider/model/evaluator call may occur until the user explicitly approves the bounded EMP-001 USD 10 ceiling.**
