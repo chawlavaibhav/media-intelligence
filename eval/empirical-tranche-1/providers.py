@@ -79,7 +79,8 @@ SHAPES = ("transcribe", "verdict")
 
 # Environment variable names. Documented in README.md. Read at dispatch time only, never at
 # import or construction, and never written to any committed file.
-OPENAI_KEY_ENV = "OPENAI_API_KEY"
+OPENAI_KEY_ENV = "OPENAI_API_KEY"  # dormant compatibility adapter; not active in EMP-001
+ANTHROPIC_KEY_ENV = "ANTHROPIC_API_KEY"
 GOOGLE_KEY_ENV = "GOOGLE_API_KEY"
 
 # Published rates at planning time, USD per 1M tokens. Sources are recorded in
@@ -87,6 +88,7 @@ GOOGLE_KEY_ENV = "GOOGLE_API_KEY"
 # cost only; they are not invoice evidence and must not be reported as measured economics.
 PRICE_BOOK = {
     "openai": {"input_per_1m": Decimal("0.75"), "output_per_1m": Decimal("4.50")},
+    "anthropic": {"input_per_1m": Decimal("2.00"), "output_per_1m": Decimal("10.00")},
     "google": {"input_per_1m": Decimal("0.30"), "output_per_1m": Decimal("2.50")},
 }
 
@@ -303,6 +305,19 @@ class OpenAIHttpTransport(ProviderHttpTransport):
         return {"Authorization": f"Bearer {key}"}
 
 
+class AnthropicHttpTransport(ProviderHttpTransport):
+    """Anthropic Messages API. x-api-key + anthropic-version; model remains in the body."""
+
+    KEY_ENV = ANTHROPIC_KEY_ENV
+    ENDPOINT = "https://api.anthropic.com/v1/messages"
+
+    def endpoint(self) -> str:
+        return self.ENDPOINT
+
+    def auth_headers(self, key: str) -> dict:
+        return {"x-api-key": key, "anthropic-version": "2023-06-01"}
+
+
 class GeminiHttpTransport(ProviderHttpTransport):
     """Gemini REST generateContent. API-key header, and the model lives in the URL.
 
@@ -337,6 +352,8 @@ def transport_for(provider: str, resolved_version: str, http: Callable | None = 
     """Pick the provider-correct transport. There is no generic fallback, by design."""
     if provider == "openai":
         return OpenAIHttpTransport(resolved_version, http=http, timeout_s=timeout_s)
+    if provider == "anthropic":
+        return AnthropicHttpTransport(resolved_version, http=http, timeout_s=timeout_s)
     if provider == "google":
         return GeminiHttpTransport(resolved_version, http=http, timeout_s=timeout_s)
     raise ValueError(
@@ -430,6 +447,10 @@ def prompt_text_of(payload: dict) -> str:
     for c in payload.get("contents", []) or []:
         for part in c.get("parts", []) or []:
             if isinstance(part.get("text"), str):
+                parts.append(part["text"])
+    for message in payload.get("messages", []) or []:
+        for part in message.get("content", []) or []:
+            if isinstance(part, dict) and isinstance(part.get("text"), str):
                 parts.append(part["text"])
     return "\n".join(parts)
 
@@ -686,6 +707,63 @@ class OpenAITextJudge(TextJudge):
         return EvaluatorResponse("".join(text_parts), in_tok, out_tok, cost, req_id, "ok")
 
 
+# ----------------------------------------------------------------------------- Anthropic
+class AnthropicTextJudge(TextJudge):
+    provider = "anthropic"
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.provider = "anthropic"
+
+    def _image_part(self, image_bytes: bytes) -> dict:
+        return {"type": "image", "source": {
+            "type": "base64", "media_type": "image/png",
+            "data": base64.b64encode(image_bytes).decode("ascii")}}
+
+    def build_transcribe_request(self, image_bytes: bytes) -> dict:
+        return {
+            "model": self.resolved_version,
+            "max_tokens": 128,
+            "messages": [{"role": "user", "content": [
+                self._image_part(image_bytes),
+                {"type": "text", "text": PROMPT_TRANSCRIBE}]}],
+        }
+
+    def build_verdict_request(self, image_bytes: bytes, target: str) -> dict:
+        return {
+            "model": self.resolved_version,
+            "max_tokens": 16,
+            "messages": [{"role": "user", "content": [
+                self._image_part(image_bytes),
+                {"type": "text", "text": PROMPT_VERDICT.format(target=target)}]}],
+        }
+
+    def parse(self, raw: dict) -> EvaluatorResponse:
+        usage = raw.get("usage") or {}
+        in_tok = usage.get("input_tokens")
+        out_tok = usage.get("output_tokens")
+        cost = self.provisional_cost(in_tok, out_tok)
+        req_id = raw.get("id")
+
+        if raw.get("error"):
+            err = raw["error"]
+            return EvaluatorResponse("", in_tok, out_tok, cost, req_id, "error",
+                                     err.get("type") or "provider_error",
+                                     raw_status_note=str(err)[:200])
+
+        if raw.get("stop_reason") == "refusal":
+            detail = raw.get("stop_details") or {}
+            return EvaluatorResponse("", in_tok, out_tok, cost, req_id, "refusal",
+                                     "moderation_block",
+                                     raw_status_note=str(detail)[:200])
+
+        text_parts = [b.get("text", "") for b in (raw.get("content") or [])
+                      if b.get("type") == "text" and isinstance(b.get("text"), str)]
+        if not any(text_parts):
+            raise ProviderResponseError("no text and no refusal in an ok-looking Anthropic response")
+        return EvaluatorResponse("".join(text_parts), in_tok, out_tok, cost, req_id, "ok")
+
+
 # ------------------------------------------------------------------------------- Gemini
 class GeminiTextJudge(TextJudge):
     provider = "google"
@@ -915,6 +993,24 @@ OPENAI_ERROR_FIXTURE = {
     "error": {"type": "server_error", "code": "internal_error"},
     "usage": {"input_tokens": 790, "output_tokens": 0},
 }
+ANTHROPIC_OK_FIXTURE = {
+    "id": "msg_fake_abc123", "type": "message", "role": "assistant",
+    "content": [{"type": "text", "text": "Flat 50% Off"}],
+    "stop_reason": "end_turn",
+    "usage": {"input_tokens": 812, "output_tokens": 7},
+}
+ANTHROPIC_REFUSAL_FIXTURE = {
+    "id": "msg_fake_ref456", "type": "message", "role": "assistant",
+    "content": [], "stop_reason": "refusal",
+    "stop_details": {"type": "refusal", "category": "general_harms"},
+    "usage": {"input_tokens": 800, "output_tokens": 2},
+}
+ANTHROPIC_ERROR_FIXTURE = {
+    "id": "msg_fake_err789",
+    "error": {"type": "api_error", "message": "backend unavailable"},
+    "usage": {"input_tokens": 790, "output_tokens": 0},
+}
+
 GEMINI_OK_FIXTURE = {
     "responseId": "gen-req-99",
     "candidates": [{"content": {"parts": [{"text": "Flat 50% Off"}]}, "finishReason": "STOP"}],
