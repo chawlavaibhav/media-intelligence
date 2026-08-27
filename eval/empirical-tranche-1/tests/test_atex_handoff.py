@@ -59,9 +59,9 @@ def _resolved_perceptibility(tmp_path):
 def _qualify(tmp_path, run, scripts=('devanagari', 'latin')):
     """Run a real fake-live qualification for one candidate and persist its result."""
     stage = SL.TrancheBudget(run).stage('qualification')
-    version = 'claude-haiku-4-5-20251001'
+    version = 'claude-sonnet-5'
     judge = P.AnthropicTextJudge(
-        model_alias='claude-haiku-4-5-20251001', resolved_version=version,
+        model_alias='claude-sonnet-5', resolved_version=version,
         transport=P.AnthropicHttpTransport(resolved_version=version,
                                         http=FakeJudgeHttp(P.AnthropicTextJudge,
                                                            image_index_for('both'))),
@@ -87,7 +87,7 @@ def test_the_handoff_loads_the_persisted_qualification(tmp_path, keys):
     run = _run(tmp_path)
     _qualify(tmp_path, run)
     handoff = R.load_qualification(run, expected_mode='fake_live')
-    assert handoff['qualified'][0]['resolved_version'] == 'claude-haiku-4-5-20251001'
+    assert handoff['qualified'][0]['resolved_version'] == 'claude-sonnet-5'
     assert set(handoff['qualified'][0]['qualified_scope']) == {'devanagari', 'latin'}
 
 
@@ -110,7 +110,7 @@ def test_a_fabricated_qualification_file_is_rejected(tmp_path, keys):
     fabricated = {
         'run_id': run.run_id, 'mode': 'live', 'tranche_id': 'EMP-001',
         'evidence_fingerprint': 'deadbeef' * 8,
-        'qualified': [{'provider': 'anthropic', 'model_alias': 'claude-haiku-4-5-20251001',
+        'qualified': [{'provider': 'anthropic', 'model_alias': 'claude-sonnet-5',
                        'resolved_version': 'whatever', 'qualified_scope': ['devanagari', 'latin']}],
         'call_records': [],
     }
@@ -163,8 +163,8 @@ def test_the_selected_judge_binds_to_the_exact_qualified_version(tmp_path, keys)
     _qualify(tmp_path, run)
     chosen = R.select_judge_for_atex(R.load_qualification(run, expected_mode='fake_live'))
     assert chosen['provider'] == 'anthropic'
-    assert chosen['resolved_version'] == 'claude-haiku-4-5-20251001'
-    assert chosen['model_alias'] == 'claude-haiku-4-5-20251001'
+    assert chosen['resolved_version'] == 'claude-sonnet-5'
+    assert chosen['model_alias'] == 'claude-sonnet-5'
 
 
 def test_old_openai_qualification_cannot_open_atex_after_roster_switch(tmp_path, keys):
