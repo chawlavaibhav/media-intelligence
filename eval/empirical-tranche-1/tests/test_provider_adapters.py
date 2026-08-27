@@ -34,7 +34,7 @@ def test_constructors_make_no_network_call(monkeypatch):
     monkeypatch.setattr(socket.socket, 'connect', explode)
     monkeypatch.setattr(socket, 'create_connection', explode)
 
-    P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='claude-haiku-4-5-20251001')
+    P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='claude-sonnet-5')
     P.GeminiTextJudge(model_alias='gemini-3.5-flash-lite',
                       resolved_version='gemini-3.5-flash-lite-001')
 
@@ -54,7 +54,7 @@ def test_no_api_key_is_read_during_import_or_construction(monkeypatch):
 
     monkeypatch.setattr(os, 'environ', Tracking(os.environ))
 
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='x')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='x')
     j.build_transcribe_request(IMAGE)
     j.build_verdict_request(IMAGE, TARGET_DEV)
 
@@ -63,7 +63,7 @@ def test_no_api_key_is_read_during_import_or_construction(monkeypatch):
 
 # ------------------------------------------------------------------------ blindness
 @pytest.mark.parametrize('judge_cls,alias', [
-    (P.AnthropicTextJudge, 'claude-haiku-4-5-20251001'),
+    (P.AnthropicTextJudge, 'claude-sonnet-5'),
     (P.GeminiTextJudge, 'gemini-3.5-flash-lite'),
 ])
 @pytest.mark.parametrize('target', [TARGET_DEV, TARGET_LAT])
@@ -76,7 +76,7 @@ def test_transcribe_payload_never_contains_the_target(judge_cls, alias, target):
 def test_transcribe_payload_contains_no_devanagari_at_all():
     """The catch-all. Every Devanagari target is Devanagari, so any of it in a blind payload is
     decisive regardless of which field carried it."""
-    for cls, alias in ((P.AnthropicTextJudge, 'claude-haiku-4-5-20251001'),
+    for cls, alias in ((P.AnthropicTextJudge, 'claude-sonnet-5'),
                        (P.GeminiTextJudge, 'gemini-3.5-flash-lite')):
         blob = json.dumps(cls(model_alias=alias, resolved_version='v')
                           .build_transcribe_request(IMAGE), ensure_ascii=False)
@@ -91,20 +91,20 @@ def test_the_blind_check_actually_fires_on_a_leak():
 
 
 def test_the_blind_check_passes_a_clean_payload():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v')
     assert P.verify_blind_payload(j.build_transcribe_request(IMAGE),
                                   shape='transcribe', target=TARGET_DEV) == []
 
 
 def test_building_a_transcribe_request_cannot_be_handed_a_target():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v')
     with pytest.raises(TypeError):
         j.build_transcribe_request(IMAGE, TARGET_DEV)
 
 
 # --------------------------------------------------------------- verdict is deliberately not blind
 @pytest.mark.parametrize('judge_cls,alias', [
-    (P.AnthropicTextJudge, 'claude-haiku-4-5-20251001'),
+    (P.AnthropicTextJudge, 'claude-sonnet-5'),
     (P.GeminiTextJudge, 'gemini-3.5-flash-lite'),
 ])
 def test_verdict_payload_carries_the_target_exactly_once(judge_cls, alias):
@@ -114,7 +114,7 @@ def test_verdict_payload_carries_the_target_exactly_once(judge_cls, alias):
 
 
 def test_verdict_payload_carries_the_target_inside_the_prompt():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v')
     req = j.build_verdict_request(IMAGE, TARGET_DEV)
     assert TARGET_DEV in P.prompt_text_of(req)
 
@@ -126,11 +126,11 @@ def test_verdict_blind_check_rejects_a_payload_that_lost_its_target():
 
 # ---------------------------------------------------------------- alias vs resolved version
 def test_anthropic_canonical_model_id_is_itself_a_pinned_resolved_version():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001',
-                             resolved_version='claude-haiku-4-5-20251001')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5',
+                             resolved_version='claude-sonnet-5')
     ident = j.identity()
-    assert ident['model_alias'] == 'claude-haiku-4-5-20251001'
-    assert ident['resolved_version'] == 'claude-haiku-4-5-20251001'
+    assert ident['model_alias'] == 'claude-sonnet-5'
+    assert ident['resolved_version'] == 'claude-sonnet-5'
     assert ident['version_pinned_at_execution'] is True
 
 
@@ -138,18 +138,18 @@ def test_a_judge_without_a_resolved_version_refuses_to_exist():
     """An alias alone is not a pinned model. A run that cannot name the exact version it called
     cannot be reproduced or compared."""
     with pytest.raises(ValueError):
-        P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='')
+        P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='')
 
 
 # -------------------------------------------------------------------- fail-closed dispatch
 def test_a_judge_with_no_transport_refuses_to_dispatch():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v')
     with pytest.raises(P.DispatchRefused):
         j.transcribe(IMAGE)
 
 
 def test_dispatch_requires_a_budget_guard():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v',
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v',
                           transport=P.FakeTransport(P.ANTHROPIC_OK_FIXTURE))
     with pytest.raises(P.DispatchRefused):
         j.transcribe(IMAGE)
@@ -157,7 +157,7 @@ def test_dispatch_requires_a_budget_guard():
 
 def test_dispatch_is_refused_when_the_guard_cannot_reserve():
     guard = BudgetGuard(authorised_usd=Decimal('0.01'), spent_usd=Decimal('0.01'))
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v',
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v',
                           transport=P.FakeTransport(P.ANTHROPIC_OK_FIXTURE), guard=guard)
     with pytest.raises(BudgetExceeded):
         j.transcribe(IMAGE)
@@ -166,7 +166,7 @@ def test_dispatch_is_refused_when_the_guard_cannot_reserve():
 def test_a_refused_reservation_dispatches_nothing():
     guard = BudgetGuard(authorised_usd=Decimal('0.01'), spent_usd=Decimal('0.01'))
     transport = P.FakeTransport(P.ANTHROPIC_OK_FIXTURE)
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v',
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v',
                           transport=transport, guard=guard)
     with pytest.raises(BudgetExceeded):
         j.transcribe(IMAGE)
@@ -181,7 +181,7 @@ def _judge(cls, fixture, alias):
 
 
 def test_anthropic_response_preserves_request_id_tokens_and_cost():
-    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-haiku-4-5-20251001')
+    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-sonnet-5')
     r = j.transcribe(IMAGE)
     assert r.text == 'Flat 50% Off'
     assert r.provider_request_id == 'msg_fake_abc123'
@@ -200,7 +200,7 @@ def test_gemini_response_preserves_request_id_tokens_and_cost():
 
 
 def test_a_refusal_is_recorded_as_a_refusal_not_a_transcription():
-    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_REFUSAL_FIXTURE, 'claude-haiku-4-5-20251001')
+    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_REFUSAL_FIXTURE, 'claude-sonnet-5')
     r = j.transcribe(IMAGE)
     assert r.api_status == 'refusal'
     assert r.error_class == 'moderation_block'
@@ -208,7 +208,7 @@ def test_a_refusal_is_recorded_as_a_refusal_not_a_transcription():
 
 
 def test_an_error_is_recorded_as_an_error_and_still_consumes_its_trial():
-    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_ERROR_FIXTURE, 'claude-haiku-4-5-20251001')
+    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_ERROR_FIXTURE, 'claude-sonnet-5')
     r = j.transcribe(IMAGE)
     assert r.api_status == 'error'
     assert r.error_class
@@ -217,7 +217,7 @@ def test_an_error_is_recorded_as_an_error_and_still_consumes_its_trial():
 
 def test_spend_is_recorded_against_the_guard_after_every_call():
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v',
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v',
                           transport=P.FakeTransport(P.ANTHROPIC_OK_FIXTURE), guard=guard)
     j.transcribe(IMAGE)
     assert guard.spent_usd > 0
@@ -226,29 +226,31 @@ def test_spend_is_recorded_against_the_guard_after_every_call():
 def test_one_call_is_one_trial_and_there_is_no_retry_path():
     """No adapter method may loop. A refusal returns a record, it does not try again."""
     transport = P.FakeTransport(P.ANTHROPIC_REFUSAL_FIXTURE)
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v',
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v',
                           transport=transport, guard=BudgetGuard(authorised_usd=Decimal('10.00')))
     j.transcribe(IMAGE)
     assert transport.calls == 1
     assert not any('retry' in name for name in dir(j))
 
 
-def test_full_anthropic_plus_gemini_qualification_reservation_fits_six_dollar_cap():
+def test_full_sonnet_plus_gemini_reservation_exceeds_six_dollar_cap():
     calls_per_candidate = 96 * 2 * 3 * 2  # 96 items × 2 shapes × 3 passes × 2 scripts
     anthropic = P.AnthropicTextJudge(
-        model_alias='claude-haiku-4-5-20251001',
-        resolved_version='claude-haiku-4-5-20251001')
+        model_alias='claude-sonnet-5',
+        resolved_version='claude-sonnet-5')
     gemini = P.GeminiTextJudge(
         model_alias='gemini-3.5-flash-lite',
         resolved_version='gemini-3.5-flash-lite')
     worst_case = (anthropic._estimate() + gemini._estimate()) * calls_per_candidate
-    assert worst_case == Decimal('3.548160')
-    assert worst_case <= Decimal('6.00')
+    assert worst_case == Decimal('6.220800')
+    # Full Sonnet + Gemini cannot both be re-run under the frozen $6 cap.
+    # EMP-001 therefore authorises Sonnet-only continuation after the first run.
+    assert worst_case > Decimal('6.00')
 
 
 # ------------------------------------------------------------------ persistence shape
 def test_a_response_can_be_persisted_with_every_field_the_contract_needs():
-    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-haiku-4-5-20251001')
+    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-sonnet-5')
     row = j.call_record(j.transcribe(IMAGE), shape='transcribe')
     for key in ('provider', 'model_alias', 'resolved_version', 'shape', 'api_status',
                 'error_class', 'provider_request_id', 'input_tokens', 'output_tokens',
@@ -259,13 +261,13 @@ def test_a_response_can_be_persisted_with_every_field_the_contract_needs():
 
 
 def test_a_persisted_transcribe_record_does_not_leak_the_target():
-    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-haiku-4-5-20251001')
+    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-sonnet-5')
     row = j.call_record(j.transcribe(IMAGE), shape='transcribe')
     assert 'target' not in json.dumps(row).lower()
 
 
 def test_provisional_cost_is_labelled_provisional_not_invoiced():
-    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-haiku-4-5-20251001')
+    j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-sonnet-5')
     row = j.call_record(j.transcribe(IMAGE), shape='transcribe')
     assert row['cost_basis'] == 'provisional_published_rate'
 
@@ -276,7 +278,7 @@ def test_a_short_verdict_target_is_not_falsely_flagged():
     a one-character target matched inside ordinary structural words like "text" and "type" and a
     perfectly good payload was refused. A control that cries wolf on a short target is a control
     that will be switched off."""
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='v')
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='v')
     for target in ('t', 'A', '20%', 'Aaj ki Deal'):
         assert P.verify_blind_payload(j.build_verdict_request(IMAGE, target),
                                       shape='verdict', target=target) == [], target
