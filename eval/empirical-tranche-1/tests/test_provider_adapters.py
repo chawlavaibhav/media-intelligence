@@ -190,6 +190,35 @@ def test_anthropic_response_preserves_request_id_tokens_and_cost():
     assert r.api_status == 'ok'
 
 
+def test_sonnet_requests_explicitly_disable_adaptive_thinking():
+    j = P.AnthropicTextJudge(model_alias='claude-sonnet-5', resolved_version='claude-sonnet-5')
+    t = j.build_transcribe_request(IMAGE)
+    v = j.build_verdict_request(IMAGE, TARGET_DEV)
+    assert t['thinking'] == {'type': 'disabled'}
+    assert v['thinking'] == {'type': 'disabled'}
+    assert t['max_tokens'] == 128
+    assert v['max_tokens'] == 16
+
+
+def test_anthropic_max_tokens_without_text_is_well_formed_model_failure_not_ambiguity():
+    guard = BudgetGuard(authorised_usd=Decimal('10.00'))
+    j = P.AnthropicTextJudge(
+        model_alias='claude-sonnet-5', resolved_version='claude-sonnet-5',
+        transport=P.FakeTransport(P.ANTHROPIC_MAX_TOKENS_NO_TEXT_FIXTURE),
+        guard=guard)
+    r = j.verdict(IMAGE, TARGET_DEV)
+    assert r.api_status == 'error'
+    assert r.error_class == 'max_tokens_no_text'
+    assert r.provider_request_id == 'msg_fake_max001'
+    assert r.input_tokens == 810 and r.output_tokens == 16
+    assert r.ambiguous_dispatch is False
+    assert r.billing_state == 'reported'
+    assert r.billed_usd == P.AnthropicTextJudge(
+        model_alias='claude-sonnet-5',
+        resolved_version='claude-sonnet-5').provisional_cost(810, 16)
+    assert guard.spent_usd == r.billed_usd
+
+
 def test_gemini_response_preserves_request_id_tokens_and_cost():
     j = _judge(P.GeminiTextJudge, P.GEMINI_OK_FIXTURE, 'gemini-3.5-flash-lite')
     r = j.transcribe(IMAGE)
@@ -248,13 +277,13 @@ def test_full_sonnet_plus_gemini_reservation_exceeds_six_dollar_cap():
     assert worst_case > Decimal('6.00')
 
 
-def test_sonnet_only_continuation_with_first_run_spend_fits_six_dollar_cap():
+def test_corrected_sonnet_rerun_with_all_prior_spend_fits_six_dollar_cap():
     calls = 96 * 2 * 3 * 2
     sonnet = P.AnthropicTextJudge(
         model_alias='claude-sonnet-5', resolved_version='claude-sonnet-5')
-    first_run_counted = Decimal('0.0854218')
-    cumulative_worst_case = first_run_counted + sonnet._estimate() * calls
-    assert cumulative_worst_case == Decimal('5.4307018')
+    already_counted = Decimal('0.1206238')
+    cumulative_worst_case = already_counted + sonnet._estimate() * calls
+    assert cumulative_worst_case == Decimal('5.4659038')
     assert cumulative_worst_case <= Decimal('6.00')
 
 
