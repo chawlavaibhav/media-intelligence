@@ -31,7 +31,7 @@ MODEL IDENTITY
     `model_alias` records the configured model label and `resolved_version` records the exact
     execution identifier. They may differ for providers that expose moving aliases, or be identical
     when the provider's canonical model ID is itself pinned (as with Anthropic
-    `claude-haiku-4-5-20251001`). Both are persisted on every call. A judge refuses to exist
+    `claude-sonnet-5`). Both are persisted on every call. A judge refuses to exist
     without a resolved version.
 
 COST
@@ -91,7 +91,7 @@ GOOGLE_KEY_ENV = "GOOGLE_API_KEY"
 # cost only; they are not invoice evidence and must not be reported as measured economics.
 PRICE_BOOK = {
     "openai": {"input_per_1m": Decimal("0.75"), "output_per_1m": Decimal("4.50")},
-    "anthropic": {"input_per_1m": Decimal("1.00"), "output_per_1m": Decimal("5.00")},
+    "anthropic": {"input_per_1m": Decimal("2.00"), "output_per_1m": Decimal("10.00")},
     "google": {"input_per_1m": Decimal("0.30"), "output_per_1m": Decimal("2.50")},
 }
 
