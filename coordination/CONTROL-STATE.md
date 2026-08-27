@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-023 is integrated (PR #46, merge `0ecbf5f19cd6a3a14a15e85e1a1f6ae8fa690431`). Literal Tesseract `hin+eng` sharply reduced Devanagari false passes but failed accuracy; its post-hoc Latin run is diagnostic only. Three parallel lanes are now active: EVAL-025 script-routed local OCR, EVAL-024 A-TEXT generation-only, and CANON-011 marketplace-derived real-demand brief/prompt preparation.
+**Updated:** 27 Aug 2026 — EVAL-025 is integrated (PR #47, merge `711aa8ceb12231610212236a19ab21578fb028c0`). Script-routed Tesseract removed wrong-script errors but did not reduce false passes; the Tesseract configuration line is closed. Next exact-text direction is EVAL-028: zero-spend preparation of a Cloud-Vision-first, two-independent-blind-human-confirmed fail-closed composite. EVAL-024 and CANON-011 continue in parallel.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -280,59 +280,22 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Three independent parallel lanes may run now.
+Exact-text:
+- Tesseract tuning is CLOSED after EVAL-025.
+- Prepare EVAL-028 only:
+  - `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md`
+  - `eval/tasks/EVAL-028-HUMAN-CONFIRMED-EXACT-TEXT-PREP.md`
+- Build/freeze a fail-closed composite contract and blind two-reader review tooling.
+- Reuse stored Cloud Vision evidence for orchestration tests only; no new API calls.
+- Do not consume human review time yet.
+- Do not score A-TEXT yet.
+- Registry remains unchanged.
 
-### Lane A — EVAL-025 script-routed literal OCR
+Parallel lanes remain:
+- EVAL-024 A-TEXT generation-only;
+- CANON-011 marketplace-derived real-demand brief/prompt bank;
+- any separately authorised temporal/governance lanes.
 
-Authority:
-- `coordination/decisions/CONTROLLER-EVAL-023-DISPOSITION-AND-SCRIPT-ROUTED-OCR-2026-08-27.md`
-
-Task:
-- `eval/tasks/EVAL-025-SCRIPT-ROUTED-LITERAL-TESSERACT.md`
-
-Run both zero-cost script-specific legs:
-- `hin` only on Devanagari, 288 local executions;
-- `eng` only on Latin, 288 local executions;
-- same Tesseract/tessdata/OEM/PSM/DAWG-off configuration otherwise;
-- no normalization changes;
-- if either still false-passes, stop Tesseract tuning after this task.
-
-### Lane B — EVAL-024 A-TEXT generation-only
-
-Authority:
-- `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`
-
-Task:
-- `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md`
-
-Generate and seal:
-- 4 frozen strings × 2 repeats × 2 routes = 16 images;
-- GPT Image 2 via fal + Ideogram v3 via fal;
-- retries 0;
-- no evaluator calls;
-- no scoring;
-- sealed hashes must be reused later;
-- nominal generation max USD 0.904;
-- current paid qualification spend USD 1.3037905;
-- standing EMP-001 total ceiling USD 10.
-
-### Lane C — CANON-011 marketplace-derived request bank
-
-Authority:
-- `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`
-
-Task:
-- `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`
-
-Sources:
-- `canon/research/marketplace-demand-v1/sources/`
-
-Build 12–20 provenance-preserving real-demand cases, at least 8 runnable, from Upwork buyer jobs;
-use Fiverr seller research only for commercial input/package conventions. Produce source-faithful
-briefs, Normalized Requests, acceptance contracts, route-neutral generation briefs and prompt-ready
-envelopes. No model calls or spend.
-
-Return each lane independently for Controller review. Do not merge worker branches.
 
 
 
