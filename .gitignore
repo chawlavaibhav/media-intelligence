@@ -18,3 +18,22 @@ __pycache__/
 # committed fingerprints prove any rebuild is byte-identical. Irreplaceable class-C model outputs are
 # NOT covered by this rule and must never be git-ignored.
 resources/v1/build/
+
+# EMP-001 runtime authorisation. Materialised only from an explicit human approval at
+# execution time; never committed. The committed schema is authorization.example.yaml.
+eval/empirical-tranche-1/authorization.local.yaml
+
+# Reproducible build products of EMP-001 text qualification: the rendered Latin pack, and the
+# materialised 96-item Devanagari validated view. Both are regenerated deterministically from
+# committed code plus pinned fonts, so committing the bytes would add weight without adding truth.
+# The Devanagari view is built with --out-dir pointing HERE rather than into the frozen battery,
+# so that battery is read and never written to.
+#   python3 eval/empirical-tranche-1/text_qualification/render_latin_pack.py
+#   cd eval/battery/devanagari-exactness && python3 build_items.py --total 120 \
+#       --out-dir <repo>/eval/empirical-tranche-1/text_qualification/build/devanagari
+#   python3 apply_human_validation.py --from-build <that dir> --out-dir <that dir>/validated
+eval/empirical-tranche-1/text_qualification/build/
+
+# EMP-001 runtime spend ledger and run evidence. Machine-local runtime state about money;
+# reconstructed from the ledger on every read and never committed.
+eval/runs/

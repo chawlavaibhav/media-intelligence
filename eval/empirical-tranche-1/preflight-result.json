@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "adapter_path_blocked": {
+      "guardless_dispatch_refused": true,
+      "live_adapters_in_synthetic_harness": false,
+      "ok": true,
+      "reason": "a judge refuses without an injected transport, and refuses again without a budget guard opened from an explicit authorisation file",
+      "transcribe_dispatch_refused": true,
+      "verdict_dispatch_refused": true
+    },
+    "authorisation_blocked": {
+      "authorisation_file_exists": false,
+      "authorisation_file_is_false_or_missing": true,
+      "config_status": "PREPARED_NOT_AUTHORISED",
+      "ok": true,
+      "paid_execution_permitted": false,
+      "refusals": [
+        "no authorisation file exists at that path"
+      ],
+      "retries_authorised": 0
+    },
+    "geometry_fixtures": {
+      "declared_items": 102,
+      "expected": 102,
+      "fixture_count": 102,
+      "manifest": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-015/eval/v1/instruments/fixtures/cv-geometry/manifest.json",
+      "missing_images": [],
+      "ok": true
+    },
+    "harness_selftest": {
+      "checks_passed": 107,
+      "checks_total": 107,
+      "exit_code": 0,
+      "failed_checks": [],
+      "ok": true,
+      "ran": "eval/v1/harness/run_selftest.py main() in-process",
+      "registry_rows_created": 0
+    },
+    "one_call_one_trial": {
+      "attempts": 2,
+      "ok": true,
+      "refused_attempt_has_a_cost_ref": true,
+      "refused_attempt_still_has_a_trial": true,
+      "registry_rows_created": 0,
+      "trials": 2
+    },
+    "protected_baselines": {
+      "checked": 13,
+      "mismatches": [],
+      "ok": true
+    },
+    "registry_empirical_rows": {
+      "empirical_row_count": 0,
+      "file_sha256": "0d1dfdb33c3c6c974cce29f9df52f4265a837d4c607bdde059ac6db9c295e698",
+      "ok": true,
+      "path": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-015/eval/registry/registry-v1.jsonl"
+    },
+    "synthetic_cannot_reach_registry": {
+      "ok": true,
+      "refusal_message": "REGISTRY WRITE REFUSED: synthetic/dummy measurements may never become empirical Registry rows. There is no override.",
+      "refused": true,
+      "registry_rows_created": 0
+    }
+  },
+  "dry_run": true,
+  "external_calls": 0,
+  "failed_checks": [],
+  "note": "Every boolean above was produced by a check executed in this run. No provider, model or evaluator was called and no money was spent.",
+  "record": "EMP-001-preflight",
+  "spend_usd": "0",
+  "verdict": "PREFLIGHT_GREEN"
+}

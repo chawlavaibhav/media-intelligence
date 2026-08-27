@@ -1,0 +1,71 @@
+# EMP-001 text-judge qualification contract.
+#
+# READ THE STATUS FIELD BEFORE READING THE NUMBERS.
+#
+# These are BOUNDED FIRST-RUN GATES, chosen so that the first tranche has a decision rule at all.
+# They are not empirically established universal thresholds, and nothing in this repository has
+# yet measured whether they are the right ones. Record how the first two candidates perform
+# against them, then revisit. Do not convert them into a general benchmark claim.
+status: PROVISIONAL_FIRST_RUN_GATE
+
+repeats_per_shape: 3
+mismatch_false_pass_max: 0
+match_false_fail_rate_max: 0.10
+refusal_rate_max: 0.05
+repeat_consistency_min: 0.95
+primary_generated_output_shape: transcribe
+
+qualified_scope_excludes:
+  # The generated-glyph stress layer was never built. A judge qualified here has been tested only
+  # against correctly formed but WRONG text; malformed generated glyphs are a different question
+  # and this contract makes no claim about them.
+  - malformed_generated_glyphs
+
+thresholds:
+  mismatch_false_pass_max:
+    value: 0
+    status: PROVISIONAL_FIRST_RUN_GATE
+    rationale: >-
+      A false pass is the dangerous error: the checker says "matches" when the text is wrong and a
+      broken asset ships with a passing grade attached. Zero is deterministic and is the one gate
+      here that is not a rate estimate.
+  match_false_fail_rate_max:
+    value: 0.10
+    status: PROVISIONAL_FIRST_RUN_GATE
+    rationale: >-
+      A checker that rejects correct text is merely expensive, not dangerous, so it is bounded
+      rather than forbidden.
+  refusal_rate_max:
+    value: 0.05
+    status: PROVISIONAL_FIRST_RUN_GATE
+    rationale: >-
+      Reported separately from accuracy. A refusal is not a wrong answer; folding it into either
+      error rate would corrupt both.
+  repeat_consistency_min:
+    value: 0.95
+    status: PROVISIONAL_FIRST_RUN_GATE
+    rationale: >-
+      Across three full passes in both shapes. An unstable checker cannot anchor a measurement
+      however accurate its average looks.
+
+progressive_stop:
+  order: [devanagari, latin]
+  rule: >-
+    A candidate that fails the Devanagari gate does not advance to Latin. Paying another 576 calls
+    to demonstrate that an already-disqualified checker also fails English buys nothing.
+
+shapes:
+  transcribe:
+    blind: true
+    role: primary
+    note: The target is evaluator-side only; exactness is decided in code after transcription.
+  verdict:
+    blind: false
+    role: diagnostic
+    note: >-
+      Deliberately exposed to the target. The transcribe/verdict comparison measures how much of a
+      checker's false-pass behaviour is caused by showing it the answer we hope for. A verdict may
+      never override a primary transcription mismatch.
+
+evaluator_spend_ceiling_usd: 6.00
+retries_authorised: 0
