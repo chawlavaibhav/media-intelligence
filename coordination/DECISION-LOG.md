@@ -1,6 +1,7 @@
 # Decision Log
 
-**Updated:** 26 Aug 2026 — current Controller decision index.
+**Updated:** 26 Aug 2026 — curated Controller decision index through that date.
+**Role clarified:** 28 Aug 2026 (see the note below).
 
 > **Scope notice.** The two narrative entries below are the project's **23 Aug 2026 architectural
 > decisions** and remain accurate as history. They are **not** a complete decision register: from
@@ -9,6 +10,30 @@
 >
 > The index below links those committed decisions. It records only decisions with committed evidence;
 > it creates none.
+
+> ### What this file is — and is not. Recorded 28 Aug 2026.
+>
+> **This is a curated historical and navigation index. It is deliberately not an exhaustive record
+> of Controller decisions after 26 August 2026**, and must not be read as one. Settled by Controller
+> decision: `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md`.
+>
+> **Where to actually look:**
+>
+> - **What is currently authorised** — `coordination/CONTROL-STATE.md`. That file governs.
+> - **The detailed durable decisions** — list `coordination/decisions/` directly, plus the
+>   stream-owned decision records that Controller state references.
+> - **The narrative history through 26 Aug 2026** — the index and entries below.
+>
+> **Why it is not being back-filled.** The Governor raised the gap as GOV-005 finding F-5. The
+> Controller's disposition was to fix the *claim*, not the *coverage*: a hand-maintained index that
+> promises exhaustive discovery will drift again and mislead more than an honest partial one. Each
+> row also summarises what was decided, and that characterisation is the Controller's to write. A
+> mechanically generated index may replace this later; no manual transcription is required now.
+>
+> **The practical consequence.** Everything from 27 Aug 2026 onward — the EMP-001 spend
+> authorisation, every evaluator disqualification, the exact-text course correction, EVAL-028's
+> supersession, EVAL-029, and the EVAL-024 cleanup gate — is **not** in the table below by design.
+> A session that stops here will not see any of it.
 
 ## Decision index — 24 Aug 2026 onward
 
