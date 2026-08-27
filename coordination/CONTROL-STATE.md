@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — User overrode the prior Gemini pacing restriction and authorised live smoke tests for both Gemini API and Google Cloud Vision API. The 7-second minimum is removed (0-second mandatory pacing). After final OCR live-runner wiring verifies green, run one Gemini smoke + one Vision smoke, then full Vision qualification if healthy, all within the existing USD 1.00 incremental cap.
+**Updated:** 27 Aug 2026 — User explicitly overrode the prior Gemini smoke-only limitation and authorised full qualification of both Gemini 3.5 Flash-Lite and Google Cloud Vision OCR. Gemini mandatory pacing is now 0 seconds; retries remain 0. Combined conservative new reservation USD 1.739520; prospective qualification spend USD 2.4107615 <= USD 6.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -279,37 +279,41 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Execute the combined dual-API + OCR flow recorded in:
-- `coordination/decisions/CONTROLLER-DUAL-API-SMOKE-NO-GEMINI-PACING-2026-08-27.md`
+Execute:
+- `coordination/decisions/CONTROLLER-FULL-GEMINI-AND-VISION-QUALIFICATION-NO-PACING-2026-08-27.md`
 - `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RUNNER-WIRING-CORRECTION-2026-08-27.md`
 
 Required sequence:
 1. bring current `origin/main` into `eval/eval-022-ocr-family-readiness`;
 2. finish real OCR `--live` persistent-ledger wiring;
-3. run all zero-network verification; if anything fails, stop before spend;
+3. run all zero-network verification and preflight; if anything fails, stop before spend;
 4. push exact tested head; do not merge;
-5. run ONE Gemini `gemini-3.5-flash-lite` connectivity smoke call:
-   - existing `GOOGLE_API_KEY`
-   - `thinkingLevel: minimal`
-   - retries 0
-   - **no mandatory pacing / 0-second minimum**
-   - connectivity evidence only, not scientific qualification;
-6. run ONE Google Cloud Vision `TEXT_DETECTION` connectivity smoke call:
-   - `GOOGLE_CLOUD_VISION_API_KEY`
-   - no language hints
+5. run fresh full Gemini `gemini-3.5-flash-lite` qualification:
+   - VLM contract v2;
+   - `thinkingLevel: minimal`;
    - retries 0;
-7. if both smoke paths are sufficiently healthy and no ambiguous stop occurred, run full OCR qualification from Devanagari call 1;
-8. OCR qualification max 576 scientific calls;
-9. Gemini smoke reserve USD 0.000760;
-10. Vision smoke reserve USD 0.001500;
-11. OCR qualification max reserve USD 0.864000;
-12. max incremental for this combined pass USD 0.866260 <= user cap USD 1.00;
-13. prior cumulative USD 0.6712415; prospective cumulative max USD 1.5375015 <= USD 6;
-14. no retries;
-15. preserve prior evidence; append only to ledger;
-16. smoke records marked `connectivity_smoke_only`, never Registry/A-TEXT evidence;
-17. if OCR qualifies both scripts, stop before A-TEXT;
-18. no fal calls; Registry unchanged.
+   - **minimum mandatory pacing 0 seconds**;
+   - Devanagari from call 1;
+   - Latin only if Devanagari passes;
+   - max 1,152 calls / USD 0.875520 reservation;
+6. regardless of Gemini scientific failure or clean provider failure, run full Cloud Vision OCR qualification if persistent budget remains healthy;
+7. Cloud Vision:
+   - `TEXT_DETECTION`;
+   - `GOOGLE_CLOUD_VISION_API_KEY`;
+   - no language hints;
+   - retries 0;
+   - Devanagari 288 calls;
+   - Latin only if Devanagari scientifically passes;
+   - max 576 calls / USD 0.864 reservation;
+8. infrastructure failure in one provider stops only that provider's run, provided billing is persisted and the ledger remains safe;
+9. combined max new reservation USD 1.739520;
+10. prior qualification spend USD 0.6712415;
+11. prospective cumulative USD 2.4107615 <= USD 6;
+12. preserve all prior evidence byte-identically; append only to ledger;
+13. Gemini prior disqualification remains historical; an unexpected new full pass creates conflicting evidence and does not auto-promote;
+14. if OCR passes both scripts, record OCR-family qualification but keep A-TEXT blocked;
+15. no fal calls; Registry unchanged.
+
 
 
 
