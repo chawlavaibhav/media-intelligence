@@ -111,9 +111,9 @@ view is proved to be the one the reviewer actually validated.
 No key, token or credential belongs in any committed file. Provider credentials are read from the
 environment **at dispatch time only**, never at import or construction:
 
-- `OPENAI_API_KEY` — sent as `Authorization: Bearer …` to the OpenAI Responses API
+- `ANTHROPIC_API_KEY` — sent as `x-api-key` to the Anthropic Messages API
 - `GOOGLE_API_KEY` — sent as `x-goog-api-key: …` to the Gemini REST route, **not** as a Bearer
-  token; the two providers have different auth contracts and there is no generic fallback
+  token; the active judge providers have different auth contracts and there is no generic fallback
   transport
 - `FAL_KEY` — sent as `Authorization: Key …` to the frozen fal image routes
 
