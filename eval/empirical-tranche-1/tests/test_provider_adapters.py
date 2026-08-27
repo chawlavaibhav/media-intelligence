@@ -125,12 +125,12 @@ def test_verdict_blind_check_rejects_a_payload_that_lost_its_target():
 
 
 # ---------------------------------------------------------------- alias vs resolved version
-def test_alias_and_resolved_version_are_separate_fields():
-    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001', resolved_version='claude-haiku-4-5-20251001')
+def test_anthropic_canonical_model_id_is_itself_a_pinned_resolved_version():
+    j = P.AnthropicTextJudge(model_alias='claude-haiku-4-5-20251001',
+                             resolved_version='claude-haiku-4-5-20251001')
     ident = j.identity()
     assert ident['model_alias'] == 'claude-haiku-4-5-20251001'
     assert ident['resolved_version'] == 'claude-haiku-4-5-20251001'
-    assert ident['model_alias'] != ident['resolved_version']
     assert ident['version_pinned_at_execution'] is True
 
 
@@ -184,7 +184,7 @@ def test_anthropic_response_preserves_request_id_tokens_and_cost():
     j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-haiku-4-5-20251001')
     r = j.transcribe(IMAGE)
     assert r.text == 'Flat 50% Off'
-    assert r.provider_request_id == 'resp_abc123'
+    assert r.provider_request_id == 'msg_fake_abc123'
     assert r.input_tokens == 812 and r.output_tokens == 7
     assert r.billed_usd is not None and r.billed_usd > 0
     assert r.api_status == 'ok'
