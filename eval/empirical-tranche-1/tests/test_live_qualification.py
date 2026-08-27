@@ -316,6 +316,28 @@ def test_cli_fake_live_runs_the_real_orchestration_without_a_network(monkeypatch
     assert r['candidates'][0]['devanagari']['calls'] == CALLS_PER_SCRIPT
 
 
+def test_cli_fake_live_honors_anthropic_only_provider(monkeypatch, tmp_path, keys):
+    import socket
+
+    def explode(*a, **k):
+        raise AssertionError('fake-live qualification attempted a network connection')
+
+    monkeypatch.setattr(socket.socket, 'connect', explode)
+    monkeypatch.setattr(socket, 'create_connection', explode)
+
+    out = tmp_path / 'fake-live-anthropic-only.json'
+    assert Q.main(['--fake-live', '--only-provider', 'anthropic',
+                   '--authorisation', str(_authorisation(tmp_path)),
+                   '--out', str(out)]) == 0
+
+    r = json.loads(out.read_text())
+    assert r['selected_providers'] == ['anthropic']
+    assert len(r['candidates']) == 1
+    assert r['candidates'][0]['candidate'].startswith('anthropic:')
+    assert r['dispatches'] == 2 * CALLS_PER_SCRIPT
+    assert r['maximum_evaluator_calls_if_all_survive'] == 2 * CALLS_PER_SCRIPT
+
+
 def test_fake_live_records_are_not_labeled_synthetic(tmp_path, keys):
     """E13-E(6). Real/non-dry-run evidence must never be labeled synthetic."""
     out = tmp_path / 'fake-live.json'

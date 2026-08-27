@@ -727,6 +727,7 @@ class AnthropicTextJudge(TextJudge):
         return {
             "model": self.resolved_version,
             "max_tokens": 128,
+            "thinking": {"type": "disabled"},
             "messages": [{"role": "user", "content": [
                 self._image_part(image_bytes),
                 {"type": "text", "text": PROMPT_TRANSCRIBE}]}],
@@ -736,6 +737,7 @@ class AnthropicTextJudge(TextJudge):
         return {
             "model": self.resolved_version,
             "max_tokens": 16,
+            "thinking": {"type": "disabled"},
             "messages": [{"role": "user", "content": [
                 self._image_part(image_bytes),
                 {"type": "text", "text": PROMPT_VERDICT.format(target=target)}]}],
@@ -762,9 +764,25 @@ class AnthropicTextJudge(TextJudge):
 
         text_parts = [b.get("text", "") for b in (raw.get("content") or [])
                       if b.get("type") == "text" and isinstance(b.get("text"), str)]
-        if not any(text_parts):
-            raise ProviderResponseError("no text and no refusal in an ok-looking Anthropic response")
-        return EvaluatorResponse("".join(text_parts), in_tok, out_tok, cost, req_id, "ok")
+        if any(text_parts):
+            return EvaluatorResponse("".join(text_parts), in_tok, out_tok, cost, req_id, "ok")
+
+        # A successful HTTP response with a documented stop_reason is NOT transport ambiguity.
+        # Sonnet 5 has adaptive thinking on by default; if max_tokens is too small, a response can
+        # legitimately contain no final text. Preserve its request ID, usage and actual cost and
+        # score it as an evaluator failure rather than pretending the provider reply was malformed.
+        stop_reason = raw.get("stop_reason")
+        if stop_reason:
+            content_types = [b.get("type") for b in (raw.get("content") or [])
+                             if isinstance(b, dict)]
+            error_class = ("max_tokens_no_text" if stop_reason == "max_tokens"
+                           else f"empty_response_{stop_reason}")
+            return EvaluatorResponse(
+                "", in_tok, out_tok, cost, req_id, "error", error_class,
+                raw_status_note=f"stop_reason={stop_reason}; content_types={content_types}"[:200])
+
+        raise ProviderResponseError(
+            "Anthropic response had neither text/refusal nor a documented stop_reason")
 
 
 # ------------------------------------------------------------------------------- Gemini
@@ -1001,6 +1019,12 @@ ANTHROPIC_OK_FIXTURE = {
     "content": [{"type": "text", "text": "Flat 50% Off"}],
     "stop_reason": "end_turn",
     "usage": {"input_tokens": 812, "output_tokens": 7},
+}
+ANTHROPIC_MAX_TOKENS_NO_TEXT_FIXTURE = {
+    "id": "msg_fake_max001", "type": "message", "role": "assistant",
+    "content": [{"type": "thinking", "thinking": "brief hidden reasoning"}],
+    "stop_reason": "max_tokens",
+    "usage": {"input_tokens": 810, "output_tokens": 16},
 }
 ANTHROPIC_REFUSAL_FIXTURE = {
     "id": "msg_fake_ref456", "type": "message", "role": "assistant",
