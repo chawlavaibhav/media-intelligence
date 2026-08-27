@@ -22,6 +22,7 @@ CONTRACT = PKG / 'text_qualification' / 'qualification-contract-v2.yaml'
 
 # 96 items x 2 shapes x 3 passes
 CALLS_PER_SCRIPT = 576
+PRIMARY_CALLS_PER_SCRIPT = 288
 
 
 # --------------------------------------------------------------- the frozen contract
@@ -113,7 +114,8 @@ def test_a_devanagari_false_pass_costs_576_calls_and_zero_latin_calls():
     candidate = Q.FakeCandidate(name='leaky', false_pass_on_first_mismatch=True)
     result = Q.qualify_candidate(candidate, guard=BudgetGuard(authorised_usd=Decimal('10.00')))
 
-    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert result['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['devanagari']['total_dispatches'] == CALLS_PER_SCRIPT
     assert result['latin'] is None
     assert candidate.calls_by_script['latin'] == 0
     assert result['qualified_scope'] == []
@@ -124,8 +126,10 @@ def test_a_clean_candidate_reaches_latin_and_spends_576_more():
     candidate = Q.FakeCandidate(name='clean')
     result = Q.qualify_candidate(candidate, guard=BudgetGuard(authorised_usd=Decimal('10.00')))
 
-    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
-    assert result['latin']['calls'] == CALLS_PER_SCRIPT
+    assert result['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['devanagari']['total_dispatches'] == CALLS_PER_SCRIPT
+    assert result['latin']['calls'] == PRIMARY_CALLS_PER_SCRIPT
+    assert result['latin']['total_dispatches'] == CALLS_PER_SCRIPT
     assert candidate.calls_by_script['latin'] == CALLS_PER_SCRIPT
     assert result['qualified_scope'] == ['devanagari', 'latin']
 
@@ -137,7 +141,7 @@ def test_an_unresolved_human_review_stops_before_any_latin_call(tmp_path):
     result = Q.qualify_candidate(candidate, guard=BudgetGuard(authorised_usd=Decimal('10.00')),
                                  perceptibility_path=p)
 
-    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert result['devanagari']['calls'] == PRIMARY_CALLS_PER_SCRIPT
     assert result['latin'] is None
     assert candidate.calls_by_script['latin'] == 0
     assert result['stopped_reason'] == 'latin_human_perceptibility_unresolved'
