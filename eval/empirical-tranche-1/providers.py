@@ -1062,7 +1062,14 @@ ANTHROPIC_ERROR_FIXTURE = {
 GEMINI_OK_FIXTURE = {
     "responseId": "gen-req-99",
     "candidates": [{"content": {"parts": [{"text": "Flat 50% Off"}]}, "finishReason": "STOP"}],
-    "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 6},
+    "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 6,
+                      "thoughtsTokenCount": 4},
+}
+GEMINI_EMPTY_MAX_TOKENS_FIXTURE = {
+    "responseId": "gen-req-max",
+    "candidates": [{"content": {"parts": []}, "finishReason": "MAX_TOKENS"}],
+    "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 0,
+                      "thoughtsTokenCount": 16},
 }
 GEMINI_REFUSAL_FIXTURE = {
     "responseId": "gen-req-100",
