@@ -50,6 +50,8 @@ import sys
 import unicodedata
 from pathlib import Path
 
+import human_review as HR
+
 HERE = Path(__file__).resolve().parent
 PACKAGE_ROOT = HERE.parent
 REPO_ROOT = PACKAGE_ROOT.parent.parent
@@ -174,6 +176,12 @@ def render_pack(out_dir: Path | str = DEFAULT_BUILD_DIR,
 
     invisible = [i["item_id"] for i in items if not i["visible_in_decoded_pixels"]]
 
+    # The human sheet is evidence. Create an empty template only when it does not exist; never
+    # overwrite a completed review during a reproducible image rebuild.
+    if write_records:
+        _ensure_human_sheet(rows)
+    human = HR.review_status(HUMAN_SHEET)
+
     record = {
         "record": "latin-pack-v1-perceptibility",
         "pack_sha256": FINGERPRINT.read_text(encoding="utf-8").split()[0],
@@ -191,17 +199,20 @@ def render_pack(out_dir: Path | str = DEFAULT_BUILD_DIR,
         "mismatches_visible": len(items) - len(invisible),
         "mismatches_invisible": invisible,
         "human_perceptibility_review": {
-            "status": "OUTSTANDING_ZERO_SPEND_HUMAN_PREREQUISITE",
+            "status": human["status"],
+            "resolved": human["ok"],
             "performed_by_this_worker": False,
             "sheet": str(HUMAN_SHEET.relative_to(REPO_ROOT)),
+            "items_reviewed": human.get("items_reviewed", 0),
+            "usable_yes": human.get("usable_yes", 0),
+            "mismatch_visible_yes": human.get("mismatch_visible_yes", 0),
+            "bound_rows": human.get("bound_rows", 0),
+            "pack_sha256": human["pack_sha256"],
+            "reason": human.get("reason"),
             "what_it_must_answer": [
-                "visible_difference — would a person reading this surface notice the corruption?",
+                "visible_difference — for mismatch rows, would a person notice the corruption?",
                 "usable_surface — is this a plausible commercial surface to test a judge on?",
             ],
-            "why_not_done_here": ("EVAL-012 forbids fabricating a human review. The mechanical "
-                                 "pixel gate above proves a difference is ON THE PAGE; it cannot "
-                                 "prove a person would notice it, and the two are not the same "
-                                 "claim."),
             "if_any_item_is_rejected": ("correct the base list in build_latin_pack.py and rebuild "
                                         "the WHOLE manifest before re-freezing the fingerprint. "
                                         "Never patch a single reviewed row in place."),
@@ -214,18 +225,24 @@ def render_pack(out_dir: Path | str = DEFAULT_BUILD_DIR,
         MECHANICAL_RECORD.write_text(
             json.dumps(record, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
             encoding="utf-8")
-        _write_human_sheet(rows)
 
     return record
 
 
-def _write_human_sheet(rows: list[dict]) -> Path:
-    """Emit the review sheet UNFILLED. Every verdict column is blank, by design."""
+def _ensure_human_sheet(rows: list[dict]) -> Path:
+    """Create an empty review template only if none exists.
+
+    Once a human has answered the sheet it is evidence. A routine render rebuild must preserve it
+    byte-for-byte; if the pack later changes, human_review.review_status closes the gate because
+    the recorded pack fingerprint no longer matches.
+    """
+    if HUMAN_SHEET.exists():
+        return HUMAN_SHEET
     with HUMAN_SHEET.open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["item_id", "visible_difference", "usable_surface", "reviewer_note"])
-        for r in sorted(rows, key=lambda x: x["item_id"]):
-            w.writerow([r["item_id"], "", "", ""])
+        for row in sorted(rows, key=lambda x: x["item_id"]):
+            w.writerow([row["item_id"], "", "", ""])
     return HUMAN_SHEET
 
 
