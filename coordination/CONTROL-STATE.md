@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-022 readiness returned locally with strong zero-spend results, but Controller requires one semantic correction before merge/live review: empty OCR transcriptions are scientific evaluator failures; provider/API/backend/quota errors are infrastructure failures that stop the run incomplete and do not enter scientific gate metrics.
+**Updated:** 27 Aug 2026 — User authorised a combined EVAL-022 pass: apply the OCR failure-taxonomy correction, verify at zero spend, then—only if fully green—run live Google Cloud Vision TEXT_DETECTION. Incremental OCR cap USD 1.00; frozen 576-call protocol reserves at most USD 0.864. A-TEXT remains blocked.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -279,26 +279,29 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Apply the zero-spend EVAL-022 failure-taxonomy correction recorded in
-`coordination/decisions/CONTROLLER-EVAL-022-OCR-FAILURE-TAXONOMY-CORRECTION-2026-08-27.md`.
+Execute the combined EVAL-022 correction + conditional live OCR pass recorded in
+`coordination/decisions/CONTROLLER-EVAL-022-COMBINED-CORRECTION-LIVE-OCR-AUTH-2026-08-27.md`.
 
-Worker-reported local branch:
-- `eval/eval-022-ocr-family-readiness`
-- prior local head `3be9c1d3bcaafc612621fe99698d47fce1b7f554`
+Sequence:
+1. apply the OCR scientific-vs-infrastructure failure taxonomy correction;
+2. run full zero-spend focused verification and preflight;
+3. if ANY verification fails, stop before external spend;
+4. if fully green, push the corrected branch and confirm pushed HEAD == tested HEAD;
+5. confirm `GOOGLE_CLOUD_VISION_API_KEY` exists locally without printing it;
+6. run Google Cloud Vision `TEXT_DETECTION` qualification from that exact pushed/tested HEAD;
+7. no language hints, retries 0, target never sent;
+8. Devanagari: 96 × 3 = 288 OCR calls;
+9. Latin only if Devanagari scientifically passes; max total 576 calls;
+10. incremental OCR spend cap USD 1.00;
+11. frozen max OCR reservation USD 0.864;
+12. prior qualification spend USD 0.6712415;
+13. prospective cumulative USD 1.5352415 <= USD 6;
+14. provider/API/quota/transport failures stop incomplete and are not scientific gate evidence;
+15. successful-but-empty OCR responses count toward `empty_transcription_rate_max: 0.05`;
+16. if both scripts qualify, stop before A-TEXT;
+17. no fal calls; Registry unchanged;
+18. preserve all historical EMP-001 evidence byte-identically.
 
-Required:
-1. keep OCR scientific failures separate from infrastructure failures;
-2. add `empty_transcription_rate_max: 0.05` as the OCR scientific availability/failure gate;
-3. successful-but-empty OCR responses count only there;
-4. provider/API/backend/quota/transport failures stop fail-closed and leave the script scientifically incomplete;
-5. infrastructure failures do not increment false-pass, false-fail, or empty-transcription metrics;
-6. retries remain 0;
-7. clean fake-live still completes 576 calls and qualifies;
-8. rerun zero-spend tests/preflight with all keys unset;
-9. preserve all historical evidence byte-identically;
-10. push the corrected branch to origin for Controller inspection;
-11. do not merge;
-12. no live Cloud Vision call; A-TEXT remains blocked.
 
 
 
