@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-016 integrated and fresh macOS zero-spend verification GREEN; EMP-001 is blocked only on runtime key readiness and explicit user spend approval.
+**Updated:** 27 Aug 2026 — EVAL-017 judge-roster switch prepared: Anthropic Haiku 4.5 + Gemini replace OpenAI + Gemini. Fresh zero-spend verification is required before integration or spend approval.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -72,11 +72,13 @@ Proposed spend remains:
 
 ## Text-judge qualification freeze
 
-Candidates remain:
-- OpenAI `gpt-5.4-mini`;
+Active candidates are now:
+- Anthropic `claude-haiku-4-5-20251001`;
 - Google `gemini-3.5-flash-lite`.
 
-Exact resolved model versions must be pinned at execution. Aliases alone are insufficient.
+The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
+
+Exact execution model IDs must be pinned. Anthropic `claude-haiku-4-5-20251001` is itself a dated pinned ID; Google uses the documented stable exact ID `gemini-3.5-flash-lite`.
 
 Materials remain:
 - Devanagari validated view: 96 items;
@@ -217,7 +219,7 @@ This prerequisite no longer blocks the Latin qualification leg.
 ### 2. Runtime secrets
 
 Needed only at execution:
-- `OPENAI_API_KEY`;
+- `ANTHROPIC_API_KEY`;
 - `GOOGLE_API_KEY`;
 - `FAL_KEY`.
 
@@ -231,7 +233,7 @@ Authoritative verification:
 - `coordination/decisions/CONTROLLER-EMP-001-PRE-SPEND-VERIFICATION-2026-08-27.md`
 
 Current execution identifiers:
-- OpenAI: `gpt-5.4-mini-2026-03-17` immutable snapshot;
+- Anthropic: `claude-haiku-4-5-20251001` dated pinned model ID;
 - Google: `gemini-3.5-flash-lite` current documented stable exact model ID.
 
 Do not use the synthetic test fixture `gemini-3.5-flash-lite-001` as though it were a published provider version. Do not use a `*-latest` alias or silently substitute a sibling model.
@@ -241,7 +243,7 @@ Do not use the synthetic test fixture `gemini-3.5-flash-lite-001` as though it w
 Verified on 27 Aug 2026:
 - fal `openai/gpt-image-2`, 1024×1024 medium: USD 0.053/image;
 - fal `fal-ai/ideogram/v3`, BALANCED: USD 0.060/image;
-- OpenAI GPT-5.4 Mini: USD 0.75/M input, USD 4.50/M output;
+- Anthropic Claude Haiku 4.5: USD 1.00/M input, USD 5.00/M output;
 - Gemini 3.5 Flash-Lite: USD 0.30/M input, USD 2.50/M output.
 
 These exactly match the committed EMP-001 planning price book. No price-book correction is required before the spend decision.
@@ -272,8 +274,9 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-1. Confirm runtime availability of `OPENAI_API_KEY`, `GOOGLE_API_KEY`, and `FAL_KEY` without pre-funding above the proposed ceiling.
-2. Present the user the explicit bounded EMP-001 spend decision.
+1. Complete fresh zero-spend verification of EVAL-017 on macOS and integrate only if green.
+2. Confirm runtime availability of `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, and `FAL_KEY` without pre-funding above the proposed ceiling.
+3. Present the user the explicit bounded EMP-001 spend decision.
 3. Only after explicit approval, create the gitignored local authorisation and execute progressively: Devanagari qualification → Latin for survivors → A-TEXT only if a judge qualifies on both scripts.
 
 **No paid provider/model/evaluator call may occur until the user explicitly approves the bounded EMP-001 USD 10 ceiling.**
