@@ -1,0 +1,33 @@
+{
+  "_what_this_is": "Example ingest config for the approved 12-clip base pack. Copy it next to the delivered clip files, fill in the real entries, and pass it to build_perturbation_pack.py --ingest-config. Paths are relative to this file. Nothing here is a defect label: clip_id, regions and shots are identity and geometry, and the truth of every fixture still comes from the transformation that builds it.",
+  "_frozen_requirement": "eval/v1/instruments/RESOURCE-REQUESTS.yaml family 4: >=12 clips, 6-20 seconds, each containing a person, a product and on-screen text, with >=2 clips that cut between shots.",
+  "_fps_note": "target_fps normalises every clip to one integer frame rate so that 'the defect is at frame 41' is unambiguous. It is recorded as a condition of any qualification earned on this pack.",
+  "target_fps": 24,
+  "min_seconds": 6,
+  "max_seconds": 20,
+  "clips": [
+    {
+      "clip_id": "av-clean-01",
+      "file": "av-clean-01.mp4",
+      "material_class": "supplied_real_clip",
+      "pack_ref": "PACK-AV-CLEAN",
+      "rights_ref": "fill in the Resources rights record id; a clip with no rights record must not be ingested",
+      "regions": {
+        "_note": "optional. A bounding box says WHERE to look, never that anything is wrong. Omit them and ingest defaults boxes from frame geometry and records region_source: geometric_default. Declared boxes are strongly preferred for real footage: a defaulted box that lands on a featureless area cannot carry a text or product perturbation at all, and the pack will record that gap rather than invent a fixture.",
+        "text": [120, 820, 840, 130],
+        "product": [640, 300, 300, 280]
+      },
+      "shots": "auto",
+      "_shots_note": "\"auto\" runs the deterministic, threshold-recorded cut detector. A list such as [[0,120],[120,264]] declares boundaries explicitly. Omit the field entirely to treat the clip as one shot, which makes shot_horizontal_flip unavailable for it.",
+      "text_string": null
+    },
+    {
+      "clip_id": "av-clean-02",
+      "file": "av-clean-02.mp4",
+      "material_class": "supplied_real_clip",
+      "pack_ref": "PACK-AV-CLEAN",
+      "rights_ref": "",
+      "shots": [[0, 96], [96, 216]]
+    }
+  ]
+}

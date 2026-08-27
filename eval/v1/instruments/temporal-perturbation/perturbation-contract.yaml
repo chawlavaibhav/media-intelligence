@@ -1,0 +1,351 @@
+# =============================================================================
+# Temporal perturbation contract - what each injected defect proves, and what it
+# does not
+# =============================================================================
+# Task: EVAL-026 · Date: 2026-08-28
+# STATUS: MACHINERY AND MATERIAL SPEC. NO INSTRUMENT IS QUALIFIED BY THIS FILE.
+#
+# This file is the machine-readable half of PERTURBATION-SPEC.md. It states, for
+# each perturbation, which FROZEN capability it supplies known truth for, how
+# complete that truth is, and what it cannot establish.
+#
+# It adds no capability, changes no capability definition, and sets no
+# threshold. Every capability id below appears in
+# eval/pre-execution-freeze/EVALUATOR-QUALIFICATION-MAP.yaml with
+# evaluator_family: temporal_video. A test asserts that, so this file cannot
+# drift away from the frozen contract silently.
+# =============================================================================
+
+meta:
+  task: EVAL-026
+  package: eval/v1/instruments/temporal-perturbation
+  evaluator_family: temporal_video
+  frozen_sources:
+    - eval/pre-execution-freeze/EVALUATOR-QUALIFICATION-MAP.yaml
+    - eval/pre-execution-freeze/CAPABILITY-CONTRACT-v2.yaml
+    - eval/v1/instruments/FAMILY-4-TEMPORAL-VIDEO.md
+    - eval/v1/instruments/QUALIFICATION-MASTER-SPEC.md
+    - eval/v1/instruments/RESOURCE-REQUESTS.yaml
+    - eval/pre-execution-integration/EVALUATOR-AND-MATERIAL-STAGE-MAP.yaml
+  instruments_qualified_by_this_file: 0
+  capabilities_added_by_this_file: 0
+  thresholds_set_by_this_file: 0
+  human_labels_required: 0
+  external_calls: 0
+  spend_usd: 0.0
+
+# =============================================================================
+# The gate, restated from the frozen family-4 spec. NOT redefined here.
+# =============================================================================
+gate:
+  source: eval/v1/instruments/FAMILY-4-TEMPORAL-VIDEO.md#gate
+  measures:
+    - id: detection_recall_per_perturbation_type
+      plain_english: >-
+        Of the defects we injected of one particular kind, how many did the
+        checker find? Reported separately for every kind, never as a single
+        average, because a checker that catches freezes and misses text drift is
+        not "80% accurate" - it is blind to one whole failure mode.
+    - id: false_positive_rate_on_clean_clips
+      plain_english: >-
+        How often did the checker report a defect in a clip we did not touch? A
+        detector that sees drift in a perfectly stable clip is unusable however
+        good its recall is.
+    - id: localisation
+      plain_english: >-
+        Did it point at roughly the right moment? Finding that "something is
+        wrong somewhere" cannot drive a repair.
+  numeric_pass_mark:
+    status: DOES_NOT_EXIST
+    consequence: >-
+      No number anywhere in the frozen contracts says what recall or what
+      false-positive rate is good enough for this family. Until the Controller
+      sets one, the scoring harness computes the three measures and returns
+      gate_verdict: undetermined. Inventing a pass mark to let a run conclude
+      would be the exact convenience this project forbids.
+  sampling_rule:
+    source: eval/v1/instruments/FAMILY-4-TEMPORAL-VIDEO.md
+    rule: >-
+      A defect between two sampled frames is invisible. Every result records the
+      frame sample rate used, and a qualification is valid only at or above the
+      rate it was measured at.
+  independence_rule:
+    source: eval/v1/instruments/QUALIFICATION-MASTER-SPEC.md#4
+    rule: >-
+      Frames from one clip are ONE trial. Sampling twelve frames does not create
+      twelve independent tests. Every fixture carries independent_opportunity_id
+      = its base clip, and rates are reported over clips as well as fixtures.
+
+# =============================================================================
+# Perturbations
+# =============================================================================
+# truth_completeness values:
+#   full     - the transformation establishes the whole judgement the capability
+#              asks for.
+#   negative_direction_only - the transformation can prove a defect EXISTS, but
+#              cannot establish the positive case, because the positive case
+#              needs an instruction or an intent that no transformation creates.
+# =============================================================================
+perturbations:
+
+  - id: frame_freeze
+    plain_english: "Hold one frame still for a known run of frames - the picture stalls."
+    changes_clip_length: false
+    targets: [motion_action_quality, technical_visual_integrity]
+    truth_completeness: full
+    truth_basis: "we chose the frame and the run, so the stall's start and end are exact"
+    min_samples_inside_interval: 2
+    why_two_samples: "the evidence is that two consecutive samples are identical"
+
+  - id: frame_duplication
+    plain_english: >-
+      Replay a run of moving frames an extra time - the motion stutters
+      backwards and forwards instead of stopping.
+    changes_clip_length: true
+    targets: [motion_action_quality, technical_visual_integrity]
+    truth_completeness: full
+    min_samples_inside_interval: 2
+    distinct_from_freeze: >-
+      A freeze repeats ONE frame in place and keeps the clip length. Duplication
+      replays a moving run and makes the clip longer. They fail differently and
+      are scored as separate types.
+
+  - id: frame_drop
+    plain_english: "Remove a known run of frames - time jumps forward."
+    changes_clip_length: true
+    targets: [motion_action_quality, technical_visual_integrity]
+    truth_completeness: full
+    min_samples_inside_interval: 2
+    interval_semantics: >-
+      The recorded interval is the SEAM - the pair of frames that are adjacent
+      in the output but were not adjacent in the source.
+
+  - id: frame_reversal
+    plain_english: "Play a known run backwards - motion reverses and returns."
+    changes_clip_length: false
+    targets: [motion_action_quality, action_adherence]
+    truth_completeness_by_capability:
+      motion_action_quality: full
+      action_adherence: negative_direction_only
+    negative_direction_note: >-
+      Reversing the run provably destroys the action. It does not establish that
+      an unreversed clip performs a REQUESTED action, because no transformation
+      can create a request. Positive action adherence needs a prompt or a brief,
+      which is Stage A material, not Stage Q.
+    min_samples_inside_interval: 2
+
+  - id: segment_reordering
+    plain_english: >-
+      Move a run of frames to a different position, so anything whose visible
+      state only advances - a filling bar, a box being opened - now runs
+      backwards.
+    changes_clip_length: false
+    targets: [sequence_state_continuity, action_adherence]
+    truth_completeness_by_capability:
+      sequence_state_continuity: full
+      action_adherence: negative_direction_only
+    truth_basis: >-
+      The order is provably wrong because we reordered it. Nobody had to label
+      what the state was.
+    min_samples_inside_interval: 2
+
+  - id: shot_horizontal_flip
+    plain_english: >-
+      Mirror exactly one shot of a multi-shot clip. A subject walking left to
+      right in shot 1 now walks right to left in shot 2 with no cue that they
+      turned round.
+    changes_clip_length: false
+    targets: [multi_shot_spatial_continuity]
+    truth_completeness: full
+    requires: "a clip with at least two declared or detected shots"
+    min_samples_inside_interval: 1
+    why_this_matters: >-
+      Structurally invisible at frame level. Every single frame is a perfectly
+      good frame. This is why the temporal family cannot be replaced by running
+      an image checker over sampled frames.
+
+  - id: midclip_horizontal_flip
+    plain_english: "Mirror a run inside one continuous shot - orientation breaks with no cut."
+    changes_clip_length: false
+    targets: [multi_shot_spatial_continuity, technical_visual_integrity]
+    truth_completeness: full
+    min_samples_inside_interval: 1
+    available_when: "always - needs no shot structure, so single-shot clips are still usable"
+
+  - id: identity_splice
+    plain_english: "Swap in frames from a different clip - a different person, mid-shot."
+    changes_clip_length: false
+    targets: [person_stability_in_clip]
+    truth_completeness: full
+    requires: "a donor clip of identical geometry and frame rate"
+    fails_closed_on: "geometry or fps mismatch, or a donor that is the same material"
+    why_no_rescaling: >-
+      Silently rescaling a mismatched donor would introduce a second,
+      undeclared defect and destroy the one-defect-per-fixture property the
+      recall figure depends on.
+    min_samples_inside_interval: 1
+
+  - id: product_region_substitution
+    plain_english: >-
+      Replace the product's pixels with a visibly different object from a known
+      frame onward - the product morphs mid-clip.
+    changes_clip_length: false
+    targets: [product_stability_in_clip]
+    truth_completeness: full
+    requires: "a product region (a bounding box)"
+    region_note: >-
+      A bounding box says WHERE to look. It is geometry, not a judgement, and it
+      never asserts that anything is wrong. Fixtures built on a defaulted box
+      record region_source: geometric_default so the weaker basis is visible.
+    min_samples_inside_interval: 1
+
+  - id: text_region_mutation
+    plain_english: >-
+      Alter the rendered text inside its region from a known frame onward. Works
+      on real footage because it changes pixels rather than characters.
+    changes_clip_length: false
+    targets: [text_logo_stability_in_clip]
+    truth_completeness: full
+    truth_basis: "the text surface provably changed at frame k"
+    min_samples_inside_interval: 1
+    project_relevance: >-
+      This is the project's own founding failure in video form: Devanagari text
+      that is correct at the start of a clip and wrong later. It exists in no
+      single frame.
+
+  - id: text_glyph_substitution
+    plain_english: "Re-render the text region with a different string from frame k onward."
+    changes_clip_length: false
+    targets: [text_logo_stability_in_clip]
+    truth_completeness: full
+    available_only_on: constructed_stand_in
+    why: >-
+      We do not own the glyphs in supplied footage. Real clips use
+      text_region_mutation, which gives the same capability pixel-level rather
+      than string-level truth.
+    min_samples_inside_interval: 1
+
+  - id: framing_discontinuity
+    plain_english: >-
+      Crop and rescale from a known frame onward - the framing jumps while the
+      subject and the motion are unchanged.
+    changes_clip_length: false
+    targets: [camera_framing_fidelity]
+    truth_completeness: negative_direction_only
+    negative_direction_note: >-
+      A known framing BREAK is constructible. Whether a clip honours a REQUESTED
+      camera move is not, because the request does not exist until a brief
+      exists. The frozen contract also marks this capability
+      model_based_plus_human with required adjudication, and nothing here
+      changes that.
+    min_samples_inside_interval: 1
+
+  - id: technical_corruption
+    plain_english: >-
+      Inject deterministic block-level corruption in a known interval - the
+      breakup and garbage a customer rejects on sight.
+    changes_clip_length: false
+    targets: [technical_visual_integrity]
+    truth_completeness: full
+    determinism: "block pattern seeded from the source clip hash plus the parameters"
+    min_samples_inside_interval: 1
+    frozen_note: >-
+      The frozen map marks this capability model_based_plus_human with required
+      adjudication. Injected corruption gives known-defect recall; it does not
+      remove the human adjudication the frozen contract requires.
+
+# =============================================================================
+# Controls
+# =============================================================================
+controls:
+  clean_positive_controls:
+    what: "every base clip, untouched, entered as a fixture with defect_present: false"
+    measures: "false-positive rate - the half of the gate recall cannot show"
+  corrupt_negative_controls:
+    what: "deliberately unreadable artifacts the loader must refuse"
+    cases:
+      - nc-truncated-frame
+      - nc-corrupt-crc
+      - nc-missing-frame
+      - nc-silent-frame-swap
+      - nc-zero-frames
+      - nc-not-a-png
+      - nc-bad-json
+    required_behaviour: >-
+      ClipError is raised, the run stops, and the clip is never scored and never
+      counted as clean. If any of these loads, the pack build aborts.
+    source_rule: eval/v1/instruments/QUALIFICATION-MASTER-SPEC.md#6
+  builder_controls:
+    - id: nc-null-perturbation
+      what: "a declared perturbation that leaves the pixels identical"
+      required_behaviour: "NullPerturbationError; the fixture is never written"
+      why: >-
+        A fixture whose injected defect is invisible would score every
+        instrument as a miss and silently corrupt the recall figure.
+
+# =============================================================================
+# Capability status once the approved base clips exist
+# =============================================================================
+capability_readiness:
+  precondition: >-
+    12 clean base clips of 6-20 seconds, supplied by Resources, each carrying a
+    person, a product and on-screen text, with at least 2 clips that cut between
+    shots (RESOURCE-REQUESTS.yaml family 4).
+  note: >-
+    "Runnable" below means the qualification protocol can EXECUTE and produce
+    per-type recall, false-positive and localisation numbers. It does not mean
+    any instrument passes, and it does not mean the family is qualified.
+  capabilities:
+    - id: motion_action_quality
+      runnable_on_12_clips: yes
+      perturbation_types: [frame_freeze, frame_duplication, frame_drop, frame_reversal]
+      residual: "the frozen contract requires motion load recorded as a condition; the pack records it per clip"
+    - id: person_stability_in_clip
+      runnable_on_12_clips: yes
+      perturbation_types: [identity_splice]
+      residual: "donor clips must match geometry and fps; ingest normalises fps, so this holds within one delivered pack"
+    - id: product_stability_in_clip
+      runnable_on_12_clips: yes
+      perturbation_types: [product_region_substitution]
+      residual: "needs a product region; a geometric default weakens the basis and is recorded as such"
+    - id: text_logo_stability_in_clip
+      runnable_on_12_clips: yes
+      perturbation_types: [text_region_mutation]
+      residual: "string-level truth needs constructed text; real clips get pixel-level truth"
+    - id: multi_shot_spatial_continuity
+      runnable_on_12_clips: yes
+      perturbation_types: [shot_horizontal_flip, midclip_horizontal_flip]
+      residual: "shot_horizontal_flip needs the >=2 clips with cuts that RESOURCE-REQUESTS already asks for"
+    - id: sequence_state_continuity
+      runnable_on_12_clips: yes
+      perturbation_types: [segment_reordering]
+      residual: "the frozen map marks this model_based_plus_human; reordering gives known truth, not a removal of adjudication"
+    - id: technical_visual_integrity
+      runnable_on_12_clips: yes
+      perturbation_types: [technical_corruption, frame_freeze, frame_duplication, frame_drop, midclip_horizontal_flip]
+      residual: "frozen map marks this model_based_plus_human; adjudication requirement unchanged"
+    - id: action_adherence
+      runnable_on_12_clips: partial
+      perturbation_types: [frame_reversal, segment_reordering]
+      residual: >-
+        Only the negative direction. Proving a checker notices a destroyed
+        action does not prove it can confirm a requested action happened. The
+        positive direction needs a brief, which is Stage A material.
+    - id: camera_framing_fidelity
+      runnable_on_12_clips: partial
+      perturbation_types: [framing_discontinuity]
+      residual: >-
+        Only the negative direction, for the same reason: a camera INSTRUCTION
+        does not exist until a brief exists.
+
+# =============================================================================
+out_of_scope:
+  - id: audio_video_synchronisation
+    listed_in: eval/v1/instruments/FAMILY-4-TEMPORAL-VIDEO.md
+    why_not_implemented: >-
+      It belongs to evaluator family 5 (speech_audio_av) in the frozen
+      qualification map, not to temporal_video, and the project holds no audio
+      of any kind. Shifting audio by a known number of milliseconds is the right
+      construction for it, and it is straightforward to add once AV material
+      exists - but implementing it now would produce machinery with nothing to
+      run on and would overstate this task's coverage.
