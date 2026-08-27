@@ -647,7 +647,8 @@ def _dry_run(out: Path) -> dict:
 
 
 def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver | None = None,
-                          resolved_versions: dict | None = None) -> list[LiveCandidate]:
+                          resolved_versions: dict | None = None,
+                          only_provider: str | None = None) -> list[LiveCandidate]:
     """Construct the two frozen judge candidates behind whatever transport is supplied.
 
     `http` is the injected HTTP layer. Passing None means the real socket, which is why nothing in
@@ -665,6 +666,8 @@ def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver |
     candidates = []
     for spec in cfg["qualification"]["judge_candidates"]:
         provider, alias = spec["provider"], spec["model_alias"]
+        if only_provider is not None and provider != only_provider:
+            continue
         version = resolved_versions.get(provider)
         if not version:
             raise NotAuthorised(
@@ -686,7 +689,7 @@ def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver |
 
 
 def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = None,
-             mode: str = "live") -> dict:
+             mode: str = "live", only_provider: str | None = None) -> dict:
     """The real orchestration. Devanagari first; Latin only for survivors; one shared ceiling.
 
     The guard is shared across BOTH candidates and BOTH scripts, exactly as frozen: the ceiling is
@@ -695,7 +698,8 @@ def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = Non
     """
     images = ImageResolver()
     candidates = build_live_candidates(guard, http=http, images=images,
-                                       resolved_versions=resolved_versions)
+                                       resolved_versions=resolved_versions,
+                                       only_provider=only_provider)
 
     results = []
     for candidate in candidates:
@@ -810,6 +814,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--anthropic-version", default=None)
     ap.add_argument("--gemini-version", default=None)
+    ap.add_argument("--only-provider", choices=["anthropic", "google"], default=None,
+                    help="bounded continuation: run only one configured judge provider")
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args(argv)
 
@@ -846,13 +852,15 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         versions = {"anthropic": a.anthropic_version, "google": a.gemini_version}
-        if not all(versions.values()):
+        required = [a.only_provider] if a.only_provider else ["anthropic", "google"]
+        missing = [p for p in required if not versions.get(p)]
+        if missing:
             raise NotAuthorised(
-                "--live requires --anthropic-version and --gemini-version. Exact model IDs "
-                "must be pinned at execution; a run that cannot name what it called cannot "
-                "be reproduced.")
+                f"--live is missing exact model ID(s) for: {missing}. A run that cannot name "
+                "what it called cannot be reproduced.")
 
-        result = run_live(guard, http=None, resolved_versions=versions)
+        result = run_live(guard, http=None, resolved_versions=versions,
+                          only_provider=a.only_provider)
         out = Path(a.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True,
