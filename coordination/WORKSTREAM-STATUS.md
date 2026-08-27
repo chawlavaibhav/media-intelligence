@@ -258,17 +258,18 @@ No longer zero:
 **Every lane open at GOV-005 has settled**, and **no worker may infer authorisation from any of those
 completed task files.**
 
-**Post-GOV-006 parallel work was authorised and then narrowed by a newer Controller correction.**
-`coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` supersedes the original five-lane programme where stated:
-- **EVAL-032** continues only as 12/12 real-clip ingest/materialisation closure;
-- **EVAL-033** continues only as the minimum temporal checker-stack/precommit design;
-- **EVAL-031** must not start as written;
-- **EVAL-034** is cancelled;
-- **RES-006** is deferred.
+**Post-GOV-006 parallel work was authorised, narrowed, and then stopped as an immediate priority.**
+`coordination/decisions/CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` is the current disposition:
+- **EVAL-031** remains stopped;
+- **EVAL-032** is deferred until automated temporal-evaluator qualification is again the objective;
+- **EVAL-033** is deferred on the same basis;
+- **EVAL-034** remains cancelled;
+- **RES-006** remains deferred.
 
-GOV-006 did not audit these post-snapshot decisions. The correction also sets a real customer
-vertical-slice pilot as the next Controller planning priority; it does not by itself authorise pilot
-execution. **GOV-007 is not authorised.**
+**No domain execution lane is currently active.** The next Controller priority is a real customer
+vertical-slice pilot: prompt -> Normalized Request -> Creative IR -> manually authored production
+recipe -> real generation -> explicit human inspection -> bounded repair -> candidate accepted
+outcome. The pilot is product-learning, not Registry evidence or Stage C. **GOV-007 is not authorised.**
 
 What the settled state leaves genuinely open:
 
