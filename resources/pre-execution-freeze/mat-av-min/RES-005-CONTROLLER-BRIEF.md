@@ -1,8 +1,8 @@
 # Controller Brief — RES-005
 
 **TASK:** RES-005 — MAT-AV-MIN bounded acquisition (Stage-Q temporal perturbation base)
-**STATUS:** completed — **12 of 12 frozen and accepted by Eval's own ingest**, with a
-**stated shortfall against one reading of the frozen contract** (see SHORTFALL)
+**STATUS:** completed — **12 of 12 frozen and cleanliness-screened; representative 3 of 3 accepted by Eval's own ingest**, with a
+**stated shortfall against one reading of the frozen contract** (see SHORTFALL). The full 12-clip ingest was not completed because the frame-PNG expansion exhausted local disk; this is recorded in `INGEST-VERIFICATION.md`.
 **Branch:** `work/res-005-mat-av-min-acquisition` · **not merged**
 **Spend:** **₹0 / USD 0.** No paid model call, no account, no login, no form, no terms acceptance,
 no payment, no email.
@@ -185,8 +185,9 @@ not declared.
 
 ## FAILURES / BLOCKERS
 
-None outstanding. Two Commons files initially failed to download because already-encoded URLs were
-being encoded a second time; fixed, and both retrieved.
+Acquisition has no outstanding download/right/cleanliness blocker. The **material-contract interpretation remains a Controller decision**: pack-level coverage passes; per-clip all-three-content coverage does not. Also, only a representative 3-clip subset completed Eval ingest; the attempted 12-clip ingest exhausted local disk because of rebuildable frame PNG expansion.
+
+Two Commons files initially failed to download because already-encoded URLs were being encoded a second time; fixed, and both retrieved.
 
 ---
 
@@ -317,11 +318,8 @@ Modified — `resources/HANDOFF.md` (appended RES-005 section).
 
 ## RECOMMENDED NEXT STEP
 
-Settle decision 1. If the pack-level reading governs, the next task is Eval's and the injector
-**already exists** — EVAL-026 shipped it. Family-4 qualification can run against these twelve clips
-with no acquisition, no human labels and no API spend, and it would produce this project's **first
-qualified evaluator family** against a current floor of zero. This is a recommendation, not work
-started; RES-005 ran ingest only, and no perturbation pack was built.
+Settle decision 1. If the pack-level reading governs, the next work is Eval-side and the injector
+**already exists** — EVAL-026 shipped it. The perturbation pack itself needs no new acquisition or human defect labels. **Actual checker qualification is not yet authorised and its API/spend profile depends on the candidate checker selected by the Controller.** A pass mark must also be frozen before any real qualification observations are run or inspected. A checker could become the project's first qualified evaluator family only if it passes that precommitted gate; this result is not guaranteed. RES-005 ran ingest only, and no perturbation pack was built.
 
 ---
 
