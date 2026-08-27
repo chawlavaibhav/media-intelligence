@@ -1,0 +1,60 @@
+# MAT-AV-MIN media-lineage manifest - RES-005
+#
+# Media lineage only. Request lineage is a SEPARATE namespace (lineage contract v3, gate
+# G11) and is not_applicable here: these clips answer no customer brief. It is recorded as
+# not_applicable rather than left blank, because an unpopulated request lineage would read
+# as INDETERMINATE and INDETERMINATE must never be read as independent.
+generated_utc: 2026-08-27T20:16:23Z
+task: RES-005
+request_lineage: not_applicable
+clips: 12
+source_lineages: 5
+
+independence_warning: >
+  12 clips span only 5 source lineages. Family-4's false-positive
+  rate on clean clips is therefore measured over fewer independent origins than the clip
+  count suggests. MAT-AV-MIN sets disjointness_required: false because perturbation truth
+  is injected, so this is not a leakage defect - but a per-lineage breakdown must accompany
+  any pooled false-positive number, or the number will read as more independent than it is.
+
+lineages:
+  lin_blender_open_movies:
+    clips: [MAVM-01, MAVM-02, MAVM-03]
+    count: 3
+    note: >-
+      Blender Foundation open-movie programme. Three different films, but one studio, one pipeline and one renderer. Treat as ONE lineage: a temporal instrument that overfits to Blender's render characteristics would look good on all three.
+  lin_commons_ownwork_bprieur:
+    clips: [MAVM-12]
+    count: 1
+    note: >-
+      Single Commons contributor's own work (Benoit Prieur). Independent of every other lineage in this set.
+  lin_commons_ownwork_ruindig:
+    clips: [MAVM-11]
+    count: 1
+    note: >-
+      Single Commons contributor's own work (RuinDig / Yuki Uchida). Independent of every other lineage in this set.
+  lin_nasa_public_domain:
+    clips: [MAVM-04, MAVM-05, MAVM-06, MAVM-07, MAVM-08]
+    count: 5
+    note: >-
+      NASA-produced video across HQ and JPL. Different subjects and crews, but one broadcast post-production house style - the same lower-third templates, graphics package and delivery encode. ONE lineage.
+  lin_wikimedia_foundation_first_party:
+    clips: [MAVM-09, MAVM-10]
+    count: 2
+    note: >-
+      Wikimedia Foundation's own productions, uploaded by WMF staff accounts. Two different shoots with different people, but one commissioning organisation. ONE lineage.
+
+byte_and_content_lineage:
+  byte_level: clip_sha256 in MAT-AV-MIN-MANIFEST.csv
+  content_level: content_lineage_key - a clip and its source work share content;
+    two clips cut from one work would share this key. In this set every clip comes from
+    a distinct source work, so no two clips share a content key.
+  source_level: source_lineage_key above.
+
+perturbation_reuse_consequence: >
+  CONTROLLED-PACK-REQUIREMENTS-v2 records that clips reused as a perturbation base share
+  content lineage with their AV originals and cannot be an independent holdout for a
+  speech measurement that also uses the original. That constraint does not bind here,
+  because none of these clips is part of PACK-AV-CLEAN and none carries a verified
+  transcript, consent record or turn boundary. They are a temporal perturbation base
+  only. If PACK-AV-CLEAN is later acquired, it must NOT reuse these works.

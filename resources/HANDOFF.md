@@ -200,3 +200,31 @@ reuse). The latter also proposes a replacement Resources row for
 
 **NEXT APPROVED TASK:** none. Await a Controller-assigned task file, or a concrete Eval requirement
 to source against. Do not begin broad source discovery.
+
+---
+
+## RES-005 — MAT-AV-MIN bounded acquisition (28 Aug 2026)
+
+**Branch:** `work/res-005-mat-av-min-acquisition` · **Spend: ₹0 / USD 0** · not merged.
+
+**What it is, plainly.** Twelve short video clips, acquired free and legally, to serve as the
+*clean base* the temporal evaluator family perturbs. Eval takes a clean clip, injects a known
+defect at a known frame — a freeze, a swapped face, a changed word of on-screen text — and checks
+whether a candidate instrument finds it. Because the defect is injected, the correct answer is
+known by construction and **no human has to label anything**. That is why this is the cheapest
+large unblock in the plan: nine capabilities, twelve clips, zero annotation.
+
+**Rights posture.** Every clip is CC BY, CC BY-SA, CC0 or US-Government public domain, with the
+licence readable at a page a human can open. No CC-BY-NC. No YouTube ripping, no reposts, no
+social-media downloads, no request-corpus or user-uploaded identity footage.
+
+**What these clips are NOT.** They are **not** `PACK-AV-CLEAN`. No consent instrument, no verified
+transcript, no turn boundaries, no language balance, not controlled captures. Acquiring them
+satisfies nothing the AV pack owes, and the AV pack's five rights gates remain exactly as open as
+`RIGHTS-ACQUISITION-PLAN.md` left them. A cross-stream proposal
+(`resources/PROPOSED-INTEGRATION-CHANGE-RES-005-EVAL.md`) asks the Controller to settle which of
+two frozen documents defines MAT-AV-MIN, because they disagree.
+
+**Where things are.** Manifests, provenance and lineage in
+`resources/pre-execution-freeze/mat-av-min/`. Media in `resources/corpus/raw/mat-av-min/`, which
+`.gitignore` excludes — reproduce it with `python3 resources/scripts/acquire_mat_av_min.py`.
