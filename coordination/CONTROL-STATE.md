@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-022 OCR taxonomy correction is verified and pushed, but Controller review found the OCR runner still lacks a real persistent-ledger `--live` orchestration path. Final zero-spend live-runner wiring is now required; the user's existing USD 1.00 combined OCR authorisation remains valid once that wiring is green.
+**Updated:** 27 Aug 2026 — User overrode the prior Gemini pacing restriction and authorised live smoke tests for both Gemini API and Google Cloud Vision API. The 7-second minimum is removed (0-second mandatory pacing). After final OCR live-runner wiring verifies green, run one Gemini smoke + one Vision smoke, then full Vision qualification if healthy, all within the existing USD 1.00 incremental cap.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -279,27 +279,38 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Apply the final EVAL-022 live-runner wiring correction:
+Execute the combined dual-API + OCR flow recorded in:
+- `coordination/decisions/CONTROLLER-DUAL-API-SMOKE-NO-GEMINI-PACING-2026-08-27.md`
 - `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RUNNER-WIRING-CORRECTION-2026-08-27.md`
 
-Current pushed OCR branch:
-- `eval/eval-022-ocr-family-readiness`
-- worker-reported head `6b174b2659584e23fa5704ad48058e0d5c9f35df`
+Required sequence:
+1. bring current `origin/main` into `eval/eval-022-ocr-family-readiness`;
+2. finish real OCR `--live` persistent-ledger wiring;
+3. run all zero-network verification; if anything fails, stop before spend;
+4. push exact tested head; do not merge;
+5. run ONE Gemini `gemini-3.5-flash-lite` connectivity smoke call:
+   - existing `GOOGLE_API_KEY`
+   - `thinkingLevel: minimal`
+   - retries 0
+   - **no mandatory pacing / 0-second minimum**
+   - connectivity evidence only, not scientific qualification;
+6. run ONE Google Cloud Vision `TEXT_DETECTION` connectivity smoke call:
+   - `GOOGLE_CLOUD_VISION_API_KEY`
+   - no language hints
+   - retries 0;
+7. if both smoke paths are sufficiently healthy and no ambiguous stop occurred, run full OCR qualification from Devanagari call 1;
+8. OCR qualification max 576 scientific calls;
+9. Gemini smoke reserve USD 0.000760;
+10. Vision smoke reserve USD 0.001500;
+11. OCR qualification max reserve USD 0.864000;
+12. max incremental for this combined pass USD 0.866260 <= user cap USD 1.00;
+13. prior cumulative USD 0.6712415; prospective cumulative max USD 1.5375015 <= USD 6;
+14. no retries;
+15. preserve prior evidence; append only to ledger;
+16. smoke records marked `connectivity_smoke_only`, never Registry/A-TEXT evidence;
+17. if OCR qualifies both scripts, stop before A-TEXT;
+18. no fal calls; Registry unchanged.
 
-Required:
-1. bring current `origin/main` into the OCR branch;
-2. add a real `--live` OCR path;
-3. wire existing EMP-001 authorisation + persistent `TrancheRun` / qualification stage budget;
-4. construct exactly one Cloud Vision TEXT_DETECTION candidate, no language hints;
-5. read `GOOGLE_CLOUD_VISION_API_KEY` only at dispatch;
-6. persist canonical OCR qualification evidence + human-readable live result;
-7. preserve historical evidence byte-identically and append only to spend ledger;
-8. prove live orchestration with injected HTTP at zero network/spend;
-9. all focused tests/preflight green;
-10. push exact tested head; do not merge;
-11. if key exists locally after green verification, immediately run the already-authorised live OCR screen under the existing USD 1.00 incremental cap;
-12. if key is missing, stop pre-dispatch;
-13. A-TEXT remains blocked; Registry unchanged.
 
 
 
