@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — Gemini 3.5 Flash-Lite completed the full contract-v2 primary Devanagari screen and is disqualified on 18 blind false passes plus false-fail/consistency gate failures. The later diagnostic 429 does not change qualification. General-purpose VLM text judges are now frozen; EVAL-022 opens a zero-spend OCR-family readiness pass.
+**Updated:** 27 Aug 2026 — EVAL-022 readiness returned locally with strong zero-spend results, but Controller requires one semantic correction before merge/live review: empty OCR transcriptions are scientific evaluator failures; provider/API/backend/quota errors are infrastructure failures that stop the run incomplete and do not enter scientific gate metrics.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -279,31 +279,27 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run **EVAL-022 OCR-family qualification readiness** at zero external spend.
+Apply the zero-spend EVAL-022 failure-taxonomy correction recorded in
+`coordination/decisions/CONTROLLER-EVAL-022-OCR-FAILURE-TAXONOMY-CORRECTION-2026-08-27.md`.
 
-Authoritative decision:
-- `coordination/decisions/CONTROLLER-EVAL-022-OCR-FAMILY-PIVOT-2026-08-27.md`
+Worker-reported local branch:
+- `eval/eval-022-ocr-family-readiness`
+- prior local head `3be9c1d3bcaafc612621fe99698d47fce1b7f554`
 
-Task:
-- `eval/tasks/EVAL-022-OCR-FAMILY-READINESS.md`
+Required:
+1. keep OCR scientific failures separate from infrastructure failures;
+2. add `empty_transcription_rate_max: 0.05` as the OCR scientific availability/failure gate;
+3. successful-but-empty OCR responses count only there;
+4. provider/API/backend/quota/transport failures stop fail-closed and leave the script scientifically incomplete;
+5. infrastructure failures do not increment false-pass, false-fail, or empty-transcription metrics;
+6. retries remain 0;
+7. clean fake-live still completes 576 calls and qualifies;
+8. rerun zero-spend tests/preflight with all keys unset;
+9. preserve all historical evidence byte-identically;
+10. push the corrected branch to origin for Controller inspection;
+11. do not merge;
+12. no live Cloud Vision call; A-TEXT remains blocked.
 
-Key requirements:
-1. preserve LLM qualification contracts v1/v2 and all historical evidence;
-2. create a separate OCR-family qualification contract;
-3. first candidate config: Google Cloud Vision `TEXT_DETECTION`, no language hints;
-4. transcription-only evaluator; do not fabricate an LLM-style verdict shape;
-5. exact equality remains local code after NFC + surrounding whitespace trim;
-6. zero mismatch false passes remains the safety gate;
-7. 3 repeats, Devanagari first, Latin only for survivors;
-8. adapter behind an injected HTTP seam; target never sent to provider;
-9. persist and fingerprint-bind OCR outcomes/config/call records;
-10. conservative price basis USD 0.0015/image, regardless of free tier;
-11. max prospective OCR qualification: 576 calls = USD 0.864 reservation;
-12. current qualification spend: USD 0.6712415;
-13. prospective cumulative: USD 1.5352415 <= USD 6;
-14. zero provider/model/evaluator calls during readiness;
-15. A-TEXT remains blocked;
-16. return for Controller review before any Cloud Vision live call.
 
 
 
