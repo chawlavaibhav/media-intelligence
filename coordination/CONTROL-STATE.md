@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — First EMP-001 live qualification run returned one valid disqualification (Anthropic Haiku 4.5) and one non-scientific Gemini 429 halt. Gemini-only paced continuation is authorised under remaining qualification headroom.
+**Updated:** 27 Aug 2026 — First EMP-001 live run disqualified Haiku 4.5; Gemini was unresolved after a 17-call 429 halt. User directed Sonnet; Sonnet 5-only qualification continuation is now the active next gate.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -32,7 +32,7 @@ Still true:
 
 The EVAL-012→016 work makes the execution machinery safer and closes the zero-spend material gates. It does **not** establish any model-quality result.
 
-## EMP-001 — prepared, NOT authorised
+## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
 Frozen paid shape remains:
 
@@ -61,24 +61,26 @@ Primary measurement remains:
 
 A-TEXT remains only a partial admission screen. It may eliminate deeper text spend; it cannot promote a complete Stage-A model slot.
 
-Proposed spend remains:
+Approved spend remains:
 - total consumed-API ceiling **USD 10.00**;
 - planning reference ≈ ₹954 before tax;
 - text-judge qualification sub-cap **USD 6.00**;
 - retries **0**;
 - no account pre-funding above the approved ceiling.
 
-**No part of that spend is approved yet.**
+**The bounded EMP-001 spend was explicitly approved by the user and is recorded in `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`.**
 
 ## Text-judge qualification freeze
 
-Active candidates are now:
-- Anthropic `claude-haiku-4-5-20251001`;
+Configured candidates are now:
+- Anthropic `claude-sonnet-5`;
 - Google `gemini-3.5-flash-lite`.
+
+For the active continuation, **Sonnet 5 only** is authorised. The pending Gemini continuation is superseded for now.
 
 The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
 
-Exact execution model IDs must be pinned. Anthropic `claude-haiku-4-5-20251001` is itself a dated pinned ID; Google uses the documented stable exact ID `gemini-3.5-flash-lite`.
+Exact execution model IDs must be pinned. Anthropic `claude-sonnet-5` is a pinned model ID under Anthropic's current model-ID policy; Google uses the documented stable exact ID `gemini-3.5-flash-lite`.
 
 Materials remain:
 - Devanagari validated view: 96 items;
@@ -233,7 +235,7 @@ Authoritative verification:
 - `coordination/decisions/CONTROLLER-EMP-001-PRE-SPEND-VERIFICATION-2026-08-27.md`
 
 Current execution identifiers:
-- Anthropic: `claude-haiku-4-5-20251001` dated pinned model ID;
+- Anthropic: `claude-sonnet-5` pinned model ID;
 - Google: `gemini-3.5-flash-lite` current documented stable exact model ID.
 
 Do not use the synthetic test fixture `gemini-3.5-flash-lite-001` as though it were a published provider version. Do not use a `*-latest` alias or silently substitute a sibling model.
@@ -243,10 +245,10 @@ Do not use the synthetic test fixture `gemini-3.5-flash-lite-001` as though it w
 Verified on 27 Aug 2026:
 - fal `openai/gpt-image-2`, 1024×1024 medium: USD 0.053/image;
 - fal `fal-ai/ideogram/v3`, BALANCED: USD 0.060/image;
-- Anthropic Claude Haiku 4.5: USD 1.00/M input, USD 5.00/M output;
+- Anthropic Claude Sonnet 5: USD 2.00/M input, USD 10.00/M output;
 - Gemini 3.5 Flash-Lite: USD 0.30/M input, USD 2.50/M output.
 
-These exactly match the committed EMP-001 planning price book. No price-book correction is required before the spend decision.
+These match the current committed EMP-001 price book after the Sonnet 5 switch.
 
 ### 5. Rebuild gitignored generated image sets — VERIFIED
 
@@ -274,18 +276,19 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run the authorised Gemini-only paced qualification continuation recorded in `coordination/decisions/CONTROLLER-EMP-001-GEMINI-CONTINUATION-2026-08-27.md`.
+Run the authorised **Sonnet 5-only** qualification continuation recorded in `coordination/decisions/CONTROLLER-EMP-001-SONNET-5-CONTINUATION-2026-08-27.md`.
 
-Frozen continuation constraints:
-1. Google `gemini-3.5-flash-lite` only; do not rerun Anthropic.
+Constraints:
+1. Anthropic `claude-sonnet-5` only; do not rerun Haiku and do not run Gemini in this continuation.
 2. Devanagari first; Latin only if Devanagari passes.
-3. Same 96-item batteries, 2 shapes, 3 repeats, prompts and thresholds.
-4. Minimum 7 seconds between Gemini dispatches; no concurrency.
-5. Retries 0.
-6. Preserve the first run, including the 17-call 429 and its provisional reservation.
-7. Remaining qualification headroom before continuation: USD 5.9145782.
-8. No billing-tier upgrade or prefunding is authorised.
-9. On any new ambiguous dispatch failure, count it, persist it, stop.
-10. Do not run A-TEXT unless Gemini qualifies on both scripts.
+3. Same 96-item batteries, 2 shapes, 3 repeats, prompts, thresholds and reviewed materials.
+4. Preserve the first live run and its ledger/evidence.
+5. Already-counted qualification spend: USD 0.0854218.
+6. Sonnet worst-case reservation if both scripts run: USD 5.345280.
+7. Cumulative worst-case qualification amount: USD 5.4307018 <= USD 6.
+8. Retries 0. Any ambiguous dispatch failure is counted and stops the continuation.
+9. No billing-tier change or prefunding is authorised.
+10. Stop after qualification and report to Controller before A-TEXT.
+
 
 
