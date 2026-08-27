@@ -1,0 +1,440 @@
+{
+  "base_clip_content_hashes": {
+    "dummy-01": "41710901ca88e54a118b64081235d6f86c28c136b267ab49331093229a7f78fa",
+    "dummy-02": "65102b93a6cc7f1ced0e1272c0927c4b4bac0073f0785f84c150d5618a2437e0",
+    "dummy-03": "cebae5467eceafad8802d92308d5cdd74698030801597eb4e693ecbdfc39579f",
+    "dummy-04": "a291697e9e4300c3ec6ee8b4ed577ac94eb11021c51f4844f86d1a0468ad35e2",
+    "dummy-05": "7593636908971f7960a2f991d4d4124e989327b91dff3dc8fe2f3d861afde070",
+    "dummy-06": "b03c21e13741a54305e2eae9e1ed0b8475d5a821a1fa7b8f6b43179f21b182a6",
+    "dummy-07": "0c8f218fe977a50797adf20e322e5a233b8846f645e134a9241d5d2e4e75c39c",
+    "dummy-08": "d651ee725d8081def855611e0900274aa1e93d2b057fc6ee776787a59ff2745e",
+    "dummy-09": "fffb92798ab67c8f010d87ef33149982af617408ecc57ef2168a4c6cb4d48fc6",
+    "dummy-10": "2bfde38b0a67a62fd947403eed2a94474b12cc593d348ab7647b363b0192cc6c",
+    "dummy-11": "277e02cbe4715ce70454d5b453c5f9f83cbc4d670743381f2bc4cdaa7ee40cad",
+    "dummy-12": "7b83183d7029170ae4f1d6ef19e13be06bbddf159a01c352f804621577500c22"
+  },
+  "base_clip_motion_load": {
+    "dummy-01": 0.00358192,
+    "dummy-02": 0.00290602,
+    "dummy-03": 0.00390893,
+    "dummy-04": 0.0030048,
+    "dummy-05": 0.00331591,
+    "dummy-06": 0.00219793,
+    "dummy-07": 0.00378537,
+    "dummy-08": 0.00220254,
+    "dummy-09": 0.00260777,
+    "dummy-10": 0.00241151,
+    "dummy-11": 0.01145932,
+    "dummy-12": 0.00724996
+  },
+  "capability_coverage": {
+    "action_adherence": {
+      "fixtures": 24,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "frame_reversal",
+        "segment_reordering"
+      ]
+    },
+    "camera_framing_fidelity": {
+      "fixtures": 12,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "framing_discontinuity"
+      ]
+    },
+    "motion_action_quality": {
+      "fixtures": 48,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "frame_drop",
+        "frame_duplication",
+        "frame_freeze",
+        "frame_reversal"
+      ]
+    },
+    "multi_shot_spatial_continuity": {
+      "fixtures": 14,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "midclip_horizontal_flip",
+        "shot_horizontal_flip"
+      ]
+    },
+    "person_stability_in_clip": {
+      "fixtures": 12,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "identity_splice"
+      ]
+    },
+    "product_stability_in_clip": {
+      "fixtures": 12,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "product_region_substitution"
+      ]
+    },
+    "sequence_state_continuity": {
+      "fixtures": 12,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "segment_reordering"
+      ]
+    },
+    "technical_visual_integrity": {
+      "fixtures": 60,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "frame_drop",
+        "frame_duplication",
+        "frame_freeze",
+        "midclip_horizontal_flip",
+        "technical_corruption"
+      ]
+    },
+    "text_logo_stability_in_clip": {
+      "fixtures": 24,
+      "independent_clips": 12,
+      "perturbation_types": [
+        "text_glyph_substitution",
+        "text_region_mutation"
+      ]
+    }
+  },
+  "caveats": [
+    "THIS PACK CONTAINS CONSTRUCTED STAND-IN MATERIAL. It proves the machinery runs. It is not the approved 12-clip base and cannot qualify the temporal family under the frozen family-4 conditions.",
+    "No instrument is qualified by this pack. It is material plus machinery.",
+    "Frames from one clip are ONE independent opportunity. Count independent_opportunity_id, never fixture count, when reporting a rate.",
+    "A qualification earned here is valid only at or above the frame sample rate it was measured at, and only under these clips' conditions.",
+    "mp4 exports are a convenience; only the frame-sequence content hash is a reproducible identity."
+  ],
+  "configuration_hash": "df48b883401b10bd1be67ce2a4633081d4ca63418cb8ef48aaed2ba841c635f9",
+  "controls": [
+    {
+      "control_id": "nc-truncated-frame",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-corrupt-crc",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-missing-frame",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-silent-frame-swap",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-zero-frames",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-not-a-png",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-bad-json",
+      "fail_closed": true,
+      "kind": "corrupt_control",
+      "observed": "ClipError"
+    },
+    {
+      "control_id": "nc-null-perturbation",
+      "fail_closed": true,
+      "kind": "builder_control",
+      "observed": "NullPerturbationError"
+    }
+  ],
+  "counts": {
+    "base_clips": 12,
+    "builder_controls": 1,
+    "by_perturbation_type": {
+      "frame_drop": 12,
+      "frame_duplication": 12,
+      "frame_freeze": 12,
+      "frame_reversal": 12,
+      "framing_discontinuity": 12,
+      "identity_splice": 12,
+      "midclip_horizontal_flip": 12,
+      "product_region_substitution": 12,
+      "segment_reordering": 12,
+      "shot_horizontal_flip": 2,
+      "technical_corruption": 12,
+      "text_glyph_substitution": 12,
+      "text_region_mutation": 12
+    },
+    "clean_controls": 12,
+    "corrupt_controls": 7,
+    "perturbation_types_used": 13,
+    "perturbed_fixtures": 146
+  },
+  "coverage_warnings": [],
+  "external_calls": 0,
+  "fixture_content_hashes": {
+    "dummy-01__clean": "41710901ca88e54a118b64081235d6f86c28c136b267ab49331093229a7f78fa",
+    "dummy-01__frame_drop": "7066ed53851972a43f41b85cd8cded96b5012f9397fbb31fb6c0c489db7396c6",
+    "dummy-01__frame_duplication": "7883c59f9b4dd4c70a506cb1aeda5949182d5d7ed20e1a164544a3711946ee0c",
+    "dummy-01__frame_freeze": "a237ac2ae7930e2ffda61160787724bdaa1b6424b12d0b96c679f6a2b108c464",
+    "dummy-01__frame_reversal": "53b0e3f1c6b172ccef9bccfd9a1dd92e3e78a5397da8f80c1dd4d907893541df",
+    "dummy-01__framing_discontinuity": "481f4b172ad18f5ad153528244b9fa48962b28f3a0740ed8b0f17a63b56defd0",
+    "dummy-01__identity_splice": "4a6041ae9f772fe58ca796f765265e0da4d5af75f2541e6747cc6eef68a309e9",
+    "dummy-01__midclip_horizontal_flip": "308950ce8e47b7e81911dbedc32eb3fe5c80de91eaac336f6d7fb8f564692ce6",
+    "dummy-01__product_region_substitution": "db2865f6a41cc6f250be598e87b9052e18be6750e9c572851ae4b556b74b2fb9",
+    "dummy-01__segment_reordering": "608fdaf1d0c7571bdb565042716fd425b8a489054f46b8fad31503b1fc3271d4",
+    "dummy-01__technical_corruption": "4001dd434eed5363d31c9059a26151d0354954288903b6226e7a0f4f82e803b0",
+    "dummy-01__text_glyph_substitution": "6e8a50f6b8bc4add6c51b49f23485f23e14cfef92178abd5595d770fd30bb5b5",
+    "dummy-01__text_region_mutation": "e516cc261a018acb4676e58c48a13393df8a9ea3b3493032c66e7b1c783ee012",
+    "dummy-02__clean": "65102b93a6cc7f1ced0e1272c0927c4b4bac0073f0785f84c150d5618a2437e0",
+    "dummy-02__frame_drop": "b9fce889ad9e6b889d3b473034106863ccb7bc4fc4d7c1553e9b4783a6e4f57a",
+    "dummy-02__frame_duplication": "d5860c9b42d38a0c16961cb3b93f3cdec0d50d697ae50169aa593c7de24506ab",
+    "dummy-02__frame_freeze": "2386b1cfaae6a531e31af3969cb1cb3ba2174db0d70ad918e9701280292d990e",
+    "dummy-02__frame_reversal": "9bb48204386d6744941b722c89cd067c4a682cd6921b47b315f05a16535a9963",
+    "dummy-02__framing_discontinuity": "c029933ab3fbb2091504f1c825b34f55d79975bf5afea808edda7133aa2dc0d2",
+    "dummy-02__identity_splice": "978f91ee45e59da64d4d563f91c2d634be7223379adff0ca7f4e239f7ffffa58",
+    "dummy-02__midclip_horizontal_flip": "889730f9d0f130409b57c4ce947e36b721b63522ff3b45f1cc2f59b5f3c3bb08",
+    "dummy-02__product_region_substitution": "a92f2597f631b7ad697310109e7c1600e71e292588cad4f2b1eafefd19d0bc5d",
+    "dummy-02__segment_reordering": "56d3ff9611631b5ca81bf8cdd4488d7edae44edbcfbd5b301520f2638cbb2ab3",
+    "dummy-02__technical_corruption": "32e611637cea3287af9d8227c6ca0588d250cb2eeac7a5c3df1fe929634b432e",
+    "dummy-02__text_glyph_substitution": "7158d6c19245295aa95fb7526c0fd9b888e38964133ad71d9999bda7b056c33f",
+    "dummy-02__text_region_mutation": "6efeb595ddb373b7443de28c53995234c791825250dfa76b58bfdcb6f7839c74",
+    "dummy-03__clean": "cebae5467eceafad8802d92308d5cdd74698030801597eb4e693ecbdfc39579f",
+    "dummy-03__frame_drop": "68296f407edcbca202d0148cac4b0714d6a0b5b2c34aec8e85f79490920cfae5",
+    "dummy-03__frame_duplication": "562ebb50ecc15f2dba23def5ab82a0d60f0839dcb809104529d666a82dcef793",
+    "dummy-03__frame_freeze": "96b11467fcb7334267ebe486ffdb14eaeb29caac7b336ff98d05e634f2c110e5",
+    "dummy-03__frame_reversal": "72e03c269b7a96358493ee925af51094d13f8cd0503a04cdca5fca25fe7d0de2",
+    "dummy-03__framing_discontinuity": "cd395e14ecd7bfbb6f17c103a8ea50d9752c6fd333e1a60babe410da9a8e8268",
+    "dummy-03__identity_splice": "cb1f92b33ca301cf0000df081c1215c5c9347e98ae1763ff14365f83d49a747f",
+    "dummy-03__midclip_horizontal_flip": "513f551a29717fd41f4b3803f6e5c98c5619cc3591c0686801bb934a64fd201b",
+    "dummy-03__product_region_substitution": "32030208f842ec6b42294caa69f212fe834cce095f338ed8a86cf266e014c733",
+    "dummy-03__segment_reordering": "1aaa2efe8e6807e2d77b80644c05bbf9330df31f3d00610cb106d61c0681b02f",
+    "dummy-03__technical_corruption": "9370f5e1e891f715ddc4af5bf91a6c096da77987308d6cac0ab40ff9700da983",
+    "dummy-03__text_glyph_substitution": "ee41902280cad21e3c924b6293ad8ddd2fca8e449511eac776b0a1e1b1e8d0d9",
+    "dummy-03__text_region_mutation": "be1f98eb502363c7fbed3d66cb8cec6714f3629e51878c177b277c46218d9744",
+    "dummy-04__clean": "a291697e9e4300c3ec6ee8b4ed577ac94eb11021c51f4844f86d1a0468ad35e2",
+    "dummy-04__frame_drop": "5d2ab2a9f963785bb33a891ad0cf5e55fd392f326a53fd4f673d7d64fa26e631",
+    "dummy-04__frame_duplication": "ffeada4a4063632ca13c47fb97450334e352e4ea1dcdcd3c87e4722ae6b96f1a",
+    "dummy-04__frame_freeze": "90167d2fd79e9123ea95d68ddb0883f3e9e7dafc6cd3dcffdbbf69ebe9db5aad",
+    "dummy-04__frame_reversal": "cc3cbd6b76791ce2a8318df5a44d3afa24473cf6a8f41b14aacaadbe83b4ad31",
+    "dummy-04__framing_discontinuity": "7a4d6b3e70a9e407c9c5b16657418997a64b611c59124f39c7dd0d4585a1546c",
+    "dummy-04__identity_splice": "90d3a85a4dad167f252a7088dd4e13094b460ea3699a343c054d3d21deb9dbdd",
+    "dummy-04__midclip_horizontal_flip": "f721669a5006647f1b43561f0da74331afe7d6cc5f0f863e8fab4e2d45f68ddd",
+    "dummy-04__product_region_substitution": "18ac3ab54cb90de4f6b61bbe7b98dcff6e428337bc588a5bef2504b2f0b648cc",
+    "dummy-04__segment_reordering": "2d02fffdea62fa5df272c85ac4b3ff8b7231eb04fed4e4f0ded0ce9ddf031b00",
+    "dummy-04__technical_corruption": "7e6040952588262453dd6437586820955305f587f73dfb78aaa664c1d369dd18",
+    "dummy-04__text_glyph_substitution": "213fde34e6e4566e0cd15520af227dbc9fb302994087b0679fdcfb17e1f3acae",
+    "dummy-04__text_region_mutation": "e71de08646b7d116db6524601ce086573bfbc2012642a4c6bb5c3755e291eb09",
+    "dummy-05__clean": "7593636908971f7960a2f991d4d4124e989327b91dff3dc8fe2f3d861afde070",
+    "dummy-05__frame_drop": "d4e2fd78eda38b5e9b0fbabe8bf6ef5ccf6b5f49cc7bedb9e2d14e5e37b4e2e5",
+    "dummy-05__frame_duplication": "db138072d1653327abf7dae6fab749205e9ad771cd1cd6bb553b26481fde5018",
+    "dummy-05__frame_freeze": "966f3a2ff1a848dc28c705386a51df7751572688e5a08873651984b24b6ea8d2",
+    "dummy-05__frame_reversal": "9a14d2d97778b6265bb1bca85dd1b9e45b77a8762d69de76e5cd9258a2be101a",
+    "dummy-05__framing_discontinuity": "5049a23759164fbdc7c4cb65d404ea9a702d7d1a47febeb872cfadf3f4965481",
+    "dummy-05__identity_splice": "8e1ba81d65174a5ea874a3c0df01c09ee809af5b5061220eb66733d4edc2c951",
+    "dummy-05__midclip_horizontal_flip": "11e87d0aac47cd95f261b992437b014851c6075fafec3af1eb2e96e2ca1bab75",
+    "dummy-05__product_region_substitution": "4462e70fed37ddfce3db6c26fb1ed22f0a1ac5ff841ab9b0f196e358627a4a7d",
+    "dummy-05__segment_reordering": "698f92052748b0b2098dde5cb883d92dd6dda0c20fde57c4d4291f650fa62999",
+    "dummy-05__technical_corruption": "06769306ad698fb3fe4b309c9c4ac3e54df3426ae7cc15e91d9a14593e0e5d39",
+    "dummy-05__text_glyph_substitution": "166917beae1734c4e9c5315393c205c448ee9af2f8c1c583dd0277f33ad1a57e",
+    "dummy-05__text_region_mutation": "5f1778fccaa7f6b7746d52187eb94b8ef82354319745ac46ed046bdf4730ed43",
+    "dummy-06__clean": "b03c21e13741a54305e2eae9e1ed0b8475d5a821a1fa7b8f6b43179f21b182a6",
+    "dummy-06__frame_drop": "28cdc0ad3495dcfa421d2cbce2e5cb6c515669eb86389639452beed848908ab9",
+    "dummy-06__frame_duplication": "5b16ae84cb728e5c05610b74912ebfd09dc76df54584abe892d4c46330c17004",
+    "dummy-06__frame_freeze": "789f8ed959f4537035b70a8f2f3f2cccfcb0111196e75e2a8bc711dbde484769",
+    "dummy-06__frame_reversal": "175cd5d90ba9d32fd1c934f4afec518f96403131235cddc3996d8c7087abc32b",
+    "dummy-06__framing_discontinuity": "aba5d1ad39c3e2e306337047c67828e5a0d5030637cb7abdd15015057e199294",
+    "dummy-06__identity_splice": "a3def5ebcb11ca56e8d087f7f3638e7213fdf3f81a531bf1f0e200c89b7a405f",
+    "dummy-06__midclip_horizontal_flip": "769818bf644cc6c6f35b173213d2c7b52d1469e12471da0253851989720eb7b9",
+    "dummy-06__product_region_substitution": "e2cd27edda488e1ced975c87fab03f7bdde03c45bf68877743dc3b9da19008dd",
+    "dummy-06__segment_reordering": "bcd18ab6f95d1f4c42f5c081305c4930e0d0c798f367e12a31894352bab3b3ed",
+    "dummy-06__technical_corruption": "9fb31052086d239ac4c9749d1cd9264b48208d4ddb3b40fd70ba36b92890d6c0",
+    "dummy-06__text_glyph_substitution": "7acc54eb6a6f19f8b43681cd8a3a0d17281cd3f2daf05397aaa0083e9f1855c5",
+    "dummy-06__text_region_mutation": "29c59f5c89b102e59ec81cfe9e9440715d04322d97374427ac4e3f2a6cd4bf13",
+    "dummy-07__clean": "0c8f218fe977a50797adf20e322e5a233b8846f645e134a9241d5d2e4e75c39c",
+    "dummy-07__frame_drop": "e9e294c3f5bfb484d69ec14f0f023763df1d47eab82ae4e7dd9d2cde77fdf739",
+    "dummy-07__frame_duplication": "b81e215ab69156de55d0fddc9d759674c190a5a20a22dfd52929b3bc8ba5f10d",
+    "dummy-07__frame_freeze": "b805b8db6c6b27d51cfe6bc6b637efae1bcd4826d0be954fd003df0252e4d172",
+    "dummy-07__frame_reversal": "185026b3187a184b089476c1f75007143f3f33d610e71e1dd4954bb54d0c193c",
+    "dummy-07__framing_discontinuity": "400c784538b49e6031db9d96d033f3ad8cee42bf7f1ca6dd13c95e9954e54388",
+    "dummy-07__identity_splice": "0ad44bea52f4abaedacbeb687f2dc779504edd1c6615231b72c2b7c640d9322e",
+    "dummy-07__midclip_horizontal_flip": "0677f3089cc8b9b433a3bcba62302236f2c0c50c5148c709fd59ffc708f490fd",
+    "dummy-07__product_region_substitution": "e16ce694f5b62ae00945b5d6a8ab0122527c9798ea5d740c608e4ebd5c08e840",
+    "dummy-07__segment_reordering": "f31598a79f27b353b967b447c25830380b0884da486d1f0a60b5d655bd6d9146",
+    "dummy-07__technical_corruption": "a13ac2b29fde46d150313df02b38181f5844921123c169f249d390c2dd9380c9",
+    "dummy-07__text_glyph_substitution": "f5a8b457b50c8b397ef470aea541b0204be347cf3682bf87f748c1f3ca644f12",
+    "dummy-07__text_region_mutation": "890349ddf056f9cf0cc694e6f1e5729ec93c030738ffdf164820b1ac29118d8b",
+    "dummy-08__clean": "d651ee725d8081def855611e0900274aa1e93d2b057fc6ee776787a59ff2745e",
+    "dummy-08__frame_drop": "bb72712e8a598a0da592c2563b3fd2ca0d6b58550599872be3e414dbd41bd622",
+    "dummy-08__frame_duplication": "08114f01fc2442cf12a23c372c32937a9cb0636fa477292041e510d82cdf3626",
+    "dummy-08__frame_freeze": "c807044c91aedf13c98b9e198d78b616443cc77bb0b6fcef2b31f68a3704deb5",
+    "dummy-08__frame_reversal": "c829814f6b9033b739c9f4b0285aa745ee6a1aebd9c9cb075889945e5bed5857",
+    "dummy-08__framing_discontinuity": "dae4fbe6ac451a40d88535ac8d117ead1d9a2870e0f41e92ad70b8f02a9225da",
+    "dummy-08__identity_splice": "27946157d2fca5b0529769604cd4e8532c3df751b716965f0e07cb4f78d53eab",
+    "dummy-08__midclip_horizontal_flip": "4d2db4008d9268c41646861da1757df87246020e9044388992dfd76dfc4fe74e",
+    "dummy-08__product_region_substitution": "ac317979d7e4bd15e7583bccc8b2b05d4a7430dd945b29c456416885a0200021",
+    "dummy-08__segment_reordering": "502f34498733a4d05e6877337b86bd579859d477551533ae19c699262ea4b0b6",
+    "dummy-08__technical_corruption": "a0f24efc8ef5af140a89d3a5bf8060ddbed932527251b846304cd12c2259fb45",
+    "dummy-08__text_glyph_substitution": "42c157cf8754bb1a6ce339e5d11a93359011a9e0f4a4437ae4001a37a2fed747",
+    "dummy-08__text_region_mutation": "933821ec01f7ae6c0c91fd2d70062f8e0f352bd606ad90e0b2ade0a30cc0d732",
+    "dummy-09__clean": "fffb92798ab67c8f010d87ef33149982af617408ecc57ef2168a4c6cb4d48fc6",
+    "dummy-09__frame_drop": "1674fa770779f73e1c7a482b9f1402f58019c1b6a91deb8463dfd5d5e67a8b50",
+    "dummy-09__frame_duplication": "9d88b0f17082ac54ebd285b4f1a5f0c8e578341b5867ed53c1701434f52c3a96",
+    "dummy-09__frame_freeze": "30bc1f51140a5d76e07df688ac4c7295c8990cc45e8d5480e0c2e1a8f9bfa47e",
+    "dummy-09__frame_reversal": "a64da2408dfe6ada14249f081e6db9784af11301ac99f10eb293e7e33d840da7",
+    "dummy-09__framing_discontinuity": "867e091fe860356abe93a3a6df6d530d5dc342d95682eaec7637fcb3d9dde697",
+    "dummy-09__identity_splice": "509bd6482923ef60c34cc7c5d5229124d59b76975815ac22ed27c99d260474f3",
+    "dummy-09__midclip_horizontal_flip": "5f325589ec7f7a3d8e81efdac6d1ffa9957017542b1dff91020145f4a30fa86f",
+    "dummy-09__product_region_substitution": "4d64e339bac00b552d01b8b1dc21621fd0c75e76fc0a502daee21081b2eaec82",
+    "dummy-09__segment_reordering": "30aa8d1e3c83a820af411e663e31e0a7271cfb7327848d5602865683be13aedb",
+    "dummy-09__technical_corruption": "a90268794d2726e373dd2057b703e1cccae8750a9a9f39f821f817b82eea4b1a",
+    "dummy-09__text_glyph_substitution": "4641ca283cef2fc770b5363e3525d40247183f6ea7db11c6ffcbc847413c7e7f",
+    "dummy-09__text_region_mutation": "8c0eb06c162cbc25c2f6b5d9e894ee56dedf030e445c2dc8482e5dbb298da0c0",
+    "dummy-10__clean": "2bfde38b0a67a62fd947403eed2a94474b12cc593d348ab7647b363b0192cc6c",
+    "dummy-10__frame_drop": "4b61b7f880ca657bdb5615ac96521f4ab235c1226279e684d91d2a0b183f57a1",
+    "dummy-10__frame_duplication": "50486f75c88d9ac546cb4c93a30e9913a32ed2975ae7361a6a30afc838098986",
+    "dummy-10__frame_freeze": "da22ec6d159cc246b2128b1dcb217de4391d372667934fa4ceafbf67545fab88",
+    "dummy-10__frame_reversal": "0152c1c20ef43f74eac2e046bfaaab9462ff823ad020cfba42777d954c7d40e4",
+    "dummy-10__framing_discontinuity": "2a3222e9b8ea00a2ae887d3ea826e59dbb329f6a719d09e5c757be8f4c7f1409",
+    "dummy-10__identity_splice": "b0e86b25d0a1aa4801d867c49ac62a7ce2fb901f2b5a395cd542412189acc162",
+    "dummy-10__midclip_horizontal_flip": "67ac3c5ca01c322455b36afd0b7d0efeb319b1ef4674bcaf2d96732f575fa5c1",
+    "dummy-10__product_region_substitution": "4b68530e74830511b1f33872610cc7efb0a8bb8f72a5d4b3643fd8fe00dbe674",
+    "dummy-10__segment_reordering": "d3d3bc8ddc6ced8fc6235778825a24c206b0815fccdfdf9454e6760fb5eb6f70",
+    "dummy-10__technical_corruption": "43b47f7e7f387831c1ede677664702f8b208867badda5f0e4ad6593dc7a439ec",
+    "dummy-10__text_glyph_substitution": "3040161b41bcfe433cb07b5ba6542f5abb91023574ddc670eb242f538e688709",
+    "dummy-10__text_region_mutation": "fd19f136dab90db6930e6d69a33c1b08842c790db9f1a919316de6734fdb96fa",
+    "dummy-11__clean": "277e02cbe4715ce70454d5b453c5f9f83cbc4d670743381f2bc4cdaa7ee40cad",
+    "dummy-11__frame_drop": "0b133e2c3a83a3883f69cc4c4ee064c87e8f333813107c866d2df76b9ba617f7",
+    "dummy-11__frame_duplication": "9236dd08445cb384594faa42cf4f75a42ab59abcd7236100a076c31b43a146d5",
+    "dummy-11__frame_freeze": "f61898c5847f0e71f1e64c34095c85b2e91f22f1189075eb08d068dc00038e23",
+    "dummy-11__frame_reversal": "d81dde09e3c19348ede617a94f82aa8b7dc74d371183496ff813ad64da6b69b4",
+    "dummy-11__framing_discontinuity": "00a971e98dce28cf468b8ede988409347acc2cf9ccffad173ef8246a119a9d8e",
+    "dummy-11__identity_splice": "ea7f6f8f8cac0bae5b4532d58adf266203534a50f198eed1ea864045b733e37d",
+    "dummy-11__midclip_horizontal_flip": "51f36ca3efcc2b2cac71cac306cef78e7d41a2d51fa66c8c70d111327ff3f889",
+    "dummy-11__product_region_substitution": "cab4bde3cf57d919206e2a00549819ec9bbed3896ebddd6d08221a378da1d298",
+    "dummy-11__segment_reordering": "9bef7637dccf645f4734eca9666ef66ef35206a351a99341fd9c2c2f05913a3d",
+    "dummy-11__shot_horizontal_flip": "c98c469c88f321069f62f5fa1c20065ead72fccd333361bd9c541571ad76111d",
+    "dummy-11__technical_corruption": "8c37d74f5b5aa2c79d559fcc3b5e4c30de9090befa096c7c77ddb13a0756a590",
+    "dummy-11__text_glyph_substitution": "41e68304df63a142bba41fbdc3f969b0f3b8533c6d2cd2a4738f55caf86d7a0d",
+    "dummy-11__text_region_mutation": "d025585ec59a351a8cb79112623917a2b3d464384f6d380118d5f5355bf02880",
+    "dummy-12__clean": "7b83183d7029170ae4f1d6ef19e13be06bbddf159a01c352f804621577500c22",
+    "dummy-12__frame_drop": "891fd29da00af7de3f1d9a1f2ac1032cd637c12863e20f90ea602d9906995342",
+    "dummy-12__frame_duplication": "95a36daaef875ab94f7e687c2075f72d31ba8953ac1f4b52ae431bfd0203275d",
+    "dummy-12__frame_freeze": "1d9e73a5a45c469f9868e968397891b2c645385244b9d4cc14a22f112bdafaaf",
+    "dummy-12__frame_reversal": "9e79cc11e8a39a2eca5754b35cd3c515a2a6198e60c9220b9344d12c6a265d9f",
+    "dummy-12__framing_discontinuity": "73b15b7f525cc721c949c58c376b00e7493967dad44bb379656b1ec96b850ba3",
+    "dummy-12__identity_splice": "2bb8527f5c7f060984e694ddea341360b75a8d3cedadca3d19242a09f2a62c77",
+    "dummy-12__midclip_horizontal_flip": "e700736096b1c91d1eec1cb1e60ae7462ebffd94a75c12dee1864cc2fcc4ff92",
+    "dummy-12__product_region_substitution": "0eb621d0697ddac6e7fcf4fa6b6732f58147c40cb9a6bfe36f23ce11dd8261c0",
+    "dummy-12__segment_reordering": "08e7d863623075280f37d69436ec3002b06f23f6e9bb27030a3acf9e350b3b36",
+    "dummy-12__shot_horizontal_flip": "d539634197152283ec94543b24aa5c94f9ac72a49e1bfaee6df28916d7185520",
+    "dummy-12__technical_corruption": "55d830c51b5b14f8c919ad5e53f14d7e522a361dbd2bd97fe3acabf7d06c3c71",
+    "dummy-12__text_glyph_substitution": "79f1cc2cbf4c27c38166d4defdb76316d78aa7740f8e03b54204cb128ae3049e",
+    "dummy-12__text_region_mutation": "e932f79822b48ca940e707eee6828b09619fef4605049cc563791f75afc82709"
+  },
+  "human_labels_used": 0,
+  "is_approved_qualification_pack": false,
+  "material_classes": [
+    "constructed_stand_in"
+  ],
+  "model_or_evaluator_calls": 0,
+  "plan_version": "plan-v1",
+  "schema": "temporal-perturbation-fingerprint/v1",
+  "skipped": [
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-01",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-02",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-03",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-04",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-05",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-06",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-07",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-08",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-09",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    },
+    {
+      "capabilities_not_covered_for_this_clip": [
+        "multi_shot_spatial_continuity"
+      ],
+      "clip_id": "dummy-10",
+      "perturbation_type": "shot_horizontal_flip",
+      "reason": "clip declares a single shot; a screen-direction violation across a cut cannot be constructed without a cut"
+    }
+  ],
+  "spend_usd": 0.0,
+  "task": "EVAL-026"
+}
