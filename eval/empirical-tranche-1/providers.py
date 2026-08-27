@@ -88,7 +88,7 @@ GOOGLE_KEY_ENV = "GOOGLE_API_KEY"
 # cost only; they are not invoice evidence and must not be reported as measured economics.
 PRICE_BOOK = {
     "openai": {"input_per_1m": Decimal("0.75"), "output_per_1m": Decimal("4.50")},
-    "anthropic": {"input_per_1m": Decimal("2.00"), "output_per_1m": Decimal("10.00")},
+    "anthropic": {"input_per_1m": Decimal("1.00"), "output_per_1m": Decimal("5.00")},
     "google": {"input_per_1m": Decimal("0.30"), "output_per_1m": Decimal("2.50")},
 }
 
