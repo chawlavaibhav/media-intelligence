@@ -1,9 +1,38 @@
 # Proposed integration change — RES-005 → Eval
 
 **Severity:** `CROSS_STREAM` · **Status:** PROPOSED, not actioned · **Date:** 28 Aug 2026
+**Superseded in part:** EVAL-026 merged to `main` during this task and froze a concrete family-4
+requirement. Section 0 below states what that changed; the rest is retained because the underlying
+tension it describes is what produced the shortfall.
 **Filed by:** Resources, task RES-005 · **Branch:** `work/res-005-mat-av-min-acquisition`
 
 Resources proposes; it does not act. Nothing in Eval's tree was edited by this task.
+
+---
+
+## 0. What EVAL-026 already settled, and what it did not
+
+EVAL-026 (`eval/v1/instruments/temporal-perturbation/`, now on `main`) resolved the *supply route*
+question in the direction this task assumed: its ingest accepts a `material_class` of
+`supplied_real_clip` with a `rights_ref`, and `RESOURCE-REQUESTS.yaml` family 4 states plainly that
+the clips "need NOT be generated and need no annotation - any rights-cleared clean footage serves,
+because we are qualifying the INSTRUMENT, not scoring a generator."
+
+**So the Eval reading has effectively won on supply route.** RES-005's clips were accepted by that
+ingest without error (`INGEST-VERIFICATION.md`).
+
+**What remains unsettled is narrower and sharper:** whether family 4's `must_contain` list describes
+**the pack** or **every clip**. The YAML's structure says pack; EVAL-026's `clips.example.json`
+prose says each. RES-005 satisfies the first completely and the second for 1 of 12 clips. That is
+the live question, and it is the one the Controller now needs to answer.
+
+**Two concrete corrections proposed, neither actioned:**
+
+1. Make `clips.example.json`'s prose agree with `RESOURCE-REQUESTS.yaml` rather than tighten it in
+   passing — a paraphrase in an example file should not silently become a stricter contract.
+2. Change `clips.example.json`'s `pack_ref` example away from `PACK-AV-CLEAN`. Clips ingested for
+   temporal work are not members of that pack and must not be counted against its consent,
+   transcript, turn-boundary or language obligations.
 
 ---
 

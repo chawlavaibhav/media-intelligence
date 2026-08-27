@@ -1,7 +1,8 @@
 # Controller Brief — RES-005
 
 **TASK:** RES-005 — MAT-AV-MIN bounded acquisition (Stage-Q temporal perturbation base)
-**STATUS:** completed — **12 of 12 frozen**, one cross-stream question needs your decision
+**STATUS:** completed — **12 of 12 frozen and accepted by Eval's own ingest**, with a
+**stated shortfall against one reading of the frozen contract** (see SHORTFALL)
 **Branch:** `work/res-005-mat-av-min-acquisition` · **not merged**
 **Spend:** **₹0 / USD 0.** No paid model call, no account, no login, no form, no terms acceptance,
 no payment, no email.
@@ -21,13 +22,14 @@ exactly, and **no human has to label anything**. That is why the project's own p
 call this the cheapest large unblock available: **nine capabilities become measurable from twelve
 clips and zero annotation hours**.
 
-**The result.** All twelve are frozen and all twelve pass the cleanliness screen. Every perturbation
-type in Eval's Family-4 table now has at least one base clip. Total cost was zero.
+**The result.** All twelve are frozen, all twelve pass the cleanliness screen, and a sample was
+**accepted by Eval's own real-clip ingest** — so this is verified usable material, not an assertion
+that it is usable.
 
-**The catch you need to decide on.** Two frozen documents in this repository define MAT-AV-MIN
-differently, and I could not satisfy both. Details in **DECISIONS NEEDED**, and in full in
-`resources/PROPOSED-INTEGRATION-CHANGE-RES-005-EVAL.md`. I proceeded on the reading your
-instruction implied and recorded the conflict rather than papering over it.
+**The catch you need to decide on.** EVAL-026 merged into `main` while this ran, and it froze a
+concrete requirement for these clips. Read one way, this pack **fully satisfies** it. Read the other
+way, it satisfies **1 of 12**. I did not weaken the requirement to make the number look better —
+the shortfall is stated below exactly as measured.
 
 ---
 
@@ -40,6 +42,59 @@ the temporal plan needs. Where a measurement showed a clip unfit, I moved the sa
 re-measured — never relaxed the requirement.
 
 ---
+
+## SHORTFALL — stated, not smoothed over
+
+EVAL-026 landed on `main` during this task. Its frozen requirement is
+`eval/v1/instruments/RESOURCE-REQUESTS.yaml`, family 4:
+
+```
+quantity: '>=12 clips, 6-20 seconds'
+must_contain:
+  - a person
+  - a product
+  - on-screen text
+  - '>=2 clips that cut between shots'
+```
+
+**That list can be read two ways, and the difference is the whole result.**
+
+**Read as a property of the pack** — which is how the YAML is structured, since the fourth bullet
+("≥2 **clips** that cut between shots") is meaningless as a per-clip property:
+
+| Requirement | Delivered | |
+|---|---|:--:|
+| ≥12 clips | 12 | PASS |
+| 6–20 seconds each | 12/12 at 10.0 s | PASS |
+| a person | 8 clips (3 photographed faces, 4 rendered, 1 hand only) | PASS |
+| a product | 5 clips | PASS |
+| on-screen text | 6 clips | PASS |
+| ≥2 clips that cut between shots | 6 clips | PASS |
+
+**Read as a property of every clip** — which is how EVAL-026's own `clips.example.json` paraphrases
+it ("each containing a person, a product and on-screen text"):
+
+| Requirement | Delivered | |
+|---|---|:--:|
+| every clip has person **and** product **and** on-screen text | **1 of 12** (`MAVM-11`, and its person is a hand, not a face) | **FAIL** |
+
+**Why the strict reading is hard to satisfy from free material.** A single shot holding a
+recognisable person, a manufactured product, and legible on-screen text simultaneously is
+essentially a television commercial. Commercial creative is dense third-party IP — brand marks,
+licensed music, talent likeness, stock imagery, each often separately licensed inside one asset —
+which is exactly why `RIGHTS-ACQUISITION-PLAN.md` routes the commercial pack through
+rights-holder outreach rather than public sources. **Twelve freely licensed clips each carrying all
+three do not plausibly exist in the public pool**, and manufacturing them would mean staging and
+filming, which is controlled capture with a consent instrument — the very thing this lane exists to
+avoid.
+
+**What I did not do.** I did not relabel a hand as a person, did not count a rendered character as a
+photographed one, and did not lower the bar to reach twelve. `MAVM-11` is recorded as
+`real_hand_no_face` precisely so it cannot be silently counted as an identity-swap base.
+
+**What this costs, concretely.** Under the strict reading, the per-perturbation-type coverage is:
+photographed-face identity swap **3** clips, product swap **5**, text mutation **6**. Freeze,
+direction-reversal and audio-shift are unaffected at 12, 12 and 11.
 
 ## OBSERVED
 
@@ -111,7 +166,17 @@ perfectly clean — and frame inspection showed it holds only monochrome terrain
 hardware that entry exists to supply. Only looking caught it. A third window fixed it. **The
 mechanical screen tests cleanliness; it does not test fitness for purpose.**
 
-**4. One assumption I had to correct from the frames.** I expected `Wikimedia Foundation Funds
+**4. Eval's ingest disagrees with my shot counts, and Eval's is the one that counts.** My screen
+measured `MAVM-06` at 2 shots; Eval's ingest auto-detected 12. Different thresholds on a
+graphics-heavy sequence, neither wrong. The pack is built from **Eval's** boundaries, so the
+manifest's shot count should be read as "does this clip cut at all", not as the boundary list.
+
+**5. Ingest is far more disk-hungry than the clip sizes suggest.** Three 10-second clips expand to
+**941 MB** of per-frame PNGs. Ingesting all twelve at once **exhausted the disk and failed
+mid-write**. Whoever runs the qualification should batch it or downscale first. Recorded in
+`INGEST-VERIFICATION.md` as an operational warning from an actual failure.
+
+**6. One assumption I had to correct from the frames.** I expected `Wikimedia Foundation Funds
 Strategy` to be a talking-head video with real people. It is animation. The tag was corrected from
 the contact sheet rather than from the title, which is why the tags are recorded as inspected and
 not declared.
@@ -184,23 +249,32 @@ None.
 
 ## DECISIONS NEEDED FROM CONTROLLER
 
-### 1. Which document defines MAT-AV-MIN? *(the one that matters)*
+### 1. Pack-level or per-clip? *(the one that matters)*
 
-- **Eval's Family-4 spec** says the base needs only *"any rights-cleared clean footage with a
-  person, a product and on-screen text"*. Under this reading, **RES-005 delivers it today, for ₹0.**
-- **RES-004's stage map** says `MAT-AV-MIN: from_pack: PACK-AV-CLEAN` — controlled recordings with
-  **written consent for likeness and voice**. Under this reading the temporal lane stays blocked
-  behind a consent instrument that may need external legal review, and these twelve clips are not
-  the base.
+Family 4's `must_contain` list is satisfied **completely** if it describes the pack, and **1 of 12**
+if it describes every clip. `RESOURCE-REQUESTS.yaml`'s own structure supports the pack reading;
+EVAL-026's `clips.example.json` prose supports the per-clip reading.
 
-**Consequence.** One reading opens nine capabilities now at no cost; the other keeps them behind a
-legal decision and roughly 73 person-hours of AV work — most of it transcription and turn-boundary
-annotation that the temporal family **never reads**.
+**If pack-level governs:** the temporal lane is unblocked today at ₹0 and Eval can proceed.
 
-**My recommendation:** adopt the Eval reading for the temporal base only, and rename this set
-(e.g. `MAT-TEMPORAL-BASE`) so it stops borrowing the AV pack's name. `PACK-AV-CLEAN`'s consent,
-transcript, turn-boundary and language requirements stay **exactly as they are** for the five
-speech capabilities — nothing here weakens them. This is a recommendation, not a decision taken.
+**If per-clip governs:** free material cannot realistically supply it (reasoning under SHORTFALL),
+and the honest options are (a) relax to pack-level with the per-type coverage recorded as a stated
+limitation, (b) accept a smaller pack of clips that do satisfy all three, or (c) commission staged
+capture — which reintroduces consent and cost, and would make this the expensive lane rather than
+the cheap one.
+
+**My recommendation:** adopt the pack-level reading, and require that Family 4's per-perturbation
+recall be reported against the per-type clip counts above rather than pooled — which Family 4's own
+gate already demands ("never as one average"). Correct `clips.example.json`'s prose to match. This
+is a recommendation, not a decision taken.
+
+### 2. Should this set keep borrowing the AV pack's name?
+
+These clips are **not** `PACK-AV-CLEAN`: no consent instrument, no verified transcripts, no turn
+boundaries, no language balance, not controlled captures. They are recorded under their own
+`pack_ref` so acquiring them cannot later be mistaken for partial satisfaction of that pack's
+obligations, all five of which remain exactly as open as `RIGHTS-ACQUISITION-PLAN.md` left them.
+Renaming the set (e.g. `MAT-TEMPORAL-BASE`) would make that permanent.
 
 ### 2. Is 10 seconds the right clip length?
 
@@ -220,6 +294,8 @@ before perturbation code is written rather than after.
    retrieval date, hashes, duration, resolution, fps, audio, tags and the exact transformation.
 3. **`CANDIDATE-SPEC-v1.yaml`, entries MAVM-05/08/09** — the three window revisions, each recording
    the original window and the measured failure that caused the move.
+4. **`INGEST-VERIFICATION.md`** — proof the clips are accepted by Eval's own tooling, plus the two
+   operational warnings above.
 
 ---
 
@@ -228,7 +304,8 @@ before perturbation code is written rather than after.
 Created — `resources/pre-execution-freeze/mat-av-min/`: `CANDIDATE-SPEC-v1.yaml`,
 `acquisition-record.json`, `qualification-measurements.json`, `frame-inspection.json`,
 `FRAME-INSPECTION-METHOD.md`, `MAT-AV-MIN-MANIFEST.csv`, `MAT-AV-MIN-MANIFEST.jsonl`,
-`LINEAGE-MANIFEST.yaml`, `RES-005-CONTROLLER-BRIEF.md`.
+`LINEAGE-MANIFEST.yaml`, `INGEST-VERIFICATION.md`, `DELETION-LOG.md`,
+`RES-005-CONTROLLER-BRIEF.md`.
 Created — `resources/scripts/`: `acquire_mat_av_min.py`, `qualify_mat_av_min.py`,
 `build_mat_av_min_manifest.py`.
 Created — `resources/tasks/RES-005-MAT-AV-MIN-BOUNDED-ACQUISITION.md`,
@@ -240,10 +317,11 @@ Modified — `resources/HANDOFF.md` (appended RES-005 section).
 
 ## RECOMMENDED NEXT STEP
 
-Settle decision 1. If the Eval reading governs, the next task is Eval's: **write the perturbation
-injector** and run Family-4 qualification against these twelve clips. That needs no acquisition, no
-human labels and no API spend, and it would produce this project's **first qualified evaluator
-family** — against a current floor of zero. This is a recommendation, not work started.
+Settle decision 1. If the pack-level reading governs, the next task is Eval's and the injector
+**already exists** — EVAL-026 shipped it. Family-4 qualification can run against these twelve clips
+with no acquisition, no human labels and no API spend, and it would produce this project's **first
+qualified evaluator family** against a current floor of zero. This is a recommendation, not work
+started; RES-005 ran ingest only, and no perturbation pack was built.
 
 ---
 
