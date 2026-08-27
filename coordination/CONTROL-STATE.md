@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-015 accepted/integrated and live model/route/price metadata re-verified; paid EMP-001 execution remains blocked on human/material prerequisites and explicit user approval.
+**Updated:** 27 Aug 2026 — Latin human perceptibility review PASS recorded; paid EMP-001 execution remains blocked on remaining material/runtime prerequisites and explicit user approval.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -174,15 +174,17 @@ Treat the test counts as worker execution evidence. The Controller independently
 
 ## Remaining zero-spend prerequisites
 
-### 1. Latin human perceptibility review — STILL UNFILLED
+### 1. Latin human perceptibility review — COMPLETE
 
-This is the main outstanding non-code gate.
+Authoritative record:
+- `coordination/decisions/CONTROLLER-EMP-001-LATIN-HUMAN-REVIEW-2026-08-27.md`
 
-It must not be fabricated.
+Human review result:
+- usable surface: **96/96 yes**;
+- controlled mismatches visibly different: **48/48 yes**;
+- frozen pack SHA-256 verified against the supplied review bundle.
 
-Mechanical validation exists, but a person has not yet confirmed that the rendered Latin match/mismatch differences are perceptible and usable.
-
-This gates the Latin qualification leg and therefore the complete four-item A-TEXT screen.
+This prerequisite no longer blocks the Latin qualification leg.
 
 ### 2. Runtime secrets
 
@@ -236,9 +238,8 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-1. Complete the Latin human perceptibility review with a real person.
-2. Rebuild the generated zero-spend image sets.
-3. Confirm execution secrets can be supplied without pre-funding beyond the proposed ceiling.
-4. Only then present the user the explicit bounded EMP-001 spend decision.
+1. Rebuild/restore the generated zero-spend execution image sets, including the validated Devanagari materialized view.
+2. Confirm execution secrets can be supplied without pre-funding beyond the proposed ceiling.
+3. Only then present the user the explicit bounded EMP-001 spend decision.
 
 **No paid provider/model/evaluator call may occur until the user explicitly approves the bounded EMP-001 USD 10 ceiling.**
