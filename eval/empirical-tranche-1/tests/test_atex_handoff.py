@@ -167,6 +167,29 @@ def test_the_selected_judge_binds_to_the_exact_qualified_version(tmp_path, keys)
     assert chosen['model_alias'] == 'claude-haiku-4-5-20251001'
 
 
+def test_old_openai_qualification_cannot_open_atex_after_roster_switch(tmp_path, keys):
+    run = _run(tmp_path)
+    payload = {
+        'run_id': run.run_id, 'mode': 'fake_live', 'tranche_id': 'EMP-001',
+        'synthetic': False,
+        'qualified': [{
+            'candidate': 'openai:gpt-5.4-mini',
+            'provider': 'openai',
+            'model_alias': 'gpt-5.4-mini',
+            'resolved_version': 'gpt-5.4-mini-2026-03-17',
+            'qualified_scope': ['devanagari', 'latin'],
+        }],
+        'candidates': [],
+        'call_records': [],
+    }
+    payload['evidence_fingerprint'] = Q.qualification_fingerprint(payload)
+    (run.evidence_dir / 'qualification-result.json').write_text(json.dumps(payload))
+
+    loaded = R.load_qualification(run, expected_mode='fake_live')
+    with pytest.raises(R.GateClosed):
+        R.select_judge_for_atex(loaded)
+
+
 def test_no_qualified_candidate_at_all_refuses(tmp_path, keys):
     run = _run(tmp_path)
     payload = {'run_id': run.run_id, 'mode': 'fake_live', 'tranche_id': 'EMP-001',
