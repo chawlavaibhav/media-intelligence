@@ -40,7 +40,7 @@ def test_qualification_shape_is_frozen():
 def test_both_judge_candidates_require_an_exact_version_at_execution():
     cands = cfg()['qualification']['judge_candidates']
     assert [c['provider'] for c in cands] == ['anthropic', 'google']
-    assert [c['model_alias'] for c in cands] == ['claude-haiku-4-5-20251001', 'gemini-3.5-flash-lite']
+    assert [c['model_alias'] for c in cands] == ['claude-sonnet-5', 'gemini-3.5-flash-lite']
     assert cands[0]['exact_model_id_required'] is True
     assert cands[1]['snapshot_or_exact_version_required'] is True
 

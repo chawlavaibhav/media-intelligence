@@ -18,7 +18,7 @@ import providers as P
 
 
 OPENAI_VERSION = 'gpt-5.4-mini-2026-07-01'  # dormant compatibility adapter
-ANTHROPIC_VERSION = 'claude-haiku-4-5-20251001'
+ANTHROPIC_VERSION = 'claude-sonnet-5'
 GEMINI_VERSION = 'gemini-3.5-flash-lite-001'
 IMAGE = b'\x89PNG\r\n\x1a\n-not-a-real-image-'
 

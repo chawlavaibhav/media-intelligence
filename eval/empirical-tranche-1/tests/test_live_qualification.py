@@ -25,7 +25,7 @@ from fake_live import FakeJudgeHttp, image_index_for
 
 PKG = Path(__file__).resolve().parents[1]
 
-ANTHROPIC_VERSION = 'claude-haiku-4-5-20251001'
+ANTHROPIC_VERSION = 'claude-sonnet-5'
 GEMINI_VERSION = 'gemini-3.5-flash-lite-001'
 
 CALLS_PER_SCRIPT = 576          # 96 items x 2 shapes x 3 passes
@@ -47,7 +47,7 @@ def _authorisation(tmp_path):
 
 def _anthropic_judge(http, guard):
     return P.AnthropicTextJudge(
-        model_alias='claude-haiku-4-5-20251001', resolved_version=ANTHROPIC_VERSION,
+        model_alias='claude-sonnet-5', resolved_version=ANTHROPIC_VERSION,
         transport=P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION, http=http), guard=guard)
 
 
@@ -93,7 +93,7 @@ def test_one_live_evaluator_call_dispatches_exactly_once_and_is_not_synthetic(ke
     assert len(http.calls) == 1
     assert reply['api_status'] == 'ok'
     assert reply['call_record']['synthetic'] is False
-    assert reply['call_record']['model_alias'] == 'claude-haiku-4-5-20251001'
+    assert reply['call_record']['model_alias'] == 'claude-sonnet-5'
     assert reply['call_record']['resolved_version'] == ANTHROPIC_VERSION
     assert guard.spent_usd > 0
 
@@ -228,7 +228,7 @@ def test_every_live_call_record_pins_alias_and_resolved_version(keys):
     records = result['devanagari']['call_records']
     assert len(records) == CALLS_PER_SCRIPT
     assert {r['resolved_version'] for r in records} == {ANTHROPIC_VERSION}
-    assert {r['model_alias'] for r in records} == {'claude-haiku-4-5-20251001'}
+    assert {r['model_alias'] for r in records} == {'claude-sonnet-5'}
     assert all(r['retries'] == 0 for r in records)
     assert all(r['synthetic'] is False for r in records)
 
