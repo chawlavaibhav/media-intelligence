@@ -1,0 +1,223 @@
+# MAT-AV-MIN candidate spec v1 — RES-005
+#
+# One entry per DISTINCT SOURCE WORK. One clip is cut from each work, so the 12
+# clips are 12 independent works: no two clips share a source work, a creator's
+# production, or a depicted subject.
+#
+# Every field below is either (a) copied verbatim from the named authority, or
+# (b) marked "verify_by" and left for the acquisition run to MEASURE. Nothing
+# content-descriptive is asserted here; visual tags are measured, not declared.
+#
+# licence_authority = the page a human can open to confirm the licence.
+# retrieval_authority = the server the bytes actually come from.
+
+meta:
+  spec_version: v1.1
+  task: RES-005
+  date: 2026-08-28
+  purpose: >
+    Stage-Q temporal perturbation base (MAT-PERT input) per
+    eval/pre-execution-integration/EVALUATOR-AND-MATERIAL-STAGE-MAP.yaml and
+    eval/v1/instruments/FAMILY-4-TEMPORAL-VIDEO.md.
+  clip_target_seconds: 10.0
+  distinct_source_works_required: 12
+  window_revision_policy: >
+    A clip window may be moved when MEASUREMENT shows the first window fails a cleanliness screen.
+    The requirement is never relaxed to fit the sample; the sample is moved to meet the
+    requirement, and the original window and its measured failure are recorded in the entry.
+  paid_calls: 0
+  accounts_created: 0
+  terms_accepted: 0
+
+candidates:
+
+  - id: MAVM-01
+    work: "Big Buck Bunny"
+    creator: "Blender Foundation (Peach open movie project)"
+    licence: "CC BY 3.0"
+    licence_authority: "https://peach.blender.org/about/"
+    licence_quote: "The results of the Peach open movie project has been licensed under the Creative Commons Attribution 3.0 license."
+    attribution_required: "(c) copyright 2008, Blender Foundation / www.bigbuckbunny.org"
+    retrieval_authority: "download.blender.org (Blender Foundation's own server)"
+    url: "https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4.zip"
+    container: zip
+    member_hint: "bbb_sunflower_1080p_30fps_normal.mp4"
+    clip_start: "00:02:16"
+    selection_reason: "sustained character + prop action, no title card, no cross-fade"
+    verify_by: [person_or_character, product_object, multi_shot, motion, audio]
+
+  - id: MAVM-02
+    work: "Sintel"
+    creator: "Blender Foundation (Durian open movie project)"
+    licence: "CC BY 3.0"
+    licence_authority: "https://durian.blender.org/about/"
+    licence_quote: "“Sintel” is licensed as Creative Commons Attribution 3.0."
+    attribution_required: "(c) copyright Blender Foundation | durian.blender.org"
+    retrieval_authority: "download.blender.org (Blender Foundation's own server)"
+    url: "https://download.blender.org/durian/movies/Sintel.2010.720p.mkv.zip"
+    container: zip
+    member_hint: "Sintel.2010.720p.mkv"
+    clip_start: "00:04:40"
+    selection_reason: "multi-shot dialogue/action sequence away from title and credit cards"
+    verify_by: [person_or_character, multi_shot, motion, audio]
+
+  - id: MAVM-03
+    work: "Tears of Steel"
+    creator: "Blender Foundation (Mango open movie project)"
+    licence: "CC BY 3.0"
+    licence_authority: "https://mango.blender.org/about/"
+    licence_quote: "Tears of Steel is licensed as Creative Commons Attribution 3.0, which allows you to share and show the film freely, for as long you keep the credit scroll included."
+    attribution_required: "(CC) Blender Foundation | mango.blender.org"
+    retrieval_authority: "download.blender.org (Blender Foundation's own server)"
+    url: "https://download.blender.org/demo/movies/ToS/tears_of_steel_720p.mov"
+    container: none
+    clip_start: "00:01:30"
+    selection_reason: "live-action photographed humans; only work in the set with real actors under an explicit CC BY film licence"
+    rights_note: >
+      FILM is CC BY 3.0. The ORIGINAL SOUNDTRACK files are separately licensed
+      CC BY-ND 3.0 (download.blender.org/demo/movies/ToS/copyright.txt, read
+      2026-08-28). A time-shift audio perturbation would create a derivative of
+      an ND-licensed work, so this clip is marked audio_perturbation_prohibited
+      and is a VISUAL perturbation base only.
+    verify_by: [person_real, product_object, multi_shot, motion, audio]
+
+  - id: MAVM-04
+    work: "Mars Helicopter Testing Media Reel"
+    creator: "NASA / Jet Propulsion Laboratory"
+    licence: "Public domain (US Government work)"
+    licence_authority: "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    retrieval_authority: "images-assets.nasa.gov (NASA's own asset server)"
+    nasa_id: "JPL-20220623-TECHf-0001-Mars Helicopter Testing Media Reel"
+    url: "https://images-assets.nasa.gov/video/JPL-20220623-TECHf-0001-Mars Helicopter Testing Media Reel/JPL-20220623-TECHf-0001-Mars Helicopter Testing Media Reel~orig.mp4"
+    container: none
+    clip_start: "00:00:20"
+    selection_reason: "engineered hardware handled by people in a controlled facility; media reel form implies hard cuts"
+    verify_by: [person_real, product_object, multi_shot, motion]
+
+  - id: MAVM-05
+    work: "NASA Reveals Webb Telescope's First Images of Unseen Universe"
+    creator: "NASA Headquarters"
+    licence: "Public domain (US Government work)"
+    licence_authority: "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    retrieval_authority: "images-assets.nasa.gov (NASA's own asset server)"
+    nasa_id: "NHQ_2022_0712_VF_NASA Reveals Webb Telescope’s First Images of Unseen Universe"
+    url: "https://images-assets.nasa.gov/video/NHQ_2022_0712_VF_NASA Reveals Webb Telescope’s First Images of Unseen Universe/NHQ_2022_0712_VF_NASA Reveals Webb Telescope’s First Images of Unseen Universe~orig.mp4"
+    container: none
+    clip_start: "00:02:15"
+    selection_reason: >-
+      Two presenters with a labelled data chart in frame. WINDOW REVISED AFTER MEASUREMENT: the
+      first window (00:00:15) landed on the press slate that NASA prepends to this asset - a
+      full-screen static text card. It measured 1 shot, a detected freeze run and no cut, which is
+      unusable as a freeze-injection base because the clip is already frozen. The revised window
+      measures 0 freezes, 0 black frames and continuous motion. The requirement was not weakened;
+      the sample was moved to material that meets it.
+    verify_by: [person_real, on_screen_text, multi_shot, audio]
+
+  - id: MAVM-06
+    work: "Introducing the Artemis Team of Astronauts on This Week @NASA - December 11, 2020"
+    creator: "NASA Headquarters"
+    licence: "Public domain (US Government work)"
+    licence_authority: "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    retrieval_authority: "images-assets.nasa.gov (NASA's own asset server)"
+    nasa_id: "Introducing the Artemis Team of Astronauts on This Week @NASA – December 11, 2020"
+    url: "https://images-assets.nasa.gov/video/Introducing the Artemis Team of Astronauts on This Week @NASA – December 11, 2020/Introducing the Artemis Team of Astronauts on This Week @NASA – December 11, 2020~orig.mp4"
+    container: none
+    clip_start: "00:00:10"
+    selection_reason: "news-magazine format: densest on-screen text and highest cut rate available in the public-domain pool"
+    verify_by: [person_real, on_screen_text, multi_shot, audio]
+
+  - id: MAVM-07
+    work: "Explore Mars Jezero Crater with NASA's Perseverance Rover"
+    creator: "NASA / Jet Propulsion Laboratory"
+    licence: "Public domain (US Government work)"
+    licence_authority: "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    retrieval_authority: "images-assets.nasa.gov (NASA's own asset server)"
+    nasa_id: "JPL-20211221-M2020f-0001-Explore_Mars_Jezero_Crater_with_NASAs_Perseverance_Rover"
+    url: "https://images-assets.nasa.gov/video/JPL-20211221-M2020f-0001-Explore_Mars_Jezero_Crater_with_NASAs_Perseverance_Rover/JPL-20211221-M2020f-0001-Explore_Mars_Jezero_Crater_with_NASAs_Perseverance_Rover~orig.mp4"
+    container: none
+    clip_start: "00:00:25"
+    selection_reason: "strong directional camera motion; direction-reversal perturbation needs unambiguous motion direction"
+    verify_by: [motion, on_screen_text, multi_shot]
+
+  - id: MAVM-08
+    work: "Ingenuity Flight Update Media Reel"
+    creator: "NASA / Jet Propulsion Laboratory"
+    licence: "Public domain (US Government work)"
+    licence_authority: "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    retrieval_authority: "images-assets.nasa.gov (NASA's own asset server)"
+    nasa_id: "JPL-20230406-TECHf-0001-Ingenuity Flight Update Media Reel 1080"
+    url: "https://images-assets.nasa.gov/video/JPL-20230406-TECHf-0001-Ingenuity Flight Update Media Reel 1080/JPL-20230406-TECHf-0001-Ingenuity Flight Update Media Reel 1080~orig.mp4"
+    container: none
+    clip_start: "00:01:16"
+    selection_reason: >-
+      Second distinct hardware subject, so product-swap has a same-domain plausible confusion
+      rather than a shoe-versus-kettle non-test. WINDOW REVISED AFTER MEASUREMENT: the first
+      window (00:00:20) fell in the stills-and-animation portion of this media reel and measured
+      8 pre-existing freeze runs plus a black interval. Eight freezes in a freeze-detection base
+      would make injected and pre-existing freezes indistinguishable. A second window (00:04:15)
+      measured clean but frame inspection showed it holds only monochrome navigation-camera
+      terrain, with no hardware in frame - clean, but no longer the product-swap subject this
+      entry exists to supply. The third window (00:01:16) measures 0 freezes, 0 black frames and
+      one scene change, and frame inspection confirms the helicopter is visible on the surface.
+      Recorded in full because a clip that passes the mechanical screen can still fail the
+      requirement, and only inspection catches that.
+    verify_by: [product_object, multi_shot, motion]
+
+  - id: MAVM-09
+    work: "What does the Wikimedia Foundation do - A WIKI MINUTE (16:9, no VO)"
+    creator: "Wikimedia Foundation"
+    licence: "CC BY-SA 4.0"
+    licence_authority: "https://commons.wikimedia.org/wiki/File:What_does_the_Wikimedia_Foundation_do_%E2%80%93_A_WIKI_MINUTE_16-9_%E2%80%93_NO_VO.webm"
+    retrieval_authority: "upload.wikimedia.org; uploaded by the rights holder's own staff account (CKoerner (WMF))"
+    commons_title: "File:What does the Wikimedia Foundation do – A WIKI MINUTE 16-9 – NO VO.webm"
+    container: none
+    clip_start: "00:00:36"
+    selection_reason: >-
+      Motion-graphics explainer at 3840x2160 - the densest rendered on-screen text in the
+      permissive pool, and text-mutation perturbation needs rendered text rather than photographed
+      signage. WINDOW REVISED AFTER MEASUREMENT: the first window (00:00:08) held a title card
+      long enough to register a freeze run and produced no cut. The revised window measures 0
+      freezes and several scene changes, so it serves both the text-mutation and the
+      screen-direction perturbations.
+    rights_note: >
+      ShareAlike. Internal evaluation creates no distribution trigger, but any
+      future public release of a derived frame or clip would carry CC BY-SA 4.0
+      onward. Recorded, not waived.
+    verify_by: [on_screen_text, multi_shot, motion]
+
+  - id: MAVM-10
+    work: "Wikimedia Foundation Funds Strategy"
+    creator: "Wikimedia Foundation"
+    licence: "CC BY-SA 4.0"
+    licence_authority: "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Funds_Strategy.webm"
+    retrieval_authority: "upload.wikimedia.org; uploaded by the rights holder's own staff account (HDothiduc (WMF))"
+    commons_title: "File:Wikimedia Foundation Funds Strategy.webm"
+    container: none
+    clip_start: "00:00:20"
+    selection_reason: "institutional talking-head with titles; second independent WMF production, different shoot and different people from MAVM-09"
+    rights_note: "ShareAlike - see MAVM-09."
+    verify_by: [person_real, on_screen_text, audio]
+
+  - id: MAVM-11
+    work: "WMF Fusiontec Mineral Multipot product video"
+    creator: "RuinDig / Yuki Uchida (own work)"
+    licence: "CC BY 4.0"
+    licence_authority: "https://commons.wikimedia.org/wiki/File:WMF-Fusiontec-Mineral-Multipot-video.webm"
+    retrieval_authority: "upload.wikimedia.org; Commons source field states 'Own work'"
+    commons_title: "File:WMF-Fusiontec-Mineral-Multipot-video.webm"
+    container: none
+    clip_start: "00:00:03"
+    selection_reason: "a single branded consumer product held steady in frame - the closest thing in the permissive pool to a product-reference shot, which product-swap perturbation needs"
+    verify_by: [product_object, motion]
+
+  - id: MAVM-12
+    work: "Machine a cafe a l'hotel de la Cloche (Dole, Jura, France)"
+    creator: "Benoit Prieur (own work)"
+    licence: "CC0 1.0 (public domain dedication)"
+    licence_authority: "https://commons.wikimedia.org/wiki/File:Machine_%C3%A0_caf%C3%A9_%C3%A0_l%27h%C3%B4tel_de_la_Cloche_(Dole,_Jura,_France).webm"
+    retrieval_authority: "upload.wikimedia.org; Commons source field states own work"
+    commons_title: "File:Machine à café à l'hôtel de la Cloche (Dole, Jura, France).webm"
+    container: none
+    clip_start: "00:00:02"
+    selection_reason: "second distinct manufactured object, so product-swap has a same-category-adjacent confusion rather than a shoe-versus-kettle non-test"
+    verify_by: [product_object, motion]
