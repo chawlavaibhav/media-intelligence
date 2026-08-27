@@ -1,0 +1,97 @@
+{
+  "call_counts": {
+    "devanagari": 288,
+    "latin": 288,
+    "total": 576
+  },
+  "candidate_config_sha256": "7b83bf630bf3c6056bf72b78ebc4ae582211299c35dd39540b016f0e6d0d6d07",
+  "candidate_identity": {
+    "api_version": "v1",
+    "config_alias": "cloud-vision-text-detection-v1",
+    "config_pinned_at_execution": true,
+    "endpoint": "https://vision.googleapis.com/v1/images:annotate",
+    "family": "ocr",
+    "feature": "TEXT_DETECTION",
+    "language_hints": [],
+    "provider": "google_cloud_vision"
+  },
+  "contracts": {
+    "benchmark": {
+      "contract_id": "benchmark_text_ocr_v1",
+      "contract_sha256": "de25e43779071bf1d6e080711e9b22f75fbfc82ae7b824f18779c33d48359775",
+      "contract_version": "benchmark-1",
+      "disposition": "PASSED for devanagari and latin"
+    },
+    "strict_ocr": {
+      "contract_sha256": "25602691fb136ac0515c829c7d0ed697c59be638b4befa64db662c5c7196b490",
+      "contract_version": "ocr-1",
+      "disposition": "FAILED zero-false-pass; preserved unchanged"
+    }
+  },
+  "evidence_package_id": "EMP-001-text-ocr-v1",
+  "files": [
+    {
+      "byte_identical_to_source": true,
+      "bytes": 826536,
+      "path": "eval/empirical-tranche-1/evidence/EMP-001/text-ocr/qualification-live-cloudvision-ocr-v1.json",
+      "provenance_local_runtime_path": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/emp-001-live/eval/runs/tranche-1/emp-001-live-2026-08-27/qualification-live-cloudvision-ocr-v1.json",
+      "role": "strict-contract Cloud Vision Devanagari source evidence used by EVAL-029 recomputation",
+      "sha256": "14e7d5b5dfe11bf46461fdacdff1420f0b2244fb2bfede314cda80949aa31e7d"
+    },
+    {
+      "byte_identical_to_source": false,
+      "bytes": 475901,
+      "note": "Latin per-call observations were added into this sealed copy so the result is recomputable from committed bytes alone. Every Latin metric is unchanged from the live run and is asserted so by test.",
+      "path": "eval/empirical-tranche-1/evidence/EMP-001/text-ocr/benchmark-text-ocr-qualification.json",
+      "provenance_local_runtime_path": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/emp-001-live/eval/runs/tranche-1/emp-001-live-2026-08-27/benchmark-text-ocr-qualification.json",
+      "role": "completed EVAL-029 combined benchmark qualification result, incl. Latin observations",
+      "sha256": "9a69cc87ee456191928d74a16ccd893295d300a5ab5389f7850b04331eb9a3a8"
+    },
+    {
+      "byte_identical_to_source": "derived_at_seal",
+      "bytes": 517163,
+      "path": "eval/empirical-tranche-1/evidence/EMP-001/text-ocr/cost-ledger-excerpt.json",
+      "provenance_local_runtime_path": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/emp-001-live/eval/runs/tranche-1/emp-001-live-2026-08-27/cost-ledger-excerpt.json",
+      "role": "bounded immutable qualification-stage cost/ledger excerpt",
+      "sha256": "1e05338c3e2758b69af575ea0c823deea20077a1bd0a2549508a01a9de796041"
+    }
+  ],
+  "immutable": true,
+  "manifest_fingerprint": "24b097de63452138f24b2a6bd3a44eadd44a9592000e718e0e878b660f69d965",
+  "reproducible_without_local_worktree": true,
+  "run_id": "emp-001-live-2026-08-27",
+  "sealed_by": "EVAL-029 persistence correction",
+  "sealed_status": "SEALED",
+  "secrets": {
+    "credential_redaction_applied": false,
+    "note": "Raw bytes committed unmodified; no redaction was necessary.",
+    "patterns": [
+      "google_api_key",
+      "anthropic_key",
+      "openai_key",
+      "fal_key",
+      "authorization_header",
+      "x-api-key value",
+      "x-goog-api-key value",
+      "key= query param",
+      "environment dump"
+    ],
+    "result": "NONE FOUND",
+    "scanned": true
+  },
+  "spend": {
+    "devanagari_usd": "0.4320",
+    "eval_029_incremental_latin_usd": "0.4320",
+    "ledger_relation": "cost-ledger-excerpt.json, linked by trial_id/attempt_id",
+    "qualification_stage_cumulative_usd": "1.7357905"
+  },
+  "statuses": {
+    "benchmark_qualified": true,
+    "benchmark_qualified_scripts": [
+      "devanagari",
+      "latin"
+    ],
+    "strict_exactness_qualified": false
+  },
+  "why": "GOV-005 finding F-1: completed live EMP-001 observations and cost evidence lived only under gitignored eval/runs/ and could not be reconstructed from GitHub. These are the exact bytes EVAL-029 depended on, now durable."
+}

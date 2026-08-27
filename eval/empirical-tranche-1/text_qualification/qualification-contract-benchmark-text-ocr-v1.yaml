@@ -1,0 +1,148 @@
+# BENCHMARK-GRADE text OCR evaluator contract, v1.
+#
+# THIS IS A SECOND, SEPARATE INSTRUMENT. It does not supersede, amend, relax or reinterpret
+# `qualification-contract-ocr-v1.yaml` or either VLM contract. Those remain in force for the
+# question they were built to answer, and every result produced under them stands unchanged.
+#
+# TWO CONTRACTS BECAUSE THERE ARE TWO QUESTIONS
+#
+#   The strict OCR contract asks:  "Can this evaluator make a zero-false-pass claim?"
+#   This contract asks:            "Is this evaluator accurate and stable enough to COMPARE
+#                                   media-generation routes, with its own error rate declared?"
+#
+#   Those are genuinely different questions, and the honest answer to the first is not the honest
+#   answer to the second. An evaluator that misses 12.5% of adversarial corruptions cannot
+#   certify that customer-facing text is exact. It can still rank two generators reliably,
+#   provided everyone downstream is told the ruler has 12.5% slack in it.
+#
+#   The failure mode this contract is designed to prevent is NOT a false pass. It is a project
+#   that freezes indefinitely because one capability's evaluator is imperfect, while the
+#   measurable question — which generation route produces better text — goes unanswered.
+#
+# WHAT THIS CONTRACT IS NOT
+#
+#   It is not a production certifier. A candidate qualified here is `benchmark_qualified: true`
+#   and `strict_exactness_qualified: false`, and BOTH statuses travel with every number it
+#   produces. A downstream reader who sees only "qualified" has been misled, so the schema makes
+#   the unqualified half impossible to drop silently.
+#
+#   It contains no human-review step. Human confirmation was withdrawn as a production gate; this
+#   contract does not smuggle it back in as an evaluator requirement.
+contract_id: benchmark_text_ocr_v1
+contract_version: benchmark-1
+contract_family: ocr
+contract_class: benchmark_utility
+status: ACTIVE_BENCHMARK_GATE_V1
+supersedes: []
+does_not_supersede:
+  - qualification-contract-ocr-v1.yaml
+  - qualification-contract-v2.yaml
+  - qualification-contract-v1.yaml
+
+repeats_per_shape: 3
+qualifying_shape: transcribe
+primary_generated_output_shape: transcribe
+
+# ---------------------------------------------------------------------------- thresholds
+mismatch_false_pass_rate_max: 0.15
+match_false_fail_rate_max: 0.10
+repeat_consistency_min: 0.95
+failure_rate_max: 0.05          # empty + refusal + infrastructure, on a COMPLETE screen
+
+thresholds:
+  mismatch_false_pass_rate_max:
+    value: 0.15
+    rationale: >-
+      A rate, not a count. The strict contract's zero-count gate answers "can this evaluator be
+      trusted to certify?"; this one answers "does it catch enough adversarial corruptions to
+      rank generators?". 0.15 means the evaluator must catch at least 85% of deliberate
+      corruptions in the qualification battery. A generator that produces materially worse text
+      will still separate from a better one at that sensitivity; what is lost is the ability to
+      claim any individual output is exact.
+  match_false_fail_rate_max:
+    value: 0.10
+    rationale: >-
+      Unchanged from the strict contract deliberately. Wrongly rejecting correct text is the
+      error that makes a benchmark unusable for ranking, because it penalises good generators
+      for the evaluator's own blindness. Loosening this would defeat the purpose of the contract.
+  repeat_consistency_min:
+    value: 0.95
+    rationale: >-
+      Unchanged. An evaluator whose verdict moves between identical repeats cannot rank anything;
+      the differences it reports would be its own noise rather than the generators'.
+  failure_rate_max:
+    value: 0.05
+    rationale: >-
+      Empty transcriptions, refusals and infrastructure failures combined, over a complete screen.
+      An evaluator that frequently returns nothing is unusable even when what it returns is right.
+
+# ---------------------------------------------------------------- comparison semantics
+exactness:
+  decided_by: code
+  normalisation: nfc_plus_surrounding_whitespace_trim
+  rationale: >-
+    IDENTICAL to every prior contract, and deliberately so. The comparison rule is the one thing
+    that must not vary between instruments, or results stop being comparable across candidates
+    and the historical evidence becomes unreadable. Loosening normalisation was explicitly not
+    authorised.
+
+retries_authorised: 0
+
+# ------------------------------------------------------------------------ status semantics
+status_semantics:
+  benchmark_qualified:
+    meaning: >-
+      Passed every threshold in this contract on a complete screen for the named script. Usable to
+      compare and rank generation routes, with the measured error rates attached.
+  strict_exactness_qualified:
+    meaning: >-
+      Passed the strict zero-false-pass OCR contract. A separate, harder question.
+    current_state_for_all_tested_candidates: false
+  both_statuses_required: true
+  rationale: >-
+    Every metric this evaluator produces must carry BOTH statuses plus the measured false-pass and
+    false-fail rates. A number reported as "qualified" without its error rates would let a reader
+    treat a benchmark signal as a guarantee, which is the specific misreading this contract exists
+    to prevent.
+
+scoring_output_requirements:
+  - evaluator_contract_id
+  - evaluator_contract_sha256
+  - qualification_false_pass_rate_by_script
+  - qualification_false_fail_rate_by_script
+  - qualification_repeat_consistency_by_script
+  - script_coverage
+  - benchmark_qualified
+  - strict_exactness_qualified
+
+# --------------------------------------------------------------------------- completeness
+scientific_completeness:
+  required_executions_per_script: 288        # 96 items x 3 repeats, one shape
+  rule: >-
+    A script qualifies only when every required execution produced a scientifically interpretable
+    outcome and no infrastructure failure stopped the run.
+  incomplete_disposition: null
+  incomplete_rationale: >-
+    An incomplete screen yields `benchmark_qualified: null`, never true and never false. An
+    infrastructure stop is not evidence about the evaluator's accuracy.
+
+script_independence:
+  rule: >-
+    Scripts qualify INDEPENDENTLY under this contract. There is no progressive stop: a candidate
+    may be benchmark-qualified for one script and not another, and partial coverage is a reportable
+    result rather than a failure.
+  rationale: >-
+    The strict contract stopped after Devanagari, which is why Cloud Vision's Latin screen was
+    never run. Benchmark coverage is per script because a generator comparison on Latin text does
+    not depend on the evaluator's Devanagari performance.
+
+atext_handoff:
+  accepted_by_atext: true
+  accepted_as: benchmark_measurement
+  not_accepted_as: strict_exactness_certification
+  human_review_required: false
+  rationale: >-
+    A-TEXT scored under this contract is a measurement with declared error, not a certification
+    that any generated image contains exactly correct text.
+
+evaluator_spend_ceiling_usd: 6.00
