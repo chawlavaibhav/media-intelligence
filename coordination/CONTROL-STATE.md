@@ -363,11 +363,11 @@ Not authorised:
 - Production IR/Planner implementation before sufficient empirical capability evidence exists.
 
 Authorised / active:
-- **EVAL-032**, narrowed by `coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md`: complete the full 12/12 real temporal ingest under a recorded batching/normalisation condition and prove the existing perturbation machinery materialises on the real pack. **No temporal checker observations.**
-- **EVAL-033**, reframed by the same correction: return the minimum practical temporal checker stack, exact configurations/costs and proposed precommitted gates. **Stop before protected qualification observations.**
-- **EVAL-031 must not start as written; EVAL-034 is cancelled; RES-006 is deferred.** The correction supersedes the earlier five-lane authorisation on those points.
-- **none of the six previously settled lanes** (EVAL-029, EVAL-024, EVAL-030, EVAL-026, CANON-011, RES-005) are reopened by this.
-- the next Controller planning priority is a **real customer vertical-slice pilot**, but the correction is a planning direction, not automatic authorisation to execute a pilot.
+- **No domain execution lane is currently active.**
+- **EVAL-031 is stopped; EVAL-034 is cancelled; RES-006 is deferred.**
+- **EVAL-032 and EVAL-033 are now stopped as immediate priorities** by `coordination/decisions/CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md`. They remain valid future lab tasks only when automated temporal-evaluator qualification becomes the objective.
+- **none of the previously settled lanes** (EVAL-029, EVAL-024, EVAL-030, EVAL-026, CANON-011, RES-005) are reopened by this.
+- the next Controller priority is to authorise and run a **real customer vertical-slice pilot**: customer prompt -> Normalized Request -> Creative IR -> manually authored production recipe -> real generation -> explicit human inspection -> bounded repair -> candidate accepted outcome. This is product-learning, not Registry evidence or Stage C.
 
 
 Customer-outcome CpAO remains Stage C only.
