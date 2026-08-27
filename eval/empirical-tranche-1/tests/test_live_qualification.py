@@ -13,6 +13,7 @@ Every test here FAILS if the live branch refuses. That is the point: a positive 
 still pass against an unconditional refusal is not a control.
 """
 import json
+from types import SimpleNamespace
 from decimal import Decimal
 from pathlib import Path
 
@@ -276,6 +277,29 @@ def test_a_refusal_still_costs_its_trial(keys):
     assert reply['api_status'] == 'refusal'
     assert guard.spent_usd > 0
     assert reply['call_record']['billed_usd'] is not None
+
+
+def test_run_live_persists_canonical_fingerprint_bound_qualification(tmp_path, keys):
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('both'))
+    guard = BudgetGuard(authorised_usd=Decimal('10.00'))
+    run = SimpleNamespace(run_id='canonical-live-test', mode='live', evidence_dir=tmp_path)
+
+    result = Q.run_live(
+        guard,
+        http=http,
+        resolved_versions={'anthropic': ANTHROPIC_VERSION},
+        only_provider='anthropic',
+        run=run)
+
+    path = tmp_path / Q.QUALIFICATION_FILENAME
+    assert path.exists()
+    payload = json.loads(path.read_text())
+    assert payload['contract_version'] == 2
+    assert payload['contract_sha256']
+    assert payload['candidates'][0]['devanagari']['observations']
+    assert payload['qualified'][0]['qualified_scope'] == ['devanagari', 'latin']
+    assert payload['evidence_fingerprint'] == Q.qualification_fingerprint(payload)
+    assert result['qualified_candidates'] == [f'anthropic:{ANTHROPIC_VERSION}']
 
 
 # ------------------------------------------------- CLI still fails closed
