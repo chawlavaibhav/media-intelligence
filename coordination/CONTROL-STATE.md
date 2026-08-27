@@ -1,12 +1,14 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-014 reviewed BLOCKED on one ambiguous-dispatch accounting defect; bounded EVAL-015 active. Paid calls remain blocked.
+**Updated:** 27 Aug 2026 — EVAL-015 accepted and integrated into `main`; paid EMP-001 execution remains blocked pending zero-spend prerequisites and explicit user approval.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
 ## Global posture
 
-Broad research/design and the final pre-execution freeze are closed. The project remains in first empirical tranche implementation.
+Broad research/design and the final pre-execution freeze are closed.
+
+The accepted EVAL-012→015 execution implementation for the first empirical tranche is now integrated. The project is at **zero-spend pre-execution prerequisites** before any real provider call.
 
 Frozen foundations remain:
 - CANON-010 request contract;
@@ -28,105 +30,189 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
+The EVAL-012→015 work makes the execution machinery safer. It does **not** establish any model-quality result.
+
 ## EMP-001 — prepared, NOT authorised
 
 Frozen paid shape remains:
+
 1. qualify text judges progressively: Devanagari first, Latin only for survivors;
-2. only with a judge qualified on all required scripts, run A-TEXT;
-3. four frozen items × two repeats × two routes = **16 image generations maximum**.
+2. only if one judge qualifies for every script required by A-TEXT, run image generation;
+3. A-TEXT: 4 strings × 2 repeats × 2 routes = **16 image generations maximum**.
 
-Proposed spend remains:
-- total consumed-API ceiling **USD 10.00** / approximately ₹954 planning reference, excluding taxes;
-- qualification sub-cap **USD 6.00** inside that total;
-- retries **0**;
-- no account pre-funding above the approved ceiling.
-
-No part of that spend is approved yet.
-
-## EVAL-014 review
-
-Returned branch:
-- `work/eval-014-emp-001-budget-continuity` @ `094c24a77737b17067a3e98834c00e3bf2e1fa53`
-
-Worker verdict:
-- `READY_FOR_SPEND_APPROVAL`
-
-Controller verdict:
-- **BLOCKED — preserve EVAL-014; correct only ambiguous provider-dispatch exception accounting.**
-
-Authoritative review:
-- `coordination/decisions/CONTROLLER-EVAL-014-REVIEW-2026-08-27.md`
-
-Accepted EVAL-014 work:
-- durable run ledger carrying spend across separate processes;
-- USD 10 total ceiling and USD 6 qualification sub-cap mechanically enforced;
-- fingerprint-bound qualification → A-TEXT handoff;
-- deterministic evaluator trial/attempt ids and ledger-resolvable cost refs;
-- target-aware blind check parity in A-TEXT;
-- Latin perceptibility review correctly gates the whole four-item A-TEXT screen;
-- worker-reported 315 EMP-001 tests green, V1 107/107 green, Resources validation PASS, Registry zero, protected baselines intact, zero external calls/spend;
-- worker-reported full cross-process rehearsal: qualification USD 0.9763200 persisted across process exit, then A-TEXT USD 0.9142480, cumulative USD 1.8905680 of USD 10.
-
-Blocking defect remaining:
-1. **Ambiguous evaluator transport exception:** after reserving budget, `TextJudge._dispatch()` releases the reservation on any transport exception. A timeout/reset can happen after the provider received the request, so releasing can manufacture headroom and erase a potentially billed trial.
-2. **Ambiguous generation transport exception:** A-TEXT currently exits on a fal transport exception before persisting the generation Attempt/trial. The pending reservation is conservative for spend but the failure/timeout attempt is not durable evidence.
-
-Frozen policy: a reservation may be released only when no provider dispatch can be proven. Ambiguous post-dispatch failures must persist as timeout/error/unknown-billing trials, remain conservatively costed, and receive no automatic retry.
-
-## Active assignment — EVAL-015
-
-Task:
-- `eval/tasks/EVAL-015-EMP-001-AMBIGUOUS-DISPATCH-ACCOUNTING.md`
-
-Branch:
-- `work/eval-015-emp-001-ambiguous-dispatch`
-
-Base:
-- EVAL-014 returned head `094c24a77737b17067a3e98834c00e3bf2e1fa53`
-
-External spend/calls:
-- **USD 0 / INR 0**;
-- **0 provider/model/evaluator calls**.
-
-EVAL-015 may only:
-- distinguish provably pre-dispatch failures from ambiguous post-dispatch failures;
-- prevent ambiguous evaluator failures from releasing spend headroom;
-- persist ambiguous evaluator and generation failures as one-call-one-trial evidence with cost refs;
-- keep retries at 0 and stop fail-closed;
-- prove the correction with injected fake transports and rerun EVAL-014 regressions.
-
-No model, prompt, threshold, route, repeat, retry, A-TEXT item, budget, Latin prerequisite or scientific decision may change.
-
-## Measurement freeze unchanged
-
-Text qualification:
-- Devanagari validated view: 96 items;
-- Latin pack: 96 items = 48 match + 48 controlled mismatch;
-- 3 repeats per shape;
-- shapes: `transcribe`, `verdict`;
-- candidates: OpenAI `gpt-5.4-mini` and Google `gemini-3.5-flash-lite`, exact versions pinned at execution;
-- maximum 2,304 evaluator calls if both reach both scripts;
-- Devanagari failure stops that candidate before Latin.
-
-A-TEXT strings remain exactly:
+Frozen A-TEXT strings:
 - `शुभ दीपावली`
 - `आज की डील`
 - `Aaj ki Deal`
 - `SAVE 20% • ₹999`
 
-Routes remain:
-- IMG-01: fal `openai/gpt-image-2`, 8 unseeded generations;
-- IMG-02: fal `fal-ai/ideogram/v3`, BALANCED, 8 unseeded generations.
+Frozen image routes:
+- IMG-01: fal `openai/gpt-image-2`
+  - 1024×1024
+  - medium
+  - 8 unseeded generations
+- IMG-02: fal `fal-ai/ideogram/v3`
+  - BALANCED
+  - 8 unseeded generations
 
-Primary exactness remains blind transcription followed by code-level comparison. A-TEXT remains partial evidence only.
+Primary measurement remains:
+- blind transcription;
+- code-level exact equality.
 
-The Latin human perceptibility review remains unfilled and is a zero-spend prerequisite for the Latin qualification leg and therefore for the complete four-item A-TEXT screen. It must not be fabricated.
+A-TEXT remains only a partial admission screen. It may eliminate deeper text spend; it cannot promote a complete Stage-A model slot.
+
+Proposed spend remains:
+- total consumed-API ceiling **USD 10.00**;
+- planning reference ≈ ₹954 before tax;
+- text-judge qualification sub-cap **USD 6.00**;
+- retries **0**;
+- no account pre-funding above the approved ceiling.
+
+**No part of that spend is approved yet.**
+
+## Text-judge qualification freeze
+
+Candidates remain:
+- OpenAI `gpt-5.4-mini`;
+- Google `gemini-3.5-flash-lite`.
+
+Exact resolved model versions must be pinned at execution. Aliases alone are insufficient.
+
+Materials remain:
+- Devanagari validated view: 96 items;
+- Latin pack: 96 items = 48 match + 48 controlled mismatch;
+- 3 repeats per shape;
+- shapes: `transcribe`, `verdict`.
+
+Maximum evaluator calls if both candidates survive both scripts:
+- **2,304**.
+
+Devanagari failure stops that candidate before Latin.
+
+## EVAL-015 — ACCEPTED AND INTEGRATED
+
+Authoritative Controller review:
+- `coordination/decisions/CONTROLLER-EVAL-015-REVIEW-2026-08-27.md`
+
+Worker branch:
+- `work/eval-015-emp-001-ambiguous-dispatch`
+- returned head `b98789673a90fac350609eed5730ff6483e7e6bf`
+
+Conflict-free Controller integration:
+- PR #36;
+- merge commit `bf17fe2db3a3712753fbf5bdf8db28e682f1b1b1`.
+
+Controller verdict:
+- **ACCEPTED FOR INTEGRATION — NOT SPEND APPROVAL.**
+
+Accepted semantics:
+
+### Provably pre-dispatch failure
+
+Examples:
+- missing API key before dispatch;
+- blindness/request validation refusal;
+- model/body refusal before dispatch.
+
+May release or avoid a reservation because no provider call occurred.
+
+### Ambiguous post-dispatch failure
+
+Examples:
+- read/socket timeout after dispatch path entered;
+- connection reset;
+- remote disconnect;
+- TLS/network ambiguity;
+- malformed/unparseable provider response after send.
+
+Must:
+- **NOT** release spend headroom;
+- persist one timeout/error trial;
+- preserve provider/model/route identity;
+- preserve trial/attempt identity;
+- preserve `cost_ref`;
+- mark billing state unknown/provisional;
+- conservatively count the reserved estimate when actual billing is unavailable;
+- retry 0 times;
+- stop fail-closed.
+
+Generation ambiguity also persists the generation Attempt and invokes no evaluator because there is no usable artifact.
+
+An ambiguous evaluator call after a successful generation preserves both trials and stops the run.
+
+## Accepted EVAL-014 controls preserved
+
+Still accepted:
+- persistent cumulative spend ledger across separate processes;
+- mechanical USD 10 total ceiling;
+- mechanical USD 6 qualification sub-cap;
+- outstanding reservations count against available headroom;
+- fingerprint-bound qualification → A-TEXT handoff;
+- real A-TEXT handoff reconstructs the same provider + model alias + exact resolved version;
+- deterministic evaluator trial/attempt identity;
+- ledger-resolvable cost refs;
+- target-aware blind pre-dispatch checking;
+- Latin perceptibility gate blocks complete A-TEXT;
+- Registry remains empty unless qualified empirical evidence exists.
+
+Worker-reported EVAL-015 verification:
+- EMP-001 tests: **363 passed**;
+- V1 harness: **107/107**;
+- Resources cross-branch validation: **PASS**;
+- fake-live qualification: **2,304 evaluator dispatches**;
+- fake-live A-TEXT: **16 generations + 16 evaluator calls**;
+- cross-process rehearsal:
+  - qualification USD 0.9763200
+  - + A-TEXT USD 0.9142480
+  - = USD 1.8905680 cumulative;
+- Registry rows: 0;
+- 13/13 protected baselines byte-identical;
+- 0 external calls;
+- USD 0 spend.
+
+Treat the test counts as worker execution evidence. The Controller independently reviewed the pushed code/diff and integration shape.
+
+## Remaining zero-spend prerequisites
+
+### 1. Latin human perceptibility review — STILL UNFILLED
+
+This is the main outstanding non-code gate.
+
+It must not be fabricated.
+
+Mechanical validation exists, but a person has not yet confirmed that the rendered Latin match/mismatch differences are perceptible and usable.
+
+This gates the Latin qualification leg and therefore the complete four-item A-TEXT screen.
+
+### 2. Runtime secrets
+
+Needed only at execution:
+- `OPENAI_API_KEY`;
+- `GOOGLE_API_KEY`;
+- `FAL_KEY`.
+
+No secret belongs in GitHub.
+
+If any provider requires account funding above an approved ceiling, execution must stop and return.
+
+### 3. Exact execution-time model/version pins
+
+The live path mechanically refuses floating aliases without exact version pins.
+
+Current exact available versions must be verified immediately before execution.
+
+### 4. Current route availability and planning prices
+
+The frozen scientific routes remain unchanged, but current provider availability and planning prices must be checked before approval so the USD 10 ceiling is still credible.
+
+### 5. Rebuild gitignored generated image sets
+
+Required before execution. This is zero spend.
 
 ## Still blocked / not authorised
 
 Not authorised:
 - any paid EMP-001 call;
-- EMP-001 USD 10 tranche until EVAL-015 returns clean and the user explicitly approves;
 - any account funding;
 - full 90-generation Stage A;
 - Stage B / Stage C;
@@ -139,6 +225,10 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-EVAL-015 returns first.
+1. Complete the Latin human perceptibility review with a real person.
+2. Verify current exact model/version availability plus frozen route availability/prices.
+3. Rebuild the generated zero-spend image sets.
+4. Confirm execution secrets can be supplied without pre-funding beyond the proposed ceiling.
+5. Only then present the user the explicit bounded EMP-001 spend decision.
 
-If it is genuinely `READY_FOR_SPEND_APPROVAL`, Controller will re-review ambiguous failure accounting plus the already-accepted EVAL-014 budget/handoff controls before asking the user for any spend approval.
+**No paid provider/model/evaluator call may occur until the user explicitly approves the bounded EMP-001 USD 10 ceiling.**
