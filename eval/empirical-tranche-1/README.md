@@ -48,8 +48,8 @@ the wire has already destroyed the measurement, and no later assertion can undo 
 
 `--fake-live` is the positive control. It runs the **same orchestration, the same request
 builders, the same auth headers, the same parsers and the same scorer** as a paid run, with an
-injected recorder standing exactly where the socket would be. It walks the same authorisation gate
-too, so exercising it also exercises the gate a paid run must pass.
+injected recorder standing exactly where the socket would be. It walks the same authorisation and
+human-review gates too, so exercising it also exercises the gates a paid run must pass.
 
 It proves the positive path executes. It proves **nothing about any model**: the fake readers are
 perfect, and a perfect reader is not a real one. Its output is no more promotable than a dry run's.
@@ -89,7 +89,8 @@ bash   eval/v1/harness/run_cross_branch_validation.sh
 Both are gitignored build products, reproducible from committed code plus a pinned font.
 
 ```bash
-# the Latin pack images + the mechanical perceptibility record
+# the Latin pack images + the mechanical perceptibility record.
+# IMPORTANT: a completed human review is evidence and the renderer preserves it; it does not reset it.
 python3 eval/empirical-tranche-1/text_qualification/render_latin_pack.py
 
 # the 96-item Devanagari validated view — note the --out-dir OUTSIDE the battery
