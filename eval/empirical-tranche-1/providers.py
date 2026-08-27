@@ -26,11 +26,12 @@ THE TWO SHAPES ARE DIFFERENT EXPERIMENTS
     `build_transcribe_request` takes NO target parameter. Blindness is enforced by the signature
     first and by `verify_blind_payload` second.
 
-ALIAS IS NOT VERSION
+MODEL IDENTITY
 
-    `model_alias` ('gpt-5.4-mini') and `resolved_version` ('gpt-5.4-mini-2026-07-01') are separate
-    fields and both are persisted on every call. An alias silently repoints; a run that cannot
-    name the exact version it called cannot be reproduced or compared. A judge refuses to exist
+    `model_alias` records the configured model label and `resolved_version` records the exact
+    execution identifier. They may differ for providers that expose moving aliases, or be identical
+    when the provider's canonical model ID is itself pinned (as with Anthropic
+    `claude-haiku-4-5-20251001`). Both are persisted on every call. A judge refuses to exist
     without a resolved version.
 
 COST
@@ -42,8 +43,10 @@ COST
 
 LIVE EXECUTION
 
-    Dispatch is PER PROVIDER: `OpenAIHttpTransport` (Bearer, model in the body) and
-    `GeminiHttpTransport` (`x-goog-api-key`, model in the URL). There is no generic fallback
+    Dispatch is PER PROVIDER. Active EMP-001 judges use `AnthropicHttpTransport`
+    (`x-api-key` + `anthropic-version`, model in the body) and `GeminiHttpTransport`
+    (`x-goog-api-key`, model in the URL). The dormant OpenAI compatibility adapter remains
+    available but is not on the active EMP-001 roster. There is no generic fallback
     transport, because a provider without an explicit auth contract must not inherit somebody
     else's — that is exactly the defect the EVAL-012 branch shipped.
 
