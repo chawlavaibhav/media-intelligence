@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — User explicitly overrode the prior Gemini smoke-only limitation and authorised full qualification of both Gemini 3.5 Flash-Lite and Google Cloud Vision OCR. Gemini mandatory pacing is now 0 seconds; retries remain 0. Combined conservative new reservation USD 1.739520; prospective qualification spend USD 2.4107615 <= USD 6.
+**Updated:** 27 Aug 2026 — EVAL-022 is accepted/integrated (PR #45, merge `afe866cea4adc7625e1ee306ed93f396432a9212`). Gemini 3.5 Flash-Lite failed a second complete no-pacing contract-v2 screen. Cloud Vision TEXT_DETECTION (no hints) is the strongest checker so far but still fails the zero-false-pass gate. EVAL-023 now tests a zero-API-cost local Tesseract configuration with lexical aids disabled.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -30,7 +30,7 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The execution machinery is now live. Contract-v2 Sonnet 5 and Gemini 3.5 Flash-Lite are both scientifically disqualified for Devanagari exact-text judging. Both exhibit stable silent auto-correction of corrupted Hindi text on the blind transcription shape. The later Gemini 429 occurred only after all 288 primary calls were complete and affects diagnostic completeness, not qualification. Historical Haiku evidence remains preserved.
+The execution machinery is now live. Sonnet 5 and Gemini 3.5 Flash-Lite are scientifically disqualified for Devanagari exact-text judging; Gemini's disqualification is now reinforced by a second complete no-pacing contract-v2 screen. Cloud Vision TEXT_DETECTION with no language hints also scientifically fails the mismatch-false-pass gate despite perfect repeat consistency and zero infrastructure failures. Historical Haiku evidence remains preserved.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
@@ -76,7 +76,7 @@ Configured candidates are now:
 - Anthropic `claude-sonnet-5`;
 - Google `gemini-3.5-flash-lite`.
 
-General-purpose multimodal LLMs are now **frozen as the primary exact-text judge family for EMP-001**. No further Haiku/Sonnet/Gemini qualification call is authorised. EVAL-022 prepares a purpose-built OCR evaluator family at zero spend.
+General-purpose multimodal LLMs remain **frozen as the primary exact-text judge family for EMP-001**. Cloud Vision's first OCR configuration also fails the same literalness gate. EVAL-023 moves to a local Tesseract candidate with dictionary/lexical aids disabled; API spend USD 0.
 
 The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
 
@@ -263,11 +263,10 @@ These are reproducible gitignored build products. The live execution worker may 
 ## Still blocked / not authorised
 
 Not authorised:
-- any additional paid text-judge call while EVAL-022 readiness is open;
-- any Cloud Vision live OCR call;
-- any further Haiku, Sonnet or Gemini qualification attempt;
-- account funding above the approved ceiling;
-- A-TEXT until a qualified evaluator covers all required scripts;
+- any new paid evaluator call while EVAL-023 is active;
+- Cloud Vision `languageHints:["hi"]` rerun;
+- another Gemini/Sonnet/Haiku qualification attempt;
+- A-TEXT until a qualified evaluator covers all required scripts and its family handoff is accepted;
 - full 90-generation Stage A;
 - Stage B / Stage C;
 - EVAL-006;
@@ -279,40 +278,26 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Execute:
-- `coordination/decisions/CONTROLLER-FULL-GEMINI-AND-VISION-QUALIFICATION-NO-PACING-2026-08-27.md`
-- `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RUNNER-WIRING-CORRECTION-2026-08-27.md`
+Run **EVAL-023 local literal OCR qualification**:
+- `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RESULTS-AND-EVAL-023-2026-08-27.md`
+- `eval/tasks/EVAL-023-LOCAL-LITERAL-OCR.md`
 
-Required sequence:
-1. bring current `origin/main` into `eval/eval-022-ocr-family-readiness`;
-2. finish real OCR `--live` persistent-ledger wiring;
-3. run all zero-network verification and preflight; if anything fails, stop before spend;
-4. push exact tested head; do not merge;
-5. run fresh full Gemini `gemini-3.5-flash-lite` qualification:
-   - VLM contract v2;
-   - `thinkingLevel: minimal`;
-   - retries 0;
-   - **minimum mandatory pacing 0 seconds**;
-   - Devanagari from call 1;
-   - Latin only if Devanagari passes;
-   - max 1,152 calls / USD 0.875520 reservation;
-6. regardless of Gemini scientific failure or clean provider failure, run full Cloud Vision OCR qualification if persistent budget remains healthy;
-7. Cloud Vision:
-   - `TEXT_DETECTION`;
-   - `GOOGLE_CLOUD_VISION_API_KEY`;
-   - no language hints;
-   - retries 0;
-   - Devanagari 288 calls;
-   - Latin only if Devanagari scientifically passes;
-   - max 576 calls / USD 0.864 reservation;
-8. infrastructure failure in one provider stops only that provider's run, provided billing is persisted and the ledger remains safe;
-9. combined max new reservation USD 1.739520;
-10. prior qualification spend USD 0.6712415;
-11. prospective cumulative USD 2.4107615 <= USD 6;
-12. preserve all prior evidence byte-identically; append only to ledger;
-13. Gemini prior disqualification remains historical; an unexpected new full pass creates conflicting evidence and does not auto-promote;
-14. if OCR passes both scripts, record OCR-family qualification but keep A-TEXT blocked;
-15. no fal calls; Registry unchanged.
+Required:
+1. local Tesseract 5.x only; API spend USD 0;
+2. official pinned `hin` + `eng` traineddata;
+3. alias `tesseract5-hin-eng-literal-psm13-v1`;
+4. `--oem 1 --psm 13 -l hin+eng`;
+5. fresh subprocess per image;
+6. disable system/freq/unambig/bigram/punc/number DAWGs;
+7. no target in subprocess command/stdin/temp path/environment;
+8. same OCR contract `ocr-1`, same thresholds;
+9. 3 repeats; Devanagari first; Latin only if Devanagari passes;
+10. run zero-spend controls first;
+11. then run full local scientific qualification in the same pass if controls are green;
+12. preserve prior evidence byte-identically;
+13. A-TEXT blocked; Registry unchanged;
+14. do not merge; return exact branch/head and result.
+
 
 
 
