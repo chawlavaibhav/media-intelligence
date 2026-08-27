@@ -1,5 +1,15 @@
 # A-TEXT Benchmark Scoring Handoff — prepared by EVAL-029, not executed
 
+> **Current-state update — 28 Aug 2026**
+>
+> EVAL-024 has since completed and merged. The 16 frozen A-TEXT artifacts now exist on `main`
+> under `eval/empirical-tranche-1/atex/sealed-generation-v1/`, sealed by manifest and SHA-256.
+> This document below preserves the historical state when EVAL-029 first prepared the handoff.
+> It is no longer blocked on artifact existence. The next action is a separate scoring task that
+> must consume those exact merged bytes and the benchmark-qualified Cloud Vision evaluator evidence
+> from this EVAL-029 package. No regeneration is permitted.
+>
+
 **Status:** PREPARED AND BLOCKED ON EVAL-024. No A-TEXT artifact was scored, because none exists.
 
 ## Why nothing was scored
