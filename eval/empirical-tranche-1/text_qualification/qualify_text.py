@@ -433,11 +433,11 @@ def _metrics(observations: list[dict]) -> dict:
     false_fail_rate = false_fails / len(scored_matches) if scored_matches else 0.0
     refusal_rate = len(refusals) / len(observations) if observations else 0.0
 
-    by_item: dict[str, set] = {}
+    by_cell: dict[tuple[str, str], set] = {}
     for o in scoreable:
-        by_item.setdefault(o["item_id"], set()).add(o["observed"])
-    consistency = (sum(1 for values in by_item.values() if len(values) == 1) / len(by_item)
-                   if by_item else 0.0)
+        by_cell.setdefault((o["item_id"], o["shape"]), set()).add(o["observed"])
+    consistency = (sum(1 for values in by_cell.values() if len(values) == 1) / len(by_cell)
+                   if by_cell else 0.0)
 
     return {
         "calls": len(observations),
