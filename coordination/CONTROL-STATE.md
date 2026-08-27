@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-017 integrated: Anthropic Haiku 4.5 + Gemini replace OpenAI + Gemini. User explicitly waived the additional post-switch zero-spend macOS rerun; paid execution still requires runtime keys and explicit bounded spend approval.
+**Updated:** 27 Aug 2026 — EMP-001 explicitly authorised for bounded live execution: USD 10 total consumed API spend, USD 6 qualification sub-cap, retries 0, no prefunding above USD 10.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -274,9 +274,16 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-1. Confirm runtime availability of `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, and `FAL_KEY` without pre-funding above the proposed ceiling.
-2. Present the user the explicit bounded EMP-001 spend decision.
-3. Only after explicit approval, create the gitignored local authorisation and execute progressively.
-3. Only after explicit approval, create the gitignored local authorisation and execute progressively: Devanagari qualification → Latin for survivors → A-TEXT only if a judge qualifies on both scripts.
+EMP-001 is now authorised for live execution under the exact bounded spend decision recorded in `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`.
 
-**No paid provider/model/evaluator call may occur until the user explicitly approves the bounded EMP-001 USD 10 ceiling.**
+Execution requirements:
+1. local runtime keys available: `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, `FAL_KEY`;
+2. create only a gitignored local `authorization.local.yaml` matching the approved ceiling;
+3. run progressive text-judge qualification: Devanagari first, Latin survivors only;
+4. run A-TEXT only if at least one judge qualifies on both scripts;
+5. maximum 16 image generations;
+6. retries 0;
+7. cumulative consumed API spend <= USD 10 and qualification <= USD 6;
+8. ambiguous post-dispatch failures remain counted and stop the run;
+9. persist run ledger/evidence; do not commit secrets.
+
