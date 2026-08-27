@@ -18,7 +18,7 @@ import qualify_text as Q
 from budget_guard import BudgetExceeded, BudgetGuard
 
 PKG = Path(__file__).resolve().parents[1]
-CONTRACT = PKG / 'text_qualification' / 'qualification-contract-v1.yaml'
+CONTRACT = PKG / 'text_qualification' / 'qualification-contract-v2.yaml'
 
 # 96 items x 2 shapes x 3 passes
 CALLS_PER_SCRIPT = 576
@@ -33,14 +33,18 @@ def test_contract_thresholds_are_frozen():
     assert c['refusal_rate_max'] == 0.05
     assert c['repeat_consistency_min'] == 0.95
     assert c['primary_generated_output_shape'] == 'transcribe'
+    assert c['contract_version'] == 2
+    assert c['gate_scope']['qualifying_shape'] == 'transcribe'
+    assert c['gate_scope']['diagnostic_shapes'] == ['verdict']
+    assert c['gate_scope']['diagnostic_shapes_may_fail_qualification'] is False
     assert 'malformed_generated_glyphs' in c['qualified_scope_excludes']
 
 
 def test_every_threshold_is_marked_provisional_not_universal_truth():
     c = yaml.safe_load(CONTRACT.read_text(encoding='utf-8'))
-    assert c['status'] == 'PROVISIONAL_FIRST_RUN_GATE'
+    assert c['status'] == 'PROVISIONAL_PRIMARY_GATE_V2'
     for name, meta in c['thresholds'].items():
-        assert meta['status'] == 'PROVISIONAL_FIRST_RUN_GATE', name
+        assert meta['status'] == 'PROVISIONAL_PRIMARY_GATE_V2', name
 
 
 # ------------------------------------------------------------------- the scorer
@@ -65,6 +69,42 @@ def test_a_verdict_reply_is_parsed_but_never_decides_exactness():
     assert Q.parse_verdict_reply('MATCH') == 'match'
     assert Q.parse_verdict_reply('mismatch') == 'mismatch'
     assert Q.parse_verdict_reply('probably fine') == 'unparseable'
+
+
+class VerdictOnlyFalsePassCandidate(Q.FakeCandidate):
+    """Primary transcription is perfect; target-aware verdict agrees with wrong targets."""
+
+    def call(self, script, item, shape, pass_index):
+        reply = super().call(script, item, shape, pass_index)
+        if shape == 'verdict' and item['expected'] == 'mismatch' and reply['api_status'] == 'ok':
+            return {**reply, 'text': 'MATCH'}
+        return reply
+
+
+def test_diagnostic_verdict_false_passes_do_not_fail_the_primary_gate():
+    candidate = VerdictOnlyFalsePassCandidate(name='diagnostic-sycophant')
+    result = Q.qualify_candidate(candidate, guard=BudgetGuard(authorised_usd=Decimal('10.00')))
+
+    dev = result['devanagari']
+    assert dev['primary_shape'] == 'transcribe'
+    assert dev['metrics_by_shape']['transcribe']['false_passes'] == 0
+    assert dev['metrics_by_shape']['verdict']['false_passes'] == 144
+    assert dev['false_passes'] == 0
+    assert 'mismatch_false_pass' not in dev['failed_gates']
+    assert dev['passed'] is True
+    assert result['latin'] is not None
+
+
+def test_outcomes_needed_for_calibration_are_persisted_in_script_result():
+    result = Q.qualify_candidate(
+        Q.FakeCandidate(name='clean'),
+        guard=BudgetGuard(authorised_usd=Decimal('10.00')))
+    obs = result['devanagari']['observations']
+    assert len(obs) == CALLS_PER_SCRIPT
+    assert {o['shape'] for o in obs} == {'transcribe', 'verdict'}
+    for key in ('item_id', 'shape', 'pass', 'expected', 'observed', 'api_status',
+                'target', 'rendered_string', 'failure_class', 'evaluator_response'):
+        assert key in obs[0], key
 
 
 # ----------------------------------------------------------- progressive stop
