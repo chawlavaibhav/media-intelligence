@@ -161,11 +161,17 @@ class FakeOcrCandidate:
     manages_own_budget = False
 
     def __init__(self, name: str = "fake-ocr", false_pass_items: set | None = None,
-                 false_fail_items: set | None = None, empty_items: set | None = None):
+                 false_fail_items: set | None = None, empty_items: set | None = None,
+                 infrastructure_items: set | None = None,
+                 infrastructure_error_class: str = "provider_error_unavailable",
+                 infrastructure_is_ambiguous: bool = False):
         self.name = name
         self.false_pass_items = false_pass_items or set()
         self.false_fail_items = false_fail_items or set()
         self.empty_items = empty_items or set()
+        self.infrastructure_items = infrastructure_items or set()
+        self.infrastructure_error_class = infrastructure_error_class
+        self.infrastructure_is_ambiguous = infrastructure_is_ambiguous
         self.retries = 0
         self.calls = 0
 
@@ -183,7 +189,11 @@ class FakeOcrCandidate:
         self.calls += 1
         trial_id = f"{script}:{item['item_id']}:{OCR_SHAPE}:p{pass_index}"
 
-        if item["item_id"] in self.empty_items:
+        ambiguous = False
+        if item["item_id"] in self.infrastructure_items:
+            text, status, err = "", "error", self.infrastructure_error_class
+            ambiguous = self.infrastructure_is_ambiguous
+        elif item["item_id"] in self.empty_items:
             text, status, err = "", "error", "empty_transcription"
         elif item["item_id"] in self.false_pass_items:
             # Reads the INTENDED word rather than the drawn one — the VLM failure mode, simulated.
@@ -195,12 +205,13 @@ class FakeOcrCandidate:
 
         return {
             "text": text, "api_status": status, "error_class": err,
-            "ambiguous_dispatch": False, "cost": Decimal("0"),
+            "ambiguous_dispatch": ambiguous, "cost": Decimal("0"),
             "call_record": {
                 "trial_id": trial_id, "attempt_id": trial_id, "script": script,
                 "item_id": item["item_id"], "shape": OCR_SHAPE, "pass_index": pass_index,
                 "image_sha256": None, "api_status": status, "error_class": err,
-                "ambiguous_dispatch": False, "billed_usd": "0", "billing_state": "reported",
+                "ambiguous_dispatch": ambiguous, "billed_usd": "0",
+                "billing_state": "unknown_provisional" if ambiguous else "reported",
                 "cost_basis": "synthetic", "provider_request_id": None, "retries": 0,
                 "one_call_one_trial": True, "evidence_mode": "fake_live", "synthetic": True,
                 **self.identity(),
@@ -209,47 +220,81 @@ class FakeOcrCandidate:
 
 
 # --------------------------------------------------------------------------------- the scorer
-def _observed(item: dict, reply: dict) -> str:
-    """What the OCR engine effectively said about this item.
+# Outcomes a scientific metric may be computed from. Anything else is execution state.
+SCIENTIFIC_OUTCOMES = ("match", "mismatch", "empty_transcription")
+INFRASTRUCTURE_OUTCOME = "infrastructure_failure"
 
-    An error — including an empty transcription on a known-visible-text image — is `refusal`.
-    It is NEVER coerced to `match`: that is how a service outage becomes a silent false pass.
+
+def _observed(item: dict, reply: dict) -> str:
+    """What this execution established about the OCR engine — or that it established nothing.
+
+    Three scientific outcomes and one non-outcome:
+
+      match / mismatch        the service read the image; code decided exactness
+      empty_transcription     the service ran and was billed, and could not read validated
+                              visible text. A RESULT about the engine, and never coerced to
+                              `match` — that is how an outage becomes a silent false pass.
+      infrastructure_failure  the service did not usefully execute at all. Says nothing about
+                              recognition quality and must not touch any gate.
     """
-    if reply["api_status"] != "ok":
-        return "refusal"
-    if not reply["text"].strip():
-        return "refusal"
-    return "match" if QT.transcription_matches(item["target"], reply["text"]) else "mismatch"
+    if reply["api_status"] == "ok":
+        if not reply["text"].strip():
+            return "empty_transcription"
+        return "match" if QT.transcription_matches(item["target"], reply["text"]) else "mismatch"
+
+    # A successful-but-empty execution is reported by the adapter as an error carrying this
+    # exact class. It is the one error that is scientific evidence.
+    if reply.get("error_class") == "empty_transcription":
+        return "empty_transcription"
+
+    return INFRASTRUCTURE_OUTCOME
 
 
 def _metrics(observations: list[dict]) -> dict:
-    mismatches = [o for o in observations if o["expected"] == "mismatch"]
-    matches = [o for o in observations if o["expected"] == "match"]
-    refusals = [o for o in observations if o["observed"] == "refusal"]
-    scoreable = [o for o in observations if o["observed"] in ("match", "mismatch")]
+    """Gate metrics, computed ONLY from scientifically interpretable executions.
+
+    Infrastructure failures are filtered out before any denominator is formed. They are counted
+    and reported, but a 429 must never be able to move a recognition-quality number.
+    """
+    scientific = [o for o in observations if o["observed"] in SCIENTIFIC_OUTCOMES]
+    infrastructure = [o for o in observations if o["observed"] == INFRASTRUCTURE_OUTCOME]
+
+    mismatches = [o for o in scientific if o["expected"] == "mismatch"]
+    matches = [o for o in scientific if o["expected"] == "match"]
+    empties = [o for o in scientific if o["observed"] == "empty_transcription"]
 
     false_passes = [o for o in mismatches if o["observed"] == "match"]
     false_fails = [o for o in matches if o["observed"] == "mismatch"]
-    scoreable_matches = [o for o in matches if o["observed"] != "refusal"]
+    # An empty transcription is neither a pass nor a fail, so it leaves the false-fail
+    # denominator: it is already counted, once, by its own gate.
+    readable_matches = [o for o in matches if o["observed"] != "empty_transcription"]
+    readable_mismatches = [o for o in mismatches if o["observed"] != "empty_transcription"]
 
-    by_cell: dict[tuple, set] = {}
-    for o in scoreable:
-        by_cell.setdefault((o["item_id"],), set()).add(o["observed"])
+    by_cell: dict[str, set] = {}
+    for o in scientific:
+        if o["observed"] in ("match", "mismatch"):
+            by_cell.setdefault(o["item_id"], set()).add(o["observed"])
     consistency = (sum(1 for v in by_cell.values() if len(v) == 1) / len(by_cell)
                    if by_cell else 0.0)
 
     return {
         "calls": len(observations),
+        "scientific_executions": len(scientific),
+        "infrastructure_failures": len(infrastructure),
         "match_opportunities": len(matches),
         "mismatch_opportunities": len(mismatches),
         "false_passes": len(false_passes),
         "unique_false_pass_items": len({o["item_id"] for o in false_passes}),
-        "false_pass_rate": round(len(false_passes) / len(mismatches), 4) if mismatches else 0.0,
+        "false_pass_rate": (round(len(false_passes) / len(readable_mismatches), 4)
+                            if readable_mismatches else 0.0),
         "false_fails": len(false_fails),
-        "match_false_fail_rate": (round(len(false_fails) / len(scoreable_matches), 4)
-                                  if scoreable_matches else 0.0),
-        "refusals": len(refusals),
-        "refusal_rate": round(len(refusals) / len(observations), 4) if observations else 0.0,
+        "unique_false_fail_items": len({o["item_id"] for o in false_fails}),
+        "match_false_fail_rate": (round(len(false_fails) / len(readable_matches), 4)
+                                  if readable_matches else 0.0),
+        "empty_transcriptions": len(empties),
+        "unique_empty_transcription_items": len({o["item_id"] for o in empties}),
+        "empty_transcription_rate": (round(len(empties) / len(scientific), 4)
+                                     if scientific else 0.0),
         "repeat_consistency": round(consistency, 4),
     }
 
@@ -296,8 +341,11 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
                 "cost_basis": (reply.get("call_record") or {}).get("cost_basis"),
             })
 
-            if reply.get("ambiguous_dispatch"):
-                stopped_reason = "ambiguous_dispatch"
+            # An infrastructure failure is not a result. It stops the run fail-closed, with the
+            # trial and its billing already persisted above, and no retry.
+            if observations[-1]["observed"] == INFRASTRUCTURE_OUTCOME:
+                stopped_reason = (reply.get("error_class")
+                                  if not reply.get("ambiguous_dispatch") else "ambiguous_dispatch")
                 break
         if stopped_reason:
             break
@@ -305,13 +353,19 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
     c = ocr_contract()
     m = _metrics(observations)
 
+    required = OCR_ITEMS_PER_SCRIPT * repeats
+    scientifically_complete = (
+        stopped_reason is None
+        and m["infrastructure_failures"] == 0
+        and m["scientific_executions"] == required)
+
     failed_gates = []
     if m["false_passes"] > c["mismatch_false_pass_max"]:
         failed_gates.append("mismatch_false_pass")
     if m["match_false_fail_rate"] > c["match_false_fail_rate_max"]:
         failed_gates.append("match_false_fail_rate")
-    if m["refusal_rate"] > c["refusal_rate_max"]:
-        failed_gates.append("refusal_rate")
+    if m["empty_transcription_rate"] > c["empty_transcription_rate_max"]:
+        failed_gates.append("empty_transcription_rate")
     if m["repeat_consistency"] < c["repeat_consistency_min"]:
         failed_gates.append("repeat_consistency")
 
@@ -319,9 +373,14 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
         "script": script,
         "primary_shape": OCR_SHAPE,
         "total_dispatches": len(observations),
+        "required_executions": required,
+        "scientifically_complete": scientifically_complete,
         **m,
-        "failed_gates": failed_gates,
-        "passed": not failed_gates and stopped_reason is None,
+        "failed_gates": failed_gates if scientifically_complete else [],
+        "gates_that_would_have_failed": failed_gates,
+        # `None`, never a bool, when the screen did not finish. Reporting False would let a rate
+        # limit read as a quality disqualification; True would promote an unfinished screen.
+        "passed": (not failed_gates) if scientifically_complete else None,
         "stopped_reason": stopped_reason,
         "observations": observations,
         "call_records": call_records,
@@ -337,12 +396,14 @@ def qualify_ocr_candidate(candidate, guard: BudgetGuard,
     dev = _score_script(candidate, "devanagari", guard, repeats)
     latin = None
     scope = []
-    if dev["passed"]:
+    # `is True` deliberately: an INCOMPLETE script reports None, and `if None` would read the same
+    # as a scientific failure. It is not the same, and the difference decides whether Latin runs.
+    if dev["passed"] is True:
         scope.append("devanagari")
         review = QT.HR.review_status(perceptibility_path) if hasattr(QT, "HR") else {"ok": True}
         if review.get("ok", True):
             latin = _score_script(candidate, "latin", guard, repeats)
-            if latin["passed"]:
+            if latin["passed"] is True:
                 scope.append("latin")
 
     return {
@@ -354,6 +415,10 @@ def qualify_ocr_candidate(candidate, guard: BudgetGuard,
         "config_sha256": candidate.config_sha256(),
         "devanagari": dev,
         "latin": latin,
+        "scientifically_complete": {
+            "devanagari": dev["scientifically_complete"],
+            "latin": latin["scientifically_complete"] if latin else None,
+        },
         "qualified_scope": scope,
         "qualified_scope_excludes": c["qualified_scope_excludes"],
         "stopped_after": "latin" if latin else "devanagari",

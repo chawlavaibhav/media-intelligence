@@ -184,11 +184,20 @@ def test_a_malformed_reply_is_charged_and_stops_the_run(monkeypatch):
 
 
 # --------------------------------------------------------------------------------- scoring
-def test_an_empty_transcription_scores_as_refusal_not_match():
+def test_an_empty_transcription_is_its_own_scientific_outcome_not_a_match():
     item = {'item_id': 'x', 'target': 'क', 'expected': 'match', 'drawn': 'क'}
     assert QO._observed(item, {'api_status': 'error', 'error_class': 'empty_transcription',
-                               'text': ''}) == 'refusal'
-    assert QO._observed(item, {'api_status': 'ok', 'text': '   '}) == 'refusal'
+                               'text': ''}) == 'empty_transcription'
+    assert QO._observed(item, {'api_status': 'ok', 'text': '   '}) == 'empty_transcription'
+
+
+def test_infrastructure_errors_are_not_scientific_outcomes():
+    item = {'item_id': 'x', 'target': 'क', 'expected': 'match', 'drawn': 'क'}
+    for err in ('provider_error_resource_exhausted', 'provider_error_unavailable',
+                'malformed_response', 'http_429', 'timeout'):
+        assert QO._observed(item, {'api_status': 'error', 'error_class': err,
+                                   'text': ''}) == QO.INFRASTRUCTURE_OUTCOME
+    assert QO.SCIENTIFIC_OUTCOMES == ('match', 'mismatch', 'empty_transcription')
 
 
 def test_exactness_uses_the_frozen_shared_normalisation():
@@ -252,26 +261,106 @@ def test_widespread_false_fails_trip_the_false_fail_gate():
     assert dev['passed'] is False
 
 
-def test_widespread_empty_output_trips_the_refusal_gate_and_never_scores_as_match():
-    victims = {f'dx-{i:04d}' for i in range(1, 40)}
+def test_empty_transcriptions_can_fail_their_own_gate_and_never_score_as_match():
+    """CORRECTION CONTROL 1: an empty successful OCR response is scientific evidence."""
+    all_items = [i['item_id'] for i in QT._script_items('devanagari')]
+    victims = set(all_items[:10])                    # 10/96 items -> 30/288 = 0.1042 > 0.05
+
     result = QO.qualify_ocr_candidate(
         QO.FakeOcrCandidate(name='silent', empty_items=victims),
         guard=BudgetGuard(authorised_usd=Decimal('6.00')))
     dev = result['devanagari']
-    assert dev['refusals'] > 0
-    assert 'refusal_rate' in dev['failed_gates']
-    assert dev['false_passes'] == 0                 # silence never became agreement
-    assert dev['passed'] is False
+
+    assert dev['empty_transcriptions'] == 30
+    assert dev['unique_empty_transcription_items'] == 10
+    assert dev['empty_transcription_rate'] > 0.05
+    assert 'empty_transcription_rate' in dev['failed_gates']
+    assert dev['false_passes'] == 0                  # silence never became agreement
+    assert dev['false_fails'] == 0                   # nor disagreement
+    assert dev['infrastructure_failures'] == 0       # it is NOT infrastructure
+    assert dev['scientifically_complete'] is True    # the screen DID finish
+    assert dev['passed'] is False                    # and it scientifically failed
+    assert result['latin'] is None
 
 
-def test_budget_exhaustion_stops_the_ocr_run(monkeypatch):
+def test_a_few_empty_transcriptions_stay_under_the_gate():
+    all_items = [i['item_id'] for i in QT._script_items('devanagari')]
+    result = QO.qualify_ocr_candidate(
+        QO.FakeOcrCandidate(name='mostly-fine', empty_items=set(all_items[:4])),
+        guard=BudgetGuard(authorised_usd=Decimal('6.00')))
+    dev = result['devanagari']
+    assert dev['empty_transcriptions'] == 12         # 12/288 = 0.0417
+    assert dev['empty_transcription_rate'] <= 0.05
+    assert dev['failed_gates'] == []
+    assert dev['passed'] is True
+
+
+def test_a_backend_or_quota_error_stops_scientifically_incomplete():
+    """CORRECTION CONTROL 2: infrastructure failure is execution state, not a verdict."""
+    result = QO.qualify_ocr_candidate(
+        QO.FakeOcrCandidate(name='throttled', infrastructure_items={'dx-0011'},
+                            infrastructure_error_class='provider_error_resource_exhausted'),
+        guard=BudgetGuard(authorised_usd=Decimal('6.00')))
+    dev = result['devanagari']
+
+    assert dev['stopped_reason'] == 'provider_error_resource_exhausted'
+    assert dev['infrastructure_failures'] == 1
+    assert dev['scientifically_complete'] is False
+    assert dev['passed'] is None                     # NOT False
+    assert dev['failed_gates'] == []                 # an unfinished screen fails no gate
+    assert dev['false_passes'] == 0
+    assert dev['false_fails'] == 0
+    assert dev['empty_transcriptions'] == 0
+    assert dev['empty_transcription_rate'] == 0.0
+    assert result['latin'] is None                   # incomplete does not advance
+    assert result['qualified_scope'] == []           # nor qualify
+
+
+def test_an_ambiguous_post_dispatch_failure_stops_incomplete_with_conservative_billing():
+    """CORRECTION CONTROL 3."""
+    result = QO.qualify_ocr_candidate(
+        QO.FakeOcrCandidate(name='reset', infrastructure_items={'dx-0011'},
+                            infrastructure_error_class='malformed_response',
+                            infrastructure_is_ambiguous=True),
+        guard=BudgetGuard(authorised_usd=Decimal('6.00')))
+    dev = result['devanagari']
+
+    assert dev['stopped_reason'] == 'ambiguous_dispatch'
+    assert dev['scientifically_complete'] is False
+    assert dev['passed'] is None
+    bad = [r for r in dev['call_records'] if r['ambiguous_dispatch']]
+    assert len(bad) == 1
+    assert bad[0]['billing_state'] == 'unknown_provisional'
+    assert bad[0]['retries'] == 0
+
+
+def test_no_infrastructure_failure_can_produce_a_scientific_pass_or_fail():
+    """CORRECTION CONTROL 5, across every infrastructure class."""
+    for err, ambiguous in (('provider_error_resource_exhausted', False),
+                           ('provider_error_unavailable', False),
+                           ('http_429', False),
+                           ('timeout', False),
+                           ('malformed_response', True)):
+        result = QO.qualify_ocr_candidate(
+            QO.FakeOcrCandidate(name=f'infra-{err}', infrastructure_items={'dx-0011'},
+                                infrastructure_error_class=err,
+                                infrastructure_is_ambiguous=ambiguous),
+            guard=BudgetGuard(authorised_usd=Decimal('6.00')))
+        dev = result['devanagari']
+        assert dev['passed'] is None, err
+        assert dev['passed'] is not True and dev['passed'] is not False, err
+        assert dev['scientifically_complete'] is False, err
+
+
+def test_budget_exhaustion_stops_the_ocr_run_incomplete(monkeypatch):
     monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
     tiny = BudgetGuard(authorised_usd=Decimal('0.0030'))     # two images
     engine = _engine(http=RecordingHttp(OCR.CLOUD_VISION_OK_FIXTURE), guard=tiny)
     candidate = QO.OcrCandidate(engine, name='tiny-budget')
     result = QO._score_script(candidate, 'devanagari', tiny, repeats=3)
     assert result['stopped_reason'] == 'budget_exhausted'
-    assert result['passed'] is False
+    assert result['scientifically_complete'] is False
+    assert result['passed'] is None                  # a budget stop is not a quality verdict
     assert tiny.spent_usd <= tiny.authorised_usd
 
 
@@ -352,7 +441,9 @@ def test_the_ocr_contract_keeps_the_numerical_thresholds_and_adds_no_verdict_sha
     c = QO.ocr_contract()
     assert c['mismatch_false_pass_max'] == 0
     assert c['match_false_fail_rate_max'] == 0.10
-    assert c['refusal_rate_max'] == 0.05
+    assert c['empty_transcription_rate_max'] == 0.05
+    assert c['repeat_consistency_min'] == 0.95
+    assert 'refusal_rate_max' not in c              # replaced by the scientific gate
     assert c['repeats_per_shape'] == 3
     assert c['gate_scope']['qualifying_shape'] == 'transcribe'
     assert c['gate_scope']['diagnostic_shapes'] == []

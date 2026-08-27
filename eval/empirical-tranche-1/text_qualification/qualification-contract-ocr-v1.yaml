@@ -28,6 +28,24 @@
 #     service that returns no text on an image known to carry visible text has failed to perform
 #     the one function it exists for. Coercing that silence into "match" would manufacture a
 #     false pass out of a service outage, so it is an evaluator failure by construction.
+#
+# THE TAXONOMY THAT MATTERS MOST: SCIENCE vs INFRASTRUCTURE
+#
+#     A first version of this contract counted an empty transcription and an HTTP 429 against the
+#     same rate. They are not the same evidence and must never share a denominator.
+#
+#     An empty transcription is a RESULT: the service ran, was paid, and could not read text that
+#     a human reviewer confirmed is visible. That is a fact about the OCR engine and it belongs in
+#     a gate.
+#
+#     A 429, a backend outage, a reset socket or an unparseable reply is not a fact about the OCR
+#     engine at all — it is a fact about the day. Letting it move a quality metric would let a
+#     rate limit disqualify a competent engine, or let a lucky quiet hour flatter a poor one.
+#
+#     So infrastructure failure is EXECUTION STATE, not a metric. It stops the run fail-closed and
+#     leaves the script scientifically INCOMPLETE. An incomplete script gets no scientific verdict
+#     at all — not a pass, and pointedly not a fail. `passed: null` is the honest answer to a
+#     question the run never finished asking.
 contract_version: ocr-1
 contract_family: ocr
 status: PROVISIONAL_OCR_FAMILY_GATE_V1
@@ -35,9 +53,37 @@ status: PROVISIONAL_OCR_FAMILY_GATE_V1
 repeats_per_shape: 3
 mismatch_false_pass_max: 0
 match_false_fail_rate_max: 0.10
-refusal_rate_max: 0.05
+empty_transcription_rate_max: 0.05
 repeat_consistency_min: 0.95
 primary_generated_output_shape: transcribe
+
+failure_taxonomy:
+  scientific:
+    classes: [empty_transcription]
+    counts_toward: empty_transcription_rate_max
+    rationale: >-
+      A successful, billed provider execution that returned no usable transcription for a
+      validated visible-text image. Evidence about the engine, so it belongs in a gate.
+  infrastructure:
+    classes:
+      - provider_error_*
+      - http_429
+      - backend_unavailable
+      - timeout
+      - transport_reset
+      - malformed_response
+      - ambiguous_dispatch
+      - budget_exhausted
+    counts_toward: null
+    rationale: >-
+      Execution state, never a gate metric. Persisted with trial, provider and billing identity;
+      retries 0; stops the run; leaves the script scientifically incomplete. Increments no
+      false-pass, false-fail or empty-transcription count.
+  pre_dispatch:
+    classes: [missing_api_key]
+    counts_toward: null
+    rationale: >-
+      Provably nothing was sent. Zero calls, zero spend, no trial, no reservation retained.
 
 gate_scope:
   qualifying_shape: transcribe
@@ -83,12 +129,15 @@ thresholds:
     rationale: >-
       A checker that rejects correct text is costly rather than unsafe. Carried over unchanged so
       OCR and VLM results are read against the same bar.
-  refusal_rate_max:
+  empty_transcription_rate_max:
     value: 0.05
     status: PROVISIONAL_OCR_FAMILY_GATE_V1
     rationale: >-
-      Covers provider errors AND empty transcriptions on known-visible text. An OCR engine that
-      frequently returns nothing is unusable as a checker even when what it does return is right.
+      Successful, billed executions that returned no usable transcription, over all
+      scientifically interpretable executions. An OCR engine that frequently returns nothing is
+      unusable as a checker even when what it does return is right. Provider and transport
+      failures are deliberately EXCLUDED from this denominator: they say nothing about
+      recognition quality, and mixing them in would let a rate limit disqualify a good engine.
   repeat_consistency_min:
     value: 0.95
     status: PROVISIONAL_OCR_FAMILY_GATE_V1
@@ -97,10 +146,23 @@ thresholds:
       determinism is an assumption, not a measurement. A hosted OCR endpoint may vary across
       identical requests; this gate measures that rather than presuming it away.
 
+scientific_completeness:
+  required_executions_per_script: 288          # 96 items x 3 repeats, one shape
+  rule: >-
+    A script is scientifically complete only when every required execution produced a
+    scientifically interpretable outcome — match, mismatch or empty_transcription — and no
+    infrastructure failure stopped the run.
+  incomplete_disposition: null
+  incomplete_rationale: >-
+    An incomplete script yields `passed: null`. Reporting `false` would let a rate limit read as
+    a quality disqualification, and reporting `true` would promote a screen that never finished.
+    Null is the only answer the evidence supports.
+
 progressive_stop:
   order: [devanagari, latin]
   rule: >-
-    A candidate that fails the Devanagari primary gate does not advance to Latin.
+    A candidate advances to Latin only when Devanagari is scientifically COMPLETE and passed.
+    An incomplete Devanagari script does not advance and does not disqualify.
 
 shapes:
   transcribe:
