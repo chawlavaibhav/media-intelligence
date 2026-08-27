@@ -196,6 +196,33 @@ That last point is the machinery refusing to fake a defect, on a real container,
 
 ---
 
+## 7b. Fresh-clone reproducibility
+
+The strongest form of the reproducibility claim: clone the pushed branch into an empty directory
+and rebuild from nothing.
+
+```
+$ git clone --depth 1 --branch eval/eval-026-temporal-perturbation-qualification <repo> freshclone
+$ cd freshclone && git rev-parse HEAD
+960b2a771eb796e50157be2b2ede03f17d3592e0
+
+$ python3 eval/v1/instruments/temporal-perturbation/validate_package.py
+PASS - 15 files scanned: ...
+
+$ python3 -m pytest -q eval/v1/instruments/temporal-perturbation/tests
+153 passed in 9.14s
+
+$ python3 .../build_perturbation_pack.py --build --check-fingerprint .../STANDIN-PACK-FINGERPRINT.json
+committed fingerprint: MATCHES
+```
+
+**What this establishes:** a reviewer who has never seen this working directory can reproduce the
+whole pack, hash for hash, from committed code alone. No font, no downloaded asset, no third-party
+Python package, no network. This is the property the Devanagari battery could not offer, and it is
+why the built frames are git-ignored without loss.
+
+---
+
 ## 8. Timings, for anyone re-running this
 
 | Command | Wall clock on this machine |
