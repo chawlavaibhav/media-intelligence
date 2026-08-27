@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — First EMP-001 live run disqualified Haiku 4.5; Gemini was unresolved after a 17-call 429 halt. User directed Sonnet; Sonnet 5-only qualification continuation is now the active next gate.
+**Updated:** 27 Aug 2026 — Sonnet 5 continuation halted at the first verdict call due to a harness compatibility defect, not a scientific failure. EVAL-019 corrects Sonnet adaptive-thinking/output handling and authorises a fresh Sonnet-only qualification attempt under the existing cap.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -30,7 +30,7 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The execution machinery is now live. The first run established one valid evaluator result: Haiku 4.5 is disqualified for Devanagari text judging. Gemini remains unresolved after a 429 halt.
+The execution machinery is now live. Haiku 4.5 is validly disqualified for Devanagari judging. Gemini remains unresolved after a 429 halt. The first Sonnet 5 attempt is non-scientific because the adapter omitted Sonnet 5's required no-thinking compatibility setting for this terse judge workload and misclassified documented no-text stop responses as transport ambiguity.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
@@ -276,19 +276,25 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run the authorised **Sonnet 5-only** qualification continuation recorded in `coordination/decisions/CONTROLLER-EMP-001-SONNET-5-CONTINUATION-2026-08-27.md`.
+Integrate EVAL-019, then run a fresh **Sonnet 5-only** qualification from Devanagari call 1.
+
+Authoritative correction:
+- `coordination/decisions/CONTROLLER-EVAL-019-SONNET-VERDICT-COMPATIBILITY-2026-08-27.md`
 
 Constraints:
-1. Anthropic `claude-sonnet-5` only; do not rerun Haiku and do not run Gemini in this continuation.
-2. Devanagari first; Latin only if Devanagari passes.
-3. Same 96-item batteries, 2 shapes, 3 repeats, prompts, thresholds and reviewed materials.
-4. Preserve the first live run and its ledger/evidence.
-5. Already-counted qualification spend: USD 0.0854218.
-6. Sonnet worst-case reservation if both scripts run: USD 5.345280.
-7. Cumulative worst-case qualification amount: USD 5.4307018 <= USD 6.
-8. Retries 0. Any ambiguous dispatch failure is counted and stops the continuation.
-9. No billing-tier change or prefunding is authorised.
-10. Stop after qualification and report to Controller before A-TEXT.
+1. Anthropic `claude-sonnet-5` only.
+2. Requests explicitly use `thinking: {type: disabled}`.
+3. Same 96-item batteries, two shapes, three repeats, prompts, thresholds and reviewed materials.
+4. Do not reuse the prior 96 Sonnet transcription calls; the corrected judge configuration requires a fresh coherent attempt.
+5. Preserve all prior evidence and append spend to the same persistent ledger.
+6. Already-counted qualification spend: USD 0.1206238.
+7. Corrected Sonnet worst-case reservation: USD 5.345280.
+8. Cumulative worst-case qualification spend: USD 5.4659038 <= USD 6.
+9. Retries 0; true ambiguous post-dispatch failures stop the run.
+10. A documented Anthropic `max_tokens` no-text response is a model/evaluator failure with known billing, not transport ambiguity.
+11. Do not run Gemini or A-TEXT during this continuation.
+12. If Sonnet qualifies on both scripts, return to Controller before image generation.
+
 
 
 
