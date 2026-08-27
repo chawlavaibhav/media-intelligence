@@ -25,6 +25,7 @@ import argparse
 import hashlib
 import json
 import sys
+import time
 from decimal import Decimal
 from pathlib import Path
 
@@ -143,6 +144,60 @@ class OcrCandidate:
                 "billing_state": response.billing_state,
                 "cost_basis": response.cost_basis,
                 "provider_request_id": response.provider_request_id,
+                "retries": 0,
+                "one_call_one_trial": True,
+                "evidence_mode": "live",
+                "synthetic": False,
+                **self.engine.identity(),
+            },
+        }
+
+
+class TesseractCandidate(OcrCandidate):
+    """The EVAL-023 local literal OCR candidate.
+
+    Differs from the hosted-API candidate in exactly two ways, both consequences of being local:
+    the trial id is threaded into the engine so the temp filename carries trial coordinates
+    rather than anything derived from the target, and nothing is reserved against a paid budget
+    because a local process costs no API money. The ledger must show zero provider spend.
+    """
+
+    manages_own_budget = True
+
+    def call(self, script: str, item: dict, pass_index: int) -> dict:
+        image_bytes = self.images.bytes_for(script, item["item_id"])
+        image_sha = self.images.verify_bytes(script, item["item_id"], image_bytes)
+        trial_id = f"{script}:{item['item_id']}:{OCR_SHAPE}:p{pass_index}"
+        self.engine.call_context = {
+            "script": script, "item_id": item["item_id"],
+            "shape": OCR_SHAPE, "pass_index": pass_index, "trial_id": trial_id,
+        }
+        # The target goes in for the BLINDNESS PROOF only: the engine uses it to assert the
+        # command, path and environment do NOT contain it, then discards it.
+        response = self.engine.transcribe(image_bytes, blind_check_target=item["target"],
+                                          trial_id=trial_id)
+        return {
+            "text": response.text,
+            "api_status": response.api_status,
+            "error_class": response.error_class,
+            "ambiguous_dispatch": response.ambiguous_dispatch,
+            "cost": response.billed_usd,
+            "call_record": {
+                "trial_id": trial_id,
+                "attempt_id": trial_id,
+                "script": script,
+                "item_id": item["item_id"],
+                "shape": OCR_SHAPE,
+                "pass_index": pass_index,
+                "image_sha256": image_sha,
+                "api_status": response.api_status,
+                "error_class": response.error_class,
+                "stderr_note": response.raw_status_note,
+                "ambiguous_dispatch": response.ambiguous_dispatch,
+                "billed_usd": "0",
+                "billing_state": response.billing_state,
+                "cost_basis": response.cost_basis,
+                "provider_request_id": None,
                 "retries": 0,
                 "one_call_one_trial": True,
                 "evidence_mode": "live",
@@ -534,6 +589,45 @@ def run_live_ocr(guard, http=None, run=None) -> dict:
     return payload
 
 
+def run_local_tesseract(runner=None, run=None, images=None) -> dict:
+    """EVAL-023. Local, zero-API-cost, same OCR contract and thresholds.
+
+    No authorisation gate and no paid-budget reservation: there is no provider to bill. The guard
+    is a nominal in-memory one so the shared scorer's interface is satisfied, and every recorded
+    cost is USD 0.
+    """
+    import tesseract_ocr as TESS
+
+    engine = TESS.TesseractLiteralOcr(runner=runner)
+    engine.version()                 # fails closed on a missing or non-5.x binary
+    engine.traineddata_hashes()      # fails closed on missing pinned traineddata
+
+    candidate = TesseractCandidate(engine, images=images,
+                                   name=f"local_tesseract:{TESS.CANDIDATE_ALIAS}")
+    guard = BudgetGuard(authorised_usd=Decimal("6.00"))
+    started = time.monotonic()
+    result = qualify_ocr_candidate(candidate, guard)
+    elapsed = time.monotonic() - started
+
+    payload = build_ocr_qualification_result(run, [result])
+    payload["dispatches"] = sum(
+        len((result.get(s) or {}).get("call_records", [])) for s in ("devanagari", "latin"))
+    payload["api_calls"] = 0
+    payload["api_spend_usd"] = "0"
+    payload["local_executions"] = payload["dispatches"]
+    payload["elapsed_seconds"] = round(elapsed, 2)
+    payload["evidence_fingerprint"] = ocr_qualification_fingerprint(payload)
+
+    if guard.spent_usd != Decimal("0"):
+        raise RuntimeError(
+            f"a local candidate recorded {guard.spent_usd} of provider spend. Nothing here "
+            f"contacts a paid API; a non-zero figure means the accounting is wrong.")
+
+    if run is not None:
+        payload["canonical_path"] = str(persist_ocr_qualification(run, payload))
+    return payload
+
+
 def _fake_live(out: Path, run=None) -> dict:
     """The positive control: a clean synthetic OCR candidate across BOTH scripts, zero network."""
     guard = BudgetGuard(authorised_usd=Decimal("6.00"))
@@ -560,6 +654,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--run-root", default=None,
                     help="persistent EMP-001 run root; enables the durable tranche ledger")
     ap.add_argument("--run-id", default=None)
+    ap.add_argument("--local-tesseract", action="store_true",
+                    help="EVAL-023: local literal Tesseract qualification; zero API calls, USD 0")
     ap.add_argument("--budget-proof", action="store_true",
                     help="print the conservative maximum paid cost for a full OCR screen")
     ap.add_argument("--prior-spend", default="0.6712415")
@@ -568,6 +664,39 @@ def main(argv: list[str] | None = None) -> int:
 
     if a.budget_proof:
         print(json.dumps(ocr_budget_projection(a.prior_spend), indent=2, sort_keys=True))
+        return 0
+
+    if a.local_tesseract:
+        run = None
+        if a.run_root and a.run_id:
+            import spend_ledger as SL
+
+            root = Path(a.run_root)
+            try:
+                run = SL.TrancheRun.open(root, a.run_id)
+            except SL.LedgerCorrupt:
+                run = SL.TrancheRun.create(root, a.run_id, authorisation_path="", mode="live")
+
+        payload = run_local_tesseract(run=run)
+        out = Path(a.out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                                  default=str) + "\n", encoding="utf-8")
+        c = payload["candidates"][0]
+        dev, latin = c["devanagari"], c["latin"]
+        print(f"local tesseract: {payload['local_executions']} executions in "
+              f"{payload['elapsed_seconds']}s")
+        print(f"  devanagari calls={dev['calls']} complete={dev['scientifically_complete']} "
+              f"passed={dev['passed']} gates={dev['failed_gates']}")
+        latin_line = ("not run" if not latin
+                      else f"calls={latin['calls']} complete={latin['scientifically_complete']} "
+                           f"passed={latin['passed']} gates={latin['failed_gates']}")
+        print(f"  latin      {latin_line}")
+        print(f"  qualified_scope={c['qualified_scope']}  may_open_atext={payload['may_open_atext']}")
+        print(f"api calls: {payload['api_calls']}   api spend USD: {payload['api_spend_usd']}")
+        print(f"written: {out}")
+        if payload.get("canonical_path"):
+            print(f"canonical: {payload['canonical_path']}")
         return 0
 
     if a.live:
