@@ -28,6 +28,12 @@ reconstructed from disk on every read. Two ceilings apply: **USD 10.00** total, 
 **USD 6.00** for qualification inside it — enforced even when the authorisation names the full
 ten. A-TEXT gets only what qualification left.
 
+Provider failures are accounted asymmetrically: a reservation is released only when it is
+**provable** no request was sent (missing key, refused body, blindness violation). Any failure
+after the send boundary — timeout, connection reset, remote disconnect, TLS failure, malformed
+reply — keeps the spend counted at the reserved estimate, persists one trial with
+`billing_state: unknown_provisional`, and stops the run. Retries remain 0.
+
 A sixth guard sits below all of them: every payload is run through its shape's blind check
 **before dispatch**, and a payload that fails is refused rather than sent. A target that reaches
 the wire has already destroyed the measurement, and no later assertion can undo it.

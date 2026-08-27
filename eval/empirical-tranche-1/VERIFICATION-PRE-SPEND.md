@@ -1,14 +1,13 @@
 # EMP-001 pre-spend verification record
 
 **Date:** 27 Aug 2026
-**Branch:** `work/eval-014-emp-001-budget-continuity`
-**Supersedes:** the EVAL-013 record
+**Branch:** `work/eval-015-emp-001-ambiguous-dispatch`
+**Supersedes:** the EVAL-014 record
 **External calls made producing this record: 0. Spend: USD 0 / INR 0.**
 
 Copied from fresh runs in this branch. Environment: macOS (Darwin 23.6.0), Python 3.14.6,
 pytest 9.1.1, PyYAML 6.0.3 in a throwaway virtualenv outside the repository. No API key was used;
-the rehearsal sets `OPENAI_API_KEY`/`GOOGLE_API_KEY`/`FAL_KEY` to the literal string
-`REHEARSAL-NOT-A-REAL-KEY`.
+every key in every run is the literal string `REHEARSAL-NOT-A-REAL-KEY`.
 
 ---
 
@@ -16,12 +15,12 @@ the rehearsal sets `OPENAI_API_KEY`/`GOOGLE_API_KEY`/`FAL_KEY` to the literal st
 
 ```
 $ python3 -m pytest -q eval/empirical-tranche-1/tests
-...........................                                              [100%]
-315 passed in 24.96s
+...                                                                      [100%]
+363 passed in 24.61s
 EXIT=0
 ```
 
-Up from 247 at the EVAL-013 head; 68 new controls.
+Up from 315 at the EVAL-014 head; 48 new ambiguous-dispatch controls.
 
 ## Step 2 — inherited V1 harness verification
 
@@ -55,11 +54,11 @@ verdict: PREFLIGHT_GREEN
   [PASS] registry_empirical_rows
   [PASS] synthetic_cannot_reach_registry
 external calls: 0   spend USD: 0
-written: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-014/eval/empirical-tranche-1/preflight-result.json
+written: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-worktrees/eval-015/eval/empirical-tranche-1/preflight-result.json
 EXIT=0
 ```
 
-## Step 4 — positive fake-live qualification
+## Step 4 — no-regression: positive fake-live paths
 
 ```
 $ python3 .../qualify_text.py --fake-live --authorisation <valid> --out <path>
@@ -67,11 +66,9 @@ fake-live: 2304 recorded dispatches, 0 network calls
   openai:FAKE-LIVE-openai-snapshot   devanagari= 576 latin= 576 scope=['devanagari', 'latin']
   google:FAKE-LIVE-google-snapshot   devanagari= 576 latin= 576 scope=['devanagari', 'latin']
 external calls: 0   spend USD: 0
-written: /tmp/w-qual.json
+written: /tmp/x-qual.json
 EXIT=0
 ```
-
-## Step 5 — positive fake-live A-TEXT
 
 ```
 $ python3 .../run_atex.py --fake-live --authorisation <valid> --out <path>
@@ -79,44 +76,17 @@ fake-live: 16 generations ({'IMG-01': 8, 'IMG-02': 8}), 16 evaluator dispatches,
 exact matches: 16/16  (perfect reader — not evidence about any model)
 synthetic: False   registry rows: 0
 external calls: 0   spend USD: 0
-written: /tmp/w-atex.json
+written: /tmp/x-atex.json
 EXIT=0
 ```
 
-## Step 6 — cross-process budget / handoff rehearsal
-
-The control this task exists for. Real `subprocess` interpreters: qualification runs and exits,
-and A-TEXT is a fresh process that knows only what is on disk.
+## Step 5 — no-regression: cross-process budget / handoff rehearsal
 
 ```
 $ python3 eval/empirical-tranche-1/rehearse_cross_process.py
-EMP-001 cross-process rehearsal — fake-live, zero network, zero spend
-
-[1] create a valid fake authorisation
-    /var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/tmpzbu06i7q/authorization.local.yaml
-
-[2] initialise the persistent run and spend state
-    run rehearsal-run  ledger runs/rehearsal-run/spend-ledger.jsonl
-
-[3] PROCESS A — fake-live qualification (separate interpreter)
-    fake-live: 2304 recorded dispatches, 0 network calls
-
-[4] PROCESS A exits — reopen the budget from disk only
-    qualification spend reconstructed from the ledger: USD 0.9763200
-    tranche total so far:                              USD 0.9763200
-
-[5] the persisted qualification handoff
-    qualified candidates: ['openai:FAKE-LIVE-openai-snapshot', 'google:FAKE-LIVE-google-snapshot']
-    fingerprint: b8cf6bcf60a2862563bda5fd310b4f92…
-
-[6] PROCESS B — A-TEXT with the Latin perceptibility gate UNRESOLVED
-    exit 2: REFUSED: GATE 2b CLOSED — the Latin human perceptibility review is unresolved. Two of the four froze
-
-[7] PROCESS C — A-TEXT with a REHEARSAL-ONLY perceptibility fixture
-    fake_live: 16 generations {'IMG-01': 8, 'IMG-02': 8}, 16 evaluator dispatches, retries 0
     tranche spent USD 1.8905680 (qualification 0.9763200, atex 0.9142480)
     synthetic: False   registry rows: 0
-    written: /var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/tmpzbu06i7q/atex.json
+    written: /var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/tmpick3zo92/atex.json
 
 [8] verify the invariants against the reconstructed ledger
     [PASS] cumulative_spend_did_not_reset
@@ -139,18 +109,32 @@ RESULT: PASS   external calls 0   spend USD 0
 EXIT=0
 ```
 
-Read the numbers rather than the PASS lines:
+Unchanged from EVAL-014: qualification spend survives a process exit, both ceilings hold, 2,336
+spend records all uniquely referenced.
 
-- qualification spent **USD 0.9763200** in process A and, after that process exited, process B
-  reconstructed exactly that from the ledger — **not** a fresh USD 10;
-- A-TEXT then spent **USD 0.9142480** against the remaining headroom;
-- cumulative **USD 1.8905680** of 10.00, with qualification inside its 6.00 sub-cap;
-- **2,336** spend records — 2,304 qualification dispatches + 16 generations + 16 evaluator calls
-  — every cost reference and trial id unique;
-- step 6 of the rehearsal ran A-TEXT against the **committed, unfilled** perceptibility sheet and
-  was **refused**. The gate is demonstrated closed before it is demonstrated open.
+## Step 6 — new ambiguous-dispatch controls
 
-## Step 7 — protected baselines, byte for byte
+```
+$ python3 -m pytest -q .../test_ambiguous_dispatch.py .../test_ambiguous_generation.py
+................................................                         [100%]
+48 passed in 0.19s
+EXIT=0
+```
+
+Six ambiguous failure modes are injected on both paths — read timeout, socket timeout, connection
+reset, remote disconnect, TLS failure, connection abort — plus a malformed post-send response.
+
+## Step 7 — EVAL-014 budget and handoff regressions
+
+```
+$ python3 -m pytest -q .../test_spend_ledger.py .../test_trial_identity.py \
+      .../test_cross_process_rehearsal.py .../test_atex_handoff.py
+....................................................................     [100%]
+68 passed in 24.28s
+EXIT=0
+```
+
+## Step 8 — protected baselines, Registry, Latin gate
 
 ```
 $ shasum -a 256 -c <(grep -v '^#' eval/empirical-tranche-1/protected-baselines.sha256)
@@ -170,24 +154,17 @@ eval/v1/harness/adapters.py: OK
 EXIT=0
 ```
 
-### Capability Registry
-
 ```
 $ grep -v '^#' eval/registry/registry-v1.jsonl | grep -c '[^[:space:]]'
 0
 ```
 
-Zero empirical rows, before and after every run above including the full cross-process rehearsal.
-
-### The committed perceptibility sheet is still unfilled
-
 ```
-$ python3 -c "import csv; rows=list(csv.DictReader(open('.../perceptibility-review.csv'))); \
-print(len(rows), sum(1 for r in rows if r['visible_difference'] or r['usable_surface']))"
-96 rows; 0 filled verdicts
+$ python3 -c "import run_atex as R; print(R.latin_perceptibility_resolved())"
+False
 ```
 
-A test asserts this, so a rehearsal fixture can never leak back into the repository.
+The Latin human perceptibility gate remains **closed** in the committed repository, as it must.
 
 ### No key material in committed code
 
@@ -196,36 +173,30 @@ $ grep -rInE "sk-[A-Za-z0-9]{12,}|AIza[A-Za-z0-9_-]{20,}" eval/empirical-tranche
 (no matches)
 ```
 
-### Runtime spend state is not committed
-
-```
-$ git status --porcelain | grep -c 'eval/runs'
-0
-```
-
-`eval/runs/` is gitignored: it is machine-local runtime state about money.
-
 ---
 
-## What EVAL-014 changed
+## What EVAL-015 changed
 
-| Blocker | Correction |
-|---|---|
-| **B6** tranche spend not cumulative across processes | durable ledger keyed by RUN id, reconstructed from disk on every read |
-| **B7** USD 6 evaluator sub-cap not enforced | stage caps enforced in one place; qualification refused at 6.00 even when the authorisation names 10.00 |
-| **B8** A-TEXT paid CLI still refused | fingerprint-bound qualification handoff; `--live` and `--fake-live` share one code path |
-| **B9** evaluator calls lacked durable trial/cost identity | deterministic trial id + ledger-resolvable cost_ref on every dispatch |
-| **B10** A-TEXT blind check not target-aware | `blind_check_target` passed evaluator-side only; Devanagari and Latin leak controls |
+One rule, applied to both provider paths:
 
-## Deviations and honesty notes
+> **Release only when it is PROVABLE nothing was sent. Otherwise keep the money counted and keep
+> the trial.**
 
-- **The human perceptibility review is still NOT performed and NOT fabricated.** The rehearsal's
-  filled sheet is written to a temporary directory, is labelled `REHEARSAL FIXTURE - NOT A HUMAN
-  REVIEW`, and never enters the repository.
-- **The fake-live reader is perfect.** `16/16 exact matches` is a property of the fake. It says
+`PreDispatchRefusal` marks the provable cases — missing key, refused body construction, blindness
+violation — and releases. Every failure after the send boundary raises `AmbiguousDispatch`, which
+settles at the reserved estimate, marks `billing_state: unknown_provisional`, persists one trial
+with full identity and a resolvable ledger `cost_ref`, and stops the run. Retries remain 0.
+
+An unparseable response after the send is ambiguous too: the request was sent, and a gibberish
+reply does not make the call free.
+
+## Honesty notes, carried forward
+
+- The **Latin human perceptibility review is still not performed and not fabricated.** It gates
+  the whole A-TEXT screen, because two of the four frozen items are Latin.
+- The **fake-live readers are perfect.** `16/16 exact matches` is a property of the fake and says
   nothing about IMG-01, IMG-02 or either judge candidate.
-- **The live transports remain unproven against real providers.** Their URLs, headers and bodies
-  are asserted against documented contracts, not observed responses.
-- Carried forward: hyphenated package directory with `tests/conftest.py`; `shasum -a 256` in place
-  of `sha256sum`; pytest/PyYAML in a throwaway virtualenv outside the repository.
-- No provider, model or evaluator was contacted. No account was funded and no terms accepted.
+- The **live transports remain unproven against real providers.** EVAL-015 makes their *failure*
+  accounting correct; it does not make their success path observed. The first authorised call is
+  still their first real test.
+- No provider, model or evaluator was contacted. No account funded, no terms accepted.

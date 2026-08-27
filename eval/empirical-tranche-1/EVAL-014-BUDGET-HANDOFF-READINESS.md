@@ -1,5 +1,12 @@
 # EVAL-014 — EMP-001 budget continuity and paid-handoff readiness
 
+> **SUPERSEDED — 27 Aug 2026.** The Controller rejected this `READY_FOR_SPEND_APPROVAL` verdict in
+> `coordination/decisions/CONTROLLER-EVAL-014-REVIEW-2026-08-27.md` on B11–B12: an ambiguous
+> transport exception could release its reservation, manufacturing spend headroom and erasing an
+> attempted call. The work below stands and was preserved. Current verdict:
+> [`EVAL-015-AMBIGUOUS-DISPATCH-READINESS.md`](EVAL-015-AMBIGUOUS-DISPATCH-READINESS.md).
+
+
 **Verdict:** `READY_FOR_SPEND_APPROVAL`
 
 **Branch:** `work/eval-014-emp-001-budget-continuity` · **not merged**
