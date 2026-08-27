@@ -4,7 +4,7 @@ EVAL-012 proved refusal exhaustively and never proved the inverse. `qualify_text
 opened a valid guard and then unconditionally raised, so the real judges never participated in
 the protocol at all — only `FakeCandidate` did.
 
-These tests drive the REAL `OpenAITextJudge` / `GeminiTextJudge` through the REAL transports and
+These tests drive the REAL `AnthropicTextJudge` / `GeminiTextJudge` through the REAL transports and
 the REAL scoring path. The only thing replaced is the socket: an injected recorder stands exactly
 where the network would be, decodes the base64 image out of the request body, and answers from a
 lookup table built from the real rendered pack — which is what a judge does, minus the model.
@@ -25,7 +25,7 @@ from fake_live import FakeJudgeHttp, image_index_for
 
 PKG = Path(__file__).resolve().parents[1]
 
-OPENAI_VERSION = 'gpt-5.4-mini-2026-07-01'
+ANTHROPIC_VERSION = 'claude-haiku-4-5-20251001'
 GEMINI_VERSION = 'gemini-3.5-flash-lite-001'
 
 CALLS_PER_SCRIPT = 576          # 96 items x 2 shapes x 3 passes
@@ -33,7 +33,7 @@ CALLS_PER_SCRIPT = 576          # 96 items x 2 shapes x 3 passes
 
 @pytest.fixture
 def keys(monkeypatch):
-    monkeypatch.setenv('OPENAI_API_KEY', 'sk-test-openai-key')
+    monkeypatch.setenv('ANTHROPIC_API_KEY', 'sk-ant-test-key')
     monkeypatch.setenv('GOOGLE_API_KEY', 'AIza-test-google-key')
 
 
@@ -45,10 +45,10 @@ def _authorisation(tmp_path):
     return p
 
 
-def _openai_judge(http, guard):
-    return P.OpenAITextJudge(
-        model_alias='gpt-5.4-mini', resolved_version=OPENAI_VERSION,
-        transport=P.OpenAIHttpTransport(resolved_version=OPENAI_VERSION, http=http), guard=guard)
+def _anthropic_judge(http, guard):
+    return P.AnthropicTextJudge(
+        model_alias='claude-haiku-4-5-20251001', resolved_version=ANTHROPIC_VERSION,
+        transport=P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION, http=http), guard=guard)
 
 
 def _gemini_judge(http, guard):
@@ -83,9 +83,9 @@ def test_the_resolver_refuses_bytes_whose_hash_does_not_match(tmp_path):
 # ------------------------------------------------- POSITIVE CONTROL 1: exactly one dispatch
 def test_one_live_evaluator_call_dispatches_exactly_once_and_is_not_synthetic(keys):
     """E13-E(1). Valid budget + fake live transport -> one dispatch, non-synthetic record."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('latin'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('latin'))
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
 
     item = Q._script_items('latin')[0]
     reply = candidate.call('latin', item, 'transcribe', 0)
@@ -93,14 +93,14 @@ def test_one_live_evaluator_call_dispatches_exactly_once_and_is_not_synthetic(ke
     assert len(http.calls) == 1
     assert reply['api_status'] == 'ok'
     assert reply['call_record']['synthetic'] is False
-    assert reply['call_record']['model_alias'] == 'gpt-5.4-mini'
-    assert reply['call_record']['resolved_version'] == OPENAI_VERSION
+    assert reply['call_record']['model_alias'] == 'claude-haiku-4-5-20251001'
+    assert reply['call_record']['resolved_version'] == ANTHROPIC_VERSION
     assert guard.spent_usd > 0
 
 
 def test_the_live_candidate_declares_itself_not_synthetic(keys):
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('latin'))
-    c = Q.LiveCandidate(judge=_openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('latin'))
+    c = Q.LiveCandidate(judge=_anthropic_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
                         images=Q.ImageResolver())
     assert c.synthetic is False
 
@@ -141,9 +141,9 @@ def test_a_live_transcribe_dispatch_carries_no_devanagari_in_its_body(keys):
     would have travelled as \\uXXXX and the check would have passed while blind. The transport now
     emits real UTF-8 and the scan parses first; between them a leak has nowhere to hide.
     """
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'))
     candidate = Q.LiveCandidate(
-        judge=_openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
+        judge=_anthropic_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
         images=Q.ImageResolver())
     item = Q._script_items('devanagari')[0]
     candidate.call('devanagari', item, 'transcribe', 0)
@@ -156,9 +156,9 @@ def test_a_live_transcribe_dispatch_carries_no_devanagari_in_its_body(keys):
 
 def test_the_wire_body_is_utf8_not_ascii_escaped(keys):
     """The property the blind scan depends on. If this regresses, blindness goes unwatched."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'))
     candidate = Q.LiveCandidate(
-        judge=_openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
+        judge=_anthropic_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
         images=Q.ImageResolver())
     item = Q._script_items('devanagari')[0]
     candidate.call('devanagari', item, 'verdict', 0)
@@ -179,9 +179,9 @@ def test_the_blind_scan_would_catch_an_escaped_leak():
 
 
 def test_a_live_verdict_dispatch_does_carry_the_target(keys):
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'))
     candidate = Q.LiveCandidate(
-        judge=_openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
+        judge=_anthropic_judge(http, BudgetGuard(authorised_usd=Decimal('10.00'))),
         images=Q.ImageResolver())
     item = Q._script_items('devanagari')[0]
     candidate.call('devanagari', item, 'verdict', 0)
@@ -191,9 +191,9 @@ def test_a_live_verdict_dispatch_does_carry_the_target(keys):
 # ------------------------------------------------- POSITIVE CONTROL: the whole protocol runs
 def test_a_faithful_fake_live_candidate_completes_both_scripts(keys):
     """The full progressive protocol, driven through the real judge, transport and scorer."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('both'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('both'))
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
 
     result = Q.qualify_candidate(candidate, guard=guard)
 
@@ -207,9 +207,9 @@ def test_a_faithful_fake_live_candidate_completes_both_scripts(keys):
 
 def test_a_live_candidate_that_false_passes_stops_before_latin(keys):
     """The progressive stop must hold on the LIVE path too, not only for FakeCandidate."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('both'), false_pass_on_first_mismatch=True)
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('both'), false_pass_on_first_mismatch=True)
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
 
     result = Q.qualify_candidate(candidate, guard=guard)
 
@@ -220,15 +220,15 @@ def test_a_live_candidate_that_false_passes_stops_before_latin(keys):
 
 
 def test_every_live_call_record_pins_alias_and_resolved_version(keys):
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('both'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('both'))
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
     result = Q.qualify_candidate(candidate, guard=guard)
 
     records = result['devanagari']['call_records']
     assert len(records) == CALLS_PER_SCRIPT
-    assert {r['resolved_version'] for r in records} == {OPENAI_VERSION}
-    assert {r['model_alias'] for r in records} == {'gpt-5.4-mini'}
+    assert {r['resolved_version'] for r in records} == {ANTHROPIC_VERSION}
+    assert {r['model_alias'] for r in records} == {'claude-haiku-4-5-20251001'}
     assert all(r['retries'] == 0 for r in records)
     assert all(r['synthetic'] is False for r in records)
 
@@ -236,9 +236,9 @@ def test_every_live_call_record_pins_alias_and_resolved_version(keys):
 # ------------------------------------------------- NEGATIVE TWINS
 def test_budget_exhaustion_stops_the_live_run_with_zero_further_dispatches(keys):
     """E13-E(5)."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('both'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('both'))
     tiny = BudgetGuard(authorised_usd=Decimal('0.02'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, tiny), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, tiny), images=Q.ImageResolver())
 
     result = Q.qualify_candidate(candidate, guard=tiny)
 
@@ -254,9 +254,9 @@ def test_budget_exhaustion_stops_the_live_run_with_zero_further_dispatches(keys)
 
 def test_a_refusing_live_judge_is_never_retried(keys):
     """E13-E(8)."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'), refuse_all=True)
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'), refuse_all=True)
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
 
     result = Q.qualify_candidate(candidate, guard=guard)
 
@@ -268,9 +268,9 @@ def test_a_refusing_live_judge_is_never_retried(keys):
 
 
 def test_a_refusal_still_costs_its_trial(keys):
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('latin'), refuse_all=True)
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('latin'), refuse_all=True)
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
     reply = candidate.call('latin', Q._script_items('latin')[0], 'transcribe', 0)
 
     assert reply['api_status'] == 'refusal'
@@ -338,13 +338,13 @@ def test_a_leaking_transcribe_request_is_refused_before_dispatch(keys):
     call is made. On the live path it must therefore be enforced in the code, not only asserted
     in a test — a leak that reaches the wire has already destroyed the measurement.
     """
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
-    judge = _openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00')))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'))
+    judge = _anthropic_judge(http, BudgetGuard(authorised_usd=Decimal('10.00')))
     target = Q._script_items('devanagari')[0]['target']
 
     # Simulate the leak this guard exists to catch: a builder that appends the target.
     def leaking(image_bytes):
-        return {'model': OPENAI_VERSION,
+        return {'model': ANTHROPIC_VERSION,
                 'input': [{'role': 'user', 'content': [
                     {'type': 'input_text', 'text': f'Transcribe. TARGET: {target}'}]}]}
 
@@ -359,10 +359,10 @@ def test_a_leaking_transcribe_request_is_refused_before_dispatch(keys):
 
 def test_a_leaking_request_costs_nothing_because_it_never_dispatched(keys):
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
-    judge = _openai_judge(http, guard)
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'))
+    judge = _anthropic_judge(http, guard)
     target = Q._script_items('devanagari')[0]['target']
-    judge.build_transcribe_request = lambda b: {'model': OPENAI_VERSION, 'input': [
+    judge.build_transcribe_request = lambda b: {'model': ANTHROPIC_VERSION, 'input': [
         {'role': 'user', 'content': [{'type': 'input_text', 'text': target}]}]}
 
     with pytest.raises(P.BlindnessViolation):
@@ -371,9 +371,9 @@ def test_a_leaking_request_costs_nothing_because_it_never_dispatched(keys):
 
 
 def test_a_verdict_request_that_lost_its_target_is_also_refused(keys):
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('devanagari'))
-    judge = _openai_judge(http, BudgetGuard(authorised_usd=Decimal('10.00')))
-    judge.build_verdict_request = lambda b, t: {'model': OPENAI_VERSION, 'input': [
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('devanagari'))
+    judge = _anthropic_judge(http, BudgetGuard(authorised_usd=Decimal('10.00')))
+    judge.build_verdict_request = lambda b, t: {'model': ANTHROPIC_VERSION, 'input': [
         {'role': 'user', 'content': [{'type': 'input_text', 'text': 'Does it match?'}]}]}
 
     with pytest.raises(P.BlindnessViolation):
@@ -383,9 +383,9 @@ def test_a_verdict_request_that_lost_its_target_is_also_refused(keys):
 
 def test_the_ordinary_live_path_passes_the_blind_check_every_call(keys):
     """The guard must not be so strict that the real path cannot run."""
-    http = FakeJudgeHttp(P.OpenAITextJudge, image_index_for('both'))
+    http = FakeJudgeHttp(P.AnthropicTextJudge, image_index_for('both'))
     guard = BudgetGuard(authorised_usd=Decimal('10.00'))
-    candidate = Q.LiveCandidate(judge=_openai_judge(http, guard), images=Q.ImageResolver())
+    candidate = Q.LiveCandidate(judge=_anthropic_judge(http, guard), images=Q.ImageResolver())
     result = Q.qualify_candidate(candidate, guard=guard)
     assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
     assert result['latin']['calls'] == CALLS_PER_SCRIPT

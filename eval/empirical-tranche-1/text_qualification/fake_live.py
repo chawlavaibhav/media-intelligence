@@ -144,10 +144,18 @@ class FakeJudgeHttp:
     def _is_openai(self) -> bool:
         return self.provider_cls.__name__.startswith("OpenAI")
 
+    def _is_anthropic(self) -> bool:
+        return self.provider_cls.__name__.startswith("Anthropic")
+
     def _ok(self, text: str) -> dict:
         if self._is_openai():
             return {"id": f"resp_fake_{len(self.calls):05d}",
                     "output": [{"content": [{"type": "output_text", "text": text}]}],
+                    "usage": {"input_tokens": 812, "output_tokens": 7}}
+        if self._is_anthropic():
+            return {"id": f"msg_fake_{len(self.calls):05d}", "type": "message",
+                    "role": "assistant", "content": [{"type": "text", "text": text}],
+                    "stop_reason": "end_turn",
                     "usage": {"input_tokens": 812, "output_tokens": 7}}
         return {"responseId": f"gen-fake-{len(self.calls):05d}",
                 "candidates": [{"content": {"parts": [{"text": text}]}, "finishReason": "STOP"}],
@@ -158,6 +166,11 @@ class FakeJudgeHttp:
             return {"id": f"resp_fake_{len(self.calls):05d}",
                     "output": [{"content": [{"type": "refusal", "refusal": "I can't help."}]}],
                     "usage": {"input_tokens": 800, "output_tokens": 2}}
+        if self._is_anthropic():
+            return {"id": f"msg_fake_{len(self.calls):05d}", "type": "message",
+                    "role": "assistant", "content": [], "stop_reason": "refusal",
+                    "stop_details": {"type": "refusal", "category": "general_harms"},
+                    "usage": {"input_tokens": 800, "output_tokens": 2}}
         return {"responseId": f"gen-fake-{len(self.calls):05d}",
                 "candidates": [{"content": {"parts": []}, "finishReason": "SAFETY"}],
                 "usageMetadata": {"promptTokenCount": 640, "candidatesTokenCount": 0}}
@@ -166,6 +179,10 @@ class FakeJudgeHttp:
         if self._is_openai():
             return {"id": f"resp_fake_{len(self.calls):05d}",
                     "error": {"type": "server_error", "code": "internal_error"},
+                    "usage": {"input_tokens": 790, "output_tokens": 0}}
+        if self._is_anthropic():
+            return {"id": f"msg_fake_{len(self.calls):05d}",
+                    "error": {"type": "api_error", "message": "backend unavailable"},
                     "usage": {"input_tokens": 790, "output_tokens": 0}}
         return {"responseId": f"gen-fake-{len(self.calls):05d}",
                 "error": {"status": "UNAVAILABLE", "message": "backend overloaded"},

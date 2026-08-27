@@ -62,7 +62,7 @@ def rehearse(work_dir: Path) -> dict:
     env = {
         **os.environ,
         # Obvious non-secrets. No real key is used anywhere in this rehearsal.
-        "OPENAI_API_KEY": "REHEARSAL-NOT-A-REAL-KEY",
+        "ANTHROPIC_API_KEY": "REHEARSAL-NOT-A-REAL-KEY",
         "GOOGLE_API_KEY": "REHEARSAL-NOT-A-REAL-KEY",
         "FAL_KEY": "REHEARSAL-NOT-A-REAL-KEY",
     }

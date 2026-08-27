@@ -17,7 +17,8 @@ import pytest
 import providers as P
 
 
-OPENAI_VERSION = 'gpt-5.4-mini-2026-07-01'
+OPENAI_VERSION = 'gpt-5.4-mini-2026-07-01'  # dormant compatibility adapter
+ANTHROPIC_VERSION = 'claude-haiku-4-5-20251001'
 GEMINI_VERSION = 'gemini-3.5-flash-lite-001'
 IMAGE = b'\x89PNG\r\n\x1a\n-not-a-real-image-'
 
@@ -41,6 +42,11 @@ def openai_key(monkeypatch):
 
 
 @pytest.fixture
+def anthropic_key(monkeypatch):
+    monkeypatch.setenv('ANTHROPIC_API_KEY', 'sk-ant-test-key')
+
+
+@pytest.fixture
 def google_key(monkeypatch):
     monkeypatch.setenv('GOOGLE_API_KEY', 'AIza-test-google-key')
 
@@ -54,6 +60,7 @@ def test_constructing_a_transport_opens_no_socket(monkeypatch):
     monkeypatch.setattr(socket, 'create_connection', explode)
 
     P.OpenAIHttpTransport(resolved_version=OPENAI_VERSION)
+    P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION)
     P.GeminiHttpTransport(resolved_version=GEMINI_VERSION)
 
 
@@ -69,6 +76,7 @@ def test_constructing_a_transport_reads_no_key():
     try:
         os.environ = Tracking(real)  # noqa: B003
         P.OpenAIHttpTransport(resolved_version=OPENAI_VERSION)
+        P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION)
         P.GeminiHttpTransport(resolved_version=GEMINI_VERSION)
     finally:
         os.environ = real  # noqa: B003
@@ -97,6 +105,32 @@ def test_openai_carries_the_exact_resolved_version_in_the_body(openai_key):
     http = RecordingHttp(P.OPENAI_OK_FIXTURE)
     P.OpenAIHttpTransport(resolved_version=OPENAI_VERSION, http=http)({'model': OPENAI_VERSION})
     assert json.loads(http.calls[0]['body'])['model'] == OPENAI_VERSION
+
+
+# --------------------------------------------------------------------------- Anthropic auth
+def test_anthropic_sends_x_api_key_and_version_header(anthropic_key):
+    http = RecordingHttp(P.ANTHROPIC_OK_FIXTURE)
+    t = P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION, http=http)
+    t({'model': ANTHROPIC_VERSION, 'messages': [], 'max_tokens': 16})
+
+    headers = http.calls[0]['headers']
+    assert headers['x-api-key'] == 'sk-ant-test-key'
+    assert headers['anthropic-version'] == '2023-06-01'
+    assert 'Authorization' not in headers
+
+
+def test_anthropic_posts_to_messages_endpoint(anthropic_key):
+    http = RecordingHttp(P.ANTHROPIC_OK_FIXTURE)
+    P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION, http=http)(
+        {'model': ANTHROPIC_VERSION, 'messages': [], 'max_tokens': 16})
+    assert http.calls[0]['url'] == 'https://api.anthropic.com/v1/messages'
+
+
+def test_anthropic_carries_exact_pinned_model_in_body(anthropic_key):
+    http = RecordingHttp(P.ANTHROPIC_OK_FIXTURE)
+    P.AnthropicHttpTransport(resolved_version=ANTHROPIC_VERSION, http=http)(
+        {'model': ANTHROPIC_VERSION, 'messages': [], 'max_tokens': 16})
+    assert json.loads(http.calls[0]['body'])['model'] == ANTHROPIC_VERSION
 
 
 # ------------------------------------------------------------------------------ Gemini auth
@@ -146,6 +180,7 @@ def test_gemini_does_not_repeat_the_model_in_the_body(google_key):
 # ---------------------------------------------------------------- secrets discipline
 @pytest.mark.parametrize('cls,env,version', [
     (P.OpenAIHttpTransport, 'OPENAI_API_KEY', OPENAI_VERSION),
+    (P.AnthropicHttpTransport, 'ANTHROPIC_API_KEY', ANTHROPIC_VERSION),
     (P.GeminiHttpTransport, 'GOOGLE_API_KEY', GEMINI_VERSION),
 ])
 def test_a_missing_key_refuses_before_any_dispatch(monkeypatch, cls, env, version):
@@ -159,37 +194,45 @@ def test_a_missing_key_refuses_before_any_dispatch(monkeypatch, cls, env, versio
 
 @pytest.mark.parametrize('cls,version,fixture', [
     (P.OpenAIHttpTransport, OPENAI_VERSION, P.OPENAI_OK_FIXTURE),
+    (P.AnthropicHttpTransport, ANTHROPIC_VERSION, P.ANTHROPIC_OK_FIXTURE),
     (P.GeminiHttpTransport, GEMINI_VERSION, P.GEMINI_OK_FIXTURE),
 ])
-def test_the_key_never_appears_in_the_request_body(openai_key, google_key, cls, version, fixture):
+def test_the_key_never_appears_in_the_request_body(openai_key, anthropic_key, google_key, cls, version, fixture):
     http = RecordingHttp(fixture)
     cls(resolved_version=version, http=http)({'model': version, 'contents': [], 'input': []})
     body = http.calls[0]['body'].decode('utf-8')
     assert 'sk-test-openai-key' not in body
+    assert 'sk-ant-test-key' not in body
     assert 'AIza-test-google-key' not in body
 
 
 @pytest.mark.parametrize('cls,version,fixture', [
     (P.OpenAIHttpTransport, OPENAI_VERSION, P.OPENAI_OK_FIXTURE),
+    (P.AnthropicHttpTransport, ANTHROPIC_VERSION, P.ANTHROPIC_OK_FIXTURE),
     (P.GeminiHttpTransport, GEMINI_VERSION, P.GEMINI_OK_FIXTURE),
 ])
-def test_no_key_reaches_a_persisted_call_record(openai_key, google_key, cls, version, fixture):
-    judge_cls = P.OpenAITextJudge if cls is P.OpenAIHttpTransport else P.GeminiTextJudge
+def test_no_key_reaches_a_persisted_call_record(openai_key, anthropic_key, google_key, cls, version, fixture):
+    judge_cls = {
+        P.OpenAIHttpTransport: P.OpenAITextJudge,
+        P.AnthropicHttpTransport: P.AnthropicTextJudge,
+        P.GeminiHttpTransport: P.GeminiTextJudge,
+    }[cls]
     from decimal import Decimal
     from budget_guard import BudgetGuard
     j = judge_cls(model_alias='alias', resolved_version=version,
                   transport=cls(resolved_version=version, http=RecordingHttp(fixture)),
                   guard=BudgetGuard(authorised_usd=Decimal('10.00')))
     blob = json.dumps(j.call_record(j.transcribe(IMAGE), shape='transcribe'))
-    assert 'sk-test-openai-key' not in blob and 'AIza-test-google-key' not in blob
+    assert 'sk-test-openai-key' not in blob and 'sk-ant-test-key' not in blob and 'AIza-test-google-key' not in blob
 
 
 # ---------------------------------------------------------------- one dispatch, no retry
 @pytest.mark.parametrize('cls,version,fixture', [
     (P.OpenAIHttpTransport, OPENAI_VERSION, P.OPENAI_OK_FIXTURE),
+    (P.AnthropicHttpTransport, ANTHROPIC_VERSION, P.ANTHROPIC_OK_FIXTURE),
     (P.GeminiHttpTransport, GEMINI_VERSION, P.GEMINI_OK_FIXTURE),
 ])
-def test_one_call_produces_exactly_one_http_dispatch(openai_key, google_key, cls, version,
+def test_one_call_produces_exactly_one_http_dispatch(openai_key, anthropic_key, google_key, cls, version,
                                                      fixture):
     http = RecordingHttp(fixture)
     cls(resolved_version=version, http=http)({'model': version, 'contents': [], 'input': []})
@@ -198,9 +241,10 @@ def test_one_call_produces_exactly_one_http_dispatch(openai_key, google_key, cls
 
 @pytest.mark.parametrize('cls,version,fixture', [
     (P.OpenAIHttpTransport, OPENAI_VERSION, P.OPENAI_ERROR_FIXTURE),
+    (P.AnthropicHttpTransport, ANTHROPIC_VERSION, P.ANTHROPIC_ERROR_FIXTURE),
     (P.GeminiHttpTransport, GEMINI_VERSION, P.GEMINI_ERROR_FIXTURE),
 ])
-def test_an_error_response_is_not_retried(openai_key, google_key, cls, version, fixture):
+def test_an_error_response_is_not_retried(openai_key, anthropic_key, google_key, cls, version, fixture):
     http = RecordingHttp(fixture)
     cls(resolved_version=version, http=http)({'model': version, 'contents': [], 'input': []})
     assert len(http.calls) == 1

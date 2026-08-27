@@ -570,7 +570,14 @@ def select_judge_for_atex(qualification: dict) -> dict:
             "GATE 2 CLOSED — no candidate qualified. If no text judge qualifies, ZERO image "
             "generations run: there would be nothing to score the output with.")
 
+    active_roster = {
+        (spec["provider"], spec["model_alias"])
+        for spec in config()["qualification"]["judge_candidates"]
+    }
     for candidate in candidates:
+        identity = (candidate.get("provider"), candidate.get("model_alias"))
+        if identity not in active_roster:
+            continue
         if required <= set(candidate.get("qualified_scope") or []):
             return candidate
 
@@ -583,7 +590,13 @@ def select_judge_for_atex(qualification: dict) -> dict:
 
 def build_live_judge(chosen: dict, guard, http=None):
     """Rebuild the EXACT judge that qualified: same provider, alias and resolved version."""
-    judge_cls = P.OpenAITextJudge if chosen["provider"] == "openai" else P.GeminiTextJudge
+    judge_cls = {
+        "anthropic": P.AnthropicTextJudge,
+        "google": P.GeminiTextJudge,
+        "openai": P.OpenAITextJudge,
+    }.get(chosen["provider"])
+    if judge_cls is None:
+        raise GateClosed(f"unsupported qualified judge provider {chosen['provider']!r}")
     return judge_cls(
         model_alias=chosen["model_alias"],
         resolved_version=chosen["resolved_version"],
@@ -812,7 +825,7 @@ def main(argv: list[str] | None = None) -> int:
             sys.path.insert(0, str(PACKAGE_ROOT / "text_qualification"))
             from fake_live import FakeFalHttp, FakeJudgeHttp
 
-            judge_http = FakeJudgeHttp(P.OpenAITextJudge, {})
+            judge_http = FakeJudgeHttp(P.AnthropicTextJudge, {})
             fal_http = FakeFalHttp()
 
             def artifact_fetch(url):

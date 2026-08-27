@@ -670,7 +670,13 @@ def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver |
             raise NotAuthorised(
                 f"no resolved version pinned for {provider} ({alias}). The exact model snapshot "
                 f"must be pinned at execution; an alias is not a version.")
-        judge_cls = P.OpenAITextJudge if provider == "openai" else P.GeminiTextJudge
+        judge_cls = {
+            "anthropic": P.AnthropicTextJudge,
+            "google": P.GeminiTextJudge,
+            "openai": P.OpenAITextJudge,
+        }.get(provider)
+        if judge_cls is None:
+            raise NotAuthorised(f"unsupported judge provider {provider!r}")
         candidates.append(LiveCandidate(
             judge=judge_cls(model_alias=alias, resolved_version=version,
                             transport=P.transport_for(provider, version, http=http),
@@ -729,21 +735,21 @@ def _fake_live(guard, out: Path, run=None) -> dict:
 
     from fake_live import FakeJudgeHttp, image_index_for
 
-    os.environ.setdefault("OPENAI_API_KEY", "fake-live-openai-key")
+    os.environ.setdefault("ANTHROPIC_API_KEY", "fake-live-anthropic-key")
     os.environ.setdefault("GOOGLE_API_KEY", "fake-live-google-key")
 
     index = image_index_for("both")
     http_by_provider = {
-        "openai": FakeJudgeHttp(P.OpenAITextJudge, index),
+        "anthropic": FakeJudgeHttp(P.AnthropicTextJudge, index),
         "google": FakeJudgeHttp(P.GeminiTextJudge, index),
     }
 
     images = ImageResolver()
     candidates = [
-        LiveCandidate(judge=P.OpenAITextJudge(
-            model_alias="gpt-5.4-mini", resolved_version="FAKE-LIVE-openai-snapshot",
-            transport=P.OpenAIHttpTransport("FAKE-LIVE-openai-snapshot",
-                                            http=http_by_provider["openai"]),
+        LiveCandidate(judge=P.AnthropicTextJudge(
+            model_alias="claude-haiku-4-5-20251001", resolved_version="claude-haiku-4-5-20251001",
+            transport=P.AnthropicHttpTransport("claude-haiku-4-5-20251001",
+                                               http=http_by_provider["anthropic"]),
             guard=guard), images=images),
         LiveCandidate(judge=P.GeminiTextJudge(
             model_alias="gemini-3.5-flash-lite", resolved_version="FAKE-LIVE-google-snapshot",
@@ -802,7 +808,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--run-root", default=None,
                     help="persistent EMP-001 run root; enables the durable tranche ledger")
     ap.add_argument("--run-id", default=None)
-    ap.add_argument("--openai-version", default=None)
+    ap.add_argument("--anthropic-version", default=None)
     ap.add_argument("--gemini-version", default=None)
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args(argv)
@@ -839,12 +845,12 @@ def main(argv: list[str] | None = None) -> int:
             print(f"written: {a.out}")
             return 0
 
-        versions = {"openai": a.openai_version, "google": a.gemini_version}
+        versions = {"anthropic": a.anthropic_version, "google": a.gemini_version}
         if not all(versions.values()):
             raise NotAuthorised(
-                "--live requires --openai-version and --gemini-version. The exact model snapshot "
-                "must be pinned at execution; an alias is not a version and a run that cannot "
-                "name what it called cannot be reproduced.")
+                "--live requires --anthropic-version and --gemini-version. Exact model IDs "
+                "must be pinned at execution; a run that cannot name what it called cannot "
+                "be reproduced.")
 
         result = run_live(guard, http=None, resolved_versions=versions)
         out = Path(a.out)
