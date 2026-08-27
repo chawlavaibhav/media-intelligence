@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-022 is accepted/integrated (PR #45, merge `afe866cea4adc7625e1ee306ed93f396432a9212`). Gemini 3.5 Flash-Lite failed a second complete no-pacing contract-v2 screen. Cloud Vision TEXT_DETECTION (no hints) is the strongest checker so far but still fails the zero-false-pass gate. EVAL-023 now tests a zero-API-cost local Tesseract configuration with lexical aids disabled.
+**Updated:** 27 Aug 2026 — Three parallel lanes are now active: EVAL-023 local literal OCR qualification; EVAL-024 sealed A-TEXT generation-only (16 frozen images, ~USD 0.904 nominal, no scoring until evaluator qualification); and CANON-011 marketplace-derived brief/prompt-bank preparation from the user's Upwork/Fiverr research at zero API spend.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -276,27 +276,43 @@ Not authorised:
 
 Customer-outcome CpAO remains Stage C only.
 
-## Next gate
+## Next gates — parallel
 
-Run **EVAL-023 local literal OCR qualification**:
-- `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RESULTS-AND-EVAL-023-2026-08-27.md`
+### Lane 1 — evaluator
+Run EVAL-023:
 - `eval/tasks/EVAL-023-LOCAL-LITERAL-OCR.md`
+- zero API spend;
+- Tesseract literal OCR with lexical aids disabled;
+- return before merge.
 
-Required:
-1. local Tesseract 5.x only; API spend USD 0;
-2. official pinned `hin` + `eng` traineddata;
-3. alias `tesseract5-hin-eng-literal-psm13-v1`;
-4. `--oem 1 --psm 13 -l hin+eng`;
-5. fresh subprocess per image;
-6. disable system/freq/unambig/bigram/punc/number DAWGs;
-7. no target in subprocess command/stdin/temp path/environment;
-8. same OCR contract `ocr-1`, same thresholds;
-9. 3 repeats; Devanagari first; Latin only if Devanagari passes;
-10. run zero-spend controls first;
-11. then run full local scientific qualification in the same pass if controls are green;
-12. preserve prior evidence byte-identically;
-13. A-TEXT blocked; Registry unchanged;
-14. do not merge; return exact branch/head and result.
+### Lane 2 — A-TEXT generation-only
+Run EVAL-024:
+- `eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md`
+- authority: `coordination/decisions/CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`;
+- generate/seal 16 frozen A-TEXT artifacts only;
+- nominal max generation spend USD 0.904;
+- no evaluator calls;
+- no scoring/model verdict;
+- no Stage-A expansion;
+- later score the exact stored artifacts if/when a qualified evaluator exists.
+
+### Lane 3 — real-demand benchmark preparation
+Run CANON-011:
+- `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md`
+- authority: `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`;
+- zero API spend;
+- derive marketplace source facts -> Normalized Request -> frozen benchmark prompt packages;
+- Upwork = buyer-brief evidence;
+- Fiverr = package/intake/format evidence, not customer-request truth;
+- do not mutate A-TEXT or frozen Stage-A comparability core;
+- target Layer-4/Stage-C readiness first, with later explicit integration into compound benchmark work.
+
+All three lanes:
+- preserve historical evidence;
+- no Registry population;
+- no automatic merge;
+- Controller reviews returned branches/evidence.
+
 
 
 
