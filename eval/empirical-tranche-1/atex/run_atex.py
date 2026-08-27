@@ -184,7 +184,7 @@ def promote_slot(result: dict):
 
 
 def _measure_artifact(judge_instance, image_bytes: bytes, item: dict, seq: int,
-                      attempt_id: str) -> tuple[dict, dict]:
+                      attempt_id: str) -> tuple[dict, dict, "P.EvaluatorResponse"]:
     """One blind transcription. Returns (evaluator_call_record, measurement).
 
     The judge never sees the target. It commits to what it believes is drawn and OUR code performs
@@ -215,10 +215,12 @@ def _measure_artifact(judge_instance, image_bytes: bytes, item: dict, seq: int,
     if response.api_status != "ok":
         absent = ("evaluator_refused" if response.api_status == "refusal"
                   else f"evaluator_{response.api_status}")
-        return call, {"transcription": None, "exact_match": None, "absent_reason": absent}
+        return call, {"transcription": None, "exact_match": None,
+                      "absent_reason": absent}, response
 
     exact = transcription_matches(item["target_string"], response.text)
-    return call, {"transcription": response.text, "exact_match": exact, "absent_reason": None}
+    return call, {"transcription": response.text, "exact_match": exact,
+                  "absent_reason": None}, response
 
 
 def run(judge: dict | None = None, generator=None, routes: dict | None = None,
@@ -300,15 +302,42 @@ def run(judge: dict | None = None, generator=None, routes: dict | None = None,
                     "seed_policy": "unseeded",
                 }
 
-                if dry_run:
-                    response = generator(request)    # exactly one call, no loop
-                else:
-                    response = routes[slot](request)  # exactly one call, no loop
+                ambiguous = None
+                try:
+                    if dry_run:
+                        response = generator(request)     # exactly one call, no loop
+                    else:
+                        response = routes[slot](request)  # exactly one call, no loop
+                except P.PreDispatchRefusal:
+                    # PROVEN nothing was sent. Release and re-raise: there is no attempt to
+                    # persist, because no attempt was made.
+                    release = getattr(guard, "release", None)
+                    if release:
+                        release()
+                    raise
+                except P.AmbiguousDispatch as exc:
+                    # fal may have received and billed this generation. Keep the money counted,
+                    # persist the attempt as a real failed trial, and stop after it.
+                    ambiguous = exc
+                    response = {
+                        "api_status": exc.api_status,
+                        "error_class": exc.error_class,
+                        "provider_request_id": None,
+                        "artifact_url": None,
+                        "fetch_artifact": None,
+                        "slot": slot,
+                        "route": meta["route"],
+                        "provider_surface": meta["provider_surface"],
+                    }
 
                 # A persistent StageBudget returns the ledger cost_ref that this spend was
                 # written under; the in-memory guard returns None. Using the ledger's reference
                 # is what makes a generation trial reconcilable against actual spend later.
-                recorded_ref = guard.record(price)
+                try:
+                    recorded_ref = guard.record(
+                        price, billing_state=("unknown_provisional" if ambiguous else "reported"))
+                except TypeError:
+                    recorded_ref = guard.record(price)
                 per_route[slot] += 1
 
                 cost_ref = recorded_ref or f"ledger-{seq:04d}"
@@ -338,6 +367,8 @@ def run(judge: dict | None = None, generator=None, routes: dict | None = None,
                     "retry_of_attempt_id": None,
                     "cost_ref": cost_ref,
                     "synthetic": bool(dry_run),
+                    "billing_state": "unknown_provisional" if ambiguous else "reported",
+                    "ambiguous_dispatch": bool(ambiguous),
                 })
 
                 # The Attempt record exists BEFORE anything asks whether an artifact came back, so
@@ -367,11 +398,13 @@ def run(judge: dict | None = None, generator=None, routes: dict | None = None,
                                                                  transcription),
                             "absent_reason": None,
                         })
-                elif response["api_status"] == "ok" and response.get("fetch_artifact"):
+                evaluator_response = None
+                if not dry_run and response["api_status"] == "ok" \
+                        and response.get("fetch_artifact"):
                     image_bytes = response["fetch_artifact"]()
                     _TARGET_BY_ARTIFACT[response["artifact_url"]] = item["target_string"]
-                    call, outcome = _measure_artifact(judge_instance, image_bytes, item, seq,
-                                                      attempt_id)
+                    call, outcome, evaluator_response = _measure_artifact(
+                        judge_instance, image_bytes, item, seq, attempt_id)
                     evaluator_calls.append(call)
                     measurement.update(outcome)
                     measurement["evaluator_trial_id"] = call["evaluator_trial_id"]
@@ -403,6 +436,17 @@ def run(judge: dict | None = None, generator=None, routes: dict | None = None,
                         })
 
                 measurements.append(measurement)
+
+                if ambiguous is not None:
+                    # The attempt and its cost are now on the record. Stop: continuing would
+                    # spend more money after a call nobody can account for, and retries are 0 so
+                    # there is nothing to re-attempt.
+                    stopped_reason = "ambiguous_dispatch"
+                    break
+
+                if getattr(evaluator_response, "ambiguous_dispatch", False):
+                    stopped_reason = "ambiguous_dispatch"
+                    break
             if stopped_reason:
                 break
         if stopped_reason:

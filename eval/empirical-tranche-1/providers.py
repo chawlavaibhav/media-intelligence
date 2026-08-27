@@ -815,9 +815,9 @@ class FalImageRoute:
 
         key = os.environ.get(FAL_KEY_ENV)
         if not key:
-            raise DispatchRefused(
+            raise PreDispatchRefusal(
                 f"{FAL_KEY_ENV} is not set. Keys are read from the environment at dispatch time "
-                f"and are never committed, logged or persisted.")
+                f"and are never committed, logged or persisted. Nothing was sent.")
         return key
 
     def build_body(self, request: dict) -> dict:
@@ -832,10 +832,28 @@ class FalImageRoute:
         key = self._read_key()          # raises BEFORE anything is sent
         body = self.build_body(request)
         headers = {"Content-Type": "application/json", "Authorization": f"Key {key}"}
+        payload = json.dumps(body, ensure_ascii=False).encode("utf-8")
+
+        # ---- THE DISPATCH BOUNDARY ----------------------------------------------------------
+        # Below this line fal may have received and billed the request, so every failure is
+        # AMBIGUOUS. An image generation is the most expensive call in this tranche; letting one
+        # disappear because the socket broke is exactly the accounting hole EVAL-015 closes.
         self.calls += 1                 # exactly one, no loop
-        raw = self.http(self.endpoint(), headers,
-                        json.dumps(body, ensure_ascii=False).encode("utf-8"), self.timeout_s)
-        return self.parse(raw)
+        try:
+            raw = self.http(self.endpoint(), headers, payload, self.timeout_s)
+        except Exception as exc:
+            api_status, error_class = classify_transport_failure(exc)
+            raise AmbiguousDispatch(
+                f"{type(exc).__name__} after dispatch to {self.endpoint()}: {exc}. fal may have "
+                f"received and billed this generation; billing state is unknown.",
+                api_status=api_status, error_class=error_class, cause=exc) from exc
+
+        try:
+            return self.parse(raw)
+        except Exception as exc:
+            raise AmbiguousDispatch(
+                f"unparseable fal response: {exc}. The request was sent.",
+                api_status="error", error_class="malformed_response", cause=exc) from exc
 
     def parse(self, raw: dict) -> dict:
         """Map a fal response onto the persistence vocabulary. A refusal is not an error."""
