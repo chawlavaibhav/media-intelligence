@@ -16,6 +16,7 @@ import pytest
 import providers as P
 import qualify_text as Q
 import run_atex as R
+import human_review as HR
 import spend_ledger as SL
 from fake_live import FakeFalHttp, FakeJudgeHttp, image_index_for
 
@@ -43,15 +44,14 @@ def _run(tmp_path, mode='fake_live', run_id='run-handoff'):
 
 
 def _resolved_perceptibility(tmp_path):
-    """A REHEARSAL-ONLY filled sheet in a temp dir.
-
-    The committed sheet stays unfilled: EVAL-012/013/014 all refuse to fabricate a human review.
-    This exists solely to exercise the code path on the far side of the gate.
-    """
+    """A structurally valid rehearsal-only sheet bound to the current frozen pack."""
     p = tmp_path / 'perceptibility-review-REHEARSAL-ONLY.csv'
+    pack_sha = HR.pack_sha256()
     rows = ['item_id,visible_difference,usable_surface,reviewer_note']
     for item in Q.load_latin_items():
-        rows.append(f"{item['item_id']},yes,yes,REHEARSAL FIXTURE - NOT A HUMAN REVIEW")
+        visible = 'yes' if item['expected'] == 'mismatch' else ''
+        note = f'REHEARSAL FIXTURE - NOT A HUMAN REVIEW; pack_sha256={pack_sha}'
+        rows.append(f"{item['item_id']},{visible},yes,{note}")
     p.write_text('\n'.join(rows) + '\n')
     return p
 
@@ -178,18 +178,20 @@ def test_no_qualified_candidate_at_all_refuses(tmp_path, keys):
 
 
 # ------------------------------------------------------------------ Latin perceptibility gate
-def test_the_committed_perceptibility_sheet_is_still_unresolved():
-    """It must stay unfilled. The whole point is that nobody fabricated it."""
+def test_the_committed_perceptibility_sheet_is_now_resolved():
     assert R.latin_perceptibility_resolved(
-        PKG / 'text_qualification' / 'perceptibility-review.csv') is False
+        PKG / 'text_qualification' / 'perceptibility-review.csv') is True
 
 
-def test_atex_refuses_while_the_latin_perceptibility_gate_is_unresolved(tmp_path, keys):
+def test_atex_refuses_while_an_explicit_perceptibility_sheet_is_unresolved(tmp_path, keys):
     run = _run(tmp_path)
     _qualify(tmp_path, run)
+    p = tmp_path / 'unresolved.csv'
+    p.write_text('item_id,visible_difference,usable_surface,reviewer_note\n')
     with pytest.raises(R.GateClosed) as e:
         R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.OpenAITextJudge, {}),
-                   fal_http=FakeFalHttp(), artifact_fetch=lambda u: b'x')
+                   fal_http=FakeFalHttp(), artifact_fetch=lambda u: b'x',
+                   perceptibility_path=p)
     assert 'perceptibility' in str(e.value).lower()
 
 

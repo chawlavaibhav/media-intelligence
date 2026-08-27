@@ -1,15 +1,21 @@
 {
   "external_calls": 0,
   "human_perceptibility_review": {
-    "if_any_item_is_rejected": "correct the base list in build_latin_pack.py and rebuild the WHOLE manifest before re-freezing the fingerprint. Never patch a single reviewed row in place.",
+    "status": "COMPLETE_HUMAN_REVIEW",
+    "resolved": true,
     "performed_by_this_worker": false,
     "sheet": "eval/empirical-tranche-1/text_qualification/perceptibility-review.csv",
-    "status": "OUTSTANDING_ZERO_SPEND_HUMAN_PREREQUISITE",
+    "items_reviewed": 96,
+    "usable_yes": 96,
+    "mismatch_visible_yes": 48,
+    "bound_rows": 96,
+    "pack_sha256": "320323ff84dd9c0d3ea3e9110eead1a3b789516de43c5f31c4f414fa022f1fcb",
+    "reason": null,
     "what_it_must_answer": [
-      "visible_difference — would a person reading this surface notice the corruption?",
+      "visible_difference — for mismatch rows, would a person notice the corruption?",
       "usable_surface — is this a plausible commercial surface to test a judge on?"
     ],
-    "why_not_done_here": "EVAL-012 forbids fabricating a human review. The mechanical pixel gate above proves a difference is ON THE PAGE; it cannot prove a person would notice it, and the two are not the same claim."
+    "if_any_item_is_rejected": "correct the base list in build_latin_pack.py and rebuild the WHOLE manifest before re-freezing the fingerprint. Never patch a single reviewed row in place."
   },
   "items": [
     {

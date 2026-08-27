@@ -95,15 +95,15 @@ def test_the_rehearsal_made_no_external_call_and_spent_nothing(rehearsal):
     assert findings['spend_usd'] == '0'
 
 
-def test_the_rehearsal_never_writes_a_filled_sheet_into_the_repository(rehearsal):
-    """The fixture lives in a temp dir. The committed sheet must stay unfilled."""
-    import csv
+def test_the_rehearsal_preserves_the_completed_committed_human_review(rehearsal):
+    import human_review as HR
 
     committed = PKG / 'text_qualification' / 'perceptibility-review.csv'
-    with committed.open(encoding='utf-8') as fh:
-        rows = list(csv.DictReader(fh))
-    assert len(rows) == 96
-    assert all(r['visible_difference'] == '' and r['usable_surface'] == '' for r in rows)
+    status = HR.review_status(committed)
+    assert status['ok'] is True
+    assert status['usable_yes'] == 96
+    assert status['mismatch_visible_yes'] == 48
+    assert status['bound_rows'] == 96
 
 
 def test_a_reopened_ledger_reports_the_same_totals(rehearsal):

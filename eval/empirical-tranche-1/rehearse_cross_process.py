@@ -18,10 +18,9 @@ WHAT IS FAKE, AND WHAT IS NOT
           the code-level exactness comparison, the persistent ledger, both ceilings, the
           fingerprint-bound handoff and every gate.
 
-    The Latin perceptibility sheet used here is a REHEARSAL FIXTURE written to a temporary
-    directory. It is not a human review, it is never written into the repository, and the
-    committed sheet stays unfilled. It exists only to exercise the code on the far side of a gate
-    that is otherwise closed.
+    The committed Latin perceptibility sheet is now a completed real human review. The rehearsal
+    also writes an explicitly unresolved temporary fixture first, solely to prove the fail-closed
+    gate still refuses before exercising the positive path with the committed review.
 
     Nothing produced here may reach the Capability Registry.
 """
@@ -116,30 +115,25 @@ def rehearse(work_dir: Path) -> dict:
     print(f"    fingerprint: {qualification_doc['evidence_fingerprint'][:32]}…")
     findings["checks"]["qualified_candidates"] = len(qualified)
 
-    # The gate is genuinely closed in the repository as it stands. Show that first.
-    _step(6, "PROCESS B — A-TEXT with the Latin perceptibility gate UNRESOLVED")
+    # Negative control: an explicitly unresolved temp sheet must close the gate.
+    _step(6, "PROCESS B — A-TEXT with an explicitly UNRESOLVED Latin review fixture")
+    unresolved = work_dir / "perceptibility-review-UNRESOLVED.csv"
+    unresolved.write_text("item_id,visible_difference,usable_surface,reviewer_note\n")
     proc_blocked = _run_process([
         "eval/empirical-tranche-1/atex/run_atex.py",
         "--fake-live", "--run-root", str(run_root), "--run-id", run_id,
+        "--perceptibility-review", str(unresolved),
         "--out", str(work_dir / "atex-blocked.json"),
     ], env)
     print(f"    exit {proc_blocked.returncode}: "
           f"{(proc_blocked.stderr.strip().splitlines() or [''])[0][:100]}")
     findings["checks"]["atex_blocked_by_perceptibility_gate"] = proc_blocked.returncode != 0
 
-    # A REHEARSAL FIXTURE, in a temp dir, never written into the repository.
-    _step(7, "PROCESS C — A-TEXT with a REHEARSAL-ONLY perceptibility fixture")
-    fixture = work_dir / "perceptibility-review-REHEARSAL-ONLY.csv"
-    import qualify_text as QT
-    rows = ["item_id,visible_difference,usable_surface,reviewer_note"]
-    for item in QT.load_latin_items():
-        rows.append(f"{item['item_id']},yes,yes,REHEARSAL FIXTURE - NOT A HUMAN REVIEW")
-    fixture.write_text("\n".join(rows) + "\n")
-
+    # Positive control: use the committed real human review, which is bound to the frozen pack.
+    _step(7, "PROCESS C — A-TEXT with the completed committed perceptibility review")
     proc_c = _run_process([
         "eval/empirical-tranche-1/atex/run_atex.py",
         "--fake-live", "--run-root", str(run_root), "--run-id", run_id,
-        "--perceptibility-review", str(fixture),
         "--out", str(work_dir / "atex.json"),
     ], env)
     for line in proc_c.stdout.strip().splitlines():
