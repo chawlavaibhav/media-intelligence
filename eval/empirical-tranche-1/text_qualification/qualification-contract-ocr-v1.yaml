@@ -1,0 +1,184 @@
+# EMP-001 OCR-FAMILY exact-text qualification contract, v1.
+#
+# THIS IS A SEPARATE FAMILY INSTRUMENT. It does not supersede, amend or reinterpret
+# `qualification-contract-v1.yaml` or `qualification-contract-v2.yaml`. Those remain the
+# historical general-VLM contracts and the evidence produced under them stands unchanged.
+#
+# WHY A SEPARATE CONTRACT RATHER THAN A NEW SHAPE IN V2
+#
+#     The VLM contract has two shapes because a language model can be asked a question. An OCR
+#     service cannot. Cloud Vision TEXT_DETECTION takes an image and returns what it read; there
+#     is no prompt to expose a target through, and therefore no target-aware `verdict` shape to
+#     measure answer-exposure bias with.
+#
+#     Fabricating a verdict shape for a service that has none would produce a metric with no
+#     referent. The honest instrument for this family has exactly one measurement, and this
+#     contract says so rather than carrying a vestigial field.
+#
+# WHAT CARRIES OVER UNCHANGED
+#
+#     The safety gate and the exactness rule. A false pass is still the dangerous error — the
+#     checker reporting that corrupted text matches — and the tolerance for it is still zero.
+#     Exactness is still decided in code, by the same frozen NFC + surrounding-whitespace rule,
+#     never by the provider.
+#
+# WHAT THE OCR FAMILY ADDS
+#
+#     `empty_transcription_is_failure`. A general VLM that says nothing is refusing. An OCR
+#     service that returns no text on an image known to carry visible text has failed to perform
+#     the one function it exists for. Coercing that silence into "match" would manufacture a
+#     false pass out of a service outage, so it is an evaluator failure by construction.
+#
+# THE TAXONOMY THAT MATTERS MOST: SCIENCE vs INFRASTRUCTURE
+#
+#     A first version of this contract counted an empty transcription and an HTTP 429 against the
+#     same rate. They are not the same evidence and must never share a denominator.
+#
+#     An empty transcription is a RESULT: the service ran, was paid, and could not read text that
+#     a human reviewer confirmed is visible. That is a fact about the OCR engine and it belongs in
+#     a gate.
+#
+#     A 429, a backend outage, a reset socket or an unparseable reply is not a fact about the OCR
+#     engine at all — it is a fact about the day. Letting it move a quality metric would let a
+#     rate limit disqualify a competent engine, or let a lucky quiet hour flatter a poor one.
+#
+#     So infrastructure failure is EXECUTION STATE, not a metric. It stops the run fail-closed and
+#     leaves the script scientifically INCOMPLETE. An incomplete script gets no scientific verdict
+#     at all — not a pass, and pointedly not a fail. `passed: null` is the honest answer to a
+#     question the run never finished asking.
+contract_version: ocr-1
+contract_family: ocr
+status: PROVISIONAL_OCR_FAMILY_GATE_V1
+
+repeats_per_shape: 3
+mismatch_false_pass_max: 0
+match_false_fail_rate_max: 0.10
+empty_transcription_rate_max: 0.05
+repeat_consistency_min: 0.95
+primary_generated_output_shape: transcribe
+
+failure_taxonomy:
+  scientific:
+    classes: [empty_transcription]
+    counts_toward: empty_transcription_rate_max
+    rationale: >-
+      A successful, billed provider execution that returned no usable transcription for a
+      validated visible-text image. Evidence about the engine, so it belongs in a gate.
+  infrastructure:
+    classes:
+      - provider_error_*
+      - http_429
+      - backend_unavailable
+      - timeout
+      - transport_reset
+      - malformed_response
+      - ambiguous_dispatch
+      - budget_exhausted
+    counts_toward: null
+    rationale: >-
+      Execution state, never a gate metric. Persisted with trial, provider and billing identity;
+      retries 0; stops the run; leaves the script scientifically incomplete. Increments no
+      false-pass, false-fail or empty-transcription count.
+  pre_dispatch:
+    classes: [missing_api_key]
+    counts_toward: null
+    rationale: >-
+      Provably nothing was sent. Zero calls, zero spend, no trial, no reservation retained.
+
+gate_scope:
+  qualifying_shape: transcribe
+  diagnostic_shapes: []
+  diagnostic_shapes_may_fail_qualification: false
+  complete_screen_requires_all_shapes: true
+  rationale: >-
+    Transcription is the only measurement this family supports. There is no diagnostic shape
+    because the provider exposes no channel through which a target could be shown, and a metric
+    invented for a channel that does not exist would measure nothing.
+
+exactness:
+  decided_by: code
+  normalisation: nfc_plus_surrounding_whitespace_trim
+  rationale: >-
+    Identical to the VLM contract, deliberately. The comparison rule is the part of the
+    instrument that must not vary between families, or results stop being comparable.
+
+empty_transcription_is_failure: true
+empty_transcription_rationale: >-
+  Every battery image is a human-reviewed, mechanically-verified rendering of visible text. An OCR
+  response carrying no usable transcription is therefore an evaluator/service failure, counted
+  against the refusal/error rate. It is never scored as a match: doing so would convert an outage
+  into a silent false pass, which is the exact failure this contract exists to prevent.
+
+qualified_scope_excludes:
+  # Inherited verbatim from the VLM contract: the generated-glyph stress layer was never built,
+  # so no candidate qualified here has been tested against malformed generated glyphs.
+  - malformed_generated_glyphs
+
+thresholds:
+  mismatch_false_pass_max:
+    value: 0
+    status: PROVISIONAL_OCR_FAMILY_GATE_V1
+    rationale: >-
+      Unchanged from the VLM contract and for the same reason. Three general-purpose multimodal
+      models failed this gate by silently auto-correcting corrupted Devanagari to the intended
+      word. Zero is what makes that behaviour detectable; relaxing it for a new family would
+      discard the finding that motivated the family.
+  match_false_fail_rate_max:
+    value: 0.10
+    status: PROVISIONAL_OCR_FAMILY_GATE_V1
+    rationale: >-
+      A checker that rejects correct text is costly rather than unsafe. Carried over unchanged so
+      OCR and VLM results are read against the same bar.
+  empty_transcription_rate_max:
+    value: 0.05
+    status: PROVISIONAL_OCR_FAMILY_GATE_V1
+    rationale: >-
+      Successful, billed executions that returned no usable transcription, over all
+      scientifically interpretable executions. An OCR engine that frequently returns nothing is
+      unusable as a checker even when what it does return is right. Provider and transport
+      failures are deliberately EXCLUDED from this denominator: they say nothing about
+      recognition quality, and mixing them in would let a rate limit disqualify a good engine.
+  repeat_consistency_min:
+    value: 0.95
+    status: PROVISIONAL_OCR_FAMILY_GATE_V1
+    rationale: >-
+      Three repeats are retained for the first OCR qualification specifically because service
+      determinism is an assumption, not a measurement. A hosted OCR endpoint may vary across
+      identical requests; this gate measures that rather than presuming it away.
+
+scientific_completeness:
+  required_executions_per_script: 288          # 96 items x 3 repeats, one shape
+  rule: >-
+    A script is scientifically complete only when every required execution produced a
+    scientifically interpretable outcome — match, mismatch or empty_transcription — and no
+    infrastructure failure stopped the run.
+  incomplete_disposition: null
+  incomplete_rationale: >-
+    An incomplete script yields `passed: null`. Reporting `false` would let a rate limit read as
+    a quality disqualification, and reporting `true` would promote a screen that never finished.
+    Null is the only answer the evidence supports.
+
+progressive_stop:
+  order: [devanagari, latin]
+  rule: >-
+    A candidate advances to Latin only when Devanagari is scientifically COMPLETE and passed.
+    An incomplete Devanagari script does not advance and does not disqualify.
+
+shapes:
+  transcribe:
+    blind: true
+    role: primary
+    qualification_effect: decisive
+    note: >-
+      The image is the entire request. The target is evaluator-side only and is used solely to
+      prove, mechanically, that it never entered the payload.
+
+atext_handoff:
+  accepted_by_atext: false
+  rationale: >-
+    A-TEXT currently understands the VLM contract family only. OCR-family evidence must not open a
+    paid generation stage until a Controller decision explicitly extends the handoff to this
+    family and states which scripts a candidate must have qualified on.
+
+evaluator_spend_ceiling_usd: 6.00
+retries_authorised: 0

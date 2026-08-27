@@ -74,6 +74,11 @@ DEFAULT_OUT = HERE / "atex-dryrun.json"
 # size the pre-call reservation and are not invoice evidence.
 NOMINAL_PRICE_USD = {"IMG-01": Decimal("0.053"), "IMG-02": Decimal("0.060")}
 
+# The ONLY evaluator family whose qualification evidence this handoff knows how to interpret.
+# Records with no `family` key predate the OCR pivot and are general-VLM records by construction,
+# so they default to this value rather than being rejected retroactively.
+ACCEPTED_QUALIFICATION_FAMILY = "vlm"
+
 
 class GateClosed(RuntimeError):
     """A gate that must be open before a paid generation is not open."""
@@ -546,6 +551,19 @@ def load_qualification(run, expected_mode: str) -> dict:
         raise GateClosed(
             "GATE 2 CLOSED — qualification evidence is marked synthetic. Synthetic evidence "
             "cannot qualify an instrument for paid measurement.")
+
+    # FAMILY GATE. A-TEXT understands the general-VLM judge contract and nothing else. An
+    # OCR-family record would otherwise be refused only incidentally, by failing the version
+    # comparison below — a refusal that happens to be correct is not the same as a refusal that
+    # states its reason, and the incidental one would silently start passing the day some future
+    # family happened to pick a matching version string.
+    family = payload.get("family", "vlm")
+    if family != ACCEPTED_QUALIFICATION_FAMILY:
+        raise GateClosed(
+            f"GATE 2 CLOSED — qualification evidence belongs to the {family!r} evaluator family; "
+            f"this A-TEXT handoff accepts {ACCEPTED_QUALIFICATION_FAMILY!r} only. Extending the "
+            f"handoff to another family is a Controller decision about what that family's "
+            f"qualification means, not a comparison this code may make on its own.")
 
     current_contract_sha = hashlib.sha256(QT.CONTRACT.read_bytes()).hexdigest()
     if payload.get("contract_version") != QT.contract().get("contract_version"):
