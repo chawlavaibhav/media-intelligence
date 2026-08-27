@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-023 is integrated (PR #46, merge `0ecbf5f19cd6a3a14a15e85e1a1f6ae8fa690431`). Literal Tesseract `hin+eng` sharply reduced Devanagari false passes but failed accuracy; its post-hoc Latin run is diagnostic only. Three parallel lanes are now active: EVAL-025 script-routed local OCR, EVAL-024 A-TEXT generation-only, and CANON-011 marketplace-derived real-demand brief/prompt preparation.
+**Updated:** 28 Aug 2026 — EVAL-024 generation-only implementation returned with zero live spend because `FAL_KEY` was unavailable. Core design is accepted in principle, but the returned branch is behind current main and includes two unrelated regenerated evidence files plus a media-extension issue. One bounded cleanup/sync pass is required before live generation. EVAL-029 benchmark-grade OCR remains the text-evaluation lane.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -263,76 +263,44 @@ These are reproducible gitignored build products. The live execution worker may 
 ## Still blocked / not authorised
 
 Not authorised:
-- A-TEXT scoring/evaluation until a qualified evaluator workflow covers required scripts and its handoff is accepted;
-- Registry population from current unqualified text instruments;
-- further paid text-judge candidate sweeps without a new Controller decision;
-- full 90-generation Stage A;
-- Stage B / full Stage C execution;
-- broad controlled-pack acquisition;
-- Production IR/Planner implementation.
+- mandatory human-in-the-loop exact-text review as part of the production API architecture;
+- further Tesseract/OCR configuration sweeps without a new mechanism-level rationale;
+- treating benchmark-grade OCR as a perfect exactness certifier;
+- Registry population from text metrics until the benchmark-grade handoff is reviewed;
+- broad Stage-B/C execution without their own instrument readiness;
+- Production IR/Planner implementation before sufficient empirical capability evidence exists.
 
-Authorised in parallel:
-- EVAL-025 local script-routed Tesseract probe at USD 0 API spend;
-- EVAL-024 generation-only creation/sealing of the frozen 16 A-TEXT artifacts under the existing EMP-001 USD 10 total ceiling;
-- CANON-011 zero-spend marketplace-derived brief/prompt-ready bank preparation.
+Authorised / active:
+- EVAL-029 benchmark-grade text OCR qualification and optional A-TEXT scoring handoff;
+- EVAL-024 A-TEXT generation-only;
+- CANON-011 marketplace-derived benchmark brief preparation;
+- unrelated evaluator/capability lanes may proceed independently of exact Hindi text.
 
 Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Three independent parallel lanes may run now.
+Exact-text is no longer a programme-wide blocker.
 
-### Lane A — EVAL-025 script-routed literal OCR
+Run:
+- `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md`
+- `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md`
 
-Authority:
-- `coordination/decisions/CONTROLLER-EVAL-023-DISPOSITION-AND-SCRIPT-ROUTED-OCR-2026-08-27.md`
+EVAL-029:
+1. preserve all historical strict zero-false-pass results;
+2. create a separate `benchmark_text_ocr_v1` contract;
+3. thresholds: false-pass <= 0.15, false-fail <= 0.10, repeat consistency >= 0.95, execution failure <= 0.05;
+4. recompute existing Cloud Vision Devanagari evidence against that benchmark contract;
+5. if it passes, run only the missing Latin Cloud Vision screen: 288 calls, max USD 0.432, retries 0;
+6. if both scripts pass, Cloud Vision becomes benchmark-qualified for model comparison, not strict-certification;
+7. if EVAL-024 sealed artifacts are available, score those exact A-TEXT images without humans or regeneration;
+8. if not available, prepare the handoff and stop;
+9. exact-text imperfection must not block unrelated Stage-A or evaluator work;
+10. Registry text rows remain blocked pending Controller review of the A-TEXT result.
 
-Task:
-- `eval/tasks/EVAL-025-SCRIPT-ROUTED-LITERAL-TESSERACT.md`
+EVAL-028 is superseded and must not be executed.
 
-Run both zero-cost script-specific legs:
-- `hin` only on Devanagari, 288 local executions;
-- `eng` only on Latin, 288 local executions;
-- same Tesseract/tessdata/OEM/PSM/DAWG-off configuration otherwise;
-- no normalization changes;
-- if either still false-passes, stop Tesseract tuning after this task.
 
-### Lane B — EVAL-024 A-TEXT generation-only
-
-Authority:
-- `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`
-
-Task:
-- `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md`
-
-Generate and seal:
-- 4 frozen strings × 2 repeats × 2 routes = 16 images;
-- GPT Image 2 via fal + Ideogram v3 via fal;
-- retries 0;
-- no evaluator calls;
-- no scoring;
-- sealed hashes must be reused later;
-- nominal generation max USD 0.904;
-- current paid qualification spend USD 1.3037905;
-- standing EMP-001 total ceiling USD 10.
-
-### Lane C — CANON-011 marketplace-derived request bank
-
-Authority:
-- `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`
-
-Task:
-- `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`
-
-Sources:
-- `canon/research/marketplace-demand-v1/sources/`
-
-Build 12–20 provenance-preserving real-demand cases, at least 8 runnable, from Upwork buyer jobs;
-use Fiverr seller research only for commercial input/package conventions. Produce source-faithful
-briefs, Normalized Requests, acceptance contracts, route-neutral generation briefs and prompt-ready
-envelopes. No model calls or spend.
-
-Return each lane independently for Controller review. Do not merge worker branches.
 
 
 
