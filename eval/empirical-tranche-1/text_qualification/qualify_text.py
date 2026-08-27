@@ -747,8 +747,8 @@ def _fake_live(guard, out: Path, run=None) -> dict:
     images = ImageResolver()
     candidates = [
         LiveCandidate(judge=P.AnthropicTextJudge(
-            model_alias="claude-haiku-4-5-20251001", resolved_version="claude-haiku-4-5-20251001",
-            transport=P.AnthropicHttpTransport("claude-haiku-4-5-20251001",
+            model_alias="claude-sonnet-5", resolved_version="claude-sonnet-5",
+            transport=P.AnthropicHttpTransport("claude-sonnet-5",
                                                http=http_by_provider["anthropic"]),
             guard=guard), images=images),
         LiveCandidate(judge=P.GeminiTextJudge(
