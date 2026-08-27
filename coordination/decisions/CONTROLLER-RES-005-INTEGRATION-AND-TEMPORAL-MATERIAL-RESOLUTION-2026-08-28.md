@@ -8,6 +8,11 @@ Integration:
 - PR #54
 - merge commit `3a49464448f1fb4d49ea59b7325c57eb750f5716`
 
+Cross-stream wording reconciliation on `main`:
+- `clips.example.json`: `c049cfe06d6ff5ff79f8985b1af548a2f368690d`
+- `perturbation-contract.yaml`: `68667c5dcda13022cb87e826bfa8996d11bc4f10`
+- `RESOURCE-REQUESTS.yaml`: `88b5a1b4b34890f8a005ec850e53a34f0d6a2721`
+
 ## Accepted acquisition result
 
 RES-005 provides a bounded real-footage base for EVAL-026 temporal perturbation work:
