@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — Three parallel lanes are now active: EVAL-023 local literal OCR qualification; EVAL-024 sealed A-TEXT generation-only (16 frozen images, ~USD 0.904 nominal, no scoring until evaluator qualification); and CANON-011 marketplace-derived brief/prompt-bank preparation from the user's Upwork/Fiverr research at zero API spend.
+**Updated:** 27 Aug 2026 — EVAL-023 is integrated (PR #46, merge `0ecbf5f19cd6a3a14a15e85e1a1f6ae8fa690431`). Literal Tesseract `hin+eng` sharply reduced Devanagari false passes but failed accuracy; its post-hoc Latin run is diagnostic only. Three parallel lanes are now active: EVAL-025 script-routed local OCR, EVAL-024 A-TEXT generation-only, and CANON-011 marketplace-derived real-demand brief/prompt preparation.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -263,55 +263,77 @@ These are reproducible gitignored build products. The live execution worker may 
 ## Still blocked / not authorised
 
 Not authorised:
-- any new paid evaluator call while EVAL-023 is active;
-- Cloud Vision `languageHints:["hi"]` rerun;
-- another Gemini/Sonnet/Haiku qualification attempt;
-- A-TEXT until a qualified evaluator covers all required scripts and its family handoff is accepted;
+- A-TEXT scoring/evaluation until a qualified evaluator workflow covers required scripts and its handoff is accepted;
+- Registry population from current unqualified text instruments;
+- further paid text-judge candidate sweeps without a new Controller decision;
 - full 90-generation Stage A;
-- Stage B / Stage C;
-- EVAL-006;
-- Registry population from unqualified instruments;
+- Stage B / full Stage C execution;
 - broad controlled-pack acquisition;
 - Production IR/Planner implementation.
 
+Authorised in parallel:
+- EVAL-025 local script-routed Tesseract probe at USD 0 API spend;
+- EVAL-024 generation-only creation/sealing of the frozen 16 A-TEXT artifacts under the existing EMP-001 USD 10 total ceiling;
+- CANON-011 zero-spend marketplace-derived brief/prompt-ready bank preparation.
+
 Customer-outcome CpAO remains Stage C only.
 
-## Next gates — parallel
+## Next gate
 
-### Lane 1 — evaluator
-Run EVAL-023:
-- `eval/tasks/EVAL-023-LOCAL-LITERAL-OCR.md`
-- zero API spend;
-- Tesseract literal OCR with lexical aids disabled;
-- return before merge.
+Three independent parallel lanes may run now.
 
-### Lane 2 — A-TEXT generation-only
-Run EVAL-024:
-- `eval/tasks/EVAL-024-ATEXT-GENERATION-ONLY.md`
-- authority: `coordination/decisions/CONTROLLER-EMP-001-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`;
-- generate/seal 16 frozen A-TEXT artifacts only;
-- nominal max generation spend USD 0.904;
+### Lane A — EVAL-025 script-routed literal OCR
+
+Authority:
+- `coordination/decisions/CONTROLLER-EVAL-023-DISPOSITION-AND-SCRIPT-ROUTED-OCR-2026-08-27.md`
+
+Task:
+- `eval/tasks/EVAL-025-SCRIPT-ROUTED-LITERAL-TESSERACT.md`
+
+Run both zero-cost script-specific legs:
+- `hin` only on Devanagari, 288 local executions;
+- `eng` only on Latin, 288 local executions;
+- same Tesseract/tessdata/OEM/PSM/DAWG-off configuration otherwise;
+- no normalization changes;
+- if either still false-passes, stop Tesseract tuning after this task.
+
+### Lane B — EVAL-024 A-TEXT generation-only
+
+Authority:
+- `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md`
+
+Task:
+- `eval/tasks/EVAL-024-PARALLEL-ATEXT-GENERATION-ONLY.md`
+
+Generate and seal:
+- 4 frozen strings × 2 repeats × 2 routes = 16 images;
+- GPT Image 2 via fal + Ideogram v3 via fal;
+- retries 0;
 - no evaluator calls;
-- no scoring/model verdict;
-- no Stage-A expansion;
-- later score the exact stored artifacts if/when a qualified evaluator exists.
+- no scoring;
+- sealed hashes must be reused later;
+- nominal generation max USD 0.904;
+- current paid qualification spend USD 1.3037905;
+- standing EMP-001 total ceiling USD 10.
 
-### Lane 3 — real-demand benchmark preparation
-Run CANON-011:
-- `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-PROMPT-BANK.md`
-- authority: `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PROMPT-PREP-2026-08-27.md`;
-- zero API spend;
-- derive marketplace source facts -> Normalized Request -> frozen benchmark prompt packages;
-- Upwork = buyer-brief evidence;
-- Fiverr = package/intake/format evidence, not customer-request truth;
-- do not mutate A-TEXT or frozen Stage-A comparability core;
-- target Layer-4/Stage-C readiness first, with later explicit integration into compound benchmark work.
+### Lane C — CANON-011 marketplace-derived request bank
 
-All three lanes:
-- preserve historical evidence;
-- no Registry population;
-- no automatic merge;
-- Controller reviews returned branches/evidence.
+Authority:
+- `coordination/decisions/CONTROLLER-MARKETPLACE-DERIVED-BRIEF-PREP-2026-08-27.md`
+
+Task:
+- `canon/tasks/CANON-011-MARKETPLACE-DERIVED-BRIEF-BANK.md`
+
+Sources:
+- `canon/research/marketplace-demand-v1/sources/`
+
+Build 12–20 provenance-preserving real-demand cases, at least 8 runnable, from Upwork buyer jobs;
+use Fiverr seller research only for commercial input/package conventions. Produce source-faithful
+briefs, Normalized Requests, acceptance contracts, route-neutral generation briefs and prompt-ready
+envelopes. No model calls or spend.
+
+Return each lane independently for Controller review. Do not merge worker branches.
+
 
 
 
