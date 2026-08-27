@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — EVAL-021 is accepted and integrated (PR #44, merge `045ccef9fd1a0629257ac6f3885320b1a3d6a7ff`). Sonnet 5 is genuinely disqualified under contract v2; Gemini 3.5 Flash-Lite is now the active authorised qualification candidate with 7-second dispatch pacing.
+**Updated:** 27 Aug 2026 — Gemini 3.5 Flash-Lite completed the full contract-v2 primary Devanagari screen and is disqualified on 18 blind false passes plus false-fail/consistency gate failures. The later diagnostic 429 does not change qualification. General-purpose VLM text judges are now frozen; EVAL-022 opens a zero-spend OCR-family readiness pass.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -30,7 +30,7 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The execution machinery is now live. Contract-v2 Sonnet 5 is now genuinely disqualified for Devanagari exact-text judging because blind transcription silently auto-corrected corrupted text (20 false passes / 144 mismatch opportunities). Historical Haiku/Sonnet-v2 pooled-v1 evidence remains preserved; Gemini remains scientifically unresolved after its earlier 429 halt.
+The execution machinery is now live. Contract-v2 Sonnet 5 and Gemini 3.5 Flash-Lite are both scientifically disqualified for Devanagari exact-text judging. Both exhibit stable silent auto-correction of corrupted Hindi text on the blind transcription shape. The later Gemini 429 occurred only after all 288 primary calls were complete and affects diagnostic completeness, not qualification. Historical Haiku evidence remains preserved.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
@@ -76,7 +76,7 @@ Configured candidates are now:
 - Anthropic `claude-sonnet-5`;
 - Google `gemini-3.5-flash-lite`.
 
-For the active continuation, **Gemini 3.5 Flash-Lite only** is authorised under qualification contract v2 with a minimum 7-second interval between dispatch starts. Sonnet remains disqualified and is not part of this run.
+General-purpose multimodal LLMs are now **frozen as the primary exact-text judge family for EMP-001**. No further Haiku/Sonnet/Gemini qualification call is authorised. EVAL-022 prepares a purpose-built OCR evaluator family at zero spend.
 
 The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
 
@@ -263,9 +263,11 @@ These are reproducible gitignored build products. The live execution worker may 
 ## Still blocked / not authorised
 
 Not authorised:
+- any additional paid text-judge call while EVAL-022 readiness is open;
+- any Cloud Vision live OCR call;
+- any further Haiku, Sonnet or Gemini qualification attempt;
 - account funding above the approved ceiling;
-- any qualification call outside the active Sonnet 5 v3 bounded continuation;
-- A-TEXT until a contract-v2 judge qualifies on both scripts;
+- A-TEXT until a qualified evaluator covers all required scripts;
 - full 90-generation Stage A;
 - Stage B / Stage C;
 - EVAL-006;
@@ -277,31 +279,32 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run the authorised **Gemini 3.5 Flash-Lite contract-v2 qualification** recorded in
-`coordination/decisions/CONTROLLER-EVAL-021-VERIFICATION-AND-GEMINI-V2-RUN-2026-08-27.md`.
+Run **EVAL-022 OCR-family qualification readiness** at zero external spend.
 
-Requirements:
-1. use current `origin/main` at or after merge `045ccef9fd1a0629257ac6f3885320b1a3d6a7ff`;
-2. Google `gemini-3.5-flash-lite` only;
-3. explicit `thinkingLevel: minimal`;
-4. Devanagari from call 1;
-5. 96 items × 2 shapes × 3 repeats = 576 total dispatches;
-6. top-level `calls` = 288 primary transcribe calls; `total_dispatches` = 576;
-7. contract v2: blind transcribe decides qualification; verdict diagnostic only;
-8. numerical thresholds unchanged;
-9. serial execution with minimum 7 seconds between dispatch starts;
-10. retries 0;
-11. same persistent EMP-001 ledger;
-12. already-counted qualification spend: USD 0.5016018;
-13. Gemini worst-case two-script reservation: USD 0.875520;
-14. cumulative worst case: USD 1.3771218 <= USD 6;
-15. preserve all prior evidence byte-identically;
-16. persist new Gemini result plus canonical fingerprint-bound `qualification-result.json`;
-17. on HTTP 429 or any true ambiguous post-dispatch failure: count/persist, no retry, stop;
-18. if Devanagari primary gate fails, stop before Latin;
-19. if Devanagari passes, run Latin automatically;
-20. if both scripts pass, stop before A-TEXT and return to Controller;
-21. no Haiku, Sonnet or fal calls in this run.
+Authoritative decision:
+- `coordination/decisions/CONTROLLER-EVAL-022-OCR-FAMILY-PIVOT-2026-08-27.md`
+
+Task:
+- `eval/tasks/EVAL-022-OCR-FAMILY-READINESS.md`
+
+Key requirements:
+1. preserve LLM qualification contracts v1/v2 and all historical evidence;
+2. create a separate OCR-family qualification contract;
+3. first candidate config: Google Cloud Vision `TEXT_DETECTION`, no language hints;
+4. transcription-only evaluator; do not fabricate an LLM-style verdict shape;
+5. exact equality remains local code after NFC + surrounding whitespace trim;
+6. zero mismatch false passes remains the safety gate;
+7. 3 repeats, Devanagari first, Latin only for survivors;
+8. adapter behind an injected HTTP seam; target never sent to provider;
+9. persist and fingerprint-bind OCR outcomes/config/call records;
+10. conservative price basis USD 0.0015/image, regardless of free tier;
+11. max prospective OCR qualification: 576 calls = USD 0.864 reservation;
+12. current qualification spend: USD 0.6712415;
+13. prospective cumulative: USD 1.5352415 <= USD 6;
+14. zero provider/model/evaluator calls during readiness;
+15. A-TEXT remains blocked;
+16. return for Controller review before any Cloud Vision live call.
+
 
 
 
