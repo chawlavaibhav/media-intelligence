@@ -1,0 +1,83 @@
+# EMP-001 text-judge qualification contract v2.
+#
+# This supersedes v1 for NEW qualification runs only. v1 remains historical evidence.
+#
+# The numerical thresholds are unchanged. V2 corrects the instrument semantics after the
+# contract-mandated review of the first two complete candidates showed that the implementation
+# pooled the blind primary transcribe shape with the target-aware diagnostic verdict shape.
+#
+# Qualification is decided ONLY by the primary blind transcribe shape. Verdict remains mandatory
+# diagnostic coverage for a complete screen, but its accuracy metrics may not pass or fail the
+# candidate. Both shapes are persisted separately so the intended comparison is actually auditable.
+contract_version: 2
+status: PROVISIONAL_PRIMARY_GATE_V2
+
+repeats_per_shape: 3
+mismatch_false_pass_max: 0
+match_false_fail_rate_max: 0.10
+refusal_rate_max: 0.05
+repeat_consistency_min: 0.95
+primary_generated_output_shape: transcribe
+
+gate_scope:
+  qualifying_shape: transcribe
+  diagnostic_shapes: [verdict]
+  diagnostic_shapes_may_fail_qualification: false
+  complete_screen_requires_all_shapes: true
+  rationale: >-
+    The blind transcription is the actual measurement instrument. The verdict shape is deliberately
+    shown the target so it can diagnose answer-exposure bias; pooling it into the qualification
+    gate destroys that contrast and allows a diagnostic measurement to decide the primary outcome.
+
+qualified_scope_excludes:
+  - malformed_generated_glyphs
+
+thresholds:
+  mismatch_false_pass_max:
+    value: 0
+    status: PROVISIONAL_PRIMARY_GATE_V2
+    rationale: >-
+      A false pass on the blind primary transcription instrument is dangerous: the checker says
+      text matches when the rendered text is wrong. The value remains zero; v2 changes only which
+      shape the gate applies to.
+  match_false_fail_rate_max:
+    value: 0.10
+    status: PROVISIONAL_PRIMARY_GATE_V2
+    rationale: >-
+      A checker that rejects correct text is costly rather than unsafe. Applied to the blind
+      primary transcription shape only.
+  refusal_rate_max:
+    value: 0.05
+    status: PROVISIONAL_PRIMARY_GATE_V2
+    rationale: >-
+      Applied to the blind primary transcription shape only. Diagnostic verdict refusal is reported
+      separately and cannot by itself fail qualification.
+  repeat_consistency_min:
+    value: 0.95
+    status: PROVISIONAL_PRIMARY_GATE_V2
+    rationale: >-
+      Applied across the three repeats of the blind primary transcription shape. Diagnostic verdict
+      consistency is reported separately.
+
+progressive_stop:
+  order: [devanagari, latin]
+  rule: >-
+    A candidate that fails the Devanagari primary-shape gate does not advance to Latin.
+
+shapes:
+  transcribe:
+    blind: true
+    role: primary
+    qualification_effect: decisive
+    note: The target is evaluator-side only; exactness is decided in code after transcription.
+  verdict:
+    blind: false
+    role: diagnostic
+    qualification_effect: none
+    note: >-
+      Deliberately exposed to the target. It measures how showing the hoped-for answer changes
+      behaviour. It is persisted and compared against transcribe, but may not override or fail the
+      primary qualification outcome.
+
+evaluator_spend_ceiling_usd: 6.00
+retries_authorised: 0

@@ -83,6 +83,31 @@ def test_a_qualification_result_is_persisted_into_the_run(tmp_path, keys):
     assert on_disk['evidence_fingerprint']
 
 
+def test_qualification_fingerprint_binds_per_call_outcomes(tmp_path, keys):
+    run = _run(tmp_path)
+    path, _ = _qualify(tmp_path, run)
+    doc = json.loads(path.read_text())
+    assert doc['candidates'][0]['devanagari']['observations']
+    doc['candidates'][0]['devanagari']['observations'][0]['observed'] = 'tampered'
+    path.write_text(json.dumps(doc))
+
+    with pytest.raises(R.GateClosed) as e:
+        R.load_qualification(run, expected_mode='fake_live')
+    assert 'fingerprint' in str(e.value).lower()
+
+
+def test_old_contract_evidence_cannot_open_current_handoff(tmp_path, keys):
+    run = _run(tmp_path)
+    path, payload = _qualify(tmp_path, run)
+    payload['contract_version'] = 1
+    payload['evidence_fingerprint'] = Q.qualification_fingerprint(payload)
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(R.GateClosed) as e:
+        R.load_qualification(run, expected_mode='fake_live')
+    assert 'contract version' in str(e.value).lower()
+
+
 def test_the_handoff_loads_the_persisted_qualification(tmp_path, keys):
     run = _run(tmp_path)
     _qualify(tmp_path, run)
@@ -181,6 +206,8 @@ def test_old_openai_qualification_cannot_open_atex_after_roster_switch(tmp_path,
         }],
         'candidates': [],
         'call_records': [],
+        'contract_version': Q.contract().get('contract_version'),
+        'contract_sha256': __import__('hashlib').sha256(Q.CONTRACT.read_bytes()).hexdigest(),
     }
     payload['evidence_fingerprint'] = Q.qualification_fingerprint(payload)
     (run.evidence_dir / 'qualification-result.json').write_text(json.dumps(payload))
@@ -193,7 +220,9 @@ def test_old_openai_qualification_cannot_open_atex_after_roster_switch(tmp_path,
 def test_no_qualified_candidate_at_all_refuses(tmp_path, keys):
     run = _run(tmp_path)
     payload = {'run_id': run.run_id, 'mode': 'fake_live', 'tranche_id': 'EMP-001',
-               'qualified': [], 'call_records': [], 'synthetic': False}
+               'qualified': [], 'candidates': [], 'call_records': [], 'synthetic': False,
+               'contract_version': Q.contract().get('contract_version'),
+               'contract_sha256': __import__('hashlib').sha256(Q.CONTRACT.read_bytes()).hexdigest()}
     payload['evidence_fingerprint'] = Q.qualification_fingerprint(payload)
     (run.evidence_dir / 'qualification-result.json').write_text(json.dumps(payload))
     with pytest.raises(R.GateClosed):

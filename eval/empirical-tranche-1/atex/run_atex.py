@@ -547,6 +547,18 @@ def load_qualification(run, expected_mode: str) -> dict:
             "GATE 2 CLOSED — qualification evidence is marked synthetic. Synthetic evidence "
             "cannot qualify an instrument for paid measurement.")
 
+    current_contract_sha = hashlib.sha256(QT.CONTRACT.read_bytes()).hexdigest()
+    if payload.get("contract_version") != QT.contract().get("contract_version"):
+        raise GateClosed(
+            f"GATE 2 CLOSED — qualification used contract version "
+            f"{payload.get('contract_version')!r}, current version is "
+            f"{QT.contract().get('contract_version')!r}. Old qualification evidence cannot be "
+            f"promoted under a corrected instrument.")
+    if payload.get("contract_sha256") != current_contract_sha:
+        raise GateClosed(
+            "GATE 2 CLOSED — qualification contract fingerprint does not match the current "
+            "qualification instrument. Re-run qualification; do not reinterpret old evidence.")
+
     expected_fp = payload.get("evidence_fingerprint")
     actual_fp = QT.qualification_fingerprint(payload)
     if expected_fp != actual_fp:
