@@ -90,6 +90,19 @@ def test_a_clean_candidate_reaches_latin_and_spends_576_more():
     assert result['qualified_scope'] == ['devanagari', 'latin']
 
 
+def test_an_unresolved_human_review_stops_before_any_latin_call(tmp_path):
+    candidate = Q.FakeCandidate(name='clean')
+    p = tmp_path / 'unresolved.csv'
+    p.write_text('item_id,visible_difference,usable_surface,reviewer_note\n')
+    result = Q.qualify_candidate(candidate, guard=BudgetGuard(authorised_usd=Decimal('10.00')),
+                                 perceptibility_path=p)
+
+    assert result['devanagari']['calls'] == CALLS_PER_SCRIPT
+    assert result['latin'] is None
+    assert candidate.calls_by_script['latin'] == 0
+    assert result['stopped_reason'] == 'latin_human_perceptibility_unresolved'
+
+
 def test_a_high_false_fail_rate_also_stops_before_latin():
     candidate = Q.FakeCandidate(name='trigger-happy', false_fail_rate=0.5)
     result = Q.qualify_candidate(candidate, guard=BudgetGuard(authorised_usd=Decimal('10.00')))
