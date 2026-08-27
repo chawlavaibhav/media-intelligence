@@ -8,7 +8,7 @@
 
 Broad research/design and the final pre-execution freeze are closed.
 
-The accepted EVAL-012→016 execution implementation for the first empirical tranche is now integrated. Fresh macOS verification of the reproducible execution materials is green. No real provider call has occurred.
+The accepted EVAL-012→016 execution implementation for the first empirical tranche is now integrated. Fresh macOS verification of the reproducible execution materials was green before live spend. The first real qualification run has now occurred and is preserved as empirical evidence.
 
 Frozen foundations remain:
 - CANON-010 request contract;
@@ -30,7 +30,7 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The EVAL-012→016 work makes the execution machinery safer and closes the zero-spend material gates. It does **not** establish any model-quality result.
+The execution machinery is now live. The first run established one valid evaluator result: Haiku 4.5 is disqualified for Devanagari text judging. Gemini remains unresolved after a 429 halt.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
