@@ -26,7 +26,7 @@ REGISTRY = PKG.parents[1] / 'eval' / 'registry' / 'registry-v1.jsonl'
 
 @pytest.fixture
 def keys(monkeypatch):
-    monkeypatch.setenv('OPENAI_API_KEY', 'fake-openai')
+    monkeypatch.setenv('ANTHROPIC_API_KEY', 'fake-anthropic')
     monkeypatch.setenv('GOOGLE_API_KEY', 'fake-google')
     monkeypatch.setenv('FAL_KEY', 'fake-fal')
 
@@ -59,11 +59,11 @@ def _resolved_perceptibility(tmp_path):
 def _qualify(tmp_path, run, scripts=('devanagari', 'latin')):
     """Run a real fake-live qualification for one candidate and persist its result."""
     stage = SL.TrancheBudget(run).stage('qualification')
-    version = 'openai-snapshot-2026-07-01'
-    judge = P.OpenAITextJudge(
-        model_alias='gpt-5.4-mini', resolved_version=version,
-        transport=P.OpenAIHttpTransport(resolved_version=version,
-                                        http=FakeJudgeHttp(P.OpenAITextJudge,
+    version = 'claude-haiku-4-5-20251001'
+    judge = P.AnthropicTextJudge(
+        model_alias='claude-haiku-4-5-20251001', resolved_version=version,
+        transport=P.AnthropicHttpTransport(resolved_version=version,
+                                        http=FakeJudgeHttp(P.AnthropicTextJudge,
                                                            image_index_for('both'))),
         guard=stage)
     candidate = Q.LiveCandidate(judge=judge, images=Q.ImageResolver())
@@ -87,7 +87,7 @@ def test_the_handoff_loads_the_persisted_qualification(tmp_path, keys):
     run = _run(tmp_path)
     _qualify(tmp_path, run)
     handoff = R.load_qualification(run, expected_mode='fake_live')
-    assert handoff['qualified'][0]['resolved_version'] == 'openai-snapshot-2026-07-01'
+    assert handoff['qualified'][0]['resolved_version'] == 'claude-haiku-4-5-20251001'
     assert set(handoff['qualified'][0]['qualified_scope']) == {'devanagari', 'latin'}
 
 
@@ -110,7 +110,7 @@ def test_a_fabricated_qualification_file_is_rejected(tmp_path, keys):
     fabricated = {
         'run_id': run.run_id, 'mode': 'live', 'tranche_id': 'EMP-001',
         'evidence_fingerprint': 'deadbeef' * 8,
-        'qualified': [{'provider': 'openai', 'model_alias': 'gpt-5.4-mini',
+        'qualified': [{'provider': 'anthropic', 'model_alias': 'claude-haiku-4-5-20251001',
                        'resolved_version': 'whatever', 'qualified_scope': ['devanagari', 'latin']}],
         'call_records': [],
     }
@@ -162,9 +162,9 @@ def test_the_selected_judge_binds_to_the_exact_qualified_version(tmp_path, keys)
     run = _run(tmp_path)
     _qualify(tmp_path, run)
     chosen = R.select_judge_for_atex(R.load_qualification(run, expected_mode='fake_live'))
-    assert chosen['provider'] == 'openai'
-    assert chosen['resolved_version'] == 'openai-snapshot-2026-07-01'
-    assert chosen['model_alias'] == 'gpt-5.4-mini'
+    assert chosen['provider'] == 'anthropic'
+    assert chosen['resolved_version'] == 'claude-haiku-4-5-20251001'
+    assert chosen['model_alias'] == 'claude-haiku-4-5-20251001'
 
 
 def test_no_qualified_candidate_at_all_refuses(tmp_path, keys):
@@ -189,7 +189,7 @@ def test_atex_refuses_while_an_explicit_perceptibility_sheet_is_unresolved(tmp_p
     p = tmp_path / 'unresolved.csv'
     p.write_text('item_id,visible_difference,usable_surface,reviewer_note\n')
     with pytest.raises(R.GateClosed) as e:
-        R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.OpenAITextJudge, {}),
+        R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.AnthropicTextJudge, {}),
                    fal_http=FakeFalHttp(), artifact_fetch=lambda u: b'x',
                    perceptibility_path=p)
     assert 'perceptibility' in str(e.value).lower()
@@ -211,7 +211,7 @@ def test_the_full_fake_live_handoff_runs_atex_end_to_end(tmp_path, keys):
     run = _run(tmp_path)
     _qualify(tmp_path, run)
     fal_http = FakeFalHttp()
-    judge_http = FakeJudgeHttp(P.OpenAITextJudge, {})
+    judge_http = FakeJudgeHttp(P.AnthropicTextJudge, {})
 
     result = R.run_live(run, mode='fake_live', judge_http=judge_http, fal_http=fal_http,
                         artifact_fetch=lambda url: b'\x89PNG\r\n\x1a\n' + url.encode(),
@@ -232,7 +232,7 @@ def test_the_handoff_uses_the_same_persistent_tranche_budget(tmp_path, keys):
     qualification_spend = SL.TrancheBudget(run).stage_spent_usd('qualification')
     assert qualification_spend > 0
 
-    R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.OpenAITextJudge, {}),
+    R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.AnthropicTextJudge, {}),
                fal_http=FakeFalHttp(), artifact_fetch=lambda u: b'\x89PNG\r\n\x1a\n' + u.encode(),
                perceptibility_path=_resolved_perceptibility(tmp_path))
 
@@ -245,7 +245,7 @@ def test_the_handoff_uses_the_same_persistent_tranche_budget(tmp_path, keys):
 def test_generation_and_evaluator_calls_are_separately_costed(tmp_path, keys):
     run = _run(tmp_path)
     _qualify(tmp_path, run)
-    result = R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.OpenAITextJudge, {}),
+    result = R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.AnthropicTextJudge, {}),
                         fal_http=FakeFalHttp(),
                         artifact_fetch=lambda u: b'\x89PNG\r\n\x1a\n' + u.encode(),
                         perceptibility_path=_resolved_perceptibility(tmp_path))
@@ -267,7 +267,7 @@ def test_atex_is_refused_when_the_tranche_headroom_is_gone(tmp_path, keys):
     budget.correct(stage='atex', amount_usd=budget.remaining_usd(), reason='rehearsal burn')
 
     with pytest.raises(Exception) as e:
-        R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.OpenAITextJudge, {}),
+        R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.AnthropicTextJudge, {}),
                    fal_http=FakeFalHttp(),
                    artifact_fetch=lambda u: b'\x89PNG\r\n\x1a\n' + u.encode(),
                    perceptibility_path=_resolved_perceptibility(tmp_path))
@@ -278,7 +278,7 @@ def test_the_registry_is_untouched_by_the_handoff(tmp_path, keys):
     before = REGISTRY.read_bytes()
     run = _run(tmp_path)
     _qualify(tmp_path, run)
-    R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.OpenAITextJudge, {}),
+    R.run_live(run, mode='fake_live', judge_http=FakeJudgeHttp(P.AnthropicTextJudge, {}),
                fal_http=FakeFalHttp(), artifact_fetch=lambda u: b'\x89PNG\r\n\x1a\n' + u.encode(),
                perceptibility_path=_resolved_perceptibility(tmp_path))
     assert REGISTRY.read_bytes() == before
@@ -297,7 +297,7 @@ def test_atex_passes_the_target_only_as_an_evaluator_side_blind_check(tmp_path, 
             return P.EvaluatorResponse('x', 1, 1, Decimal('0.001'), 'r')
 
         def identity(self):
-            return {'provider': 'openai', 'model_alias': 'a', 'resolved_version': 'v',
+            return {'provider': 'anthropic', 'model_alias': 'a', 'resolved_version': 'v',
                     'version_pinned_at_execution': True}
 
         def call_record(self, response, shape):
@@ -318,10 +318,10 @@ def test_a_leaking_atex_transcribe_is_refused_for_both_scripts(tmp_path, keys, i
     item = R.items()[item_index]
     target = item['target_string']
 
-    judge = P.OpenAITextJudge(
+    judge = P.AnthropicTextJudge(
         model_alias='a', resolved_version='v',
-        transport=P.OpenAIHttpTransport(resolved_version='v',
-                                        http=FakeJudgeHttp(P.OpenAITextJudge, {})),
+        transport=P.AnthropicHttpTransport(resolved_version='v',
+                                        http=FakeJudgeHttp(P.AnthropicTextJudge, {})),
         guard=stage)
     judge.build_transcribe_request = lambda b: {'model': 'v', 'input': [
         {'role': 'user', 'content': [{'type': 'input_text', 'text': f'TARGET: {target}'}]}]}
