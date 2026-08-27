@@ -248,6 +248,16 @@ def test_full_sonnet_plus_gemini_reservation_exceeds_six_dollar_cap():
     assert worst_case > Decimal('6.00')
 
 
+def test_sonnet_only_continuation_with_first_run_spend_fits_six_dollar_cap():
+    calls = 96 * 2 * 3 * 2
+    sonnet = P.AnthropicTextJudge(
+        model_alias='claude-sonnet-5', resolved_version='claude-sonnet-5')
+    first_run_counted = Decimal('0.0854218')
+    cumulative_worst_case = first_run_counted + sonnet._estimate() * calls
+    assert cumulative_worst_case == Decimal('5.4307018')
+    assert cumulative_worst_case <= Decimal('6.00')
+
+
 # ------------------------------------------------------------------ persistence shape
 def test_a_response_can_be_persisted_with_every_field_the_contract_needs():
     j = _judge(P.AnthropicTextJudge, P.ANTHROPIC_OK_FIXTURE, 'claude-sonnet-5')
