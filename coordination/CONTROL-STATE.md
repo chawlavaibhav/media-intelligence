@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — Corrected Sonnet 5 completed a clean 576-call Devanagari screen and failed only the provisional mismatch-false-pass gate. The contract-mandated post-two-candidate calibration review is now active; A-TEXT remains blocked.
+**Updated:** 27 Aug 2026 — Post-two-candidate review found the v1 scorer pooled the diagnostic verdict shape into qualification and discarded per-call outcomes. EVAL-020 prepares a contract-v2 primary-transcription gate plus complete outcome persistence; paid rerun waits on focused zero-spend verification.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -276,19 +276,26 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Run the zero-spend post-two-candidate qualification review recorded in `coordination/decisions/CONTROLLER-EMP-001-POST-TWO-CANDIDATE-QUALIFICATION-REVIEW-2026-08-27.md`.
+Verify EVAL-020 on branch `controller/eval-020-primary-gate-evidence-persistence` with zero spend.
 
-Required:
-1. use only persisted Haiku and corrected Sonnet evidence;
-2. split qualification metrics by `transcribe` and `verdict`;
-3. enumerate false-pass items/repeats and failure classes;
-4. compute unique-item as well as call-level false-pass rates;
-5. compare blind transcription and target-aware verdict outcomes for the same item/pass;
-6. audit whether pooling both shapes into one gate matches the contract semantics;
-7. zero provider/model/evaluator calls and USD 0 spend;
-8. no threshold changes during analysis.
+Authoritative decision:
+- `coordination/decisions/CONTROLLER-EVAL-020-PRIMARY-SHAPE-QUALIFICATION-2026-08-27.md`
 
-Until Controller review completes: Sonnet is not qualified; Latin and A-TEXT remain blocked; Gemini remains unresolved; Registry unchanged.
+Required before merge/live rerun:
+1. qualification contract v2 uses blind `transcribe` only for pass/fail;
+2. target-aware `verdict` remains diagnostic and cannot fail qualification;
+3. numerical thresholds remain unchanged;
+4. per-call observations are persisted and fingerprint-bound;
+5. live qualification persists canonical `qualification-result.json`;
+6. A-TEXT rejects old/different contract evidence;
+7. focused tests and preflight pass with external calls 0 and spend USD 0;
+8. prior empirical evidence remains byte-identical.
+
+After green verification, merge EVAL-020 and run fresh Sonnet 5-only qualification from Devanagari call 1.
+Current counted qualification spend: USD 0.3112678.
+Fresh Sonnet two-script worst-case reservation: USD 5.345280.
+Cumulative worst case: USD 5.6565478 <= USD 6.
+
 
 
 
