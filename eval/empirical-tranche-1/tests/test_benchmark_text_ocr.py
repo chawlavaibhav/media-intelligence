@@ -22,9 +22,15 @@ import qualify_ocr as QO
 import qualify_text as QT
 from budget_guard import BudgetGuard
 
-RUN_DIR = (Path.home() / "Vaibhav_Personal_Projects" / "media-intelligence-worktrees"
-           / "emp-001-live" / "eval" / "runs" / "tranche-1" / "emp-001-live-2026-08-27")
-CLOUD_VISION_EVIDENCE = RUN_DIR / "qualification-live-cloudvision-ocr-v1.json"
+# The COMMITTED evidence package, not a machine-local run directory. A fresh clone must be able to
+# reproduce the accepted qualification; a test that reaches into ~/…/emp-001-live cannot, and that
+# was GOV-005 finding F-1 repeating itself.
+EVIDENCE_DIR = (Path(__file__).resolve().parent.parent
+                / "evidence" / "EMP-001" / "text-ocr")
+CLOUD_VISION_EVIDENCE = EVIDENCE_DIR / "qualification-live-cloudvision-ocr-v1.json"
+BENCHMARK_EVIDENCE = EVIDENCE_DIR / "benchmark-text-ocr-qualification.json"
+EVIDENCE_MANIFEST = EVIDENCE_DIR / "EVIDENCE-MANIFEST.json"
+COST_EXCERPT = EVIDENCE_DIR / "cost-ledger-excerpt.json"
 
 
 def _obs(expected, observed, item_id="x", pass_index=0):
@@ -337,3 +343,99 @@ def test_normalisation_is_not_loosened():
     assert QT.transcription_matches("abc", " abc ") is True
     assert QT.transcription_matches("abc", "abc.") is False
     assert QT.transcription_matches("Flat 50% Off", "Flat 5O% Off") is False
+
+
+# ------------------------------------------- sealed evidence package is self-sufficient
+# GOV-005 F-1: a fresh clone must reproduce the accepted qualification from committed bytes alone.
+# Every test below reads ONLY files inside the repository.
+def test_the_sealed_evidence_package_is_committed_and_complete():
+    for p in (CLOUD_VISION_EVIDENCE, BENCHMARK_EVIDENCE, COST_EXCERPT, EVIDENCE_MANIFEST):
+        assert p.exists(), p
+        assert p.stat().st_size > 0
+
+
+def test_the_manifest_hashes_match_the_committed_bytes():
+    manifest = json.loads(EVIDENCE_MANIFEST.read_text(encoding="utf-8"))
+    repo_root = QT.REPO_ROOT
+    for entry in manifest["files"]:
+        actual = hashlib.sha256((repo_root / entry["path"]).read_bytes()).hexdigest()
+        assert actual == entry["sha256"], entry["path"]
+    assert manifest["sealed_status"] == "SEALED"
+    assert manifest["immutable"] is True
+    assert manifest["reproducible_without_local_worktree"] is True
+
+
+def test_the_manifest_fingerprint_recomputes():
+    manifest = json.loads(EVIDENCE_MANIFEST.read_text(encoding="utf-8"))
+    stored = manifest.pop("manifest_fingerprint")
+    recomputed = hashlib.sha256(json.dumps(
+        manifest, sort_keys=True, separators=(",", ":"),
+        ensure_ascii=False, default=str).encode()).hexdigest()
+    assert recomputed == stored
+
+
+def test_both_scripts_recompute_from_committed_evidence_alone():
+    """The whole point: no local run directory, no network, both scripts."""
+    dev = B.recompute_from_stored_evidence(CLOUD_VISION_EVIDENCE, "devanagari")["recomputed"]
+    assert dev["false_pass_rate"] == 0.125
+    assert dev["match_false_fail_rate"] == 0.0208
+    assert dev["repeat_consistency"] == 1.0
+    assert dev["benchmark_qualified"] is True
+
+    bench = json.loads(BENCHMARK_EVIDENCE.read_text(encoding="utf-8"))
+    latin_obs = bench["scripts"]["latin"]["observations"]
+    assert len(latin_obs) == 288, "all Latin observations must be committed"
+    latin = B.apply_benchmark_gate(latin_obs, required_executions=288)
+    assert latin["false_pass_rate"] == 0.1042
+    assert latin["match_false_fail_rate"] == 0.0
+    assert latin["repeat_consistency"] == 1.0
+    assert latin["benchmark_qualified"] is True
+    assert latin["strict_exactness_qualified"] is False
+
+
+def test_the_committed_benchmark_result_carries_both_statuses_and_full_coverage():
+    bench = json.loads(BENCHMARK_EVIDENCE.read_text(encoding="utf-8"))
+    assert bench["contract_id"] == "benchmark_text_ocr_v1"
+    assert bench["benchmark_qualified"] is True
+    assert bench["strict_exactness_qualified"] is False
+    assert sorted(bench["script_coverage"]) == ["devanagari", "latin"]
+    assert bench["evidence_fingerprint"] == B.benchmark_fingerprint(bench)
+
+
+def test_the_cost_excerpt_traces_both_screens_and_reconciles():
+    ex = json.loads(COST_EXCERPT.read_text(encoding="utf-8"))
+    assert ex["devanagari"]["trials"] == 288
+    assert ex["latin"]["trials"] == 288
+    assert ex["devanagari"]["spend_usd"] == "0.4320"
+    assert ex["latin"]["spend_usd"] == "0.4320"
+    assert ex["qualification_stage_total_spend_usd"] == "1.7357905"
+    assert ex["contains_no_credentials"] is True
+    assert len(ex["entries"]["devanagari"]) + len(ex["entries"]["latin"]) == 1152
+
+
+def test_no_committed_evidence_file_contains_a_credential():
+    import re
+    pats = [re.compile(r"AIza[0-9A-Za-z_\-]{20,}"),
+            re.compile(r"sk-ant-[0-9A-Za-z_\-]{20,}"),
+            re.compile(r"\bsk-[0-9A-Za-z]{20,}"),
+            re.compile(r"(?i)\bauthorization\b\s*[:=]\s*['\"]?(bearer|key)\b"),
+            re.compile(r"[?&]key=(?!<redacted>)[A-Za-z0-9_\-]{10,}")]
+    for p in (CLOUD_VISION_EVIDENCE, BENCHMARK_EVIDENCE, COST_EXCERPT, EVIDENCE_MANIFEST):
+        text = p.read_text(encoding="utf-8", errors="replace")
+        for pat in pats:
+            assert not pat.search(text), (p.name, pat.pattern)
+
+
+def test_no_evidence_path_in_this_file_escapes_the_repository():
+    """Every evidence path must resolve inside the repo, so a fresh clone is self-sufficient."""
+    repo_root = QT.REPO_ROOT.resolve()
+    for p in (EVIDENCE_DIR, CLOUD_VISION_EVIDENCE, BENCHMARK_EVIDENCE,
+              COST_EXCERPT, EVIDENCE_MANIFEST):
+        assert repo_root in p.resolve().parents or p.resolve() == repo_root, p
+
+    # And no executable line reaches for a home-relative or worktree-specific location.
+    code = [ln for ln in Path(__file__).read_text(encoding="utf-8").splitlines()
+            if not ln.lstrip().startswith("#") and "assert" not in ln]
+    joined = "\n".join(code)
+    assert "Path.home()" not in joined
+    assert "emp-001-live" not in joined
