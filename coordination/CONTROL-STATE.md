@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — Sonnet 5 v3 completed a clean contract-v2 Devanagari screen and is genuinely disqualified on 20 blind false passes across 7 unique corrupted items. EVAL-021 now prepares reporting alignment plus Gemini 3.5 Flash-Lite contract-v2 readiness; A-TEXT remains blocked.
+**Updated:** 27 Aug 2026 — EVAL-021 is accepted and integrated (PR #44, merge `045ccef9fd1a0629257ac6f3885320b1a3d6a7ff`). Sonnet 5 is genuinely disqualified under contract v2; Gemini 3.5 Flash-Lite is now the active authorised qualification candidate with 7-second dispatch pacing.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -76,7 +76,7 @@ Configured candidates are now:
 - Anthropic `claude-sonnet-5`;
 - Google `gemini-3.5-flash-lite`.
 
-For the next candidate, **Gemini 3.5 Flash-Lite only** is planned under qualification contract v2, but paid execution waits on zero-spend EVAL-021 verification. Sonnet is no longer an active candidate.
+For the active continuation, **Gemini 3.5 Flash-Lite only** is authorised under qualification contract v2 with a minimum 7-second interval between dispatch starts. Sonnet remains disqualified and is not part of this run.
 
 The prior OpenAI `gpt-5.4-mini` candidate is superseded for EMP-001. The OpenAI adapter may remain dormant compatibility code, but no OpenAI key is required for this tranche.
 
@@ -277,25 +277,32 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Verify EVAL-021 on branch `controller/eval-021-gemini-v2-readiness` with zero spend.
+Run the authorised **Gemini 3.5 Flash-Lite contract-v2 qualification** recorded in
+`coordination/decisions/CONTROLLER-EVAL-021-VERIFICATION-AND-GEMINI-V2-RUN-2026-08-27.md`.
 
-Authoritative decision:
-- `coordination/decisions/CONTROLLER-EVAL-021-SONNET-DISPOSITION-GEMINI-READINESS-2026-08-27.md`
+Requirements:
+1. use current `origin/main` at or after merge `045ccef9fd1a0629257ac6f3885320b1a3d6a7ff`;
+2. Google `gemini-3.5-flash-lite` only;
+3. explicit `thinkingLevel: minimal`;
+4. Devanagari from call 1;
+5. 96 items × 2 shapes × 3 repeats = 576 total dispatches;
+6. top-level `calls` = 288 primary transcribe calls; `total_dispatches` = 576;
+7. contract v2: blind transcribe decides qualification; verdict diagnostic only;
+8. numerical thresholds unchanged;
+9. serial execution with minimum 7 seconds between dispatch starts;
+10. retries 0;
+11. same persistent EMP-001 ledger;
+12. already-counted qualification spend: USD 0.5016018;
+13. Gemini worst-case two-script reservation: USD 0.875520;
+14. cumulative worst case: USD 1.3771218 <= USD 6;
+15. preserve all prior evidence byte-identically;
+16. persist new Gemini result plus canonical fingerprint-bound `qualification-result.json`;
+17. on HTTP 429 or any true ambiguous post-dispatch failure: count/persist, no retry, stop;
+18. if Devanagari primary gate fails, stop before Latin;
+19. if Devanagari passes, run Latin automatically;
+20. if both scripts pass, stop before A-TEXT and return to Controller;
+21. no Haiku, Sonnet or fal calls in this run.
 
-Required before merge/live Gemini execution:
-1. top-level script `calls` aligns to the primary transcribe metric scope; `total_dispatches` reports both shapes;
-2. Gemini `gemini-3.5-flash-lite` requests explicitly pin `thinkingLevel: minimal`;
-3. Gemini cost accounting includes visible output + `thoughtsTokenCount`;
-4. documented no-text `finishReason` is a model/evaluator error, not transport ambiguity;
-5. optional dispatch pacing works without introducing retries;
-6. focused tests and preflight pass with keys unset, external calls 0, spend USD 0;
-7. all prior empirical evidence remains byte-identical.
-
-After green verification, merge EVAL-021 and run fresh Gemini 3.5 Flash-Lite qualification from Devanagari call 1 under contract v2 with a minimum 7-second interval between dispatch starts.
-
-Current counted qualification spend: USD 0.5016018.
-Gemini worst-case two-script reservation: USD 0.875520.
-Cumulative worst case: USD 1.3771218 <= USD 6.
 
 
 
