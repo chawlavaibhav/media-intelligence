@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 27 Aug 2026 — User authorised a combined EVAL-022 pass: apply the OCR failure-taxonomy correction, verify at zero spend, then—only if fully green—run live Google Cloud Vision TEXT_DETECTION. Incremental OCR cap USD 1.00; frozen 576-call protocol reserves at most USD 0.864. A-TEXT remains blocked.
+**Updated:** 27 Aug 2026 — EVAL-022 OCR taxonomy correction is verified and pushed, but Controller review found the OCR runner still lacks a real persistent-ledger `--live` orchestration path. Final zero-spend live-runner wiring is now required; the user's existing USD 1.00 combined OCR authorisation remains valid once that wiring is green.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -279,28 +279,28 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Execute the combined EVAL-022 correction + conditional live OCR pass recorded in
-`coordination/decisions/CONTROLLER-EVAL-022-COMBINED-CORRECTION-LIVE-OCR-AUTH-2026-08-27.md`.
+Apply the final EVAL-022 live-runner wiring correction:
+- `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RUNNER-WIRING-CORRECTION-2026-08-27.md`
 
-Sequence:
-1. apply the OCR scientific-vs-infrastructure failure taxonomy correction;
-2. run full zero-spend focused verification and preflight;
-3. if ANY verification fails, stop before external spend;
-4. if fully green, push the corrected branch and confirm pushed HEAD == tested HEAD;
-5. confirm `GOOGLE_CLOUD_VISION_API_KEY` exists locally without printing it;
-6. run Google Cloud Vision `TEXT_DETECTION` qualification from that exact pushed/tested HEAD;
-7. no language hints, retries 0, target never sent;
-8. Devanagari: 96 × 3 = 288 OCR calls;
-9. Latin only if Devanagari scientifically passes; max total 576 calls;
-10. incremental OCR spend cap USD 1.00;
-11. frozen max OCR reservation USD 0.864;
-12. prior qualification spend USD 0.6712415;
-13. prospective cumulative USD 1.5352415 <= USD 6;
-14. provider/API/quota/transport failures stop incomplete and are not scientific gate evidence;
-15. successful-but-empty OCR responses count toward `empty_transcription_rate_max: 0.05`;
-16. if both scripts qualify, stop before A-TEXT;
-17. no fal calls; Registry unchanged;
-18. preserve all historical EMP-001 evidence byte-identically.
+Current pushed OCR branch:
+- `eval/eval-022-ocr-family-readiness`
+- worker-reported head `6b174b2659584e23fa5704ad48058e0d5c9f35df`
+
+Required:
+1. bring current `origin/main` into the OCR branch;
+2. add a real `--live` OCR path;
+3. wire existing EMP-001 authorisation + persistent `TrancheRun` / qualification stage budget;
+4. construct exactly one Cloud Vision TEXT_DETECTION candidate, no language hints;
+5. read `GOOGLE_CLOUD_VISION_API_KEY` only at dispatch;
+6. persist canonical OCR qualification evidence + human-readable live result;
+7. preserve historical evidence byte-identically and append only to spend ledger;
+8. prove live orchestration with injected HTTP at zero network/spend;
+9. all focused tests/preflight green;
+10. push exact tested head; do not merge;
+11. if key exists locally after green verification, immediately run the already-authorised live OCR screen under the existing USD 1.00 incremental cap;
+12. if key is missing, stop pre-dispatch;
+13. A-TEXT remains blocked; Registry unchanged.
+
 
 
 
