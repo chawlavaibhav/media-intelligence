@@ -1,6 +1,8 @@
 # Controller State
 
-**Updated:** 28 Aug 2026 — EVAL-029 live result is accepted: Cloud Vision TEXT_DETECTION/no-language-hints is benchmark-qualified for both Devanagari and Latin under `benchmark_text_ocr_v1`, while remaining strict-exactness disqualified. Incremental EVAL-029 spend USD 0.4320; cumulative paid qualification spend USD 1.7357905. EVAL-029 is not merge-ready until its completed live evidence is sealed into GitHub and tests are path-independent. EVAL-024 still has no live artifacts and remains behind its cleanup/live gate.
+**Updated:** 28 Aug 2026 — **the five parallel domain lanes have all settled and merged**, and GOV-006 has reconciled this file to them against `main` at `91984f50b294f11aefc7065f5ad11f9e0d3e2b9a`. CANON-011, EVAL-024, EVAL-029, EVAL-026, EVAL-030 and RES-005 are all accepted and merged; GOV-005 is closed. Cloud Vision `TEXT_DETECTION`/no-language-hints is benchmark-qualified for Devanagari and Latin and remains strict-exactness disqualified; its evidence is now **sealed into Git and recomputable from a fresh clone**. The 16 A-TEXT images are generated, sealed and scored: **7/16 exact**. **The Capability Registry still holds 0 rows.**
+
+> **The previous version of this line is superseded, not corrected away.** It said EVAL-029 was not merge-ready and that EVAL-024 had no live artifacts. Both were true when written and are now false. Governor reconciliation: `governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -37,12 +39,76 @@ New:
 - accepted EVAL-029 metrics:
   - Devanagari false-pass 0.1250, false-fail 0.0208, consistency 1.0;
   - Latin false-pass 0.1042, false-fail 0.0000, consistency 1.0;
-- EVAL-029 evidence persistence is still incomplete on GitHub, so the branch is not merge-ready;
-- A-TEXT still has no generated artifacts and remains unscored.
+- **EVAL-029 evidence is now sealed and merged.** `eval/empirical-tranche-1/evidence/EMP-001/text-ocr/` holds the exact source observations, the completed result and a bounded cost excerpt, all hash-fingerprinted. Both scripts' metrics recompute from committed bytes alone, with no machine-local path. GOV-005 finding **F-1 is resolved for this lane**;
+- **A-TEXT is generated, sealed and scored.** 16 images exist as committed bytes; observed exact-text result **7/16** (GPT Image 2 6/8, Ideogram v3 1/8).
+
+**The Registry is still empty, deliberately.** `benchmark_qualified` is weaker than the Registry's `qualified` / `deterministic` admission bar, and admission was **not** weakened to manufacture a first row. `coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md`.
 
 Tesseract configuration search remains closed. Exact text is not a programme-wide blocker.
 
-## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
+## Settled lanes — all merged, none active
+
+Every lane below is **closed**. Do not restart, re-run or re-generate any of them.
+
+| Lane | Result | Authority |
+|---|---|---|
+| **CANON-011** | 18 marketplace-derived buyer cases, **16 runnable** without contacting the buyer. Upwork buyer jobs only; Fiverr remains seller-convention evidence. Now the preferred real-demand pool for Stage-C and compound sourcing. GG-01…GG-04 are **observed representation gaps, not grammar changes** — do not reopen the Media Request Grammar because they exist. USD 0. | `CONTROLLER-CANON-011-INTEGRATION-2026-08-28.md` |
+| **EVAL-024** | **16/16 frozen A-TEXT coordinates generated and sealed** — 8 fal `openai/gpt-image-2`, 8 fal `fal-ai/ideogram/v3`. Generation spend **USD 0.904**. Manifest fingerprint `1e124343…`. **These exact bytes are durable evidence and must not be regenerated.** | `CONTROLLER-EVAL-024-INTEGRATION-2026-08-28.md` |
+| **EVAL-029** | Cloud Vision benchmark-qualified on both scripts, strict-disqualified, evidence sealed and portable. Incremental spend USD 0.4320. | `CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md` |
+| **EVAL-030** | The exact 16 sealed images scored **without regeneration**: GPT Image 2 **6/8**, Ideogram v3 **1/8**, overall **7/16**. Evaluator spend **USD 0.024**; A-TEXT generation + evaluation **USD 0.928**. Registry stays 0. Directional benchmark signal, **not** a production certification or a population rate. | `CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md` |
+| **EVAL-026** | Temporal qualification **machinery only**: 13 deterministic perturbation types covering all 9 frozen `temporal_video` capabilities — 7 with full injected-truth coverage, 2 (`action_adherence`, `camera_framing_fidelity`) negative-direction-only. **No temporal evaluator is qualified and no pass mark exists.** USD 0. | `CONTROLLER-EVAL-026-INTEGRATION-2026-08-28.md` |
+| **RES-005** | 12 clips from 12 distinct source works, **12/12 passing the Resources cleanliness screen**, rights limited to CC BY / CC BY-SA / CC0 / US-Government public domain. USD 0. | `CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md` |
+| **GOV-005** | Closed and merged (PR #48, `c794694`). **Do not reopen it for parallel-lane drift** — GOV-006 exists for that. | `CONTROLLER-GOV-005-CLOSURE-AND-GOV-006-TRIGGER-2026-08-28.md` |
+
+**A-TEXT manual review is not project evidence.** Any human re-reading of the 16 images that happened
+outside GitHub is **not** durable truth, must not be recorded, and must not produce a Registry row
+unless a later explicit Controller decision authorises it. The accepted result is the OCR-observed
+7/16 above.
+
+## Temporal material contract — resolved at pack level
+
+The family-4 content requirement is **pack-level**. It is **not** a requirement that every clip
+contain a person, a product and on-screen text simultaneously. An individual clip needs only the
+feature the perturbation applied to it requires.
+
+**Current measured opportunity counts** — these are *coverage* counts, never claims of statistical
+precision, and the family-4 gate remains per perturbation type:
+
+| Population | Clips |
+|---|---:|
+| General freeze / reversal base | 12 |
+| Multi-shot | 6 |
+| On-screen text | 6 |
+| Product region | 5 |
+| Rendered-character identity | 4 |
+| Photographed-face identity | 3 |
+
+**Rendered-character and photographed-face identity are separate populations and must not be
+pooled.**
+
+**RES-005 material is not `PACK-AV-CLEAN`** and does not satisfy any speech/audio pack obligation.
+`PACK-AV-CLEAN`'s own requirements — consent, verified transcripts, turn boundaries, language balance
+— are unchanged. Use the semantic role name **`MAT-TEMPORAL-BASE`**; existing paths containing
+`MAT-AV-MIN` remain historical artifact names and need no migration.
+
+**Ingest scope, stated exactly:** only a **representative 3/3** clips passed EVAL-026 real-clip
+ingest. The full 12-clip ingest was **not** completed — per-frame materialisation exhausted local
+disk. **Do not report this as 12/12.**
+
+**Before any real temporal checker qualification observation, all four remain required:**
+
+1. select the actual candidate checker/instrument;
+2. complete the full 12-clip ingest under a recorded execution condition;
+3. freeze Controller-approved numeric pass marks **before** observations are run or inspected;
+4. preserve human adjudication wherever the frozen capability map says `model_based_plus_human`.
+
+**No temporal qualification run is authorised.**
+
+## EMP-001 — AUTHORISED; QUALIFICATION AND A-TEXT COMPLETE
+
+**The paid shape below has now been executed end to end.** Text-judge qualification ran, the A-TEXT
+generations ran, and the images were scored. The frozen shape is kept here because it is the contract
+those results were produced under — it is **not** an authorisation to run any of it again.
 
 Frozen paid shape remains:
 
@@ -79,6 +145,22 @@ Approved spend remains:
 - no account pre-funding above the approved ceiling.
 
 **The bounded EMP-001 spend was explicitly approved by the user and is recorded in `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`.**
+
+### Spend consumed so far
+
+| Stage | Recorded figure | Where it is recorded |
+|---|---|---|
+| Qualification stage, cumulative through EVAL-029 | USD 1.7357905 | sealed cost excerpt + EVAL-029 decision |
+| EVAL-024 A-TEXT generation | USD 0.904 | sealed generation manifest + EVAL-024 decision |
+| **Cumulative through EVAL-024** | **USD 2.6397905** | sealed generation manifest + EVAL-024 decision |
+| EVAL-030 A-TEXT evaluator | USD 0.024 | sealed scoring evidence + EVAL-030 decision |
+
+> **A gap worth knowing about.** The last *committed cumulative* figure is **USD 2.6397905**, through
+> EVAL-024. EVAL-030's USD 0.024 is recorded only as a stage figure, so **no single committed artifact
+> states the total consumed to date including it.** The arithmetic is trivial, but the Governor does
+> not write an authoritative spend total it did not find recorded. Routed as GOV-006 finding **G6-02**.
+> The mechanical USD 10 ceiling and USD 6 qualification sub-cap are enforced by the live ledger, which
+> stays local by design.
 
 ## Text-judge qualification freeze
 
@@ -281,43 +363,40 @@ Not authorised:
 - Production IR/Planner implementation before sufficient empirical capability evidence exists.
 
 Authorised / active:
-- EVAL-029 benchmark-grade text OCR qualification and optional A-TEXT scoring handoff;
-- EVAL-024 A-TEXT generation-only;
-- CANON-011 marketplace-derived benchmark brief preparation;
-- unrelated evaluator/capability lanes may proceed independently of exact Hindi text.
+- **nothing.** EVAL-029, EVAL-024, EVAL-030, EVAL-026, CANON-011 and RES-005 have all returned, been
+  accepted and been merged — see "Settled lanes" above. **No domain lane is currently open**, and a
+  worker may not infer authorisation from any of those task files;
+- the standing posture is unchanged: unrelated evaluator/capability lanes **may** proceed
+  independently of exact Hindi text once the Controller opens them.
 
 Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Two bounded Eval closures are now active:
+**Both bounded Eval closures that stood here are complete.** The EVAL-029 persistence closure and the
+EVAL-024 generation closure were executed, returned, accepted and merged — see "Settled lanes" above.
+Their requirement lists are preserved in their own decision records as history; they are no longer
+open work.
 
-### EVAL-029 persistence closure
-Authority:
-- `coordination/decisions/CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md`
+**There is currently no active domain lane.** Nothing in this file authorises a worker to start
+anything. The next tranche of work is the Controller's to open.
 
-Required:
-- no rerun / no new spend;
-- seal exact Cloud Vision Devanagari source evidence and completed EVAL-029 Latin/combined result into committed immutable evidence;
-- include bounded cost/ledger trace and fingerprinted manifest;
-- remove machine-local test dependency;
-- secret scan;
-- fresh/path-independent tests;
-- Registry remains 0;
-- A-TEXT handoff remains prepared-only.
+**What the settled state leaves genuinely open:**
 
-### EVAL-024 generation closure
-Authority:
-- `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md`
+1. **Registry text rows remain blocked.** The Controller has now reviewed both the sealed EVAL-029
+   evidence and the actual A-TEXT scoring result, and ruled the Registry stays at 0 — because
+   `benchmark_qualified` is intentionally weaker than the Registry's admission bar. **Registry
+   admission must not be weakened to create a first row.**
+2. **Temporal qualification is not authorised** and needs all four prerequisites above first.
+3. **Prices remain incomplete.** 0 of 4 stages is price-complete and `Frontier Clouds` is still
+   unidentified.
+4. **HED-1 is still undecided** — which human review time counts as required cost in fully-loaded
+   CpAO.
+5. **Any tranche beyond EMP-001 needs explicit user approval.** The USD 10 approval covers EMP-001
+   only.
 
-Required:
-- current-main sync;
-- remove unrelated regenerated evidence diffs;
-- correct media extension/type handling;
-- restore pinned Tesseract build products for full test green;
-- if `FAL_KEY` is present, run the frozen 16 A-TEXT generations live from the exact cleaned/pushed head;
-- no evaluator/scoring in EVAL-024.
-
-CANON-011 and any separately authorised independent lanes continue.
-
-Registry text rows remain blocked until Controller reviews the sealed EVAL-029 evidence and actual A-TEXT scoring result.
+**Three stream-owned documents are stale and were left for their owners to fix** (GOV-006 findings,
+`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`): `eval/HANDOFF.md` still claims ₹0 API
+spend and that no checker run has occurred (**G6-05**, escalated); `resources/HANDOFF.md` still calls
+RES-005 unmerged (**G6-04**); `canon/HANDOFF.md` does not mention CANON-011 (**G6-06**). **This file
+governs where any of them disagrees with it.**
