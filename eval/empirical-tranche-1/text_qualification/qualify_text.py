@@ -51,7 +51,7 @@ import human_review as HR  # noqa: E402
 
 import yaml  # noqa: E402
 
-CONTRACT = HERE / "qualification-contract-v1.yaml"
+CONTRACT = HERE / "qualification-contract-v2.yaml"
 LATIN_PACK = HERE / "latin-pack-v1.jsonl"
 DEVANAGARI_VIEW = HERE / "build" / "devanagari" / "validated"
 DEVANAGARI_BUILD = HERE / "build" / "devanagari"
@@ -148,10 +148,16 @@ def verify_devanagari_identity() -> dict:
 def _script_items(script: str) -> list[dict]:
     if script == "devanagari":
         return [{"item_id": v["item_id"], "target": v["target_string"],
-                 "expected": v["expected_verdict"], "drawn": v["rendered_string"]}
+                 "expected": v["expected_verdict"], "drawn": v["rendered_string"],
+                 "failure_class": v.get("failure_class"),
+                 "failure_group": v.get("failure_group"),
+                 "edit_detail": v.get("edit_detail")}
                 for v in load_devanagari_items()]
     return [{"item_id": v["item_id"], "target": v["target_string"],
-             "expected": v["expected"], "drawn": v["rendered_string"]}
+             "expected": v["expected"], "drawn": v["rendered_string"],
+             "failure_class": v.get("failure_class"),
+             "failure_group": v.get("failure_group"),
+             "edit_detail": v.get("edit_detail")}
             for v in load_latin_items()]
 
 
@@ -413,8 +419,45 @@ def _observed_verdict(shape: str, item: dict, reply: dict) -> str:
     return parse_verdict_reply(reply["text"])
 
 
+def _metrics(observations: list[dict]) -> dict:
+    """Compute one metric set over an explicitly selected observation slice."""
+    mismatches = [o for o in observations if o["expected"] == "mismatch"]
+    matches = [o for o in observations if o["expected"] == "match"]
+    refusals = [o for o in observations if o["observed"] == "refusal"]
+    scoreable = [o for o in observations if o["observed"] in ("match", "mismatch")]
+
+    false_passes = sum(1 for o in mismatches if o["observed"] == "match")
+    false_fails = sum(1 for o in matches if o["observed"] == "mismatch")
+
+    scored_matches = [o for o in matches if o["observed"] != "refusal"]
+    false_fail_rate = false_fails / len(scored_matches) if scored_matches else 0.0
+    refusal_rate = len(refusals) / len(observations) if observations else 0.0
+
+    by_item: dict[str, set] = {}
+    for o in scoreable:
+        by_item.setdefault(o["item_id"], set()).add(o["observed"])
+    consistency = (sum(1 for values in by_item.values() if len(values) == 1) / len(by_item)
+                   if by_item else 0.0)
+
+    return {
+        "calls": len(observations),
+        "match_opportunities": len(matches),
+        "mismatch_opportunities": len(mismatches),
+        "false_passes": false_passes,
+        "false_pass_rate": round(false_passes / len(mismatches), 4) if mismatches else 0.0,
+        "false_fails": false_fails,
+        "match_false_fail_rate": round(false_fail_rate, 4),
+        "refusals": len(refusals),
+        "refusal_rate": round(refusal_rate, 4),
+        "repeat_consistency": round(consistency, 4),
+        "unique_false_pass_items": len({
+            o["item_id"] for o in mismatches if o["observed"] == "match"
+        }),
+    }
+
+
 def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> dict:
-    """Run every item x shape x pass, scoring as we go. Stops on a budget refusal."""
+    """Run every item x shape x pass. Only the contract's primary shape decides qualification."""
     items = _script_items(script)
     observations: list[dict] = []
     stopped_reason = None
@@ -441,9 +484,18 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
                 if reply.get("call_record"):
                     call_records.append(reply["call_record"])
                 observations.append({
-                    "item_id": item["item_id"], "shape": shape, "pass": pass_index,
+                    "item_id": item["item_id"],
+                    "shape": shape,
+                    "pass": pass_index,
                     "expected": item["expected"],
                     "observed": _observed_verdict(shape, item, reply),
+                    "api_status": reply.get("api_status"),
+                    "target": item["target"],
+                    "rendered_string": item["drawn"],
+                    "failure_class": item.get("failure_class"),
+                    "failure_group": item.get("failure_group"),
+                    "edit_detail": item.get("edit_detail"),
+                    "evaluator_response": reply.get("text", ""),
                 })
 
                 if reply.get("ambiguous_dispatch"):
@@ -459,51 +511,43 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
             break
 
     c = contract()
-    mismatches = [o for o in observations if o["expected"] == "mismatch"]
-    matches = [o for o in observations if o["expected"] == "match"]
-    refusals = [o for o in observations if o["observed"] == "refusal"]
-    scoreable = [o for o in observations if o["observed"] in ("match", "mismatch")]
-
-    false_passes = sum(1 for o in mismatches if o["observed"] == "match")
-    false_fails = sum(1 for o in matches if o["observed"] == "mismatch")
-
-    false_fail_rate = (false_fails / len([o for o in matches if o["observed"] != "refusal"])
-                       if any(o["observed"] != "refusal" for o in matches) else 0.0)
-    refusal_rate = len(refusals) / len(observations) if observations else 0.0
-
-    # Repeat consistency: for each (item, shape), did every pass agree?
-    by_cell: dict[tuple, set] = {}
-    for o in scoreable:
-        by_cell.setdefault((o["item_id"], o["shape"]), set()).add(o["observed"])
-    complete = {k: v for k, v in by_cell.items() if len(v) >= 1}
-    consistency = (sum(1 for v in complete.values() if len(v) == 1) / len(complete)
-                   if complete else 0.0)
+    primary_shape = c["primary_generated_output_shape"]
+    metrics_by_shape = {
+        shape: _metrics([o for o in observations if o["shape"] == shape])
+        for shape in SHAPES
+    }
+    primary = metrics_by_shape[primary_shape]
+    pooled = _metrics(observations)
 
     failed_gates = []
-    if false_passes > c["mismatch_false_pass_max"]:
+    if primary["false_passes"] > c["mismatch_false_pass_max"]:
         failed_gates.append("mismatch_false_pass")
-    if false_fail_rate > c["match_false_fail_rate_max"]:
+    if primary["match_false_fail_rate"] > c["match_false_fail_rate_max"]:
         failed_gates.append("match_false_fail_rate")
-    if refusal_rate > c["refusal_rate_max"]:
+    if primary["refusal_rate"] > c["refusal_rate_max"]:
         failed_gates.append("refusal_rate")
-    if consistency < c["repeat_consistency_min"]:
+    if primary["repeat_consistency"] < c["repeat_consistency_min"]:
         failed_gates.append("repeat_consistency")
 
     return {
         "script": script,
         "calls": len(observations),
-        "false_passes": false_passes,
-        "false_fails": false_fails,
-        "match_false_fail_rate": round(false_fail_rate, 4),
-        "refusals": len(refusals),
-        "refusal_rate": round(refusal_rate, 4),
-        "repeat_consistency": round(consistency, 4),
+        "primary_shape": primary_shape,
+        # Top-level gate metrics are intentionally the PRIMARY blind-shape metrics.
+        "false_passes": primary["false_passes"],
+        "false_pass_rate": primary["false_pass_rate"],
+        "false_fails": primary["false_fails"],
+        "match_false_fail_rate": primary["match_false_fail_rate"],
+        "refusals": primary["refusals"],
+        "refusal_rate": primary["refusal_rate"],
+        "repeat_consistency": primary["repeat_consistency"],
+        "unique_false_pass_items": primary["unique_false_pass_items"],
+        "metrics_by_shape": metrics_by_shape,
+        "pooled_diagnostic_metrics": pooled,
         "failed_gates": failed_gates,
-        # An ambiguous stop can never be a pass, however good the partial counts look: the run
-        # did not finish, and a candidate is not qualified by the calls that happened to succeed
-        # before a call whose outcome nobody knows.
         "passed": not failed_gates and stopped_reason is None,
         "stopped_reason": stopped_reason,
+        "observations": observations,
         "call_records": call_records,
     }
 
@@ -550,7 +594,7 @@ def qualify_candidate(candidate, guard: BudgetGuard, perceptibility_path: Path |
 QUALIFICATION_FILENAME = "qualification-result.json"
 
 # Fields the fingerprint is computed over. Everything that decides whether A-TEXT may open.
-FINGERPRINTED_FIELDS = ("run_id", "tranche_id", "mode", "synthetic", "qualified", "call_records")
+FINGERPRINTED_FIELDS = ("run_id", "tranche_id", "mode", "synthetic", "qualified", "candidates", "call_records", "contract_sha256")
 
 
 def qualification_fingerprint(payload: dict) -> str:
@@ -596,6 +640,8 @@ def build_qualification_result(run, results: list[dict], candidates: list) -> di
         "candidates": results,
         "call_records": call_records,
         "contract_status": contract()["status"],
+        "contract_version": contract().get("contract_version"),
+        "contract_sha256": hashlib.sha256(CONTRACT.read_bytes()).hexdigest(),
         "qualified_scope_excludes": contract()["qualified_scope_excludes"],
         "note": ("Qualification running is not promotion. A qualified judge may MEASURE the "
                  "A-TEXT screen; it does not by itself put a row in the Capability Registry."),
@@ -689,7 +735,7 @@ def build_live_candidates(guard: BudgetGuard, http=None, images: ImageResolver |
 
 
 def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = None,
-             mode: str = "live", only_provider: str | None = None) -> dict:
+             mode: str = "live", only_provider: str | None = None, run=None) -> dict:
     """The real orchestration. Devanagari first; Latin only for survivors; one shared ceiling.
 
     The guard is shared across BOTH candidates and BOTH scripts, exactly as frozen: the ceiling is
@@ -706,6 +752,9 @@ def run_live(guard: BudgetGuard, http=None, resolved_versions: dict | None = Non
         results.append(qualify_candidate(candidate, guard=guard))
 
     dispatches = sum(c.calls for c in candidates)
+    if run is not None:
+        qualification_payload = build_qualification_result(run, results, candidates)
+        persist_qualification(run, qualification_payload)
     return {
         "record": "EMP-001-text-qualification",
         "mode": mode,
@@ -863,7 +912,7 @@ def main(argv: list[str] | None = None) -> int:
                 "what it called cannot be reproduced.")
 
         result = run_live(guard, http=None, resolved_versions=versions,
-                          only_provider=a.only_provider)
+                          only_provider=a.only_provider, run=run)
         out = Path(a.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True,
