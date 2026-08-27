@@ -47,6 +47,7 @@ REPO_ROOT = PACKAGE_ROOT.parent.parent
 sys.path.insert(0, str(PACKAGE_ROOT))
 from budget_guard import BudgetExceeded, BudgetGuard, NotAuthorised, open_guard  # noqa: E402
 import providers as P  # noqa: E402
+import human_review as HR  # noqa: E402
 
 import yaml  # noqa: E402
 
@@ -507,8 +508,8 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
     }
 
 
-def qualify_candidate(candidate, guard: BudgetGuard) -> dict:
-    """Devanagari first. Latin only for survivors. Stop the moment either gate or the budget says so."""
+def qualify_candidate(candidate, guard: BudgetGuard, perceptibility_path: Path | str | None = None) -> dict:
+    """Devanagari first. Latin only for survivors and only after the human review is valid."""
     c = contract()
     repeats = c["repeats_per_shape"]
 
@@ -528,6 +529,12 @@ def qualify_candidate(candidate, guard: BudgetGuard) -> dict:
         "qualified_scope_excludes": c["qualified_scope_excludes"],
     }
     if not dev["passed"]:
+        return result
+
+    human = HR.review_status(perceptibility_path)
+    result["latin_human_review"] = human
+    if not human["ok"]:
+        result["stopped_reason"] = "latin_human_perceptibility_unresolved"
         return result
 
     lat = _score_script(candidate, "latin", guard, repeats)
