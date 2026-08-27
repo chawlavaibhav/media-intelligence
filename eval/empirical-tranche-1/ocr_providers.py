@@ -114,7 +114,8 @@ class CloudVisionHttpTransport:
         except Exception as exc:                    # noqa: BLE001 - classified by the caller
             raise AmbiguousDispatch(
                 f"Cloud Vision dispatch failed after the send boundary: {type(exc).__name__}: "
-                f"{exc}. It cannot be proven the request was not received and billed.") from exc
+                f"{exc}. It cannot be proven the request was not received and billed.",
+                api_status="error", error_class="transport_failure", cause=exc) from exc
 
 
 @dataclass

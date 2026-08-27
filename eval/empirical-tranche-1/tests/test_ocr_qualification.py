@@ -513,6 +513,178 @@ def test_a_qualified_ocr_result_still_refuses_to_open_atext():
     assert result['may_populate_registry'] is False
 
 
+# --------------------------------------------------------------- LIVE ORCHESTRATION (no network)
+class FakeVisionHttp:
+    """Stands where the Cloud Vision socket would be, and reads the image the way the real one
+    would: it returns the string that was actually DRAWN, resolved by image hash.
+
+    A recorder that returned a fixed string would exercise the plumbing and prove nothing about
+    scoring, because every item would score the same way.
+    """
+
+    def __init__(self, script_or_both='both', empty_for=None, error_for=None, error_body=None):
+        import hashlib as _h
+        self.calls = []
+        self.empty_for = empty_for or set()
+        self.error_for = error_for or set()
+        self.error_body = error_body or OCR.CLOUD_VISION_TOP_LEVEL_ERROR_FIXTURE
+        self._by_sha = {}
+        images = QT.ImageResolver()
+        scripts = ('devanagari', 'latin') if script_or_both == 'both' else (script_or_both,)
+        for script in scripts:
+            for item in QT._script_items(script):
+                data = images.bytes_for(script, item['item_id'])
+                self._by_sha[_h.sha256(data).hexdigest()] = (item['item_id'], item['drawn'])
+
+    def __call__(self, url, headers, body, timeout_s):
+        import base64 as _b64, hashlib as _h, json as _json
+        payload = _json.loads(body.decode('utf-8'))
+        raw = _b64.b64decode(payload['requests'][0]['image']['content'])
+        sha = _h.sha256(raw).hexdigest()
+        item_id, drawn = self._by_sha[sha]
+        self.calls.append(item_id)
+
+        if item_id in self.error_for:
+            return copy.deepcopy(self.error_body)
+        if item_id in self.empty_for:
+            return {'responseId': f'cv-{item_id}', 'responses': [{'textAnnotations': []}]}
+        return {'responseId': f'cv-{item_id}',
+                'responses': [{'fullTextAnnotation': {'text': drawn}}]}
+
+
+def test_cli_live_refuses_without_authorisation():
+    with pytest.raises(QO.NotAuthorised):
+        QO.main(['--live'])
+
+
+def test_live_missing_vision_key_refuses_before_dispatch(monkeypatch):
+    monkeypatch.delenv(OCR.CLOUD_VISION_KEY_ENV, raising=False)
+    http = FakeVisionHttp('devanagari')
+    guard = BudgetGuard(authorised_usd=Decimal('6.00'))
+    with pytest.raises(OCR.PreDispatchRefusal):
+        QO.run_live_ocr(guard, http=http, run=None)
+    assert http.calls == []                       # nothing was sent
+    assert guard.spent_usd == Decimal('0')        # and nothing was charged
+
+
+def test_live_orchestration_completes_576_calls_for_a_clean_candidate(monkeypatch):
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+    http = FakeVisionHttp('both')
+    guard = BudgetGuard(authorised_usd=Decimal('6.00'))
+    payload = QO.run_live_ocr(guard, http=http, run=None)
+
+    c = payload['candidates'][0]
+    assert len(http.calls) == QO.OCR_MAX_CALLS_BOTH_SCRIPTS == 576
+    assert payload['dispatches'] == 576
+    assert c['devanagari']['calls'] == 288 and c['devanagari']['passed'] is True
+    assert c['latin']['calls'] == 288 and c['latin']['passed'] is True
+    assert c['qualified_scope'] == ['devanagari', 'latin']
+    assert c['identity']['feature'] == 'TEXT_DETECTION'
+    assert c['identity']['language_hints'] == []
+    assert guard.spent_usd == OCR.CLOUD_VISION_USD_PER_IMAGE * 576
+    assert guard.spent_usd <= Decimal('0.864')
+    assert payload['may_open_atext'] is False
+
+
+def test_live_orchestration_writes_canonical_fingerprint_bound_evidence(monkeypatch, tmp_path):
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+    run = type('R', (), {'run_id': 'ocr-live-test', 'mode': 'live', 'evidence_dir': tmp_path})()
+    payload = QO.run_live_ocr(BudgetGuard(authorised_usd=Decimal('6.00')),
+                              http=FakeVisionHttp('both'), run=run)
+
+    path = tmp_path / QO.OCR_QUALIFICATION_FILENAME
+    assert path.exists()
+    on_disk = json.loads(path.read_text())
+    assert on_disk['contract_version'] == 'ocr-1'
+    assert on_disk['contract_sha256'] == QO.ocr_contract_sha256()
+    assert on_disk['config_sha256']
+    assert on_disk['mode'] == 'live' and on_disk['synthetic'] is False
+    assert len(on_disk['call_records']) == 576
+    assert on_disk['candidates'][0]['devanagari']['observations']
+    assert on_disk['evidence_fingerprint'] == QO.ocr_qualification_fingerprint(on_disk)
+
+
+def test_live_uses_the_persistent_qualification_stage_and_respects_prior_spend(monkeypatch,
+                                                                               tmp_path):
+    """The OCR run must land in the SAME USD 6 qualification stage the VLM runs used."""
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+    import spend_ledger as SL
+
+    run = SL.TrancheRun.create(tmp_path, 'ocr-stage-test', authorisation_path='x', mode='live')
+    stage = SL.TrancheBudget(run).stage('qualification')
+    before = stage.spent_usd
+
+    payload = QO.run_live_ocr(stage, http=FakeVisionHttp('both'), run=run)
+    after = SL.TrancheBudget(run).stage('qualification').spent_usd
+
+    assert payload['dispatches'] == 576
+    assert after - before == OCR.CLOUD_VISION_USD_PER_IMAGE * 576
+    assert after <= Decimal('6.00')
+    # Reconstructed from disk, not from the in-memory object.
+    assert SL.TrancheBudget(SL.TrancheRun.open(tmp_path, 'ocr-stage-test')) \
+        .stage('qualification').spent_usd == after
+
+
+def test_live_infrastructure_stop_persists_the_trial_and_leaves_disposition_null(monkeypatch):
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+    victim = QT._script_items('devanagari')[10]['item_id']
+    http = FakeVisionHttp('devanagari', error_for={victim})
+    guard = BudgetGuard(authorised_usd=Decimal('6.00'))
+    payload = QO.run_live_ocr(guard, http=http, run=None)
+
+    dev = payload['candidates'][0]['devanagari']
+    assert dev['scientifically_complete'] is False
+    assert dev['passed'] is None
+    assert dev['infrastructure_failures'] == 1
+    assert dev['failed_gates'] == []
+    assert dev['false_passes'] == 0 and dev['false_fails'] == 0
+    assert dev['empty_transcriptions'] == 0
+    bad = [r for r in dev['call_records'] if r['api_status'] != 'ok']
+    assert len(bad) == 1 and bad[0]['retries'] == 0
+    assert bad[0]['billed_usd'] is not None        # the failed trial is still charged
+    assert payload['candidates'][0]['latin'] is None
+    assert guard.spent_usd > 0
+
+
+def test_live_empty_responses_are_scientific_not_infrastructure(monkeypatch):
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+    victims = {i['item_id'] for i in QT._script_items('devanagari')[:10]}
+    payload = QO.run_live_ocr(BudgetGuard(authorised_usd=Decimal('6.00')),
+                              http=FakeVisionHttp('devanagari', empty_for=victims), run=None)
+    dev = payload['candidates'][0]['devanagari']
+    assert dev['infrastructure_failures'] == 0
+    assert dev['empty_transcriptions'] == 30
+    assert dev['scientifically_complete'] is True   # the screen finished
+    assert 'empty_transcription_rate' in dev['failed_gates']
+    assert dev['passed'] is False
+
+
+def test_live_retries_remain_zero(monkeypatch):
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+    payload = QO.run_live_ocr(BudgetGuard(authorised_usd=Decimal('6.00')),
+                              http=FakeVisionHttp('both'), run=None)
+    assert all(r['retries'] == 0 for r in payload['call_records'])
+
+
+def test_live_never_sends_the_target_or_a_language_hint(monkeypatch):
+    monkeypatch.setenv(OCR.CLOUD_VISION_KEY_ENV, 'k')
+
+    seen = []
+
+    class Spy(FakeVisionHttp):
+        def __call__(self, url, headers, body, timeout_s):
+            seen.append(body.decode('utf-8'))
+            return super().__call__(url, headers, body, timeout_s)
+
+    # 'both': a clean candidate passes Devanagari and advances, so the index must cover Latin too.
+    QO.run_live_ocr(BudgetGuard(authorised_usd=Decimal('6.00')), http=Spy('both'), run=None)
+    targets = ({i['target'] for i in QT._script_items('devanagari')}
+               | {i['target'] for i in QT._script_items('latin')})
+    for blob in seen:
+        assert 'languageHints' not in blob
+        assert not any(t in blob for t in targets)
+
+
 # ---------------------------------------------------------------------------------- registry
 def test_the_registry_is_untouched_by_ocr_readiness():
     registry = QT.REPO_ROOT / 'eval' / 'registry' / 'registry-v1.jsonl'

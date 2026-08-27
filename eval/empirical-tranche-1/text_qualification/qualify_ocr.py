@@ -34,9 +34,10 @@ HERE = Path(__file__).resolve().parent
 PACKAGE_ROOT = HERE.parent
 sys.path.insert(0, str(PACKAGE_ROOT))
 
-from budget_guard import BudgetGuard, BudgetExceeded  # noqa: E402
+from budget_guard import BudgetGuard, BudgetExceeded, NotAuthorised, open_guard  # noqa: E402
 from ocr_providers import (  # noqa: E402
     CLOUD_VISION_USD_PER_IMAGE,
+    CloudVisionHttpTransport,
     CloudVisionTextDetection,
 )
 import qualify_text as QT  # noqa: E402
@@ -488,6 +489,51 @@ def build_ocr_qualification_result(run, results: list[dict]) -> dict:
 
 
 # ---------------------------------------------------------------------------------------- CLI
+def persist_ocr_qualification(run, payload: dict) -> Path:
+    """Write the canonical OCR qualification record into the run's evidence directory."""
+    run.evidence_dir.mkdir(parents=True, exist_ok=True)
+    path = run.evidence_dir / OCR_QUALIFICATION_FILENAME
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                               default=str) + "\n", encoding="utf-8")
+    return path
+
+
+def run_live_ocr(guard, http=None, run=None) -> dict:
+    """The real Cloud Vision path. Exactly one candidate, exactly the frozen configuration.
+
+    The plan is checked against the frozen protocol BEFORE anything is constructed. A run that
+    could dispatch more than 576 images, or reserve more than USD 0.864, is refused here rather
+    than discovered halfway through a paid screen.
+    """
+    max_reservation = CLOUD_VISION_USD_PER_IMAGE * OCR_MAX_CALLS_BOTH_SCRIPTS
+    if max_reservation > Decimal("0.864"):
+        raise NotAuthorised(
+            f"the frozen OCR protocol would reserve {max_reservation}, above the authorised "
+            f"USD 0.864. The protocol is frozen; this is a configuration error, not a budget "
+            f"question.")
+
+    engine = CloudVisionTextDetection(
+        transport=CloudVisionHttpTransport(http=http),
+        guard=guard)
+    candidate = OcrCandidate(engine, name="google_cloud_vision:cloud-vision-text-detection-v1")
+
+    result = qualify_ocr_candidate(candidate, guard)
+    payload = build_ocr_qualification_result(run, [result])
+    payload["dispatches"] = sum(
+        len((result.get(s) or {}).get("call_records", [])) for s in ("devanagari", "latin"))
+    payload["max_authorised_calls"] = OCR_MAX_CALLS_BOTH_SCRIPTS
+    payload["max_authorised_reservation_usd"] = str(max_reservation)
+
+    if payload["dispatches"] > OCR_MAX_CALLS_BOTH_SCRIPTS:
+        raise NotAuthorised(
+            f"{payload['dispatches']} dispatches exceeds the frozen maximum of "
+            f"{OCR_MAX_CALLS_BOTH_SCRIPTS}.")
+
+    if run is not None:
+        payload["canonical_path"] = str(persist_ocr_qualification(run, payload))
+    return payload
+
+
 def _fake_live(out: Path, run=None) -> dict:
     """The positive control: a clean synthetic OCR candidate across BOTH scripts, zero network."""
     guard = BudgetGuard(authorised_usd=Decimal("6.00"))
@@ -508,6 +554,12 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="EMP-001 OCR-family qualification (readiness).")
     ap.add_argument("--fake-live", action="store_true",
                     help="clean synthetic OCR candidate, both scripts, zero network, zero spend")
+    ap.add_argument("--live", action="store_true",
+                    help="real paid Cloud Vision execution; requires explicit authorisation")
+    ap.add_argument("--authorisation", default=None)
+    ap.add_argument("--run-root", default=None,
+                    help="persistent EMP-001 run root; enables the durable tranche ledger")
+    ap.add_argument("--run-id", default=None)
     ap.add_argument("--budget-proof", action="store_true",
                     help="print the conservative maximum paid cost for a full OCR screen")
     ap.add_argument("--prior-spend", default="0.6712415")
@@ -516,6 +568,46 @@ def main(argv: list[str] | None = None) -> int:
 
     if a.budget_proof:
         print(json.dumps(ocr_budget_projection(a.prior_spend), indent=2, sort_keys=True))
+        return 0
+
+    if a.live:
+        # GATE 1. Fails closed on a missing, disabled or over-wide authorisation file, exactly as
+        # the VLM runner does. There is no separate OCR authorisation: this is the same tranche.
+        authorisation = open_guard(a.authorisation) if a.authorisation else open_guard()
+
+        run = None
+        guard = authorisation
+        if a.run_root and a.run_id:
+            import spend_ledger as SL
+
+            root = Path(a.run_root)
+            try:
+                run = SL.TrancheRun.open(root, a.run_id)
+            except SL.LedgerCorrupt:
+                run = SL.TrancheRun.create(root, a.run_id,
+                                           authorisation_path=a.authorisation or "", mode="live")
+            # The SAME qualification stage the VLM runs used, so prior qualification spend is
+            # already inside this ceiling rather than starting a fresh USD 6.
+            guard = SL.TrancheBudget(run).stage("qualification")
+
+        payload = run_live_ocr(guard, http=None, run=run)
+        out = Path(a.out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True,
+                                  default=str) + "\n", encoding="utf-8")
+        c = payload["candidates"][0]
+        dev, latin = c["devanagari"], c["latin"]
+        print(f"ocr live: {payload['dispatches']} dispatches")
+        print(f"  devanagari calls={dev['calls']} complete={dev['scientifically_complete']} "
+              f"passed={dev['passed']} gates={dev['failed_gates']}")
+        latin_line = ("not run" if not latin
+                      else f"calls={latin['calls']} complete={latin['scientifically_complete']} "
+                           f"passed={latin['passed']} gates={latin['failed_gates']}")
+        print(f"  latin      {latin_line}")
+        print(f"  qualified_scope={c['qualified_scope']}  may_open_atext={payload['may_open_atext']}")
+        print(f"written: {out}")
+        if payload.get("canonical_path"):
+            print(f"canonical: {payload['canonical_path']}")
         return 0
 
     if a.fake_live:
