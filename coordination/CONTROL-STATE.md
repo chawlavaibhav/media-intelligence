@@ -1,6 +1,6 @@
 # Controller State
 
-**Updated:** 28 Aug 2026 — EVAL-024 generation-only implementation returned with zero live spend because `FAL_KEY` was unavailable. Core design is accepted in principle, but the returned branch is behind current main and includes two unrelated regenerated evidence files plus a media-extension issue. One bounded cleanup/sync pass is required before live generation. EVAL-029 benchmark-grade OCR remains the text-evaluation lane.
+**Updated:** 28 Aug 2026 — EVAL-029 live result is accepted: Cloud Vision TEXT_DETECTION/no-language-hints is benchmark-qualified for both Devanagari and Latin under `benchmark_text_ocr_v1`, while remaining strict-exactness disqualified. Incremental EVAL-029 spend USD 0.4320; cumulative paid qualification spend USD 1.7357905. EVAL-029 is not merge-ready until its completed live evidence is sealed into GitHub and tests are path-independent. EVAL-024 still has no live artifacts and remains behind its cleanup/live gate.
 
 **Read `PROJECT-MEMORY.md` first.** Where older task/handoff wording conflicts with this file and the latest durable Controller decisions, the latest Controller decision governs.
 
@@ -30,7 +30,17 @@ Still true:
 - **0 accepted evidence that Canon improves model outcomes**;
 - no Production IR/Planner exists.
 
-The execution machinery is now live. Sonnet 5 and Gemini 3.5 Flash-Lite are scientifically disqualified for Devanagari exact-text judging; Gemini's disqualification is now reinforced by a second complete no-pacing contract-v2 screen. Cloud Vision TEXT_DETECTION with no language hints also scientifically fails the mismatch-false-pass gate despite perfect repeat consistency and zero infrastructure failures. Historical Haiku evidence remains preserved.
+New:
+- Cloud Vision `TEXT_DETECTION`, no language hints, is **benchmark-qualified for text OCR on both Devanagari and Latin** under the separate `benchmark_text_ocr_v1` contract;
+- it remains **strict_exactness_qualified: false**;
+- benchmark qualification does not certify any individual output as exact;
+- accepted EVAL-029 metrics:
+  - Devanagari false-pass 0.1250, false-fail 0.0208, consistency 1.0;
+  - Latin false-pass 0.1042, false-fail 0.0000, consistency 1.0;
+- EVAL-029 evidence persistence is still incomplete on GitHub, so the branch is not merge-ready;
+- A-TEXT still has no generated artifacts and remains unscored.
+
+Tesseract configuration search remains closed. Exact text is not a programme-wide blocker.
 
 ## EMP-001 — AUTHORISED, LIVE QUALIFICATION IN PROGRESS
 
@@ -280,42 +290,34 @@ Customer-outcome CpAO remains Stage C only.
 
 ## Next gate
 
-Exact-text is no longer a programme-wide blocker.
+Two bounded Eval closures are now active:
 
-Run:
-- `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md`
-- `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md`
+### EVAL-029 persistence closure
+Authority:
+- `coordination/decisions/CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md`
 
-EVAL-029:
-1. preserve all historical strict zero-false-pass results;
-2. create a separate `benchmark_text_ocr_v1` contract;
-3. thresholds: false-pass <= 0.15, false-fail <= 0.10, repeat consistency >= 0.95, execution failure <= 0.05;
-4. recompute existing Cloud Vision Devanagari evidence against that benchmark contract;
-5. if it passes, run only the missing Latin Cloud Vision screen: 288 calls, max USD 0.432, retries 0;
-6. if both scripts pass, Cloud Vision becomes benchmark-qualified for model comparison, not strict-certification;
-7. if EVAL-024 sealed artifacts are available, score those exact A-TEXT images without humans or regeneration;
-8. if not available, prepare the handoff and stop;
-9. exact-text imperfection must not block unrelated Stage-A or evaluator work;
-10. Registry text rows remain blocked pending Controller review of the A-TEXT result.
+Required:
+- no rerun / no new spend;
+- seal exact Cloud Vision Devanagari source evidence and completed EVAL-029 Latin/combined result into committed immutable evidence;
+- include bounded cost/ledger trace and fingerprinted manifest;
+- remove machine-local test dependency;
+- secret scan;
+- fresh/path-independent tests;
+- Registry remains 0;
+- A-TEXT handoff remains prepared-only.
 
-EVAL-028 is superseded and must not be executed.
+### EVAL-024 generation closure
+Authority:
+- `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md`
 
+Required:
+- current-main sync;
+- remove unrelated regenerated evidence diffs;
+- correct media extension/type handling;
+- restore pinned Tesseract build products for full test green;
+- if `FAL_KEY` is present, run the frozen 16 A-TEXT generations live from the exact cleaned/pushed head;
+- no evaluator/scoring in EVAL-024.
 
+CANON-011 and any separately authorised independent lanes continue.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Registry text rows remain blocked until Controller reviews the sealed EVAL-029 evidence and actual A-TEXT scoring result.
