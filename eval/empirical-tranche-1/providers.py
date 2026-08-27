@@ -107,6 +107,64 @@ class BlindnessViolation(RuntimeError):
     """A payload failed its shape's blind check. It was NOT sent."""
 
 
+class PreDispatchRefusal(DispatchRefused):
+    """PROVEN: no provider request left this process, so the reservation may be released.
+
+    Only failures that happen strictly before the send may raise this — a missing key, a request
+    the builder refused to construct, a blindness violation. If there is any doubt about whether
+    bytes reached the provider, it is not this exception.
+    """
+
+
+class AmbiguousDispatch(RuntimeError):
+    """The request MAY have reached the provider. Billing state is unknown.
+
+    Raised for anything that goes wrong once the send has begun: a read timeout, a connection
+    reset, a remote disconnect, a TLS failure, or a reply we could not parse. The provider may
+    have received and billed the request even though nothing usable came back.
+
+    The correct response is conservative, and it is the whole point of EVAL-015: keep the money
+    counted, keep the trial, do not retry, and stop.
+    """
+
+    def __init__(self, message: str, api_status: str, error_class: str, cause: BaseException):
+        super().__init__(message)
+        self.api_status = api_status
+        self.error_class = error_class
+        self.cause = cause
+
+
+def classify_transport_failure(exc: BaseException) -> tuple[str, str]:
+    """Map a post-send failure onto (api_status, error_class).
+
+    `timeout` and `error` are kept apart because they are different facts about the provider, and
+    the persistence vocabulary already distinguishes them. Everything here is ambiguous by
+    construction: classification decides what to CALL it, never whether to charge for it.
+    """
+    import http.client
+    import socket
+    import ssl
+    import urllib.error
+
+    if isinstance(exc, (TimeoutError, socket.timeout)):
+        return "timeout", "read_timeout"
+    if isinstance(exc, ssl.SSLError):
+        return "error", "tls_failure"
+    if isinstance(exc, ConnectionResetError):
+        return "error", "connection_reset"
+    if isinstance(exc, http.client.RemoteDisconnected):
+        return "error", "remote_disconnect"
+    if isinstance(exc, ConnectionAbortedError):
+        return "error", "connection_aborted"
+    if isinstance(exc, urllib.error.HTTPError):
+        return "error", f"http_{exc.code}"
+    if isinstance(exc, (ConnectionError, OSError)):
+        return "error", "network_failure"
+    if isinstance(exc, ProviderResponseError):
+        return "error", "malformed_response"
+    return "error", "unknown_transport_failure"
+
+
 @dataclass(frozen=True)
 class EvaluatorResponse:
     """One provider call. One trial. Whatever happened to it."""
@@ -120,6 +178,10 @@ class EvaluatorResponse:
     error_class: str | None = None
     cost_basis: str = "provisional_published_rate"
     raw_status_note: str = ""
+    # `reported` when the provider told us; `unknown_provisional` when the call may have been
+    # billed and we could not find out. Never silently zero.
+    billing_state: str = "reported"
+    ambiguous_dispatch: bool = False
 
 
 # ------------------------------------------------------------------------------ transports
@@ -198,9 +260,9 @@ class ProviderHttpTransport:
 
         key = os.environ.get(self.KEY_ENV)
         if not key:
-            raise DispatchRefused(
+            raise PreDispatchRefusal(
                 f"{self.KEY_ENV} is not set. Keys are read from the environment at dispatch time "
-                f"and are never committed, logged or persisted.")
+                f"and are never committed, logged or persisted. Nothing was sent.")
         return key
 
     def __call__(self, request: dict) -> dict:
@@ -208,13 +270,24 @@ class ProviderHttpTransport:
         key = self._read_key()          # raises BEFORE anything is sent
         body = self.outgoing_body(request)
         headers = {"Content-Type": "application/json", **self.auth_headers(key)}
-        self.calls += 1
+
+        # ---- THE DISPATCH BOUNDARY ----------------------------------------------------------
+        # Everything above this line is provably pre-dispatch. Everything below may have reached
+        # the provider, so every failure below is AMBIGUOUS and must never free the reservation.
+        #
         # ensure_ascii=False, deliberately. With ASCII escaping a Devanagari target travels as
         # \uXXXX, and every leak check that scans for Devanagari characters goes blind in exactly
-        # the place it is supposed to be watching. The wire carries real UTF-8 and the blind check
-        # can therefore see what is actually on it.
-        return self.http(self.endpoint(), headers,
-                         json.dumps(body, ensure_ascii=False).encode("utf-8"), self.timeout_s)
+        # the place it is supposed to be watching.
+        payload = json.dumps(body, ensure_ascii=False).encode("utf-8")
+        self.calls += 1
+        try:
+            return self.http(self.endpoint(), headers, payload, self.timeout_s)
+        except Exception as exc:
+            api_status, error_class = classify_transport_failure(exc)
+            raise AmbiguousDispatch(
+                f"{type(exc).__name__} after dispatch to {self.endpoint()}: {exc}. The provider "
+                f"may have received and billed this request; billing state is unknown.",
+                api_status=api_status, error_class=error_class, cause=exc) from exc
 
 
 class OpenAIHttpTransport(ProviderHttpTransport):
@@ -251,10 +324,10 @@ class GeminiHttpTransport(ProviderHttpTransport):
     def outgoing_body(self, request: dict) -> dict:
         declared = request.get("model")
         if declared and declared != self.resolved_version:
-            raise DispatchRefused(
+            raise PreDispatchRefusal(
                 f"request body names model {declared!r} but this transport is pinned to "
                 f"{self.resolved_version!r}. Refusing rather than dispatching a call whose two "
-                f"model names disagree.")
+                f"model names disagree. Nothing was sent.")
         # The REST route names the model in the URL; repeating it in the body is duplicate truth.
         return {k: v for k, v in request.items() if k != "model"}
 
@@ -418,10 +491,13 @@ class TextJudge:
             self.guard.reserve(estimated_usd)
         self._last_cost_ref = getattr(self.guard, "cost_ref", None)
 
-    def _settle(self, billed: Decimal) -> None:
+    def _settle(self, billed: Decimal, **extra) -> None:
         try:
-            self.guard.record(billed, **(self.call_context or {}))
+            self.guard.record(billed, **{**(self.call_context or {}), **extra})
         except TypeError:
+            # The in-memory BudgetGuard takes no context. It must still be CHARGED: an ambiguous
+            # call that silently skipped settlement would be exactly the free call this correction
+            # exists to prevent.
             self.guard.record(billed)
 
     def _dispatch(self, request: dict, estimated_usd: Decimal) -> EvaluatorResponse:
@@ -436,18 +512,57 @@ class TextJudge:
                 "ceiling before it is dispatched.")
 
         self._reserve(estimated_usd)               # raises BEFORE anything is sent
+
         try:
-            raw = self.transport(request)          # exactly one call
-        except Exception:
-            # The dispatch never happened. Give the headroom back rather than burning it; a
-            # reservation that outlives its call is budget nobody can ever spend.
-            release = getattr(self.guard, "release", None)
-            if release:
-                release()
+            raw = self.transport(request)          # exactly one call. No loop. No retry.
+        except PreDispatchRefusal:
+            # PROVEN nothing was sent. Only here may the headroom go back: a reservation that
+            # outlives a call that never happened is budget nobody can ever spend.
+            self._release()
             raise
-        response = self.parse(raw)
+        except AmbiguousDispatch as exc:
+            # The provider may have received and billed this. Releasing would let the ledger claim
+            # USD 0 for a call that cost money, which quietly weakens a user-approved hard ceiling
+            # — and would erase the attempt from the evidence entirely.
+            #
+            # So: settle at the reserved estimate, mark the billing state unknown, and hand back a
+            # response the caller must persist as ONE failed trial before stopping.
+            return self._ambiguous_response(exc, estimated_usd)
+
+        try:
+            response = self.parse(raw)
+        except ProviderResponseError as exc:
+            # The request WAS sent. That the reply was unusable does not make the call free.
+            ambiguous = AmbiguousDispatch(
+                f"unparseable provider response: {exc}", api_status="error",
+                error_class="malformed_response", cause=exc)
+            return self._ambiguous_response(ambiguous, estimated_usd)
+
         self._settle(response.billed_usd if response.billed_usd is not None else Decimal("0"))
         return response
+
+    def _release(self) -> None:
+        release = getattr(self.guard, "release", None)
+        if release:
+            release()
+
+    def _ambiguous_response(self, exc: AmbiguousDispatch,
+                            estimated_usd: Decimal) -> EvaluatorResponse:
+        """Settle conservatively and describe the call honestly. Never retried, never free."""
+        self._settle(estimated_usd, billing_state="unknown_provisional")
+        return EvaluatorResponse(
+            text="",
+            input_tokens=None,
+            output_tokens=None,
+            billed_usd=estimated_usd,
+            provider_request_id=None,        # unavailable; identity lives on the trial record
+            api_status=exc.api_status,
+            error_class=exc.error_class,
+            cost_basis="conservative_reserved_estimate_billing_unknown",
+            raw_status_note=str(exc)[:300],
+            billing_state="unknown_provisional",
+            ambiguous_dispatch=True,
+        )
 
     def _check_shape(self, request: dict, shape: str, target: str) -> None:
         """Run the blind check and REFUSE rather than dispatch.
@@ -503,6 +618,8 @@ class TextJudge:
             "output_tokens": response.output_tokens,
             "billed_usd": str(response.billed_usd) if response.billed_usd is not None else None,
             "cost_basis": response.cost_basis,
+            "billing_state": response.billing_state,
+            "ambiguous_dispatch": response.ambiguous_dispatch,
             "retries": 0,
             "prompt_sha256": prompt_sha256(
                 PROMPT_TRANSCRIBE if shape == "transcribe" else PROMPT_VERDICT),

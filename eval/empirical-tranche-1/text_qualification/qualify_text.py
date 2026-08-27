@@ -338,6 +338,7 @@ class LiveCandidate:
             "text": response.text,
             "cost": response.billed_usd if response.billed_usd is not None else Decimal("0"),
             "call_record": record,
+            "ambiguous_dispatch": response.ambiguous_dispatch,
         }
 
 
@@ -443,6 +444,14 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
                     "expected": item["expected"],
                     "observed": _observed_verdict(shape, item, reply),
                 })
+
+                if reply.get("ambiguous_dispatch"):
+                    # The provider may have received and billed that call, and we have no usable
+                    # answer. The trial above is persisted with its cost; the run STOPS rather
+                    # than carrying on as though nothing happened. Retries remain 0, so there is
+                    # no second attempt to make — the only choices were stop or pretend.
+                    stopped_reason = "ambiguous_dispatch"
+                    break
             if stopped_reason:
                 break
         if stopped_reason:
@@ -489,6 +498,9 @@ def _score_script(candidate, script: str, guard: BudgetGuard, repeats: int) -> d
         "refusal_rate": round(refusal_rate, 4),
         "repeat_consistency": round(consistency, 4),
         "failed_gates": failed_gates,
+        # An ambiguous stop can never be a pass, however good the partial counts look: the run
+        # did not finish, and a candidate is not qualified by the calls that happened to succeed
+        # before a call whose outcome nobody knows.
         "passed": not failed_gates and stopped_reason is None,
         "stopped_reason": stopped_reason,
         "call_records": call_records,
