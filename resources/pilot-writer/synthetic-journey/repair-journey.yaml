@@ -1,0 +1,124 @@
+schema_era: v3
+jobs:
+- job_id: JOB-R
+  received_at: '2026-08-28T08:00:00Z'
+  brief_ref: BRIEF-R
+  request_lineage_id: req_lin_synthetic_pilot_test
+outcomes:
+- outcome_id: OUT-R
+  job_id: JOB-R
+  outcome_kind: video_asset
+  created_at: '2026-08-28T08:00:00Z'
+  final_artifact_id: art-fixed
+sets:
+- set_id: SET-R
+  outcome_id: OUT-R
+  ordering: ordered
+  set_kind: video_sequence
+units:
+- unit_id: U-R
+  set_id: SET-R
+  unit_kind: shot
+  position: 0
+steps:
+- step_id: ST-GEN
+  unit_id: U-R
+  step_kind: provider_generation
+  step_index: 0
+  executed_at: '2026-08-28T09:00:00Z'
+  execution_mode: provider_call
+  attempt_ids:
+  - ATT-R
+- step_id: ST-FIX
+  unit_id: U-R
+  step_kind: repair
+  step_index: 1
+  executed_at: '2026-08-28T10:00:00Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: TR-FIX
+  cost_ref: LED-REPAIR
+  repair_of_step_id: ST-GEN
+attempts:
+- attempt_id: ATT-R
+  trial_id: ATT-R
+  step_id: ST-GEN
+  status: ok
+  lane: general_video
+  cost_ref: LED-GEN
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: null
+  storage_class: C_irreproducible_empirical
+  provider: dummy-vendor
+  model_id: dummy-video-1
+  endpoint: dummy://generate
+transform_recipes:
+- transform_ref: TR-FIX
+  tool: ffmpeg
+  tool_version: 7.0.1-synthetic
+  operation: encode
+  params_hash: 7f0cf64ddb42c2f867a516a720c48783a8b5ae5290f341164c22e4285afe5c1c
+  params_location: dummy://params/fix
+artifacts:
+- artifact_id: art-raw
+  producing_step_id: ST-GEN
+  attempt_id: ATT-R
+  trial_id: ATT-R
+  output_hash: 63d961bd5ce8d0121c23b6917adfa3f99eb8f81354b087fc842af051e33287da
+  output_bytes: 512
+  output_location: dummy://r/raw
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents: []
+- artifact_id: art-fixed
+  producing_step_id: ST-FIX
+  attempt_id: null
+  trial_id: null
+  output_hash: 258ee5e77c6fc34fd9817c392986f66cbbd8b84f8e60e67156c9f3670661fdfe
+  output_bytes: 512
+  output_location: dummy://r/fixed
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents:
+  - parent_artifact_id: art-raw
+    role: source
+    position: 0
+measurements: []
+outcome_acceptance:
+- acceptance_id: ACC-R
+  outcome_id: OUT-R
+  accepted: true
+  decided_by: dummy-customer-proxy
+  decided_at: '2026-08-28T11:00:00Z'
+  brief_ref: BRIEF-R
+cost_ledger:
+- ledger_entry_id: LED-GEN
+  amount: 5.0
+  currency: XTS
+  unit: call
+  recorded_at: '2026-08-28T09:00:00Z'
+  basis: synthetic_test
+  immutable: true
+  cost_class: api_tool
+  synthetic: true
+- ledger_entry_id: LED-REPAIR
+  amount: 0.5
+  currency: XTS
+  unit: call
+  recorded_at: '2026-08-28T10:00:00Z'
+  basis: synthetic_test
+  immutable: true
+  cost_class: local_compute
+  synthetic: true
+expected_cpao:
+  api_tool_cost: 5.0
+  local_compute_cost: 0.5
+  human_required_cost: 0.0
+  fully_loaded_cost: 5.5
+  accepted_outcomes: 1
+  api_tool_cpao: 5.0
+  fully_loaded_cpao: 5.5
+  currency: XTS
+  distinct_cost_entries_counted: 2
