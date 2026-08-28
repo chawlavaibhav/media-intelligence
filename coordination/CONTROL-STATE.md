@@ -19,10 +19,10 @@ Four **zero-spend pre-pilot tasks are authorised in parallel**:
 
 | Task | Purpose | Spend / generation authority |
 |---|---|---|
-| **CANON-012** | **Controller-accepted; Level-1 Governor review pending.** Corrected Aight NR/Creative-IR seed accepted; missing official Aight wordmark remains a PILOT-001 input gate | USD 0; 0 generations |
-| **CANON-013** | **Execution complete; awaiting Level-1 Governor review.** Triage accepted; proposed 8/8 split remains **unfrozen** | USD 0; 0 generations |
-| **EVAL-035** | **Correction active, route revised by user/Controller:** replace fal implementation with direct Gemini Developer API using `GEMINI_API_KEY`; temporary T1 executor = `veo-3.1-fast-generate-preview`; retain binary/async/budget/provenance guarantees | USD 0; **no real provider call** |
-| **RES-007** | **Final bounded correction active:** eval_item_id override is correct, but G12 must still enforce lane/storage/repeat/hash/reference/timestamp invariants before Controller acceptance | USD 0; synthetic bytes only |
+| **CANON-012** | **Merged / closed.** Corrected Aight NR + Creative IR seed integrated; official Aight wordmark/master remains a PILOT-001 input gate | USD 0; 0 generations |
+| **CANON-013** | **Merged / closed.** Feasibility triage integrated; proposed 8/8 development/holdout split remains **unfrozen** | USD 0; 0 generations |
+| **EVAL-035** | **Correction active.** Direct Gemini/Veo route accepted, but persistent pilot spend/cost_ref + exact RES-007 writer handoff must be fixed under `CONTROLLER-EVAL-035-RETURN-REVIEW-2-2026-08-28.md` | USD 0; **no real provider call** |
+| **RES-007** | **Controller-accepted; Level-1 Governor review pending.** Final G12 / writer / CpAO correction accepted | USD 0; synthetic bytes only |
 
 Authority: `coordination/decisions/CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`.
 
@@ -144,19 +144,15 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Receive corrected RES-007 and EVAL-035; run Level-1 Governor review on CANON-012.**
-   CANON-012 is Controller-accepted under
-   `CONTROLLER-CANON-012-CORRECTION-ACCEPTANCE-2026-08-28.md`. RES-007 must complete the final G12 enforcement correction under
-   `CONTROLLER-RES-007-CORRECTION-REVIEW-2-2026-08-28.md`; EVAL-035 must complete the
-   safety/integration correction in `CONTROLLER-EVAL-035-RETURN-REVIEW-2026-08-28.md`, as
-   superseded for route selection by `CONTROLLER-DIRECT-GEMINI-T1-ROUTE-REVISION-2026-08-28.md`.
-2. **Run bounded Level-1 Governor review** on merge-ready pre-pilot branches. CANON-013 is already
-   ready for that review; its proposed 8/8 split remains unfrozen.
-3. **After CANON-012 + EVAL-035 + RES-007 are accepted**, freeze PILOT-001's brief, asset refs,
-   production recipe shape, human acceptance record and explicit API-spend cap before generation.
-4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
-   development/holdout split and decision protocol.
-5. **Registry text rows stay blocked**; admission semantics stay as they are.
+1. **Complete EVAL-035's final cost/persistence integration correction** under
+   `CONTROLLER-EVAL-035-RETURN-REVIEW-2-2026-08-28.md`.
+2. **Run bounded Level-1 Governor review on RES-007**; if it passes, Controller may merge it.
+3. **After corrected EVAL-035 is Controller-accepted**, run its Level-1 Governor review and merge if coherent.
+4. **Then freeze PILOT-001**: exact brief choices, Aight asset refs, production recipe, explicit human
+   acceptance record and explicit user-approved API-spend cap before any generation.
+5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
+   development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
+6. **Registry text rows stay blocked**; admission semantics stay as they are.
 6. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
    Registry decision depends on those automated measurements.
 7. **Prices remain incomplete** — execution-time route/price verification is required before each
