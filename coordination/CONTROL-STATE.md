@@ -33,10 +33,10 @@ explicit human inspection → bounded repair → candidate accepted outcome. It 
 
 **PILOT-001 brief / brand source / production recipe / acceptance contract are now frozen** under
 `CONTROLLER-PILOT-001-AIGHT-FREEZE-2026-08-28.md`. The previous wordmark blocker is resolved by the
-official Aight website-source definition. **Paid execution is still NOT authorised.** The sole
-remaining pre-dispatch authority gate is explicit user approval of the recommended USD 2.00 cap /
-0 retries, followed by a separate machine-readable spend-authorisation decision and execution-time
-route/price verification.
+official Aight website-source definition. **Paid PILOT-001 execution is now authorised** under
+`CONTROLLER-PILOT-001-SPEND-AUTHORISATION-2026-08-28.md` with a hard max consumed API spend of
+**USD 2.00** and **0 retries**. Execution still requires a matching local runtime authorisation,
+execution-time route/price verification, and `GEMINI_API_KEY` availability.
 
 CANON-013 runs independently because its output gates the later architecture experiment, not the
 Aight pilot.
@@ -149,13 +149,11 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Obtain explicit user approval for PILOT-001 spend:** recommended max consumed API spend
-   **USD 2.00**, retries **0**. Brief, official brand source, hybrid recipe and acceptance contract
-   are already frozen.
-2. **After approval, commit the machine-readable PILOT-001 spend authority**, materialise the matching
-   local runtime authorisation, then reverify the direct Gemini model id / request contract / price.
-3. **Execute PILOT-001 exactly once under the frozen bounded-repair policy** and record the real outcome
-   through merged RES-007.
+1. **Execute PILOT-001 under the committed USD 2.00 / 0-retry authority.** Materialise the matching
+   local runtime authorisation, reverify the direct Gemini model id / request contract / price, and
+   confirm `GEMINI_API_KEY` before dispatch.
+2. **Run the frozen Aight vertical slice exactly as specified**, with at most one repair total, and
+   record the real outcome through merged RES-007.
 5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 6. **Registry text rows stay blocked**; admission semantics stay as they are.
