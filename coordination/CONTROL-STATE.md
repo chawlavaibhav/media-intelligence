@@ -149,17 +149,21 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **PILOT-001 Candidate 1 is human-rejected**: deterministic text/brand passed, but H1/H4/H6 failed
-   because the Veo plate was not premium, did not hold, and had no coherent visual meaning.
-2. **The single authorised repair is now allocated to one final provider regeneration** under
-   `CONTROLLER-PILOT-001-CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md`. Attempt 2 may consume
-   another provisional USD 0.80 within the existing USD 2.00 cap. 0 retries; no third provider call.
-   **The segmented repair prompt in that decision was withdrawn before dispatch**; the current
-   frozen Attempt 2 prompt is the single-scene prompt in
-   `CONTROLLER-PILOT-001-ATTEMPT-2-PROMPT-SUPERSESSION-2026-08-28.md`, with the execution packet at
-   `coordination/plans/2026-08-28-PILOT-001-ATTEMPT-2-EXECUTION-ADDENDUM.md`.
-3. **After Candidate 2, no repair remains.** Human-review it once; PASS closes T1 with an accepted
-   outcome, FAIL closes T1 as a bounded product/integration failure.
+1. **PILOT-001 / T1 is CLOSED — both candidates human-rejected; no repair remains; no further
+   PILOT-001 provider call is authorised, ever.** Candidate 1: H1/H4/H6 FAIL. Candidate 2
+   (single-scene prompt): 13/13 hard checks PASS, H1/H6 FAIL. Deterministic text/brand passed both
+   times. Outcome line: USD 1.60 provisional consumed / 0 accepted — CpAO undefined for the
+   journey. Root cause recorded: text-to-video from descriptive words with no concrete product
+   hero and no pre-approved visual; the user's prior `media-factory` system succeeded with the
+   inverse (image-first hero still + minimal animate prompt + deterministic composition).
+   Authority: `CONTROLLER-PILOT-001-CANDIDATE-2-REJECTION-AND-T1-CLOSURE-2026-08-28.md`. Residual
+   PILOT-001 headroom (USD 0.40) lapsed. Evidence sealed via the merged execution branch.
+2. **Next paid tranche is the T2 workflow-then-model screen** per
+   `coordination/plans/2026-08-28-PROGRAMME-PLAN-T2-T8-v1.md` — USD 25 envelope, image-first
+   primary arm seeded with the media-factory prompt family, T2V control retained. **Requires its
+   own Controller authorisation decision plus explicit user spend approval before any call.**
+   Zero-spend T2 prep (media-factory pattern import, scoped price sheet, brand-token templates,
+   demand-to-capability map) is authorised by the closure decision.
 4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 5. **Registry text rows stay blocked**; admission semantics stay as they are.

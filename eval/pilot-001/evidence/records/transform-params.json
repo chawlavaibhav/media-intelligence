@@ -1,0 +1,39 @@
+{
+  "assembly_audio_strip": {
+    "audio_policy": "provider audio stripped deterministically per the frozen recipe/runbook default for PILOT-001; local transform, not a provider repair",
+    "command": "ffmpeg -i claims-composited-8s.mp4 -i endcard-4s.mp4 -filter_complex \"[0:v][1:v]concat=n=2:v=1:a=0[v]\" -map \"[v]\" -an -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -r 24 final-candidate-001.mp4",
+    "output_sha256": "50fb635ccb774294935d5238865e582c4b0787507de52d3e865df98a1add829d",
+    "tool": "ffmpeg version 8.1.2"
+  },
+  "brand_source": {
+    "commit": "38a9fb6e5d7d5d946f53e731f3d214d27b425cae",
+    "index_html_git_blob_sha": "02469cdaf95cf32eb4ae49005b73aa75ac1c4f3b",
+    "index_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+    "note": "overlay-claims.html and endcard.html embed, verbatim, the single <style> block (fonts as data: URIs, tokens, .wordmark/.money registers) extracted from the pinned index.html; only 720x1280 layout CSS was added",
+    "repo": "chawlavaibhav/Aight_Website"
+  },
+  "claims_composite": {
+    "command": "ffmpeg -i provider-attempt-001.mp4 -i overlay-claims.png -filter_complex \"[0:v][1:v]overlay=0:0:enable='between(t,4,8)'[v]\" -map \"[v]\" -map 0:a -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -r 24 -c:a copy claims-composited-8s.mp4",
+    "output_sha256": "1b73a004a9a2d4243cf55d0c2c981ae36775ffde1cefa9216396b462732d8d77",
+    "tool": "ffmpeg version 8.1.2"
+  },
+  "claims_render": {
+    "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=720,1280 --default-background-color=00000000 --virtual-time-budget=10000 --screenshot=overlay-claims.png file://.../overlay-claims.html",
+    "output_sha256": "fa61eec5bd98a3acac0e1deffdf83bcab43fb116572c27adbd9f8fd7a553803a",
+    "source_html": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence/eval/pilot-001/evidence/artifacts/overlay-claims.html",
+    "source_html_sha256": "aa215ea74b3cb39335815f19beab17d84b51b940bb034b7d4243b2d5c9e7a0ec",
+    "tool": "Google Chrome 152.0.7977.65 (Chromium headless)"
+  },
+  "endcard_render": {
+    "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=720,1280 --default-background-color=00000000 --virtual-time-budget=10000 --screenshot=endcard.png file://.../endcard.html",
+    "output_sha256": "04be238a924f6ae3df8e74b7966ad338e916a72bfdbd1c2ea62c240ae0c78616",
+    "source_html": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence/eval/pilot-001/evidence/artifacts/endcard.html",
+    "source_html_sha256": "ba8da1d5781ba818dd647aed322ab03b3a8099d32efb50a12dd97a5a6264f47f",
+    "tool": "Google Chrome 152.0.7977.65 (Chromium headless)"
+  },
+  "endcard_segment": {
+    "command": "ffmpeg -loop 1 -i endcard.png -t 4 -r 24 -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p endcard-4s.mp4",
+    "output_sha256": "8324503610692b8ff8b3929b088cff76f34aa794694242b1d635982f97232989",
+    "tool": "ffmpeg version 8.1.2"
+  }
+}
