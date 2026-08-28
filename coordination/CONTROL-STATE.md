@@ -149,11 +149,13 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **PILOT-001 candidate 1 is generated and technically valid.** One real Veo 3.1 Fast call consumed
-   provisional USD 0.80, 0 retries; 12/12 hard checks and RES G1-G12 pass. The next gate is the actual
-   H1-H6 human review under `CONTROLLER-PILOT-001-CANDIDATE-1-TECHNICAL-REVIEW-2026-08-28.md`.
-2. **Do not consume the one authorised repair until the human disposition.** If all H1-H6 pass, record
-   acceptance; otherwise Controller chooses one deterministic or provider repair.
+1. **PILOT-001 Candidate 1 is human-rejected**: deterministic text/brand passed, but H1/H4/H6 failed
+   because the Veo plate was not premium, did not hold, and had no coherent visual meaning.
+2. **The single authorised repair is now allocated to one final provider regeneration** under
+   `CONTROLLER-PILOT-001-CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md`. Attempt 2 may consume
+   another provisional USD 0.80 within the existing USD 2.00 cap. 0 retries; no third provider call.
+3. **After Candidate 2, no repair remains.** Human-review it once; PASS closes T1 with an accepted
+   outcome, FAIL closes T1 as a bounded product/integration failure.
 5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 6. **Registry text rows stay blocked**; admission semantics stay as they are.
