@@ -15,6 +15,11 @@ time.
 **Historical facts are never rewritten.** These files may be superseded by newer chapters; they are
 not mutated to match current numbers.
 
+**Ownership.** `history/**` is Governor-maintained project-wide derived narrative. It may archive or
+summarise already-accepted project history, but it never owns scientific/domain evidence and never
+replaces stream-owned authoritative artifacts or Controller decisions. Stream-specific authoritative
+history/evidence stays inside its owning stream.
+
 ## Contents
 
 | File | Covers |
