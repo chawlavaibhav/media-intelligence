@@ -6,7 +6,7 @@ from pathlib import Path
 
 from conftest import (MP4_FIXTURE_BYTES, OPERATION_NAME, FakeGeminiTransport,
                       fixed_clock)
-from video_route import (RES007_REQUIRED_FIELDS, GeminiVeoRoute,
+from video_route import (GeminiVeoRoute, res007_cost_ledger_entry,
                          res007_production_attempt)
 
 PROMPT = "A festive premium 9:16 motion plate, warm light, no text"
@@ -69,24 +69,38 @@ def test_exact_provider_model_endpoint_preserved_on_the_attempt(guard, gemini_ke
 
 
 # ------------------------------------------------------------- RES-007 handoff adapter
-def test_production_attempt_satisfies_the_corrected_res007_field_set(guard, gemini_key,
-                                                                     tmp_path):
+# NOTE: no test here asserts against a copied required-field list. Whether the handoff
+# satisfies the merged writer is proven by test_res007_integration.py, which calls the
+# ACTUAL merged OutcomeWriter and topology validator. These tests cover only handoff
+# properties the integration test cannot see directly.
+def test_production_attempt_basic_shape(guard, gemini_key, tmp_path):
     outcome = run_success(guard, tmp_path)
-    handoff = res007_production_attempt(outcome)
-    wf = handoff["writer_fields"]
-
-    for field_name in RES007_REQUIRED_FIELDS:
-        assert field_name in wf, f"missing required handoff field {field_name}"
-    # G12-required inherited provenance is present AND non-null on a successful attempt
-    for field_name in ("provider", "model_id", "model_version", "endpoint", "workflow",
-                       "prompt_hash", "config_hash", "config_location", "requested_at"):
-        assert wf[field_name], f"required inherited field {field_name} is empty"
-    assert isinstance(wf["reference_asset_hashes"], list)      # list, empty if none
+    wf = res007_production_attempt(outcome)["writer_fields"]
     assert wf["attempt_kind"] == "production"
     assert wf["status"] == "ok"
     assert wf["lane"] == "native_av"
+    assert isinstance(wf["reference_asset_hashes"], list)      # list, empty if none
     assert wf["completed_at"] is not None
     assert wf["error_detail"] is None                          # ok attempts carry none
+
+
+def test_storage_class_is_not_a_writer_kwarg(guard, gemini_key, tmp_path):
+    """CONTROLLER-EVAL-035-RETURN-REVIEW-2 correction 1: the merged writer owns the
+    frozen storage class and refuses it from the caller; it rides as provider evidence."""
+    handoff = res007_production_attempt(run_success(guard, tmp_path))
+    assert "storage_class" not in handoff["writer_fields"]
+    assert handoff["provider_extras"]["storage_class"] == "C_irreproducible_empirical"
+
+
+def test_cost_ledger_adapter_requires_a_durable_cost_ref(guard, gemini_key, tmp_path):
+    """An in-memory guard yields no cost_ref, so the cost adapter must refuse rather
+    than hand Resources an anonymous cost row."""
+    import pytest
+
+    outcome = run_success(guard, tmp_path)     # RecordingGuard: no durable cost_ref
+    assert outcome["cost_record"]["ledger_entry_id"] is None
+    with pytest.raises(ValueError, match="persistent pilot spend ledger"):
+        res007_cost_ledger_entry(outcome)
 
 
 def test_production_attempt_contains_no_fabricated_eval_item_id(guard, gemini_key,

@@ -30,18 +30,29 @@ behaviour. All fal-specific execution code (fal route identity, `FAL_KEY`, queue
   binary download. The **submit is the generation trial**; polls, the result read and the
   download never inflate the generation count. Google retains the server-side file for
   2 days only, so the local binary copy is the artifact.
-- **Machine-verifiable spend gate.** `pilot_authorisation.py` opens a guard only when a
-  COMMITTED Controller decision carries an explicit `machine_authorisation` YAML block for
-  `PILOT-001` (cap, zero retries, approval identity/date) AND the local, git-ignored
-  runtime file matches it. No such committed decision exists — tests prove the current
-  repository state cannot open a paid guard, and a locally authored YAML cannot
-  manufacture authority.
-- **RES-007 handoff.** `res007_production_attempt()` emits exactly the corrected v3
-  writer's production-attempt field set (provider/model_id/model_version/endpoint/
-  workflow/prompt_hash/config_hash/config_location/reference_asset_hashes/timestamps/
-  lane/status/repeat/retry/cost_ref/storage_class) with **no fabricated `eval_item_id`**;
-  provider-specific evidence rides in a separate `provider_extras` mapping because the
-  corrected writer refuses unknown fields.
+- **Machine-verifiable spend gate + persistent spend ledger.** `pilot_authorisation.py`
+  verifies PERMISSION: a COMMITTED Controller decision carrying an explicit
+  `machine_authorisation` YAML block for `PILOT-001` (cap, zero retries, approval
+  identity/date), matched by the local, git-ignored runtime file. No such committed
+  decision exists — tests prove the current repository state cannot open a live runtime,
+  and a locally authored YAML cannot manufacture authority. The live guard itself is
+  `pilot_spend_ledger.py`: an append-only on-disk ledger keyed to a PILOT-001 run
+  (EMP-001's durable-ledger semantics as precedent, EMP-001's frozen constants untouched)
+  — reservations persist before dispatch and count against the cap, settlements keep the
+  reservation's stable `cost_ref`, releases happen only on provably pre-dispatch failure,
+  process restart reconstructs committed + pending spend from disk, and corruption
+  (bad line, sequence gap, truncation, missing run record, ceiling drift) fails closed.
+- **RES-007 integration, against the MERGED implementation.** There is deliberately no
+  local copy of the writer's field list. `res007_production_attempt()` and
+  `res007_cost_ledger_entry()` emit writer-ready kwargs, and
+  `tests/test_res007_integration.py` — the task's primary acceptance test — imports the
+  merged `resources/pilot-writer/outcome_writer.py`, builds the minimum real v3 journey,
+  calls the real `add_ledger_entry` → `record_attempt` → `record_artifact`, writes the
+  archive, and runs the merged v3 topology validator (subprocess) — for the successful
+  path AND a preserved ambiguous-failure path, plus a negative control proving the
+  validator run can fail. `storage_class` is not passed to the writer (it owns the frozen
+  storage class); no fabricated `eval_item_id`; provider evidence rides in
+  `provider_extras`.
 - **Binary artifact handling.** `artifact_store.py` accepts `bytes` only (a `str` is
   refused with `TypeError`), writes with `write_bytes`, records SHA-256, byte length,
   media kind, location, exact route/model identity and the provider operation name. Test
@@ -55,7 +66,7 @@ behaviour. All fal-specific execution code (fal route identity, `FAL_KEY`, queue
 | Endpoint `POST /v1beta/models/{model}:predictLongRunning`, header `x-goog-api-key`, body `instances[{prompt}]` + `parameters{aspectRatio, durationSeconds, resolution}`; durations 4\|6\|8 s; aspect 16:9\|9:16; operation polling via `GET /v1beta/{operation.name}`; result at `response.generateVideoResponse.generatedSamples[].video.uri`; authenticated download; 2-day retention; native audio; safety filters may block (blocked videos documented as not charged) | Official Google docs, `ai.google.dev/gemini-api/docs/veo`, fetched 2026-08-28 |
 | Price: Veo 3.1 Fast 720p **USD 0.10 per generated second, audio included** | Official Gemini API pricing page, fetched 2026-08-28 — provisional planning rate, NOT invoice evidence |
 | `raiMediaFilteredCount` / `raiMediaFilteredReasons` field names | Google's Veo reference on the sibling Vertex surface (same response proto); read **only if present**, never interpreted when absent |
-| Corrected production-attempt field requirements (G12), status vocab `ok\|error\|refusal\|timeout\|cancelled`, lane `native_av`, no `eval_item_id` on production attempts | `CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md` + `work/res-007-pilot-writer` `outcome_writer.py` |
+| Production-attempt requirements (G12), status vocab `ok\|error\|refusal\|timeout\|cancelled`, lane `native_av`, no `eval_item_id` on production attempts, writer-owned `storage_class` | The MERGED `resources/pilot-writer/outcome_writer.py` and `resources/pre-execution-freeze/validators/validate_topology_v3.py` on current `main` — called directly by the integration tests |
 
 **Route identity, availability, schema and price must all be re-verified at execution time
 before any live PILOT-001 call** (CONTROL-STATE "Next gate"). Provider docs move; the

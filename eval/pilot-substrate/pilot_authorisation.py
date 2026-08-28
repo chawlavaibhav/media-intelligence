@@ -26,8 +26,10 @@ THE CORRECTED CHAIN — TWO DOCUMENTS THAT MUST MECHANICALLY AGREE
        manufacture spend authority: without the matching committed Controller block it is
        refused, whatever it says.
 
-    The mechanical guard itself is EMP-001's `BudgetGuard`, imported unchanged — Decimal
-    money, reserve-before-dispatch, record-after, fail closed in every direction.
+    This module verifies PERMISSION only. The live spend guard is the persistent
+    append-only run ledger in `pilot_spend_ledger.py` (`open_pilot_runtime`), which calls
+    `verify_authority` before touching any money state — an in-memory guard is never the
+    pilot's spend history (EMP-001 lesson), and Resources requires a durable `cost_ref`.
 
     This module DEFINES the record format (explicitly permitted by the review decision); it
     does not create authority. No decision is written here, and the committed state must
@@ -47,7 +49,7 @@ EMP001 = HERE.parent / "empirical-tranche-1"
 if str(EMP001) not in sys.path:
     sys.path.insert(0, str(EMP001))
 
-from budget_guard import BudgetGuard, NotAuthorised  # noqa: E402
+from budget_guard import NotAuthorised  # noqa: E402
 
 PILOT_TRANCHE_ID = "PILOT-001"
 PILOT_AUTHORISATION_PATH = HERE / "authorization.pilot.local.yaml"
@@ -255,17 +257,21 @@ def load_pilot_authorisation(path: Path | str = PILOT_AUTHORISATION_PATH,
     return status
 
 
-def open_pilot_guard(path: Path | str = PILOT_AUTHORISATION_PATH,
-                     decisions_dir: Path = DECISIONS_DIR) -> BudgetGuard:
-    """Return a live guard for PILOT-001, or raise NotAuthorised with every refusal reason.
+def verify_authority(path: Path | str = PILOT_AUTHORISATION_PATH,
+                     decisions_dir: Path = DECISIONS_DIR) -> dict:
+    """Verify the full PILOT-001 authority chain, or raise NotAuthorised with every reason.
 
-    This is the ONLY supported way for a pilot runner to obtain a guard for paid dispatch.
-    It opens only when a committed Controller machine_authorisation block for PILOT-001
-    exists AND the local runtime file matches it. Neither exists today.
+    Returns {"max_consumed_api_spend_usd": Decimal, "committed": <committed authority>}.
+    This function verifies PERMISSION only — it deliberately returns no guard object.
+    The live spend guard is the persistent, append-only run ledger
+    (`pilot_spend_ledger.open_pilot_runtime`), which calls this first: EMP-001 already
+    paid to learn that an in-memory ceiling is a per-process ceiling wearing a tranche
+    ceiling's clothes, and its `record()` returns no cost_ref for Resources to resolve.
     """
     status = load_pilot_authorisation(path, decisions_dir)
     if status["refusals"]:
         raise NotAuthorised(
             f"PILOT-001 paid execution is not authorised ({status['source_path']}):\n  - "
             + "\n  - ".join(status["refusals"]))
-    return BudgetGuard(authorised_usd=status["max_consumed_api_spend_usd"])
+    return {"max_consumed_api_spend_usd": status["max_consumed_api_spend_usd"],
+            "committed": status["committed_authority"]}

@@ -494,7 +494,8 @@ class GeminiVeoRoute:
             "ambiguous_dispatch": False,
             "outcome_resolved": True,
         })
-        return {"attempt": attempt, "artifact": artifact}
+        return {"attempt": attempt, "artifact": artifact,
+                "cost_record": self._cost_record(attempt, estimate)}
 
     # -- record shaping ---------------------------------------------------------------
     def _base_attempt(self, body: dict, out_dir: Path) -> dict:
@@ -580,38 +581,65 @@ class GeminiVeoRoute:
             "ambiguous_dispatch": bool(ambiguous),
             "outcome_resolved": bool(outcome_resolved),
         })
-        return {"attempt": attempt, "artifact": None}
+        return {"attempt": attempt, "artifact": None,
+                "cost_record": self._cost_record(attempt, estimate)}
+
+    def _cost_record(self, attempt: dict, estimate: Decimal) -> dict:
+        """The writer-ready immutable cost row this trial's `cost_ref` resolves to.
+
+        A modelled cost is permitted by the CpAO contract when its basis is explicit; the
+        basis text says exactly what kind of evidence this is and never claims invoice
+        truth. For ambiguous dispatch the conservative basis is preserved honestly.
+        """
+        if attempt["cost_basis"] == "conservative_reserved_estimate_billing_unknown":
+            basis = ("conservative_reserved_estimate_billing_unknown: reserved estimate "
+                     "held after ambiguous dispatch; provider billing state unknown; not "
+                     "invoice evidence")
+        else:
+            basis = (f"provisional_published_rate: USD "
+                     f"{self.frozen['provisional_usd_per_second']}/generated second, "
+                     f"{self.frozen['model_id']} 720p with audio (official Gemini API "
+                     f"pricing page, fetched 2026-08-28); modelled estimate, not invoice "
+                     f"evidence")
+        return {
+            "ledger_entry_id": attempt["cost_ref"],
+            "amount": float(estimate),
+            "currency": "USD",
+            "cost_class": "api_tool",
+            "recorded_at": self._now(),
+            "basis": basis,
+            "unit": "call",
+            "immutable": True,
+        }
 
 
 # --------------------------------------------------------- RES-007 production handoff
-# The corrected v3 writer (RES-007, gate G12) mechanically requires the inherited v2.1 call
-# provenance on every production attempt and FORBIDS eval_item_id on production attempts.
-# This adapter emits exactly the writer-ready field set, losslessly, so PILOT-001 needs no
-# ad-hoc translation after the call. It is a handoff shape, not a second persistence
-# architecture: nothing is written anywhere by this function.
-RES007_REQUIRED_FIELDS = (
-    "attempt_id", "trial_id", "provider", "model_id", "model_version", "endpoint",
-    "workflow", "prompt_hash", "config_hash", "config_location",
-    "reference_asset_hashes", "requested_at", "completed_at", "lane", "repeat_index",
-    "repeat_of_attempt_id", "retry_of_attempt_id", "retry_reason", "status", "cost_ref",
-    "storage_class",
-)
+# The merged v3 writer (resources/pilot-writer/outcome_writer.py, gate G12) mechanically
+# requires the inherited v2.1 call provenance on every production attempt, FORBIDS
+# eval_item_id on production attempts, refuses unknown extra fields, and sets the frozen
+# storage class itself. These adapters emit writer-ready call arguments, losslessly, so
+# PILOT-001 needs no ad-hoc translation after the call. They are a handoff shape, not a
+# second persistence architecture: nothing is written anywhere by these functions, and
+# there is deliberately NO local copy of the writer's required-field list — the merged
+# writer and validator are the authority, and the integration tests call them directly.
 
 
 def res007_production_attempt(outcome: dict) -> dict:
-    """Map one route outcome onto the corrected-RES-007 production-attempt handoff.
+    """Map one route outcome onto the merged-RES-007 production-attempt handoff.
 
     Returns {"writer_fields": ..., "provider_extras": ...}:
 
-      writer_fields     exactly the named arguments OutcomeWriter.record_attempt requires
-                        for a production attempt (minus step_id, which belongs to the
-                        journey, and plus storage_class for the artifact side). No
-                        eval_item_id — a production attempt serves a brief, not a
-                        benchmark item, and fabricating the link is invented provenance.
+      writer_fields     keyword arguments for OutcomeWriter.record_attempt, minus step_id
+                        (which belongs to the journey): call as
+                        `writer.record_attempt(step_id=..., **writer_fields)`.
+                        No eval_item_id — a production attempt serves a brief, not a
+                        benchmark item. No storage_class — the merged writer owns the
+                        frozen storage class and refuses it as a caller argument
+                        (CONTROLLER-EVAL-035-RETURN-REVIEW-2, correction 1).
       provider_extras   provider-specific evidence (operation name, raw status note,
-                        artifact URI, poll count, billing state) that the journey persists
-                        alongside, kept OUT of writer_fields because the corrected writer
-                        refuses unknown fields.
+                        artifact URI, poll count, billing state, storage class) that the
+                        journey persists alongside, kept OUT of writer_fields because the
+                        merged writer refuses unknown fields.
     """
     a = outcome["attempt"]
     writer_fields = {
@@ -638,7 +666,6 @@ def res007_production_attempt(outcome: dict) -> dict:
         "retry_reason": a["retry_reason"],
         "error_detail": (None if a["status"] == "ok"
                          else f"{a['error_class']}: {a['raw_status_note']}"[:300]),
-        "storage_class": a["storage_class"],
     }
     provider_extras = {
         "provider_surface": a["provider_surface"],
@@ -654,8 +681,27 @@ def res007_production_attempt(outcome: dict) -> dict:
         "cost_basis": a["cost_basis"],
         "ambiguous_dispatch": a["ambiguous_dispatch"],
         "outcome_resolved": a["outcome_resolved"],
+        "storage_class": a["storage_class"],
     }
     return {"writer_fields": writer_fields, "provider_extras": provider_extras}
+
+
+def res007_cost_ledger_entry(outcome: dict) -> dict:
+    """Keyword arguments for OutcomeWriter.add_ledger_entry for this trial's cost.
+
+    The ledger entry id IS the attempt's cost_ref, so the attempt row resolves to this
+    immutable cost row. Must be added to the writer BEFORE record_attempt — the merged
+    writer requires cost references to resolve at record time. Raises if the outcome has
+    no cost_ref: only the persistent pilot ledger produces one, and a cost row with no
+    durable identity cannot be handed to Resources.
+    """
+    record = outcome["cost_record"]
+    if not record.get("ledger_entry_id"):
+        raise ValueError(
+            "outcome carries no cost_ref. A durable cost identity comes from the "
+            "persistent pilot spend ledger (pilot_spend_ledger.open_pilot_runtime); an "
+            "in-memory guard cannot produce a Resources-resolvable cost row.")
+    return dict(record)
 
 
 # ------------------------------------------------------------------- the PILOT-001 seam

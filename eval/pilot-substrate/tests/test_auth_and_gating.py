@@ -129,7 +129,7 @@ def test_current_committed_repository_state_cannot_open_a_paid_guard(tmp_path):
     committed Controller decision carries a machine_authorisation block for PILOT-001."""
     local = _write_local(tmp_path)
     with pytest.raises(NotAuthorised, match="no committed Controller decision"):
-        PA.open_pilot_guard(local)                 # real DECISIONS_DIR, real repo state
+        PA.verify_authority(local)                 # real DECISIONS_DIR, real repo state
 
 
 def test_no_committed_decision_currently_carries_pilot_authority():
@@ -140,7 +140,7 @@ def test_no_committed_decision_currently_carries_pilot_authority():
 
 def test_default_paths_fail_closed_with_no_local_file():
     with pytest.raises(NotAuthorised, match="PILOT-001"):
-        PA.open_pilot_guard()
+        PA.verify_authority()
 
 
 def test_referencing_an_existing_but_non_authorising_decision_is_refused(tmp_path):
@@ -151,7 +151,7 @@ def test_referencing_an_existing_but_non_authorising_decision_is_refused(tmp_pat
         decision_ref=("coordination/decisions/"
                       "CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md"))
     with pytest.raises(NotAuthorised, match="no machine_authorisation block"):
-        PA.open_pilot_guard(local)
+        PA.verify_authority(local)
 
 
 def test_valid_chain_opens_a_guard_only_when_committed_authority_exists(tmp_path):
@@ -162,9 +162,9 @@ def test_valid_chain_opens_a_guard_only_when_committed_authority_exists(tmp_path
                                                               encoding="utf-8")
     local = _write_local(tmp_path,
                          decision_ref=str(decisions / "CONTROLLER-TEST-PILOT-SPEND.md"))
-    g = PA.open_pilot_guard(local, decisions_dir=decisions)
-    assert g.authorised_usd == Decimal("5")
-    assert g.spent_usd == Decimal("0")
+    auth = PA.verify_authority(local, decisions_dir=decisions)
+    assert auth["max_consumed_api_spend_usd"] == Decimal("5")
+    assert auth["committed"]["tranche_id"] == "PILOT-001"
 
 
 @pytest.mark.parametrize("mutation,expected", [
@@ -183,7 +183,7 @@ def test_local_file_defects_refused_even_with_committed_authority(tmp_path, muta
     decision.write_text(COMMITTED_BLOCK, encoding="utf-8")
     local = _write_local(tmp_path, decision_ref=str(decision), **mutation)
     with pytest.raises(NotAuthorised) as exc:
-        PA.open_pilot_guard(local, decisions_dir=decisions)
+        PA.verify_authority(local, decisions_dir=decisions)
     assert expected in str(exc.value)
 
 
@@ -212,10 +212,10 @@ def test_committed_block_defects_refused(tmp_path, overrides, expected):
     decision.write_text(_committed_decision_text(**overrides), encoding="utf-8")
     local = _write_local(tmp_path, decision_ref=str(decision))
     if expected is None:
-        assert PA.open_pilot_guard(local, decisions_dir=decisions)
+        assert PA.verify_authority(local, decisions_dir=decisions)
     else:
         with pytest.raises(NotAuthorised) as exc:
-            PA.open_pilot_guard(local, decisions_dir=decisions)
+            PA.verify_authority(local, decisions_dir=decisions)
         assert expected in str(exc.value)
 
 
@@ -226,7 +226,7 @@ def test_two_committed_authorities_are_a_conflict_not_a_choice(tmp_path):
     (decisions / "CONTROLLER-B.md").write_text(COMMITTED_BLOCK, encoding="utf-8")
     local = _write_local(tmp_path, decision_ref=str(decisions / "CONTROLLER-A.md"))
     with pytest.raises(NotAuthorised, match="conflicting authority"):
-        PA.open_pilot_guard(local, decisions_dir=decisions)
+        PA.verify_authority(local, decisions_dir=decisions)
 
 
 def test_local_decision_ref_must_name_an_actually_authorising_decision(tmp_path):
@@ -239,7 +239,7 @@ def test_local_decision_ref_must_name_an_actually_authorising_decision(tmp_path)
     (decisions / "CONTROLLER-OTHER.md").write_text("# unrelated\n", encoding="utf-8")
     local = _write_local(tmp_path, decision_ref=str(decisions / "CONTROLLER-OTHER.md"))
     with pytest.raises(NotAuthorised, match="no machine_authorisation block"):
-        PA.open_pilot_guard(local, decisions_dir=decisions)
+        PA.verify_authority(local, decisions_dir=decisions)
 
 
 def test_decision_ref_outside_the_decisions_dir_is_refused(tmp_path):
@@ -249,4 +249,4 @@ def test_decision_ref_outside_the_decisions_dir_is_refused(tmp_path):
     elsewhere.write_text(COMMITTED_BLOCK, encoding="utf-8")
     local = _write_local(tmp_path, decision_ref=str(elsewhere))
     with pytest.raises(NotAuthorised, match="is not under"):
-        PA.open_pilot_guard(local, decisions_dir=decisions)
+        PA.verify_authority(local, decisions_dir=decisions)

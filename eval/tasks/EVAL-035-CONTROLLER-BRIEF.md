@@ -1,161 +1,150 @@
-# Controller Brief — EVAL-035 (correction pass)
+# Controller Brief — EVAL-035 (third pass: RES-007 integration correction)
 
 **TASK:** EVAL-035
-**STATUS:** completed (correction pass under
-`CONTROLLER-EVAL-035-RETURN-REVIEW-2026-08-28.md`, route superseded by
+**STATUS:** completed (third implementation pass, under
+`CONTROLLER-EVAL-035-RETURN-REVIEW-2-2026-08-28.md`; route authority
 `CONTROLLER-DIRECT-GEMINI-T1-ROUTE-REVISION-2026-08-28.md`)
 
-**HUMAN SUMMARY:** The first-pass video substrate talked to Google's Veo model through fal,
-an aggregator. The Controller and user ruled that for Google models this project calls
-Google directly, so the fal execution path was **superseded by infrastructure policy** and
-has been replaced: the substrate now talks to the **direct Gemini Developer API** with the
-`GEMINI_API_KEY` credential, using the exact model identifier
-**`veo-3.1-fast-generate-preview`**. Everything the first pass got right survives — one
-generation request is one recorded trial, waiting-room polling never multiplies that count,
-the returned video is stored as exact fingerprinted binary bytes, money can only move
-behind a budget guard, and any failure after a request may have reached Google is charged
-conservatively and never retried. Two review defects are also fixed: the **spend gate is
-now mechanically real** (a locally written file can no longer manufacture authority by
-pointing at any existing decision — a committed Controller decision must carry an explicit
-machine-readable authorisation block, and none does, which a test proves), and every
-attempt now carries the **full production provenance the corrected RES-007 writer
-requires**, with a ready-made handoff so PILOT-001 needs no field translation. No money
-was spent and no provider was contacted; the live network path remains unproven until the
-first authorised pilot call, which per Controller decision should be a real production
-shot, not a throwaway smoke test.
+**HUMAN SUMMARY:** This is the **third pass** on EVAL-035, and it exists because the
+second pass had a defect its own 78 green tests could not see: EVAL-035 claimed its
+records were compatible with Resources' journey writer by checking them against a
+**hand-maintained field list** instead of the real thing. That list was wrong in one place
+(it passed `storage_class`, which the real writer refuses) and, worse, the method could
+not catch drift at all — a list that claims to be someone else's interface is a mock
+wearing a contract's clothes. The fix is structural, not cosmetic: the acceptance test now
+**imports the actual merged Resources writer from `main`, feeds it EVAL-035's real cost
+and attempt handoffs, records the real binary artifact, and runs the actual merged
+topology validator over the resulting journey — for both a successful generation and a
+preserved ambiguous failure — plus a negative control proving the validator run can
+fail.** If Resources' interface ever changes incompatibly, these tests break loudly, which
+is exactly their job. The second review also found that live spend still rested on an
+in-memory budget object — the same per-process-ceiling mistake EMP-001 already paid to
+learn, and one that produced no durable cost reference for Resources to resolve. The
+pilot now has its own **append-only, on-disk spend ledger**: reservations are persisted
+before dispatch, count against the cap, settle under a stable cost identity, survive a
+real process restart (proven with a second OS process, not a second Python object), and
+any corruption fails closed. Spend authority itself is unchanged and still closed: no
+committed Controller decision authorises pilot spend, and tests prove the repository
+state cannot open a live runtime. No provider was contacted; USD 0 spent.
 
-**WHAT I DID:** Re-read the changed authority (CONTROL-STATE, the return review, the
-direct-Gemini decision, the RES-007 correction and its corrected writer interface);
-verified the current official Google documentation for the Veo 3.1 Fast contract
-(endpoint, request schema, long-running-operation lifecycle, download, retention, safety
-behaviour, price); replaced the fal transport/route/tests with the direct Gemini
-equivalents while keeping the provider-neutral pieces (binary artifact store, EMP-001
-ambiguity semantics, fake-transport patterns); rebuilt the spend gate as a two-document
-chain (committed machine-verifiable Controller authority + matching local runtime file);
-added the RES-007 production-attempt adapter; rebased the branch onto current `main` and
-reverted the first pass's root `.gitignore` edit in favour of a task-local ignore file.
+**WHAT I DID:** Confirmed the merged RES-007 on `main` (hard precondition), read the
+merged `outcome_writer.py` and `validate_topology_v3.py` as the interface authority,
+rebased the branch onto that `main`, re-verified the official Gemini/Veo contract and
+price, removed the copied field list and the `storage_class` writer kwarg, built the
+persistent PILOT-001 spend ledger on EMP-001's accepted durable-ledger precedent (without
+touching EMP-001's frozen constants or history), wired the route's cost settlement to
+emit a writer-ready immutable cost row sharing the attempt's `cost_ref`, and wrote the
+real-writer/real-validator integration tests and the persistent-spend test matrix.
 
 **OBSERVED:**
-- **78/78 substrate tests pass** (`eval/pilot-substrate/tests/`, pytest; zero network — an
-  autouse fixture makes socket use raise and strips `GEMINI_API_KEY`; one test proves the
-  fixture bites). Regression: the EMP-001 machinery this package imports
-  (budget guard, transports, ambiguous dispatch) passes 76/76 on this machine.
-- **Current official contract** (ai.google.dev, fetched 2026-08-28): model
-  `veo-3.1-fast-generate-preview`; `POST /v1beta/models/{model}:predictLongRunning` with
-  header `x-goog-api-key`; body `instances[{prompt}]` +
-  `parameters{aspectRatio, durationSeconds, resolution}`; durations 4|6|8 s; aspects
-  16:9|9:16; 720p (1080p/4k need 8 s); audio is native with **no audio request
-  parameter**; poll `GET /v1beta/{operation.name}` until `done`; video at
-  `response.generateVideoResponse.generatedSamples[0].video.uri`; download authenticates
-  with the same header; **server retains the file 2 days only**; safety filters sometimes
-  block a generation and Google documents blocked videos as **not charged**.
-- **Current price evidence:** official Gemini API pricing page (fetched 2026-08-28): Veo
-  3.1 Fast 720p = **USD 0.10 per generated second, audio included** → an 8 s clip reserves
-  USD 0.80. Status: provisional published rate for reservation sizing; not invoice
-  evidence; execution-time re-verification still required.
-- **fal removal:** no `FAL_KEY`, `fal.run`, `X-Fal-*` or `fal-ai/` reference remains in
-  any executable file; fal appears only in prose recording the supersession.
-- **Spend gate result:** tests prove the current committed repository state cannot open a
-  paid PILOT-001 guard; a perfectly-formed local YAML is refused (no committed
-  `machine_authorisation` block exists); pointing at an existing non-authorising decision
-  is refused; defective committed blocks (string-true, wrong tranche, nonzero retries,
-  zero cap, missing approver) are each refused with their specific reason; two valid
-  committed authorities are a conflict, not a choice; a local ceiling above the committed
-  cap is refused. The positive path is proven only against a synthetic decisions
-  directory, never the repository.
-- **One-call-one-trial result:** ten polls still record one submit, one trial, one
-  settlement; a transport that would succeed on a second call never receives one; ambiguous
-  submit/poll/result/download failures settle at the reserved estimate
-  (`unknown_provisional`), persist the attempt, and dispatch nothing again.
-- **Binary result:** deliberately invalid-UTF-8 MP4-shaped fixtures round-trip with exact
-  SHA-256 and byte count; `str` payloads are refused; artifacts are immutable; provenance
-  survives JSON round-trips.
-- **RES-007 handoff result:** `res007_production_attempt()` emits the corrected writer's
-  exact production field set (verified against `work/res-007-pilot-writer`'s
-  `record_attempt` signature and G12 gate: status vocabulary, lane `native_av`, explicit
-  `completed_at` that is None only for genuinely unresolved calls, `error_detail` on
-  non-ok, `reference_asset_hashes` as an empty list, repeat/retry pinned to first-attempt
-  values) — and **no `eval_item_id`** anywhere on a production attempt. Provider extras
-  (operation name, raw status, artifact URI, poll count, billing state) ride in a separate
-  mapping because the corrected writer refuses unknown fields.
-- The request-config file written next to the artifact is hash-bound
-  (`config_hash` = SHA-256 of its bytes) and complete enough to reconstruct the exact
-  request; `prompt_hash` binds the exact prompt.
+- **Baseline:** merged RES-007 present on `main` at start (`745f43c`, writer commit
+  `85f3a4d`, G12 correction included). Branch rebased onto it; at completion the branch is
+  `behind_by: 0` against `origin/main` (re-fetched before returning).
+- **103/103 substrate tests pass**, zero network (socket-blocking autouse fixture with
+  its own sanity test; `GEMINI_API_KEY` stripped from the test environment).
+- **Primary acceptance test result: PASS.** The successful path — fake Gemini transport →
+  route → persistent ledger reservation/settlement → `res007_cost_ledger_entry` →
+  **actual merged** `OutcomeWriter.add_ledger_entry` → **actual merged**
+  `record_attempt(step_id=…, **handoff)` → **actual** `record_artifact` from the real
+  bytes → `write_archive` → **actual merged** `validate_topology_v3.py` (subprocess,
+  exactly as RES-007's own tests invoke it) → **exit 0**. The archive's single attempt,
+  single ledger row and the route outcome share one `cost_ref`; the writer's recomputed
+  artifact hash equals the route's persisted SHA-256.
+- **Failure-side integration: PASS.** An ambiguous submit timeout flows through the same
+  real chain: non-ok status, non-empty `error_detail`, `completed_at: null` (genuinely
+  unresolved), no artifact (and a test proves the merged writer itself refuses one),
+  conservative immutable cost row, validator exit 0. A negative control (attempt stripped
+  of `prompt_hash`) makes the validator exit 1, proving the subprocess judgement is real.
+- **Persistent spend results:** reservation on disk before dispatch; pending counts
+  against the cap; committed+pending can never exceed the cap; `cost_ref` stable from
+  reservation through settlement; pre-dispatch refusal releases exactly its own
+  reservation as a new record; ambiguous dispatch settles conservatively and keeps
+  headroom consumed; **a real second process (subprocess) reopening the same run sees
+  committed 0.80 / pending 0 — never zero**; malformed line, sequence gap, in-process
+  truncation, unknown record type, missing run record and run-vs-authority ceiling drift
+  all raise `LedgerCorrupt`.
+- **Spend authority unchanged and closed:** the persistent runtime opens only behind
+  `verify_authority` (committed `machine_authorisation` block + matching local file);
+  tests prove the real repository state cannot open a live runtime and that no run
+  directory is even created on refusal.
+- **Gemini contract re-verified at execution time** (official `ai.google.dev` docs +
+  pricing, fetched 2026-08-28, this pass): model `veo-3.1-fast-generate-preview` listed;
+  `POST /v1beta/models/{model}:predictLongRunning`, `x-goog-api-key`; durations 4|6|8 s;
+  16:9|9:16; 720p default; poll `GET /v1beta/{operation.name}` to `done`; result at
+  `generateVideoResponse.generatedSamples[0].video.uri`; authenticated download; 2-day
+  retention; native audio; blocked videos documented as not charged. **Price unchanged:
+  Veo 3.1 Fast 720p USD 0.10/generated second with audio** — provisional planning rate,
+  and every emitted cost row's basis text says so explicitly ("not invoice evidence").
+- No remaining fal reference in executable code (prose history only). No mocked or copied
+  Resources interface remains anywhere in the package.
 
 **INFERRED:**
-- The blocked-video representation (`raiMediaFilteredCount`/`raiMediaFilteredReasons`) is
-  documented by Google on the sibling Vertex surface for the same response type; the
-  Gemini-API page confirms blocking happens but does not show the fields. The substrate
-  reads them only if present and never interprets their absence — the conservative
-  handling stands even if the field names differ live.
-- Google documents blocked videos as unbilled, but the ledger still settles refusals at
-  the reserved estimate: a conservative overstatement is correctable by billing evidence;
-  an optimistic release is not. This slightly overstates spend against the pilot cap in
-  refusal scenarios.
+- The recurrence-prevention is the test architecture itself: EVAL-035 now has no private
+  belief about Resources' contract to go stale — the merged writer and validator are
+  executed, so incompatible drift surfaces as a natural test failure on either side's
+  branch.
+- The prior "78 tests green" result is a caution worth keeping: unit coverage of one's
+  own code proves nothing about a cross-stream boundary. Only calling the counterpart's
+  production code does.
 
-**SURPRISES / BELIEF UPDATES:** none material this pass. The direct surface is simpler
-than fal's (no platform retry or model-fallback mechanisms to suppress), which removes two
-whole classes of silent-identity risk the first pass had to defend against.
+**SURPRISES / BELIEF UPDATES:** none beyond the above; the merged writer accepted the
+corrected handoff on the first integration run once `storage_class` was removed, which is
+consistent with the review's diagnosis that it was the single blocking kwarg.
 
-**FAILURES / BLOCKERS:** none blocking. The broader EMP-001 suite still carries the known
-environmental Tesseract-model failures on a fresh machine; unrelated to this task.
+**FAILURES / BLOCKERS:** none blocking. (Known environmental Tesseract failures in the
+wider EMP-001 suite persist on this machine; unrelated.)
 
 **UNKNOWN / NOT VERIFIED:**
-- The live network path (real dispatch, real operation cadence, real download) has never
-  run — by design at USD 0. The `-preview` model id may be renamed or retired; route,
-  schema and price must be re-verified at execution time (CONTROL-STATE next-gate item).
-- Actual billed amounts, the live blocked-video response shape, and the operation's error
-  vocabulary are unverified until a real call.
-- Whether the served download `Content-Type` is exactly `video/mp4` live; an unexpected
-  type is recorded, not guessed away.
+- The live network path — real dispatch, operation cadence, blocked-video response shape,
+  operation error vocabulary, served content type, actual billed amounts — remains
+  unproven at USD 0 and must be verified at execution time before PILOT-001, including
+  re-verifying the `-preview` model identifier and price on the funded account.
+- File-locking is `fcntl`-based (this platform); cross-machine concurrency is out of
+  scope for a single-operator pilot.
 
-**ASSUMPTIONS CHALLENGED:** none new.
+**ASSUMPTIONS CHALLENGED:** none in `coordination/ASSUMPTIONS.md`.
 
-**LOCAL IMPLICATIONS:** Eval's pilot seam is unchanged in shape
-(`generate_pilot_video(...)`) but now returns attempts already speaking the corrected
-production vocabulary, so the pilot's journey recording is a direct pass-through.
+**LOCAL IMPLICATIONS:** PILOT-001's integration burden is now one pass-through:
+`add_ledger_entry(**res007_cost_ledger_entry(outcome))` then
+`record_attempt(step_id=…, **res007_production_attempt(outcome)["writer_fields"])`, with
+the persistent runtime supplying the durable `cost_ref`.
 
-**CROSS-STREAM IMPLICATIONS:** CROSS_STREAM (Resources): the handoff was aligned to the
-corrected writer on `work/res-007-pilot-writer` as of `068f235`; if RES-007's final merged
-interface changes further, the adapter (one function) is the only touch point — proposed
-integration check at the pilot boundary, not enacted here.
+**CROSS-STREAM IMPLICATIONS:** none pending — the boundary is now proven against merged
+Resources code, not proposed. Any future Resources interface change will surface here as
+a failing integration test, which is the intended coupling.
 
 **ARCHITECTURAL IMPLICATIONS:** none.
 
 **DECISIONS NEEDED FROM CONTROLLER:**
-1. Accept the corrected EVAL-035 for bounded Level-1 Governor review (the review gate the
-   return-review decision names).
+1. Accept the third pass and route EVAL-035 to bounded Level-1 Governor review.
 2. When pilot spend is eventually approved, the approving decision must carry the
-   `machine_authorisation` YAML block this substrate verifies (format documented in
-   `pilot_authorisation.py`); without it the gate stays closed by design.
+   `machine_authorisation` block (format in `pilot_authorisation.py`); the persistent
+   runtime then opens against it with the run ceiling bound to that authority.
 
 **EVIDENCE WORTH HUMAN INSPECTION:**
-- `eval/pilot-substrate/tests/test_auth_and_gating.py` — the spend-authority tests are
-  the correction's core: read
-  `test_current_committed_repository_state_cannot_open_a_paid_guard`.
-- `eval/pilot-substrate/tests/test_provenance_res007.py` — the RES-007 boundary in
-  executable form.
+- `eval/pilot-substrate/tests/test_res007_integration.py` — the whole point of this
+  pass: real writer, real validator, success + preserved failure + negative control.
+- `eval/pilot-substrate/tests/test_pilot_spend_ledger.py` — restart continuity proven
+  with a second OS process.
 
-**FILES CREATED / MODIFIED:** rewrote `video_route.py` (direct Gemini/Veo),
-`pilot_authorisation.py` (machine-verifiable chain), `README.md`, `tests/conftest.py` and
-all test modules; added `tests/test_provenance_res007.py` and a task-local
-`eval/pilot-substrate/.gitignore`; reverted the first pass's root `.gitignore` change;
-`artifact_store.py` preserved unchanged (provider-neutral). EMP-001 code untouched
-(semantics imported, not copied).
+**FILES CREATED / MODIFIED:** added `pilot_spend_ledger.py`,
+`tests/test_pilot_spend_ledger.py`, `tests/test_res007_integration.py`; modified
+`video_route.py` (cost-record emission, handoff without `storage_class`/field list,
+`res007_cost_ledger_entry`), `pilot_authorisation.py` (`verify_authority` replaces the
+in-memory guard opener), `tests/conftest.py`, `tests/test_provenance_res007.py`,
+`tests/test_auth_and_gating.py`, `README.md`, this brief. EMP-001 and Resources files
+untouched.
 
-**RECOMMENDED NEXT STEP:** Level-1 Governor review of this branch. Before any live
-PILOT-001 call: execution-time verification of model id/schema/price on the funded
-account, the Aight asset package, the frozen pilot brief/acceptance record, and a
-Controller decision carrying the machine-verifiable spend block after explicit user
-approval. Per Controller disposition, the first paid call should be a real PILOT-001
-production shot chosen so an early transport failure is still useful pilot evidence — no
-separate smoke tranche.
+**RECOMMENDED NEXT STEP:** Level-1 Governor review. The pre-PILOT-001 gates are
+unchanged: Aight asset package, frozen brief/acceptance record, execution-time
+route/price verification on the funded account, and the user-approved spend cap recorded
+as committed machine-verifiable authority. Per the standing Controller disposition, the
+first paid call is a real production shot — no smoke tranche.
 
-**EPISTEMIC CHECK:** Confirmed — provider-contract facts are labelled with source and
-fetch date; the one cross-surface field-name inference is labelled as such; the live path
-is stated as unproven; no number is presented as invoice evidence; no authority was
-created.
+**EPISTEMIC CHECK:** Confirmed — the integration claims name the exact merged files and
+their invocation form; the prior pass's defect is stated plainly rather than reframed;
+cost rows are labelled modelled/conservative, never invoice truth; live-path unknowns are
+listed; no authority was created.
 
-**CONFIRMATION:** No unapproved next strategic step was started. No paid call, no real
-generation, no Registry write, no second provider, no spend authority created, no
-Resources-owned file modified.
+**CONFIRMATION:** No unapproved next strategic step was started. Real provider calls: 0.
+Spend: USD 0. Generations: 0. Registry writes: 0. Resources contracts unchanged.

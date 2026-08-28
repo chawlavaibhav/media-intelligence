@@ -139,6 +139,36 @@ def gemini_key(monkeypatch):
     return "test-key-not-a-real-credential"
 
 
+def make_pilot_authority(tmp_path, cap: str = "5.00"):
+    """A complete SYNTHETIC authority chain in tmp_path: a decisions dir holding one
+    Controller-format decision with a valid machine_authorisation block, plus a matching
+    local runtime file. Test fixture only — never the repository's decisions directory,
+    which (correctly) authorises nothing today."""
+    import yaml
+
+    decisions = tmp_path / "decisions"
+    decisions.mkdir(exist_ok=True)
+    decision = decisions / "CONTROLLER-TEST-PILOT-SPEND.md"
+    decision.write_text(
+        "# Controller — synthetic test decision (test fixture, not real authority)\n\n"
+        "```yaml\n"
+        "machine_authorisation:\n"
+        "  tranche_id: PILOT-001\n"
+        "  authorised: true\n"
+        f"  max_consumed_api_spend_usd: {cap}\n"
+        "  retries_authorised: 0\n"
+        "  approved_by: test-controller\n"
+        "  approved_at: \"2026-08-28\"\n"
+        "```\n", encoding="utf-8")
+    local = tmp_path / "authorization.pilot.local.yaml"
+    local.write_text(yaml.safe_dump({
+        "authorised": True, "tranche_id": "PILOT-001",
+        "max_consumed_api_spend_usd": float(cap), "retries_authorised": 0,
+        "approved_by": "test-fixture", "approved_at": "2026-08-28",
+        "decision_ref": str(decision)}), encoding="utf-8")
+    return local, decisions
+
+
 def fixed_clock():
     """Deterministic injected clock: monotonic fake ISO timestamps."""
     state = {"t": 0}
