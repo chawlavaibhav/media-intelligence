@@ -5,22 +5,36 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 28 Aug 2026 — compacted by the context-architecture migration; content state as of the
-`CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` decision. The previous full
-text is preserved at `history/CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md`; the last Governor
-reconciliation was GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`).
+**Updated:** 28 Aug 2026 — post context-architecture migration, with the revised outcome-first
+programme and zero-spend pre-pilot tranche authorised by
+`CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`. The previous full text is preserved
+at `history/CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md`; the last Governor reconciliation
+was GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`).
 
 **Read `PROJECT-MEMORY.md` first.**
 
 ## Active / authorised
 
-- **No domain execution lane is currently active.**
-- The **next Controller priority** is to authorise and run a **real customer vertical-slice
-  pilot**: customer prompt → Normalized Request → Creative IR → manually authored production recipe
-  → real generation → explicit human inspection → bounded repair → candidate accepted outcome.
-  Product-learning only — not Registry evidence, not Stage C, no CpAO population claim. **Pilot
-  execution is not yet authorised by any decision on `main`.**
-  Authority: `coordination/decisions/CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md`.
+Four **zero-spend pre-pilot tasks are authorised in parallel**:
+
+| Task | Purpose | Spend / generation authority |
+|---|---|---|
+| **CANON-012** | First Aight Normalized Request + Creative IR instance; expose schema friction without Canon or production routing | USD 0; 0 generations |
+| **CANON-013** | Feasibility-triage the 16 runnable marketplace cases and propose an 8-development / 8-holdout split | USD 0; 0 generations |
+| **EVAL-035** | Implement exactly one pilot-capable video route substrate with binary artifact handling and fake-transport tests | USD 0; **no real provider call** |
+| **RES-007** | Implement the minimal v3 outcome writer so a real production journey can be persisted and CpAO recomputed | USD 0; synthetic bytes only |
+
+Authority: `coordination/decisions/CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`.
+
+The next integration target remains **PILOT-001**: customer prompt → Normalized Request → Creative IR
+→ manually authored production recipe → real generation → explicit human inspection → bounded repair
+→ candidate accepted outcome. It is product-learning only — not Registry evidence, not Stage C.
+**PILOT-001 paid execution is NOT authorised yet.** It waits for Controller review of CANON-012,
+EVAL-035 and RES-007, a usable Aight asset package, execution-time route verification, and explicit
+user approval of a pilot spend cap.
+
+CANON-013 runs independently because its output gates the later architecture experiment, not the
+Aight pilot.
 
 ## Stopped / deferred / cancelled
 
@@ -130,14 +144,15 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Controller decides and authorises the vertical-slice pilot** (the current priority above).
-2. **Registry text rows stay blocked**; admission semantics stay as they are.
-3. **Temporal qualification** waits on its four prerequisites and on the Controller returning to
-   that objective.
-4. **Prices remain incomplete** — 0 of 4 stages price-complete; `Frontier Clouds` unidentified.
-5. **HED-1 undecided** — which human review time counts as required cost in fully-loaded CpAO.
-6. **Stream-owned staleness** routed by GOV-006, owners to fix: `eval/HANDOFF.md` still claims ₹0
-   spend/no checker run (**G6-05**, escalated); `resources/HANDOFF.md` still calls RES-005 unmerged
-   (**G6-04**); `canon/HANDOFF.md` omits CANON-011 (**G6-06**); the temporal spec understates
-   human adjudication — frozen map says five, spec says four (**G6-01**). **This file governs where
-   any of them disagrees with it.**
+1. **Review CANON-012, EVAL-035 and RES-007**. If accepted, freeze PILOT-001's brief, asset refs,
+   production recipe shape, human acceptance record and explicit API-spend cap before any generation.
+2. **Review CANON-013** and freeze the later architecture experiment's development/holdout split and
+   decision protocol before architecture-test media exists.
+3. **Registry text rows stay blocked**; admission semantics stay as they are.
+4. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
+   Registry decision depends on those automated measurements.
+5. **Prices remain incomplete** — execution-time route/price verification is required before each
+   paid tranche; no broad price-refresh task is authorised.
+6. **HED-1 remains undecided** and must be resolved before fully-loaded Stage-C CpAO is scored.
+7. **Stream-owned staleness** routed by GOV-006 remains non-blocking; this file governs where stale
+   handoffs/spec prose disagree with current decisions.
