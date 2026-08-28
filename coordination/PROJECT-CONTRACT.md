@@ -96,8 +96,10 @@ rejecting assumptions, scope changes, schema changes, milestones. **The Controll
 Repository Governor (fifth, independent role — approved 25 Aug 2026): repository coherence, the
 canonical `PROJECT-MEMORY.md`, per-task integrity review and periodic repository-health audits. It
 does **not** own project strategy or any stream's methodology, and it may write only
-`PROJECT-MEMORY.md`, `governance/**`, and status/supersession corrections in `coordination/**` when
-an approved governance task includes that scope. It flags and routes domain-owned defects rather
+`PROJECT-MEMORY.md`, project-wide derived narrative under `history/**`, `governance/**`, and
+status/supersession corrections in `coordination/**` when an approved governance task includes that scope.
+`history/**` is never authoritative domain evidence; stream-owned historical/evidence material remains
+inside its owning stream. It flags and routes domain-owned defects rather
 than fixing them. Contract: `governance/GOVERNOR-CONTRACT.md`; approved design:
 `docs/superpowers/specs/2026-08-25-repository-governor-project-memory-design.md`.
 
