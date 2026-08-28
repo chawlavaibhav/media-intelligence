@@ -101,6 +101,7 @@ its triggers, stop-and-route over guessing.
 **May write by default:**
 
 - `PROJECT-MEMORY.md`
+- `history/**` — **project-wide derived narrative/history only**; never domain evidence, never a substitute for stream-owned authoritative artifacts
 - `governance/**`
 - Explicit supersession/status markers, and factual current-state corrections, in
   `coordination/**` — **only when an approved governance task includes that scope.**
