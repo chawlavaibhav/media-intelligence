@@ -135,6 +135,8 @@ only; not authorised) · Production IR / Planner.
   source lineage (173 shared files); BSTD is the only genuine cross-lineage reserve, held untouched.
   Rights: internal research/evaluation only.
 
+**Exact-text imperfection is not a programme-wide blocker.** It may block a job that requires certified exact text, but it does not stall unrelated image/video/audio work.
+
 **Two text standards exist and every text result must name its standard:** *strict exactness
 certification* (zero false passes — nothing has ever passed) vs *benchmark-grade OCR*
 (`benchmark_text_ocr_v1`, bounded error — Cloud Vision passes). Both true simultaneously; neither
