@@ -154,11 +154,15 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 2. **The single authorised repair is now allocated to one final provider regeneration** under
    `CONTROLLER-PILOT-001-CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md`. Attempt 2 may consume
    another provisional USD 0.80 within the existing USD 2.00 cap. 0 retries; no third provider call.
+   **The segmented repair prompt in that decision was withdrawn before dispatch**; the current
+   frozen Attempt 2 prompt is the single-scene prompt in
+   `CONTROLLER-PILOT-001-ATTEMPT-2-PROMPT-SUPERSESSION-2026-08-28.md`, with the execution packet at
+   `coordination/plans/2026-08-28-PILOT-001-ATTEMPT-2-EXECUTION-ADDENDUM.md`.
 3. **After Candidate 2, no repair remains.** Human-review it once; PASS closes T1 with an accepted
    outcome, FAIL closes T1 as a bounded product/integration failure.
-5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
+4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
-6. **Registry text rows stay blocked**; admission semantics stay as they are.
+5. **Registry text rows stay blocked**; admission semantics stay as they are.
 6. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
    Registry decision depends on those automated measurements.
 7. **Prices remain incomplete** — execution-time route/price verification is required before each
