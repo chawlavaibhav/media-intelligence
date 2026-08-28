@@ -1,0 +1,349 @@
+# CANON-012 — Normalized Request instance NR-PILOT-001-AIGHT-V1
+#
+# The project's first real Normalized Request: a conservative record of what the customer (the
+# Controller-supplied Aight product-learning brief) actually asked for. Nothing here selects a
+# model, provider or production route, and nothing is invented to fill a schema field.
+#
+# Governing grammar: canon/experiments/pre-execution-freeze/MEDIA-REQUEST-GRAMMAR-v1.yaml (v1).
+# That file's own header still reads PROPOSED_READY_FOR_FREEZE; per coordination/CONTROL-STATE.md
+# such headers are stale and the grammar is in force for engineering use.
+#
+# INSTANCE-LEVEL ANNOTATION (recorded as friction F1 in CANON-012-CONTROLLER-BRIEF.md; the grammar
+# file itself is NOT modified): the grammar's provenance vocabulary
+# (customer_stated | customer_implied | system_derived | absent) cannot express
+# "experiment-supplied fixture". Where a value comes from the CANON-012 task file rather than from
+# the customer, this instance marks it:
+#     provenance: system_derived
+#     fixture: true          # instance-level annotation, not a grammar field
+# with a rationale naming the source. Nothing carrying fixture: true may ever be treated as
+# customer intent.
+# This annotation is a WORKAROUND LOCAL TO THIS INSTANCE — not an accepted schema extension, not
+# new frozen vocabulary, and not precedent for future tasks. The underlying gap is retained as an
+# open friction per coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md,
+# which also decided the schemas are not to be revised before PILOT-001.
+
+meta:
+  instance_id: NR-PILOT-001-AIGHT-V1
+  task: CANON-012
+  date: 2026-08-28
+  grammar_id: media_request_grammar
+  grammar_version: v1
+  customer: >
+    aight / getaight.ai. The Controller-supplied product-learning brief in
+    canon/tasks/CANON-012-AIGHT-NR-CREATIVE-IR-SEED.md is treated as the customer voice of record
+    for PILOT-001.
+  canon_used: none   # CANON-012 boundary — base architecture only, no Canon retrieval
+
+# What the customer actually said — the text of record, preserved verbatim from the task file.
+raw_input: |
+  Create a short premium festive promotional video for aight / getaight.ai, positioning the
+  product as an outcome API. The commercial claims that must remain exact are "Image ₹9" and
+  "Video ₹99". The work should feel modern and premium for the Indian festive context rather
+  than gaudy. Where the aight logo/wordmark appears, it must remain exact. A 12-second duration
+  and 9:16 delivery may be used as experiment-supplied fixtures, not customer-stated facts,
+  unless a newer Controller-supplied brief says otherwise.
+input_lang: en
+
+fields:
+
+  R01_requested_operation:
+    value: generate
+    provenance: customer_stated
+    operation: preserve
+    evidence: '"Create a short premium festive promotional video" — a new artefact; no supplied artefact is being changed'
+
+  R02_supplied_assets:
+    value: []
+    provenance: absent
+    note: >
+      No asset was supplied. The brief REFERENCES the aight logo/wordmark and constrains it
+      ("must remain exact") but does not provide it. The wordmark master is therefore a required
+      external asset that does not exist in this repository (see required_external_assets below
+      and ambiguity AMB-03). It is recorded as missing, not invented.
+
+  R03_mutation_intents:
+    value: absent
+    provenance: absent
+    note: not required — requested_operation is generate; nothing supplied is being mutated.
+
+  R04_deliverable_set:
+    value:
+      cardinality: 1
+      variation_axis: none
+      acceptance_basis: per_deliverable
+    provenance: customer_implied
+    operation: derive
+    evidence: >
+      Grammar default_when_absent rule. The customer asked for "a ... video" (singular) and stated
+      no set, no variants, no selection basis.
+
+  R05_modality:
+    value: video
+    provenance: customer_stated
+    operation: preserve
+    evidence: '"promotional video"'
+
+  R06_entities:
+    value:
+      - entity_id: aight_product
+        entity_type: product
+        role: hero
+        identity_invariants: []
+        allowed_variation: {}
+        provenance: customer_implied
+        operation: derive
+        evidence: >
+          The video is "for aight / getaight.ai, positioning the product" — the product is the
+          subject of the promotion. It is an API service with no customer-stated visual identity;
+          how (or whether) it is depicted on screen is a Creative IR decision, not a customer fact.
+      - entity_id: aight_wordmark
+        entity_type: brand_mark
+        role: supporting
+        identity_invariants: [exact_reproduction_of_official_wordmark]
+        allowed_variation:
+          placement: true
+          scale: true
+          letterforms: false
+          glyph_shapes: false
+        provenance: customer_stated   # the exactness CONSTRAINT is stated; presence is not — see notes
+        operation: preserve
+        evidence: '"Where the aight logo/wordmark appears, it must remain exact"'
+        presence_note: >
+          The customer constrained the wordmark CONDITIONALLY ("where ... appears") and never stated
+          that it must appear, or where. Presence and placement are therefore NOT customer
+          requirements (AMB-02). The role value "supporting" is system_derived only because the
+          grammar's role enum has no way to say "conditionally present" (see friction F6 in the
+          Controller Brief).
+        identity_note: >
+          "Exact" cannot be operationalised without the official wordmark master, which was not
+          supplied (AMB-03). Whether "the wordmark" means a specific typographic asset or merely
+          the string "aight" is undetermined.
+
+  R07_relationships:
+    value: []
+    provenance: absent
+
+  R08_text_requirements:
+    value:
+      - text_id: T1
+        content: "Image ₹9"
+        exactness: exact
+        script: latin
+        role: price
+      - text_id: T2
+        content: "Video ₹99"
+        exactness: exact
+        script: latin
+        role: price
+    provenance: customer_stated
+    operation: preserve
+    evidence: '"The commercial claims that must remain exact are \"Image ₹9\" and \"Video ₹99\""'
+    presence_note: >
+      Calling them "commercial claims that must remain exact" presupposes they appear in the
+      deliverable — presence is customer_implied. Placement, styling, prominence and timing are
+      absent (AMB-07).
+    script_note: >
+      "₹" (U+20B9) is a currency sign, neither Latin nor Devanagari script. The script vocabulary
+      (latin | devanagari | mixed | other) does not address symbols or numerals; "latin" is used as
+      the nearest value. Recorded as minor friction F8.
+
+  R09_brand_requirements:
+    value:
+      assets: []          # required but not supplied — see required_external_assets
+      palette: absent     # no brand palette or type spec supplied or referenced
+      mandatories: []     # the exact-text and wordmark constraints are recorded at R08 and R06
+      prohibitions:
+        - visually_gaudy_treatment
+    provenance: customer_stated
+    operation: preserve
+    evidence: '"rather than gaudy" — a stated prohibition on the treatment, subjectively judged'
+
+  R10_language_topology:      # required: modality is video and text_requirements are present
+    value:
+      spoken: absent          # no speech, voiceover or dialogue was requested or excluded (AMB-05)
+      on_screen_copy: en
+      subtitles: absent
+      viewer_locale: in
+    on_screen_copy_provenance: customer_implied
+    on_screen_copy_evidence: the stated exact copy ("Image ₹9", "Video ₹99") is English/Latin
+    viewer_locale_provenance: customer_implied
+    viewer_locale_evidence: '"relevant to an Indian festive context"'
+    operation: preserve | derive
+
+  R11_speaker_topology:
+    value: absent
+    provenance: absent
+    note: >
+      Conditionally required only when speech is requested. Speech was neither requested nor
+      excluded — the brief says nothing about audio at all (AMB-05). Absence is preserved.
+
+  R12_temporal_structure:     # required: modality is video
+    value:
+      duration_seconds: 12
+      shot_count: absent
+      beats: absent
+      continuity_requirements: absent
+    duration_provenance: system_derived
+    duration_fixture: true    # instance-level annotation — see header note and friction F1
+    duration_operation: decide
+    duration_rationale: >
+      Experiment-supplied fixture from the CANON-012 task file, NOT a customer statement. The only
+      customer statement about duration is the qualitative word "short", with which a 12-second
+      fixture is consistent.
+    customer_statement_on_duration: '"short" (qualitative only)'
+
+  R13_subject_motion:
+    value: absent
+    provenance: absent
+    note: the customer said nothing about what any subject does.
+
+  R14_camera_motion:
+    value: absent
+    provenance: absent
+    operation: delegate
+    note: >
+      Per the grammar's own note on R14, a customer who says nothing about the camera has delegated
+      it. Delegation is recorded; no camera plan is invented here.
+
+  R15_delivery:
+    value:
+      platform: absent
+      aspect_ratios: ["9:16"]
+      resolution: absent
+      safe_areas: absent
+    aspect_ratio_provenance: system_derived
+    aspect_ratio_fixture: true   # instance-level annotation — see header note and friction F1
+    aspect_ratio_operation: decide
+    aspect_ratio_rationale: >
+      Experiment-supplied fixture from the CANON-012 task file, NOT a customer statement.
+
+  R16_specification_provenance:
+    provenance: system_derived   # this field is ABOUT provenance, per the grammar
+    operation: derive
+    value:
+      customer_specified:
+        - R01_requested_operation
+        - R05_modality
+        - R06_entities.aight_wordmark.identity_invariants   # the conditional exactness constraint
+        - R08_text_requirements
+        - R09_brand_requirements.prohibitions
+        - R18_acceptance_intent
+      customer_omitted:
+        - R02_supplied_assets
+        - R03_mutation_intents
+        - R04_deliverable_set
+        - R07_relationships
+        - R10_language_topology.spoken
+        - R10_language_topology.subtitles
+        - R11_speaker_topology
+        - R12_temporal_structure   # except the qualitative word "short"
+        - R13_subject_motion
+        - R14_camera_motion
+        - R15_delivery             # platform / resolution / safe areas
+      derived:
+        - field: R04_deliverable_set
+          from: grammar default_when_absent rule
+        - field: R06_entities.aight_product
+          from: '"for aight / getaight.ai, positioning the product"'
+        - field: R10_language_topology.on_screen_copy
+          from: script of the customer-stated exact copy
+        - field: R10_language_topology.viewer_locale
+          from: '"Indian festive context"'
+        - field: R12_temporal_structure.duration_seconds
+          from: "CANON-012 experiment-supplied fixture (fixture: true)"
+        - field: R15_delivery.aspect_ratios
+          from: "CANON-012 experiment-supplied fixture (fixture: true)"
+
+  R17_ambiguity_markers:
+    provenance: system_derived
+    operation: flag
+    value:
+      - marker_id: AMB-01
+        marker_type: underspecification
+        detail: >
+          "Festive" is not tied to any named festival or occasion. A generic premium festive
+          treatment is safe; committing to a specific festival (e.g. Diwali) would add a customer
+          requirement they did not state.
+        affected_fields: [R18_acceptance_intent]
+      - marker_id: AMB-02
+        marker_type: underspecification
+        detail: >
+          The wordmark is only conditionally constrained ("where ... appears"). Whether it must
+          appear at all, and where, is unstated.
+        affected_fields: [R06_entities, R09_brand_requirements]
+      - marker_id: AMB-03
+        marker_type: underspecification
+        detail: >
+          No official logo/wordmark asset was supplied, and none exists in this repository.
+          "Must remain exact" has no ground truth until the master asset exists. Also undetermined:
+          whether "logo/wordmark" means a specific typographic asset or the plain string "aight".
+        affected_fields: [R02_supplied_assets, R06_entities, R09_brand_requirements]
+      - marker_id: AMB-04
+        marker_type: underspecification
+        detail: >
+          No audience is stated. "Outcome API" plus INR pricing weakly implies Indian commercial
+          buyers of media generation, but who exactly (developers, founders, marketers) is a
+          decision, not a fact. Note: the grammar has no audience field at all — see friction F6.
+        affected_fields: [R18_acceptance_intent]
+      - marker_id: AMB-05
+        marker_type: underspecification
+        detail: >
+          Audio is entirely unaddressed: no statement about music, voiceover, sound design or
+          silence in either direction.
+        affected_fields: [R10_language_topology, R11_speaker_topology]
+      - marker_id: AMB-06
+        marker_type: underspecification
+        detail: >
+          The brief names "aight / getaight.ai" but never says whether the URL should appear on
+          screen or whether any call-to-action exists.
+        affected_fields: [R08_text_requirements, R09_brand_requirements]
+      - marker_id: AMB-07
+        marker_type: underspecification
+        detail: >
+          Placement, styling, prominence and on-screen timing of the two exact price claims are
+          unstated; only their content and exactness are customer requirements.
+        affected_fields: [R08_text_requirements]
+
+  R18_acceptance_intent:
+    provenance: customer_stated
+    operation: preserve
+    value:
+      stated_success_criteria:
+        - the work feels modern and premium
+        - the work is relevant to an Indian festive context
+        - the product is positioned as an outcome API
+      stated_rejection_criteria:
+        - a visually gaudy treatment
+      hard_constraints:
+        - '"Image ₹9" reproduced exactly'
+        - '"Video ₹99" reproduced exactly'
+        - the aight wordmark is exact wherever it appears
+      soft_preferences: []
+      free_choices: []
+    note: >
+      Per grammar RULE-07, no numeric threshold, metric or evaluator name appears here. The empty
+      lists are facts about the request, not gaps to fill.
+
+# ── Required external assets, by role (a CANON-012 deliverable; not a grammar field) ─────────────
+# The grammar registers only SUPPLIED assets (R02). There is no field for "required asset that does
+# not exist yet" — recorded as friction F7. Listed here so the gap is auditable in one place.
+# This section is a WORKAROUND LOCAL TO THIS INSTANCE — not a schema extension and not precedent
+# for future tasks (CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md).
+
+required_external_assets:
+  - role: brand_asset
+    description: official aight logo/wordmark master (vector or high-resolution raster)
+    why_required: >
+      the only possible ground truth for the customer's "must remain exact" constraint; without it
+      acceptance-contract entry AC-03 cannot be verified and any on-screen wordmark is unverifiable
+    exists_in_this_repository: false   # verified by search on 2026-08-28; no Aight asset committed
+    supplied_by_customer: false
+    status: MISSING — required pilot input (PILOT gate condition 1 in CONTROL-STATE.md)
+  - role: brand_asset
+    description: brand palette / typography specification
+    why_listed: >
+      NOT customer-required by this brief; would govern "premium" consistency if it exists.
+      Listed only so its absence is a recorded fact rather than an oversight.
+    exists_in_this_repository: false
+    supplied_by_customer: false
+    status: absent — not stated by the customer; no requirement is invented from it
