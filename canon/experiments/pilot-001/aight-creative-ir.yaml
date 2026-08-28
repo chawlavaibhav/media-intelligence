@@ -1,0 +1,554 @@
+# CANON-012 — Creative IR instance CIR-PILOT-001-AIGHT-V1
+#
+# The project's first real Creative IR: WHAT should exist for the Aight festive promo — objective,
+# audience, message, hierarchy, constraints and acceptance contract. Model-independent by
+# construction: nothing here names a model, provider, workflow or production route.
+#
+# Governing spec: canon/knowledge/SPEC-01-creative-ir.md (v0.1, locked).
+# Upstream object: canon/experiments/pilot-001/aight-normalized-request.yaml (NR-PILOT-001-AIGHT-V1).
+#
+# CANON-012 boundary: NO Canon knowledge was retrieved or applied. Every canon_refs list is
+# deliberately empty, so this instance is a fair "base architecture" arm for later experiments.
+# Creative decisions below are ordinary reasoning from the brief only, each labelled decide with a
+# rationale.
+#
+# Confidence fields: SPEC-01 asks for numeric confidence (0.0–1.0) on derived / system_decided
+# values, but PROJECT-CONTRACT separation 8 forbids invented decimal confidence and no calibration
+# procedure exists. This instance records confidence: not_assigned throughout — friction F5 in the
+# Controller Brief.
+#
+# Fixture values (12 s, 9:16) come from the CANON-012 task file, not the customer. SPEC-01's
+# provenance vocabulary (user | derived | system_decided | brand_policy | customer_memory | default)
+# cannot express this either; they are marked system_decided with fixture: true — friction F1.
+
+meta:
+  instance_id: CIR-PILOT-001-AIGHT-V1
+  task: CANON-012
+  date: 2026-08-28
+  spec: SPEC-01-creative-ir v0.1
+  normalized_request: NR-PILOT-001-AIGHT-V1
+  canon_used: none
+
+# ── assets ───────────────────────────────────────────────────────────────────────────────────────
+# SPEC-01 assets[] registers supplied references. Nothing was supplied. The required-but-missing
+# wordmark master cannot be registered here without inventing it — it is recorded in the Normalized
+# Request's required_external_assets and as friction F7.
+assets: []
+
+# ── entities ─────────────────────────────────────────────────────────────────────────────────────
+# No customer-stated visual entities exist, and the chosen concept (below) deliberately requires no
+# identity-bearing subject — so nothing is invented here. Two mapping notes:
+#   * the aight wordmark is a brand_mark in the request grammar, but SPEC-01's entity types
+#     (product|mascot|person|character|venue|object) have no brand_mark — it is represented under
+#     brand.logo instead (friction F3);
+#   * the exact price texts are text_element entities in the grammar; they are represented under
+#     brand.mandatories (friction F4).
+entities: []
+relationships: []
+
+# ── intent ───────────────────────────────────────────────────────────────────────────────────────
+intent:
+  objective:
+    class:
+      value: awareness
+      operation: decide
+      provenance: system_decided
+      strength: soft
+      status: resolved
+      confidence: not_assigned
+      rationale: >
+        A positioning brief ("positioning the product as an outcome API") with price anchors and no
+        stated action mechanics (no deadline, discount, signup step) reads as
+        awareness/positioning. "offer" was considered because two exact prices are mandated, and
+        rejected: the prices function as proof of the positioning ("outcomes at fixed small
+        prices"), not as a promotion.
+      canon_refs: []
+    description:
+      value: >
+        Establish aight as an outcome API — you ask for media and receive a finished image for ₹9
+        or a finished video for ₹99 — rendered in a premium, modern, Indian-festive register.
+      operation: derive
+      provenance: derived
+      strength: soft
+      status: resolved
+      evidence: raw brief (positioning statement + exact price claims + festive/premium direction)
+      canon_refs: []
+  desired_action:
+    value: null
+    operation: ask
+    provenance: default
+    status: unresolved
+    blocking: false
+    note: >
+      No call-to-action was stated. Whether "getaight.ai" appears on screen is AMB-06 in the
+      Normalized Request. Non-blocking for a positioning promo; a system-authored CTA would be a
+      production-time proposal, never a customer requirement.
+    canon_refs: []
+  success_criteria:   # what the customer said they care about — carried, not invented
+    value:
+      - the work feels modern and premium
+      - the work is relevant to an Indian festive context
+      - the product is positioned as an outcome API
+      - '"Image ₹9" and "Video ₹99" remain exact'
+      - the aight wordmark is exact wherever it appears
+      - the treatment is not gaudy
+    operation: preserve
+    provenance: user
+    strength: hard
+    status: resolved
+    evidence: brief acceptance statements (NR field R18)
+    canon_refs: []
+
+# ── audience ─────────────────────────────────────────────────────────────────────────────────────
+audience:
+  who:
+    value: >
+      Indian commercial buyers of media generation — founders, marketers and product/engineering
+      teams who would call an API rather than hire production.
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    rationale: >
+      The customer stated no audience (AMB-04). "Outcome API" + INR pricing + Indian festive
+      context imply Indian commercial API buyers; the specific segmentation is a soft system
+      decision, safe because the stated creative criteria (modern, premium, festive, not gaudy) do
+      not depend on it.
+    canon_refs: []
+  context:
+    value: festive-season viewing in a vertical feed placement
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    rationale: >
+      Follows from the 9:16 fixture and festive brief; the platform itself is unstated and remains
+      free.
+    canon_refs: []
+  language:
+    spoken:
+      value: none
+      operation: decide
+      provenance: system_decided
+      strength: soft
+      status: resolved
+      confidence: not_assigned
+      rationale: >
+        No speech was requested (AMB-05); a 12-second positioning piece does not require dialogue.
+        Reversible if the Controller resolves AMB-05 otherwise.
+      canon_refs: []
+    on_screen_copy:
+      value: en
+      operation: derive
+      provenance: derived
+      strength: hard
+      status: resolved
+      evidence: the customer-stated exact copy is English/Latin ("Image ₹9", "Video ₹99")
+      canon_refs: []
+    subtitles:
+      value: none
+      operation: derive
+      provenance: derived
+      strength: soft
+      status: resolved
+      evidence: no speech → nothing to subtitle
+      canon_refs: []
+    viewer:
+      value: en-IN
+      operation: derive
+      provenance: derived
+      strength: soft
+      status: resolved
+      evidence: '"Indian festive context" + English on-screen copy'
+      canon_refs: []
+
+# ── message ──────────────────────────────────────────────────────────────────────────────────────
+message:
+  proposition:
+    value: "Finished media as an API call: an image for ₹9, a video for ₹99."
+    operation: derive
+    provenance: derived
+    strength: soft
+    status: resolved
+    evidence: positioning statement + the two exact price claims
+    note: >
+      This is the message, not final copy. The only copy with customer authority are the two exact
+      strings; all other wording remains open.
+    canon_refs: []
+  support:
+    value:
+      - fixed, small INR prices stated plainly (proof the promise is concrete)
+      - outcome framing — a finished image/video, not tooling or effort
+    operation: derive
+    provenance: derived
+    strength: soft
+    status: resolved
+    canon_refs: []
+  emotional_target:
+    value: premium confidence with festive warmth — celebratory but restrained
+    operation: derive
+    provenance: derived
+    strength: soft
+    status: resolved
+    evidence: '"modern and premium ... Indian festive context ... rather than gaudy"'
+    canon_refs: []
+
+# ── creative ─────────────────────────────────────────────────────────────────────────────────────
+creative:
+  concept:
+    value: >
+      Understated festive premium: a dark, warm, luminous visual field — festive light and rich
+      material, never clutter — over which the two price claims land as the message, resolving to
+      the aight brand.
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    rationale: >
+      Minimal concept satisfying every stated criterion without adding subjects, characters or a
+      named festival (AMB-01: generic festive is the safe reading). Deliberately thin so later
+      Canon-arm experiments have honest headroom over this base instance.
+    canon_refs: []
+  hook:
+    value: null
+    operation: delegate
+    provenance: default
+    strength: free
+    status: resolved
+    note: how the first moment earns attention is deliberately free at this stage.
+    canon_refs: []
+  hierarchy:
+    value:
+      - rank: 1
+        element_ref: brand.mandatories.T1_T2   # the two exact price claims
+        reason: the only customer-mandated content; the commercial takeaway
+      - rank: 2
+        element_ref: brand.logo
+        reason: brand attribution; conditional on the missing wordmark master (AC-03)
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    note: >
+      The festive-premium atmosphere is the visual field these sit in, not a rankable element
+      reference — SPEC-01 hierarchy refs resolve against entities/copy/brand only.
+    canon_refs: []
+  visual_language:
+    value:
+      palette: deep jewel tones with warm metallic light accents; restrained, not saturated excess
+      lighting: warm, soft, dimensional; glow rather than glitter
+      texture: premium material cues (silk, brass, glass, bokeh light) used sparingly
+      genre: modern premium brand film
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    rationale: >
+      Ordinary reasoning from "premium, modern, festive, not gaudy" — no Canon source consulted;
+      every choice here is soft and open to revision at pilot review.
+    canon_refs: []
+
+# ── copy ─────────────────────────────────────────────────────────────────────────────────────────
+# The two exact price strings are NOT placed here: the customer gave them no headline/body/cta
+# role, and SPEC-01's copy block has no price slot. Per SPEC-01's own brand section ("mandatories[]
+# (legal, disclaimers, price)") they live under brand.mandatories — friction F4.
+copy:
+  headline:
+    value: null
+    operation: delegate
+    provenance: default
+    strength: free
+    status: resolved
+    note: >
+      No customer headline exists. Any system-authored line at production time is a proposal with
+      exactness: free — never a customer requirement (grammar R08 forbids system_derived text
+      requirements).
+    canon_refs: []
+  body:
+    value: null
+    operation: delegate
+    provenance: default
+    strength: free
+    status: resolved
+    canon_refs: []
+  cta:
+    value: null
+    operation: ask
+    provenance: default
+    status: unresolved
+    blocking: false
+    note: AMB-06 — whether getaight.ai appears as a CTA is unstated.
+    canon_refs: []
+  script_system:
+    value: latin
+    operation: derive
+    provenance: derived
+    strength: hard
+    status: resolved
+    evidence: the customer-stated exact copy; "₹" (U+20B9) noted as a currency sign outside the
+      latin/devanagari vocabulary (friction F8)
+    canon_refs: []
+
+# ── brand ────────────────────────────────────────────────────────────────────────────────────────
+brand:
+  logo:
+    asset:
+      value: null
+      operation: preserve
+      provenance: user
+      strength: hard
+      status: blocked
+      note: >
+        BLOCKED — the official aight wordmark master does not exist in this repository and was not
+        supplied. Required pilot input (PILOT gate condition 1). Recorded, not invented (AMB-03,
+        friction F7).
+      canon_refs: []
+    placement:
+      value: closing resolution (endcard region)
+      operation: decide
+      provenance: system_decided
+      strength: soft
+      status: resolved
+      confidence: not_assigned
+      rationale: >
+        Presence/placement is not a customer requirement (AMB-02); resolving to the brand at the
+        end is a soft system choice consistent with a positioning promo, reversible at pilot
+        review.
+      canon_refs: []
+    exactness:
+      value: exact
+      operation: preserve
+      provenance: user
+      strength: hard
+      status: blocked
+      evidence: '"Where the aight logo/wordmark appears, it must remain exact"'
+      note: >
+        Conditional constraint — applies wherever the wordmark appears. Unverifiable until the
+        master asset exists (acceptance entry AC-03 is blocked, not waived).
+      canon_refs: []
+  palette:
+    value: null
+    operation: preserve
+    provenance: default
+    status: resolved
+    note: no brand palette or type specification was supplied or referenced; absence preserved.
+    canon_refs: []
+  mandatories:
+    - id: T1
+      value: "Image ₹9"
+      exactness: exact
+      script: latin
+      operation: preserve
+      provenance: user
+      strength: hard
+      status: resolved
+      evidence: '"The commercial claims that must remain exact are ..."'
+      canon_refs: []
+    - id: T2
+      value: "Video ₹99"
+      exactness: exact
+      script: latin
+      operation: preserve
+      provenance: user
+      strength: hard
+      status: resolved
+      evidence: same statement
+      canon_refs: []
+  prohibitions:
+    - value: visually gaudy treatment
+      operation: preserve
+      provenance: user
+      strength: hard
+      status: resolved
+      evidence: '"rather than gaudy"'
+      note: subjectively judged — carried into the acceptance contract as a human-verified criterion.
+      canon_refs: []
+
+# ── delivery ─────────────────────────────────────────────────────────────────────────────────────
+delivery:
+  platform:
+    value: null
+    operation: delegate
+    provenance: default
+    strength: free
+    status: resolved
+    canon_refs: []
+  aspect_ratios:
+    value: ["9:16"]
+    operation: decide
+    provenance: system_decided
+    fixture: true          # experiment-supplied fixture — never customer intent (friction F1)
+    strength: hard
+    status: resolved
+    confidence: not_assigned
+    rationale: CANON-012 experiment-supplied fixture; hard for this pilot instance only.
+    canon_refs: []
+  duration:
+    value: 12s
+    operation: decide
+    provenance: system_decided
+    fixture: true          # experiment-supplied fixture — never customer intent (friction F1)
+    strength: hard
+    status: resolved
+    confidence: not_assigned
+    rationale: >
+      CANON-012 experiment-supplied fixture, consistent with the customer's only duration
+      statement, the qualitative word "short".
+    canon_refs: []
+  resolution:
+    value: null
+    operation: delegate
+    provenance: default
+    strength: free
+    status: resolved
+    note: a production-time choice; naming one here would leak Production IR into Creative IR.
+    canon_refs: []
+
+# ── VideoCreativeExtension ───────────────────────────────────────────────────────────────────────
+video:
+  temporal_structure:
+    value:
+      - { beat: festive_open,  start: 0s,  end: 4s,  purpose: establish the premium festive field — mood before message }
+      - { beat: claims,        start: 4s,  end: 9s,  purpose: the two exact price claims land legibly as the message }
+      - { beat: brand_resolve, start: 9s,  end: 12s, purpose: resolve to the aight brand (wordmark conditional on the missing master asset) }
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    rationale: >
+      Minimal three-beat shape from ordinary reasoning (no Canon). Boundaries are indicative, not
+      hard: production may redistribute time provided every acceptance-contract requirement still
+      holds.
+    canon_refs: []
+  temporal_hierarchy:
+    value:
+      festive_open:  [creative.visual_language]
+      claims:        [brand.mandatories.T1, brand.mandatories.T2]
+      brand_resolve: [brand.logo]
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    canon_refs: []
+  dialogue_intent:
+    value: none
+    operation: decide
+    provenance: system_decided
+    strength: soft
+    status: resolved
+    confidence: not_assigned
+    rationale: no speech requested (AMB-05); music/sound design left free at this stage.
+    canon_refs: []
+  continuity_requirements:
+    value:
+      - each exact price claim remains fully legible for long enough to be read
+      - the wordmark, if present, is never obstructed or distorted
+    operation: derive
+    provenance: derived
+    strength: hard
+    status: resolved
+    evidence: direct consequences of exactness constraints in a time-based medium
+    note: deliberately qualitative — numeric legibility thresholds are Eval's to set (RULE-07).
+    canon_refs: []
+
+# ── conflicts / advisories ───────────────────────────────────────────────────────────────────────
+conflicts: []      # no internal contradiction detected in the request
+advisories: []     # empty by construction — no Canon participated (CANON-012 boundary)
+
+# ── acceptance contract ──────────────────────────────────────────────────────────────────────────
+# Two classes, kept apart as CANON-012 requires:
+#   hard_requirements    — customer-stated or fixture; objectively checkable in principle
+#   subjective_criteria  — customer-stated intent whose verification is human judgment
+# The contract states WHAT must be observed, never how; instrument selection is Production IR's.
+acceptance_contract:
+
+  hard_requirements:
+    - id: AC-01
+      requirement: the string "Image ₹9" appears in the deliverable and matches exactly, glyph for glyph, including "₹"
+      derived_from: brand.mandatories.T1 (user, exactness exact)
+      class: customer_hard
+      verification: { required: true, mode: hybrid }
+      verification_note: >
+        Two text standards exist in this project and any result must name its standard: no
+        strict-exactness machine certifier exists (five configurations tested, all disqualified);
+        Cloud Vision OCR is benchmark-qualified with a known, nonzero error rate — usable as an
+        instrument, never as an exactness guarantee. Hence hybrid, not machine.
+    - id: AC-02
+      requirement: the string "Video ₹99" appears in the deliverable and matches exactly, glyph for glyph, including "₹"
+      derived_from: brand.mandatories.T2 (user, exactness exact)
+      class: customer_hard
+      verification: { required: true, mode: hybrid }
+      verification_note: same as AC-01.
+    - id: AC-03
+      requirement: wherever the aight wordmark appears, it matches the official wordmark master exactly
+      derived_from: brand.logo.exactness (user, hard, conditional)
+      class: customer_hard_conditional
+      verification: { required: true, mode: unresolved }
+      status: blocked
+      blocked_reason: >
+        The official wordmark master does not exist in this repository and was not supplied; there
+        is no ground truth to verify against. Blocked is a recorded state, not a waiver.
+    - id: AC-04
+      requirement: deliverable duration is 12 seconds
+      derived_from: delivery.duration (experiment-supplied fixture — NOT customer intent)
+      class: fixture
+      verification: { required: true, mode: machine }
+    - id: AC-05
+      requirement: deliverable aspect ratio is 9:16
+      derived_from: delivery.aspect_ratios (experiment-supplied fixture — NOT customer intent)
+      class: fixture
+      verification: { required: true, mode: machine }
+    - id: AC-06
+      requirement: the deliverable is a video
+      derived_from: NR R05 modality (customer_stated)
+      class: customer_hard
+      verification: { required: true, mode: machine }
+
+  subjective_criteria:
+    - id: AC-07
+      criterion: the work reads as modern and premium
+      derived_from: intent.success_criteria (user)
+      verification: { required: true, mode: human }
+    - id: AC-08
+      criterion: the work reads as belonging to an Indian festive context
+      derived_from: intent.success_criteria (user)
+      verification: { required: true, mode: human }
+      note: generic festive is sufficient — no specific festival was stated (AMB-01).
+    - id: AC-09
+      criterion: the treatment is not gaudy — restraint holds under the festive styling
+      derived_from: brand.prohibitions (user)
+      verification: { required: true, mode: human }
+    - id: AC-10
+      criterion: >
+        a viewer takes away that aight is an outcome API — you ask, you receive finished media at
+        a fixed small price
+      derived_from: intent.objective / message.proposition (user positioning statement)
+      verification: { required: true, mode: human }
+    - note: >
+        Per the pilot gate (CONTROL-STATE.md), human review must be blinded and these criteria
+        frozen before any generation. No numeric threshold is defined here — thresholds are Eval's.
+
+# ── readiness ────────────────────────────────────────────────────────────────────────────────────
+readiness:
+  information_coverage: not_computed
+  specification_readiness: not_computed
+  not_computed_reason: >
+    SPEC-01 deliberately left the scoring formula unfrozen ("weights come from real examples, not
+    from us guessing now"), and PROJECT-CONTRACT separation 8 forbids invented decimal confidence.
+    Publishing a number here would be exactly that — friction F5.
+  qualitative_summary:
+    blocking_unknowns:
+      - the official aight wordmark master (blocks AC-03 and any on-screen wordmark; PILOT gate condition 1)
+    non_blocking_open_questions:
+      - AMB-01 festival specificity (safe generic default chosen)
+      - AMB-04 audience (soft system decision recorded)
+      - AMB-05 audio treatment (no-dialogue decided; music left free)
+      - AMB-06 whether getaight.ai appears / any CTA
+      - AMB-07 placement and prominence of the price claims
