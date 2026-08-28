@@ -1,5 +1,12 @@
 # Workstream Status
 
+> **Derived convenience view — not authority and not mandatory startup reading.** Since the
+> 2026-08-28 context migration this file is a per-stream convenience summary only.
+> **`coordination/CONTROL-STATE.md` is the primary operational current-state document and governs
+> wherever the two differ.** This file is refreshed opportunistically (last: GOV-006 + Controller
+> alignment) and may lag; do not act on an authorisation or status read here without checking
+> `CONTROL-STATE.md`. A later task may decide to generate, further reduce, or retire this file.
+
 **Current snapshot:** 28 Aug 2026 — **the five parallel domain lanes have settled and merged, and no
 domain lane is currently open.** EMP-001's paid work is complete: text-judge qualification ran, 16
 A-TEXT images were generated and sealed, and those exact images were scored. **Exact text is a

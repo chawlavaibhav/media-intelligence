@@ -1,0 +1,105 @@
+# Validator index — which deterministic command verifies which artifact family.
+#
+# Purpose: COMPUTE FIRST, LOAD SECOND (shared/CONTEXT-SUFFICIENCY-POLICY.md).
+# When a task needs a small invariant from committed evidence, run the validator
+# and reason over its output instead of loading the raw evidence into model
+# context. Raw evidence remains authoritative; a validator PASS is a linkage
+# check, not a certification of the underlying science.
+#
+# Scope: the important artifact/evidence families as of 2026-08-28. This index
+# is deliberately narrow — it is navigation, not a CI system. Add rows when a
+# new evidence family is sealed; do not try to cover every test in the repo.
+# Every command below runs from the repository root, offline, with zero spend,
+# and was executed successfully on 2026-08-28 as part of the context migration.
+#
+# NOTE: this index carries no "last verified at SHA" field on purpose — a
+# committed claim about the current SHA goes stale the moment it is committed.
+# Run the command; the exit status against your checkout is the fact.
+
+capability_registry:
+  authorities:
+    - eval/registry/registry-v1.jsonl
+    - eval/registry/SCHEMA-v1-draft.yaml
+  validators:
+    - python3 eval/registry/validate_registry.py
+  establishes:
+    - registry_row_count            # currently 0, deliberately
+    - schema_validity
+    - uncertainty_provenance_present
+
+sealed_emp001_evidence:
+  authorities:
+    - eval/empirical-tranche-1/atex/sealed-generation-v1/atex-generation-only-manifest.json
+    - eval/empirical-tranche-1/evidence/EMP-001/text-ocr/EVIDENCE-MANIFEST.json
+    - eval/empirical-tranche-1/evidence/EMP-001/atex-scoring/EVIDENCE-MANIFEST.json
+  validators:
+    - python3 verify/verify_sealed_evidence.py
+  establishes:
+    - sealed_hash_linkage           # 16/16 artifacts + evidence files match recorded sha256/bytes
+    - scoring_to_generation_linkage  # scoring rows are the exact sealed coordinates/hashes; generation fingerprint matches
+    - route_exact_counts            # GPT Image 2 6/8, Ideogram v3 1/8 recomputed from row-level records
+    - overall_exact_count           # 7/16
+
+canon_admission:
+  authorities:
+    - canon/audit/records/          # one audit record per live source
+    - canon/knowledge/current/      # one directory per live source
+  validators:
+    - python3 canon/validation/validate_audit_gate_v02.py
+  establishes:
+    - live_canon_source_count       # currently 19, 0 errors
+    - record_to_directory_pairing
+
+canon003_historical_baseline:
+  authorities:
+    - canon/knowledge/  # frozen CANON-003 16-book extraction
+  validators:
+    - python3 canon/validation/validate_canon003_integrated.py
+  establishes:
+    - frozen_16_book_counts         # 16 books / 505 objects / 54 systems / 417 terms, unchanged forever
+
+marketplace_brief_bank:
+  authorities:
+    - canon/research/marketplace-demand-v1/derived/
+  validators:
+    - python3 canon/research/marketplace-demand-v1/derived/validators/validate_marketplace_bank.py
+    - python3 canon/research/marketplace-demand-v1/derived/validators/test_negative_fixtures.py
+  establishes:
+    - case_counts                   # 18 cases, 16 runnable_now, Upwork buyer postings only
+    - gates_G1_G14
+    - negative_controls_rejected    # 28/28
+
+request_contract_freeze:
+  authorities:
+    - canon/experiments/pre-execution-freeze/
+  validators:
+    - python3 canon/experiments/pre-execution-freeze/validate_request_freeze.py
+  establishes:
+    - operation_vocabulary_integrity  # production-route values rejected as operations
+    - coverage_extension_integrity
+
+capability_contract_v1_baseline:
+  authorities:
+    - eval/v1/capability-contract.yaml   # historical 36-dimension baseline, byte-identical
+  validators:
+    - python3 eval/v1/validate_capability_contract.py
+    - python3 eval/v1/validate_thresholds.py
+  establishes:
+    - dimension_count_36
+    - no_threshold_promoted_to_empirical_truth
+
+temporal_perturbation_machinery:
+  authorities:
+    - eval/v1/instruments/temporal-perturbation/perturbation-contract.yaml
+  validators:
+    - python3 eval/v1/instruments/temporal-perturbation/validate_package.py
+  establishes:
+    - no_network_or_provider_import
+    - no_invented_pass_mark         # pass mark is DOES_NOT_EXIST; harness returns undetermined
+
+# Known families with NO fresh-clone validator (do not expect these to run here):
+#   - resources corpus composition: resources/scripts/verify_devanagari_composition.py reads the
+#     git-ignored raw corpus and cannot run from a fresh clone (recorded limitation).
+#   - the Devanagari battery / Latin pack rebuild needs a pinned proprietary font that is not
+#     committed; the committed human-validation record fingerprints the build by SHA-256 instead.
+#   - the live spend ledger is mutable and local by design; only bounded excerpts are sealed.

@@ -1,0 +1,53 @@
+# Project milestones
+
+**Status of this file:** historical chapter, moved out of `PROJECT-MEMORY.md` in the 2026-08-28
+context migration. Each row names its evidence; the evidence governs. Newer milestones are appended;
+existing rows are never rewritten.
+
+| Date | Milestone | Evidence |
+|---|---|---|
+| 23 Aug 2026 | SPEC-02's single-atom schema split into source knowledge / bindings / ontology; Canon scope restored after a category-error finding | `coordination/DECISION-LOG.md` |
+| 24 Aug 2026 | Three workstreams started; RES-001/002 corpus acquired and closed | `resources/tasks/`, PR #2 |
+| 24 Aug 2026 | CANON-003 extraction stopped at 16 accepted books, then integrated | `canon/decisions/CANON-003-STOP-AT-16-2026-08-24.md`, PR #4 |
+| 24 Aug 2026 | EVAL-003 calibration pack merged; EVAL-004 stopped after Reader A | PR #3, `eval/decisions/EVAL-004-STOP-2026-08-24.md` |
+| 25 Aug 2026 | Audit Gate v0.2 designed, adopted and made authoritative | `canon/decisions/CANON-004-ADOPT-AUDIT-GATE-2026-08-25.md`, PRs #6/#7 |
+| 25 Aug 2026 | CANON-006/007 take live Canon 16 → 18 → 19 | PRs #9, #10 |
+| 25 Aug 2026 | EVAL-005 human validation frozen; battery pruned to the 96-item view | PR #12 |
+| 25 Aug 2026 | CANON-008 stopped at the acquisition gate | PR #13 |
+| 25 Aug 2026 | Repository Governor approved; GOV-001 reset audit | PR #14, `governance/audits/2026-08-25-initial-repository-hygiene-audit.md` |
+| 26 Aug 2026 | V1 architecture accepted and merged: 30-brief bank, 36-capability contract, 100-item Eval bank, persistence v2.1 | `coordination/decisions/CONTROLLER-V1-OVERNIGHT-INTEGRATION-2026-08-26.md`, PRs #17/#18/#19 |
+| 26 Aug 2026 | EVAL-006 paused before execution; its spend authority withdrawn | `coordination/decisions/CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md` |
+| 26 Aug 2026 | Macro reset: paid benchmarking paused, three independent research programmes commissioned | `coordination/decisions/CONTROLLER-CLOUD-MACRO-RECALIBRATION-2026-08-26.md` |
+| 26 Aug 2026 | CANON-009, EVAL-007 and RES-003 return; Controller issues the joint integration disposition | `coordination/decisions/CONTROLLER-MACRO-RESEARCH-INTEGRATION-2026-08-26.md` |
+| 26 Aug 2026 | EVAL-008 returns a 26-row proposed model roster with sourcing; nothing authorised | `eval/model-access/2026-08-26/` (unmerged, draft PR #21) |
+| 26 Aug 2026 | GOV-003 coherence review of the three research branches — PASS with non-blocking notes | `governance/reviews/GOV-003-MACRO-RESEARCH-INTEGRATION-REVIEW.md` |
+| 26 Aug 2026 | CANON-009, EVAL-007, RES-003 and the GOV-003 review merged to `main` | commits `4815bcf`, `b71624e`, `fed0db6`, `cf105b1` |
+| 26 Aug 2026 | Final pre-execution freeze tranche returns: CANON-010, EVAL-009, RES-004, EVAL-010 | `coordination/decisions/CONTROLLER-FINAL-PRE-EXECUTION-FREEZE-2026-08-26.md` |
+| 26 Aug 2026 | Controller integrates the tranche and orders one bounded Eval correction; EVAL-011 delivers it | `coordination/decisions/CONTROLLER-PRE-EXECUTION-INTEGRATION-2026-08-26.md` |
+| 26 Aug 2026 | GOV-004 final pre-execution coherence review — PASS with non-blocking notes; four packages unmerged at review | `governance/reviews/GOV-004-FINAL-PRE-EXECUTION-REVIEW.md` |
+| 26 Aug 2026 | Pre-execution freeze closed; CANON-010, RES-004, EVAL-010 and corrected EVAL-011 merged into `main`; the v2 contracts become frozen foundations | `coordination/decisions/CONTROLLER-PRE-EXECUTION-CLOSURE-2026-08-26.md` |
+| 26–27 Aug 2026 | EMP-001 execution machinery built and corrected across EVAL-012 → EVAL-016: persistent spend ledger, mechanical caps, ambiguous-dispatch accounting, fingerprint-bound handoff | `coordination/decisions/CONTROLLER-EVAL-01{2,3,4,5,6}-REVIEW-*.md` |
+| 27 Aug 2026 | Latin human perceptibility review completed — 96/96 usable, 48/48 mismatch visible, 0 rejected | `coordination/decisions/CONTROLLER-EMP-001-LATIN-HUMAN-REVIEW-2026-08-27.md` |
+| **27 Aug 2026** | **The user approves EMP-001: USD 10 total, USD 6 qualification sub-cap, 0 retries. The project's first paid execution authority.** | `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
+| 27 Aug 2026 | First live run: Haiku 4.5 disqualified on a complete Devanagari screen; Gemini stops at 17 calls on a 429 | `coordination/decisions/CONTROLLER-EMP-001-GEMINI-CONTINUATION-2026-08-27.md` |
+| 27 Aug 2026 | Qualification contract corrected to v2 — blind transcription decides, target-aware verdict becomes diagnostic | `coordination/decisions/CONTROLLER-EVAL-020-PRIMARY-SHAPE-QUALIFICATION-2026-08-27.md` |
+| 27 Aug 2026 | Sonnet 5 disqualified under contract v2; general-purpose multimodal LLMs frozen as the exact-text judge family after Gemini fails the same way | `coordination/decisions/CONTROLLER-EVAL-021-SONNET-DISPOSITION-GEMINI-READINESS-2026-08-27.md`, `.../CONTROLLER-EVAL-022-OCR-FAMILY-PIVOT-2026-08-27.md` |
+| 27 Aug 2026 | EVAL-022 integrated: Gemini disqualified again on a clean unpaced screen; Cloud Vision TEXT_DETECTION disqualified despite perfect repeat consistency | PR #45, merge `afe866c`; `coordination/decisions/CONTROLLER-EVAL-022-LIVE-RESULTS-AND-EVAL-023-2026-08-27.md` |
+| 27 Aug 2026 | User-supplied Upwork/Fiverr marketplace demand research committed; CANON-011 opened to derive real-demand briefs at USD 0 | `canon/research/marketplace-demand-v1/README.md` |
+| 27 Aug 2026 | EVAL-023 integrated: Tesseract with dictionaries disabled cuts false passes to 3 but rejects 67% of valid text — the literalness/accuracy trade-off is demonstrated, not hypothesised | PR #46, merge `0ecbf5f`; `coordination/decisions/CONTROLLER-EVAL-023-DISPOSITION-AND-SCRIPT-ROUTED-OCR-2026-08-27.md` |
+| 27 Aug 2026 | A-TEXT generation is decoupled from evaluator qualification: EVAL-024 may generate and seal the 16 images but may not score them | `coordination/decisions/CONTROLLER-PARALLEL-ATEXT-GENERATION-ONLY-2026-08-27.md` |
+| 27 Aug 2026 | EVAL-025 integrated; script routing removes wrong-script errors but not false passes. **Tesseract line closed.** Next direction *as decided that day*: a fail-closed human-confirmed composite, prepared by EVAL-028 — superseded the following day | PR #47, merge `711aa8c`; `coordination/decisions/CONTROLLER-EVAL-025-DISPOSITION-HUMAN-CONFIRMED-TEXT-GATE-2026-08-27.md` |
+| 28 Aug 2026 | GOV-005 post-EMP-001 coherence review and project-memory refresh — PASS with non-blocking notes; the missing live-evidence problem (F-1) routed | `governance/reviews/GOV-005-POST-EMP-001-COHERENCE-REVIEW.md` |
+| **28 Aug 2026** | **Course correction: exact text becomes a non-blocking measured capability.** Strict zero-false-pass certification is preserved as research but stops gating the programme; a separate `benchmark_text_ocr_v1` contract is created; **EVAL-028 and its two-human architecture are cancelled**; EVAL-029 opens | `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md`, `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md`, `eval/tasks/EVAL-029-BENCHMARK-GRADE-TEXT-OCR.md` |
+| 28 Aug 2026 | EVAL-024 returns with zero live spend — `FAL_KEY` unavailable, correctly treated as pre-dispatch. Design accepted in principle behind a cleanup/sync gate | `coordination/decisions/CONTROLLER-EVAL-024-READINESS-CLEANUP-AND-LIVE-2026-08-28.md` |
+| 28 Aug 2026 | Controller reviews GOV-005: findings accepted, F-1 accepted as High and must be fixed, F-4 resolved with named authority chains, F-5 re-scoped, F-9/F-10 closed | `coordination/decisions/CONTROLLER-GOV-005-REVIEW-AND-CORRECTIONS-2026-08-28.md` |
+| 28 Aug 2026 | GOV-005 closed and merged; GOV-006 deferred until the five parallel lanes settle | PR #48, merge `c794694`; `coordination/decisions/CONTROLLER-GOV-005-CLOSURE-AND-GOV-006-TRIGGER-2026-08-28.md` |
+| 28 Aug 2026 | **CANON-011 merged** — 18 marketplace-derived buyer cases, 16 runnable; grammar gaps observed but the Media Request Grammar deliberately not reopened | PR #49, merge `610d69f`; `coordination/decisions/CONTROLLER-CANON-011-INTEGRATION-2026-08-28.md` |
+| **28 Aug 2026** | **EVAL-024 merged — the project's first generated media.** 16 A-TEXT images generated and sealed as committed bytes, 8 per route, USD 0.904 | PR #50, merge `eadad54`; `coordination/decisions/CONTROLLER-EVAL-024-INTEGRATION-2026-08-28.md` |
+| **28 Aug 2026** | **EVAL-029 merged — the first benchmark-qualified evaluator, and the first live evidence sealed into GitHub.** Cloud Vision benchmark-qualified on Devanagari and Latin, strict-disqualified; GOV-005 F-1 closed for this lane | merge `10b237f`; `coordination/decisions/CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md` |
+| 28 Aug 2026 | EVAL-026 merged as temporal qualification **machinery only** — 13 perturbation types over 9 capabilities, 7 full + 2 negative-direction-only, no evaluator qualified and no pass mark set | PR #52, merge `2af1dbd`; `coordination/decisions/CONTROLLER-EVAL-026-INTEGRATION-2026-08-28.md` |
+| **28 Aug 2026** | **EVAL-030 merged — the project's first empirical model comparison.** The exact 16 sealed images scored without regeneration: GPT Image 2 6/8, Ideogram v3 1/8, overall 7/16. **Registry deliberately kept at 0 rows rather than weakening admission** | PR #53, merge `13fe76f`; `coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md` |
+| 28 Aug 2026 | RES-005 merged — 12 rights-cleared temporal base clips from 12 distinct works, 12/12 clean, only 3/3 representative ingest; temporal material contract resolved at **pack level** | PR #54, merge `3a49464`; `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md` |
+| 28 Aug 2026 | GOV-006 post-parallel reconciliation — **PASS WITH NON-BLOCKING NOTES**; sealed evidence, artifact hashes and all headline arithmetic independently re-derived; seven findings routed | `governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md` |
+| 28 Aug 2026 | Post-GOV-006: five parallel lanes authorised, then narrowed, then temporal prep stopped as immediate priority; **the next Controller priority becomes a real customer vertical-slice pilot** | `coordination/decisions/CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-2026-08-28.md`, `.../CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md`, `.../CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` |
+| 28 Aug 2026 | Context-architecture migration: `PROJECT-MEMORY.md` becomes a compact map, history moves to `history/`, `shared/CONTEXT-SUFFICIENCY-POLICY.md` and `verify/VALIDATOR-INDEX.yaml` created, Governor review modes defined | this migration's Controller review record |

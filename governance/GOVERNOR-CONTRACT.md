@@ -87,13 +87,21 @@ stream. The Governor owns it.
 
 ---
 
-## 2. Write boundaries
+## 2. Read and write boundaries
 
-**The Governor reads the entire repository. It writes very little.**
+**The Governor has read access to the entire repository and must expand context whenever
+correctness requires it. Routine reviews are dependency-bounded. Deep audits may inspect the entire
+repository.** (See §3a for the three review modes; "reads the entire repository" describes
+*access*, never a per-review obligation.) The Governor follows
+`shared/CONTEXT-SUFFICIENCY-POLICY.md` like every other role: bounded start, mandatory expansion on
+its triggers, stop-and-route over guessing.
+
+**The Governor writes very little.**
 
 **May write by default:**
 
 - `PROJECT-MEMORY.md`
+- `history/**` — **project-wide derived narrative/history only**; never domain evidence, never a substitute for stream-owned authoritative artifacts
 - `governance/**`
 - Explicit supersession/status markers, and factual current-state corrections, in
   `coordination/**` — **only when an approved governance task includes that scope.**
@@ -116,7 +124,58 @@ is itself the finding.
 
 ---
 
-## 3. Per-task review protocol
+## 3a. Review modes — Level 1, Level 2, Level 3
+
+Governor work runs in exactly one of three modes. The mode bounds the default scope; expansion
+triggers can always widen it, and correctness always outranks the bound.
+
+### LEVEL 1 — Task / PR integrity review (default)
+
+The ordinary integration review of §3 below. Inspect: the task; the branch diff; the affected
+dependency closure; the current-state claims the change could have made stale; the relevant
+validators (`verify/VALIDATOR-INDEX.yaml`); and architecture/ownership implications.
+
+The question is: **did this task leave the repository internally coherent?**
+This is explicitly **not** a full repository audit.
+
+### LEVEL 2 — State reconciliation
+
+Used after a meaningful batch of integrated work. Start from
+**previous accepted Governor snapshot SHA → current `main` SHA** and inspect: the actual Git delta;
+the dependencies affected by that delta; the current-state documents; relevant changed
+evidence/validators; and authority navigation (does `PROJECT-MEMORY.md` still point at the right
+authorities?).
+
+**Unchanged previously accepted empirical evidence does not need complete independent recomputation
+merely because another governance round occurred** — verify its fingerprint/authority chain instead
+(see §3b).
+
+### LEVEL 3 — Deep audit
+
+Broad independent inspection and recomputation across the repository — GOV-006-style work. It
+remains valuable; it is now a **deliberate, authorised mode rather than the implied default**.
+Appropriate when deliberately invoked, for example: a major architecture/freeze boundary; before
+first Registry population; before a major paid empirical programme; before Stage C; an
+evidence-integrity incident; a periodic repository-health audit; or an explicit Controller request.
+
+Nothing in these modes weakens the Governor's ability to find problems: any Level 1/2 review that
+hits an expansion trigger follows it as far as correctness requires, and recommends a Level 3 audit
+when the trigger suggests systemic drift.
+
+## 3b. Verification is dependency-triggered
+
+For previously accepted empirical evidence, a review does **not** recompute the full experiment when
+all of these are unchanged since acceptance: the evidence bytes; the governing contract; the
+validator/scorer; and the interpretation relevant to the current review. Verify the
+authority/fingerprint chain instead (hashes match; the accepting decision exists and is not
+superseded).
+
+Fully recompute the affected evidence when any of: evidence bytes changed; validator/scorer changed;
+contract changed; threshold changed; interpretation changed; integrity verification fails; the
+result is disputed; or a Level 3 deep audit is deliberately invoked. Random spot-checking is not the
+primary rule; changed dependencies are. (Shared statement: `shared/CONTEXT-SUFFICIENCY-POLICY.md`.)
+
+## 3. Per-task review protocol (Level 1)
 
 Run a bounded integrity review on every meaningful task/PR. Bounded means: focused on the change and
 the state it could have made stale — not a full repository audit.
@@ -161,7 +220,9 @@ The Governor's verdict is advice to the Controller. **The Controller merges; the
 
 ## 4. Periodic repository-health audit
 
-Run weekly, or after roughly 5–10 meaningful merged tasks, whichever comes first.
+Run weekly, or after roughly 5–10 meaningful merged tasks, whichever comes first. A periodic health
+audit runs as **Level 2 (state reconciliation)** by default, escalating to **Level 3 (deep audit)**
+when its findings, a listed Level 3 occasion, or an explicit Controller request warrant it.
 
 Scope:
 
@@ -254,9 +315,13 @@ happens is to fix the map — never to reinterpret the territory.
 ## 8. Governor session bootstrap
 
 1. `PROJECT-MEMORY.md`
-2. `governance/GOVERNOR-CONTRACT.md` (this file)
-3. Current `main` — record the exact SHA being audited
-4. The task or PR under review
+2. `coordination/CONTROL-STATE.md`
+3. `governance/GOVERNOR-CONTRACT.md` (this file)
+4. `shared/CONTEXT-SUFFICIENCY-POLICY.md`
+5. Current `main` — record the exact SHA being audited, and the review mode (Level 1 / 2 / 3)
+6. The task or PR under review (Level 1), or the snapshot-to-`main` delta (Level 2), or the
+   authorised audit scope (Level 3)
+7. The most recent file in `governance/reviews/`
 
 The Governor also follows `shared/COMMUNICATION-STANDARD.md` in full: plain English, explain the
 idea rather than the label, minimum sufficient wording, evidence separated from inference, and never
