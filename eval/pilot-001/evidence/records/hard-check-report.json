@@ -1,0 +1,87 @@
+{
+  "record": "PILOT-001-attempt-1-hard-check-report",
+  "candidate": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence/eval/pilot-001/evidence/artifacts/final-candidate-001.mp4",
+  "candidate_sha256": "50fb635ccb774294935d5238865e582c4b0787507de52d3e865df98a1add829d",
+  "generated_at_utc": "2026-08-28T07:41:30Z",
+  "checks": [
+    {
+      "check": 1,
+      "name": "final MP4 exists and hashes",
+      "pass": true,
+      "evidence": "final-candidate-001.mp4: 2278984 bytes, sha256 50fb635ccb774294935d5238865e582c4b0787507de52d3e865df98a1add829d"
+    },
+    {
+      "check": 2,
+      "name": "container probe succeeds",
+      "pass": true,
+      "evidence": "format_name=mov,mp4,m4a,3gp,3g2,mj2; duration=12.000000"
+    },
+    {
+      "check": 3,
+      "name": "720x1280",
+      "pass": true,
+      "evidence": "720x1280"
+    },
+    {
+      "check": 4,
+      "name": "9:16 aspect",
+      "pass": true,
+      "evidence": "720:1280 reduces to 9:16"
+    },
+    {
+      "check": 5,
+      "name": "duration ~12s (one-frame tolerance)",
+      "pass": true,
+      "evidence": "duration 12.0s, 288 frames @ 24/1 fps"
+    },
+    {
+      "check": 6,
+      "name": "claims render source contains exact 'Image ₹9'",
+      "pass": true,
+      "evidence": "verbatim substring of overlay-claims.html (rendered by pinned-source CSS/fonts)"
+    },
+    {
+      "check": 7,
+      "name": "claims render source contains exact 'Video ₹99'",
+      "pass": true,
+      "evidence": "verbatim substring of overlay-claims.html"
+    },
+    {
+      "check": 8,
+      "name": "endcard source contains Aight. / Outcome API / getaight.ai",
+      "pass": true,
+      "evidence": "official wordmark markup 'Aight<span class=\"stop\">.</span>' + all required strings present"
+    },
+    {
+      "check": 9,
+      "name": "final has no audio stream",
+      "pass": true,
+      "evidence": "0 audio streams"
+    },
+    {
+      "check": 10,
+      "name": "no second provider call",
+      "pass": true,
+      "evidence": "ledger: 1 reservation, 1 spend, 2 rows total"
+    },
+    {
+      "check": 11,
+      "name": "spend <= USD 0.80 consumed after attempt 1",
+      "pass": true,
+      "evidence": "committed 0.80, pending 0, ceiling 2.00"
+    },
+    {
+      "check": 12,
+      "name": "RES topology validator passes",
+      "pass": true,
+      "evidence": "exit 0; all gates PASS"
+    }
+  ],
+  "all_pass": true,
+  "plate_visual_inspection": {
+    "method": "6 frames sampled at 0.5/2.0/3.5/5.0/6.5/7.8s, human-agent inspected",
+    "unintended_text_or_logos": "none observed — no letters, numbers, signage, logos, people or religious symbols in any sampled frame",
+    "observation_for_reviewer": "the generated brass/glass sculpture is a strong X-shaped abstract emblem; it is not a logo or text, but its bright centre flare sits mid-frame behind the price claims at 4-8s — legibility judged acceptable in QC frames; final call belongs to the H1-H6 human gate"
+  },
+  "cpao": "REFUSED by recompute_cpao_v3.py — no accepted outcome yet; CpAO undefined (correct pre-acceptance behaviour). HED-1 semantics not invented."
+}

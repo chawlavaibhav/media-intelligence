@@ -1,0 +1,377 @@
+schema_era: v3
+jobs:
+- job_id: JOB-PILOT-001-AIGHT
+  received_at: '2026-08-28T07:22:45Z'
+  brief_ref: canon/experiments/pilot-001/aight-normalized-request.yaml#NR-PILOT-001-AIGHT-V1
+  request_lineage_id: req_lin_pilot_001_aight_v1
+  customer_ref: aight / getaight.ai (Controller as customer proxy)
+outcomes:
+- outcome_id: OUT-PILOT-001-A
+  job_id: JOB-PILOT-001-AIGHT
+  outcome_kind: video_asset
+  created_at: '2026-08-28T07:33:42.556825Z'
+  final_artifact_id: art-final-001
+- outcome_id: OUT-PILOT-001-B
+  job_id: JOB-PILOT-001-AIGHT
+  outcome_kind: video_asset
+  created_at: '2026-08-28T08:22:34.387574Z'
+  final_artifact_id: art-final-002
+  supersedes_outcome_id: OUT-PILOT-001-A
+sets:
+- set_id: SET-PILOT-001
+  outcome_id: OUT-PILOT-001-A
+  ordering: ordered
+  set_kind: video_sequence
+- set_id: SET-PILOT-001-B
+  outcome_id: OUT-PILOT-001-B
+  ordering: ordered
+  set_kind: video_sequence
+units:
+- unit_id: U-PLATE
+  set_id: SET-PILOT-001
+  unit_kind: shot
+  position: 0
+- unit_id: U-ENDCARD
+  set_id: SET-PILOT-001
+  unit_kind: end_card
+  position: 1
+- unit_id: U-FINAL
+  set_id: SET-PILOT-001
+  unit_kind: other
+  position: 2
+- unit_id: U-PLATE-2
+  set_id: SET-PILOT-001-B
+  unit_kind: shot
+  position: 0
+- unit_id: U-FINAL-2
+  set_id: SET-PILOT-001-B
+  unit_kind: other
+  position: 1
+steps:
+- step_id: ST-GEN
+  unit_id: U-PLATE
+  step_kind: provider_generation
+  step_index: 0
+  executed_at: '2026-08-28T07:33:42.556825Z'
+  execution_mode: provider_call
+  attempt_ids:
+  - provider-attempt-001
+  cost_ref: pilot-cost-res-000001
+- step_id: ST-CLAIMS-RENDER
+  unit_id: U-PLATE
+  step_kind: transform
+  step_index: 1
+  executed_at: '2026-08-28T07:38:22Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-CHROME-CLAIMS
+- step_id: ST-ENDCARD-RENDER
+  unit_id: U-ENDCARD
+  step_kind: transform
+  step_index: 0
+  executed_at: '2026-08-28T07:38:22Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-CHROME-ENDCARD
+- step_id: ST-CLAIMS-COMP
+  unit_id: U-PLATE
+  step_kind: composition
+  step_index: 2
+  executed_at: '2026-08-28T07:38:26Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-FFMPEG-CLAIMS-OVERLAY
+- step_id: ST-ENDCARD-SEG
+  unit_id: U-ENDCARD
+  step_kind: transform
+  step_index: 1
+  executed_at: '2026-08-28T07:38:26Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-FFMPEG-ENDCARD-ENCODE
+- step_id: ST-ASSEMBLY
+  unit_id: U-FINAL
+  step_kind: assembly
+  step_index: 0
+  executed_at: '2026-08-28T07:38:29Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-FFMPEG-ASSEMBLY
+- step_id: ST-HUMAN-REVIEW-C1
+  unit_id: U-FINAL
+  step_kind: human_review
+  step_index: 1
+  executed_at: '2026-08-28T07:51:11Z'
+  execution_mode: human
+  attempt_ids: []
+  operator_ref: customer-proxy/controller (user)
+- step_id: ST-GEN-2
+  unit_id: U-PLATE-2
+  step_kind: provider_generation
+  step_index: 0
+  executed_at: '2026-08-28T08:22:34.387574Z'
+  execution_mode: provider_call
+  attempt_ids:
+  - provider-attempt-002
+  cost_ref: pilot-cost-res-000003
+  repair_of_step_id: ST-GEN
+- step_id: ST-CLAIMS-COMP-2
+  unit_id: U-PLATE-2
+  step_kind: composition
+  step_index: 1
+  executed_at: '2026-08-28T08:24:37Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-FFMPEG-CLAIMS-OVERLAY-2
+- step_id: ST-ASSEMBLY-2
+  unit_id: U-FINAL-2
+  step_kind: assembly
+  step_index: 0
+  executed_at: '2026-08-28T08:24:41Z'
+  execution_mode: local_deterministic
+  attempt_ids: []
+  transform_ref: R-FFMPEG-ASSEMBLY-2
+attempts:
+- attempt_id: provider-attempt-001
+  trial_id: provider-attempt-001
+  step_id: ST-GEN
+  attempt_kind: production
+  status: ok
+  lane: native_av
+  cost_ref: pilot-cost-res-000001
+  provider: google
+  model_id: veo-3.1-fast-generate-preview
+  model_version: veo-3.1-fast-generate-preview
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning
+  workflow: t2v
+  prompt_hash: df76d74d5398de975aa708dd541e36aa464bb36ecd91ddfc8a6e47be2b70f879
+  config_hash: f91d83049c01fb012ad00b8eacdb216e3f59182d8b0d7b97a101863e6a82156b
+  config_location: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence/eval/pilot-001/evidence/artifacts/provider-attempt-001-request-config.json
+  requested_at: '2026-08-28T07:33:42.556825Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T07:34:29.749180Z'
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: null
+  storage_class: C_irreproducible_empirical
+- attempt_id: provider-attempt-002
+  trial_id: provider-attempt-002
+  step_id: ST-GEN-2
+  attempt_kind: production
+  status: ok
+  lane: native_av
+  cost_ref: pilot-cost-res-000003
+  provider: google
+  model_id: veo-3.1-fast-generate-preview
+  model_version: veo-3.1-fast-generate-preview
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning
+  workflow: t2v
+  prompt_hash: 853442881e20cf53430425b66a3818c296f63d16d402a220b162e808060907e4
+  config_hash: 2e124d121a7e0fed8091411f5eff1df2a3093a92c925ad61aea2c6ef38408e2c
+  config_location: eval/pilot-001/evidence/artifacts/provider-attempt-002-request-config.json
+  requested_at: '2026-08-28T08:22:34.387574Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T08:23:32.159490Z'
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: null
+  storage_class: C_irreproducible_empirical
+transform_recipes:
+- transform_ref: R-CHROME-CLAIMS
+  tool: chrome-headless-chromium
+  tool_version: Google Chrome 152.0.7977.65 (Chromium headless)
+  operation: other
+  params_hash: 66c15a578d61dc00528c1d76064b668321f3342135abb06fe71b298e115ae987
+  params_location: eval/pilot-001/evidence/records/transform-params.json
+- transform_ref: R-CHROME-ENDCARD
+  tool: chrome-headless-chromium
+  tool_version: Google Chrome 152.0.7977.65 (Chromium headless)
+  operation: other
+  params_hash: 161fe7714dabaa95ee97c8fa4fd3036be51fb8154e5faa2c010fe688a7dcf920
+  params_location: eval/pilot-001/evidence/records/transform-params.json
+- transform_ref: R-FFMPEG-CLAIMS-OVERLAY
+  tool: ffmpeg
+  tool_version: ffmpeg version 8.1.2
+  operation: overlay
+  params_hash: 65148bfe4315d0a5f1c72c3c499d8eacdc7aef1c8971799dda5fa0293368a743
+  params_location: eval/pilot-001/evidence/records/transform-params.json
+- transform_ref: R-FFMPEG-ENDCARD-ENCODE
+  tool: ffmpeg
+  tool_version: ffmpeg version 8.1.2
+  operation: encode
+  params_hash: 9eaad18a96fe116c4c04b7b087b66c42451958ed8e4648bc0b08e3a35f1fdbf2
+  params_location: eval/pilot-001/evidence/records/transform-params.json
+- transform_ref: R-FFMPEG-ASSEMBLY
+  tool: ffmpeg
+  tool_version: ffmpeg version 8.1.2
+  operation: concat
+  params_hash: 7a0a0760db5107276b81d09fd01cc56e8cc997d3cb884ef0f0b5f903d6bfcd55
+  params_location: eval/pilot-001/evidence/records/transform-params.json
+- transform_ref: R-FFMPEG-CLAIMS-OVERLAY-2
+  tool: ffmpeg
+  tool_version: ffmpeg version 8.1.2
+  operation: overlay
+  params_hash: f472e4bdddbf44782a5bed06b543b0f9dbbed0f51174b42065368cd1cc7ddd7e
+  params_location: eval/pilot-001/evidence/records/transform-params-attempt-2.json
+- transform_ref: R-FFMPEG-ASSEMBLY-2
+  tool: ffmpeg
+  tool_version: ffmpeg version 8.1.2
+  operation: concat
+  params_hash: 66669c68957b1b43178efdc77747468e5059f03bbc5da27dcf654d47a5f8b594
+  params_location: eval/pilot-001/evidence/records/transform-params-attempt-2.json
+artifacts:
+- artifact_id: art-plate-001
+  producing_step_id: ST-GEN
+  attempt_id: provider-attempt-001
+  trial_id: provider-attempt-001
+  output_hash: 211494a1931cca2501f76c760d9c19e3f075bc1b9546fe3ea7b5980c500b02f0
+  output_bytes: 1780773
+  output_location: eval/pilot-001/evidence/artifacts/provider-attempt-001.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents: []
+- artifact_id: art-claims-overlay-001
+  producing_step_id: ST-CLAIMS-RENDER
+  attempt_id: null
+  trial_id: null
+  output_hash: fa61eec5bd98a3acac0e1deffdf83bcab43fb116572c27adbd9f8fd7a553803a
+  output_bytes: 111426
+  output_location: eval/pilot-001/evidence/artifacts/overlay-claims.png
+  media_kind: image
+  storage_class: C_irreproducible_empirical
+  parents: []
+- artifact_id: art-endcard-png-001
+  producing_step_id: ST-ENDCARD-RENDER
+  attempt_id: null
+  trial_id: null
+  output_hash: 04be238a924f6ae3df8e74b7966ad338e916a72bfdbd1c2ea62c240ae0c78616
+  output_bytes: 45103
+  output_location: eval/pilot-001/evidence/artifacts/endcard.png
+  media_kind: image
+  storage_class: C_irreproducible_empirical
+  parents: []
+- artifact_id: art-claims-comp-001
+  producing_step_id: ST-CLAIMS-COMP
+  attempt_id: null
+  trial_id: null
+  output_hash: 1b73a004a9a2d4243cf55d0c2c981ae36775ffde1cefa9216396b462732d8d77
+  output_bytes: 2388817
+  output_location: eval/pilot-001/evidence/artifacts/claims-composited-8s.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents:
+  - parent_artifact_id: art-plate-001
+    role: source
+    position: 0
+  - parent_artifact_id: art-claims-overlay-001
+    role: overlay
+    position: 1
+- artifact_id: art-endcard-4s-001
+  producing_step_id: ST-ENDCARD-SEG
+  attempt_id: null
+  trial_id: null
+  output_hash: 8324503610692b8ff8b3929b088cff76f34aa794694242b1d635982f97232989
+  output_bytes: 29835
+  output_location: eval/pilot-001/evidence/artifacts/endcard-4s.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents:
+  - parent_artifact_id: art-endcard-png-001
+    role: source
+    position: 0
+- artifact_id: art-final-001
+  producing_step_id: ST-ASSEMBLY
+  attempt_id: null
+  trial_id: null
+  output_hash: 50fb635ccb774294935d5238865e582c4b0787507de52d3e865df98a1add829d
+  output_bytes: 2278984
+  output_location: eval/pilot-001/evidence/artifacts/final-candidate-001.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents:
+  - parent_artifact_id: art-claims-comp-001
+    role: source
+    position: 0
+  - parent_artifact_id: art-endcard-4s-001
+    role: source
+    position: 1
+- artifact_id: art-plate-002
+  producing_step_id: ST-GEN-2
+  attempt_id: provider-attempt-002
+  trial_id: provider-attempt-002
+  output_hash: b4d3cc42e2a18b9d1563eb3d78fe92bde4f81fdd242c7bfe997c6cc377cc3fcd
+  output_bytes: 1628189
+  output_location: eval/pilot-001/evidence/artifacts/provider-attempt-002.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents: []
+- artifact_id: art-claims-comp-002
+  producing_step_id: ST-CLAIMS-COMP-2
+  attempt_id: null
+  trial_id: null
+  output_hash: 549cda1108405f2357d12403f073d807237011ca4f21f6be9acec30a9eab9281
+  output_bytes: 1958698
+  output_location: eval/pilot-001/evidence/artifacts/claims-composited-8s-002.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents:
+  - parent_artifact_id: art-plate-002
+    role: source
+    position: 0
+  - parent_artifact_id: art-claims-overlay-001
+    role: overlay
+    position: 1
+- artifact_id: art-final-002
+  producing_step_id: ST-ASSEMBLY-2
+  attempt_id: null
+  trial_id: null
+  output_hash: a18bbdaeea6db8d14fcfe026ebc862227bffabbdafa1beaf89dd08d7ab2d66cf
+  output_bytes: 1784012
+  output_location: eval/pilot-001/evidence/artifacts/final-candidate-002.mp4
+  media_kind: video
+  storage_class: C_irreproducible_empirical
+  parents:
+  - parent_artifact_id: art-claims-comp-002
+    role: source
+    position: 0
+  - parent_artifact_id: art-endcard-4s-001
+    role: source
+    position: 1
+measurements: []
+outcome_acceptance:
+- acceptance_id: ACC-PILOT-001-C1
+  outcome_id: OUT-PILOT-001-A
+  accepted: false
+  decided_by: user (customer proxy and acceptance authority)
+  decided_at: '2026-08-28T07:51:11Z'
+  brief_ref: canon/experiments/pilot-001/aight-normalized-request.yaml#NR-PILOT-001-AIGHT-V1
+  rejection_reasons:
+  - H1 FAIL — not modern/premium ('does not look premium')
+  - H4 FAIL — no coherent visual idea / takeaway ('does not make sense')
+  - H6 FAIL — not publishable ('generated video is pure garbage', 'does not hold')
+  - H5 PASS — prices legible; deterministic text/brand layer PASS ('text renders properly;
+    Aight symbol/wordmark is correct')
+  - 'authority: CONTROLLER-PILOT-001-CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md'
+cost_ledger:
+- ledger_entry_id: pilot-cost-res-000001
+  amount: 0.8
+  currency: USD
+  unit: call
+  recorded_at: '2026-08-28T07:34:31.354435Z'
+  basis: 'provisional_published_rate: USD 0.10/generated second, veo-3.1-fast-generate-preview
+    720p with audio (official Gemini API pricing page, fetched 2026-08-28); modelled
+    estimate, not invoice evidence'
+  immutable: true
+  cost_class: api_tool
+- ledger_entry_id: pilot-cost-res-000003
+  amount: 0.8
+  currency: USD
+  unit: call
+  recorded_at: '2026-08-28T08:23:34.053404Z'
+  basis: 'provisional_published_rate: USD 0.10/generated second, veo-3.1-fast-generate-preview
+    720p with audio (official Gemini API pricing page, fetched 2026-08-28); modelled
+    estimate, not invoice evidence'
+  immutable: true
+  cost_class: api_tool
