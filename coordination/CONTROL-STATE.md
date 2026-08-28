@@ -156,11 +156,11 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
    production recipe shape, human acceptance record and explicit API-spend cap before generation.
 4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol.
-3. **Registry text rows stay blocked**; admission semantics stay as they are.
-4. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
+5. **Registry text rows stay blocked**; admission semantics stay as they are.
+6. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
    Registry decision depends on those automated measurements.
-5. **Prices remain incomplete** — execution-time route/price verification is required before each
+7. **Prices remain incomplete** — execution-time route/price verification is required before each
    paid tranche; no broad price-refresh task is authorised.
-6. **HED-1 remains undecided** and must be resolved before fully-loaded Stage-C CpAO is scored.
-7. **Stream-owned staleness** routed by GOV-006 remains non-blocking; this file governs where stale
+8. **HED-1 remains undecided** and must be resolved before fully-loaded Stage-C CpAO is scored.
+9. **Stream-owned staleness** routed by GOV-006 remains non-blocking; this file governs where stale
    handoffs/spec prose disagree with current decisions.
