@@ -158,12 +158,13 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
    inverse (image-first hero still + minimal animate prompt + deterministic composition).
    Authority: `CONTROLLER-PILOT-001-CANDIDATE-2-REJECTION-AND-T1-CLOSURE-2026-08-28.md`. Residual
    PILOT-001 headroom (USD 0.40) lapsed. Evidence sealed via the merged execution branch.
-2. **Next paid tranche is the T2 workflow-then-model screen** per
-   `coordination/plans/2026-08-28-PROGRAMME-PLAN-T2-T8-v1.md` — USD 25 envelope, image-first
-   primary arm seeded with the media-factory prompt family, T2V control retained. **Requires its
-   own Controller authorisation decision plus explicit user spend approval before any call.**
-   Zero-spend T2 prep (media-factory pattern import, scoped price sheet, brand-token templates,
-   demand-to-capability map) is authorised by the closure decision.
+2. **The proposed T2 workflow-then-model screen (USD 25) was DECLINED by the user on 2026-08-28**
+   after reviewing the instantiated prompts. It is dropped: not authorised, not pending, must not
+   be re-pitched as-is. `coordination/plans/2026-08-28-PROGRAMME-PLAN-T2-T8-v1.md` remains a
+   planning reference only. **No paid tranche is currently proposed or authorised. No execution
+   lane is active.** The next paid step, whatever it is, requires fresh user direction and its own
+   Controller decision. The zero-spend prep items authorised by the T1 closure decision remain
+   valid but untasked.
 4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 5. **Registry text rows stay blocked**; admission semantics stay as they are.
