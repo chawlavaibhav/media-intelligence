@@ -10,7 +10,10 @@ Checks, from committed bytes alone (no network, no secrets, no spend):
      (`evidence/EMP-001/text-ocr/EVIDENCE-MANIFEST.json`,
       `evidence/EMP-001/atex-scoring/EVIDENCE-MANIFEST.json`)
      against its recorded SHA-256 and byte length;
-  3. the headline A-TEXT scoring counts recomputed from the 16 row-level
+  3. the A-TEXT scoring rows consume the exact 16 sealed coordinates/hashes
+     (no missing, duplicate or substituted artifact), and carry the sealed
+     generation fingerprint;
+  4. the headline A-TEXT scoring counts recomputed from the 16 row-level
      records (expected 6/8 GPT Image 2, 1/8 Ideogram v3, 7/16 overall).
 
 This script verifies linkage only. The manifests and evidence files are the
@@ -70,6 +73,12 @@ def main() -> int:
     hashes = [a["sha256"] for a in artifacts]
     if len(set(hashes)) != len(hashes):
         errors.append("atex-generation: artifact hashes are not all distinct")
+    generation_by_coordinate = {a["coordinate_id"]: a for a in artifacts}
+    if len(generation_by_coordinate) != len(artifacts):
+        errors.append("atex-generation: duplicate coordinate_id in artifact manifest")
+    planned = set(gen.get("planned_coordinates", []))
+    if planned and set(generation_by_coordinate) != planned:
+        errors.append("atex-generation: realised coordinate set does not equal planned_coordinates")
     root = ROOT / gen["artifact_root"]
     for a in artifacts:
         check_file(root / a["relative_path"], a["sha256"], a["bytes"], errors, "atex-generation")
@@ -89,14 +98,54 @@ def main() -> int:
         # fall back: find the list-valued key holding 16 records
         candidates = [v for v in rows.values() if isinstance(v, list) and len(v) == 16]
         rows = candidates[0] if candidates else []
+    # Verify scoring is linked to the exact sealed generation, not merely to
+    # some 16 rows with the same route labels.
+    scoring_generation = scoring.get("generation", {}) if isinstance(scoring, dict) else {}
+    sealed_fp = scoring_generation.get("sealed_manifest_fingerprint")
+    if sealed_fp != gen.get("evidence_fingerprint"):
+        errors.append(
+            "atex-scoring: sealed generation fingerprint mismatch "
+            f"(scoring={sealed_fp} generation={gen.get('evidence_fingerprint')})"
+        )
+
     counts: dict[str, list[int]] = {"IMG-01": [0, 0], "IMG-02": [0, 0], "overall": [0, 0]}
+    seen_coordinates: set[str] = set()
     for r in rows:
-        slot = r.get("slot") or (r.get("coordinate_id", "").split(":", 1)[0])
+        coord = r.get("coordinate_id", "")
+        if coord in seen_coordinates:
+            errors.append(f"atex-scoring: duplicate coordinate_id {coord}")
+        seen_coordinates.add(coord)
+        sealed = generation_by_coordinate.get(coord)
+        if sealed is None:
+            errors.append(f"atex-scoring: coordinate not present in sealed generation manifest: {coord}")
+        else:
+            if r.get("artifact_sha256") != sealed.get("sha256"):
+                errors.append(
+                    f"atex-scoring: artifact hash mismatch for {coord} "
+                    f"(scoring={r.get('artifact_sha256')} sealed={sealed.get('sha256')})"
+                )
+            if r.get("artifact_bytes") != sealed.get("bytes"):
+                errors.append(
+                    f"atex-scoring: artifact byte-length mismatch for {coord} "
+                    f"(scoring={r.get('artifact_bytes')} sealed={sealed.get('bytes')})"
+                )
+            if r.get("artifact_relative_path") != sealed.get("relative_path"):
+                errors.append(
+                    f"atex-scoring: artifact path mismatch for {coord} "
+                    f"(scoring={r.get('artifact_relative_path')} sealed={sealed.get('relative_path')})"
+                )
+
+        slot = r.get("slot") or (coord.split(":", 1)[0])
         exact = bool(r.get("exact_match"))
         for key in (slot, "overall"):
             if key in counts:
                 counts[key][0] += 1 if exact else 0
                 counts[key][1] += 1
+
+    if seen_coordinates != set(generation_by_coordinate):
+        missing = sorted(set(generation_by_coordinate) - seen_coordinates)
+        extra = sorted(seen_coordinates - set(generation_by_coordinate))
+        errors.append(f"atex-scoring: scored coordinate set differs from sealed set; missing={missing} extra={extra}")
     for key, (want_exact, want_total) in EXPECTED_ATEX.items():
         got_exact, got_total = counts.get(key, (None, None))
         if (got_exact, got_total) != (want_exact, want_total):
