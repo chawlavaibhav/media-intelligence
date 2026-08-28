@@ -2,7 +2,10 @@
 
 **Date:** 2026-08-28
 **Status:** EXECUTION PACKET for the single authorised repair. No new authority is created here.
-**Governing decision:** `coordination/decisions/CONTROLLER-PILOT-001-CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md`
+**Governing decisions:** `coordination/decisions/CONTROLLER-PILOT-001-CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md`
+(rejection + repair allocation) and
+`coordination/decisions/CONTROLLER-PILOT-001-ATTEMPT-2-PROMPT-SUPERSESSION-2026-08-28.md`
+(the current frozen Attempt 2 prompt — supersedes the segmented prompt, which was never dispatched)
 **Spend authority (unchanged):** `coordination/decisions/CONTROLLER-PILOT-001-SPEND-AUTHORISATION-2026-08-28.md` — USD 2.00 hard cap, 0 retries.
 **Base runbook:** `coordination/plans/2026-08-28-PILOT-001-KEY-BEARING-EXECUTION-RUNBOOK.md`
 
@@ -11,10 +14,12 @@
 The base runbook was written before Candidate 1 was human-rejected. Two of its parts are now
 superseded by the newer rejection-and-repair decision, which governs:
 
-1. **The runbook's "Provider prompt — frozen" section is superseded.** Attempt 2 must use the
-   frozen repair prompt in the rejection-and-repair decision (the concrete "one source product →
-   two media outcomes" commercial scene), verbatim, with no creative rewriting after seeing the
-   result.
+1. **The runbook's "Provider prompt — frozen" section is superseded — twice.** The
+   rejection-and-repair decision replaced it with a segmented multi-phase prompt; the user then
+   withdrew that prompt before dispatch as non-credible. The current frozen Attempt 2 prompt is
+   the single-scene prompt in
+   `CONTROLLER-PILOT-001-ATTEMPT-2-PROMPT-SUPERSESSION-2026-08-28.md`, verbatim, with no
+   creative rewriting after seeing the result.
 2. **The runbook's "Repair" section is now resolved.** The Controller disposition exists:
    Candidate 1 is REJECTED (H1/H4/H6 FAIL), the defect is provider-origin, and the single repair
    is one final provider generation. Attempt 2 is that repair. Attempt 3 is forbidden.
@@ -42,7 +47,8 @@ response format) applies to Attempt 2 unchanged.
    reset spend.
 5. **Reserve USD 0.80** under a new stable cost_ref, then dispatch **one** provider call:
    direct Gemini Developer API, `veo-3.1-fast-generate-preview`, 8 s, 9:16, 720p, using the
-   frozen repair prompt from the governing decision. One request = one attempt = one trial;
+   frozen single-scene prompt from the prompt-supersession decision. One request = one attempt
+   = one trial;
    0 retries; no third call under any condition.
 6. **Compose deterministically** with the exact accepted Candidate 1 deterministic layer
    (wordmark source, `Image ₹9`, `Video ₹99`, endcard, `Outcome API`, `getaight.ai`, stripped
