@@ -1,8 +1,7 @@
-# NEGATIVE CONTROL G5c — EXPECT FAIL.
-# Two units in an ORDERED sequence claim position 1.
-# (G12 correction 2026-08-28: attempts now carry the full inherited v2.1 call
-#  provenance required by the corrected v3 contract; this fixture's declared
-#  defect is unchanged.)
+# NEGATIVE CONTROL G12 — EXPECT FAIL.
+# EXPECT-SUBSTRING: provider
+# A production provider attempt missing inherited required field 'provider'.
+# v3 inherits the v2.1 attempt contract; incomplete call provenance is rejected.
 schema_era: v3
 jobs:
 - job_id: JOB-1
@@ -37,7 +36,7 @@ units:
 - unit_id: U-S3
   set_id: SET-SEQ
   unit_kind: shot
-  position: 1
+  position: 2
 - unit_id: U-LOGO
   set_id: SET-AUX
   unit_kind: overlay
@@ -155,17 +154,7 @@ transform_recipes:
   params_hash: c3
   params_location: dummy://params/mix
 attempts:
-- attempt_id: ATT-S1
-  trial_id: TR-1
-  step_id: ST-S1
-  status: ok
-  lane: general_video
-  cost_ref: LED-S1
-  repeat_index: 0
-  retry_of_attempt_id: null
-  error_detail: null
-  attempt_kind: production
-  provider: dummy-vendor
+- attempt_kind: production
   model_id: dummy-model-1
   model_version: unpinnable
   endpoint: dummy://generate
@@ -178,16 +167,16 @@ attempts:
   completed_at: '2026-02-01T09:15:00Z'
   repeat_of_attempt_id: null
   storage_class: C_irreproducible_empirical
-- attempt_id: ATT-S2-ERR
-  trial_id: TR-2
-  step_id: ST-S2
-  status: error
+  attempt_id: ATT-S1
+  trial_id: TR-1
+  step_id: ST-S1
+  status: ok
   lane: general_video
-  cost_ref: LED-S2-ERR
+  cost_ref: LED-S1
   repeat_index: 0
   retry_of_attempt_id: null
-  error_detail: synthetic upstream error
-  attempt_kind: production
+  error_detail: null
+- attempt_kind: production
   provider: dummy-vendor
   model_id: dummy-model-1
   model_version: unpinnable
@@ -201,7 +190,30 @@ attempts:
   completed_at: '2026-02-01T09:15:00Z'
   repeat_of_attempt_id: null
   storage_class: C_irreproducible_empirical
-- attempt_id: ATT-S2-RETRY
+  attempt_id: ATT-S2-ERR
+  trial_id: TR-2
+  step_id: ST-S2
+  status: error
+  lane: general_video
+  cost_ref: LED-S2-ERR
+  repeat_index: 0
+  retry_of_attempt_id: null
+  error_detail: synthetic upstream error
+- attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: a22d46319bc8433360517a62306b26befdc30ac1a738e2f7ebd7c9148c93e6d7
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
+  attempt_id: ATT-S2-RETRY
   trial_id: TR-3
   step_id: ST-S2
   status: ok
@@ -211,7 +223,7 @@ attempts:
   retry_of_attempt_id: ATT-S2-ERR
   retry_reason: prior attempt errored
   error_detail: null
-  attempt_kind: production
+- attempt_kind: production
   provider: dummy-vendor
   model_id: dummy-model-1
   model_version: unpinnable
@@ -225,7 +237,7 @@ attempts:
   completed_at: '2026-02-01T09:15:00Z'
   repeat_of_attempt_id: null
   storage_class: C_irreproducible_empirical
-- attempt_id: ATT-S3
+  attempt_id: ATT-S3
   trial_id: TR-4
   step_id: ST-S3
   status: ok
@@ -234,7 +246,30 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
-  attempt_kind: production
+- attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: a22d46319bc8433360517a62306b26befdc30ac1a738e2f7ebd7c9148c93e6d7
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: ATT-S3
+  storage_class: C_irreproducible_empirical
+  attempt_id: ATT-S3-REFUSED
+  trial_id: TR-5
+  step_id: ST-S3
+  status: refusal
+  lane: general_video
+  cost_ref: LED-S3-REFUSED
+  repeat_index: 1
+  retry_of_attempt_id: null
+  error_detail: synthetic moderation refusal, verbatim
+- attempt_kind: production
   provider: dummy-vendor
   model_id: dummy-model-1
   model_version: unpinnable
@@ -248,30 +283,7 @@ attempts:
   completed_at: '2026-02-01T09:15:00Z'
   repeat_of_attempt_id: null
   storage_class: C_irreproducible_empirical
-- attempt_id: ATT-S3-REFUSED
-  trial_id: TR-5
-  step_id: ST-S3
-  status: refusal
-  lane: general_video
-  cost_ref: LED-S3-REFUSED
-  repeat_index: 1
-  repeat_of_attempt_id: ATT-S3
-  retry_of_attempt_id: null
-  error_detail: synthetic moderation refusal, verbatim
-  attempt_kind: production
-  provider: dummy-vendor
-  model_id: dummy-model-1
-  model_version: unpinnable
-  endpoint: dummy://generate
-  workflow: single_call
-  prompt_hash: a22d46319bc8433360517a62306b26befdc30ac1a738e2f7ebd7c9148c93e6d7
-  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
-  config_location: dummy://config/attempts
-  reference_asset_hashes: *id001
-  requested_at: '2026-02-01T09:10:00Z'
-  completed_at: '2026-02-01T09:15:00Z'
-  storage_class: C_irreproducible_empirical
-- attempt_id: ATT-LOGO
+  attempt_id: ATT-LOGO
   trial_id: TR-6
   step_id: ST-LOGO
   status: ok
@@ -280,7 +292,7 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
-  attempt_kind: production
+- attempt_kind: production
   provider: dummy-vendor
   model_id: dummy-model-1
   model_version: unpinnable
@@ -294,7 +306,7 @@ attempts:
   completed_at: '2026-02-01T09:15:00Z'
   repeat_of_attempt_id: null
   storage_class: C_irreproducible_empirical
-- attempt_id: ATT-VO
+  attempt_id: ATT-VO
   trial_id: TR-7
   step_id: ST-VO
   status: ok
@@ -303,20 +315,6 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
-  attempt_kind: production
-  provider: dummy-vendor
-  model_id: dummy-model-1
-  model_version: unpinnable
-  endpoint: dummy://generate
-  workflow: single_call
-  prompt_hash: a22d46319bc8433360517a62306b26befdc30ac1a738e2f7ebd7c9148c93e6d7
-  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
-  config_location: dummy://config/attempts
-  reference_asset_hashes: *id001
-  requested_at: '2026-02-01T09:10:00Z'
-  completed_at: '2026-02-01T09:15:00Z'
-  repeat_of_attempt_id: null
-  storage_class: C_irreproducible_empirical
 artifacts:
 - artifact_id: art-s1
   producing_step_id: ST-S1
@@ -579,3 +577,13 @@ cost_ledger:
   immutable: true
   synthetic: true
   cost_class: human_required
+expected_cpao:
+  api_tool_cost: 50.0
+  local_compute_cost: 1.5
+  human_required_cost: 20.0
+  fully_loaded_cost: 71.5
+  accepted_outcomes: 1
+  api_tool_cpao: 50.0
+  fully_loaded_cpao: 71.5
+  currency: XTS
+  distinct_cost_entries_counted: 13

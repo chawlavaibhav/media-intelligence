@@ -1,0 +1,69 @@
+schema_era: v3
+jobs:
+- job_id: JOB-FAIL
+  received_at: '2026-08-28T08:00:00Z'
+  brief_ref: BRIEF-F
+  request_lineage_id: req_lin_synthetic_pilot_test
+outcomes:
+- outcome_id: OUT-FAIL
+  job_id: JOB-FAIL
+  outcome_kind: video_asset
+  created_at: '2026-08-28T08:00:00Z'
+  final_artifact_id: null
+sets:
+- set_id: SET-F
+  outcome_id: OUT-FAIL
+  ordering: ordered
+  set_kind: video_sequence
+units:
+- unit_id: U-F
+  set_id: SET-F
+  unit_kind: shot
+  position: 0
+steps:
+- step_id: ST-F
+  unit_id: U-F
+  step_kind: provider_generation
+  step_index: 0
+  executed_at: '2026-08-28T09:00:00Z'
+  execution_mode: provider_call
+  attempt_ids:
+  - ATT-F
+attempts:
+- attempt_id: ATT-F
+  trial_id: ATT-F
+  step_id: ST-F
+  attempt_kind: production
+  status: refusal
+  lane: general_video
+  cost_ref: LED-1
+  provider: dummy-vendor
+  model_id: dummy-video-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: ad9b02059db643d01b90f3696cd16d99601175e1b1fd701a0b9d5e207ee8dcc8
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
+  requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T09:00:00Z'
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: synthetic refusal, verbatim
+  storage_class: C_irreproducible_empirical
+transform_recipes: []
+artifacts: []
+measurements: []
+outcome_acceptance: []
+cost_ledger:
+- ledger_entry_id: LED-1
+  amount: 2.0
+  currency: XTS
+  unit: call
+  recorded_at: '2026-08-28T09:00:00Z'
+  basis: synthetic_test
+  immutable: true
+  cost_class: api_tool
+  synthetic: true

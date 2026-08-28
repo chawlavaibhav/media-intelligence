@@ -1,0 +1,85 @@
+schema_era: v3
+jobs:
+- job_id: JOB-BM
+  received_at: '2026-08-28T08:00:00Z'
+  brief_ref: BRIEF-BM
+  request_lineage_id: req_lin_synthetic_pilot_test
+outcomes:
+- outcome_id: OUT-BM
+  job_id: JOB-BM
+  outcome_kind: static_asset
+  created_at: '2026-08-28T08:00:00Z'
+  final_artifact_id: art-bm
+sets:
+- set_id: SET-BM
+  outcome_id: OUT-BM
+  ordering: unordered
+  set_kind: variant_set
+units:
+- unit_id: U-BM
+  set_id: SET-BM
+  unit_kind: static
+steps:
+- step_id: ST-BM
+  unit_id: U-BM
+  step_kind: provider_generation
+  step_index: 0
+  executed_at: '2026-08-28T09:00:00Z'
+  execution_mode: provider_call
+  attempt_ids:
+  - ATT-BM
+attempts:
+- attempt_id: ATT-BM
+  trial_id: ATT-BM
+  step_id: ST-BM
+  attempt_kind: benchmark_eval
+  status: ok
+  lane: image
+  cost_ref: LED-1
+  provider: dummy-vendor
+  model_id: dummy-image-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: a3a702346e8927797fbf20c606d8212c434aa693cd66a05dc42f2784a38a17cb
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
+  requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T09:00:00Z'
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: null
+  storage_class: C_irreproducible_empirical
+  eval_item_id: ITEM-SYN-001
+transform_recipes: []
+artifacts:
+- artifact_id: art-bm
+  producing_step_id: ST-BM
+  attempt_id: ATT-BM
+  trial_id: ATT-BM
+  output_hash: 2d7fd777ee843374dc0f423e470d3b04ffffbfd4080b1529449abd8188af7b73
+  output_bytes: 256
+  output_location: dummy://bm/1
+  media_kind: image
+  storage_class: C_irreproducible_empirical
+  parents: []
+measurements: []
+outcome_acceptance:
+- acceptance_id: ACC-BM
+  outcome_id: OUT-BM
+  accepted: true
+  decided_by: dummy-customer-proxy
+  decided_at: '2026-08-28T10:00:00Z'
+  brief_ref: BRIEF-BM
+cost_ledger:
+- ledger_entry_id: LED-1
+  amount: 1.0
+  currency: XTS
+  unit: call
+  recorded_at: '2026-08-28T09:00:00Z'
+  basis: synthetic_test
+  immutable: true
+  cost_class: api_tool
+  synthetic: true

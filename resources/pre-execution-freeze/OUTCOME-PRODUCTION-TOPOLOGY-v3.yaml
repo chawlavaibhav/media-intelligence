@@ -5,6 +5,13 @@
 # Validator: validators/validate_topology_v3.py (fail-closed)
 # Compatibility: V21-V3-COMPATIBILITY.md   Lineage rules: LINEAGE-CONTRACT-v3.md   Cost: CPAO-CONTRACT-v3.md
 #
+# CORRECTION 2026-08-28 (RES-007 correction pass, Controller-approved): one narrow conditional
+# override of v2.1 attempt inheritance - eval_item_id is required for benchmark/eval attempts
+# exactly as v2.1 wrote it, and is NOT required (and must not be fabricated) for v3
+# production-job attempts. All other inherited required attempt fields stay required and are
+# now mechanically enforced by gate G12. See entities.attempt.v3_conditional_override.
+# Authority: coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md.
+#
 # STATUS. v3 is the FORWARD contract for records written from now on. It does not rewrite, migrate or
 # reinterpret anything already written. resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml (v2.1)
 # remains the historical truth for archives written under it, and v3 readers ingest those archives
@@ -172,10 +179,41 @@ entities:
 
   # -------------------------------------------------------------------------
   attempt:
-    description: "UNCHANGED FROM v2.1. One provider/API/transform call = one trial."
+    description: >
+      One provider/API/transform call = one trial. Inherits v2.1 attempt semantics with
+      exactly ONE Controller-approved conditional override (eval_item_id, below); every
+      other inherited required field stays required and is now mechanically enforced (G12).
     inherits: "resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml entities.attempt"
     v3_additions:
       step_id: "The production_step this attempt belongs to. Null for pre-v3 archives."
+      attempt_kind: >
+        REQUIRED on every v3 attempt: production | benchmark_eval. Declares which
+        eval_item_id rule applies, so the conditional override below is mechanically
+        checkable and fail-closed - an attempt with no declared kind is refused, never
+        guessed at. Historical pre-v3 archives have no attempt_kind and are not
+        reinterpreted.
+    v3_conditional_override:
+      # CORRECTION 2026-08-28 - the single authorised deviation from v2.1 inheritance.
+      # Authority: coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md.
+      # Found by RES-007 (stop condition: schema could not represent the pilot journey
+      # as written): v2.1 requires eval_item_id, "the benchmark bank item this attempt
+      # was made for" - a production attempt serves a customer brief, not a bank item.
+      eval_item_id: >
+        For BENCHMARK/EVALUATION attempts (attempt_kind: benchmark_eval), REQUIRED
+        exactly as v2.1 specifies. For V3 PRODUCTION-JOB attempts (attempt_kind:
+        production), NOT REQUIRED and MUST NOT BE FABRICATED - a fake benchmark id would
+        be invented provenance. The production request context already exists through
+        attempt -> step -> unit -> set -> outcome -> job -> brief_ref. Historical v2.1
+        archives remain unchanged and are never rewritten or reinterpreted.
+      everything_else_still_required: >
+        This override covers eval_item_id ONLY. Every other v2.1-required attempt field
+        remains REQUIRED for every v3 attempt and is enforced by gate G12: provider,
+        model_id, model_version ('unpinnable' where the provider exposes none), endpoint,
+        workflow, prompt_hash, config_hash, config_location, reference_asset_hashes
+        (a list, empty if none - never null), requested_at, completed_at (key always
+        present; null only where the call never completed), status, lane, cost_ref,
+        storage_class, repeat_index, repeat_of_attempt_id, retry_of_attempt_id, and
+        retry_reason whenever retry_of_attempt_id is set.
     preserved:
       - "attempt_id maps one-to-one onto trial_id. No two attempts share a trial_id."
       - "status in {ok, error, refusal, timeout, cancelled}, frozen machine vocabulary."
@@ -298,3 +336,19 @@ mechanical_gates:
       rule: "Failed/refused attempts must persist individually with a reason."
     - id: G11
       rule: "request_lineage_id must never be populated from a media lineage id."
+    - id: G12
+      rule: >
+        A v3 attempt must declare attempt_kind (production | benchmark_eval) and carry the
+        full inherited v2.1 call provenance (provider, model_id, model_version, endpoint,
+        workflow, prompt_hash, config_hash, config_location, reference_asset_hashes,
+        requested_at, completed_at, cost_ref, storage_class, repeat/retry fields).
+        eval_item_id is required iff benchmark_eval and must be absent/null on production
+        attempts. Value constraints are checked mechanically, not just presence: lane from
+        the frozen vocabulary; storage_class exactly C_irreproducible_empirical;
+        repeat_index a 0-based integer (booleans are not integers); prompt_hash,
+        config_hash and every reference_asset_hashes member a genuine SHA-256
+        (64 lowercase hex); repeat/retry back-references resolving to real attempts;
+        requested_at and non-null completed_at valid ISO-8601 UTC. Added 2026-08-28 under
+        coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md; value
+        constraints extended same day under
+        coordination/decisions/CONTROLLER-RES-007-CORRECTION-REVIEW-2-2026-08-28.md.
