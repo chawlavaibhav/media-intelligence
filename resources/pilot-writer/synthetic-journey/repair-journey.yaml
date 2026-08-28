@@ -43,17 +43,26 @@ attempts:
 - attempt_id: ATT-R
   trial_id: ATT-R
   step_id: ST-GEN
+  attempt_kind: production
   status: ok
   lane: general_video
   cost_ref: LED-GEN
+  provider: dummy-vendor
+  model_id: dummy-video-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 03a7b7295d0c00aee9558de0c48d62b5d5fd1177f18128434b019cc4708ebf62
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
+  requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T09:00:00Z'
   repeat_index: 0
   repeat_of_attempt_id: null
   retry_of_attempt_id: null
   error_detail: null
   storage_class: C_irreproducible_empirical
-  provider: dummy-vendor
-  model_id: dummy-video-1
-  endpoint: dummy://generate
 transform_recipes:
 - transform_ref: TR-FIX
   tool: ffmpeg

@@ -24,7 +24,14 @@ WHAT THE WRITER REFUSES BY CONSTRUCTION
     actual bytes, so it cannot be invented;
   * duplicate ids, unresolvable references (G3/G6), ambiguous ordered-parent positions (G5);
   * mutating a ledger entry after it is recorded - cost references are immutable here in code,
-    matching `immutable: true` in the data.
+    matching `immutable: true` in the data;
+  * (correction 2026-08-28, gate G12) provider attempts with incomplete inherited v2.1 call
+    provenance - provider, model_id, model_version, endpoint, workflow, prompt_hash,
+    config_hash, config_location, reference_asset_hashes, requested_at, completed_at are
+    mechanically required named parameters, not an open field bag. eval_item_id is required
+    for attempt_kind benchmark_eval and refused for production attempts (the
+    Controller-approved conditional override in OUTCOME-PRODUCTION-TOPOLOGY-v3.yaml,
+    authority CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md).
 
 WHAT THE WRITER DELIBERATELY DOES NOT DECIDE
   * HED-1 (which human time belongs in fully-loaded CpAO): the writer records whichever
@@ -63,6 +70,15 @@ VALID_PARENT_ROLE = {"source", "overlay", "audio", "mask", "reference",
 # Must match ORDERED_ROLES in validate_topology_v3.py.
 ORDER_BEARING_ROLES = {"source", "overlay", "grade_source"}
 VALID_COST_CLASS = {"api_tool", "local_compute", "human_required", "human_optional"}
+VALID_ATTEMPT_KIND = {"production", "benchmark_eval"}
+# Inherited v2.1 call provenance every v3 attempt must carry, non-null (gate G12).
+ATTEMPT_REQUIRED_NON_NULL = ("provider", "model_id", "model_version", "endpoint",
+                             "workflow", "prompt_hash", "config_hash",
+                             "config_location", "requested_at")
+# v2.1 optional attempt fields the writer will pass through verbatim. Anything else is
+# refused - an unconstrained field bag is how required provenance went unenforced.
+ATTEMPT_OPTIONAL_FIELDS = {"seed", "settings", "latency_ms"}
+_UNSET = object()
 VALID_TRANSFORM_OPERATION = {"concat", "overlay", "mix", "crop", "grade",
                              "encode", "resize", "other"}
 STORAGE_CLASS = "C_irreproducible_empirical"
@@ -272,20 +288,68 @@ class OutcomeWriter:
 
     # ---- attempts ------------------------------------------------------------------
 
-    def record_attempt(self, attempt_id, step_id, status, lane, cost_ref,
+    def record_attempt(self, attempt_id, step_id, status, lane, cost_ref, *,
+                       provider, model_id, model_version, endpoint, workflow,
+                       prompt_hash, config_hash, config_location,
+                       reference_asset_hashes, requested_at, completed_at=_UNSET,
+                       attempt_kind="production", eval_item_id=None,
                        trial_id=None, repeat_index=0, repeat_of_attempt_id=None,
                        retry_of_attempt_id=None, retry_reason=None, error_detail=None,
-                       **provider_fields):
+                       **optional_fields):
         """One provider/API call = one attempt = one trial - written when the call is
         MADE, kept whether it succeeded, errored, was refused, timed out or was
         cancelled. A failed call stays an individual row with its verbatim reason;
         aggregate counters never substitute (G1/G10).
 
-        provider_fields carries the v2.1-inherited call identity verbatim (provider,
-        model_id, model_version, endpoint, workflow, prompt_hash, config_hash,
-        config_location, reference_asset_hashes, requested_at, completed_at, seed,
-        settings, latency_ms, eval_item_id...). The writer stores them unchanged."""
+        CORRECTED under CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28: the full
+        inherited v2.1 call provenance is now MECHANICALLY REQUIRED, not an
+        unconstrained field bag. Nullable-by-contract values keep their v2.1 meaning:
+        completed_at may be None only in the sense 'the call never completed' (the
+        argument must still be passed explicitly); repeat_of/retry_of are None on a
+        first attempt; reference_asset_hashes is a list, empty if none - never None.
+
+        attempt_kind declares which eval_item_id rule applies (gate G12):
+        'production' (default) - eval_item_id must NOT be supplied; the request context
+        is already linked via step -> unit -> set -> outcome -> job -> brief_ref.
+        'benchmark_eval' - eval_item_id is required exactly as v2.1 specifies.
+        Only v2.1's optional fields (seed, settings, latency_ms) may be passed as
+        extras; unknown fields are refused."""
         self._register("attempt", attempt_id)
+        self._require_vocab(attempt_kind, VALID_ATTEMPT_KIND, "attempt_kind")
+        prov = {"provider": provider, "model_id": model_id,
+                "model_version": model_version, "endpoint": endpoint,
+                "workflow": workflow, "prompt_hash": prompt_hash,
+                "config_hash": config_hash, "config_location": config_location,
+                "requested_at": requested_at}
+        for field, value in prov.items():
+            if value in (None, ""):
+                raise WriterError(f"attempt {attempt_id}: required inherited field "
+                                  f"{field!r} is missing or empty. v3 inherits the "
+                                  f"v2.1 attempt contract; an attempt without its call "
+                                  f"identity is not verifiable evidence (G12)")
+        if not isinstance(reference_asset_hashes, list):
+            raise WriterError(f"attempt {attempt_id}: reference_asset_hashes must be a "
+                              f"list (empty list if none), got "
+                              f"{type(reference_asset_hashes).__name__}")
+        if completed_at is _UNSET:
+            raise WriterError(f"attempt {attempt_id}: completed_at must be passed "
+                              f"explicitly - a timestamp, or None only where the call "
+                              f"genuinely never completed. Omitting it would silently "
+                              f"record 'never completed'.")
+        if attempt_kind == "production" and eval_item_id is not None:
+            raise WriterError(f"attempt {attempt_id}: production-job attempt with "
+                              f"eval_item_id {eval_item_id!r}. A production attempt "
+                              f"serves a brief, not a benchmark item; a fabricated "
+                              f"benchmark link is invented provenance (G12)")
+        if attempt_kind == "benchmark_eval" and not eval_item_id:
+            raise WriterError(f"attempt {attempt_id}: benchmark/eval attempt requires "
+                              f"eval_item_id exactly as v2.1 specifies (G12)")
+        unknown = set(optional_fields) - ATTEMPT_OPTIONAL_FIELDS
+        if unknown:
+            raise WriterError(f"attempt {attempt_id}: unknown field(s) {sorted(unknown)}. "
+                              f"Only v2.1 optional fields {sorted(ATTEMPT_OPTIONAL_FIELDS)} "
+                              f"may be passed as extras; required provenance has named "
+                              f"parameters so it cannot be silently omitted")
         step = self._step(step_id)
         if step["execution_mode"] != "provider_call":
             raise WriterError(
@@ -315,15 +379,20 @@ class OutcomeWriter:
             self._require("attempt", repeat_of_attempt_id, f"attempt {attempt_id}")
         self._require("ledger", cost_ref, f"attempt {attempt_id} cost_ref")
         row = {"attempt_id": attempt_id, "trial_id": trial_id, "step_id": step_id,
-               "status": status, "lane": lane, "cost_ref": cost_ref,
+               "attempt_kind": attempt_kind, "status": status, "lane": lane,
+               "cost_ref": cost_ref, **prov,
+               "reference_asset_hashes": reference_asset_hashes,
+               "completed_at": completed_at,
                "repeat_index": repeat_index,
                "repeat_of_attempt_id": repeat_of_attempt_id,
                "retry_of_attempt_id": retry_of_attempt_id,
                "error_detail": error_detail,
                "storage_class": STORAGE_CLASS}
+        if attempt_kind == "benchmark_eval":
+            row["eval_item_id"] = eval_item_id
         if retry_reason is not None:
             row["retry_reason"] = retry_reason
-        row.update(provider_fields)
+        row.update(optional_fields)
         self._attempts.append(row)
         step["attempt_ids"].append(attempt_id)
         return attempt_id

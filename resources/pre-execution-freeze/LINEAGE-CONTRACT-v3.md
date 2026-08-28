@@ -1,7 +1,21 @@
 # Lineage contract v3
 
 **Task:** R4-C · **Date:** 26 Aug 2026 · **Validator:** `validators/validate_topology_v3.py`
-**Controls:** `validators/run_lineage_controls.sh` — **executed, 18/18 as declared**
+**Controls:** `validators/run_lineage_controls.sh` — originally **executed, 18/18 as declared**;
+after the 2026-08-28 G12 correction (below) the suite is **28 controls** (2 positives, 26
+negatives) — **executed, 28/28 as declared**.
+
+**Correction 2026-08-28 (RES-007 correction pass):** RES-007 stopped on a contract defect —
+v3 inherits the v2.1 attempt contract, but the validator never mechanically checked the
+inherited required fields, so an archive could pass while violating the written inheritance.
+The Controller approved one narrow conditional override plus enforcement
+(`coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md`): `eval_item_id`
+stays required for benchmark/eval attempts exactly as v2.1 wrote it, is not required and must
+not be fabricated on v3 production-job attempts (their request context is the chain
+attempt → step → unit → set → outcome → job → `brief_ref`), and **every other inherited
+required attempt field stays required** — now enforced by gate **G12** below. Every v3
+attempt declares `attempt_kind: production | benchmark_eval` so the rule is fail-closed
+checkable. Historical v2.1 archives are unchanged and never reinterpreted.
 
 ---
 
@@ -25,7 +39,7 @@ methodology/benchmark use, and raw LMArena prompt data is **not** a load-bearing
 source for the integrated request grammar. The constraint travels with the contract so it cannot be
 lost between documents.
 
-## The eleven gates
+## The twelve gates
 
 Each is enforced by the validator and has at least one negative-control fixture that must fail for
 **its own declared gate** — a fixture failing for the wrong reason does not count as passing.
@@ -43,6 +57,7 @@ Each is enforced by the validator and has at least one negative-control fixture 
 | **G9** | no historical backfill of v3 context | Inventing provenance is the failure this contract exists to prevent | `nc-G9` |
 | **G10** | failed/refused attempts persist individually with a reason | A failure with no reason is a row, not evidence | `nc-G10` |
 | **G11** | request lineage ≠ media lineage | See above | `nc-G11` |
+| **G12** | v3 attempts carry full inherited v2.1 call provenance; `eval_item_id` required iff `benchmark_eval`, forbidden on `production` | Without call identity an attempt is not verifiable evidence; a benchmark id on a production attempt is fabricated provenance (added 2026-08-28, see correction note) | `nc-G12a…i`, positive `v3-valid-benchmark-attempt` |
 
 ## G2: why it is the gate that mattered most
 

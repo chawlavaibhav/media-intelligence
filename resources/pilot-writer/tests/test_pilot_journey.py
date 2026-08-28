@@ -99,6 +99,19 @@ def synthetic_bytes(seed, n):
     return bytes(out[:n])
 
 
+def full_provenance(**overrides):
+    """The inherited v2.1 call provenance the corrected contract requires on every
+    attempt (all synthetic). Overrides let a call vary model, completion, etc."""
+    p = dict(provider="dummy-vendor", model_id="dummy-video-1",
+             model_version="unpinnable", endpoint="dummy://generate",
+             workflow="single_call",
+             config_hash=hashlib.sha256(b"synthetic-config").hexdigest(),
+             config_location="dummy://config/pilot",
+             reference_asset_hashes=[], requested_at=T(9), completed_at=T(9))
+    p.update(overrides)
+    return p
+
+
 def run(cmd, expect_exit):
     p = subprocess.run(cmd, capture_output=True, text=True)
     if p.returncode != expect_exit:
@@ -156,30 +169,37 @@ def build_journey():
     w.add_unit("U-ASSEMBLY", "SET-AUX", "layer")
 
     # --- provider generation, with the failure paths kept as individual attempts ---
-    provider = dict(provider="dummy-vendor", model_id="dummy-video-1",
-                    model_version="unpinnable", endpoint="dummy://generate",
-                    workflow="single_call", requested_at=T(9), completed_at=T(9))
+    # Full inherited v2.1 call provenance on EVERY attempt (G12, corrected contract).
+    # No eval_item_id anywhere: these are production attempts serving BRIEF-PW1 via
+    # step -> unit -> set -> outcome -> job.
     w.add_provider_step("ST-GEN-A", "U-SHOT-A", "provider_generation", 0, T(9))
     w.record_attempt("ATT-A-REFUSED", "ST-GEN-A", "refusal", "general_video",
                      "LED-A-REFUSED",
                      error_detail="synthetic provider moderation refusal, verbatim",
                      prompt_hash=hashlib.sha256(b"prompt-shot-a").hexdigest(),
-                     **provider)
+                     **full_provenance())
     w.record_attempt("ATT-A-RETRY", "ST-GEN-A", "ok", "general_video", "LED-A-RETRY",
                      retry_of_attempt_id="ATT-A-REFUSED",
                      retry_reason="prior attempt refused",
                      prompt_hash=hashlib.sha256(b"prompt-shot-a-rephrased").hexdigest(),
-                     **provider)
+                     **full_provenance())
     w.add_provider_step("ST-GEN-B", "U-SHOT-B", "provider_generation", 0, T(9))
+    # A timeout is the one case where completed_at is legitimately None: the call
+    # never completed. The v2.1 nullable semantics are preserved, not reinvented.
     w.record_attempt("ATT-B-TIMEOUT", "ST-GEN-B", "timeout", "general_video",
                      "LED-B-TIMEOUT",
-                     error_detail="synthetic 504 upstream timeout, verbatim", **provider)
+                     error_detail="synthetic 504 upstream timeout, verbatim",
+                     prompt_hash=hashlib.sha256(b"prompt-shot-b").hexdigest(),
+                     **full_provenance(completed_at=None))
     w.record_attempt("ATT-B-RETRY", "ST-GEN-B", "ok", "general_video", "LED-B-RETRY",
                      retry_of_attempt_id="ATT-B-TIMEOUT",
-                     retry_reason="prior attempt timed out", **provider)
+                     retry_reason="prior attempt timed out",
+                     prompt_hash=hashlib.sha256(b"prompt-shot-b").hexdigest(),
+                     **full_provenance())
     w.add_provider_step("ST-GEN-LOGO", "U-LOGO", "provider_generation", 0, T(9))
     w.record_attempt("ATT-LOGO", "ST-GEN-LOGO", "ok", "image", "LED-LOGO",
-                     **{**provider, "model_id": "dummy-image-1"})
+                     prompt_hash=hashlib.sha256(b"prompt-logo").hexdigest(),
+                     **full_provenance(model_id="dummy-image-1"))
 
     w.record_artifact("art-shot-a", "ST-GEN-A", "video",
                       path=os.path.join(ART_DIR, "shot-a.bin"),
@@ -308,8 +328,9 @@ def t05_ordered_multi_parent_lineage():
 
 def t06_frozen_topology_validator_passes():
     out = run(["python3", VALIDATE, ARCHIVE_PATH], expect_exit=0)
-    assert "[PASS] G1" in out and "[PASS] G11" in out
+    assert "[PASS] G1" in out and "[PASS] G11" in out and "[PASS] G12" in out
     assert "failed/refused:    2" in out, "both failed attempts must be visible"
+    assert "'production': 5" in out, "all 5 attempts must be declared production kind"
 
 
 def t07_frozen_cpao_engine_matches_hand_computed_total():
@@ -322,7 +343,8 @@ def t07_frozen_cpao_engine_matches_hand_computed_total():
 def t08_writer_refuses_attempt_on_local_step():
     w, _ = build_journey()
     try:
-        w.record_attempt("ATT-EVIL", "ST-CONCAT", "ok", "general_video", "LED-EVAL")
+        w.record_attempt("ATT-EVIL", "ST-CONCAT", "ok", "general_video", "LED-EVAL",
+                         prompt_hash="p" * 64, **full_provenance())
         raise AssertionError("writer accepted a provider attempt on a local step")
     except WriterError:
         pass
@@ -369,13 +391,15 @@ def t12_writer_refuses_duplicate_trial_and_silent_failure():
     w, _ = build_journey()
     try:
         w.record_attempt("ATT-EVIL", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
-                         trial_id="ATT-A-RETRY")
+                         trial_id="ATT-A-RETRY", prompt_hash="p" * 64,
+                         **full_provenance())
         raise AssertionError("writer accepted two attempts sharing one trial")
     except WriterError:
         pass
     try:
         w.record_attempt("ATT-EVIL2", "ST-GEN-A", "refusal", "general_video",
-                         "LED-EVAL")               # no error_detail
+                         "LED-EVAL", prompt_hash="p" * 64,
+                         **full_provenance())      # no error_detail
         raise AssertionError("writer accepted a failure with no recorded reason")
     except WriterError:
         pass
@@ -431,8 +455,8 @@ def t15_negative_control_no_accepted_outcome_refused():
     w.add_provider_step("ST-F", "U-F", "provider_generation", 0, T(9))
     w.record_attempt("ATT-F", "ST-F", "refusal", "general_video", "LED-1",
                      error_detail="synthetic refusal, verbatim",
-                     provider="dummy-vendor", model_id="dummy-video-1",
-                     endpoint="dummy://generate")
+                     prompt_hash=hashlib.sha256(b"prompt-fail").hexdigest(),
+                     **full_provenance())
     p = os.path.join(NC_DIR, "nc-only-failed-attempts.yaml")
     w.write_archive(p)
     run(["python3", VALIDATE, p], expect_exit=0)         # the failure IS valid evidence
@@ -460,7 +484,7 @@ def t17_existing_control_suites_still_pass():
     out = run(["bash", os.path.join(ROOT, "resources", "pre-execution-freeze",
                                     "validators", "run_lineage_controls.sh")],
               expect_exit=0)
-    assert "18/18" in out
+    assert "28/28" in out, "2 positives + 26 negatives incl. the ten G12 controls"
     out = run(["bash", os.path.join(ROOT, "resources", "pre-execution-freeze",
                                     "validators", "run_cpao_controls_v3.sh")],
               expect_exit=0)
@@ -490,8 +514,8 @@ def t19_repair_step_journey():
     w.add_unit("U-R", "SET-R", "shot", position=0)
     w.add_provider_step("ST-GEN", "U-R", "provider_generation", 0, T(9))
     w.record_attempt("ATT-R", "ST-GEN", "ok", "general_video", "LED-GEN",
-                     provider="dummy-vendor", model_id="dummy-video-1",
-                     endpoint="dummy://generate")
+                     prompt_hash=hashlib.sha256(b"prompt-repair").hexdigest(),
+                     **full_provenance())
     w.record_artifact("art-raw", "ST-GEN", "video", data=synthetic_bytes("r-raw", 512),
                       output_location="dummy://r/raw", attempt_id="ATT-R")
     w.add_transform_recipe("TR-FIX", "ffmpeg", "7.0.1-synthetic", "encode",
@@ -518,6 +542,108 @@ def t19_repair_step_journey():
     fix = next(s for s in d["steps"] if s["step_id"] == "ST-FIX")
     assert fix["step_kind"] == "repair" and fix["repair_of_step_id"] == "ST-GEN"
     assert fix["attempt_ids"] == []
+
+
+def t20_writer_requires_full_inherited_provenance():
+    """The corrected contract: no production attempt row is accepted with missing or
+    null inherited call provenance, and no unknown field bag is accepted."""
+    from outcome_writer import ATTEMPT_REQUIRED_NON_NULL
+    for field in ATTEMPT_REQUIRED_NON_NULL:
+        w, _ = build_journey()
+        kwargs = dict(prompt_hash="p" * 64, **full_provenance())
+        kwargs[field] = None
+        try:
+            w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                             **kwargs)
+            raise AssertionError(f"writer accepted null required field {field}")
+        except WriterError:
+            pass
+    w, _ = build_journey()
+    try:
+        w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                         prompt_hash="p" * 64,
+                         **full_provenance(reference_asset_hashes=None))
+        raise AssertionError("writer accepted null reference_asset_hashes")
+    except WriterError:
+        pass
+    try:
+        kwargs = dict(prompt_hash="p" * 64, **full_provenance())
+        del kwargs["completed_at"]
+        w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                         **kwargs)
+        raise AssertionError("writer accepted an omitted completed_at")
+    except WriterError:
+        pass
+    try:
+        w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                         prompt_hash="p" * 64, mystery_field="x",
+                         **full_provenance())
+        raise AssertionError("writer accepted an unknown extra field")
+    except WriterError:
+        pass
+
+
+def t21_eval_item_id_conditional_override():
+    """Production attempts must NOT carry eval_item_id; benchmark/eval attempts must.
+    A benchmark-kind journey passes the corrected frozen validator end to end."""
+    w, _ = build_journey()
+    try:
+        w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                         prompt_hash="p" * 64, eval_item_id="ITEM-001",
+                         **full_provenance())
+        raise AssertionError("writer accepted eval_item_id on a production attempt")
+    except WriterError:
+        pass
+    try:
+        w.record_attempt("ATT-Y", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                         prompt_hash="p" * 64, attempt_kind="benchmark_eval",
+                         **full_provenance())
+        raise AssertionError("writer accepted a benchmark attempt without eval_item_id")
+    except WriterError:
+        pass
+    # A valid benchmark_eval attempt round-trips through the frozen validator.
+    w2 = OutcomeWriter()
+    w2.add_ledger_entry("LED-1", 1.0, "XTS", "api_tool", T(9), "synthetic_test",
+                        synthetic=True)
+    w2.add_job("JOB-BM", T(8), "BRIEF-BM", "req_lin_synthetic_pilot_test")
+    w2.add_outcome("OUT-BM", "JOB-BM", "static_asset", T(8))
+    w2.add_set("SET-BM", "OUT-BM", "unordered", "variant_set")
+    w2.add_unit("U-BM", "SET-BM", "static")
+    w2.add_provider_step("ST-BM", "U-BM", "provider_generation", 0, T(9))
+    w2.record_attempt("ATT-BM", "ST-BM", "ok", "image", "LED-1",
+                      prompt_hash=hashlib.sha256(b"bench-prompt").hexdigest(),
+                      attempt_kind="benchmark_eval", eval_item_id="ITEM-SYN-001",
+                      **full_provenance(model_id="dummy-image-1"))
+    w2.record_artifact("art-bm", "ST-BM", "image", data=synthetic_bytes("bm", 256),
+                       output_location="dummy://bm/1", attempt_id="ATT-BM")
+    w2.set_final_artifact("OUT-BM", "art-bm")
+    w2.record_outcome_acceptance("ACC-BM", "OUT-BM", True, "dummy-customer-proxy",
+                                 T(10), "BRIEF-BM")
+    p = os.path.join(NC_DIR, "..", "benchmark-attempt-journey.yaml")
+    w2.write_archive(p)
+    out = run(["python3", VALIDATE, p], expect_exit=0)
+    assert "'benchmark_eval': 1" in out
+    d = yaml.safe_load(open(p))
+    assert d["attempts"][0]["eval_item_id"] == "ITEM-SYN-001"
+
+
+def t22_production_archive_has_no_eval_item_id_and_full_provenance():
+    """The corrected synthetic pilot archive: every attempt declares production kind,
+    carries every inherited provenance field, and has no eval_item_id anywhere."""
+    d = yaml.safe_load(open(ARCHIVE_PATH))
+    required = ("attempt_kind", "provider", "model_id", "model_version", "endpoint",
+                "workflow", "prompt_hash", "config_hash", "config_location",
+                "reference_asset_hashes", "requested_at", "completed_at",
+                "repeat_index", "repeat_of_attempt_id", "retry_of_attempt_id",
+                "status", "lane", "cost_ref", "storage_class")
+    for a in d["attempts"]:
+        assert a["attempt_kind"] == "production"
+        assert "eval_item_id" not in a, "no fabricated benchmark id on production rows"
+        for k in required:
+            assert k in a, f"attempt {a['attempt_id']}: missing {k}"
+    timeout = next(a for a in d["attempts"] if a["status"] == "timeout")
+    assert timeout["completed_at"] is None, \
+        "a timed-out call never completed; completed_at must be recorded null"
 
 
 def main():

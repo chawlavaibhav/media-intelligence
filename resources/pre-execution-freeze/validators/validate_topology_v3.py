@@ -3,7 +3,7 @@
 
     validate_topology_v3.py <archive.yaml> [--expect-fail]
 
-Enforces the eleven mechanical gates in OUTCOME-PRODUCTION-TOPOLOGY-v3.yaml:
+Enforces the twelve mechanical gates in OUTCOME-PRODUCTION-TOPOLOGY-v3.yaml:
 
   G1  one provider call = one trial; no two attempts share a trial_id
   G2  a local/human step must not carry provider attempts
@@ -16,6 +16,10 @@ Enforces the eleven mechanical gates in OUTCOME-PRODUCTION-TOPOLOGY-v3.yaml:
   G9  no historical backfill: a pre-v3 record must not assert v3 outcome/job context
   G10 failed/refused attempts persist individually with a reason
   G11 request lineage must never be populated from a media lineage id
+  G12 v3 attempts carry the full inherited v2.1 call provenance; eval_item_id is
+      required for benchmark/eval attempts and must not be fabricated on
+      production-job attempts (Controller-approved conditional override,
+      coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md)
 
 EXIT CODES
   0  archive is valid
@@ -41,6 +45,15 @@ REQ_RECIPE = ["transform_ref", "tool", "tool_version", "operation", "params_hash
 MEDIA_LINEAGE_PREFIXES = ("lin_cvit", "lin_bhashini", "lin_diffusiondb", "lin_konstanz",
                           "lin_tigerlab", "lin_kwaivgi", "lin_google", "lin_abo", "content::",
                           "sha256:")
+# ---- G12: inherited v2.1 attempt provenance, mechanically enforced for v3 attempts ----
+VALID_ATTEMPT_KIND = {"production", "benchmark_eval"}
+# Must be present AND non-null on every v3 attempt.
+G12_REQUIRED_NON_NULL = ("provider", "model_id", "model_version", "endpoint", "workflow",
+                         "prompt_hash", "config_hash", "config_location", "requested_at",
+                         "cost_ref", "storage_class")
+# Key must be PRESENT; null is a legitimate recorded value (a call that never completed;
+# a first attempt with no prior repeat/retry). An absent key is not the same fact as null.
+G12_REQUIRED_KEYS_NULLABLE = ("completed_at", "repeat_of_attempt_id", "retry_of_attempt_id")
 
 
 def fatal(m):
@@ -120,6 +133,45 @@ def main():
         if a.get("status") in NON_OK and not a.get("error_detail"):
             bad("G10", f"attempt {aid}: status {a.get('status')!r} with no error_detail; a failure "
                        f"with no recorded reason is a row, not preserved evidence")
+        # ---- G12: inherited v2.1 call provenance, fail-closed (v3 attempts only;
+        # historical pre-v3 archives keep v2.1 semantics unchanged and are validated
+        # by the v2.1 validator, never reinterpreted here)
+        if schema_era not in ("v2.1", "pre_v3"):
+            kind = a.get("attempt_kind")
+            if kind not in VALID_ATTEMPT_KIND:
+                bad("G12", f"attempt {aid}: attempt_kind {kind!r} is not one of "
+                           f"{sorted(VALID_ATTEMPT_KIND)}. Without a declared kind the "
+                           f"eval_item_id rule cannot be applied, so the row is refused "
+                           f"rather than guessed at (fail-closed).")
+            for f in G12_REQUIRED_NON_NULL:
+                if a.get(f) in (None, ""):
+                    bad("G12", f"attempt {aid}: required inherited field '{f}' is missing "
+                               f"or null. v3 inherits the v2.1 attempt contract; an "
+                               f"attempt without its call identity/provenance is not "
+                               f"verifiable evidence.")
+            for f in G12_REQUIRED_KEYS_NULLABLE:
+                if f not in a:
+                    bad("G12", f"attempt {aid}: key '{f}' is absent. Null is a recorded "
+                               f"value ('never completed' / 'no prior attempt'); an "
+                               f"absent key is an unrecorded fact and is refused.")
+            rah = a.get("reference_asset_hashes", None)
+            if not isinstance(rah, list):
+                bad("G12", f"attempt {aid}: reference_asset_hashes must be a list "
+                           f"(empty list if none), got {type(rah).__name__}")
+            if "repeat_index" not in a or a.get("repeat_index") is None:
+                bad("G12", f"attempt {aid}: repeat_index is required on every attempt")
+            if a.get("retry_of_attempt_id") is not None and not a.get("retry_reason"):
+                bad("G12", f"attempt {aid}: retry_of_attempt_id set without retry_reason; "
+                           f"repeat and retry must stay distinguishable")
+            if kind == "benchmark_eval" and not a.get("eval_item_id"):
+                bad("G12", f"attempt {aid}: benchmark/eval attempt with no eval_item_id; "
+                           f"v2.1 requires it exactly as written for benchmark attempts")
+            if kind == "production" and a.get("eval_item_id") is not None:
+                bad("G12", f"attempt {aid}: production-job attempt carries eval_item_id "
+                           f"{a.get('eval_item_id')!r}. A production attempt serves a "
+                           f"brief (via step -> unit -> set -> outcome -> job -> "
+                           f"brief_ref); linking it to a benchmark item would fabricate "
+                           f"provenance and must not happen.")
 
     # ---- G2 / G8: step execution mode ---------------------------------------------
     for s in steps.values():
@@ -281,6 +333,8 @@ def main():
     print(f"trials:            {len(trial_owner)}  (one call = one trial)")
     nonok = [a for a in attempts.values() if a.get("status") in NON_OK]
     print(f"failed/refused:    {len(nonok)}  (each preserved individually with its reason)")
+    kind_counts = collections.Counter(a.get("attempt_kind") for a in attempts.values())
+    print(f"attempt kinds:     {dict(kind_counts)}")
     multi = [a for a in artifacts.values() if len(a.get('parents') or []) > 1]
     print(f"multi-parent artifacts: {len(multi)}")
     local_arts = [a for a in artifacts.values()
@@ -310,6 +364,8 @@ def main():
     print("[PASS] G9  no historical backfill of v3 context")
     print("[PASS] G10 failed/refused attempts persist individually with reasons")
     print("[PASS] G11 request lineage is not populated from media lineage")
+    print("[PASS] G12 attempts carry full inherited call provenance; eval_item_id "
+          "required for benchmark_eval, absent/null for production")
     sys.exit(0)
 
 

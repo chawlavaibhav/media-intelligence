@@ -102,97 +102,120 @@ attempts:
 - attempt_id: ATT-A-REFUSED
   trial_id: ATT-A-REFUSED
   step_id: ST-GEN-A
+  attempt_kind: production
   status: refusal
   lane: general_video
   cost_ref: LED-A-REFUSED
-  repeat_index: 0
-  repeat_of_attempt_id: null
-  retry_of_attempt_id: null
-  error_detail: synthetic provider moderation refusal, verbatim
-  storage_class: C_irreproducible_empirical
-  prompt_hash: 730591539de2e0ebcb2d996b508bf64dc7f336afae11196b739414adeaf26ad1
   provider: dummy-vendor
   model_id: dummy-video-1
   model_version: unpinnable
   endpoint: dummy://generate
   workflow: single_call
+  prompt_hash: 730591539de2e0ebcb2d996b508bf64dc7f336afae11196b739414adeaf26ad1
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
   requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
   completed_at: '2026-08-28T09:00:00Z'
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: synthetic provider moderation refusal, verbatim
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-A-RETRY
   trial_id: ATT-A-RETRY
   step_id: ST-GEN-A
+  attempt_kind: production
   status: ok
   lane: general_video
   cost_ref: LED-A-RETRY
+  provider: dummy-vendor
+  model_id: dummy-video-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 3e0970b2ac9792610b4cfd3e54097c3ee0455fbe4ba442965f4d0ca9620fce8f
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
+  requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T09:00:00Z'
   repeat_index: 0
   repeat_of_attempt_id: null
   retry_of_attempt_id: ATT-A-REFUSED
   error_detail: null
   storage_class: C_irreproducible_empirical
   retry_reason: prior attempt refused
-  prompt_hash: 3e0970b2ac9792610b4cfd3e54097c3ee0455fbe4ba442965f4d0ca9620fce8f
+- attempt_id: ATT-B-TIMEOUT
+  trial_id: ATT-B-TIMEOUT
+  step_id: ST-GEN-B
+  attempt_kind: production
+  status: timeout
+  lane: general_video
+  cost_ref: LED-B-TIMEOUT
   provider: dummy-vendor
   model_id: dummy-video-1
   model_version: unpinnable
   endpoint: dummy://generate
   workflow: single_call
+  prompt_hash: 0bad77f9d7a1a18249a51b20a56ea0477a42da8a7e1978978f4f75b97a2ace51
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
   requested_at: '2026-08-28T09:00:00Z'
-  completed_at: '2026-08-28T09:00:00Z'
-- attempt_id: ATT-B-TIMEOUT
-  trial_id: ATT-B-TIMEOUT
-  step_id: ST-GEN-B
-  status: timeout
-  lane: general_video
-  cost_ref: LED-B-TIMEOUT
+  reference_asset_hashes: []
+  completed_at: null
   repeat_index: 0
   repeat_of_attempt_id: null
   retry_of_attempt_id: null
   error_detail: synthetic 504 upstream timeout, verbatim
   storage_class: C_irreproducible_empirical
+- attempt_id: ATT-B-RETRY
+  trial_id: ATT-B-RETRY
+  step_id: ST-GEN-B
+  attempt_kind: production
+  status: ok
+  lane: general_video
+  cost_ref: LED-B-RETRY
   provider: dummy-vendor
   model_id: dummy-video-1
   model_version: unpinnable
   endpoint: dummy://generate
   workflow: single_call
+  prompt_hash: 0bad77f9d7a1a18249a51b20a56ea0477a42da8a7e1978978f4f75b97a2ace51
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
   requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
   completed_at: '2026-08-28T09:00:00Z'
-- attempt_id: ATT-B-RETRY
-  trial_id: ATT-B-RETRY
-  step_id: ST-GEN-B
-  status: ok
-  lane: general_video
-  cost_ref: LED-B-RETRY
   repeat_index: 0
   repeat_of_attempt_id: null
   retry_of_attempt_id: ATT-B-TIMEOUT
   error_detail: null
   storage_class: C_irreproducible_empirical
   retry_reason: prior attempt timed out
-  provider: dummy-vendor
-  model_id: dummy-video-1
-  model_version: unpinnable
-  endpoint: dummy://generate
-  workflow: single_call
-  requested_at: '2026-08-28T09:00:00Z'
-  completed_at: '2026-08-28T09:00:00Z'
 - attempt_id: ATT-LOGO
   trial_id: ATT-LOGO
   step_id: ST-GEN-LOGO
+  attempt_kind: production
   status: ok
   lane: image
   cost_ref: LED-MUTABLE
-  repeat_index: 0
-  repeat_of_attempt_id: null
-  retry_of_attempt_id: null
-  error_detail: null
-  storage_class: C_irreproducible_empirical
   provider: dummy-vendor
   model_id: dummy-image-1
   model_version: unpinnable
   endpoint: dummy://generate
   workflow: single_call
+  prompt_hash: 0637b18e1e667fed498d03241cb9f5981af9d5de25bb3a55be5babfd2c803a47
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
   requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
   completed_at: '2026-08-28T09:00:00Z'
+  repeat_index: 0
+  repeat_of_attempt_id: null
+  retry_of_attempt_id: null
+  error_detail: null
+  storage_class: C_irreproducible_empirical
 transform_recipes:
 - transform_ref: TR-CONCAT
   tool: ffmpeg

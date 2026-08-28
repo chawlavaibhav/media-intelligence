@@ -1,6 +1,9 @@
 # NEGATIVE CONTROL G5a — EXPECT FAIL.
 # Two parents of a concatenation claim position 1. Shot order is meaning: A-then-B is a different film
 # from B-then-A, and an ambiguous order makes the composition unreconstructible.
+# (G12 correction 2026-08-28: attempts now carry the full inherited v2.1 call
+#  provenance required by the corrected v3 contract; this fixture's declared
+#  defect is unchanged.)
 schema_era: v3
 jobs:
 - job_id: JOB-1
@@ -162,6 +165,20 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: &id001 []
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-S2-ERR
   trial_id: TR-2
   step_id: ST-S2
@@ -171,6 +188,20 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: synthetic upstream error
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-S2-RETRY
   trial_id: TR-3
   step_id: ST-S2
@@ -181,6 +212,20 @@ attempts:
   retry_of_attempt_id: ATT-S2-ERR
   retry_reason: prior attempt errored
   error_detail: null
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-S3
   trial_id: TR-4
   step_id: ST-S3
@@ -190,6 +235,20 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-S3-REFUSED
   trial_id: TR-5
   step_id: ST-S3
@@ -200,6 +259,19 @@ attempts:
   repeat_of_attempt_id: ATT-S3
   retry_of_attempt_id: null
   error_detail: synthetic moderation refusal, verbatim
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-LOGO
   trial_id: TR-6
   step_id: ST-LOGO
@@ -209,6 +281,20 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
 - attempt_id: ATT-VO
   trial_id: TR-7
   step_id: ST-VO
@@ -218,6 +304,20 @@ attempts:
   repeat_index: 0
   retry_of_attempt_id: null
   error_detail: null
+  attempt_kind: production
+  provider: dummy-vendor
+  model_id: dummy-model-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: 63b2c9c1ec5e9a0f9d7d5f7e6a1b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d
+  config_hash: 0d1c2b3a49586766554433221100ffeeddccbbaa99887766554433221100ffee
+  config_location: dummy://config/attempts
+  reference_asset_hashes: *id001
+  requested_at: '2026-02-01T09:10:00Z'
+  completed_at: '2026-02-01T09:15:00Z'
+  repeat_of_attempt_id: null
+  storage_class: C_irreproducible_empirical
 artifacts:
 - artifact_id: art-s1
   producing_step_id: ST-S1

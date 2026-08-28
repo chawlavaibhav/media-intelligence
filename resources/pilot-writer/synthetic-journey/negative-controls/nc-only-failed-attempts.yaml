@@ -33,17 +33,26 @@ attempts:
 - attempt_id: ATT-F
   trial_id: ATT-F
   step_id: ST-F
+  attempt_kind: production
   status: refusal
   lane: general_video
   cost_ref: LED-1
+  provider: dummy-vendor
+  model_id: dummy-video-1
+  model_version: unpinnable
+  endpoint: dummy://generate
+  workflow: single_call
+  prompt_hash: ad9b02059db643d01b90f3696cd16d99601175e1b1fd701a0b9d5e207ee8dcc8
+  config_hash: c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a
+  config_location: dummy://config/pilot
+  requested_at: '2026-08-28T09:00:00Z'
+  reference_asset_hashes: []
+  completed_at: '2026-08-28T09:00:00Z'
   repeat_index: 0
   repeat_of_attempt_id: null
   retry_of_attempt_id: null
   error_detail: synthetic refusal, verbatim
   storage_class: C_irreproducible_empirical
-  provider: dummy-vendor
-  model_id: dummy-video-1
-  endpoint: dummy://generate
 transform_recipes: []
 artifacts: []
 measurements: []
