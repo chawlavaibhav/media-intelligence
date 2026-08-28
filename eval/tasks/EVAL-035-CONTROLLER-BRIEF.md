@@ -1,150 +1,161 @@
-# Controller Brief — EVAL-035
+# Controller Brief — EVAL-035 (correction pass)
 
 **TASK:** EVAL-035
-**STATUS:** completed
+**STATUS:** completed (correction pass under
+`CONTROLLER-EVAL-035-RETURN-REVIEW-2026-08-28.md`, route superseded by
+`CONTROLLER-DIRECT-GEMINI-T1-ROUTE-REVISION-2026-08-28.md`)
 
-**HUMAN SUMMARY:** The project can now, in software, do the thing PILOT-001 needs and could
-not do before: send one real video-generation job to a provider, follow it through the
-provider's waiting room ("submit the job, get a ticket number, keep checking until it is
-done"), download the finished video, and store it as exact binary bytes with a
-fingerprint — all under the same money discipline the paid image experiment used. One route
-was implemented: **Google's Veo 3.1 via fal** (the same aggregator whose account and
-authentication the project already used for real paid image generation). No money was spent,
-no provider was contacted — every test runs against stand-in transports, and the test
-harness makes a real network connection physically raise an error. Two provider facts found
-in fal's current official documentation materially changed the implementation: fal silently
-**re-runs failed jobs up to 10 times** unless a specific header disables it (our rule is
-zero retries, so every request now sends that header), and the Veo endpoint **rewrites
-prompts by default** when they trip content policy (`auto_fix` — pinned off, because a
-silently rewritten prompt breaks the record of what actually ran). The main uncertainty is
-unavoidable at USD 0: the real network path has never been exercised, and route, schema and
-price must be re-verified at execution time before the first paid call.
+**HUMAN SUMMARY:** The first-pass video substrate talked to Google's Veo model through fal,
+an aggregator. The Controller and user ruled that for Google models this project calls
+Google directly, so the fal execution path was **superseded by infrastructure policy** and
+has been replaced: the substrate now talks to the **direct Gemini Developer API** with the
+`GEMINI_API_KEY` credential, using the exact model identifier
+**`veo-3.1-fast-generate-preview`**. Everything the first pass got right survives — one
+generation request is one recorded trial, waiting-room polling never multiplies that count,
+the returned video is stored as exact fingerprinted binary bytes, money can only move
+behind a budget guard, and any failure after a request may have reached Google is charged
+conservatively and never retried. Two review defects are also fixed: the **spend gate is
+now mechanically real** (a locally written file can no longer manufacture authority by
+pointing at any existing decision — a committed Controller decision must carry an explicit
+machine-readable authorisation block, and none does, which a test proves), and every
+attempt now carries the **full production provenance the corrected RES-007 writer
+requires**, with a ready-made handoff so PILOT-001 needs no field translation. No money
+was spent and no provider was contacted; the live network path remains unproven until the
+first authorised pilot call, which per Controller decision should be a real production
+shot, not a throwaway smoke test.
 
-**WHAT I DID:** Read the bootstrap chain, the authorising decision, and the EMP-001
-dispatch/budget machinery the task requires me to preserve; selected the route from committed
-Wave-1/route/price evidence; fetched fal's current official queue, model-schema and
-reliability documentation to pin the exact request/response contract (the repo held endpoint
-identifiers but no schemas); implemented the substrate as a new package `eval/pilot-substrate/`
-that imports EMP-001's exception semantics rather than copying them; and wrote 59
-fake-transport tests covering the required behaviours plus the extra failure modes the async
-lifecycle introduces.
+**WHAT I DID:** Re-read the changed authority (CONTROL-STATE, the return review, the
+direct-Gemini decision, the RES-007 correction and its corrected writer interface);
+verified the current official Google documentation for the Veo 3.1 Fast contract
+(endpoint, request schema, long-running-operation lifecycle, download, retention, safety
+behaviour, price); replaced the fal transport/route/tests with the direct Gemini
+equivalents while keeping the provider-neutral pieces (binary artifact store, EMP-001
+ambiguity semantics, fake-transport patterns); rebuilt the spend gate as a two-document
+chain (committed machine-verifiable Controller authority + matching local runtime file);
+added the RES-007 production-attempt adapter; rebased the branch onto current `main` and
+reverted the first pass's root `.gitignore` edit in favour of a task-local ignore file.
 
 **OBSERVED:**
-- 59/59 substrate tests pass (`eval/pilot-substrate/tests/`, pytest, 0 network calls — an
-  autouse fixture makes any socket attempt raise, and one test proves the fixture bites).
-- Binary handling works against bytes that are deliberately invalid UTF-8: exact SHA-256 and
-  byte count survive persistence and a JSON round-trip, a `str` payload is refused with
-  `TypeError`, overwrites are refused, and a provider-declared file size that disagrees with
-  the actual bytes is recorded as a mismatch rather than hidden.
-- The EMP-001 distinctions hold under test: no transport → refuse; no guard → refuse; missing
-  key → provably pre-dispatch, reservation released, zero calls; any failure after the send —
-  submit timeout, malformed reply, poll failure, undocumented queue status — settles the
-  reserved estimate conservatively (`billing_state: unknown_provisional`), persists a real
-  failed attempt, and dispatches nothing a second time (measured by counting calls).
-- Polling never inflates generation counts: 10 polls before completion still record exactly
-  one submit, one trial, one settlement.
-- fal official docs (fetched 2026-08-28): queue contract is POST `queue.fal.run/{model}` →
-  `request_id` → GET `.../requests/{id}/status` (`IN_QUEUE`/`IN_PROGRESS`/`COMPLETED`) → GET
-  `.../requests/{id}` → `video.url/content_type/file_name/file_size`; platform auto-retries
-  up to 10× unless `X-Fal-No-Retry` is sent; veo3.1 inputs are `prompt`, `aspect_ratio`
-  (16:9|9:16), `duration` (4s|6s|8s), `resolution`, `generate_audio`, `auto_fix` (default
-  true), `seed`.
-- Regression: the EMP-001 suite on this machine gives 550 passed / 20 failed; every failure
-  is `TesseractUnavailable` (the pinned EVAL-023 `tessdata` files are not installed locally)
-  and pre-exists this branch, which adds files only (plus the `.gitignore` entry).
-- **Incident, resolved:** this local clone is shared by the parallel pre-pilot workers.
-  CANON-013 and RES-007 commits landed on my checked-out branch mid-task, and the RES-007
-  commit here (`2b0e31f`) differs slightly from the one on `work/res-007-pilot-writer`
-  (`9cf1dc2`, same message/timestamp; ~10 differing lines in their brief). I re-pointed
-  `work/eval-035-video-route` to main's tip and preserved the divergent duplicate on local
-  branch `rescue/res-007-duplicate-from-eval-035` rather than adjudicating another stream's
-  content. Also: running the documented `render_latin_pack.py` rebuild rewrites the
-  **committed** file `text_qualification/perceptibility-mechanical.json` (semantically
-  equivalent, reordered keys); I restored the committed bytes.
+- **78/78 substrate tests pass** (`eval/pilot-substrate/tests/`, pytest; zero network — an
+  autouse fixture makes socket use raise and strips `GEMINI_API_KEY`; one test proves the
+  fixture bites). Regression: the EMP-001 machinery this package imports
+  (budget guard, transports, ambiguous dispatch) passes 76/76 on this machine.
+- **Current official contract** (ai.google.dev, fetched 2026-08-28): model
+  `veo-3.1-fast-generate-preview`; `POST /v1beta/models/{model}:predictLongRunning` with
+  header `x-goog-api-key`; body `instances[{prompt}]` +
+  `parameters{aspectRatio, durationSeconds, resolution}`; durations 4|6|8 s; aspects
+  16:9|9:16; 720p (1080p/4k need 8 s); audio is native with **no audio request
+  parameter**; poll `GET /v1beta/{operation.name}` until `done`; video at
+  `response.generateVideoResponse.generatedSamples[0].video.uri`; download authenticates
+  with the same header; **server retains the file 2 days only**; safety filters sometimes
+  block a generation and Google documents blocked videos as **not charged**.
+- **Current price evidence:** official Gemini API pricing page (fetched 2026-08-28): Veo
+  3.1 Fast 720p = **USD 0.10 per generated second, audio included** → an 8 s clip reserves
+  USD 0.80. Status: provisional published rate for reservation sizing; not invoice
+  evidence; execution-time re-verification still required.
+- **fal removal:** no `FAL_KEY`, `fal.run`, `X-Fal-*` or `fal-ai/` reference remains in
+  any executable file; fal appears only in prose recording the supersession.
+- **Spend gate result:** tests prove the current committed repository state cannot open a
+  paid PILOT-001 guard; a perfectly-formed local YAML is refused (no committed
+  `machine_authorisation` block exists); pointing at an existing non-authorising decision
+  is refused; defective committed blocks (string-true, wrong tranche, nonzero retries,
+  zero cap, missing approver) are each refused with their specific reason; two valid
+  committed authorities are a conflict, not a choice; a local ceiling above the committed
+  cap is refused. The positive path is proven only against a synthetic decisions
+  directory, never the repository.
+- **One-call-one-trial result:** ten polls still record one submit, one trial, one
+  settlement; a transport that would succeed on a second call never receives one; ambiguous
+  submit/poll/result/download failures settle at the reserved estimate
+  (`unknown_provisional`), persist the attempt, and dispatch nothing again.
+- **Binary result:** deliberately invalid-UTF-8 MP4-shaped fixtures round-trip with exact
+  SHA-256 and byte count; `str` payloads are refused; artifacts are immutable; provenance
+  survives JSON round-trips.
+- **RES-007 handoff result:** `res007_production_attempt()` emits the corrected writer's
+  exact production field set (verified against `work/res-007-pilot-writer`'s
+  `record_attempt` signature and G12 gate: status vocabulary, lane `native_av`, explicit
+  `completed_at` that is None only for genuinely unresolved calls, `error_detail` on
+  non-ok, `reference_asset_hashes` as an empty list, repeat/retry pinned to first-attempt
+  values) — and **no `eval_item_id`** anywhere on a production attempt. Provider extras
+  (operation name, raw status, artifact URI, poll count, billing state) ride in a separate
+  mapping because the corrected writer refuses unknown fields.
+- The request-config file written next to the artifact is hash-bound
+  (`config_hash` = SHA-256 of its bytes) and complete enough to reconstruct the exact
+  request; `prompt_hash` binds the exact prompt.
 
 **INFERRED:**
-- fal Veo 3.1 is the right substrate choice *for this infrastructure task*: it is the Wave-1
-  VID-01 candidate family (rendered text/logo stability + native audio — the Aight pilot's
-  shape) reachable in ONE call rather than a three-route TTS+lipsync composite; the endpoint
-  identity is provider-authorised committed evidence (fal's own SDK enumeration); a fal
-  per-second price is committed Controller evidence (USD 0.40/s with audio → USD 2.40 for a
-  6-second clip); and EMP-001 already proved this exact auth surface with real money. This is
-  a route-plumbing judgement, not a model-quality claim.
-- Without `X-Fal-No-Retry`, "one call = one trial" would have been false at the platform
-  layer no matter how disciplined our code was. The stale-assumption warning in the task was
-  earned: nothing in the repository recorded this behaviour.
-- The gap the task predicted is real: the V1 harness stores artifacts via text APIs
-  (`write_text`/string hashes — `eval/v1/harness/harness.py:226,373`). The substrate does not
-  touch the harness; it provides the byte-safe path PILOT-001 should use. Retrofitting the
-  harness is a separate decision, not needed for the pilot.
+- The blocked-video representation (`raiMediaFilteredCount`/`raiMediaFilteredReasons`) is
+  documented by Google on the sibling Vertex surface for the same response type; the
+  Gemini-API page confirms blocking happens but does not show the fields. The substrate
+  reads them only if present and never interprets their absence — the conservative
+  handling stands even if the field names differ live.
+- Google documents blocked videos as unbilled, but the ledger still settles refusals at
+  the reserved estimate: a conservative overstatement is correctable by billing evidence;
+  an optimistic release is not. This slightly overstates spend against the pilot cap in
+  refusal scenarios.
 
-**SURPRISES / BELIEF UPDATES:** The provider-side auto-retry and auto-prompt-rewrite
-defaults both silently violate project invariants; current-doc verification before live
-calls is not ceremony. The shared-clone parallel-worker collision is a process hazard the
-Controller should know about — it produced a divergent duplicate of another stream's commit.
+**SURPRISES / BELIEF UPDATES:** none material this pass. The direct surface is simpler
+than fal's (no platform retry or model-fallback mechanisms to suppress), which removes two
+whole classes of silent-identity risk the first pass had to defend against.
 
-**FAILURES / BLOCKERS:** none blocking this task. The 20 environmental EMP-001 test failures
-mean a fresh machine cannot run the Tesseract leg of that suite without the documented
-tessdata download; unrelated to video work.
+**FAILURES / BLOCKERS:** none blocking. The broader EMP-001 suite still carries the known
+environmental Tesseract-model failures on a fresh machine; unrelated to this task.
 
 **UNKNOWN / NOT VERIFIED:**
-- The live network path (real fal dispatch, real polling cadence, real MP4 download) has
-  never run — by design of the USD 0 budget. It stays unproven until the first authorised
-  pilot call.
-- fal's current live catalogue/schema for veo3.1 beyond the fetched docs (e.g. whether a
-  submit-time 422 is ever billed; actual `content_type` served). Conservative accounting is
-  used wherever the answer is unknown.
-- Fast/lite tier fal prices are not committed evidence; only full-tier ($0.40/s) and lite
-  ($0.05/s) figures exist in the pricing decision. The substrate's reservation uses the
-  full-tier rate.
+- The live network path (real dispatch, real operation cadence, real download) has never
+  run — by design at USD 0. The `-preview` model id may be renamed or retired; route,
+  schema and price must be re-verified at execution time (CONTROL-STATE next-gate item).
+- Actual billed amounts, the live blocked-video response shape, and the operation's error
+  vocabulary are unverified until a real call.
+- Whether the served download `Content-Type` is exactly `video/mp4` live; an unexpected
+  type is recorded, not guessed away.
 
-**ASSUMPTIONS CHALLENGED:** none in `coordination/ASSUMPTIONS.md` directly; the implicit
-assumption "our zero-retry discipline is enforceable client-side alone" is false for fal
-without the header, now handled and tested.
+**ASSUMPTIONS CHALLENGED:** none new.
 
-**LOCAL IMPLICATIONS:** Eval now has a pilot-callable seam:
-`generate_pilot_video(prompt, duration_s, aspect_ratio, out_dir, guard, transport)` — one
-route, one trial, one persisted attempt+artifact pair, vocabulary aligned with the existing
-attempt/artifact records so RES-007's outcome writer can consume it.
+**LOCAL IMPLICATIONS:** Eval's pilot seam is unchanged in shape
+(`generate_pilot_video(...)`) but now returns attempts already speaking the corrected
+production vocabulary, so the pilot's journey recording is a direct pass-through.
 
-**CROSS-STREAM IMPLICATIONS:** CROSS_STREAM (Resources/RES-007): the artifact record emitted
-here (`output_sha256`, `output_bytes`, `output_location`, `media_kind`, route identity,
-`provider_request_id`) should be reconciled with the v3 outcome writer's expected shape at
-the pilot integration boundary — proposed, not enacted. CROSS_STREAM (coordination): the
-rescue branch and the shared-clone collision need a Writer-Controller disposition.
+**CROSS-STREAM IMPLICATIONS:** CROSS_STREAM (Resources): the handoff was aligned to the
+corrected writer on `work/res-007-pilot-writer` as of `068f235`; if RES-007's final merged
+interface changes further, the adapter (one function) is the only touch point — proposed
+integration check at the pilot boundary, not enacted here.
 
 **ARCHITECTURAL IMPLICATIONS:** none.
 
 **DECISIONS NEEDED FROM CONTROLLER:**
-1. Accept or change the selected pilot route (`fal-ai/veo3.1`, full tier, native audio,
-   720p). Changing tier (fast/lite) is a one-line frozen-table change but needs a committed
-   price for reservation.
-2. Disposition of `rescue/res-007-duplicate-from-eval-035` (keep RES-007's own branch as
-   authoritative and delete the rescue ref, or reconcile the 10-line brief difference).
-3. Whether the parallel workers should each use isolated clones/worktrees going forward.
+1. Accept the corrected EVAL-035 for bounded Level-1 Governor review (the review gate the
+   return-review decision names).
+2. When pilot spend is eventually approved, the approving decision must carry the
+   `machine_authorisation` YAML block this substrate verifies (format documented in
+   `pilot_authorisation.py`); without it the gate stays closed by design.
 
 **EVIDENCE WORTH HUMAN INSPECTION:**
-- `eval/pilot-substrate/tests/test_failure_modes.py` — read the ambiguity tests; they are
-  the money-safety story in executable form.
-- `eval/pilot-substrate/README.md` — the contract-provenance table distinguishes committed
-  evidence from fetched-today provider docs.
+- `eval/pilot-substrate/tests/test_auth_and_gating.py` — the spend-authority tests are
+  the correction's core: read
+  `test_current_committed_repository_state_cannot_open_a_paid_guard`.
+- `eval/pilot-substrate/tests/test_provenance_res007.py` — the RES-007 boundary in
+  executable form.
 
-**FILES CREATED / MODIFIED:** created `eval/pilot-substrate/` (README, `video_route.py`,
-`artifact_store.py`, `pilot_authorisation.py`, `tests/` — 5 test modules, 59 tests) and this
-brief; modified `.gitignore` (one entry for the never-committed pilot authorisation file).
-No existing code was modified; EMP-001 semantics are imported, not copied.
+**FILES CREATED / MODIFIED:** rewrote `video_route.py` (direct Gemini/Veo),
+`pilot_authorisation.py` (machine-verifiable chain), `README.md`, `tests/conftest.py` and
+all test modules; added `tests/test_provenance_res007.py` and a task-local
+`eval/pilot-substrate/.gitignore`; reverted the first pass's root `.gitignore` change;
+`artifact_store.py` preserved unchanged (provider-neutral). EMP-001 code untouched
+(semantics imported, not copied).
 
-**RECOMMENDED NEXT STEP:** Before any live PILOT-001 call: (1) execution-time verification
-that `fal-ai/veo3.1` is live with this schema and current price on the funded account;
-(2) user-approved pilot spend cap materialised as `authorization.pilot.local.yaml` naming
-the authorising decision; (3) a single smallest-possible real dispatch (one 4s clip) as the
-first exercise of the untested live path before the pilot brief's real generation. This
-sequences the cheapest possible failure of the unproven path ahead of the pilot itself.
+**RECOMMENDED NEXT STEP:** Level-1 Governor review of this branch. Before any live
+PILOT-001 call: execution-time verification of model id/schema/price on the funded
+account, the Aight asset package, the frozen pilot brief/acceptance record, and a
+Controller decision carrying the machine-verifiable spend block after explicit user
+approval. Per Controller disposition, the first paid call should be a real PILOT-001
+production shot chosen so an early transport failure is still useful pilot evidence — no
+separate smoke tranche.
 
-**EPISTEMIC CHECK:** Confirmed — provider-contract facts are labelled by source and fetch
-date; committed-evidence facts carry their repository paths; the route choice is labelled a
-recommendation-grade infrastructure judgement; the live path is stated as unproven; no
-number here is invoice evidence.
+**EPISTEMIC CHECK:** Confirmed — provider-contract facts are labelled with source and
+fetch date; the one cross-surface field-name inference is labelled as such; the live path
+is stated as unproven; no number is presented as invoice evidence; no authority was
+created.
 
 **CONFIRMATION:** No unapproved next strategic step was started. No paid call, no real
-generation, no Registry write, no second provider, no change to Resources-owned contracts.
+generation, no Registry write, no second provider, no spend authority created, no
+Resources-owned file modified.

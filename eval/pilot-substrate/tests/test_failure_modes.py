@@ -8,60 +8,79 @@ from decimal import Decimal
 
 import pytest
 
-from conftest import FakeQueueTransport
-from video_route import PilotVideoRoute
+from conftest import OPERATION_NAME, VIDEO_URI, FakeGeminiTransport
+from video_route import GeminiVeoRoute
 
-SPENT = Decimal("2.40")     # every 6s trial settles at the reserved estimate
+SPENT = Decimal("0.80")     # every 8s trial settles at the reserved estimate
 
 
 def run(transport, guard, tmp_path, **kw):
-    route = PilotVideoRoute(transport=transport, guard=guard, **kw)
-    return route.generate("p", 6, "16:9", tmp_path), route
+    route = GeminiVeoRoute(transport=transport, guard=guard, **kw)
+    return route.generate("p", 8, "9:16", tmp_path), route
 
 
-# ------------------------------------------------------------------------------ refusals
-def test_content_policy_refusal_on_submit(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(submit=(422, {
-        "detail": [{"loc": ["body", "prompt"], "msg": "flagged",
-                    "type": "content_policy_violation"}]}))
-    outcome, route = run(transport, guard, tmp_path)
+def _done(payload):
+    return (200, {"name": OPERATION_NAME, "done": True, **payload})
+
+
+# --------------------------------------------------------------------- operation failure
+def test_operation_error_is_a_counted_failed_trial(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(polls=[_done(
+        {"error": {"code": 3, "status": "INVALID_ARGUMENT", "message": "bad request"}})])
+    outcome, _ = run(transport, guard, tmp_path)
     a = outcome["attempt"]
-    assert a["api_status"] == "refusal"            # the provider understood and declined
-    assert a["error_class"] == "moderation_block"
+    assert a["status"] == "error"
+    assert a["error_class"] == "INVALID_ARGUMENT"
     assert a["outcome_resolved"] is True
     assert outcome["artifact"] is None
-    assert len(transport.submit_calls) == 1        # the refusal consumed its one trial
+    assert len(transport.submit_calls) == 1        # the failure consumed its one trial
     assert guard.spent_usd == SPENT                # and it is not free
 
 
-def test_content_policy_refusal_surfaced_at_completion(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(statuses=[
-        (200, {"status": "IN_PROGRESS"}),
-        (200, {"status": "COMPLETED", "error": {"message": "blocked"},
-               "error_type": "content_policy_violation"}),
-    ])
+def test_safety_filtered_generation_is_a_refusal(guard, gemini_key, tmp_path):
+    """Google documents safety blocking; the rai* fields are read only when present."""
+    transport = FakeGeminiTransport(polls=[_done(
+        {"response": {"generateVideoResponse": {
+            "generatedSamples": [],
+            "raiMediaFilteredCount": 1,
+            "raiMediaFilteredReasons": ["blocked by safety filter"]}}})])
     outcome, _ = run(transport, guard, tmp_path)
-    assert outcome["attempt"]["api_status"] == "refusal"
-    assert outcome["attempt"]["error_class"] == "moderation_block"
-    assert transport.result_calls == []            # no artifact to fetch after a refusal
+    a = outcome["attempt"]
+    assert a["status"] == "refusal"                # the provider understood and declined
+    assert a["error_class"] == "safety_filtered"
+    assert "safety filter" in a["raw_status_note"]
+    assert a["outcome_resolved"] is True
+    # Google documents blocked videos as not charged; the ledger still settles the
+    # reserved estimate because an overstatement is correctable and a release is not.
     assert guard.spent_usd == SPENT
 
 
-def test_submit_validation_error_is_an_error_not_a_refusal(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(submit=(422, {
-        "detail": [{"loc": ["body", "duration"], "msg": "bad", "type": "value_error"}]}))
+def test_done_with_no_samples_and_no_filter_fields_is_no_artifact(guard, gemini_key,
+                                                                  tmp_path):
+    transport = FakeGeminiTransport(polls=[_done(
+        {"response": {"generateVideoResponse": {"generatedSamples": []}}})])
     outcome, _ = run(transport, guard, tmp_path)
-    assert outcome["attempt"]["api_status"] == "error"
-    assert outcome["attempt"]["error_class"] == "value_error"
+    assert outcome["attempt"]["status"] == "error"
+    assert outcome["attempt"]["error_class"] == "no_artifact_returned"
+    assert guard.spent_usd == SPENT
+
+
+def test_submit_http_error_is_counted_and_not_retried(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(submit=(400, {"error": {
+        "code": 400, "status": "INVALID_ARGUMENT", "message": "unsupported duration"}}))
+    outcome, _ = run(transport, guard, tmp_path)
+    assert outcome["attempt"]["status"] == "error"
+    assert outcome["attempt"]["error_class"] == "INVALID_ARGUMENT"
+    assert len(transport.submit_calls) == 1
     assert guard.spent_usd == SPENT                # it reached the provider; counted
 
 
 # ------------------------------------------------------------------- ambiguous dispatch
-def test_timeout_during_submit_is_ambiguous_and_conservative(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(submit=socket.timeout("read timed out"))
+def test_timeout_during_submit_is_ambiguous_and_conservative(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(submit=socket.timeout("read timed out"))
     outcome, route = run(transport, guard, tmp_path)
     a = outcome["attempt"]
-    assert a["api_status"] == "timeout"
+    assert a["status"] == "timeout"
     assert a["ambiguous_dispatch"] is True
     assert a["billing_state"] == "unknown_provisional"
     assert a["cost_basis"] == "conservative_reserved_estimate_billing_unknown"
@@ -72,55 +91,65 @@ def test_timeout_during_submit_is_ambiguous_and_conservative(guard, fal_key, tmp
     assert route.submits == 1
 
 
-def test_connection_reset_during_submit_is_ambiguous(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(submit=ConnectionResetError(54, "reset by peer"))
+def test_connection_reset_during_submit_is_ambiguous(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(submit=ConnectionResetError(54, "reset by peer"))
     outcome, _ = run(transport, guard, tmp_path)
-    assert outcome["attempt"]["api_status"] == "error"
+    assert outcome["attempt"]["status"] == "error"
     assert outcome["attempt"]["error_class"] == "connection_reset"
     assert outcome["attempt"]["ambiguous_dispatch"] is True
     assert guard.spent_usd == SPENT
 
 
-def test_malformed_submit_response_is_ambiguous(guard, fal_key, tmp_path):
-    """200 with no request_id: the job may exist, but nothing can track it."""
-    transport = FakeQueueTransport(submit=(200, {"unexpected": "shape"}))
+def test_malformed_submit_acknowledgement_is_ambiguous(guard, gemini_key, tmp_path):
+    """200 with no operation name: the job may exist, but nothing can track it."""
+    transport = FakeGeminiTransport(submit=(200, {"unexpected": "shape"}))
     outcome, _ = run(transport, guard, tmp_path)
     a = outcome["attempt"]
-    assert a["api_status"] == "error"
+    assert a["status"] == "error"
     assert a["error_class"] == "malformed_response"
     assert a["ambiguous_dispatch"] is True
     assert a["outcome_resolved"] is False
     assert guard.spent_usd == SPENT
 
 
-def test_undocumented_queue_status_stops_conservatively(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(statuses=[(200, {"status": "EXPLODED"})])
+def test_undocumented_operation_shape_stops_conservatively(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(polls=[(200, ["not", "an", "operation"])])
     outcome, _ = run(transport, guard, tmp_path)
     a = outcome["attempt"]
     assert a["error_class"] == "malformed_response"
     assert a["outcome_resolved"] is False
-    assert len(transport.status_calls) == 1        # stopped at the first breach; no loop
+    assert len(transport.poll_calls) == 1          # stopped at the first breach; no loop
     assert guard.spent_usd == SPENT
 
 
 # ------------------------------------------------------------ post-submit lifecycle loss
-def test_poll_network_failure_never_resubmits(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(statuses=[TimeoutError("poll timed out")])
+def test_poll_network_failure_never_resubmits(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(polls=[TimeoutError("poll timed out")])
     outcome, route = run(transport, guard, tmp_path)
     a = outcome["attempt"]
-    assert a["api_status"] == "timeout"
+    assert a["status"] == "timeout"
     assert a["error_class"] == "poll_read_timeout"
-    assert a["provider_request_id"] == "fal-q-0001"  # the job EXISTS; id preserved
+    assert a["operation_name"] == OPERATION_NAME     # the operation EXISTS; id preserved
     assert a["outcome_resolved"] is False            # it may complete and bill
     assert len(transport.submit_calls) == 1          # no re-submit, ever
     assert guard.spent_usd == SPENT
 
 
-def test_poll_budget_exhaustion_is_a_timeout_not_a_retry(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(statuses=[(200, {"status": "IN_PROGRESS"})])
+def test_poll_http_error_is_unresolved_not_retried(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(polls=[(500, {"error": {"message": "backend"}})])
+    outcome, _ = run(transport, guard, tmp_path)
+    assert outcome["attempt"]["error_class"] == "poll_http_500"
+    assert outcome["attempt"]["outcome_resolved"] is False
+    assert len(transport.submit_calls) == 1
+    assert guard.spent_usd == SPENT
+
+
+def test_poll_budget_exhaustion_is_a_timeout_not_a_retry(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(
+        polls=[(200, {"name": OPERATION_NAME, "done": False})])
     outcome, route = run(transport, guard, tmp_path, max_status_checks=3)
     a = outcome["attempt"]
-    assert a["api_status"] == "timeout"
+    assert a["status"] == "timeout"
     assert a["error_class"] == "poll_budget_exhausted"
     assert a["status_checks"] == 3
     assert a["outcome_resolved"] is False
@@ -128,44 +157,33 @@ def test_poll_budget_exhaustion_is_a_timeout_not_a_retry(guard, fal_key, tmp_pat
     assert guard.spent_usd == SPENT
 
 
-def test_result_fetch_failure_after_completion_is_billable(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(result=ConnectionResetError(54, "reset"))
+def test_artifact_download_failure_keeps_generation_billed_and_uri_recorded(
+        guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(artifact=TimeoutError("download stalled"))
     outcome, _ = run(transport, guard, tmp_path)
     a = outcome["attempt"]
-    assert a["error_class"] == "result_fetch_connection_reset"
-    assert a["ambiguous_dispatch"] is True
-    assert guard.spent_usd == SPENT
-
-
-def test_completed_result_with_no_artifact_url(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(result=(200, {"video": {}}))
-    outcome, _ = run(transport, guard, tmp_path)
-    a = outcome["attempt"]
-    assert a["api_status"] == "error"
-    assert a["error_class"] == "no_artifact_returned"
-    assert a["outcome_resolved"] is True
-    assert guard.spent_usd == SPENT
-
-
-def test_artifact_download_failure_keeps_generation_billed_and_url_recorded(
-        guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(artifact=TimeoutError("download stalled"))
-    outcome, _ = run(transport, guard, tmp_path)
-    a = outcome["attempt"]
-    assert a["api_status"] == "error"
+    assert a["status"] == "error"
     assert a["error_class"] == "artifact_download_failed"
-    assert a["artifact_url"] == "https://v3.fal.media/files/fake/pilot-0001.mp4"
+    assert a["artifact_uri"] == VIDEO_URI            # recorded for a later authorised fetch
     assert outcome["artifact"] is None
     assert guard.spent_usd == SPENT                  # the generation happened; it is paid
     assert len(transport.bytes_calls) == 1           # one fetch, no auto re-fetch
 
 
+def test_download_http_error_is_counted_once(guard, gemini_key, tmp_path):
+    transport = FakeGeminiTransport(artifact=(404, b"", None))
+    outcome, _ = run(transport, guard, tmp_path)
+    assert outcome["attempt"]["error_class"] == "artifact_download_failed"
+    assert len(transport.bytes_calls) == 1
+    assert guard.spent_usd == SPENT
+
+
 # ------------------------------------------------------------------------- zero retries
-def test_zero_automatic_retries_even_when_a_second_call_would_succeed(
-        guard, fal_key, tmp_path):
+def test_zero_client_retries_even_when_a_second_call_would_succeed(guard, gemini_key,
+                                                                   tmp_path):
     """A transport that would succeed on call two never GETS a call two."""
 
-    class FlakyThenFine(FakeQueueTransport):
+    class FlakyThenFine(FakeGeminiTransport):
         def post_json(self, url, headers, payload):
             if not self.submit_calls:
                 self.submit_calls.append((url, dict(headers), payload))
@@ -176,18 +194,8 @@ def test_zero_automatic_retries_even_when_a_second_call_would_succeed(
     outcome, route = run(transport, guard, tmp_path)
     assert len(transport.submit_calls) == 1
     assert route.submits == 1
-    assert outcome["attempt"]["api_status"] == "timeout"
+    assert outcome["attempt"]["status"] == "timeout"
     assert outcome["attempt"]["retries"] == 0
-    assert outcome["attempt"]["platform_auto_retry_disabled"] is True
-
-
-def test_http_500_on_submit_is_counted_and_not_retried(guard, fal_key, tmp_path):
-    transport = FakeQueueTransport(submit=(500, {"error": {"type": "internal_server_error"}}))
-    outcome, _ = run(transport, guard, tmp_path)
-    assert outcome["attempt"]["api_status"] == "error"
-    assert outcome["attempt"]["error_class"] == "internal_server_error"
-    assert len(transport.submit_calls) == 1
-    assert guard.spent_usd == SPENT                  # conservative even on 5xx
 
 
 def test_no_network_fixture_actually_bites():

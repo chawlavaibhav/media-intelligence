@@ -1,4 +1,4 @@
-"""Test plumbing for the EVAL-035 pilot video-route substrate.
+"""Test plumbing for the EVAL-035 pilot video-route substrate (direct Gemini/Veo).
 
 Two jobs:
 
@@ -7,8 +7,8 @@ Two jobs:
 2. Make it STRUCTURALLY impossible for any test to reach a network: an autouse fixture
    replaces socket connection primitives with ones that raise. "No network call occurs
    during normal tests" is enforced here as a measurement, not asserted as a promise.
-   The fixture also strips FAL_KEY from the environment so a developer machine that holds
-   a real key can never leak it into a test run.
+   The fixture also strips GEMINI_API_KEY from the environment so a developer machine
+   that holds a real key can never leak it into a test run.
 """
 from __future__ import annotations
 
@@ -27,6 +27,10 @@ for p in (str(PACKAGE_ROOT), str(EMP001)):
 
 from budget_guard import BudgetGuard  # noqa: E402
 
+OPERATION_NAME = ("models/veo-3.1-fast-generate-preview/operations/fake-op-0001")
+VIDEO_URI = ("https://generativelanguage.googleapis.com/v1beta/files/fake-file-0001:download"
+             "?alt=media")
+
 
 class NetworkAttempted(RuntimeError):
     """A test tried to open a real socket. That is a test failure by definition."""
@@ -41,7 +45,7 @@ def no_network(monkeypatch):
 
     monkeypatch.setattr(socket.socket, "connect", explode)
     monkeypatch.setattr(socket, "create_connection", explode)
-    monkeypatch.delenv("FAL_KEY", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
 
 
 class RecordingGuard(BudgetGuard):
@@ -70,35 +74,32 @@ def guard():
     return RecordingGuard()
 
 
-class FakeQueueTransport:
-    """Deterministic provider-shaped queue lifecycle. Counts everything, opens nothing.
+class FakeGeminiTransport:
+    """Deterministic provider-shaped long-running-operation lifecycle. Opens nothing.
 
-    Each scripted step is either a (status_code, body) tuple or an Exception instance to
-    raise — which is exactly where a real socket failure would surface.
+    Each scripted step is either a return value or an Exception instance to raise — which
+    is exactly where a real socket failure would surface.
+
+      submit    (status_code, body) for POST :predictLongRunning
+      polls     list of (status_code, operation_json) for GET <operation name>
+      artifact  (status_code, bytes, content_type) for GET <video uri>
     """
 
-    def __init__(self, submit=None, statuses=None, result=None, artifact=None):
-        self.submit = submit if submit is not None else (
-            200, {"request_id": "fal-q-0001",
-                  "status_url": "https://queue.fal.run/fal-ai/veo3.1/requests/fal-q-0001/status",
-                  "response_url": "https://queue.fal.run/fal-ai/veo3.1/requests/fal-q-0001",
-                  "queue_position": 0})
-        self.statuses = statuses if statuses is not None else [
-            (200, {"status": "IN_QUEUE", "request_id": "fal-q-0001", "queue_position": 0}),
-            (200, {"status": "IN_PROGRESS", "request_id": "fal-q-0001", "logs": []}),
-            (200, {"status": "COMPLETED", "request_id": "fal-q-0001", "logs": [],
-                   "metrics": {"inference_time": 41.0}}),
+    def __init__(self, submit=None, polls=None, artifact=None):
+        self.submit = submit if submit is not None else (200, {"name": OPERATION_NAME})
+        self.polls = polls if polls is not None else [
+            (200, {"name": OPERATION_NAME, "done": False}),
+            (200, {"name": OPERATION_NAME, "done": False,
+                   "metadata": {"state": "PROCESSING"}}),
+            (200, {"name": OPERATION_NAME, "done": True,
+                   "response": {"generateVideoResponse": {
+                       "generatedSamples": [{"video": {"uri": VIDEO_URI}}]}}}),
         ]
-        self.result = result if result is not None else (
-            200, {"video": {"url": "https://v3.fal.media/files/fake/pilot-0001.mp4",
-                            "content_type": "video/mp4",
-                            "file_name": "pilot-0001.mp4",
-                            "file_size": len(MP4_FIXTURE_BYTES)}})
-        self.artifact = artifact if artifact is not None else (200, MP4_FIXTURE_BYTES)
+        self.artifact = artifact if artifact is not None else (
+            200, MP4_FIXTURE_BYTES, "video/mp4")
         self.submit_calls: list[tuple] = []
-        self.status_calls: list[str] = []
-        self.result_calls: list[str] = []
-        self.bytes_calls: list[str] = []
+        self.poll_calls: list[str] = []
+        self.bytes_calls: list[tuple] = []
 
     @staticmethod
     def _play(step):
@@ -111,15 +112,12 @@ class FakeQueueTransport:
         return self._play(self.submit)
 
     def get_json(self, url, headers):
-        if url.endswith("/status"):
-            self.status_calls.append(url)
-            i = min(len(self.status_calls) - 1, len(self.statuses) - 1)
-            return self._play(self.statuses[i])
-        self.result_calls.append(url)
-        return self._play(self.result)
+        self.poll_calls.append(url)
+        i = min(len(self.poll_calls) - 1, len(self.polls) - 1)
+        return self._play(self.polls[i])
 
     def get_bytes(self, url, headers):
-        self.bytes_calls.append(url)
+        self.bytes_calls.append((url, dict(headers)))
         return self._play(self.artifact)
 
 
@@ -132,10 +130,21 @@ MP4_FIXTURE_BYTES = (b"\x00\x00\x00\x18ftypmp42\x00\x00\x00\x00mp42isom"
 
 @pytest.fixture
 def transport():
-    return FakeQueueTransport()
+    return FakeGeminiTransport()
 
 
 @pytest.fixture
-def fal_key(monkeypatch):
-    monkeypatch.setenv("FAL_KEY", "test-key-not-a-real-credential")
+def gemini_key(monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key-not-a-real-credential")
     return "test-key-not-a-real-credential"
+
+
+def fixed_clock():
+    """Deterministic injected clock: monotonic fake ISO timestamps."""
+    state = {"t": 0}
+
+    def tick():
+        state["t"] += 1
+        return f"2026-08-28T00:00:{state['t']:02d}Z"
+
+    return tick

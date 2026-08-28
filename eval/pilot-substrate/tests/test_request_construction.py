@@ -1,54 +1,68 @@
-"""Request construction: exact provider contract, frozen identity, refusal before reserve."""
+"""Request construction: exact Gemini/Veo contract, frozen identity, refusal before reserve."""
 from decimal import Decimal
 
 import pytest
 
 import video_route as VR
-from video_route import PilotVideoRoute
+from video_route import GeminiVeoRoute
 
 
-def test_build_body_matches_documented_contract():
+def test_build_body_matches_documented_predict_long_running_contract():
     """The body carries exactly the documented fields, with the frozen pins applied."""
-    route = PilotVideoRoute()
-    body = route.build_body("A 6 second product shot of a prepaid wallet card", 6, "16:9")
+    route = GeminiVeoRoute()
+    body = route.build_body("A festive premium motion plate", 8, "9:16")
     assert body == {
-        "prompt": "A 6 second product shot of a prepaid wallet card",
-        "duration": "6s",              # the provider enum is the string form
-        "aspect_ratio": "16:9",
-        "resolution": "720p",
-        "generate_audio": True,
-        "auto_fix": False,             # pinned: no silent prompt substitution, ever
+        "instances": [{"prompt": "A festive premium motion plate"}],
+        "parameters": {
+            "aspectRatio": "9:16",
+            "durationSeconds": 8,
+            "resolution": "720p",       # pinned for T1
+        },
     }
-    assert "seed" not in body          # unseeded by policy, so the key never travels
+    # No invented parameters: audio is native (no parameter exists), no seed, no
+    # personGeneration policy decided here.
+    assert "seed" not in body["parameters"]
+    assert "personGeneration" not in body["parameters"]
+    assert "generateAudio" not in body["parameters"]
 
 
-def test_route_identity_is_frozen_and_version_pinned():
-    route = PilotVideoRoute()
+def test_nine_sixteen_aspect_for_the_aight_pilot():
+    route = GeminiVeoRoute()
+    body = route.build_body("p", 8, "9:16")
+    assert body["parameters"]["aspectRatio"] == "9:16"
+
+
+def test_exact_model_identifier_and_endpoint():
+    route = GeminiVeoRoute()
     ident = route.identity()
-    assert ident["route"] == "fal-ai/veo3.1"
-    assert ident["provider_surface"] == "fal"
-    assert ident["model_family"] == "veo-3.1"
-    assert ident["workflow_mode"] == "t2v"
-    assert ident["route_version_pinned_in_path"] is True
-    assert route.submit_url() == "https://queue.fal.run/fal-ai/veo3.1"
-    assert route.request_url("abc", "/status") == \
-        "https://queue.fal.run/fal-ai/veo3.1/requests/abc/status"
+    assert ident["model_id"] == "veo-3.1-fast-generate-preview"
+    assert ident["model_version"] == "veo-3.1-fast-generate-preview"
+    assert ident["provider"] == "google"
+    assert ident["provider_surface"] == "gemini-developer-api"
+    assert ident["workflow"] == "t2v"
+    assert ident["lane"] == "native_av"
+    assert route.submit_url() == (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        "veo-3.1-fast-generate-preview:predictLongRunning")
+    assert route.operation_url("models/x/operations/op1") == (
+        "https://generativelanguage.googleapis.com/v1beta/models/x/operations/op1")
 
 
 def test_unknown_slot_refused():
     with pytest.raises(ValueError, match="Controller decision"):
-        PilotVideoRoute(slot="VID-SOMETHING-ELSE")
+        GeminiVeoRoute(slot="VID-SOMETHING-ELSE")
 
 
 @pytest.mark.parametrize("prompt,duration,aspect", [
-    ("", 6, "16:9"),                   # empty prompt
-    ("   ", 6, "16:9"),                # whitespace prompt
-    ("ok", 5, "16:9"),                 # duration outside the provider enum {4,6,8}
-    ("ok", 6, "1:1"),                  # aspect outside the provider enum
+    ("", 8, "9:16"),                   # empty prompt
+    ("   ", 8, "9:16"),                # whitespace prompt
+    ("ok", 5, "9:16"),                 # duration outside the provider enum {4,6,8}
+    ("ok", 12, "9:16"),                # 12s is the FIXTURE length, not a Veo duration
+    ("ok", 8, "1:1"),                  # aspect outside the provider enum
 ])
 def test_invalid_parameters_refused_before_anything_is_reserved_or_sent(
-        guard, transport, fal_key, tmp_path, prompt, duration, aspect):
-    route = PilotVideoRoute(transport=transport, guard=guard)
+        guard, transport, gemini_key, tmp_path, prompt, duration, aspect):
+    route = GeminiVeoRoute(transport=transport, guard=guard)
     with pytest.raises(ValueError):
         route.generate(prompt, duration, aspect, tmp_path)
     assert transport.submit_calls == []        # nothing was sent
@@ -56,9 +70,9 @@ def test_invalid_parameters_refused_before_anything_is_reserved_or_sent(
     assert guard.spent_usd == Decimal("0")
 
 
-def test_estimate_uses_committed_per_second_planning_rate():
-    """USD 0.40/generated second with audio — the Controller's Veo pricing correction."""
-    route = PilotVideoRoute()
-    assert route.estimate_usd(6) == Decimal("2.40")
-    assert route.estimate_usd(8) == Decimal("3.20")
+def test_estimate_uses_current_official_per_second_rate():
+    """USD 0.10/generated second, 720p, audio included — official pricing page."""
+    route = GeminiVeoRoute()
+    assert route.estimate_usd(8) == Decimal("0.80")
+    assert route.estimate_usd(4) == Decimal("0.40")
     assert VR.VIDEO_ROUTES["VID-PILOT-01"]["billing_unit"] == "per_generated_second"

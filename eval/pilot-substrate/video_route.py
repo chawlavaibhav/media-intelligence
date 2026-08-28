@@ -1,77 +1,92 @@
 #!/usr/bin/env python3
-"""EVAL-035: one pilot-capable video generation route. fal queue surface, Veo 3.1.
+"""EVAL-035 (corrected): one pilot-capable video route. Direct Gemini Developer API, Veo 3.1 Fast.
+
+ROUTE POLICY (Controller/user decision, 2026-08-28)
+
+    `CONTROLLER-DIRECT-GEMINI-T1-ROUTE-REVISION-2026-08-28.md` supersedes the first-pass fal
+    selection: for Google generation models this project talks to the DIRECT Gemini Developer
+    API with `GEMINI_API_KEY` — no aggregator, no aggregator retry/fallback/auth layer. The
+    temporary T1 executor is `veo-3.1-fast-generate-preview`, 720p, 9:16 for the Aight pilot.
+    T1 plumbing only: not model qualification, not a Registry row, not a claim Veo is best.
+    Veo's pilot role is the generative motion/visual plate; exact brand/text elements are
+    composited deterministically later and are NOT this route's problem.
 
 NOTHING HERE CONTACTS A PROVIDER BY ITSELF.
 
     Importing this module makes no call. Constructing a route makes no call and reads no API
     key. A route with no injected transport REFUSES to dispatch, and a route with a transport
     but no budget guard also refuses. The only way to spend money is to hand the route both a
-    live transport (built explicitly via `LiveQueueTransport`) and a guard opened from an
-    explicit PILOT-001 authorisation — which does not exist yet (`pilot_authorisation.py`).
+    live transport (built explicitly via `LiveGeminiTransport`) and a guard opened from the
+    machine-verifiable PILOT-001 authorisation chain (`pilot_authorisation.py`) — which the
+    committed repository state cannot open today, by design.
 
-ONE ROUTE, FROZEN
+THE PROVIDER CONTRACT (current official Google docs, fetched 2026-08-28)
 
-    `fal-ai/veo3.1` — Google Veo 3.1, text-to-video, native audio, version pinned in the
-    endpoint path. Identity evidence: fal's own SDK enumeration
-    (eval/pre-execution-freeze/model-supply/FAL-VERIFIED-ROUTES.yaml). Selected for the Aight
-    short-form commercial pilot because it is the Wave-1 VID-01 candidate family (rendered
-    text/logo stability + native audio in ONE call — the smallest operationally sufficient
-    topology; a composite TTS+lipsync route would be three routes, not one), and because the
-    fal surface reuses the exact auth contract EMP-001 already exercised with real money.
-    This selection is INFRASTRUCTURE, not model qualification — no quality claim is made.
+    Source: ai.google.dev/gemini-api/docs/veo and .../docs/pricing.
 
-THE TRIAL BOUNDARY, FOR AN ASYNC PROVIDER
+      start      POST https://generativelanguage.googleapis.com/v1beta/models/
+                     veo-3.1-fast-generate-preview:predictLongRunning
+                 header `x-goog-api-key: $GEMINI_API_KEY`
+                 body {"instances":[{"prompt": ...}],
+                       "parameters":{"aspectRatio","resolution","durationSeconds"}}
+                 -> {"name": "<operation name>"}
+      poll       GET  https://generativelanguage.googleapis.com/v1beta/<operation name>
+                 -> {"name", "done": bool, then "response" or "error"}
+      result     response.generateVideoResponse.generatedSamples[0].video.uri
+      download   GET <uri> with the same `x-goog-api-key` header; MP4; server retains the
+                 file for 2 days only, so the local binary copy IS the artifact.
 
-    fal runs video jobs through a queue: submit -> request_id -> status polling -> completed
-    result -> artifact URL. The GENERATION TRIAL IS THE SUBMIT. Status polls, the result
-    fetch and the artifact download are lifecycle steps of that one trial: they are counted
-    and recorded, but they are never new attempts and never inflate the generation count.
-    One submit = one attempt = one trial, including a submit that refuses, errors, times out
-    or vanishes into an unresolvable network failure mid-poll.
+    Veo 3.1 Fast: durations 4|6|8 s; aspect 16:9|9:16; resolution 720p (1080p/4k need 8 s);
+    audio is NATIVE — there is no audio request parameter, and none is sent (the pilot's
+    audio treatment is deliberately not decided here). Google documents that safety filters
+    sometimes block a generation and that blocked videos are not charged; blocked outcomes
+    surface as an operation error or as a response with no generated samples (the
+    `raiMediaFilteredCount`/`raiMediaFilteredReasons` fields Google documents on its Veo
+    reference for the sibling Vertex surface are read here ONLY if present — their absence
+    is never treated as meaning anything).
 
-ZERO RETRIES, INCLUDING THE PROVIDER'S OWN
+    Price (official Gemini API pricing page, fetched 2026-08-28): Veo 3.1 Fast 720p =
+    USD 0.10 per generated second, audio included. Provisional planning rate for the
+    pre-call reservation; NOT invoice evidence; re-verify at execution time.
 
-    fal's platform automatically retries queued requests up to 10 times on server errors,
-    timeouts, connection failures and rate limits unless the caller sends `X-Fal-No-Retry`
-    (fal reliability docs, fetched 2026-08-28). Without that header, one submit could
-    quietly become several platform-side generation runs — a silent retry outside our
-    process. Every submit here therefore carries `X-Fal-No-Retry: 1`, and the tests assert
-    the header's presence rather than trusting this paragraph.
+THE TRIAL BOUNDARY, FOR A LONG-RUNNING OPERATION
 
-NO SILENT PROMPT SUBSTITUTION
-
-    The veo3.1 endpoint's `auto_fix` parameter defaults to TRUE and rewrites prompts that
-    fail content policy. A rewritten prompt is a different generation than the one recorded,
-    which breaks provenance in exactly the way a floating model alias would. `auto_fix` is
-    pinned FALSE in the frozen body and the caller cannot turn it on. A policy block comes
-    back as an honest refusal instead.
+    The GENERATION TRIAL IS THE predictLongRunning SUBMIT. Operation polls, the result read
+    and the artifact download are lifecycle steps of that one trial: counted and recorded,
+    never new attempts. One submit = one attempt = one trial, including a submit that
+    refuses, errors, times out or becomes unresolvable mid-poll. There is no client retry
+    path and no resubmission after ambiguity — a later authorised repair would be a NEW
+    attempt owned by PILOT-001, not by this module.
 
 AMBIGUITY, PRESERVED FROM EMP-001
 
     The exception vocabulary (`PreDispatchRefusal`, `AmbiguousDispatch`, `DispatchRefused`)
     and the transport-failure classifier are IMPORTED from
-    eval/empirical-tranche-1/providers.py rather than re-declared. A second copy would
-    drift, and drifting ambiguity semantics is how a hard spend ceiling becomes soft.
-
-    Applied to the queue lifecycle:
+    eval/empirical-tranche-1/providers.py rather than re-declared — one source of truth for
+    what "ambiguous" means. Applied here:
 
       before the submit send      provably pre-dispatch -> reservation released, nothing
                                   persisted (no attempt was made)
       submit send onwards         AMBIGUOUS on any failure -> settle the reservation
                                   conservatively, persist a real failed attempt, stop
-      after submit succeeded      the job EXISTS at the provider and will be billed if it
-                                  completes. A poll/result/download failure never releases
-                                  money and never re-submits; it is recorded on the same
-                                  attempt with `outcome_resolved: false` where the final
-                                  provider-side outcome is genuinely unknown.
+      after the operation exists  a poll/result/download failure never releases money and
+                                  never resubmits; recorded on the same attempt with
+                                  `outcome_resolved: false` where the provider-side outcome
+                                  is genuinely unknown.
 
-COST
+    Google documents that safety-blocked videos are not charged; the ledger still settles
+    refusals at the reserved estimate because a conservative overstatement can be corrected
+    by billing evidence, while an optimistic release cannot be un-spent.
 
-    fal returns no billed amount. Cost is reserved and settled from the committed provisional
-    planning rate — USD 0.40 per generated second with audio at 720p/1080p, per
-    coordination/decisions/CONTROLLER-VEO-PRICING-UNIT-CORRECTION-2026-08-26.md — and marked
-    `provisional_published_rate`. It must be replaced by execution-time price verification
-    and billing evidence before any cost claim is reported.
+PROVENANCE
+
+    Every attempt is recorded in the corrected-RES-007 vocabulary: provider / model_id /
+    model_version / endpoint / workflow / prompt_hash / config_hash / config_location /
+    reference_asset_hashes / requested_at / completed_at / lane / status / repeat & retry
+    fields / storage_class. The full request configuration (model, endpoint, exact body
+    including the prompt) is written to a JSON file next to the artifact BEFORE dispatch;
+    `config_hash` is the SHA-256 of that file's bytes, so the exact request is recoverable
+    and hash-bound. `res007_production_attempt()` emits the writer-ready handoff.
 
 UNTESTED AGAINST A LIVE PROVIDER. Every exercise of this module goes through injected fake
 transports. Treat the real path as unproven until the first authorised PILOT-001 call.
@@ -82,6 +97,7 @@ import hashlib
 import json
 import sys
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
 from typing import Any, Callable
@@ -97,62 +113,52 @@ if str(EMP001) not in sys.path:
 from providers import (  # noqa: E402
     AmbiguousDispatch, DispatchRefused, PreDispatchRefusal, classify_transport_failure)
 
-# Same-package import via the sys.path convention this repo already uses for hyphenated
-# package directories (see eval/empirical-tranche-1/tests/conftest.py).
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 import artifact_store  # noqa: E402
 
-FAL_KEY_ENV = "FAL_KEY"
+GEMINI_KEY_ENV = "GEMINI_API_KEY"
 
 # ------------------------------------------------------------------ the one frozen route
 # Changing anything in this table is a Controller decision, not a runtime option.
-#
-# Contract provenance is recorded in README.md. `duration` and `aspect_ratio` are the only
-# caller-selectable parameters, restricted to the provider's own enums; everything else is
-# pinned. No seed is ever sent (`seed_policy: unseeded`) and `auto_fix` is pinned off so the
-# prompt that runs is byte-identical to the prompt recorded.
+# `model_id` IS the exact versioned identifier Google exposes; there is no separate stable
+# alias to drift from, which is why model_version records the same string explicitly rather
+# than a friendly family name.
 VIDEO_ROUTES = {
     "VID-PILOT-01": {
-        "route": "fal-ai/veo3.1",
-        "provider_surface": "fal",
-        "model_family": "veo-3.1",
-        "workflow_mode": "t2v",
-        "queue_base": "https://queue.fal.run",
+        "provider": "google",
+        "provider_surface": "gemini-developer-api",
+        "model_id": "veo-3.1-fast-generate-preview",
+        "model_version": "veo-3.1-fast-generate-preview",
+        "api_base": "https://generativelanguage.googleapis.com/v1beta",
+        "workflow": "t2v",
+        "lane": "native_av",           # Veo 3.1 output is video with native audio
         "allowed_durations_s": (4, 6, 8),
         "allowed_aspect_ratios": ("16:9", "9:16"),
-        "pinned_body": {
+        "pinned_parameters": {
             "resolution": "720p",
-            "generate_audio": True,
-            "auto_fix": False,
         },
-        # USD per generated second, with audio, 720p — provisional planning rate from
-        # CONTROLLER-VEO-PRICING-UNIT-CORRECTION-2026-08-26.md. NOT invoice evidence.
-        "provisional_usd_per_second": Decimal("0.40"),
+        # USD per generated second, 720p, audio included — official Gemini API pricing page,
+        # fetched 2026-08-28. Provisional planning rate; NOT invoice evidence.
+        "provisional_usd_per_second": Decimal("0.10"),
         "billing_unit": "per_generated_second",
     },
 }
 
-TERMINAL_STATUS = "COMPLETED"
-IN_FLIGHT_STATUSES = ("IN_QUEUE", "IN_PROGRESS")
-
-# fal signals a content-policy block as a 422 with this type, and documents it as
-# non-retryable. A block is a REFUSAL — the provider understood and declined — which is a
-# different fact about the prompt than an infrastructure ERROR is about the provider.
-CONTENT_POLICY_TYPES = ("content_policy_violation", "moderation_block", "safety")
+STORAGE_CLASS = "C_irreproducible_empirical"
 
 
 class LifecycleContractBreach(RuntimeError):
-    """The provider's queue reply did not match its documented contract."""
+    """The provider's reply did not match its documented contract."""
 
 
 # --------------------------------------------------------------------------- transports
-class LiveQueueTransport:
+class LiveGeminiTransport:
     """The ONLY class in this package that can open a socket — and only when called.
 
-    Construction opens nothing and reads no key. Kept deliberately explicit: the route's
-    default transport is None, so reaching fal requires someone to build one of these and
-    inject it, which is the correct difficulty for a paid path.
+    Construction opens nothing and reads no key. The route's default transport is None, so
+    reaching Google requires someone to build one of these and inject it, which is the
+    correct difficulty for a paid path.
     """
 
     def __init__(self, timeout_s: float = 60.0):
@@ -166,26 +172,26 @@ class LiveQueueTransport:
         self.calls += 1
         try:
             with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
-                return resp.status, resp.read()
+                return resp.status, resp.read(), resp.headers.get("Content-Type")
         except urllib.error.HTTPError as exc:
             # An HTTP error status is still a provider ANSWER; return it for classification
-            # rather than burying the body (which carries the refusal/error detail).
-            return exc.code, exc.read()
+            # rather than burying the body (which carries the error detail).
+            return exc.code, exc.read(), exc.headers.get("Content-Type")
 
     def post_json(self, url: str, headers: dict, payload: bytes) -> tuple[int, dict]:
         import urllib.request
 
-        status, body = self._open(urllib.request.Request(
+        status, body, _ = self._open(urllib.request.Request(
             url, data=payload, headers={"Content-Type": "application/json", **headers}))
         return status, json.loads(body.decode("utf-8"))
 
     def get_json(self, url: str, headers: dict) -> tuple[int, dict]:
         import urllib.request
 
-        status, body = self._open(urllib.request.Request(url, headers=headers))
+        status, body, _ = self._open(urllib.request.Request(url, headers=headers))
         return status, json.loads(body.decode("utf-8"))
 
-    def get_bytes(self, url: str, headers: dict) -> tuple[int, bytes]:
+    def get_bytes(self, url: str, headers: dict) -> tuple[int, bytes, str | None]:
         import urllib.request
 
         return self._open(urllib.request.Request(url, headers=headers))
@@ -193,18 +199,19 @@ class LiveQueueTransport:
 
 # ------------------------------------------------------------------------------ the route
 @dataclass
-class PilotVideoRoute:
+class GeminiVeoRoute:
     """The frozen pilot video route behind an injected transport and a budget guard.
 
-    `transport` must expose post_json / get_json / get_bytes as in LiveQueueTransport.
+    `transport` must expose post_json / get_json / get_bytes as in LiveGeminiTransport.
     `guard` must expose reserve / record (and optionally release), as EMP-001's guards do.
-    `sleep` is injected so tests never wait and the poll cadence is visible in the record.
+    `sleep` and `clock` are injected so tests never wait and timestamps are deterministic.
     """
 
     slot: str = "VID-PILOT-01"
     transport: Any = None
     guard: Any = None
     sleep: Callable[[float], None] | None = None
+    clock: Callable[[], str] | None = None
     poll_interval_s: float = 10.0
     max_status_checks: int = 90
     # Set by the caller before a call so ledger rows and records share trial identity.
@@ -224,19 +231,23 @@ class PilotVideoRoute:
     def identity(self) -> dict:
         return {
             "slot": self.slot,
-            "route": self.frozen["route"],
+            "provider": self.frozen["provider"],
             "provider_surface": self.frozen["provider_surface"],
-            "model_family": self.frozen["model_family"],
-            "workflow_mode": self.frozen["workflow_mode"],
-            "route_version_pinned_in_path": True,
+            "model_id": self.frozen["model_id"],
+            "model_version": self.frozen["model_version"],
+            "endpoint": self.submit_url(),
+            "workflow": self.frozen["workflow"],
+            "lane": self.frozen["lane"],
         }
 
     # -- request construction (no dispatch) -------------------------------------------
     def build_body(self, prompt: str, duration_s: int, aspect_ratio: str) -> dict:
-        """Frozen configuration plus the caller's three parameters. Nothing else can enter.
+        """The documented predictLongRunning body, frozen pins applied. Nothing else enters.
 
         Built from the frozen table, NOT from a caller dict: a seed, a resolution change or
-        auto_fix cannot reach fal merely by being passed in.
+        an undocumented parameter cannot reach Google merely by being passed in. No audio
+        parameter exists on this surface and none is invented; no personGeneration policy is
+        decided here.
         """
         if not prompt or not prompt.strip():
             raise ValueError("a generation request needs a non-empty prompt")
@@ -250,18 +261,21 @@ class PilotVideoRoute:
                 f"aspect_ratio {aspect_ratio!r} is not in the provider enum "
                 f"{self.frozen['allowed_aspect_ratios']}")
         return {
-            "prompt": prompt,
-            "duration": f"{duration_s}s",
-            "aspect_ratio": aspect_ratio,
-            **self.frozen["pinned_body"],
+            "instances": [{"prompt": prompt}],
+            "parameters": {
+                "aspectRatio": aspect_ratio,
+                "durationSeconds": duration_s,
+                **self.frozen["pinned_parameters"],
+            },
         }
 
     def submit_url(self) -> str:
-        return f"{self.frozen['queue_base']}/{self.frozen['route']}"
+        return (f"{self.frozen['api_base']}/models/"
+                f"{self.frozen['model_id']}:predictLongRunning")
 
-    def request_url(self, request_id: str, suffix: str = "") -> str:
-        return (f"{self.frozen['queue_base']}/{self.frozen['route']}/requests/"
-                f"{request_id}{suffix}")
+    def operation_url(self, operation_name: str) -> str:
+        # The operation name arrives fully qualified (e.g. "models/.../operations/<id>").
+        return f"{self.frozen['api_base']}/{operation_name}"
 
     def estimate_usd(self, duration_s: int) -> Decimal:
         return self.frozen["provisional_usd_per_second"] * Decimal(duration_s)
@@ -269,17 +283,21 @@ class PilotVideoRoute:
     def _read_key(self) -> str:
         import os
 
-        key = os.environ.get(FAL_KEY_ENV)
+        key = os.environ.get(GEMINI_KEY_ENV)
         if not key:
             raise PreDispatchRefusal(
-                f"{FAL_KEY_ENV} is not set. Keys are read from the environment at dispatch "
-                f"time and are never committed, logged or persisted. Nothing was sent.")
+                f"{GEMINI_KEY_ENV} is not set. Keys are read from the environment at "
+                f"dispatch time and are never committed, logged or persisted. Nothing "
+                f"was sent.")
         return key
 
     def _headers(self, key: str) -> dict:
-        # X-Fal-No-Retry: without it fal re-runs failed queue jobs up to 10 times, and one
-        # submit silently becomes several platform-side generation attempts.
-        return {"Authorization": f"Key {key}", "X-Fal-No-Retry": "1"}
+        return {"x-goog-api-key": key}
+
+    def _now(self) -> str:
+        if self.clock:
+            return self.clock()
+        return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
     # -- budget plumbing (EMP-001 tolerant pattern: persistent StageBudget takes context,
     #    the in-memory BudgetGuard does not; both must still be charged) -----------------
@@ -303,7 +321,7 @@ class PilotVideoRoute:
     # -- the full lifecycle, once -------------------------------------------------------
     def generate(self, prompt: str, duration_s: int, aspect_ratio: str,
                  out_dir: Path) -> dict:
-        """One generation trial: submit, poll, fetch, download, persist. No second chance.
+        """One generation trial: submit, poll the operation, fetch, download, persist.
 
         Returns {"attempt": ..., "artifact": ... | None}. Every path that reaches the
         dispatch boundary returns a persisted attempt; only provably-pre-dispatch failures
@@ -331,11 +349,13 @@ class PilotVideoRoute:
 
         headers = self._headers(key)
         payload = json.dumps(body, ensure_ascii=False).encode("utf-8")
-        attempt = self._base_attempt(body, duration_s, aspect_ratio, estimate)
+        out_dir = Path(out_dir)
+        attempt = self._base_attempt(body, out_dir)
 
         # ---- THE DISPATCH BOUNDARY ------------------------------------------------------
-        # Everything below may have reached fal. Every failure below is AMBIGUOUS: the money
-        # stays counted, the attempt is persisted, and nothing is retried.
+        # Everything below may have reached Google. Every failure below is AMBIGUOUS: the
+        # money stays counted, the attempt is persisted, and nothing is retried.
+        attempt["requested_at"] = self._now()
         self.submits += 1
         try:
             status_code, reply = self.transport.post_json(self.submit_url(), headers, payload)
@@ -346,145 +366,127 @@ class PilotVideoRoute:
                                             f"{self.submit_url()}: {exc}",
                                        ambiguous=True, outcome_resolved=False)
 
-        if status_code == 422:
-            err_type = _error_type_of(reply)
-            if err_type in CONTENT_POLICY_TYPES:
-                return self._settle_failed(attempt, estimate, "refusal", "moderation_block",
-                                           note=str(reply)[:300], ambiguous=False,
-                                           outcome_resolved=True)
-            return self._settle_failed(attempt, estimate, "error",
-                                       err_type or "validation_error",
-                                       note=str(reply)[:300], ambiguous=False,
-                                       outcome_resolved=True)
         if status_code != 200:
-            # The request reached fal and was answered with an error status. Conservative:
-            # counted, persisted, not retried — fal's own retry is disabled by header.
-            return self._settle_failed(attempt, estimate, "error",
-                                       _error_type_of(reply) or f"http_{status_code}",
-                                       note=str(reply)[:300], ambiguous=False,
-                                       outcome_resolved=True)
+            err = (reply or {}).get("error") or {}
+            return self._settle_failed(
+                attempt, estimate, "error",
+                str(err.get("status") or err.get("code") or f"http_{status_code}"),
+                note=str(reply)[:300], ambiguous=False, outcome_resolved=True)
 
-        request_id = reply.get("request_id")
-        if not request_id:
+        operation_name = (reply or {}).get("name")
+        if not operation_name:
             exc = LifecycleContractBreach(
-                "submit returned 200 with no request_id — the documented queue contract "
-                "requires one, and without it the job cannot be tracked or accounted for")
+                "predictLongRunning returned 200 with no operation name — the documented "
+                "contract returns one, and without it the job cannot be tracked or "
+                "accounted for")
             return self._settle_failed(attempt, estimate, "error", "malformed_response",
                                        note=str(exc), ambiguous=True, outcome_resolved=False)
 
-        attempt["provider_request_id"] = request_id
+        attempt["operation_name"] = operation_name
 
         # ---- polling: lifecycle steps of the SAME trial ---------------------------------
-        final_status_reply = None
+        operation = None
         for _ in range(self.max_status_checks):
             if self.status_checks and self.sleep:
                 self.sleep(self.poll_interval_s)
             self.status_checks += 1
             attempt["status_checks"] += 1
             try:
-                code, status_reply = self.transport.get_json(
-                    self.request_url(request_id, "/status"), headers)
+                code, op = self.transport.get_json(
+                    self.operation_url(operation_name), headers)
             except Exception as exc:
-                # The job exists at fal and may complete and bill. Unresolvable from here.
+                # The operation exists at Google and may complete and bill. Unresolvable.
                 api_status, error_class = classify_transport_failure(exc)
                 return self._settle_failed(
                     attempt, estimate, api_status, f"poll_{error_class}",
-                    note=f"status poll failed after submit succeeded; job {request_id} may "
-                         f"still complete and bill: {exc}",
+                    note=f"operation poll failed after submit succeeded; "
+                         f"{operation_name} may still complete and bill: {exc}",
                     ambiguous=True, outcome_resolved=False)
 
             if code != 200:
                 return self._settle_failed(
                     attempt, estimate, "error", f"poll_http_{code}",
-                    note=f"status poll answered {code} for job {request_id}; final provider "
-                         f"outcome unknown", ambiguous=True, outcome_resolved=False)
+                    note=f"operation poll answered {code} for {operation_name}; final "
+                         f"provider outcome unknown", ambiguous=True,
+                    outcome_resolved=False)
 
-            state = status_reply.get("status")
-            if state == TERMINAL_STATUS:
-                final_status_reply = status_reply
-                break
-            if state not in IN_FLIGHT_STATUSES:
+            if not isinstance(op, dict) or ("done" not in op and "name" not in op):
                 exc = LifecycleContractBreach(
-                    f"undocumented queue status {state!r} — the documented values are "
-                    f"{IN_FLIGHT_STATUSES + (TERMINAL_STATUS,)}. Refusing to guess what it "
-                    f"means for billing.")
+                    f"operation poll returned an undocumented shape for {operation_name}; "
+                    f"refusing to guess what it means for billing")
                 return self._settle_failed(attempt, estimate, "error", "malformed_response",
                                            note=str(exc), ambiguous=True,
                                            outcome_resolved=False)
+            if op.get("done") is True:
+                operation = op
+                break
         else:
             return self._settle_failed(
                 attempt, estimate, "timeout", "poll_budget_exhausted",
-                note=f"job {request_id} not terminal after {self.max_status_checks} status "
+                note=f"{operation_name} not done after {self.max_status_checks} status "
                      f"checks; it may still complete and bill. No re-submit.",
                 ambiguous=True, outcome_resolved=False)
 
-        # COMPLETED can still carry a job-level error (documented optional error fields).
-        job_error_type = _error_type_of(final_status_reply)
-        if final_status_reply.get("error") or job_error_type:
-            refusal = job_error_type in CONTENT_POLICY_TYPES
-            return self._settle_failed(
-                attempt, estimate,
-                "refusal" if refusal else "error",
-                "moderation_block" if refusal else (job_error_type or "provider_error"),
-                note=str(final_status_reply.get("error"))[:300],
-                ambiguous=False, outcome_resolved=True)
+        attempt["completed_at"] = self._now()
 
-        # ---- result fetch ---------------------------------------------------------------
-        try:
-            code, result = self.transport.get_json(self.request_url(request_id), headers)
-        except Exception as exc:
-            api_status, error_class = classify_transport_failure(exc)
+        # ---- terminal operation: error, refusal, or a result ----------------------------
+        if operation.get("error"):
+            err = operation["error"]
             return self._settle_failed(
-                attempt, estimate, api_status, f"result_fetch_{error_class}",
-                note=f"job {request_id} COMPLETED but the result fetch failed; the "
-                     f"generation happened and is billable: {exc}",
-                ambiguous=True, outcome_resolved=False)
-        if code != 200:
-            return self._settle_failed(
-                attempt, estimate, "error", f"result_fetch_http_{code}",
-                note=f"job {request_id} COMPLETED but the result endpoint answered {code}",
-                ambiguous=True, outcome_resolved=False)
+                attempt, estimate, "error",
+                str(err.get("status") or err.get("code") or "operation_error"),
+                note=str(err)[:300], ambiguous=False, outcome_resolved=True)
 
-        video = (result or {}).get("video") or {}
-        artifact_url = video.get("url")
-        if not artifact_url:
+        gv = ((operation.get("response") or {}).get("generateVideoResponse") or {})
+        samples = gv.get("generatedSamples") or []
+        if not samples or not ((samples[0].get("video") or {}).get("uri")):
+            # Google documents that safety filters sometimes block a generation. The
+            # rai* fields are read only if present; an absent field is never interpreted.
+            filtered = gv.get("raiMediaFilteredCount")
+            if filtered:
+                return self._settle_failed(
+                    attempt, estimate, "refusal", "safety_filtered",
+                    note=str(gv.get("raiMediaFilteredReasons"))[:300],
+                    ambiguous=False, outcome_resolved=True)
             return self._settle_failed(
                 attempt, estimate, "error", "no_artifact_returned",
-                note="COMPLETED result carried no video.url", ambiguous=False,
+                note="done operation carried no generated video uri", ambiguous=False,
                 outcome_resolved=True)
 
-        # ---- binary artifact download -----------------------------------------------------
+        artifact_uri = samples[0]["video"]["uri"]
+
+        # ---- binary artifact download (server retains the file 2 days only) -------------
         try:
-            code, data = self.transport.get_bytes(artifact_url, {})
+            code, data, served_type = self.transport.get_bytes(artifact_uri, headers)
         except Exception as exc:
             return self._settle_failed(
                 attempt, estimate, "error", "artifact_download_failed",
                 note=f"generation completed (billable) but the artifact download failed: "
-                     f"{exc}. The provider URL is recorded for a later, separately "
+                     f"{exc}. The provider URI is recorded for a later, separately "
                      f"authorised fetch — never an automatic one.",
-                ambiguous=False, outcome_resolved=True, artifact_url=artifact_url)
+                ambiguous=False, outcome_resolved=True, artifact_uri=artifact_uri)
         if code != 200 or not isinstance(data, (bytes, bytearray)) or not data:
             return self._settle_failed(
                 attempt, estimate, "error", "artifact_download_failed",
-                note=f"artifact URL answered {code} with "
+                note=f"artifact URI answered {code} with "
                      f"{'no' if not data else 'non-byte'} content",
-                ambiguous=False, outcome_resolved=True, artifact_url=artifact_url)
+                ambiguous=False, outcome_resolved=True, artifact_uri=artifact_uri)
 
         artifact = artifact_store.persist_video_bytes(
-            bytes(data), out_dir=Path(out_dir),
+            bytes(data), out_dir=out_dir,
             attempt_id=attempt["attempt_id"],
             trial_id=attempt["trial_id"],
             identity=self.identity(),
-            provider_request_id=request_id,
-            content_type=video.get("content_type"),
-            declared_file_size=video.get("file_size"),
-            source_url=artifact_url)
+            provider_request_id=operation_name,
+            content_type=served_type,
+            declared_file_size=None,      # the operation response declares no size
+            source_url=artifact_uri)
 
         cost_ref = self._settle(estimate, billing_state="reported")
         attempt.update({
-            "api_status": "ok",
+            "status": "ok",
             "error_class": None,
-            "artifact_url": artifact_url,
+            "artifact_uri": artifact_uri,
             "artifact_id": artifact["artifact_id"],
             "billing_state": "reported",
             "cost_basis": "provisional_published_rate",
@@ -495,50 +497,81 @@ class PilotVideoRoute:
         return {"attempt": attempt, "artifact": artifact}
 
     # -- record shaping ---------------------------------------------------------------
-    def _base_attempt(self, body: dict, duration_s: int, aspect_ratio: str,
-                      estimate: Decimal) -> dict:
-        attempt_id = self.call_context.get("attempt_id") or (
-            f"pilot-{self.slot}-{hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()[:12]}")
+    def _base_attempt(self, body: dict, out_dir: Path) -> dict:
+        """The attempt skeleton, in the corrected-RES-007 provenance vocabulary.
+
+        The full request configuration is written to a JSON file BEFORE dispatch so the
+        exact request is recoverable; config_hash binds the attempt to those bytes.
+        """
+        prompt = body["instances"][0]["prompt"]
+        config = {
+            "record": "EVAL-035-request-config",
+            "provider": self.frozen["provider"],
+            "provider_surface": self.frozen["provider_surface"],
+            "model_id": self.frozen["model_id"],
+            "model_version": self.frozen["model_version"],
+            "endpoint": self.submit_url(),
+            "api_version": "v1beta",
+            "workflow": self.frozen["workflow"],
+            "request_body": body,
+            "billing_unit": self.frozen["billing_unit"],
+            "provisional_usd_per_second": str(self.frozen["provisional_usd_per_second"]),
+        }
+        config_bytes = json.dumps(config, ensure_ascii=False, indent=2,
+                                  sort_keys=True).encode("utf-8")
+        config_hash = hashlib.sha256(config_bytes).hexdigest()
+
+        attempt_id = self.call_context.get("attempt_id") or f"pilot-{config_hash[:12]}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        config_path = out_dir / f"{attempt_id}-request-config.json"
+        config_path.write_bytes(config_bytes)
+
         return {
             **self.identity(),
             "attempt_id": attempt_id,
             "trial_id": attempt_id,                 # one call = one trial, by construction
-            "prompt_sha256": hashlib.sha256(body["prompt"].encode("utf-8")).hexdigest(),
-            "request_parameters": {
-                "duration": f"{duration_s}s",
-                "aspect_ratio": aspect_ratio,
-                **self.frozen["pinned_body"],
-            },
+            "prompt_hash": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+            "config_hash": config_hash,
+            "config_location": str(config_path),
+            "reference_asset_hashes": [],           # t2v: no reference assets supplied
+            "request_parameters": dict(body["parameters"]),
             "seed": None,
             "seed_policy": "unseeded",
             "billing_unit": self.frozen["billing_unit"],
-            "reserved_usd": str(estimate),
-            "provider_request_id": None,
-            "artifact_url": None,
+            "reserved_usd": str(self.estimate_usd(body["parameters"]["durationSeconds"])),
+            "operation_name": None,
+            "artifact_uri": None,
             "artifact_id": None,
             "status_checks": 0,
-            "api_status": None,
+            "requested_at": None,
+            "completed_at": None,
+            "status": None,
             "error_class": None,
             "raw_status_note": "",
             "retries": 0,
+            "repeat_index": 0,
+            "repeat_of_attempt_id": None,
             "retry_of_attempt_id": None,            # pinned; no code path sets it
-            "platform_auto_retry_disabled": True,   # X-Fal-No-Retry sent on the submit
+            "retry_reason": None,
+            "storage_class": STORAGE_CLASS,
             "one_call_one_trial": True,
             "synthetic": False,
         }
 
-    def _settle_failed(self, attempt: dict, estimate: Decimal, api_status: str,
+    def _settle_failed(self, attempt: dict, estimate: Decimal, status: str,
                        error_class: str, note: str, ambiguous: bool,
-                       outcome_resolved: bool, artifact_url: str | None = None) -> dict:
+                       outcome_resolved: bool, artifact_uri: str | None = None) -> dict:
         """Settle conservatively and describe the failed trial honestly. Never retried."""
         billing_state = "unknown_provisional" if ambiguous or not outcome_resolved \
             else "reported"
         cost_ref = self._settle(estimate, billing_state=billing_state)
+        if attempt["completed_at"] is None and outcome_resolved:
+            attempt["completed_at"] = self._now()
         attempt.update({
-            "api_status": api_status,
+            "status": status,
             "error_class": error_class,
             "raw_status_note": note[:300],
-            "artifact_url": artifact_url,
+            "artifact_uri": artifact_uri,
             "billing_state": billing_state,
             "cost_basis": ("conservative_reserved_estimate_billing_unknown"
                            if billing_state == "unknown_provisional"
@@ -550,34 +583,94 @@ class PilotVideoRoute:
         return {"attempt": attempt, "artifact": None}
 
 
-def _error_type_of(reply: Any) -> str | None:
-    """Pull the provider's error type out of the documented shapes without guessing."""
-    if not isinstance(reply, dict):
-        return None
-    if reply.get("error_type"):
-        return str(reply["error_type"])
-    err = reply.get("error")
-    if isinstance(err, dict):
-        return err.get("type") or err.get("code")
-    detail = reply.get("detail")
-    if isinstance(detail, list):
-        for entry in detail:
-            if isinstance(entry, dict) and entry.get("type"):
-                return str(entry["type"])
-    return None
+# --------------------------------------------------------- RES-007 production handoff
+# The corrected v3 writer (RES-007, gate G12) mechanically requires the inherited v2.1 call
+# provenance on every production attempt and FORBIDS eval_item_id on production attempts.
+# This adapter emits exactly the writer-ready field set, losslessly, so PILOT-001 needs no
+# ad-hoc translation after the call. It is a handoff shape, not a second persistence
+# architecture: nothing is written anywhere by this function.
+RES007_REQUIRED_FIELDS = (
+    "attempt_id", "trial_id", "provider", "model_id", "model_version", "endpoint",
+    "workflow", "prompt_hash", "config_hash", "config_location",
+    "reference_asset_hashes", "requested_at", "completed_at", "lane", "repeat_index",
+    "repeat_of_attempt_id", "retry_of_attempt_id", "retry_reason", "status", "cost_ref",
+    "storage_class",
+)
+
+
+def res007_production_attempt(outcome: dict) -> dict:
+    """Map one route outcome onto the corrected-RES-007 production-attempt handoff.
+
+    Returns {"writer_fields": ..., "provider_extras": ...}:
+
+      writer_fields     exactly the named arguments OutcomeWriter.record_attempt requires
+                        for a production attempt (minus step_id, which belongs to the
+                        journey, and plus storage_class for the artifact side). No
+                        eval_item_id — a production attempt serves a brief, not a
+                        benchmark item, and fabricating the link is invented provenance.
+      provider_extras   provider-specific evidence (operation name, raw status note,
+                        artifact URI, poll count, billing state) that the journey persists
+                        alongside, kept OUT of writer_fields because the corrected writer
+                        refuses unknown fields.
+    """
+    a = outcome["attempt"]
+    writer_fields = {
+        "attempt_id": a["attempt_id"],
+        "trial_id": a["trial_id"],
+        "attempt_kind": "production",
+        "status": a["status"],
+        "lane": a["lane"],
+        "cost_ref": a.get("cost_ref"),
+        "provider": a["provider"],
+        "model_id": a["model_id"],
+        "model_version": a["model_version"],
+        "endpoint": a["endpoint"],
+        "workflow": a["workflow"],
+        "prompt_hash": a["prompt_hash"],
+        "config_hash": a["config_hash"],
+        "config_location": a["config_location"],
+        "reference_asset_hashes": list(a["reference_asset_hashes"]),
+        "requested_at": a["requested_at"],
+        "completed_at": a["completed_at"],       # None only if the call never resolved
+        "repeat_index": a["repeat_index"],
+        "repeat_of_attempt_id": a["repeat_of_attempt_id"],
+        "retry_of_attempt_id": a["retry_of_attempt_id"],
+        "retry_reason": a["retry_reason"],
+        "error_detail": (None if a["status"] == "ok"
+                         else f"{a['error_class']}: {a['raw_status_note']}"[:300]),
+        "storage_class": a["storage_class"],
+    }
+    provider_extras = {
+        "provider_surface": a["provider_surface"],
+        "operation_name": a["operation_name"],
+        "artifact_uri": a["artifact_uri"],
+        "artifact_id": a["artifact_id"],
+        "status_checks": a["status_checks"],
+        "request_parameters": a["request_parameters"],
+        "seed_policy": a["seed_policy"],
+        "billing_unit": a["billing_unit"],
+        "reserved_usd": a["reserved_usd"],
+        "billing_state": a["billing_state"],
+        "cost_basis": a["cost_basis"],
+        "ambiguous_dispatch": a["ambiguous_dispatch"],
+        "outcome_resolved": a["outcome_resolved"],
+    }
+    return {"writer_fields": writer_fields, "provider_extras": provider_extras}
 
 
 # ------------------------------------------------------------------- the PILOT-001 seam
 def generate_pilot_video(prompt: str, duration_s: int, aspect_ratio: str, out_dir: Path,
-                         guard, transport, sleep=None, call_context: dict | None = None,
+                         guard, transport, sleep=None, clock=None,
+                         call_context: dict | None = None,
                          slot: str = "VID-PILOT-01") -> dict:
     """The thin interface PILOT-001 calls: one route, one trial, one persisted outcome.
 
-    The caller supplies the guard (opened from an explicit PILOT-001 authorisation — see
-    pilot_authorisation.open_pilot_guard, which fails closed today) and the transport
-    (LiveQueueTransport for a real call; a fake in every test). This function adds nothing
-    else on purpose: no routing, no planning, no repair, no retry.
+    The caller supplies the guard (opened from the machine-verifiable PILOT-001
+    authorisation chain — see pilot_authorisation.open_pilot_guard, which the committed
+    state cannot open today) and the transport (LiveGeminiTransport for a real call; a fake
+    in every test). This function adds nothing else on purpose: no routing, no planning, no
+    repair, no retry.
     """
-    route = PilotVideoRoute(slot=slot, transport=transport, guard=guard, sleep=sleep,
-                            call_context=call_context or {})
+    route = GeminiVeoRoute(slot=slot, transport=transport, guard=guard, sleep=sleep,
+                           clock=clock, call_context=call_context or {})
     return route.generate(prompt, duration_s, aspect_ratio, Path(out_dir))
