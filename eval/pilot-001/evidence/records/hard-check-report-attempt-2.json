@@ -1,0 +1,94 @@
+{
+  "record": "PILOT-001-attempt-2-hard-check-report",
+  "candidate": "eval/pilot-001/evidence/artifacts/final-candidate-002.mp4",
+  "candidate_sha256": "a18bbdaeea6db8d14fcfe026ebc862227bffabbdafa1beaf89dd08d7ab2d66cf",
+  "generated_at_utc": "2026-08-28T08:25:54Z",
+  "checks": [
+    {
+      "check": 1,
+      "name": "final MP4 exists and hashes",
+      "pass": true,
+      "evidence": "1784012 bytes, sha256 a18bbdaeea6db8d14fcfe026ebc862227bffabbdafa1beaf89dd08d7ab2d66cf"
+    },
+    {
+      "check": 2,
+      "name": "container probe succeeds",
+      "pass": true,
+      "evidence": "format_name=mov,mp4,m4a,3gp,3g2,mj2; duration=12.000000"
+    },
+    {
+      "check": 3,
+      "name": "720x1280",
+      "pass": true,
+      "evidence": "720x1280"
+    },
+    {
+      "check": 4,
+      "name": "9:16 aspect",
+      "pass": true,
+      "evidence": "720:1280 = 9:16"
+    },
+    {
+      "check": 5,
+      "name": "duration ~12s (one-frame tolerance)",
+      "pass": true,
+      "evidence": "12.0s, 288 frames @ 24/1"
+    },
+    {
+      "check": 6,
+      "name": "claims render source contains exact 'Image ₹9'",
+      "pass": true,
+      "evidence": "verbatim in overlay-claims.html (reused Candidate 1 layer)"
+    },
+    {
+      "check": 7,
+      "name": "claims render source contains exact 'Video ₹99'",
+      "pass": true,
+      "evidence": "verbatim in overlay-claims.html"
+    },
+    {
+      "check": 8,
+      "name": "endcard source: Aight. / Outcome API / getaight.ai / both prices",
+      "pass": true,
+      "evidence": "official wordmark markup + all required strings (reused Candidate 1 layer)"
+    },
+    {
+      "check": 9,
+      "name": "final has no audio stream",
+      "pass": true,
+      "evidence": "0 audio streams"
+    },
+    {
+      "check": 10,
+      "name": "exactly two provider calls total; second is the one repair; no third",
+      "pass": true,
+      "evidence": "ledger: 2 reservations, 2 spends, 4 rows"
+    },
+    {
+      "check": 11,
+      "name": "spend = USD 1.60 committed / 0 pending, within 2.00 cap",
+      "pass": true,
+      "evidence": "committed 1.60, pending 0, ceiling 2.00"
+    },
+    {
+      "check": 12,
+      "name": "RES topology validator passes (superseding archive)",
+      "pass": true,
+      "evidence": "exit 0"
+    },
+    {
+      "check": 13,
+      "name": "Candidate 1 evidence bytes preserved unchanged",
+      "pass": true,
+      "evidence": "attempt-1 plate and candidate-1 hashes match the committed originals"
+    }
+  ],
+  "all_pass": true,
+  "plate_visual_inspection": {
+    "method": "6 frames at 0.5/2.0/3.5/5.0/6.5/7.8s + composited frames at 5.0/7.0s, human-agent inspected",
+    "unintended_text_or_logos": "none — no letters, numbers, signage, logos, icons, UI, people, faces or religious symbols in any sampled frame",
+    "content": "single continuous photoreal scene: green gift box with gold satin bow on ink-navy tabletop, marigolds/petals, warm bokeh; slow push-in easing to a hold, as prompted",
+    "observation_for_reviewer": "claims overlay mechanically shifted +400px into lower-frame negative space; both prices fully legible against navy/dark ground in sampled frames"
+  },
+  "cpao": "REFUSED — no accepted outcome (Candidate 1 rejected, Candidate 2 unreviewed); CpAO undefined; HED-1 not invented."
+}

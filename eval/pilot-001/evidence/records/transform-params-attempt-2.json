@@ -1,0 +1,17 @@
+{
+  "note": "Attempt 2 (final repair) local deterministic transforms. Reuses the EXACT Candidate 1 deterministic layer bytes: overlay-claims.png (sha256 fa61eec5bd98a3acac0e1deffdf83bcab43fb116572c27adbd9f8fd7a553803a) and endcard-4s.mp4 (sha256 8324503610692b8ff8b3929b088cff76f34aa794694242b1d635982f97232989). Typography untouched; the claims overlay is mechanically shifted +400 px down for legibility against the new plate (permitted placement adjustment, not a redesign).",
+  "claims_composite": {
+    "tool": "ffmpeg version 8.1.2",
+    "command": "ffmpeg -i provider-attempt-002.mp4 -i overlay-claims.png -filter_complex \"[0:v][1:v]overlay=0:400:enable='between(t,4,8)'[v]\" -map \"[v]\" -map 0:a -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -r 24 -c:a copy claims-composited-8s-002.mp4",
+    "placement_change": "overlay y-offset 0 -> 400 (mechanical legibility shift)",
+    "executed_at": "2026-08-28T08:24:37Z",
+    "output_sha256": "549cda1108405f2357d12403f073d807237011ca4f21f6be9acec30a9eab9281"
+  },
+  "assembly_audio_strip": {
+    "tool": "ffmpeg version 8.1.2",
+    "command": "ffmpeg -i claims-composited-8s-002.mp4 -i endcard-4s.mp4 -filter_complex \"[0:v][1:v]concat=n=2:v=1:a=0[v]\" -map \"[v]\" -an -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -r 24 final-candidate-002.mp4",
+    "audio_policy": "provider audio stripped deterministically (frozen recipe default)",
+    "executed_at": "2026-08-28T08:24:41Z",
+    "output_sha256": "a18bbdaeea6db8d14fcfe026ebc862227bffabbdafa1beaf89dd08d7ab2d66cf"
+  }
+}

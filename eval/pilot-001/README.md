@@ -1,12 +1,18 @@
-# PILOT-001 — Aight vertical-slice evidence (Attempt 1)
+# PILOT-001 — Aight vertical-slice evidence (Attempts 1–2)
 
 **Empirical PILOT-001 product-learning evidence. NOT Registry qualification evidence.**
 
-Status: **candidate 1 complete, awaiting the H1–H6 human gate.** No acceptance is recorded;
-the single authorised repair is unconsumed. Authority:
-`coordination/decisions/CONTROLLER-PILOT-001-SPEND-AUTHORISATION-2026-08-28.md` (USD 2.00 cap,
-0 retries) executed per
-`coordination/plans/2026-08-28-PILOT-001-KEY-BEARING-EXECUTION-RUNBOOK.md`.
+Status: **Candidate 1 human-REJECTED (H1/H4/H6 FAIL; text/brand layer PASS). Candidate 2 —
+built from the single authorised repair generation — awaits the final H1–H6 review.**
+No acceptance is recorded for Candidate 2. **No repair remains; a third provider call is
+forbidden.** Spend: USD 1.60 committed of the 2.00 cap, 0 retries. Authority:
+`coordination/decisions/CONTROLLER-PILOT-001-SPEND-AUTHORISATION-2026-08-28.md`,
+`…CANDIDATE-1-REJECTION-AND-REPAIR-2026-08-28.md`, and
+`…ATTEMPT-2-PROMPT-SUPERSESSION-2026-08-28.md`, executed per
+`coordination/plans/2026-08-28-PILOT-001-ATTEMPT-2-EXECUTION-ADDENDUM.md` over the base
+key-bearing runbook. Candidate 1 evidence is preserved byte-for-byte; the superseding
+RES-007 archive `evidence/res-007/pilot-001-journey-2-candidate-2-pre-review.yaml` records
+the rejection and the repair lineage (G1–G12 all PASS).
 
 - `evidence/artifacts/` — the real provider motion plate (class-C irreplaceable bytes), the
   hash-bound request config written before dispatch, both deterministic brand renders
