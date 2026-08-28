@@ -26,12 +26,17 @@ Four **zero-spend pre-pilot tasks are authorised in parallel**:
 
 Authority: `coordination/decisions/CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`.
 
-The next integration target remains **PILOT-001**: customer prompt → Normalized Request → Creative IR
-→ manually authored production recipe → real generation → explicit human inspection → bounded repair
-→ candidate accepted outcome. It is product-learning only — not Registry evidence, not Stage C.
-**PILOT-001 paid execution is NOT authorised yet.** It waits for Controller review of CANON-012,
-EVAL-035 and RES-007, a usable Aight asset package, execution-time route verification, and explicit
-user approval of a pilot spend cap.
+The next integration target is **PILOT-001**: customer prompt → Normalized Request → Creative IR
+→ frozen manual production recipe → real generation → deterministic brand/text composition →
+explicit human inspection → bounded repair → candidate accepted outcome. It is product-learning only
+— not Registry evidence, not Stage C.
+
+**PILOT-001 brief / brand source / production recipe / acceptance contract are now frozen** under
+`CONTROLLER-PILOT-001-AIGHT-FREEZE-2026-08-28.md`. The previous wordmark blocker is resolved by the
+official Aight website-source definition. **Paid execution is still NOT authorised.** The sole
+remaining pre-dispatch authority gate is explicit user approval of the recommended USD 2.00 cap /
+0 retries, followed by a separate machine-readable spend-authorisation decision and execution-time
+route/price verification.
 
 CANON-013 runs independently because its output gates the later architecture experiment, not the
 Aight pilot.
@@ -144,9 +149,13 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Freeze PILOT-001**: exact brief choices, usable official Aight asset refs, hybrid production recipe,
-   explicit human acceptance record/criteria, and explicit user-approved API-spend cap before any generation.
-2. **At execution time reverify** the direct Gemini model id, request contract and current price before opening paid authority.
+1. **Obtain explicit user approval for PILOT-001 spend:** recommended max consumed API spend
+   **USD 2.00**, retries **0**. Brief, official brand source, hybrid recipe and acceptance contract
+   are already frozen.
+2. **After approval, commit the machine-readable PILOT-001 spend authority**, materialise the matching
+   local runtime authorisation, then reverify the direct Gemini model id / request contract / price.
+3. **Execute PILOT-001 exactly once under the frozen bounded-repair policy** and record the real outcome
+   through merged RES-007.
 5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 6. **Registry text rows stay blocked**; admission semantics stay as they are.
