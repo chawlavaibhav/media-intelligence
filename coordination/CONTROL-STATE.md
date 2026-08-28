@@ -149,11 +149,11 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Execute PILOT-001 under the committed USD 2.00 / 0-retry authority.** Materialise the matching
-   local runtime authorisation, reverify the direct Gemini model id / request contract / price, and
-   confirm `GEMINI_API_KEY` before dispatch.
-2. **Run the frozen Aight vertical slice exactly as specified**, with at most one repair total, and
-   record the real outcome through merged RES-007.
+1. **PILOT-001 candidate 1 is generated and technically valid.** One real Veo 3.1 Fast call consumed
+   provisional USD 0.80, 0 retries; 12/12 hard checks and RES G1-G12 pass. The next gate is the actual
+   H1-H6 human review under `CONTROLLER-PILOT-001-CANDIDATE-1-TECHNICAL-REVIEW-2026-08-28.md`.
+2. **Do not consume the one authorised repair until the human disposition.** If all H1-H6 pass, record
+   acceptance; otherwise Controller chooses one deterministic or provider repair.
 5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 6. **Registry text rows stay blocked**; admission semantics stay as they are.
