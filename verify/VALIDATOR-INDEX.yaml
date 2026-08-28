@@ -35,7 +35,8 @@ sealed_emp001_evidence:
   validators:
     - python3 verify/verify_sealed_evidence.py
   establishes:
-    - sealed_hash_linkage           # 16/16 A-TEXT artifacts + all evidence files match recorded sha256/bytes
+    - sealed_hash_linkage           # 16/16 artifacts + evidence files match recorded sha256/bytes
+    - scoring_to_generation_linkage  # scoring rows are the exact sealed coordinates/hashes; generation fingerprint matches
     - route_exact_counts            # GPT Image 2 6/8, Ideogram v3 1/8 recomputed from row-level records
     - overall_exact_count           # 7/16
 
