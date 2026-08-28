@@ -21,7 +21,7 @@ Four **zero-spend pre-pilot tasks are authorised in parallel**:
 |---|---|---|
 | **CANON-012** | **Merged / closed.** Corrected Aight NR + Creative IR seed integrated; official Aight wordmark/master remains a PILOT-001 input gate | USD 0; 0 generations |
 | **CANON-013** | **Merged / closed.** Feasibility triage integrated; proposed 8/8 development/holdout split remains **unfrozen** | USD 0; 0 generations |
-| **EVAL-035** | **Controller-accepted; Level-1 Governor review pending.** Direct Gemini/Veo substrate now proves merged RES-007 writer/validator integration and persistent PILOT-001 spend/cost_ref continuity | USD 0; **no real provider call** |
+| **EVAL-035** | **Merged / closed.** Direct Gemini/Veo pilot substrate integrated; merged RES-007 writer/validator integration and persistent PILOT-001 spend/cost_ref continuity proven | USD 0; **no real provider call** |
 | **RES-007** | **Merged / closed.** Pilot outcome writer + final G12 enforcement integrated; Governor Level-1 PASS WITH NON-BLOCKING NOTES | USD 0; synthetic bytes only |
 
 Authority: `coordination/decisions/CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`.
@@ -144,10 +144,9 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Run bounded Level-1 Governor review on EVAL-035** under
-   `CONTROLLER-EVAL-035-FINAL-ACCEPTANCE-2026-08-28.md`; merge if coherent.
-2. **Then freeze PILOT-001**: exact brief choices, Aight asset refs, production recipe, explicit human
-   acceptance record and explicit user-approved API-spend cap before any generation.
+1. **Freeze PILOT-001**: exact brief choices, usable official Aight asset refs, hybrid production recipe,
+   explicit human acceptance record/criteria, and explicit user-approved API-spend cap before any generation.
+2. **At execution time reverify** the direct Gemini model id, request contract and current price before opening paid authority.
 5. **Before architecture-test media exists**, freeze the representative-deliverable policy,
    development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
 6. **Registry text rows stay blocked**; admission semantics stay as they are.
