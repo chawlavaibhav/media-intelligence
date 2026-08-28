@@ -1,0 +1,263 @@
+# ===========================================================================
+# CANON-013 — Proposed 8-development / 8-holdout split
+# ===========================================================================
+# STATUS: PROPOSED. NOT FROZEN. The Controller freezes the final split; this
+# file is a worker recommendation and creates no authorisation.
+#
+# ---------------------------------------------------------------------------
+# HOLDOUT DISCIPLINE — READ BEFORE READING FURTHER
+#
+# The eight cases under `holdout:` below are proposed to be RESERVED for the
+# final product test. Once the Controller freezes a split:
+#
+#   * later implementation/experiment workers should NOT read, analyse,
+#     optimise against, or generate media for holdout cases;
+#   * task Context Contracts for architecture-experiment work should point
+#     workers at the development list only;
+#   * nothing about the holdout selection used, or may later use, any
+#     model-quality information — selection here is based solely on
+#     pre-generation feasibility and representativeness, from committed
+#     repository evidence, with zero generations and zero spend.
+#
+# The holdout case DETAILS remain in the CANON-011 bank (which cannot be
+# changed); this file deliberately lists holdout cases by id and coarse shape
+# only, so a worker who needs the development set never needs to open the
+# holdout entries.
+# ---------------------------------------------------------------------------
+#
+# WHAT THE DEVELOPMENT SET WILL BE USED FOR (per the revised-programme
+# decision of 2026-08-28): choosing models/workflows, testing Creative IR,
+# testing Canon, testing Production Intelligence, and revising architecture
+# across arms A-F. The holdout set is reserved for the final product test.
+#
+# SPLIT PRINCIPLE ACTUALLY USED (stated so it can be audited):
+#   1. NOT easy-8 / hard-8 — each set carries the same burden mix
+#      (2-3 low, 3-4 medium, 2 high).
+#   2. Where two cases exercise the same mechanism, one goes to each set, so
+#      the final test generalises rather than repeats.
+#   3. Where a mechanism exists in only ONE case (a singleton), it goes to
+#      development if the architecture must be BUILT against it, and to
+#      holdout if it is primarily a generalisation test of machinery that has
+#      a development counterpart. Every singleton placement is listed under
+#      `unbalanceable_dimensions` with its consequence.
+
+meta:
+  task: CANON-013
+  date: '2026-08-28'
+  status: PROPOSED_NOT_FROZEN
+  selection_basis: pre-generation feasibility + representativeness only
+  model_quality_information_used: none_exists_and_none_used
+  triage_evidence: canon/experiments/architecture-outcome-v1/marketplace-feasibility-triage.yaml
+
+# ── DEVELOPMENT SET (8) ────────────────────────────────────────────────────
+
+development:
+  - case_id: MKT-001
+    shape: single 40s talking-head + product B-roll Meta ad
+    burden: medium
+    why_development: >
+      The canonical direct-response ad shape — person + product + speech in one
+      multi-shot deliverable. Production Intelligence has to learn shot
+      segmentation, speech routing and dual identity on exactly this shape;
+      it is the single best all-round driver of arms C-F.
+  - case_id: MKT-005
+    shape: single 35s app promo — UI fidelity + exact on-screen text + VO
+    burden: low
+    why_development: >
+      The only exact-text case among the 16, and text is the one leg where the
+      project holds a benchmark-qualified instrument. Development should
+      exercise the text pipeline where it can be partially machine-checked.
+      Singleton: placing it here leaves holdout with no exact-text case.
+  - case_id: MKT-006
+    shape: 10-video two-character comedy series, dual visual+vocal identity, supplied footage integrated
+    burden: high
+    why_development: >
+      The maximal stressor — series identity in two channels, dialogue,
+      live-footage integration, and the bank's only customer-stated rejection
+      criterion. This is the case most likely to force architecture revision,
+      which is what development is for. Its identity mechanics have a holdout
+      counterpart (the invent-then-hold persona case), so holdout still tests
+      cross-set identity.
+  - case_id: MKT-007
+    shape: 12-item scripted batch, 30-300s duration envelope, throughput as stated acceptance
+    burden: high
+    why_development: >
+      The duration-envelope straddler. Development needs to discover where the
+      production envelope actually sits (the 30s end works, the 300s end needs
+      planning) and to confront throughput economics. Long-form batch work has
+      a holdout counterpart (the 10x3min supplied-script batch), so holdout
+      keeps planner-stress coverage.
+  - case_id: MKT-009
+    shape: 5 short silent videos of one established character vs supplied reference (with decoys)
+    burden: low
+    why_development: >
+      The cleanest, cheapest read on reference-conditioned person identity —
+      nearly an atomic probe. Development gets the buildable identity
+      mechanism (match a supplied reference); holdout gets the harder
+      generalisation (hold an identity that has no reference).
+  - case_id: MKT-011
+    shape: variants — 3 products x TikTok-UGC + Amazon treatments, cross-variant product identity
+    burden: medium
+    why_development: >
+      The only real `variants` operation in the bank. One creative intent
+      fanning into placement-specific deliverables is core Creative IR
+      machinery — the representation has to be developed against a case that
+      actually has the structure. Singleton: holdout will contain no variants
+      case; its product-identity and register mechanics are covered in holdout
+      by the catalogue and UGC cases.
+  - case_id: MKT-013
+    shape: edit — replace 4 monitor screens in a supplied video, everything else preserved
+    burden: medium
+    why_development: >
+      The only `edit` operation. Edit-with-implicit-preservation is a
+      structurally different request the architecture must represent (mutation
+      intents, preservation semantics), and its deterministic preservation
+      check makes it the cheapest place to get trustworthy feedback while
+      developing. Singleton: holdout will contain no edit case. Its base-video
+      fixture is also the one flagged UNKNOWN — better discovered in
+      development than in the final test.
+  - case_id: MKT-017
+    shape: single 90s narrated explainer, non-commercial community objective
+    burden: medium
+    why_development: >
+      The only non-sale objective among the 16. If Creative IR cannot
+      represent an objective that is not a purchase, that must surface during
+      development, not at the final test. Singleton: holdout objectives are
+      all commercial; stated as an accepted imbalance.
+
+# ── HOLDOUT SET (8) — reserved; coarse shape only ─────────────────────────
+
+holdout:
+  - case_id: MKT-002
+    coarse_shape: silent e-commerce product-video batch with real per-unit pricing
+    burden: medium
+  - case_id: MKT-003
+    coarse_shape: supplied-script long-form narrated batch (planner-stressing)
+    burden: high
+  - case_id: MKT-004
+    coarse_shape: document-sourced instructional video set (planner-stressing)
+    burden: high
+  - case_id: MKT-008
+    coarse_shape: persona established without a reference, then held across a set (look + voice)
+    burden: medium
+  - case_id: MKT-010
+    coarse_shape: short vertical presenter-holds-product social ads, unpolished register
+    burden: low
+  - case_id: MKT-012
+    coarse_shape: single short silent product piece, stated aesthetic register
+    burden: low
+  - case_id: MKT-014
+    coarse_shape: still-to-motion product piece (animate)
+    burden: low
+  - case_id: MKT-018
+    coarse_shape: execution of a customer-supplied creative concept as a single ad
+    burden: medium
+
+holdout_rationale: >
+  Why these eight as the final product test, in one paragraph each dimension:
+  they include the bank's single best real-economics case (a per-approved-unit
+  price against which CpAO is computable), both planner-stressing long-form
+  batch shapes, the hardest identity generalisation (no reference), the
+  inverted-register social ad, the two most attemptable silent product shapes
+  (so the final test also measures the easy floor, not only the ceiling), the
+  only animate operation, and the sharpest test of creative-intent fidelity
+  (concept realised vs parts present). A product that passes this set has
+  generalised across economics, length, identity, register, operation type
+  and creative fidelity — without any of these cases having tuned it.
+
+# ── Balance audit ──────────────────────────────────────────────────────────
+
+balance:
+  burden_mix:
+    development: {low: 2, medium: 4, high: 2}   # 005,009 / 001,011,013,017 / 006,007
+    holdout: {low: 3, medium: 3, high: 2}        # 010,012,014 / 002,008,018 / 003,004
+    verdict: comparable — explicitly not easy-8/hard-8
+  short_vs_longer:
+    development: short 001(40s), 005(35s), 009, 011, 013; longer 006(series), 007(to 300s), 017(90s)
+    holdout: short 008, 010(20s), 012(10-20s), 014(8s), 018(30s); longer 002(batch of 8), 003(3min each), 004(multi-min)
+    verdict: both sets span single-short to planner-stressing
+  product_vs_person_focus:
+    development: product 005, 011, 013(object), 001(both); person/character 001, 006, 009
+    holdout: product 002, 010(both), 012, 014, 018; person 008, 010
+    verdict: >
+      both sets contain both; development leans slightly person/character,
+      holdout leans slightly product. Development's only person-free silent
+      product work arrives via MKT-011's Amazon variant; the pure
+      silent-product singles (012, 014) both sit in holdout so the final test
+      keeps an untouched easy floor.
+  speech_vs_no_speech:
+    development: speech 001, 005, 006, 007, 017 (+ 011 half); silent 009, 013
+    holdout: speech 003, 004, 008, 010, 018; silent 002, 012, 014
+    verdict: ~5/3 each — comparable
+  identity_and_reference:
+    development: supplied-person-reference (009), dual-character series (006), product/UI reference (001, 005, 011 cross-variant), edit preservation (013)
+    holdout: identity-without-reference (008), product reference (002 batch, 010, 012), source-frame-as-reference (014), concept-as-reference (018)
+    verdict: both sets carry within-clip AND cross-set identity demands
+  commercial_objectives:
+    development: [direct-response ad, B2B brand series, scale/ops contract, social character content, marketplace catalogue variants, edit service, non-commercial community]
+    holdout: [e-commerce catalogue economics, content batch production, education/instruction, influencer brand persona, social UGC ads, premium product ad, still-activation ad, agency concept execution]
+    verdict: comparable breadth; education only in holdout, non-commercial only in development
+  production_complexity:
+    development: planner-required 007 (top of range), 006 (partially); rest attemptable
+    holdout: planner-required 003, 004; rest attemptable
+    verdict: two planner-stressing cases each
+
+unbalanceable_dimensions:
+  statement: >
+    Perfect balance is impossible because ten mechanisms exist in exactly ONE
+    case each among the 16. Wherever such a singleton is placed, the other set
+    lacks that mechanism entirely. The placements and their consequences:
+  singletons:
+    - {mechanism: edit operation, case: MKT-013, placed: development,
+       consequence: the final product test contains no edit case}
+    - {mechanism: variants operation, case: MKT-011, placed: development,
+       consequence: the final product test contains no variants case}
+    - {mechanism: animate operation, case: MKT-014, placed: holdout,
+       consequence: development never runs a pure animate case (though
+         still-to-motion is embedded inside most generate workflows)}
+    - {mechanism: exact on-screen text, case: MKT-005, placed: development,
+       consequence: the final test has no exact-text case}
+    - {mechanism: non-commercial objective, case: MKT-017, placed: development,
+       consequence: every holdout objective is commercial}
+    - {mechanism: two-speaker dialogue + supplied-footage integration, case: MKT-006,
+       placed: development, consequence: holdout has no dialogue case}
+    - {mechanism: throughput-as-acceptance, case: MKT-007, placed: development,
+       consequence: holdout has no throughput case}
+    - {mechanism: identity established without any reference, case: MKT-008,
+       placed: holdout, consequence: development identity work is always
+         reference-conditioned}
+    - {mechanism: content fidelity to a supplied document (CO-01 hole), case: MKT-004,
+       placed: holdout, consequence: development never confronts
+         document-to-media fidelity}
+    - {mechanism: real customer unit price for CpAO, case: MKT-002, placed: holdout,
+       consequence: development CpAO uses fixture prices only; the one real
+         price is preserved untouched for the final test}
+  placement_rule_applied: >
+    Operations and representations the architecture must be BUILT against
+    (edit, variants, exact text, non-commercial objective, dialogue,
+    throughput) went to development. Generalisation tests of machinery that
+    has a development counterpart (no-reference identity vs 009's
+    reference identity; document fidelity and long-form batch vs 007's
+    scripted batch; animate vs 012/014-adjacent product motion; real price
+    vs fixture prices) went to holdout.
+
+cases_recommended_for_exclusion: []
+exclusion_note: >
+  No case among the 16 is recommended for outright exclusion — an 8/8 split
+  consumes all 16, so any exclusion is also a decision to shrink a set. Two
+  flags for the Controller short of exclusion: (1) MKT-004's central
+  acceptance (does the lecture teach the supplied PDF) has no capability and
+  no evaluator family — in holdout it will require subject-matter human
+  review under frozen criteria, or the Controller may swap it with a
+  development case if that is unacceptable for the final test; (2) MKT-003
+  and MKT-004 are both unattemptable end-to-end until a segmentation/assembly
+  planning object exists — holding them out is coherent (the final product
+  should be tested on them) but the final test date inherits that dependency.
+
+controller_freeze_checklist:
+  - approve or amend the 8/8 assignment above;
+  - decide the two MKT-004 / MKT-003 flags;
+  - once frozen, add a context rule so architecture-experiment task Context
+    Contracts reference the development list only and name the holdout ids as
+    do-not-read;
+  - record the freeze as a durable decision under coordination/decisions/.

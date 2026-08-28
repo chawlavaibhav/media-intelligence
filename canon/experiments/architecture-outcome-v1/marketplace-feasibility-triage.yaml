@@ -1,0 +1,649 @@
+# ===========================================================================
+# CANON-013 — Marketplace architecture-experiment feasibility triage
+# ===========================================================================
+# STATUS: PROPOSED WORKER OUTPUT. NOT FROZEN. NOT A CONTROLLER DECISION.
+#
+# WHAT THIS IS. A pre-generation feasibility triage of the 16 cases marked
+# `runnable_now: true` in the CANON-011 marketplace brief bank. "Runnable"
+# means only that the missing inputs can be supplied without contacting the
+# buyer. This file records, per case, what running it in the later
+# architecture outcome experiment would actually take: how much media, which
+# hard capabilities are entangled, what fixtures must exist first, and how
+# heavy the experimental burden is.
+#
+# WHAT THIS IS NOT.
+#   * Not a change to the marketplace bank. Every buyer fact below is drawn
+#     from marketplace-brief-bank-v1.yaml and no buyer requirement is
+#     weakened, deleted or reinterpreted here.
+#   * Not a model or route selection. Route/slot vocabulary from the frozen
+#     scientific roster (VID-01..05, IMG, AUD, composite speech routes) is
+#     used only to NAME production dependencies, never to claim any model
+#     can meet them. No model capability is inferred anywhere in this file.
+#   * Not an authorisation. The Controller freezes the split; this file and
+#     proposed-brief-split.yaml only propose.
+#
+# EVIDENCE BASIS. canon/research/marketplace-demand-v1/derived/
+# marketplace-brief-bank-v1.yaml at main 2995b44 (unchanged since the task's
+# base SHA 719c90f); CANON-011 integration decision; the revised-programme
+# decision of 2026-08-28 (arms A-F, media is the object judged).
+#
+# BURDEN VOCABULARY (defined once, applied uniformly):
+#   low    — small deliverable count, short runtime, light fixture kit, few
+#            entangled hard capabilities; attemptable as short multi-shot
+#            work without a planning object.
+#   medium — either several deliverables / a heavier fixture kit, or several
+#            hard capabilities entangled in one deliverable (speech + identity
+#            + text and similar), while still attemptable without a Planner.
+#   high   — requires long-form segmentation/assembly planning the project
+#            has no object for (Production IR does not exist), or its central
+#            acceptance condition has no measurement path at all.
+#
+# FIXTURE STATUS VOCABULARY:
+#   exists        — the asset is already committed in the repository.
+#   constructible — can be authored/assembled later without the buyer; the
+#                   bank already labels it a fixture. NOTE: constructing
+#                   fixtures is explicitly out of scope for CANON-013 itself.
+#   unknown       — constructible in principle but the construction method is
+#                   unresolved enough that it may become a real blocker.
+# ===========================================================================
+
+meta:
+  task: CANON-013
+  date: '2026-08-28'
+  status: PROPOSED_WORKER_OUTPUT_NOT_FROZEN
+  bank: canon/research/marketplace-demand-v1/derived/marketplace-brief-bank-v1.yaml
+  bank_verified_at_main: '2995b44'
+  runnable_cases_triaged: 16
+  runnable_count_verified_mechanically: true
+  excluded_by_bank_itself:
+    - {case: MKT-015, reason: 'runnable_now: false — no verified Hindi/Urdu speech material; 15-20 min duration needs a Controller scope decision'}
+    - {case: MKT-016, reason: 'runnable_now: false — source too thin; completing it would mean inventing the request'}
+  generations: 0
+  spend_usd: 0
+
+# A global fact that applies to every case and is therefore stated once:
+# ZERO evaluator instruments are qualified project-wide (one text evaluator is
+# benchmark-qualified only, and only for OCR-grade checking, not exactness
+# certification). Every "acceptance requirement" below therefore describes
+# what would need to be judged — by human review under frozen criteria in the
+# pilot-style posture the Controller has approved — not what can be scored
+# automatically today. This is not repeated per case.
+
+cases:
+
+  - case_id: MKT-001
+    one_line: single 40s Meta ad — talking-head avatar + AI product B-roll (dog supplement)
+    deliverable_count: 1
+    duration_scale: 40 s stated; longer than a single generation from most
+      current routes, so implies multi-shot assembly (the bank says attemptable
+      as a sequence of short pieces without a planning object)
+    modality: video
+    speech_required: yes — one visible presenter, verbatim fixture script, lip-sync
+    visible_people_required: yes (presenter is customer-stated)
+    identity_matters: yes — product must match reference stills (fixture) and
+      presenter must stay one person across the clip
+    fixtures_required:
+      - {id: FX-001-product, what: supplement pack reference stills, status: constructible}
+      - {id: FX-001-avatar, what: presenter identity reference, status: constructible}
+      - {id: FX-001-script, what: 40s English script, status: constructible}
+      - {id: FX-001-format, what: aspect ratio + brand kit, status: constructible}
+    representative_deliverable_ok: already a single deliverable — yes trivially
+    production_dependencies:
+      - multi-shot assembly to reach 40 s
+      - a speech route (native audio-video, or silent video + TTS + lip-sync —
+        the roster's two named speech topologies)
+      - reference-conditioned product identity (the VID-03 question)
+      - person consistency across shot changes (the VID-02 question)
+    acceptance_requirements_main:
+      - 40 s runtime; one visible speaking presenter; product matches reference;
+        presenter does not drift; spoken words verbatim; fixture aspect ratio
+    experimental_confounds:
+      - the posting body was not captured, so a large share of the case is
+        fixture; results partly measure the benchmark's fixture choices
+      - whether avatar + B-roll reads as one piece of film is a pure human judgement
+    burden: medium
+    burden_reason: one deliverable, but it entangles speech, person identity and
+      product identity inside a 40 s multi-shot assembly, with a four-part
+      fixture kit — everything is buildable, nothing about it is small.
+
+  - case_id: MKT-002
+    one_line: furniture catalogue — 8 x 15-30s silent product videos, 1080x1080 master + 2 exports, per-approved-video price
+    deliverable_count: 8 (batch size is a declared fixture; buyer said "a
+      substantial portion of our catalog"; acceptance per approved video is
+      genuinely customer-stated)
+    duration_scale: 15-30 s each; each within a plausible single-generation
+      envelope; the batch is a repeat loop, not a plan
+    modality: video (silent — no speech, no on-screen text required)
+    speech_required: no
+    visible_people_required: no
+    identity_matters: yes — each video's furniture item must match its own
+      reference photography and not morph mid-clip; the set must not drift
+      apart stylistically (set-level economics)
+    fixtures_required:
+      - {id: FX-002-catalogue, what: 8 distinct fictional furniture items with
+          multi-angle catalogue photography each, status: constructible,
+          note: the heaviest pure-asset fixture among the low/medium cases —
+            8 items x multiple angles of benchmark-owned renders or licensed
+            photography}
+      - {id: FX-002-batchsize, what: batch fixed at 8, status: constructible}
+    representative_deliverable_ok: partially — one catalogue video preserves the
+      per-video job and the customer-stated per-deliverable acceptance; it loses
+      the batch dimension the buyer's economics are actually about
+    production_dependencies:
+      - image-reference-conditioned product video (VID-03 question)
+      - deterministic local format transforms (1:1 master to 9:16 / 16:9 —
+        allowed without a provider call under the accepted evidence contract)
+    acceptance_requirements_main:
+      - duration band 15-30 s; master 1080x1080; two exports on request; no
+        watermark anywhere; the product is the referenced item, not a similar
+        one; per-video acceptance
+    experimental_confounds:
+      - the only case with a real customer unit price ($30-45 per approved
+        video) and revision allowance — CpAO can be computed against a real
+        price instead of an invented one, which makes it uniquely valuable and
+        uniquely hard to substitute
+    burden: medium
+    burden_reason: each unit is easy, but there are eight of them and the
+      fixture pack (8 products x multiple angles) is real work; measurement of
+      "video 8 still looks like video 1" is a set-level judgement.
+
+  - case_id: MKT-003
+    one_line: 10 x ~3-minute narrated videos from supplied scripts, $150 for the set
+    deliverable_count: 10
+    duration_scale: ~180 s each, ~30 minutes of finished video total — far
+      beyond any single-generation envelope; the bank itself says this needs a
+      segmentation-and-assembly plan, i.e. Production IR, which does not exist
+    modality: video with off-screen narration
+    speech_required: yes — verbatim supplied scripts, one consistent voice
+      across all ten
+    visible_people_required: no (unseen narrator is a fixture)
+    identity_matters: voice identity across the set only; no product or person
+    fixtures_required:
+      - {id: FX-003-scripts, what: ten ~3-minute English scripts, status: constructible}
+      - {id: FX-003-visualdirection, what: visual treatment + delivery format, status: constructible}
+    representative_deliverable_ok: partially — one 3-minute video preserves the
+      core supplied-script job (acceptance basis per-deliverable is
+      system-derived, not stated), but even ONE deliverable still needs the
+      assembly plan; the reduction removes volume, not the structural problem
+    production_dependencies:
+      - long-form segmentation/assembly planning (does not exist — the case's
+        documented value is exposing exactly this)
+      - a speech route; audio-video sync held across 3 continuous minutes
+    acceptance_requirements_main:
+      - ten deliverables; ~3 minutes each; verbatim scripts; one narration
+        voice across the set; sync over the full runtime
+    experimental_confounds:
+      - the speech evaluator family carries a hard blocker (the project holds
+        no audio material); long-form watchability has no instrument
+    burden: high
+    burden_reason: thirty minutes of finished video whose structure must be
+      planned by an object the project has not built; the cheapest-looking
+      case in the bank ($150) is structurally the least attemptable.
+
+  - case_id: MKT-004
+    one_line: 48 lecture videos from a supplied course PDF, narration + assessment, $20/video
+    deliverable_count: 48 stated; a runnable-slice subset size is a declared
+      fixture (FX-004-scope)
+    duration_scale: per-lecture duration entirely unstated — certainly
+      multi-minute; same planner problem as MKT-003
+    modality: video with narration
+    speech_required: yes — but exactness is APPROXIMATE by design (teach the
+      document, not read it aloud)
+    visible_people_required: no
+    identity_matters: voice identity across the set only
+    fixtures_required:
+      - {id: FX-004-pdf, what: benchmark-authored course PDF + factual key, status: constructible}
+      - {id: FX-004-scope, what: fixed per-lecture duration + subset size, status: constructible}
+    representative_deliverable_ok: yes — one lecture built from one section of
+      the fixture PDF preserves the core job (convey supplied document content
+      as a narrated lecture); the bank itself provides the scoping fixture
+    production_dependencies:
+      - long-form planning (as MKT-003)
+      - document-to-media content pipeline; a speech route
+    acceptance_requirements_main:
+      - narration present, intelligible, one voice across the set, sync — and
+        the buyer's REAL acceptance test - the lecture teaches what the PDF
+        contains - which no capability in Capability Contract v2 measures
+        (recorded coverage hole CO-01)
+    experimental_confounds:
+      - central acceptance is unmeasurable by any contract instrument AND has
+        no evaluator family; only subject-matter human review can judge it
+      - unstated duration means the benchmark chooses the size of the job
+    burden: high
+    burden_reason: unbounded per-item duration, 48 stated deliverables, planner
+      required, and the one requirement the buyer would actually accept or
+      reject on sits in a documented measurement hole.
+
+  - case_id: MKT-005
+    one_line: single 35s mobile-app promo — UI fidelity + exact app name on screen + verbatim VO
+    deliverable_count: 1
+    duration_scale: 35 s; short multi-shot; attemptable without a planner
+    modality: video with off-screen VO and on-screen text
+    speech_required: yes (verbatim fixture script)
+    visible_people_required: no
+    identity_matters: yes — the app interface must match supplied screens
+      (product identity) and the app NAME must render correctly (exact Latin
+      text), the only exact-text case among the 16
+    fixtures_required:
+      - {id: FX-005-app, what: fictional app - name, icon, palette, UI screens, status: constructible}
+      - {id: FX-005-script, what: 35s English script, status: constructible}
+    representative_deliverable_ok: already single — yes trivially
+    production_dependencies:
+      - interface-fidelity conditioning; exact text surviving motion; a speech
+        route; short multi-shot assembly
+    acceptance_requirements_main:
+      - 35 s; UI matches supplied screens; app name spelled correctly wherever
+        it appears; verbatim script; interface elements stable between shots
+    experimental_confounds:
+      - exact-text checking is the one leg where the project holds a
+        benchmark-qualified instrument (Cloud Vision OCR, bounded error) — but
+        benchmark-grade only, never an exactness certification
+      - the posting's real script/instructions were not captured
+    burden: low
+    burden_reason: one short, fully specified deliverable with a small fixture
+      kit; several capabilities are entangled but each is short-form, and its
+      exact-text leg is the single place the project already has a working
+      (benchmark-grade) instrument.
+
+  - case_id: MKT-006
+    one_line: Thomas & Anna — 10-video B2B SaaS comedy series; dual visual+vocal identity across the series; supplied dashboard footage must appear
+    deliverable_count: 10 (customer-stated), with a customer-stated set-level
+      identity invariant on top of per-video acceptance (grammar gap GG-03)
+    duration_scale: per-video duration entirely unstated; individual short
+      scenes attemptable, the series is the hard part
+    modality: video with two-speaker dialogue
+    speech_required: yes — two visible speakers, turn boundaries, per-character
+      voice consistency across the whole series
+    visible_people_required: yes — two recurring characters
+    identity_matters: maximal — two characters consistent in look AND voice
+      across ten deliverables, plus supplied dashboard footage that must appear
+      as-is (GG-01 role gap), plus the bank's only customer-stated REJECTION
+      criterion (no static AI-avatar look)
+    fixtures_required:
+      - {id: FX-006-characters, what: 2 identity sheets + fixed voice sample each, status: constructible}
+      - {id: FX-006-dashboard, what: fictional SaaS dashboard screen recordings, status: constructible}
+      - {id: FX-006-scripts, what: 10 two-hander comedy scripts with turn marks, status: constructible}
+      - {id: FX-006-duration, what: fixed per-video duration, status: constructible}
+    representative_deliverable_ok: no — cross-series identity IS the core
+      request; one deliverable cannot exhibit it. The honest minimum is a
+      2-3 video sub-series, which preserves the invariant while shrinking cost.
+    production_dependencies:
+      - generated character performance composited with supplied live footage
+        (no clean route slot exists for this shape)
+      - cross-deliverable identity (VID-02/VID-03 questions) in BOTH channels
+      - two-speaker turn assignment and lip-sync; voice consistency across a set
+    acceptance_requirements_main:
+      - both characters same person in look and voice in every deliverable;
+        dashboard footage present, not recreated; right lips move on the right
+        line; the explicitly rejected static-avatar look avoided
+    experimental_confounds:
+      - the 'subtle comedy' register has no ground truth; almost every hard
+        requirement lands on an unqualified evaluator family; the character
+        identities are benchmark fixtures, so the case tests persistence
+        against OUR reference, not the buyer's unstated taste
+    burden: high
+    burden_reason: the most entangled case in the bank — dual-channel identity
+      across a series, dialogue, live-footage integration and an aesthetic
+      prohibition, on a four-family fixture kit; also the most
+      information-rich case for what flips AI-video work from routine to hard.
+
+  - case_id: MKT-007
+    one_line: scale contract — 12-item slice of a stated 75-100 scripts/week, durations 30-300s, throughput itself is an acceptance condition
+    deliverable_count: 12 (declared fixture slice standing in for the stated
+      weekly volume, which is preserved separately in the bank)
+    duration_scale: 30-300 s per item — a ten-to-one envelope; the 30 s end is
+      attemptable, the 300 s end needs the planner that does not exist
+    modality: video with narration
+    speech_required: yes (verbatim supplied scripts)
+    visible_people_required: no
+    identity_matters: no entity identity; adherence to per-item supplied visual
+      guidance (reference conditioning)
+    fixtures_required:
+      - {id: FX-007-scripts, what: 12 scripts + visual guidance spread across
+          the 30-300s range, status: constructible}
+      - {id: FX-007-slice, what: slice size 12, status: constructible}
+    representative_deliverable_ok: partially — one script→video item preserves
+      the per-item contract but deletes the customer-STATED success criterion,
+      sustained throughput, which is the case's distinctive content
+    production_dependencies:
+      - batch production loop; long-form planning for the top of the range
+      - guidance-adherence conditioning; a speech route
+    acceptance_requirements_main:
+      - verbatim scripts; visual guidance followed; durations in range;
+        quality holds at item 12 as at item 1; throughput sustained
+    experimental_confounds:
+      - throughput-as-acceptance has NO capability in the contract (recorded
+        hole CO-02); "mixed styles" is stated but contentless
+    burden: high
+    burden_reason: twelve deliverables spanning up to five minutes each; the
+      distinctive requirement (sustained throughput without decay) is exactly
+      the thing the current measurement system cannot express.
+
+  - case_id: MKT-008
+    one_line: AI influencer persona — identity invented by the first output, then held across 4 short videos, look AND voice
+    deliverable_count: 4 (fixture — smallest set where persistence is
+      observable more than once)
+    duration_scale: unstated; short pieces assumed; attemptable
+    modality: video
+    speech_required: yes — persona speaks (verbatim fixture scripts), lip-sync,
+      voice consistent across the set
+    visible_people_required: yes — the persona
+    identity_matters: yes, and uniquely — NO reference exists; identity must be
+      established by the first accepted output and then held (the inverse of
+      every other identity case)
+    fixtures_required:
+      - {id: FX-008-persona, what: persona spec + the rule for judging "same
+          person" from output one, status: constructible, note: the fixture IS
+          the measurement protocol — it materially shapes what the case measures}
+      - {id: FX-008-scripts, what: 4 short scripts, status: constructible}
+    representative_deliverable_ok: no — persistence needs at least two
+      deliverables; 4 is already close to minimal
+    production_dependencies:
+      - identity hold WITHOUT reference conditioning (harder variant of the
+        VID-03 question); lip-sync; voice consistency across a set
+    acceptance_requirements_main:
+      - same figure in all four; same voice; no within-clip drift; verbatim
+        scripts; reads as a real person ("ultra-realistic" is a soft
+        preference with no threshold — not a gate)
+    experimental_confounds:
+      - what counts as "the same person" is itself a benchmark decision;
+        realism has no instrument; person-reference-with-decoys material the
+        visual family needs does not exist
+    burden: medium
+    burden_reason: four short pieces and a light fixture kit, but the central
+      mechanism (invent-then-hold identity in two channels) is unproven and
+      its pass/fail protocol is a fixture the benchmark itself must define.
+
+  - case_id: MKT-009
+    one_line: established female character maintained across 5 short silent social videos, reference supplied
+    deliverable_count: 5 (fixture; buyer said "all output")
+    duration_scale: unstated; short; attemptable
+    modality: video, silent (no speech is read in — a recurring social
+      character can be silent)
+    speech_required: no
+    visible_people_required: yes — the character
+    identity_matters: yes — match a SUPPLIED reference across the set, with
+      same-category decoy characters in the fixture so a permissive judge can
+      be caught
+    fixtures_required:
+      - {id: FX-009-character, what: character reference set + decoy characters, status: constructible}
+      - {id: FX-009-scenarios, what: 5 scenario briefs, status: constructible}
+    representative_deliverable_ok: no — the set-level invariant is the request;
+      minimum two deliverables
+    production_dependencies:
+      - reference-conditioned person identity in video (the VID-03 question,
+        nearly isolated)
+    acceptance_requirements_main:
+      - character matches her reference in every deliverable; no within-clip
+        drift; never replaced by a look-alike
+    experimental_confounds:
+      - deliberately narrow — the bank calls it the nearest thing to an atomic
+        probe; low breadth means low Stage-C richness but very clean reads
+    burden: low
+    burden_reason: five short silent clips dominated by a single capability;
+      the cheapest person-identity case in the bank.
+
+  - case_id: MKT-010
+    one_line: AI UGC ads for Meta — 2 x 20s vertical presenter-holds-product pieces, deliberately unpolished register
+    deliverable_count: 2 (customer-stated weekly minimum; ongoing rate recorded
+      as GG-04)
+    duration_scale: 20 s each (fixture); attemptable
+    modality: video with one visible speaker
+    speech_required: yes (verbatim fixture script)
+    visible_people_required: yes — UGC presenter holding the product
+    identity_matters: yes — product matches reference stills; presenter stable
+      within each clip; hands must interact plausibly with the object
+    fixtures_required:
+      - {id: FX-010-product, what: fictional consumer product + stills, status: constructible}
+      - {id: FX-010-presenter, what: presenter identity reference, status: constructible}
+      - {id: FX-010-format, what: 20s, vertical, handheld register, status: constructible}
+    representative_deliverable_ok: yes — one of the two videos preserves the
+      core job completely
+    production_dependencies:
+      - human-object contact (a genuinely hard capability); lip-sync; short
+        vertical generation
+    acceptance_requirements_main:
+      - vertical Meta format; product matches reference; plausible hands;
+        presenter stable; reads as user content, NOT as a polished commercial
+        (the quality direction is inverted, which is rare and informative)
+    experimental_confounds:
+      - most of the case's specificity is fixture; "reads as UGC" is a
+        perceptual judgement with no instrument
+    burden: low
+    burden_reason: two 20-second clips with a small fixture kit; hands-on-
+      product is the only heavyweight capability inside it.
+
+  - case_id: MKT-011
+    one_line: variants — 3 products x 2 placements (TikTok UGC + Amazon listing), same product recognisable across both treatments
+    deliverable_count: 6 (3 products x 2 placements; sizes are fixture, the
+      placement split is customer-stated — the bank's only real variants case)
+    duration_scale: unstated; short each; attemptable
+    modality: video; speech in the UGC variant only
+    speech_required: partially — UGC variant yes, Amazon variant no
+    visible_people_required: partially — presenter in the UGC variant only
+    identity_matters: yes — product matches its reference in every deliverable
+      AND is the same object across its two differently-treated variants
+      (cross-variant identity, which per-deliverable acceptance cannot see)
+    fixtures_required:
+      - {id: FX-011-products, what: 3 fictional sports products + stills,
+          status: constructible, note: invented brands only — licensed marks
+          must not be reproduced, which the real buyer's job would require and
+          this case legally cannot test}
+      - {id: FX-011-variants, what: spec of how TikTok and Amazon treatments differ, status: constructible}
+      - {id: FX-011-presenter, what: presenter reference for UGC variant, status: constructible}
+    representative_deliverable_ok: partially — one product x both placements
+      (a pair) preserves the variants core; a single deliverable does not
+    production_dependencies:
+      - one identity through two register treatments; human-object contact in
+        the UGC half; two delivery formats
+    acceptance_requirements_main:
+      - each product in both variants; reference match everywhere; same object
+        across variants; registers actually read as TikTok-native vs
+        catalogue; vertical vs square formats
+    experimental_confounds:
+      - what distinguishes the two treatments is entirely benchmark fixture;
+        cross-variant identity has no instrument
+    burden: medium
+    burden_reason: six short pieces, moderate fixture kit; the load-bearing
+      check (same product through two treatments) is a set-level judgement.
+
+  - case_id: MKT-012
+    one_line: single 10-20s cinematic product ad — silent, one product, one fixture
+    deliverable_count: 1
+    duration_scale: 10-20 s band; the single most attemptable case in the bank
+    modality: video, silent (no speech, no text, no people)
+    speech_required: no
+    visible_people_required: no
+    identity_matters: yes — product matches reference stills, no mid-clip
+      morphing, materials behave physically
+    fixtures_required:
+      - {id: FX-012-product, what: one fictional product + stills + defined finish, status: constructible}
+    representative_deliverable_ok: already single — yes trivially
+    production_dependencies:
+      - one short generation (possibly single-shot); product fidelity under
+        motion; material/lighting physics
+    acceptance_requirements_main:
+      - 10-20 s; reference match; stability; physical material behaviour;
+        "cinematic" is a register, not a gate
+    experimental_confounds:
+      - the 'cinematic' register is unmeasurable; the product is entirely the benchmark's
+        choice, so it tests product identity in general, not any category
+    burden: low
+    burden_reason: one deliverable, one fixture, no speech, no people — the
+      cheapest complete commercial outcome available.
+
+  - case_id: MKT-013
+    one_line: the only edit case — replace 4 monitor screens inside a supplied promo video, everything else byte-preserved
+    deliverable_count: 1
+    duration_scale: short (the base video is benchmark-authored, so its length
+      is a benchmark choice)
+    modality: video EDIT (unique among the 16 — R01 = edit, customer-stated)
+    speech_required: no
+    visible_people_required: no requirement (whatever the base video contains
+      is inherited, not requested)
+    identity_matters: yes, but inverted — screen count/position/geometry must
+      survive; every unnamed region must be UNCHANGED against a held original,
+      which makes the preservation half deterministic to judge
+    fixtures_required:
+      - {id: FX-013-basevideo, what: benchmark-authored promo video containing
+          exactly 4 visible monitor screens, with source frames retained,
+          status: unknown, note: 'the highest-uncertainty fixture among the 16
+            — authoring a VIDEO fixture is unlike authoring stills or scripts;
+            whether it is assembled from held rights-cleared material,
+            rendered synthetically, or would itself need a generation call is
+            unresolved, and the last option would carry a spend/authorisation
+            question. None of the RES-005 temporal base clips is recorded as
+            containing four monitor screens.'}
+      - {id: FX-013-screencontent, what: replacement content for the 4 screens, status: constructible}
+    representative_deliverable_ok: already single — yes trivially
+    production_dependencies:
+      - an edit-capable route (the VID-04 roster question - can existing
+        footage be edited rather than regenerated - exists precisely because
+        this is the least-proven part of the tool ecosystem)
+    acceptance_requirements_main:
+      - exactly 4 screens after the edit; all show replacement content; every
+        unnamed region unchanged (deterministic vs held original); geometry
+        preserved; no flicker between frames
+    experimental_confounds:
+      - the research classified this posting NOT pipeline-addressable; the
+        bank retained it with the disagreement recorded — results feed that
+        open question
+      - cheapest measurement in the bank (deterministic preservation) but the
+        least mature route family
+    burden: medium
+    burden_reason: judging it is the cheapest in the bank, but the base-video
+      fixture has an unresolved construction method and edit routes are the
+      least-established production path — heavy in a different dimension than
+      every other case.
+
+  - case_id: MKT-014
+    one_line: animate — one supplied product still becomes one ~8s ad; the source frame IS the identity spec
+    deliverable_count: 1
+    duration_scale: 8 s (fixture); the most attemptable shape in the bank
+    modality: video (operation = animate, unique among the 16)
+    speech_required: no
+    visible_people_required: no
+    identity_matters: yes — everything visible in the source frame must survive
+      the motion unchanged in form and colour
+    fixtures_required:
+      - {id: FX-014-sourceimage, what: one product still at full resolution, status: constructible}
+      - {id: FX-014-motionspec, what: what moves - subject vs camera, status: constructible}
+      - {id: FX-014-format, what: duration + aspect ratio, status: constructible}
+    representative_deliverable_ok: already single — yes trivially
+    production_dependencies:
+      - a still-to-motion route (the buyer even named one in the title; that
+        phrase stays source metadata per the frozen discipline)
+      - subject motion vs camera motion distinguishable in the result
+    acceptance_requirements_main:
+      - source content recognisably preserved in motion; no deformation or
+        drift; the specified motion (and only it) occurs
+    experimental_confounds:
+      - the motion spec — the substance of the request — is entirely a fixture;
+        the buyer asked for motion and specified none
+    burden: low
+    burden_reason: a single 8-second operation from one still with a trivial
+      fixture kit.
+
+  - case_id: MKT-017
+    one_line: church explainer — one narrated video from a supplied (substituted, deliberately non-doctrinal) script, the only non-commercial objective in the bank
+    deliverable_count: 1
+    duration_scale: unstated by the buyer; 90 s fixture in the envelope —
+      multi-shot assembly but attemptable; a long reading would not be
+    modality: video with off-screen narration
+    speech_required: yes (verbatim; paraphrase of organisational copy is a defect)
+    visible_people_required: no
+    identity_matters: no entity identity at all
+    fixtures_required:
+      - {id: FX-017-script, what: neutral community-organisation explainer script, status: constructible}
+      - {id: FX-017-format, what: duration + aspect + treatment, status: constructible}
+    representative_deliverable_ok: already single — yes trivially
+    production_dependencies:
+      - a speech route; supporting imagery that does not contradict the words;
+        90 s assembly
+    acceptance_requirements_main:
+      - verbatim script; intelligible narration; sync; register suits a
+        community organisation rather than a commercial brand
+    experimental_confounds:
+      - the only non-sale objective among all 16 — it tests whether Creative
+        IR can represent an objective that is not a purchase, which no other
+        case exercises; register appropriateness is a pure judgement
+    burden: medium
+    burden_reason: fixture kit is trivial, but 90 continuous narrated seconds
+      is a real assembly job and the speech family carries the no-audio-
+      material blocker; sits just above the low tier on duration alone.
+
+  - case_id: MKT-018
+    one_line: concept-execution — one ~30s high-end ad realising a customer-SUPPLIED creative concept and script
+    deliverable_count: 1
+    duration_scale: unstated; 30 s fixture; attemptable
+    modality: video with off-screen VO
+    speech_required: yes (verbatim)
+    visible_people_required: no
+    identity_matters: yes — product matches reference; every element the
+      concept names must be present
+    fixtures_required:
+      - {id: FX-018-concept, what: written creative concept specific enough
+          that "was it realised" is answerable, status: constructible,
+          note: the intellectually hardest fixture to author well — its
+            specificity determines whether the case measures anything}
+      - {id: FX-018-script, what: matching script, status: constructible}
+      - {id: FX-018-product, what: product + stills, status: constructible}
+    representative_deliverable_ok: already single — yes trivially
+    production_dependencies:
+      - a speech route; reference-conditioned product identity; short assembly
+    acceptance_requirements_main:
+      - concept elements all present (checkable); the concept REALISED rather
+        than merely containing its parts (the sharpest subjective requirement
+        in the bank); verbatim script; reference match; high-end register
+    experimental_confounds:
+      - leans hardest of all 16 on the creative-commercial judgement family,
+        which is unqualified and has no reviewer panel; but the framing —
+        fidelity to a stated creative intention rather than "is this good" —
+        is the most tractable version of the creative question the bank offers
+    burden: medium
+    burden_reason: cheap to produce (one 30 s piece), expensive to judge — its
+      defining acceptance condition is exactly the judgement the project has
+      the least machinery for, and the concept fixture must be authored with
+      unusual care.
+
+# ── Summary tables ─────────────────────────────────────────────────────────
+
+burden_distribution:
+  low: [MKT-005, MKT-009, MKT-010, MKT-012, MKT-014]
+  medium: [MKT-001, MKT-002, MKT-008, MKT-011, MKT-013, MKT-017, MKT-018]
+  high: [MKT-003, MKT-004, MKT-006, MKT-007]
+
+looked_runnable_but_operationally_heavy:
+  - case: MKT-003
+    surprise: $150 for the set, yet structurally the least attemptable —
+      30 minutes of video that cannot be planned by anything the project has
+  - case: MKT-004
+    surprise: cheapest per-unit price in the bank ($20/video), yet its real
+      acceptance test sits in a documented measurement hole (CO-01)
+  - case: MKT-007
+    surprise: the stated success criterion (throughput) is invisible to the
+      entire capability contract (CO-02)
+  - case: MKT-006
+    surprise: known-hard, but the triage makes the shape precise — FOUR
+      fixture families and a route shape (generated performance composited
+      with supplied footage) that no roster slot cleanly covers
+  - case: MKT-013
+    surprise: cheapest case to JUDGE in the entire bank, but the only one
+      whose key fixture (an authored base video) has an unresolved
+      construction method
+
+fixture_blockers_vs_work:
+  real_blockers_among_the_16: []
+  note: >
+    No fixture on any of the 16 carries blocks_runnable: true — that is
+    consistent with the bank. One fixture is flagged UNKNOWN rather than
+    constructible: FX-013-basevideo (an authored promo video containing
+    exactly four monitor screens). It is probably work, not a blocker, but it
+    is the only fixture whose construction might itself require a generation
+    call, which would need authorisation. Everything else is authoring effort:
+    the heaviest kits are FX-002-catalogue (8 products x multi-angle
+    photography), FX-006 (character sheets + voice samples + dashboard
+    recordings + 10 scripts) and FX-018-concept (hard to author WELL rather
+    than hard to author).
+
+# End of triage. The split proposal lives in proposed-brief-split.yaml.
