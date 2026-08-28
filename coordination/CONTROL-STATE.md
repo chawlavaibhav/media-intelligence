@@ -19,10 +19,10 @@ Four **zero-spend pre-pilot tasks are authorised in parallel**:
 
 | Task | Purpose | Spend / generation authority |
 |---|---|---|
-| **CANON-012** | First Aight Normalized Request + Creative IR instance; expose schema friction without Canon or production routing | USD 0; 0 generations |
-| **CANON-013** | Feasibility-triage the 16 runnable marketplace cases and propose an 8-development / 8-holdout split | USD 0; 0 generations |
+| **CANON-012** | **Correction active** after Controller review: preserve useful Aight NR/Creative-IR seed but fix conformance/factual claims; no schema mutation | USD 0; 0 generations |
+| **CANON-013** | **Execution complete; awaiting Level-1 Governor review.** Triage accepted; proposed 8/8 split remains **unfrozen** | USD 0; 0 generations |
 | **EVAL-035** | Implement exactly one pilot-capable video route substrate with binary artifact handling and fake-transport tests | USD 0; **no real provider call** |
-| **RES-007** | Implement the minimal v3 outcome writer so a real production journey can be persisted and CpAO recomputed | USD 0; synthetic bytes only |
+| **RES-007** | **Correction active / previously stopped on contract defect:** make v3 production-attempt semantics and validator/writer enforcement consistent | USD 0; synthetic bytes only |
 
 Authority: `coordination/decisions/CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`.
 
@@ -144,10 +144,15 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Review CANON-012, EVAL-035 and RES-007**. If accepted, freeze PILOT-001's brief, asset refs,
-   production recipe shape, human acceptance record and explicit API-spend cap before any generation.
-2. **Review CANON-013** and freeze the later architecture experiment's development/holdout split and
-   decision protocol before architecture-test media exists.
+1. **Receive corrected CANON-012 and RES-007 plus EVAL-035.** CANON-012 must correct its known
+   SPEC-01 conformance/factual claims; RES-007 must resolve the v3 production-attempt inheritance
+   defect under `CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md`.
+2. **Run bounded Level-1 Governor review** on merge-ready pre-pilot branches. CANON-013 is already
+   ready for that review; its proposed 8/8 split remains unfrozen.
+3. **After CANON-012 + EVAL-035 + RES-007 are accepted**, freeze PILOT-001's brief, asset refs,
+   production recipe shape, human acceptance record and explicit API-spend cap before generation.
+4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
+   development/holdout split and decision protocol.
 3. **Registry text rows stay blocked**; admission semantics stay as they are.
 4. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
    Registry decision depends on those automated measurements.
