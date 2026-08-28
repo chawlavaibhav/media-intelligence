@@ -19,7 +19,7 @@ Four **zero-spend pre-pilot tasks are authorised in parallel**:
 
 | Task | Purpose | Spend / generation authority |
 |---|---|---|
-| **CANON-012** | **Correction active** after Controller review: preserve useful Aight NR/Creative-IR seed but fix conformance/factual claims; no schema mutation | USD 0; 0 generations |
+| **CANON-012** | **Controller-accepted; Level-1 Governor review pending.** Corrected Aight NR/Creative-IR seed accepted; missing official Aight wordmark remains a PILOT-001 input gate | USD 0; 0 generations |
 | **CANON-013** | **Execution complete; awaiting Level-1 Governor review.** Triage accepted; proposed 8/8 split remains **unfrozen** | USD 0; 0 generations |
 | **EVAL-035** | **Correction active, route revised by user/Controller:** replace fal implementation with direct Gemini Developer API using `GEMINI_API_KEY`; temporary T1 executor = `veo-3.1-fast-generate-preview`; retain binary/async/budget/provenance guarantees | USD 0; **no real provider call** |
 | **RES-007** | **Correction active / previously stopped on contract defect:** make v3 production-attempt semantics and validator/writer enforcement consistent | USD 0; synthetic bytes only |
@@ -144,9 +144,11 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Receive corrected CANON-012, RES-007 and EVAL-035.** CANON-012 must correct its known
-   SPEC-01 conformance/factual claims; RES-007 must resolve the v3 production-attempt inheritance
-   defect under `CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md`; EVAL-035 must complete the
+1. **Receive corrected RES-007 and EVAL-035; run Level-1 Governor review on CANON-012.**
+   CANON-012 is Controller-accepted under
+   `CONTROLLER-CANON-012-CORRECTION-ACCEPTANCE-2026-08-28.md`. RES-007 must resolve the v3
+   production-attempt inheritance defect under
+   `CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md`; EVAL-035 must complete the
    safety/integration correction in `CONTROLLER-EVAL-035-RETURN-REVIEW-2026-08-28.md`, as
    superseded for route selection by `CONTROLLER-DIRECT-GEMINI-T1-ROUTE-REVISION-2026-08-28.md`.
 2. **Run bounded Level-1 Governor review** on merge-ready pre-pilot branches. CANON-013 is already
