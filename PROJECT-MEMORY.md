@@ -224,7 +224,7 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 | Real customer demand evidence (external, not a Canon source) | `canon/research/marketplace-demand-v1/`; derived bank under its `derived/` |
 | What media we hold | `resources/manifests/corpus-pilot-v0.jsonl`, `source-registry-v0.csv` |
 | Governor role and review modes | `governance/GOVERNOR-CONTRACT.md` |
-| Current Governor review | `governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md` |
+| Current Governor review | `governance/reviews/GOV-L1-PREPILOT-CANON-012-CANON-013.md` (Level-1, CANON-012 + CANON-013; last full reconciliation remains `GOV-006-POST-PARALLEL-RECONCILIATION.md`) |
 | What is believed but untested | `coordination/ASSUMPTIONS.md` |
 | Known limitations / unresolved questions | preserved in `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` §7; live blockers in `CONTROL-STATE.md` |
 
