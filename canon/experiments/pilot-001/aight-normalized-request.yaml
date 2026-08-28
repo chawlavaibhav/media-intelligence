@@ -17,6 +17,10 @@
 #     fixture: true          # instance-level annotation, not a grammar field
 # with a rationale naming the source. Nothing carrying fixture: true may ever be treated as
 # customer intent.
+# This annotation is a WORKAROUND LOCAL TO THIS INSTANCE — not an accepted schema extension, not
+# new frozen vocabulary, and not precedent for future tasks. The underlying gap is retained as an
+# open friction per coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md,
+# which also decided the schemas are not to be revised before PILOT-001.
 
 meta:
   instance_id: NR-PILOT-001-AIGHT-V1
@@ -323,6 +327,8 @@ fields:
 # ── Required external assets, by role (a CANON-012 deliverable; not a grammar field) ─────────────
 # The grammar registers only SUPPLIED assets (R02). There is no field for "required asset that does
 # not exist yet" — recorded as friction F7. Listed here so the gap is auditable in one place.
+# This section is a WORKAROUND LOCAL TO THIS INSTANCE — not a schema extension and not precedent
+# for future tasks (CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md).
 
 required_external_assets:
   - role: brand_asset

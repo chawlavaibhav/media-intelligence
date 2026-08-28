@@ -12,10 +12,16 @@
 # Creative decisions below are ordinary reasoning from the brief only, each labelled decide with a
 # rationale.
 #
-# Confidence fields: SPEC-01 asks for numeric confidence (0.0–1.0) on derived / system_decided
-# values, but PROJECT-CONTRACT separation 8 forbids invented decimal confidence and no calibration
-# procedure exists. This instance records confidence: not_assigned throughout — friction F5 in the
-# Controller Brief.
+# CONFORMANCE STATEMENT (corrected per CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md):
+# This instance is SEMANTICALLY COMPLETE — every requirement of the brief is represented — but it
+# is NOT STRICTLY CONFORMANT TO SPEC-01 AS WRITTEN. SPEC-01 requires numeric confidence (0.0–1.0)
+# on derived / system_decided fields; PROJECT-CONTRACT separation 8 forbids invented decimal
+# confidence and no calibration procedure exists, so this instance records
+# confidence: not_assigned throughout. That is a documented conformance deviation caused by a real
+# conflict between the two governing documents (friction F5 in the Controller Brief).
+# `not_assigned` is an instance-level workaround for this instance only — not an accepted schema
+# extension, not precedent for future tasks. The Controller has decided the schemas are NOT to be
+# revised before PILOT-001 to resolve this; the seam is retained for later schema revision.
 #
 # Fixture values (12 s, 9:16) come from the CANON-012 task file, not the customer. SPEC-01's
 # provenance vocabulary (user | derived | system_decided | brand_policy | customer_memory | default)
@@ -26,6 +32,10 @@ meta:
   task: CANON-012
   date: 2026-08-28
   spec: SPEC-01-creative-ir v0.1
+  spec_conformance: >
+    semantically complete; known deviation from SPEC-01 as written — confidence fields carry
+    not_assigned instead of the required numeric 0.0–1.0 (friction F5; disposition:
+    coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md)
   normalized_request: NR-PILOT-001-AIGHT-V1
   canon_used: none
 
@@ -42,7 +52,7 @@ assets: []
 #     (product|mascot|person|character|venue|object) have no brand_mark — it is represented under
 #     brand.logo instead (friction F3);
 #   * the exact price texts are text_element entities in the grammar; they are represented under
-#     brand.mandatories (friction F4).
+#     brand.mandatories, which SPEC-01 explicitly permits for price (see the narrowed friction F4).
 entities: []
 relationships: []
 
@@ -255,8 +265,13 @@ creative:
 
 # ── copy ─────────────────────────────────────────────────────────────────────────────────────────
 # The two exact price strings are NOT placed here: the customer gave them no headline/body/cta
-# role, and SPEC-01's copy block has no price slot. Per SPEC-01's own brand section ("mandatories[]
-# (legal, disclaimers, price)") they live under brand.mandatories — friction F4.
+# role, and SPEC-01's brand section explicitly permits price under brand.mandatories[] — the
+# SPEC-sanctioned home used below. SPEC-01 DOES have first-class exact-copy machinery
+# (headline/body/cta with exactness, script_system); the narrower observed gap — friction F4 as
+# corrected per CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md — is that there is no clean
+# generic representation for MULTIPLE independently required exact commercial strings / arbitrary
+# exact text elements, each with its own role and exactness semantics, other than fitting them
+# into headline/body/cta or brand.mandatories.
 copy:
   headline:
     value: null
@@ -532,8 +547,11 @@ acceptance_contract:
       derived_from: intent.objective / message.proposition (user positioning statement)
       verification: { required: true, mode: human }
     - note: >
-        Per the pilot gate (CONTROL-STATE.md), human review must be blinded and these criteria
-        frozen before any generation. No numeric threshold is defined here — thresholds are Eval's.
+        Per the pilot gate (CONTROL-STATE.md), these criteria must be frozen before any generation
+        and PILOT-001 requires an explicit human inspection/acceptance record. Blinding is NOT
+        required for PILOT-001 — blinded review belongs to the later architecture outcome
+        experiment (corrected per CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md). No numeric
+        threshold is defined here — thresholds are Eval's.
 
 # ── readiness ────────────────────────────────────────────────────────────────────────────────────
 readiness:
