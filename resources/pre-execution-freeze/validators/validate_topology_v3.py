@@ -28,7 +28,8 @@ EXIT CODES
 
 "I found no problem" and "I could not look" never share an exit code.
 """
-import os, sys, collections
+import os, re, sys, collections
+from datetime import datetime
 
 try:
     import yaml
@@ -37,6 +38,8 @@ except ImportError:
 
 VALID_STATUS = {"ok", "error", "refusal", "timeout", "cancelled"}
 NON_OK = VALID_STATUS - {"ok"}
+# v2.1 frozen lane vocabulary, stored verbatim.
+VALID_LANE = {"image", "general_video", "native_av", "lipsync", "tts"}
 VALID_MODE = {"provider_call", "local_deterministic", "human"}
 VALID_ORDERING = {"ordered", "unordered"}
 ORDERED_ROLES = {"source", "overlay", "grade_source"}     # roles where sequence carries meaning
@@ -54,6 +57,32 @@ G12_REQUIRED_NON_NULL = ("provider", "model_id", "model_version", "endpoint", "w
 # Key must be PRESENT; null is a legitimate recorded value (a call that never completed;
 # a first attempt with no prior repeat/retry). An absent key is not the same fact as null.
 G12_REQUIRED_KEYS_NULLABLE = ("completed_at", "repeat_of_attempt_id", "retry_of_attempt_id")
+# SHA-256 as this project records it: hashlib hexdigest output - exactly 64 LOWERCASE hex
+# characters (every committed hash in the repository follows this convention).
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+# ISO-8601 UTC as this project records it: 2026-02-01T09:10:00Z (optionally fractional
+# seconds; +00:00 accepted as the equivalent explicit UTC offset).
+ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?(Z|\+00:00)$")
+
+
+def is_sha256(v):
+    return isinstance(v, str) and bool(SHA256_RE.match(v))
+
+
+def is_iso_utc(v):
+    """A recorded UTC instant. YAML may deliver it as a string (the project quotes its
+    timestamps) or, if unquoted, as a datetime the YAML parser already validated - a
+    UTC-offset datetime is accepted; anything else is not."""
+    if isinstance(v, datetime):
+        off = v.utcoffset()
+        return off is not None and off.total_seconds() == 0
+    if not isinstance(v, str) or not ISO_UTC_RE.match(v):
+        return False
+    try:
+        datetime.fromisoformat(v.replace("Z", "+00:00"))
+        return True
+    except ValueError:
+        return False
 
 
 def fatal(m):
@@ -154,15 +183,58 @@ def main():
                     bad("G12", f"attempt {aid}: key '{f}' is absent. Null is a recorded "
                                f"value ('never completed' / 'no prior attempt'); an "
                                f"absent key is an unrecorded fact and is refused.")
+            # lane: frozen v2.1 vocabulary, checked here independently of the writer.
+            if a.get("lane") not in VALID_LANE:
+                bad("G12", f"attempt {aid}: lane {a.get('lane')!r} is missing or not in "
+                           f"the frozen vocabulary {sorted(VALID_LANE)}")
+            # storage_class: the exact required value, not merely a non-empty string.
+            if a.get("storage_class") not in (None, "") and \
+                    a.get("storage_class") != "C_irreproducible_empirical":
+                bad("G12", f"attempt {aid}: storage_class {a.get('storage_class')!r} "
+                           f"must equal 'C_irreproducible_empirical'")
+            # SHA-256 provenance: 64 lowercase hex chars (hashlib hexdigest, the
+            # project's recorded convention) - a non-empty pseudo-hash is not a hash.
+            for hf in ("prompt_hash", "config_hash"):
+                v = a.get(hf)
+                if v not in (None, "") and not is_sha256(v):
+                    bad("G12", f"attempt {aid}: {hf} {str(v)[:20]!r}... is not a valid "
+                               f"SHA-256 (64 lowercase hex characters)")
             rah = a.get("reference_asset_hashes", None)
             if not isinstance(rah, list):
                 bad("G12", f"attempt {aid}: reference_asset_hashes must be a list "
                            f"(empty list if none), got {type(rah).__name__}")
-            if "repeat_index" not in a or a.get("repeat_index") is None:
-                bad("G12", f"attempt {aid}: repeat_index is required on every attempt")
+            else:
+                for h in rah:
+                    if not is_sha256(h):
+                        bad("G12", f"attempt {aid}: reference_asset_hashes member "
+                                   f"{str(h)[:20]!r} is not a valid SHA-256 "
+                                   f"(64 lowercase hex characters)")
+            # repeat_index: 0-based integer. Booleans are not integers for this purpose.
+            ri = a.get("repeat_index")
+            if not isinstance(ri, int) or isinstance(ri, bool) or ri < 0:
+                bad("G12", f"attempt {aid}: repeat_index {ri!r} must be an integer >= 0 "
+                           f"(missing, null, negative, string and boolean values are "
+                           f"all refused)")
+            # repeat/retry back-references must resolve to real attempts in this archive.
+            for ref in ("repeat_of_attempt_id", "retry_of_attempt_id"):
+                v = a.get(ref)
+                if v is not None and v not in attempts:
+                    bad("G12", f"attempt {aid}: {ref} {v!r} does not resolve to an "
+                               f"attempt in this archive; a dangling back-reference is "
+                               f"unverifiable provenance")
             if a.get("retry_of_attempt_id") is not None and not a.get("retry_reason"):
                 bad("G12", f"attempt {aid}: retry_of_attempt_id set without retry_reason; "
                            f"repeat and retry must stay distinguishable")
+            # timestamps: ISO-8601 UTC as the project records it.
+            ra = a.get("requested_at")
+            if ra not in (None, "") and not is_iso_utc(ra):
+                bad("G12", f"attempt {aid}: requested_at {str(ra)[:30]!r} is not a "
+                           f"valid ISO-8601 UTC timestamp")
+            ca = a.get("completed_at")
+            if ca is not None and not is_iso_utc(ca):
+                bad("G12", f"attempt {aid}: completed_at {str(ca)[:30]!r} is neither "
+                           f"null (call never completed) nor a valid ISO-8601 UTC "
+                           f"timestamp")
             if kind == "benchmark_eval" and not a.get("eval_item_id"):
                 bad("G12", f"attempt {aid}: benchmark/eval attempt with no eval_item_id; "
                            f"v2.1 requires it exactly as written for benchmark attempts")

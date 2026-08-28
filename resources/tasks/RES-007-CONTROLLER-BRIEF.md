@@ -1,154 +1,138 @@
-# Controller Brief — RES-007 (corrected)
+# Controller Brief — RES-007 (final correction pass)
 
 **TASK:** RES-007
-**STATUS:** completed — correction pass under
-`coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md`; awaiting
-Level-1 Governor review before merge.
+**STATUS:** completed — final bounded correction under
+`coordination/decisions/CONTROLLER-RES-007-CORRECTION-REVIEW-2-2026-08-28.md`; returning for
+Controller review (then Level-1 Governor review if accepted).
 
-**HUMAN SUMMARY:** The project now has working, contract-conformant software that can
-*record* a real customer production job — every provider call (including failed ones), every
-local ffmpeg-style operation, every human review, every file of actual bytes, and every cost
-— in the frozen v3 format, and the validators now actually enforce the whole written
-contract. That last part is the correction: **the first pass had a real defect, and the
-task's own stop condition should have fired.** The v3 rulebook says a provider-call record
-inherits the older v2.1 record's required fields (which provider, which model, which
-endpoint, hashes of the exact prompt and configuration sent, timestamps, and a benchmark
-item id). My first writer accepted any assortment of those fields, my synthetic records
-omitted several, and the validator checked none of them — so a record could pass validation
-while violating the written contract. My first brief wrongly filed this as a low-priority
-observation instead of stopping. The Controller has now ruled on the one genuinely
-inapplicable field: `eval_item_id` (the benchmark-item link) stays required for
-benchmark/evaluation calls exactly as written, is not required for production-job calls, and
-must never be faked there — a production call's context is its chain to the customer brief.
-Everything else stays mandatory and is now mechanically enforced by a new validation gate
-(G12) in the validator, by the writer itself, and by ten new controls. The corrected
-synthetic journey passes end to end and the cost engine still reproduces the hand-computed
-total exactly. No money was spent; no real provider was called; HED-1 remains untouched.
+**HUMAN SUMMARY:** The pilot outcome writer is done and, after this third pass, the durable
+validator now genuinely enforces every *mechanically explicit* rule the v3 attempt contract
+inherits from v2.1. The history matters and is recorded honestly: the **first pass** shipped
+a real contract/validator mismatch and failed to fire the task's stop condition. The
+**second pass** fixed the substance (the `eval_item_id` production override and required
+provenance fields) but its brief **overclaimed** — it said a validator PASS now meant full
+written-contract conformance, while the validator still accepted, for example, a lane value
+outside the frozen list, a "hash" of 64 letter p's, a boolean repeat counter, or a
+made-up timestamp, because it checked that fields were *present*, not that their *values*
+were what the contract says. **Review 2 caught exactly that gap; this pass closes it.**
+The validator (and the writer, which mirrors it) now checks values: lanes against the
+frozen vocabulary, the exact storage class, 0-based integer repeat counters, genuine
+SHA-256 hashes, repeat/retry references that resolve to real attempts, and real ISO-8601
+UTC timestamps. Thirteen new negative controls prove each rejection individually, and the
+control runner now verifies each control fails for its *own* invariant, not by accident.
+The `eval_item_id` decision is unchanged. No money was spent; no provider was called;
+HED-1 remains untouched.
 
-**WHAT I DID:** Applied the Controller-approved narrow correction in four places. (1) The
-frozen topology document now states the conditional override explicitly (attempt entity
-`v3_conditional_override` + gate G12), and states that every other inherited field stays
-required. (2) `validate_topology_v3.py` enforces G12 fail-closed: every v3 attempt must
-declare `attempt_kind: production | benchmark_eval` (refused, not guessed, when absent) and
-carry the full inherited call provenance; `eval_item_id` is required iff benchmark, refused
-on production rows. (3) `OutcomeWriter.record_attempt` now takes the provenance as named
-required parameters — the unconstrained field bag is gone; unknown extras are refused; the
-v2.1 nullable meanings are preserved rather than reinvented (`completed_at` null only for a
-call that never completed, and it must be passed explicitly; repeat/retry links null on a
-first attempt; `reference_asset_hashes` an empty list, never null). (4) The synthetic
-journey, all lineage fixtures, and the control suite were regenerated/extended and re-run.
+**WHAT I DID:** Extended gate G12 in `validate_topology_v3.py` with the six value-level
+invariant groups Review 2 listed, mirrored the same checks in
+`OutcomeWriter.record_attempt`, replaced every placeholder pseudo-hash in fixtures and
+tests with genuine SHA-256 digests, added 13 negative controls (each declaring the exact
+invariant it must trip via an `# EXPECT-SUBSTRING:` header the runner now verifies against
+the failure message), documented the extension in the topology yaml and lineage contract,
+and rebased the branch onto current `main` before returning.
 
 **OBSERVED:**
-- 22/22 writer tests pass; lineage controls **28/28** (2 positives + 26 negatives; was
-  18/18 before the correction added ten G12 controls); CpAO controls **13/13 unchanged**.
-- Positive controls: the corrected production journey passes all 12 gates with no
-  `eval_item_id` anywhere; a benchmark-kind attempt with its `eval_item_id` also passes
-  (`v3-valid-benchmark-attempt.yaml`, `benchmark-attempt-journey.yaml`).
-- Negative controls (each rejected under G12, by the validator on the durable archive, not
-  only by the writer): missing `attempt_kind`; production attempt missing `provider`,
-  `model_id`, `prompt_hash`, `config_hash`, `config_location`, or
-  `reference_asset_hashes`; benchmark attempt missing `eval_item_id`; production attempt
-  *carrying* an `eval_item_id` (fabricated benchmark link).
-- Writer-level enforcement observed: null/omitted required provenance, unknown extra
-  fields, `eval_item_id` on production rows, and benchmark rows without it are all refused
-  at record time with explanatory errors.
-- All first-pass properties re-verified after the correction: binary artifacts (bytes not
-  valid UTF-8; SHA-256/byte counts recomputed from disk and matching), provider/local/human
-  step distinction, failed refusal+timeout attempts preserved individually with no faked
-  artifacts (the timed-out call records `completed_at: null` — the v2.1 meaning of "never
-  completed"), ordered multi-parent lineage, repair step, deterministic byte-for-byte
-  output, and CpAO recomputed at fully-loaded **42.00 XTS** matching the independent
-  hand-computed expectation; the `human_optional` entry remains visibly excluded.
-- The pre-existing 17 negative lineage fixtures were updated only by adding the
-  now-required provenance to their attempts; each still fails for **its own declared
-  gate** (verified by the control suite's gate-matching check).
-- Historical v2.1 archives: untouched. G12 applies only to `schema_era: v3` records; the
-  v2.1 validator and archives are unchanged, and G9 still blocks context backfill.
+- **Writer tests: 24/24 pass** (was 22; +1 writer-side Review-2 refusal sweep, +1 seeding
+  each of the 13 violations into a written archive and proving the frozen validator
+  rejects each with a G12 message naming that invariant).
+- **Lineage controls: 41/41** — 2 positives (production journey with no `eval_item_id`;
+  benchmark attempt with its `eval_item_id`) + 39 negatives (17 original gates G1–G11,
+  9 first-correction G12 field-presence controls, 13 new Review-2 value controls:
+  missing/unknown lane, wrong storage class, negative/string/boolean repeat_index,
+  malformed prompt/config/reference hashes, dangling repeat/retry references, malformed
+  `requested_at`, malformed non-null `completed_at`).
+- **CpAO controls: 13/13 unchanged; no regression** — the synthetic journey still
+  recomputes exactly the hand-computed fully-loaded **42.00 XTS**, shared ledger entry
+  counted once, `human_optional` visibly excluded. The full RES-004 check bundle passes.
+- **All positive fixtures and journeys now carry genuine SHA-256 values** (hashlib
+  hexdigest of named synthetic inputs) — no placeholder pseudo-hashes remain in any
+  positive case, including the two hand-typed hex constants the second pass introduced.
+- Conventions preserved, not invented: hashes are 64 **lowercase** hex (the project's
+  hexdigest convention — uppercase hex is refused, proven by test); timestamps are
+  ISO-8601 UTC `...Z` (or explicit `+00:00`); `completed_at: null` remains valid exactly
+  for a call that never completed (the journey's timeout attempt exercises this);
+  `reference_asset_hashes: []` remains valid; booleans do not count as integers for
+  `repeat_index`.
+- All previously verified behaviour re-verified after the extension and rebase: one call =
+  one attempt = one trial; local/human steps create no fake attempts; binary artifact
+  hashing/byte counts; ordered multi-parent lineage; failed/refused/timed-out attempts
+  kept individually; immutable cost references; repair representation; acceptance only at
+  outcome level; deterministic output. Historical v2.1 archives untouched (G12 applies to
+  `schema_era: v3` only).
 
-**INFERRED:** With inheritance now mechanically enforced, "passes the validator" and
-"conforms to the written v3 contract" mean the same thing for attempt provenance. I base
-this on the validator rejecting each seeded violation on the durable archive itself,
-independently of the writer.
+**INFERRED:** For the attempt entity, a validator PASS and the *mechanically explicit*
+written v2.1/v3 provenance invariants are now aligned: every field-presence and
+field-value rule that the contract states in checkable form is enforced on the durable
+archive independently of the writer. This claim is deliberately narrower than the second
+pass's — see the next section for what it excludes.
 
-**SURPRISES / BELIEF UPDATES:** The first pass's "all gates green" was weaker evidence than
-it appeared: a validator can only prove the rules it implements. The belief to carry
-forward: when a contract says "inherits X", conformance is not established until something
-mechanically checks X.
+**Intentionally outside mechanical validation (unchanged by design, per the bounded
+authority):** whether a `provider`/`model_id`/`endpoint` actually exists or is spelled
+canonically; URL/URI semantics of `endpoint`, `config_location`, `output_location`;
+whether a recorded hash matches bytes the archive does not hold (prompt/config text is
+recoverable via `config_location`, not stored); repeat/retry *policy* (when a repeat or
+retry was strategically justified — only structural provenance is checked);
+`transform_recipe.params_hash` and artifact `output_hash` formats (owned by gates G8/G6 as
+originally written, not part of the Review-2 attempt scope); and all measurement
+semantics (Eval-owned). These are recorded so no future brief mistakes "validator PASS"
+for proof of them.
 
-**FAILURES / BLOCKERS (including corrected history):**
-- **First pass: a stop-condition defect, not a low-risk footnote.** RES-007's stop condition
-  ("the accepted v3 schema cannot represent the pilot journey without a contract change")
-  fired in substance: v2.1-required `eval_item_id` has no truthful value for a production
-  attempt, and the only ways through were fabricating one, silently dropping inherited
-  requirements (what actually happened), or a contract change. I should have stopped with
-  `STOP — CONTEXT_INSUFFICIENT`/`needs_controller_review` instead of noting it under
-  "unknown". The first validator pass therefore did **not** prove full contract
-  conformance — the validator simply never checked inheritance.
-- The earlier workspace incident (parallel workers sharing one checkout; commit re-parented
-  onto clean main) remains as reported previously; this correction pass ran in an isolated
-  worktree and did not touch the shared checkout.
+**SURPRISES / BELIEF UPDATES:** none new; Review 2 confirmed the first-pass lesson —
+"enforced" means value-checked, not merely present.
 
-**UNKNOWN / NOT VERIFIED:** Real provider payloads may still surface fields or shapes the
-synthetic journey does not exercise; the writer now fails closed on anything outside the
-contract, so the failure mode is a loud refusal, not silent acceptance — but this remains
-unverified until PILOT-001. `V21-V3-COMPATIBILITY.md` still carries its historical
-"18/18 controls" execution statement about the original R4-C run; it describes that run
-truthfully, and the current count lives in `LINEAGE-CONTRACT-v3.md`'s correction note.
+**FAILURES / BLOCKERS:** none in this pass. The prior history (first-pass stop-condition
+defect; second-pass overclaim; the shared-checkout workspace incident, since resolved by
+isolated worktrees) stands recorded above and in the decision records.
+
+**UNKNOWN / NOT VERIFIED:** real provider payload shapes remain unverified until
+PILOT-001; the writer and validator now fail closed on anything outside the contract, so
+the expected failure mode is a loud refusal, not silent acceptance.
 
 **ASSUMPTIONS CHALLENGED:** none in `coordination/ASSUMPTIONS.md`.
 
-**LOCAL IMPLICATIONS:** Resources' persistence path for PILOT-001 is now both usable and
-honest: recording a real journey forces capture of the exact prompt/config hashes, provider
-identity and timestamps for every call — precisely the evidence CpAO and later routing
-decisions depend on.
+**LOCAL IMPLICATIONS:** Recording a real pilot journey now forces genuine call identity —
+real hashes, real timestamps, frozen lane values — at write time *and* at validation time,
+so PILOT-001's archive will be verifiable evidence even if the writer is bypassed.
 
-**CROSS-STREAM IMPLICATIONS:** CROSS_STREAM (propose only): EVAL-035's route substrate will
-need to surface the full call provenance (endpoint, hashes, timestamps) for each real call
-so the writer can record it; its fake-transport tests could reuse
-`benchmark-attempt-journey.yaml` / the G12 fixtures as reference shapes. Measurement
-semantics remain Eval-owned and untouched.
+**CROSS-STREAM IMPLICATIONS:** CROSS_STREAM (propose only): EVAL-035's route substrate
+must surface per-call `lane`, prompt/config hashes and UTC timestamps in exactly these
+formats for the writer to record; the G12 fixtures are reference shapes.
 
-**ARCHITECTURAL IMPLICATIONS:** ARCHITECTURAL (resolved): the v3 attempt-inheritance
-mismatch is closed by the Controller's conditional override; no further topology change is
-proposed.
+**ARCHITECTURAL IMPLICATIONS:** none new; the conditional override from Review 1 is
+unchanged and this pass adds no topology concepts.
 
-**DECISIONS NEEDED FROM CONTROLLER:**
-- **HED-1 remains open, deliberately** — unchanged from the first pass: both
-  `human_required` and `human_optional` classes are representable and compute correctly;
-  synthetic labels imply nothing about real pilot review time.
-- None new from this correction; the `eval_item_id` question is settled by
-  `CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md`.
+**DECISIONS NEEDED FROM CONTROLLER:** none new. **The `eval_item_id` decision is not
+reopened or changed** — production attempts carry none (fabrication refused), benchmark
+attempts require it. HED-1 remains open, deliberately.
 
 **EVIDENCE WORTH HUMAN INSPECTION:**
-- `resources/pre-execution-freeze/fixtures/lineage/nc-G12i-production-with-eval-item-id.yaml`
-  — the subtle one: a production attempt *with* a benchmark id is rejected, because a
-  plausible-looking extra link is fabricated provenance.
-- `resources/pilot-writer/synthetic-journey/pilot-journey-synthetic.yaml` — each attempt
-  row now reads as a complete call record: who was called, at which endpoint, with which
-  exact prompt/config (by hash), when, at what cost, and what happened.
+- `resources/pre-execution-freeze/fixtures/lineage/nc-G12p-malformed-prompt-hash.yaml` —
+  the emblematic Review-2 case: 64 p's is non-empty, looks hash-length, and is now
+  refused; before this pass it validated.
+- The `41/41` runner output — each G12 rejection now names the exact invariant it tripped.
 
-**FILES CREATED / MODIFIED (this correction):**
-- `resources/pre-execution-freeze/OUTCOME-PRODUCTION-TOPOLOGY-v3.yaml` (conditional
-  override + G12, correction header)
-- `resources/pre-execution-freeze/validators/validate_topology_v3.py` (G12, fail-closed)
-- `resources/pre-execution-freeze/validators/run_lineage_controls.sh` (dynamic counts,
-  multiple positives)
-- `resources/pre-execution-freeze/LINEAGE-CONTRACT-v3.md` (correction note, twelfth gate)
-- `resources/pre-execution-freeze/fixtures/lineage/` (17 fixtures gain required
-  provenance; 9 new `nc-G12*` negatives; 1 new positive)
-- `resources/pilot-writer/outcome_writer.py` (mechanical provenance enforcement)
-- `resources/pilot-writer/tests/test_pilot_journey.py` (22 tests)
-- `resources/pilot-writer/synthetic-journey/` (regenerated; + `benchmark-attempt-journey.yaml`)
+**FILES CREATED / MODIFIED (this pass):**
+- `resources/pre-execution-freeze/validators/validate_topology_v3.py` (G12 value checks)
+- `resources/pilot-writer/outcome_writer.py` (mirrored value checks)
+- `resources/pre-execution-freeze/validators/run_lineage_controls.sh` (EXPECT-SUBSTRING
+  verification)
+- `resources/pre-execution-freeze/fixtures/lineage/` (13 new `nc-G12j…v`; genuine SHA-256
+  values everywhere; invariant headers on all G12 controls)
+- `resources/pre-execution-freeze/OUTCOME-PRODUCTION-TOPOLOGY-v3.yaml`,
+  `LINEAGE-CONTRACT-v3.md` (Review-2 extension documented, counts corrected)
+- `resources/pilot-writer/tests/test_pilot_journey.py` (24 tests)
+- `resources/pilot-writer/synthetic-journey/` (regenerated, all-genuine hashes)
 - this brief
-CpAO logic, CpAO fixtures, and all historical v2.1 material: untouched.
+CpAO logic and fixtures, historical v2.1 material: untouched.
 
-**RECOMMENDED NEXT STEP:** Level-1 Governor review of this branch (per the return-review
-decision), alongside EVAL-035 when it returns, then the PILOT-001 freeze gate.
+**RECOMMENDED NEXT STEP:** Controller review of this branch; if accepted, Level-1 Governor
+review, then the PILOT-001 freeze gate alongside EVAL-035.
 
-**EPISTEMIC CHECK:** Facts are from committed code and validator/control output;
-interpretations are labeled INFERRED; the first pass's defect is stated as a defect, not
-minimized; unknowns are stated, not filled; no unapproved decision is presented as fact.
+**EPISTEMIC CHECK:** Facts are from committed code and control-suite output; the
+conformance claim is explicitly scoped to mechanically explicit invariants with the
+exclusions listed; prior defects are described as defects; unknowns are stated, not
+filled; no unapproved decision is presented as fact.
 
-**CONFIRMATION:** No unapproved next strategic step was started. USD 0 spent, 0 generations,
-0 external provider calls. HED-1 not decided. CpAO semantics unchanged. The only contract
-change made is the one the Controller explicitly authorised.
+**CONFIRMATION:** No unapproved next strategic step was started. USD 0 spent, 0 provider
+calls, 0 generations. HED-1 not decided. CpAO semantics unchanged. Only the
+Controller-authorised Review-2 extension was made.

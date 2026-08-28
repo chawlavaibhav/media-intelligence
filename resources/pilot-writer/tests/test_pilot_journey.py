@@ -99,6 +99,11 @@ def synthetic_bytes(seed, n):
     return bytes(out[:n])
 
 
+# A genuine SHA-256 for test attempts (Review 2: placeholder pseudo-hashes such as
+# "ppp..." are no longer accepted anywhere, including by the writer itself).
+PH = hashlib.sha256(b"unit-test-prompt").hexdigest()
+
+
 def full_provenance(**overrides):
     """The inherited v2.1 call provenance the corrected contract requires on every
     attempt (all synthetic). Overrides let a call vary model, completion, etc."""
@@ -344,7 +349,7 @@ def t08_writer_refuses_attempt_on_local_step():
     w, _ = build_journey()
     try:
         w.record_attempt("ATT-EVIL", "ST-CONCAT", "ok", "general_video", "LED-EVAL",
-                         prompt_hash="p" * 64, **full_provenance())
+                         prompt_hash=PH, **full_provenance())
         raise AssertionError("writer accepted a provider attempt on a local step")
     except WriterError:
         pass
@@ -391,14 +396,14 @@ def t12_writer_refuses_duplicate_trial_and_silent_failure():
     w, _ = build_journey()
     try:
         w.record_attempt("ATT-EVIL", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
-                         trial_id="ATT-A-RETRY", prompt_hash="p" * 64,
+                         trial_id="ATT-A-RETRY", prompt_hash=PH,
                          **full_provenance())
         raise AssertionError("writer accepted two attempts sharing one trial")
     except WriterError:
         pass
     try:
         w.record_attempt("ATT-EVIL2", "ST-GEN-A", "refusal", "general_video",
-                         "LED-EVAL", prompt_hash="p" * 64,
+                         "LED-EVAL", prompt_hash=PH,
                          **full_provenance())      # no error_detail
         raise AssertionError("writer accepted a failure with no recorded reason")
     except WriterError:
@@ -484,7 +489,8 @@ def t17_existing_control_suites_still_pass():
     out = run(["bash", os.path.join(ROOT, "resources", "pre-execution-freeze",
                                     "validators", "run_lineage_controls.sh")],
               expect_exit=0)
-    assert "28/28" in out, "2 positives + 26 negatives incl. the ten G12 controls"
+    assert "41/41" in out, ("2 positives + 39 negatives: the ten first-correction G12 "
+                            "controls plus the thirteen Review-2 invariant controls")
     out = run(["bash", os.path.join(ROOT, "resources", "pre-execution-freeze",
                                     "validators", "run_cpao_controls_v3.sh")],
               expect_exit=0)
@@ -550,7 +556,7 @@ def t20_writer_requires_full_inherited_provenance():
     from outcome_writer import ATTEMPT_REQUIRED_NON_NULL
     for field in ATTEMPT_REQUIRED_NON_NULL:
         w, _ = build_journey()
-        kwargs = dict(prompt_hash="p" * 64, **full_provenance())
+        kwargs = dict(prompt_hash=PH, **full_provenance())
         kwargs[field] = None
         try:
             w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
@@ -561,13 +567,13 @@ def t20_writer_requires_full_inherited_provenance():
     w, _ = build_journey()
     try:
         w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
-                         prompt_hash="p" * 64,
+                         prompt_hash=PH,
                          **full_provenance(reference_asset_hashes=None))
         raise AssertionError("writer accepted null reference_asset_hashes")
     except WriterError:
         pass
     try:
-        kwargs = dict(prompt_hash="p" * 64, **full_provenance())
+        kwargs = dict(prompt_hash=PH, **full_provenance())
         del kwargs["completed_at"]
         w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
                          **kwargs)
@@ -576,7 +582,7 @@ def t20_writer_requires_full_inherited_provenance():
         pass
     try:
         w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
-                         prompt_hash="p" * 64, mystery_field="x",
+                         prompt_hash=PH, mystery_field="x",
                          **full_provenance())
         raise AssertionError("writer accepted an unknown extra field")
     except WriterError:
@@ -589,14 +595,14 @@ def t21_eval_item_id_conditional_override():
     w, _ = build_journey()
     try:
         w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
-                         prompt_hash="p" * 64, eval_item_id="ITEM-001",
+                         prompt_hash=PH, eval_item_id="ITEM-001",
                          **full_provenance())
         raise AssertionError("writer accepted eval_item_id on a production attempt")
     except WriterError:
         pass
     try:
         w.record_attempt("ATT-Y", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
-                         prompt_hash="p" * 64, attempt_kind="benchmark_eval",
+                         prompt_hash=PH, attempt_kind="benchmark_eval",
                          **full_provenance())
         raise AssertionError("writer accepted a benchmark attempt without eval_item_id")
     except WriterError:
@@ -644,6 +650,67 @@ def t22_production_archive_has_no_eval_item_id_and_full_provenance():
     timeout = next(a for a in d["attempts"] if a["status"] == "timeout")
     assert timeout["completed_at"] is None, \
         "a timed-out call never completed; completed_at must be recorded null"
+
+
+def t23_writer_enforces_review2_invariants():
+    """Review-2 invariants refused at record time: malformed repeat_index values,
+    placeholder pseudo-hashes, junk reference-asset hashes, malformed timestamps."""
+    cases = [
+        dict(repeat_index=-1), dict(repeat_index="0"), dict(repeat_index=True),
+        dict(repeat_index=None),
+        dict(prompt_hash="p" * 64),
+        dict(prompt_hash=PH.upper()),   # valid hex but uppercase: the project records
+                                        # hashlib hexdigest (lowercase) - convention kept
+        dict(config_hash="not-a-hash"),
+        dict(reference_asset_hashes=["junk"]),
+        dict(requested_at="yesterday morning"),
+        dict(requested_at="2026-02-01 09:00:00"),
+        dict(completed_at="2026-13-99T99:99:99Z"),
+    ]
+    for override in cases:
+        w, _ = build_journey()
+        kwargs = dict(prompt_hash=PH, **full_provenance())
+        kwargs.update(override)
+        try:
+            w.record_attempt("ATT-X", "ST-GEN-A", "ok", "general_video", "LED-EVAL",
+                             **kwargs)
+            raise AssertionError(f"writer accepted invalid provenance {override}")
+        except WriterError:
+            pass
+
+
+def t24_validator_rejects_review2_violations_on_durable_archive():
+    """The durable archive is independently protected: seed each Review-2 violation
+    into an otherwise valid written archive and prove the frozen validator rejects it
+    with a G12 message naming that invariant (writer checks alone are not the line of
+    defence)."""
+    cases = [
+        ({"lane": None}, "lane"), ({"lane": "video"}, "lane"),
+        ({"storage_class": "B_cache"}, "storage_class"),
+        ({"repeat_index": -1}, "repeat_index"),
+        ({"repeat_index": "0"}, "repeat_index"),
+        ({"repeat_index": True}, "repeat_index"),
+        ({"prompt_hash": "p" * 64}, "prompt_hash"),
+        ({"config_hash": "zz"}, "config_hash"),
+        ({"reference_asset_hashes": ["junk"]}, "reference_asset_hashes"),
+        ({"repeat_of_attempt_id": "ATT-GHOST"}, "repeat_of_attempt_id"),
+        ({"retry_of_attempt_id": "ATT-GHOST", "retry_reason": "x"},
+         "retry_of_attempt_id"),
+        ({"requested_at": "yesterday"}, "requested_at"),
+        ({"completed_at": "2026-02-01 09:15:00"}, "completed_at"),
+    ]
+    os.makedirs(NC_DIR, exist_ok=True)
+    for i, (mutation, token) in enumerate(cases):
+        a = yaml.safe_load(open(ARCHIVE_PATH))
+        target = next(x for x in a["attempts"] if x["attempt_id"] == "ATT-LOGO")
+        target.update(mutation)
+        p = os.path.join(NC_DIR, "tmp-review2-seeded.yaml")
+        yaml.safe_dump(a, open(p, "w"), sort_keys=False)
+        out = run(["python3", VALIDATE, p, "--expect-fail"], expect_exit=0)
+        first = next(l for l in out.splitlines() if l.startswith("[FAIL:"))
+        assert first.startswith("[FAIL:G12]") and token in first, \
+            f"case {i} {mutation}: expected G12/{token}, got: {first}"
+    os.remove(p)
 
 
 def main():

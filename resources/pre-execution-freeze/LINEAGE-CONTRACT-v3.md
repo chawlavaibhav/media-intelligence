@@ -2,8 +2,11 @@
 
 **Task:** R4-C · **Date:** 26 Aug 2026 · **Validator:** `validators/validate_topology_v3.py`
 **Controls:** `validators/run_lineage_controls.sh` — originally **executed, 18/18 as declared**;
-after the 2026-08-28 G12 correction (below) the suite is **28 controls** (2 positives, 26
-negatives) — **executed, 28/28 as declared**.
+after the 2026-08-28 G12 correction (below) the suite grew to 28, and after the same-day
+Review-2 extension it is **41 controls** (2 positives, 39 negatives) — **executed, 41/41 as
+declared**. G12 negative controls also declare the exact invariant they must trip
+(`# EXPECT-SUBSTRING:`), and the runner verifies the failure names that invariant — a control
+cannot pass by accidentally breaking an unrelated field.
 
 **Correction 2026-08-28 (RES-007 correction pass):** RES-007 stopped on a contract defect —
 v3 inherits the v2.1 attempt contract, but the validator never mechanically checked the
@@ -16,6 +19,19 @@ attempt → step → unit → set → outcome → job → `brief_ref`), and **ev
 required attempt field stays required** — now enforced by gate **G12** below. Every v3
 attempt declares `attempt_kind: production | benchmark_eval` so the rule is fail-closed
 checkable. Historical v2.1 archives are unchanged and never reinterpreted.
+
+**Review-2 extension (same day,
+`coordination/decisions/CONTROLLER-RES-007-CORRECTION-REVIEW-2-2026-08-28.md`):** G12 also
+checks the mechanically explicit v2.1 value constraints, not just field presence — `lane`
+from the frozen vocabulary; `storage_class` exactly `C_irreproducible_empirical`;
+`repeat_index` a 0-based integer (booleans, strings, negatives refused); `prompt_hash`,
+`config_hash` and every `reference_asset_hashes` member a genuine SHA-256 (64 lowercase hex
+characters, the project's hashlib-hexdigest convention; empty reference list stays valid);
+non-null `repeat_of_attempt_id`/`retry_of_attempt_id` resolving to real attempts in the same
+archive; `requested_at` and non-null `completed_at` valid ISO-8601 UTC (null `completed_at`
+stays valid for a call that never completed). Deliberately outside mechanical validation:
+whether a provider/model/endpoint actually exists, URL semantics, and any repeat/retry
+*policy* beyond structural provenance.
 
 ---
 

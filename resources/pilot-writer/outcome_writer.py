@@ -47,6 +47,8 @@ The writer does not call providers, generate media, or spend money. RES-007 budg
 
 import hashlib
 import os
+import re
+from datetime import datetime
 
 import yaml
 
@@ -79,6 +81,20 @@ ATTEMPT_REQUIRED_NON_NULL = ("provider", "model_id", "model_version", "endpoint"
 # refused - an unconstrained field bag is how required provenance went unenforced.
 ATTEMPT_OPTIONAL_FIELDS = {"seed", "settings", "latency_ms"}
 _UNSET = object()
+# SHA-256 as the project records it (hashlib hexdigest): 64 lowercase hex characters.
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+# ISO-8601 UTC as the project records it: 2026-02-01T09:10:00Z (or explicit +00:00).
+ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?(Z|\+00:00)$")
+
+
+def _is_iso_utc(v):
+    if not isinstance(v, str) or not ISO_UTC_RE.match(v):
+        return False
+    try:
+        datetime.fromisoformat(v.replace("Z", "+00:00"))
+        return True
+    except ValueError:
+        return False
 VALID_TRANSFORM_OPERATION = {"concat", "overlay", "mix", "crop", "grade",
                              "encode", "resize", "other"}
 STORAGE_CLASS = "C_irreproducible_empirical"
@@ -327,10 +343,34 @@ class OutcomeWriter:
                                   f"{field!r} is missing or empty. v3 inherits the "
                                   f"v2.1 attempt contract; an attempt without its call "
                                   f"identity is not verifiable evidence (G12)")
+        for hash_field, value in (("prompt_hash", prompt_hash),
+                                  ("config_hash", config_hash)):
+            if not (isinstance(value, str) and SHA256_RE.match(value)):
+                raise WriterError(f"attempt {attempt_id}: {hash_field} must be a valid "
+                                  f"SHA-256 - 64 lowercase hex characters (hashlib "
+                                  f"hexdigest); a placeholder pseudo-hash is not a hash")
         if not isinstance(reference_asset_hashes, list):
             raise WriterError(f"attempt {attempt_id}: reference_asset_hashes must be a "
                               f"list (empty list if none), got "
                               f"{type(reference_asset_hashes).__name__}")
+        for h in reference_asset_hashes:
+            if not (isinstance(h, str) and SHA256_RE.match(h)):
+                raise WriterError(f"attempt {attempt_id}: reference_asset_hashes member "
+                                  f"{str(h)[:20]!r} is not a valid SHA-256")
+        if not isinstance(repeat_index, int) or isinstance(repeat_index, bool) \
+                or repeat_index < 0:
+            raise WriterError(f"attempt {attempt_id}: repeat_index {repeat_index!r} must "
+                              f"be an integer >= 0 (booleans, strings, negatives and "
+                              f"null are refused)")
+        if not _is_iso_utc(requested_at):
+            raise WriterError(f"attempt {attempt_id}: requested_at "
+                              f"{str(requested_at)[:30]!r} is not a valid ISO-8601 UTC "
+                              f"timestamp (e.g. 2026-08-28T09:00:00Z)")
+        if completed_at is not _UNSET and completed_at is not None \
+                and not _is_iso_utc(completed_at):
+            raise WriterError(f"attempt {attempt_id}: completed_at "
+                              f"{str(completed_at)[:30]!r} is neither null (call never "
+                              f"completed) nor a valid ISO-8601 UTC timestamp")
         if completed_at is _UNSET:
             raise WriterError(f"attempt {attempt_id}: completed_at must be passed "
                               f"explicitly - a timestamp, or None only where the call "

@@ -343,5 +343,12 @@ mechanical_gates:
         workflow, prompt_hash, config_hash, config_location, reference_asset_hashes,
         requested_at, completed_at, cost_ref, storage_class, repeat/retry fields).
         eval_item_id is required iff benchmark_eval and must be absent/null on production
-        attempts. Added 2026-08-28 under
-        coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md.
+        attempts. Value constraints are checked mechanically, not just presence: lane from
+        the frozen vocabulary; storage_class exactly C_irreproducible_empirical;
+        repeat_index a 0-based integer (booleans are not integers); prompt_hash,
+        config_hash and every reference_asset_hashes member a genuine SHA-256
+        (64 lowercase hex); repeat/retry back-references resolving to real attempts;
+        requested_at and non-null completed_at valid ISO-8601 UTC. Added 2026-08-28 under
+        coordination/decisions/CONTROLLER-PREPILOT-RETURN-REVIEW-1-2026-08-28.md; value
+        constraints extended same day under
+        coordination/decisions/CONTROLLER-RES-007-CORRECTION-REVIEW-2-2026-08-28.md.

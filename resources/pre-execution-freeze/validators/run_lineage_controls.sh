@@ -26,12 +26,19 @@ for f in "$F"/nc-*.yaml; do
   total=$((total+1))
   out=$(python3 "$V" "$f" 2>&1)
   if echo "$out" | grep -q "^\[FAIL:"; then
-    gate=$(echo "$out" | grep -m1 "^\[FAIL:" | sed 's/^\[FAIL:\([^]]*\)\].*/\1/')
+    firstfail=$(echo "$out" | grep -m1 "^\[FAIL:")
+    gate=$(echo "$firstfail" | sed 's/^\[FAIL:\([^]]*\)\].*/\1/')
     expect=$(echo "$n" | sed 's/^nc-\(G[0-9]*\).*/\1/')
-    if [ "$gate" = "$expect" ]; then
-      echo "[PASS] $n  rejected by $gate as declared"; passed=$((passed+1))
-    else
+    # A fixture may declare the exact invariant it must trip (not just the gate), so a
+    # control cannot pass by accidentally breaking some unrelated field.
+    expect_sub=$(grep -m1 '^# EXPECT-SUBSTRING: ' "$f" | sed 's/^# EXPECT-SUBSTRING: //')
+    if [ "$gate" != "$expect" ]; then
       echo "[FAIL] $n  rejected by $gate but declares $expect"; fail=1
+    elif [ -n "$expect_sub" ] && ! echo "$firstfail" | grep -qF "$expect_sub"; then
+      echo "[FAIL] $n  rejected by $gate but not for '$expect_sub': $firstfail"; fail=1
+    else
+      echo "[PASS] $n  rejected by $gate as declared${expect_sub:+ (invariant: $expect_sub)}"
+      passed=$((passed+1))
     fi
   else
     echo "[FAIL] $n  was NOT rejected"; fail=1
