@@ -158,8 +158,9 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 1. **Programme reset is in force.** The 28-Aug T2-T8 v1 plan is superseded for T2 onward by
    `coordination/plans/2026-08-29-PROGRAMME-PLAN-T2-T8-v2-MEDIA-FACTORY-RESET.md`.
    The declined USD 25 workflow/model screen remains declined and must not be re-pitched as-is.
-2. **T2A — next task, zero spend:** import the recovered Media Factory package under Eval ownership
-   as a provenance-preserving **historical empirical prior** set. Preserve evidence tiers, dates,
+2. **T2A / EVAL-036 is authorised at zero spend:** import the recovered Media Factory package under
+   Eval ownership as a provenance-preserving **historical empirical prior** set. Task:
+   `eval/tasks/EVAL-036-MEDIA-FACTORY-HISTORICAL-PRIORS.md`. Preserve evidence tiers, dates,
    hashes, contradictions and freshness risk. **Do not create Registry rows.**
 3. **T2B — after T2A:** freeze a small reasoning-only controlled experiment comparing the **same
    strong reasoning LLM without Canon vs with relevant Canon retrieval**, with repeated runs and
