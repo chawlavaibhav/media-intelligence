@@ -94,6 +94,12 @@ customer-outcome CpAO observations · Production IR / Planner.
 `qualified`/`deterministic` admission bar; **admission must not be weakened to create a first row**
 (`coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md`).
 
+**Important reset clarification (29 Aug): Registry = 0 does NOT mean empirical workflow memory = 0.**
+The Controller has reviewed recovered Media Factory evidence containing dated historical workflow/model
+observations (including a 64-item human-scored still set). These are to be imported as **historical
+empirical priors**, not current Registry rows, under
+`CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`.
+
 **A-TEXT manual review is not project evidence.** Any human re-reading of the 16 images outside
 GitHub must not be recorded or used for a Registry row without a new explicit Controller decision.
 The accepted result is the OCR-observed 7/16.
@@ -149,29 +155,24 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **PILOT-001 / T1 is CLOSED — both candidates human-rejected; no repair remains; no further
-   PILOT-001 provider call is authorised, ever.** Candidate 1: H1/H4/H6 FAIL. Candidate 2
-   (single-scene prompt): 13/13 hard checks PASS, H1/H6 FAIL. Deterministic text/brand passed both
-   times. Outcome line: USD 1.60 provisional consumed / 0 accepted — CpAO undefined for the
-   journey. Root cause recorded: text-to-video from descriptive words with no concrete product
-   hero and no pre-approved visual; the user's prior `media-factory` system succeeded with the
-   inverse (image-first hero still + minimal animate prompt + deterministic composition).
-   Authority: `CONTROLLER-PILOT-001-CANDIDATE-2-REJECTION-AND-T1-CLOSURE-2026-08-28.md`. Residual
-   PILOT-001 headroom (USD 0.40) lapsed. Evidence sealed via the merged execution branch.
-2. **The proposed T2 workflow-then-model screen (USD 25) was DECLINED by the user on 2026-08-28**
-   after reviewing the instantiated prompts. It is dropped: not authorised, not pending, must not
-   be re-pitched as-is. `coordination/plans/2026-08-28-PROGRAMME-PLAN-T2-T8-v1.md` remains a
-   planning reference only. **No paid tranche is currently proposed or authorised. No execution
-   lane is active.** The next paid step, whatever it is, requires fresh user direction and its own
-   Controller decision. The zero-spend prep items authorised by the T1 closure decision remain
-   valid but untasked.
-4. **Before architecture-test media exists**, freeze the representative-deliverable policy,
-   development/holdout split and decision protocol. CANON-013's merged 8/8 split remains only a proposal.
-5. **Registry text rows stay blocked**; admission semantics stay as they are.
-6. **Temporal/identity/speech evaluator qualification remains deferred** until a real product or
-   Registry decision depends on those automated measurements.
-7. **Prices remain incomplete** — execution-time route/price verification is required before each
-   paid tranche; no broad price-refresh task is authorised.
-8. **HED-1 remains undecided** and must be resolved before fully-loaded Stage-C CpAO is scored.
-9. **Stream-owned staleness** routed by GOV-006 remains non-blocking; this file governs where stale
-   handoffs/spec prose disagree with current decisions.
+1. **Programme reset is in force.** The 28-Aug T2-T8 v1 plan is superseded for T2 onward by
+   `coordination/plans/2026-08-29-PROGRAMME-PLAN-T2-T8-v2-MEDIA-FACTORY-RESET.md`.
+   The declined USD 25 workflow/model screen remains declined and must not be re-pitched as-is.
+2. **T2A — next task, zero spend:** import the recovered Media Factory package under Eval ownership
+   as a provenance-preserving **historical empirical prior** set. Preserve evidence tiers, dates,
+   hashes, contradictions and freshness risk. **Do not create Registry rows.**
+3. **T2B — after T2A:** freeze a small reasoning-only controlled experiment comparing the **same
+   strong reasoning LLM without Canon vs with relevant Canon retrieval**, with repeated runs and
+   blind/brief-grounded human judgment. No media generation in the first experiment.
+4. **No paid tranche is active or authorised.** Exact model/call count/cost for T2B must be frozen
+   before seeking user approval.
+5. **PILOT-001 / T1 remains closed** with USD 1.60 provisional consumed / 0 accepted and no further
+   provider call authorised.
+6. **Historical priors are not current capability qualification.** Freshness-test only the routes a
+   real winning workflow needs; the Registry admission bar remains unchanged.
+7. **Production policy is requirement-specific, not dogmatic:** hard exact copy/logo remains
+   deterministic by default; generated non-critical still text may be inspected/accepted; exact
+   text through motion remains a deterministic/tracked prior until current evidence says otherwise.
+8. CANON-013's 8/8 split remains proposed, not frozen; freeze it only before holdout/architecture
+   media that depends on it.
+9. HED-1 remains undecided and must be resolved before fully-loaded holdout/Stage-C CpAO scoring.
