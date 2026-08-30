@@ -35,41 +35,57 @@ Both are exploratory. Neither is an admission decision.
 
 ---
 
-## 2. The finding that shaped this run — source access
+## 2. Source access — how the portfolio was decided
 
-The single most consequential thing this task established is **not** an extraction result. It is
-that most of the local library cannot be cleared for use under this task's source-access rules.
+The local library is `~/Downloads/Books/` — 40 files, 37 distinct titles. Its licence status had
+never been settled: CANON-003's source inventory
+(`canon/findings/CANON-003-source-inventory-and-selection.md` §2) records *"**NOT VERIFIED:** the
+licence status of any of these copies. This is a Controller question, not one this extraction can
+settle."*
 
-The local library is `~/Downloads/Books/` — 40 files, 37 distinct titles. Its status:
+This run began by holding the whole library back on exactly that ground. **The Controller then
+explicitly authorised read-only use of the already-present local library for this experimental
+task**, answering the question CANON-003 had reserved to them. That decision is what set the
+portfolio below.
 
-- **Six files carry an explicit `libgen.li` marker in the filename**, indicating a piracy-mirror
-  origin. Those are excluded outright.
-- **The project's own record already flags the rest as unresolved.** CANON-003's source inventory
-  (`canon/findings/CANON-003-source-inventory-and-selection.md` §2) states: *"**NOT VERIFIED:** the
-  licence status of any of these copies. This is a Controller question, not one this extraction can
-  settle."*
-- This task's rules permit only "legitimately owned", "publisher-authorised",
-  "institution-authorised", "creator-authorised", "openly licensed" or "other **clearly legitimate**
-  access". **"Not verified" is not "clearly legitimate."**
+**What the authorisation does and does not cover.** It authorises reading files already on the
+Controller's disk. It does not change any copy's provenance, and it is recorded as an authorisation
+rather than as a finding of ownership. Accordingly:
 
-So the in-copyright commercial titles are recorded as `available = false`,
-`legitimate_access_basis = not established`, and were not opened. That is **not** an accusation
-about any individual file — it is the honest statement that this task could not establish the basis
-its own rules require, on a question the project has explicitly reserved to the Controller.
+- Nothing was acquired, purchased, downloaded, de-DRM'd, scraped past a paywall, or accessed with
+  anyone's credentials. **No book bytes and no page images are committed anywhere in this
+  directory.** Extraction output is paraphrase, not reproduction.
+- Every processed source's `PROVENANCE.md` states plainly that the licence status of the individual
+  copy is **not independently verified**. An inventory that omits provenance defeats its own
+  purpose, and this corpus has been caught by that before.
 
-**What survived that filter, and why:**
+**Six files are excluded despite the authorisation.** Their filenames carry an explicit `libgen.li`
+marker — direct evidence of piracy-mirror origin, which contradicts rather than supports an
+ownership assertion. A general authorisation over a library does not resolve a specific file that
+records where it came from. (The environment's own safety classifier independently refused to read
+them, which is consistent.) They are recorded, not processed:
 
-| Source | Why it clears the bar |
+Lupton *Thinking with Type* · Molly Bang *Picture This* · Williams *The Non-Designer's Design Book*
+· Albers *Interaction of Color* · Berger *Ways of Seeing* · Graham *Hackers and Painters*
+
+The real cost is narrow: Albers is already live Canon, Berger is an image-only scan and unreadable
+anyway, Graham is out of domain, and the remaining three were already processed historically under
+the superseded SPEC-02 atom schema. What is lost is a **re-extraction of those three under the
+current architecture** — worth doing, and cleanly separable as its own task.
+
+**Four sources needed no authorisation at all**, and it is worth keeping them distinct because their
+basis is stronger than anyone's permission:
+
+| Source | Basis |
 |---|---|
-| Hopkins, *My Life in Advertising* (1927) | The **work** is in the public domain (US term for 1927 publications expired 1 Jan 2023; author died 1932). Copyright status of the work governs, independent of which scan is on disk. |
-| Hopkins, *Scientific Advertising* ch. 8–21 (1923) | Same: US term for 1923 publications expired 1 Jan 2019. |
-| W3C, WCAG 2.2 | Openly published standard under the W3C Document Licence. |
-| Google, "ABCDs of effective video ads" | Publisher-authorised, free, unauthenticated, from Google-owned pages. A third-party Scribd reupload of a fuller guide exists and was **deliberately not used**. |
+| Hopkins, *My Life in Advertising* (1927) | The **work** is public domain — US term for 1927 publications expired 1 Jan 2023; author died 1932. Copyright status of the work governs, whichever scan is on disk. |
+| Hopkins, *Scientific Advertising* ch. 8–21 (1923) | Same — US term expired 1 Jan 2019. |
+| W3C, WCAG 2.2 | Openly published standard, W3C Document Licence. |
+| Google, "ABCDs of effective video ads" | Publisher-authorised, free, unauthenticated, Google-owned pages. A third-party Scribd reupload of a fuller guide exists and was **deliberately not used**. |
 
-**Nothing was purchased, downloaded from a mirror, de-DRM'd, scraped past a paywall, or accessed
-through anyone's credentials.** Two candidates were abandoned rather than routed around: the Dalvi
-Devanagari thesis (IIT Bombay SSO — the same wall CANON-008 stopped at) and the Cayla & Elson
-article (journal paywall).
+**Two candidates were abandoned rather than routed around**: the Dalvi Devanagari thesis (IIT Bombay
+SSO — the wall CANON-008 already stopped at) and the Cayla & Elson article (journal paywall). No
+mirror, reupload, torrent or scraped copy was used for anything in this run.
 
 ---
 
@@ -80,21 +96,41 @@ Full row-per-candidate detail: **`SOURCE-STATUS.csv`** (46 rows).
 | Disposition | Count |
 |---|---|
 | Candidate sources inventoried | **46** |
-| **Processed** | **4** |
-| Skipped — already live Canon | 19 |
-| Skipped — already processed historically, not live (and access not established) | 3 |
-| Skipped — blocked on source integrity (image-only scan / no extractor) | 4 |
-| Skipped — access legitimacy not established | 11 |
+| **Processed** | **17** |
+| Skipped — already live Canon, scope extension not prioritised this run | 14 |
+| Excluded — explicit `libgen.li` piracy-mirror marker | 6 |
+| Excluded — unreadable (image-only scan / `.mobi`, no extractor) | 3 |
+| Skipped — out of domain | 1 |
 | Unavailable — official route failed or identity unresolved | 5 |
 
-### Processed
+### Processed — 17 sources
 
-| # | Source | Kind | Scope | Overlap with live Canon |
-|---|---|---|---|---|
-| 1 | **Claude C. Hopkins, *My Life in Advertising*** (Harper & Brothers, 1927) | full book, new source | 19 chapters, printed pp. 1–208 | **`shared_author` dependence** with live `hopkins-scientific-advertising-ch1-7`. **Not an independent origin against it.** |
-| 2 | **Claude C. Hopkins, *Scientific Advertising*** ch. 8–21 (1923) | **scope extension** of a live source | printed pp. 25–64 | **Same work** as live `hopkins-scientific-advertising-ch1-7`. Zero independence. Ch. 1–7 knowledge deliberately not re-extracted. |
-| 3 | **W3C, WCAG 2.2** — Guideline 1.4 contrast / text-presentation criteria | open standard | success criteria + normative glossary + non-normative Understanding notes | None. Independent origin. The corpus's first standards document and its first numeric criteria. |
-| 4 | **Google, "ABCDs of effective video ads"** | platform guidance | 3 official Google pages, retrieved 30 Aug 2026 | None. Independent origin. The corpus's first short-form / feed-native source. |
+**Twelve are new independent origins. Five are scope extensions of works already in live Canon** and
+carry **zero** independence against their live counterpart — same work, same author.
+
+| # | Source | Kind | Overlap with live Canon |
+|---|---|---|---|
+| 1 | Hopkins, *My Life in Advertising* (1927) | full book | **`shared_author` dependence** with live `hopkins-scientific-advertising-ch1-7`; its ch.17 is *about* that book. **Not an independent origin against it.** |
+| 2 | Hopkins, *Scientific Advertising* ch. 8–21 (1923) | **scope extension** | Same work as live `hopkins-scientific-advertising-ch1-7`. Zero independence. |
+| 3 | W3C, **WCAG 2.2** — Guideline 1.4 | open standard | None. Corpus's first standards document and first numeric criteria. |
+| 4 | Google, **"ABCDs of effective video ads"** | platform guidance | None. Corpus's first short-form / feed-native source. |
+| 5 | Sullivan, ***Hey, Whipple, Squeeze This*** | full book | None. Creative-department tradition; disagrees with the reason-why school held by live Ogilvy and Hopkins. |
+| 6 | Connor & Irizarry, ***Discussing Design*** | full book | None. Nearest live neighbour `catmull-creativity-inc-ch5`. The corpus's first source on how judgement itself is conducted. |
+| 7 | Hunter/Biver/Fuqua, ***Light: Science & Magic*** beyond ch. 3 | **scope extension** | Same work as live `light-science-magic-ch3`. Zero independence. Targets the open **G4 packshot gap**. |
+| 8 | Samara, ***Making and Breaking the Grid*** ch. 2 | **scope extension** | Same work as live `samara-making-breaking-grid-ch1`. Zero independence. Ch.2 is the book's own **counter-argument** to the live material. |
+| 9 | Airey, ***Logo Design Love*** | full book | None. Brand-identity marks; nearest live neighbour `vignelli-canon-intangibles`. |
+| 10 | Berger, ***Contagious*** | full book | None. Corpus's strongest empirical-social source; adjacent in kind to live `heath-made-to-stick-introduction`. |
+| 11 | Ries & Ries, ***The 22 Immutable Laws of Branding*** | full book | None. **Materially disagrees with live `binet-field-effectiveness-in-context-ch1`** — recorded, not resolved. |
+| 12 | Kahneman/Sibony/Sunstein, ***Noise*** | full book (judgement material only) | None. No live source covers how human judgement behaves. |
+| 13 | Carroll, ***Read This If You Want to Take Great Photographs*** | full book (small) | None. Subject overlap with live `freeman-photographers-eye-graphic-guide`. |
+| 14 | Ogilvy, ***Ogilvy on Advertising*** beyond ch. 2 | **scope extension** | Same work as live `ogilvy-ch2-advertising-that-sells`. Zero independence. |
+| 15 | Freeman, ***The Photographer's Eye*** beyond Parts 1–3 | **scope extension** | Same work as live `freeman-photographers-eye-graphic-guide`. Zero independence. |
+| 16 | Godin, ***This Is Marketing*** | full book | None. Adjacent to live `miller-storybrand-sb7`. |
+| 17 | Sontag, ***On Photography*** | full book (transferable material only) | None. Extracted under the project's own standing warning that this is **"critique, not craft"**. |
+
+**Independence accounting, stated plainly:** this run adds **12** independent origins, not 17. The
+five scope extensions deepen origins the Canon already had. Hopkins's *My Life in Advertising* is a
+new work but **not** a new origin against the Hopkins already in Canon.
 
 ### Unavailable — recorded, not routed around
 
@@ -170,13 +206,16 @@ Repository-level files:
    sources, so under `canon/audit/AUDIT-GATE-v0.2.md` none of them may be used for cross-source
    promotion, downstream product use, or retrieval work. They are source evidence, not accepted
    knowledge.
-2. **Access legitimacy, not source quality, determined the portfolio.** The four sources processed
-   are the ones whose access basis could be established — not the four the Canon most needs. Eleven
-   genuinely unconsumed, subject-relevant titles sit unopened behind an unresolved licence question
-   that only the Controller can settle. This is the single biggest limitation of the run.
-3. **Two of the four processed sources are the same author** (Hopkins), and one of those is a scope
-   extension of a source already live. In independence terms this run adds **two** independent
-   origins (WCAG, Google ABCD), not four.
+2. **The run adds 12 independent origins, not 17.** Five of the seventeen are scope extensions of
+   works already live, with zero independence against their counterpart, and *My Life in
+   Advertising* is a new work by an author already in Canon. Any later cross-source promotion must
+   use the pairwise dependence rules, not a count of directory names — the failure SPEC-05
+   governance rule 5 exists to prevent.
+3. **Six files were excluded despite the Controller's authorisation** because their filenames record
+   a piracy-mirror origin. Three of those (Lupton, Bang, Williams) were processed historically under
+   the superseded SPEC-02 atom schema, so a re-extraction under the current architecture — which the
+   portfolio noted might close gap **G9** at zero acquisition cost — did **not** happen and remains
+   open.
 4. **Hopkins is heavily era-bound.** Mail order, coupon keying, door-to-door sampling, 1920s
    American consumer culture. Objects are labelled `historical_claim` / `culturally_bounded`, and
    they were **not** modernised. Some passages reflect 1927 attitudes to gender and class, and one

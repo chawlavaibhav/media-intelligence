@@ -1,0 +1,321 @@
+# W3C, WCAG 2.2 — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. Lane 3, book-expansion-qa-v1.
+#
+# THE GAP, STATED ONCE AND REPEATED IN EVERY applicability.limits:
+# WCAG 2.2 is an accessibility conformance standard for web content rendered by a user agent under
+# user control. It sets thresholds so that readers with low vision and colour-vision deficiency can
+# perceive content. It makes NO claim that meeting a threshold makes a piece of communication
+# effective, and NO claim that failing one makes creative work bad. Applying its numbers to a
+# generated still, a thumbnail, a packshot or a feed creative is OUR extrapolation. Every binding
+# that does so carries evidence_basis: extractor_inference.
+#
+# No creative_ir binding is written: SPEC-01 was not supplied to this lane, so no target_path could be
+# named honestly. No production binding is written: this source describes no physical production act.
+# Per the schema contract, neither cross_source_supported nor empirically_supported is used anywhere.
+
+source_id: w3c-wcag22-text-legibility
+
+operational_bindings:
+
+- binding_id: bnd_wcag_001
+  source_knowledge_refs: [sk_wcag_0001, sk_wcag_0002, sk_wcag_0014, sk_wcag_0020]
+  source_system_refs: [scs_wcag_001]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, flags]
+  observation_unit: frame
+  rationale: >
+    The Canon holds no numeric acceptance criterion of any kind. This source supplies a computable one
+    with a published formula and a published derivation, which makes it usable as an external reference
+    measure on overlaid text in a rendered frame: extract the two colours, compute the ratio, report it
+    alongside the threshold that would apply on the web. The value of the binding is that the number is
+    reproducible and its provenance is citable, not that the number is the right target for creative
+    work.
+  applicability:
+    when: "a generated or composited frame carries flat overlaid text on a flat or near-flat field, and both colours can be sampled"
+    limits: >
+      The source is a web-accessibility standard. It defines this measure for text specified in markup
+      and rendered by a user agent, and its thresholds are compensation factors for measurable acuity
+      loss. Nothing in it addresses viewing distance on a phone, a two-second feed impression, motion,
+      compression, or whether the text is noticed. Reporting the number is defensible; treating a pass
+      as evidence of good creative work, or a fail as evidence of bad, is not something this source
+      supports. Report the ratio and the applicable threshold, and label the threshold as WCAG's.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_wcag_0014]
+  repair_ontology_refs: [t_wcag_0021]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_002
+  source_knowledge_refs: [sk_wcag_0021, sk_wcag_0022, sk_wcag_0023, sk_wcag_0024]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: frame
+  rationale: >
+    The 3:1 branch is not available for the asking. It is gated by a definition with a weight test, a
+    script-equivalence clause for CJK, an instruction that the size meant is the size at delivery, and
+    a warning that thin or unfamiliar letterforms are harder to read at exactly the lower contrast the
+    branch permits. An evaluator that applies 3:1 on the strength of "it looks like a headline" has
+    skipped all four. This binding constrains the branch: it may be taken only where size, weight and
+    script are established, and it should be withheld where the face is thin-stroked.
+  applicability:
+    when: "an evaluator is deciding whether the relaxed contrast threshold applies to a piece of overlaid text"
+    limits: >
+      The source's procedure for establishing point size is to ask the user agent or compute from font
+      metrics as a user agent does. A delivered image has no user agent to ask, and the source's own
+      Understanding note warns that specifying point sizes inside an image editor is unreliable because
+      applications default to different pixel densities. So the definition can be honoured in spirit —
+      size and weight established, thin faces excluded — but not executed as written outside a
+      rendered document. That gap is ours, not a defect in the source.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_wcag_0019]
+  repair_ontology_refs: [t_wcag_0024]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_003
+  source_knowledge_refs: [sk_wcag_0016, sk_wcag_0018, sk_wcag_0019]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, diagnoses]
+  observation_unit: frame
+  rationale: >
+    The source defines the measurement against a specified background, and lists "background images
+    that do not provide sufficient contrast with foreground text" as a documented failure rather than
+    as a measurement case. Text over a photograph — the ordinary condition of a thumbnail or a
+    packshot — therefore has no single defined value under this source. The binding is to detect the
+    condition and flag it as unmeasurable-as-specified rather than to compute an average and present it
+    as a ratio. The source's letter-border note is the exception that can rescue such a case: a narrow
+    outline is counted as the letter, a wide one becomes the effective background.
+  applicability:
+    when: "overlaid text sits on a varying, photographic or gradient field rather than a flat colour"
+    limits: >
+      The source addresses this only obliquely: it names the failure, and its non-normative note on
+      graphical objects says to test the least-contrasting area of a gradient. Extending that to a
+      per-glyph worst-case measurement over a photograph is our construction, not the source's method.
+      The honest output is a flag plus a worst-case number labelled as ours.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_wcag_0016]
+  repair_ontology_refs: [t_wcag_0021]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_004
+  source_knowledge_refs: [sk_wcag_0007, sk_wcag_0038]
+  source_system_refs: [scs_wcag_004]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    This is the one criterion in the set that is genuinely about meaning rather than measurement, and
+    it detects a failure no per-pixel measure can. Where an asset encodes a distinction — a legend, a
+    before-and-after, a comparison, a status — the question is whether hue alone carries it. The source
+    supplies both the test and its limit: a lightness difference reaching 3:1 discharges the
+    requirement, unless the reader must identify which colour it is, in which case nothing does. The
+    observation unit is the whole asset because a legend and the thing it labels can be far apart.
+  applicability:
+    when: "an asset distinguishes categories, states or series, and the distinction is carried visually"
+    limits: >
+      The source's frame is web content, where the reader can consult a legend at leisure. It says
+      nothing about a viewer who sees an asset for two seconds, and nothing about brand systems in
+      which colour coding is itself the intended message. Reading a colour-coded creative as failing
+      this criterion is applying a web-conformance test to a communication choice; the finding is a
+      perceptibility observation, not a verdict on the work.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_wcag_0013]
+  repair_ontology_refs: [t_wcag_0020]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_005
+  source_knowledge_refs: [sk_wcag_0006, sk_wcag_0036]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, evaluates]
+  observation_unit: frame
+  rationale: >
+    The source's "assume the low-contrast area is invisible, is it still understandable" procedure is
+    the most transferable thing in this extraction, because it converts a contrast question into a
+    comprehension question and therefore needs no threshold to be useful. Applied to icons, badges,
+    arrows, chart marks and callouts in a generated frame, it produces a specific, checkable finding:
+    name the object, name the part that carries the meaning, remove it, say what is lost.
+  applicability:
+    when: "a frame contains an icon, symbol, chart element or diagrammatic mark that carries meaning"
+    limits: >
+      The procedure is non-normative guidance for a web criterion; the 3:1 figure attached to it is
+      normative for web content and is not established for any other surface. The source also allows
+      Gestalt reasoning inside the test, which makes the outcome a judgement rather than a measurement
+      — so two evaluators may honestly disagree, and the finding should carry the reasoning, not just
+      a verdict.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_wcag_0014]
+  repair_ontology_refs: [t_wcag_0025]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_006
+  source_knowledge_refs: [sk_wcag_0003, sk_wcag_0004, sk_wcag_0034, sk_wcag_0039]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  observation_unit: whole_asset
+  rationale: >
+    An evaluator built on these criteria must distinguish three outcomes that are easy to collapse into
+    one: measured and met, measured and not met, and out of scope. Logotypes, disabled controls,
+    genuinely decorative words, and text incidental to a photograph are out of scope — the source
+    removes the requirement rather than certifying the result. Recording an exclusion as a pass would
+    misreport the asset. The source additionally supplies the condition that keeps the logo exclusion
+    honest: where the low-contrast presentation was an author choice rather than mandated by brand
+    guidelines, it is not essential and not exempt.
+  applicability:
+    when: "an asset contains a brand lockup, a wordmark, an inactive-looking control, or letterforms inside a photographed scene"
+    limits: >
+      The narrowing condition on the logo exclusion is non-normative and sits alongside a normative
+      clause that exempts logotype text without any condition at all. An evaluator that enforces the
+      condition is applying a Working Group Note as if it were a requirement, and should say so. The
+      distinction between a brand-mandated colour and an author's low-contrast choice is also not
+      observable from the asset; it needs the brand guideline.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_wcag_0026]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_007
+  source_knowledge_refs: [sk_wcag_0029, sk_wcag_0030, sk_wcag_0033]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  governance_consumer: evidence_interpretation
+  rationale: >
+    This source is the corpus's first with a formally declared internal authority split, and it declares
+    it in its own glossary: normative means required for conformance, informative means not. The split
+    is not decorative — the thresholds are normative and the reasoning that makes them intelligible is
+    not, so almost everything worth retrieving from this source sits at the weaker level. Any layer that
+    weighs evidence must be able to represent "the source states this, but only in material it itself
+    classifies as not required," and must not let a rationale note be retrieved as a rule.
+  applicability:
+    when: "evidence characteristics are being weighted, or a claim from a standards document is being retrieved"
+    limits: >
+      The precedent is clean but narrow: it is one standards body's own two-level scheme. It does not
+      generalise to practitioner books, which declare no levels and where the equivalent distinction —
+      assertion versus demonstration — is the extractor's to make.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_008
+  source_knowledge_refs: [sk_wcag_0001, sk_wcag_0022, sk_wcag_0033]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  governance_consumer: rule_application
+  rationale: >
+    A numeric threshold is far more portable than a practitioner's judgement, and that is exactly the
+    hazard: it can be lifted out of its purpose and applied as a general quality rule without anyone
+    noticing the substitution. This source hands us the guard rails itself. Its thresholds are stated
+    as compensation for measurable acuity loss; its own notes concede that a nominal pass can be
+    practically faint, and that thin or unfamiliar letterforms are harder to read regardless of the
+    number. The rule this binding asserts is that a WCAG threshold may be applied only with its purpose
+    and authority level attached, and may never be retrieved as a bare number.
+  applicability:
+    when: "any WCAG-derived threshold is being applied outside web content, or presented as an acceptance criterion"
+    limits: >
+      This is a constraint on our own use, not a claim the source makes about itself. The source does
+      not discuss non-web application at all — which is precisely why the constraint is needed rather
+      than optional.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_wcag_0017, t_wcag_0019]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_009
+  source_knowledge_refs: [sk_wcag_0001, sk_wcag_0002, sk_wcag_0021, sk_wcag_0033]
+  source_system_refs: [scs_wcag_001]
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  rationale: >
+    Threshold criteria generate minimal pairs directly and cheaply, which is rare. Two families follow:
+    pairs that straddle a ratio boundary with everything else held (the source states the boundary is
+    unrounded, so 4.49:1 and 4.51:1 are a genuine pair), and pairs that straddle the large-scale
+    boundary in size or weight while holding the colours (17.5pt versus 18pt; 14pt regular versus 14pt
+    bold — the second changes the applicable threshold from 4.5:1 to 3:1 without changing size at all).
+    A judge that cannot separate these does not know the criterion.
+  applicability:
+    when: "building test cases that probe whether a system has learned the boundary rather than the headline number"
+    limits: >
+      The pairs test knowledge of this standard. They say nothing about whether either member of a pair
+      communicates better, and results on them must not be reported as legibility findings.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_wcag_010
+  source_knowledge_refs: [sk_wcag_0003, sk_wcag_0004, sk_wcag_0025, sk_wcag_0027, sk_wcag_0028, sk_wcag_0035]
+  source_system_refs: [scs_wcag_003]
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  rationale: >
+    The exceptions are unusually precisely drawn and mutually confusable, which makes them a strong test
+    set for whether a system has learned the structure of the standard or only its numbers. A single
+    stimulus family — letterforms appearing inside an image — spans four different verdicts depending
+    on facts that are stated, not visible: a wordmark, a street sign inside a photograph, a heading
+    rendered as a bitmap to obtain a typeface, and background words that could be substituted without
+    changing anything. Three are out of scope on three different grounds; one is squarely in scope.
+  applicability:
+    when: "testing whether a system can route a case to the right exception, and can distinguish an exemption from a pass"
+    limits: >
+      The items test the source's own classification scheme. Several of the distinctions turn on
+      authorial intent or on a brand mandate, which cannot be recovered from the image — so each item
+      must carry the stated facts, and any version that expects the verdict from the picture alone is
+      testing something the source does not claim is decidable.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

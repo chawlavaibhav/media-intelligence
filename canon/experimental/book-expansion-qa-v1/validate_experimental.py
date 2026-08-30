@@ -94,9 +94,12 @@ PRODUCT_VOCAB = [
 ]
 CONFIDENCE_KEY_RE = re.compile(r"^(confidence|certainty|score|rating|probability)$", re.I)
 
-# Real printed-page spans, established from the scanned copies themselves.
+# Real printed-page spans of the AUTHOR'S OWN TEXT, established page by page from the scanned
+# copies themselves. Beyond these the scans carry publisher advertising, not the book:
+# My Life ends at printed 206 (PDF 220; printed 207+ is Harper's own book announcements);
+# Scientific Advertising ends at printed 64 (PDF 72; printed 65+ is Snowball/BN back matter).
 PAGE_SPANS = {
-    "hopkins-my-life-in-advertising": (1, 210),
+    "hopkins-my-life-in-advertising": (1, 206),
     "hopkins-scientific-advertising-ch8-21": (25, 64),
 }
 PAGELESS = {"w3c-wcag22-text-legibility", "google-abcd-video-ads"}
