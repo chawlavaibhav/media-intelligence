@@ -1,0 +1,645 @@
+# Al Ries & Laura Ries, *The 22 Immutable Laws of Branding* (HarperBusiness, 2002 combined ed.)
+# SPEC-03 SourceKnowledge. EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge.
+#
+# LOCATORS: Case 1. printed page = PDF page - 17, folio verified on six rendered pages by this
+# lane (see PROVENANCE.md §2). page_start / page_end carry PRINTED numbers throughout. The real
+# printed span of this volume is 1-240; the span extracted here is the Introduction (roman ix-xvi,
+# recorded as null pages with the roman range in provenance.section) and chapters 1-22, printed
+# pp. 3-110. Nothing here cites outside that.
+#
+# EVIDENCE LEVEL — STATED ONCE, AND IT GOVERNS EVERY OBJECT BELOW:
+# The word "law" in this book is the authors' rhetoric, not a finding. These are two practising
+# positioning consultants writing about their own clients and about companies whose outcomes were
+# already known when they wrote. The book reports NO measurement of its own: no study, no
+# controlled comparison, no base rate, no counting method, no sample. Every quantitative statement
+# in this span is either a third-party figure reported second-hand, a before/after share pair with
+# no comparison group, research invoked but not reported ("our research indicates", "years of
+# observation have led us to this conclusion"), or a decorative count. `empirical_within_source`
+# is therefore used ZERO times in this file. That is a finding about the source, not an omission;
+# PROVENANCE.md §7 sets out the four rejected candidate cases individually.
+# Accordingly every law-bearing object carries `practitioner_assertion`, most carry `anecdotal`
+# and `outcome_claimed`, and every object resting on named companies carries `historical_claim`.
+#
+# SURVIVORSHIP AND HINDSIGHT ARE UNMANAGED IN THE SOURCE. Cases are selected after outcomes were
+# known. Successes are read back as compliance with the laws; failures as violation of them. The
+# book presents almost no focused brand that failed and almost no extended brand that kept
+# succeeding — the three it cannot avoid (Diet Coke, Vaseline Intensive Care, General Electric)
+# are each re-labelled rather than counted against the law. Every affected object carries an
+# `extractor_observed` caveat saying so in its own terms. It is never softened into the `claim`.
+#
+# PERIOD. Every company example is pre-2002. This lane has deliberately NOT updated any example
+# with what happened to those companies afterwards: there is no source for that here and doing so
+# would be invention. `historical_claim` marks the affected objects.
+#
+# SUBJECT. This book is about brands and markets. It says nothing about generative media, and no
+# inference about any model's capability has been drawn from it anywhere in this directory.
+#
+# FIGURES. The volume advertises "added illustrations"; none survive in this copy's text layer and
+# none was inspected. Every object is `source_support: text`. See EXTRACTION-NOTES.md,
+# `figure_semantic_binding_lost`.
+
+source_id: ries-22-immutable-laws-branding
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART A — THE INTRODUCTION'S FRAME: WHAT THE AUTHORS THINK A BRAND IS
+# Introduction, printed pp. ix-xvi
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_r22_0001
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "A brand name is nothing but a word in the mind"
+    - "Any and every proper noun is a brand"
+  concept_label: a_brand_is_a_proper_noun_held_in_a_mind_not_a_marketing_artefact
+  label_origin: extractor_assigned
+  claim: >
+    The authors reject every distinction the marketing trade draws between company names, division
+    names, brand names, model names, subbrands, megabrands and flanker brands. On paper there is
+    no difference; inside the prospect's mind all of the variations vanish, because people do not
+    talk or think in those categories. A brand, for them, is simply a proper noun lodged in a mind
+    — which makes brands not limited to registered trademarks, and makes places, people and
+    individuals brands too. The power of a brand is defined narrowly as its ability to influence
+    purchasing behaviour, and they insist a brand name on a package is not the same thing as a
+    brand name in a mind: the same shopper buys milk and bread as commodities and beer and
+    cigarettes by brand in the same trip.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The test they apply is conversational: imagine a customer saying to a friend "what do you
+      think of this new flanker brand?" Nobody talks that way, so the distinction has no existence
+      in the only place the authors regard as real, which is the mind of the prospect. Everything
+      that cannot be spoken by an ordinary customer is treated as an internal fiction.
+  scope:
+    domain_discussed_by_source: [brand_strategy, consumer_marketing, us_consumer_markets_late_twentieth_century]
+    conditions: "the authors state it without limit; they apply it to companies, places and individuals alike"
+  caveats:
+    - text: "the argument is entirely definitional — the authors offer no evidence that customers cannot hold hierarchical brand structures, only the observation that customers do not say the words"
+      origin: extractor_observed
+    - text: "'you are a brand' is asserted as advice for personal success and is outside anything the book examines"
+      origin: extractor_observed
+  source_stated_problems:
+    - "marketing people have all sorts of definitions for company names, division names, brand names, and model names, not to mention subbrands, megabrands, flanker brands"
+  source_stated_remedies:
+    - "when you look inside the mind of the prospect all of these variations disappear"
+  examples:
+    positive:
+      - description: "Philadelphia as simultaneously the cream cheese brand and the city; Patagonia as clothing line and tourist region"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_r22_0029, note: "the Law of the Name restates this as the long-run claim that a brand is nothing more than a name"}
+    - {relation: generalises, target: sk_r22_0039, note: "the Law of the Company is this definition applied to the company/brand question"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "printed pp. xi-xii (roman folios)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0002
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "Marketing is not selling. Marketing is building a brand in the mind of the prospect."
+    - "Branding 'pre-sells' the product or service to the user."
+  concept_label: marketing_is_brand_building_and_selling_is_in_decline
+  label_origin: extractor_assigned
+  claim: >
+    The authors hold that conventional marketing is built on selling when it should be built on
+    branding, and that the two are so linked that marketing cannot be treated as one function
+    among others — everything a company does contributes to the brand, so the whole company is the
+    branding department. They further claim a "seismic shift" from selling to buying: most
+    products and services are now bought rather than sold, self-service has spread from the
+    supermarket across retailing, and the salesperson's verbal endorsement has been replaced by
+    the brand name itself acting as the guarantee.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The brand carries the function the salesperson used to carry. In a self-service aisle nobody
+      is selling, yet choosing happens; the authors locate the selling inside the brand name, which
+      stands in for a personal recommendation. Branding is therefore described as a more efficient
+      way to sell rather than an alternative to it.
+  scope:
+    domain_discussed_by_source: [brand_strategy, retailing, consumer_marketing]
+    conditions: "self-service and multi-brand retail environments; they extend it to car dealers, bookstores, pharmacies and department stores"
+  caveats:
+    - text: "the retail-shift evidence is a list of sectors the authors say are moving that way, with no measurement of the shift and no counter-sector examined"
+      origin: extractor_observed
+    - text: "the claim that marketing will be replaced by 'branding' is offered explicitly as something they can 'visualize', i.e. a forecast"
+      origin: source_stated
+    - text: "period-bound: written before 2002 and framed against the retail landscape of that moment"
+      origin: extractor_observed
+  source_stated_problems:
+    - "conventional marketing is based on selling when it should be based on branding"
+  source_stated_remedies:
+    - "if the entire company is the marketing department, then the entire company is the branding department"
+  examples:
+    positive:
+      - description: "the one-price no-haggling Saturn strategy spreading among car dealers; department stores where salesclerks only ring up sales"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_r22_0001, note: "rests on the definition of a brand as a word in a mind"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "printed pp. x-xi (roman folios)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0003
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "You can build a brand in any category, including bread and milk, as long as you follow the laws of branding"
+  concept_label: no_category_is_inherently_a_commodity_category
+  label_origin: extractor_assigned
+  claim: >
+    The authors deny the conventional split between brand categories (beer, cigarettes) and
+    commodity categories (bread, milk). They accept the split is "literally true" as a description
+    of current buying behaviour but argue it describes only what has been done so far, not what is
+    possible: a brand can be built in any category whatever, provided the laws are followed. Their
+    demonstration case is bottled water, which they treat as the limiting case of a commodity
+    because tap water is free and adequate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [brand_strategy, consumer_packaged_goods]
+    conditions: "asserted without category limit"
+  caveats:
+    - text: "no mechanism is offered for why a commodity can be branded — the argument is carried entirely by the existence of Evian, Lactaid, Silk and Earth Grains, with no account of how many attempts at branding a commodity failed"
+      origin: extractor_observed
+    - text: "the Evian price comparison (a 1.5-litre purchase, per-litre against Budweiser and Borden's milk on the same day) is a single anecdotal observation the authors made while shopping"
+      origin: extractor_observed
+  source_stated_problems:
+    - "conventional wisdom suggests that beer and cigarettes are different from bread and milk"
+  source_stated_remedies:
+    - "turn your water into Evian"
+  examples:
+    positive:
+      - description: "Evian selling per litre above Budweiser and above Borden's milk, offered as the demonstration that a commodity can carry a brand premium"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_r22_0004, note: "the same universality framing is what makes the laws unfalsifiable in the authors' hands"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, outcome_claimed, mechanism_absent, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "printed p. xiii (roman folio)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0004
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "most dotcom failures are branding failures"
+    - "You can't build a brand in the real world, and you certainly can't build a brand on the Internet, if you violate the laws of branding."
+  concept_label: outcomes_are_read_back_as_compliance_or_violation_of_the_laws
+  label_origin: extractor_assigned
+  claim: >
+    The authors' method of demonstrating the laws, stated openly in the Introduction, is to take
+    known outcomes and assign each one to a law that was followed or broken. Named failures are
+    each attributed to the violation of a specific numbered law, and named successes are attributed
+    to "good branding"; the authors then predict that companies following the principles will
+    succeed. They also assert that the laws apply equally to the Internet and to the real world,
+    so no market is outside their reach.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [brand_strategy, internet_commerce]
+    conditions: "the authors state no condition; the laws are asserted to hold universally"
+  caveats:
+    - text: "recorded here as a description of the book's method, not as an endorsement of it: because every outcome can be assigned to some law after the fact, no outcome in this book is capable of counting against a law"
+      origin: extractor_observed
+    - text: "no base rate is given anywhere in the span — the reader is never told how many focused brands were launched, how many extensions were launched, or what share of each survived"
+      origin: extractor_observed
+    - text: "sharply period-bound: the dotcom cases are of 1999-2001 and their later fates are outside this copy"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the dotcom boom has become the dotcom bust"
+  source_stated_remedies:
+    - "study both the Internet itself and the laws of branding"
+  examples:
+    positive:
+      - description: "Amazon.com, eBay, Monster.com and America Online named as branding successes"
+        figure_ref: null
+    counter:
+      - description: "Pets.com, eToys.com and others assigned to a violation of the Law of the Common Name; BarnesandNoble.com and Walmart.com to the Law of Either/Or — each failure matched to a law after the outcome was known"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: qualifies, target: sk_r22_0049, note: "the unfalsifiable framing here is the counterpart of the concessions the authors make in chapters 15, 20 and 21"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, outcome_claimed, mechanism_absent, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction"
+    section: "printed pp. xiv-xvi (roman folios)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART B — SCOPE AND FOCUS: LAWS 1 AND 2
+# "The Law of Expansion" printed pp. 3-7; "The Law of Contraction" printed pp. 8-12
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_r22_0005
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "The Law of Expansion"
+    - "The power of a brand is inversely proportional to its scope."
+  concept_label: brand_power_is_inversely_proportional_to_scope
+  label_origin: source_verbatim
+  claim: >
+    Law 1. The authors assert that putting a brand name on more things makes the name weaker, and
+    state the relation in the strong form of an inverse proportion between power and scope. Their
+    diagnostic is the "what comes to mind?" test: a name that returns nothing specific — Chevrolet
+    returning "a large, small, cheap, expensive car . . . or truck" — has already lost its power.
+    They separate power from sales explicitly: a brand that has been weakened by expansion can
+    still sell well if its competitors are equally weak.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A brand's power lives in what the name retrieves from a mind. Attaching the name to more and
+      more different things means no single meaning can be retrieved, so the name "no longer stands
+      for anything". The authors describe the alternative to building as "milking": expansion
+      converts accumulated brand meaning into present sales and does not replace it.
+  scope:
+    domain_discussed_by_source: [brand_strategy, automobiles, credit_cards, apparel, consumer_packaged_goods]
+    conditions: "stated as a law without conditions; the authors' cases are all consumer categories with an established leader"
+  caveats:
+    - text: "the authors themselves note that sales are a function of the competition's strength as well as brand power, so market-share movements cannot on their own establish the law"
+      origin: source_stated
+    - text: "the market-share pairs offered as evidence (American Express 27% to 18%, Levi's 31% to 19%, Crest 36% to more than fifty SKUs at 25%) are two numbers each, with no comparison group, no alignment of periods and no test of the asserted cause; each brand also faced changes the book does not mention"
+      origin: extractor_observed
+    - text: "'inversely proportional' is used rhetorically — no quantity is ever computed anywhere in the book"
+      origin: extractor_observed
+    - text: "historical: every case is pre-2002"
+      origin: extractor_observed
+  source_stated_problems:
+    - "when you put your brand name on everything, that name loses its power"
+    - "line extension, megabranding, variable pricing . . . are being used to milk brands rather than build them"
+  source_stated_remedies:
+    - "you need to contract your brand, not expand it"
+  examples:
+    positive:
+      - description: "Ford outselling Chevrolet, attributed to Ford's eight car models against Chevrolet's ten"
+        figure_ref: null
+    counter:
+      - description: "Diet Coke, conceded to have worked, and explained away by the weakness of Pepsi's own line-extended Diet Pepsi rather than counted against the law"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_r22_0006, note: "the expansion decision is framed by the authors as a short-term/long-term trade"}
+    - {relation: qualified_by, target: sk_r22_0007, note: "the weak-competition escape clause"}
+    - {relation: generalises, target: sk_r22_0031, note: "the Law of Extensions is this law applied to product lines"}
+    - {relation: contradicts, target: sk_r22_0041, note: "the Law of Siblings licenses a portfolio of several brands from one company; the authors reconcile this only by requiring separate identities"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, outcome_claimed, mechanism_given, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Law of Expansion"
+    section: null
+    page_start: 3
+    page_end: 7
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0006
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "Short term versus long term."
+    - "milk brands rather than build them"
+  concept_label: broadening_buys_short_term_sales_at_the_cost_of_long_term_brand_meaning
+  label_origin: extractor_assigned
+  claim: >
+    The authors put the central trade-off of the book as a question about time horizon: broaden
+    the line and increase sales now, or keep the line narrow, build the brand in the mind, and
+    increase sales later. They state that most companies choose the short term, and that in the
+    short term the conventional strategies do work — expansion and line extension can increase
+    sales — but that in the long run they usually undermine the brand and decrease sales. The
+    trade-off is not presented as a balance to be struck but as a choice the authors think is
+    almost always made wrongly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Brand meaning is treated as a stock that expansion draws down. Milking yields easy money now
+      while wearing the brand down until it stands for nothing, at which point the sales that
+      expansion was undertaken to produce are no longer available.
+  scope:
+    domain_discussed_by_source: [brand_strategy, consumer_packaged_goods]
+    conditions: "the authors set no time constant; 'long term' is nowhere defined in years"
+  caveats:
+    - text: "the horizon at which the reversal is claimed to occur is never specified, which makes the claim difficult to test on any particular case"
+      origin: extractor_observed
+    - text: "the authors concede the short-term gain is real; the disagreement with conventional practice is entirely about the later half of the curve, for which the book supplies no measurement"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the emphasis in most companies is on the short term"
+  source_stated_remedies:
+    - "do you keep a narrow line in order to build the brand in the mind and increase sales in the future?"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_r22_0005, note: "supplies the time structure the Law of Expansion depends on"}
+    - {relation: demonstrated_together_with, target: sk_r22_0031, note: "restated in the Law of Extensions as building versus milking"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Law of Expansion"
+    section: null
+    page_start: 4
+    page_end: 4
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0007
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "If your competition is weak or nonexistent, you can often increase sales by weakening your brand."
+    - "the only thing you have demonstrated is the weakness of the competition"
+  concept_label: apparent_line_extension_success_is_attributed_to_weak_competition
+  label_origin: extractor_assigned
+  claim: >
+    The authors state directly that a line extension can raise sales, and that where it does the
+    result should be read as evidence about the competitor rather than about the extension. Sales,
+    in their frame, are a joint function of a brand's power and of the strength or weakness of the
+    brands it faces, so a weakened brand can still gain against brands that have weakened
+    themselves further. Their worked case is Diet Coke, which they say Coca-Cola had nothing to
+    lose by launching because Pepsi had already line-extended into Diet Pepsi.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Power and sales are separated. Because a competitive outcome is relative, the absolute
+      question — did this extension weaken the brand? — cannot be read off the share number, so a
+      share gain is not treated as disconfirming.
+  scope:
+    domain_discussed_by_source: [brand_strategy, soft_drinks, consumer_packaged_goods]
+    conditions: "wherever the competing brands are themselves line-extended or absent"
+  caveats:
+    - text: "this is the escape clause that makes the Law of Expansion very hard to disconfirm inside the book's own method: a failed extension confirms the law and a successful one is reassigned to competitor weakness, and the book states no independent way to establish competitor weakness before the fact"
+      origin: extractor_observed
+    - text: "the same move is made twice more in the span — for Vaseline Intensive Care (printed p. 66, customers misread the descriptor as a brand name) and for General Electric (printed p. 36, all its competitors are equally weak)"
+      origin: extractor_observed
+  source_stated_problems:
+    - "you can therefore draw the conclusion that line extension works"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter:
+      - description: "Diet Coke: a successful extension, re-described as a case where the competitor had already given away the same ground"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: qualifies, target: sk_r22_0005, note: "scopes when the Law of Expansion will not be visible in the numbers"}
+    - {relation: demonstrated_together_with, target: sk_r22_0026, note: "the same reasoning is used to explain General Electric's size"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Law of Expansion"
+    section: null
+    page_start: 6
+    page_end: 7
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0008
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "There are thousands of tiny teeter-totters in the consumer's mind."
+    - "most people try to assign one brand name to each product"
+  concept_label: customers_assign_one_name_per_product_so_brand_hierarchies_do_not_survive_contact
+  label_origin: extractor_assigned
+  claim: >
+    Against the masterbrand / superbrand / megabrand justification for line extension, the authors
+    claim that people assign exactly one name to each product and choose whichever name best
+    captures its essence — sometimes the parent name, sometimes the model name, sometimes a
+    nickname — and that they are not consistent about which. Two names for one product cannot both
+    be uppermost: the Lumina owner says "I drive a Chevrolet" while the Corvette owner says "I
+    drive a Vette". They add that customers want brands that are narrow in scope and nameable in a
+    single word, the shorter the better, and that overzealous compound brand names run against this.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The teeter-totter image is the mechanism: for each pairing of parent name and model name only
+      one end can be up, so the mental hierarchy the marketer designed collapses into a single name
+      per product, and which one survives is not under the marketer's control.
+  scope:
+    domain_discussed_by_source: [brand_strategy, brand_naming, automobiles, consumer_packaged_goods]
+    conditions: "the authors state it as a general property of how people name things"
+  caveats:
+    - text: "the claim about how minds work is illustrated with two invented lines of dialogue and no observation of actual customers"
+      origin: extractor_observed
+    - text: "the list of 'ridiculously overzealous' names is a list of names the authors dislike; no evidence is given that any of them underperformed"
+      origin: extractor_observed
+  source_stated_problems:
+    - "marketers constantly run branding programs that are in conflict with how people want to perceive their brands"
+  source_stated_remedies:
+    - "customers want brands that are narrow in scope and are distinguishable by a single word, the shorter the better"
+  examples:
+    positive:
+      - description: "the Chevrolet/Lumina and Chevrolet/Corvette pairs, used to show which name comes up in each case"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_r22_0001, note: "applies the definition of a brand as a word in a mind"}
+    - {relation: generalises, target: sk_r22_0040, note: "the Law of Subbrands develops the same objection"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1 — The Law of Expansion"
+    section: null
+    page_start: 5
+    page_end: 6
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0009
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "The Law of Contraction"
+    - "A brand becomes stronger when you narrow its focus."
+  concept_label: narrowing_the_focus_strengthens_the_brand
+  label_origin: source_verbatim
+  claim: >
+    Law 2. The positive form of Law 1: a brand becomes stronger when its focus is narrowed. The
+    authors' cases are all businesses that began in a broad format and cut it back — a coffee shop
+    that sold everything reduced to coffee, a delicatessen reduced to the submarine sandwich, a
+    children's store that threw out the furniture and kept the toys. They add an operational
+    consequence besides the mental one: when you make only one thing you get better at making it,
+    which they illustrate by contrasting the original eleven-item McDonald's menu with the sixty or
+    seventy items a store carried when they wrote.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Two mechanisms are given, one mental and one operational. Mentally, a narrow brand can be
+      retrieved by a single word, which the previous law says is the condition of power.
+      Operationally, restricting the range concentrates practice, so quality of execution rises —
+      the authors' explanation for why a chain that makes only submarine sandwiches makes them well.
+  scope:
+    domain_discussed_by_source: [brand_strategy, retailing, food_service]
+    conditions: "stated as a law; every case given is a retail or food-service format"
+  caveats:
+    - text: "every case is selected after success was known; the book presents no narrowly focused business that failed, which is the counter-example the claim most needs"
+      origin: extractor_observed
+    - text: "the evidence offered for Subway is Fred DeLuca's disclosed salary across 1990-1994, which is a fact about an owner's pay and not a measurement of the effect of narrowing"
+      origin: extractor_observed
+    - text: "in the same chapter the authors note in passing that Starbucks 'currently is busy getting into everything from ice cream to bottled drinks to tea' — their own hero example is, on their account, expanding — and they do not treat this as bearing on the law"
+      origin: extractor_observed
+    - text: "historical: all cases pre-2002"
+      origin: extractor_observed
+  source_stated_problems:
+    - "what is the conventional way to grow? Adding more things to sell."
+  source_stated_remedies:
+    - "narrow the focus"
+  examples:
+    positive:
+      - description: "Starbucks, Subway and Toys 'R' Us, each presented as the narrowing of an existing broad format"
+        figure_ref: null
+      - description: "Domino's, Little Caesars and Papa John's, each of which began with a wider menu and cut it back"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_r22_0005, note: "the positive statement of the Law of Expansion"}
+    - {relation: depends_on, target: sk_r22_0010, note: "the five-step pattern is the operational form of this law"}
+    - {relation: generalises, target: sk_r22_0027, note: "the Law of the Category extends narrowing to the point where no market yet exists"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, outcome_claimed, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — The Law of Contraction"
+    section: null
+    page_start: 8
+    page_end: 12
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_r22_0010
+  source_id: ries-22-immutable-laws-branding
+  source_terms:
+    - "Most retail category killers follow the same five-step pattern."
+    - "Narrow the focus. Stock in depth. Buy cheap. Sell cheap. Dominate the category."
+  concept_label: the_five_step_category_killer_pattern
+  label_origin: source_verbatim
+  claim: >
+    The authors set out a five-step pattern they say most retail category killers follow, in order:
+    narrow the focus by contracting rather than expanding the category; stock the narrowed category
+    in depth (a Toys "R" Us store carrying ten thousand toys against three thousand in a large
+    department store); buy cheap, which they say is where the money is actually made; sell cheap,
+    which depth of buying makes possible while holding margin; and dominate the category, which
+    they name as the ultimate objective of any branding programme.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The steps are causally chained by the authors: narrowing permits depth, depth permits
+      buying power, buying power permits low prices at maintained margin, and the combination
+      produces category domination. Domination is then said to make a brand extremely powerful.
+  scope:
+    domain_discussed_by_source: [brand_strategy, retailing, specialty_retail]
+    conditions: "explicitly retail — the authors say 'most retail category killers'"
+  caveats:
+    - text: "steps 2 and 5 sit in visible tension with step 1 and with the Law of Contraction itself: the brand narrows what it sells while widening assortment within the narrowed category and enlarging its share of it, and the authors do not say where narrowing stops and depth begins"
+      origin: extractor_observed
+    - text: "the domination figures cited (Microsoft 95 per cent of desktop operating systems, Intel 80 per cent of microprocessors, Coca-Cola 70 per cent of the world cola market) conflict with the ceiling the authors state twice later, that a leading brand's rightful share is never more than about 50 per cent"
+      origin: extractor_observed
+    - text: "steps 3 and 4 are claims about retail economics for which the book supplies no figures at all"
+      origin: extractor_observed
+  source_stated_problems:
+    - "adding more things to sell"
+  source_stated_remedies:
+    - "a powerful branding program always starts by contracting the category, not expanding it"
+  examples:
+    positive:
+      - description: "Toys 'R' Us given as the model, with Home Depot, The Gap, Victoria's Secret, Blockbuster Video, CompUSA and Foot Locker named as the same pattern"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: sk_r22_0009, note: "the operational programme belonging to the Law of Contraction"}
+    - {relation: contradicts, target: sk_r22_0036, note: "step 5 sets domination as the objective while the Law of Fellowship caps a dominant brand at about half the market"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, outcome_claimed, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2 — The Law of Contraction"
+    section: null
+    page_start: 10
+    page_end: 11
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

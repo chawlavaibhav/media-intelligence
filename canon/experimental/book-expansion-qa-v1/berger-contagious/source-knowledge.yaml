@@ -1,0 +1,36 @@
+# Jonah Berger, *Contagious: Why Things Catch On* (Simon & Schuster, 2013) — SPEC-03 SourceKnowledge
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory lane.
+#
+# LOCATORS: this is an EPUB. THERE IS NO AUTHORED PAGE. Every object carries page_start: null and
+# page_end: null, and locates itself by chapter plus named section, with the spine document number
+# as a secondary file-position aid only. Audit pattern: no_authored_page. The page numbers that
+# appear throughout the book's Notes are page ranges inside OTHER works and are not locators into
+# this book; none has been used as one.
+#
+# EVIDENCE STANCE — READ BEFORE READING ANY evidence FIELD.
+# SPEC-03 defines `empirical_within_source` as "the source reports its own measurement" and has no
+# characteristic for third-party research. Therefore:
+#   * `empirical_within_source` appears ONLY where the measurement is BERGER'S OWN — a study he
+#     conducted or co-authored, or a demonstration he ran himself, and where he says what it found.
+#   * EVERY third-party study is recorded instead in a caveat with `origin: extractor_observed`,
+#     naming whose study it was, its design and its figures. It contributes no characteristic.
+#   * `anecdotal` is used for the recounted business cases (Barclay Prime, Blendtec, Rue La La,
+#     Kit Kat, Movember, Livestrong, Panda). A vivid opening story does NOT inherit the evidential
+#     weight of the study that follows it, and no object below lets it.
+#   * `controlled_comparison` is used only where a genuine minimal pair or randomised condition is
+#     described in the text.
+#   * Where a claim is Berger's own but rests on ONE study, or on correlational field data narrated
+#     as though causal, that is said in an `extractor_observed` caveat. His confidence is reported,
+#     not adopted.
+#
+# SCOPE: this book is about transmission between people. Nothing here is translated into a model
+# instruction and nothing here is evidence about what any generative system can do.
+
+source_id: berger-contagious
+
+source_knowledge:
+
+# ══════════════════════════════════════════════════════════════════════════════
+# INTRODUCTION — what the book is arguing against, and what it is arguing for
+# ══════════════════════════════════════════════════════════════════════════════
+
