@@ -164,6 +164,12 @@ as ours.
 
 ## 11. What was produced
 
-54 SourceKnowledge objects · 5 SourceConceptSystems · 13 operational bindings · SPEC-05 ontology
-(46 terms, 14 relationships including 3 `distinct_from`, 6 source-specific concepts) · 60 Q&A pairs.
-Self-check results are in `EXTRACTION-NOTES.md` §7.
+54 SourceKnowledge objects · 5 SourceConceptSystems · 14 operational bindings (6 evaluation,
+4 benchmark, 4 governance; no `creative_ir` and no `production`) · SPEC-05 ontology (66 terms —
+22 problems, 23 remedies, 17 properties, 4 entities — 15 relationships including 6 `distinct_from`,
+7 source-specific concepts) · 60 Q&A pairs, 23 of them `requires_application: true` (38.3%).
+
+Self-check results are in `EXTRACTION-NOTES.md` §7. Headline: all YAML parses; all 119 locator-bearing
+objects verified to carry null pages and no page-style locator, with zero failures; 19 objects carry
+`empirical_within_source` and every one was checked back against the attribution ledger; the
+application fraction is 23/60 = 0.3833 against a threshold of 0.3333.

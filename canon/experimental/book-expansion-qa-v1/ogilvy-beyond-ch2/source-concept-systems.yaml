@@ -1,0 +1,241 @@
+# David Ogilvy, Ogilvy on Advertising (1983) — chapters BEYOND chapter 2 — concept systems
+# EXPERIMENTAL — NOT LIVE CANON. Lane: ogilvy-beyond-ch2, book-expansion-qa-v1. Non-merge.
+#
+# Three systems only. Each exists because the knowledge is destroyed by atomisation: the members
+# are individually reportable and jointly incoherent when retrieved alone. Everything the source
+# did not itself group is marked extractor_inferred, and every whole-system claim that is ours
+# carries an interpretation_basis.
+#
+# A fourth candidate was rejected. The sixteen television "tips" look like a system and are not
+# one: they are an unordered list of unrelated findings that share only a medium, and asserting a
+# structure over them would be inventing one. They stay as separate objects.
+
+source_concept_systems:
+
+- scs_id: scs_ogx_001
+  source_id: ogilvy-beyond-ch2
+  label: the_print_readership_cascade
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    A single quantity — how far into a print advertisement a reader gets — from which the source
+    derives almost every rule in his print chapter. Readership falls off in a known order across
+    illustration, headline, caption and body copy; each craft rule is an intervention at one step
+    of that fall, and the value of each rule is set by how many readers survive to that step.
+  whole_system_claim:
+    text: >
+      The print chapter is not a list of independent findings but one model applied repeatedly.
+      Every rule in it is a decision about what to put where the readers still are: the brand name
+      goes in the headline because eighty per cent never reach the body copy; the caption must carry
+      the brand name and the promise because more people read captions than body copy; the layout
+      runs illustration, headline, copy because that is the order the eye moves; editorial graphics
+      are adopted because advertising graphics cause readers to leave before step one; and the
+      typographic devices exist to keep the survivors moving. Retrieved separately, each rule reads
+      as an arbitrary preference; retrieved together, they are one argument about a falling curve.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source never states this as a model. It is synthesised from three things he does state:
+      that five times as many read the headline as the body copy and that it follows the headline
+      must sell; that readers look first at the illustration, then the headline, then the copy, and
+      that the layout should therefore run in that order; and that captions outdraw body copy and
+      must therefore carry the brand name and the promise. Each of the three moves from a
+      readership fact to a placement rule by the same step. Extending that step to the editorial-
+      graphics and typography sections is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ogx_0004, role_in_system: cause, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ogx_0029, role_in_system: consequence, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ogx_0026, role_in_system: consequence, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0018, role_in_system: qualifier, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_ogx_0025, role_in_system: consequence, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0028, role_in_system: precondition, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_ogx_0029, to: sk_ogx_0004, nature: "the layout order is derived from the readership order", origin: source_stated}
+      - {from: sk_ogx_0025, to: sk_ogx_0018, nature: "devices for continuation only matter for readers the advertisement has already entered", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_ogx_0018, sk_ogx_0004]
+        nature: >
+          The cascade is presented as a property of advertisements, but one of its two determinants
+          — category interest — is stated by the source to lie outside the advertisement entirely.
+          A low readership figure is therefore not by itself a verdict on the craft.
+        origin: source_stated
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, repeated_within_source, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are individually well supported by reported readership figures whose sources are
+      not given. The claim that they constitute one causal model is OURS. The source states the
+      derivation for two of the six members and we have extended it to the rest. The whole model is
+      also bound to the print of 1983 — the readership proportions, the graphic conventions and the
+      reader habits it rests on are all of that period, and none is carried forward here.
+  provenance:
+    chapter: "7 — Wanted: a renaissance in print advertising"
+    section: "Headlines, Body copy, Layouts and Typography (spine 13)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ogx_002
+  source_id: ogilvy-beyond-ch2
+  label: the_measurable_branches_and_what_measurement_costs
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    The source's account of where in advertising a result can actually be attributed, why, what a
+    practitioner may therefore conclude there, and what the measurement costs. It spans direct mail,
+    business advertising by inquiry, the split run for choosing a promise, brand preference against
+    recall for television, and the two constraints he states on all of it — that tests are serial,
+    and that a measurable response is not the same as the outcome wanted.
+  whole_system_claim:
+    text: >
+      Attributability, not format, is what makes a branch of advertising testable, and every
+      testable branch in the book is testable for the same reason: the response returns to the
+      advertiser rather than passing through a distribution channel that mixes it with everything
+      else. Where that holds, the source will accept a finding over a judgement. But he also states
+      three costs, in three different chapters, and they belong together: tests are serial, so
+      experience must ration what gets tested; the response that is measurable may select a worse
+      customer than the one wanted; and the two questions with the longest horizons — a campaign's
+      long-run contribution and what price to charge — cannot be answered by research at all. The
+      framework is therefore not "measure everything" but "know which branch you are in, and know
+      what the measurement is substituting for."
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each piece and never assembles them. He states the attributability argument
+      in the direct mail chapter and again, in the same shape, for business inquiry. He states the
+      serial limit twice — one variable at a time in direct mail, two headlines at a time in the
+      split run — without connecting the two statements. He states the response-quality trade-off
+      once, in the direct mail chapter, and the two unanswerable questions once, in the research
+      chapter. The claim that these five statements constitute one framework, and that its
+      conclusion is a qualified rather than an unqualified endorsement of measurement, is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ogx_0049, role_in_system: precondition, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ogx_0048, role_in_system: precondition, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0031, role_in_system: dimension, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0061, role_in_system: step, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0050, role_in_system: constraint, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_ogx_0052, role_in_system: constraint, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_ogx_0065, role_in_system: constraint, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_ogx_0050, to: sk_ogx_0049, nature: "the serial limit bounds what the testable branch can actually test", origin: source_stated}
+      - {from: sk_ogx_0061, to: sk_ogx_0050, nature: "the split run inherits the same serial limit, two headlines at a time", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_ogx_0049, sk_ogx_0052]
+        nature: >
+          The response that makes a branch measurable is also a response that can be raised by
+          devices which select customers who do not stay. Measurability and the wanted outcome pull
+          apart on the same lever.
+        origin: source_stated
+        source_ref: {section: "Ch. 12, the passage on premiums and terms"}
+      - between: [sk_ogx_0031, sk_ogx_0065]
+        nature: >
+          A measure that predicts purchase is preferred to one that does not, and neither can answer
+          which campaign contributes most over years — which the source says still requires
+          judgement.
+        origin: source_stated
+        source_ref: {section: "Ch. 15, the closing passage after miracle 18"}
+    conflicts:
+      - between: [sk_ogx_0050, sk_ogx_0061]
+        nature: >
+          Experience decides which variables are worth testing, and testing is what produces
+          experience. The source states both halves and does not notice the circle.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref: sk_ogx_0052
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is a claim the source makes plainly. The assembly is entirely OURS, and it is the
+      assembly that carries the value: the source's own presentation splits the endorsement of
+      measurement from its three costs across three chapters, so a reader who takes any chapter
+      alone gets a stronger position than the book as a whole supports. Retrieving the endorsement
+      without the constraints would misrepresent him.
+  provenance:
+    chapter: "11, 12 and 15"
+    section: "Ch. 11 'Analyse your inquiries'; Ch. 12 the testing passages; Ch. 15 miracles 13 and 16 and the closing limits (spines 17, 18, 21)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ogx_003
+  source_id: ogilvy-beyond-ch2
+  label: displacement_of_the_product_by_a_borrowed_element
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Four failures the source reports in four different chapters, in which something brought into an
+    advertisement to help it takes the attention or the memory the product needed: the celebrity who
+    is remembered while the product is forgotten, the analogy whose vehicle the reader thinks is
+    what is for sale, the named competitor who is taken for the hero of the commercial, and the
+    corporate slogan or graphic symbol that clutters the layout and depresses readership of the copy.
+  whole_system_claim:
+    text: >
+      These are one failure shape, not four coincidences. In each case an element is added for a
+      reason that is locally sound — fame borrows credibility, an analogy borrows vividness, naming
+      a competitor borrows a comparison, a symbol borrows recognition — and in each case the
+      borrowed element competes with the product for the same finite attention and wins. The
+      diagnostic that follows is one question asked of any addition: after this element is in, what
+      is the most memorable thing in the advertisement? If the answer is not the product, the
+      addition is subtracting.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each of the four failures separately, in chapters 7, 8 and 9, and never
+      groups them or names a common mechanism. He comes closest in the print chapter, where he says
+      readers remember the celebrity and forget the product, and in the television chapter, where he
+      says viewers come away thinking the disparaged brand is the hero — two statements with the
+      same structure. The grouping, the shared mechanism and the diagnostic question are all OURS.
+      This system is a hypothesis about the source, not a report of one.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ogx_0021, role_in_system: dimension, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0020, role_in_system: dimension, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0035, role_in_system: dimension, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ogx_0044, role_in_system: dimension, order: 4, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs:
+      - between: [sk_ogx_0021, sk_ogx_0035]
+        nature: >
+          Both borrowed elements are added for a real gain — credibility in one case, a comparison
+          in the other — and both can cost the product the memory. The trade is the same and the
+          source treats them as unrelated findings.
+        origin: extractor_inferred
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      High. The members are well attested individually; the system is entirely inferred, and one of
+      the four — the corporate slogan — is a readership claim rather than a memory claim, so it fits
+      the group less cleanly than the other three. It is kept in because the source's stated
+      mechanism for it, cluttering the layout and reducing readership of the copy, is still a claim
+      that an added element takes something the copy needed. A reviewer could reasonably drop it.
+  provenance:
+    chapter: "7, 8 and 9"
+    section: "Ch. 7 'Body copy'; Ch. 8 'Above average' item 4 and 'Below average' item 1; Ch. 9 the corporate slogans passage (spines 13, 14, 15)"
+    page_start: null
+    page_end: null
+    source_support: text

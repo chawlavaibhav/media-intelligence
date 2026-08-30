@@ -784,3 +784,805 @@ source_knowledge:
     inspected:
       text: true
       figures: []
+
+# ─────────────────────────────────────────────────────────────
+# WHAT IS ON OFFER — better, positioning, and the axes chosen
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_god_0012
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "People don't want to buy a quarter-inch drill bit. They want to feel safe and respected"
+    - "there's almost always a disconnect between performance and appeal"
+    - "the engineer's choice of the best price/performance combination is rarely the market's choice"
+    - "We sell feelings, status, and connection, not tasks or stuff"
+    - "But let's not get confused about who all this innovation is for. It's not for the dogs. It's for us"
+  concept_label: performance_and_appeal_come_apart_because_the_buyer_is_not_the_user
+  label_origin: extractor_assigned
+  claim: >
+    Godin extends the familiar drill-bit argument two steps further than usual — past the hole, past
+    the shelf, to how it feels to have an uncluttered room and to be admired for having done it —
+    and lands on a general claim: there is almost always a disconnect between performance and
+    appeal, and the engineer's best price-performance combination is rarely the market's choice. His
+    demonstration is dog food, chosen because it separates the two parties cleanly: the food is
+    bought by owners for how buying it makes them feel, and no one knows whether dogs enjoy the
+    expensive kind, because we are not dogs. He also claims the emotional targets are a short list
+    rather than an open set, printing about thirty terms and saying you could probably add ten more
+    but not fifty, so a marketer needs few colours to paint an original picture.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      What is bought is a change in emotional state; the artefact is the route to it. Optimising the
+      artefact's measurable performance improves the route while leaving the destination unaddressed,
+      which is why better specifications so often fail to move a market.
+  scope:
+    domain_discussed_by_source: [consumer_products, automotive, marketing, luxury_goods]
+    conditions: "categories where the purchaser's motive is not identical with the product's function"
+  caveats:
+    - text: >
+        Godin refuses the obvious research route in the same chapter: if you ask people what they
+        want you probably will not find it, because people are intimately aware of their wants but
+        terrible at inventing new ways to address them. So the method he leaves is assertion —
+        make assertions about what the audience wants and about how your promise will interact with
+        those wants — which is weaker than the confidence of the claim implies.
+      origin: source_stated
+    - text: >
+        The list of roughly thirty dreams and desires is presented as near-exhaustive with no source
+        and no method of derivation. It is a practitioner's list, and the closure claim
+        ("unlikely you could add fifty more") is an assertion.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Marketing isn't a race to add more features for less money"
+    - "we let everyone down when we focus on the tactics, not the outcomes"
+  source_stated_remedies:
+    - "begin with dreams and fears, with emotional states, and with the change your customers seek"
+    - "Identify that feeling before you spend time making a wallet"
+  examples:
+    positive:
+      - {description: "a premium pet-food category in which the eater is not the buyer, so improvements are made for the buyer's feelings", figure_ref: null}
+    counter:
+      - {description: "expensive vehicle capabilities the buyer will never use, cited as evidence that utility is not the primary driver even at high prices", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0010, note: "requires modelling a valuer who is not you"}
+    - {relation: generalises, target: sk_god_0013, note: "if appeal is emotional, 'better' cannot be a single scale"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 3, sections "That riff about the quarter-inch drill bit" and "People don''t want what you make" (spine 10)'
+    section: 'with Ch. 5, section "The marketing of dog food" (spine 12) and Ch. 7, section "Innovative marketers invent new solutions that work with old emotions" (spine 14)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0013
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "When a marketer arrives and says, 'This is better,' he's wrong. He actually means, 'This is better for someone and it might be better for you'"
+    - "linear comparisons don't make sense when we're building stories and opportunities for humans"
+    - "We remember the best one. Best for what? And that's the key question. Best for us"
+    - "Better is up to the users, not up to you"
+  concept_label: better_is_not_a_single_scale_and_is_not_the_makers_to_declare
+  label_origin: extractor_assigned
+  claim: >
+    Godin denies that "better" is transitive or objective. Price is measurable and orders cleanly,
+    but it does not follow that the more expensive item is better; and for the properties people
+    actually choose on — stylish, fashionable, status — there is no line to be more or less far
+    along. His mechanism is about memory: faced with hundreds of options nobody can hold, we remember
+    the best one, and "best" is always best-for-me on the dimension I happen to care about, so the
+    same category has a different winner in each head. His demonstration is that a dominant search
+    engine won not on results or speed but because its box did not make you feel stupid — better on
+    a dimension its rivals were not competing on, and better only for some people.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Memory holds one slot per person per dimension of care, not one ranking per category. So
+      "better" names the occupant of somebody's slot, and there are as many occupants as there are
+      dimensions people care about.
+  scope:
+    domain_discussed_by_source: [marketing, consumer_choice, technology, luxury_goods]
+    conditions: "crowded categories where no one can hold all the options in mind"
+  caveats:
+    - text: >
+        Godin fences off one thing that is not up for negotiation. Quality in the sense of meeting
+        specification is, he says, required but no longer sufficient — and if you cannot deliver it,
+        the book is no help. The relativism is about appeal, not about competence.
+      origin: source_stated
+    - text: >
+        The search-engine reading (two links against a hundred and eighty-three; it projected
+        confidence; you could not break it) is a retrospective attribution to one cause among many.
+      origin: extractor_observed
+  source_stated_problems:
+    - "'This is better,' he's wrong"
+    - "Quality, the quality of meeting specifications, is required but no longer sufficient"
+  source_stated_remedies:
+    - "find a spot on the map with edges that (some) people want to find"
+    - "a generous beacon, a signal flare sent up so that people who are looking for you can easily find you"
+  examples:
+    positive:
+      - {description: "a search engine whose advantage is read as not making the user feel stupid, rather than as better results or speed", figure_ref: null}
+      - {description: "three handbag brands ordered by price, offered as a case where the ordering carries no claim about quality", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_god_0014, note: "if better is per-dimension, the practical question is which dimensions you claim"}
+    - {relation: depends_on, target: sk_god_0012, note: "rests on appeal being emotional rather than specified"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 5 "In Search of Better", sections "Thinking about better" and "Better isn''t up to you" (spine 12)'
+    section: 'with Ch. 6 "Beyond Commodities", section "Better is up to the users, not up to you" (spine 13)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0014
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "draw a simple XY grid ... For each axis, choose something that people care about"
+    - "This involves going to extremes. Finding an edge. Standing for something, not everything"
+    - "If you do, you'll certainly be choosing a crowded quadrant ... Your customer doesn't know what to do, so he does nothing"
+    - "Claims that are true, that we continually double down on in all our actions. Claims that are generous, that exist as a service to the customer"
+    - "Once you claim a story ... then you're on the hook. On the hook to deliver"
+  concept_label: positioning_is_choosing_two_axes_and_going_to_their_extremes
+  label_origin: extractor_assigned
+  claim: >
+    Godin's positioning method is mechanical: draw two axes from attributes people care about, plot
+    every available alternative on them, and take a position at an extreme rather than in the
+    middle. The trade-off he attaches is the part with content. Choosing the axes most people care
+    about puts you in a crowded quadrant, and in a crowded quadrant — without the magic of
+    advertising — you cannot grow, because the customer does not know what to do and therefore does
+    nothing. The alternative is to build your own quadrant from two overlooked axes and be the clear
+    and obvious choice on them. He adds two modern conditions on the claims: they must be true and
+    continually doubled down on in all your actions, and they must be generous, existing as a
+    service to the customer, because the mid-century practice of inventing a differentiating claim
+    does not hold up in a hyper-competitive world. And he names the cost: once you claim a story you
+    are on the hook to deliver it — his music teacher now actually has to be more rigorous and to
+    expel students who are not serious.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A crowded quadrant offers the chooser no basis for deciding, and the default response to an
+      undecidable choice is not a random pick but inaction. An uncrowded quadrant makes the decision
+      trivial for the people who care about those two axes and irrelevant to everyone else.
+  scope:
+    domain_discussed_by_source: [marketing, small_business, professional_services, consumer_goods]
+    conditions: "categories with many alternatives and no advertising budget to force attention"
+  caveats:
+    - text: >
+        The choice of axes is unconstrained. Godin prints a list of two dozen candidates and says
+        you know your space better than he does, so the method organises a decision it does not
+        make. Its output is only as good as the axes chosen.
+      origin: extractor_observed
+    - text: >
+        The truth-and-generosity conditions are stated as a historical shift — this used to work,
+        now it does not — without evidence for the shift.
+      origin: extractor_observed
+    - text: >
+        His own worked case shows the method's cost and he does not hide it: the teacher who claims
+        rigour has to expel students, and Godin says plainly that the resulting teacher is not one
+        he would have wanted himself.
+      origin: source_stated
+  source_stated_problems:
+    - "a crowded quadrant"
+    - "Your customer doesn't know what to do, so he does nothing"
+    - "'You can choose anyone, and we're anyone'"
+    - "they're all lumped together"
+  source_stated_remedies:
+    - "build your own quadrant. To find two axes that have been overlooked"
+    - "Choose your axes, choose your future"
+  examples:
+    positive:
+      - {description: "two music teachers a few blocks apart occupying opposite positions — rigour and competition results against whole-student experience — who Godin says do not compete", figure_ref: null}
+      - {description: "six ways of moving diamonds across town plotted on speed against security, where each option is appropriate depending on what you seek", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0013, note: "the operational answer to better being per-dimension"}
+    - {relation: demonstrated_together_with, target: sk_god_0029, note: "price must align with the extremes claimed"}
+    - {relation: demonstrated_together_with, target: sk_god_0006, note: "an extreme position is an explicit decision about whom to disappoint"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 5 "In Search of Better", sections "Positioning as a service" and "Choose your axes, choose your future" (spine 12)'
+    section: 'with Ch. 6 "Beyond Commodities", section "But your story is a hook" (spine 13)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────
+# WHY PEOPLE MOVE — belonging, status, tension
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_god_0015
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "People like us do things like this"
+    - "our actions are primarily driven by one question: 'Do people like me do things like this?'"
+    - "Normalization creates culture, and culture drives our choices, which leads to more normalization"
+    - "We can't change the culture, but each of us has the opportunity to change a culture—our little pocket of the world"
+    - "What the marketer, the leader, and the organizer must do as their first job is simple: define 'us'"
+  concept_label: people_like_us_do_things_like_this
+  label_origin: source_verbatim
+  claim: >
+    Godin's account of why people act as they do is a single question they ask themselves — do
+    people like me do things like this — and he makes it primary rather than one factor among
+    several. Culture is produced by normalisation, and normalisation is produced by choices made in
+    answer to that question, so the loop is self-reinforcing. Two consequences follow that he states
+    explicitly. First, the marketer cannot change "the culture", only "a culture" — one pocket of the
+    world — which is why the smallest viable market maximises the chance of changing anything at all.
+    Second, the first job is to define "us", and the more specific and tighter the "us" the better;
+    he warns that defining it backwards — the people who do this are people like us — is not an
+    answer. Even outliers, he adds, are aligning with the behaviour of outliers.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Behaviour is normalised by observing others in a group one identifies with, and the resulting
+      culture then supplies the reference for the next choice. Change therefore travels horizontally,
+      person to person inside a defined group, rather than vertically from an organisation to an
+      individual.
+  scope:
+    domain_discussed_by_source: [marketing, politics, philanthropy, food_culture, community_organising]
+    conditions: "any choice made where the chooser is aware of a group they identify with"
+  caveats:
+    - text: >
+        The crickets-and-beef illustration argues the claim rather than testing it: Godin observes
+        that neither is genetically determined and neither has a clear rational advantage, and
+        concludes that the difference must be normalisation. It is an argument from elimination.
+      origin: extractor_observed
+    - text: >
+        "Everyone always acts in accordance with their internal narratives" is stated as universal.
+        As stated it is unfalsifiable, since any behaviour can be attributed to some narrative after
+        the fact.
+      origin: extractor_observed
+    - text: >
+        The standing-ovation illustration adds a real qualification: the same behaviour has
+        different thresholds in different venues, so the "us" is situational, not a fixed property
+        of a person.
+      origin: source_stated
+  source_stated_problems:
+    - "The right answer is not 'The people who give are people like us.' That's backwards"
+    - "Marketers don't make average stuff for average people"
+  source_stated_remedies:
+    - "define 'us'"
+    - "Map and understand the worldview of the culture we seek to change. Focus all our energy on this group. Ignore everyone else"
+    - "normalizing new behaviors"
+  examples:
+    positive:
+      - {description: "a town where hanging a particular ribbon signalled that people in this town support the schools, followed by a reversed budget vote", figure_ref: null}
+      - {description: "an elderly couple's video about their son, credited with making a referendum position legible as something people like us hold", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0016, note: "the second of the two forces driving the internal narrative"}
+    - {relation: generalises, target: sk_god_0003, note: "the reason the smallest viable market is the right unit"}
+    - {relation: member_of_system, target: scs_god_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source, culturally_bounded, anecdotal]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 9 "People Like Us Do Things Like This", sections "People like us (do things like this)", "The internal narrative", "Which us?" and "It shouldn''t be called the culture" (spine 16)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0016
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "The status quo doesn't shift because you're right. It shifts because the culture changes. And the engine of culture is status"
+    - "If all it took to upend the status quo was the truth, we would have changed a long time ago"
+    - "changing our behavior is driven by our desire to fit in (people like us do things like this) and our perception of our status (affiliation and dominance). Since both these forces often push us to stay as we are, it takes tension to change them"
+  concept_label: being_right_does_not_move_the_status_quo
+  label_origin: extractor_assigned
+  claim: >
+    Godin's central negative claim is that correctness is not a mechanism of change. The status quo
+    is good at resisting insurgents; if truth alone were sufficient the change would already have
+    happened, and if a better idea or a simpler solution were sufficient it would have happened a
+    year or a decade or a century ago. What moves it is cultural change, and the engine of culture
+    is status. He then states the full chain: behaviour is driven by the desire to fit in and by the
+    perception of status, both of those forces push toward staying as we are, and therefore change
+    requires tension. This is the load-bearing sentence of the book and the reason the status
+    material is not decoration.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both drivers of behaviour are conservative by construction: fitting in rewards doing what is
+      already done, and status is protected by not moving. An argument addresses neither, so a
+      correct argument leaves the forces that determine the behaviour untouched.
+  scope:
+    domain_discussed_by_source: [marketing, politics, cultural_change, organisational_change]
+    conditions: "any attempt to displace an established behaviour or default"
+  caveats:
+    - text: >
+        Godin asserts the primacy of status without argument beyond illustration, and his
+        illustrations run from penguins and dogs to a film scene to a fundraising gala. The claim
+        that status is THE engine, rather than one engine, is his position.
+      origin: extractor_observed
+    - text: >
+        Read as a normative claim this licenses persuasion that bypasses the truth of a case. Godin
+        addresses the ethics separately and in a chapter this lane refuses; nothing here endorses
+        the licence.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They're good at resisting efforts by insurgents like you"
+    - "we almost always overrate our ability to make change happen"
+  source_stated_remedies:
+    - "If you want to make change, begin by making culture"
+    - "it takes tension to change them"
+  examples:
+    positive:
+      - {description: "a conservation programme that replaced the rite of passage rather than arguing against it, because the cultural goals — bravery, patience, status on becoming an adult — were never about the act itself", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_god_0017, note: "the properties of the driver named here"}
+    - {relation: generalises, target: sk_god_0019, note: "tension is the answer to the conservatism named here"}
+    - {relation: member_of_system, target: scs_god_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 10 "Trust and Tension Create Forward Motion", section "How the status quo got that way" (spine 17)'
+    section: 'with Ch. 9, section "Deep change is difficult, and worth it" (spine 16)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0017
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Status is always relative ... 6 is bigger than 4, but lower than 11. There is no highest number"
+    - "Status is in the eyes of the beholder"
+    - "Status attended to is the status that matters"
+    - "Status has inertia. We're more likely to work to maintain our status (high or low) than we are to try to change it"
+    - "Status is learned"
+    - "Shame is the status killer"
+    - "It's a mistake to believe that everyone wants to make their status higher. In fact, few people do"
+  concept_label: six_properties_of_status_and_the_error_of_assuming_everyone_wants_more
+  label_origin: extractor_assigned
+  claim: >
+    Godin sets out six properties of status as a working model. It is relative, so there is no
+    absolute scale and no highest position. It is in the eye of the beholder, so someone may be low
+    status to outsiders and high status in their own narrative, both true at once. It matters only
+    when attended to. It has inertia — people are more likely to work to maintain their status,
+    high or low, than to change it. It is learned early, though a cohort can shift the perception
+    quickly. And shame is the status killer, which is why shame works as a lever. From these he
+    draws the correction that does the most work: it is a mistake to believe everyone wants higher
+    status, and equally a mistake to believe no one wants lower — some people are hungry for a shift
+    in either direction and others will fight to keep the role they have.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because status is relative and attended-to, an offer that changes someone's standing is read
+      as a change to their position in a group rather than as a change to their possessions, and
+      because it has inertia the default reading of any such offer is a threat.
+  scope:
+    domain_discussed_by_source: [marketing, sales, organisational_behaviour, politics]
+    conditions: "any interaction in which more than one person is present"
+  caveats:
+    - text: >
+        These are six assertions in a numbered list. None is sourced, none is tested, and the
+        illustrations are anecdotes about a singer, a dog and a film scene. The model is a
+        practitioner's working framework, not a finding.
+      origin: extractor_observed
+    - text: >
+        Godin himself flags the operational danger: bringing status into marketing is walking on
+        thin ice, because you cannot tell whether a person who appears to have high status believes
+        it.
+      origin: source_stated
+    - text: >
+        He credits the status-role vocabulary to Keith Johnstone's "Impro". This lane records that
+        attribution and asserts nothing about the relationship between the two works.
+      origin: extractor_observed
+  source_stated_problems:
+    - "It's a mistake to believe that everyone wants to make their status higher"
+    - "Shame is the status killer"
+  source_stated_remedies:
+    - "Consider ... their external status (how they are seen by their chosen community) and their internal status (who they see when they look in the mirror)"
+  examples:
+    positive:
+      - {description: "a performer described as high status externally and low status in his own account of himself, with both operating at once", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0016, note: "the properties of the engine"}
+    - {relation: generalises, target: sk_god_0018, note: "the two measures status is counted in"}
+    - {relation: member_of_system, target: scs_god_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, anecdotal, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 11 "Status, Dominance, and Affiliation", sections "Six things about status", "Status lets us" and "Learning to see status" (spine 18)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0018
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Affiliation and dominion are different ways to measure status"
+    - "Dominion is a vertical experience, above or below. Affiliation is a horizontal one: Who's standing next to me?"
+    - "Affiliation or dominance is up to the customer, not you"
+    - "Affiliation isn't as focused on scarcity as dominion is, because affiliation admires the network effect ... Abundance is welcome"
+  concept_label: affiliation_and_dominion_are_two_measures_and_the_audience_picks_which
+  label_origin: extractor_assigned
+  claim: >
+    Godin splits status into two different things being counted. Dominion asks who has more power,
+    whose side is winning, what is mine and not yours — a vertical measure. Affiliation asks who
+    knows you, who trusts you, what your circle is like, where you stand within the tribe — a
+    horizontal one. The operational point is the priority: which measure applies is the customer's,
+    not the marketer's, and the way you see the world matters far less than the worldview of those
+    you seek to serve. He notes the two behave differently under abundance — affiliation welcomes
+    the network effect because more affiliation benefits everyone affiliated, while dominion is
+    scarcity-bound because someone must be below.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A signal that raises standing on one measure is inert or hostile on the other: an invitation
+      to belong is worthless to someone counting who is winning, and a claim to dominate repels
+      someone counting who is in sync.
+  scope:
+    domain_discussed_by_source: [marketing, fashion, technology_brands, politics, sport]
+    conditions: "audiences whose status measure can be observed from what they attend to"
+  caveats:
+    - text: >
+        Godin says the same person applies different measures in different settings — his example is
+        a child who cares only about winning on the field and only about who sits next to him on the
+        bus. So the pair describes a situation, not a personality type, and treating it as a
+        segmentation would misread it.
+      origin: source_stated
+    - text: >
+        The claim that modern urban, internet, arts and innovation culture is built primarily on
+        affiliation rather than dominion is a broad cultural assertion of 2018 with no support.
+      origin: extractor_observed
+  source_stated_problems:
+    - "People who align with one worldview often have trouble imagining why someone would choose the alternative"
+  source_stated_remedies:
+    - "If you want to market to someone who measures dominion or affiliation, you'll need to be aware of what's being measured and why"
+    - "The people you're seeking to serve in this moment: What are they measuring?"
+  examples:
+    positive:
+      - {description: "a ride-hailing company whose contentious early posture is read as a deliberate dominance signal that suited part of its audience", figure_ref: null}
+      - {description: "trade-show crowd size, launch-party guest lists and book endorsements, described as affiliation signals marketers spend heavily on", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0017, note: "the two measures the status model is counted in"}
+    - {relation: depends_on, target: sk_god_0008, note: "which measure applies is a worldview question"}
+    - {relation: member_of_system, target: scs_god_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 11 "Status, Dominance, and Affiliation", sections "Affiliation and dominion are different ways to measure status" through "Affiliation or dominance is up to the customer, not you" (spine 18)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0019
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Tension is not the same as fear"
+    - "If you feel like you're coercing people, manipulating them or causing them to be afraid, you're probably doing it wrong"
+    - "Fear's a dream killer. It puts people into suspended animation, holding their breath, paralyzed and unable to move forward"
+    - "There might be fear, but tension is the promise that we can get through that fear to the other side"
+    - "Tension is the hallmark of a great educational experience"
+  concept_label: tension_is_not_fear_and_the_difference_is_whether_forward_motion_is_available
+  label_origin: extractor_assigned
+  claim: >
+    Godin draws a distinction he treats as the ethical boundary of his method. Fear paralyses: it
+    puts people into suspended animation, holding their breath, unable to move forward, and fear
+    alone will not produce change. Tension is different in kind — it is the promise that you can get
+    through the fear to the other side, the state of "this might work versus this might not work",
+    and the state of knowing you do not yet know something. He calls tension the hallmark of a great
+    educational experience and says all effective education creates it, because just before you
+    learn something you are aware you do not know it. His practical test for having crossed the
+    line is subjective and he offers no other: if you feel like you are coercing, manipulating or
+    frightening people, you are probably doing it wrong.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Fear and tension are both discomfort; they differ in whether a route out is visible. Where
+      forward motion is available the discomfort is a reason to move, and where it is not the same
+      discomfort produces immobility.
+  scope:
+    domain_discussed_by_source: [marketing, education, cultural_change]
+    conditions: "any attempt to move someone off an established behaviour"
+  caveats:
+    - text: >
+        The test is the marketer's own feeling. Godin supplies no criterion the person on the
+        receiving end could apply, and several of his own approved cases — the colleague saying
+        "you're missing out", the fear of social isolation as a joining motive — sit close to the
+        line he is drawing.
+      origin: extractor_observed
+    - text: >
+        "Once we see a way out, the tension can be the tool that moves us" makes the availability of
+        forward motion the whole distinction. Whether the route out is genuinely available, or only
+        appears to be, is the question the framing does not ask.
+      origin: extractor_observed
+  source_stated_problems:
+    - "coercing people, manipulating them or causing them to be afraid"
+    - "Fear will paralyze us if we haven't been taught that forward motion is possible"
+  source_stated_remedies:
+    - "generously and respectfully create tension on behalf of that change"
+  examples:
+    positive:
+      - {description: "the state of not quite knowing where you are in a curriculum, offered as the tension all effective education creates", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_god_0020, note: "names the boundary the tension mechanism must not cross"}
+    - {relation: specialises, target: sk_god_0016, note: "tension is the answer to the conservatism of fitting in and status"}
+    - {relation: member_of_system, target: scs_god_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 10 "Trust and Tension Create Forward Motion", section "Tension is not the same as fear" (spine 17)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0020
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Marketers create tension, and forward motion relieves that tension"
+    - "None of those feelings existed before a marketer showed up with something that caused them"
+    - "We intentionally create these gaps, these little canyons of tension that people find themselves leaping over"
+    - "Launch a new project and, in addition to serving your audience, you'll be breaking something"
+    - "The very existence of a fancier alternative degraded their experience at their former favorite"
+  concept_label: change_requires_a_gap_that_only_moving_forward_closes
+  label_origin: extractor_assigned
+  claim: >
+    Godin's account of how anything actually moves is that the marketer creates a gap and the only
+    way to close it is forward motion. He is unusually direct that the gap is manufactured: the
+    feelings involved did not exist before someone arrived with something that caused them — if
+    there were no new album you would not feel left out for not having heard it. The second half is
+    the part practitioners miss: launching anything breaks something. The second hotel makes the
+    first no longer the only one; a fancier casino makes last year's satisfied visitor ask whether
+    he is the sort of person who goes somewhere this run-down. So a new offering does not merely add
+    an option, it degrades the standing of what people already chose, and that degradation is the
+    tension. He puts the diagnostic as a question to the maker: when you arrive with your solution,
+    do you also create tension — because if you do not, the status quo is likely to survive.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The gap is a discrepancy in standing — between where the person is and where people like them
+      now are. It is not closed by information, because information does not change standing; it is
+      closed only by taking the action that moves them.
+  scope:
+    domain_discussed_by_source: [marketing, software, retail, hospitality, automotive]
+    conditions: "an offering that changes what is normal for a group the audience identifies with"
+  caveats:
+    - text: >
+        Godin's own strongest case is uncomfortable and he does not soften it: a workplace tool
+        spread because every day a colleague was not on it, people were talking about them behind
+        their back and working without them. The tension is exclusion. That sits close to the fear
+        boundary he draws elsewhere, and the two objects should be read together.
+      origin: extractor_observed
+    - text: >
+        "If you don't [create tension], the status quo is likely to survive" is stated as a rule
+        with no case where tension was created and the status quo survived anyway.
+      origin: extractor_observed
+  source_stated_problems:
+    - "the status quo is likely to survive"
+    - "Be a replaceable cog in the on-demand transport system"
+  source_stated_remedies:
+    - "be an agent of change, someone who creates tension and then relieves it"
+    - "What pattern are you interrupting?"
+  examples:
+    positive:
+      - {description: "a workplace tool whose users had a selfish reason to recruit colleagues, so the pattern interrupt was delivered peer to peer rather than by the company", figure_ref: null}
+      - {description: "an electric car described as having broken the story its buyers' existing cars told about them", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_god_0019, note: "the boundary this mechanism must not cross"}
+    - {relation: depends_on, target: sk_god_0021, note: "whether a gap exists depends on whether you are matching or interrupting a pattern"}
+    - {relation: member_of_system, target: scs_god_001}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 10 "Trust and Tension Create Forward Motion", sections "Tension can change patterns", "What are you breaking?", "Marketers create tension, and forward motion relieves that tension" and "Are you ready to create tension?" (spine 17)'
+    section: 'with Ch. 21, section "Tesla broke the other cars first" (spine 28)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0021
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Pattern match/pattern interrupt"
+    - "A pattern interrupt, on the other hand, requires some sort of jolt ... The answer is no because the patterns are established, time is precious, and risk is something to be feared"
+    - "When life interferes, new patterns are established. This is why it's so profitable to market to new dads, engaged women, and people who have recently moved"
+    - "When you market to someone who doesn't have a pattern yet, you don't have to persuade them that their old choices were mistakes"
+  concept_label: matching_an_existing_pattern_is_cheap_and_interrupting_one_is_not
+  label_origin: extractor_assigned
+  claim: >
+    Godin distinguishes two situations that look alike and cost very different amounts. A pattern
+    match slots a new offering into a routine that already exists — the family that cycles through
+    breakfast cereals adds another one without deciding anything. A pattern interrupt requires the
+    routine itself to be undone before any forward motion is possible, and the default answer to
+    that request is no, because the pattern is established, time is precious and risk is feared. The
+    operational consequence he draws is about timing rather than message: when a person's life has
+    just changed — a new parent, someone recently engaged or recently moved — there is no pattern to
+    match, so everything is an interrupt and you do not have to persuade them that their old choices
+    were mistakes. The same logic makes a brand-new platform the best time to launch on it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Undoing a pattern requires the person to accept that their previous choice was wrong, which is
+      a status cost on top of the switching cost. Where no pattern has formed, that cost is simply
+      absent, so the same offer meets a much lower barrier.
+  scope:
+    domain_discussed_by_source: [consumer_marketing, software, b2b_purchasing, services]
+    conditions: "audiences with or without an established routine in the category"
+  caveats:
+    - text: >
+        Godin notes the mirror case in organisations: a purchasing manager has been taught that
+        matching the pattern is the way to keep a steady job with no surprises, so the same
+        distinction predicts institutional resistance, not only consumer inertia.
+      origin: source_stated
+    - text: >
+        The life-transition targeting claim is stated as a profitability fact with no source. It is
+        also the point in the book where the method comes closest to the surveillance-driven
+        practice Godin criticises elsewhere, and he does not address the tension.
+      origin: extractor_observed
+  source_stated_problems:
+    - "The pattern requires undoing before you can earn forward motion"
+    - "Most of the time, for most of those you seek to reach, the answer is no"
+  source_stated_remedies:
+    - "market to someone who doesn't have a pattern yet"
+    - "The best time to market a new app is when the platform is brand new"
+  examples:
+    positive:
+      - {description: "a workplace tool that began as a pattern match to people who like new software and then handed those users a way to interrupt their colleagues' pattern", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_god_0020, note: "sets which of the two situations the tension mechanism is needed for"}
+    - {relation: demonstrated_together_with, target: sk_god_0024, note: "the mass market wants a pattern match, which is why the gap exists"}
+    - {relation: member_of_system, target: scs_god_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 10 "Trust and Tension Create Forward Motion", section "Pattern match/pattern interrupt" (spine 17)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0022
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "We scan instead of study. And when we scan, we're asking, 'What does this remind me of?'"
+    - "We don't care about you, or how hard you worked on it. We want to know if it's for us, and if you're the real deal"
+    - "Because it's not for you. Because they're sending a signal to people who are skeptical, careful, and well-informed: go away"
+    - "You're not people like us if you don't talk (talk means typefaces, photo styles, copy) the way we expect you to"
+    - "Send a signal that feels like a sign we already trust, then change it enough to let us know that it's new, and that it's yours"
+  concept_label: the_surface_selects_the_audience_before_the_message_is_read
+  label_origin: extractor_assigned
+  claim: >
+    Godin's claim about form is that it acts before content does. Busy people scan rather than
+    study, and while scanning they ask what this reminds them of; the answer decides whether they
+    are the audience and whether the maker is credible, and it is reached before any argument is
+    considered. So the vernacular of a category — typefaces, photo styles, copy — is a membership
+    signal, and failing to speak it marks you as not people like us. His strongest illustration
+    inverts the usual reading of an obvious failure: badly spelled advance-fee scam mail is not
+    incompetent, it is a filter, sending skeptical and well-informed readers away so the sender does
+    not waste effort on people who would drop out later. He draws a two-part instruction from this:
+    send a signal that resembles one already trusted, then change it just enough to mark it as new
+    and yours; and note that flying no flag is as intentional a choice as flying one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A symbol's meaning is in the mind of the person looking at it, not in the intent of whoever
+      made it, so form is read as evidence of category membership before content is processed at
+      all. Selection therefore happens at the surface.
+  scope:
+    domain_discussed_by_source: [advertising, design, branding, direct_mail, film]
+    conditions: "audiences encountering an unfamiliar offering under scanning conditions"
+  caveats:
+    - text: >
+        Godin says explicitly that the same symbol works differently for different groups — his
+        example is a garment that signals status in one context and puts people on alert in another —
+        so no signal has a fixed reading and the method cannot be reduced to a style guide.
+      origin: source_stated
+    - text: >
+        The scam-mail reading is an inference about the senders' intent, not a reported finding
+        about their strategy.
+      origin: extractor_observed
+    - text: >
+        The paradox he names is real and unresolved: to make change you must go first, but going
+        first reminds some people of a past thing that went wrong, so the audience must be one that
+        tolerates the resemblance.
+      origin: source_stated
+  source_stated_problems:
+    - "If you remind me of a scam, it will take a long time to undo that initial impression"
+    - "The foolish thing to do is pretend your features are so good that nothing else matters"
+  source_stated_remedies:
+    - "Send a signal that feels like a sign we already trust, then change it enough to let us know that it's new, and that it's yours"
+    - "make it easy for them to know who you are and where you stand"
+  examples:
+    positive:
+      - {description: "a famous Super Bowl commercial whose literary references almost no one in the mass audience caught, aimed at the roughly one million people who would", figure_ref: null}
+      - {description: "advance-fee scam mail whose errors are read as a deliberate filter against careful readers", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0015, note: "the vernacular is how 'people like us' is signalled"}
+    - {relation: demonstrated_together_with, target: sk_god_0006, note: "a signal that repels part of the audience is exclusion performed at the surface"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 13 "Semiotics, Symbols, and Vernacular", sections "What does this remind you of?", "Why is Nigerian spam so sloppy?", "The flag is not for everyone" and "The same and the different" (spine 20)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
