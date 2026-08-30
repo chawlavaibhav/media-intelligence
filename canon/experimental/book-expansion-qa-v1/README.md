@@ -151,7 +151,40 @@ not close them. `indian_indic_context` still has zero contributors.
 ## 4. Volume produced
 
 <!-- COUNTS:BEGIN -->
-*(filled mechanically by `build_manifest.py` — see `QA-MANIFEST.json`)*
+| Measure | Count |
+|---|---|
+| Sources processed | **17** |
+| Material examined | **~248 printed pages of Hopkins (208 + 40), plus WCAG 2.2 Guideline 1.4 with its glossary and 7 Understanding notes, plus 3 Google ABCD pages** |
+| Source Knowledge objects | **822** |
+| Source Concept Systems | **70** |
+| Proposed operational bindings | **184** |
+| Ontology terms | **823** |
+| **Q&A pairs** | **899** |
+| — of which require application | **348** (39%) |
+
+Per source:
+
+| Source | Source Knowledge | Concept Systems | Bindings | Q&A | Application |
+|---|---|---|---|---|---|
+| `airey-logo-design-love` | 50 | 4 | 17 | **57** | 20 (35%) |
+| `berger-contagious` | 54 | 5 | 14 | **60** | 23 (38%) |
+| `carroll-read-this-photographs` | 30 | 4 | 6 | **35** | 17 (49%) |
+| `connor-irizarry-discussing-design` | 55 | 6 | 12 | **51** | 20 (39%) |
+| `freeman-photographers-eye-beyond-parts1-3` | 55 | 5 | 12 | **58** | 25 (43%) |
+| `godin-this-is-marketing` | 29 | 3 | 5 | **37** | 13 (35%) |
+| `google-abcd-video-ads` | 26 | 2 | 9 | **26** | 10 (38%) |
+| `hopkins-my-life-in-advertising` | 70 | 5 | 15 | **80** | 32 (40%) |
+| `hopkins-scientific-advertising-ch8-21` | 48 | 4 | 11 | **57** | 21 (37%) |
+| `kahneman-sibony-sunstein-noise` | 50 | 3 | 14 | **57** | 22 (39%) |
+| `light-science-magic-beyond-ch3` | 60 | 5 | 13 | **62** | 25 (40%) |
+| `ogilvy-beyond-ch2` | 70 | 3 | 15 | **76** | 27 (36%) |
+| `ries-22-immutable-laws-branding` | 49 | 3 | 9 | **50** | 19 (38%) |
+| `samara-breaking-the-grid-ch2` | 45 | 4 | 7 | **46** | 17 (37%) |
+| `sontag-on-photography` | 22 | 3 | 3 | **28** | 10 (36%) |
+| `sullivan-hey-whipple` | 70 | 7 | 12 | **78** | 31 (40%) |
+| `w3c-wcag22-text-legibility` | 39 | 4 | 10 | **41** | 16 (39%) |
+
+Breakdowns by answer type, difficulty and knowledge type are in `QA-MANIFEST.json` (`counts_by_answer_type`, `counts_by_difficulty`, `counts_by_knowledge_type`, `counts_by_source_and_dimension`).
 <!-- COUNTS:END -->
 
 ---

@@ -1,0 +1,246 @@
+# SourceConceptSystem — Susan Sontag, "On Photography" (essays 1973-77, book 1977).
+# source_id: sontag-on-photography
+# EXPERIMENTAL — NOT LIVE CANON.
+# LOCATORS: EPUB, reflowable. NO AUTHORED PAGE NUMBERS. page_start/page_end are null everywhere.
+#
+# THREE SYSTEMS, AND ALL THREE ARE LARGELY OURS. This is a book of essays that argues by
+# accumulation and allusion; it contains no framework, no numbered set and no stated structure of
+# any kind. Every whole_system_claim below therefore carries origin: extractor_synthesis with a
+# non-null interpretation_basis, and every system_type_origin is extractor_inferred. A reader should
+# treat these as three hypotheses about how her recurring arguments relate, not as anything she says.
+#
+# The temptation this file resists is worth naming: an essayist who returns to the same themes across
+# six essays LOOKS like she is building a framework. She is not, and inventing one for her would be
+# the characteristic way of getting this source wrong.
+
+source_id: sontag-on-photography
+
+source_concept_systems:
+
+- scs_id: scs_snt_001
+  source_id: sontag-on-photography
+  label: the_authority_of_the_photograph_and_what_it_licenses
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The cluster of claims about why a photograph is trusted differently from a made image, and what
+    follows from that trust: the photograph as trace rather than depiction; its reception as a piece
+    of the world rather than a statement about it; the selection that this reception conceals; the
+    consequence that faking it falsifies reality rather than art history; and the acquisitive
+    relation — possession, tourism — that the trust makes available.
+  whole_system_claim:
+    text: >
+      The photograph's authority is causal rather than evidential: it is credited because light from
+      the subject made it, not because it is accurate. Everything else in the cluster follows from
+      that misattribution. Because the credit is given to the causal link, the human decisions that
+      produced the frame are not looked for; because the image is received as a piece of the world,
+      possessing it feels like knowing; and because the claim it makes is about the world rather than
+      about its own authorship, corrupting it — by retouching or by caption — corrupts a claim about
+      the world.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Each member is stated by Sontag, several of them memorably, but she never assembles them and
+      never presents the trace as the root of the others. The trace argument is in "The Image-World";
+      the reception-as-evidence argument and the acquisitive relation are in "In Plato's Cave"; the
+      faking argument is in "The Heroism of Vision". The claim that the first explains the rest is
+      the EXTRACTOR'S ordering of three essays written up to four years apart. Two things make it
+      contestable and both are recorded: the acquisition material can be read as an independent
+      argument about consumption that owes nothing to the trace, and Sontag herself asserts within
+      "In Plato's Cave" that photographs are as much an interpretation as paintings are, which sits
+      awkwardly with a system organised around what makes them different in kind.
+    source_ref: null
+  members:
+    - {sk_ref: sk_snt_0003, role_in_system: root_claim, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0001, role_in_system: consequence, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0002, role_in_system: qualification, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0004, role_in_system: consequence, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_snt_0018, role_in_system: consequence, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0019, role_in_system: instance, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_snt_0004, to: sk_snt_0003, nature: "the claim to be true, which faking corrupts, is the trace's claim", origin: source_stated}
+      - {from: sk_snt_0019, to: sk_snt_0018, nature: "tourism is the acquisitive relation performed as travel", origin: source_stated}
+      - {from: sk_snt_0001, to: sk_snt_0003, nature: "the presumption of veracity is credit given to the causal link", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_snt_0001, sk_snt_0002]
+        nature: >
+          Sontag states within one passage both that a photograph seems to have a more innocent and
+          therefore more accurate relation to reality than other made images, and that photographs
+          are as much an interpretation of the world as paintings and drawings are. She does not
+          reconcile them; the essay's argument runs on the friction between them.
+        origin: source_stated
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      MOSTLY OURS. The members are hers and the causal ordering is ours, assembled across three
+      essays. Sontag writes no system anywhere in this book. The whole cluster also rests on a
+      premise she never examines because in 1977 it did not need examining — that an image which
+      looks photographic was made by a camera pointed at something — and if that premise is the
+      root, then the root is the least argued part of the structure.
+  provenance:
+    chapter: '"In Plato''s Cave" (spine 5), "The Heroism of Vision" (spine 8), "The Image-World" (spine 10)'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_snt_002
+  source_id: sontag-on-photography
+  label: what_a_photograph_cannot_do_on_its_own
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The cluster of limits: the frame severs the subject from its circumstance; meaning is therefore
+    supplied by placement and no placement secures it; the caption speaks for the mute image and
+    still cannot fix it; the photograph acknowledges but cannot explain; identification of the
+    subject dominates the reading; an image lands inside a frame of understanding it cannot itself
+    supply; and the still holds a moment open at the cost of the duration that understanding needs.
+  whole_system_claim:
+    text: >
+      A photograph is not a self-sufficient unit of meaning. Everything that would fix what it means
+      — the circumstance, the naming of the event, the narration of how the thing functions — lies
+      outside the frame, and the devices that attach meaning from outside are detachable. The limits
+      are therefore not defects to be designed around; they are constitutive, and any claim about
+      what an image will do must be a claim about the image together with what surrounds it.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Sontag states every limit and states several of them as limits. What is the EXTRACTOR'S is the
+      claim that they are ONE limit seen from different sides — that severance, unsecured meaning,
+      the detachable caption, the inability to explain and the dependence on a prior naming are the
+      same insufficiency. She never says this; the members are spread across two essays and are
+      raised in service of different arguments, the caption material in a discussion of Benjamin and
+      the naming material in a discussion of American political consciousness. The unification is a
+      hypothesis about her position, and it is contestable in one specific way: sk_snt_0010, that
+      what a photograph is of dominates how it is seen, could as easily be filed under the authority
+      cluster, since it follows from the photograph being received as a piece of the world.
+    source_ref: null
+  members:
+    - {sk_ref: sk_snt_0006, role_in_system: mechanism, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0007, role_in_system: consequence, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_snt_0008, role_in_system: failed_remedy, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_snt_0009, role_in_system: limit, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0010, role_in_system: limit, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0016, role_in_system: limit, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0017, role_in_system: qualification, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0021, role_in_system: consequence, order: 8, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_snt_0007, to: sk_snt_0006, nature: "if the frame severed the circumstance, meaning must come from placement", origin: source_stated}
+      - {from: sk_snt_0008, to: sk_snt_0007, nature: "the caption is the obvious candidate for securing meaning and she says it cannot", origin: source_stated}
+      - {from: sk_snt_0016, to: sk_snt_0009, nature: "an image that cannot explain cannot supply the frame it needs to be read within", origin: extractor_inferred}
+      - {from: sk_snt_0021, to: sk_snt_0007, nature: "recycling is possible precisely because no placement secures a meaning", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_snt_0017, sk_snt_0009]
+        nature: >
+          The stasis that gives a still its force — keeping open to scrutiny an instant the flow of
+          time would replace — is the same stasis that removes the duration understanding requires.
+          Sontag states both.
+        origin: source_stated
+        source_ref: {chapter: '"In Plato''s Cave" and "The Heroism of Vision" (spines 5, 8)', page_start: null}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      MOSTLY OURS. This is the system with the best claim to being in the source, because Sontag
+      does state each member as a limit and does return to the theme. It is still our unification.
+      One member (sk_snt_0017) is itself typed source_interpretation, so a hypothesis sits inside a
+      hypothesis, and that is recorded rather than hidden.
+  provenance:
+    chapter: '"In Plato''s Cave" (spine 5), "The Heroism of Vision" (spine 8), "The Image-World" (spine 10)'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_snt_003
+  source_id: sontag-on-photography
+  label: the_aesthetic_cycle_and_the_wearing_out_of_response
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The cluster in which the medium beautifies whatever it records, becomes the standard against
+    which reality is then measured, exhausts the conventions of beauty it establishes, neutralises
+    the distress it conveys, and blunts response by repetition and by time.
+  whole_system_claim:
+    text: >
+      The medium's characteristic effects work against the purposes images are usually made to
+      serve, and they do so by the same route rather than by several. Attention to how something
+      appears is an aesthetic relation; the medium converts every subject into an object of that
+      attention; and an aesthetic relation, once established, is subject to habituation. So the
+      beautification, the shifted standard, the exhausted conventions, the neutralised distress and
+      the blunted response are one process observed at different points.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Sontag states each effect and, in two places, states a link between two of them — the
+      beautification neutralising distress, and photographs creating the beautiful and using it up.
+      What is the EXTRACTOR'S is the claim that ALL FIVE are one process with a single route. She
+      never says that, and one member resists it: she explicitly warns that increased familiarity
+      does not entirely explain why certain conventions of beauty get used up while others remain,
+      and that the attrition is moral as well as perceptual — a residue she does not analyse and
+      which a single-route account cannot absorb. The system is recorded with that objection inside
+      it rather than smoothed over.
+    source_ref: null
+  members:
+    - {sk_ref: sk_snt_0011, role_in_system: root_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_snt_0022, role_in_system: consequence, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0012, role_in_system: consequence, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_snt_0013, role_in_system: consequence, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_snt_0014, role_in_system: consequence, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0015, role_in_system: consequence, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_snt_0020, role_in_system: precondition, order: 7, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_snt_0013, to: sk_snt_0011, nature: "the neutralising of distress follows from the beautifying", origin: source_stated}
+      - {from: sk_snt_0012, to: sk_snt_0011, nature: "what is used up is the beauty the medium created", origin: source_stated}
+      - {from: sk_snt_0022, to: sk_snt_0011, nature: "the standard could only shift to photographs because the medium beautifies", origin: extractor_inferred}
+      - {from: sk_snt_0012, to: sk_snt_0020, nature: "the exhausted conventions are conventions of photographic seeing", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_snt_0014, sk_snt_0012]
+        nature: >
+          Two different attritions are described and Sontag distinguishes them herself: response to a
+          SUBJECT wearing out through repeated exposure, and a CONVENTION of beauty being used up by
+          assimilation. She states that familiarity does not entirely explain the second, which is a
+          warning against collapsing them into one — and this system's whole-system claim comes close
+          to collapsing them, which is why the objection is recorded here.
+        origin: source_stated
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      MOSTLY OURS, and this is the system whose whole-system claim the source most directly resists.
+      Sontag's own concession — that the attrition is moral as well as perceptual and that
+      familiarity does not entirely explain it — is a statement that the single route we propose is
+      insufficient. The system is retained because the members genuinely cluster and because the
+      cluster is the part of this book most likely to matter to anyone thinking about images that
+      repeat; the objection is retained with it.
+  provenance:
+    chapter: '"In Plato''s Cave" (spine 5), "The Heroism of Vision" (spine 8), "The Image-World" (spine 10)'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text
