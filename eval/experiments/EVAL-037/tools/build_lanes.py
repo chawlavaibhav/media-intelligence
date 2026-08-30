@@ -19,8 +19,15 @@ ROOT = HERE.parent
 REPO = ROOT.parents[2]
 
 BASE_COMMIT = "c6f8d910f7a3cdaaeafa2280313abfb9b898cddd"
+sys.path.insert(0, str(HERE))
 FULL_KNOWLEDGE_FP = "cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60"
 QA_FP = "1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd"
+
+def _common_digest():
+    """Computed at generation time, so a tools/ or prompt change forces a lane rebuild."""
+    import freeze_fingerprint as FF
+    return FF.compute_common()[0]
+
 
 BRIEFS = ["B01", "B02", "B03", "B04", "B05", "B06"]
 REPETITIONS = [1, 2, 3]
@@ -68,21 +75,27 @@ MODELS = {
 
 CONDITIONS = ["no-canon", "full-canon"]
 
+COMMON_FP = None  # filled in main() from the live substrate bytes
+
 
 def trial_plan(lane_id):
-    """The exact 18 trials, in the exact order the worker must execute them.
+    """The exact 18 trials, in the frozen deterministic pseudo-random order.
 
-    Repetition-major: all six briefs at repetition 1, then 2, then 3. The three
-    repetitions of a brief are therefore maximally separated in execution order.
-    Trials are independent regardless - every one is a fresh stateless request -
-    but the ordering makes any accidental carry-over visible rather than hidden.
+    Order = sort every trial id by sha256("EVAL-037|" + trial_id).
+
+    This decorrelates execution position from brief and from repetition, so a
+    position effect (provider warm-up, drift, rate-limit shaping) cannot line up with
+    a brief or a repetition. It is deterministic and independently recomputable: the
+    validator recomputes the whole ordering rather than checking order_index runs
+    1..18, which would pass for any ordering at all.
     """
-    rows, i = [], 0
-    for rep in REPETITIONS:
-        for b in BRIEFS:
-            i += 1
-            rows.append({"order_index": i, "trial_id": f"E037-{lane_id}-{b}-R{rep}",
-                         "brief_id": b, "repetition": rep})
+    ids = [f"E037-{lane_id}-{b}-R{rep}" for rep in REPETITIONS for b in BRIEFS]
+    ids.sort(key=lambda t: hashlib.sha256(("EVAL-037|" + t).encode()).hexdigest())
+    rows = []
+    for i, tid in enumerate(ids, 1):
+        b = tid.split("-")[-2]
+        rep = int(tid.split("-R")[-1])
+        rows.append({"order_index": i, "trial_id": tid, "brief_id": b, "repetition": rep})
     return rows
 
 
@@ -113,10 +126,32 @@ def build(model_key, cond_key):
     w("experiment: EVAL-037")
     w(f"lane_id: {lane_id}")
     w(f"branch: work/eval-037-{lane_id}")
-    w(f"base_commit: {BASE_COMMIT}")
-    w("base_commit_note: >-")
-    w("  The frozen common substrate. Start from exactly this commit. If your HEAD's")
-    w("  merge-base with this commit is not this commit, stop and escalate.")
+    w("")
+    w("substrate:")
+    w("  # The experiment-defining BYTES are the authority, not a commit SHA. The")
+    w("  # substrate was authored after the Canon merge, so no commit can contain both")
+    w("  # itself and its own fingerprint; requiring one would be self-referential.")
+    w("  algorithm: sha256-of-sorted-path-and-content")
+    w(f"  common_substrate_digest: {COMMON_FP}")
+    w("  common_substrate_scope: eval/experiments/EVAL-037/** excluding lanes/, runs/, dotfiles")
+    w("  common_substrate_note: >-")
+    w("    Safe to embed here because lanes/ is outside its scope. This is the digest")
+    w("    this lane verifies on its own: prompt, briefs, website snapshots, conditions,")
+    w("    schemas, tools and validators. Recompute and STOP on mismatch.")
+    w("  freeze_fingerprint_file: FREEZE-FINGERPRINT.yaml")
+    w("  freeze_fingerprint_note: >-")
+    w("    The whole-substrate fingerprint covers lanes/ too, so it cannot be embedded")
+    w("    in a lane without self-reference. It lives in FREEZE-FINGERPRINT.yaml, is")
+    w("    recorded in the controller approval, and is verified with")
+    w("    `tools/freeze_fingerprint.py --check` before dispatch.")
+    w(f"  canon_base_commit: {BASE_COMMIT}")
+    w("  canon_base_commit_role: >-")
+    w("    Canon provenance only. This is the CANON-014 merge the two corpus")
+    w("    fingerprints were computed against. It does NOT contain EVAL-037 and is not")
+    w("    the execution-lane starting commit.")
+    w("  execution_checkout_requirement: >-")
+    w("    Run from any checkout that contains the approved frozen substrate (verified")
+    w("    by freeze_fingerprint) and has canon_base_commit as an ancestor.")
     w("")
     w("model:")
     w(f"  key: {model_key}")
@@ -204,6 +239,30 @@ def build(model_key, cond_key):
         w("    content. The tested model is given the common system prompt and the brief, and")
         w("    nothing else. Reading Canon here would contaminate the control condition.")
     w("")
+    w("website_tool:")
+    w("  name: website_read")
+    w("  access: read-only")
+    w("  module: tools/website_tools.py")
+    w("  exposed_for_briefs: [B01, B02]")
+    w("  not_exposed_for_briefs: [B03, B04, B05, B06]")
+    w("  identical_across_conditions: true")
+    w("  condition_independence_note: >-")
+    w("    Website access is a property of the BRIEF, not of the condition. This tool is")
+    w("    exposed identically in NO_CANON and FULL_CANON, and serves byte-identical")
+    w("    snapshot content in both. It is not a Canon tool and carries no Canon")
+    w("    semantics.")
+    w("  returns:")
+    w("    - the frozen page.txt for the website that brief permits")
+    w("    - the snapshot sha256 actually served")
+    w("    - the source URL")
+    w("  live_browsing: forbidden")
+    w("  other_domains: refused")
+    w("  model_decides_whether_to_call: true")
+    w("  recording: >-")
+    w("    Every call is recorded with its arguments and the exact snapshot digest")
+    w("    returned. website_snapshot_used is derived from actual calls and is never")
+    w("    hardcoded.")
+    w("")
     w("prompt:")
     w("  system_prompt_path: common/system-prompt.txt")
     w(f"  system_prompt_sha256: {sha256(ROOT / 'common/system-prompt.txt')}")
@@ -267,41 +326,86 @@ def build(model_key, cond_key):
         w(f"      website_snapshot: {('common/websites/' + site['host']) if site else 'null'}")
     w("")
     w("retry_policy:")
-    w("  technical_failure:")
+    w("  # A retry is licensed ONLY by a TRANSIENT provider failure. Deterministic")
+    w("  # failures are recorded and never resampled — resampling them would be")
+    w("  # creative resampling wearing a technical retry's clothes.")
+    w("  transient_failure:")
     w("    initial_attempt: 1")
     w("    max_technical_retries: 2")
-    w("    max_total_attempts_from_technical: 3")
-    w("    qualifying_classes:")
+    w("    max_total_attempts_from_transient: 3")
+    w("    retry_resends: the identical request, unchanged")
+    w("    classes:")
     w("      - timeout")
     w("      - connection_error")
-    w("      - rate_limit")
+    w("      - rate_limit_429")
     w("      - server_error_5xx")
-    w("      - empty_response")
-    w("      - truncated_response")
-    w("      - provider_refusal_non_content")
-    w("      - sdk_error")
     w("    on_exhaustion: >-")
     w("      Record the trial as failed_technical with every attempt retained. Do not")
     w("      substitute a model, relax a setting or hand-write a package.")
+    w("  deterministic_failure:")
+    w("    retries: 0")
+    w("    status: failed_execution")
+    w("    classes:")
+    w("      - invalid_request_4xx")
+    w("      - auth_error")
+    w("      - tool_schema_rejected")
+    w("      - context_overflow")
+    w("      - tool_loop_guard_exhausted")
+    w("      - model_refusal")
+    w("      - truncated_response")
+    w("      - empty_response")
+    w("      - sdk_error")
+    w("    note: >-")
+    w("      A stable 4xx caused by request, configuration or tool schema; context")
+    w("      exhaustion; tool-loop exhaustion; provider truncation; or model refusal is")
+    w("      recorded distinctly and receives NO automatic resampling. Context overflow")
+    w("      or tool-loop exhaustion caused by the model's own retrieval is a")
+    w("      model+condition EXECUTION FAILURE and is a real result of this experiment,")
+    w("      not a transient provider fault.")
+    w("  truncation_detection: >-")
+    w("    Detected from the provider's own stop/finish reason, not inferred from missing")
+    w("    section headings.")
     w("  format_repair:")
     w("    max: 1")
     w("    scope: format only")
+    w("    request_contains:")
+    w("      - the original customer brief")
+    w("      - the original model answer, verbatim")
+    w("      - exactly the frozen format-only instruction")
+    w("    must_not_contain:")
+    w("      - any other trial")
+    w("      - any new creative guidance")
+    w("    records: repair_source_response_digest")
     w("    permitted_when: >-")
     w("      The response is present and substantive but does not carry the required")
     w("      FINAL_PRODUCTION_PACKAGE section structure.")
-    w("    forbidden: >-")
-    w("      Changing, steering, enriching or improving the creative content. A format")
-    w("      repair may ask only for the same answer in the required shape.")
+    w("    on_transient_failure_during_repair: >-")
+    w("      Retry THAT SAME format-repair request under the transient retry policy. It")
+    w("      must NEVER fall back to a fresh creative generation.")
+    w("    if_repair_still_invalid:")
+    w("      retain_output: true")
+    w("      status: failed_format")
+    w("      eligible_for_media_generation: false")
+    w("      note: An invalid repair is never labelled format_repaired.")
     w("  forbidden_retry_reasons:")
     w("    - the answer looks creatively weak")
     w("    - the idea seems unoriginal or safe")
     w("    - the package is shorter than expected")
     w("    - a different sample would probably be better")
-    w("    - the model did not use Canon" if full else "    - the model used no website")
+    w("    - the model did not use Canon" if full else "    - the model did not read the website")
     w("  forbidden_retry_note: >-")
     w("    Creative weakness is NEVER a reason for another attempt. Retrying on quality")
     w("    silently selects the best-of-N and destroys the comparison this experiment exists")
     w("    to make.")
+    w("")
+    w("tool_loop_guard:")
+    w("  max_provider_turns: 100")
+    w("  purpose: emergency stop against literal runaway execution")
+    w("  is_a_retrieval_budget: false")
+    w("  note: >-")
+    w("    The model may retrieve as much as it wants below this. Hitting the guard is a")
+    w("    model+condition execution failure, preserved as such, and never rerun as a")
+    w("    transient provider failure.")
     w("")
     w("spend:")
     w("  experiment_level_cap: none")
@@ -314,7 +418,19 @@ def build(model_key, cond_key):
     w("  attempt_ledger_schema: schemas/attempt-ledger.schema.json")
     w(f"  result: eval/experiments/EVAL-037/runs/{lane_id}/result.json")
     w("  result_schema: schemas/result.schema.json")
+    w(f"  raw_requests: eval/experiments/EVAL-037/runs/{lane_id}/requests/")
     w(f"  raw_responses: eval/experiments/EVAL-037/runs/{lane_id}/raw/")
+    w(f"  tool_transcripts: eval/experiments/EVAL-037/runs/{lane_id}/transcripts/")
+    w("  transcript_note: >-")
+    w("    Every provider invocation retains its EXACT serialised request, not only a")
+    w("    digest. Every tool call retains its real arguments, per-item identity")
+    w("    (item id, source id, source_status, kind, Q&A flag) and the full tool result,")
+    w("    so a later session can reconstruct exactly what the model asked for and got.")
+    w("  usage_note: >-")
+    w("    Usage is recorded per PROVIDER TURN, including every intermediate turn caused")
+    w("    by a tool call, and summed to trial and lane totals. A field the provider does")
+    w("    not expose is null; nothing is invented.")
+    w("  price_snapshot: common/price-snapshot.yaml")
     w(f"  packages: eval/experiments/EVAL-037/runs/{lane_id}/packages/")
     w("  retention: >-")
     w("    Retain every output regardless of apparent quality, including outputs from")
@@ -330,7 +446,8 @@ def build(model_key, cond_key):
     w("    Eligibility is never withdrawn on creative grounds.")
     w("")
     w("worker_obligations:")
-    w("  - Start from the exact base_commit above.")
+    w("  - Run from a checkout containing the approved frozen substrate; verify the")
+    w("    common_substrate_digest above and the freeze fingerprint before dispatch.")
     w("  - Read only EXECUTION-CONTRACT.md, this lane YAML, and files this YAML names.")
     w("  - Never list or read a sibling lane config.")
     w("  - Never inspect another EVAL-037 execution branch, PR, log, output or report.")
@@ -362,6 +479,8 @@ def _wrap(s, width=88):
 
 
 def main():
+    global COMMON_FP
+    COMMON_FP = _common_digest()
     out = ROOT / "lanes"
     out.mkdir(exist_ok=True)
     written = []

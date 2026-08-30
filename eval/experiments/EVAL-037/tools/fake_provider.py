@@ -2,21 +2,26 @@
 """EVAL-037 — deterministic fake provider.
 
 Exists so the whole runner can be exercised end to end WITHOUT a single real
-experimental call. It makes no network request of any kind; there is no SDK import
-and no client construction anywhere in this file.
+experimental call. It makes no network request of any kind: no SDK import, no client,
+no socket.
 
-It is scriptable, so the validators can prove the runner obeys the retry contract:
+Scenarios:
+  clean               every trial succeeds on the first attempt
+  flaky               a named trial fails TRANSIENTLY once, then succeeds
+  hard_fail           a named trial fails transiently forever (stops at 3 attempts)
+  deterministic_fail  a named trial fails with a 400 (must NOT be retried at all)
+  context_overflow    a named trial blows its context (model+condition execution failure)
+  loop_guard          a named trial trips the tool-loop guard (execution failure)
+  truncated           the provider reports a truncation stop reason
+  malformed           a named trial returns a malformed answer once, then a valid one
+  always_malformed    never well-formed (one repair, then failed_format)
+  repair_flaky        the FORMAT REPAIR call fails transiently once, then succeeds
+  canon_user          the model calls the Canon tools before answering
+  website_user        the model calls website_read before answering
+  tool_user           the model calls both Canon and website tools
 
-  scenario "clean"          every trial succeeds first attempt
-  scenario "flaky"          a named trial fails technically once, then succeeds
-  scenario "hard_fail"      a named trial fails technically forever (must stop at 3 attempts)
-  scenario "malformed"      a named trial returns a package missing sections once,
-                            then returns a well-formed one (exactly one format repair)
-  scenario "always_malformed" never well-formed (must NOT repair more than once)
-  scenario "canon_user"     the model calls the Canon tools before answering
-
-Determinism: every response is a pure function of (trial_id, attempt_index, scenario).
-No clock, no randomness.
+Determinism: every response is a pure function of (trial_id, attempt_index, phase,
+scenario). No clock, no randomness.
 """
 import hashlib
 import json
@@ -27,6 +32,8 @@ SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
             "AUDIO_AND_EDIT", "FAILURE_PREVENTION", "HARD_CONSTRAINT_CHECK",
             "KNOWLEDGE_AND_WEBSITE_USE"]
 
+MALFORMED_TEXT = "Here are three concepts you could consider. No headings.\n"
+
 
 class FakeProviderError(RuntimeError):
     def __init__(self, message, failure_class):
@@ -34,12 +41,22 @@ class FakeProviderError(RuntimeError):
         self.failure_class = failure_class
 
 
-def _package(trial_id, attempt, sections=SECTIONS):
+def _package(trial_id, attempt):
     seed = hashlib.sha256(f"{trial_id}:{attempt}".encode()).hexdigest()[:12]
     out = ["FINAL_PRODUCTION_PACKAGE", ""]
-    for s in sections:
+    for s in SECTIONS:
         out += [s, f"fake deterministic content for {trial_id} attempt {attempt} [{seed}]", ""]
     return "\n".join(out).strip() + "\n"
+
+
+def _usage(trial_id, turn, provider):
+    """Deterministic pseudo-usage, shaped like the real provider's fields."""
+    h = int(hashlib.sha256(f"{trial_id}:{turn}".encode()).hexdigest()[:8], 16)
+    inp, out, rsn = 1000 + h % 500, 200 + h % 300, 50 + h % 100
+    return {"input_tokens": inp, "cached_input_tokens": h % 40,
+            "output_tokens": out, "reasoning_tokens": rsn,
+            "raw": {"input_tokens": inp, "output_tokens": out,
+                    "cache_read_input_tokens": h % 40, "thinking_tokens": rsn}}
 
 
 class FakeAdapter:
@@ -48,16 +65,16 @@ class FakeAdapter:
     def __init__(self, model_id, tool_schemas=None, scenario="clean", target_trial=None,
                  model_key="fake", provider="FAKE"):
         self.model_id = model_id
-        self.tool_schemas = tool_schemas or []
+        self.tool_schemas = list(tool_schemas or [])
         self.scenario = scenario
         self.target_trial = target_trial
         self.model_key = model_key
         self.provider = provider
-        self.calls = []            # every request this fake ever saw, for assertions
+        self.calls = []
 
-    def build_request(self, system_prompt, user_message):
+    def build_request(self, system_prompt, user_content):
         return {"model": self.model_id, "system": system_prompt,
-                "messages": [{"role": "user", "content": user_message}],
+                "messages": [{"role": "user", "content": user_content}],
                 "tools": [t["name"] for t in self.tool_schemas]}
 
     @staticmethod
@@ -65,42 +82,79 @@ class FakeAdapter:
         return hashlib.sha256(
             json.dumps(request, sort_keys=True, default=str).encode()).hexdigest()
 
-    def call(self, request, canon_dispatch=None, trial_id=None, attempt=0):
-        self.calls.append({"trial_id": trial_id, "attempt": attempt,
+    def _turn(self, trial_id, turn, stop="end_turn"):
+        u = _usage(trial_id, turn, self.provider)
+        return {"turn_index": turn, "provider": self.provider,
+                "provider_model_version": self.model_id,
+                "provider_request_id": f"fake_req_{trial_id}_{turn}",
+                "input_tokens": u["input_tokens"],
+                "cached_input_tokens": u["cached_input_tokens"],
+                "output_tokens": u["output_tokens"],
+                "reasoning_tokens": u["reasoning_tokens"],
+                "stop_reason": stop, "latency_ms": 10 + turn,
+                "provider_reported_usage": u["raw"]}
+
+    def _tool(self, dispatch, name, args, turn):
+        import providers
+        return providers._run_tool(dispatch, name, args, turn)
+
+    def call(self, request, dispatch=None, trial_id=None, attempt=0, phase="creative"):
+        self.calls.append({"trial_id": trial_id, "attempt": attempt, "phase": phase,
                            "digest": self.request_digest(request),
                            "system": request.get("system"),
                            "user": request["messages"][0]["content"],
                            "tools": request.get("tools", [])})
         hit = self.target_trial is None or trial_id == self.target_trial
+        names = {t["name"] for t in self.tool_schemas}
 
         if self.scenario == "flaky" and hit and attempt == 0:
             raise FakeProviderError("simulated timeout", "timeout")
         if self.scenario == "hard_fail" and hit:
             raise FakeProviderError("simulated 503", "server_error_5xx")
+        if self.scenario == "deterministic_fail" and hit:
+            raise FakeProviderError("simulated 400 invalid_request", "invalid_request_4xx")
+        if self.scenario == "context_overflow" and hit:
+            raise FakeProviderError("prompt is too long for the context window",
+                                    "context_overflow")
+        if self.scenario == "loop_guard" and hit:
+            raise FakeProviderError("tool loop guard: 100 provider turns",
+                                    "tool_loop_guard_exhausted")
+        if self.scenario == "truncated" and hit:
+            raise FakeProviderError("provider stop reason 'max_tokens'",
+                                    "truncated_response")
+        if self.scenario == "repair_flaky" and hit and phase == "repair" \
+                and attempt == 1:
+            raise FakeProviderError("simulated timeout during format repair", "timeout")
 
-        tool_log = []
-        if self.scenario == "canon_user" and canon_dispatch is not None:
+        turns, tool_log, t = [], [], 0
+
+        want_canon = self.scenario in ("canon_user", "tool_user")
+        want_web = self.scenario in ("website_user", "tool_user")
+
+        if want_canon and dispatch is not None and "canon_search" in names:
             for name, args in (("canon_catalog", {}),
-                               ("canon_search", {"query": "colour", "limit": 5})):
-                out = canon_dispatch(name, args)
-                items = out.get("results") or out.get("sources") or []
-                tool_log.append({
-                    "name": name,
-                    "arguments_digest": hashlib.sha256(
-                        json.dumps(args, sort_keys=True).encode()).hexdigest(),
-                    "result_item_count": len(items),
-                    "accepted_items": sum(1 for i in items if i.get("source_status") == "ACCEPTED"),
-                    "hold_items": sum(1 for i in items if i.get("source_status") == "HOLD"),
-                    "qa_items": sum(1 for i in items if i.get("kind") == "qa"),
-                    "every_item_carried_source_status": all(
-                        i.get("source_status") in ("ACCEPTED", "HOLD") for i in items)})
+                               ("canon_search", {"query": "colour hierarchy", "limit": 5})):
+                turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+                _, meta = self._tool(dispatch, name, args, t)
+                tool_log.append(meta)
 
-        if self.scenario == "malformed" and hit and attempt == 0:
-            text = "Here are three great concepts you could consider.\n"
+        if want_web and dispatch is not None and "website_read" in names:
+            turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+            _, meta = self._tool(dispatch, "website_read", {}, t)
+            tool_log.append(meta)
+
+        turns.append(self._turn(trial_id, t))
+
+        if self.scenario == "malformed" and hit and phase == "creative":
+            text = MALFORMED_TEXT
         elif self.scenario == "always_malformed" and hit:
-            text = "Here are three great concepts you could consider.\n"
+            text = MALFORMED_TEXT
+        elif self.scenario == "repair_flaky" and hit and phase == "creative":
+            text = MALFORMED_TEXT
         else:
             text = _package(trial_id, attempt)
-        return {"text": text, "tool_calls": tool_log,
-                "raw": {"fake": True, "scenario": self.scenario,
-                        "trial_id": trial_id, "attempt": attempt}}
+
+        return {"text": text, "tool_calls": tool_log, "turns": turns,
+                "raw": {"fake": True, "scenario": self.scenario, "phase": phase,
+                        "trial_id": trial_id, "attempt": attempt,
+                        "model": self.model_id}}

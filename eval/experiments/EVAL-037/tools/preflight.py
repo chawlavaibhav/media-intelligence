@@ -80,13 +80,11 @@ def main():
         return 2
     print("model available: yes")
 
-    if lane["condition"] == "FULL_CANON" and m["key"] == "gemma":
-        print("\nGATE: gemma FULL_CANON requires function-calling support.")
-        print("  Gemma served through the Gemini API has historically not supported")
-        print("  function calling or a separate system instruction. Confirm BOTH against")
-        print("  the live model before trial 1. If tools cannot be declared, STOP and")
-        print("  escalate — do NOT run a tool-less lane and call it FULL_CANON.")
-        return 3
+    # No model-specific capability gate. Gemma 4 documents both function calling and
+    # system instructions, so there is nothing special to assert here — every lane gets
+    # the same exact-model preflight. If the live endpoint nevertheless rejects this
+    # lane's exact tool configuration at run time, the runner records the concrete API
+    # error and the lane STOPS. It never substitutes another model.
     return 0
 
 

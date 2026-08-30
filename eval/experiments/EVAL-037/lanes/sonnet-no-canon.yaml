@@ -11,10 +11,32 @@
 experiment: EVAL-037
 lane_id: sonnet-no-canon
 branch: work/eval-037-sonnet-no-canon
-base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
-base_commit_note: >-
-  The frozen common substrate. Start from exactly this commit. If your HEAD's
-  merge-base with this commit is not this commit, stop and escalate.
+
+substrate:
+  # The experiment-defining BYTES are the authority, not a commit SHA. The
+  # substrate was authored after the Canon merge, so no commit can contain both
+  # itself and its own fingerprint; requiring one would be self-referential.
+  algorithm: sha256-of-sorted-path-and-content
+  common_substrate_digest: d8b2c045c61e22668bf6bb8b6b387250efce8c80b1e909029e21d3d6a6c0ebc2
+  common_substrate_scope: eval/experiments/EVAL-037/** excluding lanes/, runs/, dotfiles
+  common_substrate_note: >-
+    Safe to embed here because lanes/ is outside its scope. This is the digest
+    this lane verifies on its own: prompt, briefs, website snapshots, conditions,
+    schemas, tools and validators. Recompute and STOP on mismatch.
+  freeze_fingerprint_file: FREEZE-FINGERPRINT.yaml
+  freeze_fingerprint_note: >-
+    The whole-substrate fingerprint covers lanes/ too, so it cannot be embedded
+    in a lane without self-reference. It lives in FREEZE-FINGERPRINT.yaml, is
+    recorded in the controller approval, and is verified with
+    `tools/freeze_fingerprint.py --check` before dispatch.
+  canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  canon_base_commit_role: >-
+    Canon provenance only. This is the CANON-014 merge the two corpus
+    fingerprints were computed against. It does NOT contain EVAL-037 and is not
+    the execution-lane starting commit.
+  execution_checkout_requirement: >-
+    Run from any checkout that contains the approved frozen substrate (verified
+    by freeze_fingerprint) and has canon_base_commit as an ancestor.
 
 model:
   key: sonnet
@@ -48,6 +70,30 @@ condition_detail:
     The execution worker must not read the FULL_CANON condition file or any Canon
     content. The tested model is given the common system prompt and the brief, and
     nothing else. Reading Canon here would contaminate the control condition.
+
+website_tool:
+  name: website_read
+  access: read-only
+  module: tools/website_tools.py
+  exposed_for_briefs: [B01, B02]
+  not_exposed_for_briefs: [B03, B04, B05, B06]
+  identical_across_conditions: true
+  condition_independence_note: >-
+    Website access is a property of the BRIEF, not of the condition. This tool is
+    exposed identically in NO_CANON and FULL_CANON, and serves byte-identical
+    snapshot content in both. It is not a Canon tool and carries no Canon
+    semantics.
+  returns:
+    - the frozen page.txt for the website that brief permits
+    - the snapshot sha256 actually served
+    - the source URL
+  live_browsing: forbidden
+  other_domains: refused
+  model_decides_whether_to_call: true
+  recording: >-
+    Every call is recorded with its arguments and the exact snapshot digest
+    returned. website_snapshot_used is derived from actual calls and is never
+    hardcoded.
 
 prompt:
   system_prompt_path: common/system-prompt.txt
@@ -125,150 +171,195 @@ execution:
     regardless.
   trials_plan:
     - order_index: 1
-      trial_id: E037-sonnet-no-canon-B01-R1
-      brief_id: B01
-      repetition: 1
-      brief_path: common/briefs/B01.txt
-      website_snapshot: common/websites/rentok.com
-    - order_index: 2
       trial_id: E037-sonnet-no-canon-B02-R1
       brief_id: B02
       repetition: 1
       brief_path: common/briefs/B02.txt
       website_snapshot: common/websites/getaight.ai
-    - order_index: 3
-      trial_id: E037-sonnet-no-canon-B03-R1
-      brief_id: B03
-      repetition: 1
-      brief_path: common/briefs/B03.txt
-      website_snapshot: null
-    - order_index: 4
-      trial_id: E037-sonnet-no-canon-B04-R1
-      brief_id: B04
-      repetition: 1
-      brief_path: common/briefs/B04.txt
-      website_snapshot: null
-    - order_index: 5
-      trial_id: E037-sonnet-no-canon-B05-R1
-      brief_id: B05
-      repetition: 1
-      brief_path: common/briefs/B05.txt
-      website_snapshot: null
-    - order_index: 6
-      trial_id: E037-sonnet-no-canon-B06-R1
-      brief_id: B06
-      repetition: 1
-      brief_path: common/briefs/B06.txt
-      website_snapshot: null
-    - order_index: 7
-      trial_id: E037-sonnet-no-canon-B01-R2
-      brief_id: B01
-      repetition: 2
-      brief_path: common/briefs/B01.txt
-      website_snapshot: common/websites/rentok.com
-    - order_index: 8
-      trial_id: E037-sonnet-no-canon-B02-R2
-      brief_id: B02
-      repetition: 2
-      brief_path: common/briefs/B02.txt
-      website_snapshot: common/websites/getaight.ai
-    - order_index: 9
-      trial_id: E037-sonnet-no-canon-B03-R2
-      brief_id: B03
-      repetition: 2
-      brief_path: common/briefs/B03.txt
-      website_snapshot: null
-    - order_index: 10
-      trial_id: E037-sonnet-no-canon-B04-R2
-      brief_id: B04
-      repetition: 2
-      brief_path: common/briefs/B04.txt
-      website_snapshot: null
-    - order_index: 11
+    - order_index: 2
       trial_id: E037-sonnet-no-canon-B05-R2
       brief_id: B05
       repetition: 2
       brief_path: common/briefs/B05.txt
       website_snapshot: null
-    - order_index: 12
-      trial_id: E037-sonnet-no-canon-B06-R2
-      brief_id: B06
-      repetition: 2
-      brief_path: common/briefs/B06.txt
-      website_snapshot: null
-    - order_index: 13
-      trial_id: E037-sonnet-no-canon-B01-R3
-      brief_id: B01
-      repetition: 3
-      brief_path: common/briefs/B01.txt
-      website_snapshot: common/websites/rentok.com
-    - order_index: 14
-      trial_id: E037-sonnet-no-canon-B02-R3
-      brief_id: B02
-      repetition: 3
-      brief_path: common/briefs/B02.txt
-      website_snapshot: common/websites/getaight.ai
-    - order_index: 15
-      trial_id: E037-sonnet-no-canon-B03-R3
-      brief_id: B03
-      repetition: 3
-      brief_path: common/briefs/B03.txt
-      website_snapshot: null
-    - order_index: 16
-      trial_id: E037-sonnet-no-canon-B04-R3
-      brief_id: B04
-      repetition: 3
-      brief_path: common/briefs/B04.txt
-      website_snapshot: null
-    - order_index: 17
+    - order_index: 3
       trial_id: E037-sonnet-no-canon-B05-R3
       brief_id: B05
       repetition: 3
       brief_path: common/briefs/B05.txt
       website_snapshot: null
-    - order_index: 18
+    - order_index: 4
+      trial_id: E037-sonnet-no-canon-B02-R2
+      brief_id: B02
+      repetition: 2
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 5
+      trial_id: E037-sonnet-no-canon-B06-R1
+      brief_id: B06
+      repetition: 1
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 6
+      trial_id: E037-sonnet-no-canon-B03-R1
+      brief_id: B03
+      repetition: 1
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 7
+      trial_id: E037-sonnet-no-canon-B02-R3
+      brief_id: B02
+      repetition: 3
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 8
+      trial_id: E037-sonnet-no-canon-B01-R3
+      brief_id: B01
+      repetition: 3
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 9
+      trial_id: E037-sonnet-no-canon-B04-R3
+      brief_id: B04
+      repetition: 3
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 10
+      trial_id: E037-sonnet-no-canon-B04-R1
+      brief_id: B04
+      repetition: 1
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 11
       trial_id: E037-sonnet-no-canon-B06-R3
       brief_id: B06
       repetition: 3
       brief_path: common/briefs/B06.txt
       website_snapshot: null
+    - order_index: 12
+      trial_id: E037-sonnet-no-canon-B05-R1
+      brief_id: B05
+      repetition: 1
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+    - order_index: 13
+      trial_id: E037-sonnet-no-canon-B06-R2
+      brief_id: B06
+      repetition: 2
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 14
+      trial_id: E037-sonnet-no-canon-B01-R1
+      brief_id: B01
+      repetition: 1
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 15
+      trial_id: E037-sonnet-no-canon-B03-R2
+      brief_id: B03
+      repetition: 2
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 16
+      trial_id: E037-sonnet-no-canon-B04-R2
+      brief_id: B04
+      repetition: 2
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 17
+      trial_id: E037-sonnet-no-canon-B03-R3
+      brief_id: B03
+      repetition: 3
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 18
+      trial_id: E037-sonnet-no-canon-B01-R2
+      brief_id: B01
+      repetition: 2
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
 
 retry_policy:
-  technical_failure:
+  # A retry is licensed ONLY by a TRANSIENT provider failure. Deterministic
+  # failures are recorded and never resampled — resampling them would be
+  # creative resampling wearing a technical retry's clothes.
+  transient_failure:
     initial_attempt: 1
     max_technical_retries: 2
-    max_total_attempts_from_technical: 3
-    qualifying_classes:
+    max_total_attempts_from_transient: 3
+    retry_resends: the identical request, unchanged
+    classes:
       - timeout
       - connection_error
-      - rate_limit
+      - rate_limit_429
       - server_error_5xx
-      - empty_response
-      - truncated_response
-      - provider_refusal_non_content
-      - sdk_error
     on_exhaustion: >-
       Record the trial as failed_technical with every attempt retained. Do not
       substitute a model, relax a setting or hand-write a package.
+  deterministic_failure:
+    retries: 0
+    status: failed_execution
+    classes:
+      - invalid_request_4xx
+      - auth_error
+      - tool_schema_rejected
+      - context_overflow
+      - tool_loop_guard_exhausted
+      - model_refusal
+      - truncated_response
+      - empty_response
+      - sdk_error
+    note: >-
+      A stable 4xx caused by request, configuration or tool schema; context
+      exhaustion; tool-loop exhaustion; provider truncation; or model refusal is
+      recorded distinctly and receives NO automatic resampling. Context overflow
+      or tool-loop exhaustion caused by the model's own retrieval is a
+      model+condition EXECUTION FAILURE and is a real result of this experiment,
+      not a transient provider fault.
+  truncation_detection: >-
+    Detected from the provider's own stop/finish reason, not inferred from missing
+    section headings.
   format_repair:
     max: 1
     scope: format only
+    request_contains:
+      - the original customer brief
+      - the original model answer, verbatim
+      - exactly the frozen format-only instruction
+    must_not_contain:
+      - any other trial
+      - any new creative guidance
+    records: repair_source_response_digest
     permitted_when: >-
       The response is present and substantive but does not carry the required
       FINAL_PRODUCTION_PACKAGE section structure.
-    forbidden: >-
-      Changing, steering, enriching or improving the creative content. A format
-      repair may ask only for the same answer in the required shape.
+    on_transient_failure_during_repair: >-
+      Retry THAT SAME format-repair request under the transient retry policy. It
+      must NEVER fall back to a fresh creative generation.
+    if_repair_still_invalid:
+      retain_output: true
+      status: failed_format
+      eligible_for_media_generation: false
+      note: An invalid repair is never labelled format_repaired.
   forbidden_retry_reasons:
     - the answer looks creatively weak
     - the idea seems unoriginal or safe
     - the package is shorter than expected
     - a different sample would probably be better
-    - the model used no website
+    - the model did not read the website
   forbidden_retry_note: >-
     Creative weakness is NEVER a reason for another attempt. Retrying on quality
     silently selects the best-of-N and destroys the comparison this experiment exists
     to make.
+
+tool_loop_guard:
+  max_provider_turns: 100
+  purpose: emergency stop against literal runaway execution
+  is_a_retrieval_budget: false
+  note: >-
+    The model may retrieve as much as it wants below this. Hitting the guard is a
+    model+condition execution failure, preserved as such, and never rerun as a
+    transient provider failure.
 
 spend:
   experiment_level_cap: none
@@ -281,7 +372,19 @@ evidence:
   attempt_ledger_schema: schemas/attempt-ledger.schema.json
   result: eval/experiments/EVAL-037/runs/sonnet-no-canon/result.json
   result_schema: schemas/result.schema.json
+  raw_requests: eval/experiments/EVAL-037/runs/sonnet-no-canon/requests/
   raw_responses: eval/experiments/EVAL-037/runs/sonnet-no-canon/raw/
+  tool_transcripts: eval/experiments/EVAL-037/runs/sonnet-no-canon/transcripts/
+  transcript_note: >-
+    Every provider invocation retains its EXACT serialised request, not only a
+    digest. Every tool call retains its real arguments, per-item identity
+    (item id, source id, source_status, kind, Q&A flag) and the full tool result,
+    so a later session can reconstruct exactly what the model asked for and got.
+  usage_note: >-
+    Usage is recorded per PROVIDER TURN, including every intermediate turn caused
+    by a tool call, and summed to trial and lane totals. A field the provider does
+    not expose is null; nothing is invented.
+  price_snapshot: common/price-snapshot.yaml
   packages: eval/experiments/EVAL-037/runs/sonnet-no-canon/packages/
   retention: >-
     Retain every output regardless of apparent quality, including outputs from
@@ -297,7 +400,8 @@ downstream:
     Eligibility is never withdrawn on creative grounds.
 
 worker_obligations:
-  - Start from the exact base_commit above.
+  - Run from a checkout containing the approved frozen substrate; verify the
+    common_substrate_digest above and the freeze fingerprint before dispatch.
   - Read only EXECUTION-CONTRACT.md, this lane YAML, and files this YAML names.
   - Never list or read a sibling lane config.
   - Never inspect another EVAL-037 execution branch, PR, log, output or report.

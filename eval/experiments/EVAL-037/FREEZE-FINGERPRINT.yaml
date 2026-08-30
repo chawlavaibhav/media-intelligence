@@ -1,20 +1,33 @@
-# EVAL-037 — freeze fingerprint over the whole common substrate.
+# EVAL-037 — substrate identity. The experiment-defining bytes are the authority.
 #
 # Regenerate:  python3 tools/freeze_fingerprint.py
 # Verify:      python3 tools/freeze_fingerprint.py --check
 #
-# Excludes this file (self-reference), runs/ (post-freeze lane evidence),
-# __pycache__/, and dotfiles (.gitignore is hygiene, not experimental design).
+# freeze_fingerprint covers the WHOLE substrate including lanes/, so it cannot
+# live in any file it covers — it lives only here, and this file is excluded
+# from its own scope. This is the value the controller approves.
+#
+# common_substrate_digest excludes lanes/, which makes it safe for every lane
+# YAML to embed. That is the digest a lane verifies on its own.
+#
+# Both exclude runs/ (post-freeze lane evidence), __pycache__/ and dotfiles.
 
 experiment: EVAL-037
 scope: eval/experiments/EVAL-037/**
-base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
 algorithm: sha256-of-sorted-path-and-content
-file_count: 43
-combined_digest: 755b304bbcd5c0b4ec4b798cf5a1db96b6f157e53d422730a6a59208a43128f9
+
+# Canon provenance. This commit does NOT contain EVAL-037 and is not the
+# execution-lane starting commit.
+canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+canon_base_commit_role: the CANON-014 merge the corpus fingerprints were computed against
+
+file_count: 45
+freeze_fingerprint: 5fc021d96d23299e977600735cc8cf0f950f61d6ed7cd8b39099f9a10aa189ee
+common_substrate_file_count: 37
+common_substrate_digest: d8b2c045c61e22668bf6bb8b6b387250efce8c80b1e909029e21d3d6a6c0ebc2
 files:
   - path: EXECUTION-CONTRACT.md
-    sha256: 6e07f53387080a436797b21593d59f4f04e97bb4e125852bff856b27854868cb
+    sha256: b4af51a3e9b891110b347233d5b3f959400fa7a8d0431ec3318608888b4d92ad
   - path: common/briefs/B01.txt
     sha256: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
   - path: common/briefs/B02.txt
@@ -27,6 +40,8 @@ files:
     sha256: a5450117410e01e6eb8889977e463e6f697f0e6fb42f524c70784a254cd510c6
   - path: common/briefs/B06.txt
     sha256: 27391665eb56d62f9788329ce994dabcb2a8f152073843594caf6bef74ab8ff4
+  - path: common/price-snapshot.yaml
+    sha256: 775a1b5fa2eed0658b2d5baed28148a492f989648f25c2558363a26bd5d84175
   - path: common/system-prompt.txt
     sha256: aae58578f4300b3e6bd27e7812dced88bb955d77635cf521fcde17154e00889f
   - path: common/websites/WEBSITE-SNAPSHOT-MANIFEST.yaml
@@ -54,48 +69,50 @@ files:
   - path: conditions/full-canon.yaml
     sha256: ff03c79829c1d9bb6db6c10bbd5ea38e9b2782647db19209a58eeec0e695f91b
   - path: experiment.yaml
-    sha256: e20360619ff5f1e9c06ef60ca039a2416b499ff44949f803104b8eac519be5bb
+    sha256: a9da0f65fce4fc430984d683c647805b55a4d74a8e7623aa25ccf9e409c3dd3c
   - path: lanes/gemma-full-canon.yaml
-    sha256: 389cf165ff534ad704019a55ed93b0b78413cf9cc9362b0c8a12ea33eb0cc309
+    sha256: 0a355093a63fa16406f14332cbb3c7b06465a57400d8b1e2af25f4d7eef47c87
   - path: lanes/gemma-no-canon.yaml
-    sha256: 3fa06056f0dd689f8000c837561d6c440be035d3b98a7c40ba3a7b05e47b7457
+    sha256: 57d8097239210a7444b84fddcada42dceb122009d96257700d26c40d19bb4481
   - path: lanes/haiku-full-canon.yaml
-    sha256: c79997b1640a3fb975487347bf8f8223e27328c87c336175461ce01efb05ef16
+    sha256: f9e0bf8bdca2db73f10930d3da9fc8d26119aa563e1cb367284f30fb964c9a40
   - path: lanes/haiku-no-canon.yaml
-    sha256: 2e2410c3b6dd7f7e6164a4e823c0203b703e15c854206adb55909c9cb996b1e6
+    sha256: 893695ae966f4efe48cb095c808e8314652e84a92b18a62e8a142c280cf23b55
   - path: lanes/sol-full-canon.yaml
-    sha256: e5ac00094ffbc054be5686a5771115210bf3ed7e41702eadb2df18e1d3f2e4d0
+    sha256: 645196a8c76738e4d22a36dac68993b6e72615d747c5846b5b276e754e701c0f
   - path: lanes/sol-no-canon.yaml
-    sha256: 52a935134f602aeb9763385d4fecd57a12022f9ce87fca43e1fbd198779bd15d
+    sha256: 1209a55971cfea5c769bd64051adb723fedede072c0970acde6f2e17bd6aec5d
   - path: lanes/sonnet-full-canon.yaml
-    sha256: ede03437bde4b3ac3c2ca7ee2d12389d76174d2b305bd1d23a1c4583124acfb4
+    sha256: 428f9c4455e1ced6ae859e1fff7b4d993783346de77ab703a898330c161a58f9
   - path: lanes/sonnet-no-canon.yaml
-    sha256: 8a60c0d6cf6d7dd33f7772c1f82c545abd742fa46290f21133359cabe982efb1
+    sha256: b857d149a5aa80df47bd4df2f8444a7bcfa434145b0c85d7e1f9b0183cccbec9
   - path: schemas/attempt-ledger.schema.json
-    sha256: fcb1fce507e11fedb80d419de79889dae022e5c0a0a4cc0b4d38d34ef32c2138
+    sha256: 5fbc3a17fa2167a35ef723298428ff1fff2537692edf910640356f9da2b624cb
   - path: schemas/result.schema.json
-    sha256: 82e7824d15b05433ccf229d2b2b310ac93694cd63fcb9225af8fbe865992932b
+    sha256: f45f2fa05b631ea418222a91a92a4adb2bdb8fa159799778c461235ce3dd7cd3
   - path: tools/build_lanes.py
-    sha256: 869270b0dee60775e23f5876e414e5b837bb74b0610fcd36f62a041c2e17c6c4
+    sha256: 575d2aa29b0fb3c77fcbd155bf465ae1770dc269499bc5e07a3bfe3435c70bed
   - path: tools/canon_tools.py
-    sha256: 6173095259966e7abcdc06ccc447f6f10fb8b483342f6b5033de6dd2dd385ffb
+    sha256: c2f476a7c7885cbe15af636f015b3e8280a76e03ce3208b1fb891111d9920ad3
   - path: tools/fake_provider.py
-    sha256: ad25c1d7a1d096ca24a77f7c818fca2cda8fb76031978da887f8ebf9ce90520d
+    sha256: a21825bf9fe94ed694570fa82b44f5d235f327ac0455a7b731cdcb8a20b5c98e
   - path: tools/freeze_fingerprint.py
-    sha256: 44a829af025c70c5672b4d52ab92b486ca27d10283ed50d0948c03836fefa051
+    sha256: aa4d5787a9a88cfbd183c4ac841c8edc64a2a3ce7de091d7b04e8185a712b25f
   - path: tools/jsonschema_mini.py
     sha256: 8b9557f234d13544cfc1122080591187100001f83d6bd28f3a13bf0838273c6d
   - path: tools/preflight.py
-    sha256: 3956867ab0087e23a0cd0571a39f95b1e61a97e0019e2d0a868327cadf82810f
+    sha256: 203a731c63d665a473cab0675c113e8d892876313c762451bc3e551d76189c3b
   - path: tools/providers.py
-    sha256: e24912b038083daa3bf554c1c31643f5b48fde008d73121069607129bab921c4
+    sha256: 2395bcf5ad8769b11528fcaaf8bfb6b0cb4de5c9c735acff149c9076ffba4c49
   - path: tools/runner.py
-    sha256: d3e9fa1f903394c69afb880c525bc592f8266c26d61bb89fee26bd97c90c8379
+    sha256: 11afdd3087a4b892d0b72ef8a53dfc82f46af3b558ec7d7828080d69453231ac
   - path: tools/snapshot_websites.py
     sha256: d2906418a6fadb1d26bef68dc914537e7090620401f6b711572dea338dac880a
+  - path: tools/website_tools.py
+    sha256: e263b7636d547d1566926c797cab929af3da5de6a8b5e6df0f11934d09e6416a
   - path: validators/test_substrate.py
-    sha256: 2716ebbe1a5ea6a2dcb7f1f4feaddf255caf44e07557562228ecdb3fe1b2fa83
+    sha256: c6f9e12e46dd4b018116aaf527cae56c32dfe18c239cda7e5cdbff49fb4308b7
   - path: validators/validate_freeze.py
-    sha256: fd0824a81e7a86d591ca3faa06a5ab195d4948f840f24b97eee5ecce1656f34f
+    sha256: c0375195298c1c2f87b07aeb0ab82ac2845852708b7de681293a9ce5043698e5
   - path: validators/validate_lane_run.py
-    sha256: 2b0b5d240b0a91c0c58daf9e7b2e521e834e5b5bd7122f34b32a6262a888f8f2
+    sha256: e03668335fab184acbda15b3177fd29379164dfec957da629e3bf6ab501ef7a0

@@ -2,7 +2,9 @@
 """EVAL-037 — the three read-only Canon tools exposed in the FULL_CANON condition.
 
   canon_catalog   what sources exist, and in what epistemic state
-  canon_search    find items across knowledge, concept systems, bindings, ontology and Q&A
+  canon_search    deterministic tokenized BM25 ranked retrieval across SourceKnowledge,
+                  concept systems, operational bindings, ontology, visual-evidence
+                  items and Q&A. No embedding and no model call anywhere.
   canon_read      read a whole artifact, a whole source, or one item by id
 
 NO_CANON lanes never import this module. The runner refuses to load it unless the
@@ -20,7 +22,11 @@ Hard invariants, enforced here and tested by validators/test_canon_tools.py:
 
 The harness imposes NO aggregate top-K, NO token budget and NO retrieval-count budget.
 `limit` exists only so the tested model can bound its own result set if it chooses; the
-default is unbounded.
+default is unbounded — every scoring item is returned, ranked.
+
+Ranking is BM25 (k1=1.2, b=0.75) over a deterministic tokenization, with ties broken
+on (-score, source_dir, kind, item_id) so the same query always returns the same order
+on the same corpus. Nothing here is stochastic and nothing calls a model.
 """
 import hashlib
 import json
@@ -51,12 +57,54 @@ _ITEM_LISTS = {
     "terms": ("ontology_term", "term_id"),
     "concepts": ("ontology_concept", "concept_id"),
     "qa_items": ("qa", "qa_id"),
-    "visual_evidence": ("visual_evidence", "evidence_id"),
+    # visual-evidence ledgers carry two item lists, both keyed on `ref`
+    "demonstrations": ("visual_evidence", "ref"),
+    "visual_only_observations": ("visual_evidence", "ref"),
 }
 
 
 class CanonStatusError(RuntimeError):
     """Raised when the corpus cannot establish a status. Fails closed."""
+
+
+_TOKEN_RE = re.compile(r"[a-z0-9]+")
+
+# BM25 constants, fixed at freeze. Standard defaults; not tuned against the corpus.
+BM25_K1 = 1.2
+BM25_B = 0.75
+
+# Process-level cache of the flattened corpus and its BM25 index, keyed by repo root.
+# Safe by construction: both are pure functions of immutable, read-only corpus bytes.
+# NO trial state is involved, so sharing them across trials carries nothing between
+# trials. Rebuilding per trial would only burn wall-clock.
+_CORPUS_CACHE = {}
+
+
+def tokenize(text):
+    """Deterministic tokenizer: lowercase, split on non-alphanumerics, drop 1-char tokens.
+
+    No stemming and no stopword list — both would be tuning decisions that quietly
+    shape what the tested model can find.
+    """
+    return [t for t in _TOKEN_RE.findall(str(text).lower()) if len(t) > 1]
+
+
+def _text_of(item):
+    """Flatten every string leaf of an item into one searchable document."""
+    out = []
+
+    def walk(o):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                out.append(str(k)); walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+        elif o is not None and not isinstance(o, bool):
+            out.append(str(o))
+
+    walk(item)
+    return " ".join(out)
 
 
 def _load(p):
@@ -75,8 +123,10 @@ class Canon:
         self.cache_dir = pathlib.Path(cache_dir) if cache_dir else None
         self._index = None
         self._sources = None
-        self._artifacts = {}
+        self._artifacts = _CORPUS_CACHE.setdefault(("artifacts", str(self.root)), {})
+        self._titles = _CORPUS_CACHE.setdefault(("titles", str(self.root)), {})
         self._flat = None
+        self._bm25 = None
 
     # -- corpus map ---------------------------------------------------------
     @property
@@ -113,6 +163,12 @@ class Canon:
 
     def _title(self, source_dir):
         """Title only where the corpus states one. Never invented."""
+        if source_dir in self._titles:
+            return self._titles[source_dir]
+        self._titles[source_dir] = t = self._title_uncached(source_dir)
+        return t
+
+    def _title_uncached(self, source_dir):
         qb = self._qa_bank_path(source_dir)
         if qb:
             items = (_load(qb) or {}).get("qa_items") or []
@@ -198,6 +254,10 @@ class Canon:
         """One pass over the whole corpus. Every item is stamped with its source_status."""
         if self._flat is not None:
             return self._flat
+        ck = ("flat", str(self.root))
+        if ck in _CORPUS_CACHE:
+            self._flat = _CORPUS_CACHE[ck]
+            return self._flat
         flat = []
         for sd, rec in sorted(self.sources.items()):
             try:
@@ -213,48 +273,103 @@ class Canon:
         self._flat = flat
         return flat
 
+    # -- BM25 index ---------------------------------------------------------
+    def _bm25_index(self):
+        """Build the BM25 index once per process. Pure function of the corpus bytes."""
+        if getattr(self, "_bm25", None) is not None:
+            return self._bm25
+        ck = ("bm25", str(self.root))
+        if ck in _CORPUS_CACHE:
+            self._bm25 = _CORPUS_CACHE[ck]
+            return self._bm25
+        import math
+        docs, df = [], {}
+        for entry in self._flatten():
+            toks = tokenize(_text_of(entry["item"]))
+            tf = {}
+            for t in toks:
+                tf[t] = tf.get(t, 0) + 1
+            for t in tf:
+                df[t] = df.get(t, 0) + 1
+            docs.append({"entry": entry, "tf": tf, "len": len(toks)})
+        n = len(docs)
+        avgdl = (sum(d["len"] for d in docs) / n) if n else 0.0
+        idf = {t: math.log(1.0 + (n - c + 0.5) / (c + 0.5)) for t, c in df.items()}
+        self._bm25 = _CORPUS_CACHE[ck] = {"docs": docs, "idf": idf, "avgdl": avgdl,
+                                          "n": n}
+        return self._bm25
+
     # -- tool 2: canon_search ----------------------------------------------
     def canon_search(self, query, kinds=None, source_status=None, include_qa=True,
-                     limit=None, fields=None):
-        """Substring/regex search across the corpus.
+                     limit=None, min_score=0.0):
+        """Deterministic BM25 ranked retrieval across the whole corpus.
 
-        limit is the CALLER's own choice. The harness imposes no aggregate top-K,
-        no token budget and no retrieval-count budget. Default: unbounded.
+        Every item kind is searched: SourceKnowledge, concept systems, operational
+        bindings, ontology terms and concepts, visual-evidence items, and Q&A.
+
+        `limit` is the CALLER's own choice. The harness imposes no aggregate top-K, no
+        token budget and no retrieval-count budget. Default: every scoring item,
+        ranked.
         """
         if not query or not str(query).strip():
             raise ValueError("query must be a non-empty string")
         if source_status is not None and source_status not in (ACCEPTED, HOLD):
             raise ValueError(f"source_status must be {ACCEPTED!r} or {HOLD!r}")
-        try:
-            rx = re.compile(query, re.I)
-        except re.error:
-            rx = re.compile(re.escape(query), re.I)
-        hits = []
-        for entry in self._flatten():
+        q = tokenize(query)
+        if not q:
+            raise ValueError("query contained no searchable tokens")
+        ix = self._bm25_index()
+        idf, avgdl = ix["idf"], ix["avgdl"]
+
+        scored = []
+        for d in ix["docs"]:
+            entry = d["entry"]
             if kinds and entry["kind"] not in kinds:
                 continue
             if source_status and entry["source_status"] != source_status:
                 continue
             if not include_qa and entry["kind"] == "qa":
                 continue
-            hay = _haystack(entry["item"], fields)
-            if rx.search(hay):
-                hits.append(_assert_status(entry))
-        hits.sort(key=lambda e: (e["source_dir"], e["kind"], str(e["item_id"])))
-        total = len(hits)
+            tf, dl = d["tf"], d["len"]
+            score, matched = 0.0, []
+            for t in q:
+                f = tf.get(t)
+                if not f:
+                    continue
+                matched.append(t)
+                denom = f + BM25_K1 * (1 - BM25_B + BM25_B * (dl / avgdl if avgdl else 1))
+                score += idf.get(t, 0.0) * (f * (BM25_K1 + 1)) / denom
+            if score > min_score:
+                scored.append((score, sorted(set(matched)), entry))
+
+        scored.sort(key=lambda r: (-r[0], r[2]["source_dir"], r[2]["kind"],
+                                   str(r[2]["item_id"])))
+        total = len(scored)
         if limit is not None:
             if not isinstance(limit, int) or limit < 1:
                 raise ValueError("limit must be a positive integer or None")
-            hits = hits[:limit]
+            scored = scored[:limit]
+
+        results = []
+        for rank, (score, matched, entry) in enumerate(scored, 1):
+            r = dict(entry)
+            r["rank"] = rank
+            r["score"] = round(score, 6)
+            r["matched_query_terms"] = matched
+            results.append(_assert_status(r))
+
         return {"query": query,
+                "query_tokens": q,
+                "ranking": "BM25 k1=1.2 b=0.75, deterministic tokenization, no model call",
                 "total_matches": total,
-                "returned": len(hits),
+                "returned": len(results),
                 "limit_applied": limit,
                 "limit_source": "caller" if limit is not None else "none (unbounded)",
-                "accepted_matches": sum(1 for h in hits if h["source_status"] == ACCEPTED),
-                "hold_matches": sum(1 for h in hits if h["source_status"] == HOLD),
+                "accepted_matches": sum(1 for r in results if r["source_status"] == ACCEPTED),
+                "hold_matches": sum(1 for r in results if r["source_status"] == HOLD),
+                "qa_matches": sum(1 for r in results if r["kind"] == "qa"),
                 "status_note": "Each result carries its own source_status. HOLD is not accepted.",
-                "results": hits}
+                "results": results}
 
     # -- tool 3: canon_read -------------------------------------------------
     def canon_read(self, source_dir=None, artifact=None, item_id=None):
@@ -320,12 +435,6 @@ def _assert_status(obj):
     return obj
 
 
-def _haystack(item, fields=None):
-    if fields:
-        return json.dumps({k: item.get(k) for k in fields}, default=str)
-    return json.dumps(item, default=str)
-
-
 # -- tool schemas exposed to the provider ----------------------------------
 TOOL_SCHEMAS = [
     {"name": "canon_catalog",
@@ -337,17 +446,22 @@ TOOL_SCHEMAS = [
          "has_qa": {"type": "boolean", "description": "Optional: only sources with a Q&A bank."}},
          "required": []}},
     {"name": "canon_search",
-     "description": ("Search the knowledge library. Returns every match by default; there is no "
-                     "imposed result cap. Each result states its own source_status."),
+     "description": ("Ranked lexical (BM25) search across the whole knowledge library: "
+                     "source knowledge, concept systems, operational bindings, ontology "
+                     "terms and concepts, visual-evidence items and Q&A. Returns every "
+                     "scoring item by default, best first; there is no imposed result "
+                     "cap. Each result states its own source_status."),
      "input_schema": {"type": "object", "properties": {
-         "query": {"type": "string", "description": "Substring or regular expression."},
+         "query": {"type": "string", "description": "Free-text query. Ranked by BM25."},
          "kinds": {"type": "array", "items": {"type": "string", "enum": [
              "knowledge", "concept_system", "binding", "ontology_term",
              "ontology_concept", "qa", "visual_evidence"]}},
          "source_status": {"type": "string", "enum": [ACCEPTED, HOLD]},
          "include_qa": {"type": "boolean", "default": True},
          "limit": {"type": "integer", "minimum": 1,
-                   "description": "Optional cap you choose. Omit for all matches."}},
+                   "description": "Optional cap you choose. Omit for all matches."},
+         "min_score": {"type": "number",
+                       "description": "Optional BM25 score floor. Default 0."}},
          "required": ["query"]}},
     {"name": "canon_read",
      "description": ("Read one source's artifact, one source's overview, or one item by id. "

@@ -1,7 +1,7 @@
 # EVAL-037 — Execution Contract
 
-**Status: FROZEN.** This substrate is complete and no experimental model call has been
-made. Every number below was produced by validators and the fake provider.
+**Status: FROZEN.** No experimental model call has been made. Every number below was
+produced by validators and the deterministic fake provider.
 
 You are an EVAL-037 **execution worker**. You run exactly one lane. Read this file and
 your own lane YAML. Nothing else, except the files your lane YAML names.
@@ -17,19 +17,36 @@ packages and evidence. You do **not** judge them, and you do **not** generate me
 
 ---
 
-## 1. Frozen base
+## 1. Substrate identity — bytes, not a commit
 
-| | |
-|---|---|
-| Base commit | `c6f8d910f7a3cdaaeafa2280313abfb9b898cddd` |
-| Base subject | `CANON-014: integrate full Canon corpus` |
-| Freeze branch | `work/eval-037-freeze` |
-| Full-knowledge fingerprint | `cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60` (193 files) |
-| Q&A fingerprint | `1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd` (23 files) |
-| rentok.com snapshot | `4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6` |
-| getaight.ai snapshot | `17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514` |
+**The experiment-defining bytes are the authority.** No commit SHA is, and none can
+be: the substrate was authored *after* the CANON-014 merge, so no commit contains both
+the substrate and a fingerprint of itself. Requiring one would be an impossible
+self-referential gate.
 
-Start from **exactly** that commit. If your HEAD's merge-base with it is not it, stop.
+For the same reason **this document does not print either digest**: it is itself inside
+the scope both digests cover, so a literal value here would invalidate itself the
+moment it was written. The values live in `FREEZE-FINGERPRINT.yaml`, which is excluded
+from its own scope, and the common digest is additionally embedded in every lane YAML,
+which the whole-substrate digest covers but the common digest does not. Verify with
+`tools/freeze_fingerprint.py --check`.
+
+| Identity | Value | Role |
+|---|---|---|
+| `freeze_fingerprint` | recorded in `FREEZE-FINGERPRINT.yaml` | **Dispatch gate.** Covers the whole substrate, lanes included. Lives only in `FREEZE-FINGERPRINT.yaml` (excluded from its own scope) and in the controller approval. Verify with `tools/freeze_fingerprint.py --check`. |
+| `common_substrate_digest` | recorded in `FREEZE-FINGERPRINT.yaml` and in every lane YAML | Covers the substrate **excluding `lanes/`**, which is what makes it safe to embed in every lane. This is the digest a lane verifies on its own. |
+| `canon_base_commit` | `c6f8d910f7a3cdaaeafa2280313abfb9b898cddd` | **Canon provenance only.** The CANON-014 merge the two corpus fingerprints were computed against. It does **not** contain EVAL-037 and is **not** the execution-lane starting commit. |
+
+Execution lanes run from **any checkout that contains the approved frozen substrate**
+and has `canon_base_commit` as an ancestor. Preflight verifies both digests and stops
+on any mismatch.
+
+| Corpus | Files | Digest |
+|---|---|---|
+| Full knowledge | 193 | `cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60` |
+| Q&A | 23 | `1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd` |
+| rentok.com snapshot | — | `4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6` |
+| getaight.ai snapshot | — | `17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514` |
 
 ---
 
@@ -37,11 +54,9 @@ Start from **exactly** that commit. If your HEAD's merge-base with it is not it,
 
 Every execution worker **must**:
 
-1. start from the exact frozen base commit recorded above;
-2. read only
-   - `EXECUTION-CONTRACT.md`
-   - its own lane YAML
-   - files explicitly referenced by that lane YAML;
+1. run from a checkout containing the approved frozen substrate, verifying the
+   freeze fingerprint and the common substrate digest before dispatch;
+2. read only `EXECUTION-CONTRACT.md`, its own lane YAML, and files that lane YAML names;
 3. never list or read sibling lane configs;
 4. never inspect another EVAL-037 execution branch, PR, log, output or report;
 5. execute exactly **18** trials;
@@ -53,34 +68,30 @@ Every execution worker **must**:
 11. do no creative judging;
 12. generate no media.
 
-Each lane YAML is deliberately repetitive: it carries the model config, condition,
-tool list, brief paths, prompt path, addendum path, snapshot paths, all 18 trial IDs in
-order, the retry policy, the evidence paths and schemas, and the frozen base commit.
-That duplication **is** the isolation property. You never need a sibling file.
+Each lane YAML deliberately repeats every shared fact. That duplication **is** the
+isolation property.
 
 ---
 
-## 3. Design (fixed — not open to lane-level interpretation)
+## 3. Design (fixed)
 
-- 6 briefs
-- 3 independent repetitions
-- one model × one condition per isolated execution session
-- 18 trials per session
-- 144 trials total
-- fresh provider context for every trial
-- no creative-quality judging at the reasoning stage
-- all valid packages remain eligible for later media generation
-- media generation and final acceptance scoring are explicitly **outside** EVAL-037
-- no experiment-level spend cap
-- technical failure: initial attempt + **maximum 2** technical retries
-- exactly **one** format-only repair if required
-- **no retry because an answer looks creatively weak**
+6 briefs · 3 repetitions · one model × one condition per isolated session · 18 trials
+per session · 144 total · fresh provider context per trial · no creative-quality
+judging at the reasoning stage · all valid packages remain eligible for later media
+generation · media generation and final acceptance scoring are **outside** EVAL-037 ·
+no experiment-level spend cap.
 
-Trial order is repetition-major — all six briefs at R1, then R2, then R3 — so the three
-repetitions of a brief are maximally separated. Every trial is stateless regardless;
-the ordering makes accidental carry-over visible rather than hidden.
+### Trial order — deterministic pseudo-random
 
-Trial IDs: `E037-<lane_id>-<brief>-R<rep>`, e.g. `E037-sonnet-full-canon-B04-R2`.
+For each lane, all 18 trial IDs are sorted by `SHA-256("EVAL-037|" + trial_id)`, and
+that order is frozen into the lane YAML.
+
+This decorrelates execution position from brief and from repetition, so a position
+effect (provider warm-up, drift, rate-limit shaping) cannot line up with a brief or a
+repetition. **The validator recomputes the whole ordering** — it does not merely check
+that `order_index` runs 1..18, which would pass for any ordering at all.
+
+Trial IDs: `E037-<lane_id>-<brief>-R<rep>`.
 
 ---
 
@@ -96,50 +107,45 @@ substitute** if it is unavailable.
 | `haiku` | Anthropic | `claude-haiku-4-5-20251001` | Messages API | `thinking={"type":"enabled","budget_tokens":8000}`; sampling: provider defaults |
 | `gemma` | Google Gemini API | `gemma-4-31b-it` | Gemini API (`GEMINI_API_KEY`) | provider defaults throughout |
 
-Notes that are part of the freeze, not suggestions:
+Part of the freeze, not suggestions:
 
-- On `claude-sonnet-5`, `budget_tokens` and `temperature`/`top_p`/`top_k` are **removed
-  and return 400**. "Sampling: provider defaults" is therefore both the instruction and
-  the only legal call.
-- `claude-haiku-4-5-20251001` is a pre-4.6 model: it takes `budget_tokens` and
-  **rejects** the `effort` control. `budget_tokens` must be below `max_tokens`.
-- For `gemma-4-31b-it`, **do not invent unsupported reasoning controls.** There is no
-  thinking budget, no `effort`, no `reasoning_effort`. If a control is not documented
-  for this model, it is not set.
-- `max_tokens` is a required transport parameter, not a sampling control. It is set
-  uniformly in `tools/providers.py` and is generous enough that no trial is truncated
-  by our own ceiling.
+- On `claude-sonnet-5`, `budget_tokens` and `temperature`/`top_p`/`top_k` are removed
+  and return 400. "Sampling: provider defaults" is both the instruction and the only
+  legal call.
+- `claude-haiku-4-5-20251001` is pre-4.6: it takes `budget_tokens` and **rejects**
+  `effort`. `budget_tokens` must be below `max_tokens`.
+- For `gemma-4-31b-it`, **do not invent unsupported reasoning controls.** No thinking
+  budget, no `effort`, no `reasoning_effort`.
+- `max_tokens` is a required transport parameter, not a sampling control.
 
-**Open gate — `gemma-full-canon`.** Gemma served through the Gemini API has
-historically not supported function calling or a separate system instruction. Before
-trial 1 that lane must confirm the live model accepts tool declarations. If it does
-not: **STOP and escalate.** Do not run a tool-less lane and call it FULL_CANON — that
-is a different condition wearing this one's name. `tools/preflight.py` returns exit
-code 3 on that lane to force the check.
+**Every lane gets the same exact-model preflight — there is no model-specific
+capability gate.** If a live endpoint rejects a lane's exact tool configuration at run
+time, the runner records the concrete API error and that lane **stops**. It never
+substitutes another model.
 
 ---
 
 ## 5. Conditions
 
 ### NO_CANON
-
-- The tested model receives **no** Canon instruction.
-- **No** Canon tool is exposed.
-- The execution worker must **not** read `conditions/full-canon.yaml` or any Canon
-  content. Reading Canon here contaminates the control condition.
-- System prompt = `common/system-prompt.txt` **verbatim**, nothing appended.
+No Canon instruction, no Canon tool. The worker must not read
+`conditions/full-canon.yaml` or any Canon content. System prompt =
+`common/system-prompt.txt` verbatim, nothing appended.
 
 ### FULL_CANON
+Read-only `canon_catalog`, `canon_search`, `canon_read` over the merged status-aware
+corpus.
 
-The merged status-aware full corpus. Read-only tools: `canon_catalog`, `canon_search`,
-`canon_read`.
+`canon_search` is **deterministic tokenized BM25** (k1=1.2, b=0.75) ranked retrieval
+across source knowledge, concept systems, operational bindings, ontology terms and
+concepts, visual-evidence items and Q&A. No embedding and no model call. Ties break on
+`(-score, source_dir, kind, item_id)`, so the same query always returns the same order.
 
-The **tested model** decides: whether to use Canon, what to search, what to read,
-whether to consume Q&A, how much to retrieve, and when to stop.
-
-There is **no** aggregate top-K, **no** Canon token budget, **no** retrieval-count
-budget, and **no** mandatory Canon use. `canon_search` returns every match unless the
-model itself asks for a limit.
+The **tested model** decides whether to use Canon, what to search, what to read,
+whether to consume Q&A, how much to retrieve, and when to stop. There is **no**
+aggregate top-K, **no** token budget, **no** retrieval-count budget, and **no**
+mandatory use. `canon_search` returns every scoring item unless the model itself asks
+for a `limit`.
 
 Status invariants, enforced in code and tested:
 
@@ -147,131 +153,134 @@ Status invariants, enforced in code and tested:
 - `source_status` is `ACCEPTED` or `HOLD`, taken from the corpus, never inferred.
 - **HOLD is never represented, relabelled or defaulted as accepted.**
 - An object whose status cannot be established is dropped, not guessed.
-- Q&A items carry their source's status plus `not_benchmark_ground_truth: true` and
-  `independent_corroboration: false`. Q&A is accessible knowledge, **not** independent
-  corroboration and **not** benchmark truth.
+- Q&A carries `not_benchmark_ground_truth: true` and `independent_corroboration: false`.
 
-The FULL_CANON addendum text lives **only** in `conditions/full-canon.yaml`. It is
-appended to the common system prompt after one blank line. Nothing else is added.
+The addendum text lives **only** in `conditions/full-canon.yaml`.
 
 ---
 
-## 6. Websites
+## 6. Websites — the `website_read` tool
 
-Website access is limited to two frozen snapshots, taken once during this setup task:
+Website access is a property of the **brief**, not of the condition. `website_read` is
+exposed **identically in NO_CANON and FULL_CANON** and serves **byte-identical**
+snapshot content in both.
 
-| Brief | Site | Snapshot |
+| Brief | Tool exposed | Site |
 |---|---|---|
-| B01 | `https://rentok.com` | `common/websites/rentok.com/` |
-| B02 | `https://getaight.ai` | `common/websites/getaight.ai/` |
+| B01 | yes | `https://rentok.com` |
+| B02 | yes | `https://getaight.ai` |
+| B03–B06 | **no** | none |
 
-B03–B06 permit **no** website.
+`website_read` returns the frozen `page.txt` for the one site that brief permits, plus
+the snapshot sha256 actually served and the source URL. There is no fetch path in the
+code: **no live browsing**, and any other domain is **refused**, not fetched. A brief
+that permits no website cannot even construct the tool.
 
-- **No live browsing during experimental calls.** Ever.
-- **No other websites.** Ever.
-- Each snapshot holds `index.html` (raw bytes), `page.txt` (deterministic text
-  extraction), `headers.txt`, `fetch.json` and `SNAPSHOT.yaml` with digests.
-- The **tested model** decides whether to inspect the permitted snapshot.
+The tested model decides whether to call it. **Every call is recorded with its
+arguments and the exact snapshot digest returned**, and `website_snapshot_used` is
+derived from actual calls — it is never hardcoded.
 
 ---
 
 ## 7. Retry policy
 
-**Technical failure** — initial attempt + maximum **2** technical retries (3 attempts
-max). A retry is licensed *only* by a named technical failure class:
+A retry is licensed **only** by a **TRANSIENT** provider failure:
 
-`timeout`, `connection_error`, `rate_limit`, `server_error_5xx`, `empty_response`,
-`truncated_response`, `provider_refusal_non_content`, `sdk_error`.
+`timeout`, `connection_error`, `rate_limit_429`, `server_error_5xx`
 
-A technical retry resends an **identical** request. On exhaustion, record the trial as
-`failed_technical`, retain every attempt, and do not substitute a model, relax a
-setting or hand-write a package.
+Initial attempt + maximum **2** transient retries. A retry resends the **identical**
+request. On exhaustion: `failed_technical`, every attempt retained, no substitution.
 
-**Format repair** — at most **one** per trial, **format only**. Permitted when the
-response is present and substantive but lacks the required `FINAL_PRODUCTION_PACKAGE`
-section structure. The repair may ask only for the same answer in the required shape.
-It may not change, steer, enrich or improve the creative content.
+**Deterministic failures are never retried.** `invalid_request_4xx`, `auth_error`,
+`tool_schema_rejected`, `context_overflow`, `tool_loop_guard_exhausted`,
+`model_refusal`, `truncated_response`, `empty_response`, `sdk_error` → status
+`failed_execution`, zero retries.
+
+> Context overflow or tool-loop exhaustion caused by the model's **own** Canon
+> consumption is a **model+condition execution failure** and a real result of this
+> experiment — not a transient provider fault, and never rerun as one.
+
+Truncation and refusal are detected from the provider's **own stop/finish reason**, not
+inferred from missing section headings.
+
+**Format repair** — at most **one** per trial, format only. The repair is a fresh
+provider request that **contains**:
+
+1. the original customer brief;
+2. the original model answer, verbatim;
+3. exactly the frozen format-only instruction.
+
+It must not expose another trial or any new creative guidance. It records
+`repair_source_response_digest`.
+
+- A **transient** failure during a repair call retries **that same repair request**
+  under the transient policy. It **never** falls back to a fresh creative generation.
+- If the repaired answer is **still** structurally invalid: retain it, mark the trial
+  **`failed_format`**, and set `eligible_for_media_generation: false`. An invalid
+  repair is **never** labelled `format_repaired`.
 
 **Forbidden retry reasons** — the answer looks creatively weak; the idea seems
-unoriginal or safe; the package is shorter than expected; a different sample would
-probably be better; the model did not use Canon.
+unoriginal; the package is shorter than expected; a different sample would probably be
+better; the model did not use Canon or the website.
 
-> Creative weakness is **never** a reason for another attempt. Retrying on quality
-> silently selects best-of-N and destroys the comparison this experiment exists to make.
+> Creative weakness is **never** a reason for another attempt.
 
-The runner has no quality notion and cannot judge. `is_well_formed()` is a mechanical
-section-presence check and nothing more.
+**Tool-loop guard** — 100 provider turns, an emergency stop against literal runaway
+execution. It is **not** a retrieval budget.
 
 ---
 
-## 8. Spend
+## 8. Evidence
 
-No experiment-level spend cap. Cost is recorded, not enforced.
+Per lane, under `eval/experiments/EVAL-037/runs/<lane_id>/`:
+
+| Path | Contents |
+|---|---|
+| `attempt-ledger.json` | every attempt (schema: `schemas/attempt-ledger.schema.json`) |
+| `result.json` | the 18 trials (schema: `schemas/result.schema.json`) |
+| `requests/<trial>-a<n>.request.json` | the **exact serialised request**, not only a digest |
+| `raw/<trial>-a<n>.response.json` | the raw provider response |
+| `transcripts/<trial>-a<n>.jsonl` | the **complete tool transcript** |
+| `packages/<trial>.txt` | the production package |
+
+**Usage and cost.** Every provider invocation — **including every intermediate turn
+caused by a tool call** — records: input tokens, cached input tokens, output tokens,
+reasoning/thinking tokens, provider model version, provider request id, stop/finish
+reason, latency, and the provider-reported usage object verbatim. These are summed to
+**trial totals** and **lane totals**. A Canon run's reasoning cost is the sum of *all*
+its turns, not only the final response. `*_turns_reporting` counts how many turns
+contributed, so a partial sum can never pass as a complete one.
+
+A field the provider does not expose is stored as **null**. Nothing is invented. Cost
+comes from the frozen `common/price-snapshot.yaml`; where a price is not established
+the cost is `null` and `cost_basis` says why.
+
+**Tool transcript.** Every tool call retains: tool name, the **actual arguments**,
+result item IDs, source IDs, `source_status`, item kind, Q&A flag, result digest, and
+the **full tool result** in the transcript file with an exact `transcript_ref`. Argument
+hashes and aggregate counts are kept too, but they are not what the evidence rests on.
+
+Retain **every** output, including failed and malformed attempts.
 
 ---
 
 ## 9. How to run a lane
 
 ```bash
-# 1. Confirm the exact model. Stop rather than substitute.
+python3 eval/experiments/EVAL-037/tools/freeze_fingerprint.py --check
 python3 eval/experiments/EVAL-037/tools/preflight.py --lane <your lane yaml>
-
-# 2. Confirm the substrate, without calling anything.
 python3 eval/experiments/EVAL-037/tools/runner.py --lane <your lane yaml> --preflight-only
-
-# 3. FREEZE AND COMMIT YOUR RUNNER. The runner refuses to start on a dirty tree.
 git commit -am "eval-037 <lane>: freeze runner before first call"
-
-# 4. Execute all 18 trials.
 python3 eval/experiments/EVAL-037/tools/runner.py --lane <your lane yaml>
-
-# 5. Validate your own evidence before opening a PR.
 python3 eval/experiments/EVAL-037/validators/validate_lane_run.py \
     --lane <your lane yaml> --run eval/experiments/EVAL-037/runs/<lane_id>
 ```
 
-Step 3 is enforced: `preflight()` refuses to proceed while the runner tree is dirty.
-After your first call, change nothing — not the runner, not the prompt, not the config.
+The commit step is enforced: the runner refuses to start on a dirty tree.
 
 ---
 
-## 10. Evidence
-
-Per lane, under `eval/experiments/EVAL-037/runs/<lane_id>/`:
-
-| File | Schema |
-|---|---|
-| `attempt-ledger.json` | `schemas/attempt-ledger.schema.json` |
-| `result.json` | `schemas/result.schema.json` |
-| `raw/<trial>-a<n>.json` | raw provider response per attempt |
-| `packages/<trial>.txt` | the production package |
-
-Retain **every** output, including failed and malformed attempts. Nothing is deleted,
-trimmed or tidied. `result.json` carries no creative-quality judgement and no media.
-
----
-
-## 11. What the substrate already proves
-
-Everything below was run at freeze time, against the deterministic fake provider. **No
-experimental model call was made.**
-
-| Check | Result |
-|---|---|
-| `validators/validate_freeze.py` | 27 gates, all PASS |
-| `validators/test_substrate.py` | 63 tests, 63 pass, 0 fail |
-| `validators/validate_lane_run.py` on all 8 fake lane runs | 8/8 PASS |
-| Trials executed on the fake provider | 144 (8 lanes × 18) |
-| Real provider calls | **0** |
-
-The tests are mostly negative: they break one rule each and assert rejection — a
-dropped trial, reordered trials, a third technical retry, a second format repair, a
-moving alias, an unlicensed retry, a media file in the run directory, a NO_CANON run
-claiming Canon fingerprints, a HOLD item presented without its status.
-
----
-
-## 12. Out of scope
+## 10. Out of scope
 
 Media generation and final acceptance scoring are explicitly outside EVAL-037. All
 structurally valid packages remain eligible for later media generation; eligibility is
