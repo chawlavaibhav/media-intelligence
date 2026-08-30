@@ -19,7 +19,7 @@ operational_bindings:
   source_knowledge_refs: [sk_nnn_0005, sk_nnn_0001]
   source_system_refs: [scs_nnn_001]
   target_type: governance
-  target_path: null
+  target_path:
   role: [constrains, flags]
   rationale: >
     The source states that an advertisement depicts what an advertiser judged aspirational rather
@@ -44,7 +44,7 @@ operational_bindings:
   source_knowledge_refs: [sk_nnn_0040]
   source_system_refs: []
   target_type: governance
-  target_path: null
+  target_path:
   role: [flags]
   rationale: >
     The source records a gating measurement (the commercial ad pre-test) being raised by a
@@ -73,23 +73,19 @@ operational_bindings:
   target_schema: SPEC-01
   target_schema_version: v0.1
   role: [constrains, flags]
-  rationale: >
-    Two inspected executions carry their whole argument through locally held knowledge: a scene the
-    audience recognises without explanation (the crowded suburban train), and a common noun set in
-    the local script (Devanagari "Thanda matlab"). Both stop working for an audience that lacks the
-    reference. A Creative IR that specifies an audience by locale therefore has a real constraint to
-    record — whether the intended audience holds the reference the execution depends on.
+  rationale: >-
+    OWNED AS EXTRACTOR INFERENCE. Two inspected executions carry their whole argument through locally held knowledge: a scene the audience recognises without explanation (the crowded suburban train), and a common noun set in the local script (Devanagari "Thanda matlab"). The source describes neither execution's construction and never claims either stops working for an audience that lacks the reference - that is the extractor's inference from opening the plates, and this binding, not the SourceKnowledge, is where it lives. A Creative IR that specifies an audience by locale therefore has a question worth recording: whether the intended audience holds the reference the execution depends on.
   applicability:
     when: "a Creative IR whose audience is specified by locale, language or script"
     limits: >
       Derived from two Indian executions inspected by the extractor, not from any study of transfer.
       It flags a question to record; it does not predict whether any particular reference travels.
-  evidence_basis: derived_from_source
+  evidence_basis: extractor_inference
   empirical_refs: []
   failure_ontology_refs: [t_nnn_0033]
   repair_ontology_refs: []
   status: proposed
-  status_reason: "not reviewed"
+  status_reason: "not reviewed; rests on an extractor inference now owned by this binding rather than by any SourceKnowledge mechanism"
 
 - binding_id: bnd_nnn_0004
   source_knowledge_refs: [sk_nnn_0021]
@@ -121,7 +117,7 @@ operational_bindings:
   source_knowledge_refs: [sk_nnn_0022]
   source_system_refs: []
   target_type: evaluation
-  target_path: null
+  target_path:
   role: [diagnoses]
   rationale: >
     The NDDB frames set the sung word as the picture rather than as a subtitle. That makes a
@@ -145,7 +141,7 @@ operational_bindings:
   source_knowledge_refs: [sk_nnn_0016]
   source_system_refs: [scs_nnn_003]
   target_type: evaluation
-  target_path: null
+  target_path:
   role: [diagnoses]
   rationale: >
     The Tuffs plate shows the product reduced to two postage-stamp insets beside a full-bleed image.
@@ -168,12 +164,11 @@ operational_bindings:
   source_knowledge_refs: [sk_nnn_0050]
   source_system_refs: []
   target_type: production
-  target_path: null
-  target_schema: null
+  target_path:
+  target_schema:
   role: [derives]
-  rationale: >
-    Booking redundant interchangeable subjects because the performance cannot be directed and usable
-    yield is a matter of chance over a fixed day. Recorded as a physical-production pattern only.
+  rationale: >-
+    The source states the practice directly: no baby shoot is booked with fewer than three interchangeable infants standing by, against a stated yield of roughly five seconds of usable footage per day. This binds THE PRACTICE, which is the source's. It does not bind any explanation of why redundant casting helps - that reasoning was the extractor's and has been removed from the SourceKnowledge mechanism. Recorded as a physical-production pattern only.
   applicability:
     when: "planning a live-action shoot with an undirectable subject"
     limits: >
@@ -184,14 +179,14 @@ operational_bindings:
   failure_ontology_refs: []
   repair_ontology_refs: []
   status: production_candidate
-  status_reason: "Production IR does not exist"
+  status_reason: "Production IR does not exist; rationale weakened to the source-stated practice after the extractor's causal explanation was withdrawn"
 
 - binding_id: bnd_nnn_0008
   source_knowledge_refs: [sk_nnn_0013, sk_nnn_0010, sk_nnn_0051]
   source_system_refs: [scs_nnn_002]
   target_type: production
-  target_path: null
-  target_schema: null
+  target_path:
+  target_schema:
   role: [constrains]
   rationale: >
     Clearance and contracting constraints that bind a real production before any asset exists:
@@ -215,7 +210,7 @@ operational_bindings:
   source_knowledge_refs: [sk_nnn_0053, sk_nnn_0054]
   source_system_refs: []
   target_type: governance
-  target_path: null
+  target_path:
   role: [flags]
   rationale: >
     Two reported-figure objects that must never be consumed as current market context: a television

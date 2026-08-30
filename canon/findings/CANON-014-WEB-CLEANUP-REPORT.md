@@ -209,6 +209,84 @@ is pre-existing and untouched by this lane; it passes when run as the script it 
 
 ---
 
+## 7a. Controller delta correction (applied at head `66c70bd`)
+
+Controller review of `66c70bdc9a53807b2b62bdce63efeab78c835a47` found three residual **semantic**
+defects. All three are fixed. The source was not reopened; every correction was made from committed
+bytes.
+
+### D-1 — Pandey: a dependence the source does not have
+
+Removed `sk_ppm_0010 --depends_on--> sk_ppm_0011`. The general critique of research procedures does
+**not** depend on the counterfactual campaign list — the fabrication-cascade mechanism stands or
+falls on its own, while the list is counterfactual about tests that were never run. No substitute
+relation was manufactured to replace the unavailable `supports`; the illustrative role of the
+campaign list is preserved in an `extractor_observed` caveat that says explicitly why no relation is
+recorded.
+
+### D-2 — Parameswaran: a contradiction that is not one
+
+Removed the reciprocal `contradicts` between `sk_nnn_0041` and `sk_nnn_0042`. The claims pull in
+different directions and are **not logically contradictory**: a high-aura celebrity can still be cast
+as a character. The unresolved tension is preserved in caveats on both objects and, more
+appropriately, at system level in `scs_nnn_004`'s `conflicts` entry with `origin:
+extractor_inferred` — which is where a tension the source never notices belongs.
+
+`sk_nnn_0041` now carries no intra-source relations at all. That is the correct outcome, not a loss.
+
+### D-3 — SourceKnowledge mechanism purity
+
+**13 objects, all in Parameswaran**, carried the extractor's own causal explanation in
+`mechanism.text` while `stated_by_source` was `false` — several literally prefixed *"Extractor's
+reading: …"*. The boolean was honest and the placement was not: a SourceKnowledge mechanism is the
+source's account of why, and an invented explanation does not belong there whatever the flag says.
+
+All 13 now have `mechanism.text: null`, with the reasoning moved to its proper extractor-owned home:
+
+| Group | Objects | Where the reasoning went |
+|---|---|---|
+| `source_interpretation` with an existing `interpretation_basis` | 9 — `sk_nnn_0001`, `0015`–`0022` | merged into `interpretation_basis`, which is the extractor-owned justification for an interpretation |
+| `explicit_source_claim`, no `interpretation_basis` | 4 — `sk_nnn_0011`, `0012`, `0031`, `0050` | an `extractor_observed` caveat stating the explanation is the extractor's *because the source states none* |
+
+No inferred mechanism was promoted to `stated_by_source: true` to retain it. Pandey and the held
+Desai candidate had **zero** such objects and were not modified by D-3.
+
+### Bindings that rested on a withdrawn inference
+
+Three bindings referenced affected objects and each was reviewed rather than assumed safe:
+
+| Binding | Finding | Action |
+|---|---|---|
+| `bnd_nnn_0001` | rests on `sk_nnn_0005`, whose depiction/prevalence separation the source **states**; `sk_nnn_0001` is context only | unchanged, stays `derived_from_source` |
+| `bnd_nnn_0003` | rested **entirely** on the inference that these executions stop working for an audience lacking the reference — the source never says it | now `evidence_basis: extractor_inference`, with the inference explicitly owned in the rationale and in `status_reason` |
+| `bnd_nnn_0007` | its rationale carried the inferred causal clause *"because the performance cannot be directed…"* | **weakened** to the source-stated practice (book three interchangeable infants against a stated five-second yield), which keeps `derived_from_source` honest |
+
+`bnd_nnn_0007` mattered most: it is a production binding, and an invented explanation of why redundant
+casting works is exactly the kind of thing that gets lifted into a rule later.
+
+### No new validator rule
+
+Per the Controller's instruction, **no universal "`false` always requires `null`" rule was added**.
+SPEC-03 says only that `mechanism.stated_by_source` must be present and that `false` is a normal
+value; it does not mechanically require a null text. The validator and its tests are unchanged this
+round. The correction is to the artifacts and to the SourceKnowledge/extractor separation, not to the
+contract.
+
+### Status after the delta
+
+Dispositions are unchanged and both corrected audits still pass: **Parameswaran READY**, **Pandey
+READY**, **Desai HOLD**. Snapshots regenerated for the two changed sources; Desai's artifacts did not
+change and its fingerprint stands.
+
+```
+Audit Gate validator                21 records, 0 errors
+Hardened schema validator           21 dirs, 3 errors  (all F-01, pre-existing)
+  held Desai candidate               1 dir,  0 errors
+179 tests pass across four suites; test_request_freeze_gates.py passes as a script
+```
+
+---
+
 ## 8. For the Controller
 
 1. **This is a donor/cleanup PR and must not be merged until reconciled with the laptop agent's

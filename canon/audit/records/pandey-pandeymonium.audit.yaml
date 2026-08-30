@@ -18,10 +18,10 @@ source_snapshot:
   - path: source-concept-systems.yaml
     digest: 46a0af653487aad3c1f50f9455c5a660321ade0fba68f5f8ee2fe773c092c46b
   - path: source-knowledge.yaml
-    digest: 176a603523f751b278b9da58c5b58ecf7355a6936dfefb06dbd050721bb7b5d5
+    digest: 1e602598730ab9a01ef165ccd163e45ee503b2b33ee8cddb5257989bd259c6f8
   - path: visual-evidence-ledger.yaml
     digest: e66110fefbffe6d245cb943de8eaef07cc49dda222d9f916239af38115ca199d
-  combined_digest: 35529c151016646041cc632d1158548a554679f6c4c47b6cdac60df92f17159c
+  combined_digest: d695508aade7fdf10400722cfcc7a5b162ffb6b97e7cb947bce4b86c54d2c1ba
 
 evidence_basis_for_this_audit:
 - canon/knowledge/current/pandey-pandeymonium/source-knowledge.yaml
@@ -284,3 +284,4 @@ technology_contingency:
       edition, and whether that route still resolves is not knowable from here.
   existing_characteristics_relied_on: [historical_claim, culturally_bounded]
 correction_note: "This record was rewritten by the CANON-014 web-cleanup lane against corrected artifacts. The source was still NOT reopened - every correction was made from the committed bytes. What changed in the artifacts: free prose was replaced by the controlled enum in evidence.source_uncertainty and extraction_uncertainty with the prose moved to caveats; invalid intra_source_relations were mapped to SPEC-03 relations or removed with the nuance moved to caveats; label_origin values outside SPEC-03's vocabulary were corrected; ontology term kinds outside SPEC-05's four values were corrected; every repair term gained the required executable_by; and mechanisms that were the extractor's generalisation were re-attributed with stated_by_source: false. The source_snapshot below is recomputed against those corrected bytes."
+controller_delta_note: "Controller delta correction at head 66c70bd, applied without reopening the source. Three residual semantic defects were fixed: an intra-source relation that asserted a dependence the source does not have; a reciprocal `contradicts` between two claims that pull in different directions without being logically contradictory; and 13 SourceKnowledge mechanisms that carried the extractor's own causal explanation while stated_by_source was false. Every such mechanism text is now null, with the reasoning moved to interpretation_basis where it justifies a source_interpretation and to an extractor_observed caveat where it was an analytical observation. Two bindings that rested on a withdrawn inference were reviewed: one now owns the inference explicitly as extractor_inference, the other was weakened to the source-stated practice. The source_snapshot below is recomputed against those bytes."
