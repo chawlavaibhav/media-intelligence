@@ -1,0 +1,449 @@
+# Adam Connor & Aaron Irizarry, *Discussing Design* — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory.
+#
+# THE GAP, STATED ONCE AND REPEATED IN EVERY applicability.limits:
+# This book is a practitioner methodology for human design teams holding synchronous conversations
+# about interface and product work. Its unit is a sentence said by a person to another person in a
+# room, its remedies are acts people perform, and it reports no measurement of its own. Applying any
+# of it to an automated judgement pipeline — where the "giver" is a model or a metric, the
+# "recipient" is a generation step, and nobody can be asked a follow-up question — is OUR
+# extrapolation. EVERY binding below therefore carries evidence_basis: extractor_inference. Not one
+# is derived_from_source, because in no case is the target the source's own target.
+#
+# WHAT IS NOT BOUND, AND WHY. Large parts of this source are deliberately left unbound:
+#   - everything about people's feelings, defensiveness, culture, trust and morale (sk_disc_0026,
+#     0050, 0051, 0055) — these act on humans and have no honest non-human analogue;
+#   - the facilitation session mechanics (sk_disc_0038, 0039, 0040, 0047, 0049) — they govern how a
+#     meeting is run, and a meeting is not a governance consumer;
+#   - the process-shape material (sk_disc_0021, 0030, 0031) — it concerns how an organisation
+#     schedules work.
+# Per SCHEMA-CONTRACT §5.9, zero bindings would have been a legitimate outcome and no binding here
+# was manufactured to fill a table. Twelve are written because twelve knowledge objects in this
+# source are about how a judgement is formed, recorded, weighted and disputed, which is what the
+# permitted governance consumers cover.
+#
+# No creative_ir binding: SPEC-01 was not supplied to this lane, so no target_path could be named
+# honestly. No production binding: this source describes no physical production act. No benchmark
+# binding: this source contains no measurement to benchmark against.
+# Per the schema contract, neither cross_source_supported nor empirically_supported is used anywhere.
+
+source_id: connor-irizarry-discussing-design
+
+operational_bindings:
+
+- binding_id: bnd_disc_001
+  source_knowledge_refs: [sk_disc_0006, sk_disc_0015]
+  source_system_refs: [scs_disc_002]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    This project has to decide whether a judgement it is holding is usable before it acts on it, and
+    at present it has no admission test for that. The source supplies one that is checkable by
+    inspection rather than by trusting the judge: a finding that does not name the element it is
+    about, the objective it is being judged against, and why the element does or does not serve that
+    objective is incomplete, and its incompleteness is visible without knowing anything about the
+    subject matter. The value of the binding is that it makes a class of unusable finding
+    mechanically detectable; it does not make the complete ones correct. Do not read this as a
+    quality rule — a well-formed finding can be wrong, and the source says nothing about how often it
+    is.
+  applicability:
+    when: "a judgement about a generated outcome is being recorded for later use, whatever produced it"
+    limits: >
+      The source is about statements made by one person to another about interface work, in a room
+      where the missing element can be asked for. Nothing in it addresses judgements produced by a
+      metric, a model, or a rubric, and nothing in it establishes that a finding satisfying its three
+      elements is more often right — the authors offer no measurement of any kind. Treating the three
+      elements as an admission test for a record is ours. Treating a rejected finding as false rather
+      than as under-specified would go beyond both the source and this binding.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0003]
+  repair_ontology_refs: [t_disc_0028]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_002
+  source_knowledge_refs: [sk_disc_0002, sk_disc_0003, sk_disc_0004, sk_disc_0005]
+  source_system_refs: [scs_disc_001]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source's three-way split gives a routing rule that this project currently lacks: before
+    acting on an incoming judgement, classify it. If it reports only a response to the artifact, it
+    is a reaction and carries no diagnosis. If it supplies a change to make, it is a direction and
+    the diagnosis it encodes has not been stated. Only the third kind can be acted on directly. The
+    binding's use is that the three demand different handling — a reaction needs interrogation, a
+    direction needs decoding, a critique needs checking — so collapsing them into one bucket called
+    "feedback" is exactly the failure the source names.
+  applicability:
+    when: "judgements arrive from mixed origins and must be triaged before any of them changes anything"
+    limits: >
+      The taxonomy is asserted by two practitioners from their own experience; the source offers no
+      argument that the three are exhaustive and no evidence that classification improves outcomes.
+      In the source's setting the classification is cheap because the speaker is present and can be
+      asked. Where the judgement came from a metric or a model, there is nobody to ask, and the
+      classification has to be made from the text alone — which the source never contemplates. This
+      binding therefore proposes a triage, not a validated one.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0001, t_disc_0002]
+  repair_ontology_refs: [t_disc_0034]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_003
+  source_knowledge_refs: [sk_disc_0005, sk_disc_0017, sk_disc_0022]
+  source_system_refs: [scs_disc_005]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, derives]
+  observation_unit: null
+  governance_consumer: conflict_resolution
+  rationale: >
+    When two judgements about the same outcome disagree, this project has no principled way to
+    resolve them beyond preferring whichever is more confident or more recent. The source supplies a
+    prior question: which objective is each judgement made against? Where the two turn out to be
+    judged against different objectives, the disagreement is not about the artifact at all and
+    resolving it as if it were will produce an arbitrary winner. The source's own prescription in
+    that case is to name the divergence explicitly and decide separately whether to settle it now or
+    later — which converts an unresolvable conflict into a disclosed disagreement about goals, and
+    that is a different and more tractable item.
+  applicability:
+    when: "two or more judgements about the same outcome conflict and something must be decided"
+    limits: >
+      The source's setting has a fixed, small, human-agreed set of objectives and participants who
+      can be asked which one they meant. Neither holds here. Where the objectives are not written
+      down at all, the source's answer is not a resolution procedure but an instruction to go and
+      establish them — which is advice to a project, not a rule an automated consumer can apply. The
+      escalation path (route the conflict upward as a goals question rather than a findings question)
+      is ours, inferred from the source's prescription to name the divergence explicitly.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0007, t_disc_0008]
+  repair_ontology_refs: [t_disc_0032]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_004
+  source_knowledge_refs: [sk_disc_0010, sk_disc_0035, sk_disc_0036]
+  source_system_refs: [scs_disc_004]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The most transferable structural idea in this source is that a diagnosis and a proposed repair
+    are different objects and that recording only the repair destroys the diagnosis. This project
+    routinely receives judgements shaped as instructions — change this, use that instead — and, if it
+    stores them as instructions, loses the finding that motivated them, which is the part that
+    generalises, that another judgement can contradict, and that a later change can be checked
+    against. The binding is: store the finding and any proposed repair as separate fields, never let
+    a repair stand alone, and mark a record that has a repair and no finding as incomplete rather
+    than as actionable.
+  applicability:
+    when: "a judgement arrives already carrying a prescribed change"
+    limits: >
+      In the source this is a rule for a live conversation, enforced by a facilitator who can ask the
+      speaker what problem they were solving; there is no such recourse for a stored record whose
+      author is unavailable. The source also concedes that some repairs are small and obvious and
+      that its own follow-up routine begins by simply fixing typos — so a blanket refusal to accept a
+      bare repair would be stricter than the source. The separation of the two fields is ours; the
+      source's own claim is about what a session should produce, not about how a record should be
+      shaped.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0002, t_disc_0010]
+  repair_ontology_refs: [t_disc_0046, t_disc_0049]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_005
+  source_knowledge_refs: [sk_disc_0024, sk_disc_0023, sk_disc_0054]
+  source_system_refs: [scs_disc_005]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: null
+  governance_consumer: rule_application
+  rationale: >
+    This is the source's sharpest reusable test and it runs on the criteria rather than on the work.
+    A criterion that admits nearly everything it is applied to is not evidence that the work is good;
+    it is evidence that the criterion is too broad. The source states it both forwards — a good
+    principle eliminates more ideas than it retains — and backwards — if the goals and principles
+    turn out not to help during an actual analysis, they are too broad and need refining, and a goal
+    with no meaningful way to check achievement needs refining too. Applied here: a rule whose
+    application rate approaches unity should be flagged for review of the rule, not recorded as a
+    string of passes.
+  applicability:
+    when: "a stated criterion has been applied across enough outcomes for its rejection rate to be observable"
+    limits: >
+      The source gives no threshold — "more often the answer should be 'no'" is the whole of it — and
+      supplies no test at all for the opposite failure, a criterion so narrow it rejects everything.
+      It also assumes the criteria were written by the team that applies them, so refining one is
+      cheap; that is not generally the case here. Treating this as a numeric trigger would put a
+      precision on it the source explicitly declines to give. Report the rate and the source's
+      direction of concern; do not derive a threshold and attribute it to this book.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0016, t_disc_0017]
+  repair_ontology_refs: [t_disc_0050]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_006
+  source_knowledge_refs: [sk_disc_0027, sk_disc_0028]
+  source_system_refs: [scs_disc_006]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: asset_set_over_time
+  rationale: >
+    The source's four cues for excessive critique describe a review loop that has stopped adding
+    information: advancement between passes too small to register, discussion circling, revisions
+    demanded faster than the work can change between them, and review being run for reassurance
+    rather than for findings. Observed over a series of revisions of the same asset, the first three
+    are visible without any judgement about content — how much changed between passes, whether the
+    findings repeat, and whether the findings produced changes that in turn produced new findings.
+    The binding proposes watching a revision series for that signature and reporting the loop as
+    saturated rather than continuing to spend on it.
+  applicability:
+    when: "the same asset has been through several judge-and-revise passes and the series can be inspected as a whole"
+    limits: >
+      The source's cues are experiential and retrospective — they describe what a team notices, and
+      the authors explicitly refuse to give any number, calling the judgement "an innate sense or
+      sensitivity that a team or individuals develop over time". Turning three of them into
+      inspectable properties of a revision series is entirely ours. The fourth cue, review used for
+      validation, is a motive and is not observable at all here; it is excluded from this binding.
+      Nothing in the source supports a specific saturation threshold, and none should be attributed
+      to it.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0013]
+  repair_ontology_refs: [t_disc_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_007
+  source_knowledge_refs: [sk_disc_0032]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, constrains]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source's separation of the approval gate from the diagnostic session gives a rule about what
+    a signal means. An approval decision — this passes, ship it — is not a finding about why anything
+    works, and the source's account of why is structural rather than incidental: a meeting whose
+    output is a yes or a change list receives the inputs that produce a yes or a change list.
+    Applied here: a pass/fail verdict and a diagnostic finding must be stored as different kinds of
+    record, a run of passes must not be read as evidence that the objectives are being served, and a
+    gate's rejection reasons must not be filed as diagnoses unless they carry the three elements.
+  applicability:
+    when: "the same pipeline produces both admission decisions and diagnostic findings"
+    limits: >
+      The source is describing meetings in organisations, their attendee lists and their position in
+      a project plan; three of its four stated challenges (attendee motives, group size, timing set by
+      the plan) have no analogue here at all. Only the first — that the intended outcome shapes the
+      feedback — transfers, and it transfers as an argument rather than as a finding. The extension to
+      how records are typed and stored is ours.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0015]
+  repair_ontology_refs: [t_disc_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_008
+  source_knowledge_refs: [sk_disc_0019, sk_disc_0045]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, constrains]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source holds that a judgement made without access to the maker's stated intent rests
+    entirely on assumptions, and prescribes the only mitigation available when that access is
+    missing: write the assumption down alongside the judgement so the maker can check it first. That
+    is directly usable here, because a judgement produced about a generated outcome almost never has
+    access to what the outcome was trying to do. The binding: a finding produced without the
+    governing objective in hand must carry the assumption it was made under as an explicit field,
+    and must be weighted below a finding made with the objective available. The source accepts the
+    consequence in its own frame — "there might be some wasted feedback, but that is one of the
+    trade-offs" — and this binding accepts it too.
+  applicability:
+    when: "a judgement is produced without the objective or intent of the artifact being available to the judge"
+    limits: >
+      In the source the mitigation works because the maker later reads the assumption and corrects
+      it; there may be no such reader here, in which case the recorded assumption is a caveat nobody
+      resolves. The source also never contemplates a judge that cannot articulate its own
+      assumptions, which is the common case for a metric. The down-weighting is ours; the source
+      states the disadvantage but assigns no relative weight.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0007]
+  repair_ontology_refs: [t_disc_0030]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_009
+  source_knowledge_refs: [sk_disc_0042, sk_disc_0043]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, repairs]
+  observation_unit: null
+  governance_consumer: taxonomy_governance
+  rationale: >
+    Two of the source's mechanics are the same move applied to speech and to writing: restate a
+    judgement as you understood it so the speaker can correct the reading, and record it once,
+    visibly, so participants can challenge the entry while it is being written rather than
+    reconciling private interpretations afterwards. Both attack the same defect — an interpretation
+    that becomes authoritative without ever being confirmed. Applied to this project's vocabulary:
+    a term introduced from an incoming judgement should be recorded in the words used, with the
+    interpretation attached and marked as an interpretation, rather than silently normalised into an
+    existing term; and where several records describe the same thing differently, they should not be
+    merged into a single restatement by whoever happens to do the merging.
+  applicability:
+    when: "judgements from different origins use overlapping vocabulary that a taxonomy must accommodate"
+    limits: >
+      The source's mechanism depends on the speaker being present to confirm or correct — which is
+      the entire point of both practices and is absent here. What survives is only the weaker,
+      structural half: keep the original wording, keep the interpretation separate from it, and do
+      not merge without a record of who merged and on what reading. The application to a term
+      taxonomy is ours; the source is talking about a whiteboard in a meeting.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0026]
+  repair_ontology_refs: [t_disc_0033, t_disc_0041]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_010
+  source_knowledge_refs: [sk_disc_0046]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, derives]
+  observation_unit: null
+  governance_consumer: rule_application
+  rationale: >
+    The step in the source's follow-up routine that is worth more than the rest of it is the last
+    one: decide which collected items will not be addressed, and write down why, because the
+    question comes back. This project accumulates findings it does not act on and currently keeps no
+    record of the decision, so the same item is re-raised indefinitely and nobody can tell whether it
+    was rejected or overlooked. The binding: a finding that is declined must carry a recorded reason
+    and be closable, and a finding with neither a resolution nor a recorded declination is an open
+    item, not a settled one.
+  applicability:
+    when: "more findings are collected than will be acted on"
+    limits: >
+      The source's four prioritisation considerations that precede this step — relevancy, immediacy,
+      amount of agreement, source of the feedback — are labelled by the authors themselves as
+      "completely unscientific" and are one practitioner's habit; they are recorded in the knowledge
+      layer but deliberately NOT bound here, and in particular the agreement heuristic (more people
+      agreeing raises priority) has no protection against amplifying a shared blind spot and should
+      not be adopted on this source's authority. Only the record-the-declination step is bound.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0023]
+  repair_ontology_refs: [t_disc_0047, t_disc_0048]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_011
+  source_knowledge_refs: [sk_disc_0011, sk_disc_0034]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  governance_consumer: conflict_resolution
+  rationale: >
+    The source separates two things this project conflates: the weight a judgement carries during
+    collection, and the weight it carries when a decision is made. Its rule is that during collection
+    the position of the giver contributes nothing — seniority does not make an observation accurate —
+    and that expertise may legitimately be weighed afterwards, when the collected findings are
+    reviewed. The corresponding rule here is that no judgement should be weighted by the standing,
+    cost or recency of its producer at the point of collection, and any such weighting must be a
+    separate, recorded, later step. The source's warning about what happens otherwise is specific and
+    worth carrying: an unchallenged preference held by whoever approves becomes a standing criterion
+    the whole system optimises against without it ever being written down.
+  applicability:
+    when: "judgements from producers of differing standing or cost are being pooled before a decision"
+    limits: >
+      The source's mechanism is social — people defer, stay quiet, or go along with what was already
+      said — and none of that applies to a pooled set of machine-produced judgements. What transfers
+      is only the structural prescription: separate collection from weighting, and record the
+      weighting. The claim that unweighted collection produces better decisions is not established by
+      this source, which offers no measurement, and must not be presented as though it were.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0004, t_disc_0012]
+  repair_ontology_refs: [t_disc_0032]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_disc_012
+  source_knowledge_refs: [sk_disc_0052, sk_disc_0014]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, constrains]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source applies its own test symmetrically, and the symmetry is the part this project needs.
+    An unexplained approval is exactly as unusable as an unexplained rejection: neither names an
+    aspect or an objective, so neither can guide a change. Yet only the rejection prompts anyone to
+    ask why. Two consequences bind. A pass with no stated reason must not be recorded as evidence
+    that anything is working. And where something is judged to work, the reason should be recorded
+    on the same terms as a failure — the source's grounds being that the reason is the transferable
+    part, and that an effective element nobody named as effective carries no protection into the
+    next revision and can be lost without anyone noticing.
+  applicability:
+    when: "positive and negative judgements are recorded about the same outcomes"
+    limits: >
+      The regression argument is the source's, and in the source it depends on a human team that
+      revises freely wherever no constraint is recorded — whether an automated revision step behaves
+      the same way is an empirical question this source cannot answer and does not address. The
+      source's grounds for its symmetry claim are the structure of a statement, not any measurement
+      of how often unexplained approvals turn out to be wrong; it offers none.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_disc_0018, t_disc_0024]
+  repair_ontology_refs: [t_disc_0031, t_disc_0035]
+  status: proposed
+  status_reason: "experimental; not reviewed"

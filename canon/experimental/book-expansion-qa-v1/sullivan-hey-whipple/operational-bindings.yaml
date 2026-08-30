@@ -1,0 +1,392 @@
+# Luke Sullivan, Hey Whipple, Squeeze This (6th ed., Wiley, 2022) — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. Lane: sullivan-hey-whipple, book-expansion-qa-v1. Non-merge.
+#
+# THE GAP, STATED ONCE AND REPEATED IN EVERY applicability.limits:
+# This source is about advertising made by people, for paid and earned media, judged by a
+# practitioner on professional and aesthetic grounds. It contains no measurement of any kind that
+# would license a threshold, and its author explicitly rejects the testing of creative work. Every
+# binding below therefore proposes his diagnostics as CHECKABLE QUESTIONS TO PUT TO AN ASSET, never
+# as pass/fail criteria and never as evidence of effectiveness. Applying any of it outside
+# human-made advertising is OUR extrapolation and is marked evidence_basis: extractor_inference.
+#
+# NO creative_ir binding is written. SPEC-01 was not supplied to this lane, so no target_path could
+# be named honestly, and the schema contract forbids inventing one.
+# NO governance binding is written: nothing in this source addresses taxonomy, retrieval, conflict
+# resolution, evidence interpretation, rule application or cross-source synthesis, and a binding
+# that fits none of the permitted consumers is not a governance binding.
+# Per the schema contract, neither cross_source_supported nor empirically_supported appears anywhere.
+#
+# NOTHING HERE IS TRANSLATED INTO A MODEL INSTRUCTION. Two remedies in this lane are
+# executable_by: physical_production (t_whip_0038, t_whip_0039). They are recorded in the source's
+# own frame and left unbound, exactly as SPEC-04 requires.
+
+source_id: sullivan-hey-whipple
+
+operational_bindings:
+
+- binding_id: bnd_whip_001
+  source_knowledge_refs: [sk_whip_0001, sk_whip_0003, sk_whip_0004, sk_whip_0053]
+  source_system_refs: [scs_whip_001]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  rationale: >
+    The Canon currently has no way to ask whether a still asset has a single centre of attention or
+    several competing ones. This source's model supplies a question that can actually be put to a
+    finished piece — count the elements competing for salience, identify which one the maker intended
+    the viewer to start from, and ask whether one was designated at all. The value is that the
+    question is answerable by inspection and its answer is reportable; the model behind it is not
+    imported as a rule, and the referenced objects carry the claim itself.
+  applicability:
+    when: "reviewing a single composed still asset that carries more than one element and is intended to be understood quickly"
+    limits: >
+      The source is a practitioner writing about print advertisements and billboards encountered by a
+      person who did not seek them out. He offers no measurement of salience, no threshold for element
+      count, and concedes he reached his own ideal — one element — once in a career. Reporting how
+      many elements compete and whether an entry point was designated is defensible; treating a high
+      count as a defect, or a low one as quality, is not something this source supports. Applying any
+      of it to generated imagery is our extension of a claim made about human-made layouts.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0001]
+  repair_ontology_refs: [t_whip_0017, t_whip_0021, t_whip_0018]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_002
+  source_knowledge_refs: [sk_whip_0032, sk_whip_0043, sk_whip_0048]
+  source_system_refs: [scs_whip_006]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The see-say is the most mechanically checkable diagnostic this source provides: read the text,
+    describe the image, and ask whether the second restates the first. That question can be asked of
+    any asset that pairs words with a picture, and unlike most of the material in this lane it does
+    not require the reviewer to share the author's taste. The referenced objects hold the claim about
+    why duplication costs anything.
+  applicability:
+    when: "an asset carries both a text element and an image element and both are intended to carry meaning"
+    limits: >
+      The source's own boundary is soft: his preferred pattern still requires the straight element to
+      add something — to amplify emotional force or finish a thought — and he supplies no test for
+      where support becomes restatement. So the diagnostic reliably identifies exact duplication and
+      is a judgement call everywhere else. It is stated for print advertising by a practitioner and
+      has no measurement attached.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0004]
+  repair_ontology_refs: [t_whip_0021]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_003
+  source_knowledge_refs: [sk_whip_0030, sk_whip_0031, sk_whip_0021]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: asset_set_over_time
+  rationale: >
+    This source's argument about worn imagery is comparative and its unit is a category, not a piece:
+    an image is not tired in itself, it is tired relative to what a competitive set is already doing.
+    That makes the useful operation a corpus comparison — assemble what the category is currently
+    running and flag where a candidate asset lands inside it — rather than an inspection of the asset
+    alone. Recorded because the Canon has no notion of category-relative distinctiveness at all.
+  applicability:
+    when: "a candidate asset can be compared against a assembled sample of current work in the same commercial category"
+    limits: >
+      The source's own examples are American category conventions of his period and he gives no
+      method for assembling the comparison set or for deciding how close is too close. He also
+      explicitly permits reuse of familiar imagery where it is re-angled to carry a product
+      advantage, so a flag here is a prompt to look, never a defect. Nothing in the source measures
+      the effect of distinctiveness on anything.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0006, t_whip_0007]
+  repair_ontology_refs: [t_whip_0026, t_whip_0030]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_004
+  source_knowledge_refs: [sk_whip_0033, sk_whip_0034, sk_whip_0035, sk_whip_0036]
+  source_system_refs: [scs_whip_005]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  rationale: >
+    What makes this group operationally interesting is that its members are surface features a
+    reviewer can enumerate without interpretation — exclamation points, asterisked claims, invented
+    personal names, model numbers in headlines, "real"-prefixed reassurances, stock-photograph
+    tropes. The referenced objects supply the reasoning for why the source treats each as a tell. The
+    binding proposes only the enumeration and the flag, because the inference from presence to
+    audience reaction is the source's and is untested.
+  applicability:
+    when: "an asset carries copy and the reviewer can enumerate its punctuation, qualifiers, named persons and identifier strings"
+    limits: >
+      The source asserts how readers respond to these signals and cites nothing. His historical
+      account of why — an American collapse of institutional authority — is a sweeping cultural
+      narrative with no evidence attached and does not transfer to other markets. Flagging presence
+      is safe; concluding that an audience discounted the claim is not supported.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0010, t_whip_0008]
+  repair_ontology_refs: [t_whip_0023, t_whip_0037]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_005
+  source_knowledge_refs: [sk_whip_0060, sk_whip_0001]
+  source_system_refs: [scs_whip_001]
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    Two of this source's tests are procedures with a stated stimulus and a stated response, which is
+    unusual in a book of this kind and is what makes them usable as a repeatable exercise rather than
+    as an opinion: expose a layout for two seconds, withdraw it, and record what a viewer reports;
+    and inspect the same layout from ten feet. Recorded as a benchmark because what it produces is a
+    comparable observation across assets, not a verdict on any one.
+  applicability:
+    when: "comparing candidate short-form or out-of-home layouts where comprehension inside a very short exposure is the property of interest"
+    limits: >
+      The source offers these as informal studio checks, not as an instrument. There is no sample, no
+      protocol, no scoring and no baseline, and the associated word count he quotes — about seven, up
+      to ten or eleven — is reported as something that has been said rather than measured. Any use of
+      this must report it as a rough exercise inherited from practice, and its results are not
+      evidence about effectiveness.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0001, t_whip_0002]
+  repair_ontology_refs: [t_whip_0024, t_whip_0040, t_whip_0017]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_006
+  source_knowledge_refs: [sk_whip_0010, sk_whip_0009]
+  source_system_refs: [scs_whip_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates]
+  observation_unit: asset_set_over_time
+  rationale: >
+    The compressibility sign in this source is the rare check here that has a mechanical form: state
+    the governing premise of a body of work in one sentence and see whether the sentence holds. It
+    is worth recording because it applies to a set rather than a piece — the question is whether
+    several executions share one legible premise — and the Canon has no way of asking that. The
+    second sign the source gives is social and is not proposed for binding, for the reason in limits.
+  applicability:
+    when: "reviewing several executions intended to belong to one campaign or platform, and asking whether they share a premise a reader could state"
+    limits: >
+      The source hedges the sign himself, calling it kind of weird, and offers the whole formula it
+      sits inside as a tool rather than a rule. His second sign — that a working platform starts
+      talking and other people spontaneously generate executions — is confounded by who is in the
+      room and by the enthusiasm of whoever is presenting, and is deliberately excluded from this
+      binding. All supporting cases are classroom work or campaigns described after their success.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_whip_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_007
+  source_knowledge_refs: [sk_whip_0038, sk_whip_0066, sk_whip_0067]
+  source_system_refs: [scs_whip_005]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, flags]
+  observation_unit: whole_asset
+  rationale: >
+    The interesting property of this group is its ordering, not its content. The source's own
+    sequence puts a conformance question first, a distinctiveness question second, and an
+    overriding relevance question last — and says the last survives when every other rule in his book
+    is thrown away. Recording the ordering is the point: it is a prompt to ask "and is it relevant to
+    this audience" after, not before, any judgement about how striking the work is.
+  applicability:
+    when: "an internal review of finished or near-finished work that has already satisfied its brief"
+    limits: >
+      Two of the three questions are answered by prediction, not observation: whether people would
+      talk about it and whether the press would cover it are guesses about the future. The source
+      supplies no test whatever for the relevance constraint he makes overriding, and separately
+      concedes that genuinely new work cannot be judged by its maker at all. This binding therefore
+      proposes a checklist ordering, not a scoring instrument, and must not be reported as one.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0005, t_whip_0014]
+  repair_ontology_refs: [t_whip_0029, t_whip_0032]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_008
+  source_knowledge_refs: [sk_whip_0037, sk_whip_0055, sk_whip_0056]
+  source_system_refs: [scs_whip_007]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, repairs]
+  observation_unit: whole_asset
+  rationale: >
+    Two of this source's copy tests share one structure — remove a unit and see whether the whole
+    still stands — applied at different scales, and one of them inverts the usual direction of blame
+    by treating explanatory copy as a symptom of a failed headline rather than of bad copy. That
+    inversion is what is worth binding: it tells a reviewer where to look, which is upstream of where
+    the problem is visible.
+  applicability:
+    when: "an asset carries body copy beneath or beside a headline"
+    limits: >
+      The source is prescribing craft for advertising copy read by a person who has already been
+      stopped by something else. The no-removable-sentence target can be met by a tightly written
+      piece that says nothing, which he does not address, and the cut-by-a-third proportion is a
+      working rule of thumb rather than a measured optimum. None of this has any measured effect
+      attached, and none of it should be applied to copy whose function is instructional or legal.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0009]
+  repair_ontology_refs: [t_whip_0020, t_whip_0022, t_whip_0021]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_009
+  source_knowledge_refs: [sk_whip_0011, sk_whip_0013, sk_whip_0014]
+  source_system_refs: [scs_whip_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: sequence
+  rationale: >
+    This source supplies a structural question about narrative assets that can be asked without any
+    judgement of quality: is there an opposing force present, and if not, does the piece open at the
+    resolved state? Its unit is a sequence rather than a frame, and it is recorded because the
+    Canon's existing advertising material — reason-why in tradition — contains nothing about dramatic
+    structure at all. The referenced objects hold the argument for why the absence matters.
+  applicability:
+    when: "reviewing a time-based or multi-beat asset that is meant to hold attention across its length"
+    limits: >
+      The source's supporting mechanism is borrowed from a screenwriting manual and from a trade
+      book's argument about interspecies alarm calls; neither is evidence about advertising. He also
+      qualifies himself in the text — this is not an argument for negative advertising — and his
+      exemplars are three of the most celebrated campaigns of their decades, with no case discussed
+      in which conflict was present and the work still failed. Presence or absence of an opposing
+      force is observable; its consequences are not established here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_whip_0032]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_whip_010
+  source_knowledge_refs: [sk_whip_0017, sk_whip_0018, sk_whip_0019, sk_whip_0022, sk_whip_0023]
+  source_system_refs: [scs_whip_004]
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    Recorded as a production candidate because what this source describes is a way of organising
+    human working time: wide cheap exploration first, volume before selection, judgement deferred to
+    a separate cold pass, and clustering of survivors to find the shared premise. It is the source's
+    account of a studio practice, and it is recorded in that frame. It is NOT rewritten as a
+    generation strategy, a sampling policy or any instruction to a system, and nothing here is
+    evidence that any such translation would work.
+  applicability:
+    when: "planning how a human team spends time on an open-ended creative assignment"
+    limits: >
+      Every number in it is the author's own practice and none is measured: the hundred lines, the
+      three-hour session, the fifty-versus-ten discard rate. The account is drawn from one career in
+      American agencies from 1979 onward, and the source states plainly that whatever process a
+      reader arrives at is their own and that he is describing his. The unification of four chapters
+      into a single cycle is ours, not his — see scs_whip_004's system_level_uncertainty.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0007, t_whip_0015]
+  repair_ontology_refs: [t_whip_0025, t_whip_0026, t_whip_0027, t_whip_0028, t_whip_0032, t_whip_0033]
+  status: production_candidate
+  status_reason: "experimental; not reviewed. target_path is null because production IR does not exist and this describes a human working practice, not a generative operation."
+
+- binding_id: bnd_whip_011
+  source_knowledge_refs: [sk_whip_0061, sk_whip_0068]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [repairs]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The triage rule in this source is the transferable part of its chapter on revision: distinguish
+    changes that alter surface from changes that remove something load-bearing, concede the first
+    class and argue only the second, and abandon the work once enough of the second class has
+    landed. Recorded as a human working practice for handling review feedback, in the source's own
+    frame, and left unbound to any system.
+  applicability:
+    when: "responding to a round of review comments on creative work where some comments affect surface and some affect structure"
+    limits: >
+      This is advice for a client-service business in which, as the source states, the client has
+      paid for the right to their opinion. It presumes a commissioning relationship and a single
+      identifiable idea to protect. The associated arguments against creative testing are the
+      source's position, offered by him as ammunition for a conversation rather than as findings, and
+      they come from the party whose work such testing evaluates — which he does not raise.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0012, t_whip_0003, t_whip_0013]
+  repair_ontology_refs: [t_whip_0034, t_whip_0035, t_whip_0036, t_whip_0041]
+  status: production_candidate
+  status_reason: "experimental; not reviewed. target_path is null; this is a human review practice and is not translated into any generative or automated operation."
+
+- binding_id: bnd_whip_012
+  source_knowledge_refs: [sk_whip_0005, sk_whip_0040]
+  source_system_refs: [scs_whip_003]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    What this source contributes here is not the advice but the two-sided failure structure: work can
+    fail by being obvious and by being incomprehensible, and the two are repaired in opposite
+    directions, so a single "make it better" note is always underspecified. Binding the pair means a
+    reviewer must say which side an asset has fallen off, and the two named rebuttals give a second
+    axis — credibility and relevance — with the same property.
+  applicability:
+    when: "recording why a reviewer rejected an asset, where the reason could be either obviousness or opacity"
+    limits: >
+      Neither axis is measurable and the source says so: finding the borders of the overlap is where
+      essentially all the working time goes, and nothing tells the maker where they lie in a given
+      case. He also concedes the incontestability advice does not apply to products with no real
+      difference worth claiming. This binding therefore structures a rejection note; it does not
+      evaluate anything on its own.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_whip_0014, t_whip_0007]
+  repair_ontology_refs: [t_whip_0019, t_whip_0029]
+  status: proposed
+  status_reason: "experimental; not reviewed"

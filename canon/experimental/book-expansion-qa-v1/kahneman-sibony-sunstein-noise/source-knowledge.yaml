@@ -873,3 +873,2898 @@
     inspected:
       text: true
       figures: []
+
+- sk_id: sk_nse_0013
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "noise audit"
+    - "an experiment in which several professionals make independent judgments of the same cases"
+    - "All we need to measure noise is multiple judgments of the same problem"
+  concept_label: noise_audit
+  label_origin: source_verbatim
+  claim: >-
+    A noise audit is an experiment in which several interchangeable professionals each judge the same
+    cases, independently, without being told that the variability of their answers is the object of
+    study. The spread of their answers is the measurement. No true value is needed. Because each judge
+    handles several cases, the audit recovers not just the total amount of disagreement but its
+    composition — how much comes from some judges being generally more severe, and how much from judges
+    ranking the same cases differently.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Normal operations assign one case to one judge, so two judgements of the same case never exist and
+      the disagreement is never observable. An audit manufactures the missing observation by making
+      several judges work the same case. The multi-case design is what makes the level/pattern split
+      arithmetically recoverable.
+  scope:
+    domain_discussed_by_source: [insurance_underwriting, criminal_sentencing, organisational_decision_making, forensic_examination]
+    conditions: >-
+      The judges must be genuinely interchangeable — the source's test is that if one were unavailable
+      another would be assigned and expected to reach a similar judgement. The source recommends a task
+      that can be completed from written information and answered numerically.
+  caveats:
+    - text: >-
+        The insurance audit that supplies the source's headline numbers was conducted by the authors'
+        own consulting engagement at one company. It is their study, not a survey of an industry.
+      origin: extractor_observed
+    - text: >-
+        An audit measures disagreement, not accuracy. The source is explicit that no one could say how
+        much error or bias there was, "because no one could know for sure the Goldilocks value for each
+        case".
+      origin: source_stated
+    - text: >-
+        Audits use constructed cases, not live work. The source's own defence is an a fortiori argument:
+        if much disagreement appears on simplified cases, real cases can only be worse. That is an
+        argument, not a measurement.
+      origin: extractor_observed
+  source_stated_problems:
+    - "no one at the company had expected anything like the amount of noise we had observed"
+    - "the amount of noise observed when an organization takes a serious look almost always comes as a shock"
+  source_stated_remedies:
+    - "A noise-reduction effort in an organization should always begin with a noise audit"
+    - "An essential benefit is the assessment of separate types of noise"
+  examples:
+    positive:
+      - {description: "underwriters and claims adjusters each evaluating two or three of five constructed cases, working independently and not told the purpose", figure_ref: null}
+      - {description: "an asset-management firm's own follow-up audit: 42 investors valuing the same stock from a one-page description, median difference 41%", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0002, note: "the audit exploits the fact that noise is measurable without a true value"}
+    - {relation: specialises, target: sk_nse_0010, note: "the audit is the design from which the decomposition is computed"}
+    - {relation: qualified_by, target: sk_nse_0014, note: "an audit that is not constructed to survive scrutiny will not be believed"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 2 — A Noisy System"
+    section: "'Noise Audits Reveal System Noise'; procedure given in full in Appendix A 'How to Conduct a Noise Audit' (spine 10, spine 44)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0014
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "Every detail of the cases and the procedure should therefore be considered with hostile scrutiny in mind"
+    - "the term noise audit not be used to describe the project"
+    - "a commitment to accept its results, whatever they are"
+  concept_label: constructing_a_credible_noise_audit
+  label_origin: extractor_assigned
+  claim: >-
+    The source treats the credibility of a noise audit as a design problem, not an afterthought, because
+    an audit that finds a serious problem will be attacked. Its prescriptions are procedural: build the
+    cases with subject-matter experts from inside the organisation so the likeliest critics are the
+    authors; get the leadership to state, in advance and on the record, what disagreement they expect and
+    what they would consider acceptable; never call it a noise audit to the participants; guarantee
+    individual anonymity; include every qualified professional in the unit; and have everyone judge at the
+    same time, physically separated and forbidden to communicate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Each prescription blocks a specific escape route. Pre-registering the executives' expectations
+      stops the result being reinterpreted after the fact as normal. The neutral label and the anonymity
+      stop participants from managing their answers. Simultaneous, separated administration stops the
+      contamination that would collapse the very independence the measurement depends on. Insider
+      authorship stops the finding being dismissed as an outsider's artefact.
+  scope:
+    domain_discussed_by_source: [organisational_decision_making, insurance_underwriting]
+    conditions: >-
+      An organisation with a unit of interchangeable professionals and leadership willing to commit in
+      advance. The source states plainly that "there is no point moving on to the next stage" without
+      that commitment.
+  caveats:
+    - text: >-
+        This is a practitioner's protocol, not a validated method. The source presents no comparison of
+        audits run with and without these precautions.
+      origin: extractor_observed
+    - text: >-
+        The design is generalised from the authors' own two audits — federal sentencing and the insurance
+        company — which used very different case formats (a schematic attribute list versus detailed
+        realistic summaries).
+      origin: extractor_observed
+    - text: >-
+        The source concedes the case construction is "a delicate task" and sets a demanding acceptance
+        test: would people in the company accept that noise found in the simulation exists in real work?
+        "The noise audit is only worth carrying out if the answer is a clear yes."
+      origin: source_stated
+  source_stated_problems:
+    - "its credibility will surely be questioned if its findings reveal significant flaws"
+    - "The words noise and noisy should be avoided, especially as descriptions of people"
+  source_stated_remedies:
+    - "enlisting the professionals who are the most significant potential critics of the audit to be its authors"
+    - "The answers to these questions should be documented to ensure that they are remembered and believed when the actual results of the audit come in"
+    - "A questionnaire should be prepared for each case … administered only after the completion of all cases"
+  examples:
+    positive:
+      - {description: "asking executives up front what difference they expect between two randomly chosen professionals, and what difference would be unacceptable", figure_ref: null}
+      - {description: "a post-hoc questionnaire asking each judge which facts drove the answer, and for an outside-view rating of the case against its category", figure_ref: null}
+    counter:
+      - {description: "describing the exercise to participants as a noise audit — explicitly ruled out; a neutral name such as 'decision-making study' is prescribed instead", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0013}
+    - {relation: depends_on, target: sk_nse_0015, note: "the pre-commitment step exists because the illusion of agreement makes results deniable after the fact"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Appendix A — How to Conduct a Noise Audit"
+    section: "'Construction of Case Materials', 'Prelaunch Meeting with Executives', 'Administration of the Study' (spine 44)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0015
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "illusion of agreement"
+    - "naive realism"
+    - "Noise was like a leak in the basement. It was tolerated not because it was thought acceptable but because it had remained unnoticed"
+  concept_label: illusion_of_agreement
+  label_origin: source_verbatim
+  claim: >-
+    Professionals who disagree systematically in their daily judgements can work alongside one another
+    for years without discovering it. The source's account is that shared vocabulary and shared rules
+    supply constant, false evidence of agreement: colleagues agree readily that absurd judgements are
+    absurd, and mistake that easy consensus for consensus on ordinary cases. Confidence grows from
+    agreeing with one's own past self, not from ever checking agreement with others. Organisations then
+    reinforce the illusion, because procedures are often arranged to minimise exposure to disagreement.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Two mechanisms are given. Psychologically, naive realism — the unquestioned belief that the world
+      is as it looks and that others see it the same way — means alternatives to one's own reading are
+      never generated, so disagreement is never anticipated. Organisationally, shared doctrine eliminates
+      some possibilities without specifying a positive answer to any particular case, so drift between
+      colleagues is invisible; and post-mortems examine only judgements far outside the norm, which are
+      easy to agree about and therefore teach nothing about ordinary disagreement.
+  scope:
+    domain_discussed_by_source: [insurance_underwriting, university_admissions, organisational_decision_making]
+    conditions: >-
+      Settings where professionals judge alone after an apprenticeship and where second opinions, if
+      taken at all, are not independent.
+  caveats:
+    - text: >-
+        The supporting evidence is the authors' own: their insurance audit, their informal polling of 828
+        CEOs and senior executives whose median expected difference was 10% against a measured 55%, and
+        interviews they conducted. The naive-realism literature they invoke is third-party work.
+      origin: extractor_observed
+    - text: >-
+        The admissions-office anecdote — a school that abandoned blind second reads because they produced
+        "so many disagreements" — was related to the authors by Nathan Kuncel. It is a reported anecdote,
+        not a study.
+      origin: extractor_observed
+  source_stated_problems:
+    - "respected professionals—and the organizations that employ them—maintained an illusion of agreement while in fact disagreeing in their daily professional judgments"
+    - "the discomfort of disagreement … Most organizations prefer consensus and harmony over dissent and conflict"
+    - "Bad judgment is much easier to identify than good judgment"
+  source_stated_remedies:
+    - "The noise audit shattered the illusion of agreement"
+  examples:
+    positive:
+      - {description: "an underwriter who over years discussed fewer and fewer cases with a supervisor and grew confident by exercising judgement, never by checking it against colleagues", figure_ref: null}
+      - {description: "an admissions office that stopped masking the first reader's rating from the second because the disagreements were uncomfortable", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0013, note: "explains why the audit's result is always a shock and why pre-commitment is needed"}
+    - {relation: depends_on, target: sk_nse_0027, note: "the suppression of alternative interpretations is what makes others' disagreement unimaginable"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, mechanism_given, anecdotal]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 2 — A Noisy System"
+    section: "The Illusion of Agreement (spine 10); restated in the Review and Conclusion, 'The Obscurity of Noise' (spine 42)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0016
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "the expectation of bounded disagreement"
+    - "matter of judgment"
+    - "judgment is a form of measurement in which the instrument is a human mind"
+  concept_label: bounded_disagreement_defines_a_matter_of_judgment
+  label_origin: extractor_assigned
+  claim: >-
+    A matter of judgement occupies the space between computation, where no disagreement is allowed, and
+    taste, where unresolved disagreement is entirely acceptable. What defines it is an expectation of
+    bounded disagreement: competent people may differ, but not by much, and they behave as though an
+    invisible target existed whether or not one does. How much disagreement is admissible is itself a
+    judgement call and depends on the difficulty of the problem. The source narrows "judgement" further:
+    it is a conclusion expressible in a word or phrase, not a synonym for thinking, and it is the
+    conclusion of a report rather than the report.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source's diagnostic is easiest at the extremes: judges who differ widely on an ordinary fraud
+      sentence still concur that a one-dollar fine and a life sentence are both unreasonable; wine judges
+      who differ on medals are often unanimous in contempt for the rejects. Agreement on absurdity marks
+      the boundary of the space without fixing any point inside it.
+  scope:
+    domain_discussed_by_source: [criminal_sentencing, wine_judging, insurance_underwriting, professional_judgment]
+    conditions: >-
+      Applies where people believe they should agree. The source explicitly excludes matters of opinion
+      or taste, where the concept of noise does not apply.
+  caveats:
+    - text: >-
+        The source gives no procedure for setting the bound. It says the acceptable amount of
+        disagreement "is itself a judgment call".
+      origin: source_stated
+    - text: >-
+        The narrow technical sense of "judgment" is borrowed from psychology and is much narrower than
+        ordinary usage; the source warns that "making accurate judgments is not a synonym for having good
+        judgment".
+      origin: source_stated
+  source_stated_problems:
+    - "there is a limit to how much disagreement is admissible"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "insurance executives who would not mind claims adjusters disagreeing about the Beatles versus the Rolling Stones, but were shocked by disagreement on claims", figure_ref: null}
+    counter:
+      - {description: "'Your choice between the candidates was just an expression of taste, not a serious judgment' — the source's own diagnostic phrase for the boundary being crossed", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0004, note: "supplies the test that separates a matter of judgement from a matter of taste"}
+    - {relation: generalises, target: sk_nse_0018, note: "both predictive and evaluative judgements carry the expectation of bounded disagreement"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 4 — Matters of Judgment"
+    section: "opening argument; restated in the Review and Conclusion, 'Judgments' (spine 13, spine 42)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0017
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "Multiple, conflicting cues create the ambiguity that defines difficult judgment problems"
+    - "if there is more than one way to see anything, people will vary in how they see it"
+    - "Large individual differences emerge when a judgment requires the weighting of multiple, conflicting cues"
+  concept_label: conflicting_cues_make_complex_judgments_noisier
+  label_origin: extractor_assigned
+  claim: >-
+    Agreement is high when the cues in a case point the same way, because everyone can build the same
+    coherent story from them. Noise appears when the cues conflict, because there is then more than one
+    defensible way to see the case: people select different pieces of evidence as the core of their
+    narrative, weight them differently, and arrive at different conclusions each of which feels coherent
+    to its owner. The source's rule is blunt — the more ways there are to see something, the more people
+    will vary in how they see it — and this is where pattern noise comes from.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source decomposes a complex judgement into three steps, each contributing variability:
+      selective attention and recall over the available cues; informal — not formal — integration of
+      those cues into an overall impression; and the conversion of that impression into a value on a
+      scale. Where the cues cohere, the first two steps converge across people; where they conflict, they
+      do not.
+  scope:
+    domain_discussed_by_source: [executive_selection, academic_prediction, recruitment, professional_judgment]
+    conditions: >-
+      Complex judgements from a mass of partly inconsistent information. The source notes that agreement
+      remains fairly high on single dimensions and on cues that point the same general direction.
+  caveats:
+    - text: >-
+        The demonstration cases — Gambardi and Julie 2.0 — were written by the authors to be difficult and
+        were presented to readers and, in Gambardi's case, to 115 MBA students whose estimates ranged from
+        10 to 95. That is the authors' own demonstration, and it was designed to produce the effect it
+        illustrates.
+      origin: extractor_observed
+    - text: >-
+        The source concedes it made the Gambardi case for one purpose and only later noticed it
+        illustrated another — "it took us weeks before we realized that it was also a prime example of the
+        bias we describe here". The cases are illustrations, not controlled comparisons of cue coherence.
+      origin: source_stated
+  source_stated_problems:
+    - "There is a mass of information, much of it seemingly inconsistent"
+    - "some noise is inevitable in an informal operation"
+    - "you can be quite certain that other readers will construct different stories that justify judgments other than yours"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "the Gambardi CEO case: integrity and turnaround success against domineering, abrasive, arrogant — 115 MBA estimates spread from 10 to 95", figure_ref: null}
+      - {description: "two interviewers hearing the identical answer 'strategic disagreement with the CEO' and reading it as integrity and as inflexibility", figure_ref: null}
+    counter:
+      - {description: "Bill the jazz-playing accountant, where every cue points the same way and people converge on the same answer — and the same error", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0027, note: "excessive coherence is what turns cue conflict into divergent, confidently held stories"}
+    - {relation: specialises, target: sk_nse_0008, note: "supplies the case-side condition under which pattern noise appears"}
+    - {relation: qualified_by, target: sk_nse_0039, note: "structuring is the source's remedy: judge one dimension at a time so the cues cannot fight"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 16 — Patterns"
+    section: "'Problems: Hard and Easy'; three-step account of judgement in Ch. 4 'The Experience of Judgment: An Example'; restated in the Review and Conclusion (spine 27, spine 13, spine 42)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0018
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "predictive judgment"
+    - "evaluative judgment"
+    - "nonverifiable"
+    - "What's Wrong with Noise"
+  concept_label: predictive_versus_evaluative_judgment
+  label_origin: extractor_assigned
+  claim: >-
+    Predictive judgements aim at a true value, which may or may not ever be revealed; evaluative
+    judgements match a response to the perceived merits of a case and have no true value to aim at.
+    Noise is a defect in both, but for different reasons. In predictive judgement, disagreement proves
+    that at least one judge is wrong. In evaluative judgement, disagreement is a failure of fairness and
+    of institutional credibility: people affected by an evaluation expect it to express the values of the
+    system, not of whichever individual happened to be assigned. The source stresses that the boundary is
+    fuzzy and that judges are usually unaware of which side they are on.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The asymmetry follows from what a true value does. Where one exists, two different judgements
+      cannot both be right, so scatter implies error directly. Where none exists, scatter cannot be
+      convicted of inaccuracy but still turns an assignment into a lottery, and "System noise is
+      inconsistency, and inconsistency damages the credibility of the system."
+  scope:
+    domain_discussed_by_source: [criminal_sentencing, essay_grading, wine_judging, forecasting, medical_diagnosis, strategic_decision_making]
+    conditions: >-
+      The source notes that most consequential decisions contain both: predictive judgements supply the
+      inputs, and evaluative judgements resolve the trade-offs between options.
+  caveats:
+    - text: >-
+        The source's own error equation is declared inapplicable to evaluative judgements, so the
+        quantitative apparatus that supports most of the book's argument does not extend to them.
+      origin: source_stated
+    - text: >-
+        "Professionals feel much the same, act much the same, and speak much the same to justify
+        themselves" whether the judgement is predictive or evaluative — the source concedes the
+        distinction is invisible from the inside.
+      origin: source_stated
+  source_stated_problems:
+    - "The observation of noise in predictive judgments always indicates that something is wrong"
+    - "large disagreements about the same case violate expectations of fairness and consistency"
+    - "People who are affected by evaluative judgments expect the values these judgments reflect to be those of the system, not of the individual judges"
+  source_stated_remedies:
+    - "Regardless of whether the goal of judgment is just accuracy or a more complex trade-off between values, noise is undesirable and often measurable"
+  examples:
+    positive:
+      - {description: "one customer with a defective laptop fully reimbursed and another given an apology — evaluative noise as an inconsistency problem, not an accuracy problem", figure_ref: null}
+      - {description: "two doctors disagreeing on a diagnosis — predictive noise, where at least one must be wrong", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0005, note: "marks the class of judgements the error equation does not cover"}
+    - {relation: specialises, target: sk_nse_0016}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 4 — Matters of Judgment"
+    section: "'Evaluative Judgments' and \"What's Wrong with Noise\" (spine 13)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0019
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "internal signal of judgment completion"
+    - "the achievement of a coherent solution"
+    - "This emotional experience ('the evidence feels right') masquerades as rational confidence"
+  concept_label: internal_signal_of_judgment_completion
+  label_origin: source_verbatim
+  claim: >-
+    What tells a judge that a judgement is finished is not evidence about the world but an internal
+    signal: a feeling that the answer fits the evidence coherently. The signal is self-administered and
+    unrelated to any outside information, which is why judging a fictitious case feels exactly like
+    judging a real one, and why a judgement whose accuracy can never be checked still feels complete. Its
+    danger is that it is construed not as a feeling but as a belief — "I know, even if I don't know why" —
+    so subjective confidence gets mistaken for evidence of validity.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The sense of coherence is part of the experience of judging rather than a consequence of being
+      right, so it is available whether or not an outcome exists. The source adds that the coherence is
+      often manufactured — "bolstered by hiding or ignoring pieces of evidence that don't fit" — and that
+      confidence therefore requires only two things: a comprehensively coherent story and no attractive
+      alternative in mind, both of which can be achieved by suppression rather than by getting it right.
+  scope:
+    domain_discussed_by_source: [executive_intuition, professional_judgment, forecasting]
+    conditions: >-
+      Any judgement, verifiable or not. The source claims universality: "we are not all highly confident
+      all the time, but most of the time we are more confident than we should be."
+  caveats:
+    - text: >-
+        The internal signal is the authors' proposed construct, offered as an interpretation of the
+        managerial-intuition literature, not as a measured quantity. The definition of intuition they
+        build on is a third party's review.
+      origin: extractor_observed
+    - text: >-
+        The source treats the signal as legitimate at the right moment: it does not recommend banning it,
+        only delaying it, because decision makers "clearly need to be comfortable with their eventual
+        choice".
+      origin: source_stated
+  source_stated_problems:
+    - "Confidence is no guarantee of accuracy"
+    - "subjective confidence in one's judgment by no means guarantees accuracy"
+    - "you can also achieve coherence, albeit less elegantly, by ignoring or explaining away whatever does not fit"
+  source_stated_remedies:
+    - "Intuition need not be banned, but it should be informed, disciplined, and delayed"
+  examples:
+    positive:
+      - {description: "settling on a Gambardi probability because the number 'felt right' — while 0 or 100 would not — with no outcome in existence", figure_ref: null}
+      - {description: "executives who say they trust their gut, and are most likely to do so precisely where uncertainty is greatest", figure_ref: null}
+    counter:
+      - {description: "the true expert who can also explain why the competing stories are wrong — confidence of the same strength but better quality", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0027, note: "coherence-seeking is the process that generates the signal"}
+    - {relation: qualified_by, target: sk_nse_0049, note: "the signal is unrelated to the achievable accuracy set by objective ignorance"}
+    - {relation: trades_off_with, target: sk_nse_0036, note: "sequencing deliberately withholds the information that would let the signal fire early"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 4 — Matters of Judgment"
+    section: "'What Judgment Aims to Achieve: The Internal Signal'; developed in Ch. 11 'Objective Ignorance', opening section, and Ch. 16 'Problems: Hard and Easy' (spine 13, spine 21, spine 27)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0020
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "evaluating the process of judgment"
+    - "focus on the process, not on the outcome of a single case"
+    - "The judgments are verifiable as an ensemble, although no single probability judgment can be declared right or wrong"
+  concept_label: evaluate_the_process_not_the_single_outcome
+  label_origin: extractor_assigned
+  claim: >-
+    There are two ways to evaluate a judgement — against its outcome, and by the quality of the process
+    that produced it — and they can disagree in any single case. The source's position is that the
+    process is the right target: it is the only route available for the many judgements that are
+    unverifiable, it is the only route available before an outcome exists, and it is the only thing that
+    can be improved. A process can be assessed in two ways: by how it performs across an ensemble of
+    similar cases, and by whether it conforms to the principles of logic and probability.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      A single probability judgement other than 0 or 100% cannot be confirmed or disconfirmed by one
+      outcome, because a 10% event happens 10% of the time. Calibration is a property of a set: if a
+      forecaster calls a hundred races at 70% and seventy of them are won, that is evidence about the
+      forecaster. The unit of evaluation therefore has to be the ensemble, not the case.
+  scope:
+    domain_discussed_by_source: [forecasting, political_prediction, professional_judgment]
+    conditions: >-
+      Applies to verifiable and nonverifiable judgements alike; the source presents it as the general
+      answer to "how, then, are we to decide what constitutes good judgment?"
+  caveats:
+    - text: >-
+        The source concedes this is not standard practice: "Professionals are usually evaluated on how
+        closely their judgments match verifiable outcomes."
+      origin: source_stated
+    - text: >-
+        Calibration alone is not enough. The source's Brier-score discussion shows a perfectly calibrated
+        forecaster who is useless because she never differentiates; resolution is required as well. That
+        argument is drawn from Brier's scoring rule and the Good Judgment Project, both third-party work.
+      origin: extractor_observed
+    - text: >-
+        "In a single quarter, a dart-throwing chimpanzee will sometimes be right" — the source's own
+        statement that outcome and process verdicts can diverge in any one case.
+      origin: source_stated
+  source_stated_problems:
+    - "The outcome does not reveal what the ex ante probability was"
+    - "a psychological bias that is identified only after the fact can still provide a useful, if tentative, explanation if it also offers a prediction about the future"
+    - "'In that case they failed, so they must have been overconfident.' The statement is completely vacuous"
+  source_stated_remedies:
+    - "All the procedures we recommend in this book to reduce bias and noise aim to adopt the judgment process that would minimize error over an ensemble of similar cases"
+  examples:
+    positive:
+      - {description: "a forecaster who calls a hundred candidates 70% likely and sees seventy elected — evidence about skill that no single call could give", figure_ref: null}
+      - {description: "Margaret, perfectly calibrated at 60% every day, and Nicholas, equally calibrated but willing to differentiate — the same calibration, very different usefulness", figure_ref: null}
+    counter:
+      - {description: "attributing a single failed decision to overconfidence — an explanation the source calls vacuous because it predicts nothing", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0018, note: "process evaluation is what remains when a judgement is nonverifiable"}
+    - {relation: generalises, target: sk_nse_0035, note: "the case for decision hygiene rests on process being the improvable object"}
+    - {relation: qualifies, target: sk_nse_0050, note: "post-hoc causal explanation of a single bad judgement is the failure mode this replaces"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 4 — Matters of Judgment"
+    section: "'How Judgment Is Evaluated: The Outcome and the Process'; scoring discussion in Ch. 21 'The Good Judgment Project'; bias-as-explanation test in Ch. 17 'Explaining Error' (spine 13, spine 33, spine 28)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0021
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "singular decisions"
+    - "a singular decision is a recurrent decision that happens only once"
+    - "we cannot measure noise in a singular decision, but if we think counterfactually, we know for sure that noise is there"
+  concept_label: singular_decisions_are_noisy_too
+  label_origin: extractor_assigned
+  claim: >-
+    A decision made once — no precedent, no prepackaged response, genuinely unique features — cannot
+    exhibit measurable noise, because there is no second judgement of the same case to compare it with.
+    The source argues that the noise is nevertheless present: the factors that produce disagreement among
+    judges of recurrent cases are all still operating, and a different but equally competent decision
+    maker, or the same one on a different day, could have concluded otherwise. The practical consequence
+    is that the same noise-reduction procedures apply, which the source concedes is counter-intuitive.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The shooting-range analogy is run in reverse: observing only the first shooter of a team tells you
+      nothing about the team's scatter, but the unsteady hand that produced the scatter is present in that
+      first shot too. Unmeasurability is a property of the observation, not of the process.
+  scope:
+    domain_discussed_by_source: [political_decision_making, military_command, corporate_strategy, personal_decisions]
+    conditions: >-
+      The source states there is a continuum rather than a category difference; extreme cases at each end
+      are what make the distinction meaningful.
+  caveats:
+    - text: >-
+        This is an argument from counterfactual reasoning, not a measurement, and the source says so
+        plainly. Nothing here establishes how much noise a singular decision carries.
+      origin: source_stated
+    - text: >-
+        The COVID-19 cross-country comparison is offered as illustration of the counterfactual, not as
+        evidence about any one country's decision. The source says the inability to observe variability
+        "would not make the decision less noisy" — an assertion, not a finding.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Since singular problems are never exactly repeated, this definition does not apply to them"
+    - "your instinct is probably to treat it as, well, one of a kind"
+  source_stated_remedies:
+    - "the strategies that reduce noise in recurrent decisions should also improve the quality of singular decisions"
+    - "The personal experiences that made you who you are are not truly relevant to this decision"
+  examples:
+    positive:
+      - {description: "different countries' widely divergent COVID-19 responses to a similar threat at a similar time, as evidence of the noise a single country's decision would have hidden", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_nse_0003, note: "extends the concept of noise past the recurrent-judgement setting in which it is defined"}
+    - {relation: depends_on, target: sk_nse_0042, note: "the mediating assessments protocol is the source's worked application to a singular decision"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 3 — Singular Decisions"
+    section: "'Noise in Singular Decisions' and 'Controlling Noise in Singular Decisions' (spine 11)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0022
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "statistical juries"
+    - "deliberating juries were far noisier than statistical juries"
+    - "Deliberation had the effect of increasing noise"
+    - "group polarization"
+  concept_label: group_deliberation_increases_noise
+  label_origin: extractor_assigned
+  claim: >-
+    Aggregating judgements mechanically reduces noise; discussing them can increase it. In the authors'
+    own experiments, virtual six-person juries formed by taking the median of six independent judgements
+    were markedly less noisy than real six-person juries that met and discussed the same case. The
+    deliberating groups also became more extreme in the direction their median member already leaned —
+    more lenient when the median was lenient, more severe when severe — and 27% of them awarded as much as
+    or more than their most severe member.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Two mechanisms are given. Informational: a group leaning one way hears mostly arguments for that
+      way, so listening members shift further in it. Reputational: members who care about standing in the
+      group shift toward the dominant tendency as well. The source adds that group dynamics amplify
+      whatever level, pattern and occasion noise the individual members brought in, notably through
+      whoever speaks first.
+  scope:
+    domain_discussed_by_source: [juries, professional_teams, corporate_decision_making]
+    conditions: >-
+      Groups that deliberate before recording individual views. The source is explicit that the noise
+      reduction it contrasts this with "was a mechanical effect of statistical aggregation".
+  caveats:
+    - text: >-
+        These are the authors' own studies: 899 participants for the statistical juries, then more than
+        three thousand jury-eligible citizens forming more than five hundred six-person juries. Both used
+        constructed product-liability vignettes with mock jurors, not real trials.
+      origin: extractor_observed
+    - text: >-
+        The finding is about noise across groups and about polarisation within them. The source does not
+        claim deliberating juries are less accurate — for punitive damages there is no true value to be
+        accurate against.
+      origin: extractor_observed
+    - text: >-
+        The source elsewhere concedes deliberation has real benefits: teaming improved forecasters'
+        ability to extract information, and "under favorable circumstances, in which people share what
+        they know, deliberating groups can indeed do well".
+      origin: source_stated
+  source_stated_problems:
+    - "because of group dynamics, groups can add noise, too"
+    - "after people talk with one another, they typically end up at a more extreme point in line with their original inclinations"
+    - "group discussions often increase noise"
+  source_stated_remedies:
+    - "The simple procedure of collecting participants' judgments before the discussion both reveals the extent of noise and facilitates a constructive resolution of differences"
+  examples:
+    positive:
+      - {description: "millions of computer-assembled six-person 'statistical juries' taking the median of independent judgements, against real deliberating juries on the same cases", figure_ref: null}
+      - {description: "a seven-person group that thought a Paris office was a pretty good idea concluding after discussion that it is a terrific idea", figure_ref: null}
+    counter:
+      - {description: "the Good Judgment Project's teaming intervention, where discussion improved forecasts — the source's own counter-case, in a setting with scoring and actively open-minded participants", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0023, note: "cascades and polarisation are the mechanisms"}
+    - {relation: qualifies, target: sk_nse_0037, note: "bounds when aggregation helps: independence first, discussion after"}
+    - {relation: contradicts, target: sk_nse_0038, note: "the source's teaming result cuts the other way and is left standing rather than reconciled"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 8 — How Groups Amplify Noise"
+    section: "'Group Polarization' (spine 17); the same studies analysed for scale effects in Ch. 15 (spine 26)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0023
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "informational cascades"
+    - "social pressure cascades"
+    - "people tend to neglect the possibility that most of the people in the crowd are in a cascade, too"
+    - "chance variation in a small number of early movers"
+  concept_label: cascades_and_group_polarization
+  label_origin: extractor_assigned
+  claim: >-
+    A group's conclusion can be determined by who spoke first and what they said, rather than by the
+    merits. Each subsequent speaker who lacks strong private grounds reasonably defers to the apparent
+    weight of opinion already expressed, and the private information they held goes unshared. Social
+    pressure produces the same pattern without any learning at all. The consequence the source stresses
+    is diagnostic: unanimity and confidence in a group are weak evidence of correctness, because
+    observers systematically underestimate how much of an apparent consensus is people following
+    predecessors rather than judging independently.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source's worked example runs a ten-person hiring meeting in sequence: Arthur names Thomas,
+      Barbara defers because she trusts Arthur, Charles suppresses a contrary view because he is a
+      respectful listener rather than a coward, and by the time Erica speaks the consensus is
+      self-sustaining. Had Barbara spoken first, or Arthur felt slightly differently, the group would have
+      landed elsewhere — which is what makes cascades a source of noise across groups, not only of error.
+  scope:
+    domain_discussed_by_source: [hiring_committees, juries, corporate_meetings, online_ratings, political_opinion]
+    conditions: >-
+      Sequential expression of views, with later speakers able to observe earlier ones. The source notes
+      cascading is often individually rational, which is why it is hard to stop.
+  caveats:
+    - text: >-
+        Every quantitative demonstration is a third party's: Salganik and colleagues' music-download
+        worlds and their inverted-ranking follow-up, Macy and colleagues on political positions, Muchnik
+        and colleagues' single artificial up-vote raising mean ratings 25% after five months, and the
+        estimation study showing social influence "reduce group diversity without diminishing the
+        collective error".
+      origin: extractor_observed
+    - text: >-
+        The music and comment studies are online consumer settings with large anonymous populations. The
+        source extends them to small professional groups by analogy and says so — "It should be easy to
+        see how these studies bear on group judgments in general" is an argument, not a measurement.
+      origin: extractor_observed
+    - text: >-
+        The source records the limits found: the very worst songs never reached the top and the very best
+        never reached the bottom, and the single most popular song rose even under an inverted ranking.
+        Social influence dominated the middle, not the extremes.
+      origin: source_stated
+  source_stated_problems:
+    - "We might think that their shared agreement reflects collective wisdom, even if it reflects the initial views of just a few people"
+    - "informational cascades can lead groups of people in truly terrible directions"
+    - "if people are not making their own judgments and are relying instead on what other people think, crowds might not be so wise after all"
+  source_stated_remedies:
+    - "independence is a prerequisite for the wisdom of crowds"
+  examples:
+    positive:
+      - {description: "eight parallel download worlds seeded identically, producing wildly different rankings of the same 72 songs", figure_ref: null}
+      - {description: "one artificial up-vote making the next viewer 32% more likely to up-vote, with the effect persisting for months", figure_ref: null}
+    counter:
+      - {description: "the control group in the download study, where participants saw no one else's choices and the ranking was reproducible", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_nse_0022}
+    - {relation: depends_on, target: sk_nse_0024, note: "the damage is defined against the independence condition it violates"}
+    - {relation: demonstrated_together_with, target: sk_nse_0036, note: "the forensic bias cascade is the same mechanism inside a verification step"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, controlled_comparison, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 8 — How Groups Amplify Noise"
+    section: "'Noise in the Music', 'Beyond Music Downloads', 'Cascades' (spine 17)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0024
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "independence is a prerequisite for the wisdom of crowds"
+    - "aggregation can only reduce noise if judgments are truly independent"
+    - "The second opinion is not independent if the person giving it knows what the first opinion was"
+  concept_label: independence_is_a_precondition_for_aggregation
+  label_origin: extractor_assigned
+  claim: >-
+    The noise reduction that averaging delivers is contingent on the judgements being independent. A
+    second opinion given by someone who knows the first is not a second observation; it is a
+    contaminated echo, and the third is worse. The source's sharpest instance is procedural: a
+    verification step designed as an independent check delivers none of the expected benefit when the
+    verifier knows what conclusion is being verified.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Averaging works because errors that are uncorrelated partly cancel. Social influence correlates
+      them — it "reduces group diversity without diminishing the collective error" — so the sample size
+      that the arithmetic assumes is not the sample size that exists. The source's analogy is witnesses to
+      a crime who are allowed to talk before testifying.
+  scope:
+    domain_discussed_by_source: [forensic_examination, hiring_committees, forecasting, corporate_boards]
+    conditions: >-
+      Wherever multiple judgements of one case are combined, formally or informally. The source treats
+      the requirement as "routinely violated in the procedures of organizations, notably in meetings".
+  caveats:
+    - text: >-
+        The source concedes independence is often impractical: its own worked example has one analyst
+        covering two assessments because there were not enough people, mitigated only by ordering the work
+        and choosing maximally dissimilar topics.
+      origin: source_stated
+    - text: >-
+        Independence is necessary but not sufficient. The source stresses averaging "does nothing to
+        reduce bias", so independent judges who share a bias produce a confident, precise, wrong average.
+      origin: source_stated
+  source_stated_problems:
+    - "The verification step therefore does not provide the benefit normally expected from the aggregation of independent judgments, because verifications are not, in fact, independent"
+    - "group deliberation often adds more error in bias than it removes in noise"
+  source_stated_remedies:
+    - "the second person should not be aware of the first judgment"
+    - "the company makes sure that the interviewers rate the candidate separately, before they communicate with one another"
+    - "Organizations that want to harness the power of diversity must welcome the disagreements that will arise when team members reach their judgments independently"
+  examples:
+    positive:
+      - {description: "Google requiring interviewers to record their ratings before speaking to each other", figure_ref: null}
+      - {description: "a board taking a silent, anonymous read of each member's rating before any discussion of that assessment", figure_ref: null}
+    counter:
+      - {description: "the ACE-V verification step in fingerprint work, where the verifier is told the first examiner concluded identification", figure_ref: null}
+      - {description: "an admissions office that shows the first reader's rating to the second", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0037}
+    - {relation: depends_on, target: sk_nse_0023}
+    - {relation: demonstrated_together_with, target: sk_nse_0036}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 21 — Selection and Aggregation in Forecasting"
+    section: "'Where Selection and Aggregation Work'; forensic instance in Ch. 20 'The Forensic Confirmation Bias'; hiring instance in Ch. 24 (spine 33, spine 32, spine 36)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0025
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "psychological biases create system noise when judges are biased in different ways, or to a different extent"
+    - "psychological bias"
+    - "statistical bias"
+  concept_label: psychological_biases_create_noise_when_unshared
+  label_origin: extractor_assigned
+  claim: >-
+    A psychological bias is a mechanism; whether it shows up as bias or as noise depends on how widely it
+    is shared. When everyone is pulled the same way by the same amount, the result is statistical bias.
+    When people differ in which biases affect them, in how strongly, or in what triggers them, the same
+    mechanisms produce system noise instead. The source therefore refuses the common inference that
+    "psychological bias" implies a directional error, and separately objects to using the word "bias" as
+    a catch-all explanation for any bad outcome.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Three families are given. Substitution misweights the evidence; conclusion biases, including
+      prejudgment, the affect heuristic and anchoring, either bypass the evidence or distort its reading;
+      excessive coherence magnifies first impressions. Each produces noise rather than bias when its
+      trigger is idiosyncratic — a question answered by consulting one's social circle, an order of
+      information that arrives haphazardly, a prejudgment that half the judges hold and half do not.
+  scope:
+    domain_discussed_by_source: [claims_adjusting, asylum_adjudication, hiring, forecasting]
+    conditions: >-
+      Requires either individual differences in bias, or context-dependence in the trigger. Shared,
+      uniformly-triggered biases yield bias, not noise.
+  caveats:
+    - text: >-
+        The bias catalogue is drawn from half a century of third-party research reviewed elsewhere, not
+        from studies conducted for this book. Nothing in this extraction asserts anything about the
+        current replication status of any of those findings.
+      origin: extractor_observed
+    - text: >-
+        The source draws a hard line on what counts as an explanation: a bias explains a judgement error
+        only if it could have been predicted in advance or detected in real time, and it explicitly calls
+        after-the-fact bias attribution "completely vacuous".
+      origin: source_stated
+    - text: >-
+        The BIN analysis of the Good Judgment Project found that training aimed at reducing bias in fact
+        worked mainly by reducing noise — a result the source reports as surprising to the researchers
+        themselves. That analysis is Satopää, Tetlock, Mellers and Salikhov's, not the authors'.
+      origin: extractor_observed
+  source_stated_problems:
+    - "blaming every undesirable outcome on biases is a worthless explanation"
+    - "when there are large individual differences in biases (different prejudgments) or when the effect of biases depends on context (different triggers), there will be noise"
+  source_stated_remedies:
+    - "We recommend reserving the word bias for specific and identifiable errors and the mechanisms that produce them"
+  examples:
+    positive:
+      - {description: "half of hiring managers biased against women and half in their favour: no overall bias, and a great many wrong hires", figure_ref: null}
+      - {description: "'Is there climate change?' answered by 'do I trust the people who say so?' — the same substitution producing different answers per person", figure_ref: null}
+    counter:
+      - {description: "Bill the accountant, where the substitution is shared by nearly everyone and produces a common error with no noise at all", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_nse_0026}
+    - {relation: generalises, target: sk_nse_0027}
+    - {relation: qualifies, target: sk_nse_0001, note: "the same mechanism can land on either side of the bias/noise distinction"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 13 — Heuristics, Biases, and Noise"
+    section: "'Diagnosing Biases' and 'Psychological Biases Cause Noise' (spine 24); BIN result in Ch. 21 'Noise and Bias in Forecasting' (spine 33)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0026
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "substitution"
+    - "a heuristic for answering a difficult question is to find the answer to an easier one"
+    - "the outrage hypothesis"
+  concept_label: substitution_of_an_easier_question
+  label_origin: extractor_assigned
+  claim: >-
+    Faced with a hard question, people frequently answer an easier one instead, without noticing the
+    swap, and report the answer as though it addressed the original. The substitute is typically a
+    question of similarity, of ease of recall, or of feeling. Because the two questions have different
+    correct answers, the substitution guarantees error: evidence gets weights appropriate to the easy
+    question rather than the hard one. In the authors' own punitive-damages study the substituted question
+    was emotional — "how angry am I?" — and mean outrage ratings correlated 0.98 with mean punitive
+    intent across twenty-eight scenarios.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      System 1 supplies a fast answer to whatever nearby question it can answer, and System 2 endorses it.
+      The tell is a misweighting that can be demonstrated experimentally: a factor that should matter is
+      ignored, or one that should not is given weight. The source's demonstration is that harm suffered
+      barely moved outrage ratings (4.24 severe versus 4.19 mild) but did move punitive intent (4.93
+      versus 4.65) and doubled the median award — showing which question each scale was really answering.
+  scope:
+    domain_discussed_by_source: [jury_awards, probability_judgment, risk_perception, life_satisfaction]
+    conditions: >-
+      "The substitution happens, of course, only if the available information is relevant" — an
+      irrelevant cue is correctly ignored rather than substituted.
+  caveats:
+    - text: >-
+        The punitive-damages study is the authors' own (Kahneman, Schkade and Sunstein, reported 1998),
+        run with 899 mock jurors on constructed vignettes. The Bill and Julie demonstrations are classic
+        third-party heuristics-and-biases material.
+      origin: extractor_observed
+    - text: >-
+        The 0.98 correlation is between the MEAN ratings of twenty-eight scenarios, not between
+        individuals' judgements. Agreement on averages coexisted with very large disagreement case by
+        case.
+      origin: extractor_observed
+  source_stated_problems:
+    - "substituting one question for another will lead to an answer that does not give different aspects of the evidence their appropriate weights"
+    - "The participants … were not even aware of assigning weights to the various features of the case"
+  source_stated_remedies:
+    - "Did the group's choice of evidence and the focus of their discussion indicate substitution of an easier question for the difficult one they were assigned?"
+  examples:
+    positive:
+      - {description: "'Do I think this surgeon is competent?' answered by 'does this individual speak with confidence and authority?'", figure_ref: null}
+      - {description: "'Will the project be completed on schedule?' answered by 'is it on schedule now?'", figure_ref: null}
+    counter:
+      - {description: "knowing only that Julie was a fast runner — no substitution occurs, because the cue supports no plausible reading of the target", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0025}
+    - {relation: depends_on, target: sk_nse_0028, note: "matching is the operation that carries the substituted answer onto the response scale"}
+    - {relation: qualified_by, target: sk_nse_0041, note: "the outside view is the source's corrective for the neglected base rate"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 13 — Heuristics, Biases, and Noise"
+    section: "'Substitution' (spine 24); the outrage hypothesis and harm manipulation in Ch. 15 'The Outrage Hypothesis' (spine 26)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0027
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "excessive coherence"
+    - "halo effect"
+    - "we jump to conclusions, then stick to them"
+  concept_label: excessive_coherence_and_the_halo_effect
+  label_origin: source_verbatim
+  claim: >-
+    People form an overall impression from the first evidence they meet and then interpret everything
+    after it in that impression's light, so identical evidence presented in different orders produces
+    different conclusions. The source's demonstration is a four-adjective description of a candidate —
+    intelligent, persistent, cunning, unprincipled — which reads far more favourably in that order than
+    reversed. The consequence for a set of judgements is that whenever the order in which information
+    arrives varies haphazardly across cases and judges, excessive coherence converts that arbitrary order
+    into system noise.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      An evaluation forms before the evidence is complete and is not revised enough by what follows.
+      Confirmation bias then reduces the weight given to later, conflicting data, and information already
+      seen cannot be unseen. Where judgements on several dimensions are required, the first strong rating
+      drags the rest with it — the halo effect — which is why nominally separate dimensions are not in fact
+      assessed separately.
+  scope:
+    domain_discussed_by_source: [hiring, performance_appraisal, claims_adjusting, forensic_examination, consumer_choice]
+    conditions: >-
+      Requires sequential exposure to evidence. Where all judges receive the same information in the same
+      order, the effect produces shared bias instead of noise.
+  caveats:
+    - text: >-
+        The calorie-label study — labels to the left of the item mattering more than to the right, and the
+        mirror-image result for Hebrew readers — is a third party's, and the source notes the wider
+        evidence on calorie labelling is "disputed and mixed".
+      origin: extractor_observed
+    - text: >-
+        The source concedes the process "is fine, of course, if the conclusions are correct". Excessive
+        coherence is a failure only when the initial impression is wrong or arbitrary.
+      origin: source_stated
+    - text: >-
+        The source records a practical limit on remedies: instructing jurors to disregard inadmissible
+        evidence "is not a realistic instruction", though rejecting arguments built on it in deliberation
+        may help.
+      origin: source_stated
+  source_stated_problems:
+    - "we form coherent impressions quickly and are slow to change them"
+    - "the halo effect implies that supposedly separate dimensions will in fact not be treated separately"
+    - "the order in which data about a claim becomes available varies haphazardly … causing random variation in initial impressions"
+  source_stated_remedies:
+    - "People can reduce excessive coherence by breaking down the judgment problem into a series of smaller tasks"
+    - "Was there accidental bias in the choice of considerations that were discussed early?"
+  examples:
+    positive:
+      - {description: "the same four adjectives read forwards and backwards, producing clearly different evaluations of the same person", figure_ref: null}
+      - {description: "a 360-degree questionnaire of forty-six ratings on eleven dimensions, where an early strong rating pulls the rest with it", figure_ref: null}
+    counter:
+      - {description: "an attractive candidate creating an early positive impression in most recruiters — the same mechanism producing shared bias rather than noise", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0025}
+    - {relation: qualified_by, target: sk_nse_0039, note: "structuring into independently assessed dimensions is the source's remedy"}
+    - {relation: qualified_by, target: sk_nse_0036, note: "sequencing controls which evidence gets to form the first impression"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 13 — Heuristics, Biases, and Noise"
+    section: "'Excessive Coherence' (spine 24); restated as a decision hygiene rationale in the Review and Conclusion (spine 42)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0028
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "matching"
+    - "your task is to find a value on the judgment scale that matches your mood or experience"
+    - "The matching operation is a versatile tool of fast, System 1 thinking and the core of many intuitive judgments, but it is crude"
+  concept_label: the_matching_operation
+  label_origin: source_verbatim
+  claim: >-
+    Every rating is the output of a matching operation: an impression on one dimension is mapped onto a
+    value on the response scale. The source argues people do this effortlessly and across wildly
+    unrelated dimensions — affection for singers onto building heights, a restaurant onto the length of a
+    novel — and that the versatility is real. The operation is nevertheless crude, and it is one of the
+    three points in the judgement process at which variability enters.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Quantitative intensity dimensions share the property that "which is more?" can be answered for any
+      pair of values, which is what allows one dimension to be mapped onto another. The source's account
+      of the Julie problem shows the two stages: evaluate the evidence into a band ("unusually but not
+      extraordinarily precocious"), then find the value on the target scale carrying the same label.
+  scope:
+    domain_discussed_by_source: [academic_prediction, consumer_ratings, punitive_damages, probability_judgment]
+    conditions: >-
+      Quantitative or ordered scales. The source separates these from qualitative scales — professions,
+      diagnoses — whose values are not ordered.
+  caveats:
+    - text: >-
+        The claim that two differently-worded questions elicit identical numbers rests on third-party
+        experimental work; the source calls the evidence for the mechanism "unusually conclusive" but that
+        is its assessment of others' results.
+      origin: extractor_observed
+    - text: >-
+        The source notes the range of a scale is set by context in ordinary language — "she has been
+        saving a lot of money" means different things about a banker and a babysitter — so a matched value
+        is only interpretable against a shared frame of reference.
+      origin: source_stated
+  source_stated_problems:
+    - "Individuals may differ in the interpretation of labels even when they agree on the substance of the judgment"
+    - "our ability to match values across intensity dimensions cannot be better than our ability to assign values on these dimensions"
+  source_stated_remedies:
+    - "A procedure that compels explicitly comparative judgments is likely to reduce noise"
+  examples:
+    positive:
+      - {description: "'On a scale of 1 to 10, how good is your mood?' — finding the number that matches an experience", figure_ref: null}
+      - {description: "matching reading precocity to a GPA of 3.7 or 3.8 by carrying the same band label across scales", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0026}
+    - {relation: generalises, target: sk_nse_0029}
+    - {relation: qualified_by, target: sk_nse_0030, note: "the resolution of the operation is bounded by the limits of absolute judgement"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 14 — The Matching Operation"
+    section: "'Matching and Coherence' and 'Matching Intensities' (spine 25)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0029
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "matching prediction"
+    - "nonregressive"
+    - "regression to the mean"
+    - "Intuitive predictions that match the evidence are too extreme, both when they are optimistic and when they are pessimistic"
+  concept_label: matching_predictions_are_nonregressive
+  label_origin: extractor_assigned
+  claim: >-
+    An intuitive prediction typically carries the intensity of the evidence straight onto the outcome
+    scale, as if the evidence were perfectly predictive of the outcome. It almost never is. The correct
+    prediction lies between the outside-view average and the intuitive match, at a distance from the
+    average proportional to the actual predictive value of the evidence. The source's correction
+    procedure is explicit and arithmetic: make the intuitive guess, find the mean for the reference class,
+    estimate the correlation, then move from the mean toward the guess by that proportion.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Matching is a substitution of an evidence-intensity question for a prediction question, so the
+      answer inherits the evidence's extremity. Because past and future performance are imperfectly
+      correlated, extreme observations tend to become less extreme; a prediction that ignores this is
+      systematically too extreme in whichever direction the evidence points.
+  scope:
+    domain_discussed_by_source: [academic_prediction, sales_forecasting, hiring, film_production]
+    conditions: >-
+      Predictive judgements scored for accuracy. The source notes the correction "can be neglected only in
+      very easy problems, when the information available supports a prediction that can be made with
+      complete confidence".
+  caveats:
+    - text: >-
+        The source concedes corrected predictions "will inevitably result in some highly visible failures"
+        in hindsight, because they never bet on outliers. Its defence is that the opposite error is far
+        more frequent.
+      origin: source_stated
+    - text: >-
+        The correlation estimate the procedure requires "will have to be a back-of-the-envelope estimate"
+        in all but rare cases. The precision of the corrected number is therefore illusory.
+      origin: source_stated
+    - text: >-
+        The source records an asymmetry it does not fully explain: people resist matching predictions from
+        unfavourable evidence more than from favourable evidence, and the asymmetry disappears as more
+        information arrives.
+      origin: source_stated
+  source_stated_problems:
+    - "The matching prediction can be justified only if reading precocity and college GPA are perfectly correlated, which is clearly not the case"
+    - "Producers routinely anticipate that the next movie of a director whose previous movie was a hit will be just as successful"
+    - "predictions should be moderate"
+  source_stated_remedies:
+    - "The optimal prediction must lie between these two extremes of perfect knowledge and zero knowledge"
+    - "adjust from the mean, in the direction of your intuitive guess, in proportion to the correlation you have estimated"
+  examples:
+    positive:
+      - {description: "Julie's GPA: intuitive 3.8, class mean 3.2, evidence correlation at most .20, corrected prediction about 3.3", figure_ref: null}
+      - {description: "an outstanding interview suggesting $1m of first-year sales against a $500k mean, corrected to at most $700k at a generous r = .40", figure_ref: null}
+    counter:
+      - {description: "knowing Julie's grades in every subject — perfectly predictive of her GPA, so no regression is needed", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0028}
+    - {relation: depends_on, target: sk_nse_0041}
+    - {relation: qualified_by, target: sk_nse_0049, note: "the size of the correction is set by how little the evidence actually predicts"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 14 — The Matching Operation"
+    section: "'The Bias of Matching Predictions'; four-step correction in Appendix C 'Correcting Predictions' (spine 25, spine 47)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0030
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "The Magical Number Seven, Plus or Minus Two"
+    - "Explicit comparisons between objects of judgment support much finer discriminations than do ratings of objects evaluated one at a time"
+    - "Comparative or relative judgments are more sensitive than categorical or absolute ones"
+  concept_label: relative_judgments_are_less_noisy_than_absolute_ones
+  label_origin: extractor_assigned
+  claim: >-
+    People can reliably place items into only about seven categories on an intensity scale, and the limit
+    barely moves when the range of the stimuli widens. Any rating scale finer than that resolution
+    manufactures noise. Comparison is not subject to the same limit: people can rank items they cannot
+    reliably label, so replacing absolute ratings with comparisons — or with ratings on an explicitly
+    comparative scale — reduces noise. The source's practical recipe is to sort into a small number of
+    categories first, then rank within each.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Absolute judgement requires holding a whole scale in mind and assigning a label to one item at a
+      time; comparison requires only deciding which of two is greater, which people do far more finely.
+      The source notes the limit can be pushed by hierarchical categorisation, but only where the
+      categories exist in advance with clear boundaries — categorisation is "not under voluntary control
+      when you are in the fast-thinking mode".
+  scope:
+    domain_discussed_by_source: [essay_grading, restaurant_and_singer_ratings, performance_appraisal, punitive_damages]
+    conditions: >-
+      Intensity scales judged item by item. The source concedes comparative procedures "are also more
+      effortful and time-consuming".
+  caveats:
+    - text: >-
+        The magical-number-seven result is a 1956 third-party classic about lines, tones and brightness.
+        Its extension to professional judgement is the authors' argument, not a demonstration on
+        professional tasks.
+      origin: extractor_observed
+    - text: >-
+        The source flags a governance condition on comparative scales: percentile ratings "rarely deserve
+        to be taken at face value because there is no way to keep the recommenders accountable for using
+        the scale properly" unless a rater who puts 90% of cases in the top 20% can be identified and
+        corrected.
+      origin: source_stated
+  source_stated_problems:
+    - "Beyond this limit, people tend to start to make errors"
+    - "you could not possibly maintain perfect reliability with a twenty-point scale"
+    - "This type of matching is noisy because it is crude"
+  source_stated_remedies:
+    - "instead of using labels, use comparisons"
+    - "first rate the restaurants … using the five-point rating scale … then rank the cases within each category"
+    - "If you grade essays, you will be more precise when you rank them from best to worst"
+  examples:
+    positive:
+      - {description: "Joe's Pizza is worth three stars, but is it an eleven or a twelve on a twenty-point scale?", figure_ref: null}
+      - {description: "rating employees by percentile on one named dimension at a time rather than on an absolute 'work quality' scale", figure_ref: null}
+    counter:
+      - {description: "forced ranking imposed on a team of five whose performances are genuinely indistinguishable — a comparative scale that adds error rather than removing it", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0028}
+    - {relation: generalises, target: sk_nse_0032}
+    - {relation: qualified_by, target: sk_nse_0040, note: "case scales are the source's way of making a rating comparative without forcing a distribution"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 14 — The Matching Operation"
+    section: "'Noise in Matching: Limitations of Absolute Judgment' (spine 25); applied in Ch. 23 'In Praise of Relative Judgments' (spine 35)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0031
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "the role of the response scale as a pervasive source of noise"
+    - "ambiguous scales are noisy"
+    - "People may differ in their judgments, not because they disagree on the substance but because they use the scale in different ways"
+  concept_label: ambiguous_response_scales_generate_noise
+  label_origin: extractor_assigned
+  claim: >-
+    A large share of apparent disagreement is disagreement about the scale rather than about the case. In
+    the authors' own study, the same twenty-eight scenarios judged on three scales that ask substantively
+    the same question produced very different amounts of noise: 51% of variance was noise on the
+    punitive-intent scale, 71% on the outrage scale, and 94% on the dollar scale. The source's explanation
+    is specificity of the scale's upper bound: "extremely severe punishment" is bounded by law in a way
+    that "absolutely outrageous" is not, and dollars are not bounded at all.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Verbal anchors that different people interpret differently convert agreement about substance into
+      disagreement about numbers. The clearer the upper bound of the scale, the less room there is for
+      that divergence — which is why the ordering of noise across the three scales tracks the ordering of
+      their specificity, not their content.
+  scope:
+    domain_discussed_by_source: [jury_awards, performance_appraisal, legal_standards_of_proof, probability_expressions]
+    conditions: >-
+      Judgements expressed on a scale defined by words or by an unbounded unit. The source generalises:
+      "professional judgments are rarely expressed on scales that are so hopelessly ambiguous.
+      Nonetheless, ambiguous scales are common."
+  caveats:
+    - text: >-
+        This is the authors' own study (Kahneman, Schkade and Sunstein), with 899 mock jurors and
+        constructed vignettes; each participant answered only one of the three questions, across ten of
+        twenty-eight scenarios.
+      origin: extractor_observed
+    - text: >-
+        The noise percentages depend on an explicit and possibly wrong assumption, which the source states:
+        the average of individual judgements is treated as the unbiased just value, and every deviation
+        from it is counted as error. "This is an assumption for purposes of analysis; we emphasize that it
+        might be wrong."
+      origin: source_stated
+    - text: >-
+        Figures 13 and 14 carry the variance decompositions and were not inspected; the prose states the
+        percentages.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Judgments that are expressed in such phrases are inevitably noisy because they are interpreted differently by both speakers and listeners"
+    - "The lack of clarity on the upper end of the scale makes some noise inevitable"
+    - "The ambiguity of judgment scales is one of the sources of level noise"
+  source_stated_remedies:
+    - "the choice of a scale can make a large difference in the amount of noise in judgments"
+    - "performance rating scales must be anchored on descriptors that are sufficiently specific to be interpreted consistently"
+  examples:
+    positive:
+      - {description: "'beyond a reasonable doubt', 'outstanding performance', 'unlikely to happen' — phrases whose interpretation varies between speaker and listener", figure_ref: null}
+      - {description: "two raters who both mean 'pretty good' and write 4 and 3 on the same 0-6 scale", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0007, note: "scale ambiguity is one of the named sources of level noise"}
+    - {relation: generalises, target: sk_nse_0032}
+    - {relation: qualified_by, target: sk_nse_0040}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 15 — Scales"
+    section: "'Noisy Scales' (spine 26)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0032
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "ratio scales"
+    - "modulus"
+    - "coherent arbitrariness"
+    - "the absolute values of the dollar awards are essentially meaningless because they depend on the arbitrary number chosen in the first case"
+  concept_label: unanchored_ratio_scales_make_absolute_values_arbitrary
+  label_origin: extractor_assigned
+  claim: >-
+    On an unbounded scale with a meaningful zero, a judge who is given no reference point must invent one
+    on the first case and then judges everything else consistently against it. The absolute values are
+    therefore arbitrary while the relative ordering is not. The authors demonstrated this by replacing each
+    juror's dollar awards with their rank among that juror's own ten judgements: the noise share fell from
+    94% to 49%, slightly below the noise in the ratings of punitive intent. Jurors agreed about the
+    relative severity of the cases all along; the dollar scale hid it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Stevens's finding is that a ratio scale can be tied down by a single intermediate anchor, and that
+      both the judgements and their standard deviation scale proportionally with whatever anchor is
+      supplied. With no anchor supplied, the judge's own first answer becomes the modulus. Ranking removes
+      all judge-level differences mechanically, because the 1-to-10 distribution of ranks is the same for
+      everyone.
+  scope:
+    domain_discussed_by_source: [jury_awards, willingness_to_pay, punitive_damages]
+    conditions: >-
+      Ratio scales — meaningful zero, unbounded top. The source contrasts these with bounded verbal
+      rating scales, which behave differently.
+  caveats:
+    - text: >-
+        The study is the authors' own; the Stevens results on brightness and the Social-Security-number
+        anchoring demonstration are third parties'.
+      origin: extractor_observed
+    - text: >-
+        The demonstration required each juror to judge ten cases. Real juries see one, which is exactly the
+        source's point — the ranking remedy is unavailable in the setting the study models.
+      origin: source_stated
+    - text: >-
+        The source's charge against American legal practice — that prohibiting any communication of other
+        awards "assumes an ability that humans do not have" — is a normative claim about an institution,
+        not a finding.
+      origin: extractor_observed
+  source_stated_problems:
+    - "you surely experienced the feeling that your choice of a number was essentially arbitrary"
+    - "American legal practice requires civil juries to set a dollar award for one case, without the benefit of any guiding anchor"
+  source_stated_remedies:
+    - "Can we agree on an anchor case that will serve as a reference point on the scale?"
+    - "replacing absolute judgments with relative ones, when feasible, is likely to reduce noise"
+  examples:
+    positive:
+      - {description: "supplying one comparable case at $1.5m, after which setting an award for a more severe case becomes easy", figure_ref: null}
+      - {description: "participants anchored on a high number paying proportionally more for every later item, with the ordering of items unchanged", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0031}
+    - {relation: depends_on, target: sk_nse_0030}
+    - {relation: generalises, target: sk_nse_0040}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 15 — Scales"
+    section: "'Dollars and Anchors' and 'An Unfortunate Conclusion' (spine 26)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0033
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "clinical judgment"
+    - "mechanical prediction"
+    - "the model of the judge"
+    - "simple models beat humans"
+    - "mindless consistency"
+  concept_label: mechanical_aggregation_outperforms_clinical_judgment
+  label_origin: extractor_assigned
+  claim: >-
+    Where the same predictors are available to both, a rule that combines them the same way every time
+    generally out-predicts a person combining them case by case. The result holds for three successively
+    more damaging comparisons: a model fitted to the outcomes beats the judge; a model fitted to the
+    judge's own past judgements beats that same judge; and in one study, randomly weighted linear models
+    beat the human experts in 77% to 100% of ten thousand trials. The source's diagnosis is that the
+    subtlety human judges believe they contribute is mostly noise, and that removing it improves accuracy
+    even when some of the subtlety is genuinely valid.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      A model of a judge can only subtract: it drops the judge's complex rules and it drops the judge's
+      pattern noise and occasion noise. If the lost subtlety were worth more than the removed noise, the
+      model would lose. It does not. The source adds why valid subtlety rarely pays: complex rules apply
+      only under rarely-observed conditions, and measurement error at both ends drowns their advantage.
+  scope:
+    domain_discussed_by_source: [personnel_selection, academic_prediction, clinical_diagnosis, bail_decisions]
+    conditions: >-
+      Predictive judgements with a measurable outcome and a common set of predictors. The source insists
+      "we should not conclude that any model beats any human", and notes the Yu and Kuncel result is
+      extreme because the human judges performed very poorly in absolute terms.
+  caveats:
+    - text: >-
+        Every study cited is a third party's: Meehl's 1954 review of twenty studies, the 2000 review of
+        136 studies (mechanical better in 63, tied in 65, clinical better in 8), Goldberg's model-of-the-
+        judge work, and Yu and Kuncel's random-model study on 847 candidates.
+      origin: extractor_observed
+    - text: >-
+        The margin is small. The source states plainly that "models are consistently better than people,
+        but not much better" — in the median study of that review clinicians were right 68% of the time
+        and formulas 73%.
+      origin: source_stated
+    - text: >-
+        In many of the studies the human judges had access to private information the model did not,
+        which the source describes as an unfair advantage to the humans that they still failed to convert.
+      origin: source_stated
+    - text: >-
+        The source explicitly declines the conclusion that people should be replaced: "Our goal in this
+        book is to offer suggestions for the improvement of human judgment, not to argue for the
+        'displacement of people by machines'."
+      origin: source_stated
+  source_stated_problems:
+    - "clinicians and other professionals are distressingly weak in what they often see as their unique strength: the ability to integrate information"
+    - "the gains from subtle rules in human judgment—when they exist—are generally not sufficient to compensate for the detrimental effects of noise"
+    - "You may believe that you are subtler, more insightful, and more nuanced than the linear caricature of your thinking. But in fact, you are mostly noisier"
+  source_stated_remedies:
+    - "Reducing noise mechanically increases the validity of predictive judgment"
+    - "we can strive to emulate the simplicity and noiselessness of simple models"
+  examples:
+    positive:
+      - {description: "ninety-eight participants predicting student GPAs, with the model of each participant outperforming that participant — all ninety-eight of them", figure_ref: null}
+      - {description: "consultants' clinical predictions of executive performance at r = .15 against an optimal statistical combination of the same ratings at r = .32", figure_ref: null}
+    counter:
+      - {description: "eight of 136 studies in which clinical prediction won", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0008, note: "the noise the model removes is chiefly pattern noise"}
+    - {relation: qualified_by, target: sk_nse_0034, note: "broken legs are the source's stated licence to override"}
+    - {relation: qualified_by, target: sk_nse_0049, note: "the absolute accuracy of both remains low; the comparison is between two poor performers"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 9 — Judgments and Models"
+    section: "'Meehl: The Optimal Model Beats You' and 'Goldberg: The Model of You Beats You' (spine 19)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0034
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "broken-leg exceptions"
+    - "is there a broken leg here, or do you just dislike the prediction?"
+  concept_label: the_broken_leg_principle
+  label_origin: source_verbatim
+  claim: >-
+    The source gives one test for when a person may override a mechanical recommendation: whether they
+    hold decisive information the rule could not take into account. If they do, that is a broken leg and
+    the override is right. If they merely disagree, the disagreement is a personal pattern applied to the
+    same predictors the rule already used — highly likely to be invalid — and overriding will make the
+    prediction worse. The test is a question about the information, not about the strength of the
+    feeling.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Meehl's original case is a model predicting who will go to the cinema tonight, and someone who knows
+      a particular person just broke a leg. The private fact is decisive and outside the model's inputs.
+      Absent such a fact, the only thing the human adds over the rule is their own pattern noise.
+  scope:
+    domain_discussed_by_source: [predictive_judgment, corporate_decision_making, bail_decisions]
+    conditions: >-
+      Applies where a mechanical recommendation exists and a person may depart from it. The source notes
+      that with enough data a machine-learning model can itself discover many broken legs, reducing the
+      need for human supervision.
+  caveats:
+    - text: >-
+        The broken-leg example is Meehl's; the source presents it as a principle for decision makers, not
+        as a tested procedure, and offers no evidence about how often overrides that pass the test improve
+        outcomes.
+      origin: extractor_observed
+    - text: >-
+        The source keeps a role for the override at the end of a structured process: in the mediating
+        assessments protocol the final decision remains a judgement partly so that unanticipated broken
+        legs and deal breakers can be caught.
+      origin: source_stated
+  source_stated_problems:
+    - "you will sometimes disagree with a model's recommendation even if you lack such private information"
+    - "your intervention is likely to make the prediction less accurate"
+  source_stated_remedies:
+    - "If you have decisive information that the model could not take into consideration … you should override the model's recommendation"
+    - "Since this personal pattern is highly likely to be invalid, you should refrain from overriding the model"
+  examples:
+    positive:
+      - {description: "knowing a person just broke a leg when the model predicts they will go to the cinema", figure_ref: null}
+      - {description: "a board keeping the right to reject a deal on a decisive factor that the list of mediating assessments did not anticipate", figure_ref: null}
+    counter:
+      - {description: "disliking a model's forecast without holding any information the model lacked", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0033}
+    - {relation: demonstrated_together_with, target: sk_nse_0042}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 10 — Noiseless Rules"
+    section: "'More Complexity: Toward Machine Learning' (spine 20); reused in Ch. 25 'The Decision Meeting' (spine 37)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0035
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "The goal of judgment is accuracy, not individual expression"
+    - "judgment is not the place to express your individuality"
+    - "decision hygiene"
+  concept_label: judgment_is_not_the_place_for_individuality
+  label_origin: source_verbatim
+  claim: >-
+    The source's first principle of decision hygiene is that judgement aims at accuracy, not at
+    self-expression. Because stable pattern noise — the largest component of system noise — is a direct
+    consequence of individual differences in how people read cases, the uniqueness that makes a person
+    interesting is exactly what makes a judgement system noisy. The source is careful about the boundary:
+    individuality and creativity are essential in choosing goals, framing problems and generating
+    options, and become a defect only at the point of judging between them.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The operational test the source derives is perspectival: "when the goal is accuracy and you expect
+      others to agree with you, you should also consider what other competent judges would think if they
+      were in your place." That substitutes an ensemble standard for a personal one at the moment of
+      judgement.
+  scope:
+    domain_discussed_by_source: [professional_judgment, organisational_decision_making]
+    conditions: >-
+      Judgements where agreement is expected. The principle does not reach matters of taste, idea
+      generation, or competitive settings where variation is selected on.
+  caveats:
+    - text: >-
+        The source itself calls the conclusion unpopular and grounds it on the tentative finding that
+        stable pattern noise dominates — a finding it hedges as drawn from a limited selection of examples.
+      origin: source_stated
+    - text: >-
+        The source concedes the human cost directly in its own objections chapter: removing discretion can
+        leave professionals feeling diminished, constrained and even humiliated, and demoralisation is
+        itself a cost.
+      origin: source_stated
+  source_stated_problems:
+    - "Noise is mostly a by-product of our uniqueness, of our 'judgment personality'"
+    - "when it comes to making a judgment about these options, expressions of individuality are a source of noise"
+  source_stated_remedies:
+    - "consider what other competent judges would think if they were in your place"
+    - "A radical application of this principle is the replacement of judgment with rules or algorithms"
+  examples:
+    positive:
+      - {description: "the source's own summary line: uniqueness makes people innovative and interesting, and when it comes to judgement it is not an asset", figure_ref: null}
+    counter:
+      - {description: "choice of goals, novel framings of a problem, and generation of options — phases where the source insists individuality is needed", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0011}
+    - {relation: trades_off_with, target: sk_nse_0004}
+    - {relation: trades_off_with, target: sk_nse_0047, note: "the morale and creativity objections bite directly on this principle"}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Review and Conclusion — Taking Noise Seriously"
+    section: "'How to Reduce Noise (and Bias, Too)', first principle (spine 42)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0036
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "sequencing information to limit the formation of premature intuitions"
+    - "linear sequential unmasking"
+    - "keep a 'shadow of a doubt'"
+    - "forensic confirmation bias"
+  concept_label: sequencing_information
+  label_origin: source_verbatim
+  claim: >-
+    More information is not always better. Where information could bias a judgement by letting an
+    impression form early, the source's remedy is to control what the judge knows and when: give them
+    only what they need, when they need it, and require the judgement at each step to be documented
+    before the next piece of information is revealed. Any later change of mind, and its reasons, must be
+    recorded too. The source stresses that this applies to accurate information as much as to misleading
+    information.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Coherence-seeking makes an early impression organise everything that follows, and the source reports
+      that biasing context changes not only the conclusion but what the examiner perceives — examiners
+      shown a target exemplar alongside a latent print recorded significantly fewer details in the print
+      than examiners shown it alone. Withholding the biasing input is therefore the only reliable point of
+      intervention; instructing someone to disregard what they have seen is not.
+  scope:
+    domain_discussed_by_source: [forensic_examination, fingerprint_analysis, corporate_decision_making]
+    conditions: >-
+      Judgements assembled in steps from separable pieces of evidence, where some of the evidence is not
+      needed for the sub-judgement being made.
+  caveats:
+    - text: >-
+        All the empirical work is Itiel Dror's and colleagues', with independent replications; the FBI's
+        2012 seventy-two-examiner re-test and the 2011 FBI accuracy study are the FBI's own. None of it is
+        the authors' study.
+      origin: extractor_observed
+    - text: >-
+        The reported effects are modest in absolute terms — four of twenty-four decisions changed in one
+        study, about one decision in ten in the FBI re-test — and the source notes most changes were to or
+        from "inconclusive" and none produced false identifications.
+      origin: source_stated
+    - text: >-
+        The source records that the fingerprint community initially rejected the finding outright, and
+        that in a survey of four hundred forensic scientists 71% thought cognitive bias a concern for the
+        field while only 26% thought their own judgements affected.
+      origin: source_stated
+  source_stated_problems:
+    - "expert fingerprint examiners made decisions on the basis of the context, rather than on the basis of the actual information contained in the print"
+    - "an initial error prompted by confirmation bias becomes the biasing information that influences a second expert, whose judgment biases a third one"
+    - "as soon as you know what others think, confirmation bias can lead you to form an overall impression too early"
+  source_stated_remedies:
+    - "the laboratory keeps them as much in the dark about the case as possible and reveals information only gradually"
+    - "examiners should document their judgments at each step"
+    - "the second person should not be aware of the first judgment"
+  examples:
+    positive:
+      - {description: "recording the analysis of a latent print before any exemplar is shown", figure_ref: null}
+      - {description: "the Mayfield case, where three FBI experts and a court-appointed defence expert all confirmed an erroneous identification after the first examiner had made it", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_nse_0027, note: "excessive coherence is the mechanism sequencing is aimed at"}
+    - {relation: depends_on, target: sk_nse_0024}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, controlled_comparison, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 20 — Sequencing Information in Forensic Science"
+    section: "'The Forensic Confirmation Bias' and 'Sequencing Information' (spine 32)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0037
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "aggregating multiple independent judgments"
+    - "Averaging is mathematically guaranteed to reduce noise"
+    - "estimate-talk-estimate"
+    - "the crowd within"
+  concept_label: aggregating_independent_judgments
+  label_origin: extractor_assigned
+  claim: >-
+    Averaging independent judgements divides noise by the square root of the number averaged: four
+    judgements halve it, a hundred cut it by 90%. The reduction is arithmetic and guaranteed, and it does
+    nothing whatever to bias. Where several people are unavailable, the source reports a weaker version
+    of the same effect within one person — a second estimate by the same judge, better if separated by
+    time or generated by deliberately arguing against the first. Beyond straight averaging the source
+    describes select-crowd averaging, prediction markets, the Delphi method and its single-meeting form,
+    estimate-talk-estimate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      A single judgement is a sample of one drawn from a population of possible judgements; increasing
+      sample size improves precision. The source adds a second-order gain: aggregating judges who are both
+      independent and complementary beats aggregating redundant ones, because validity rises faster when
+      judgements are uncorrelated. Its striking consequence is that "the average of that noisy group will
+      be more accurate than the average of a unanimous one".
+  scope:
+    domain_discussed_by_source: [forecasting, juries, hiring, performance_appraisal]
+    conditions: >-
+      Independence is required; without it the arithmetic does not apply. The source also notes averaging
+      is powerless against shared bias, so the gain in total error depends on the bias/noise mix.
+  caveats:
+    - text: >-
+        The inner-crowd results are Vul and Pashler's and the dialectical-bootstrapping variant is Herzog
+        and Hertwig's. The reported gains are small — about one tenth of a second opinion immediately, one
+        third after three weeks, about one half with the dialectical instruction.
+      origin: extractor_observed
+    - text: >-
+        Aggregation has a cost the source records elsewhere: Google found that beyond four interviews
+        additional interviews added almost no predictive validity, and 360-degree systems became
+        counterproductive as the number of raters and questions grew.
+      origin: source_stated
+    - text: >-
+        Galton's ox demonstration and the wisdom-of-crowds literature are third-party work; the source
+        notes crowds are not wise on questions only experts can approach.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Because averaging does nothing to reduce bias, its effect on total error (MSE) depends on the proportions of bias and noise in it"
+  source_stated_remedies:
+    - "if you can get independent opinions from others, do it"
+    - "unless you have very strong reasons to put more weight on one of the estimates, your best bet is to average them"
+    - "Sleep on it, and think again in the morning"
+  examples:
+    positive:
+      - {description: "estimate-talk-estimate: silent individual estimates, then explanation and debate, then a second estimate averaged as the consensus", figure_ref: null}
+      - {description: "assembling a judging team by adding the member who brings the most non-redundant skill, not the second-best judge", figure_ref: null}
+    counter:
+      - {description: "a deliberating jury, where the same six judgements are combined by discussion instead and noise rises", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0024}
+    - {relation: trades_off_with, target: sk_nse_0044, note: "each additional independent judgement costs time and returns less than the last"}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 21 — Selection and Aggregation in Forecasting"
+    section: "'Improving Forecasts' and 'Where Selection and Aggregation Work'; the inner crowd in Ch. 7 'One Is a Crowd' (spine 33, spine 16)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0038
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "respect-experts"
+    - "actively open-minded thinking"
+    - "perpetual beta"
+    - "good judgments depend on what you know, how well you think, and how you think"
+  concept_label: selecting_better_judges
+  label_origin: extractor_assigned
+  claim: >-
+    Some judges are both less noisy and less biased than their equally qualified peers, and three things
+    distinguish them: task-specific skill, general mental ability, and a cognitive style the source calls
+    actively open-minded — actively seeking information that contradicts one's own hypothesis and being
+    willing to change one's mind. The source separates true experts, whose superiority is verifiable
+    against outcomes, from respect-experts, whose standing rests only on peers' regard, and warns that
+    the traits that produce respect — confidence, fluency, a coherent story — are not the traits that
+    produce accuracy.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Respect-experts are trusted because they share professional doctrine, have experience, and
+      construct coherent stories with confidence; the source notes the confidence heuristic gives confident
+      people extra weight in a group whether or not the confidence is warranted. Since doctrine "does not
+      fully specify how to proceed", identically trained professionals drift apart in applying it, so
+      shared training buys agreement on absurdity without buying agreement on cases.
+  scope:
+    domain_discussed_by_source: [forecasting, underwriting, criminal_sentencing, wine_tasting, political_analysis]
+    conditions: >-
+      Selection is available and someone can be identified as better. The source concedes that in practice
+      you often cannot test people and must guess who the abler ones are.
+  caveats:
+    - text: >-
+        The evidence is entirely third-party: the GMA literature, the cognitive reflection test, the
+        need-for-cognition scale, Baron's actively-open-minded scale, and the Good Judgment Project's
+        finding that selection had the largest effect of the three interventions tested.
+      origin: extractor_observed
+    - text: >-
+        The source flags a trap in using apparent ability as the selection signal: high mental ability also
+        improves the ability to convince others, so it produces respect-experts in the absence of any
+        reality feedback. "Medieval astrologers must have been among the highest-GMA people of their time."
+      origin: source_stated
+    - text: >-
+        The BIN analysis found that selection, like training and teaming, worked mainly by reducing noise
+        rather than by better reading of the evidence — a result the researchers themselves called a
+        surprise.
+      origin: extractor_observed
+    - text: >-
+        Haran, Ritov and Mellers found the need for cognition did NOT reliably predict forecasting
+        performance; only actively open-minded thinking did. The source records the negative result.
+      origin: source_stated
+  source_stated_problems:
+    - "The confidence we have in these experts' judgment is entirely based on the respect they enjoy from their peers"
+    - "It can be sensible to place your trust in people who look and sound intelligent … but this strategy is insufficient and may even backfire"
+    - "Even identically trained professionals who agree on the doctrine they are applying will drift away from one another in their application of it"
+  source_stated_remedies:
+    - "look for the sort of people who actively search for new information that could contradict their prior beliefs"
+    - "If they end up being decisive, it is at the end of a process, not at the start"
+  examples:
+    positive:
+      - {description: "superforecasters, whose advantage Tetlock attributes to perpetual beta — belief updating and self-improvement — rather than to raw intelligence", figure_ref: null}
+      - {description: "a chess grandmaster who cannot explain a move against a political analyst who explains everything — the source's own instruction to trust the former more", figure_ref: null}
+    counter:
+      - {description: "the decisive leader who knows immediately what is right and inspires confidence — the personality the source says the evidence does not favour", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0019, note: "confidence and fluency are the signals that produce respect and do not track accuracy"}
+    - {relation: demonstrated_together_with, target: sk_nse_0037}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 18 — Better Judges for Better Judgments"
+    section: "'Experts and Respect-Experts', 'Intelligence', 'Cognitive Style' (spine 30); superforecaster findings in Ch. 21 'Perpetual Beta' (spine 33)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0039
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "structuring complex judgments"
+    - "decomposition, independence, and delayed holistic judgment"
+    - "mediating assessments"
+    - "do not exclude intuition, but delay it"
+  concept_label: structuring_complex_judgments
+  label_origin: source_verbatim
+  claim: >-
+    A structured complex judgement has three parts, and the source insists all three are required.
+    Decomposition breaks the judgement into a small set of assessments defined in advance, which both
+    directs attention to what matters and filters out what does not. Independence requires that evidence
+    for each assessment be gathered and scored separately, because merely listing dimensions does not stop
+    them contaminating one another. Delayed holistic judgement keeps the final integrating judgement human
+    but forbids it until every assessment is complete.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Decomposition attacks the halo effect only if the scoring is genuinely separate — the source notes
+      that ranking on an aggregate "work quality" would not reduce halo at all. Independence protects the
+      evidentiary value of each assessment the way separating witnesses protects testimony. Delay lets the
+      final intuition be anchored on fact-based, discussed ratings rather than on a first impression.
+  scope:
+    domain_discussed_by_source: [personnel_selection, performance_appraisal, corporate_acquisitions]
+    conditions: >-
+      Complex judgements with several separable dimensions. The source concedes that defining the
+      assessments "gets difficult for unusual or senior positions, and this step of definition is
+      frequently overlooked".
+  caveats:
+    - text: >-
+        The Google account is drawn from Laszlo Bock's book and from the company's own reporting; the
+        structured-interview validity range (r = .44 to .57, PC 65-69%) comes from the personnel-selection
+        literature. Neither is the authors' study.
+      origin: extractor_observed
+    - text: >-
+        The source records that people dislike it: "there is some evidence that both interviewees and
+        interviewers dislike structured interviews", and that there is continuing debate about what
+        qualifies as structured.
+      origin: source_stated
+    - text: >-
+        The source warns against the failure mode of bloated dimension lists produced by consensus —
+        "vague wish lists … with no way to calibrate the characteristics or make trade-offs among them".
+      origin: source_stated
+  source_stated_problems:
+    - "in the conduct of the interview, they do not evaluate these elements separately. Each assessment influences the others, which makes each assessment very noisy"
+    - "we tend to give too much weight to the interview and too little to other data that may be more predictive"
+    - "the overwhelming majority of HR professionals favor clinical aggregation"
+  source_stated_remedies:
+    - "investing in the problem definition"
+    - "collect data about each assessment in the evaluation structure and to assign a score to the candidate on each assessment"
+    - "do not exclude intuition, but delay it"
+  examples:
+    positive:
+      - {description: "four predefined assessments, predefined questions, recorded answers and a shared rubric giving examples of average, good and great answers", figure_ref: null}
+      - {description: "interviewers who form an impression in the first two or three minutes of rapport-building and then ask questions that confirm it", figure_ref: null}
+    counter:
+      - {description: "the experiment in which interviewees answered yes/no at random and not one interviewer noticed, while feeling they had learned a lot about the person", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0027}
+    - {relation: qualifies, target: sk_nse_0017}
+    - {relation: generalises, target: sk_nse_0042}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 24 — Structure in Hiring"
+    section: "'Improving Personnel Selection Through Structure'; interview failure modes in 'The Psychology of Interviewers' (spine 36)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0040
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "a shared scale grounded in an outside view"
+    - "case scale"
+    - "frame-of-reference training"
+    - "behaviorally anchored rating scales"
+  concept_label: shared_scale_anchored_in_case_examples
+  label_origin: extractor_assigned
+  claim: >-
+    If different judges use different scales there will be noise, so the source's remedy is to anchor the
+    scale in something shared. Behaviourally anchored scales, which attach a described behaviour to each
+    degree, help but are not sufficient. The stronger form is a case scale: anchor points defined by
+    concrete reference cases known to everyone, so that rating a new case becomes a comparison rather than
+    an absolute judgement. Frame-of-reference training, where raters practise on vignettes and see how
+    their ratings compare with expert ratings, is the source's named method for installing one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Judgement entails translating an impression onto a scale; a shared, concretely anchored scale
+      removes the part of the divergence that is about the scale rather than the case, and converts the
+      matching operation into the comparison at which people are more reliable. In recurring decisions the
+      organisation's own past cases can serve as the anchors.
+  scope:
+    domain_discussed_by_source: [performance_appraisal, hiring, investment_evaluation]
+    conditions: >-
+      Requires an agreed set of anchor cases known to all raters and kept up to date. The source notes
+      these must be customised per organisation and unit and "frequently updated as job requirements
+      evolve".
+  caveats:
+    - text: >-
+        Frame-of-reference training is third-party research, and the source records a serious limitation:
+        "the majority of studies of frame-of-reference rater training have so far been conducted on
+        students, not on actual managers."
+      origin: source_stated
+    - text: >-
+        The source explains why it has not spread — it is complex, time-consuming, requires customisation,
+        and reduces raters' ability to steer outcomes, which "is certain to generate considerable
+        resistance".
+      origin: source_stated
+    - text: >-
+        Figure 18 contrasts a behaviourally anchored scale with a case scale and was not inspected; the
+        prose states the distinction.
+      origin: extractor_observed
+  source_stated_problems:
+    - "if different judges use different scales, there will be noise"
+    - "different raters have completely different ideas of what 'good' or 'great' means"
+    - "true variance … accounts for no more than 20 to 30% of the total variance"
+  source_stated_remedies:
+    - "ensure a common frame of reference"
+    - "They will only agree if we give them concrete cases as anchors on the rating scale"
+    - "a case scale requires judges to locate a case on a scale that is defined by instances familiar to everyone"
+  examples:
+    positive:
+      - {description: "'as good as the management team of ABC Company when we acquired it, but not as good as DEF's' — a case scale used for a recurring investment judgement", figure_ref: null}
+      - {description: "a target's product development department placed in the second quintile of its peer group rather than called 'good' or 'great'", figure_ref: null}
+    counter:
+      - {description: "a company where 98% of managers were rated as fully meeting expectations", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0030}
+    - {relation: qualifies, target: sk_nse_0031}
+    - {relation: depends_on, target: sk_nse_0041}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 23 — Defining the Scale in Performance Ratings"
+    section: "'What's Next?' (spine 35); case scales reused in Ch. 25 'The Mediating Assessments Protocol in Recurring Decisions' (spine 37)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0041
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "the outside view"
+    - "base-rate neglect"
+    - "reference class"
+    - "Think statistically, and take the outside view of the case"
+  concept_label: the_outside_view_and_base_rates
+  label_origin: source_verbatim
+  claim: >-
+    Taking the outside view means treating the case as a member of a reference class and thinking
+    statistically about that class, rather than building a causal story about this case alone. The
+    source's argument is that people applying unique experience to a unique reading of a case produce
+    pattern noise, and that judges sharing a reference class will be less noisy. It also serves accuracy:
+    the base rate is the starting point a matching prediction skips, and predictions anchored in it are
+    appropriately moderate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Causal thinking is the default and is effortless; statistical thinking is effortful, requires
+      training, and begins with ensembles rather than the focal case. Because the case-focused mode draws
+      on each judge's own associations and memories, it is precisely the mode that generates idiosyncratic
+      readings. Substituting a shared class for private associations removes that input.
+  scope:
+    domain_discussed_by_source: [executive_selection, academic_prediction, geopolitical_forecasting, corporate_acquisitions]
+    conditions: >-
+      Requires a defensible reference class. The source's own examples show the work involved: defining
+      "a group of deals considered comparable enough" is a step in its own right.
+  caveats:
+    - text: >-
+        The source concedes the authors themselves missed it: they wrote the Gambardi case to illustrate
+        noise and only realised weeks later that it was also a base-rate-neglect example. "Thinking of base
+        rates is no more automatic for the authors of this book than for anyone else."
+      origin: source_stated
+    - text: >-
+        The outside view is a starting point, not the answer: "this number is only a starting point, and
+        the specifics of Gambardi's case will affect your final estimate."
+      origin: source_stated
+    - text: >-
+        The superforecaster base-rate practice is Tetlock and colleagues' finding, not the authors' study.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Relying on causal thinking about a single case is a source of predictable errors"
+    - "if you focused solely on what you were told about Gambardi, you neglected a key piece of information"
+    - "they can be blamed for a lack of predictive humility"
+  source_stated_remedies:
+    - "professionals who share the same reference class will be less noisy"
+    - "Before we discuss this situation, what is the relevant base rate?"
+    - "Ensure that whenever possible, mediating assessments use an outside view"
+  examples:
+    positive:
+      - {description: "CEO turnover of about 15% a year, implying roughly a 72% chance of surviving two years, as the starting point for the Gambardi question", figure_ref: null}
+      - {description: "asked about a China-Vietnam border clash, starting with how often past border disputes escalated rather than with current news", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0026}
+    - {relation: depends_on, target: sk_nse_0050, note: "the outside view is hard because causal thinking is the default mode"}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 13 — Heuristics, Biases, and Noise"
+    section: "'Substitution', base-rate neglect (spine 24); principle stated in the Review and Conclusion (spine 42); procedure in Appendix C (spine 47)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0042
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "mediating assessments protocol"
+    - "options are like candidates"
+    - "delay intuition, but don't ban it"
+  concept_label: mediating_assessments_protocol
+  label_origin: source_verbatim
+  claim: >-
+    The mediating assessments protocol applies the structure used for evaluating candidates to the
+    evaluation of options. Its six steps are: define the assessments up front; ground each in an outside
+    view and, for recurring decisions, in a case scale; keep the analytical work on each assessment
+    independent; review each assessment separately in the decision meeting; take individual judgements
+    before discussion and use estimate-talk-estimate; and delay the final holistic judgement without
+    banning it. The source presents this as the integration of its other decision hygiene strategies, not
+    a new one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The protocol substitutes intermediate goals for the goal of reaching a decision, which is what stops
+      the group processing all information in the light of a conclusion it is already reaching. The source
+      predicts and welcomes a specific symptom: because the assessments are kept independent, the resulting
+      profile is uneven rather than uniformly favourable, and the discrepancies are the material for a real
+      debate.
+  scope:
+    domain_discussed_by_source: [corporate_acquisitions, venture_investment, strategic_decision_making]
+    conditions: >-
+      Applies "whenever the evaluation of a plan or an option requires considering and weighting multiple
+      dimensions", for both singular and recurring decisions.
+  caveats:
+    - text: >-
+        The protocol is illustrated with a stylised composite of real cases — a fictitious company — not
+        with a reported study. The authors say so. No measured effect on decision quality is offered.
+      origin: source_stated
+    - text: >-
+        The final step deliberately refuses mechanical aggregation of the assessment ratings, and the
+        source's stated reasons are practical rather than accuracy-based: people game a system whose
+        formula they know, and unanticipated broken legs would otherwise be missed.
+      origin: source_stated
+    - text: >-
+        The source concedes the emphasis on process "may raise some eyebrows" and that the objections
+        raised by its own fictional participants "are not unusual".
+      origin: source_stated
+  source_stated_problems:
+    - "We are constantly aware of the final goal of reaching a decision, and we process all the information in light of that goal"
+    - "we are at risk of using all the debate to confirm our first impressions"
+    - "decision makers game the system when they know that a formula will be used"
+  source_stated_remedies:
+    - "structure the decision into mediating assessments"
+    - "In the decision meeting, review each assessment separately"
+    - "To make the final decision, delay intuition, but don't ban it"
+  examples:
+    positive:
+      - {description: "assigning different analysts to different assessments and instructing them to work independently, using an outside expert where independence could not otherwise be had", figure_ref: null}
+      - {description: "an anonymous phone vote on each assessment before any discussion of it, repeated after the discussion", figure_ref: null}
+    counter:
+      - {description: "a board report in which every chapter supports the same rosy conclusion — the coherent profile the protocol is designed to prevent", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0039}
+    - {relation: depends_on, target: sk_nse_0037}
+    - {relation: depends_on, target: sk_nse_0041}
+    - {relation: qualified_by, target: sk_nse_0034}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 25 — The Mediating Assessments Protocol"
+    section: "'The Second Meeting: Defining the Mediating Assessments', 'The Deal Team', 'The Decision Meeting', 'What the Protocol Changes' (spine 37)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0043
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "judgment guidelines"
+    - "guidelines succeed in reducing noise because they decompose a complex decision into a number of easier subjudgments on predefined dimensions"
+    - "the diagnostic criteria of some disorders are still vague and difficult to operationalize"
+  concept_label: judgment_guidelines_and_their_limits
+  label_origin: extractor_assigned
+  claim: >-
+    A guideline sits between open discretion and a rule: it does not eliminate judgement, it decomposes
+    it. The source's account of why guidelines reduce noise has three parts — they focus the judge on a
+    fixed set of predictors known to matter, they specify how each is to be assessed so each sub-judgement
+    is easier, and they aggregate the sub-judgements mechanically instead of leaving the weighting to the
+    judge. The limit follows directly from the mechanism: where the criteria themselves remain vague, the
+    decomposition buys little, which is the source's explanation for the persistently high noise in
+    psychiatric diagnosis despite successive revisions of its manual.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      In the Apgar score only heart rate is strictly numerical; the other four components still involve
+      judgement, but each is simple enough that practitioners with modest training rarely disagree much.
+      Noise reduction comes from making each sub-judgement easy and from removing the judge's discretion
+      over the weights, not from removing judgement.
+  scope:
+    domain_discussed_by_source: [medical_diagnosis, psychiatry, criminal_sentencing]
+    conditions: >-
+      Works where the components can be defined concretely. The source states that "to the extent that such
+      criteria are relatively open-ended, noise remains likely".
+  caveats:
+    - text: >-
+        All the medical evidence is third-party: the Apgar and Centor scores, the BI-RADS interrater
+        study, and the psychiatric reliability studies from 1964 onwards including the DSM-5 field trials.
+      origin: extractor_observed
+    - text: >-
+        The psychiatric case is a genuine negative result the source reports rather than explains away:
+        field trials found agreement on major depressive disorder "between 4 and 15% of the time", and
+        some DSM-5 diagnoses were "so unreliable as to appear useless in clinical practice".
+      origin: source_stated
+    - text: >-
+        The source notes the explanations for psychiatric noise are themselves contested — "the
+        explanations for noise are themselves noisy" — and declines to predict whether proposed fixes will
+        work.
+      origin: source_stated
+    - text: >-
+        Guidelines are a point on a continuum, not a category. The source states that "when guidelines are
+        tightened so as to eliminate that discretion, they turn into rules".
+      origin: source_stated
+  source_stated_problems:
+    - "When diagnosing the same patient using the same diagnostic criteria, psychiatrists frequently disagree with one another"
+    - "the reliance on the patient's subjective symptoms, the clinician's interpretation of the symptoms, and the absence of objective measure … implant the seeds of diagnostic unreliability"
+  source_stated_remedies:
+    - "A focus on the relevant predictors, simplification of the predictive model, and mechanical aggregation—all of these reduce noise"
+    - "clarifying diagnostic criteria, moving away from vague standards"
+    - "producing 'reference definitions' of symptoms and their level of severity"
+  examples:
+    positive:
+      - {description: "the Apgar score: five predefined components, each with a concrete three-point description, summed mechanically", figure_ref: null}
+    counter:
+      - {description: "successive revisions of the psychiatric manual, where more explicit criteria reduced noise only modestly and one revision appears to have increased it", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_nse_0039}
+    - {relation: depends_on, target: sk_nse_0033, note: "the mechanical weighting step is the mechanical-aggregation argument applied inside a guideline"}
+    - {relation: qualified_by, target: sk_nse_0048}
+    - {relation: member_of_system, target: scs_nse_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 22 — Guidelines in Medicine"
+    section: "the Apgar and Centor discussion and 'The Depressing Case of Psychiatry' (spine 34); role in the strategy set stated in the Part V introduction (spine 29)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0044
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "reducing noise can be expensive; it might not be worth the trouble"
+    - "an optimal level of noise that is not zero"
+    - "invoking the difficulty of reducing noise is nothing but an excuse not to measure it"
+  concept_label: costs_of_noise_reduction_may_exceed_benefits
+  label_origin: extractor_assigned
+  claim: >-
+    The source accepts, as a first objection in its own catalogue of seven, that noise reduction has costs
+    and that these can exceed the benefits. Its worked case is a teacher grading twenty-five essays a week
+    for whom a second reader, a checklist or repeated readings may simply not be worth it — and it notes
+    the calculation changes with the stakes, so the same effort that is overkill for a weekly assignment
+    is warranted for a senior thesis. Its rebuttal is not that the cost is never real but that the cost
+    argument is usually deployed without measurement: absent an audit, no one knows what is being bought.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source frames it as an explicit comparison — how much accuracy is gained, how much that accuracy
+      is worth, and what the reduction costs in time and money — and observes that the audit is what makes
+      the first two terms knowable. Where an audit reveals outrageous unfairness or very high cost, "the
+      cost of noise reduction is hardly a good reason not to make the effort".
+  scope:
+    domain_discussed_by_source: [education, medicine, performance_appraisal]
+    conditions: >-
+      Applies to any candidate noise-reduction measure. The source stresses the answer is
+      strategy-specific: an objection to aggregation on cost grounds may not apply to guidelines at all.
+  caveats:
+    - text: >-
+        The source is candid that its own tolerance is asymmetric: "the belief that it is too expensive to
+        reduce noise is not always wrong", but "much of the time their costs are merely an excuse".
+      origin: source_stated
+    - text: >-
+        The source's own example of a noise-reduction effort whose cost exceeded its benefit is
+        organisational: 360-degree systems whose questionnaires grew so large that "this explosion in the
+        demands placed on time-constrained raters cannot be expected to improve the quality of the
+        information they supply".
+      origin: source_stated
+    - text: >-
+        No procedure for the cost-benefit calculation is supplied. The source calls for "a disciplined
+        analysis" without specifying one.
+      origin: extractor_observed
+  source_stated_problems:
+    - "In extreme circumstances, noise reduction is simply not possible"
+    - "the cost of performance evaluations skyrocketed"
+    - "in the absence of noise audits, people are unaware of how much noise there is in their judgments"
+  source_stated_remedies:
+    - "we have to compare the benefits of noise reduction with the costs"
+    - "Once the cost-benefit calculation is made, it may reveal an optimal level of noise that is not zero"
+  examples:
+    positive:
+      - {description: "Deloitte spending two million hours a year evaluating sixty-five thousand people", figure_ref: null}
+      - {description: "an invasive, dangerous and costly test that would remove diagnostic noise where the variability is modest and its consequences mild", figure_ref: null}
+    counter:
+      - {description: "a noise audit revealing outrageous unfairness or very high cost, after which the cost objection no longer holds", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0006}
+    - {relation: depends_on, target: sk_nse_0013, note: "the calculation is not available without an audit"}
+    - {relation: member_of_system, target: scs_nse_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 26 — The Costs of Noise Reduction"
+    section: "opening section; restated in the Review and Conclusion, 'How Much Noise?' (spine 39, spine 42)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0045
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "Less Noise, More Mistakes?"
+    - "perversity, futility, and jeopardy"
+    - "they could be more reliably biased than human judges"
+    - "the solution is not to abandon noise-reduction efforts; it is to come up with better ones"
+  concept_label: noise_reduction_can_introduce_error_and_bias
+  label_origin: extractor_assigned
+  claim: >-
+    The second objection the source raises against itself is that a noise-reduction measure can be blunt
+    enough to cause more error than it removes, and can introduce directional bias where none existed. A
+    rule that removes all posts containing certain words is noise-free and takes down many that should
+    stay; a three-strikes sentencing law removes the judge lottery and imposes life sentences on people
+    who should not receive them. The same applies to algorithms: because they are consistent, an algorithm
+    trained on biased data or using proxies for a protected characteristic can be more reliably biased
+    than the humans it replaces.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      A rule buys consistency by refusing to look at variables it does not contain. Where those variables
+      matter, the consistency is consistency in being wrong. For algorithms the source names two routes to
+      bias: predictors correlated with race or gender even when neither is used, and training data that
+      already encodes discrimination — the predictive-policing case, where overpoliced neighbourhoods
+      generate the data that justifies more policing.
+  scope:
+    domain_discussed_by_source: [criminal_sentencing, content_moderation, bail_decisions, recruitment, university_admissions]
+    conditions: >-
+      Applies to any specific noise-reduction instrument. The source insists the verdict depends on which
+      instrument, not on noise reduction in general.
+  caveats:
+    - text: >-
+        The source's rebuttal is escalation rather than retreat: if one strategy is too crude, devise a
+        better one — complex rules, wise guidelines, aggregation, or a structured process. It does not
+        claim that a better one always exists.
+      origin: source_stated
+    - text: >-
+        The favourable algorithm results — 41% fewer people of colour jailed at constant crime rate, a
+        résumé screener selecting a more diverse pool — are third-party studies, and the source is careful
+        to say algorithms "can" and not "will" outperform.
+      origin: extractor_observed
+    - text: >-
+        The source records the opposing literature it does not adjudicate: O'Neil's Weapons of Math
+        Destruction and the ProPublica analysis of COMPAS. It states that how to test for disparate impact
+        is "well beyond the scope of this book".
+      origin: source_stated
+    - text: >-
+        Its one claimed structural advantage for algorithms is auditability — that the question can be
+        asked at all — not fairness. "It is much harder to subject individual human beings, whose
+        judgments are often opaque, to the same kind of scrutiny."
+      origin: source_stated
+  source_stated_problems:
+    - "some cures are worse than the disease"
+    - "A noise-free scoring system that fails to take significant variables into account might be worse than reliance on (noisy) individual judgments"
+    - "since they eliminate noise, they could be more reliably biased than human judges"
+  source_stated_remedies:
+    - "we should instead try to devise a better noise-reduction strategy"
+    - "careful assessment of algorithms to ensure that they do not consider inadmissible inputs and to test whether they discriminate in an objectionable way"
+  examples:
+    positive:
+      - {description: "the airline chess program that always put the opponent's king in check — perfectly consistent and terrible", figure_ref: null}
+      - {description: "an algorithm trained on past promotion decisions, which reproduces every bias in them", figure_ref: null}
+    counter:
+      - {description: "a bail algorithm that improves accuracy and reduces racial disparity at the same time", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0033}
+    - {relation: qualifies, target: sk_nse_0006}
+    - {relation: member_of_system, target: scs_nse_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 26 — The Costs of Noise Reduction"
+    section: "'Less Noise, More Mistakes?' and 'Noiseless, Biased Algorithms' (spine 39)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0046
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "dignity"
+    - "not as uniquely individual human beings, but as members of a faceless, undifferentiated mass"
+    - "the quality of mercy is not strained"
+  concept_label: dignity_and_the_demand_for_individualized_treatment
+  label_origin: extractor_assigned
+  claim: >-
+    The third objection the source raises is that people want an individualised hearing — a real person
+    who considers their particular circumstances and has the power to act — and that noise may be the
+    price of it. The source treats this as a real value with deep moral foundations rather than a
+    confusion, and notes that it does not bite equally on all strategies: three judges instead of one, or
+    guidelines that leave discretion, still give an individualised hearing; rigid rules do not. Its
+    rebuttal is conditional: the interest in being heard matters, but not at the price of more deaths,
+    more unfairness and higher costs.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source locates the objection's force in the legal doctrine of individualised determination, and
+      shows the doctrine cutting both ways: the same reasoning that struck down a mandatory death sentence
+      also struck down a rule requiring pregnant teachers to leave five months before childbirth on the
+      ground that there was no individualised determination — while, as the source observes, many
+      unobjectionable rules are irrebuttable presumptions too, including voting ages and speed limits.
+  scope:
+    domain_discussed_by_source: [criminal_justice, lending, employment, university_admissions]
+    conditions: >-
+      Bites hardest on strategies that eliminate discretion entirely. The source says explicitly that
+      "some noise-reduction strategies do not run into this objection".
+  caveats:
+    - text: >-
+        The source does not concede the objection. It says "we are not saying that the interest in
+        individualized treatment does not matter" and immediately adds that "there is a high price to pay
+        if such treatment leads to all sorts of terrible consequences, including palpable unfairness".
+      origin: source_stated
+    - text: >-
+        The argument is legal, literary and philosophical rather than empirical. No evidence is offered
+        about how much people actually value individualised hearings or what they would trade for them.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They want to be treated as individuals. They want a real human being to look at their particular circumstances"
+    - "some efforts to reduce noise, including rigid rules, do eliminate that discretion and might lead people to object that the resulting process offends their sense of dignity"
+  source_stated_remedies:
+    - "if a noise-reduction strategy is crude, then … the best response is to try to come up with a better strategy—one attuned to a wide range of relevant variables"
+  examples:
+    positive:
+      - {description: "a mortgage denied by a credit-rating rule with no person having looked at the situation", figure_ref: null}
+      - {description: "three decision makers rather than one — a noise-reduction strategy that leaves the individualised hearing intact", figure_ref: null}
+    counter:
+      - {description: "speed limits, voting ages and a flat prohibition on drunk driving — irrebuttable presumptions nobody objects to", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_nse_0035}
+    - {relation: qualifies, target: sk_nse_0048}
+    - {relation: member_of_system, target: scs_nse_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 27 — Dignity"
+    section: "opening section and 'Changing Values' (spine 40)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0047
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "noise might be essential to accommodate new values"
+    - "a noise-free system might freeze existing values"
+    - "Creativity, Morale, and Fresh Ideas"
+    - "In the end, most of the efforts to defend noise aren't convincing"
+  concept_label: noise_as_room_for_changing_values_gaming_deterrence_and_morale
+  label_origin: extractor_assigned
+  claim: >-
+    The source catalogues four further defences of noise and answers each. Noise leaves room for values to
+    change, where a fixed rule would freeze them. Vagueness deters gaming, because clear rules have clear
+    edges that clever parties work around. Unpredictable penalties may deter wrongdoing better than
+    certain ones. And discretion sustains morale and creativity, since people who are hemmed in feel
+    diminished. The source's answers are: revisit rules on a schedule instead; ask how much evasion
+    against how much noise; note that deterrence by unpredictability depends on the wrongdoer being
+    risk-averse and that raising the penalty would work better; and pick hygiene strategies that leave
+    room to manoeuvre.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The common structure of the source's replies is that each defence attacks one particular
+      noise-reduction instrument — usually a firm rule — rather than noise reduction as such. Aggregation,
+      structuring and shared scales survive all four objections, because none of them freezes a value,
+      creates an exploitable edge, or removes a professional's room to think.
+  scope:
+    domain_discussed_by_source: [criminal_justice, taxation, university_conduct_codes, corporate_policy, regulation]
+    conditions: >-
+      The source states the verdict "depends on the particular noise-reduction strategy to which it is
+      meant to apply".
+  caveats:
+    - text: >-
+        The source is explicit that it presents these objections sympathetically without endorsing them:
+        "we by no means endorse them, at least not if they are taken as reasons to reject the general goal
+        of reducing noise."
+      origin: source_stated
+    - text: >-
+        The deterrence reply is analytical, not empirical: whether a punishment lottery deters more
+        depends on whether potential wrongdoers are risk-averse or risk-seeking, which the source does not
+        claim to know.
+      origin: source_stated
+    - text: >-
+        The source concedes the morale objection has real force in some cases — "Demoralization is itself a
+        cost and leads to other costs, such as poor performance" — and grants that Philip Howard "makes
+        some appealing arguments" for general principles over prescriptive rules.
+      origin: source_stated
+    - text: >-
+        The gaming argument is presented as a live debate among tax specialists rather than a settled
+        finding.
+      origin: source_stated
+  source_stated_problems:
+    - "A rule-bound system might eliminate noise, which is good, but it might also freeze existing norms and values"
+    - "if there is a specific list of what counts as wrongdoing, then terrible behavior that is not explicitly covered by the list will end up being tolerated"
+    - "Who wants to work in a place that squelches your own capacity to make independent decisions?"
+  source_stated_remedies:
+    - "noise-reduction efforts need not and should not be permanent … They might revisit them annually"
+    - "We need to ask how much evasion there would be—and how much noise there would be"
+    - "if we want to increase deterrence, wouldn't it be better to increase the penalty and eliminate the noise?"
+    - "a process exists to challenge and rethink them—but not to break them by exercising case-by-case discretion"
+  examples:
+    positive:
+      - {description: "a consulting firm's dated expense rules replaced by the evolvable standard 'proper and reasonable'", figure_ref: null}
+      - {description: "forbidding 'wrongdoing' without defining it — noisy, and the alternative list leaves uncovered misconduct tolerated", figure_ref: null}
+    counter:
+      - {description: "different customers with the same malfunctioning laptop treated differently — inconsistency that has nothing to do with emerging values", figure_ref: null}
+      - {description: "noisy diagnoses of strep throat, which the source says is not a good place to exercise creativity", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_nse_0035}
+    - {relation: qualifies, target: sk_nse_0048}
+    - {relation: member_of_system, target: scs_nse_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 27 — Dignity"
+    section: "'Changing Values', 'Gaming the System, Evading the Rules', 'Deterrence and Risk Aversion', 'Creativity, Morale, and Fresh Ideas' (spine 40); the seven objections listed in the Part VI introduction (spine 38)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0048
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "rules and standards"
+    - "Rules are meant to eliminate discretion by those who apply them; standards are meant to grant such discretion"
+    - "the costs of decisions and the costs of errors"
+    - "the rules will simply drive discretion underground"
+  concept_label: rules_versus_standards
+  label_origin: extractor_assigned
+  claim: >-
+    Rules eliminate discretion and therefore noise; standards export decision authority and therefore
+    invite it. The source's framework for choosing reduces to two factors: the cost of making decisions
+    and the cost of errors. Standards make every decision expensive because someone must give the
+    open-ended term content; rules make decisions cheap but make writing the rule expensive, and are
+    sometimes prohibitively so. On errors there is no general winner. The decisive practical question is
+    trust: principals impose rules when they cannot rely on their agents to be competent, unbiased, and
+    practising decision hygiene.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Where many similar decisions must be made, the per-decision cost of a standard accumulates and the
+      one-off cost of writing a rule amortises, which is why the source says repeated decisions argue for
+      moving toward rules. It also names the failure mode: a rule that produces terrible results in
+      particular cases gets quietly ignored — jury nullification, prosecutors declining to charge a third
+      felony, employees disregarding stupid rules — so noise reappears where no one can hear it.
+  scope:
+    domain_discussed_by_source: [law, content_moderation, corporate_policy, medicine, aviation]
+    conditions: >-
+      The source notes rules and standards are a continuum and can be mixed — a rule constraining the pool,
+      a standard choosing within it — and that guidelines can sit at either end.
+  caveats:
+    - text: >-
+        The source records a reason for standards that has nothing to do with judgement quality: where a
+        group is divided or lacks the information to write a sensible rule, a standard may be the only
+        thing that can be agreed at all.
+      origin: source_stated
+    - text: >-
+        Rules do not automatically end noise: fact-finding under a rule is itself judgement and can be
+        noisy or biased. The reduction depends on people actually following the rule.
+      origin: source_stated
+    - text: >-
+        The Facebook example is drawn from the company's public Community Standards and a non-public
+        implementation document obtained by a magazine, not from a study.
+      origin: extractor_observed
+    - text: >-
+        The source's closing position is normative and it says so — that legal systems should do much more
+        to control noise, and that it would "not go so far" as to make noise reduction a human right.
+      origin: source_stated
+  source_stated_problems:
+    - "In private and public organizations, noise is often a product of a failure to issue rules"
+    - "there is a risk that noise will reemerge"
+    - "When such things happen, there will be noise, but no one will hear it"
+    - "We often use standards when we should embrace rules—simply because we don't pay attention to noise"
+  source_stated_remedies:
+    - "Principals need to impose rules when they have reason to distrust their agents"
+    - "We need to monitor our rules to make sure they are operating as intended"
+    - "they are willing to devote considerable time and attention, in advance, to ensuring that the rules are accurate (enough)"
+  examples:
+    positive:
+      - {description: "a public standard 'we remove content that glorifies violence' against an internal implementation list naming specific images", figure_ref: null}
+      - {description: "a disability matrix replacing ad hoc determinations of who cannot work", figure_ref: null}
+    counter:
+      - {description: "prosecutors avoiding a third felony charge to defeat a three-strikes rule — discretion driven underground", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_nse_0043}
+    - {relation: qualified_by, target: sk_nse_0045}
+    - {relation: qualified_by, target: sk_nse_0046}
+    - {relation: member_of_system, target: scs_nse_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 28 — Rules or Standards?"
+    section: "'Divisions and Ignorance', 'Bosses, Controlling Subordinates', 'The Return of the Repressed', 'A Framework' (spine 41)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0049
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "objective ignorance"
+    - "the illusion of validity"
+    - "denial of ignorance"
+    - "wherever there is prediction, there is ignorance, and more of it than you think"
+  concept_label: objective_ignorance_and_the_illusion_of_validity
+  label_origin: extractor_assigned
+  claim: >-
+    The largest source of prediction error is usually not how good judgements are but how good they could
+    be. Objective ignorance — what cannot be known plus what could be known but is not — is a property of
+    the task, not of the judge, and it sets a ceiling that no amount of noise or bias reduction can lift.
+    The characteristic error is to confuse confidence in reading a case with confidence in predicting an
+    outcome; the source calls this the illusion of validity, and calls the belief that unpredictable
+    events are predictable the denial of ignorance.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Evaluating a case and predicting an outcome are two different tasks, and only the first is one you
+      have most of the information for. The internal signal fires on the first and is read as confidence in
+      the second. The source adds an institutional consequence: because the achievable accuracy is low,
+      decision makers reject formal methods that do not promise high validity and keep the intuitive
+      method that supplies the emotional reward instead.
+  scope:
+    domain_discussed_by_source: [personnel_selection, political_forecasting, medical_diagnosis, social_science_prediction]
+    conditions: >-
+      Predictive tasks. The source notes objective ignorance is lower in some domains than others — "with
+      respect to many illnesses, doctors' predictions are excellent" — and that it accumulates the further
+      ahead one looks.
+  caveats:
+    - text: >-
+        All the ceiling evidence is third-party: Tetlock's expert political judgement work, the Fragile
+        Families common-task challenge with 160 teams, the personnel-selection review giving r = .28 for
+        human judges against .44 for mechanical prediction, and the Mullainathan and Obermeyer heart-attack
+        model.
+      origin: extractor_observed
+    - text: >-
+        The source draws the practical conclusion in the opposite direction from despair: a rise from PC
+        59% to 65% is worth having, and "none of them would buy a lottery ticket that had a 59% chance of
+        winning if they could buy, for the same price, one with a 65% chance".
+      origin: source_stated
+    - text: >-
+        Because objective ignorance is a ceiling on accuracy and not on agreement, it does not license
+        tolerating noise: noise reduction remains available below the ceiling.
+      origin: extractor_observed
+  source_stated_problems:
+    - "It is the limit on how good they could be"
+    - "If you are as confident in your predictions as you are in your evaluation of cases, however, you are a victim of the illusion of validity"
+    - "leaders say they are especially likely to resort to intuitive decision making in situations that they perceive as highly uncertain"
+  source_stated_remedies:
+    - "Have we checked whether the experts we trust are more accurate than dart-throwing chimpanzees?"
+    - "As long as algorithms are not nearly perfect … human judgment will not be replaced. That is why it must be improved"
+  examples:
+    positive:
+      - {description: "executives estimating their own hiring accuracy at PC 75-85% against a measured average of about 59%", figure_ref: null}
+      - {description: "160 teams with thousands of variables per family predicting eviction at r = .22", figure_ref: null}
+    counter:
+      - {description: "'you know most of what you need to know to assess the two cases' — the evaluation half of the task, where confidence is warranted", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0019}
+    - {relation: qualifies, target: sk_nse_0033}
+    - {relation: depends_on, target: sk_nse_0050}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 11 — Objective Ignorance"
+    section: "'Objective Ignorance', 'Poor Judges and Barely Better Models', 'The Denial of Ignorance' (spine 21); the illusion of validity introduced in Ch. 9 (spine 19)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0050
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "the valley of the normal"
+    - "Causally, noise is nowhere; statistically, it is everywhere"
+    - "bias has a kind of explanatory charisma, which noise lacks"
+    - "It is the occurrence of the event that tells you its cause"
+  concept_label: noise_is_invisible_because_our_thinking_is_causal
+  label_origin: extractor_assigned
+  claim: >-
+    Noise is a statistical property of a set of judgements and becomes visible only when a set is examined
+    statistically. Ordinary understanding is causal: an unexpected but unsurprising outcome triggers a
+    search of memory for a cause, the search almost always succeeds, and the resulting story makes the
+    outcome feel predictable in hindsight. Applied to judgement errors, that habit finds a bias every
+    time and never finds noise — not because noise is absent but because a single case cannot display it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Most events fall in the valley of the normal, neither actively expected nor surprising, and are
+      explained after the fact from an unlimited reservoir of available facts and beliefs — the same news
+      flow explains a market rise and a market fall. Because the explanation arrives only once the outcome
+      is known, it feels like understanding while predicting nothing. Statistical thinking, the only mode
+      in which noise appears, is effortful and must be learned.
+  scope:
+    domain_discussed_by_source: [social_science, business_post_mortems, everyday_explanation]
+    conditions: >-
+      Applies wherever explanation of individual cases is the mode of review. The source presents this as
+      its answer to why noise is absent from public discussion despite being ubiquitous.
+  caveats:
+    - text: >-
+        The Fragile Families challenge and the reviews of effect sizes in social psychology are
+        third-party work. The source uses them to argue that limited predictive accuracy implies limited
+        causal understanding.
+      origin: extractor_observed
+    - text: >-
+        The step from "causation implies correlation" to "correlation measures how much causality we
+        understand" is the source's own argument, offered without qualification but resting on the
+        assumption that the measured predictors capture the causal structure.
+      origin: extractor_observed
+    - text: >-
+        The source does not claim causal thinking is a defect to be removed: it "avoids unnecessary effort
+        while retaining the vigilance needed to detect abnormal events".
+      origin: source_stated
+  source_stated_problems:
+    - "The invisibility of noise is a direct consequence of causal thinking"
+    - "Researchers must reconcile the idea that they understand life trajectories with the fact that none of the predictions were very accurate"
+    - "If we try to explain, in hindsight, why a particular decision was wrong, we will easily find bias and never find noise"
+  source_stated_remedies:
+    - "Only a statistical view of the world enables us to see noise"
+    - "We think we understand what is going on here, but could we have predicted it?"
+  examples:
+    positive:
+      - {description: "the Joneses' eviction, explicable in hindsight from a lay-off and an unmoved manager — and equally explicable had it not happened, from her tenacity and his kindness", figure_ref: null}
+      - {description: "'they failed because they lacked experience' — a low correlation converted into a satisfying causal force", figure_ref: null}
+    counter:
+      - {description: "the noise audit, which produces exactly the statistical view in which the scatter becomes hard to miss", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0015, note: "supplies the cognitive half of the explanation for which the illusion of agreement is the social half"}
+    - {relation: depends_on, target: sk_nse_0041}
+    - {relation: generalises, target: sk_nse_0020}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 12 — The Valley of the Normal"
+    section: "'Understanding in the Valley of the Normal' and 'Inside and Outside' (spine 22); applied to noise in Ch. 17 'Explaining Error' and 'Noise Is Statistical' (spine 28)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

@@ -2051,7 +2051,8 @@ source_knowledge:
   source_id: light-science-magic-beyond-ch3
   source_terms:
     - "Placing the box on a sheet of clear glass allows reflecting light through the glass to the box."
-    - "most of the direct reflection from glass viewed at this angle is polarized, so we were able to eliminate that reflection ... Remember, too, that direct reflection from metal is never polarized unless the light source itself is polarized."
+    - "most of the direct reflection from glass viewed at this angle is polarized"
+    - "Remember, too, that direct reflection from metal is never polarized unless the light source itself is polarized."
     - "We call this technique invisible light ."
   concept_label: transparent_and_glossy_black_supports_light_a_metal_box_without_showing_the_source
   label_origin: extractor_assigned
@@ -2248,6 +2249,1421 @@ source_knowledge:
     page_start: null
     page_end: null
     locator: "Ch. 6, 'Other Resources' through 'Dulling Spray'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ═════════════════════════════════════════════════════════════════════════════
+# CHAPTER 7 — THE CASE OF THE DISAPPEARING GLASS
+# ═════════════════════════════════════════════════════════════════════════════
+
+- sk_id: sk_lsmx_0039
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Like metal, almost all reflection produced by glass is direct reflection. Unlike metal, however, this direct reflection is often polarized."
+    - "Lighting glass, however, requires attention to the edges. If they are clearly defined, we can often ignore the front surface altogether ."
+    - "An invisible glass has no shape or form."
+  concept_label: glass_is_lit_at_its_edges_not_at_its_face
+  label_origin: extractor_assigned
+  claim: >
+    Glass shares metal's optics — almost all of its reflection is direct — and differs in that its
+    direct reflection is often polarized. The source expects a reader to conclude that glass technique
+    is metal technique plus a polarizer, and says explicitly that it is not. With metal the concern is
+    the surfaces facing the camera; with glass it is the edges, and if the edges are clearly defined the
+    front surface can often be ignored altogether. The failure the chapter exists to prevent follows
+    from transparency: from most angles light striking a visible glass edge does not reflect toward the
+    viewer, so the edge is invisible, and an invisible glass has no shape or form. The few reflections
+    that do appear are usually too small and too bright to say anything about surface or texture, so
+    they distract without informing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because glass transmits rather than absorbs, the only information a photograph can carry about it
+      is what its surfaces reflect; the edges are where the surface curves through the widest range of
+      angles, and so they are the part whose treatment decides whether the object has a legible outline.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "transparent glassware; the source's examples are a decanter, a laboratory bottle, stemware and a beer glass"
+  caveats:
+    - text: "the source states its two objectives numerically — produce strong lines along the edges to delineate shape and set it apart from the background, and eliminate distracting reflections of lights and equipment"
+      origin: source_stated
+    - text: "the same-optics-different-method point is the chapter's organising claim, and it is stated as a correction of an expectation the source itself raises"
+      origin: extractor_observed
+  source_stated_problems:
+    - "With no clear outlines and no marked differences in edge tonality, the glass merges with the background."
+    - "the few tiny reflections we do see are often too small and too bright to tell us anything about surface detail or texture"
+  source_stated_remedies:
+    - "produce strong lines along the edges of the subject"
+    - "eliminate distracting reflections of the lights and other equipment"
+  examples:
+    positive:
+      - {description: "a decanter with strong dark edge lines against a bright field: the shape is unambiguous and no equipment reflection mars the surface", figure_ref: "7.2"}
+    counter:
+      - {description: "the same decanter on the same background from the same viewpoint, lit so its edges merge with the ground: a few small bright specks and almost no readable outline", figure_ref: "7.1"}
+  intra_source_relations:
+    - {relation: contradicts, target: sk_lsmx_0025, note: "same optics as metal, opposite emphasis"}
+    - {relation: generalises, target: sk_lsmx_0040, note: "bright-field is one of the two answers"}
+    - {relation: generalises, target: sk_lsmx_0041, note: "dark-field is the other"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Principles / Problems / Solutions"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Principles', 'Problems' and 'Solutions'"
+    figure_refs: ["7.1", "7.2"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.1", "7.2"]}
+
+- sk_id: sk_lsmx_0040
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "The background dictates how we must treat any glass subject. On a bright background, we have to keep the glass dark if it is to remain visible."
+    - "we care only about the extreme limits of the family of angles, labeled 'L' in the diagram"
+    - "there must be no light along the lines marked 'L'"
+  concept_label: bright_field_lighting_keeps_the_limits_of_the_family_dark
+  label_origin: extractor_assigned
+  claim: >
+    Bright-field lighting produces dark edge lines on a bright background. The background dictates the
+    treatment: on a bright ground the glass must be kept dark to remain visible. What matters is not the
+    whole family of angles but only its two extreme limits, because light arriving from exactly those
+    angles is what would brighten the edge. Bright-field therefore requires that there be no light at
+    those limits. The procedure is to set up a light-toned background — translucent tracing paper,
+    cloth, a shower curtain, or an opaque wall or board — light it evenly, place the camera so the
+    background exactly fills the frame, position the subject, then meter and shoot.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The edge of a round glass reflects, toward the camera, only light arriving from the extreme
+      limits of its family of angles. Excluding light from those two directions leaves the edge with
+      nothing to reflect, so it records dark against the lit ground behind it.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "transparent glassware photographed against a light ground"
+  caveats:
+    - text: "the source calls its worked example ideal and says complications occur whenever a composition deviates from it — notably that many compositions force the glass to be smaller relative to the background, which reduces edge definition"
+      origin: source_stated
+    - text: "the source's defence of teaching the ideal is that it explains the failure and suggests the remedy in the non-ideal case, and tells you when physics makes a remedy impossible so no time is wasted"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "keep all light away from the two extreme limits of the family of angles"
+    - "light a translucent or opaque light-toned background evenly, from behind or below"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0039, note: "one of the two edge solutions"}
+    - {relation: contradicts, target: sk_lsmx_0041, note: "the opposite answer from the same geometry"}
+    - {relation: depends_on, target: sk_lsmx_0042, note: "requires the background to fill the frame exactly"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Two Attractive Opposites / Bright-field Lighting"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Bright-field Lighting', the five numbered steps"
+    figure_refs: ["7.2", "7.3", "7.4"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.2"]}
+
+- sk_id: sk_lsmx_0041
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "It makes sense to suppose, then, that the light must come from L if the edge of the glass is to be bright."
+    - "So we need four large sources to light just the edges of a single tiny glass!"
+    - "Any size between 10 and 25 times the diameter of the subject will work well."
+  concept_label: dark_field_lighting_puts_one_large_source_at_the_limits_and_a_smaller_dark_ground_inside_it
+  label_origin: extractor_assigned
+  claim: >
+    Dark-field lighting inverts the same geometry: light lines against a dark background. If no light at
+    the family's limits keeps the edge dark, light from exactly those limits makes it bright, and the
+    glass must see light nowhere else. The plan-view diagram appears to require light at two points, but
+    that is an artefact of drawing in two dimensions — in three dimensions the same reasoning demands a
+    source above and behind for the rim and, on a stemmed glass, another for the underside of the bowl,
+    which is four large sources for one small glass. The source replaces all of them with a single
+    source large enough to cover top, bottom and sides; its exact size is not critical and any size
+    between 10 and 25 times the subject's diameter works. A dark background, smaller than the source,
+    sits inside it — taped to a translucent panel, or hung separately in front of a brightly lit opaque
+    wall so the wall can be lit as much as one likes without lighting the background the camera sees.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The edge reflects only what lies at the limits of its family of angles; surrounding a small dark
+      background with a much larger bright source puts light at those limits from every direction while
+      leaving the field behind the subject unlit.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "transparent glassware against a dark ground"
+  caveats:
+    - text: "the 10-to-25-times range is one of very few numeric prescriptions in the book, and the source explicitly says the exact size is not critical, so the range is a working band rather than a threshold"
+      origin: source_stated
+    - text: "the source calls the two-point appearance of its own diagram a representational defect, which is a rare instance of a book arguing through diagrams warning the reader against one of them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "This arrangement would be unwieldy at best."
+  source_stated_remedies:
+    - "replace the several point sources with a single source large enough to illuminate top, bottom and sides"
+    - "attach a dark card smaller than the source directly to the translucent panel, or suspend it clear of a brightly lit opaque wall"
+  examples:
+    positive:
+      - {description: "a laboratory bottle in dark field: bright continuous lines trace the shoulders, neck, stopper and base against black", figure_ref: "7.5"}
+    counter: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_lsmx_0040, note: "the same limits, occupied instead of vacated"}
+    - {relation: depends_on, target: sk_lsmx_0042, note: "requires the dark ground to fill the frame exactly"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Dark-field Lighting"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Dark-field Lighting', 'Set Up a Large Light Source' and 'Set Up a Dark Background Smaller Than the Light Source'"
+    figure_refs: ["7.5", "7.6", "7.7"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.5"]}
+
+- sk_id: sk_lsmx_0042
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "the background must exactly fill the field of view of the camera, no more and no less"
+    - "A background that is too large will extend into the family of angles that produces direct reflection on the edge of the glass."
+    - "as the subject moves farther from the lighted background, less light reflects off its edges"
+  concept_label: the_background_must_exactly_fill_the_frame_and_the_subject_belongs_near_the_camera
+  label_origin: extractor_assigned
+  claim: >
+    In both glass methods the single most important consideration is the effective size of the
+    background, which is set by the camera-to-background distance and must exactly fill the field of
+    view — no more and no less. Too small and it will not fill the picture; too large and it extends
+    into the family of angles that acts on the glass edge, in bright field brightening the edge that
+    should be dark, in dark field blocking the light that should make it bright. Where the background
+    cannot be made smaller — a room wall — its effective size can be cut by lighting only part of it or
+    masking it with dark cards. Independently, edge definition improves as the subject is moved toward
+    the camera and away from the background, and the source is explicit that this is not because larger
+    detail is easier to see: the closer the subject is to a lit background, the more of that background
+    falls inside the family of angles that obscures the edges.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The background's angular extent as seen from the subject is what determines how much of it lies
+      inside the subject's family of angles, and that extent depends on both the background's size and
+      the subject's distance from it.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "bright-field and dark-field glass set-ups"
+  caveats:
+    - text: "the source notes refocusing on the subject slightly increases the effective background size and says the increase is not usually enough to matter"
+      origin: source_stated
+    - text: "this same rule reappears in chapter 9 as the reason white-on-white backgrounds must be kept small; the source cross-references it there"
+      origin: extractor_observed
+  source_stated_problems:
+    - "Light from those points eliminates the dark outline that we need to define the edge of the glass."
+  source_stated_remedies:
+    - "set the camera distance so the background exactly fills the field of view"
+    - "reduce an over-large background's effective size by lighting only part of it or masking it with dark cards"
+    - "move the subject toward the camera and away from the background to improve edge definition"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_lsmx_0006, note: "the family's dependence on viewpoint again"}
+    - {relation: generalises, target: sk_lsmx_0055, note: "the same rule governs white-on-white backgrounds"}
+  evidence:
+    characteristics: [explicitly_stated, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Position the Camera / Position the Subject and Focus the Camera"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Position the Camera' and 'Position the Subject and Focus the Camera', in both the bright-field and dark-field sequences"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0043
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Most failures in photographing glass result from deliberately or naively using both simultaneously."
+    - "They successfully eliminated extraneous reflections, but they equally successfully eliminated the edge of the glass."
+    - "Using the two methods together requires that we keep them separate, even in a single picture."
+  concept_label: bright_field_and_dark_field_must_be_kept_spatially_separate_and_the_tent_is_the_worked_failure
+  label_origin: extractor_assigned
+  claim: >
+    The two methods are individually easy and difficult to combine, and the source attributes most glass
+    failures to using both at once. Its worked counter-example is the tent, the very enclosure
+    recommended for round metal: photographers who tented glass removed the extraneous reflections and
+    removed the glass's edges with them, because the part of the tent the camera saw became a light
+    background while the rest of the tent lit the glass — light-on-light, the one combination that
+    cannot define an edge. Combining the methods is possible only by keeping them separate within the
+    frame: divide the scene mentally, assign one region to bright field and another to dark field. Where
+    the two remain distinct the glass is well defined; only the transition area mixes them, and keeping
+    that transition small minimises the loss.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Edge definition requires a tonal difference between the edge and the ground immediately behind it.
+      Both methods create that difference by making one bright and the other dark; illuminating both
+      leaves no difference to record.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "scenes containing glass where more than one background tone is wanted"
+  caveats:
+    - text: "the tent failure is reported as something the authors have known other photographers to do, not as an experiment they ran"
+      origin: extractor_observed
+    - text: "the source concedes a noticeable loss in the transition area and offers only minimisation, not a cure"
+      origin: source_stated
+  source_stated_problems:
+    - "The result was the light-on-light approach."
+    - "Only in the transition area do the two methods mix. There can be a noticeable loss there."
+  source_stated_remedies:
+    - "divide the scene and assign one region to bright field and another to dark field, keeping the transition small"
+  examples:
+    positive:
+      - {description: "a green glass dish where the upper field is bright and the lower dark: the rim is defined by a dark line against the bright field and by a bright line against the dark one", figure_ref: "7.8"}
+    counter: []
+  intra_source_relations:
+    - {relation: contradicts, target: sk_lsmx_0037, note: "the tent that solves round metal destroys glass"}
+    - {relation: qualifies, target: sk_lsmx_0040, note: "bounds how the two methods may be used together"}
+    - {relation: qualifies, target: sk_lsmx_0041, note: "same bound from the other side"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "The Best of Both Worlds"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'The Best of Both Worlds'"
+    figure_refs: ["7.8"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.8"]}
+
+- sk_id: sk_lsmx_0044
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "in this scene there is no such thing as 'correct' exposure. The only correct exposure is the one that we like."
+    - "pure direct reflections from a subject are as bright as the light source that produces them. Those reflections may be too small to read, but the large source is not."
+    - "Because perfect direct reflections rarely occur, try additional exposures with one, two, and then three stops more exposure."
+  concept_label: the_two_glass_methods_are_metered_by_opposite_procedures
+  label_origin: extractor_assigned
+  claim: >
+    The two methods require different metering. In bright field the meter reads the background directly
+    behind the subject, and the exposure decision is free: the indicated value gives a mid grey, up to
+    two stops more gives near white, up to two stops less gives a very dark grey. Any tone but black
+    works, because a black edge against a black ground leaves nothing to record, and the lighter the
+    background the more graphically the glass is defined. A very light background has a further benefit
+    — extraneous reflections in the front surface become too dim to see against it — while a medium or
+    dark one lets surrounding objects reflect visibly. In dark field the edge highlights are too small
+    for a normal meter, so the source substitutes a proxy: because a pure direct reflection is as bright
+    as its source, meter the edge of the light source itself and open two stops to place it near white.
+    That is only the starting point of a bracket, because a real reflection is never both perfect and
+    un-polarized; the source prescribes trying one, two and three stops beyond it. Lightening the
+    dark-field background by increasing exposure instead of adding a background light will usually
+    overexpose the subject.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A direct reflection records at the brightness of its source, so the source can be metered as a
+      stand-in for a highlight too small to read; the bracket compensates for the loss from
+      polarization and from the imperfection of real direct reflection.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "bright-field and dark-field glass, with the glass as the only important subject"
+  caveats:
+    - text: "the proxy metering rests on the live chapter-3 claim that a direct reflection is as bright as its source (sk_lsm_c003_0011) and on the live claim that polarized direct reflection is substantially dimmer (sk_lsm_c003_0015); neither is re-extracted, and the bracket is the practical allowance for the second"
+      origin: extractor_observed
+    - text: "the source says accurate dark-field metering would need a spot meter of much less than one degree, that few photographers have one, and that bracketing with a conventional meter is an acceptably close approximation — an explicit substitution of procedure for instrument"
+      origin: source_stated
+  source_stated_problems:
+    - "attempting to lighten the background by increasing exposure will usually overexpose the subject"
+  source_stated_remedies:
+    - "in bright field, meter the background behind the subject and place it anywhere but black"
+    - "in dark field, meter the edge of the light source, open two stops, and bracket up to three stops beyond"
+    - "add a separate background light rather than more exposure when a dark-field background must be lighter"
+  examples:
+    positive:
+      - {description: "a dark-field bottle whose background has been lifted to mid grey by a separate background light, with the glass unchanged and free of extraneous reflections", figure_ref: "7.13"}
+    counter: []
+  intra_source_relations:
+    - {relation: related_to, target: sk_lsmx_0029, note: "the same source-brightness fact drives the metal exposure rule"}
+    - {relation: specialises, target: sk_lsmx_0041, note: "how the dark-field arrangement is exposed"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Shoot the Picture (both methods) / Illuminating the Background"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, the 'Shoot the Picture' step in both the bright-field and dark-field sequences, and 'Illuminating the Background'"
+    figure_refs: ["7.13"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.13"]}
+
+- sk_id: sk_lsmx_0045
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Large highlights are essential to glass surface definition."
+    - "Rather than cluttering the other elements of the photograph for the attention of the viewer, it serves the constructive purpose of saying, 'This is how this glass surface looks and feels.'"
+    - "Had we lit the whole diffusion sheet brightly, it would have reflected in the glass as an obvious hard-edged rectangle. This reflection would have advertised the presence of a studio light"
+  concept_label: a_large_dim_highlight_describes_a_glass_surface_where_a_small_bright_one_only_distracts
+  label_origin: extractor_assigned
+  claim: >
+    Defining the edges is not always enough; often the surface must be shown too, and that requires
+    managing the highlights. Large highlights are essential, and the difference from small ones is not
+    of degree but of function: a tiny bright spot is distracting at best and meaningless at worst, while
+    a large highlight tells the viewer how the surface looks and feels. Producing one means filling the
+    relevant family of angles with light, and because a rounded glass reflects much of the studio, that
+    family can be surprisingly large. The distance from the lamp head to the diffusion sheet then becomes
+    a design decision: close in, only the centre of the sheet is bright and the highlight is small and
+    bright; pulled back, the whole sheet lights and reflects as a larger highlight, which the source
+    says should usually be kept dimmer, because a brightly lit whole sheet reflects as a hard-edged
+    rectangle that advertises a studio light and costs the scene its reality. Strips of black tape on
+    the sheet can make the reflection read as a window instead.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A direct reflection is an image of the source, so the highlight's size, shape and evenness are the
+      source's size, shape and evenness. Making the highlight describe a surface therefore means shaping
+      the source, and making it look unlike a studio means giving the source a shape found outside one.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "glassware whose surface, not only outline, must read; also useful with non-transparent secondary subjects present"
+  caveats:
+    - text: "this is the live chapter-3 mirror-image property (sk_lsm_c003_0010, sk_lsm_c003_0012) used as a design control rather than as a fact; the new content is that highlight SIZE carries surface information and that a recognisable source shape reads as artificial"
+      origin: extractor_observed
+    - text: "the source notes these are the first examples in the chapter where the light does not come from behind the glass, and that front lighting is what makes irregular surfaces and non-transparent secondary subjects manageable"
+      origin: source_stated
+  source_stated_problems:
+    - "The tiny bright spots we see are distracting at the least and meaningless at best."
+    - "it would have reflected in the glass as an obvious hard-edged rectangle"
+  source_stated_remedies:
+    - "fill the family of angles of the area to be described, using a source large enough for a rounded subject"
+    - "pull the lamp head back to light the whole diffusion sheet for a larger highlight, and keep that larger highlight dimmer"
+    - "tape black strips across the diffusion sheet so its reflection reads as a window"
+  examples:
+    positive:
+      - {description: "a laboratory bottle with a broad soft vertical highlight down its shoulder, describing the curvature of the glass", figure_ref: "7.9"}
+      - {description: "the same bottle with the lamp pulled back: the whole sheet reflects as a wider, dimmer highlight", figure_ref: "7.11"}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsmx_0039, note: "the case where edges alone are not enough"}
+    - {relation: trades_off_with, target: sk_lsmx_0049, note: "the highlight that describes the glass is what spoils a paper label"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Defining the Surface of Glassware"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Defining the Surface of Glassware'"
+    figure_refs: ["7.9", "7.10", "7.11", "7.12"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.9", "7.11", "7.12", "7.10"]}
+
+- sk_id: sk_lsmx_0046
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Glass things have to be put on tables; tables cause horizon lines in photographs."
+    - "A transparent table allows light to pass through as if the table didn't exist, but an opaque table blocks light essential for edge definition."
+    - "If we cut the paper strip carefully so that it fits the field of view of the camera exactly, there will be no sacrifice of the lighting quality."
+  concept_label: the_table_under_glass_is_an_optical_obstruction_not_only_a_compositional_one
+  label_origin: extractor_assigned
+  claim: >
+    A table under glassware creates a horizon line, and the usual cures — a table large enough to fall
+    outside the frame, or a paper sweep — fight the requirement that the background barely fill the
+    image area. Worse, the table is not merely a compositional nuisance: an opaque table blocks light
+    that is essential for edge definition, which a transparent one passes as if the table did not exist.
+    The source's options, in order of how completely they remove the horizon: a transparent glass or
+    acrylic table, which resembles a nonexistent table more closely than anything else; a mirror, whose
+    reflected background reduces the abrupt tonal step and which can light glass surfaces almost as well
+    as a transparent table, at the cost of a visible but less obtrusive horizon; and, where the horizon
+    must go entirely, a paper strip taped to a large diffusion panel and cut to fit the field of view
+    exactly, which the source says costs no lighting quality. It adds a variation for either transparent
+    surface: mist the table with water to disrupt and camouflage the subject's reflection.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Light needed at the limits of the family of angles for the lower edges of the subject arrives from
+      below and behind; an opaque surface intercepts it, a transparent one transmits it, and a mirror
+      redirects some of it back up.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "glassware standing on a surface within the frame"
+  caveats:
+    - text: "the source says covering a dark table with white or silver reflectors for dark field is somewhat less effective, because the light on the reflectors is the same source lighting the table and the right amount for one may be too much for the other"
+      origin: source_stated
+    - text: "even a transparent table or mirror produces a slight horizon line, which the source concedes before offering the paper strip"
+      origin: source_stated
+  source_stated_problems:
+    - "Large tables and paper surfaces interfere with this requirement."
+  source_stated_remedies:
+    - "use a transparent glass or acrylic table so background light passes through"
+    - "stand the subject on a mirror to soften the tonal step at the horizon"
+    - "tape a paper strip cut exactly to the field of view onto the diffusion panel to eliminate the horizon"
+    - "mist a transparent table with water to camouflage the subject's reflection"
+  examples:
+    positive:
+      - {description: "a martini glass shot over a paper strip: continuous edge definition through the stem and foot with no horizon at all", figure_ref: "7.16"}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_lsmx_0042, note: "constrained by the exactly-fill-the-frame rule"}
+    - {relation: related_to, target: sk_lsmx_0036, note: "the transparent support is the same device used for the metal box"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Minimizing the Horizon"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Minimizing the Horizon'"
+    figure_refs: ["7.14", "7.15", "7.16"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.14", "7.16"]}
+
+- sk_id: sk_lsmx_0047
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "the basic dark-field approach to photographing glassware is probably the worst flare-producing arrangement that we could encounter"
+    - "Dark-field lighting exaggerates the problem by giving camera flare the opportunity to occur on all four sides of the image."
+    - "the general degradation of the image from all sides accumulates"
+  concept_label: dark_field_is_the_worst_flare_arrangement_because_the_source_surrounds_the_frame
+  label_origin: extractor_assigned
+  claim: >
+    Dark-field glass lighting is the worst flare-producing arrangement in the book, because the
+    arrangement that makes it work — a large source surrounding a small dark background — puts
+    non-imaging light just outside the field of view on all four sides at once. Even when the flare is
+    not bad enough to fog or streak an edge, the degradation from four sides accumulates into a
+    low-contrast picture. The cure is the same gobo used elsewhere, but it must block from all four
+    sides: four cardboard blades, or one board with a rectangular hole, clamped to a stand in front of
+    the camera.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Camera flare is caused by light from outside the field of view entering the lens and scattering
+      inside the camera. Dark field places bright source area on every side of the field of view, so
+      every side contributes.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "dark-field glass set-ups"
+  caveats:
+    - text: "the invisible-accumulation case is the diagnostic worth keeping: the source says the loss can be significant while remaining too uniform to notice, so the absence of visible streaking is not evidence that flare is absent"
+      origin: extractor_observed
+  source_stated_problems:
+    - "At best, it produces a picture with low contrast."
+  source_stated_remedies:
+    - "block non-imaging light from all four sides with four gobo blades or a board with a rectangular hole"
+  examples:
+    positive: []
+    counter:
+      - {description: "a bottle shot in dark field without gobos: a grey fog lies over the whole frame and the black background has lifted to mid grey", figure_ref: "7.17"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0024, note: "the flare mechanism and gobo trick from chapter 5, at its worst case"}
+    - {relation: qualifies, target: sk_lsmx_0041, note: "the cost of the dark-field arrangement"}
+    - {relation: related_to, target: sk_lsmx_0055, note: "large white backgrounds cause the same invisible loss"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Stopping Flare"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Stopping Flare'"
+    figure_refs: ["7.17"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.17"]}
+
+- sk_id: sk_lsmx_0048
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Optical laws dictate that a round, transparent container filled with a liquid is, in fact, a lens."
+    - "a background large enough to fill the field of view of the camera is not large enough to fill the field of view that is seen through the liquid"
+    - "a liquid in a transparent container always takes on some of the color and/or texture of its background"
+  concept_label: a_liquid_filled_container_is_a_lens_with_its_own_wider_field_of_view_and_its_own_colour_problem
+  label_origin: extractor_assigned
+  claim: >
+    A round transparent container filled with liquid is a lens, and this produces two distinct problems.
+    The first is field of view: the liquid lens sees more than the camera does, so a background that
+    exactly fills the camera's frame does not fill the area seen through the liquid, and the studio
+    appears as a dark surround inside the glass. The obvious remedy — a larger background — is barred,
+    because it would sacrifice the edge definition the chapter exists to protect. The source's remedy is
+    to move the camera closer and, if needed, fit a shorter lens to hold the image size, so the existing
+    background fills the area seen through the liquid; the stated cost is increased perspective
+    distortion, visible as a deeper ellipse at the rim, which may or may not be acceptable. The second
+    problem is colour: a liquid in a transparent container always takes on some of the colour and
+    texture of whatever is behind it, so amber beer against a mottled mid-toned ground records dark and
+    murky. The remedy is a secondary white or silver card behind the glass, cut to the subject's own
+    outline and lit separately, made by replacing the camera with a test light, tracing the cast shadow
+    on the card, cutting it out and repositioning it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A cylinder of liquid refracts, so it images a wider field than the camera and transmits the tone
+      and colour of what lies behind it. A secondary background restores a controlled field and a
+      controlled colour behind the liquid without extending beyond the glass into the camera's view.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects, food_and_drink]
+    conditions: "round transparent containers holding liquid; the source's cases are a wine glass and a glass of beer"
+  caveats:
+    - text: "the source notes some photographers prefer a foil coloured like the liquid — gold for beer — rather than white or silver; offered as practice, without a stated mechanism for the preference"
+      origin: source_stated
+    - text: "the secondary card must be large enough to fill as much of the area behind the liquid as possible without extending far enough to be visible beyond the edges of the glass; that two-sided constraint is what makes the tracing procedure necessary"
+      origin: source_stated
+    - text: "the perspective cost is the chapter-5 viewpoint coupling being paid explicitly, and the source says whether it is a defect depends on the scene"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a liquid-filled subject may reveal surroundings that we would prefer the viewer not see"
+    - "a dark and unappealing murky-looking brew"
+  source_stated_remedies:
+    - "move the camera closer and use a shorter lens so the existing background fills the field seen through the liquid"
+    - "place a white or silver card behind the glass, cut to the subject's outline by tracing the shadow cast by a test light at the camera position, and light it separately"
+  examples:
+    positive:
+      - {description: "the wine glass with the camera moved closer: the background now fills the whole area seen through the liquid, with a visibly deeper rim ellipse", figure_ref: "7.20"}
+      - {description: "the beer with a cut secondary white background: bright amber, translucent, with the head reading clean white", figure_ref: "7.23"}
+    counter:
+      - {description: "the wine glass at a normal viewpoint: a white rectangle of background sits in the centre of the bowl with the dark studio around it", figure_ref: "7.19"}
+      - {description: "the same beer against the mottled background alone: dark, brown and murky", figure_ref: "7.21"}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_lsmx_0016, note: "the closer viewpoint pays the perspective cost"}
+    - {relation: qualifies, target: sk_lsmx_0042, note: "the exactly-fill rule cannot be relaxed even when the liquid demands more"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Liquids in Glass / Liquid as a Lens / Keeping True Color"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Liquids in Glass', both 'Liquid as a Lens' and 'Keeping True Color'"
+    figure_refs: ["7.19", "7.20", "7.21", "7.22", "7.23"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.19", "7.20", "7.21", "7.23"]}
+
+- sk_id: sk_lsmx_0049
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "The lighting that produces direct reflection on the glass surface is also likely to obscure the paper label."
+    - "If it extends beyond the family of angles defined by the label, it will reflect in the glass."
+    - "if the polarizer eliminates the offending reflection from a label, it is also likely to interfere with the light the glass needs"
+    - "We cannot make these editorial and artistic decisions on a purely technical basis."
+  concept_label: the_label_and_the_glass_want_the_same_light_and_only_a_precisely_sized_gobo_serves_both
+  label_origin: extractor_assigned
+  claim: >
+    A paper label on a glass bottle is the source's worked case of two surfaces demanding incompatible
+    treatment from one light. Most of a paper's reflection is diffuse but some is direct, so the light
+    that gives the glass its describing highlight also puts direct reflection on the label and reduces
+    its legibility. Two remedies work. Raise the offending light, so the label's direct reflection goes
+    downward rather than toward the lens. Or, where good highlight placement forbids moving the light,
+    interpose a small opaque card blocking exactly the angles that produce direct reflection on the
+    label — and the size of that gobo is critical, because if it extends beyond the label's own family of
+    angles it will itself reflect in the glass. A polarizer is a third option and rarely works, because
+    much of the highlight the glass needs is usually polarized too, so removing the label's reflection
+    interferes with the light the glass requires. Underneath all of it sits a prior question the source
+    says cannot be settled technically: which subject is the principal one. Two identical scenes might be
+    lit differently depending on the caption, the client, or personal whim.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each surface has its own family of angles. A gobo sized to the label's family removes the label's
+      direct reflection without entering the glass's family; oversize it and it enters the glass's family
+      and becomes a black reflection there. A lens polarizer cannot discriminate between the two, because
+      both reflections are polarized.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering, glass_and_transparent_subjects]
+    conditions: "glass with opaque secondary subjects; the source's example is a labelled wine bottle"
+  caveats:
+    - text: "the polarizer's failure here is the mirror image of its success on the metal box: there it discriminated because the two surfaces polarized differently, here it cannot because they polarize alike"
+      origin: extractor_observed
+    - text: "the source is explicit that the principal-subject question is editorial and commercial, naming the caption and who is paying the bill among the inputs, and says lighting choices follow from it rather than the reverse"
+      origin: source_stated
+    - text: "the improvement in the labelled-bottle pair is real but subtle in this copy; the label's legibility gain is smaller than the source's prose implies"
+      origin: extractor_observed
+  source_stated_problems:
+    - "The result is reduced legibility."
+  source_stated_remedies:
+    - "move the offending light higher so the label's direct reflection goes downward"
+    - "block the label's own family of angles with a small opaque card, sized no larger than that family"
+    - "decide which subject is the principal one before lighting a mixed scene"
+  examples:
+    positive:
+      - {description: "the labelled bottle with a gobo blocking the label's family of angles: the label reads slightly cleaner while the glass keeps its highlight", figure_ref: "7.25"}
+    counter:
+      - {description: "the same bottle without the gobo: a sheen across the label reduces its legibility", figure_ref: "7.24"}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_lsmx_0045, note: "the describing highlight is the cause of the label problem"}
+    - {relation: contradicts, target: sk_lsmx_0036, note: "the polarizer discriminated for metal-on-glass and cannot here"}
+    - {relation: generalises, target: sk_lsmx_0003, note: "which reflection to capitalize on presupposes knowing which subject is principal"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Secondary Opaque Subjects / Recognizing the Principal Subject"
+    page_start: null
+    page_end: null
+    locator: "Ch. 7, 'Secondary Opaque Subjects' and 'Recognizing the Principal Subject'"
+    figure_refs: ["7.24", "7.25"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["7.24", "7.25"]}
+
+# ═════════════════════════════════════════════════════════════════════════════
+# CHAPTER 8 — MAKING PORTRAITS  (only where a general optical mechanism is stated)
+# ═════════════════════════════════════════════════════════════════════════════
+
+- sk_id: sk_lsmx_0050
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Changing from short to broad lighting positions the main light outside the family of angles that produces direct reflection."
+    - "From any particular camera position, the family of angles that produces direct reflection is greater if the glasses have big lenses."
+  concept_label: eyeglass_glare_is_a_family_of_angles_problem_and_lens_diameter_sets_its_size
+  label_origin: extractor_assigned
+  claim: >
+    Reflections in a sitter's eyeglasses are treated by the source as an ordinary family-of-angles
+    problem rather than as a portrait-specific nuisance. With the main light on the far side from the
+    visible ear, the glasses can reflect it and the source says the glare cannot be eliminated from that
+    position — raising the light might clear it, but by the time it is high enough the eyes may be in
+    shadow. Moving the light to the near side, which portrait practice calls broad lighting, works
+    because it puts the main light outside the family of angles the eyeglass lenses define. The size of
+    that family scales with the diameter of the lenses, so the problem grows with big glasses, and with
+    small ones a smaller main light can sometimes be kept on the far side because it is easier to place
+    entirely outside the family.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An eyeglass lens is a small mirror-like surface with its own family of angles determined by its
+      size and by the camera position; a larger lens subtends a wider family and a smaller source is
+      easier to keep wholly outside it.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, portraiture]
+    conditions: "portrait subjects wearing eyeglasses"
+  caveats:
+    - text: "the broad/short naming is portrait convention and carries a stylistic preference the source states as its own — it leans to short lighting — but the eyeglass result is optical and does not depend on the preference"
+      origin: extractor_observed
+    - text: "the source calls broad lighting 'the only solution that always works' for eyeglasses, which is a stronger claim than it makes for most remedies in the book"
+      origin: source_stated
+  source_stated_problems:
+    - "Short lighting produces an objectionable glare on the eyeglasses."
+  source_stated_remedies:
+    - "switch from short to broad lighting so the main light falls outside the eyeglasses' family of angles"
+    - "with small eyeglass lenses, keep short lighting and use a smaller main light placed wholly outside the family"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0026, note: "the same in-or-out-of-the-family decision on a very small surface"}
+    - {relation: qualified_by, target: sk_lsmx_0051, note: "the polarizer route is barred by skin's own direct reflection"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "8 — Making Portraits"
+    section: "Eyeglasses"
+    page_start: null
+    page_end: null
+    locator: "Ch. 8, 'Eyeglasses'"
+    figure_refs: ["8.13", "8.14"]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0051
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Human skin also produces a small amount of direct reflection. Consequently, eliminating all direct reflection in the highlights of a portrait may give the skin a lifeless appearance."
+    - "The key to successfully dealing with dark complexions is to increase the direct reflections from them"
+    - "just a slight increase in the size of the light would offer almost no improvement"
+    - "The larger the light we use, the better the result."
+  concept_label: skins_small_direct_reflection_is_both_a_resource_for_dark_skin_and_a_thing_not_to_remove
+  label_origin: extractor_assigned
+  claim: >
+    Human skin produces a small amount of direct reflection, and the source draws two consequences from
+    the same fact. First, it is a resource: because direct reflection is most visible on a dark surface,
+    dark skin is best rendered not by opening the aperture — which would ruin any light-toned subject in
+    the same frame, the source's example being a bride's white dress — but by increasing the direct
+    reflection from the skin with a larger source. Since a head is roughly spherical, the family of
+    angles producing a large direct reflection on it is itself large, so a slight increase in light size
+    achieves almost nothing and the larger the source the better. Second, it is a thing not to destroy:
+    still-life photographers coming to portraiture are sometimes tempted to cross-polarize source and
+    lens to kill reflections from eyeglasses, and eliminating all direct reflection from the highlights
+    may leave the skin looking lifeless.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Direct reflection is more visible where diffuse reflection is weak, so it contributes more to the
+      rendering of dark skin than of light. A larger source fills more of a spherical subject's wide
+      family of angles, enlarging the highlight without changing the exposure at the camera.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, portraiture]
+    conditions: "portrait subjects; specifically dark complexions, and any portrait where polarization is being considered"
+  caveats:
+    - text: "rests on the live chapter-3 explanation that direct reflection is more visible on dark subjects because their diffuse reflection is weak (sk_lsm_c003_0017); that mechanism is not re-extracted, and what is new is its use as a portrait technique"
+      origin: extractor_observed
+    - text: "the lifeless-skin claim is an aesthetic judgement about how an image reads, asserted without a demonstration, and it is the reason the source blocks a technique it recommends elsewhere"
+      origin: extractor_observed
+    - text: "the source concedes the aperture may still need opening a little; the direct-reflection route reduces rather than removes the exposure conflict"
+      origin: source_stated
+  source_stated_problems:
+    - "if the subject is a bride with very dark skin in a white wedding dress, the preceding strategy could lead to disaster"
+  source_stated_remedies:
+    - "use a much larger light source to increase direct reflection from dark skin rather than increasing exposure"
+    - "do not cross-polarize away all direct reflection in a portrait"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsmx_0009, note: "cross-polarization is barred here although it rescued copy work"}
+    - {relation: related_to, target: sk_lsmx_0057, note: "the same reasoning drives black-on-black lighting"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "8 — Making Portraits"
+    section: "Eyeglasses / Dark Skin"
+    page_start: null
+    page_end: null
+    locator: "Ch. 8, the closing paragraphs of 'Eyeglasses' and the section 'Dark Skin'"
+    figure_refs: ["8.35"]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ═════════════════════════════════════════════════════════════════════════════
+# CHAPTER 9 — THE EXTREMES  (white-on-white and black-on-black)
+# ═════════════════════════════════════════════════════════════════════════════
+
+- sk_id: sk_lsmx_0052
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Compression means that tones that were very different and easy to distinguish in the scene are now very similar and difficult to distinguish in the photograph."
+    - "Changing the general exposure decreases compression at one end of the grayscale, but it worsens the compression at the other extreme."
+    - "we cannot remedy the compression caused by overexposing the picture"
+  concept_label: tonal_compression_at_the_extremes_is_moved_by_exposure_and_not_recovered_afterwards
+  label_origin: extractor_assigned
+  claim: >
+    A recording medium does not respond linearly across its range: tones near both extremes are
+    compressed, so distinctions that were easy to see in the scene become hard to see in the picture.
+    Exposure moves the problem rather than removing it — more exposure relieves shadow compression and
+    worsens highlight compression, less exposure does the reverse. Crucially, the compression is not
+    recoverable after the fact. Darkening an overexposed frame restores the overall tonality without
+    restoring distinction among the highlights; lightening an underexposed one does not bring back
+    shadow detail, because the underexposure compressed those tones too much for them ever to be
+    salvaged. The source's practical use of this is that white-on-white and black-on-black scenes are
+    recorded entirely on the parts of the curve that preserve the least detail, which is why they need
+    lighting and exposure to be used together.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The characteristic curve is S-shaped, so equal exposure steps in the scene map to unequal
+      brightness steps in the image, with the steps smallest at both ends. Information lost by mapping
+      several scene tones onto one image tone cannot be recreated by rescaling the image.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, exposure]
+    conditions: "any recording medium with an S-shaped response; the source discusses both film and digital sensors"
+  caveats:
+    - text: "partly technology-contingent: the source states that Raw straightens the curve and preserves the detail, that the straight result looks flat, and that photographers deliberately reintroduce the compression to make pictures look right. The grain discussion is about film specifically."
+      origin: source_stated
+    - text: "the claim that this preference is hardwired and will not change without hundreds of thousands of years of evolution is a strong psychological assertion offered without evidence; it is the source's own opinion about taste"
+      origin: extractor_observed
+    - text: "the histogram and curves material is about particular software of the edition's period and is historical rather than optical"
+      origin: extractor_observed
+  source_stated_problems:
+    - "scenes get recorded on those portions of the characteristic curve that preserve the least detail"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_lsmx_0053, note: "the exposure rules for the two extremes follow from it"}
+    - {relation: qualifies, target: sk_lsmx_0021, note: "explains why a detailed package cannot take the full tonal range"}
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "The Characteristic Curve / Overexposure / Underexposure"
+    page_start: null
+    page_end: null
+    locator: "Ch. 9, 'The Characteristic Curve' through 'Underexposure', plus the sidebars 'Shooting in Raw' and 'Grain'"
+    figure_refs: ["9.1", "9.3", "9.5", "9.7", "9.8", "9.10"]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0053
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "A typical white diffuse reflection is about 2½ stops brighter than an 18% gray card seen under the same light."
+    - "the reduced exposure reserves more choices for later"
+    - "we increase the exposure of a black-on-black scene to move it closer to the middle grays, even if we know we're going to darken it back down later"
+  concept_label: both_extremes_are_exposed_toward_the_middle_and_corrected_afterwards
+  label_origin: extractor_assigned
+  claim: >
+    Both extreme scene types are exposed toward the middle of the curve and moved back afterwards, by
+    the same magnitude and for different reasons. A white-on-white scene is given up to 2½ stops less
+    than normal — which in practice means metering the white subject and using the reading without the
+    usual 2½-stop white correction — because that places the subject on the straight part of the curve
+    and away from the shoulder, and because it reserves more choices for later. A black-on-black scene is
+    given up to 2½ stops more, and the source says the extreme is more likely to be actually used there,
+    because the shadow end also carries digital noise. Both shortcuts have the same failure condition: a
+    secondary subject at the opposite extreme. Reduced exposure leaves an important black subject without
+    shadow detail; increased exposure overexposes any light-grey secondary subject. Whether that matters
+    is explicitly a psychological judgement about the secondary subject's importance and size, not a
+    technical one, and the source says it is entirely reasonable to expose two technically identical
+    scenes differently on that basis.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Detail survives best on the straight portion of the curve. Shifting the exposure moves the scene's
+      tones onto that portion; the shift is then undone in reproduction, which restores the intended
+      lightness while keeping the distinctions that were recorded.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, exposure]
+    conditions: "scenes composed almost entirely of very light or very dark tones"
+  caveats:
+    - text: "the source distinguishes deliberate reduced and increased exposure from accidental under- and overexposure by whether the photographer has thought about the dangers, which is a distinction of intent rather than of result"
+      origin: source_stated
+    - text: "it anticipates that photographers who have mastered metering will be offended by 'point the meter and do what it says', and says they ought to be — the shortcut is only safe with the secondary-subject warning attached"
+      origin: source_stated
+    - text: "the noise ground for the black-on-black direction is sensor-generation dependent; the source says the severity depends on camera quality and that all cameras show it to some extent at the time of writing"
+      origin: source_stated
+  source_stated_problems:
+    - "that part of the scene will lack shadow detail"
+    - "This method will, of course, overexpose any secondary light-gray subjects in the same scene."
+  source_stated_remedies:
+    - "for white-on-white, meter the white subject and use the reading without the routine 2½-stop correction"
+    - "for black-on-black, expose up to 2½ stops more than a grey-card or incident reading, or meter the subject and use the reading uncorrected"
+    - "use a normal exposure instead when an important secondary subject sits at the opposite extreme"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0052, note: "the exposure consequence of compression"}
+    - {relation: qualified_by, target: sk_lsmx_0054, note: "exposure alone is not enough; lighting must create the distinctions"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "Exposing White-on-White Scenes / Exposing Black-on-Black Scenes"
+    page_start: null
+    page_end: null
+    locator: "Ch. 9, 'Exposing White-on-White Scenes' and 'Exposing Black-on-Black Scenes'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0054
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "White-on-white scenes generally have as much direct reflection as any other scene, but the diffuse reflection is usually bright enough to overpower the direct reflection."
+    - "a light gray still disappears against an identical light gray. The only way to keep such a subject visible is to make one of those grays lighter or darker ."
+    - "White subjects do not necessarily produce less direct reflection."
+  concept_label: white_on_white_removes_the_direct_reflection_tool_and_black_on_black_hands_it_back
+  label_origin: extractor_assigned
+  claim: >
+    White-on-white scenes deprive the photographer of direct reflection as a working tool, and the source
+    is careful about why. White subjects do not produce less direct reflection than others; they produce
+    so much diffuse reflection that it overpowers what direct reflection there is, so the camera cannot
+    see it and manipulating it accomplishes little. The mirror-image statement holds for black subjects:
+    they produce no more direct reflection, but theirs faces less competition and is therefore more
+    visible. Good exposure only preserves distinctions; it cannot create them, and a light grey still
+    disappears against an identical light grey. Only lighting can make one of the two greys lighter or
+    darker, which is what separates a subject from its background.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Whether direct reflection is usable is set by its ratio to the diffuse reflection, not by its
+      absolute amount, so the same physical reflection is a tool on a dark surface and unusable on a
+      light one.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, exposure]
+    conditions: "scenes composed almost entirely of very light or very dark tones"
+  caveats:
+    - text: "this restates the live chapter-3 mechanism (sk_lsm_c003_0017) in both directions and applies it as a constraint on which techniques are available; the mechanism itself is live and is not re-extracted here"
+      origin: extractor_observed
+    - text: "the source is explicit that 'white-on-white' and 'black-on-black' are abbreviations: what is really meant is very light grey on very light grey with some whites, and mostly dark greys with some blacks"
+      origin: source_stated
+  source_stated_problems:
+    - "With so much competition from diffuse reflection, the camera cannot see much direct reflection"
+  source_stated_remedies:
+    - "use lighting, not exposure, to make the subject and its background different tones"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsmx_0053, note: "exposure preserves distinctions, lighting creates them"}
+    - {relation: generalises, target: sk_lsmx_0057, note: "why black-on-black is lit as if it were metal"}
+  evidence:
+    characteristics: [explicitly_stated, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "White-on-White / Lighting White-on-White Scenes / Lighting Black-on-Black Scenes"
+    page_start: null
+    page_end: null
+    locator: "Ch. 9, the opening of 'White-on-White', 'Lighting White-on-White Scenes' and the corresponding paragraphs in 'Lighting Black-on-Black Scenes'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0055
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Technically, it does not matter whether the main subject or the background is slightly darker."
+    - "Psychologically, however, it matters a lot whether the background or the subject is white."
+    - "the background needs to be between ½ stop and 1 stop brighter than grays in the edges of the primary subject"
+    - "the white backgrounds in all of these arrangements are in exactly the position most likely to cause these reflections"
+  concept_label: the_background_must_carry_the_extreme_and_the_separation_window_is_half_to_one_stop
+  label_origin: extractor_assigned
+  claim: >
+    Separating subject from background needs only that one be lighter than the other, and technically it
+    does not matter which. Psychologically it matters a great deal: the brain will accept a light-grey
+    subject against a white background as white-on-white, but will not accept a grey background, reading
+    the same scene relit as white-on-gray. The identical asymmetry holds at the other end — a dark-grey
+    subject on a black background reads as black-on-black, a black subject on a dark-grey background does
+    not. The rule the source draws is that the background must carry the extreme. It also states a
+    numeric window, rare in this book: the background between ½ and 1 stop brighter than the greys at the
+    edges of the subject. Under ½ stop, part of the subject may disappear; over 1 stop, flare scatters
+    enough light inside the camera to cost contrast in the subject. Separately, the background must be
+    kept small — the same rule as bright-field glass — because direct reflection at the subject's edge is
+    what makes it disappear against a white ground and the background sits in exactly the position most
+    likely to produce it, and because large white backgrounds produce a flare so uniform that the
+    contrast loss will not be seen.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Viewers judge the key of a scene from the background rather than from the subject, so the
+      background's tone determines whether a scene reads as an extreme at all. The separation window is
+      bounded below by the loss of the edge and above by flare inside the camera.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, exposure, product_rendering]
+    conditions: "white-on-white and black-on-black scenes, especially simple ones giving the brain few other clues"
+  caveats:
+    - text: "the source says this is almost always true for simple scenes that do not give the brain many other clues, and also true for many complex ones — a hedged generalisation"
+      origin: source_stated
+    - text: "it explicitly allows the alternative: if the aim is only to separate subject from background, either may carry the extreme, and the picture may be good; it is simply not an example of the extreme type"
+      origin: source_stated
+    - text: "the ½-to-1-stop figure is given for the source's own remaining examples rather than as a universal, and is stated in the same paragraph that sets those examples' conventions"
+      origin: extractor_observed
+  source_stated_problems:
+    - "If it is less than ½ stop brighter, part of the subject may disappear; if it is more than 1 stop brighter, flare may scatter enough light inside the camera to cost contrast"
+    - "This flare will probably be so uniform that you will not see it, even when the general loss of contrast is significant."
+  source_stated_remedies:
+    - "keep the background at the extreme and let the subject sit slightly inside it"
+    - "hold the background between ½ and 1 stop brighter than the subject's edge tones"
+    - "keep the white background no larger than it needs to be, confining the light to the image area or surrounding it with black cards"
+  examples:
+    positive:
+      - {description: "a white bust against a white ground: the background reads white, the bust light grey, and the scene reads as white-on-white", figure_ref: "9.11"}
+      - {description: "a black crow against black: reads as black-on-black", figure_ref: "9.22"}
+    counter:
+      - {description: "the same bust relit so the background is light grey and the bust white: it now reads as white-on-gray", figure_ref: "9.12"}
+      - {description: "the same crow with the background lit to grey: the brain no longer accepts it as black-on-black", figure_ref: "9.23"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0042, note: "the same keep-the-background-small rule as bright-field glass"}
+    - {relation: qualifies, target: sk_lsmx_0054, note: "how much lighter or darker, and which one"}
+    - {relation: related_to, target: sk_lsmx_0047, note: "the invisible-flare diagnosis appears in both chapters"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "Subject and Background (both) / In Any Case, Keep the Background Small"
+    page_start: null
+    page_end: null
+    locator: "Ch. 9, 'Subject and Background' in both the white-on-white and black-on-black halves, and 'In Any Case, Keep the Background Small'"
+    figure_refs: ["9.11", "9.12", "9.22", "9.23"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["9.11", "9.12", "9.22", "9.23"]}
+
+- sk_id: sk_lsmx_0056
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "The closer the gobo is to the subject, the harder the shadow of the gobo becomes."
+    - "one of the single biggest advantages to this technique is that it allows us to control the apparent shadow of the subject completely independently of the lighting of the subject"
+    - "A mirror reflects almost nothing but direct reflections . These reflections are likely to be much brighter than the diffuse reflections from a white subject."
+  concept_label: three_white_backgrounds_and_the_manufactured_ground_shadow
+  label_origin: extractor_assigned
+  claim: >
+    Three white-on-white background types trade different things. On an opaque white background — the
+    hardest case, because whatever is done to one affects the other — the subject is lit from above,
+    which shades its front and fully lights the tabletop, and a gobo is then almost always needed to
+    bring the over-lit top of the subject down to the tone of its front. The gobo is tuned by two coupled
+    controls: closer to the subject makes its shadow harder, farther makes it softer but lighter, so a
+    shadow that blends but is too dark calls for a smaller gobo and one that is too light for a larger.
+    A medium-sized main light is recommended precisely to keep that adjustment available. The method
+    fails on very shallow subjects — a white card on a white table cannot be shaded without shading the
+    background equally. A translucent background lit from behind removes the coupling entirely, at the
+    cost of erasing the ground shadow; the source then manufactures one, tracing a pleasing shadow cast
+    by a test light onto paper, cutting it out, and gluing the cut-out beneath the translucent panel, so
+    the apparent shadow becomes independent of the lighting of the subject. A mirror is the easiest
+    white background of all, because it reflects almost nothing but direct reflection and those
+    reflections are brighter than any diffuse white; it needs the largest light in the book, one filling
+    the family of angles of the entire background, that light must show no texture because it will be
+    sharply reflected, and no ground shadow is obtainable at all.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Shadow hardness varies with the occluder's distance from the subject and shadow depth with its
+      size, so the two must be traded against each other. A translucent or mirror background is lit by a
+      separate mechanism from the subject, which decouples the two.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering]
+    conditions: "white subjects on white backgrounds"
+  caveats:
+    - text: "the source gives no formula for gobo size or distance and says the factors vary with the subject, offering instead a procedure for finding them by hand"
+      origin: source_stated
+    - text: "the manufactured shadow is presented without any suggestion that it is deceptive; the source's own phrase is that it certainly looks as if the light cast it"
+      origin: extractor_observed
+    - text: "the mirror background's drawbacks are stated: the subject's own reflection may confuse depending on crop and shape, and misting the tabletop with water is offered to break it up"
+      origin: source_stated
+  source_stated_problems:
+    - "it is impossible to put a shadow on the card without shading the background equally"
+    - "the illumination under the subject has erased any hint of a ground shadow"
+  source_stated_remedies:
+    - "light from above and add a gobo over the subject, tuned by moving it and by recutting its size"
+    - "use a translucent background lit from behind to decouple subject and background"
+    - "trace a test light's shadow, cut it out, and glue it under the translucent background to manufacture a ground shadow"
+    - "use a mirror background with a source large enough to fill the whole background's family of angles"
+    - "add a black card to one side to give a white-on-white subject a shadowed side, rather than a reflector"
+  examples:
+    positive:
+      - {description: "the bust with a gobo shading the top of its head, restoring the separation lost in the previous frame", figure_ref: "9.15"}
+      - {description: "a white flower on a translucent background with a manufactured shadow beneath it that reads as cast", figure_ref: "9.20"}
+      - {description: "the same flower on a mirror background reading whiter than the flower", figure_ref: "9.21"}
+    counter:
+      - {description: "the bust lit from above without a gobo: good separation at the sides but the top of the head has vanished into the ground", figure_ref: "9.14"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0055, note: "how the required separation is actually produced"}
+    - {relation: related_to, target: sk_lsmx_0019, note: "the ground shadow's job is the one chapter 5 described"}
+    - {relation: related_to, target: sk_lsmx_0027, note: "the mirror background's family is found by the metal procedure"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "Using an Opaque White Background / Using a Translucent White Background / Using a Mirror Background"
+    page_start: null
+    page_end: null
+    locator: "Ch. 9, 'Using an Opaque White Background' through 'Using a Mirror Background'"
+    figure_refs: ["9.13", "9.14", "9.15", "9.16", "9.17", "9.18", "9.19", "9.20", "9.21"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["9.14", "9.15", "9.16", "9.18", "9.20", "9.21"]}
+
+- sk_id: sk_lsmx_0057
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "another good rule for black-on-black is to light it as if it were metal , regardless of the actual material"
+    - "The best solution is to find a background material that produces less diffuse reflection than the subject. Black velvet serves this purpose"
+    - "Much of the direct reflection from a black subject is likely to be polarized. If we use a polarizing filter to take the reflection off our table surface, we will probably turn the subject black too."
+  concept_label: light_black_on_black_as_if_it_were_metal_and_the_metal_tricks_stop_where_polarization_differs
+  label_origin: extractor_assigned
+  claim: >
+    Because a black subject's direct reflection has little diffuse competition, the rule for black-on-black
+    is to capitalize on direct reflection wherever possible — in the source's words, to light it as if it
+    were metal regardless of what it is actually made of, which means finding the family of angles and
+    filling it. The background problem is then the hard part. Opaque black paper is the worst common
+    choice: it receives as much light as the subject, and since the subject must be rendered dark grey
+    rather than black to hold detail, the paper under it cannot be black either. A spotlight would keep
+    the background darker but is ruled out, because the direct reflection wanted on the subject requires a
+    large source. The source's answer is a background material producing less diffuse reflection than the
+    subject — black velvet — with two stated limits: a few subjects are so black that even velvet is not
+    blacker, and the subject's edges may merge with its own shadow. Glossy black acrylic supplies invisible
+    light to fill those edges, but the same overhead source then fills the acrylic's family of angles and
+    the background stops being black; the source argues its way to keeping this, saying the reflection
+    under the subject is itself a sufficient clue that the surface is black and glossy, and concedes some
+    readers will not accept that. The clean solution is distance: put the subject far enough from the
+    background that lighting one does not touch the other. And the metal chapter's glass-support trick does
+    not transfer — much of a black subject's direct reflection is polarized, so a polarizer used to clear
+    the table would probably blacken the subject too.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Black surfaces show direct reflection because their diffuse reflection is weak, which makes them
+      behave for lighting purposes like polished metal. The glass-support trick depends on the subject and
+      the support polarizing differently; black insulating subjects polarize like the glass, so the filter
+      cannot discriminate.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, product_rendering]
+    conditions: "black subjects on black backgrounds"
+  caveats:
+    - text: "the same authors revising their own earlier prescription: the metal chapter's transparent-support-plus-polarizer solution is explicitly withdrawn for black subjects, on a stated optical ground. Not cross-source disagreement."
+      origin: source_stated
+    - text: "the acrylic-background argument is presented as an argument the source expects some readers to refuse, and it says so — an unusually explicit acknowledgement that it is bending its own rule"
+      origin: source_stated
+    - text: "the string-support alternative is dismissed as usually needing retouching, and the source notes it may survive in a brief motion picture or video shot while being apparent in a high-quality still"
+      origin: source_stated
+  source_stated_problems:
+    - "if the subject is not black, then the background under it cannot be black either"
+    - "the edges of the black subject merge with their own shadow"
+  source_stated_remedies:
+    - "find the family of angles and fill it with a large source, exactly as for metal"
+    - "replace black paper with black velvet, a material producing less diffuse reflection than the subject"
+    - "use a glossy black surface to bounce invisible light into the subject's edges"
+    - "place the subject far enough from the background that its lighting does not reach the background"
+  examples:
+    positive:
+      - {description: "the black flashlight on black velvet at the same exposure as on paper: the ground is far darker and the subject holds its form", figure_ref: "9.25"}
+    counter:
+      - {description: "the same flashlight on black paper: the paper records as a mid grey and the scene does not read as black-on-black", figure_ref: "9.24"}
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0054, note: "the direct-reflection tool is available here"}
+    - {relation: contradicts, target: sk_lsmx_0036, note: "the metal chapter's glass-and-polarizer support does not transfer"}
+    - {relation: related_to, target: sk_lsmx_0012, note: "the same channel switch that rescued the black leather"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "Lighting Black-on-Black Scenes / Using an Opaque Black Background / Using a Glossy Black Surface / Keeping the Subject Away from the Background"
+    page_start: null
+    page_end: null
+    locator: "Ch. 9, 'Lighting Black-on-Black Scenes' through 'Keeping the Subject Away from the Background'"
+    figure_refs: ["9.24", "9.25", "9.26", "9.27"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["9.24", "9.25"]}
+
+# ═════════════════════════════════════════════════════════════════════════════
+# CHAPTER 10 — TRAVELING LIGHT  (only the colour-of-light mechanism)
+# ═════════════════════════════════════════════════════════════════════════════
+
+- sk_id: sk_lsmx_0058
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "The difficulty comes from an uneven mix —part of the scene is lit by one light, while lights of different colors illuminate different areas ."
+    - "It is this uniformity of error that makes the problem so simple to correct."
+    - "The best way to cope with unmixed color sources is to filter the lights to match each other as closely as possible . The objective of this is to get all of the light sources to be a single color—but not necessarily the right color."
+  concept_label: mixed_colour_is_correctable_and_unmixed_colour_is_not_so_match_the_sources_to_each_other
+  label_origin: extractor_assigned
+  claim: >
+    Two situations arise when light sources of different colours are present, and only one is a problem.
+    In mixed colour, rays of different balance blend so that the whole scene is lit by a single new
+    balance: the error is uniform, so the camera will probably fix it and postproduction certainly can,
+    with the result differing from a correctly shot frame only under side-by-side comparison. In unmixed
+    colour, different areas are lit by different sources — flash on the foreground subject, fluorescent
+    overhead, and, in a case the source flags as easy to miss, a flash-cast shadow on a wall filled in by
+    fluorescent light and rendering yellow-green. No white balance can correct this, because whatever is
+    right for one area is wrong for another, and a compromise value makes nothing right. The remedy is
+    counter-intuitive: gel the sources to match each other as closely as possible, aiming for a single
+    colour and not necessarily the correct one, then let the camera correct the whole scene globally. The
+    source's example is a light-green gel on the flash to approximate the overhead fluorescents.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A global colour correction is a single transform applied to the whole image, so it can only succeed
+      where the error is the same everywhere. Matching the sources to each other converts a spatially
+      varying error into a uniform one, which the global transform can then remove.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, colour]
+    conditions: "location work where existing light cannot be removed or matched to a standard"
+  caveats:
+    - text: "the specific filtration varies with the scene and the source says trial and error is the only really satisfactory way to determine it"
+      origin: source_stated
+    - text: "the catalogue of nonstandard sources is period-specific — fluorescent tubes of mixed age and type, early LED panels whose colour temperature varies and whose adjustable versions the source says it has not been satisfied by — and is technology-contingent"
+      origin: extractor_observed
+    - text: "the source also allows unbalanced colour as a deliberate effect, citing its own 'Cinema Noir' portrait made from mixed street sources; that is a taste claim, not a correction claim"
+      origin: source_stated
+  source_stated_problems:
+    - "No white balance adjustment can correct unmixed color."
+    - "the flash casts a shadow on the wall, but the fluorescent light illuminates the shadow and makes it a putrid yellow/green"
+  source_stated_remedies:
+    - "filter the lights to match each other, aiming for one colour rather than the right colour, then correct globally"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_lsmx_0059, note: "filtering the window is a case of matching the sources"}
+    - {relation: qualified_by, target: sk_lsmx_0060, note: "global correction has its own failure mode"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "10 — Traveling Light"
+    section: "Lights of Different Colors / Do the Colors Mix? / The Remedies"
+    page_start: null
+    page_end: null
+    locator: "Ch. 10, 'Do the Colors Mix?' and 'The Remedies'"
+    figure_refs: ["10.12", "10.13", "10.14"]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0059
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Remember that windows are light sources and that they can be filtered just like any other light source."
+    - "our lights are probably weaker than the sun, and we would prefer not to dim them even more with the light absorbed by the filter"
+    - "A better solution would be to put orange theatrical gels on the outside of the window and then shoot with a tungsten white balance."
+  concept_label: filter_the_window_rather_than_the_lamps_because_it_balances_intensity_as_well_as_colour
+  label_origin: extractor_assigned
+  claim: >
+    A window is a light source and can be gelled like any other, a possibility the source says motion
+    picture and video photographers use routinely and still photographers tend to overlook. In a room lit
+    by tungsten photographic lights and by daylight through windows, the quick fix is blue gels on the
+    photographic lights and a daylight balance. The better fix inverts it: orange theatrical gel on the
+    outside of the window and a tungsten balance. Both achieve the same colour match. The second is
+    preferred because the photographic lights are probably weaker than the sun, so filtering them costs
+    output where it can least be spared, whereas filtering the window attenuates the stronger source and
+    balances the two intensities as well as their colours.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A colour-correction filter absorbs light as well as shifting its balance, so which source is
+      filtered determines which source is attenuated; putting the loss on the stronger source improves
+      the intensity ratio at the same time as the colour match.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, colour]
+    conditions: "interiors with both photographic lighting and daylight"
+  caveats:
+    - text: "an instance of the general matching principle with an added criterion — where two ways of matching exist, prefer the one that also improves the intensity balance"
+      origin: extractor_observed
+    - text: "the source attributes the practice to motion picture and video photographers, which is a claim about another craft's habits rather than about optics"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies:
+    - "gel the window orange and shoot at a tungsten balance, rather than gelling the lamps blue"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_lsmx_0058, note: "a worked instance of matching the sources to each other"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "10 — Traveling Light"
+    section: "Filtering Daylight"
+    page_start: null
+    page_end: null
+    locator: "Ch. 10, 'Filtering Daylight'"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_lsmx_0060
+  source_id: light-science-magic-beyond-ch3
+  source_terms:
+    - "Beware of those scenes that include either a light source or the mirror reflection of one."
+    - "Such extremely bright areas record in a picture as white highlights regardless of the color of the light producing them. These highlights may then take on the color of whatever correction you use to remedy the rest of the scene."
+  concept_label: a_light_source_or_its_mirror_image_in_frame_records_white_and_then_takes_the_corrections_colour
+  label_origin: extractor_assigned
+  claim: >
+    A global colour correction has a specific failure mode worth anticipating at the composition stage.
+    Any area bright enough — a light source in the frame, or the mirror reflection of one — records as a
+    white highlight regardless of the colour of the light that produced it, because it has clipped. When a
+    correction is then applied to fix the rest of the scene, those highlights, having no colour of their
+    own to shift, take on the colour of the correction. The source says the problem can be dealt with but
+    requires more than the straightforward adjustment most people know, that only first-rate printers have
+    prepress departments able to handle it, and that the reliable answers are to get the colour right while
+    shooting or to compose so the troublesome highlights are not in the frame.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A clipped highlight carries no chromatic information, so a global correction that shifts every pixel
+      shifts it too, away from the neutral white it recorded as and toward the correction's own colour.
+  scope:
+    domain_discussed_by_source: [photographic_lighting, colour]
+    conditions: "scenes whose frame contains a light source or a mirror image of one, corrected globally"
+  caveats:
+    - text: "the source declines to explain the fix, calling it a topic too far from photographic lighting for the book, so the remedy recorded here is preventive rather than corrective"
+      origin: source_stated
+    - text: "the prepress remark is period- and workflow-specific and is not an optical claim"
+      origin: extractor_observed
+    - text: "a diagnostic worth keeping for image inspection: a coloured cast in a specular highlight, matching the correction applied elsewhere, is evidence of this failure rather than of the original lighting"
+      origin: extractor_observed
+  source_stated_problems:
+    - "These highlights may then take on the color of whatever correction you use to remedy the rest of the scene."
+  source_stated_remedies:
+    - "correct the colour while shooting"
+    - "compose the picture so it contains no light source or mirror image of one"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_lsmx_0058, note: "the limit of global correction"}
+    - {relation: related_to, target: sk_lsmx_0038, note: "a light source's own image in a shiny subject is the commonest way this arises"}
+  evidence:
+    characteristics: [explicitly_stated, argued, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "10 — Traveling Light"
+    section: "Correcting Mixed Colors"
+    page_start: null
+    page_end: null
+    locator: "Ch. 10, 'Correcting Mixed Colors', the caution on highlights"
     figure_refs: []
     source_support: text
     inspected: {text: true, figures: []}

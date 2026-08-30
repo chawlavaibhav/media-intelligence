@@ -1,0 +1,220 @@
+# kahneman-sibony-sunstein-noise — SourceConceptSystem (SPEC-03 Object 2)
+# Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, "Noise: A Flaw in Human Judgment"
+# (Little, Brown Spark / Hachette Book Group, first ebook edition May 2021, ISBN 978-0-316-45138-3).
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# FORMAT: EPUB, reflowable. NO AUTHORED PAGE NUMBERS. page_start / page_end are null throughout.
+# Audit pattern: no_authored_page.
+#
+# Three systems only. Each is claimed as a system because the source itself presents the members as
+# a set whose meaning depends on the relationships between them, not as a list of separate points:
+#   - scs_nse_001: the noise taxonomy, which the source states as three nested equations.
+#   - scs_nse_002: the six decision hygiene principles, which the source explicitly enumerates as a set.
+#   - scs_nse_003: the seven objections, which the source explicitly enumerates and answers as a set.
+# No fourth system was manufactured. Where the book's material is a sequence of separate arguments
+# rather than an interacting set, it is left as unrelated SourceKnowledge objects.
+
+- scs_id: scs_nse_001
+  source_id: kahneman-sibony-sunstein-noise
+  label: components_of_system_noise
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >-
+    The source's decomposition of error. Overall error (mean squared error) splits into bias squared
+    plus system noise squared; system noise splits into level noise squared plus pattern noise squared;
+    pattern noise splits into stable pattern noise squared plus occasion noise squared. Each split is
+    a sum of squares because the components are independent and uncorrelated, and the source renders
+    each as the sides of a right triangle. The system is not a list: which component a given remedy can
+    touch, and which components a given study design can even see, both follow from where a component
+    sits in the nesting.
+  whole_system_claim:
+    text: >-
+      The components sit in a fixed nesting, and that nesting is what determines both what an
+      organisation can observe and what it can fix. Level noise is the only component visible from
+      ordinary operating records, so an organisation that has not run an audit sees the smallest of the
+      three; separating stable pattern noise from occasion noise requires two independent judgements of
+      each case by each judge, which is why the authors defaulted for years to treating the whole
+      residual as transient. On the studies the authors assemble, the largest component is the one the
+      easiest observation cannot reach.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: >-
+      Ch. 17 "The Sources of Noise", sections "The Components of Noise" and "Sizing the Components";
+      equations first given in Ch. 5 "The Error Equations", Ch. 6 "The Analysis of Noise" and Ch. 16
+      "Pattern Noise: Stable or Transient" (spine 28, spine 14, spine 15, spine 27).
+  members:
+    - {sk_ref: sk_nse_0003, role_in_system: whole, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0007, role_in_system: component, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0008, role_in_system: component, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0009, role_in_system: component, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0010, role_in_system: structure, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0011, role_in_system: finding, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0012, role_in_system: observability_constraint, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+      - {from: sk_nse_0009, to: sk_nse_0008, note: "occasion noise is the transient component of pattern noise, not a sibling of it"}
+      - {from: sk_nse_0011, to: sk_nse_0010, note: "the sizing claim is only expressible once the decomposition exists"}
+      - {from: sk_nse_0012, to: sk_nse_0011, note: "the understatement argument depends on pattern noise exceeding level noise"}
+    tradeoffs: []
+    conflicts:
+      - {between: [sk_nse_0011, sk_nse_0009], note: "the source records one case, asylum adjudication, where it expects level noise to dominate instead, and leaves the exception standing"}
+  source_warns_against_isolated_use: true
+  source_warning_ref: >-
+    Ch. 17, "Sizing the Components": "Reducing level noise is still a worthwhile objective, but
+    attaining only this objective would leave most of the problem of system noise without a solution."
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >-
+      The nesting and the three equations are the source's own and are stated verbatim; nothing in the
+      structure is ours. What IS hedged by the source itself is the sizing: it calls the conclusion that
+      stable pattern noise is the largest component "tentative", says it required "some triangulation",
+      and warns against overgeneralising from a limited selection of examples. Figure 16 renders the
+      combined decomposition and was not inspected; the prose states all three equations, so the
+      structure is recoverable from text alone, but the figure's presentation is not available here.
+  provenance:
+    chapter: "Chapter 17 — The Sources of Noise"
+    section: "'The Components of Noise' and 'Sizing the Components' (spine 28)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_nse_002
+  source_id: kahneman-sibony-sunstein-noise
+  label: decision_hygiene_principles
+  label_origin: source_verbatim
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >-
+    The six principles the source enumerates as decision hygiene, together with the strategies each
+    inspires. The source presents them as a set rather than a ranked list, and it names the analogy that
+    defines them: like handwashing, each prevents an unspecified range of errors, so you never learn
+    which error a given application prevented. The members interact — sequencing protects the
+    independence that aggregation needs, structuring supplies the separate assessments that a shared
+    scale is applied to, and the outside view supplies the reference class the shared scale is anchored
+    in — which is why the source's own integrated protocol combines several at once.
+  whole_system_claim:
+    text: >-
+      The principles are chosen individually and per situation, not adopted wholesale, and the source's
+      own objections chapter turns on this: an objection that defeats one member frequently leaves the
+      others untouched. That makes the set the unit of reasoning rather than any single strategy — the
+      right question is never "should we reduce noise" but "which of these, here, and at what cost".
+    origin: extractor_synthesis
+    interpretation_basis: >-
+      The source states the six principles as a list and separately states, in Part VI and the
+      Conclusion, that "whether an objection to noise reduction makes sense depends on the particular
+      noise-reduction strategy that is under discussion" and that "an objection to aggregating
+      judgments … may not apply to the use of guidelines". Reading those two statements together as a
+      single claim about the set is OURS. The source does not itself frame the principles as a decision
+      procedure for selecting among them.
+    source_ref: null
+  members:
+    - {sk_ref: sk_nse_0035, role_in_system: principle, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0041, role_in_system: principle, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0039, role_in_system: principle, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0036, role_in_system: principle, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0037, role_in_system: principle, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0040, role_in_system: principle, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0038, role_in_system: strategy, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0043, role_in_system: strategy, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0042, role_in_system: integration, order: 9, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_nse_0037, to: sk_nse_0036, note: "aggregation delivers nothing unless the judgements were shielded from each other first"}
+      - {from: sk_nse_0040, to: sk_nse_0041, note: "the shared scale is anchored in the reference class the outside view supplies"}
+      - {from: sk_nse_0040, to: sk_nse_0039, note: "a shared scale is applied per decomposed dimension, not to an aggregate impression"}
+      - {from: sk_nse_0042, to: sk_nse_0039, note: "the protocol is the structuring principle generalised from candidates to options"}
+    tradeoffs:
+      - {between: [sk_nse_0037, sk_nse_0044], note: "each additional independent judgement costs time and returns less than the one before; the source records Google cutting interviews from twenty-five to four"}
+      - {between: [sk_nse_0040, sk_nse_0044], note: "case scales and frame-of-reference training are expensive, need customisation per unit, and must be kept current"}
+    conflicts:
+      - {between: [sk_nse_0035, sk_nse_0047], note: "the source's own morale and creativity objection bears directly on the first principle and is conceded to have force"}
+  source_warns_against_isolated_use: true
+  source_warning_ref: >-
+    Ch. 24, "Improving Personnel Selection Through Structure": listing the components of a judgement is
+    explicitly not enough — "The problem is that, in the conduct of the interview, they do not evaluate
+    these elements separately." Decomposition without independence does not deliver the benefit.
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+    system_level_uncertainty: >-
+      The membership and the enumeration are the source's. The dependency and trade-off structure is
+      partly OURS: the source states each link somewhere in the text but does not assemble them into a
+      structure. The source is explicit that the comparative value of the strategies is unmeasured —
+      "these remain open questions, which research could eventually address" — so no ranking, weighting
+      or sufficiency claim is made here, and none should be read into the ordering, which follows the
+      order of presentation in the Conclusion.
+  provenance:
+    chapter: "Review and Conclusion — Taking Noise Seriously"
+    section: "'How to Reduce Noise (and Bias, Too)', six enumerated principles; strategies introduced in the Part V introduction (spine 42, spine 29)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_nse_003
+  source_id: kahneman-sibony-sunstein-noise
+  label: objections_to_noise_reduction
+  label_origin: extractor_assigned
+  system_type: trade_off_set
+  system_type_origin: source_stated
+  description: >-
+    The seven objections the source raises against its own programme and then answers: cost; introduced
+    error or bias; dignity and the demand for an individualised hearing; the freezing of values that
+    ought to be able to change; gaming and evasion of clear rules; deterrence through unpredictability;
+    and demoralisation and the loss of creativity. The source enumerates these as a set in the Part VI
+    introduction and then works through them, and it states its own stance plainly: it presents them as
+    sympathetically as it can and does not endorse them as reasons to abandon the goal.
+  whole_system_claim:
+    text: >-
+      The objections are not objections to noise reduction; they are objections to particular
+      instruments, and nearly all of them land on the same one — the firm rule. The source's uniform
+      reply is that a crude instrument is a reason to build a better instrument rather than to tolerate
+      the noise, and it names aggregation, structuring, guidelines with retained discretion and shared
+      scales as members of the hygiene set that survive most of the seven.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: >-
+      Part VI introduction: "whether an objection is convincing depends on the particular
+      noise-reduction strategy to which it is meant to apply… even when the objections are given their
+      due, noise reduction remains a worthy and even an urgent goal." Ch. 26: "the solution is not to
+      abandon noise-reduction efforts; it is to come up with better ones."
+  members:
+    - {sk_ref: sk_nse_0044, role_in_system: objection, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0045, role_in_system: objection, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0046, role_in_system: objection, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0047, role_in_system: objection, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_nse_0048, role_in_system: resolution_framework, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - {from: sk_nse_0044, to: sk_nse_0013, note: "the cost objection cannot be evaluated without an audit, which is the source's reply to it"}
+    tradeoffs:
+      - {between: [sk_nse_0046, sk_nse_0035], note: "individualised hearing against accuracy-not-individuality; the source declines to resolve this in the abstract"}
+      - {between: [sk_nse_0047, sk_nse_0048], note: "room for evolving values and for creativity against the consistency a rule buys"}
+    conflicts:
+      - {between: [sk_nse_0045, sk_nse_0044], note: "the two chapter-26 objections pull opposite ways on how much machinery to build: one says the instrument is too crude, the other that a better instrument costs more"}
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >-
+      The seven objections and the framing are the source's, enumerated in its own words. Two things
+      here are OURS. First, the four SourceKnowledge members compress seven objections into four
+      objects — cost and introduced-error map one-to-one, while dignity carries objection three and one
+      object carries objections four to seven; that grouping is an extraction decision. Second, treating
+      the rules-versus-standards framework as the resolution mechanism for the set is our inference,
+      marked as extractor_inferred in the membership; the source presents that chapter as a further
+      chapter rather than as the answer to the objections.
+  provenance:
+    chapter: "Part VI — Optimal Noise"
+    section: "the seven objections enumerated in the Part VI introduction; worked through in Ch. 26, Ch. 27 and Ch. 28 (spine 38, spine 39, spine 40, spine 41)"
+    page_start: null
+    page_end: null
+    source_support: text

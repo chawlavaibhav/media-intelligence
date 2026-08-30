@@ -1,0 +1,951 @@
+# Light: Science & Magic, 5th ed., chapters beyond ch.3 — SPEC-05 ontology (terms, relationships, concepts)
+# EXPERIMENTAL — NOT LIVE CANON. Lane of book-expansion-qa-v1.
+# scope_extension_of: light-science-magic-ch3 · independence: none — same work
+#
+# THE RULE THAT GOVERNS THIS FILE:
+#   Every remedy term below whose only route is a physical camera, light, card, filter or support
+#   carries `executable_by: [physical_production]`. NONE of them is translated into a generative
+#   instruction. "Move the light outside the family of angles" stays a person moving a light.
+#   Four terms carry `human_edit` instead, and they are the four where the source's own remedy is a
+#   person editing an image or making a decision, not a person moving a light.
+#
+# No cross_source_concept (xs_...) is created — forbidden in this task.
+# No `same_failure_family` relation is used — it requires human review under SPEC-05 governance.
+# No relationship is written to a term outside this lane. The live chapter-3 ontology
+#   (canon/knowledge/current/light-science-magic-ch3/ontology-mappings.yaml) contains terms these
+#   plainly extend — family_of_angles, direct_reflection, diffuse_reflection, glare — but this lane is
+#   the SAME WORK, so a relationship asserting anything about them would be the book agreeing with
+#   itself dressed as a mapping. Those correspondences are recorded as prose in EXTRACTION-NOTES.md §5
+#   instead, where they cannot be mistaken for evidence.
+
+source_id: light-science-magic-beyond-ch3
+extraction_date: 2026-08-30
+
+terms:
+
+# ── PROPERTIES AND ENTITIES ──────────────────────────────────────────────────
+
+- term_id: t_lsmx_0001
+  term: complex_surface
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    A single surface that requires both diffuse and direct reflection to be defined properly. The
+    source's example is glossy wood, where only direct reflection can say the surface is glossy and only
+    diffuse reflection can show the colour and grain beneath the gloss.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 4, 'Complex Surfaces'"}
+  arising_from: [sk_lsmx_0013]
+
+- term_id: t_lsmx_0002
+  term: bright_field_lighting
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    A glass arrangement producing dark edge lines against a bright background, obtained by keeping all
+    light away from the two extreme limits of the family of angles that acts on the glass edge. The
+    source also calls it the dark-on-light approach.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Bright-field Lighting'"}
+  arising_from: [sk_lsmx_0040]
+
+- term_id: t_lsmx_0003
+  term: dark_field_lighting
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    A glass arrangement producing bright edge lines against a dark background, obtained by placing light
+    at the extreme limits of the family of angles and nowhere else — in practice one source ten to
+    twenty-five times the subject's diameter surrounding a smaller dark background. The source also
+    calls it the light-on-dark approach.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Dark-field Lighting'"}
+  arising_from: [sk_lsmx_0041]
+
+- term_id: t_lsmx_0004
+  term: effective_size_of_the_background
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    How large a background is as the subject and camera see it, set by the camera-to-background distance
+    rather than by the material's physical size. The source calls it the single most important
+    consideration in glass lighting and requires that the background exactly fill the field of view, no
+    more and no less.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Position the Camera'"}
+  arising_from: [sk_lsmx_0042]
+
+- term_id: t_lsmx_0005
+  term: effective_size_of_the_light
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    How large a source behaves relative to a subject, set jointly by its physical size, its distance,
+    and — for direct reflection — by how much of the subject's family of angles it covers. The source
+    notes that camera-to-subject distance and focal length change it indirectly, by changing the width
+    of the family.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 6, 'Controlling the Effective Size of the Light'"}
+  arising_from: [sk_lsmx_0033, sk_lsmx_0017]
+
+- term_id: t_lsmx_0006
+  term: falloff
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    Deliberately uneven illumination of a background, defined by the source as a transition in the scene
+    from light to dark. Most commonly placed at the top of the picture, where it adds a depth clue and
+    separates subject from background.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 5, 'Adding Depth to the Background'"}
+  arising_from: [sk_lsmx_0024]
+
+- term_id: t_lsmx_0007
+  term: perspective_distortion
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    The apparent size difference between nearer and farther parts of one subject, and the convergence of
+    known-parallel lines that follows. Determined by camera position, not by the lens; one of the two
+    depth clues the source names.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 5, 'Perspective Distortion'"}
+  arising_from: [sk_lsmx_0015, sk_lsmx_0016]
+
+- term_id: t_lsmx_0008
+  term: tonal_variation
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    The presence of both light and dark areas in a subject; the second of the source's two depth clues.
+    For a three-sided object the source's stated ideal is a highlight side, a shadow side and a side
+    between, used as a standard for evaluating whatever lighting exists rather than as a requirement.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 5, 'Tonal Variation'"}
+  arising_from: [sk_lsmx_0015, sk_lsmx_0021]
+
+- term_id: t_lsmx_0009
+  term: invisible_light
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: entity
+  definition_in_origin_frame: >
+    The source's name for lighting a subject by bouncing light off a glossy surface that is inside the
+    subject's family of angles but whose own family of angles excludes the camera. The light source for
+    the subject is in the scene and cannot be seen to be one.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 6, 'A Glossy Background'"}
+  arising_from: [sk_lsmx_0036]
+
+- term_id: t_lsmx_0010
+  term: black_magic
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: entity
+  definition_in_origin_frame: >
+    The source's name for anything added to a lighting set-up solely to place a black reflection in a
+    metal surface — used to differentiate an edge from its background or to add dimension across a
+    slightly irregular surface.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 6, 'Black Magic'"}
+  arising_from: [sk_lsmx_0038]
+
+- term_id: t_lsmx_0011
+  term: liquid_lens
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    A round transparent container filled with liquid, which the source states is optically a lens: it
+    sees a wider field than the camera does and transmits the colour and texture of whatever lies
+    behind it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Liquid as a Lens'"}
+  arising_from: [sk_lsmx_0048]
+
+- term_id: t_lsmx_0012
+  term: mixed_colour
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: property
+  definition_in_origin_frame: >
+    Light sources of different balance blending so that the whole scene is lit by one new balance. The
+    error is uniform across the frame and is therefore correctable globally.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 10, 'Do the Colors Mix?'"}
+  arising_from: [sk_lsmx_0058]
+
+- term_id: t_lsmx_0013
+  term: unmixed_colour
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    Different areas of one scene lit by sources of different colour, so that no single white balance is
+    right anywhere. The source states that no white balance adjustment can correct it and that a
+    compromise value leaves nothing in the scene right.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 10, 'Do the Colors Mix?'"}
+  arising_from: [sk_lsmx_0058]
+
+- term_id: t_lsmx_0014
+  term: tonal_compression_at_the_extremes
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    Tones that were very different and easy to distinguish in the scene becoming similar or identical in
+    the recorded image, because the medium's response flattens at both ends of its range. The source
+    states it cannot be undone after the fact.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 9, 'A \"Bad\" Camera'"}
+  arising_from: [sk_lsmx_0052]
+
+# ── PROBLEMS ────────────────────────────────────────────────────────────────
+
+- term_id: t_lsmx_0015
+  term: hot_spot_on_a_flat_subject
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A bright area of direct reflection on flat artwork or a flat surface, caused by a light inside the
+    family of angles; the source calls it unacceptable in copy work because it obliterates the original.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 4, 'The Angle of Light'"}
+  arising_from: [sk_lsmx_0005]
+
+- term_id: t_lsmx_0016
+  term: uneven_illumination_from_a_shallow_lighting_angle
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A flat subject whose edge nearer the light receives so much more light than the far edge that
+    uniform exposure is impossible; a second light on the other side gives two overexposed edges with a
+    dark centre rather than curing it.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 4, 'The Distance of Light'"}
+  arising_from: [sk_lsmx_0008]
+
+- term_id: t_lsmx_0017
+  term: texture_lost_on_a_dark_surface_under_raking_light
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A dark textured surface photographed with the light technique correct for a light one: the shadow
+    side of each texture particle survives and the diffuse highlight side does not, because a black
+    subject produces little diffuse reflection, so there is no tonal difference left to read.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 4, 'Capitalizing on Direct Reflections'"}
+  arising_from: [sk_lsmx_0011]
+
+- term_id: t_lsmx_0018
+  term: invisible_glass_edge
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A glass edge that does not reflect toward the viewer from the current geometry, so the subject has
+    no outline and merges with the background. In the source's words, an invisible glass has no shape or
+    form.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Problems'"}
+  arising_from: [sk_lsmx_0039]
+
+- term_id: t_lsmx_0019
+  term: light_on_light_or_dark_on_dark_collapse
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    The failure produced by running bright-field and dark-field lighting simultaneously, or by an
+    over-large background: subject edge and background reach the same tone, leaving nothing to record.
+    The source's worked case is a glass photographed inside a tent.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'The Best of Both Worlds'"}
+  arising_from: [sk_lsmx_0043]
+
+- term_id: t_lsmx_0020
+  term: camera_reflection_in_a_mirror_like_subject
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    The camera appearing in the subject because it lies inside the subject's family of angles. On flat
+    metal it can be moved out of the family; on round metal it cannot, and its reflection falls at the
+    centre of the subject and is the one reflection whose size distance cannot reduce.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 6, 'Keeping the Metal Square' and 'Round Metal'"}
+  arising_from: [sk_lsmx_0034, sk_lsmx_0037]
+
+- term_id: t_lsmx_0021
+  term: disappearing_metal_edge
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A metal edge lost against the surface it stands on, because a near-pure direct reflection records at
+    the brightness of its source and the supporting surface often IS the source, so the two record
+    identically and the camera cannot see where one ends and the other begins.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 6, 'Other Resources'"}
+  arising_from: [sk_lsmx_0038, sk_lsmx_0035]
+
+- term_id: t_lsmx_0022
+  term: label_obscured_by_the_glass_highlight
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    Reduced legibility of a paper label on a glass container, because the light that produces the
+    describing highlight on the glass also produces direct reflection on the paper.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Secondary Opaque Subjects'"}
+  arising_from: [sk_lsmx_0049]
+
+- term_id: t_lsmx_0023
+  term: liquid_taking_the_colour_of_its_background
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A liquid in a transparent container always taking on some of the colour and texture of what lies
+    behind it; the source's case is amber beer rendering dark and murky against a mottled mid-toned
+    ground.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Keeping True Color'"}
+  arising_from: [sk_lsmx_0048]
+
+- term_id: t_lsmx_0024
+  term: uniform_invisible_flare
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    Non-imaging light scattered inside the camera evenly enough that no streak or fog is visible, while
+    the contrast loss is significant. The source names two arrangements that produce it: dark-field glass,
+    where the source surrounds the frame on all four sides, and a large white background.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 7, 'Stopping Flare'; Ch. 9, 'In Any Case, Keep the Background Small'"}
+  arising_from: [sk_lsmx_0047, sk_lsmx_0055]
+
+- term_id: t_lsmx_0025
+  term: background_read_as_the_wrong_key
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: problem
+  definition_in_origin_frame: >
+    A technically correct extreme scene that the viewer does not accept as one, because the subject
+    rather than the background carries the extreme: a white subject on a light-grey ground reads as
+    white-on-gray, and a black subject on a dark-grey ground is not accepted as black-on-black.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+  source_ref: {locator: "Ch. 9, 'Subject and Background'"}
+  arising_from: [sk_lsmx_0055]
+
+# ── REMEDIES ────────────────────────────────────────────────────────────────
+# executable_by is REQUIRED here. Everything whose only route is a physical camera, light, card,
+# filter or support is [physical_production] and is NOT translated.
+
+- term_id: t_lsmx_0026
+  term: fill_the_family_of_angles_to_render_a_surface_by_direct_reflection
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Use a source large enough to cover the whole family of angles, so a surface that cannot supply
+    diffuse reflection is rendered by direct reflection instead. The source's cases are black leather,
+    bright metal, and black-on-black subjects lit as if they were metal.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 4, 'Capitalizing on Direct Reflections'; Ch. 6, 'Keeping the Metal Bright'; Ch. 9, 'Lighting Black-on-Black Scenes'"}
+  arising_from: [sk_lsmx_0012, sk_lsmx_0026, sk_lsmx_0057]
+
+- term_id: t_lsmx_0027
+  term: find_the_family_of_angles_with_a_test_light_at_the_lens
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Hang a white target where the family is expected, put a narrow-beam test light exactly at the lens
+    position, aim it at the nearest and farthest points of the subject, and mark where the reflected
+    beam lands. Those marks are the limits of the family.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'Finding the Family of Angles'"}
+  arising_from: [sk_lsmx_0027]
+
+- term_id: t_lsmx_0028
+  term: subtract_the_family_from_a_large_source_with_a_shaped_gobo
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Light a large diffusion panel evenly and attach a gobo cut to barely fill the family of angles, so
+    the scene is lit softly while the mirror-like subject stays dark. Fails with a front-lit opaque
+    reflector, where the gobo is itself illuminated and behaves as a reflector.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'Keeping the Metal Dark'"}
+  arising_from: [sk_lsmx_0030]
+
+- term_id: t_lsmx_0029
+  term: move_the_light_to_set_the_background_without_moving_the_metal
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Change the source-to-subject distance to place the background's brightness anywhere wanted, relying
+    on the metal's direct reflection being independent of source distance. Bounded by how much of the
+    family the source still covers.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'Controlling the Effective Size of the Light'"}
+  arising_from: [sk_lsmx_0032, sk_lsmx_0033]
+
+- term_id: t_lsmx_0030
+  term: use_the_background_itself_as_the_light_source_for_a_metal_box
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Stand a three-dimensional metal subject on a light-toned background large enough to fill the family
+    of angles the metal reflects — not merely the area the camera sees — so that the background lights
+    the faces no reflector could reach without appearing in the frame.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'A Light Background'"}
+  arising_from: [sk_lsmx_0035]
+
+- term_id: t_lsmx_0031
+  term: support_the_subject_on_glass_and_polarize_the_supports_reflection_away
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Stand a metal subject on clear glass, light it from below through the glass, and use a lens
+    polarizer to remove the glass's own polarized direct reflection without touching the metal's
+    un-polarized one. The source states this fails for black subjects, whose direct reflection is
+    likely to be polarized too.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'A Transparent Background'; Ch. 9, 'Keeping the Subject Away from the Background'"}
+  arising_from: [sk_lsmx_0036, sk_lsmx_0057]
+
+- term_id: t_lsmx_0032
+  term: bounce_invisible_light_from_a_glossy_black_support
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Light the front or lower edges of a subject by bouncing light off a glossy black surface that sits
+    inside the subject's family of angles while its own family excludes the camera, so the source is in
+    the scene and invisible.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'A Glossy Background'; Ch. 9, 'Using a Glossy Black Surface'"}
+  arising_from: [sk_lsmx_0036, sk_lsmx_0057]
+
+- term_id: t_lsmx_0033
+  term: tent_the_subject
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Enclose a strongly direct-reflecting subject in a white enclosure that serves as both environment
+    and source, shooting through a hole. The source states it does not solve the problem — the camera
+    hole and seams reflect and must be retouched — and that it is exactly wrong for glass, where it
+    produces the light-on-light collapse.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 6, 'Using a Tent'"}
+  arising_from: [sk_lsmx_0037, sk_lsmx_0043]
+
+- term_id: t_lsmx_0034
+  term: keep_the_background_exactly_the_size_of_the_frame
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Set the camera distance so the background exactly fills the field of view, and cut an over-large
+    background's effective size by lighting only part of it or masking it with dark cards, so it cannot
+    extend into the family of angles that acts on the subject's edge.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 7, 'Position the Camera'; Ch. 9, 'In Any Case, Keep the Background Small'"}
+  arising_from: [sk_lsmx_0042, sk_lsmx_0055]
+
+- term_id: t_lsmx_0035
+  term: separate_bright_field_and_dark_field_regions_within_one_frame
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Where both glass methods are wanted in one picture, divide the scene and assign one region to each,
+    keeping the transition zone small, since only the transition mixes them and loses definition.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 7, 'The Best of Both Worlds'"}
+  arising_from: [sk_lsmx_0043]
+
+- term_id: t_lsmx_0036
+  term: cut_a_secondary_background_to_the_subjects_outline
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Replace the camera with a test light, trace the subject's cast shadow onto a white or silver card,
+    cut it out, reposition it behind the subject where it cannot be seen past the glass, and light it
+    separately — so a liquid takes its colour from a controlled surface rather than from the set.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 7, 'Keeping True Color'"}
+  arising_from: [sk_lsmx_0048]
+
+- term_id: t_lsmx_0037
+  term: block_only_the_secondary_subjects_own_family_of_angles
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Interpose a small opaque card blocking exactly the angles producing direct reflection on a label,
+    sized no larger than the label's own family of angles — because a gobo extending beyond it enters the
+    glass's family and reflects there. Alternatively raise the light so the label's reflection goes
+    downward.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 7, 'Secondary Opaque Subjects'"}
+  arising_from: [sk_lsmx_0049]
+
+- term_id: t_lsmx_0038
+  term: gobo_the_lens_against_non_imaging_light
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Block light from outside the field of view before it reaches the lens, positioned by looking into
+    the front of the lens and moving the gobo until the offending source is no longer reflected in it.
+    In dark-field glass this must be done on all four sides, with four blades or a board with a
+    rectangular hole.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 5, sidebar 'Managing Flare'; Ch. 7, 'Stopping Flare'"}
+  arising_from: [sk_lsmx_0024, sk_lsmx_0047]
+
+- term_id: t_lsmx_0039
+  term: manufacture_a_ground_shadow_under_a_translucent_background
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Trace a pleasing shadow cast by a test light onto paper, cut it out, and glue it beneath a
+    translucent background, so the apparent ground shadow is controlled independently of the lighting of
+    the subject.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 9, 'Using a Translucent White Background'"}
+  arising_from: [sk_lsmx_0056]
+
+- term_id: t_lsmx_0040
+  term: choose_a_background_material_darker_than_the_subject
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    For black-on-black, replace black paper with a material producing less diffuse reflection than the
+    subject — the source's choice is black velvet — so the background can stay black while the subject
+    is rendered dark grey and keeps its detail.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 9, 'Using an Opaque Black Background'"}
+  arising_from: [sk_lsmx_0057]
+
+- term_id: t_lsmx_0041
+  term: cross_polarize_the_source_and_the_lens
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Polarize the lights with their axes toward the camera and cross a lens polarizer at 90 degrees, so
+    the whole direct component is removed and only diffuse reflection reaches the camera. The source
+    calls this a last resort, costing four to six stops in practice, and blocks it for portraits because
+    skin's own small direct reflection would go with it.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 4, 'Doing the Impossible'; Ch. 8, 'Eyeglasses'"}
+  arising_from: [sk_lsmx_0009, sk_lsmx_0051]
+
+- term_id: t_lsmx_0042
+  term: match_the_sources_to_each_other_rather_than_to_a_standard
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Gel the light sources so they are a single colour, not necessarily the correct one, converting an
+    unmixed-colour scene into a mixed-colour one that a single global correction can then fix. Includes
+    gelling the window rather than the lamps where that also improves the intensity balance.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 10, 'Correcting Unmixed Colors' and 'Filtering Daylight'"}
+  arising_from: [sk_lsmx_0058, sk_lsmx_0059]
+
+- term_id: t_lsmx_0043
+  term: apply_dulling_spray_sparingly
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Add diffuse reflection and reduce direct reflection on a surface, buying freedom from the family of
+    angles. The source's stated costs: the metal may no longer look like metal, fine detail may lose
+    sharpness, and the chemistry may attack the subject, so a small insignificant area must be tested
+    first.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production]
+  source_ref: {locator: "Ch. 5, 'Use Dulling Spray'; Ch. 6, 'Dulling Spray'"}
+  arising_from: [sk_lsmx_0023, sk_lsmx_0038]
+
+- term_id: t_lsmx_0044
+  term: expose_toward_the_middle_of_the_curve_and_correct_afterwards
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Give an extreme scene up to 2½ stops less exposure if it is white-on-white and up to 2½ stops more
+    if it is black-on-black, recording it on the straighter part of the curve, then move it back in
+    reproduction. Fails when a secondary subject sits at the opposite extreme.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production, human_edit]
+  source_ref: {locator: "Ch. 9, 'Exposing White-on-White Scenes' and 'Exposing Black-on-Black Scenes'"}
+  arising_from: [sk_lsmx_0053]
+
+- term_id: t_lsmx_0045
+  term: retouch_the_reflection_rather_than_light_around_it
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Shoot flat metal straight on, allow the camera to reflect, and remove the reflection afterwards. The
+    source is explicit that this is not a lighting solution, that it loses no image quality, and that for
+    some subjects it is so much cheaper than the lighting solutions that it should not be forgotten.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {locator: "Ch. 6, 'Retouch the Reflection'"}
+  arising_from: [sk_lsmx_0034]
+
+- term_id: t_lsmx_0046
+  term: decide_which_subject_is_principal_before_lighting
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Settle, before lighting a mixed scene, which subject is the principal one. The source states this
+    cannot be decided on a purely technical basis and names the intended caption, the client and personal
+    whim among the inputs, and that two identical scenes might therefore be lit differently.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit]
+  source_ref: {locator: "Ch. 7, 'Recognizing the Principal Subject'"}
+  arising_from: [sk_lsmx_0049, sk_lsmx_0003]
+
+- term_id: t_lsmx_0047
+  term: compose_out_the_highlights_that_a_global_correction_will_colour
+  origin: source
+  origin_ref: light-science-magic-beyond-ch3
+  kind: remedy
+  definition_in_origin_frame: >
+    Correct colour while shooting, or compose so the frame contains no light source and no mirror image
+    of one, because clipped highlights record white regardless of the source's colour and then take on
+    the colour of whatever global correction is applied to the rest of the scene.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [physical_production, human_edit]
+  source_ref: {locator: "Ch. 10, 'Correcting Mixed Colors'"}
+  arising_from: [sk_lsmx_0060]
+
+relationships:
+
+- from: t_lsmx_0002
+  to: t_lsmx_0003
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source's own pairing, and it checks the distinction on four questions rather than asserting it.
+    Bright field vacates the limits of the family of angles and dark field occupies them; one shows dark
+    edges on a bright ground, the other bright edges on a dark one; one is metered on the background and
+    the other on the edge of the light source; one hides extraneous reflections in a bright ground while
+    the other makes them maximally visible. They share the requirement that the background exactly fill
+    the frame. Recorded as distinct rather than opposed because the source derives both from a single
+    geometric fact.
+
+- from: t_lsmx_0002
+  to: t_lsmx_0019
+  relation: related_to
+  confidence_basis: source_stated
+  note: "Each glass method's characteristic failure is the collapse produced by drifting toward the other."
+
+- from: t_lsmx_0004
+  to: t_lsmx_0005
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: >
+    Both are 'effective size' quantities set by distance rather than by material dimensions, and it
+    would be easy to treat them as one idea. The source keeps them apart and so do we: the effective size
+    of the background is what decides whether a background intrudes into the subject's family of angles,
+    while the effective size of the light is what decides how much of that family is filled. They are
+    measured from different points and they control different outcomes. Checked and rejected as
+    equivalent.
+
+- from: t_lsmx_0005
+  to: t_lsmx_0007
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Linked through the camera. The source states that focal length indirectly influences the effective
+    size of the light by changing the width of the family of angles, and separately that camera position
+    determines perspective distortion — so a single viewpoint choice sets both. Recorded as related, not
+    causal, because neither determines the other.
+
+- from: t_lsmx_0014
+  to: t_lsmx_0008
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Compression at the extremes is why a subject carrying important detail on every face cannot take the
+    full range of tonal variation. The source states both halves — the compression in chapter 9, the
+    package constraint in chapter 5 — and does not connect them; the link is ours in placement though not
+    in content.
+
+- from: t_lsmx_0017
+  to: t_lsmx_0026
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The problem and the source's stated remedy: switch the surface to the reflection channel it actually has."
+
+- from: t_lsmx_0018
+  to: t_lsmx_0002
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The problem the whole glass chapter exists to solve, and the first of its two answers."
+
+- from: t_lsmx_0020
+  to: t_lsmx_0033
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The tent is the remedy of last resort for the camera reflection on round metal, and the source is
+    candid that it does not remove it — it substitutes the reflection of a hole and some seams, which
+    must be retouched.
+
+- from: t_lsmx_0021
+  to: t_lsmx_0010
+  relation: related_to
+  confidence_basis: source_stated
+  note: "Black magic exists to restore the tonal boundary a disappearing metal edge has lost."
+
+- from: t_lsmx_0022
+  to: t_lsmx_0037
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The problem and its precisely sized remedy. The size constraint is the interesting part: the gobo must
+    cover the label's family of angles and no more, because a larger one enters the glass's family and
+    becomes a black reflection there.
+
+- from: t_lsmx_0031
+  to: t_lsmx_0041
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    Both use polarizing filters and they do opposite work. The glass-support remedy uses a lens polarizer
+    alone and depends on two surfaces polarizing DIFFERENTLY, so it discriminates. Cross-polarization puts
+    a filter on the source as well and removes the direct component from EVERYTHING, so it cannot
+    discriminate. The source shows each failing where the other succeeds — cross-polarization is the
+    escape from impossible copy lighting and is barred in portraits; the lens polarizer clears a glass
+    support under metal and is useless under a black subject. Checked and recorded as distinct.
+
+- from: t_lsmx_0024
+  to: t_lsmx_0038
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    The problem and its only remedy. Worth keeping because the source states that the loss can be
+    significant while remaining invisible, so the absence of visible flare is not evidence that flare is
+    absent.
+
+- from: t_lsmx_0025
+  to: t_lsmx_0034
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: >
+    Both concern the background in an extreme scene and they pull in the same direction for different
+    reasons — one perceptual, one optical. The source treats them in separate sections and does not link
+    them; recorded as related only.
+
+- from: t_lsmx_0012
+  to: t_lsmx_0013
+  relation: distinct_from
+  confidence_basis: source_stated
+  note: >
+    The source's own distinction and the whole point of its colour section: mixed colour is a uniform
+    error and therefore correctable globally, unmixed colour is a spatially varying error and no white
+    balance can fix it. The remedy for the second is to convert it into the first.
+
+- from: t_lsmx_0013
+  to: t_lsmx_0042
+  relation: related_to
+  confidence_basis: source_stated
+  note: "The problem and the source's counter-intuitive remedy: match the sources to each other, not to a standard."
+
+- from: t_lsmx_0045
+  to: t_lsmx_0033
+  relation: related_to
+  confidence_basis: source_stated
+  note: >
+    Two answers to the same problem from opposite ends of the effort scale, and the source endorses both
+    in different places: build an enclosure, or shoot it and retouch. It is explicit that the second is
+    not a lighting solution and equally explicit that spending half a day lighting instead of half an hour
+    retouching makes no sense.
+
+concepts:
+
+- concept_id: sc_lsmx_surface_classes
+  kind: source_specific_concept
+  origin_ref: light-science-magic-beyond-ch3
+  label: the_surface_classes_the_book_treats_separately
+  children_terms: [t_lsmx_0001, t_lsmx_0017, t_lsmx_0018, t_lsmx_0021, t_lsmx_0023, t_lsmx_0025]
+  origin: source_stated
+  basis: >
+    The book's own organisation. It devotes a chapter each to metal and to glass, a section each to
+    white-on-white and black-on-black, and defines 'complex surface' as its own term for a surface needing
+    both reflection types. The grouping is the source's; the membership of the liquid and the perceptual
+    key problem in it is ours.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_lsmx_family_of_angles_controls
+  kind: source_specific_concept
+  origin_ref: light-science-magic-beyond-ch3
+  label: things_that_act_on_the_family_of_angles
+  children_terms: [t_lsmx_0004, t_lsmx_0005, t_lsmx_0007, t_lsmx_0026, t_lsmx_0027, t_lsmx_0028, t_lsmx_0029, t_lsmx_0030, t_lsmx_0034, t_lsmx_0037]
+  origin: extractor_inferred
+  basis: >
+    The source uses the family of angles in every chapter of this span and states each control where it
+    arises, but never gathers them. Collecting the light's position and size, the camera's position and
+    focal length, the background's effective size, and every shaped occluder as acting on one quantity is
+    ours. See scs_lsmx_002, whose whole-system claim carries the same marking.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_lsmx_physical_remedies
+  kind: source_specific_concept
+  origin_ref: light-science-magic-beyond-ch3
+  label: remedies_executable_only_by_moving_physical_apparatus
+  children_terms: [t_lsmx_0026, t_lsmx_0027, t_lsmx_0028, t_lsmx_0029, t_lsmx_0030, t_lsmx_0031, t_lsmx_0032, t_lsmx_0033, t_lsmx_0034, t_lsmx_0035, t_lsmx_0036, t_lsmx_0037, t_lsmx_0038, t_lsmx_0039, t_lsmx_0040, t_lsmx_0041, t_lsmx_0042, t_lsmx_0043]
+  origin: extractor_inferred
+  basis: >
+    Grouped so the boundary is visible rather than implicit. Eighteen of this lane's twenty-two remedy
+    terms have no route except a person moving a light, a camera, a card, a filter or a support, and none
+    of them has been translated into anything else. The grouping is ours and exists to make the untranslated
+    set countable.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_lsmx_glass_methods
+  kind: source_specific_concept
+  origin_ref: light-science-magic-beyond-ch3
+  label: the_two_glass_field_methods_and_their_joint_failure
+  children_terms: [t_lsmx_0002, t_lsmx_0003, t_lsmx_0018, t_lsmx_0019, t_lsmx_0035]
+  origin: source_stated
+  basis: >
+    The source names the pair, calls them 'two attractive opposites', derives both from the limits of one
+    family of angles, and devotes a section to the failure of combining them. The grouping is entirely the
+    source's.
+  asserts_agreement_between_sources: false
+
+- concept_id: sc_lsmx_colour_management
+  kind: source_specific_concept
+  origin_ref: light-science-magic-beyond-ch3
+  label: the_mixed_and_unmixed_colour_distinction
+  children_terms: [t_lsmx_0012, t_lsmx_0013, t_lsmx_0042, t_lsmx_0047]
+  origin: source_stated
+  basis: >
+    The source introduces the two as its own named pair under the heading 'Do the Colors Mix?', gives a
+    different remedy section to each, and adds the clipped-highlight caution to the mixed case. The
+    grouping is the source's.
+  asserts_agreement_between_sources: false

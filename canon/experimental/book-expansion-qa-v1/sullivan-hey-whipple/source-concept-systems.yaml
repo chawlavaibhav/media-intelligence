@@ -1,0 +1,557 @@
+# Luke Sullivan, Hey Whipple, Squeeze This (6th ed., Wiley, 2022) — SPEC-03 SourceConceptSystems
+# EXPERIMENTAL — NOT LIVE CANON. Lane: sullivan-hey-whipple, book-expansion-qa-v1. Non-merge.
+#
+# LOCATORS: EPUB, reflowable. NO AUTHORED PAGE NUMBERS. page_start / page_end are null in every
+# system. Chapter and section names carry the locator. Audit pattern: no_authored_page.
+#
+# ORIGIN MARKING: seven systems are recorded. Sullivan writes in chapter-length runs of numbered
+# advice, so the individual claims are his and the *structure* connecting them is very often ours.
+# Every system therefore carries a blunt `system_level_uncertainty` saying how much of it he stated
+# and how much we imposed. Where he states the structure himself (the fuse/reduction arithmetic, the
+# truth-plus-conflict generator, the clear/clever diagram) that is said plainly too.
+#
+# No system is recorded for the source's career advice, agency-life material or award-show example
+# runs, none of which was extracted at all.
+
+source_id: sullivan-hey-whipple
+
+source_concept_systems:
+
+- scs_id: scs_whip_001
+  source_id: sullivan-hey-whipple
+  label: the_reduction_and_speed_of_get_model
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    Sullivan's simplicity chapter is not a list of preferences but a small closed causal loop, and
+    the members are unintelligible apart. Attention inside one composition is treated as a fixed
+    quantity divided among the elements present, so every element added lowers the salience of every
+    other and every element removed raises it (sk_whip_0003). That arithmetic is what makes the
+    removal test meaningful rather than arbitrary: an element that can be taken out without loss was
+    already diluting the rest (sk_whip_0002). Reduction has a target — one point, because a concept
+    making more than one makes none (sk_whip_0004) — and a purpose, which is comprehension speed:
+    the fuse must be short enough that the idea resolves inside the viewer's attention and long
+    enough that resolving it is worth something (sk_whip_0001). How long the fuse may be is not a
+    property of the idea but of the medium the viewer meets it in (sk_whip_0060). Remove any member
+    and the others stop having reasons.
+  whole_system_claim:
+    text: >
+      Simplicity in this source is instrumental, not aesthetic. Element count is the lever,
+      per-element salience is the intermediate variable, and comprehension speed inside the medium's
+      dwell time is the outcome the whole chain exists to control. This is why Sullivan can say a
+      quick get matters more than the creativity of the piece and treat it as heresy rather than as
+      taste: within the model, creativity that lengthens the fuse past the medium's budget produces
+      nothing at all.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Sullivan states each link — French's arithmetic, the removal test, the one-point limit, the
+      fuse, the medium's speed — but never assembles them into a single mechanism or says that the
+      earlier links exist to serve the last. The causal ordering is ours. He does connect the fuse to
+      reduction explicitly ("you can improve the speed of the get on your concepts by taking
+      everything out of the idea except the idea"), which is the one link he supplies himself.
+    source_ref: null
+  members:
+    - {sk_ref: sk_whip_0003, role_in_system: mechanism, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0002, role_in_system: procedure, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0004, role_in_system: target_state, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0001, role_in_system: outcome_variable, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0060, role_in_system: boundary_condition, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_whip_0002, to: sk_whip_0003, note: "the removal test is only justified by the dilution arithmetic"}
+      - {from: sk_whip_0001, to: sk_whip_0002, note: "the removal test is the stated way to shorten a long fuse"}
+      - {from: sk_whip_0001, to: sk_whip_0060, note: "permissible fuse length is set by the medium"}
+    tradeoffs:
+      - {between: [sk_whip_0001, sk_whip_0007], note: "wit requires the viewer to travel part of the distance, which lengthens the fuse on purpose; the model has an optimum, not a minimum"}
+    conflicts:
+      - {note: "sk_whip_0045 grants that the sheer weight of body copy adds gravitas whether or not it is read, which the dilution arithmetic cannot accommodate; the source does not reconcile them"}
+  source_warns_against_isolated_use: true
+  source_warning_ref: sk_whip_0001
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The five claims are the source's, stated in his own words in one chapter and one adjacent
+      section. The causal assembly is OURS: he presents them as consecutive advice, not as a chain
+      with a single outcome variable. Two links he does state (fuse improved by removal; outdoor
+      forcing simplicity). The rest of the ordering is our reading. He also concedes he reached the
+      system's ideal end state — one element — exactly once in a career, which should temper any use
+      of this as a procedure.
+  provenance:
+    chapter: "Ch. 6 — The Virtues of Simplicity: Or, Why It's Hard to Pound in a Nail Sideways"
+    section: "the whole chapter, including 'A few words about outdoor.' (spine 19)"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_whip_002
+  source_id: sullivan-hey-whipple
+  label: the_truth_plus_conflict_platform_generator
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The storytelling chapter contains an explicit generative procedure with a stated entry point, a
+    stated operation, a stated output and two stated acceptance tests. Entry: the truest thing that
+    can be said about the brand, which is generally not in the brief because clients are taught to
+    minimise it (sk_whip_0041, sk_whip_0012). Operation: cross that truth with the conflicts it
+    produces (sk_whip_0012), a conflict being required because without one there is no story
+    (sk_whip_0011); the conflict may be found in the category, invented outright, or imposed by the
+    versus frame (sk_whip_0014), and its most reliable shape is deprivation — life without the
+    product rather than with it (sk_whip_0013). Output: not a campaign but a world with rules, which
+    then keeps generating (sk_whip_0009); casting the brand as an archetype rather than as the hero
+    is one route into such a world (sk_whip_0015). Acceptance tests: it fits on a sticky note, and
+    spoken aloud it starts talking (sk_whip_0010). Sullivan applies the whole sequence to branded
+    content, where the output must additionally satisfy an entertainment criterion (sk_whip_0070).
+  whole_system_claim:
+    text: >
+      The system's real claim is that a platform is produced rather than found, and that the
+      production runs on constraint. Each step narrows: a truth eliminates most of what could be
+      said, a conflict eliminates most of what could be dramatised, and the resulting rule set
+      eliminates most of what could be executed — after which, by the source's account, executions
+      arrive without further invention. Sullivan states the payoff of the middle step in one word,
+      focus, and states the payoff of the last as the rules starting to talk.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Sullivan states the formula (TRUTH + CONFLICTS = possible platform), the definitions of
+      campaign and platform, the two signs, and the deprivation and versus devices, all in the same
+      chapter and in this order. What is ours is the reading of the whole as a narrowing sequence and
+      the claim that constraint is what makes it work — he says only that it gave his student focus.
+      He also refuses the word formula and calls it a tool, so presenting it as a procedure is
+      already one step further than he goes.
+    source_ref: "Ch. 7, 'Truth + conflicts = platform.' (spine 21)"
+  members:
+    - {sk_ref: sk_whip_0041, role_in_system: input, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0012, role_in_system: operation, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0011, role_in_system: precondition, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0014, role_in_system: device, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0013, role_in_system: device, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0015, role_in_system: device, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0009, role_in_system: output, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0010, role_in_system: acceptance_test, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0070, role_in_system: extension, order: 9, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+      - {from: sk_whip_0012, to: sk_whip_0041, note: "the operation needs a truth, and a fact will not serve"}
+      - {from: sk_whip_0009, to: sk_whip_0012, note: "the rule set is what the crossing produces"}
+      - {from: sk_whip_0010, to: sk_whip_0009, note: "the two signs test for the property that object defines"}
+    tradeoffs: []
+    conflicts:
+      - {note: "sk_whip_0059 requires every execution to be wholly self-sufficient, while a platform's value is that later stories draw on rules the earlier ones established; the source states both and reconciles neither"}
+  source_warns_against_isolated_use: true
+  source_warning_ref: sk_whip_0012
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, anecdotal]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The sequence is largely the SOURCE'S — he writes it in this order in one chapter and states the
+      formula in a display line. Ours are: the framing of it as a progressive narrowing, the
+      placement of sk_whip_0041 (from Chapter 3) as the system's input, and the inclusion of
+      sk_whip_0070 as an extension. He explicitly hedges the whole thing as a tool rather than a
+      rule, and every supporting case is classroom work or a celebrated campaign described after the
+      fact.
+  provenance:
+    chapter: "Ch. 7 — Why Is the Bad Guy Always More Interesting?; with the input from Ch. 3 and the extension in Ch. 11"
+    section: "Ch. 7 in full; Ch. 3 'Start with a central human truth.'; Ch. 11 'The hard part.' (spines 21, 13, 29)"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_whip_003
+  source_id: sullivan-hey-whipple
+  label: the_clear_and_clever_intersection
+  label_origin: source_verbatim
+  system_type: mutual_qualification
+  system_type_origin: source_stated
+  description: >
+    Sullivan draws a two-circle diagram and states that the writer's job is the overlap: all the ways
+    the key message could be communicated clearly, intersected with all the ways it could be spun
+    into something interesting (sk_whip_0005). The two demands are owed to different parties — the
+    client is entitled to clarity, the reader is not looking for it — so neither can be traded away
+    for the other, which is what makes this a mutual qualification rather than a scale. Each half has
+    a named failure at its far end: "I've seen that before" at the clear end and "I don't get it" at
+    the clever end. Around the diagram sit the operations. Say it straight, then say it great is the
+    stated entry procedure (sk_whip_0006). Wit is the mechanism of the clever half, working by making
+    the viewer travel part of the distance (sk_whip_0007), and two sentence architectures realise
+    that shift inside a single line (sk_whip_0008). Two upstream checks guard the clear half: the
+    message must survive "Yeah, riiiight" and "So what?" (sk_whip_0040), and it must be built on a
+    truth rather than a fact (sk_whip_0041, which is also this system's shared boundary with
+    scs_whip_002).
+  whole_system_claim:
+    text: >
+      Interest and clarity are not two settings of one dial and cannot be optimised separately. Each
+      one, pursued alone, produces a named and recognisable failure, and the source locates
+      essentially all of the working time in the search for the borders of the region where both
+      hold. The practical consequence is that "make it clearer" and "make it more interesting" are
+      never sufficient instructions on their own.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The diagram, the two rejections and the entry procedure are Sullivan's, printed as a figure and
+      discussed directly. What is ours is treating the two upstream checks (sk_whip_0040) and the
+      fact/truth distinction (sk_whip_0041) from Chapter 3 as guards on the clear half — he does not
+      connect them to the diagram. The reading of the relation as mutual qualification rather than as
+      a trade-off is also ours, though it follows from his statement that the two demands come from
+      different parties.
+    source_ref: "Ch. 5, 'First say it straight, then say it great.', Figure 5.3 (spine 17)"
+  members:
+    - {sk_ref: sk_whip_0005, role_in_system: whole, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0006, role_in_system: entry_procedure, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0007, role_in_system: mechanism, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0008, role_in_system: mechanism, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0040, role_in_system: guard, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0041, role_in_system: guard, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_whip_0006, to: sk_whip_0005, note: "the procedure exists to reach the overlap"}
+      - {from: sk_whip_0007, to: sk_whip_0005, note: "wit is what the clever half is doing"}
+      - {from: sk_whip_0008, to: sk_whip_0007, note: "the sentence architectures are wit realised in one line"}
+    tradeoffs:
+      - {between: [sk_whip_0005, sk_whip_0001], note: "cleverness is bought with comprehension time; the intersection is bounded by the fuse model of scs_whip_001"}
+      - {between: [sk_whip_0007, sk_whip_0001], note: "the 5-to-40-percent travel the audience does is exactly what lengthens the fuse"}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: sk_whip_0005
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The core is the SOURCE'S and is printed as a diagram he discusses at length; the two failure
+      names are quoted from George Felton. Ours: the inclusion of the two Chapter 3 guards as members,
+      the system type, and the observation that this system is bounded by the fuse model. Nothing
+      here tells a maker where the borders of the overlap lie in any particular case, and Sullivan
+      says so — finding them is the work.
+  provenance:
+    chapter: "Ch. 5 — Brevity Is the Soul of Wit: The Art of Copywriting; with guards from Ch. 3"
+    section: "Ch. 5, 'Have a writing process' and 'The architecture of ideas'; Ch. 3, 'Three final notes on strategy.' (spines 17, 13)"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_whip_004
+  source_id: sullivan-hey-whipple
+  label: the_diverge_converge_working_cycle
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: extractor_inferred
+  description: >
+    Sullivan's account of how work is actually produced spans four chapters and resolves into one
+    repeating cycle with named stages and named failure modes at each. Conditions are set first: a
+    three-hour session, paper rather than a screen, everything else off (sk_whip_0026), and a partner
+    protocol that suspends judgement (sk_whip_0027) while keeping the work off the hallway
+    (sk_whip_0028). Generation runs wide and cheap — shallow holes everywhere rather than one deep
+    one (sk_whip_0019) — fed by two collision devices (sk_whip_0024, sk_whip_0064) and one methodical
+    coverage device (sk_whip_0025), toward an explicit volume target (sk_whip_0017) reachable only
+    at speed, which is the discard skill experience actually buys (sk_whip_0018). Bad ideas are
+    written down rather than suppressed (sk_whip_0020), and the arc is expected to pass through easy
+    ideas that must be discarded and a dry stretch that must be endured (sk_whip_0021), with a set of
+    named recovery moves for the dry stretch (sk_whip_0069). Judgement then runs separately and cold
+    (sk_whip_0022), after which the surviving ideas are clustered to find the campaign latent in them
+    (sk_whip_0023) and the cycle reverses. Upstream of all of it sits the option of refusing the
+    question the brief asked (sk_whip_0062) and replacing its key message with a key question
+    (sk_whip_0063).
+  whole_system_claim:
+    text: >
+      Everything in this cycle is arranged to keep generation and judgement from happening at the
+      same time, and the source's individual instructions are almost all instances of that one rule:
+      write hot and edit cold, angel's advocate not devil's, record the bad idea instead of arguing
+      with it, capture the promising find and keep digging, do not talk about the work while it is
+      unfinished. The volume target is what the separation makes possible, and the clustering step is
+      what makes volume pay.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Sullivan never assembles these into one cycle; they are distributed across Chapters 4, 5, 8 and
+      15 as separate runs of headed advice. He does state the separation principle twice in his own
+      words ("write hot, edit cold", repeated in two chapters) and states the convergent/divergent
+      alternation directly, which is what licenses reading the rest as instances of it. The
+      identification of the four condition-setting members as a preamble, and the placement of
+      problem-finding upstream, are ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_whip_0026, role_in_system: precondition, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0027, role_in_system: precondition, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0028, role_in_system: precondition, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0062, role_in_system: upstream_option, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0063, role_in_system: upstream_option, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0019, role_in_system: step, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0024, role_in_system: device, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0025, role_in_system: device, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0064, role_in_system: device, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0020, role_in_system: rule, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0017, role_in_system: target, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0018, role_in_system: enabling_skill, order: 12, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0021, role_in_system: expected_stage, order: 13, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0069, role_in_system: repair, order: 14, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0022, role_in_system: step, order: 15, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0023, role_in_system: step, order: 16, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_whip_0017, to: sk_whip_0018, note: "the volume target is unreachable without fast discard"}
+      - {from: sk_whip_0023, to: sk_whip_0017, note: "there is nothing to cluster without volume"}
+      - {from: sk_whip_0023, to: sk_whip_0022, note: "clustering follows the cold edit"}
+      - {from: sk_whip_0020, to: sk_whip_0022, note: "permission to write badly is safe only because judgement comes later"}
+    tradeoffs:
+      - {between: [sk_whip_0069, sk_whip_0021], note: "change something versus sit through it — the source gives both and no rule for choosing"}
+    conflicts:
+      - {note: "sk_whip_0062 concedes that agencies are staffed only for current business and so cannot do problem-finding, which makes the system's upstream option unavailable under the conditions the source himself describes"}
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_given, anecdotal]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      This is the most extractor-assembled system in the lane and should be treated as such. The
+      sixteen claims are all Sullivan's, in his words, and several of the local orderings are his
+      (shallow holes then deep dig; write hot then edit cold; cluster after editing). The unification
+      of four chapters into one cycle with preconditions, devices, targets and repairs is OURS. He
+      does not present a process; he presents advice under headings, and says explicitly that
+      whatever process a reader arrives at is their own.
+  provenance:
+    chapter: "Ch. 4 — A Controlled Daydream; Ch. 5 — Brevity Is the Soul of Wit; Ch. 8 — Rewiring Your Brain; Ch. 15 — Creative Mind Versus Monkey Mind"
+    section: "the concepting and writing-process sections of each (spines 15, 17, 23, 37)"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_whip_005
+  source_id: sullivan-hey-whipple
+  label: the_sources_apparatus_for_judging_finished_work
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    The book's founding premise is that measured sales effect does not by itself justify an
+    advertisement (sk_whip_0042), which creates the problem the rest of this system answers: if not
+    sales, then what. Sullivan's answer has three layers. A negative layer of named, checkable faults
+    — the pun and the rhyme (sk_whip_0029), the category's worn imagery (sk_whip_0030), reflexive
+    exaggeration (sk_whip_0031), the reassurance signals that read as their own refutation
+    (sk_whip_0033, sk_whip_0034, sk_whip_0035), the business register (sk_whip_0036) and copy that
+    explains its own headline (sk_whip_0037). A positive layer that rejects work passing all of those
+    and still doing nothing (sk_whip_0038), tested by whether people would talk about it and whether
+    the press would carry it (sk_whip_0066) and pursued by deliberate inversion of category
+    convention (sk_whip_0065). And one overriding constraint that survives when the source discards
+    every other rule in his own book: the work must be relevant (sk_whip_0067). Two members are
+    negative findings about the apparatus itself — Sullivan's refusal of focus-group creative testing
+    (sk_whip_0039) and his stated mechanisms for why it distorts (sk_whip_0068).
+  whole_system_claim:
+    text: >
+      Sullivan replaces one measurable criterion with a stack of unmeasurable ones and does not
+      conceal the exchange: he rejects sales as sufficient, rejects testing as valid, and offers in
+      their place a fault list applied by a trained eye, two talkability questions answered by
+      prediction, and a relevance requirement he supplies no test for. The apparatus is coherent, it
+      is checkable in its negative layer, and its positive layer rests on professional judgement.
+      That is the honest description of it, and it is what makes `source_position` the right register
+      for most of this material.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The three layers are ours. Sullivan distributes these claims across Chapters 1, 3, 4, 5, 9 and
+      16 without ever presenting them as an evaluation framework, and does not himself observe that
+      rejecting both sales and testing leaves judgement carrying the whole weight. He does state the
+      ordering of the last element himself — relevance is the one rule that survives when the rest
+      are thrown out — and he does state the founding premise as the reason he wrote the book. The
+      characterisation of the apparatus as trading measurability for judgement is entirely ours and
+      is offered as a description, not as a criticism of the individual claims.
+    source_ref: null
+  members:
+    - {sk_ref: sk_whip_0042, role_in_system: founding_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0039, role_in_system: rejected_method, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0068, role_in_system: rejected_method, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0029, role_in_system: fault, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0030, role_in_system: fault, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0031, role_in_system: fault, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0033, role_in_system: fault, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0034, role_in_system: fault, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0035, role_in_system: fault, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0036, role_in_system: fault, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0037, role_in_system: fault, order: 11, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0038, role_in_system: residual_fault, order: 12, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0065, role_in_system: remedy, order: 13, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0066, role_in_system: acceptance_test, order: 14, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0067, role_in_system: overriding_constraint, order: 15, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_whip_0065, to: sk_whip_0030, note: "you cannot invert a convention you have not learned"}
+      - {from: sk_whip_0066, to: sk_whip_0038, note: "the talkability tests are what the obedient idea fails"}
+      - {from: sk_whip_0033, to: sk_whip_0035, note: "the punctuation case is one instance of the reassurance-signal pattern"}
+      - {from: sk_whip_0034, to: sk_whip_0035, note: "the fake name is another"}
+    tradeoffs:
+      - {between: [sk_whip_0065, sk_whip_0067], note: "inversion buys attention and relevance is what it must not spend"}
+    conflicts:
+      - {note: "sk_whip_0042 rests the book's founding argument on survey research about dislike and believability while sk_whip_0039 and sk_whip_0068 reject the testing of creative work; the source does not distinguish which research he will accept and which he will not, beyond the strategy/execution line drawn in Ch. 16"}
+      - {note: "sk_whip_0066's talkability tests measure attention, which is not the criterion sk_whip_0042 says should replace sales; the chapter reads as though they were the same thing"}
+  source_warns_against_isolated_use: true
+  source_warning_ref: sk_whip_0067
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The individual faults, tests and the relevance constraint are the SOURCE'S, in his own
+      vocabulary. The assembly into a three-layer evaluation framework, the ordering, and the
+      observation that the apparatus trades measurability for judgement are OURS and are stated as
+      ours. Anyone using this system should note that its negative layer is far more checkable than
+      its positive layer, and that the source presents the whole thing as the opinions of one writer.
+  provenance:
+    chapter: "Ch. 1 — A Brief History of Why Everybody Hates Advertising; Ch. 3; Ch. 4; Ch. 5; Ch. 9 — Viral, Naughty, and Rong; Ch. 16 — Pecked to Death by Ducks"
+    section: "the opening argument of Ch. 1, the named-fault sections of Chs. 3-5, the whole of Ch. 9, and 'Creative testing: be afraid' in Ch. 16 (spines 9, 13, 15, 17, 25, 39)"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_whip_006
+  source_id: sullivan-hey-whipple
+  label: the_division_of_labour_between_word_and_image
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Sullivan's treatment of headline and visual is a set of interlocking constraints on a single
+    quantity: how the burden of meaning is split between the two elements. The precondition is that
+    one element is designated as the entry point (sk_whip_0053). The format decision is taken early
+    and is set by message complexity — letter or postcard (sk_whip_0045) — and choosing the postcard
+    transfers the whole selling idea into the image (sk_whip_0044). Within a piece carrying both, one
+    element may be the clever one and the other must be straight (sk_whip_0043); the distance between
+    what is said and what is shown is the variable that sets the size of the reader's shift
+    (sk_whip_0048); and zero distance is the named failure, the see-say (sk_whip_0032). Three
+    generative devices supply the image side: transformation of the product itself (sk_whip_0051),
+    borrowed image equity re-angled into a metaphor (sk_whip_0046), and demonstration rather than
+    assertion (sk_whip_0047), which can remove the need for a headline entirely. Two members govern
+    the look rather than the split: the brand should own a visual territory (sk_whip_0049) pulled
+    from its own material rather than from current fashion (sk_whip_0050). The environment the piece
+    appears in can itself become the image (sk_whip_0052).
+  whole_system_claim:
+    text: >
+      In this source the relation between word and image is a designed quantity, not a matter of
+      composition. Its lower bound is duplication, which wastes an element; its upper bound is the
+      fuse running past the medium's dwell time; and everything between is a deliberate choice about
+      how much of the resolving the reader is asked to do. That is why "which element carries the
+      idea" is a question the maker must answer before executing rather than discover afterwards.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Sullivan states each constraint separately, across two chapters, as headed advice. He does
+      state the scaling claim about polarity, the see-say failure and the clever/straight rule in the
+      same short run, which is the strongest evidence for reading them as one set. What is ours is
+      the framing of all of it as governing a single quantity, the identification of duplication and
+      fuse length as the two bounds, and the inclusion of the look and environment members, which
+      concern recognisability rather than the split.
+    source_ref: null
+  members:
+    - {sk_ref: sk_whip_0053, role_in_system: precondition, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0045, role_in_system: format_decision, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0044, role_in_system: consequence, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0043, role_in_system: rule, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0048, role_in_system: governing_variable, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0032, role_in_system: lower_bound_failure, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0051, role_in_system: device, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0046, role_in_system: device, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0047, role_in_system: device, order: 9, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0052, role_in_system: device, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0049, role_in_system: constraint_on_look, order: 11, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0050, role_in_system: constraint_on_look, order: 12, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - {from: sk_whip_0043, to: sk_whip_0053, note: "the clever/straight split presupposes a designated boss"}
+      - {from: sk_whip_0044, to: sk_whip_0053, note: "a visually led piece presupposes the visual is dominant"}
+      - {from: sk_whip_0032, to: sk_whip_0048, note: "the see-say is polarity at zero"}
+      - {from: sk_whip_0050, to: sk_whip_0049, note: "the owned look must come from the brand, not from fashion"}
+      - {from: sk_whip_0046, to: sk_whip_0030, note: "the metaphor's boundary against the visual cliché is re-angling"}
+    tradeoffs:
+      - {between: [sk_whip_0048, sk_whip_0001], note: "greater polarity means a longer fuse; this set is bounded by scs_whip_001"}
+      - {between: [sk_whip_0049, sk_whip_0050], note: "a distinctive owned look and indifference to current visual convention pull against each other in practice, and against sk_whip_0030's requirement to study the category's conventions closely"}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The claims are the source's; the set is largely OURS. He himself puts the clever/straight rule,
+      the see-say failure and the polarity claim together in one run, and repeats the dominance
+      requirement inside the letter/postcard decision, so a core of four members is source-grouped.
+      The devices and the two look constraints were pulled in by us from a different chapter. A
+      material limitation: almost every member is demonstrated by a reproduced advertisement that
+      this extraction could not see, so what the images actually do is taken on the source's word.
+  provenance:
+    chapter: "Ch. 4 — A Controlled Daydream; and Ch. 5 — Brevity Is the Soul of Wit"
+    section: "Ch. 4, 'A few words about pictures'; Ch. 5, 'Tension and release in an idea' and the clever-headline/straight-visual rule (spines 15, 17)"
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+
+- scs_id: scs_whip_007
+  source_id: sullivan-hey-whipple
+  label: the_copy_finishing_sequence
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The copywriting chapter's back half is ordered, and the source states the ordering at the points
+    where it matters. Tone is decided before writing and is constrained by product and audience,
+    with the standing correction that funny is a subset of interesting rather than a goal
+    (sk_whip_0058). Voice is acquired by study of the brand's own published work rather than invented
+    (sk_whip_0054). The draft is then written, and only afterwards worked: rhythm varied and the
+    joints filled until no sentence can be removed without damage (sk_whip_0055), the whole cut by a
+    third and read aloud (sk_whip_0056). The tagline is written last, explicitly — save it until the
+    campaign is well started, possibly to the very end — and must survive alone with the logo
+    (sk_whip_0057). The final requirement is that each piece stands alone and ends by moving the
+    reader somewhere (sk_whip_0059).
+  whole_system_claim:
+    text: >
+      The ordering carries the claim. Each step operates on material the previous step produced, and
+      three of the steps are explicitly retrospective — you cannot vary a rhythm, cut a third, or
+      summarise an idea into a tagline before the thing exists. Taken together they say that
+      copywriting in this source is mostly editing, which is Sullivan's own summary: all first drafts
+      are crap and all good copywriting is rewriting.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The individual steps and two of the orderings are the source's — the tagline is explicitly last,
+      and reading aloud and cutting are explicitly after the writing. The unification of the tone and
+      voice material at the head of the same sequence is ours; he presents those under a separate
+      heading and does not say they precede the draft, though his own account of voice emerging from
+      the brand truth implies it.
+    source_ref: "Ch. 5, 'If you have to have one, make your tagline an anthem.' (spine 17)"
+  members:
+    - {sk_ref: sk_whip_0058, role_in_system: step, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0054, role_in_system: step, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_whip_0055, role_in_system: step, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0056, role_in_system: step, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0057, role_in_system: step, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_whip_0059, role_in_system: acceptance_test, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+      - {from: sk_whip_0057, to: sk_whip_0055, note: "the tagline summarises an idea that must already exist"}
+      - {from: sk_whip_0056, to: sk_whip_0022, note: "the cut and the aloud read are the cold edit at sentence level"}
+      - {from: sk_whip_0054, to: sk_whip_0041, note: "voice is said to emerge from the brand truth"}
+    tradeoffs: []
+    conflicts:
+      - {note: "sk_whip_0057 prescribes how to make a tagline while sk_whip_0003's reduction exercise names the tagline as the first element to remove; the source holds both and signals it by making the tagline advice conditional"}
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, visually_demonstrated, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Half the ordering is the SOURCE'S and stated: the tagline is last, the cut and the aloud read
+      come after writing, and the whole chapter runs from process to voice to flow to finish. Ours:
+      placing the tone decision and voice acquisition as steps one and two, and treating sk_whip_0059
+      as the sequence's acceptance test rather than as separate campaign advice. None of the steps
+      has a measured effect attached; all are craft prescriptions.
+  provenance:
+    chapter: "Ch. 5 — Brevity Is the Soul of Wit: The Art of Copywriting"
+    section: "Voice and tone; Flow and readability; If you have to have one, make your tagline an anthem. (spine 17)"
+    page_start: null
+    page_end: null
+    source_support: text
