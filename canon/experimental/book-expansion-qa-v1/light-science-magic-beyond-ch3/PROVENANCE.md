@@ -105,10 +105,12 @@ The live chapter-3 record carries `blocked_visual_validation`: the macOS privacy
 unseen. **That block is gone.** The EPUB opened, and the figure images are present as
 `OEBPS/Images/figN_M.jpg`.
 
-I inspected **34 figures** from chapters 4, 6, 7 and 9 as nine labelled contact sheets, chosen to
-cover every matched pair on which a claim in this lane depends. What that changes, and what it does
-not, is set out in `EXTRACTION-NOTES.md` §3, including the count of objects that still carry
-`extraction_uncertainty: figure_not_inspected`.
+I inspected **54 figures** from chapters 4, 6, 7 and 9, as nine labelled contact sheets, chosen to
+cover every matched pair on which a claim in this lane depends. **53 of them are cited in an object**
+and recorded in that object's `provenance.inspected.figures`; every figure so recorded was actually
+opened, and this was verified mechanically. Objects citing a figure that was NOT opened carry
+`extraction_uncertainty: figure_not_inspected` — 18 of 60 do. What the inspection changes, and what
+it does not, is set out in `EXTRACTION-NOTES.md` §3.
 
 This asymmetry must be carried forward: **the live chapter-3 objects and this lane's objects do not
 have the same evidential standing**, and a reader comparing them should not read

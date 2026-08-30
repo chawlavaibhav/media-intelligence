@@ -34,16 +34,21 @@ Sullivan. This is recorded rather than silently normalised.
 
 - **Format:** EPUB, reflowable.
 - **Spine documents carrying text:** 49. **Total characters:** 718,561.
-- **Span read in full:** front matter (foreword, preface), Chapters 1–11 and 14–16, plus the
-  opening and craft sections of Chapters 12, 13 and 17.
-- **Span sampled but not extracted from:** Chapter 17 beyond the "Whatever you make, make it way
-  better than it has to be made" section (portfolio construction, interviewing, career advice),
-  Chapter 18 (closing essay), Suggested Reading, Bibliography, Acknowledgments, About the Author,
-  Index, EULA.
-- **Rationale for the span:** the lane brief prioritises concept development, diagnostic cues,
-  repair principles, word/image relationship, trade-offs, boundary conditions and process. Those
-  live in Chapters 1–9 and 14–16. Chapters 10–13 were read for the technology-contingent material,
-  which is extracted only where a mechanism is stated, and is labelled.
+- **Span read in full (this run):** front matter (foreword, preface) and Chapters 1, 2, 3, 4, 5, 6,
+  7, 8, 9, 11, 15 and 16, plus the "Mastering good social media practices" section of Chapter 12.
+- **Span read only as headings / table of contents:** Chapters 10, 13, 14, 17, the remainder of
+  Chapter 12.
+- **Span not read and not extracted from:** Chapter 18 (closing essay), Suggested Reading,
+  Bibliography, Acknowledgments, About the Author, "Also by Luke Sullivan", Index, EULA.
+- **Rationale for the span.** The lane brief prioritises concept development, diagnostic cues,
+  repair principles, the word/image relationship, trade-offs, boundary conditions and process.
+  Those live in Chapters 1–9, 11, 15 and 16, which were read in full. Chapters 10, 12 and 13 are
+  the digital and social chapters; one section of Chapter 12 was read to characterise the
+  technology-contingent material accurately, and the rest was not extracted from. Chapters 14
+  (television craft) and 17 (portfolio and career) fall outside the brief's priorities and outside
+  its refusal list respectively, and were deliberately left unextracted rather than skimmed.
+  **This is a partial extraction of the work and is recorded as one.** It is not a claim to have
+  covered the book.
 
 ## 3. Local paths and fingerprints
 
@@ -86,6 +91,17 @@ Per `SCHEMA-CONTRACT-ADDENDUM-LOCATORS.md`, **this source has no authored page n
   locator in this lane uses one, and none was reconstructed by interpolation.
 - The book's own text cross-references chapters ("we'll discuss copywriting in Chapter 5"), never
   pages, so the addendum's unresolvable-page-reference case did not arise.
+- **One extraction artefact in the plain-text conversion.** Where the EPUB broke a chapter title
+  across lines, the converter joined the fragments without a space: the Chapter 1 title appears in
+  the source text as `A BRIEF HISTORYOF WHY EVERYBODYHATES ADVERTISING`. Locators in this lane use
+  the correct human-readable title (`A Brief History of Why Everybody Hates Advertising`). A reader
+  grepping the extracted text for that title will miss it; searching for `BRIEF HISTORY` will not.
+  No other title is affected.
+- **Locators were verified mechanically, not asserted.** All 211 quoted section headings across
+  `qa-bank.yaml`, `source-knowledge.yaml` and `source-concept-systems.yaml` were checked to occur
+  inside the spine document each locator cites, and all 15 distinct chapter titles were checked to
+  occur in the source text. Both checks pass at 211/211 and 15/15. See `EXTRACTION-NOTES.md` §
+  "Self-check results".
 
 ## 6. Overlap with live Canon
 

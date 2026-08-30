@@ -45,7 +45,7 @@ from the spine-6 marker to the spine-7 marker and is **20,766 words** of running
 | Primary text | `scratchpad/src/EPUB-Making_and_Breaking_the_Grid__A_.txt` |
 | sha256 of that file | `d52616e0eca30d5691a3c0acb0fef64281fedb6bfe489ca151d33f4d10def1fa` |
 | Original | `~/Downloads/Books/Making and Breaking the Grid_ A Graphic Design Layout Workshop.epub` (30,988,392 bytes) |
-| Figure references in chapter 2 | **202 distinct**, in the EPUB's own `ch02.xhtml` |
+| Figure references in chapter 2 | **205 distinct** `<img>` references, counted in the EPUB's own `ch02.xhtml` |
 | Figures inspected | **0** |
 | Text integrity | clean; no OCR signature, no column interleaving. Four typographical errors in the publisher's own text were observed (`rcetangular`, `esnure`, `shcool`, `disection`) and are the publisher's, not damage. |
 
@@ -91,9 +91,11 @@ earlier statement** — never as two sources disagreeing. The five substantive q
 listed in `EXTRACTION-NOTES.md` §5.
 
 Chapter 1 material already live was **not re-extracted**: the grid taxonomy, the derivation method,
-and the usage judgement of *Using a Grid*. The one live object closest to this lane —
-`violation_works_by_scarcity_and_can_be_designed_into_the_structure` — was diffed against every
-object here; see `EXTRACTION-NOTES.md` §6 for the near-duplicate check and its result.
+and the usage judgement of *Using a Grid*. All 45 concept labels here were diffed mechanically
+against all 79 live labels — **zero exact collisions, zero near-duplicates above threshold** — and
+five semantically adjacent pairs (including the live
+`violation_works_by_scarcity_and_can_be_designed_into_the_structure`) were checked by hand and kept
+with stated reasons. See `EXTRACTION-NOTES.md` §5 and §6.
 
 ## 6. Access basis
 
@@ -108,22 +110,29 @@ wording of a rule; the Q&A bank is paraphrase throughout.
 
 | File | Contents |
 |---|---|
-| `source-knowledge.yaml` | 45 SourceKnowledge objects |
-| `source-concept-systems.yaml` | 5 SourceConceptSystems |
-| `operational-bindings.yaml` | 7 bindings (5 evaluation, 2 governance; **no** `creative_ir`, **no** `production`) |
-| `ontology-mappings.yaml` | 38 terms, 16 relationships, 7 concepts |
-| `qa-bank.yaml` | 46 Q&A items |
+| `source-knowledge.yaml` | **45** SourceKnowledge objects |
+| `source-concept-systems.yaml` | **4** SourceConceptSystems (a fifth was planned and refused; see `EXTRACTION-NOTES.md` §8.8) |
+| `operational-bindings.yaml` | **7** bindings (5 evaluation, 2 governance; **no** `creative_ir`, **no** `production`, **no** `benchmark`) |
+| `ontology-mappings.yaml` | **45** terms, **22** relationships, **7** concepts |
+| `qa-bank.yaml` | **46** Q&A items, **17** with `requires_application: true` (36.96%) |
 | `EXTRACTION-NOTES.md` | method, hazards, refusals, self-check results |
 
 ## 8. The central hazard, stated up front
 
 `visual_argument_role: source_is_its_own_specimen`. This book argues through page layouts; its
 claims are demonstrated by the arrangement of the page in front of the reader. **In an EPUB the page
-does not exist**, and in this lane's text route the figures are not even named. 202 figure
-references in chapter 2; zero inspected; zero inspectable as pages.
+does not exist**, and in this lane's text route the figures are not even named. **205** figure
+references in chapter 2; **zero inspected; zero inspectable as pages.**
 
 The live chapter-1 audit already recorded this book as `inspected_no_page_available` with
 `no_authored_page` as an unrecoverable loss pattern. This lane honours that finding rather than
-working around it. Fourteen objects carry `extraction_uncertainty: figure_not_inspected` and two
-carry `inferred_from_layout`; several claims that the text gestures at were **left unextracted**
-because they exist only in an image. See `EXTRACTION-NOTES.md` §2.
+working around it.
+
+**The proportion, stated honestly.** **26 of 45 objects (58%)** carry
+`extraction_uncertainty: figure_not_inspected`; **21 of 45 (47%)** have
+`source_support: text_and_visual`; **25 of 45 (56%)** carry `visually_demonstrated`. So more than
+half of this extraction rests on demonstrations that were not seen. **No object carries
+`inferred_from_layout`** — deliberately: no claim here was reached by reasoning from an unseen
+layout. Where a caption stops one clause short of a claim, the object stops there too, and several
+things the text gestures at were **left unextracted** because they exist only in an image. See
+`EXTRACTION-NOTES.md` §2 and §8.6.
