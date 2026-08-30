@@ -1,0 +1,124 @@
+# CANON-014 — SPEC-03 SourceConceptSystems for Pandey, "Pandeymonium".
+#
+# Two only. This is a memoir of short chapters each ending in a lesson; it has no argued structure,
+# and building systems over it would assert one. Both systems below are the extractor's synthesis.
+
+source_id: pandey_pandeymonium
+
+source_concept_systems:
+
+- scs_id: scs_ppm_001
+  source_id: pandey_pandeymonium
+  label: the_authors_position_on_judging_creative_work_before_it_runs
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    Pandey's position on pre-publication judgement, assembled from three chapters: his rejection of
+    self-report research procedures and the observational alternative he proposes; the list of his
+    own campaigns he says the procedures would have killed; and his account of a strategy board
+    rejecting a campaign it had not watched develop.
+  whole_system_claim:
+    text: >
+      Across these Pandey holds that judgements made on work before it runs are unreliable when they
+      rest on self-report or on reviewers without the work's development context, and that direct
+      observation of attention is a better instrument. The evidence he offers for it is a set of
+      cases in which he was right.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Pandey never assembles these. The research chapter, the campaign list and the Tata Cement story
+      sit in different parts of the book and he draws a different lesson from each. The grouping is
+      the extractor's, justified by all three concerning the same question — who is entitled to
+      judge work before it runs, and on what evidence. What the grouping ADDS, and what must be
+      attributed to CANON-014, is the observation that his evidence in all three is of the same
+      survivorship shape, which is visible across the set and not within any one member.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ppm_0010, role_in_system: the_position_and_the_alternative, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ppm_0011, role_in_system: the_evidence_offered, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ppm_0021, role_in_system: the_review_conditions_case, order: 3, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - between: [sk_ppm_0010, sk_ppm_0011]
+        nature: "the position rests on the campaign list; the list is counterfactual, so the position is weaker than it reads"
+        origin: extractor_inferred
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, culturally_bounded]
+    source_uncertainty: >
+      Every member is evidenced by a case that ended in the author's favour.
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      High. The members are each directly stated and quoted, but the claim that they form ONE position
+      on pre-publication judgement is the extractor's, and so is the cross-cutting observation about
+      survivorship. This system is the most useful thing in the book for this project — it bears
+      directly on evaluator design — and it is also where an extractor is most tempted to tidy a
+      memoirist's scattered opinions into a coherent doctrine. It is recorded as a hypothesis about
+      Pandey's position, not as a position he states.
+  provenance:
+    chapter: "Scratching beneath the Surface; Standing Up for One's Beliefs"
+    section: "assembled across chapters"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ppm_002
+  source_id: pandey_pandeymonium
+  label: how_the_book_argues_and_why_that_bounds_what_it_can_support
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    A record of the book's own evidential form: lessons drawn from cases that succeeded, campaign
+    outcomes asserted without data, and the campaign evidence itself published outside the book.
+    Grouped so that a downstream consumer meets the bound attached to the source rather than having
+    to rediscover it.
+  whole_system_claim:
+    text: >
+      This source can support statements about what an eminent Indian practitioner believes and
+      recommends, and about the mechanisms he articulates. It cannot support any claim that a
+      practice causes an outcome, because every case it offers is one that succeeded, no outcome is
+      evidenced, and the work itself is not reproduced.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Entirely the extractor's. Pandey makes no methodological statement about his own book. The
+      grouping is a statement about the representation and its evidential limits, not about
+      advertising, and it is recorded here rather than left in prose because the same bound applies
+      to every object in the file and would otherwise have to be restated on each.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ppm_0050, role_in_system: evidence_published_elsewhere, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ppm_0011, role_in_system: outcomes_asserted_not_evidenced, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ppm_0021, role_in_system: lesson_from_a_case_that_won, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ppm_0020, role_in_system: lesson_from_relationships_that_lasted, order: 4, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Moderate. Unusually for a system, what it asserts is checkable against the file itself: the
+      claim is that this book's cases all succeeded and its outcomes are unevidenced, and a reader
+      can verify that by reading the objects. What remains the extractor's is the decision to record
+      the evidential bound as a system rather than as prose, and the judgement about what the source
+      can and cannot support — which is a recommendation to consumers, not a finding about Pandey.
+  provenance:
+    chapter: "whole book, and the copyright page"
+    section: "assembled"
+    page_start: null
+    page_end: null
+    source_support: text

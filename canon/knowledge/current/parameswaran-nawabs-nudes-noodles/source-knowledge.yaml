@@ -1,0 +1,1702 @@
+# CANON-014 — Ambi Parameswaran, "Nawabs, Nudes, Noodles: India Through 50 Years of Advertising"
+# (Pan Macmillan India, 2016). SPEC-03 extraction over the whole book.
+#
+# Corpus position: the FIRST accepted source in this corpus on Indian advertising and the first
+# with any Indian cultural context at all. CANON-013 recorded `indian_indic_context` as having zero
+# contributors and did not close it.
+#
+# Epistemic shape of this source, established by reading it rather than assumed: it is a
+# synthesising trade book by a practising adman (FCB Ulka), and it mixes four things that must not
+# be flattened together - (a) historical description of named campaigns, (b) the author's own
+# interpretation of what those campaigns reveal about Indian society, (c) third-party research he
+# reports and cites in endnotes, and (d) proprietary qualitative studies by his own agency's
+# consulting arm (Cogito), in which he has a declared interest. Every object below names which.
+#
+# The author's central thesis - that advertising is a window on Indian social change - is HIS, and
+# he qualifies it himself (see sk_nnn_0004, where he records that advertising did NOT reflect the
+# Angry Young Man decade). That self-qualification is extracted, not smoothed away.
+#
+# Locators: EPUB, reflowable. There is no authored page anywhere in this copy. Chapter titles are
+# stable and are the locator; spine positions are given as a secondary file-position aid only and
+# are NOT pages. See visual-evidence-ledger.yaml and PROVENANCE.md.
+
+source_id: parameswaran_nawabs_nudes_noodles
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# A. What the book is doing, and its own limits
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_nnn_0001
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Advertising too has become a significant window to studying the transformation of Indian society, its desires and its needs."
+    - "Often advertising has tried to stay a few steps ahead of society, thereby signalling a future trend."
+  concept_label: advertising_read_as_a_record_of_social_change
+  label_origin: extractor_assigned
+  claim: >
+    The author's organising proposition is that fifty years of Indian advertising can be read as a
+    record of how Indian society changed — the roles of man, woman, father, mother, the place of
+    ritual, festival and money — and that advertising sometimes runs ahead of society to signal a
+    coming trend and sometimes reaches back to an older ritual or custom to make a connection.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    This is the author's thesis, argued by accumulation of campaign cases rather than by any
+    measurement. He positions it against Jackson Lears, who he says dismisses advertising as "the
+    folklore of industrial society", and against Barthes on myth; he claims Indian advertising
+    supplies "not just folklore but also some interesting insights into a society in transition".
+    No test is proposed that could fail.
+  mechanism:
+    stated_by_source: true
+    text: >
+      Advertising must connect with ideas the audience already holds in order to sell, so the ideas
+      it reaches for are evidence about which ideas were available and salient at that time.
+  scope:
+    domain_discussed_by_source: [indian_advertising, indian_consumer_society]
+    conditions: >
+      India, roughly 1965-2016, and overwhelmingly URBAN India and the mass media that reached it
+      (cinema, Doordarshan, satellite television, national print). The author's own examples are
+      almost entirely national-brand advertising.
+  caveats:
+    - text: "the author states the deep divisions of class and caste are 'rapidly diminishing' in consumer India 'at least in the urban markets' — he scopes the claim himself"
+      origin: source_stated
+    - text: "the thesis is unfalsifiable as stated: a campaign that matches society confirms it, one that runs ahead of society also confirms it, and one that reaches into the past confirms it too"
+      origin: extractor_observed
+    - text: "the author is a career advertising practitioner writing about the value of his own industry; the book opens with an anecdote about defending the profession to a stranger"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_nnn_0004, note: "the author records a decade in which advertising did NOT track the dominant social mood"}
+    - {relation: qualified_by, target: sk_nnn_0005, note: "he separates depiction from prevalence"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — Divining Societal Trends Using Advertising"
+    section: "whole introduction"
+    page_start: null
+    page_end: null
+    locator: "Introduction, 'Divining Societal Trends Using Advertising' (spine 4)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0002
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The objective of this book is to provide a window to the changing Indian consumer landscape for students of management, marketing, advertising, sociology and media studies."
+  concept_label: source_declares_itself_a_survey_not_a_study
+  label_origin: extractor_assigned
+  claim: >
+    The book states its own purpose as providing a window onto the changing Indian consumer
+    landscape for students and general readers, and as leaving readers with questions rather than
+    answers. It does not claim to establish causal findings about advertising effectiveness.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising]
+    conditions: "the book's own statement of purpose"
+  caveats:
+    - text: "this matters for consumption: outcome language in the book ('the brand went on to be the largest selling') is reported commercial history, not the source's measurement of advertising's contribution"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nnn_0001, note: "bounds how strongly the thesis may be consumed"}
+  evidence:
+    characteristics: [explicitly_stated]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — Divining Societal Trends Using Advertising"
+    section: "closing"
+    page_start: null
+    page_end: null
+    locator: "Introduction, closing paragraphs (spine 4)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0004
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The time was ripe for the rise of a new hero stereotype, the Angry Young Man. Film historians tell us that this phase lasted almost ten years, from 1975 to 1985. In advertising, however, we don't see much evidence of anger during that period."
+  concept_label: advertising_did_not_track_the_dominant_film_mood
+  label_origin: extractor_assigned
+  claim: >
+    Across the decade 1975-1985, when Hindi cinema was dominated by the Angry Young Man figure and
+    the country had passed through the Emergency, high inflation and high unemployment, the author
+    reports that Indian advertising shows little corresponding anger. Film and advertising diverged.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising, hindi_cinema]
+    conditions: "India, 1975-1985"
+  caveats:
+    - text: "no mechanism is offered for why the two media diverged, and no systematic survey of the period's advertising is presented — it is the author's recollection of the corpus he knows"
+      origin: extractor_observed
+    - text: "this is the single most useful object in the book for a consumer, because it is the author recording a case that runs AGAINST his own organising thesis rather than for it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "reading advertising as a mirror of the social mood fails for at least one Indian decade"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nnn_0001, note: "a counter-instance to the mirror thesis, recorded by the author himself"}
+  evidence:
+    characteristics: [explicitly_stated, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Tingling Freshness of Teens"
+    section: "Emergency and the Angry Young Man"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'The Tingling Freshness of Teens', Emergency passage (spine 8)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0005
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "But I would submit that the Airtel ad was a depiction of a future, not the current reality. And in a sense, good advertising is an attempt to always stay one step ahead of the consumer."
+    - "It is possibly true that in most Indian homes, the woman is the homemaker and the man is the breadwinner."
+  concept_label: depiction_is_not_prevalence
+  label_origin: extractor_assigned
+  claim: >
+    Discussing a 2014 Airtel commercial in which a woman manager's subordinate turns out to be her
+    husband, the author states plainly that the advertisement depicted a future rather than a
+    current reality, and that in most Indian homes the older division of roles still held. What an
+    advertisement shows is therefore evidence about what an advertiser judged aspirational, not
+    evidence about how common the depicted arrangement was.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The author holds that good advertising deliberately runs one step ahead of the consumer, so a
+      depiction is selected for its aspirational pull, which decouples it from prevalence.
+  scope:
+    domain_discussed_by_source: [indian_advertising, gender_roles_in_advertising]
+    conditions: "India, 2014; argued from one commercial and generalised by the author"
+  caveats:
+    - text: "'good advertising is an attempt to always stay one step ahead of the consumer' is the author's practitioner aphorism, not a tested rule, and it is offered without any account of how far ahead is too far"
+      origin: extractor_observed
+    - text: "the author notes the same ad drew opposite readings — praised as an ode to the new Indian woman, criticised for still placing the woman at the stove — and he declines to adjudicate"
+      origin: source_stated
+  source_stated_problems:
+    - "an advertisement's depiction of a social arrangement can be mistaken for evidence that the arrangement is common"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nnn_0001, note: "the strongest internal brake on reading campaigns as social measurement"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Jo Biwi Se Kare Pyaar…"
+    section: "the 2014 Airtel commercial"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'Jo Biwi Se Kare Pyaar…', Airtel passage (spine 9)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# B. Indian advertising regulation and its institutions — first-hand and durable
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_nnn_0010
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Before an ad is made at great cost, the agency always gets a 'storyboard', which is a pictorial depiction of the ad, approved by the Doordarshan authorities."
+    - "The agency did not see any problem since the storyboard was already approved. Then came the bombshell. Doordarshan rejected the film on the grounds of obscenity."
+  concept_label: storyboard_approval_did_not_bind_the_finished_film
+  label_origin: extractor_assigned
+  claim: >
+    Under Doordarshan, clearance ran as two separate gates: a storyboard was approved before
+    production, and the finished film was approved again afterwards. Approval at the first gate did
+    not bind the second. The author reports his own Sweetex campaign clearing the storyboard and
+    then being rejected on the finished film for showing the model's navel in an opening close-up,
+    forcing a reshoot at the advertiser's cost.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The storyboard is a pictorial abstraction; the finished film contains framing, duration and
+      emphasis that the storyboard does not fix. A censor assessing the film is therefore assessing
+      material the storyboard never showed, and can reach a different verdict on the same concept.
+  scope:
+    domain_discussed_by_source: [indian_broadcast_clearance, doordarshan]
+    conditions: >
+      India, mid-1980s, state-monopoly television. The two-gate structure described is
+      Doordarshan-era and the author reports the rules "kept changing". It must not be read as
+      current Indian practice.
+  caveats:
+    - text: "the author is a participant recounting a grievance thirty years later; the reasoning attributed to the Doordarshan official is his recollection of a conversation"
+      origin: extractor_observed
+    - text: "he reports that the film-maker found a way to reshoot a single visual at low cost, so the consequence was bounded"
+      origin: source_stated
+  source_stated_problems:
+    - "a campaign can clear pre-production approval and still be rejected after the money is spent"
+  source_stated_remedies:
+    - "the author's lane reshot only the single offending visual rather than the whole film"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: co_occurs_with, target: sk_nnn_0011, note: "same regulatory regime"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, mechanism_given, historical_claim, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "No Squeeze, No Wheeze, No Navel Please!"
+    section: "the Sweetex rejection"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'No Squeeze, No Wheeze, No Navel Please!', Sweetex passage (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0011
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Hindustan Lever, which was launching its fairness cream, was prevented from using the Hindi word for 'fair' or gori. They found a way around it by using the word nikhri and over time managed to get it established as an equivalent word for 'fair'. Though nikhri in Hindi literally means 'improved'."
+  concept_label: a_banned_word_replaced_by_a_euphemism_the_campaign_then_invests
+  label_origin: extractor_assigned
+  claim: >
+    When Doordarshan forbade the word *gori* ("fair") in fairness-cream advertising, the advertiser
+    substituted *nikhri*, whose dictionary sense is "improved" or "better". Sustained use then
+    loaded the substitute with the forbidden meaning, so that the author reports *nikhri* coming to
+    mean "fairer" to the lay public. The prohibition changed the word and not the proposition.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A lexical ban acts on a token, not on the meaning the audience assigns. If one advertiser uses
+      a permitted token consistently in the banned token's slot, the audience learns the mapping and
+      the meaning transfers to the new word.
+  scope:
+    domain_discussed_by_source: [indian_broadcast_clearance, hindi_advertising_copy, skin_lightening_category]
+    conditions: >
+      India, Doordarshan era into the satellite era; one advertiser (Hindustan Unilever), one word,
+      one category. The author gives no measurement of how widely the new sense is held.
+  caveats:
+    - text: "the claim that nikhri 'almost means fairer to the lay public' is the author's assertion; no survey or dictionary evidence is offered"
+      origin: extractor_observed
+    - text: "this is a mechanism of censorship evasion, recorded as advertising history. Nothing here endorses the skin-lightening proposition, and the author separately describes the fairness obsession as an 'obsession' and a 'mania'"
+      origin: extractor_observed
+    - text: "do NOT merge this with euphemism inflation in other sources: here a permitted word ACQUIRES a banned meaning under a prohibition; inflation is a different mechanism in which an unbanned descriptor loses force through universal use"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a regulator can forbid the word a category depends on"
+  source_stated_remedies:
+    - "substitute a permitted word and invest it with the meaning through consistent use"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, historical_claim, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "No Squeeze, No Wheeze, No Navel Please!"
+    section: "Doordarshan's changing rules"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'No Squeeze, No Wheeze, No Navel Please!', Doordarshan rules passage (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0012
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Advertising Standards Council of India (ASCI) was born in 1985. Modelled after the UK Council, it had sixteen members on its Board of Governors and a twenty-one-member Consumer Complaints Council."
+    - "As a final shot in the arm of ASCI, the government of India in 2007 modified the Cable TV Network Rules to ensure that no ad found objectionable by ASCI could be aired through any cable network."
+  concept_label: asci_self_regulation_and_how_it_acquired_teeth
+  label_origin: extractor_assigned
+  claim: >
+    Indian advertising self-regulation runs through the Advertising Standards Council of India,
+    founded in 1985 on the UK model, with a sixteen-member Board of Governors and a twenty-one-member
+    Consumer Complaints Council. A complaint goes to the CCC and is upheld or rejected; if upheld,
+    the advertiser is told to modify the advertising and resubmit it for ASCI's record. Compliance
+    was effectively voluntary and split by membership — the author reports that most large
+    advertisers, agencies and media owners were members and almost always complied, while
+    non-members were inclined to disregard rulings. In 2007 the government amended the Cable TV
+    Network Rules so that an advertisement ASCI found objectionable could not be aired on any cable
+    network, which converted a members-only sanction into a general one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A self-regulator binds only its members. Attaching its findings to a distribution rule that
+      applies to every carrier makes the finding effective against non-members too, because the
+      constraint moves from the advertiser to the channel that would have to carry the ad.
+  scope:
+    domain_discussed_by_source: [indian_advertising_regulation]
+    conditions: "India, 1985 onward; the cable amendment is dated 2007. Composition figures are as at the book's writing (2016) and may have changed."
+  caveats:
+    - text: "the author was an industry insider throughout this period; the account of member compliance is his characterisation, not a compliance measurement"
+      origin: extractor_observed
+    - text: "the book records ASCI rulings against specific campaigns (Amul Macho, Wild Stone, KamaSutra) but never reports how many complaints are upheld or what proportion of the market is covered"
+      origin: extractor_observed
+  source_stated_problems:
+    - "voluntary self-regulation does not bind non-members"
+  source_stated_remedies:
+    - "bind the carrier rather than the advertiser, via the Cable TV Network Rules"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: co_occurs_with, target: sk_nnn_0013, note: "adjacent regulators named in the same passage"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, historical_claim, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "No Squeeze, No Wheeze, No Navel Please!"
+    section: "the birth of ASCI"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'No Squeeze, No Wheeze, No Navel Please!', ASCI passage (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0013
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Using real animals in ad films is today highly regulated by the Animal Welfare Board. They can appoint a supervisor to oversee the shoot and more. So before you approve a script featuring a python, a dog or a cat, just find out how you are going to manage the Animal Welfare Board."
+    - "television broadcasters too set up two self-regulatory bodies, News Broadcasting Standards Authority (NBSA) and Broadcasting Content Complaints Council (BCCC). These bodies are, by and large, concerned with the content that is broadcast and not the advertising."
+  concept_label: production_clearances_beyond_the_advertising_regulator
+  label_origin: extractor_assigned
+  claim: >
+    Beyond the advertising self-regulator, Indian ad production is constrained by other bodies with
+    different remits: the Animal Welfare Board regulates the use of real animals and may appoint a
+    supervisor to oversee a shoot, and the author advises settling that route before a script
+    featuring an animal is approved. Two broadcaster bodies, NBSA and BCCC, exist but address
+    broadcast content rather than advertising. Cinema advertising ran on a separate track: brands
+    made shorts of roughly 100 feet (30.4 m), running about a minute, which required a censor
+    certificate — a practice the author says continues.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_ad_production, indian_advertising_regulation]
+    conditions: "India, as at 2016; the cinema-short practice is described as running from the pre-television era to the present"
+  caveats:
+    - text: "'before you approve a script featuring a python, a dog or a cat' is practitioner advice addressed to a reader in the Indian ad industry, not a general production rule"
+      origin: extractor_observed
+    - text: "the author's comparison — that cinema censors were 'a lot clearer about what they wanted to stop' than Doordarshan — is his opinion, offered without evidence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a script can be approved creatively and then be blocked or delayed by a clearance body nobody consulted"
+  source_stated_remedies:
+    - "establish the animal-clearance route before approving an animal script"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, historical_claim, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "No Squeeze, No Wheeze, No Navel Please!"
+    section: "animal phobia sidebar and censor history"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'No Squeeze, No Wheeze, No Navel Please!', ANIMAL PHOBIA sidebar (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0014
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "the name KamaSutra seemed particularly fortuitous to the agency team because it instantly satisfied three crucial requirements: maximum reach/intelligibility, an erotic connotation, and cultural legitimacy"
+  concept_label: three_requirements_a_name_had_to_satisfy_simultaneously
+  label_origin: source_stated
+  claim: >
+    Reporting the anthropologist William Mazzarella, who reached the finding by speaking with the
+    campaign's creators, the author records that the name "KamaSutra" was chosen for a condom brand
+    because it satisfied three requirements at once: maximum reach and intelligibility, an erotic
+    connotation, and cultural legitimacy. The brand was positioned against the government's Nirodh
+    family-planning framing as an enabler of better lovemaking — "For the pleasure of making love" —
+    and priced at a significant premium to both Nirodh and imported condoms.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A taboo category cannot be addressed directly, so the name has to do three jobs at once:
+      be understood by everyone, carry the charge the positioning needs, and supply a sanctioned
+      cultural warrant that makes the charge admissible. A canonical indigenous text supplied all
+      three where an invented or imported name would have supplied at most two.
+  scope:
+    domain_discussed_by_source: [indian_advertising, brand_naming, taboo_categories]
+    conditions: >
+      India, 1991, condom category, at a moment when the category's only mass framing was
+      state family planning. The three requirements are stated for this case; the source does not
+      claim they generalise.
+  caveats:
+    - text: "the finding is Mazzarella's, an academic reporting interviews with the campaign team after the fact; it is a reconstruction of a naming decision, not a record made at the time"
+      origin: extractor_observed
+    - text: "the campaign's outcome was contested: ASCI ordered modifications, a Rajya Sabha member sought a ban, Doordarshan withdrew its storyboard approval, and the company fell back to shop displays. Commercial success is not established by the source"
+      origin: source_stated
+    - text: "generalising these three requirements into a naming checklist would be OUR extrapolation; the source presents them as a reconstruction of one decision"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a category whose only available public framing is state health messaging cannot be premium-positioned inside that framing"
+  source_stated_remedies:
+    - "find a name that simultaneously supplies reach, the intended connotation, and cultural legitimacy"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: exemplified_by, target: sk_nnn_0015, note: "the surviving plate shows the same legitimacy device executed"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "No Squeeze, No Wheeze, No Navel Please!"
+    section: "KamaSutra"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'No Squeeze, No Wheeze, No Navel Please!', KamaSutra passage (spine 32)"
+    figure_refs: ["plate: KamaSutra (images/00022.jpg)"]
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# C. Objects whose evidence is the reproduced advertisement itself
+#    All 19 plates in the insert were opened and read in this session. Where the plate
+#    settles the claim, source_support is text_and_visual and inspected.figures names it.
+#    Where the plate was opened and does NOT settle the claim, that is recorded as such
+#    and source_support stays `text`. See visual-evidence-ledger.yaml.
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_nnn_0015
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Kamasutra (or KS) made condom-wearing appealing and attractive."
+    - "The print ads released for KamaSutra featured the model Pooja Bedi … Industry observers lauded the campaign since it was extremely upfront about sex, but was at the same time rather elegant."
+  concept_label: taboo_category_legitimised_by_framing_it_as_a_canonical_text
+  label_origin: extractor_assigned
+  claim: >
+    The KamaSutra press execution reproduced in this book legitimises a taboo category by presenting
+    the advertisement as an extract from a canonical Indian text rather than as a product claim. The
+    plate carries a ruled box headed "THE KAMASUTRA ON COURTING A MAID" set in small capitals above a
+    column of body copy, with the product pack reduced to a small inset and a calligraphic brush
+    figure suggesting a female form at the right. The device places the reader in the position of
+    reading classical instruction, and the product is subordinate within the layout.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source states that the campaign was "extremely upfront about sex, but … rather elegant" and
+    reports Mazzarella's cultural-legitimacy requirement, but it does not describe the layout or say
+    how the legitimacy is achieved on the page. The reading of the ruled-box-and-column device as the
+    legitimising mechanism is the extractor's, made by opening the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: framing the advertisement as an excerpt from an authoritative text
+      transfers that text's sanction to the product, and the typographic form of the excerpt - a
+      titled rule box over a justified column - is what performs the transfer.
+  scope:
+    domain_discussed_by_source: [indian_advertising, taboo_categories, press_advertising]
+    conditions: "India, early 1990s, one press execution for one brand"
+  caveats:
+    - text: "the plate is reproduced at 566 px on the long edge; the body copy is NOT legible, so the claim rests on the layout and the visible headline only, and nothing may be asserted about what the copy said"
+      origin: extractor_observed
+    - text: "the caption attached to this plate makes an effectiveness claim ('made condom-wearing appealing and attractive') that neither the plate nor the book's text supports with any measurement"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "KamaSutra press advertisement, plate 17 of the insert"
+  intra_source_relations:
+    - {relation: exemplifies, target: sk_nnn_0014, note: "the cultural-legitimacy requirement, executed"}
+  evidence:
+    characteristics: [visually_demonstrated, culturally_bounded, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: >
+      Body copy illegible at the reproduced resolution; the layout reading is secure, the copy is not.
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 17 — KamaSutra"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), KamaSutra plate, images/00022.jpg"
+    figure_refs: ["images/00022.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00022.jpg"]}
+
+- sk_id: sk_nnn_0016
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The ads featuring two nude models ended up creating history as one of the longest-running advertising cases in Mumbai law courts."
+    - "Tuffs shoes ran a half-page ad in the Times of India featuring supermodels Milind Soman and Madhu Sapre in the nude except for their shoes and a strategically positioned python wrapped around them."
+  concept_label: shock_image_dominant_product_minimised_in_the_layout
+  label_origin: extractor_assigned
+  claim: >
+    In the Tuffs execution reproduced here, the layout allocates roughly half the area to the
+    photograph — the two nude models with the python, both wearing white trainers — and the other
+    half to a flat purple field carrying a small script line, "His. And hers.", two postage-stamp
+    product insets, and the logotype "TUFFS / HARDWEAR FOR FEET" in a heavy condensed sans. The
+    product is present but is the smallest element on the page.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source describes the ad's content and recounts the fourteen-year obscenity case at length,
+    but says nothing about its composition. The observation that the product is deliberately
+    minimised relative to the shock image is the extractor's, made by opening the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: the asymmetry is what makes the execution legible as a fashion or
+      attitude statement rather than a product demonstration, and it is also what left the campaign
+      with almost nothing to fall back on when the image itself became the subject of prosecution.
+  scope:
+    domain_discussed_by_source: [indian_advertising, press_advertising, footwear_category]
+    conditions: "India, mid-1995, one half-page press execution"
+  caveats:
+    - text: "the plate is a black-and-white reproduction of a colour original except for the purple field; fidelity of the colour is not established"
+      origin: extractor_observed
+    - text: "the second half of the mechanism - that the layout left the campaign exposed - is the extractor's inference and is NOT supported by anything the source says"
+      origin: extractor_observed
+  source_stated_problems:
+    - "an advertisement whose entire value sits in a contested image has no fallback if the image is prosecuted"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "Tuffs shoes press advertisement, plate 19 of the insert"
+  intra_source_relations: []
+  evidence:
+    characteristics: [visually_demonstrated, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 19 — Tuffs"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), Tuffs plate, images/00002.jpg"
+    figure_refs: ["images/00002.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00002.jpg"]}
+
+- sk_id: sk_nnn_0017
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The Fevicol campaign was proof that scintillating creative advertising can happen for even a humble adhesive."
+  concept_label: product_attribute_argued_entirely_by_a_photographed_situation
+  label_origin: extractor_assigned
+  claim: >
+    The Fevicol execution reproduced here carries no headline and no body copy. It is a photograph of
+    an overcrowded Indian suburban train with dozens of men hanging off the side of a carriage, on
+    which a Fevicol panel reading "FEVICOL — The Ultimate Adhesive" is mounted. The adhesion claim is
+    made entirely by the photographed situation and its juxtaposition with the panel; there is no
+    verbal claim on the page.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source's caption asserts only that the campaign proves good creative work is possible for a
+    humble category. That the execution carries its whole argument without any copy is the
+    extractor's observation from the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: an everyday scene the audience already knows is recruited as the
+      demonstration, so the product attribute is inferred by the viewer rather than asserted by the
+      advertiser. This requires the scene to be culturally familiar; it does not travel to an
+      audience that has not seen an Indian suburban train.
+  scope:
+    domain_discussed_by_source: [indian_advertising, outdoor_and_press, adhesives_category]
+    conditions: "India; one execution. The device depends on the local familiarity of the scene."
+  caveats:
+    - text: "the source does not date this execution and gives no outcome data for it"
+      origin: extractor_observed
+    - text: "the cultural-dependence half of the mechanism is the extractor's inference; the source makes no claim about whether the device travels"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "Fevicol train advertisement, plate 10 of the insert"
+  intra_source_relations:
+    - {relation: contrasts_with, target: sk_nnn_0018, note: "a single abstract symbol versus a dense documentary photograph, both carrying the whole argument"}
+  evidence:
+    characteristics: [visually_demonstrated, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 10 — Fevicol"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), Fevicol plate, images/00005.jpg"
+    figure_refs: ["images/00005.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00005.jpg"]}
+
+- sk_id: sk_nnn_0018
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Jenson & Nicholson's outdoor campaign was an iconic first in corporate brand-building."
+  concept_label: outdoor_execution_reduced_to_one_headline_and_one_symbol
+  label_origin: extractor_assigned
+  claim: >
+    The Jenson & Nicholson execution reproduced here consists of a white ground, a single black
+    headline — "Whenever you see colour, think of us." — one large red cross-shaped block occupying
+    the centre, and a footline: "Jenson & Nicholson [J&N monogram] The most trusted name in paints".
+    There is no product, no pack, no person and no body copy.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source's caption asserts only that the campaign was an iconic first in corporate
+    brand-building. The description of what is actually on the poster, and the observation that it
+    contains no product or person, is the extractor's, made by opening the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: the headline instructs the viewer to associate an entire perceptual
+      category with the advertiser, and the single saturated symbol supplies the category's
+      exemplar. The claim is about memory attribution rather than about any product property.
+  scope:
+    domain_discussed_by_source: [indian_advertising, outdoor_advertising, paints_category]
+    conditions: "India; one outdoor execution, undated in this source"
+  caveats:
+    - text: "the source gives no date, no market and no outcome for this campaign, so 'iconic first' is an unsupported characterisation"
+      origin: extractor_observed
+    - text: "the red cross form closely resembles a protected humanitarian emblem; the source does not raise this and the extractor records it only as an observation about the plate, not as a legal claim"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "Jenson & Nicholson outdoor advertisement, plate 12 of the insert"
+  intra_source_relations:
+    - {relation: contrasts_with, target: sk_nnn_0017, note: "opposite ends of the density range, same reliance on the image to carry everything"}
+  evidence:
+    characteristics: [visually_demonstrated, mechanism_absent, culturally_bounded]
+    source_uncertainty: >
+      The source supplies no date, market or outcome for this execution.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 12 — Jenson & Nicholson"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), Jenson & Nicholson plate, images/00008.jpg"
+    figure_refs: ["images/00008.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00008.jpg"]}
+
+- sk_id: sk_nnn_0019
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "This award-winning 'Thanda matlab Coca-Cola' poster and outdoor design saw the beverage giant appropriating the Hindi word for 'cool'"
+  concept_label: vernacular_appropriation_carried_by_script_and_setting_together
+  label_origin: extractor_assigned
+  claim: >
+    The "Thanda matlab Coca-Cola" execution reproduced here works by two simultaneous vernacular
+    moves that the plate makes visible: the setting is an ordinary small-town Indian street —
+    whitewashed wall, stacked red crates, a squatting child, a dog, a leaning pole — photographed
+    without styling, and the line "Thanda matlab" is set in Devanagari alongside the Latin Coca-Cola
+    logotype. The appropriation is of a Hindi word AND of the script it is written in, in a setting
+    that is neither aspirational nor aspirationally lit.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source's caption records the appropriation of the Hindi word and the use of Aamir Khan in the
+    associated television work. It does not mention the script setting or the documentary character
+    of the location. Both are the extractor's observations from the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: appropriating a common noun makes the brand the default referent for a
+      whole category of need, and setting it in the local script and an unstyled local place asserts
+      that the claim already holds there rather than being addressed to it.
+  scope:
+    domain_discussed_by_source: [indian_advertising, outdoor_advertising, beverages]
+    conditions: "India, 2000s, Hindi-speaking markets. The device is script- and language-specific."
+  caveats:
+    - text: "the plate is the poster/outdoor execution; the caption's claim about the television commercials and Aamir Khan is NOT settled by this plate, which contains no celebrity"
+      origin: extractor_observed
+    - text: "the small print at the foot of the plate is not legible at the reproduced resolution"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "Coca-Cola 'Thanda matlab' outdoor, plate 3 of the insert"
+  intra_source_relations: []
+  evidence:
+    characteristics: [visually_demonstrated, culturally_bounded, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 3 — Coca-Cola 'Thanda matlab'"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), Coca-Cola plate, images/00013.jpg"
+    figure_refs: ["images/00013.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00013.jpg"]}
+
+- sk_id: sk_nnn_0020
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The Air India Maharaja is one of the most widely recognized advertising icons for many decades, taking Indians to exotic destinations around the world."
+  concept_label: mascot_inserted_into_a_foreign_icon_set_at_reduced_scale
+  label_origin: extractor_assigned
+  claim: >
+    The Air India poster reproduced here works by placing the airline's Maharaja mascot inside a set
+    of foreign icons and scaling him down. Four Buckingham Palace guardsmen in red tunics and
+    bearskins stand in a flat cartoon style beneath the word "London" in a heavy blue display face;
+    the Maharaja — moustachioed, in a striped turban and red tunic — stands among them at roughly
+    half their height. The joke is carried by the scale relationship and the uniform rhyme, not by
+    any copy.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source's caption asserts only that the Maharaja is a long-recognised icon that took Indians
+    to exotic destinations. The device — insertion into a foreign icon set at reduced scale — is the
+    extractor's reading of the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: the mascot's small stature and deferential posture make the encounter
+      comic rather than competitive, which lets an Indian carrier claim a foreign destination without
+      claiming parity with it. The device is repeatable across destinations because only the icon set
+      changes.
+  scope:
+    domain_discussed_by_source: [indian_advertising, poster_advertising, airline_category]
+    conditions: "India, mid-twentieth-century poster campaign; one execution ('London') seen"
+  caveats:
+    - text: "only one destination execution is reproduced, so the claim that the device is repeatable across destinations is the extractor's inference from a single instance, supported by the source's statement that the icon ran for decades"
+      origin: extractor_observed
+    - text: "the mascot is a caricature of an Indian aristocratic type produced for a mid-century audience; the source treats it purely as a beloved icon and does not discuss that"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "Air India 'London' poster, plate 14 of the insert"
+  intra_source_relations: []
+  evidence:
+    characteristics: [visually_demonstrated, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 14 — Air India Maharaja"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), Air India plate, images/00012.jpg"
+    figure_refs: ["images/00012.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00012.jpg"]}
+
+- sk_id: sk_nnn_0021
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The first time Amul hoardings became 'topicals' was to celebrate the Bombay Derby Races many decades ago; hundreds of 'topicals' have followed this one."
+  concept_label: the_topical_hoarding_as_a_fixed_form_with_one_variable_slot
+  label_origin: extractor_assigned
+  claim: >
+    The Amul topical reproduced here shows the form the source says was repeated hundreds of times: a
+    flat yellow ground; a large hand-lettered display pun as the only headline ("THOROUGHBREAD",
+    over a horse-racing subject); a cartoon illustration of the Amul girl acting out the pun; and a
+    fixed brand signature, "utterly butterly Amul", in a small casual hand at the lower right. Only
+    the pun and the illustrated subject change between executions; the ground, the character, the
+    lettering manner and the signature do not.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source states that this was the first topical and that hundreds followed. Which elements are
+    fixed and which vary — the structural reading of the form — is the extractor's, from the plate
+    plus the source's statement that the series continued.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: holding every element constant except the joke makes each new execution
+      recognisable before it is read, so a topical can be produced and posted fast enough to comment
+      on current events while remaining unmistakably the same campaign.
+  scope:
+    domain_discussed_by_source: [indian_advertising, outdoor_advertising, dairy_category]
+    conditions: "India; one execution of a long-running series seen, dated by the source only as 'many decades ago'"
+  caveats:
+    - text: "the fixed/variable structure is inferred from ONE reproduced execution plus the source's assertion that the series ran; no second execution is reproduced in this copy for comparison"
+      origin: extractor_observed
+    - text: "the speed advantage in the mechanism is the extractor's inference; the source does not discuss production turnaround"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "Amul 'THOROUGHBREAD' topical, plate 8 of the insert"
+  intra_source_relations: []
+  evidence:
+    characteristics: [visually_demonstrated, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: >
+      The source dates the first topical only as "many decades ago".
+    extraction_uncertainty: >
+      Structure inferred from a single reproduced execution.
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 8 — Amul topical"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), Amul plate, images/00021.jpg"
+    figure_refs: ["images/00021.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00021.jpg"]}
+
+- sk_id: sk_nnn_0022
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The signature campaign used 'doodh' musically to make milk sound cool and aspirational."
+  concept_label: a_sung_word_set_as_the_visual_rather_than_as_a_subtitle
+  label_origin: extractor_assigned
+  claim: >
+    In the NDDB Operation Flood frames reproduced here, the sung word "doodh" is set typographically
+    as the picture itself — repeated four times in a heavy rounded yellow display face against black,
+    beside the singer — rather than appearing as a caption or subtitle under a scene. The second
+    frame shows a glass of milk with the Operation Flood mark and a cartoon buffalo.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The source's caption says the campaign used "doodh" musically. That the word is rendered as the
+    frame's principal visual element, rather than as supporting text, is the extractor's observation
+    from the plate.
+  mechanism:
+    stated_by_source: false
+    text: >
+      Extractor's reading: typesetting the sung word as the image binds the audio and the visual to
+      the same token, so the frame remains legible with the sound off and the jingle remains
+      attributable with the picture unseen.
+  scope:
+    domain_discussed_by_source: [indian_advertising, television_advertising, dairy_category]
+    conditions: "India; a national dairy development campaign; frames only, no date given in this source"
+  caveats:
+    - text: "the plate is a two-frame composite of low-resolution video grabs; nothing may be asserted about the commercial's edit, duration or the rest of its frames"
+      origin: extractor_observed
+    - text: "the sound-off / picture-unseen reasoning is the extractor's inference and is not in the source"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - "NDDB 'doodh' frames, plate 16 of the insert"
+  intra_source_relations: []
+  evidence:
+    characteristics: [visually_demonstrated, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: >
+      Two frames only, from a low-resolution grab.
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plate 16 — NDDB Operation Flood"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), NDDB plate, images/00007.jpg"
+    figure_refs: ["images/00007.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00007.jpg"]}
+
+- sk_id: sk_nnn_0023
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The Rasna girl's 'I love you Rasna' was heard all over the country in the early days of television, creating a new drinking habit across India."
+    - "'Nothing official about it' campaign cocked a snook at Coca-Cola's designation as the official sponsor for the 1996 Cricket World Cup"
+    - "'Hitler. Arrogant. Rascal. Idiot…' The name-calling of an obnoxious boss in the Naukri ad set a new boss-subordinate relationship trend in the country."
+  concept_label: four_plates_inspected_that_do_not_settle_their_captions
+  label_origin: extractor_assigned
+  claim: >
+    Four of the nineteen plates were opened and read and still do not establish what their captions
+    assert, because the plate reproduced is not the artefact the caption is about. The Rasna caption
+    describes a television line but the plate is a press advertisement in which "I love you Rasna"
+    appears only as a small lockup beside the logo. The Naukri caption quotes spoken abuse but the
+    plate is a single frame of a shouting man in which no words appear. The Pepsi caption quotes
+    "Nothing official about it" but the plate shows only a cricketer holding a bottle in front of a
+    hoarding. The Asian Paints caption says the campaign made "Mera wala blue" a household phrase,
+    but the plate is a later Janmashtami execution that puns on the phrase as already established —
+    it shows the phrase in use, not its origin.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    Each of these is the extractor's finding from opening the plate and comparing it against its
+    caption. The source asserts the captions and does not flag any gap.
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising]
+    conditions: "this copy's plate insert; four of nineteen plates"
+  caveats:
+    - text: "this is a finding about the SOURCE REPRESENTATION, not about the campaigns. The captions may well be true; the point is that these plates do not evidence them, and a downstream consumer must not treat plate-plus-caption as a settled pair"
+      origin: extractor_observed
+    - text: "the audit pattern for this shape is figure_inspected_claim_underdetermined: the figure was looked at and the claim still is not settled"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [visually_demonstrated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: >
+      This object records an underdetermination, and is itself well established: all four plates were
+      opened and compared against their captions.
+  provenance:
+    chapter: "plate insert (unpaginated)"
+    section: "plates 1, 4, 11 and 15"
+    page_start: null
+    page_end: null
+    locator: "plate insert (spine 19), plates images/00010.jpg, 00014.jpg, 00006.jpg, 00004.jpg"
+    figure_refs: ["images/00010.jpg", "images/00014.jpg", "images/00006.jpg", "images/00004.jpg"]
+    source_support: text_and_visual
+    inspected: {text: true, figures: ["images/00010.jpg", "images/00014.jpg", "images/00006.jpg", "images/00004.jpg"]}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# D. Mechanisms with stated boundaries — the most transferable material here
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_nnn_0030
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "the best time to launch a kid-focused product is when the kid is attending school"
+    - "If the kid is going to be the viral mechanism for the new product, it stands to logic that a kid does not see the ad for a new product – of interest to him – as an ad. He or she sees it as valuable information that could be traded in school."
+    - "when advertising to kids, we need not apply the minimum threshold principle to advertising"
+  concept_label: schedule_against_the_audience_the_recipient_will_have
+  label_origin: extractor_assigned
+  claim: >
+    The author records being argued out of his own position by the marketer T. Krishnakumar. The
+    author had proposed reaching children during holidays, when they are free. Krishnakumar's
+    counter-position is that a child-directed product should launch while school is in session,
+    because the child does not experience the advertisement as advertising but as tradeable news,
+    and school is where the audience for that trade exists. The author records the consequence
+    drawn from this: that the usual minimum-threshold weight principle need not be applied to
+    child-directed advertising, because the amplification comes from retransmission rather than
+    from frequency.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The recipient of a child-directed advertisement is also a transmitter. The value of an exposure
+      is therefore a function of whether the recipient currently has an audience, so scheduling
+      should follow the audience's availability rather than the recipient's free time.
+  scope:
+    domain_discussed_by_source: [indian_advertising, media_scheduling, children_as_audience]
+    conditions: >
+      India, 1980s, confectionery; a school-going child audience with a shared daily gathering.
+      The argument depends on the recipients having a common physical assembly.
+  caveats:
+    - text: "no measurement is offered for either position; this is one senior practitioner's argument defeating another's, reported by the loser"
+      origin: extractor_observed
+    - text: "the conclusion that minimum-threshold weight can be relaxed is presented as something 'propounded', with no test and no account of how much it can be relaxed by"
+      origin: extractor_observed
+    - text: "the argument is about a pre-digital school day; whether a shared physical assembly is still the relevant audience is not addressed by the source"
+      origin: extractor_observed
+  source_stated_problems:
+    - "child-directed media weight is planned as if the child were only a recipient"
+  source_stated_remedies:
+    - "schedule to coincide with the period in which the child recipient has the largest audience to retransmit to"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: co_occurs_with, target: sk_nnn_0031, note: "both concern children's influence, but by different routes"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, historical_claim, culturally_bounded]
+    source_uncertainty: >
+      No measurement supports either position; the source presents the exchange, not a result.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "I am a Complan Girl! I am a Complan Boy!"
+    section: "the confectionery launch-timing argument"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'I am a Complan Girl! I am a Complan Boy!', launch-timing passage (spine 7)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0031
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "pester power worked best for products that were not high value and were aimed at children"
+    - "researchers also found that the child could have a 'veto' in other products like soaps, shampoos, toothpaste etc. In the case of durables like cars, motorbikes, television sets etc., pester power played a smaller role"
+  concept_label: childs_influence_varies_by_category_and_is_sometimes_only_a_veto
+  label_origin: extractor_assigned
+  claim: >
+    The influence a child exerts on a household purchase is not uniform. The source reports
+    researchers finding three bands: strongest for low-value products aimed at the child (snacks,
+    sweets, drinks); a *veto* rather than a positive choice in shared household categories such as
+    soap, shampoo and toothpaste; and smallest in durables such as cars, motorbikes and television
+    sets, where it was nonetheless said to be rising because the child sometimes held more product
+    knowledge than the parent.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where the child is the consumer and the outlay is small, the parent concedes; where the product
+      is shared and the outlay is routine, the child can block but not select; where the outlay is
+      large, the parent decides, and the child's leverage comes from information rather than from
+      pestering.
+  scope:
+    domain_discussed_by_source: [indian_consumer_behaviour, children_as_influencers]
+    conditions: >
+      Indian middle-class households, 1990s onward, as reported by unnamed consumer researchers.
+      The bands are stated qualitatively; no magnitudes are given.
+  caveats:
+    - text: "'consumer researchers' and 'research said' are unnamed throughout this passage; no study, sample or date is cited"
+      origin: extractor_observed
+    - text: "the author immediately speculates about whether better-educated mothers will reduce or increase pester power, and marks it as speculation ('I wonder if')"
+      origin: source_stated
+    - text: "the veto/selection distinction is the genuinely durable part; the category examples are period- and market-specific"
+      origin: extractor_observed
+  source_stated_problems:
+    - "treating child influence as a single quantity across categories"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: >
+      Attributed to unnamed researchers; no study identified.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "I am a Complan Girl! I am a Complan Boy!"
+    section: "pester power"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'I am a Complan Girl! I am a Complan Boy!', pester power passage (spine 7)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0032
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "the sachet strategy did not work for Colgate. I suspect consumers did not see toothpaste as an occasional use product."
+    - "Shampooing is not a daily habit in many Indian homes and so a sachet of shampoo could be bought for that special occasion"
+  concept_label: sachet_format_works_for_occasional_use_not_daily_use
+  label_origin: extractor_assigned
+  claim: >
+    The author's conjecture, offered explicitly as a suspicion rather than a finding, is that the
+    Indian sachet format succeeded for shampoo because shampooing was an occasional rather than daily
+    act in many homes, so a single-occasion pack matched the usage pattern; and that it failed for
+    toothpaste and for hair oil because those are daily-use products, for which a consumer ready to
+    adopt the category would buy the full pack instead.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The author writes "I suspect" and "probably for the same reason". The whole object is his
+    proposed explanation for an observed commercial pattern, not a reported study.
+  mechanism:
+    stated_by_source: true
+    text: >
+      A sachet prices a single occasion. That is attractive when consumption is occasion-shaped and
+      unattractive when consumption is continuous, because a continuous user is buying a rate of
+      supply rather than an occasion.
+  scope:
+    domain_discussed_by_source: [indian_consumer_behaviour, pack_format, fmcg]
+    conditions: >
+      India, 1990s; shampoo, toothpaste and hair oil. The usage frequencies asserted are the
+      author's characterisation of Indian household practice at that time.
+  caveats:
+    - text: "explicitly a conjecture — 'I suspect' — with no test proposed and no data on either the shampoo success or the toothpaste failure"
+      origin: source_stated
+    - text: "the underlying usage-frequency premise (shampooing occasional, brushing daily) is asserted, not measured, and is period- and segment-specific"
+      origin: extractor_observed
+    - text: "hair oil is cited as a second failure 'probably for the same reason', which is the author extending his own conjecture to a further case without new evidence"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a pack format that succeeded in one category was extended to another where it failed"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, practitioner_assertion, culturally_bounded, historical_claim]
+    source_uncertainty: >
+      The author marks this as a suspicion, not a finding.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "I am a Complan Girl! I am a Complan Boy!"
+    section: "Colgate sachet"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'I am a Complan Girl! I am a Complan Boy!', sachet passage (spine 7)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0033
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The challenge that confronted HUL was similar to the ones companies with large monolithic brands face. Will something that they do inadvertently destroy their own brand's equity? A newcomer has no such fears. They have nothing to lose."
+  concept_label: incumbent_equity_as_a_barrier_to_the_incumbent
+  label_origin: extractor_assigned
+  claim: >
+    The author's account of how a modest Kolkata company (Emami) opened the Indian men's fairness
+    category in 2005 ahead of the category leader is that the incumbent had known for years that men
+    were using its women's brand, but could not act because any move risked its own franchise's
+    equity, whereas a newcomer with no equity at stake had nothing to lose. The incumbent followed
+    quickly once the category was opened.
+  claim_type: source_interpretation
+  interpretation_basis: >
+    The author presents this as his explanation ("The challenge that confronted HUL was similar
+    to…"), having first raised and left open the alternative — "Was it just a lucky break?" — which
+    he does not exclude.
+  mechanism:
+    stated_by_source: true
+    text: >
+      Accumulated brand equity is an asset that can be damaged by the firm's own actions, so an
+      incumbent's expected cost of a category-extending move includes a risk a newcomer does not
+      bear. The asymmetry can hand first-mover advantage to the smaller firm.
+  scope:
+    domain_discussed_by_source: [indian_marketing, category_creation, male_grooming]
+    conditions: "India, 2005, male skincare; one case"
+  caveats:
+    - text: "the author himself floats 'Was it just a lucky break?' and never rules it out; a single successful entrant is consistent with luck"
+      origin: source_stated
+    - text: "this is survivorship-shaped: the successful newcomer is described, and newcomers who took the same risk and failed are not counted"
+      origin: extractor_observed
+    - text: "a named practitioner, Subhas Chakravarty, is separately quoted asserting that Indian male grooming was created single-handedly by marketing and advertising with no governmental or societal support — a strong causal claim carrying no evidence in this source"
+      origin: extractor_observed
+  source_stated_problems:
+    - "an incumbent can see a category opportunity in its own data and still be unable to take it"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, anecdotal, historical_claim, culturally_bounded]
+    source_uncertainty: >
+      The author leaves the luck explanation open.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The [In] Complete Man"
+    section: "Fair & Handsome"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'The [In] Complete Man', Emami/HUL passage (spine 6)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# E. Celebrity — including a measurement instrument distorting the work
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_nnn_0040
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "many marketers are resorting to pre-testing the ads. While pre-testing an ad, using a celebrity often helps the brand score many extra points. So for an additional cost of around 5 to 10 per cent of the annual media budget, if you can get a good score in the pre-test, the marketing manager is not going to let that go."
+  concept_label: the_pre_test_instrument_selects_for_what_it_scores
+  label_origin: extractor_assigned
+  claim: >
+    Among the reasons the author gives for the prevalence of celebrities in Indian advertising is
+    that celebrities raise pre-test scores. Because the celebrity fee is a small fraction of the
+    media budget and the pre-test is the gate the marketing manager must clear, the instrument
+    itself creates a reason to cast a celebrity that is independent of whether the celebrity makes
+    the advertising work.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      When a measurement stands between the work and its approval, and a controllable input reliably
+      raises that measurement, the input will be bought — whether or not it raises the outcome the
+      measurement was meant to predict.
+  scope:
+    domain_discussed_by_source: [indian_advertising, advertising_pre_testing, celebrity_endorsement]
+    conditions: >
+      India, 2000s-2010s, large advertisers running commercial pre-tests. The author does not name
+      the pre-test instruments or supply the score differential.
+  caveats:
+    - text: "no figures are given for how many points a celebrity adds, on which instrument, or whether pre-test score predicts in-market outcome at all"
+      origin: extractor_observed
+    - text: "the author is himself an agency principal, a party with an interest in how client-side testing is regarded"
+      origin: extractor_observed
+    - text: "this object is about an INSTRUMENT distorting a decision. It says nothing about whether celebrities work, and must not be consumed as either an endorsement or a criticism of celebrity casting"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a gating measurement can be raised by an input that does not raise the outcome"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: co_occurs_with, target: sk_nnn_0041, note: "the other reasons the source gives for celebrity prevalence"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, practitioner_assertion, culturally_bounded, historical_claim]
+    source_uncertainty: >
+      No instrument named, no score differential given, no predictive validity discussed.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Meri Khubsurti Ka Raaz"
+    section: "why celebrities"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'Meri Khubsurti Ka Raaz', pre-testing passage (spine 30)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0041
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Most brands have figured out that just saying 'I use Lux' is no longer going to work, if all brands are using film stars. Savvy ad agencies have figured out that you need to 'cast' the film star as a character in a film rather than as a 'star'."
+  concept_label: when_every_brand_has_a_star_the_star_must_be_cast_as_a_character
+  label_origin: extractor_assigned
+  claim: >
+    The author reports that the endorsement form changed once celebrity use became universal: a
+    star simply declaring use of the product ceased to differentiate, so the star is now cast as a
+    character within a story rather than appearing as themselves. He gives Preity Zinta in TVS
+    Scooty as "just a girl having fun on her scooter", and Priyanka Chopra in Hero Pleasure playing
+    a village girl who is underestimated by the man her parents have chosen.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where every competitor holds the same kind of asset, possession of the asset stops carrying
+      information. Differentiation has to move to how the asset is used, so the star's fame becomes a
+      casting input rather than the message.
+  scope:
+    domain_discussed_by_source: [indian_advertising, celebrity_endorsement, television_advertising]
+    conditions: "India, 2000s onward, after celebrity endorsement became near-universal"
+  caveats:
+    - text: "the shift is asserted from examples the author selects; no measurement compares star-as-self against star-as-character"
+      origin: extractor_observed
+    - text: "the same chapter reports a proprietary study by the author's own agency's consulting arm concluding that the celebrity's 'aura' dominates the other two dimensions it measured, which sits awkwardly with the claim that the casting matters more than the star; the source does not reconcile them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a differentiating asset stops differentiating once every competitor has it"
+  source_stated_remedies:
+    - "cast the star as a character rather than presenting them as a star"
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: tension_with, target: sk_nnn_0042, note: "the Cogito study's aura finding and this claim pull in different directions and the source does not resolve it"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, practitioner_assertion, historical_claim, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Meri Khubsurti Ka Raaz"
+    section: "casting the star"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'Meri Khubsurti Ka Raaz', casting passage (spine 30)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0042
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "three key dimensions: Trait Fit Index, how the traits of the brand fit with those of the celebrity; Compatibility Index, consumers perception of suitability of brand with celebrity and, finally, Aura of the celebrity"
+    - "The study showed that brands will do well to pick the star with the biggest aura; the rest are not as important as the aura of the star."
+  concept_label: cogito_2002_celebrity_study_aura_dominates
+  label_origin: extractor_assigned
+  claim: >
+    The author reports a 2002 study by Cogito Consulting, the consulting arm of his own agency FCB
+    Ulka, which measured three dimensions of a celebrity-brand pairing — a Trait Fit Index, a
+    Compatibility Index, and the celebrity's Aura — and concluded that Aura dominates: a brand does
+    best to pick the star with the biggest aura, and the other two matter less. The study's own
+    conditional advice is also reported: a youth brand must include the current heartthrobs; a
+    serious category should instead choose someone radiating maturity and credibility; and a brand
+    without the budget for the biggest star should pick a personality who mirrors the brand and has
+    at least some aura.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising, celebrity_endorsement]
+    conditions: "India, study dated 2002; instrument, sample, method and outcome measure are not reported"
+  caveats:
+    - text: "the study is by the consulting arm of the author's own agency and is reported by him; the publisher of the finding has a commercial interest in the finding"
+      origin: extractor_observed
+    - text: "no sample, no method, no outcome variable and no effect size are given — three named indices and a dominance conclusion, and nothing that would let a reader check it"
+      origin: extractor_observed
+    - text: "'Aura' is not defined anywhere in the source, so the dominant dimension is the one whose construction is least visible"
+      origin: extractor_observed
+    - text: "the conditional advice by brand type is not obviously consistent with 'pick the biggest aura', since it tells a serious category to choose maturity over heartthrob status"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: tension_with, target: sk_nnn_0041, note: "aura dominance versus casting-as-character"}
+  evidence:
+    characteristics: [explicitly_stated, outcome_claimed, culturally_bounded, historical_claim, mechanism_absent]
+    source_uncertainty: >
+      Proprietary study reported without method, sample, outcome measure or effect size, by a party
+      with an interest in it.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Meri Khubsurti Ka Raaz"
+    section: "Cogito 2002 celebrity study"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'Meri Khubsurti Ka Raaz', Cogito study passage (spine 30)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0043
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Professor Arvind Rajagopal … points out that brands started using totems from the bazaar to connect with consumers. In the 1950s, it was common to see brands like Pears using images of gods to sell themselves."
+    - "Professor Rajagopal says that brands borrowed from bazaar art to connect with the consumers when selling products the consumer was not familiar with."
+  concept_label: bazaar_art_borrowed_to_introduce_unfamiliar_products
+  label_origin: extractor_assigned
+  claim: >
+    Reporting Arvind Rajagopal, the author records that Indian brands borrowed totems and imagery
+    from bazaar art — including images of gods — specifically when selling products the consumer was
+    not yet familiar with, citing 1950s Pears advertising and Burmah Shell's distribution of
+    calendars featuring Hindu deities, a practice he says continues. The author then extends the
+    argument himself to the 2010s, proposing that celebrity endorsement now performs the same
+    function as brands drive categories such as face wash, shampoos and mobile services down the
+    socio-economic pyramid.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unfamiliar product cannot be argued for in its own terms because the audience has no frame
+      for it. Attaching it to imagery that already carries authority supplies a frame, so the
+      borrowed image does the work of introduction.
+  scope:
+    domain_discussed_by_source: [indian_advertising, bazaar_and_calendar_art, category_introduction]
+    conditions: >
+      India, 1950s for the bazaar-art claim; the extension to 2010s celebrity use is the author's own
+      and is offered as a likelihood ("It is likely this is happening at a larger scale").
+  caveats:
+    - text: "the bazaar-art claim is Rajagopal's, reported without a citation to a specific work in this passage; the extension to celebrity endorsement is the author's own speculation and is marked as such"
+      origin: extractor_observed
+    - text: "the Pears line quoted ('pure as the lotus, learn without sorrow…') is given as from an old poster, undated and unsourced"
+      origin: extractor_observed
+    - text: "this passage is the nearest thing in the corpus to Indian calendar/bazaar art as an advertising resource, and it is second-hand. It is NOT a substitute for a primary source on that subject"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a product the audience has no frame for cannot be introduced on its own terms"
+  source_stated_remedies:
+    - "borrow imagery that already carries authority with that audience"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, historical_claim, culturally_bounded]
+    source_uncertainty: >
+      Reported from a named scholar without a specific citation in this passage.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Meri Khubsurti Ka Raaz"
+    section: "why celebrity obsession — Rajagopal"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'Meri Khubsurti Ka Raaz', Rajagopal passage (spine 30)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# F. Production practice, language, and the book's reported numbers
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_nnn_0050
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Baby shoots are true challenges. A full day shoot may end up delivering just five seconds of useful footage. The baby sleeps, wakes up, becomes cranky. So all baby shoots have no less than three babies as stand by."
+  concept_label: infant_shoots_yield_seconds_per_day_so_cast_redundantly
+  label_origin: extractor_assigned
+  claim: >
+    The author records as standard Indian practice that a full day shooting an infant may yield only
+    about five seconds of usable footage, because the subject's state cannot be directed, and that
+    consequently no baby shoot is booked with fewer than three infants standing by.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The performance cannot be directed, only waited for, so usable footage is a function of chance
+      over time. Adding interchangeable subjects multiplies the independent chances within the same
+      booked day rather than extending the day.
+  scope:
+    domain_discussed_by_source: [ad_film_production, casting_infants]
+    conditions: >
+      Indian television commercial production, roughly 1980s-2010s, live-action infants.
+      This is physical-production practice with a live human subject.
+  caveats:
+    - text: "the five-second figure is a practitioner's rule of thumb presented in a sidebar, not a measured yield, and no range or source is given"
+      origin: extractor_observed
+    - text: "'no less than three' is stated as invariant practice; whether it is a rule or a habit is not established"
+      origin: extractor_observed
+    - text: "this is advice about photographing a live infant. It is NOT evidence about, and must not be translated into, the behaviour of any generative model. Any such binding stays a production candidate with a null target path"
+      origin: extractor_observed
+  source_stated_problems:
+    - "an undirectable subject makes shoot-day yield unpredictable"
+  source_stated_remedies:
+    - "book at least three interchangeable infants for the same day"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, culturally_bounded]
+    source_uncertainty: >
+      A rule of thumb, not a measurement.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "I am a Complan Girl! I am a Complan Boy!"
+    section: "SHOOTING BABIES sidebar"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'I am a Complan Girl! I am a Complan Boy!', SHOOTING BABIES sidebar (spine 7)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0051
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Hiring a celebrity costs a bomb and often they are particular about giving eight hours and nothing more. The hidden costs of hiring a film star could include special allowances for the star's driver, make-up man, hair stylist, dress designer, vanity van driver and more."
+    - "Like in feature films, when using stars, body doubles are routinely used in ads as well."
+    - "thanks to the availability of cheap stock photos, many brands have opted to pick photos from stock photo vendors. But one has to be careful lest the competitor also ends up using the same image"
+  concept_label: production_costs_and_hazards_the_brief_does_not_show
+  label_origin: extractor_assigned
+  claim: >
+    The author records three production facts stated as standing practitioner cautions: a contracted
+    film star typically supplies a bounded working day (he gives eight hours) and carries an
+    entourage whose allowances are a real and easily overlooked cost; body doubles are routinely used
+    in advertisements as in features, particularly for stunts; and cheap stock photography carries
+    the specific hazard that a competitor may license the same image.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      For stock photography the mechanism is stated: a non-exclusive licence gives no protection
+      against a competitor's identical use, so the saving is bought with a loss of distinctiveness.
+  scope:
+    domain_discussed_by_source: [ad_film_production, stock_photography, celebrity_contracting]
+    conditions: "Indian advertising production, roughly 2000s-2010s"
+  caveats:
+    - text: "the eight-hour figure is given as typical, not contractual; no contract is cited"
+      origin: extractor_observed
+    - text: "these are sidebar cautions addressed to Indian practitioners, and the entourage costs in particular are market- and period-specific"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a celebrity's headline fee understates the cost of the shoot day"
+    - "a non-exclusively licensed image can appear in a competitor's advertising"
+  source_stated_remedies:
+    - "budget the entourage allowances alongside the fee"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, culturally_bounded, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Meri Khubsurti Ka Raaz / The [In] Complete Man"
+    section: "CELEBRITY COSTS, BODY DOUBLES and STOCK PHOTO sidebars"
+    page_start: null
+    page_end: null
+    locator: "sidebars in Ch. 'Meri Khubsurti Ka Raaz' (spine 30) and Ch. 'The [In] Complete Man' (spine 6)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0052
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "The Indian advertising scene was largely dominated by convent-educated boys in the '60s and '70s. They took over the task from the British admen who exited the country in the '50s. Indian language writers were confined to the 'Language Department'."
+    - "Kamlesh was one of the first to break this thick wall with his ads for brands like Red Eveready, Red & White cigarettes, HMT bulbs and more, all originally created in Hindi."
+  concept_label: hindi_originated_copy_moved_from_translation_department_to_the_centre
+  label_origin: extractor_assigned
+  claim: >
+    The author records a structural change in who writes Indian advertising. Through the 1960s and
+    1970s the business was dominated by English-medium, convent-educated writers who had succeeded
+    the departing British admen, and Indian-language writers were confined to a separate "Language
+    Department" that translated. From the mid-1970s writers such as Kamlesh Pandey began creating
+    work ORIGINALLY in Hindi rather than translating into it, and the author names Piyush Pandey,
+    Balki and Prasoon Joshi as continuing that through the 1990s and 2000s.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising, advertising_copywriting, language_in_advertising]
+    conditions: "India, 1950s-2000s; the agency business in the metros"
+  caveats:
+    - text: "the distinction that matters here is origination versus translation, and the source draws it explicitly ('all originally created in Hindi')"
+      origin: extractor_observed
+    - text: "this is an insider's history of his own industry, told through the individuals he knew; no institutional data on department structure or staffing is offered"
+      origin: extractor_observed
+    - text: "the source names Piyush Pandey in passing as a continuer of this line. That is an incidental mention, NOT a shared primary informant: none of this book's load-bearing claims rests on Pandey's own account"
+      origin: extractor_observed
+  source_stated_problems:
+    - "confining Indian-language writing to a translation function separates the language from the idea"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, historical_claim, culturally_bounded, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Bole Mere Lips, I Love Uncle Chipps"
+    section: "Kamlesh Pandey and the Language Department"
+    page_start: null
+    page_end: null
+    locator: "Ch. 'Bole Mere Lips, I Love Uncle Chipps', copywriting history passage (spine 31)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0053
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "There were a grand total of fifty-five licensed television sets when Nehru died in 1964, about a hundred thousand when Indira Gandhi declared emergency in 1975, a little over two million when the Asian Games came to Delhi in 1982, thirty-four million families owned a TV set when Manmohan Singh opened up the economy in 1991 and when Narendra Modi was sworn in as Prime Minister in 2014, over 60 per cent of the 250 million homes in India had a television set."
+  concept_label: indian_television_penetration_milestones_as_reported
+  label_origin: extractor_assigned
+  claim: >
+    The source reports Indian television penetration at five political milestones, citing Nalin
+    Mehta's *Behind a Billion Screens*: 55 licensed sets in 1964; roughly 100,000 in 1975; a little
+    over 2 million in 1982; 34 million households in 1991; and over 60 per cent of 250 million homes
+    in 2014. The figures are on inconsistent bases — licensed sets in the early years, households
+    later — and are reported, not measured, by this source.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_media_history]
+    conditions: "India, 1964-2014"
+  caveats:
+    - text: "the base changes across the series — 'licensed television sets' for 1964 and 1975, 'families' for 1991, 'homes' for 2014 — so the numbers are not a consistent time series and must not be treated as one"
+      origin: extractor_observed
+    - text: "third-party figures, cited to N. Mehta, Behind a Billion Screens (HarperCollins, 2015); this source performs no measurement"
+      origin: extractor_observed
+    - text: "historical numbers only. They date immediately and must never be used as current market context"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: >
+      Reported from a third party on shifting bases.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — Divining Societal Trends Using Advertising"
+    section: "media growth, endnote 2"
+    page_start: null
+    page_end: null
+    locator: "Introduction, television penetration passage, endnote 2 (spine 4)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0054
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "A frame-by-frame content analysis of consumer product television advertising in India, released over the last fifty years, shows some very interesting facts. For instance, the way women are presented has changed dramatically. The number of words used in each advertisement has increased. Even products like soap have a wordy explanation."
+  concept_label: a_content_analysis_is_invoked_and_its_results_are_not_supplied
+  label_origin: extractor_assigned
+  claim: >
+    The introduction invokes a frame-by-frame content analysis of fifty years of Indian consumer
+    television advertising and reports two directional findings from it — that the presentation of
+    women changed dramatically, and that the number of words per advertisement increased. No
+    numbers, no sample, no period breakdown, no method and no attribution are given, in the
+    introduction or in the endnotes for that chapter.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising, content_analysis]
+    conditions: "India, described as covering the last fifty years to 2016"
+  caveats:
+    - text: "this is the clearest instance in the book of a measurement being claimed and its result not being supplied: the reader is told a content analysis exists and shown two directional statements from it"
+      origin: extractor_observed
+    - text: "the word-count finding is interesting precisely because it is checkable in principle and uncheckable from this source"
+      origin: extractor_observed
+    - text: "the endnotes for the Introduction cite only Lears and Mehta; neither is a content analysis"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nnn_0001, note: "the thesis's most quantitative-sounding support turns out to be unsupplied"}
+  evidence:
+    characteristics: [explicitly_stated, outcome_claimed, culturally_bounded, historical_claim, mechanism_absent]
+    source_uncertainty: >
+      A measurement is asserted; its results, method and attribution are absent.
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction — Divining Societal Trends Using Advertising"
+    section: "content analysis passage"
+    page_start: null
+    page_end: null
+    locator: "Introduction, content-analysis passage (spine 4)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_nnn_0055
+  source_id: parameswaran_nawabs_nudes_noodles
+  source_terms:
+    - "Advertisers have at times used social consciousness as a tool to further the aims of commerce."
+    - "Tata Tea managed to blend in a very relevant social message along with its core message of refreshing tea."
+  concept_label: social_cause_used_as_a_commercial_platform
+  label_origin: extractor_assigned
+  claim: >
+    The source records a recurring Indian pattern in which advertisers attach a social cause to a
+    commercial message: Amul's advertising celebrating the milk co-operative movement, Tata Steel's
+    "We also make steel", and Tata Tea's "Jaago Re" (2008), which asked Indians to raise awareness of
+    social causes and was refreshed in 2014 as "Power of 49" urging women to vote. The author states
+    the commercial purpose plainly — social consciousness used "as a tool to further the aims of
+    commerce".
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [indian_advertising, cause_related_advertising]
+    conditions: "India; named campaigns dated 2008 and 2014, others undated"
+  caveats:
+    - text: "the author does not claim these campaigns produced either social or commercial outcomes; no measurement is offered for either"
+      origin: extractor_observed
+    - text: "he separately records the counter-case: a 2015 Kalyan jewellery execution showing a dark-skinned child fanning a film star drew criticism for child labour and colour discrimination and was withdrawn with an apology. Social framing is not automatically favourably received"
+      origin: source_stated
+  source_stated_problems:
+    - "a brand adopting a social position can be read as exploiting it"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, historical_claim, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Introduction / The Tingling Freshness of Teens / No Squeeze, No Wheeze, No Navel Please!"
+    section: "Jaago Re and the Kalyan counter-case"
+    page_start: null
+    page_end: null
+    locator: "Introduction (spine 4), Ch. 'The Tingling Freshness of Teens' (spine 8), Ch. 'No Squeeze…' (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

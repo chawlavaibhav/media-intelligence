@@ -1,0 +1,102 @@
+# CANON-014 — visual-evidence ledger for Desai, "Mother Pious Lady".
+#
+# The visual pass RAN and COMPLETED, and its finding is that there is no visual argument to inspect.
+# That is a real result and is recorded as one rather than as a gap.
+
+source_id: desai_mother_pious_lady
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: no_visual_argument
+
+inspection:
+  method: >
+    The EPUB was unpacked and all 33 image assets enumerated and measured. Every image large enough
+    to carry content was opened. Images under 2 KB were measured and identified as repeated
+    decorative furniture rather than opened individually.
+  images_in_archive: 33
+  figures: 0
+  decorative_ornaments: 30
+  ornament_evidence: >
+    Images 00001-00030 are 700-1,840 bytes each. They recur at essay openings and at section
+    breaks — Images/00004.jpeg alone opens many of the ch.1 essays — and are chapter-head rules and
+    ornaments, not figures. No essay text refers to any image, anywhere in the book.
+  remaining_images:
+    - {file: "OEBPS/Images/00031.jpeg", size: 12232, identified_as: "front-matter mark"}
+    - {file: "OEBPS/Images/00032.jpeg", size: 68608, identified_as: "front-matter / publisher mark"}
+    - {file: "OEBPS/Images/cover.jpeg", size: 61533, identified_as: "publisher cover, not evidence"}
+
+observed_loss_patterns:
+
+  - pattern: no_visual_argument
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      This is a collection of verbal essays. The book argues about objects — a scooter, a thali, a
+      nightie, a matrimonial column — entirely in prose, and never reproduces, cites or points at an
+      image of any of them. No sentence in the book directs the reader to look at anything. A
+      text-only representation therefore loses NOTHING of the argument, which is the opposite of the
+      situation in the other candidates processed by CANON-014.
+
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB, no page map declared, no folio in the text. Every locator in this extraction
+      is an essay title, which is stable and unambiguous because the essays are individually titled
+      and none repeats. No page number was interpolated.
+
+  - pattern: text_layer_order_damage
+    affects: "one paragraph of the Introduction, and ten front-matter and section-break positions"
+    detectability: announced_by_placeholder
+    recoverability: recovered_in_this_copy
+    evidence: >
+      This copy has been modified by a redistributor. The string "GAPPAA.ORG" is injected at 11
+      positions, and — the material case — one full non-authorial sentence sits INSIDE an authorial
+      paragraph of the Introduction: "My effort in this book has been to examine Middle India from
+      within. This book has been downloaded from gappaa dot org. I have grown up in a middle class
+      family…". The interpolation carries no distinguishing markup and reads as prose. All 11
+      positions were located mechanically by string search and are enumerated below; the injected
+      text was excluded from extraction. The publisher metadata is separately overwritten (see
+      PROVENANCE.md).
+
+  - pattern: no_loss_detected
+    affects: "the body text of the essays"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Apart from the 11 enumerated injections, the prose extracts cleanly and in order across all
+      137 spine items. A duplicate-sentence scan found no duplicated sentence above 90 characters,
+      so no pull-quote flattening. The table of contents matches the essays present.
+
+injected_text_positions:
+  count: 11
+  form: >
+    Ten are the bare string "GAPPAA.ORG" standing alone on a line in front matter, the dedication,
+    the contents page, section openers and chapter heads. One is a complete sentence inside an
+    authorial paragraph of the Introduction.
+  in_body_interpolations: 1
+  consequence: >
+    The injections are individually detectable and were all found, so they were excluded from
+    extraction and no extracted claim contains redistributor text. The residual risk is NOT the
+    injections that were found: it is that a redistributor demonstrably willing to alter the text
+    may have made other changes that carry no marker and are therefore undetectable in this copy.
+    That risk is silent and unbounded, and it is the reason this record avoids resting any object on
+    a single verbatim sentence. Every extracted object is supported by an argument the author
+    develops across a whole essay.
+
+demonstrations: []
+visual_only_observations: []
+
+extraction_constraint_applied: >
+  No object in this source carries source_support: visual or text_and_visual, and
+  provenance.inspected.figures is empty on every object, correctly, because there are no figures.
+  No claim anywhere in this record depends on an image.
+
+claim_resolution_after_inspection: not_applicable
+consequence: >
+  The visual pass changed nothing about this extraction and could not have, because the source makes
+  no visual argument. Recording that as a completed inspection with a null result is the point: it
+  distinguishes "we looked and there is nothing to see" from "we did not look", which the Audit Gate
+  vocabulary was designed to separate.

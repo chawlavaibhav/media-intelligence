@@ -1,0 +1,89 @@
+# CANON-014 — SPEC-04 bindings for Pandey, "Pandeymonium", against SPEC-01 v0.1.
+#
+# Three only, and none to Creative IR. This is a memoir of practice; its content is about how people
+# work together and how work is judged, not about what an artefact should be. Seven of ten objects
+# have no binding, which is the honest outcome and not a gap to be filled.
+
+source_id: pandey_pandeymonium
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_ppm_0001
+  source_knowledge_refs: [sk_ppm_0010]
+  source_system_refs: [scs_ppm_001]
+  target_type: governance
+  target_path: null
+  role: [flags, constrains]
+  rationale: >
+    Pandey names a specific and independently recognisable failure of group self-report: a respondent
+    with no genuine answer fabricates one to save face, and the first fabrication propagates round
+    the group as agreement, after which it is reported as a finding. This project designs evaluation
+    instruments, some of which will involve human judgement in groups, so the failure shape belongs
+    where instrument design is discussed. It binds the mechanism, NOT his conclusion that the
+    procedures should be rejected — that conclusion rests on selected successes.
+  applicability:
+    when: "designing or interpreting any instrument that collects human self-report in a group setting"
+    limits: >
+      The mechanism is stated without evidence; the author's evidence supports his conclusion, not
+      his mechanism, and is survivorship-shaped. This supports naming the hazard and nothing
+      quantitative. It is NOT evidence that any particular instrument has this property, and it must
+      not be read as licensing the removal of human judgement from any evaluation.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ppm_0031]
+  repair_ontology_refs: [t_ppm_0051]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_ppm_0002
+  source_knowledge_refs: [sk_ppm_0021]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [flags]
+  rationale: >
+    The reviewable observation inside the Tata Cement story is not about conviction but about review
+    conditions: reviewers who had not seen the work develop over a month judged it at the end and
+    rejected it as beyond repair. Whether a reviewer holds the development context is a real property
+    of a review process and this project runs review processes.
+  applicability:
+    when: "designing a review or acceptance step for work produced over multiple iterations"
+    limits: >
+      One case, from one agency, told by the party who prevailed. It supports recording the question
+      of what context a reviewer holds; it establishes nothing about whether contextless review is
+      worse, since the author's case is one in which the contextless reviewers were also wrong.
+  governance_consumer: rule_application
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ppm_0032]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; separated by the extractor from the lesson the source draws"
+
+- binding_id: bnd_ppm_0003
+  source_knowledge_refs: [sk_ppm_0010]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  rationale: >
+    Pandey proposes observed attention over self-report and gives a concrete, if unvalidated,
+    criterion: a viewer who is chatting and not looking at the commercial after five seconds is lost.
+    Whether attention is held through the opening seconds of an asset is directly observable and is
+    an inspection question about a rendered asset over time.
+  observation_unit: whole_asset
+  applicability:
+    when: "inspecting whether a time-based asset holds attention through its opening"
+    limits: >
+      The five-second figure is a practitioner's rule of thumb offered in passing, with no validation
+      and no account of how it was arrived at. It supports asking the question and NOT the threshold.
+      Adopting five seconds as a pass mark would be inventing a criterion, which this project
+      forbids.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; the threshold is explicitly not adopted"
