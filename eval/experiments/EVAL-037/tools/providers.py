@@ -400,7 +400,11 @@ def _run_tool(dispatch, name, args, turn_index):
         raise ProviderError(f"model called {name!r} but no tool is exposed here",
                             "tool_schema_rejected")
     out = dispatch(name, args)
-    blob = json.dumps(out, sort_keys=True, default=str)
+    # REPAIR-001: digest-only. Canon YAML can contain non-string mapping keys
+    # (an unquoted `on:` parses as bool under YAML 1.1), and sort_keys cannot
+    # order mixed bool/str keys. The bytes SENT to the model are serialised
+    # separately and are unaffected by this line.
+    blob = json.dumps(out, default=str)
     meta = {
         "turn_index": turn_index,
         "name": name,
