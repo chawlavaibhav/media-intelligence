@@ -1,0 +1,622 @@
+# Luke Sullivan, Hey Whipple, Squeeze This (6th ed., Wiley, 2022) — SPEC-03 SourceKnowledge
+# EXPERIMENTAL — NOT LIVE CANON. Lane: sullivan-hey-whipple, book-expansion-qa-v1. Non-merge.
+#
+# LOCATORS: EPUB, reflowable. THIS SOURCE HAS NO AUTHORED PAGE NUMBERS. page_start / page_end are
+# null in EVERY object. The real locator is provenance.chapter (number + title) plus
+# provenance.section (the source's own section heading), with the spine marker as a file-position
+# aid only. No page number is invented anywhere. Audit pattern: no_authored_page.
+#
+# EVIDENCE STANCE: Sullivan argues from professional experience and taste. The dominant
+# characteristic is practitioner_assertion. `empirical_within_source` is used only where he reports
+# an actual measurement or count. See EXTRACTION-NOTES.md for the counts.
+#
+# SURVIVORSHIP: his examples are overwhelmingly award-winning or celebrated work — a selected
+# sample he does not correct for. Where an object rests on such an example, a caveat with
+# origin: extractor_observed says so.
+#
+# FIGURES: the book reproduces ads whose images carry the argument, and the extracted text does not
+# contain them. Objects whose claim depends on an ad that could not be seen carry
+# extraction_uncertainty: figure_not_inspected. Caution name: figure_semantic_binding_lost.
+#
+# SCOPE: this is about advertising made by humans for paid and earned media. Nothing here is
+# translated into a model instruction and nothing here is evidence about generative capability.
+
+source_id: sullivan-hey-whipple
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART A — CONCEPT DEVELOPMENT: what an idea is, and how it is found
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_whip_0001
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "Speed of the Get"
+    - "the fuse on your idea"
+  concept_label: an_idea_has_a_fuse_length_that_can_be_too_long_or_too_short
+  label_origin: extractor_assigned
+  claim: >
+    The time a viewer takes to understand an idea is itself a design variable, and it can be
+    mis-set in either direction. Sullivan calls it the Speed of the Get and likens it to the fuse
+    on a firecracker. A fuse that is too short means the idea resolves before the viewer has begun
+    attending, and its instant, contentless bang tells them there is nothing there worth attending
+    to. A fuse that is too long means the idea does not go off before the viewer has moved on. He
+    holds that a quick get is the first and most important property an idea needs — more important,
+    he says explicitly, than the creativity of the piece — and that in student work the error is
+    almost always the long fuse, produced by over-complicating and thereby "encoding" the idea.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Comprehension time competes with a viewer's willingness to spend attention at all. The
+      viewer is not looking for the message; they will not wait, so an idea that has not resolved
+      inside the available window simply does not resolve. At the other end, an idea that resolves
+      instantly and completely leaves nothing for the viewer to do, so nothing is registered.
+  scope:
+    domain_discussed_by_source: [print_advertising, out_of_home_advertising, advertising_concept_development]
+    conditions: "advertising encountered by a viewer who did not seek it out; the permissible fuse length varies with how long the viewer dwells with the medium (see sk_whip_0060)"
+  caveats:
+    - text: "the source calls the priority of the quick get 'heresy' in his own field, which marks it as his position rather than a settled view"
+      origin: source_stated
+    - text: "no measurement is offered for either bound; 'too fast' and 'too slow' are named by example and by the author's judgement of student work"
+      origin: extractor_observed
+  source_stated_problems:
+    - "encoding the idea"
+    - "a get that takes three or four beats longer than it should"
+    - "its quick, clueless bang makes it clear there's nothing there to be interested in"
+  source_stated_remedies:
+    - "taking everything out of the idea except the idea"
+  examples:
+    positive: [{description: "two ads the source says have exactly the right fuse: a mud-caked boat on a trailer for Jeep, with no headline and no product; and a Ford Expedition rear-view-camera ad. In both, the source says there is only one place to look, the image reads as slightly wrong, the viewer leans in, and the idea then goes off", figure_ref: "Figures 6.2, 6.3"}]
+    counter: [{description: "a STOP sign — an instant read with too little substance to have any effect on the viewer", figure_ref: null}]
+  intra_source_relations:
+    - {relation: depends_on, target: sk_whip_0002, note: "the removal test is the operational way to shorten a long fuse"}
+    - {relation: qualified_by, target: sk_whip_0060, note: "dwell time in the medium sets how long a fuse may be"}
+    - {relation: trades_off_with, target: sk_whip_0007, note: "wit requires the viewer to travel some distance, which lengthens the fuse on purpose"}
+    - {relation: member_of_system, target: scs_whip_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Ch. 6 — The Virtues of Simplicity: Or, Why It's Hard to Pound in a Nail Sideways"
+    section: "Make sure the fuse on your idea isn't too long or too short. (spine 19)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 6.2", "Figure 6.3"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0002
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "load-bearing beam"
+  concept_label: the_removal_test_identifies_which_elements_the_idea_actually_needs
+  label_origin: source_verbatim
+  claim: >
+    To decide whether an image, phrase or word belongs in an idea, take it out and see whether the
+    idea still works. If it does not, that element was a load-bearing beam. If it does, the element
+    was not needed and should go. Sullivan presents this as a general test applicable to any
+    element of any concept, and elsewhere uses the same term for the diagnosis of client damage: a
+    less experienced client is particularly good at asking for the removal of the one thing holding
+    the whole idea up.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Necessity is established by subtraction rather than by argument. An element that can be
+      removed without loss was carrying no meaning, and by sk_whip_0003 it was actively diluting
+      everything that remained.
+  scope:
+    domain_discussed_by_source: [advertising_concept_development, print_advertising]
+    conditions: "applies to any element of a concept — image, phrase, word, headline, tagline, logo — during editing and during client revision"
+  caveats:
+    - text: "the test depends entirely on the tester's own judgement of whether the idea 'still works'; the source offers no external check on that judgement"
+      origin: extractor_observed
+  source_stated_problems:
+    - "taking out the load-bearing beam"
+  source_stated_remedies:
+    - "to determine whether you need a certain image, phrase, or word to make your idea work, try taking it out"
+    - "taking everything out of the idea except the idea"
+  examples:
+    positive: [{description: "Michelangelo's reported answer about carving an elephant — 'I just chipped away everything that wasn't elephant' — which the source flags as possibly apocryphal", figure_ref: null}]
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_whip_0003, note: "the removal test is the procedure; the dilution claim is the reason it matters"}
+    - {relation: demonstrated_together_with, target: sk_whip_0061, note: "the same term names the damage clients do by minor changes"}
+    - {relation: member_of_system, target: scs_whip_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Ch. 6 — The Virtues of Simplicity"
+    section: "Make sure the fuse on your idea isn't too long or too short. (spine 19)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0003
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "reductionism"
+    - "get it down to one thing"
+  concept_label: every_element_added_reduces_the_importance_of_every_other_element
+  label_origin: extractor_assigned
+  claim: >
+    Sullivan reports Neil French's stated arithmetic of a layout: every element you add to an idea
+    reduces the importance of all the other elements, and every item you subtract raises the
+    visibility and importance of what is left. French's demonstration begins with a conventional
+    ad — headline, visual, body copy, tagline, logo — and removes them one at a time, each removal
+    requiring the survivors to work harder, until the ad is one thing: sometimes a headline,
+    sometimes a picture. Sullivan endorses the exercise and says the reduced version is almost
+    always better than the version it started from.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attention within a single layout is a fixed quantity divided among the elements present, so
+      element count and per-element salience are inversely related. The claim is about relative
+      prominence inside one composition, not about how much information a reader can absorb.
+    
+  scope:
+    domain_discussed_by_source: [print_advertising, out_of_home_advertising]
+    conditions: "a single layout or composition; the source concedes it is hard to pull off with a client who wants more in an ad rather than less"
+  caveats:
+    - text: "the source concedes he managed to reduce a print concept to a single image only once in an entire career, which is a strong admission about how rarely the ideal is reachable"
+      origin: source_stated
+    - text: "the arithmetic is asserted, not measured; no eye-tracking, recall or response data is offered anywhere in the chapter"
+      origin: extractor_observed
+    - text: "the demonstration is a hand-drawn napkin sequence reproduced as a figure; the figure was not inspected"
+      origin: extractor_observed
+  source_stated_problems:
+    - "a client who wants to put more in an ad, not less"
+  source_stated_remedies:
+    - "can we make this ad work without the body copy? by making the headline work a little harder"
+    - "is the tagline bringing any new information to the ad? then let's broom it"
+    - "isn't there some way we can incorporate the logo into the visual?"
+  examples:
+    positive: [{description: "the source's own B2B ad for Lee jeans in Women's Wear Daily, reduced to a single image with no logo at all; he names it his favourite of his own work", figure_ref: "Figure 6.7"}]
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_whip_0002, note: "the removal test is the case-by-case application of this arithmetic"}
+    - {relation: depends_on, target: sk_whip_0053, note: "reduction only works if something is left to dominate"}
+    - {relation: member_of_system, target: scs_whip_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, visually_demonstrated]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Ch. 6 — The Virtues of Simplicity"
+    section: "Keep paring away until you have the essence of your idea. (spine 19)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 6.5", "Figure 6.6", "Figure 6.7"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0004
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "we must limit ourselves to saying one thing"
+    - "this is basically why they put the point on the end of the nail"
+  concept_label: a_concept_that_makes_more_than_one_point_makes_none
+  label_origin: extractor_assigned
+  claim: >
+    Sullivan states flatly that to create a simple advertising idea in any medium the maker must be
+    limited to saying one thing, and that any advertising concept trying to make more than one
+    point will not work. He extends this to the client request for a full-line advertisement: if a
+    client has three important things to say, they need three advertisements, because customers
+    shop for specific needs and never for a full line.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      He gives the mechanism as an analogy rather than a process: force concentrates at a point.
+      For the full-line case he gives a stated reason — customer behaviour is need-specific, so an
+      advertisement addressing a specific need matches how the purchase is actually made.
+  scope:
+    domain_discussed_by_source: [advertising_concept_development, print_advertising, television_advertising]
+    conditions: "one advertising idea in one execution; the source allows secondary benefits a place in brochures, on packaging, and two or three clicks into a website"
+  caveats:
+    - text: "the source concedes he is 'arguing for purism in an area where it's often impossible to think that way' and that many brands do not lend themselves to such clean distinctions"
+      origin: source_stated
+    - text: "stated as an absolute ('won't work') with no stated exception, which is stronger than the evidence offered for it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "full-line ads are effective only as magazine thickener"
+    - "the hunter who chases two rabbits catches neither"
+  source_stated_remedies:
+    - "if your clients say they have three important things to say, tell them they need three ads"
+    - "secondary benefits have a place: in the brochures, on the packaging, and two, maybe three clicks into the website"
+  examples:
+    positive: []
+    counter: [{description: "a client asking for an advertisement to tout their full line of products", figure_ref: null}]
+  intra_source_relations:
+    - {relation: depends_on, target: sk_whip_0003, note: "the dilution arithmetic is why a second point costs the first"}
+    - {relation: member_of_system, target: scs_whip_001}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, argued]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Ch. 6 — The Virtues of Simplicity; and Ch. 16 — Pecked to Death by Ducks"
+    section: "Ch. 6 opening paragraphs; Ch. 16, 'Somebody asks to cram more stuff into the idea.' (spines 19, 39)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0005
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "clear and clever"
+    - "I don't get it"
+    - "I've seen that before"
+  concept_label: the_idea_must_sit_in_the_overlap_of_clear_and_clever
+  label_origin: extractor_assigned
+  claim: >
+    Sullivan models the writer's target as the overlap of two sets: all the ways the key message
+    could be clearly communicated, and all the ways it could be cleverly spun into something
+    interesting. Clarity alone yields boredom; cleverness alone yields something nobody gets. He
+    holds that the client is entitled to expect clarity, but that the reader is not out looking for
+    clarity — what customers notice is what is interesting. Quoting George Felton, he names the two
+    rejections that mark the two failure directions: "I don't get it" (too weird) and "I've seen
+    that before" (too obvious), and says finding the borders of the overlap is where essentially
+    all the working time goes.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The two demands come from different parties. Clarity is owed to the client, who is paying for
+      a message to arrive. Interest is owed to the reader, who owes the advertisement nothing and
+      will not attend to a message merely because it is clear. Neither party's demand can be
+      satisfied at the other's expense, so the target is an intersection rather than a point on a
+      single scale.
+  scope:
+    domain_discussed_by_source: [copywriting, advertising_concept_development]
+    conditions: "any execution working from a stated key message"
+  caveats:
+    - text: "the source presents this as a diagram, not a procedure; nothing tells the maker where the borders of the overlap actually lie in a given case, and he says so — finding them is the work"
+      origin: extractor_observed
+  source_stated_problems:
+    - "dullness"
+    - "irrelevant brilliance"
+    - "if your idea is only clear it could be boring; if it's too clever, nobody will get it"
+  source_stated_remedies:
+    - "first say it straight, then say it great"
+  examples:
+    positive: [{description: "three headline-and-logo advertisements the source offers as sitting in the overlap: 'Call in rich tomorrow' (Mystic Lake Casino); 'We hear you need a new muffler' (Korman Muffler); 'For more information on lung cancer, keep smoking' (The Lung Association)", figure_ref: null}]
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_whip_0006, note: "say-it-straight-then-great is the procedure the diagram implies"}
+    - {relation: trades_off_with, target: sk_whip_0001, note: "cleverness costs comprehension time"}
+    - {relation: member_of_system, target: scs_whip_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, visually_demonstrated]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Ch. 5 — Brevity Is the Soul of Wit: The Art of Copywriting"
+    section: "First say it straight, then say it great. (spine 17)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 5.3"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0006
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "first say it straight, then say it great"
+    - "start literal, finish lateral"
+  concept_label: write_the_flat_statement_first_then_spin_it
+  label_origin: source_verbatim
+  claim: >
+    Sullivan's stated starting procedure is to write the thing you want to say flatly and without
+    art, then make it memorable afterwards. He suggests literally beginning a headline with "This
+    is an ad about …" and continuing, on the grounds that even if the result is unusable the writer
+    has focused. He reports Thomas Kemeny's version — start literal, finish lateral — and endorses
+    the image: you begin in a straight direction and then add spin, the way a knight in chess moves
+    forward and then jukes sideways at the end.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Clarity is established before art is attempted, so the spin has something to be a spin on.
+      The flat statement fixes what must survive, which is what stops the clever version from
+      losing the selling idea in the act of expressing it.
+  scope:
+    domain_discussed_by_source: [copywriting, advertising_concept_development]
+    conditions: "the opening move of a writing session, when the writer is working from a flat key message"
+  caveats:
+    - text: "presented as the author's own practice and one of several processes he offers, not as the only route"
+      origin: source_stated
+  source_stated_problems:
+    - "you often lose the selling idea in the act of trying to express it creatively"
+  source_stated_remedies:
+    - "try beginning a headline with 'This is an ad about …' and then just keep writing"
+    - "shorten it, punch it up, say it faster, say it in slang, add some attitude"
+  examples:
+    positive: [{description: "Kemeny's paired examples — literal 'A color printer for the price of a black-and-white printer' becoming lateral 'Millions of colors for the price of two'; literal 'Your teeth will be a bright shiny white' becoming lateral 'James, your smile is needed at the lighthouse'", figure_ref: null}]
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_whip_0005, note: "a procedure for reaching the clear/clever overlap"}
+    - {relation: member_of_system, target: scs_whip_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Ch. 5 — Brevity Is the Soul of Wit; also Ch. 4 — A Controlled Daydream"
+    section: "Ch. 5, 'First say it straight, then say it great.'; Ch. 4, 'First, say it straight. Then say it great.' (spines 17, 15)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0007
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "a smile in the mind"
+    - "wit invites participation"
+    - "that > CLICK <"
+  concept_label: wit_works_by_making_the_viewer_travel_part_of_the_distance
+  label_origin: extractor_assigned
+  claim: >
+    Quoting McAlhone and Stuart, Sullivan holds that a witty idea deliberately does not travel all
+    the way to the audience: the audience must travel somewhere between five and forty percent of
+    the way to unlock it. Leave too much out and you mystify; put too much in and you bore. The
+    completion is the mechanism, not a side effect — the reader's own act of resolving the idea is
+    what makes it register and persist. Sullivan reports the same structure in jokes, citing
+    Koestler's claim that hearing a joke compels the listener to re-create it in imagination.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Participation puts the viewer's mind in gear. Sullivan adds a physiological gloss: the moment
+      of resolution is accompanied by a small dopamine release, and he cites an NIH item suggesting
+      dopamine influences how the brain evaluates whether a mental task is worth the effort. He
+      also reports the authors' claim that an idea that happens in the mind stays in the mind and
+      leaves a stronger trace, because the person can re-create the pleasure by recalling it.
+  scope:
+    domain_discussed_by_source: [advertising_concept_development, copywriting, graphic_design]
+    conditions: "ideas that ask the viewer to complete something; the source does not claim every idea should be witty"
+  caveats:
+    - text: "the five-to-forty-percent range is quoted from another book and is a figure of speech, not a measurement; nothing in the source operationalises it"
+      origin: extractor_observed
+    - text: "the dopamine explanation is the source's own gloss connecting a general NIH finding about effort evaluation to advertising comprehension; the cited research is not about advertising"
+      origin: extractor_observed
+    - text: "the worked example is a printed advertisement the extraction could not see"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if you leave too much out, you'll mystify your audience"
+    - "if you put too much in, you'll bore them"
+  source_stated_remedies:
+    - "when baiting a trap with cheese, always leave room for the mouse"
+  examples:
+    positive: [{description: "an Ogilvy Brasil advertisement for Band Sports, an all-sports cable network, which the source calls marvellously subtle and describes only by the click it produces", figure_ref: "Figure 5.5"}]
+    counter: []
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_whip_0001, note: "participation is bought with comprehension time"}
+    - {relation: qualifies, target: sk_whip_0005, note: "names what the clever half of the overlap is actually doing"}
+    - {relation: demonstrated_together_with, target: sk_whip_0008, note: "the sentence-level version of the same shift"}
+    - {relation: member_of_system, target: scs_whip_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Ch. 5 — Brevity Is the Soul of Wit"
+    section: "The architecture of ideas — 'A smile in the mind.' (spine 17)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 5.5", "Figure 5.6"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0008
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "paraprosdokian"
+    - "parallelism"
+    - "two-fers"
+  concept_label: two_sentence_architectures_put_the_payload_at_the_end
+  label_origin: extractor_assigned
+  claim: >
+    Sullivan names two distinct sentence structures for building tension into a headline, and says
+    both require the key words to be pushed to the very end. In a paraprosdokian the second half is
+    unexpected in a way that forces the reader to reinterpret the first half — the brain has
+    already auto-filled a likely ending, and the actual ending overturns it. In a parallelism no
+    reinterpretation is required; what is needed is opposition — this versus that, this but not
+    that, not only this but that — a contrast that throws the benefit into relief. He adds that a
+    full reinterpretation is not always necessary: simply holding the key word until the end can
+    achieve a similar effect, because the punch line of a joke is at the end for a reason.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both structures work on the order in which the reader receives the words. The
+      paraprosdokian's mechanism is prediction failure — the reader's own completion of the
+      sentence is what gets overturned. The parallelism's mechanism is contrast — the benefit is
+      made legible by the thing it is set against. In both, delaying the operative word means the
+      effect fires when the writer intends, "like a firecracker at the end of a fuse".
+  scope:
+    domain_discussed_by_source: [copywriting]
+    conditions: "headlines and short lines; the source does not claim these are the only workable structures"
+  caveats:
+    - text: "the two structures are distinguished by the source explicitly — a parallelism does not require reinterpretation, only opposition — so treating them as one device loses the distinction he is making"
+      origin: source_stated
+    - text: "all the evidence is a selected set of celebrated headlines; no comparison against lines that used the same structures and failed"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "push the key words to the very end of your sentence; save your wrap-up punch for the end"
+    - "start looking for 'two-fers': language that separates this versus that, this plus that, this but not that"
+  examples:
+    positive: [{description: "paraprosdokian: 'For more information on lung cancer, keep smoking' — the brain autofills 'ask for our free brochure' and is then made to reinterpret. Delayed key word: 'Refreshes your breath while you scream' (Altoids). Parallelism: 'You don't win silver. You lose gold.' (Nike); 'Cars people swear by, not at.' (Volvo); 'The best surprise is no surprise.' (Holiday Inn)", figure_ref: "Figure 5.7"}]
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_whip_0007, note: "the same tension-and-release shift, realised inside one sentence"}
+    - {relation: member_of_system, target: scs_whip_003}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Ch. 5 — Brevity Is the Soul of Wit"
+    section: "The paraprosdokian and the parallelism: Tension and release in a sentence. (spine 17)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 5.7"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0009
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "a platform is a world with its own rules"
+    - "platforms are ideas that create ideas"
+    - "world building"
+  concept_label: a_platform_is_a_rule_governed_world_not_a_campaign
+  label_origin: extractor_assigned
+  claim: >
+    Sullivan draws a hard line between a campaign and a platform. A campaign he defines as a series
+    of executions held together by similar messaging, typography, art direction, tone and
+    architecture. A platform is a world with its own internal rules, and those rules can be used
+    again and again to generate further stories — prequels, sequels, spin-offs. His governing claim
+    is that the richer the set of rules in the world, the more stories can be pulled out of it, and
+    that this is why platforms outlast campaigns. He applies the test to his own example: VW's
+    computer-assisted parallel-parking campaign is excellent but is a world with essentially one
+    rule — you change what is on either side of the parking space — whereas Coke Zero's "taste
+    infringement" imports the whole rule set of the legal world and therefore keeps producing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Rules are generative. A shared, internally consistent set of conventions gives a team a
+      combinatorial space to recombine rather than a single idea to repeat, so the number of
+      distinct further executions available is a function of the rule count rather than of further
+      invention from scratch.
+  scope:
+    domain_discussed_by_source: [advertising_concept_development, brand_communication]
+    conditions: "brand work intended to run over time; the source says a junior will be asked to add to campaigns before being asked to create platforms"
+  caveats:
+    - text: "'campaign' and 'platform' are the source's working definitions offered 'for the purposes of discussion', not industry-standard terms"
+      origin: source_stated
+    - text: "rule count is not defined or counted anywhere; the comparison between the VW and Coke Zero examples is made by inspection"
+      origin: extractor_observed
+  source_stated_problems:
+    - "as great as that campaign is, it's not a world — it's a small one with just the one rule"
+  source_stated_remedies:
+    - "the more rules to your world, the better"
+  examples:
+    positive: [{description: "Coke Zero 'taste infringement' (Crispin): actors posing as Coca-Cola brand managers trying to hire lawyers to sue Coke Zero. The imported legal-world rules then generated a class-action spin-off, a 'Sue a Friend' web mechanic, and billboards", figure_ref: "Figure 7.4"}]
+    counter: [{description: "VW's One Show-winning computer-assisted parallel-parking campaign — a working idea, but a one-rule world", figure_ref: "Figure 7.3"}]
+  intra_source_relations:
+    - {relation: depends_on, target: sk_whip_0012, note: "the platform is built from a truth crossed with a conflict"}
+    - {relation: demonstrated_together_with, target: sk_whip_0010, note: "the sticky-note test and the talking test are the two signs he gives"}
+    - {relation: member_of_system, target: scs_whip_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, argued]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Ch. 7 — Why Is the Bad Guy Always More Interesting?: Storytelling, Conflict, and Brand Platforms"
+    section: "Brand platforms: the mother of stories — 'Platforms are ideas that create ideas.' (spine 21)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 7.3", "Figure 7.4"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_whip_0010
+  source_id: sullivan-hey-whipple
+  source_terms:
+    - "it fits on a sticky note"
+    - "it starts talking and won't shut up"
+  concept_label: two_stated_signs_that_an_idea_is_actually_big
+  label_origin: extractor_assigned
+  claim: >
+    Sullivan gives two checkable signs that an idea has reached platform size. First, it can be
+    written on a sticky note: a big idea can be summed up in a sentence, and if setting the idea up
+    takes more than a sentence or two the idea is probably not there yet. He demonstrates on his
+    own example — "Coca-Cola company sues itself for 'taste infringement'" — and counts the
+    characters. Second, once a working platform is spoken aloud, its rules start talking and the
+    platform unpacks itself: other people in the room immediately begin generating executions
+    without being asked. He reports this happening in his classroom the moment a student said
+    "PetSmart is the only thing dogs and cats can agree on."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both signs are indirect measurements of the same property. Compressibility to a sentence
+      indicates the idea has a single centre rather than an accumulation of parts; spontaneous
+      generation by listeners indicates the rules are legible enough that other people can operate
+      them, which is exactly what makes the world productive.
+  scope:
+    domain_discussed_by_source: [advertising_concept_development, creative_process]
+    conditions: "evaluating a candidate platform before committing to it"
+  caveats:
+    - text: "the source calls the sticky-note sign 'kind of weird' and hedges the whole formula it sits inside as a tool rather than a rule"
+      origin: source_stated
+    - text: "the talking test is social, so it is confounded by who is in the room and by the enthusiasm of the person presenting; the source does not address this"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if you find yourself needing more than a sentence or two to set up an idea, well, your idea probably isn't there yet"
+  source_stated_remedies:
+    - "write the idea on a sticky note"
+    - "speak the platform concept aloud and see whether the rules start talking"
+  examples:
+    positive: [{description: "student platforms that fit on notes: PetSmart as the only thing dogs and cats agree on; Reese's as 'the tragic love story of how Peanut Butter left Jelly for Chocolate'; Casper mattresses versus the 'Crazy Ex-Mattress'", figure_ref: "Figure 7.5"}]
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_whip_0009, note: "these are the diagnostic signs for the thing that object defines"}
+    - {relation: member_of_system, target: scs_whip_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Ch. 7 — Why Is the Bad Guy Always More Interesting?"
+    section: "Two signs you have a platform: It fits on a sticky note and it starts talking and won't shut up. (spine 21)"
+    page_start: null
+    page_end: null
+    figure_refs: ["Figure 7.5"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
