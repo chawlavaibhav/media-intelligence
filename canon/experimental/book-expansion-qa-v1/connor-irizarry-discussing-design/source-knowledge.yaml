@@ -1,0 +1,2621 @@
+# Adam Connor & Aaron Irizarry, *Discussing Design* (O'Reilly, 2015) — SPEC-03 SourceKnowledge
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory.
+#
+# LOCATORS: Case 1. printed page = PDF page - 18, folio verified on ten rendered pages.
+# page_start / page_end carry PRINTED numbers throughout. The real printed span is 1-187,
+# with 20, 76, 142, 174 and 180 absent (blank versos). Nothing here cites outside 1-179.
+#
+# EVIDENCE LEVEL, STATED ONCE AND REPEATED IN EVERY OBJECT'S characteristics:
+# this book reports NO measurement of its own — no study, experiment, count or controlled
+# comparison of outcomes appears anywhere in it, and its single footnote is a dictionary
+# definition of "collaborate" (printed p. 48). Every claim below is practitioner assertion,
+# argument from stated premises, or recounted anecdote. `empirical_within_source` is used
+# ZERO times in this file. That is a finding about the source, not an omission.
+#
+# SCOPE CAUTION: the subject is synchronous conversation between people about interface and
+# product work, and every remedy is an act performed by a person. Applying any of it to an
+# automated evaluation pipeline is OUR extrapolation and appears only in
+# operational-bindings.yaml under evidence_basis: extractor_inference. It is never inside a
+# `claim` here.
+#
+# SIDEBARS: six named practitioners contribute signed sidebars. Where an object rests on a
+# sidebar rather than on Connor & Irizarry's own text it says so in a caveat and names the
+# contributor — a sidebar is a different practitioner's assertion carried inside this book.
+
+source_id: connor-irizarry-discussing-design
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART A — THE DISTINCTION BETWEEN CRITIQUE AND OTHER KINDS OF REACTION
+# Chapter 1, "Understanding Critique", printed pp. 1-19
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_disc_0001
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Feedback itself is nothing more than a reaction or response"
+    - "The issue with feedback lies in how nonspecific it is"
+  concept_label: the_word_feedback_names_only_a_reaction_not_a_judgement
+  label_origin: extractor_assigned
+  claim: >
+    The source locates the problem not in any particular bad comment but in the request itself.
+    "Feedback" names any reaction or response whatsoever — the authors take the term from the
+    interaction-design sense of a feedback loop, where feedback is the system's noticeable change
+    of state after a user acts — so a request for feedback places no constraint on what comes
+    back. Asking for it therefore returns an unpredictable mixture: a gut reaction, a list of
+    instructions, or a description of what the critic would have made instead. The work of sorting
+    which of that is usable falls entirely on the person who asked.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A word that categorises nothing cannot set an expectation. Because "feedback" covers every
+      response, both parties can use it in good faith and still be doing different things: the
+      asker wanting analysis, the giver supplying a reaction. The authors' remedy is not to ban
+      the word — they concede they use it throughout the book — but to know which of the three
+      forms one is asking for and to shape the request accordingly.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, interface_and_product_design]
+    conditions: "any conversation in which someone shares work in progress and asks for others' responses to it"
+  caveats:
+    - text: "the authors explicitly concede the point may look like semantics, and that giving up the word is 'damned difficult'"
+      origin: source_stated
+    - text: "this is an argument about vocabulary and expectation, offered without any measurement of how differently-worded requests actually perform"
+      origin: extractor_observed
+  source_stated_problems:
+    - "we aren't being specific enough in describing what we want feedback on and why we are asking for it"
+    - "weeding through all of that feedback to try to determine what's of use to us can be a struggle"
+  source_stated_remedies:
+    - "understand the differences in forms of feedback and use that understanding to inform how you ask people and facilitate the resulting conversations"
+  examples:
+    positive:
+      - description: "the Ready For Zero payment-plan form, where moving a slider instantly readjusts the other values — the source's illustration of feedback in its original, non-human sense"
+        figure_ref: "Figure 1-2"
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_disc_0002, note: "the three-form taxonomy is the response to this problem"}
+    - {relation: qualified_by, target: sk_disc_0019, note: "the channel used to ask also shapes what comes back"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "The Problem with Asking for 'Feedback' / What Is Feedback?"
+    page_start: 2
+    page_end: 5
+    figure_refs: ["Figure 1-1", "Figure 1-2"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0002
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "There are three forms of feedback"
+    - "reaction, direction, and critique"
+  concept_label: feedback_has_three_forms_only_one_of_which_is_analysis
+  label_origin: source_verbatim
+  claim: >
+    The source's central move is to split "feedback" into exactly three forms — reaction,
+    direction and critique — and to hold that they differ in kind, not in politeness or quality.
+    Reaction reports how the responder felt. Direction reports what the responder would do
+    instead. Only critique reports whether a specific decision serves a stated objective, and why.
+    The authors' position is that reaction and direction "are limited in their ability to help us
+    understand if the design choices we've made might work toward the product's objectives",
+    and that critique "is feedback that focuses on exactly that understanding".
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The three forms are distinguished by what they are about. A reaction is about the responder's
+      state; a direction is about the responder's preferred solution; a critique is about the
+      relationship between an element of the work and an objective. Only the third contains the
+      information needed to decide what to change next, because only the third names the objective
+      that the change would be serving.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, feedback_on_work_in_progress]
+    conditions: "responses to work that was made in pursuit of objectives that can be stated"
+  caveats:
+    - text: "the authors do not claim reaction and direction are worthless — a reaction tells you something about a subconscious response, and a direction may reveal the giver's unstated concern; the claim is that neither on its own supports iteration"
+      origin: source_stated
+    - text: "the taxonomy is asserted, not derived from observation of a sample; no evidence is offered that these three are exhaustive"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the lines have become blurred in relation to feedback, critique, and how we communicate while working together"
+  source_stated_remedies:
+    - "understanding these three kinds of feedback can help us understand the conversations we have with our teams"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_001}
+    - {relation: specialises, target: sk_disc_0003, note: "reaction is the first form"}
+    - {relation: specialises, target: sk_disc_0004, note: "direction is the second form"}
+    - {relation: specialises, target: sk_disc_0005, note: "critique is the third form"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "Three Kinds of Feedback; restated in the Chapter 7 summary"
+    page_start: 5
+    page_end: 11
+    figure_refs: ["Figure 1-3", "Figure 1-4", "Figure 1-5"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0003
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "reaction-based feedback tends to be emotional or visceral"
+    - "it's a gut reaction"
+    - "That's wonderful! Great work!"
+  concept_label: reaction_based_feedback_and_why_it_cannot_direct_a_revision
+  label_origin: extractor_assigned
+  claim: >
+    Reaction-based feedback is fast, instinctive and driven by the responder's own expectations,
+    desires and values. The source names a second variety that is often missed: a reaction driven
+    not by the work at all but by the responder's sense of what they are expected to say — "That's
+    wonderful! Great work!" — which is a response to having been asked, not to what was made. The
+    authors' test for why reaction fails is a set of questions the reaction cannot answer: is the
+    responder representative of the actual audience; are they looking at it as a user would; and
+    does the reaction divulge anything specific about any design decision or its effectiveness.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A reaction is a report about the responder's state, produced before the slower analytical
+      process has run. It therefore contains no reference to any element of the work and no
+      reference to any objective, which are the two things needed to locate a change.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, social_media_responses_to_products]
+    conditions: "an immediate response given on first exposure to a design"
+  caveats:
+    - text: "the authors state that reactions are 'something we do want to understand when designing a product or service' — it is not ideal to sell something users cringe at; the defect is in using a reaction as iteration guidance, not in noticing it"
+      origin: source_stated
+    - text: "the second variety — the culturally-expected compliment — is the more dangerous one for a judgement pipeline, because it is indistinguishable in form from a genuine positive finding; the source names it but gives no cue for telling them apart at the moment it is uttered"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the reaction might be based upon the personal biases and preferences of the individual who is reacting"
+    - "the reaction itself isn't in regard to what's being presented; rather, it's in response to simply being asked for feedback in the first place"
+  source_stated_remedies:
+    - "ask questions that push him to examine not only his reaction, but also the creation you're asking them to analyze"
+  examples:
+    positive: []
+    counter:
+      - description: "'Well… it's better than peanut butter and salami!' — a real reaction the authors witnessed in a meeting, whose meaning the room could not decode until it was unpacked"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_001}
+    - {relation: contradicts, target: sk_disc_0005, note: "the source draws critique specifically against this"}
+    - {relation: qualified_by, target: sk_disc_0048, note: "laddering is the stated route from a reaction to an analysis"}
+    - {relation: qualified_by, target: sk_disc_0051, note: "a positive reaction is no more usable than a negative one"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "Three Kinds of Feedback — The first two types of feedback / Why it can be an issue"
+    page_start: 5
+    page_end: 6
+    figure_refs: ["Figure 1-3"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0004
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Direction-based feedback typically begins with an instruction or suggestion"
+    - "If I were to do this…"
+    - "getting that approval and creating an effective design are not necessarily the same things"
+  concept_label: direction_based_feedback_and_why_a_reason_does_not_repair_it
+  label_origin: extractor_assigned
+  claim: >
+    Direction-based feedback opens with an instruction or suggestion and, in many cases, ends
+    there; the giver is communicating their own vision for the work. The source makes a
+    distinction that is easy to miss: even when the giver does explain why they are suggesting the
+    change, direction is still not critique. The explanation tells you what problem they believe
+    exists — "you at least begin to understand the impetus" — but it "still does not help you
+    understand how or why the design you have is or is not effective at addressing that problem".
+    The authors also separate two outcomes that are commonly conflated: if the director is the
+    approver, complying produces approval, and approval is not the same thing as an effective
+    design.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A proposed solution encodes a diagnosis without stating it. The recipient receives the
+      remedy and must reverse-engineer what was wrong, which means the actual finding — the
+      relationship between the existing element and the objective — is never put on the record and
+      cannot be checked, disputed, or applied to anything else.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, stakeholder_and_client_review]
+    conditions: "a responder who has their own solution in mind, or who perceives a problem and reaches for a fix"
+  caveats:
+    - text: "the authors are explicit that the direction itself may be a good idea — 'it's not that the direction itself that is being given is a bad idea, but at this point it's out of place'"
+      origin: source_stated
+    - text: "the source treats jumping to a solution as instinctive rather than culpable, and returns to that framing repeatedly"
+      origin: source_stated
+  source_stated_problems:
+    - "direction-based feedback without any explanation indicates nothing about the effectiveness of your decisions in meeting the design's objectives"
+    - "when left unchecked, this type of feedback leads to problem solving which is counterproductive to the conversation you're trying to have"
+  source_stated_remedies:
+    - "ask questions that work toward identifying what that issue is and how it relates to the objectives of the design"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_001}
+    - {relation: generalises, target: sk_disc_0035, note: "the rule against problem solving in a session is this failure at group scale"}
+    - {relation: qualified_by, target: sk_disc_0052, note: "a delivered alternative design is the extreme form of it"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "Three Kinds of Feedback — Direction / Why it can be an issue"
+    page_start: 7
+    page_end: 8
+    figure_refs: ["Figure 1-4"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0005
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Critique is a form of analysis that uses critical thinking to determine whether a design is expected to achieve its desired objectives (and adhere to any pertinent best practices or heuristics)"
+    - "Critical thinking is the process of taking a statement and determining if it is true or false"
+  concept_label: critique_is_analysis_of_a_design_against_its_stated_objectives
+  label_origin: source_verbatim
+  claim: >
+    Critique is defined as the third form of feedback: analysis, using critical thinking, of
+    whether what has been designed is expected to achieve the objectives set for it, and whether
+    it adheres to any pertinent best practices or heuristics. The authors are explicit about what
+    it is not — "Critique isn't about that instant reaction we might feel when seeing something,
+    or about how we would change someone's design to better solve an issue." The objectives it is
+    judged against may be of three kinds: about utility (giving someone the ability to complete a
+    task), about metrics (increasing conversions on a call to action), or experiential (making
+    someone feel excited or surprised).
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Judgement is made checkable by binding it to something outside the judge. The objective is
+      the external referent; without one, an assessment reports only the assessor. With one, the
+      assessment becomes a proposition another person can examine, agree with, or refute.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, interface_and_product_design, any_deliberate_making]
+    conditions: "work made in pursuit of objectives that the group has agreed and can state"
+  caveats:
+    - text: "the definition is load-bearing on the objectives actually existing and being shared; the source devotes a chapter to the fact that they usually do not (see sk_disc_0022)"
+      origin: extractor_observed
+    - text: "experiential objectives are admitted alongside metric ones, so this is not a claim that only measurable objectives count"
+      origin: source_stated
+    - text: "'best practices or heuristics' is admitted as a second legitimate yardstick alongside project objectives, which widens the definition beyond what a team has explicitly agreed"
+      origin: source_stated
+  source_stated_problems:
+    - "the practice of real critique has become a lost skill"
+  source_stated_remedies:
+    - "we should be working to understand whether we believe that what has been designed will work to achieve those objectives"
+  examples:
+    positive:
+      - description: "'If the objective is for users to seriously consider the impact to their bank balance before making a purchase, placing the balance at the bottom of the screen at the same size as all the other numbers isn't effective because it gets lost in all of the other information' — the source's own worked example, decomposed in the prose into its three parts"
+        figure_ref: "Figure 1-5"
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_001}
+    - {relation: depends_on, target: sk_disc_0006, note: "the three elements are what a critique must contain"}
+    - {relation: depends_on, target: sk_disc_0022, note: "it presupposes a shared foundation of objectives"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "What We Really Need Is Critical Thinking / Critique: The third form of feedback"
+    page_start: 8
+    page_end: 10
+    figure_refs: ["Figure 1-5"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0006
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "It identifies a specific aspect of the idea or a decision in the design being analyzed."
+    - "It relates that aspect or decision to an objective or best practice."
+    - "It describes how and why the aspect or decision work to support or not support the objective or best practice."
+  concept_label: the_three_elements_a_usable_piece_of_feedback_must_contain
+  label_origin: source_verbatim
+  claim: >
+    Good critique is composed of three elements, all three required. It identifies a specific
+    aspect of the idea or a decision in the design. It relates that aspect or decision to an
+    objective or best practice. And it describes how and why that aspect or decision does or does
+    not support that objective or best practice. The source demonstrates the decomposition on its
+    own example: the clause naming the objective, the clause naming the design choices, and the
+    clause stating that the critic does not believe those choices will be effective and why.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [design_team_conversation, interface_and_product_design]
+    conditions: "a statement offered as feedback on a design decision"
+  caveats:
+    - text: "the source presents the three as constitutive of good critique but never says what to do with a statement that has two of the three; sk_disc_0010 supplies the missing-why case and sk_disc_0048 the missing-specific-aspect case, but the missing-objective case is only addressed indirectly, via the foundation material"
+      origin: extractor_observed
+    - text: "no mechanism is given for why exactly these three and not more or fewer; the list is asserted and then used"
+      origin: extractor_observed
+    - text: "restated verbatim at printed p. 33 as the basis of the four-question framework, which is how the source intends it to be operated"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - description: "the bank-balance example decomposed clause by clause against the three elements in the prose at printed p. 10"
+        figure_ref: "Figure 1-5"
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_002}
+    - {relation: specialises, target: sk_disc_0005, note: "this is the operational form of the definition"}
+    - {relation: demonstrated_together_with, target: sk_disc_0015, note: "the four questions are the procedure for producing all three elements"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_absent, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "Critique: The third form of feedback; restated at Ch. 2, 'A Simple Framework for Critique'"
+    page_start: 9
+    page_end: 10
+    figure_refs: ["Figure 1-5"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0007
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "the brain operates as a toggle"
+    - "creative thinking… and analytical thinking"
+    - "critique is an act of reflection"
+  concept_label: making_and_judging_are_separate_modes_that_must_be_switched_between
+  label_origin: extractor_assigned
+  claim: >
+    The source's cognitive premise, introduced early and relied on for the rest of the book, is
+    that a person designing something toggles between creative thinking — generating or assembling
+    ideas — and analytical thinking — determining whether what exists so far is in line with what
+    is being aimed at. Experienced practitioners, the authors say, have learned to be deliberate
+    about when they make that switch, periodically pausing creative work to step back and critique
+    what they have. The corollary the authors draw is that an individual can and should critique
+    alone, and that the switch is a controllable skill improved by exercise.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The authors state that the brain does not consciously think analytically and creatively at
+      the same time; multitasking forces it to divide resources between the two processes and
+      actively switch between them. Deliberate control of the switch is therefore what makes
+      analysis possible at all, and losing control of it is what makes group analysis fragment.
+  scope:
+    domain_discussed_by_source: [individual_design_work, group_critique_sessions]
+    conditions: "any activity that alternates between producing something and assessing it"
+  caveats:
+    - text: "this is a claim about human cognition presented without citation, measurement or reference to any research; it is the load-bearing premise for the rule against problem solving and should be treated as the authors' working model, not as an established finding"
+      origin: extractor_observed
+    - text: "the source's own hedge is that keeping the brain from bouncing back and forth 'can take a lot of practice and skill'"
+      origin: source_stated
+  source_stated_problems:
+    - "It happens so frequently that we often aren't even aware it's happening"
+  source_stated_remedies:
+    - "periodically pausing their creative work to take a step back and critique what they have so far"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_disc_0035, note: "the rule against problem solving in a group is this premise applied to many brains at once"}
+    - {relation: generalises, target: sk_disc_0030, note: "the same premise explains why analysis suppresses idea generation in a brainstorm"}
+    - {relation: demonstrated_together_with, target: sk_disc_0018, note: "the recipient critiquing their own work is an exercise of the toggle"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "Critiquing Solo; developed at Ch. 5, 'Avoid Problem Solving'"
+    page_start: 11
+    page_end: 11
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART B — FAILURE MODES OF FEEDBACK, AND WHAT A WELL-FORMED CRITIQUE CONTAINS
+# Chapter 2, "What Critique Looks Like", printed pp. 21-46
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_disc_0008
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Recipient"
+    - "Giver"
+    - "Intent initiates conversation and is often what separates successful critiques and feedback discussions from problematic ones"
+  concept_label: intent_on_both_sides_is_what_separates_useful_from_harmful_critique
+  label_origin: extractor_assigned
+  claim: >
+    The source names two roles — Recipient and Giver — and holds that the quality of a critique is
+    determined before anything is said, by the intent each party arrives with. Receiving with the
+    appropriate intent is "wanting to understand whether the elements of the design will work
+    toward the established objectives for the product". Giving with the appropriate intent is
+    "wanting to help the designer understand the effect that elements of the design will have on
+    the product's ability to achieve its objectives". The authors' summary formulation is that
+    intent is either self-focused — ulterior motives or personal agendas — or product-focused, and
+    that a wrong intent on either side is sufficient to spoil the exchange.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Intent determines what a participant is looking for, and therefore what they will notice and
+      say. A giver who wants to be seen as clever will look for faults to display; a recipient who
+      wants praise will hear analysis as attack. The technique in the rest of the book operates on
+      the surface of the conversation and cannot correct a misaligned purpose underneath it.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, client_and_stakeholder_review]
+    conditions: "both parties present and participating in a feedback exchange"
+  caveats:
+    - text: "intent is not directly observable, and the source offers no cue for reading it other than watching how someone responds to questions over time (see sk_disc_0048)"
+      origin: extractor_observed
+    - text: "the authors are careful that misaligned intent is often not malicious — 'some individuals might simply be unaware of their tone, or they have difficulty forming their feedback in a way that is useful'"
+      origin: source_stated
+  source_stated_problems:
+    - "critique with the wrong or inappropriate intent on either side can lead to problems not only in our designs, but also in our ability to work with our teammates"
+  source_stated_remedies:
+    - "prior to beginning a critique, whether you're the giver or receiver, it's best to ensure that you're going in with the right intent"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0009, note: "selfish critique is the giver-side failure of intent"}
+    - {relation: qualifies, target: sk_disc_0016, note: "the three anti-patterns are the recipient-side failures of intent"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "The Two Sides of Critique and the Importance of Intent"
+    page_start: 21
+    page_end: 22
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0009
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Selfish"
+    - "Untimely"
+    - "Don't invite yourself"
+  concept_label: selfish_and_untimely_critique_as_named_failure_modes
+  label_origin: extractor_assigned
+  claim: >
+    Two of the source's four named characteristics of bad critique concern the giver's position
+    rather than the content of what they say. Selfish critique is driven by the critic's own
+    goals — in the extreme, by wanting to be recognised as smarter or superior — and the authors
+    include in it the case of using a critique as the occasion to propose one's own unshared idea,
+    which they call detrimental even though they hold that a good idea can come from anywhere.
+    Untimely critique is critique that was not invited: unless someone has said they want it, the
+    authors hold it is unwise to treat a conversation as an opening, because "for the receiver to
+    really listen, process, and make use of critique, she needs to be in the proper mindset". The
+    stated remedy is to get in touch first and offer, letting the person prepare to listen.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Both failures spend the recipient's attention on something other than the analysis. Selfish
+      critique redirects the session toward the giver's standing or unshared alternative; untimely
+      critique arrives when the recipient's attention is elsewhere, producing defensiveness rather
+      than uptake and casting the giver as a know-it-all.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, social_media_commentary_on_products]
+    conditions: "feedback given without invitation, or given by someone with a competing stake"
+  caveats:
+    - text: "the authors include themselves among the guilty — 'Aaron and I are guilty of it, too' — which is a rhetorical move, not evidence"
+      origin: extractor_observed
+    - text: "the untimeliness claim rests on an assertion about the recipient's readiness to listen; no observation of uptake rates is offered"
+      origin: extractor_observed
+    - text: "the sidebar by Kevin M. Hoffman and Chris Cashdollar (printed pp. 31-32) supplies the strongest statement of the timing point — 'the right feedback at the wrong time ruins momentum and causes designers to abandon good thinking' — and it is a different practitioner's assertion carried inside this book, not the authors'"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the commenters have only a cursory understanding of what the designer or team was working toward and the constraints they were working within"
+    - "when critique is uninvited, it can lead to defensiveness, communication breakdowns"
+  source_stated_remedies:
+    - "get in touch with her first and let her know… Give her the opportunity to prepare to listen"
+    - "critique is not the place for exploring new ideas; shifting a group from an analytical mindset to an explorative one is best done with deliberate facilitation"
+  examples:
+    positive: []
+    counter:
+      - description: "the pattern on social networks after a popular product changes: decisions slammed as ridiculous and stupid by people with only a cursory understanding of the objectives and constraints"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_003}
+    - {relation: qualified_by, target: sk_disc_0008, note: "both are failures of giver intent"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "The Characteristics of Bad Critique — Selfish, Untimely; and 'Don't invite yourself'"
+    page_start: 23
+    page_end: 29
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0010
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Incomplete"
+    - "Good critique is actionable"
+    - "Be aware though that this is different from prescription or direction"
+  concept_label: incomplete_critique_and_the_boundary_between_actionable_and_prescriptive
+  label_origin: extractor_assigned
+  claim: >
+    Incomplete critique states an outcome or a reaction without the "why" behind it: "I think the
+    button is better than the link", "Nobody is going to click that", "This is terrible". The
+    source's repair is to attach the reason — "Nobody is going to click on that because the
+    current page design leads the eye down the left side of the screen away from the
+    call-to-action" — and its definition of actionable is precise and unusual: the designer has
+    enough understanding of what is and is not working, and why, that she can explore alternatives
+    or make other adjustments. The authors then draw the boundary that this whole book turns on:
+    actionable is not the same as prescriptive. "Critique should not tell the designer how to act
+    on something or specifically what changes she should make."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The "why" is what converts a verdict into a diagnosis. A verdict can only be obeyed or
+      ignored; a diagnosis can be explored, and admits more than one repair. Supplying the repair
+      instead of the diagnosis collapses that option space and, in the authors' framing, detracts
+      and distracts from the analytical focus of the discussion.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, interface_and_product_design]
+    conditions: "a feedback statement that names an element or predicts an outcome"
+  caveats:
+    - text: "the source's own repaired example still contains an implicit objective ('the call-to-action') rather than an explicitly named one, so it satisfies two of the three elements of sk_disc_0006 rather than all three"
+      origin: extractor_observed
+    - text: "the authors acknowledge that for some insights 'the changes to be made will be small and obvious', which softens the prohibition in practice"
+      origin: source_stated
+  source_stated_problems:
+    - "it lacks the critical thinking that makes it possible for those working on the design to understand what they might need to change in their next iteration"
+  source_stated_remedies:
+    - "for these critiques to become valuable, they need to be followed by an explanation as to 'why' the giver is having that reaction or foresees a certain outcome"
+  examples:
+    positive:
+      - description: "'Nobody is going to click on that because the current page design leads the eye down the left side of the screen away from the call-to-action.'"
+        figure_ref: null
+    counter:
+      - description: "'I think the button is better than the link' — a preference stated as a verdict with no objective and no reason"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_003}
+    - {relation: specialises, target: sk_disc_0006, note: "this is the third element missing"}
+    - {relation: trades_off_with, target: sk_disc_0036, note: "actionable-but-not-prescriptive is the same boundary the no-change-list rule enforces at session level"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "The Characteristics of Bad Critique — Incomplete"
+    page_start: 24
+    page_end: 25
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0011
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Preferential"
+    - "justified by the giver from purely preferential thinking"
+    - "the team begins, consciously or subconsciously, to prioritize that individual's tastes alongside or above project and user goals"
+  concept_label: preferential_critique_becomes_structural_when_the_preference_holder_approves
+  label_origin: extractor_assigned
+  claim: >
+    Preferential critique rejects work not because an aspect fails an objective but because it
+    does not match what the giver likes. The source's distinctive contribution is not naming the
+    failure — that is common — but naming what happens when the preference-holder also holds
+    approval authority: the team begins, consciously or subconsciously, to prioritise that
+    individual's tastes alongside or above project and user goals, even where the two conflict. A
+    single unchallenged preference thereby stops being an isolated bad comment and becomes a
+    standing, unwritten criterion the team optimises against.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Approval authority converts a preference into a constraint. Because the team must eventually
+      pass the approver, satisfying the approver's taste becomes instrumentally rational even for
+      people who know it is not an objective — and because it is never written down, it is never
+      subject to the test that written objectives are subject to.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, stakeholder_and_client_review]
+    conditions: "feedback given by someone whose sign-off the work must pass"
+  caveats:
+    - text: "the illustration — a colour scheme rejected because it reminds a stakeholder of a Christmas sweater from an ex-wife — is offered as recognisable rather than as evidence, and the authors concede it 'might seem ridiculous'"
+      origin: source_stated
+    - text: "the source does not say how to tell a preference from a legitimate but unarticulated expert judgement at the moment it is voiced; sk_disc_0048 is the nearest thing to a test"
+      origin: extractor_observed
+  source_stated_problems:
+    - "designs are torn apart not because a particular aspect isn't working toward its objective, but rather because it doesn't match exactly what the critique giver 'likes'"
+  source_stated_remedies:
+    - "ask the individual to frame it in relation to a goal, scenario, principle, or persona"
+  examples:
+    positive: []
+    counter:
+      - description: "a website design discarded because the colour scheme reminded a stakeholder of a Christmas sweater given to him by his ex-wife"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_003}
+    - {relation: qualified_by, target: sk_disc_0034, note: "the 'everyone is equal' rule is the session-level counterweight"}
+    - {relation: qualified_by, target: sk_disc_0037, note: "the authors nonetheless decline to ban the phrase 'I like'"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "The Characteristics of Bad Critique — Preferential"
+    page_start: 25
+    page_end: 25
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0012
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Lead with questions"
+    - "Don't assume"
+    - "Use lighter, more inviting phrasing such as, 'Tell me more about…'"
+  concept_label: elicit_before_judging_and_put_your_assumptions_on_the_record_as_questions
+  label_origin: extractor_assigned
+  claim: >
+    Before offering analysis, the giver should ask: what the objectives were for a specific
+    element, what other options were considered, why this approach was chosen, and what
+    influencers or constraints affected the choices. The source gives the practice a dual purpose,
+    stated explicitly — to get more information, and to make the designer more comfortable talking
+    about his thought process. It adds a phrasing constraint: opening every question with "Why"
+    can feel abrasive or like an attack, so lighter framings such as "Tell me more about…" are
+    preferred. The same discipline covers assumptions: rather than reasoning silently from an
+    assumed constraint, put the assumption out loud and ask whether it is accurate.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unverified assumption propagates: thoughts, questions and statements form around it, and
+      participants leave to act on action items grounded in different pictures of the situation.
+      Voicing the assumption converts a private premise into a checkable one before any analysis
+      is built on it.
+  scope:
+    domain_discussed_by_source: [design_team_conversation]
+    conditions: "the giver has not been told the objectives, options or constraints behind a decision"
+  caveats:
+    - text: "the authors note the presenter 'likely hasn't explained everything. Actually, as we'll talk about later on, hopefully he hasn't explained everything' — the gap is deliberate (see sk_disc_0039), not a defect to be closed by longer presentations"
+      origin: source_stated
+    - text: "the phrasing guidance is presented as felt experience; no comparison of question wordings is reported"
+      origin: extractor_observed
+  source_stated_problems:
+    - "when we make assumptions we begin to form our thoughts, questions, and statements around them, without ever knowing whether they're accurate"
+  source_stated_remedies:
+    - "avoiding assumptions is simple: ask about them. Put your assumption out there and ask if it's accurate"
+  examples:
+    positive:
+      - description: "'Can you tell me more about what your objectives were for [specific aspect]?' / 'What other options did you consider?' / 'Were there any influencers or constraints that affected your choices?'"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_disc_0039, note: "the presenter deliberately leaves gaps for these questions to fill"}
+    - {relation: demonstrated_together_with, target: sk_disc_0019, note: "questions rather than statements are the mark of a good critique"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "Best Practices for Giving Critique — Lead with questions; Don't assume"
+    page_start: 26
+    page_end: 28
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0013
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Use a filter"
+    - "Hold on to your initial reactions, investigate them, and discuss them in the proper context, as appropriate"
+  concept_label: interrogate_your_own_reaction_before_voicing_it_and_triage_where_it_belongs
+  label_origin: extractor_assigned
+  claim: >
+    The source does not ask givers not to react — it takes reactions as inevitable — but to hold
+    them, ask why the reaction occurred, and only then decide whether and when it belongs in the
+    conversation. The triage has three outcomes, and the third is the interesting one. If the
+    reaction relates to the product's objectives or to a best practice, it likely has a place. If
+    it is personal preference, it likely does not. But if it is neither — "something new that you
+    think should be considered" — the authors treat it as potentially revealing an additional
+    objective or constraint that has not been exposed, to be either handled quickly or moved to a
+    dedicated discussion so the critique is not derailed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A reaction is a signal of unknown provenance. Investigating it locates the cause, and the
+      cause determines what kind of item it is: a finding against a known objective, a preference
+      to be dropped, or evidence that the objective set is incomplete. Voicing it before that
+      triage forfeits the classification.
+  scope:
+    domain_discussed_by_source: [design_team_conversation]
+    conditions: "the giver has an immediate response to work being presented"
+  caveats:
+    - text: "the third branch is the source's own admission that the agreed objectives may be wrong or incomplete; it is a small aperture in an otherwise objectives-anchored method, and the authors do not develop it into a procedure"
+      origin: extractor_observed
+    - text: "the same triage is offered to the recipient in Chapter 6 as 'hold on to your reaction' when feedback is unsolicited (printed p. 156)"
+      origin: source_stated
+  source_stated_problems:
+    - "there will be things that make you think 'Huh?' or 'That's cool'… Hold on to those reactions and remember that they don't typically make for useful feedback"
+  source_stated_remedies:
+    - "ask yourself why you're reacting in that way. Ask the presenters additional questions if necessary to help you understand your reaction"
+    - "it might prove to be something sizeable that needs a separate, dedicated discussion so that the critique isn't derailed"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0003, note: "the reaction is not suppressed, it is converted or parked"}
+    - {relation: demonstrated_together_with, target: sk_disc_0022, note: "an off-foundation comment may mean the foundation is missing something"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "Best Practices for Giving Critique — Use a filter"
+    page_start: 27
+    page_end: 27
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0014
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Talk about strengths"
+    - "Critique isn't just about what's not working"
+    - "It's just as important to talk about what is working and why as it is to talk about what isn't working"
+  concept_label: recording_what_works_and_why_serves_reuse_and_prevents_silent_regression
+  label_origin: extractor_assigned
+  claim: >
+    The source argues for discussing strengths on two grounds that are independent of making
+    criticism easier to hear. First, reuse: naming why an aspect works lets the designer abstract
+    the concept behind it and apply it to weaker areas of the same design — the authors tie this
+    to their view that design proceeds by deconstructing, abstracting and recombining ideas.
+    Second, protection against regression: if a strong aspect is never discussed, the team has no
+    reason not to change it, and it can be lost in the next iteration without anyone noticing it
+    was load-bearing. The authors are explicit that this is a separate argument from the
+    "sandwich" or OREO structure, which they treat elsewhere and largely reject.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unstated success is indistinguishable from an accident. Because iteration modifies freely
+      wherever no constraint is recorded, an effective element that was never named as effective
+      carries no protection into the next revision — and the reason it worked, which is the
+      transferable part, is never available for use anywhere else.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, iterative_design_processes]
+    conditions: "a critique of work that will be revised afterwards"
+  caveats:
+    - text: "the regression argument is stated as a rhetorical question — 'how bad would it be if at the next critique you noticed that an aspect… had now been changed' — rather than as a reported occurrence"
+      origin: extractor_observed
+    - text: "'we spend the vast majority of time talking about what isn't working' is asserted about meetings in general with no count behind it"
+      origin: extractor_observed
+    - text: "reinforced in Appendix A as the bad habit 'Focusing on What Isn't Working' (printed p. 178), where the suggested structure is two things working and two causing concern"
+      origin: source_stated
+  source_stated_problems:
+    - "we often take the positive for granted"
+  source_stated_remedies:
+    - "remember that critique is about honest analysis. It should be balanced, focusing on the design and its objectives, regardless of their success"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_disc_0050, note: "the authors reject the sandwich framing of the same practice"}
+    - {relation: demonstrated_together_with, target: sk_disc_0049, note: "the quota structure operationalises the balance"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "Best Practices for Giving Critique — Talk about strengths"
+    page_start: 29
+    page_end: 30
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0015
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "What is the objective of the design?"
+    - "What elements of the design are related to the objective?"
+    - "Are those elements effective in achieving the objective?"
+    - "Why or why not?"
+  concept_label: the_four_question_procedure_for_producing_a_well_formed_critique
+  label_origin: source_verbatim
+  claim: >
+    The source supplies a four-question procedure that produces the three required elements: what
+    is the objective of the design; what elements of the design are related to that objective; are
+    those elements effective in achieving it; and why or why not. The authors state that the first
+    two questions may be reversed depending on how the work is being presented, and that the
+    questions may be answered silently by the giver or asked out loud of the designer. Two
+    properties are worth holding onto. The second question explicitly does not care whether the
+    aspect was a conscious choice — "we are analyzing the effectiveness of the whole design as it's
+    presented". The fourth asks not merely for a verdict but for the result the choice will
+    actually produce, and admits the case where an element does not achieve the objective alone
+    but contributes in conjunction with others.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Fixing the objective first constrains attention: it decides what is pertinent before anyone
+      looks for faults, so the search is directed rather than free. The authors call the third
+      question "the crux of critical thinking" and the fourth is what forces a prediction of the
+      actual effect rather than a pass/fail mark.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, any_artifact_made_toward_an_objective]
+    conditions: "objectives exist and are known to the person asking"
+  caveats:
+    - text: "the ordering is carried by the arrows in Figure 2-1 as much as by the prose; the figure was rendered and inspected, and it shows the four questions in a single downward arrow flow"
+      origin: extractor_observed
+    - text: "the source adds two supplementary questions — what new problems or successes might arise from the proposed choices, and what other objectives should have been considered — and immediately warns that these are the main route to scope creep in a session"
+      origin: source_stated
+    - text: "the procedure assumes the objective is available; where it is not, the source's answer is the foundation material of Chapter 3, not a variant of the procedure"
+      origin: extractor_observed
+  source_stated_problems:
+    - "these questions can lead to spending too much time discussing things that are outside the scope of the project or product itself"
+  source_stated_remedies:
+    - "the group, both the recipient and the givers, need to be conscious of this potential for scope-creep and be prepared to end or defer a discussion when it begins to move out of scope"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_002}
+    - {relation: depends_on, target: sk_disc_0006, note: "the questions exist to produce the three elements"}
+    - {relation: generalises, target: sk_disc_0029, note: "the same four questions are held to apply to any artifact"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "A Simple Framework for Critique"
+    page_start: 33
+    page_end: 36
+    figure_refs: ["Figure 2-1"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: ["Figure 2-1"]
+
+- sk_id: sk_disc_0016
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Asking for feedback without listening"
+    - "Asking for feedback for praise or validation"
+    - "Not asking for feedback at all"
+  concept_label: three_anti_patterns_in_how_judgement_is_requested
+  label_origin: source_verbatim
+  claim: >
+    The source names three failures on the requesting side. Asking without being ready to listen:
+    the authors' mechanism is that the critics will detect the disinterest, will feel uninterested
+    in sharing, and over time will be less inclined to participate at all. Asking for validation:
+    the request is framed as a request for thoughts when the only wanted thoughts are
+    congratulatory, so genuine analysis arrives to a mind that cannot receive it and is met with
+    defensiveness, argument or silence. And not asking at all: the authors state the two
+    assumptions this rests on and reject both — that others will come to us with feedback, and
+    that no incoming feedback means the solution is right.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A request for judgement is itself a signal. Requests that are not honoured teach the
+      responders that responding is pointless, and the supply of judgement decays. The authors
+      make the same point about action: if discussions repeatedly fail to produce change, the
+      desire to participate wanes.
+  scope:
+    domain_discussed_by_source: [design_team_conversation]
+    conditions: "the maker controls when and whether feedback is solicited"
+  caveats:
+    - text: "'no feedback means it must be fine' is refuted by assertion, not by any reported case where silence concealed a real defect"
+      origin: extractor_observed
+    - text: "the decay-of-participation mechanism is stated twice (printed pp. 22 and 37-38) but never quantified or observed"
+      origin: extractor_observed
+  source_stated_problems:
+    - "asking for critique at a time when we don't really want it or can't do something with it leads to unproductive discussions"
+    - "we can't assume that just because no one comes to us that we've designed the perfect solution"
+  source_stated_remedies:
+    - "if we ask for feedback or critique, we need to be ready to listen to whatever we receive in response"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_disc_0008, note: "all three are failures of recipient intent"}
+    - {relation: trades_off_with, target: sk_disc_0028, note: "asking too often for reassurance is also the source's cue for too much critique"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "Receiving Critique — Critique Anti-Patterns"
+    page_start: 37
+    page_end: 39
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0017
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Return to the foundation"
+    - "you might have discovered that members of the team share different views on what the objectives of the product and its design are"
+  concept_label: unrelatable_feedback_is_a_test_that_can_fail_upward_into_the_objectives
+  label_origin: extractor_assigned
+  claim: >
+    When a piece of feedback seems out of place, the recipient's move is to try to relate it to the
+    previously agreed objectives, if necessary by asking the giver follow-up questions that do the
+    relating. The source treats the two outcomes as both informative. If a connection is found,
+    the feedback is now understood and usable. If no connection can be found, the authors' reading
+    is not that the comment was worthless but that the team may hold different views of what the
+    product's objectives are — and they prescribe naming that explicitly and then deciding, on the
+    spot, whether to resolve the divergence now or table it. The failure of a judgement to bind to
+    the stated objectives is thereby treated as evidence about the objectives, not only about the
+    judgement.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The objectives act as the shared referent that makes a judgement checkable. A judgement that
+      cannot be attached to any of them is either mis-stated or is being made against a different
+      referent that the speaker holds and the group does not; asking which converts an
+      unassimilable comment into either a finding or a disclosed disagreement about goals.
+  scope:
+    domain_discussed_by_source: [design_team_conversation]
+    conditions: "a project with previously agreed objectives that participants can be asked to point at"
+  caveats:
+    - text: "the escalation is only available where a foundation was actually agreed; without one the diagnostic collapses, which is the point of sk_disc_0022"
+      origin: extractor_observed
+    - text: "the authors leave the resolve-now-or-table decision to judgement — 'depending on its severity and the people present' — and offer no criterion"
+      origin: source_stated
+  source_stated_problems:
+    - "it might seem as though the feedback has little to do with what you're trying to design or the objectives you have"
+  source_stated_remedies:
+    - "try to work with the person giving the critique on relating it back by asking her follow-up questions related to the objectives"
+    - "if you discover during a critique that different perspectives about objectives exist within the team, the best course of action is to point it out explicitly"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_disc_0022, note: "requires that a foundation exists"}
+    - {relation: demonstrated_together_with, target: sk_disc_0013, note: "the giver-side version of the same triage"}
+    - {relation: specialises, target: sk_disc_0048, note: "laddering is the question technique that does the relating"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "Best Practices for Receiving Critique — Return to the foundation"
+    page_start: 40
+    page_end: 42
+    figure_refs: ["Figure 2-2"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0018
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Participate"
+    - "one of the best things a designer can do during a critique is to become a critic themselves"
+    - "Everyone is a critic"
+  concept_label: the_maker_should_analyse_alongside_the_others_and_everyone_present_should_contribute
+  label_origin: extractor_assigned
+  claim: >
+    The source asks the recipient to critique their own work alongside the others, and gives three
+    stated reasons: exercising the creative-to-analytical switch makes it faster and more
+    controllable; openly naming weaknesses in one's own work relieves the common fear of hurting
+    the designer's feelings, which the authors identify as a leading cause of withheld critique;
+    and doing it models the form, showing participants what usable feedback looks like. The same
+    chapter's session rule extends the obligation to everyone present: useful insights can come
+    from anyone, and the authors name the specific harm of non-participation — an individual who
+    says little in the session but raises the concern afterwards, when it is often too late to act
+    on it. Chapter 6 sharpens this into a diagnostic: the withheld comment travels person to
+    person and returns days or weeks later.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Non-participation does not remove the judgement, it delays it past the point where it can be
+      acted on. And the fear that blocks participation is a fear of harming the maker, so the maker
+      publicly analysing their own work removes the thing being feared.
+  scope:
+    domain_discussed_by_source: [group_critique_sessions]
+    conditions: "a critique with more than one participant present"
+  caveats:
+    - text: "the authors add a limit on pursuing silent participants — 'you don't want to overwhelm people by continuously putting pressure on them'; if someone simply has nothing useful to say, leave it and talk one on one afterwards"
+      origin: source_stated
+    - text: "the three benefits are asserted; no observation of whether modelling actually changes how others phrase their feedback is reported"
+      origin: extractor_observed
+  source_stated_problems:
+    - "an individual might not say much during the critique but ends up expressing any concerns he had after the fact, when it is often too late to act on those concerns"
+  source_stated_remedies:
+    - "take steps to ensure that they have opportunities to share their thoughts by asking them for feedback, directly if necessary"
+    - "it can be useful to frame the feedback request as something relevant to their specific expertise or skillset"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_004}
+    - {relation: depends_on, target: sk_disc_0007, note: "it is an exercise of the creative-analytical toggle"}
+    - {relation: demonstrated_together_with, target: sk_disc_0034, note: "paired with 'everyone is equal' as the two participation rules"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like; 5. Facilitating Critique; 6. Critiquing with Difficult People"
+    section: "Participate; Everyone Is a Critic; Preventing Surprises from Quiet Participants"
+    page_start: 42
+    page_end: 42
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0019
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "great critiques are often more about questions asked than statements made"
+    - "individuals must do so based on assumptions that they haven't yet been able to validate or eliminate"
+  concept_label: critique_is_dialogue_and_asynchronous_channels_degrade_it_by_stranding_assumptions
+  label_origin: extractor_assigned
+  claim: >
+    The source holds that productive critiques contain more questions than statements, for a
+    stated reason: questions let assumptions be validated, eliminated or examined collaboratively,
+    so the resulting feedback rests on a mutually understood foundation rather than on each
+    person's private interpretation. It adds a second use for the recipient — the questions asked
+    are themselves evidence of which parts of the design are unclear. From this the authors derive
+    a channel argument. Email and comment tools are held to be poor conduits not because they are
+    informal but because they are not real-time: a commenter must commit to an assumption they
+    have had no opportunity to test. The authors do not forbid these channels; where there is no
+    alternative they prescribe being specific about what feedback is wanted, stating the
+    objectives in the request, allowing as much back-and-forth as possible, and — the operative
+    instruction — writing any assumption down explicitly so the recipient can confirm or correct it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A judgement is only as good as the premises behind it, and in a live exchange a wrong premise
+      is cheap to discover and correct. Latency makes that correction expensive, so commenters
+      either guess or say nothing, and the recipient cannot tell which of the two happened. Making
+      the assumption explicit restores the checkability that the channel removed.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, email_and_design_commenting_tools]
+    conditions: "feedback collected from more than one person, especially where the maker cannot answer immediately"
+  caveats:
+    - text: "the tools named (inVision, WebEx, Google Hangouts, Basecamp) are of the book's 2015 moment; the argument is about latency and assumption-testing, not about any product, and should be read that way"
+      origin: extractor_observed
+    - text: "the authors state plainly that critique through these mechanisms 'very much is' possible — the claim is a cost, not an impossibility"
+      origin: source_stated
+    - text: "the recommendation to prefer real-time, co-viewed sessions is a practitioner preference, offered with no comparison of outcomes between channels"
+      origin: extractor_observed
+  source_stated_problems:
+    - "email isn't a great conduit for anything resembling real-time conversations"
+    - "now you need to manage threads, keep track of who gets what information via replies and reply-alls"
+  source_stated_remedies:
+    - "when making assumptions in order to offer an insight, be sure to state that assumption so that the recipient can see it and verify that it's true or let you know that it isn't"
+    - "be specific about what you want feedback on in your request. Specify what the objectives for your product or design were"
+  examples:
+    positive: []
+    counter:
+      - description: "feedback solicited by email that, after one or two replies, is abandoned for a call or meeting because making sense of the returning lists of questions and comments proved harder"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0012, note: "the questioning discipline is what the channel prevents"}
+    - {relation: demonstrated_together_with, target: sk_disc_0045, note: "the same argument grounds the requirement that the designer be present"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "2. What Critique Looks Like"
+    section: "Critique, Conversation, and Questions"
+    page_start: 43
+    page_end: 44
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART C — ANCHORING JUDGEMENT TO OBJECTIVES RATHER THAN TASTE
+# Chapter 3, "Culture and Critique", printed pp. 47-75
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_disc_0020
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "coordination and consensus"
+    - "critique isn't intended to get everyone to agree"
+    - "it can help show where there is partial consensus"
+  concept_label: critique_is_not_a_consensus_mechanism_and_both_collaboration_extremes_obstruct_it
+  label_origin: extractor_assigned
+  claim: >
+    The source analyses collaboration into two mechanisms — coordination, the aligning of separate
+    work efforts, and consensus — and holds that a team sitting at either extreme will find
+    critique hard. A purely coordinated team is siloed and inexperienced at giving or receiving
+    perspectives on others' work. A team that acts only on full consensus is obstructed for a
+    different and more interesting reason: critique does not produce agreement and is not intended
+    to. "In critiques, people will disagree. Individual perspectives will produce different lines
+    of thinking, and that's OK." What critique can do, the authors say, is show where partial
+    consensus lies and keep the team focused on what matters rather than mired in personal
+    preference — but a team that needs unanimity to move will not get it from a critique.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Critique's output is a set of observations about how elements relate to objectives, and
+      several such observations can be simultaneously true and point different ways. Agreement is
+      a property of a decision, not of an analysis; expecting the analysis to deliver it makes the
+      analysis look like a failure whenever it does its job.
+  scope:
+    domain_discussed_by_source: [team_culture, design_and_development_organisations]
+    conditions: "an organisation deciding how much agreement is required before work proceeds"
+  caveats:
+    - text: "the workable middle is described only in general terms — leadership 'looks to understand where consensus lies and uses that… as a basis upon which to make decisions' — with no test for how much divergence is tolerable"
+      origin: extractor_observed
+    - text: "the two mechanisms and the two extremes are the authors' own analytic frame, presented as something they 'observed' across teams but with no described sample or method"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if a team feels it needs complete consensus to move forward, a critique won't in any way guarantee that"
+    - "these teams or organizations are often separated into silos and have established processes and values that insulate them from one another"
+  source_stated_remedies:
+    - "a trust that their perspectives will be taken into consideration by whomever is responsible for the aspect of the design being discussed"
+    - "the understanding that although their perspective will be taken into consideration, a different direction or decision might be made"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0005, note: "bounds what critique is for"}
+    - {relation: contradicts, target: sk_disc_0032, note: "the approval-seeking frame of a design review is the consensus extreme institutionalised"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique"
+    section: "Creating a Conducive Organizational Culture — Coordination; Consensus; Meeting in the Middle"
+    page_start: 47
+    page_end: 50
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0021
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Critique is a linchpin for iteration"
+    - "For critique to take place, a process must allow for iteration"
+    - "why does the incremental process matter? It matters for the same reason… focus"
+  concept_label: iteration_is_a_precondition_for_critique_and_incrementalism_supplies_its_focus
+  label_origin: extractor_assigned
+  claim: >
+    The source states a two-way dependency and a division of labour between the two process
+    shapes it distinguishes. Iteration is a precondition: a process that provides no time to
+    rethink and change decisions cannot host critique at all, and beyond mere allowance the team
+    must be culturally comfortable that what is being analysed is temporary, valuing continuous
+    improvement over "right-the-first-time". Critique is in turn the linchpin of iteration —
+    it is what tells you how and where to iterate. Incrementalism contributes something different
+    and is not opposed to this: it supplies focus, because problems and solutions are usually too
+    big to discuss all at once, and "otherwise, a critique, or any conversation for that matter,
+    can fragment into so many directions that it loses all value". An effective process, the
+    authors hold, is both.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Analysis is only worth performing where its result can be acted on, so the cadence of
+      revision sets the value of the analysis. And because attention is finite, the scope of what
+      is analysed at one time has to be bounded — which is what breaking a solution into pieces
+      provides.
+  scope:
+    domain_discussed_by_source: [design_and_development_process, team_culture]
+    conditions: "a project whose delivery process determines when work can be changed"
+  caveats:
+    - text: "the incremental/iterative distinction is developed at length (printed pp. 50-53) with illustrative examples — a pocket knife, the evolution of the telephone, Apple's product ecosystem — that are analogies, not evidence"
+      origin: extractor_observed
+    - text: "the claim that critique drives iteration is supported by the authors' own team practice ('my team at Mad*Pow might iterate three or four times on a design in a single day'), which is a report of habit, not a measured outcome"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the team's process needs to provide it time to analyze and rethink decisions and change what it designed in the places where it determines the designs won't be effective"
+  source_stated_remedies:
+    - "team members need to value continuous improvement over 'right-the-first-time', and they need to be working in a process and culture that accommodates and reinforces that value"
+  examples:
+    positive:
+      - description: "the writing of this book itself: a vision and outline built out incrementally chapter by chapter, while sections were revised, reorganised, eliminated and discovered — offered by the authors as a combined process"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_disc_0027, note: "the timing window is where in an iteration critique pays"}
+    - {relation: qualified_by, target: sk_disc_0032, note: "design reviews sit at the wrong point of the cycle for this reason"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique"
+    section: "Incremental Versus Iterative Processes — Why It Matters; and Ch. 1, 'Critique as Iteration Driver'"
+    page_start: 50
+    page_end: 54
+    figure_refs: ["Figure 3-1", "Figure 3-2"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0022
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Lack of foundation"
+    - "the objectives each participant is critiquing against are different"
+    - "Starting from Disparate Foundations"
+  concept_label: without_a_shared_foundation_participants_judge_against_different_yardsticks
+  label_origin: extractor_assigned
+  claim: >
+    The source's diagnosis of most unproductive design conversation is not bad behaviour but a
+    missing referent. Where a team has not explicitly agreed the objectives of what it is
+    building, each participant frames the discussion against their own, and a critique held in
+    that condition is ineffective by construction: "the objectives each participant is critiquing
+    against are different". The authors report that when they ask teams what the objectives of the
+    product are, very few people can answer and those who do rarely give the same answer. The
+    named symptom is a meeting that appears to converge and then does not: everyone leaves with
+    to-dos, and the work that comes back reveals they had different ideas of what was discussed.
+    Appendix A restates the failure as "Starting from Disparate Foundations" and adds that where a
+    comment cannot be related to the foundation, it may mean the foundation itself is incomplete.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Critique compares an element against an objective. If the objective differs per person, the
+      comparisons are not commensurable, and the group is not disagreeing about the design — it is
+      running several unrelated analyses that happen to be voiced in the same room. Nothing in the
+      conversation surfaces this, because the objective is usually left implicit in each remark.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, project_kickoff]
+    conditions: "a project that has not explicitly and jointly stated its objectives"
+  caveats:
+    - text: "the observation that few team members can name the objectives is reported from the authors' consulting experience with no count, sample or method — it is the strongest empirical-sounding statement in the book and it is not a measurement"
+      origin: extractor_observed
+    - text: "the source also allows that a foundation can legitimately be incomplete and that new information can reveal new foundational elements during a project, so failure to relate a comment is not automatically the commenter's error"
+      origin: source_stated
+  source_stated_problems:
+    - "the framing of dialogues and discussions for each team member is then different because they're working toward a different set of objectives from the others"
+    - "it would be like an Olympic rowing team trying to win a race while everyone in the boat is trying to row in their own direction"
+  source_stated_remedies:
+    - "begin their projects by explicitly identifying the objectives of the project to a significant degree of detail"
+    - "you can refer back to the applicable personas/scenarios/goals/principles and ask how the comment relates to them"
+  examples:
+    positive: []
+    counter:
+      - description: "a design review where a product owner wanted a feature changed to make an internal team more efficient, an executive wanted less development work, and a designer wanted a direction they thought innovative — each point valid, none related to the others, and nothing to prioritise them against"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: depends_on, target: sk_disc_0023, note: "the four foundation elements are the proposed remedy"}
+    - {relation: generalises, target: sk_disc_0017, note: "the return-to-the-foundation move requires this to have been done"}
+    - {relation: qualified_by, target: sk_disc_0025, note: "writing the foundation down is not sufficient for it to be shared"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique; Appendix A"
+    section: "Setting the Foundation for Critique — Lack of Foundation; Appendix A, 'Starting from Disparate Foundations'"
+    page_start: 56
+    page_end: 57
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0023
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "personas, scenarios, goals and principles"
+    - "Goals are the desired, measurable outcomes that result from the product being used"
+    - "it's also best to avoid goals that are binary or output based"
+  concept_label: the_four_foundation_elements_and_what_makes_a_goal_usable_as_a_yardstick
+  label_origin: extractor_assigned
+  claim: >
+    The source names four artifacts that together constitute what it means by a product's
+    objectives, and states the relation between them as a single sentence: the objectives for a
+    product are to reach its goals, for the given audiences (personas), by creating a design with
+    the right behaviours and characteristics (principles), to produce the desired experience when
+    used in the applicable contexts (scenarios). Personas and scenarios supply the setting for the
+    analysis — through whose eyes, with what expectations, in what contexts. Goals and principles
+    supply the finish line. On goals specifically the authors give a quality test: a goal is a
+    desired, measurable outcome that correlates to a change in user behaviour, and goals that are
+    binary or output-based are to be avoided — "adding a 'remember me' feature" is an output the
+    team either ships or does not, whereas "increase authenticated visits to our site by 15
+    percent" is an outcome that can be checked.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An output-shaped goal cannot discriminate: once the thing is built the goal is satisfied
+      regardless of whether anything improved, so it can never be used to judge a design decision.
+      An outcome-shaped goal remains a live test after delivery and can therefore be argued
+      against during design.
+  scope:
+    domain_discussed_by_source: [product_and_interface_design_projects]
+    conditions: "a project at a stage where objectives can be set before or alongside design work"
+  caveats:
+    - text: "the source's cautions on personas are specific and worth keeping with the claim: state characteristics explicitly rather than hinting at them through flowery detail, and do not use demographics as proxies for behaviour"
+      origin: source_stated
+    - text: "Figure 3-5 carries the example goals; it was rendered and inspected, and the examples are numeric and percentage-based ('Decrease time spent researching topics by 15%'), which is stronger than the prose alone conveys"
+      origin: extractor_observed
+    - text: "the four-element foundation is presented as 'four common and widely used tools' rather than as the authors' invention; no source is given for the set"
+      origin: extractor_observed
+  source_stated_problems:
+    - "many teams get carried away including details that don't matter, aren't helpful, or aren't explicit enough"
+    - "demographics are often used as stereotypes for behaviors and characteristics"
+  source_stated_remedies:
+    - "learn the real characteristics of your audience and state them explicitly in your personas"
+    - "base your scenarios on real observations. Be sure that the details you include matter"
+  examples:
+    positive:
+      - description: "example goals for a knowledge-sharing platform, all outcome-shaped and numeric — decrease time spent researching topics by 15%, increase utilisation of purchased materials by 20%"
+        figure_ref: "Figure 3-5"
+    counter:
+      - description: "'add a remember me feature to the login screen' — binary and output-based, and therefore useless as a yardstick"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_005}
+    - {relation: depends_on, target: sk_disc_0024, note: "principles carry their own quality test"}
+    - {relation: qualified_by, target: sk_disc_0054, note: "goals that cannot be measured are the source's own signal that the goal needs refining"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique"
+    section: "Creating an Effective, Common Foundation — The background; The end game"
+    page_start: 57
+    page_end: 63
+    figure_refs: ["Figure 3-3", "Figure 3-4", "Figure 3-5"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: ["Figure 3-3", "Figure 3-5"]
+
+- sk_id: sk_disc_0024
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "a good design principle helps you to eliminate more design ideas than you retain"
+    - "Characteristics like 'fun' or 'amusing' don't make great design principles because they're still pretty broad"
+    - "Good principles also act as constraints and filtering mechanisms"
+  concept_label: a_criterion_that_rejects_more_than_it_admits_is_the_test_of_a_usable_principle
+  label_origin: extractor_assigned
+  claim: >
+    The source gives design principles a discriminating-power test rather than a content test. A
+    good principle is specific, and by virtue of being specific it eliminates more design ideas
+    than it retains; principles stated as broad qualities — "fun", "amusing" — fail because every
+    member of the team interprets them differently. Chapter 6 states the test in its negative
+    form and makes it a diagnostic on the criteria themselves: "when asking whether design options
+    adhere to a principle, more often the answer should be 'no'." Principles that never reject
+    anything are the authors' evidence that the principles are too broad, not that the designs are
+    good. The authors extend the same move reflexively: because there are best practices for
+    writing principles, a team's principles are themselves something to critique.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A criterion earns its keep by cutting. A principle that admits every candidate carries no
+      information and cannot focus effort after an idea-generation activity; one that is specific
+      enough to reject most candidates concentrates the work that follows.
+  scope:
+    domain_discussed_by_source: [design_principles, product_and_interface_design_projects]
+    conditions: "a team that has written or is writing principles to guide choices between ideas"
+  caveats:
+    - text: "Figure 3-6 carries the example principles and was rendered and inspected; they are written as first-person user constraints with an explanatory clause each — 'Be where I am', 'Know me', 'Not everyone is equal' — a form the prose does not describe"
+      origin: extractor_observed
+    - text: "'more often the answer should be no' is a heuristic with no threshold; the source gives no rate at which a principle becomes too narrow"
+      origin: extractor_observed
+  source_stated_problems:
+    - "every member of a team might have a different interpretation of what 'fun' is"
+    - "if your principles and goals are too broad, this can be your chance to refine them"
+  source_stated_remedies:
+    - "good principles should be somewhat specific"
+    - "when your team creates principles for your next product or project, you have an opportunity for critiquing your principles against them"
+  examples:
+    positive:
+      - description: "principles for a knowledge-sharing platform written as user-voiced constraints with reasons attached, e.g. 'Be where I am. Don't be just another place I have to go log into. The further out of my way I have to go to use the tool, the less likely I am to use it.'"
+        figure_ref: "Figure 3-6"
+    counter:
+      - description: "'fun' as a design principle"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_005}
+    - {relation: generalises, target: sk_disc_0054, note: "a criterion that does not help during a critique is too broad"}
+    - {relation: demonstrated_together_with, target: sk_disc_0029, note: "principles are themselves critiquable against best practices for principles"}
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique; 6. Critiquing with Difficult People"
+    section: "The end game: goals and principles; and 'Step 4: Critique together'"
+    page_start: 63
+    page_end: 64
+    figure_refs: ["Figure 3-6"]
+    source_support: text_and_visual
+    inspected:
+      text: true
+      figures: ["Figure 3-6"]
+
+- sk_id: sk_disc_0025
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Evaluation criteria are not truly shared unless everyone both understands them and believes in them"
+    - "Teams sometimes think evaluation criteria are 'shared' as long as they're written down somewhere or mentioned in a meeting"
+    - "they just didn't know how else to express themselves"
+  concept_label: written_criteria_are_not_shared_criteria_and_missing_vocabulary_produces_prescription
+  label_origin: extractor_assigned
+  claim: >
+    In a signed sidebar, Kim Goodwin makes two claims the authors' own text does not. The first is
+    that documentation is not sharing: criteria are not truly shared unless everyone both
+    understands them and believes in them, and a team that treats "written down somewhere or
+    mentioned in a meeting" as sufficient will find the criteria used as weapons rather than as
+    tools — in her account, a persona wielded as a "trump card" ("Trust us, we did the user
+    research"). The second is a diagnosis of directive feedback: people fall back on dictating
+    solutions when they lack the language to describe the problem. She adds that shared criteria
+    are hardest to build for the emotionally expressive aspects of a design, such as visual
+    styling, because those feel more subjective than something like workflow — and that the
+    remedy is to attach the style discussion to the persona's emotional goals and the scenario's
+    hierarchy needs, which converts an argument about preference into an argument about whether a
+    treatment inspires the intended confidence.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Belief, not availability, is what makes someone reason from a criterion; a criterion nobody
+      is invested in gets cited to win rather than used to think. And where a person can feel a
+      problem but has no vocabulary for it, the only expressible form of their judgement is a
+      substitute solution — so prescription is a symptom of a missing shared language, not
+      necessarily of a bad attitude.
+  scope:
+    domain_discussed_by_source: [design_team_conversation, visual_design_discussions]
+    conditions: "a team using research-derived artifacts as criteria, where not everyone took part in producing them"
+  caveats:
+    - text: "this is Kim Goodwin's signed sidebar (printed pp. 61-62), not Connor & Irizarry's own text; it is a different practitioner's assertion carried inside this book"
+      origin: extractor_observed
+    - text: "the account is a single coaching anecdote about one three-person team; no measurement of any kind is reported"
+      origin: extractor_observed
+    - text: "her closing caution is against the very use the book's own method invites — 'it's tempting to use personas and goals like hammers to end arguments, but this can backfire if the other person isn't fully invested'"
+      origin: source_stated
+  source_stated_problems:
+    - "people also struggle when they don't have the language for describing problems with the design"
+    - "frustrated feedback recipients are less inclined to tease out exactly what the real (and often valid) concern is"
+  source_stated_remedies:
+    - "use emotional goals to drive visual style and voice"
+    - "keep asking: which persona, which scenario, which goal?"
+  examples:
+    positive:
+      - description: "asking, of a set of scenario storyboards, who the most important persona is, what they should notice first, what next, and what only by exception — which let the visual designer get hierarchy right the first time"
+        figure_ref: null
+    counter:
+      - description: "interaction designers art-directing a visual designer's colour, type and layout choices and invoking 'we did the user research' when he disagreed"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0022, note: "having a foundation is necessary but not sufficient"}
+    - {relation: qualifies, target: sk_disc_0004, note: "supplies a benign explanation for directive feedback"}
+    - {relation: demonstrated_together_with, target: sk_disc_0052, note: "the same explanation is given for a delivered alternative design"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique"
+    section: "Sidebar: 'Personas Help Visual Design Discussions, Too' — Kim Goodwin"
+    page_start: 61
+    page_end: 62
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0026
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "If you don't have anything nice to say, don't say anything at all"
+    - "participants might think that people who tend to refrain from sharing disagreement in groups are in agreement"
+  concept_label: cultural_norms_bias_both_what_is_said_and_how_silence_is_read
+  label_origin: extractor_assigned
+  claim: >
+    The source names a bias that operates on the supply of judgement itself and a matching error in
+    reading it. On the supply side: people raised to withhold anything not nice hold back honest
+    critique they fear will upset the recipient, or worse, validate a direction they do not
+    believe in. On the reading side: in cultures where challenging or speaking up is seen as rude,
+    silence is not agreement, and participants who assume it is will record a consensus that does
+    not exist; conversely, participants used to straightforwardness can be misread as combative.
+    Adam's own account is of a project with a team from India where he repeatedly discovered
+    afterwards that the alignment he thought he had seen in meetings was not there, and that where
+    he thought there had been disagreement there had been none. The prescription is to state
+    before the session that stepping outside these norms is acceptable, and to identify and
+    clarify such gaps as soon as they are noticed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Norms about politeness govern whether a judgement is uttered at all, so the set of judgements
+      a session collects is filtered before any facilitation technique can act on it. And because
+      the filter is invisible, the absence of an objection is systematically misread as its
+      absence in the person's mind.
+  scope:
+    domain_discussed_by_source: [cross_cultural_teams, group_critique_sessions]
+    conditions: "participants from differing societal or ethnic communication norms, or any group where honesty carries a social cost"
+  caveats:
+    - text: "this is explicitly culturally bounded and the source treats cultures at the level of generalisation; the anecdote about misread body language is one person's recollection of one engagement"
+      origin: extractor_observed
+    - text: "the authors also record a related structural barrier — team members withholding insights out of intimidation, or because they have repeatedly been told 'no' in the past and no longer feel their insights are valued (printed p. 55)"
+      origin: source_stated
+    - text: "the source offers no way to detect the filter operating in a session, only the advice to pre-empt it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "not wanting to hurt someone's feelings during a critique session, hold back from delivering honest critique"
+    - "people might sense that others who are more used to being straightforward are actually being combative"
+  source_stated_remedies:
+    - "communicate to those who will be participating that it is perfectly acceptable for them to step outside of these 'norms'"
+    - "ensure that everyone knows that when sharing thoughts and insights during the critique, it is not a reflection on the designer(s) skills or expertise"
+  examples:
+    positive: []
+    counter:
+      - description: "a RISD graphic design class in which a well-known designer tore a student's first project off the wall, threw it on the floor and stomped on it in silence — recounted to the authors by Dorelle Rabinowitz as an example of critique used to build 'thick skin'"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0018, note: "explains why participation cannot simply be requested"}
+    - {relation: qualifies, target: sk_disc_0034, note: "hierarchy is a second suppressor of the same kind"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, culturally_bounded, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "3. Culture and Critique"
+    section: "Personal Barriers to Critique — Additional Cultural Influences; Negative Critique Experiences"
+    page_start: 66
+    page_end: 68
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART D — WHERE CRITIQUE SITS IN A PROCESS, AND WHERE IT IS THE WRONG INSTRUMENT
+# Chapter 4, "Making Critique a Part of Your Process", printed pp. 77-108
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_disc_0027
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "We need to be able to clearly communicate the idea to others."
+    - "We need to have the time to process the feedback we receive from the critique and use it to iterate on our idea."
+    - "the best time to critique a solution is after it is 20 percent baked but before it's 80 percent baked"
+  concept_label: the_window_in_which_critique_is_immediately_useful_is_bounded_at_both_ends
+  label_origin: extractor_assigned
+  claim: >
+    The source bounds the useful period for critique by two conditions rather than by a schedule.
+    The opening condition is communicability: before the maker has enough clarity to explain the
+    idea, critique is premature — "as soon as the first person asked us to clarify things, all we
+    would be able to answer with is 'I don't know'." The authors are careful that this does not
+    require every detail to be settled; unanswered questions at this stage are expected. The
+    closing condition is actionability: at the point where something must be let go so it can be
+    produced, feedback can still be collected but cannot be used until the work comes round again.
+    Between the two lies what the authors call the sweet spot, defined as the region where the
+    maker can walk away and begin iterating right away. On the familiar "20 percent to 80 percent
+    baked" shorthand the authors take an explicit position: such labels help people talk about
+    timing but risk being taken too literally, and the durations depend on the scale of the
+    problem, the idea, the team and the process — "in some cases, you'll get to that 20 percent
+    mark very fast — maybe a matter of minutes or even seconds."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Critique consumes a description and produces changes. Before the description exists it has no
+      input; after the change window closes it has no output. The window is therefore a property of
+      the work's state and the process's cadence, not of the calendar.
+  scope:
+    domain_discussed_by_source: [design_and_development_process]
+    conditions: "a design moving from first idea to a produced artifact, in a process with defined hand-off points"
+  caveats:
+    - text: "the source explicitly refuses to give numeric boundaries — 'we can't say that the first point comes exactly two days after the idea begins to form' — and prefers judgement informed by the two conditions"
+      origin: source_stated
+    - text: "the timeline is carried across four cumulative figures (4-1 to 4-4); the prose states both endpoints and the between-region, so the figures illustrate rather than carry the claim"
+      origin: extractor_observed
+    - text: "the authors concede critique after the second point is still possible and still worth doing — the claim is about immediacy of use, not about validity"
+      origin: source_stated
+  source_stated_problems:
+    - "if we tried to share them with others so that we could get their critique, we'd likely confuse the heck out of them because the idea itself isn't clear enough even to ourselves at this point"
+    - "there isn't enough time following the review to fully utilize it"
+  source_stated_remedies:
+    - "understand the dynamics and criteria we've described here and then use your judgment"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_006}
+    - {relation: depends_on, target: sk_disc_0021, note: "the closing bound is set by the iteration cadence"}
+    - {relation: qualified_by, target: sk_disc_0028, note: "frequency within the window has its own upper bound"}
+    - {relation: demonstrated_together_with, target: sk_disc_0032, note: "design reviews are timed by the project plan, not by this window"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process"
+    section: "When Should You Critique? — Early critique; Later critique; Finding the sweet spot"
+    page_start: 84
+    page_end: 87
+    figure_refs: ["Figure 4-1", "Figure 4-2", "Figure 4-3", "Figure 4-4"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0028
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "yes, there is absolutely such a thing as too much critique"
+    - "critiques are just talking in circles"
+    - "if critiques begin to be seen or used by team members as a validation mechanism"
+  concept_label: too_much_critique_exists_and_the_source_gives_four_cues_for_it
+  label_origin: extractor_assigned
+  claim: >
+    The source retracts an earlier public position in print — Adam had answered an audience
+    question "No. Not at all!" and the authors say they wish they could find that person and
+    apologise — and holds that there is such a thing as too much critique. They decline to give a
+    number and instead name four cues. Advancement between critiques becomes so small that
+    progress feels stalled. Critiques circle, and the changes made from the insights collected are
+    not advancing the design. Formal critiques are required so frequently that the team cannot
+    push the design far enough between them. And critique starts being used as a validation
+    mechanism because the team or the designer lacks confidence in the ideas. The authors present
+    the judgement as a sensitivity a team develops with practice rather than a formula.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Critique pays only where an iteration has produced enough change for there to be something
+      new to analyse. Past that rate the sessions consume time and momentum without adding
+      information, and the group experiences it as inhibition rather than help.
+  scope:
+    domain_discussed_by_source: [design_and_development_process, team_practice]
+    conditions: "a team already critiquing regularly"
+  caveats:
+    - text: "explicitly a self-correction of the authors' own earlier enthusiasm, which is worth preserving as a source position rather than smoothing away"
+      origin: source_stated
+    - text: "no threshold, rate or measurement is offered — 'it's an innate sense or sensitivity that a team or individuals develop over time'"
+      origin: source_stated
+    - text: "the fourth cue (critique used for validation) is a motive, not an observable, and is the hardest of the four to check"
+      origin: extractor_observed
+  source_stated_problems:
+    - "it's the sense that critiques are no longer helping or contributing to the momentum of the solution or the project; instead, they are possibly inhibiting it"
+  source_stated_remedies:
+    - "as you try incorporating critique at various points and times and frequencies, think about whether it feels like too much or too little. Talk with other members of the team and get their perspectives. Adjust your timing"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_006}
+    - {relation: qualifies, target: sk_disc_0027, note: "bounds frequency where the timing window bounds position"}
+    - {relation: demonstrated_together_with, target: sk_disc_0016, note: "critique used for validation is the recipient anti-pattern at team scale"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process"
+    section: "How Often Should You Critique?"
+    page_start: 90
+    page_end: 91
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0029
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "No matter what you're critiquing, the framework stays the same"
+    - "What changes when critiquing different artifacts or design elements are the objectives against which you're analyzing"
+    - "Critique. All. The. Things."
+  concept_label: the_procedure_is_invariant_across_artifacts_and_only_the_yardstick_changes
+  label_origin: extractor_assigned
+  claim: >
+    Asked what should be critiqued — sketches, wireframes, comps, prototypes — the source answers
+    that the form of the artifact does not matter and that the four-question framework is
+    unchanged across all of them. What changes is the set of objectives the thing is analysed
+    against. The authors make two further moves. Some objectives are pertinent to one artifact and
+    not another: a colour palette may or may not bear on a goal of increasing authenticated visits
+    or reducing support calls. And different aspects of a design carry their own objectives,
+    usually in the form of principles and best practices specific to interaction design or to
+    visual design. The reflexive case is stated explicitly: a team's own design principles,
+    personas, scenarios, journey maps, tools, methodologies and processes are all critiquable,
+    each against the best practices for making that kind of thing.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because the procedure is a comparison against a stated referent, it is indifferent to what is
+      being compared. Substituting the referent is the whole of the adaptation required to move it
+      from a wireframe to a set of principles.
+  scope:
+    domain_discussed_by_source: [design_artifacts_of_any_kind, team_processes_and_methods]
+    conditions: "anything constructed or decided in order to reach a specific goal or fulfil an objective"
+  caveats:
+    - text: "the claim is asserted rather than demonstrated across artifact types; only one worked case is given, the critique of design principles against best practices for principles"
+      origin: extractor_observed
+    - text: "the source's confidence that everything is critiquable sits in tension with its own boundary conditions elsewhere — that critique is premature before an idea is communicable, and that it is the wrong instrument for approval"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "regardless of what's being critiqued, the structure of the conversation doesn't really change. What does change is that against which the object being critiqued is being analyzed"
+  examples:
+    positive:
+      - description: "critiquing a team's own newly written design principles against the best practices for writing design principles"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_disc_0015, note: "asserts the four questions transfer unchanged"}
+    - {relation: depends_on, target: sk_disc_0024, note: "the reflexive case rests on there being best practices for principles"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process; 1. Understanding Critique"
+    section: "What Should You Critique?; and 'Incorporating Critique and Moving Forward'"
+    page_start: 91
+    page_end: 92
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0030
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Critical thinking is the nemesis of creative or generative thinking"
+    - "divergent thinking activities"
+    - "convergent thinking activities"
+    - "By incorporating critique as a precursor to voting or a voting-like activity, we prime the pump"
+  concept_label: analysis_suppresses_generation_so_the_two_must_be_separated_and_ordered
+  label_origin: extractor_assigned
+  claim: >
+    The source's explanation of why group idea-generation underperforms is that nothing prevents
+    participants from thinking critically while it happens. Two distinct suppressions are named:
+    participants who are analysing the ideas already on the table are not producing new ones, and
+    participants who are producing ideas analyse them prematurely, judge them not worth
+    mentioning, and keep them to themselves. A third obstruction is that people are pushed into
+    discussion before they have formed their own view of the problem at all. The prescribed
+    structure divides the time into a divergent phase, whose activities minimise the opportunity
+    for critical thinking — typically via a time limit and a challenge, such as sketching six to
+    eight ideas in five minutes — and a convergent phase that compares, consolidates and
+    eliminates. Critique belongs at a specific point: incorporated into the second phase, before
+    voting, so that ideas are retained or dropped on their strength against the product's
+    objectives rather than on whatever private criteria each voter would otherwise use. The
+    authors make the same point about design-by-committee: there is nothing wrong with combining
+    elements from different ideas, and the weakness is the reason the combined elements were
+    selected.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The authors ground this in their creative/analytical toggle: a mind in analytical mode is not
+      generating, so admitting analysis into a generative phase costs ideas, and admitting
+      generation into an analytical phase costs coordination. Sequencing the two protects both.
+      Placing critique immediately before selection means the shared objectives, rather than
+      unstated individual criteria, are what is fresh in participants' minds when they choose.
+  scope:
+    domain_discussed_by_source: [workshops, brainstorms, collaborative_design_activities]
+    conditions: "a group session whose purpose is to produce and then narrow a set of options"
+  caveats:
+    - text: "'we can't say that we've often seen it work out that way' — the failure of ordinary brainstorms is reported as the authors' repeated observation, with no count of sessions or ideas"
+      origin: source_stated
+    - text: "the divergent/convergent vocabulary is standard facilitation terminology and is not attributed to any source here"
+      origin: extractor_observed
+    - text: "the claim that voters use inconsistent criteria is stated as a likelihood — 'it's more than likely that the criteria each participant is using varies' — not as an observation"
+      origin: extractor_observed
+  source_stated_problems:
+    - "other participants who might be coming up with ideas aren't sharing them because as they're coming up with them, they're analyzing them prematurely"
+    - "brainstorms lack focus; brainstorms lack structure and facilitation; brainstorms devolve quickly into design-by-committee"
+  source_stated_remedies:
+    - "utilize activities that minimize or remove the opportunity for critical thinking and give individual participants an opportunity to form their own perspective"
+    - "incorporate critique as part of the second phase to ensure that ideas are being kept or eliminated based on their strengths with respect to the product's objectives"
+  examples:
+    positive:
+      - description: "a time-boxed divergent challenge: sketch six to eight ideas for this interface in five minutes"
+        figure_ref: "Figure 4-5"
+    counter:
+      - description: "the typical brainstorm the authors describe: silence, one idea, group analysis of it, a second idea that is usually a variation, and rarely more than a handful of unique ideas"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: depends_on, target: sk_disc_0007, note: "rests on the creative/analytical toggle"}
+    - {relation: demonstrated_together_with, target: sk_disc_0035, note: "the same premise underwrites the rule against problem solving"}
+    - {relation: qualified_by, target: sk_disc_0031, note: "conditions under which the whole structure should not be run"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process; 1. Understanding Critique"
+    section: "Enter the Brainstorm; Building Better Brainstorms; and 'Critique as Consensus Finder'"
+    page_start: 92
+    page_end: 97
+    figure_refs: ["Figure 4-5"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0031
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "The problem hasn't been framed adequately"
+    - "The problem has been framed, but there is no agreement on the framing"
+    - "A concept already exists from which the team can't or won't stray"
+  concept_label: boundary_conditions_under_which_collaborative_generation_and_critique_should_not_be_run
+  label_origin: extractor_assigned
+  claim: >
+    The source lists conditions under which its own recommended collaborative activity should not
+    be used, and the reasons transfer beyond the specific method. If the problem has not been
+    framed, there is not enough context to guide idea generation and the problem stays too
+    nebulous. If it has been framed but the framing has not been shared, understood and agreed,
+    the group will spend the session debating the framing instead — and the authors are explicit
+    that this is an important discussion, just one that should have happened earlier. Worse, if
+    participants proceed to sketch without agreed framing, the later critiques break down
+    "because people are analyzing and judging the value of ideas on different sets of criteria".
+    If a concept already exists that the team cannot or will not depart from, an activity designed
+    to widen the option space will produce output the team cannot use. And if participants are
+    unwilling, the authors advise trying but not forcing: "if they repeatedly resist, it is not
+    worth forcing the issue."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each condition removes one of the inputs the activity consumes: a bounded problem, a shared
+      criterion set, latitude to change, and willing participants. Without the shared criteria in
+      particular, the critique rounds inside the activity degenerate in exactly the way an
+      objectives-less critique degenerates anywhere else.
+  scope:
+    domain_discussed_by_source: [design_studio_workshops, collaborative_design_activities]
+    conditions: "before committing a group to a generate-and-critique workshop"
+  caveats:
+    - text: "the list is written about one named methodology (Design Studio, credited to architecture and art-school studio teaching and to Todd Zaki Warfel's adaptation); the generalisation to collaborative generation as such is ours and is marked here as an extractor observation, not as the authors' claim"
+      origin: extractor_observed
+    - text: "a sixth condition concerns unbalanced remote distribution of participants, which the authors treat as a logistics problem with workarounds rather than as a reason not to proceed"
+      origin: source_stated
+  source_stated_problems:
+    - "participants are left to generate ideas based on their individual understanding of the problem that is being solved"
+    - "this causes complications during the critiques and iterations because people are analyzing and judging the value of ideas on different sets of criteria"
+  source_stated_remedies:
+    - "if this discussion starts when you're trying to kick off a Design Studio, it means that the group isn't ready and you should have had this conversation earlier"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0030, note: "bounds the applicability of the divergent/convergent structure"}
+    - {relation: specialises, target: sk_disc_0022, note: "the no-agreed-framing case is the foundation failure inside a workshop"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process"
+    section: "When Not to Use Design Studio"
+    page_start: 102
+    page_end: 103
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0032
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Reviews are not critique"
+    - "these meetings can be seen as a form of 'gate'"
+    - "Do not rely on design reviews for critique"
+  concept_label: an_approval_gate_is_not_a_diagnostic_session_and_cannot_be_made_into_one
+  label_origin: extractor_assigned
+  claim: >
+    The source separates two meetings that are routinely conflated. A design review is defined by
+    three characteristics: it is held toward the end of a design phase; it includes the goal of
+    collecting approval so effort can shift elsewhere; and where approval is not given it focuses
+    on identifying the changes needed to obtain it later. Four consequences make it a poor host
+    for critique, each with a stated mechanism. Its intended outcome is approval, not iteration.
+    Its feedback therefore arrives as a list of required changes — directive feedback by
+    construction, since "it isn't ready yet, but if you do these things and show it to us again,
+    we'll give you the OK". Its attendees are largely there to ensure their own interests survive
+    into the final design rather than to compare the design to its objectives, and the group is
+    usually too large for a coherent conversation — Adam reports one with more than seventy
+    people, most by phone. And its timing is set by the project plan rather than by when the
+    designer needs the analysis. The authors do not say to abolish reviews; they say do not rely
+    on them for critique, and critique in the run-up so the review can do its own job.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A meeting's output shapes its input. When the deliverable is a yes or a change list, the
+      participants supply what produces a yes or a change list, and the analysis that would have
+      explained why an element does or does not serve an objective is never asked for. Placing
+      that meeting at a hand-off point also leaves no room to use anything diagnostic it happens
+      to produce.
+  scope:
+    domain_discussed_by_source: [design_reviews, project_governance]
+    conditions: "an organisation with formal sign-off points in its design process"
+  caveats:
+    - text: "the authors are explicit that reviews may be necessary — 'for some organizations, the need to gather everyone and collect approvals or sign-off is going to be essential'"
+      origin: source_stated
+    - text: "the mitigations offered (take a lead role, recap the objectives at the start, use the difficult-people techniques) are presented as damage limitation, not as a way to convert a review into a critique"
+      origin: source_stated
+    - text: "the seventy-person review is a single recollection offered to make the size point vivid"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the majority of the people we find in these meetings are there to ensure that their own list of interests and requirements are present in the final design"
+    - "not only does this timing impede a team's ability to collect and make use of critique… but it is completely disjointed from when a team might actually need critique"
+  source_stated_remedies:
+    - "if we are regularly critiquing before and leading up to a design review, the review can serve its purpose. It can act as a focused forum for approval of designs"
+    - "remind people of the agreed upon objectives for the design… review these at the beginning of the session"
+  examples:
+    positive: []
+    counter:
+      - description: "a design review with more than seventy attendees, most on the phone"
+        figure_ref: null
+  intra_source_relations:
+    - {relation: contradicts, target: sk_disc_0005, note: "approval and analysis are different products"}
+    - {relation: specialises, target: sk_disc_0004, note: "a review produces directive feedback structurally, not incidentally"}
+    - {relation: qualified_by, target: sk_disc_0027, note: "its position in the timeline is outside the useful window"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process; Appendix A"
+    section: "Conducting Design Reviews — The Challenges Design Reviews Pose to Critique; Appendix A, 'Confusing Critique with Review'"
+    page_start: 104
+    page_end: 107
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART E — FACILITATION MECHANICS
+# Chapter 5, "Facilitating Critique", printed pp. 109-141
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_disc_0033
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Facilitation is the conscious, balanced management of conversations toward a conclusion"
+    - "that's about six people"
+  concept_label: facilitation_defined_and_the_conversational_group_ceiling
+  label_origin: extractor_assigned
+  claim: >
+    Facilitation is defined as the conscious, balanced management of conversations toward a
+    conclusion: it begins from the objectives and purpose of the discussion and works to meet them
+    by asking appropriate questions, ensuring shared understanding, and allowing participants to
+    contribute. The authors argue it is not optional for critique but constitutive, because
+    without it participants analyse different aspects against their own criteria and the
+    sporadic, unstructured delivery makes it hard to tell what is useful. Two sizing claims are
+    attached. The number of people directly determines the effort of managing the conversation and
+    each participant's ability to follow it, so groups should start small — pairs when introducing
+    critique — and grow. And the ceiling for a single undivided conversation is given as roughly
+    six people; beyond that, either more active facilitation or splitting into smaller groups is
+    required. The authors add that facilitation is not always a formal role — "sometimes it's just
+    a matter of the questions you choose to ask and how you choose to ask them."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Structure is what makes contributions comparable. Facilitation supplies the shared frame —
+      which aspect, against which objective, in what order — so that what each person says can be
+      related to what the others said, and it supplies the bounded scope that keeps attention on
+      one thing at a time.
+  scope:
+    domain_discussed_by_source: [group_critique_sessions, formal_and_informal_meetings]
+    conditions: "more than one person contributing judgement in the same conversation"
+  caveats:
+    - text: "'about six people' is offered as the authors' experience of when a conversation splinters into side discussions; it is a practitioner estimate, not a measured threshold"
+      origin: extractor_observed
+    - text: "the chapter is written from the perspective of facilitating formal critiques, and the authors state that much but not all of it transfers to casual discussion"
+      origin: source_stated
+  source_stated_problems:
+    - "without it, our critiques can become unruly, with participants analyzing different aspects of the design against their own criteria"
+    - "the number of people involved has a direct effect on how much effort it takes to manage a conversation"
+  source_stated_remedies:
+    - "keep the number of people involved to fewer at first, maybe just pairs"
+    - "we can provide structures with which people can share their individual thoughts"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_disc_0041, note: "scope and goals are the primary facilitation instrument"}
+    - {relation: qualified_by, target: sk_disc_0047, note: "a facilitator's authority is weaker than it appears"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5. Facilitating Critique; 4. Making Critique a Part of Your Process"
+    section: "Facilitating Critique, opening; 'Who Should We Include?'; and Ch. 4, 'Start Small'"
+    page_start: 109
+    page_end: 117
+    figure_refs: ["Figure 5-1"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0034
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Everyone is equal"
+    - "HiPPO (Highest Paid Person's Opinion); it's a killer when it comes to effective critique"
+    - "it isn't inherently true that their opinions are more accurate just because they're executives"
+  concept_label: the_weight_of_a_judgement_must_not_come_from_the_position_of_its_giver
+  label_origin: extractor_assigned
+  claim: >
+    The first of the source's four rules holds that in a critique everyone's observations are
+    listened to equally, and that more attention must not be paid to a perspective because of the
+    speaker's position. The argument is careful: the authors concede that an organisation may
+    legitimately make its decisions on what its leaders think, but deny that seniority makes an
+    observation more accurate, and insist the two be kept separate and sequenced — "we want to
+    keep that separate, and hopefully after a critique." The named harm is suppression: where
+    participants sense inequality they either stay quiet or go along with what was already said,
+    and the group loses information. Crucially the authors state the rule must hold in both
+    directions — contributors must also see themselves and others as equal contributors. The
+    remedies are behavioural: ask quiet people directly during the session, speak to a
+    weight-throwing participant afterwards, and, in Adam's practice, call a break to raise the
+    problem with the organisation's leaders present. Weighing expertise is permitted, but later,
+    when the collected feedback is reviewed.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Deference removes independent observations from the pool before they are voiced, so the
+      session's output is narrower than the room's actual knowledge. Separating collection from
+      decision preserves the observations while leaving the organisation's authority structure
+      intact for the decision that follows.
+  scope:
+    domain_discussed_by_source: [group_critique_sessions, hierarchical_organisations]
+    conditions: "a session including participants of differing organisational seniority"
+  caveats:
+    - text: "the authors concede the rule is hard to implement depending on culture, and that it is a 'key element' rather than an achievable default"
+      origin: source_stated
+    - text: "they note that many executives do not want the deference and have helped address it when asked — which is an observation about the executives they worked with, not a general finding"
+      origin: source_stated
+    - text: "the rule concerns the weight given during collection; it explicitly permits expertise to be weighted afterwards, which is a distinction easy to lose when the rule is quoted alone"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if participants are sensing an inequality, they might be hesitant to share their feedback"
+    - "they might decide to just go along with the feedback expressed by someone else instead of voicing their own perspectives"
+  source_stated_remedies:
+    - "if you notice that people are being quiet because of a 'superior's' participation, ask for feedback directly from those people"
+    - "as we review the feedback collected, we can take into consideration an individual's expertise and experience, and not focus solely on her position in the hierarchy"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_004}
+    - {relation: qualifies, target: sk_disc_0011, note: "the counterweight to preference held by an approver"}
+    - {relation: demonstrated_together_with, target: sk_disc_0046, note: "source of the feedback is one of the four later prioritisation considerations"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5. Facilitating Critique"
+    section: "Understanding the Rules of Critique — Everyone Is Equal"
+    page_start: 111
+    page_end: 112
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0035
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Avoid problem solving"
+    - "the human brain does not consciously think both analytically… and creatively… simultaneously"
+    - "you have some folks in the critique who are in a creative mental process, some in an analytical one, some analyzing the new idea, and some in a third process: comprehension"
+  concept_label: proposing_a_fix_mid_analysis_fragments_the_group_into_incompatible_mental_processes
+  label_origin: extractor_assigned
+  claim: >
+    The source calls this the hardest of its four rules and gives it the book's most developed
+    mechanism. When a participant proposes a solution she has switched from analytical to creative
+    thinking; when that happens in a group, the participants scatter across at least four
+    simultaneous processes — still analysing the original design, analysing the new idea,
+    generating alternatives, and simply trying to comprehend what was just proposed — with
+    individuals jumping between them. The authors add a second, purely practical cost: veering
+    into problem solving on item two of five means items three to five are never reached. They are
+    explicit that the rule cannot be enforced by will — the tendency is instinctual and
+    unconscious, "we can't" prevent a room from doing it — so what matters is recognising it and
+    knowing the three responses. If someone jumped to a solution without naming the issue, ask
+    questions that identify the issue and relate it to the objectives. If the issue is already
+    understood and the person is elaborating a solution, get them to hold the idea for a later
+    exploration session. And if the whole group is stuck on one problem, or the impact of solving
+    it would call the rest of the analysis into question, pause the critique and deliberately
+    switch the room to exploration. "What is paramount is to keep everyone in the same mental
+    process."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Analysis in a group requires the participants to be attending to the same object in the same
+      mode; a proposed solution introduces a second object and a second mode at once. The
+      coordination is lost not because anyone is being unhelpful but because there is no longer a
+      single question in the room.
+  scope:
+    domain_discussed_by_source: [group_critique_sessions]
+    conditions: "a session whose purpose is analysis of existing work"
+  caveats:
+    - text: "the cognitive claim about the brain is asserted without citation or evidence, and it carries the weight of the rule; it should be read as the authors' working model"
+      origin: extractor_observed
+    - text: "the third response — abandoning the critique for exploration — is a permitted exit, so this is not a rule that analysis must always win"
+      origin: source_stated
+    - text: "the authors note the same jump happens in usability testing, where observers say 'they really should…' before articulating the problem, which is offered as a familiar illustration rather than as data"
+      origin: source_stated
+  source_stated_problems:
+    - "when problem solving begins to happen, the coordination becomes lost and everyone heads in different mental directions"
+    - "if we have five items to review and critique in the meeting and we veer off to problem solving while looking at item number two, the chances are that we'll never make it to item number three"
+  source_stated_remedies:
+    - "ask questions that work toward identifying what that issue is and how it relates to the objectives of the design"
+    - "work toward getting him to hold onto that idea for a future discussion that will be focused on exploration"
+    - "try pausing or postponing the remainder of the critique and switch right then to exploring solutions"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_004}
+    - {relation: depends_on, target: sk_disc_0007, note: "rests on the creative/analytical toggle"}
+    - {relation: demonstrated_together_with, target: sk_disc_0036, note: "the no-change-list rule is its consequence at session output"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5. Facilitating Critique; Appendix A"
+    section: "Understanding the Rules of Critique — Avoid Problem Solving; Appendix A, 'Problem Solving'"
+    page_start: 113
+    page_end: 115
+    figure_refs: ["Figure 5-2"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0036
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "The output of a critique is not a list of specific changes for the designer to go back and make"
+    - "the desired output is a set of new observations and understandings about the design and whether it is meeting the objectives set for it"
+    - "If a list of changes is coming out of a critique session, problem solving is taking the place of analysis"
+  concept_label: the_deliverable_of_a_critique_is_a_set_of_findings_not_a_change_list
+  label_origin: source_verbatim
+  claim: >
+    The fourth rule fixes what a critique produces. Its output is a set of new observations and
+    understandings about the design and whether it is meeting its objectives — not a list of
+    specific changes. The authors give this a diagnostic edge that makes it checkable after the
+    fact: if a change list came out of the session, problem solving displaced analysis inside it.
+    Exploration is not cancelled but sequenced — "after a critique should come a period of
+    exploration, using the new insights to frame challenges and generate possible solutions" — and
+    the reason for the delay is that most insights admit numerous possible responses, so deciding
+    during the analysis risks missing stronger ideas or making premature decisions that cause
+    problems later. The interval also serves the maker: it gives her time to digest the feedback
+    against the goals, principles, scenarios and personas and to follow up on specific points. The
+    authors concede small and obvious changes exist, and that the rule "might raise some eyebrows".
+    Appendix A puts it most sharply: "Critique is not a list of revisions to be carried out like a
+    short-order cook."
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A finding constrains the space of acceptable repairs without choosing one; a change list
+      chooses one and discards the rest, including options nobody has thought of yet. Because the
+      choice is made while the analysis is still incomplete, it is made on less information than
+      the same choice would have after.
+  scope:
+    domain_discussed_by_source: [group_critique_sessions]
+    conditions: "a session held with the intent that the work will be revised afterwards"
+  caveats:
+    - text: "the rule is stated as a norm for sessions, and the authors immediately soften it for trivial repairs — Adam's own follow-up routine begins by fixing typos, copy-paste errors and small alignment issues before anything is reframed"
+      origin: source_stated
+    - text: "no criterion is given for how small an obvious change has to be to escape the rule"
+      origin: extractor_observed
+  source_stated_problems:
+    - "if we rush to make all of the decisions on changes to be made while we're still trying to analyze things in our critique, it's likely that we'll miss opportunities for stronger ideas or make premature decisions that cause more problems down the road"
+  source_stated_remedies:
+    - "after a critique should come a period of exploration, using the new insights to frame challenges and generate possible solutions"
+    - "waiting to make decisions affords the designer time to digest all of the feedback she received during the session"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_disc_004}
+    - {relation: depends_on, target: sk_disc_0035, note: "it is the observable consequence of the problem-solving rule"}
+    - {relation: specialises, target: sk_disc_0010, note: "actionable-not-prescriptive, stated at the level of the session's output"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5. Facilitating Critique; Appendix A"
+    section: "Don't Rush to Make Decisions on the Changes to Be Made; Appendix A, 'Lack of Discussion'"
+    page_start: 115
+    page_end: 116
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0037
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "The 'I Like…' or 'I Don't Like…' Rule"
+    - "telling people that they can't use these phrases hampers the flow of a critique discussion"
+    - "what's important is to then facilitate the conversation to understand whether his reasons are pertinent to the objectives of the design"
+  concept_label: the_authors_decline_to_ban_preference_vocabulary_and_prescribe_a_follow_up_instead
+  label_origin: extractor_assigned
+  claim: >
+    Asked repeatedly about the common rule forbidding "I like" and "I don't like" in critique, the
+    authors agree with its premise — what an individual likes is probably not relevant to whether
+    the design is meeting its objectives — and reject the rule anyway. Their reason is a cost the
+    ban imposes on the conversation: the phrases are such a natural part of how people speak that
+    their use is inevitable, and a speaker who has been forbidden them and slips will apologise,
+    become flustered and regroup, "sometimes losing clarity around the point they were trying to
+    make and causing some awkwardness in the exchange." The prescribed alternative is not
+    correction but continuation: when someone says they like or dislike something, facilitate the
+    conversation to establish whether their reasons bear on the objectives.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Policing vocabulary consumes the speaker's attention at exactly the moment the content is
+      being formed, so the ban costs clarity in order to buy compliance. Treating the phrase as an
+      opening for a question keeps the speaker fluent and still recovers the reasoning, which is
+      the thing that was actually wanted.
+  scope:
+    domain_discussed_by_source: [group_critique_sessions]
+    conditions: "a facilitator deciding what conversational rules to impose on participants"
+  caveats:
+    - text: "this is a practitioner position on a widely taught rule, argued from the authors' experience of sessions; no comparison of banned and unbanned sessions is reported"
+      origin: extractor_observed
+    - text: "it is one of the few places where the source knowingly tolerates an ambiguous term rather than removing it, and it does so for a stated reason about conversational cost"
+      origin: extractor_observed
+  source_stated_problems:
+    - "these two phrases are such a natural part of how many of us speak that it is inevitable that people will use them"
+  source_stated_remedies:
+    - "facilitate the conversation to understand whether his reasons are pertinent to the objectives of the design"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0011, note: "preference is to be redirected, not prohibited"}
+    - {relation: demonstrated_together_with, target: sk_disc_0048, note: "laddering is the follow-up that does the redirecting"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5. Facilitating Critique"
+    section: "The 'I Like…' or 'I Don't Like…' Rule"
+    page_start: 116
+    page_end: 116
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0038
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Avoid 'Ta-da' moments"
+    - "Critical thought takes a little bit of time"
+    - "limit what you send to only the relevant aspects of the design you plan to discuss"
+  concept_label: first_exposure_can_only_produce_reactions_so_send_the_material_in_advance
+  label_origin: extractor_assigned
+  claim: >
+    The source holds that unveiling work for the first time in the session guarantees reactive
+    feedback, because most attendees are seeing it for the first time and can only react. Its
+    stated reason is temporal: critical thought takes time — people need to think through the
+    design, determine the effects they believe it will have, and compare those effects to the
+    objectives — and a room asked to do that on the spot will supply responses it has not thought
+    through. The prescription is to send the designs a couple of days ahead, with two
+    qualifications the authors are specific about: send only the aspects that will be discussed,
+    because sending more invites participants to fixate on irrelevant parts; and preface them with
+    a few clear notes on the focus and what is expected. The authors state explicitly that the
+    goal is not to have participants arrive with finished feedback but to jump-start the critical
+    thinking process before the conversation begins. They answer the standard objection — that
+    pre-sending produces a flood of emailed change lists — by conceding it happens (it happened to
+    Adam on the example email they reproduce), and prescribing a specific handling: acknowledge
+    the feedback, say it will be addressed in the session, and at the session revisit it and ask
+    whether it still holds now that more of the design has been discussed. Where nothing could be
+    sent, the fallback is to pace the opening more slowly and start with small, discrete aspects.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Analysis has a latency. Compressing the interval between first exposure and required response
+      to zero forces the response to come from the fast, reactive process, which is precisely the
+      form of feedback the book is trying to displace. Moving the exposure earlier restores the
+      interval without lengthening the meeting.
+  scope:
+    domain_discussed_by_source: [formal_critique_sessions, client_and_team_reviews]
+    conditions: "a scheduled session where the maker controls what participants see beforehand"
+  caveats:
+    - text: "the authors concede that some participants will not look at what was sent, and that 'no matter which route we choose, there will always be people who do their own thing'"
+      origin: source_stated
+    - text: "Figure 5-3 reproduces a real notification email; the figure was not rendered, so the specific wording of that example is not available to this extraction, and no claim here depends on it"
+      origin: extractor_observed
+  source_stated_problems:
+    - "when we wait until the critique to show our work and expect immediate feedback, we put our team in a position to give us responses that they have not had the time to think through"
+  source_stated_remedies:
+    - "getting the designs that are going to be critiqued out to those participating in the meeting before the critique takes place… Sending the designs out a couple of days in advance is often enough"
+    - "we revisit the feedback we received from that individual. We ask if the feedback is still relevant now that more about the design has been discussed"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_disc_0003, note: "a structural cause of reactive feedback rather than a personal failing"}
+    - {relation: demonstrated_together_with, target: sk_disc_0041, note: "limiting what is sent is the scope decision made in advance"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "5. Facilitating Critique"
+    section: "Preparing for and Kicking Off a Critique — Avoid 'Ta-Da' Moments"
+    page_start: 118
+    page_end: 120
+    figure_refs: ["Figure 5-3"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0039
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Present your work quickly and efficiently"
+    - "it's as if we're trying to avoid the potential for questions"
+    - "focus your presentation on what isn't obvious or can't be seen easily"
+  concept_label: withholding_rationale_during_presentation_makes_the_analysis_better_not_worse
+  label_origin: extractor_assigned
+  claim: >
+    The source inverts the natural instinct to explain everything before being judged. Walk the
+    group through the specific aspect to be discussed, give only enough explanation for them to
+    understand how the design is intended to work, and do not attempt to justify every decision;
+    let the rationale emerge through the questions participants ask. Two mechanisms are given.
+    Pre-empting every question means participants are bombarded and can become overwhelmed, and
+    the authors read the over-explanation as an attempt to foreclose questioning. And when the
+    details arrive in response to questions, they are "more closely tied to participant's insights
+    and questions" — the explanation lands where someone actually needed it, when they needed it.
+    A second rule of selection accompanies this: focus on what cannot be seen, typically by
+    presenting from the perspective of a user, since participants do not need to be told that the
+    navigation is at the top of the page. If the pace ran too fast, the source's remedy is simply
+    to say so and invite questions.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Information supplied before it is wanted competes with the analysis for attention and closes
+      the openings through which the group would have engaged. Information supplied in answer to a
+      question is already attached to a specific line of thinking, so it is retained and used.
+  scope:
+    domain_discussed_by_source: [formal_critique_sessions]
+    conditions: "the maker is presenting work to a group that will then analyse it"
+  caveats:
+    - text: "this sits in deliberate tension with the giver-side advice to lead with questions; the authors intend the two to interlock — the presenter leaves the gaps that the questions fill (printed p. 26)"
+      origin: extractor_observed
+    - text: "Figure 5-4 shows the improved user-perspective framing; the figure was not rendered, so only the prose formulation is carried here"
+      origin: extractor_observed
+  source_stated_problems:
+    - "this approach can often slow things down and eat up the time in the meeting"
+    - "we bombard participants with so much that they can become overwhelmed"
+  source_stated_remedies:
+    - "just give enough of an explanation so that the team gets an understanding of how the design is intended to work"
+    - "present the design from the perspective of a user"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_disc_0012, note: "the presenter's gaps are what the giver's questions are for"}
+    - {relation: demonstrated_together_with, target: sk_disc_0040, note: "constraints are the specific rationale most worth withholding"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "5. Facilitating Critique"
+    section: "Present Your Work Quickly and Efficiently"
+    page_start: 121
+    page_end: 122
+    figure_refs: ["Figure 5-4"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_disc_0040
+  source_id: connor-irizarry-discussing-design
+  source_terms:
+    - "Be careful when talking about constraints"
+    - "some participants will often interpret the constraints we discuss as excuses or possibly even that we're casting blame"
+  concept_label: constraints_volunteered_up_front_are_heard_as_excuses_and_cost_the_room_its_tone
+  label_origin: extractor_assigned
+  claim: >
+    The source singles out constraints — legacy systems, infrastructure limits, deadlines, budgets,
+    other business or technical decisions — as the rationale most likely to backfire when
+    volunteered. Because the maker's motive for mentioning them is usually that the constraint was
+    frustrating and forced a decision she considers less than ideal, participants often hear an
+    excuse or an accusation, with a negative effect on the tone and energy of the discussion. The
+    prescription is to let the constraint surface through a question about why a choice was made,
+    to word it matter-of-factly rather than as blame, and if needed to set up separate time for
+    it; in some cases to defer it entirely until after the critique, following up with the person
+    whose insight it bears on and bringing in someone who can explain the constraint and possible
+    ways around it. The source names exactly one exception: where the constraint was discussed
+    with the group previously and the presentation is of the solution to it, in which case it is
+    part of the context the group needs — with the same caution about wording.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unrequested justification is read as anticipating an attack, which changes the register of
+      the room from analysis to defence. Arriving as an answer to a question, the same fact carries
+      no such implication because someone asked for it.
+  scope:
+    domain_discussed_by_source: [formal_critique_sessions, client_and_stakeholder_review]
+    conditions: "a design shaped by constraints the maker did not choose"
+  caveats:
+    - text: "the effect on tone is asserted from the authors' experience of sessions; no observation of how differently-framed constraint disclosures land is reported"
+      origin: extractor_observed
+    - text: "the exception is narrow and specific, and it is the only one the source grants"
+      origin: source_stated
+  source_stated_problems:
+    - "as a result, they can have a negative impact on the tone and energy of the discussion"
+  source_stated_remedies:
+    - "wait for someone to ask about why choices were made and, if relevant, explain the constraint(s), choosing your words thoughtfully"
+    - "it can also be useful to wait to discuss constraints after the critique is over and insights are being reviewed"
+  examples:
+    positive:
+      - description: "presenting a solution to a constraint the group already discussed in a previous session, where the constraint is context the group needs"
+        figure_ref: null
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_disc_0039, note: "the sharpest case of withholding rationale"}
+    - {relation: qualified_by, target: sk_disc_0055, note: "the same distinction between explaining and defending"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "5. Facilitating Critique"
+    section: "Be Careful When Talking About Constraints"
+    page_start: 122
+    page_end: 124
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

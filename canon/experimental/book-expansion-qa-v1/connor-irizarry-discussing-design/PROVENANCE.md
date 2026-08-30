@@ -47,8 +47,14 @@ the printed folio read directly off the page image:
 | 170 | `152` | 152 | yes |
 | 172 | `154` | 154 | yes |
 | 173 | `155` | 155 | yes |
+| 51 | `33` | 33 | yes |
+| 77 | `59` | 59 | yes |
+| 81 | `63` | 63 | yes |
 
-Seven for seven. **No page where the folio disagrees with the marker was found.**
+Ten for ten. **No page where the folio disagrees with the marker was found.** The last
+three were rendered in this pass, on pages carrying figures whose meaning the prose does not
+fully carry (see `EXTRACTION-NOTES.md`, "Figures inspected"); reading the folio off them was
+free, so it was done.
 
 ### The real printed span
 
