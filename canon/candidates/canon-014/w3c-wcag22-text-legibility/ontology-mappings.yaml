@@ -1,0 +1,498 @@
+source_id: w3c-wcag22-text-legibility
+extraction_date: 2026-08-30
+terms:
+- term_id: t_wcag_0001
+  term: contrast_ratio
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: property
+  definition_in_origin_frame: '(L1 + 0.05) / (L2 + 0.05), where L1 is the relative luminance of the lighter
+    of two colours and L2 that of the darker. Dimensionless, bounded between 1 and 21, and a property
+    of a pair of colours rather than of one colour.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0002
+  term: relative_luminance
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: property
+  definition_in_origin_frame: 'The relative brightness of any point in a colourspace, normalised to 0
+    for darkest black and 1 for lightest white; for sRGB, 0.2126 R + 0.7152 G + 0.0722 B over linearised
+    channel values.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0003
+  term: large_scale_text
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: property
+  definition_in_origin_frame: 'Text at at least 18 point, or 14 point bold, or a font size yielding equivalent
+    size for Chinese, Japanese and Korean fonts. The size meant is the size at delivery, obtained from
+    the user agent or computed from font metrics as a user agent would.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0004
+  term: image_of_text
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: entity
+  definition_in_origin_frame: 'Text rendered in a non-text form, for example an image, in order to achieve
+    a particular visual effect. Explicitly excludes text that is part of a picture containing significant
+    other visual content.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0005
+  term: pure_decoration
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: property
+  definition_in_origin_frame: 'Serving only an aesthetic purpose, providing no information and having
+    no functionality. For text, only purely decorative if the words can be rearranged or substituted without
+    changing their purpose.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0006
+  term: essential
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: property
+  definition_in_origin_frame: 'If removed, would fundamentally change the information or functionality
+    of the content, and the information and functionality cannot be achieved in another way that would
+    conform. A two-part test; both halves must hold.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0007
+  term: text
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: entity
+  definition_in_origin_frame: 'A sequence of characters that can be programmatically determined, where
+    the sequence is expressing something in human language. A machine-readability definition, not a typographic
+    one.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0008
+  term: user_interface_component
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: entity
+  definition_in_origin_frame: 'A part of the content that is perceived by users as a single control for
+    a distinct function. Tied to what the user perceives as a separate control, not to a programmatic
+    element.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0009
+  term: graphical_object
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: entity
+  definition_in_origin_frame: 'A stand-alone icon, or an important part of a more complex graphic such
+    as each line in a graph. For a simple single-colour icon the entire image is one graphical object;
+    a complex image contains several, only some of which are required for understanding. The term is introduced
+    in the non-normative Understanding note for SC 1.4.11, not in the glossary.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0010
+  term: logotype
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: entity
+  definition_in_origin_frame: 'Text that is part of a logo or brand name. Exempt from the contrast requirements
+    of SC 1.4.3 and SC 1.4.6, and declared "essential" by note under SC 1.4.5 and SC 1.4.9.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0011
+  term: incidental_text
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: property
+  definition_in_origin_frame: 'The source''s heading for four situations in which text has no contrast
+    requirement: text that is part of an inactive user interface component, that is pure decoration, that
+    is not visible to anyone, or that is part of a picture containing significant other visual content.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0012
+  term: inactive_user_interface_component
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: entity
+  definition_in_origin_frame: 'A component that is visible but not currently operable — the source''s
+    example is a submit button that cannot be activated until required fields are complete. Exempt from
+    both SC 1.4.3 and SC 1.4.11.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: null
+- term_id: t_wcag_0013
+  term: colour_used_as_the_only_visual_means
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'Colour used as the only visual means of conveying information, indicating
+    an action, prompting a response or distinguishing a visual element. The source''s examples include
+    "required fields are red" and a series distinguished only by line colour.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0014
+  term: insufficient_luminance_contrast
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'A specified foreground and background pair whose computed contrast ratio
+    falls below the threshold applicable to that content — 4.5:1, 3:1 or 7:1 for text; 3:1 for the visual
+    information identifying a control or a graphical object required for understanding.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0015
+  term: unpaired_colour_specification
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'Specifying a text colour without a background colour, or a background colour
+    without a text colour. The source calls it a failure because the unspecified half falls to an unknown
+    user default that cannot be evaluated. Documented as failure F24.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0016
+  term: background_image_defeating_foreground_text_contrast
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'Using a background image that does not provide sufficient contrast with
+    foreground text or images of text. Documented as failure F83 under SC 1.4.3 and SC 1.4.6.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0017
+  term: nominal_contrast_pass_with_low_practical_contrast
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'Text or a thin non-text shape whose declared colours pass the threshold,
+    but which anti-aliasing renders much fainter than the declared colour, so the measured ratio and the
+    perceived contrast diverge. Stated only in the non-normative Understanding notes for SC 1.4.3 and
+    SC 1.4.11.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0018
+  term: content_lost_when_user_overrides_text_spacing
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'Text cut off vertically or horizontally, or overlapping other content,
+    when a user sets line height, paragraph spacing, letter spacing and word spacing to the SC 1.4.12
+    values. The source illustrates all three cases as failures.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0019
+  term: thin_or_unfamiliar_letterforms_at_low_contrast
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: problem
+  definition_in_origin_frame: 'Fonts with extraordinarily thin strokes or unusual features that reduce
+    the familiarity of their letterforms, which the source states are harder to read, especially at lower
+    contrast levels. A warning attached to a normative definition that no criterion converts into a test.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+- term_id: t_wcag_0020
+  term: add_a_visual_indicator_other_than_colour
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Convey the same information with a second visible means alongside hue —
+    an icon, a shape, a text cue, a number, or a lightness difference reaching 3:1. Required regardless
+    of contrast where the reader must identify which colour it is.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+- term_id: t_wcag_0021
+  term: raise_luminance_contrast_of_the_specified_pair
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Change the specified foreground or background colour so the computed ratio
+    meets the applicable threshold. The source''s sufficient techniques G18 and G145 state it directly
+    for 4.5:1 and 3:1.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+- term_id: t_wcag_0022
+  term: use_real_text_instead_of_an_image_of_text
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Achieve the visual presentation with text and styling rather than by rendering
+    text into an image, where the technologies in use can do so. The source''s technique C22 uses CSS
+    to control the visual presentation of text.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+- term_id: t_wcag_0023
+  term: provide_the_same_text_alongside_the_image_of_text
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Where an image of text cannot be avoided, also present the same information
+    as text so both reach the user. The source''s worked case is an event poster uploaded to a limited
+    CMS, with the poster''s words also entered as calendar text. Satisfies SC 1.4.5 but not SC 1.4.9.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+- term_id: t_wcag_0024
+  term: choose_a_thicker_face_or_exceed_the_threshold
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Where anti-aliasing renders a thin or unusual face fainter than its declared
+    colour, the source''s stated best practice is to pick a font with stronger, thicker lines, or to aim
+    for a colour pair that exceeds the normative requirement. Advice in a non-normative note, not a requirement.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+- term_id: t_wcag_0025
+  term: add_a_contrasting_border_around_a_graphical_object
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Where a graphical object required for understanding does not reach 3:1
+    against its adjacent colours, add a darker border around it — the source''s pie-chart example adds
+    a border around the yellow slice — or darken the fill, or add text labels and values so the graphic
+    is no longer relied upon.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+- term_id: t_wcag_0026
+  term: use_a_higher_contrast_logo_variant_or_an_equivalent_control
+  origin: source
+  origin_ref: w3c-wcag22-text-legibility
+  kind: remedy
+  definition_in_origin_frame: 'Where an exempt logo or logotype also acts as a control, the source''s
+    stated best practice is to choose a logo variant with sufficient contrast if brand guidelines allow,
+    or to provide an equivalent user interface component serving the same purpose that does meet the requirements.
+
+    '
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  - human_edit
+relationships:
+- from: t_wcag_0011
+  to: t_wcag_0005
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: pure decoration is one of the four situations the source groups under the Incidental heading;
+    the heading is wider than the defined term
+- from: t_wcag_0011
+  to: t_wcag_0012
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: text belonging to an inactive component is another of the four incidental situations
+- from: t_wcag_0006
+  to: t_wcag_0010
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: the source's own note under SC 1.4.5 and SC 1.4.9 declares logotypes to be essential, making logotype
+    a named case of the wider term
+- from: t_wcag_0001
+  to: t_wcag_0002
+  relation: narrower_than
+  confidence_basis: extractor_judgement
+  note: the ratio is a construction over two relative luminance values; luminance is the more general
+    quantity
+- from: t_wcag_0003
+  to: t_wcag_0001
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: size classification selects which contrast threshold applies; it is not itself a contrast property
+- from: t_wcag_0013
+  to: t_wcag_0014
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'checked and rejected as the same failure. The source separates them explicitly: a star rating
+    relying on yellow versus white fill fails Use of Colour, while a pale yellow star on white fails Non-text
+    Contrast. Colour-alone encoding can occur at any contrast level, and insufficient contrast can occur
+    with no colour coding at all.'
+- from: t_wcag_0017
+  to: t_wcag_0014
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: checked and rejected. Insufficient contrast is a measured shortfall against a threshold; the nominal-pass
+    problem is content that meets the threshold as specified and is nonetheless faint as rendered. Same
+    appearance to a reader, opposite verdicts under the standard.
+- from: t_wcag_0019
+  to: t_wcag_0017
+  relation: same_mechanism
+  confidence_basis: extractor_judgement
+  note: both are the source's account of stroke weight interacting with perceived contrast — one stated
+    as a normative warning attached to the large-scale definition, one as a non-normative rendering consequence
+- from: t_wcag_0004
+  to: t_wcag_0007
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'checked and rejected as interchangeable. The glossary defines them separately, and SC 1.4.5 exists
+    precisely because they are different: one is programmatically determinable and restylable by the user,
+    the other is pixels.'
+- from: t_wcag_0009
+  to: t_wcag_0008
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: both are assessed at 3:1 under SC 1.4.11 but they are separate clauses with separate exceptions
+    — components are exempt when inactive or user-agent-styled, graphics when a particular presentation
+    is essential
+- from: t_wcag_0020
+  to: t_wcag_0021
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: 'the source lets one substitute for the other in one direction only: a lightness difference reaching
+    3:1 counts as an additional visual means, but no contrast level substitutes for a second cue where
+    a specific hue must be identified'
+- from: t_wcag_0022
+  to: t_wcag_0023
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: both address the same problem at different strictness; providing text alongside the image satisfies
+    SC 1.4.5 but not SC 1.4.9
+- from: t_wcag_0024
+  to: t_wcag_0021
+  relation: narrower_than
+  confidence_basis: extractor_judgement
+  note: exceeding the threshold is the general remedy specialised to the thin-face rendering case, and
+    it is offered as best practice rather than as a requirement
+- from: t_wcag_0015
+  to: t_wcag_0016
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: checked and rejected. F24 is a failure of specification — one half of the pair is missing. F83
+    is a failure of the specified pair against an actual image background. Different diagnoses, different
+    repairs.
+concepts:
+- concept_id: sc_wcag_contrast_measurement_vocabulary
+  kind: source_specific_concept
+  origin_ref: w3c-wcag22-text-legibility
+  children_terms:
+  - t_wcag_0001
+  - t_wcag_0002
+  - t_wcag_0003
+  origin: source_stated
+- concept_id: sc_wcag_exemption_vocabulary
+  kind: source_specific_concept
+  origin_ref: w3c-wcag22-text-legibility
+  children_terms:
+  - t_wcag_0005
+  - t_wcag_0006
+  - t_wcag_0010
+  - t_wcag_0011
+  - t_wcag_0012
+  origin: extractor_inferred
+- concept_id: sc_wcag_what_counts_as_text
+  kind: source_specific_concept
+  origin_ref: w3c-wcag22-text-legibility
+  children_terms:
+  - t_wcag_0004
+  - t_wcag_0007
+  - t_wcag_0009
+  origin: source_stated
+- concept_id: cc_wcag_legibility_failure_terms
+  kind: canonical_concept
+  label: legibility_failure_terms
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: w3c-wcag22-text-legibility
+  children_terms:
+  - t_wcag_0013
+  - t_wcag_0014
+  - t_wcag_0015
+  - t_wcag_0016
+  - t_wcag_0017
+  - t_wcag_0018
+  - t_wcag_0019
+  origin: extractor_inferred
+- concept_id: cc_wcag_legibility_repair_terms
+  kind: canonical_concept
+  label: legibility_repair_terms
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: w3c-wcag22-text-legibility
+  children_terms:
+  - t_wcag_0020
+  - t_wcag_0021
+  - t_wcag_0022
+  - t_wcag_0023
+  - t_wcag_0024
+  - t_wcag_0025
+  - t_wcag_0026
+  origin: extractor_inferred

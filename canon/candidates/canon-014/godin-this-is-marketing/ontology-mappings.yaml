@@ -1,0 +1,589 @@
+# Ontology mappings (SPEC-05) — Seth Godin, "This Is Marketing" (Portfolio/Penguin, 2018).
+# source_id: godin-this-is-marketing
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# Terms are Godin's own words wherever he supplies one, and he usually does — this is a book that
+# names things. "People like us do things like this", "the smallest viable market", "sonder",
+# "neophiliacs", "pattern interrupt", "the chasm" and "permission" are all his phrasing and are
+# preserved verbatim; several he credits to others and those attributions are recorded in the
+# definitions rather than asserted as relationships.
+#
+# REMEDY TERMS: every one carries executable_by. Godin's remedies are DECISIONS, not acts on an
+# asset — choose these people, claim these two axes, refuse to measure this spending, keep the
+# promise you made. Nine of the ten therefore carry [human_edit]; the tenth, designing a reason to
+# tell into the offering, carries [human_edit, unknown] because Godin locates it in the product
+# itself and this lane cannot say what performing it would consist of outside his domain. NONE
+# carries generative_respecification. Nothing here is translated into a generative instruction.
+#
+# NO cross_source_concept (xs_) is created. NO same_failure_family relation is used. No relationship
+# points outside this lane: the nearest live neighbour (Miller, StoryBrand) is discussed as prose in
+# PROVENANCE.md §4 and EXTRACTION-NOTES.md, and is deliberately absent from this machine-readable
+# layer.
+
+source_id: godin-this-is-marketing
+terms:
+
+  # ── problems: the source's own words for what goes wrong ─────────────────────
+
+- term_id: t_god_0001
+  term: reverse_engineered_change
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    An answer to "what change are you trying to make?" constructed backwards from what you had
+    already decided to sell, which Godin says arrives loaded with buzzwords that mean nothing to
+    anyone. One of the two ways he says the question is answered badly; the other is picking a
+    grandiose, nearly impossible change.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_god_0002
+  term: hiding_behind_everyone
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Declining to name the audience, which Godin treats as a comfort rather than an ambition: an
+    unspecified audience makes the work unaccountable, since no outcome can contradict it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0003
+  term: sanding_off_the_edges
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Removing what made the work specific in response to rejection from an audience it was never
+    for. Godin's mechanism for how more reach makes work worse — it operates through the maker,
+    not the audience.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0004
+  term: a_crowded_quadrant
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    A position taken on the axes most people care about, where without the magic of advertising
+    you cannot grow, because the customer does not know what to do and therefore does nothing.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0005
+  term: you_can_choose_anyone_and_were_anyone
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    The commodity position: an offering with no claimed edge, distinguishable only by price, which
+    Godin says condemns you to being replaced by whoever cuts theirs.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0006
+  term: assuming_everyone_is_like_you
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    One of the two errors Godin names about the people you serve. The other is assuming they are
+    well-informed, rational, independent, long-term choice makers.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0007
+  term: marketing_driven
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    An organisation focused on the offer, the surface shine and squeezing out one more dollar,
+    which Godin calls a dead end. Its opposite is market-driven — listening to the market and
+    seeking to influence it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0008
+  term: the_status_quo_resists_because_it_is_good_at_it
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    The dominant narrative exists for a reason and is good at resisting insurgents. Godin's point
+    is that it does not shift because you are right — if truth were sufficient the change would
+    already have happened.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_god_0009
+  term: shame_is_the_status_killer
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Accepting shame someone directs at you undermines your entire narrative about relative status,
+    which is why shame is used as a lever: it works.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0010
+  term: the_dip_between_boredom_and_reception
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    The gap between when the maker gets bored of the story and when the audience gets the message.
+    Godin's failure is quitting inside that gap, which forfeits the trust frequency was building.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_god_0011
+  term: the_stunt
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    The impatient substitute for being worth talking about. Godin says stunts come from a place of
+    selfishness, and that offensive, juvenile, urgent or selfish is not the same thing as
+    remarkable.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0012
+  term: no_reason_to_tell
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    An offering built to spread with nothing in it for the person who would spread it. Godin's
+    form of the failure: people never tell their friends because it is important to you, because
+    you asked, or because you worked hard.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_god_0013
+  term: fear_as_a_dream_killer
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Discomfort with no visible route out, which Godin says puts people into suspended animation,
+    holding their breath, paralysed and unable to move forward. Distinguished from tension, which
+    is the promise that you can get through it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0014
+  term: no_tension_so_the_status_quo_survives
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Arriving with a solution that opens no gap. Godin's diagnostic question to the maker: when you
+    show up with your story, do you also create tension — because if you do not, the status quo is
+    likely to survive.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_god_0015
+  term: presumed_or_legalistic_permission
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Treating possession of an address, absence of complaint, or a clause in a privacy policy as
+    permission. Godin's test for the real thing: if you stopped showing up, would people be
+    concerned and ask where you went.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0016
+  term: the_sharecropper
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Building an audience on a platform that holds the permission. It is not your land; you do not
+    have permission to contact those people, the platform does.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0017
+  term: confusing_direct_with_brand_marketing
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Applying one discipline's rules to the other's spending — measuring culturally-oriented
+    investment, or failing to measure action-oriented investment. Godin names the confusion itself,
+    not either discipline, as the danger.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_god_0018
+  term: cheap_is_another_way_to_say_scared
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Competing on price, which Godin says promises the same but cheaper rather than any change at
+    all, and which lowers trust rather than raising it. Exempted where a genuinely new way of
+    delivering has been found.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0019
+  term: average_stuff_for_average_people
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    The product of pursuing mass: work that must offend no one and satisfy everyone, and is
+    therefore boring — which Godin notes is beyond criticism, and is why it is chosen.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0020
+  term: an_ad_unnoticed_doesnt_exist
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: problem
+  definition_in_origin_frame: >
+    Godin's statement of the base rate for bought attention: online advertising is the most
+    ignored advertising ever created, and it is not unusual to reach a hundred thousand people and
+    get no clicks at all.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── remedies: decisions, not acts on an asset. All carry executable_by ───────
+
+- term_id: t_god_0021
+  term: whos_it_for_whats_it_for
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    The two questions answered before the product, the story and the channel are chosen. Godin's
+    claim is that they are generative: the answers shift what you make, what you say and where you
+    say it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [human_edit]
+
+- term_id: t_god_0022
+  term: the_smallest_viable_market
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Choosing the minimum number of people you would need to influence for the effort to be worth
+    it, and then going to their extremes. "Viable" is load-bearing: no fair shipping junk.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [human_edit]
+
+- term_id: t_god_0023
+  term: choose_your_axes_choose_your_future
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Pick two attributes people care about, plot every alternative on them, and take an extreme
+    position — preferably on two axes others have overlooked, so the quadrant is yours.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [human_edit]
+
+- term_id: t_god_0024
+  term: its_not_for_you
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Saying explicitly whom the work is not for. Godin frames it as respect — not wasting their
+    time, not pandering, not insisting they change their beliefs — and as the stance that resists
+    reach pressure.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [human_edit]
+
+- term_id: t_god_0025
+  term: design_the_reason_to_tell_into_the_offering
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Building into the product or service something the sharer gets to say about themselves, rather
+    than attaching a request to share afterwards. Godin's strongest form is a network effect,
+    where the sharer's own life improves when others join.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit, unknown]
+
+- term_id: t_god_0026
+  term: create_tension_not_fear
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Opening a gap that the audience can close by moving forward, rather than one they cannot. The
+    test Godin supplies is the maker's own feeling: if you feel like you are coercing,
+    manipulating or frightening people, you are probably doing it wrong.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit]
+
+- term_id: t_god_0027
+  term: earn_and_keep_your_own_permission
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Communicate only with those who chose to hear from you, and keep the promise you made in
+    exchange until both sides agree to change it. A launch or a quarter-end is not an agreement.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [human_edit]
+
+- term_id: t_god_0028
+  term: measure_everything_or_refuse_to_measure
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Apply the discipline the spending calls for and never mix them: for direct marketing, value
+    every step and treat what cannot be measured as not counting; for brand marketing, be patient,
+    consistent and refuse to measure, and if you cannot afford that, do not spend.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit]
+
+- term_id: t_god_0029
+  term: send_a_trusted_signal_then_change_it_enough
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Use a form that resembles one the audience already trusts, then vary it enough to mark the
+    offering as new and yours. Godin's remedy for the scanning reader who asks what this reminds
+    them of.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [human_edit]
+
+- term_id: t_god_0030
+  term: keep_saying_it_past_your_own_boredom
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: remedy
+  definition_in_origin_frame: >
+    Do not change the story when you, your colleagues or your friends are tired of it. The
+    quoted rule is to change it when your accountant is tired of it; the generalisation is that
+    the best marketers are farmers rather than hunters.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit]
+
+  # ── properties: the source's names for things in the world ──────────────────
+
+- term_id: t_god_0031
+  term: people_like_us_do_things_like_this
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    Godin's formulation of how culture governs choice: our actions are primarily driven by the
+    question "do people like me do things like this?", and normalisation creates culture, which
+    drives choices, which leads to more normalisation.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0032
+  term: worldview
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    The shortcut or lens each of us uses to see the world — assumptions, biases and stereotypes.
+    Godin credits the term to the cognitive linguist George Lakoff and uses it as the unit of
+    audience grouping in place of demographics.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0033
+  term: sonder
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    The moment of realising that everyone around you has an internal life as rich and as
+    conflicted as yours. Godin uses it as the precondition for modelling an audience that is not
+    you.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0034
+  term: affiliation_and_dominion
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    The two measures status is counted in. Dominion is vertical — who has more power, whose side
+    is winning. Affiliation is horizontal — who knows you, who trusts you, who is standing next to
+    me. Which applies is the customer's choice, not the marketer's, and the same person may switch
+    by situation.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0035
+  term: neophiliacs
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    Early adopters understood as addicted to the new rather than as people adapting to change.
+    Thrilled by discovery, forgiving of missteps while the thrill lasts and incredibly unforgiving
+    afterwards; you cannot be perfect in their eyes, only interesting.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0036
+  term: pattern_match_and_pattern_interrupt
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    A pattern match slots an offering into an existing routine and costs almost nothing to accept.
+    A pattern interrupt requires the routine to be undone first, and the default answer is no.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0037
+  term: the_chasm
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    The gap between the early adopters and the mass market, credited by Godin to Geoffrey Moore.
+    It exists because the two want opposite things: the mass market wants a pattern match, and
+    satisfying the early adopters may require annoying it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0038
+  term: permission
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    The privilege of delivering anticipated, personal and relevant messages to people who want to
+    get them. Its test is being missed: if you stop showing up, people ask where you went.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_god_0039
+  term: better_is_not_transitive
+  origin: source
+  origin_ref: godin-this-is-marketing
+  kind: property
+  definition_in_origin_frame: >
+    "Better" names the occupant of one person's memory slot on one dimension they care about, so
+    the same category has a different winner in each head. Price orders cleanly and carries no
+    claim about quality.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+relationships:
+
+- {from: t_god_0013, to: t_god_0026, relation: distinct_from, confidence_basis: extractor_judgement, note: "Godin's own distinction and the ethical boundary of his method: both are discomfort, and they differ in whether a route out is visible. Recorded as distinct_from because the string similarity between 'tension' and 'fear' is exactly the merge he is writing against — fear paralyses, tension moves."}
+- {from: t_god_0011, to: t_god_0025, relation: distinct_from, confidence_basis: extractor_judgement, note: "A stunt and a designed reason to tell both aim at being talked about and are not the same act. Godin separates them explicitly: the stunt is attached afterwards and comes from selfishness; the reason to tell is built into what the thing is and serves the teller."}
+- {from: t_god_0019, to: t_god_0004, relation: same_mechanism, confidence_basis: extractor_judgement, note: "Average work and a crowded quadrant are the same failure seen from two sides — both are the result of choosing what most people care about, and both leave the chooser with no basis for deciding."}
+- {from: t_god_0002, to: t_god_0019, relation: related_to, confidence_basis: extractor_judgement, note: "Not naming the audience and making average work are cause and consequence in Godin's account, but they are not the same term: one is a refusal to decide, the other is a property of the output."}
+- {from: t_god_0003, to: t_god_0024, relation: related_to, confidence_basis: extractor_judgement, note: "'It's not for you' is the stance that answers the sanding-off pressure. Recorded as related_to and not as a repair pairing, because Godin offers no test for when the edges should be defended and when the work is simply not good enough."}
+- {from: t_god_0006, to: t_god_0032, relation: related_to, confidence_basis: extractor_judgement, note: "Substituting your own worldview is the failure the worldview construct exists to prevent."}
+- {from: t_god_0031, to: t_god_0034, relation: related_to, confidence_basis: extractor_judgement, note: "The two forces Godin names as driving the internal narrative. He states them together and neither is presented as reducible to the other."}
+- {from: t_god_0035, to: t_god_0037, relation: related_to, confidence_basis: extractor_judgement, note: "Beginning with neophiliacs is what creates the chasm that must later be crossed; the strategy and the problem are the same decision at two moments."}
+- {from: t_god_0036, to: t_god_0037, relation: same_mechanism, confidence_basis: extractor_judgement, note: "Godin's stated reason the chasm exists is that the mass market wants a pattern match and the innovation was a pattern interrupt, so the two terms name one underlying mechanism at different scales."}
+- {from: t_god_0015, to: t_god_0038, relation: distinct_from, confidence_basis: extractor_judgement, note: "Explicitly separated by the source: having an address, an absence of complaint or a privacy-policy clause is not permission. Recorded as a negative finding so the legal and the earned senses are not merged on the shared word."}
+- {from: t_god_0016, to: t_god_0038, relation: related_to, confidence_basis: extractor_judgement, note: "The sharecropper problem is permission held by an intermediary. The structural point survives its 2018 examples; the named platforms do not."}
+- {from: t_god_0018, to: t_god_0023, relation: related_to, confidence_basis: extractor_judgement, note: "Price is a position on the axes already claimed, so competing on cheapness is a positioning decision rather than a commercial one."}
+- {from: t_god_0010, to: t_god_0030, relation: related_to, confidence_basis: extractor_judgement, note: "The remedy is defined by the failure it prevents; the maxim about the accountant gives a heuristic and no stopping rule."}
+- {from: t_god_0009, to: t_god_0026, relation: distinct_from, confidence_basis: extractor_judgement, note: "Shame and tension both move people and are not the same lever. Godin records that shame works and does not recommend it; his method turns on a gap the person can close, not on undermining their narrative. Recorded so the two are never grouped as one persuasion family."}
+
+concepts:
+
+- concept_id: sc_god_audience_selection_before_execution
+  kind: source_specific_concept
+  origin_ref: godin-this-is-marketing
+  children_terms: [t_god_0021, t_god_0022, t_god_0024, t_god_0002, t_god_0019, t_god_0003]
+  origin: source_stated
+
+- concept_id: sc_god_status_and_belonging
+  kind: source_specific_concept
+  origin_ref: godin-this-is-marketing
+  children_terms: [t_god_0031, t_god_0034, t_god_0009, t_god_0008, t_god_0026, t_god_0013]
+  origin: source_stated
+
+- concept_id: sc_god_the_adoption_path
+  kind: source_specific_concept
+  origin_ref: godin-this-is-marketing
+  children_terms: [t_god_0035, t_god_0036, t_god_0037, t_god_0012, t_god_0025, t_god_0010]
+  origin: source_stated
+
+- concept_id: sc_god_positioning_by_extremes
+  kind: source_specific_concept
+  origin_ref: godin-this-is-marketing
+  children_terms: [t_god_0023, t_god_0004, t_god_0005, t_god_0018, t_god_0039]
+  origin: source_stated
+
+- concept_id: cc_god_modelling_an_audience_that_is_not_you
+  kind: canonical_concept
+  label: modelling_an_audience_that_is_not_you
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: godin-this-is-marketing
+  children_terms: [t_god_0032, t_god_0033, t_god_0006, t_god_0007]
+  origin: extractor_inferred
+
+- concept_id: cc_god_earned_versus_bought_attention
+  kind: canonical_concept
+  label: earned_versus_bought_attention
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: godin-this-is-marketing
+  children_terms: [t_god_0038, t_god_0015, t_god_0016, t_god_0017, t_god_0020, t_god_0027, t_god_0028, t_god_0029, t_god_0030]
+  origin: extractor_inferred

@@ -1,0 +1,230 @@
+# SourceConceptSystem — Seth Godin, "This Is Marketing" (Portfolio/Penguin, 2018).
+# source_id: godin-this-is-marketing
+# EXPERIMENTAL — NOT LIVE CANON.
+# LOCATORS: EPUB, reflowable. NO AUTHORED PAGE NUMBERS. page_start/page_end are null everywhere.
+#
+# Three systems. All three group material the SOURCE groups: he prints a five-step method and a
+# thirteen-question worksheet; he states the behaviour-status-tension chain in one sentence; and he
+# lays out the adoption path as a sequence with a named gap. Where the whole-system claim is ours
+# rather than his it is marked extractor_synthesis and carries an interpretation_basis.
+
+source_id: godin-this-is-marketing
+
+source_concept_systems:
+
+- scs_id: scs_god_001
+  source_id: godin-this-is-marketing
+  label: belonging_and_status_as_the_engine_of_change
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    Godin's account of why anything moves: people act in accordance with their internal narratives;
+    those narratives are driven by the desire to fit in ("people like us do things like this") and
+    by the perception of status; both forces push toward staying as they are; therefore change
+    requires tension; and tension is relieved only by forward motion. Status is then decomposed into
+    six properties and two measures, and tension is fenced off from fear.
+  whole_system_claim:
+    text: >
+      Being right is not a mechanism. Because the two forces that determine behaviour are both
+      conservative, an argument leaves them untouched, and the only lever that moves them is a gap
+      in standing that the person can close by acting. Every downstream instruction in the book —
+      define "us", find out which measure of status your audience counts in, create tension rather
+      than fear — is derived from this chain.
+    origin: source_explicit
+    interpretation_basis:
+    source_ref:
+      chapter: 'Ch. 9 "People Like Us Do Things Like This", section "Deep change is difficult, and worth it" (spine 16)'
+      quote_gist: >
+        changing our behaviour is driven by our desire to fit in and our perception of our status;
+        since both these forces often push us to stay as we are, it takes tension to change them.
+        Stated again in Ch. 10: the status quo doesn't shift because you're right, it shifts because
+        the culture changes, and the engine of culture is status.
+      page_start:
+      page_end:
+  members:
+  - {sk_ref: sk_god_0016, role_in_system: causal_claim, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_god_0015, role_in_system: driver, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_god_0017, role_in_system: driver, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_god_0018, role_in_system: driver_parameter, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_god_0020, role_in_system: lever, order: 5, membership_origin: source_stated}
+  - {sk_ref: sk_god_0019, role_in_system: boundary, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+    - {from: sk_god_0015, to: sk_god_0016, nature: "fitting in is one of the two named drivers of the internal narrative", origin: source_stated}
+    - {from: sk_god_0017, to: sk_god_0016, nature: "status perception is the other named driver", origin: source_stated}
+    - {from: sk_god_0018, to: sk_god_0017, nature: "affiliation and dominion are the two measures status is counted in", origin: source_stated}
+    - {from: sk_god_0020, to: sk_god_0016, nature: "tension is required because both drivers are conservative", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+    - between: [sk_god_0019, sk_god_0020]
+      nature: >
+        The tension mechanism is illustrated with cases that sit close to the fear boundary Godin
+        draws — a colleague saying "you're missing out", the threat of social isolation as a
+        joining motive. He states both the mechanism and the boundary and does not reconcile them.
+      origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref:
+    chapter: 'Ch. 10 "Trust and Tension Create Forward Motion", section "Tension is not the same as fear" (spine 17)'
+    note: >
+      Godin explicitly fences the tension mechanism against coercion, manipulation and fear, which
+      is a warning against applying the lever without the boundary member.
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The chain is the source's and he states it in a single sentence, so the system's existence is
+      not our claim. What is ours is admitting affiliation/dominion as a parameter of the status
+      driver rather than as a separate topic, and recording the unresolved conflict between the
+      tension mechanism and its own fear boundary. The chain itself rests on assertion throughout:
+      no member of this system is supported by anything stronger than illustration.
+  provenance:
+    chapter: 'Chs. 9-11, spines 16-18'
+    section:
+    page_start:
+    page_end:
+    source_support: text
+
+- scs_id: scs_god_002
+  source_id: godin-this-is-marketing
+  label: the_smallest_viable_market_as_a_pre_execution_decision_framework
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >
+    The sequence Godin puts before any execution: choose the audience before the artefact; answer
+    who it is for and what change it seeks; take the smallest viable market rather than the largest;
+    accept the accountability that specificity creates; refuse the reach pressure that follows; say
+    explicitly whom it is not for; and model the audience by worldview rather than by attributes.
+  whole_system_claim:
+    text: >
+      Narrowing is not a concession to limited resources but the condition that makes the work good:
+      mass forces the artefact to the average, and only a defined audience permits the extremity
+      that makes anything worth remarking on. The framework therefore runs in one direction — the
+      audience and the change are settled first, and the product, the story and the channel are
+      derived from them, not reconciled with them afterwards.
+    origin: source_explicit
+    interpretation_basis:
+    source_ref:
+      chapter: 'Ch. 2 "The Marketer Learns to See", section "Marketing in five steps" (spine 9), and "A Simple Marketing Worksheet" (spine 32)'
+      quote_gist: >
+        invent a thing worth making; design and build it so that a few people particularly benefit;
+        tell a story that matches the built-in narrative of that tiny group, the smallest viable
+        market; spread the word; show up consistently for years. The worksheet opens with "Who's it
+        for?" and "What's it for?".
+      page_start:
+      page_end:
+  members:
+  - {sk_ref: sk_god_0001, role_in_system: ordering_constraint, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_god_0002, role_in_system: decision_rule, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_god_0003, role_in_system: selection_rule, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_god_0008, role_in_system: modelling_rule, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_god_0010, role_in_system: modelling_rule, order: 5, membership_origin: source_stated}
+  - {sk_ref: sk_god_0004, role_in_system: consequence, order: 6, membership_origin: extractor_inferred}
+  - {sk_ref: sk_god_0005, role_in_system: failure_mode, order: 7, membership_origin: source_stated}
+  - {sk_ref: sk_god_0006, role_in_system: stance, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: source_stated
+    dependencies:
+    - {from: sk_god_0002, to: sk_god_0001, nature: "the two questions are the operational form of the ordering constraint", origin: source_stated}
+    - {from: sk_god_0003, to: sk_god_0002, nature: "the smallest viable market is the answer to 'who's it for'", origin: source_stated}
+    - {from: sk_god_0008, to: sk_god_0010, nature: "grouping by worldview presupposes that the audience's narrative is not yours", origin: source_stated}
+    - {from: sk_god_0006, to: sk_god_0005, nature: "'it's not for you' is the stance that resists the reach pressure", origin: source_stated}
+    tradeoffs:
+    - between: [sk_god_0003, sk_god_0004]
+      nature: "the narrowing that improves the work is the same act that makes it possible to be shown to have failed"
+      origin: extractor_inferred
+      source_ref:
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "Forcing a focus" (spine 11)'
+    note: >
+      Godin insists the word "viable" is load-bearing — no fair shipping junk, it does not help to
+      release something that does not work yet — which is a warning against applying the narrowing
+      rule without the quality precondition he states in Ch. 6.
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: "Low at the system level relative to its members. The source states both the grouping and the procedural order (system_type_origin and ordering.origin are source_stated, and the whole-system claim is source_explicit), so the framework's existence and sequence are the source's own. The residual uncertainty is membership: some members carry membership_origin: extractor_inferred, meaning the extractor placed them into a framework the source did state but did not enumerate in this exact form. Field authored by CANON-014 from this object's own recorded origin fields; the source was NOT reopened."
+  provenance:
+    chapter: 'Chs. 2-5 and the worksheet, spines 9-12 and 32'
+    section:
+    page_start:
+    page_end:
+    source_support: text
+
+- scs_id: scs_god_003
+  source_id: godin-this-is-marketing
+  label: the_adoption_path_and_the_gap_in_it
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    Godin's account of how something travels from nobody to a market: begin with the neophiliacs
+    because the satisfied cannot be afforded; expect a gap, because the mass market wants a pattern
+    match and the early adopters wanted an interrupt; cross it with a network effect rather than
+    with enthusiasm; sustain it with frequency past the point of your own boredom; and build the
+    reason to tell into the artefact rather than adding it later.
+  whole_system_claim:
+    text: >
+      The path has a discontinuity in it that is structural rather than a matter of effort: the two
+      populations want opposite things, so the same offering cannot satisfy both, and the passage
+      between them is bought only where the earlier adopter's own life improves when the later one
+      joins. Everything else in the sequence — where to spend first, how long to keep saying the
+      same thing — is a consequence of that discontinuity.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Godin states each member separately and credits the curve and the chasm to others (Rogers,
+      Moore, Gartner). He does not present them as one sequence with a single governing property.
+      The claim that the discontinuity is what determines the spending rule, the bridge and the
+      persistence requirement is our reading of how the chapters relate — Chs. 14, 15, 17 and 19 are
+      four separate chapters in his order, not one argument. The reading is contestable in one
+      specific way, recorded here rather than smoothed: Godin's own counter-example — a chocolate you
+      like, which does not improve your life if others eat it — means the bridge is unavailable for
+      whole categories, and he supplies no alternative for them, which a genuine sequence would.
+    source_ref:
+  members:
+  - {sk_ref: sk_god_0023, role_in_system: step, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_god_0021, role_in_system: mechanism, order: 2, membership_origin: extractor_inferred}
+  - {sk_ref: sk_god_0024, role_in_system: step, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_god_0026, role_in_system: precondition, order: 4, membership_origin: extractor_inferred}
+  - {sk_ref: sk_god_0025, role_in_system: sustaining_condition, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+    - {from: sk_god_0024, to: sk_god_0023, nature: "beginning with neophiliacs is what creates the gap that must then be crossed", origin: source_stated}
+    - {from: sk_god_0024, to: sk_god_0026, nature: "the bridge requires a reason to tell that was designed into the offering", origin: source_stated}
+    - {from: sk_god_0021, to: sk_god_0024, nature: "the gap exists because the mass market wants a pattern match", origin: source_stated}
+    tradeoffs:
+    - between: [sk_god_0023, sk_god_0024]
+      nature: "satisfying the early adopters may require annoying the mass market you will later need"
+      origin: source_stated
+      source_ref: {chapter: 'Ch. 19 "The Funnel", section "Bridging the chasm" (spine 26)', page_start: null}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref:
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, anecdotal, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are the source's; the sequence is ours. Two of the frameworks inside it (the
+      chasm, the hype cycle) are cited from other authors and are not findings of this book, and one
+      member's evidence is the author's own failed project, reported by him. The system should be
+      read as a hypothesis about how his chapters relate, not as a stated method.
+  provenance:
+    chapter: 'Chs. 14, 15, 17, 19-20, spines 21-22, 24, 26-27'
+    section:
+    page_start:
+    page_end:
+    source_support: text

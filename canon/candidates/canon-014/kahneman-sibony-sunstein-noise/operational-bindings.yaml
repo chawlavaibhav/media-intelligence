@@ -1,0 +1,493 @@
+source_id: kahneman-sibony-sunstein-noise
+operational_bindings:
+# kahneman-sibony-sunstein-noise — Operational bindings (SPEC-04)
+# Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, "Noise: A Flaw in Human Judgment"
+# (Little, Brown Spark / Hachette Book Group, first ebook edition May 2021, ISBN 978-0-316-45138-3).
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# WHAT THESE BINDINGS ARE, AND WHAT THEY ARE NOT
+#
+#   1. Every binding below is OUR interpretation of how this book's material might bear on this
+#      project. NONE of it is the book's claim. The book is about human professional judgement in
+#      organisations and says nothing at all about automated pipelines, model evaluators, or generated
+#      media. Where a binding crosses that gap, `evidence_basis` is `extractor_inference` and
+#      `applicability.limits` says so in plain terms.
+#
+#   2. NO `creative_ir` BINDINGS. Nothing in this source describes an artefact; it describes people
+#      judging. There is no path in SPEC-01 that this book fills.
+#
+#   3. NO CLAIM ABOUT MODEL BEHAVIOUR. Whether an automated evaluator exhibits anything analogous to
+#      level, pattern or occasion noise is UNKNOWN and outside this source. Bindings that touch an
+#      automated evaluator bind only to the HUMAN side of the loop — the humans who adjudicate, who
+#      set rubrics, who accept or reject — or state the open question and stop. See EXTRACTION-NOTES.md.
+#
+#   4. OBSERVATION UNIT. Noise is a property of a SET of judgements. A single asset judged once cannot
+#      exhibit it, so `whole_asset` is almost always the wrong unit and is not used. Where an
+#      `evaluation` binding is made, the unit is `asset_set_over_time` and the limits field states
+#      explicitly what the unit does and does not capture.
+#
+#   5. `governance_consumer` is restricted to the three values from the permitted list that plausibly
+#      fit this material: `evidence_interpretation`, `conflict_resolution`, `rule_application`.
+#      Candidates fitting none of the six permitted consumers were left unbound rather than forced.
+#
+# DELIBERATELY LEFT UNBOUND (recorded here so the omissions are visible):
+#   - the error equation and its MSE arithmetic (sk_nse_0005, sk_nse_0006) — the project's acceptance
+#     judgements are evaluative, and the source itself rules the equation out for those;
+#   - objective ignorance (sk_nse_0049) — a real and important limit, but binding it would require
+#     claiming something about the ceiling on this project's prediction tasks, which we cannot support;
+#   - the rules-versus-standards framework (sk_nse_0048) and the dignity objection (sk_nse_0046) —
+#     institutional and legal material with no permitted consumer here;
+#   - the whole of the criminal-sentencing, insurance, medical and forecasting case material.
+
+- binding_id: bnd_nse_001
+  source_knowledge_refs: [sk_nse_0013, sk_nse_0014]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >-
+    This project has evaluator capabilities that require human adjudication, and no measurement of
+    whether its human adjudicators agree with one another. The audit design described in sk_nse_0013 and
+    sk_nse_0014 is a procedure for producing that missing measurement without needing a ground-truth
+    label — several adjudicators scoring the same fixed set of assets independently, blind to the fact
+    that agreement is what is being measured. The reason to prefer this to a spot check is given in
+    sk_nse_0015. We record it as a candidate instrument for evaluating our own evaluators.
+  applicability:
+    when: >-
+      Before trusting a human-adjudicated evaluator capability as a gate, and periodically after — the
+      source recommends audits be routine rather than one-off.
+    limits: >-
+      The source's audits are of interchangeable professionals judging written business cases. Whether
+      the same design transfers to people judging generated media is UNTESTED, and two conditions the
+      source names may not hold: that the judges are genuinely interchangeable, and that the task can be
+      completed from written information and answered numerically. The observation unit is a set because
+      the quantity does not exist for one asset; a single asset cannot carry it, and any report of this
+      measure against one asset would be meaningless. The result would tell us how much our adjudicators
+      disagree. It would tell us NOTHING about whether they are right.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0003, t_nse_0010]
+  repair_ontology_refs: [t_nse_0008]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_002
+  source_knowledge_refs: [sk_nse_0015]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >-
+    sk_nse_0015 identifies a specific reason why an absence of recorded disagreement is weak evidence of
+    agreement. Applied to this project's records, the implication we draw is a rule for reading them:
+    "our reviewers have not disagreed" and "our reviewers agree" are different statements, and the first
+    does not support the second unless the review process was actually capable of surfacing disagreement.
+  applicability:
+    when: >-
+      Whenever a claim about reviewer consistency is inferred from operational review records rather than
+      from a designed comparison.
+    limits: >-
+      The source's mechanism is about professionals sharing doctrine and rarely comparing cases; our
+      review records may be silent for entirely different reasons, including that few people have run the
+      review at all. This binding licenses withholding a conclusion, not asserting the opposite one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0010]
+  repair_ontology_refs: [t_nse_0008]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_003
+  source_knowledge_refs: [sk_nse_0012, sk_nse_0011]
+  source_system_refs: [scs_nse_001]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >-
+    The nesting recorded in scs_nse_001 has a consequence for how any consistency statistic we produce
+    should be read. sk_nse_0012 sets out which component ordinary operating records can reach and which
+    they cannot; sk_nse_0011 reports which the authors found larger. The rule we draw is that a
+    reviewer-level average from operating data must be reported as a partial measure, with the part it
+    cannot see named.
+  applicability:
+    when: >-
+      Reporting any measure of reviewer or evaluator consistency derived from operational records rather
+      than from a design in which several people judged the same item.
+    limits: >-
+      The relative sizing in sk_nse_0011 is the source's own tentative conclusion, hedged by it, from a
+      limited set of human-judgement studies in unrelated domains. We are NOT importing the ratio. What
+      we import is the weaker structural point: a per-person average cannot express a person-by-item
+      interaction, whatever the sizes turn out to be. Whether an automated evaluator has anything
+      corresponding to these components is unknown and is not assumed here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0004, t_nse_0005]
+  repair_ontology_refs: [t_nse_0008]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_004
+  source_knowledge_refs: [sk_nse_0024, sk_nse_0036]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: rule_application
+  rationale: >-
+    This project has a human-inspection step whose outputs may be combined or escalated. sk_nse_0024
+    states the condition under which combining several opinions is worth anything, and sk_nse_0036 gives
+    the procedural form that protects it. The rule we take is one of ordering: a reviewer who is shown a
+    prior verdict, a confidence score or another reviewer's note before recording their own is not
+    supplying a second observation.
+  applicability:
+    when: >-
+      Any step where more than one person's assessment of the same output is collected, escalated or
+      combined; and any step where a machine-produced score is shown to a human before their assessment.
+    limits: >-
+      The source's forensic evidence concerns human examiners exposed to human-supplied context. Whether
+      a model-generated score biases a human reviewer the way a colleague's verdict does is a plausible
+      but UNTESTED extension and is our inference, not the book's. The ordering constraint costs
+      throughput; the source offers no basis for judging whether that cost is worth paying here.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0026, t_nse_0028]
+  repair_ontology_refs: [t_nse_0030, t_nse_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_005
+  source_knowledge_refs: [sk_nse_0022, sk_nse_0023]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit:
+  governance_consumer: conflict_resolution
+  rationale: >-
+    Where this project resolves disagreement about an output by discussion, sk_nse_0022 and sk_nse_0023
+    together supply a diagnostic that inverts the usual reading of the outcome: convergence produced by
+    talking is evidence about the talking, not about the output. The practical form is to record each
+    participant's position before the discussion, so that the amount of pre-discussion spread is
+    recoverable afterwards.
+  applicability:
+    when: >-
+      Any review meeting, escalation call or sign-off discussion that resolves conflicting assessments of
+      the same output.
+    limits: >-
+      The source's evidence is mock juries setting punitive damages and online consumer ratings. Neither
+      resembles a small team of colleagues reviewing generated media, and the extension is ours. The
+      source also records the opposite result in a different setting — teaming improved forecasters —
+      and does not reconcile the two, so this binding diagnoses a risk rather than establishing that
+      discussion is harmful here.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0027, t_nse_0026]
+  repair_ontology_refs: [t_nse_0036, t_nse_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_006
+  source_knowledge_refs: [sk_nse_0031, sk_nse_0032, sk_nse_0030]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [repairs]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >-
+    Any rubric this project gives a human reviewer is a response scale, and sk_nse_0031 and sk_nse_0032
+    identify properties of a scale that generate disagreement independently of the thing being judged.
+    sk_nse_0030 gives the direction of repair. The concrete implication for a rubric: bound the top of
+    the scale in terms a reader can check, keep the number of points within the range people can
+    actually discriminate, and prefer a comparison against a named reference output to a free-standing
+    label.
+  applicability:
+    when: >-
+      Designing or revising any human-facing rating scale in the review or acceptance path.
+    limits: >-
+      The 51/71/94 percentages are from the authors' study of mock jurors setting punitive damages on
+      constructed vignettes, and nothing about their magnitude transfers. What transfers is the ordering
+      argument — that scale specificity and scale noise move together. The unit is a set because the
+      quantity being repaired is disagreement across a set of ratings; the repair changes an instrument,
+      and its effect could only be observed across many ratings, never on one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0025, t_nse_0004]
+  repair_ontology_refs: [t_nse_0040, t_nse_0033]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_007
+  source_knowledge_refs: [sk_nse_0040]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >-
+    sk_nse_0040 describes a specific alternative to verbal rating anchors: a small set of concrete past
+    cases, known to everyone, that define the points on the scale. For this project the transferable
+    form is a set of kept reference outputs — this is what a 3 looks like, this is what a 4 looks like —
+    maintained alongside the rubric and refreshed as the work changes.
+  applicability:
+    when: >-
+      Wherever the same rubric is applied repeatedly by more than one person, so that reference cases can
+      be accumulated and shared.
+    limits: >-
+      The source's evidence for case scales is third-party research on performance appraisal, most of it
+      conducted on students rather than working managers, and the source says so. It also names the
+      practical obstacle plainly: the anchors need customising and periodic updating, which is why the
+      technique has not spread despite being known for decades. Nothing here says a reference set would
+      improve agreement on generated media; that is our extrapolation.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0025]
+  repair_ontology_refs: [t_nse_0033, t_nse_0040]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_008
+  source_knowledge_refs: [sk_nse_0039, sk_nse_0027]
+  source_system_refs: [scs_nse_002]
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >-
+    This project's evaluator capabilities decompose an acceptance judgement into several dimensions.
+    sk_nse_0039 is explicit that decomposition alone achieves nothing, and sk_nse_0027 gives the reason.
+    The constraint we draw is that a decomposed rubric must be scored dimension by dimension, with each
+    dimension recorded before the next is read, and never assigned as one pass over an overall
+    impression.
+  applicability:
+    when: >-
+      Any multi-dimensional human scoring of a single output, and any interface that presents all
+      dimensions on one screen for simultaneous completion.
+    limits: >-
+      The source's finding concerns human raters assessing people. Whether an automated evaluator scoring
+      several dimensions of one asset exhibits anything like a halo effect is UNKNOWN and outside this
+      source; this binding is scoped to the human path only. The source also concedes that people dislike
+      structured processes, which is a real adoption cost it does not quantify.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0022, t_nse_0021]
+  repair_ontology_refs: [t_nse_0032, t_nse_0030]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_009
+  source_knowledge_refs: [sk_nse_0034, sk_nse_0033]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: rule_application
+  rationale: >-
+    This project holds a standing rule that a worker's recommendation is not a decision, which leaves
+    open when a human may depart from one. sk_nse_0034 supplies a test with a definite answer — whether
+    the person holds decisive information the recommending process could not have had — and sk_nse_0033
+    supplies the reason to take the test seriously rather than treating override as free. We propose
+    recording the answer to that question alongside every override.
+  applicability:
+    when: >-
+      Any point where a person may accept, reject or amend an automatically produced recommendation or
+      score.
+    limits: >-
+      The book's mechanical-versus-clinical evidence concerns statistical models predicting human
+      outcomes from a fixed set of scored predictors. A generative or model-based evaluator is not that,
+      and no result here transfers to it. The test is being borrowed as a piece of process discipline —
+      make the reason explicit — NOT as evidence that our automated outputs are more accurate than our
+      reviewers. We have no such evidence.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0005]
+  repair_ontology_refs: [t_nse_0039]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_010
+  source_knowledge_refs: [sk_nse_0020]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >-
+    sk_nse_0020 argues that a judgement process can only be assessed across an ensemble, because a single
+    outcome does not reveal whether the process that produced it was sound. For this project the
+    implication is a constraint on what a pilot's individual results can be made to support: a good
+    outcome on one asset is not evidence that the review process works, and a bad one is not evidence
+    that it does not.
+  applicability:
+    when: >-
+      Reading pilot results, post-mortems on individual rejected outputs, and any argument that a review
+      step should be kept or dropped on the strength of particular cases.
+    limits: >-
+      The source's ensemble argument is developed for probabilistic forecasting, where calibration has a
+      precise meaning. Our acceptance judgements are largely evaluative and have no true value, so the
+      calibration machinery does not transfer; only the weaker point does — that the unit of evaluation
+      is the set, not the case.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0029, t_nse_0017]
+  repair_ontology_refs: [t_nse_0034]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_011
+  source_knowledge_refs: [sk_nse_0044, sk_nse_0045]
+  source_system_refs: [scs_nse_003]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: rule_application
+  rationale: >-
+    This project has an unresolved question about which human review time counts in its cost metric.
+    scs_nse_003, through sk_nse_0044 and sk_nse_0045, supplies the shape of the trade-off rather than an
+    answer: consistency measures cost time, that cost is legitimate to weigh, and the measure is only
+    weighable once the disagreement it would remove has been measured. sk_nse_0045 adds the second half —
+    a consistency measure blunt enough to remove real signal can make outcomes worse, so cheapness is not
+    the only failure mode.
+  applicability:
+    when: >-
+      Deciding whether review time belongs in the cost metric, and deciding how much review to require.
+    limits: >-
+      The source supplies no procedure for the calculation; it calls for "a disciplined analysis" without
+      specifying one, so this binding frames a decision rather than making it. Its worked examples are a
+      teacher grading essays and a corporate appraisal system, neither of which has this project's cost
+      structure. This binding must not be read as an argument for less review OR for more.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0003]
+  repair_ontology_refs: [t_nse_0008, t_nse_0009]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_012
+  source_knowledge_refs: [sk_nse_0018]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >-
+    sk_nse_0018 separates two kinds of judgement that this project's acceptance step mixes: judgements
+    aimed at a fact that could in principle be checked, and judgements that express what the system
+    values. The flag we draw is that a rubric dimension should declare which kind it is, because the
+    two carry different burdens — one can be wrong, the other can only be inconsistent — and the source's
+    quantitative apparatus covers only the first.
+  applicability:
+    when: >-
+      Defining or reviewing the dimensions of an acceptance rubric, and deciding what evidence would
+      settle a dispute about a dimension.
+    limits: >-
+      The source itself says the boundary is fuzzy and that practitioners are usually unaware which side
+      they are on, so this flag will not always have a clean answer. It is a prompt to declare a
+      classification, not a claim that the classification is always available.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0014, t_nse_0013]
+  repair_ontology_refs: [t_nse_0037]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_013
+  source_knowledge_refs: [sk_nse_0037]
+  source_system_refs: []
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >-
+    sk_nse_0037 gives an arithmetic relation between the number of independent judgements averaged and
+    the residual disagreement. For a benchmark whose reference labels come from human raters, that
+    relation is the thing that determines how many raters per item are needed to reach a target
+    stability — and it also states the limit, which is that averaging does nothing about a view all the
+    raters share.
+  applicability:
+    when: >-
+      Setting the number of independent human raters per item when constructing or refreshing a
+      human-labelled reference set.
+    limits: >-
+      The square-root relation is arithmetic and holds only where the judgements really are independent —
+      see bnd_nse_004 — and only for the noise term. A reference set built by raters who share an
+      assumption will be precisely and unanimously wrong, and no amount of averaging detects that. The
+      source also notes diminishing returns in practice well before the arithmetic suggests, citing a
+      hiring process that found no gain past four assessments.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0001, t_nse_0002]
+  repair_ontology_refs: [t_nse_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_nse_014
+  source_knowledge_refs: [sk_nse_0050, sk_nse_0025]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >-
+    sk_nse_0050 explains why a post-mortem on a single bad output will always produce a satisfying causal
+    story and will never surface variability, and sk_nse_0025 sets a test for when a named bias counts as
+    an explanation at all. Applied to this project's failure reviews, the diagnostic is: if the
+    explanation offered would not have been predicted in advance and predicts nothing about future cases,
+    it has not explained anything.
+  applicability:
+    when: >-
+      Reviewing a rejected or failed output, and any time a systematic cause is proposed for a single
+      observed failure.
+    limits: >-
+      This constrains how an explanation is assessed; it does not supply an alternative explanation. The
+      source's own remedy — look at the ensemble instead — requires a set of comparable cases that a
+      young pilot may not yet have.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nse_0029]
+  repair_ontology_refs: [t_nse_0034, t_nse_0008]
+  status: proposed
+  status_reason: "experimental; not reviewed"

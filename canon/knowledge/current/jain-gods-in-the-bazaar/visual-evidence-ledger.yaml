@@ -1,0 +1,178 @@
+# CANON-014 — visual-evidence ledger for Kajri Jain, "Gods in the Bazaar".
+#
+# The visual pass RAN and was PARTIAL, and it was the most productive of the three run in this batch.
+# Seven of approximately 156 numbered figures were rendered and read directly. The other ~149 were
+# not. What makes the pass worth the name is not its coverage but what it settled: FOUR SEPARATE
+# PRODUCTION-CONSTRAINT CLAIMS made in the text were checked against the artefacts the text cites, and
+# all four hold. Those four are among the most operationally useful objects in the whole CANON-014
+# batch, and they are no longer taken on the author's word.
+
+source_id: jain_gods_in_the_bazaar
+pass: attempted_and_partially_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+# ── the copy as an object ───────────────────────────────────────────────────
+copy_form:
+  form: born_digital_typeset_pdf
+  evidence: >
+    Creator `DVIPSONE 2.2.3`, Producer `Acrobat Distiller 8.0.0 (Windows)`, 449 pages, 179 image
+    objects, real text layer. This is a publisher's typeset PDF, not a scan: the text extracts
+    perfectly, ligatures survive, and the figures are separately addressable image objects rather
+    than regions inside page images. The book states its own typesetting on the imprint page —
+    "Designed by Heather Hensley. Typeset in Adobe Jenson Pro by Tseng Information Systems, Inc."
+  consequence: >
+    Two consequences worth recording. First, there is no OCR error class in this source at all,
+    unlike the Cinema India copy on this branch. Second, the figures could have been extracted
+    individually; they were rendered in page context instead, so that each figure was read together
+    with its caption and the surrounding argument, which is what made the claim-checking possible.
+
+# ── what was inspected ──────────────────────────────────────────────────────
+inspection:
+  method: >
+    The page mapping was established mechanically first: printed = pdf - 13, verified at three
+    independent points (pdf 60 -> printed 47, pdf 62 -> printed 49, and the chapter-1 running head).
+    Seven PDF pages were then rendered at 105 dpi and read directly, each with its caption and body
+    text in view. No caption was accepted as a description of a figure without looking at the figure.
+  numbered_figures_in_book: "approximately 156 (caption numbering observed running to 155, with fig. 156 referenced in the Conclusion)"
+  figures_inspected: 7
+  figures_not_inspected: "approximately 149"
+  pages_rendered: [198, 206, 208, 296, 300, 334, 340]
+  figures_inspected_list:
+    - {fig: 88, subject: "printed Sapar Brothers Hanuman beside the original painting, Sivakasi, 2001", printed_page: 185}
+    - {fig: 92, subject: "'Television', a 1969 calendar design by R. Arts", printed_page: 193}
+    - {fig: 93, subject: "Ram Ravan Yuddha by Mukesh, print by S. S. Brijbasi", printed_page: 195}
+    - {fig: 124, subject: "God of Indian Children, a child worshipping Nehru, published by Picture Paradise, Sivakasi", printed_page: 283}
+    - {fig: 127, subject: "Satyam! Shivam! Sundaram!, a 1974 calendar for Kisan Iron Stores, Hapud", printed_page: 287}
+    - {fig: 138, subject: "Jai Shri Ram, janmabhoomi campaign propaganda sticker, Delhi, 1994", printed_page: 321}
+    - {fig: 140, subject: "Lakshaman Shakti by Mukesh, print by S. S. Brijbasi", printed_page: 327}
+  selection_basis: >
+    Chosen by argument load, not at random. Each of the seven is the figure the text cites when making
+    a claim that could in principle be settled by looking. The record is therefore NOT a sample and
+    nothing about the other ~149 figures may be inferred from it.
+  reproduction_quality: >
+    Figures are reproduced at print quality. Colour figures render with full saturation and detail;
+    the four-colour plates in particular are legible down to facial modelling and ornament. Fig. 138
+    is reproduced in black and white in the book itself, which is a property of the publication, not
+    of this rendering. Small text within a reproduced calendar is generally legible; the Devanagari
+    and Urdu on the blackboard in fig. 127 reads clearly.
+
+# ── what the inspection actually established ────────────────────────────────
+claims_checked_against_figures:
+  - claim: "Jain: the retouching process gives the print greater saturation and colour contrast than the painting it was made from, creating a sensation of clarity, depth and lustre"
+    figure: "fig. 88, printed p. 185"
+    outcome: confirmed
+    note: >
+      THE MOST VALUABLE CHECK IN THIS PASS, because the figure is a controlled comparison: the printed
+      Hanuman and the original painting are photographed side by side. The print is visibly more
+      saturated, higher in contrast, and markedly more luminous in the golds. The effect of the
+      pre-press retouching stage is therefore observed directly rather than taken on the author's
+      word, and the claim in sk_jgb_0020 rests on this rather than on the caption.
+  - claim: "Jain: the 'front-looking' imperative means the woman watching cricket on television must do so out of the corner of her eye, her face turned toward the viewer of the calendar"
+    figure: "fig. 92, printed p. 193"
+    outcome: confirmed
+    note: >
+      Exactly as described. The woman reclines with the television to her side; her face is turned
+      frontally out of the frame; the one-point perspective makes both her and the screen visible at
+      once. This is the clearest single artefact in the batch for the constraint recorded as
+      sk_jgb_0010 — a naturalistically implausible pose adopted to satisfy an idiom requirement.
+  - claim: "Jain: even in battle, Ram and Lakshman have heavy-lidded eyes and benign countenances"
+    figure: "fig. 93, printed p. 195"
+    outcome: confirmed
+    note: >
+      Both figures are drawing bows in the middle of a battle against a multi-headed Ravan, and both
+      have half-lidded eyes, serene faces, and smooth unmuscled bodies. The claim in sk_jgb_0030 about
+      the iconographic injunction is confirmed from the artefact, and Waeerkar's complaint that the
+      result "looks ridiculous" is comprehensible on sight.
+  - claim: "Jain: the frontal relation of both child and Nehru to the viewer outside the frame is more important than a realist depiction of the frontal relation between the child and Nehru within the frame; the child is placed at a three-quarter angle and the intra-diegetic picture's perspective is manipulated"
+    figure: "fig. 124, printed p. 283"
+    outcome: confirmed
+    note: >
+      Both the praying child and the framed portrait inside the picture face the external viewer, not
+      each other; the child is at a three-quarter angle; the rose is between the child's hands. Every
+      element of a fairly intricate compositional reading holds.
+  - claim: "Jain: a child is depicted reading a book watched by a gorilla, with the slogan 'Parho aur insaan bano' on the book and the blackboard"
+    figure: "fig. 127, printed p. 287"
+    outcome: confirmed
+    note: "The scene and both instances of the text are present, the blackboard carrying Devanagari and Urdu."
+  - claim: "Jain (accepting Kapur): from the late 1980s Ram appears in a muscular, aggressive, dynamic warrior form, in contrast to the earlier tranquil depictions"
+    figure: "fig. 138, printed p. 321"
+    outcome: confirmed
+    note: >
+      The campaign sticker shows a visibly muscled Ram striding with a drawn bow. Set beside fig. 93,
+      inspected in the same pass, the contrast is unmistakable. The DATING and the CAUSE remain the
+      authors' claims and are untouched by inspection; what inspection settles is that the two
+      depictions differ as described.
+  - claim: "Jain: a strong, muscular Hanuman flies above the soft, flabby, emotive Ram and Lakshman"
+    figure: "fig. 140, printed p. 327"
+    outcome: confirmed
+    note: >
+      The contrast within a single print is exactly as described, which is what makes it evidence for
+      the Hanuman-as-enabling-figure argument rather than merely an illustration of it. The argument
+      itself (sk_jgb_0160) remains the author's proposal.
+
+# ── coverage bound ──────────────────────────────────────────────────────────
+# DELIBERATELY NOT RECORDED AS A LOSS PATTERN. Nothing is missing from the copy; the pass was
+# bounded by cost. The Audit Gate loss vocabulary describes damage to the artefact, and using one of
+# its terms here would misdescribe an intact source.
+inspection_coverage_bound:
+  not_inspected: "approximately 149 of approximately 156 numbered figures"
+  blocked: false
+  evidence: >
+    Seven figures were opened. The rest were not, and could have been: the copy is complete and
+    born-digital, the page mapping is established, and any figure can be rendered on demand. Bounded
+    by cost, not blocked. No claim in this record rests on an uninspected figure. The seven were
+    chosen by argument load, so the set is NOT a sample and nothing about the remaining figures may
+    be inferred from it.
+
+# ── loss patterns observed, using the Audit Gate vocabulary ────────────────
+observed_loss_patterns:
+
+  - pattern: no_loss_detected
+    affects: "the text layer"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Checked rather than assumed. A duplicate-sentence scan over the whole extracted text for
+      sentences above 90 characters returned exactly ONE hit, and it is not damage: it is a boilerplate
+      permissions line ("Reprinted with the permission of the copyright-holder and the publishers, Sage
+      Publications India Pvt.") which legitimately appears twice in the Acknowledgements because two
+      chapters were previously published with the same press. There is no pull-quote flattening, no
+      reading-order damage, and no duplication inside the argument. Ligatures and diacritics survive
+      intact.
+
+  - pattern: no_loss_detected
+    affects: "completeness"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      The whole book is present and extracts in order: Notes on Style, Acknowledgments, Introduction,
+      all seven chapters across three parts, Conclusion, Notes, Works Cited and Index. All contents-page
+      entries resolve against the body.
+
+  - pattern: source_evidence_never_printed
+    affects: "colour in figures reproduced in black and white in the book itself"
+    detectability: named_by_text
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      A property of the publication, not of this copy, and recorded to keep it separate from
+      digitisation loss. Some figures — fig. 138 among those inspected — are printed in monochrome in
+      the book. Since colour saturation is itself one of this source's arguments, the monochrome
+      reproduction of any figure bounds what that figure can be used to show. No claim about colour in
+      this record rests on a monochrome figure; the colour claim rests on fig. 88, which is in colour.
+
+# ── consequence ─────────────────────────────────────────────────────────────
+claim_resolution_after_inspection: some_underdetermined
+consequence: >
+  This pass did something the other two in this batch could not. Because Jain's constraints are
+  claims about what an artefact LOOKS LIKE — a face turned out of frame, an unmuscled body in battle,
+  a print more saturated than its painting — they are settleable by looking, and looking settled them.
+  Four production constraints and two compositional readings were checked and all six hold. The
+  objects that rest on them (sk_jgb_0010, sk_jgb_0020, sk_jgb_0030, sk_jgb_0160) are correspondingly
+  better evidenced than an interview-only extraction would have left them, and each records the check.
+
+  THE BOUND THIS PLACES ON THE RECORD IS EXACT AND MUST NOT BE OVERSTATED. Inspection establishes that
+  the constraints are real and are visible in the artefacts. It establishes NOTHING about why they
+  exist, nothing about whether the reasons practitioners give for them are true, and nothing whatever
+  about what any viewer does with such an image. The reasons remain practitioner testimony bounded by
+  sk_jgb_0180; the audience claims remain unmeasured, here as everywhere in this book.

@@ -1,0 +1,275 @@
+# W3C, WCAG 2.2 — SPEC-03 SourceConceptSystems
+# EXPERIMENTAL — NOT LIVE CANON. Lane 3, book-expansion-qa-v1.
+#
+# Four systems. Each is recorded because the knowledge genuinely lives in the relationships:
+# a standard is a structure of rules, definitions and exceptions that are meaningless apart.
+# Origin is marked at every structural level, as SPEC-03 requires.
+
+source_id: w3c-wcag22-text-legibility
+
+source_concept_systems:
+
+- scs_id: scs_wcag_001
+  source_id: w3c-wcag22-text-legibility
+  label: the_text_contrast_conformance_procedure
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    SC 1.4.3 is not a single number. It is a procedure with a fixed order: first establish whether the
+    text is in scope at all (the Incidental and Logotype exemptions remove it entirely); then classify
+    it by the glossary definition of large scale, which decides whether 4.5:1 or 3:1 applies; then
+    identify the colour pair to measure, which the glossary's notes on contrast ratio settle — the
+    specified background, white where none is specified, the halo or the letter where a border is
+    present, and only pairs an author would expect to appear adjacent; then compute the ratio from
+    relative luminance and compare it, unrounded, against the threshold. Every step depends on a
+    definition stated somewhere other than the criterion.
+  whole_system_claim:
+    text: >
+      The threshold cannot be applied without the definitions and the notes. A stated ratio with no
+      scope test, no size classification and no rule for choosing the colour pair is not the criterion
+      — it is one input to it. In particular, three of the four steps are exclusion or classification
+      steps, so most of the work in an actual assessment happens before any number is computed.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source never presents these as an ordered procedure. It states a criterion, places two
+      exceptions inside it, and puts the definitions and their notes in a separate glossary chapter.
+      The ordering is ours, inferred from three things the source does state: the exception clauses are
+      written as carve-outs from the general rule; the large-text clause is written as a substitute
+      threshold rather than an additional one; and the Understanding note's Sufficient Techniques
+      section splits into "Situation A: text is less than 18 point if not bold and less than 14 point
+      if bold" and "Situation B", which is the size classification acting as a branch in the source's
+      own presentation.
+    source_ref: null
+  members:
+    - {sk_ref: sk_wcag_0003, role_in_system: exclusion_test, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0004, role_in_system: exclusion_test, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0027, role_in_system: definition_supporting_an_exclusion, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0021, role_in_system: classification_test, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0002, role_in_system: threshold_branch, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0001, role_in_system: threshold_default, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0016, role_in_system: measurement_rule, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0017, role_in_system: measurement_rule, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0019, role_in_system: measurement_rule, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0020, role_in_system: computation, order: 10, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0014, role_in_system: computation, order: 11, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_wcag_0001, to: sk_wcag_0014, nature: "the threshold is meaningless without the formula", origin: source_stated}
+      - {from: sk_wcag_0002, to: sk_wcag_0021, nature: "the carve-out is gated by the glossary definition of large scale", origin: source_stated}
+      - {from: sk_wcag_0003, to: sk_wcag_0027, nature: "one of the four incidental situations is the defined term pure decoration", origin: source_stated}
+      - {from: sk_wcag_0014, to: sk_wcag_0020, nature: "the formula consumes two relative luminance values", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_wcag_0016, sk_wcag_0017]
+        nature: "Note 3 supplies a default of white when no background is specified; Note 4 makes specifying text colour without a background colour a failure. Both are normative and they sit awkwardly together — the default exists, and relying on it having specified the other half is nonetheless a failure."
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are all directly stated by the source and are individually beyond dispute. The claim
+      that they constitute one ordered procedure is OURS. The source distributes them across a
+      criterion, a glossary and a non-normative note, and never numbers them as steps. The Situation
+      A / Situation B split in the Understanding note is the only place the source itself branches on
+      size, and that note is non-normative.
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable; 6. Glossary"
+    section: "SC 1.4.3 Contrast (Minimum); Glossary: contrast ratio, relative luminance, large scale (text), pure decoration"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_wcag_002
+  source_id: w3c-wcag22-text-legibility
+  label: the_acuity_derivation_that_generates_both_contrast_levels
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    The AA and AAA contrast criteria are two outputs of one stated causal model. A 3:1 baseline is taken
+    from ISO and ANSI standards for standard text and normal vision. Contrast sensitivity loss
+    associated with a level of visual acuity multiplies that baseline: roughly 1.5 at 20/40, giving
+    4.5:1 for Level AA; the analogous figure at 20/80 gives about 7:1 for Level AAA. The large-text
+    carve-out enters the same model from the other side — larger text with wider strokes is readable at
+    lower contrast, so the requirement is relaxed by one step, which is why the AAA large-text value is
+    exactly the AA general value.
+  whole_system_claim:
+    text: >
+      Every number in the two contrast criteria is one baseline multiplied by a compensation factor, or
+      that baseline relaxed for glyph size. The model is a model of restoring perception for a reader
+      with measurable acuity loss. It contains no term for attention, appeal or communication
+      effectiveness, and the source claims none.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Understanding SC 1.4.3, Rationale for the Ratios Chosen"}
+  members:
+    - {sk_ref: sk_wcag_0030, role_in_system: causal_derivation, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0001, role_in_system: output_at_level_aa, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_wcag_0005, role_in_system: output_at_level_aaa, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0031, role_in_system: relaxation_rule, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0002, role_in_system: output_of_the_relaxation, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+      - {from: sk_wcag_0001, to: sk_wcag_0030, nature: "4.5:1 is the stated product of the baseline and the 20/40 sensitivity loss", origin: source_stated}
+      - {from: sk_wcag_0005, to: sk_wcag_0030, nature: "7:1 is the stated product of the same logic at 20/80", origin: source_stated}
+      - {from: sk_wcag_0002, to: sk_wcag_0031, nature: "the 3:1 carve-out follows from larger, wider-stroked glyphs reading at lower contrast", origin: source_stated}
+    tradeoffs:
+      - between: [sk_wcag_0002, sk_wcag_0031]
+        nature: "the source presents the relaxation as buying authors a wider range of colour choices for large text at the cost of contrast headroom, and separately warns that the trade fails for extraordinarily thin or unfamiliar letterforms"
+        origin: source_stated
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The derivation itself is the source's own and is stated as a chain in a single passage, so the
+      system type and the whole-system claim are source_explicit. What is ours is the placement of the
+      normative criteria (sk_wcag_0001, sk_wcag_0002) inside it as outputs — the criteria themselves
+      state no derivation, and the passage that does is non-normative. Reading the model as authorising
+      the criteria is therefore a reading, not a citation.
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative); Guideline 1.4 Distinguishable"
+    section: "Understanding SC 1.4.3, Rationale for the Ratios Chosen and Intent; SC 1.4.3; SC 1.4.6"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_wcag_003
+  source_id: w3c-wcag22-text-legibility
+  label: the_images_of_text_pair_and_its_exception_ladder
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    SC 1.4.5 and SC 1.4.9 have the same subject and differ only in what escapes them. SC 1.4.5 applies
+    only where the technologies in use can achieve the presentation, and excepts images of text that
+    are customisable by the user or whose particular presentation is essential. SC 1.4.9 drops the
+    technology condition and the Customizable exception, leaving only pure decoration and essential
+    presentation. Both rest on the glossary definitions of image of text and essential, and both are
+    entangled with SC 1.4.4, which excepts images of text from the 200 percent resize requirement
+    precisely because they cannot satisfy it.
+  whole_system_claim:
+    text: >
+      The pair is best read as one rule at two strictnesses, where the exceptions carry the whole
+      difference. Reading either criterion alone gives a misleading account: SC 1.4.5 looks permissive
+      until one applies the two-part definition of essential, and SC 1.4.9 looks absolute until one
+      notices that logotypes are declared essential by note. And the reason images of text are
+      disfavoured at all is not stated in either criterion — it is that the user cannot restyle them,
+      which is why SC 1.4.4 excepts them rather than requiring them to scale.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source does state part of this itself: the Understanding note for SC 1.4.5 explicitly
+      contrasts the two criteria, saying SC 1.4.5 is met where an image of text is used in addition to
+      the same information as text whereas SC 1.4.9 applies to all images of text regardless, and that
+      the techniques for the two are the same but for the technology condition. What is ours is
+      grouping SC 1.4.4's exception into the same system on the ground that the notes to SC 1.4.4 and
+      SC 1.4.3 give the same reason for it — images of text pixelate and their colours cannot be
+      changed by the user.
+    source_ref: null
+  members:
+    - {sk_ref: sk_wcag_0025, role_in_system: gating_definition, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0028, role_in_system: gating_definition, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0008, role_in_system: rule_at_level_aa, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0009, role_in_system: rule_at_level_aaa, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0010, role_in_system: related_exception, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_wcag_0008, to: sk_wcag_0025, nature: "the criterion is defined over the glossary term", origin: source_stated}
+      - {from: sk_wcag_0008, to: sk_wcag_0028, nature: "the Essential exception is the glossary term", origin: source_stated}
+      - {from: sk_wcag_0009, to: sk_wcag_0028, nature: "the same term carries the AAA exception", origin: source_stated}
+    tradeoffs:
+      - between: [sk_wcag_0008, sk_wcag_0009]
+        nature: "SC 1.4.5 trades strictness for feasibility by conditioning on what the technologies can achieve and by admitting a customisable image; SC 1.4.9 removes both and is correspondingly harder to meet"
+        origin: source_stated
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The relationship between SC 1.4.5 and SC 1.4.9 is stated by the source, in a non-normative note.
+      Pulling SC 1.4.4's images-of-text exception into the same system is ours, and it is the one
+      membership marked extractor_inferred.
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable; 6. Glossary; Understanding WCAG 2.2 (non-normative)"
+    section: "SC 1.4.5; SC 1.4.9; SC 1.4.4; Glossary: image of text, essential; Understanding SC 1.4.5, Intent"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_wcag_004
+  source_id: w3c-wcag22-text-legibility
+  label: the_division_of_labour_between_use_of_colour_and_non_text_contrast
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    SC 1.4.1 and SC 1.4.11 look adjacent and catch different failures, and the source devotes a section
+    of the SC 1.4.11 Understanding note to separating them. SC 1.4.1 fails content where hue alone
+    carries meaning. SC 1.4.11 fails content where something required to identify a control or
+    understand a graphic falls below 3:1 against adjacent colours. The 3:1 figure joins them: a
+    lightness difference of 3:1 or more counts as the additional visual means SC 1.4.1 demands — unless
+    the reader must identify which colour it is, in which case no ratio suffices and a further indicator
+    is needed. Some content is in scope of one and not the other: a change of background colour within
+    a component is explicitly out of scope of SC 1.4.11 while still failing SC 1.4.1.
+  whole_system_claim:
+    text: >
+      The two criteria partition a single question — can this be perceived and told apart — along the
+      axis of what is doing the telling. Contrast handles anything a luminance difference can carry;
+      Use of Colour handles anything that requires knowing which hue it is. Assessing either alone
+      produces a false pass, and the same visual element can be in scope of one, both, or neither.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {section: "Understanding SC 1.4.11, Relationship with Use of Color"}
+  members:
+    - {sk_ref: sk_wcag_0007, role_in_system: criterion, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0006, role_in_system: criterion, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0038, role_in_system: boundary_rule, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_wcag_0036, role_in_system: scoping_test, order: 4, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_wcag_0007, to: sk_wcag_0038, nature: "whether a luminance difference discharges the criterion is settled by the boundary rule", origin: source_stated}
+      - {from: sk_wcag_0006, to: sk_wcag_0036, nature: "the scope of the criterion is settled by the required-for-understanding test", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_wcag_0006, sk_wcag_0007]
+        nature: "the source records cases that pass one and fail the other in both directions: a star rating using yellow versus white fill fails Use of Colour but is not primarily a Non-text Contrast failure, while a link identified only by a dull-red underline on near-black fails Non-text Contrast. Judging by a single criterion misclassifies both."
+        origin: source_stated
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Understanding SC 1.4.11, Relationship with Use of Color — the source writes the section precisely because the two are confused, and states which criterion each worked example fails"
+  evidence:
+    characteristics: [explicitly_stated, argued, visually_demonstrated]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      Low. The source names the relationship, writes a dedicated section for it, and works through
+      pass and fail examples on both sides. The wording of the whole-system claim is ours; the content
+      of it is the source's. The one caution is that the section is non-normative, so the division of
+      labour it describes is guidance about two normative criteria rather than a normative rule.
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable; Understanding WCAG 2.2 (non-normative)"
+    section: "SC 1.4.1; SC 1.4.11; Understanding SC 1.4.11, Relationship with Use of Color; Understanding SC 1.4.1, Intent"
+    page_start: null
+    page_end: null
+    source_support: text

@@ -1,0 +1,306 @@
+# SourceConceptSystem — Henry Carroll, "Read This If You Want to Take Great Photographs"
+# (Laurence King, 2014). source_id: carroll-read-this-photographs
+# EXPERIMENTAL — NOT LIVE CANON.
+# LOCATORS: EPUB, reflowable. NO AUTHORED PAGE NUMBERS. page_start/page_end are null everywhere.
+#
+# Four systems. Three of them (001, 002, 004) are groupings the SOURCE makes: Carroll writes the
+# exposure trio as an inseparable set, splits light into two named types and compares them spread by
+# spread, and states the focal-length chain as a chain. The fourth (003) is OURS — the claim that
+# nine composition spreads plus the rule-breaking spread constitute one system with a top-level test
+# is the extractor's synthesis, and it is marked as such at every level.
+
+source_id: carroll-read-this-photographs
+
+source_concept_systems:
+
+- scs_id: scs_crl_001
+  source_id: carroll-read-this-photographs
+  label: the_exposure_trio_as_an_interlocking_set
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    Shutter speed, aperture and ISO, treated as three controls with different jobs that act on one
+    quantity, so that a change to any one forces a compensating change in another. Carroll's
+    consequence is that no setting is uniquely correct, which in turn licenses the two operating
+    positions he builds on top of it: semi-automatic modes over manual, and exposure compensation
+    as the tool for departing deliberately from the camera's proposal.
+  whole_system_claim:
+    text: >
+      Because the three controls trade against one another, choosing an exposure is choosing which
+      of the visual effects — blur or freeze, shallow or deep, clean or noisy — you are prepared to
+      pay for, and the camera's proposal is one of several balances that satisfy the light rather
+      than the right answer. The photographer's job is to fix the control the picture is about and
+      let the camera settle the rest.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref:
+      chapter: 'Section opener "EXPOSURE", sub-heading "Seeing through the science" (spine 18)'
+      quote_gist: >
+        the trio is inseparable, each member has its own job and that is why they rely on each
+        other; "correct exposure" is a matter of opinion; adjusting them is as much an exercise in
+        creativity as in controlling light.
+      page_start: null
+      page_end: null
+  members:
+    - {sk_ref: sk_crl_0010, role_in_system: framing_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0011, role_in_system: control, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0012, role_in_system: control, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0013, role_in_system: control, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0015, role_in_system: operating_position, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0016, role_in_system: operating_position, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: source_stated
+    dependencies:
+      - {from: sk_crl_0012, to: sk_crl_0013, nature: "a faster shutter admits less light, so aperture or ISO must pay for it", origin: source_stated}
+      - {from: sk_crl_0013, to: sk_crl_0011, nature: "a narrow aperture forces a slower compensating shutter, which brings camera shake into play", origin: source_stated}
+      - {from: sk_crl_0015, to: sk_crl_0010, nature: "the case against manual rests on the camera's exposure being a proposal", origin: source_stated}
+    tradeoffs:
+      - between: [sk_crl_0011, sk_crl_0012]
+        nature: "blurring movement against freezing it; the same control, opposite ends"
+        origin: source_stated
+        source_ref: {chapter: 'Ch. "Fast shutter speeds" (spine 24)', page_start: null}
+      - between: [sk_crl_0012, sk_crl_0013]
+        nature: "freezing movement costs light, which must be bought back with aperture or ISO"
+        origin: source_stated
+        source_ref: {chapter: 'Ch. "Fast shutter speeds" (spine 24)', page_start: null}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref:
+    chapter: 'Section opener "EXPOSURE" (spine 18) and Ch. "ISO", sub-heading "Your camera''s sensitive side" (spine 29)'
+    note: >
+      Carroll states the members cannot be considered separately ("this happy trio is inseparable")
+      and gives an explicit sequencing instruction — "Always set your ISO first, as it affects what
+      shutter speed and aperture you can use."
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The set and its interdependence are the source's, stated in his own words and repeated across
+      six spreads. What is ours is only the decision to admit the two operating positions
+      (sk_crl_0015 manual, sk_crl_0016 compensation) as members rather than as separate claims;
+      Carroll presents them as consequences of the trio but does not call them part of it. The
+      numeric thresholds inside the members are his rules of thumb, not measurements.
+  provenance:
+    chapter: 'Section "EXPOSURE", spines 18-34'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_crl_002
+  source_id: carroll-read-this-photographs
+  label: hard_and_soft_light_as_a_two_term_choice
+  label_origin: source_verbatim
+  system_type: trade_off_set
+  system_type_origin: source_stated
+  description: >
+    Carroll divides all light into two fundamental types, hard and soft, and then structures the
+    whole light section as alternating spreads that put them against each other on the same
+    property: contrast, depth, and treatment of the subject. Flat light is developed as the limiting
+    case of the soft end, where the light stops contributing to the reading altogether.
+  whole_system_claim:
+    text: >
+      Every property Carroll assigns to one type is a property the other type lacks, so choosing the
+      light is choosing which set of costs to pay: hard light simplifies and models but loses detail
+      and does not flatter; soft light retains detail and flatters but supplies no depth cues and,
+      at its flattest, none of the eye guidance a composition would otherwise get for free.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref:
+      chapter: 'Section opener "LIGHT", sub-heading "Light is your subject" (spine 35)'
+      quote_gist: >
+        light can be split into two fundamental types, hard and soft; both have particular traits
+        that affect the overall mood of the image, and the chapter compares and contrasts them.
+      page_start: null
+      page_end: null
+  members:
+    - {sk_ref: sk_crl_0017, role_in_system: pole, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0018, role_in_system: pole, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0019, role_in_system: limiting_case, order: 3, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_crl_0019, to: sk_crl_0018, nature: "flat light is developed as the extreme of the soft end", origin: source_stated}
+    tradeoffs:
+      - between: [sk_crl_0017, sk_crl_0018]
+        nature: "modelling and simplification against retained detail and a flattering rendering"
+        origin: source_stated
+        source_ref: {chapter: 'Ch. "Hard light is brutal" against Ch. "Soft light is flattering" (spines 40-41)', page_start: null}
+      - between: [sk_crl_0017, sk_crl_0019]
+        nature: "light that guides the eye against light that leaves the guiding entirely to composition"
+        origin: source_stated
+        source_ref: {chapter: 'Ch. "Soft light can be flat" (spine 39)', page_start: null}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The two-term division and the compare-and-contrast structure are entirely the source's; he
+      states both. What is ours is admitting flat light as a third, limiting member rather than as a
+      sub-case of soft light. Note also what this system is NOT: the book's alternating spreads are
+      not minimal pairs. Each spread uses a different photographer, subject and scene, so nothing
+      here is a controlled comparison, and no benchmark binding was created from it.
+  provenance:
+    chapter: 'Section "LIGHT", spines 35-45'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_crl_003
+  source_id: carroll-read-this-photographs
+  label: composition_techniques_subordinated_to_the_essence_test
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    The nine composition spreads — leading lines, internal framing, foreground interest, proximity,
+    symmetry, thirds, working the frame, visual weight — together with the closing spread that tells
+    the reader to break them. Read as a system, the techniques are the lower layer and the essence
+    test is the layer above, deciding when the lower layer applies.
+  whole_system_claim:
+    text: >
+      The composition techniques are a default that produces a settled, competent reading, and the
+      essence test overrides them: where the subject is not settled, a settled composition
+      misdescribes it, and the same features that are ordinarily faults become the means of a true
+      reading. The techniques therefore have no standing of their own — each is in force only until
+      the subject gives a reason to break it.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Carroll never states this as a system. He presents nine independent spreads, then a tenth
+      spread which calls them "essential building blocks", warns that too much of them makes
+      photographs "safe and predictable", names the rule of thirds specifically as breakable, and
+      tells the reader to concentrate instead on capturing "the essence of your subject". The
+      two-layer structure — techniques below, essence test above — is our reading of that sequence.
+      Two facts make the reading contestable and are recorded rather than smoothed over: Carroll
+      leaves symmetry (centre the subject) and thirds (do not centre the subject) side by side
+      without ranking them, and the essence test as he states it is unfalsifiable, since any broken
+      rule can be justified after the fact by asserting the discomfort suits the subject.
+    source_ref: null
+  members:
+    - {sk_ref: sk_crl_0001, role_in_system: technique, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0002, role_in_system: technique, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0003, role_in_system: technique, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0004, role_in_system: technique, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0005, role_in_system: technique, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0006, role_in_system: technique, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0007, role_in_system: technique, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0008, role_in_system: technique, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_crl_0009, role_in_system: overriding_test, order: 9, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_crl_0009, to: sk_crl_0006, nature: "the essence test is stated with the rule of thirds named as breakable", origin: source_stated}
+      - {from: sk_crl_0009, to: sk_crl_0001, nature: "leading lines are named among the building blocks the test may override", origin: source_stated}
+    tradeoffs:
+      - between: [sk_crl_0002, sk_crl_0007]
+        nature: "isolating one region against accounting for the whole frame"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_crl_0005, sk_crl_0006]
+        nature: >
+          Centring the subject to obtain symmetry and refusing to centre it in favour of the thirds
+          grid are given as two routes to balance in consecutive spreads, with no rule for choosing
+          between them.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref:
+    chapter: 'Ch. "Breaking the rules", sub-heading "Throw the rule book out the window" (spine 17)'
+    note: >
+      Carroll explicitly warns that using the techniques as a checklist makes photographs safe and
+      predictable, which is a warning against applying any member in isolation from the essence test.
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      Most of this system is OURS. The nine techniques are the source's and so is the instruction to
+      break them, but the claim that they form one system in which the essence test governs the rest
+      is extractor synthesis. Carroll's book is organised as a sequence of independent spreads and
+      he never says the techniques stand in a hierarchy. Several members' evidence is a reproduced
+      photograph that was not inspected, so the system rests partly on claims that could not be
+      verified.
+  provenance:
+    chapter: 'Section "COMPOSITION", spines 7-17'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_crl_004
+  source_id: carroll-read-this-photographs
+  label: focal_length_distance_and_reading_as_a_causal_chain
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    Focal length determines the distance at which the photographer must stand to obtain a given
+    framing; that distance is the photographer's actual relationship to the subject; and that
+    relationship is legible in the finished picture. The wide and telephoto cases are the two ends
+    of the chain, and the standard focal length is the position Carroll describes as close without
+    being too close.
+  whole_system_claim:
+    text: >
+      Lens choice is not a decision about magnification but a decision about the photographer's
+      physical position, and therefore about how the picture will be read — as intimacy, as
+      intrusion or as surveillance. The optical consequences (elongated distance at the wide end,
+      compressed depth at the long end) and the relational ones (participant or voyeur) are two
+      readings of the same choice.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref:
+      chapter: 'Ch. "Standard focal length", sub-heading "Far from the standard treatment" (spine 52)'
+      quote_gist: >
+        when deciding which focal length to use, think about how this will affect your physical
+        position in relation to your subject, and how that then affects the way people will read
+        your images.
+      page_start: null
+      page_end: null
+  members:
+    - {sk_ref: sk_crl_0021, role_in_system: causal_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0022, role_in_system: pole, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_crl_0023, role_in_system: pole, order: 3, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: source_stated
+    dependencies:
+      - {from: sk_crl_0022, to: sk_crl_0021, nature: "a short focal length forces the photographer close", origin: source_stated}
+      - {from: sk_crl_0023, to: sk_crl_0021, nature: "a long focal length permits the photographer to stay away", origin: source_stated}
+    tradeoffs:
+      - between: [sk_crl_0022, sk_crl_0023]
+        nature: >
+          Approach, which risks the encounter and yields intimacy, against distance, which is safe
+          and yields a reading Carroll calls predatory.
+        origin: source_stated
+        source_ref: {chapter: 'Ch. "Standard focal length" (spine 52)', page_start: null}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: >
+      The chain is stated by the source as a chain, in one sentence, and each link appears again in
+      its own spread. What is ours is only the naming of it as a causal model. The weakest link is
+      the last — that a viewer can read the photographer's distance off the picture — which Carroll
+      asserts about images that were not inspected and supports with no evidence at all.
+  provenance:
+    chapter: 'Section "LENSES", spines 46-54'
+    section: null
+    page_start: null
+    page_end: null
+    source_support: text

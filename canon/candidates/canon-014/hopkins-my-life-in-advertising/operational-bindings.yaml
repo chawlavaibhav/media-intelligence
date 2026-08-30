@@ -1,0 +1,468 @@
+source_id: hopkins-my-life-in-advertising
+operational_bindings:
+# Operational bindings (SPEC-04) — Claude C. Hopkins, "My Life in Advertising" (1927)
+# source_id: hopkins-my-life-in-advertising
+# EXPERIMENTAL — NOT LIVE CANON. Every binding is `status: proposed` or `production_candidate` and
+# none has been reviewed.
+#
+# ZERO `creative_ir` BINDINGS, deliberately. A creative_ir binding requires a real SPEC-01 path, a
+# schema and a schema version. This lane did not read SPEC-01 and will not invent a target_path;
+# a fabricated path is exactly the SPEC-02 failure that SPEC-03 and SPEC-04 exist to prevent.
+#
+# MOST OF THIS SOURCE IS UNBOUND, and that is the correct outcome. Hopkins's advice is
+# overwhelmingly about physical-era production and media — keyed coupons redeemed at independent
+# grocers, one-cent letters to dealers, mail-order catalogues, door-to-door canvassing, 6-point
+# letterpress body type. Under SPEC-04 those are `target_type: production`, `target_path: null`,
+# `status: production_candidate`, and they are recorded in the source's own frame and left
+# untranslated. No generative-media equivalent is asserted anywhere in this file.
+#
+# `evidence_basis` is never `cross_source_supported` or `empirically_supported` — neither is
+# authorised in this task.
+# All `failure_ontology_refs` and `repair_ontology_refs` are term_ids from this lane's
+# ontology-mappings.yaml.
+
+# ═══ EVALUATION ═══════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mla_001
+  source_knowledge_refs: [sk_mla_0029, sk_mla_0012]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    Two of this source's failure descriptions are surface-detectable in a finished asset without
+    any knowledge of the market: an unquantified superlative used as the substantive claim, and a
+    brand-insistence or self-directed instruction to the reader. Both are string-level and
+    inexpensive to check, which makes them a reasonable first-pass flag rather than a judgement.
+    See sk_mla_0029 and sk_mla_0012 for what the source actually claims about each.
+  applicability:
+    when: "a finished text-bearing asset whose principal claim can be read"
+    limits: >
+      The source studied print advertisements for mass-market American goods in the 1900s-1920s,
+      and its evidence for both claims is practitioner assertion with one uncontrolled cost
+      comparison. It also concedes that name-crying advertising may sometimes pay to an extent.
+      A flag raised here means this source would object, not that the asset is worse.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0011, t_mla_0008, t_mla_0009]
+  repair_ontology_refs: [t_mla_0020, t_mla_0019]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_mla_002
+  source_knowledge_refs: [sk_mla_0030]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >
+    The completeness claim is a property of a set, not of one asset: it says no proved appeal may
+    be deferred to a later insertion. Detecting a violation requires seeing the whole set of assets
+    for a line together and asking whether any single one, read alone, omits an argument the set
+    treats as important. An evaluator scoring assets independently cannot see this at all.
+  applicability:
+    when: "a campaign's assets for one product are available together"
+    limits: >
+      The premise — that a reader sees one asset once and may not see another for months — is the
+      source's own figuring about 1920s print and is asserted, not measured. In any environment
+      with controlled or measurable frequency the premise may simply be false, and the rule then
+      trades directly against the source's own space-economy doctrine (sk_mla_0052).
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_mla_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed; premise is era-bound"
+
+- binding_id: bnd_mla_003
+  source_knowledge_refs: [sk_mla_0049, sk_mla_0050]
+  source_system_refs: [scs_mla_004]
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    The source supplies two checks whose value is that they are conditional rather than absolute:
+    whether an asset leads on a penalty or on a reward, and whether a free offer is the chief
+    appeal in a category where the source found that reversed its results. The second is only
+    meaningful with the product category attached, which is precisely why it is worth binding as a
+    conditional check rather than as a rule.
+  applicability:
+    when: "the asset's product category is known and the asset makes a trial or premium offer"
+    limits: >
+      The reward-not-fear claim is a 1927 generalisation about human nature from one practitioner's
+      American practice, with an exception the source itself states for buyers who already have the
+      trouble. The divided-by-four figure is a single uncontrolled ratio on one product. Neither
+      supports a scored penalty; both support a question.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0017]
+  repair_ontology_refs: [t_mla_0033]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_mla_004
+  source_knowledge_refs: [sk_mla_0033, sk_mla_0039]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >
+    This source records a campaign whose response metrics were the best it ever saw and whose
+    outcome was the destruction of the client, and separately records a pass criterion — repeat
+    purchase inside the billing period — that is not a response metric. Together they argue that a
+    measured response rate is not by itself evidence of success and that the evaluation window has
+    to extend past the first conversion. The binding exists to make that objection representable,
+    not to supply a threshold.
+  applicability:
+    when: "an evaluation regime is being defined and first-response metrics are candidates for the success criterion"
+    limits: >
+      The source neither states this as a rule nor applies it — it reports the disaster and the
+      criterion in different chapters and never connects them. Treating the connection as the
+      source's position would misrepresent it; the connection is drawn in sk_mla_0033's caveats as
+      the extractor's observation.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0014]
+  repair_ontology_refs: [t_mla_0006]
+  status: proposed
+  status_reason: "experimental; not reviewed; the connecting inference is ours, not the source's"
+
+# ═══ BENCHMARK ════════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mla_005
+  source_knowledge_refs: [sk_mla_0050]
+  source_system_refs: [scs_mla_004]
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    The strongest test case this source yields is a minimal pair it discovered by accident: one
+    trial-offer device, two product categories, opposite sign. It generates a benchmark item that
+    penalises any system which applies a trial-offer heuristic without conditioning on category,
+    and it is valuable precisely because the naive general rule fails it.
+  applicability:
+    when: "constructing test cases that probe whether an advertising heuristic is applied unconditionally"
+    limits: >
+      The underlying observation is a single reported ratio with no absolute numbers, no
+      denominator, no date, and no statement of what else differed between the versions. The
+      benchmark item tests reasoning about conditionality; it is not evidence about which framing
+      wins in any category today.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0017]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_mla_006
+  source_knowledge_refs: [sk_mla_0054, sk_mla_0053]
+  source_system_refs: []
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Two comparison structures in this source generate test cases directly: the plain versus
+    attractive advertisement judged on cost per reply, and the hold-the-body-vary-the-headline
+    comparison. Both are useful benchmark shapes because the intuitive answer and the source's
+    reported answer diverge, which is what a discriminating test item requires.
+  applicability:
+    when: "constructing minimal-pair items about whether appearance predicts response"
+    limits: >
+      The reported 34-fold spread comes with no description of either advertisement, no dates and
+      no account of media or offer; the eight-to-ten headline multiple has no instance attached
+      anywhere in the book. The comparison shape is usable; the magnitudes are not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0004]
+  repair_ontology_refs: [t_mla_0002]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ═══ GOVERNANCE ═══════════════════════════════════════════════════════════════
+
+- binding_id: bnd_mla_007
+  source_knowledge_refs: [sk_mla_0062, sk_mla_0061]
+  source_system_refs: [scs_mla_001]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >
+    This source states a refusal rule for evidence that is directly usable as a precedent for how
+    outcome claims should be weighted: an observed commercial success does not license an inference
+    to the advertising that accompanied it, because the success is overdetermined, and the source
+    enumerates the competing explanations. It also supplies its own disconfirmation of a rival
+    explanation — the same people succeeding once on a fortunate name and failing repeatedly after.
+    The precedent is worth recording, and it is sharpened by the fact that the source does not
+    apply it to its own narratives.
+  applicability:
+    when: "weighing an `outcome_claimed` evidence characteristic against `empirical_within_source`"
+    limits: >
+      This is a practitioner's methodological stance from 1927, not an established epistemic
+      standard, and the source violates it throughout its own book. Its value is as a worked
+      precedent and as a self-refuting example, not as authority.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0003]
+  repair_ontology_refs: [t_mla_0002]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_mla_008
+  source_knowledge_refs: [sk_mla_0061]
+  source_system_refs: [scs_mla_001]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: rule_application
+  rationale: >
+    In the same chapter where it states its principles, this source states that methods succeeding
+    in one line cannot be applied to another, that some profitable methods are not a quarter as
+    effective as others, and that regardless of principles one must always experiment. That is a
+    source-stated limit on applying any of its own principles in isolation, and it is the kind of
+    limit `rule_application` exists to carry.
+  applicability:
+    when: "a single principle from this source is being retrieved and applied to a new category"
+    limits: >
+      The source states the limit and immediately proceeds to give fourteen pages of general rules,
+      so the limit is stated more clearly than it is observed. It nonetheless has the author's own
+      authority, which is the strongest form this constraint can take.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_mla_009
+  source_knowledge_refs: [sk_mla_0050, sk_mla_0026, sk_mla_0044]
+  source_system_refs: [scs_mla_004]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: retrieval_governance
+  rationale: >
+    The trial-offer rules in this source mutually qualify each other and reverse sign by category.
+    Retrieving any one of them alone reproduces the exact error the source spent money discovering.
+    This binding records that scs_mla_004's members must not be split in retrieval — which is the
+    named purpose of `retrieval_governance`.
+  applicability:
+    when: "retrieving any member of scs_mla_004 for a trial, sample or premium decision"
+    limits: >
+      The grouping into one mutually-qualifying set is the extractor's, not the source's; the
+      source states the individual rules and notices only one of the reversals. The
+      no-split constraint is therefore ours as well.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0012, t_mla_0016, t_mla_0017]
+  repair_ontology_refs: [t_mla_0022, t_mla_0027]
+  status: proposed
+  status_reason: "experimental; not reviewed; the grouping is the extractor's"
+
+- binding_id: bnd_mla_010
+  source_knowledge_refs: [sk_mla_0022, sk_mla_0042]
+  source_system_refs: [scs_mla_003]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit:
+  governance_consumer: conflict_resolution
+  rationale: >
+    This source contains an unresolved internal contradiction that matters: it claims in one
+    chapter to have moved most of a market off a household practice, and states in another that
+    habits cannot be changed profitably in paid print. Both are its own accounts of its own
+    campaigns. The contradiction is recorded rather than resolved, and it is flagged so that
+    retrieving either claim surfaces the other instead of presenting one as the source's position.
+  applicability:
+    when: "either sk_mla_0022 or sk_mla_0042 is retrieved for a question about displacing an existing behaviour"
+    limits: >
+      No resolution is proposed. The available distinction — substituting a purchase for a disliked
+      task versus creating an appetite that does not exist — is the extractor's reading and is
+      recorded in sk_mla_0022's caveats as such, not as the source's reconciliation.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0015]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ═══ PRODUCTION — parked, untranslated ════════════════════════════════════════
+# Production IR does not exist. These record the source's actions in the source's own frame and
+# assert no generative-media equivalent. Every one is a physical trade or media mechanic of the
+# 1890s-1920s.
+
+- binding_id: bnd_mla_011
+  source_knowledge_refs: [sk_mla_0025, sk_mla_0038]
+  source_system_refs: [scs_mla_002]
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Records the source's coupon introduction sequence as a physical retail and print mechanic:
+    pre-announced buying offer, story insertions, advance proofs mailed to the trade, coupon page,
+    retail redemption at the advertiser's expense. Referenced, not restated; see sk_mla_0038 and
+    sk_mla_0025.
+  applicability:
+    when: "never, as stated — this is parked pending a Production IR that does not exist"
+    limits: >
+      Redeemable paper coupons, independent grocers and druggists, mailed dealer proofs and
+      general-circulation print pages. NOT translated to any digital sampling, trial or promotion
+      mechanic. Any such translation is a Pass 2 hypothesis and is not performed here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0012]
+  repair_ontology_refs: [t_mla_0022, t_mla_0023]
+  status: production_candidate
+  status_reason: "Production IR does not exist; physical-era mechanic recorded untranslated"
+
+- binding_id: bnd_mla_012
+  source_knowledge_refs: [sk_mla_0008, sk_mla_0036, sk_mla_0035]
+  source_system_refs: []
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Records the source's two mechanisms for obtaining distribution without a sales force — the
+    conditional dealer privilege and the named-stocking-dealers local campaign — together with the
+    doctrine that consumer pull and trade push must not both be paid for. Referenced, not restated.
+  applicability:
+    when: "never, as stated — parked pending a Production IR that does not exist"
+    limits: >
+      Presupposes many independent retailers with no organised buying power, one-cent dealer mail
+      and local newspapers. NOT translated to any contemporary distribution, retail-media or
+      channel mechanic.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0013]
+  repair_ontology_refs: [t_mla_0024, t_mla_0025]
+  status: production_candidate
+  status_reason: "Production IR does not exist; physical-era mechanic recorded untranslated"
+
+- binding_id: bnd_mla_013
+  source_knowledge_refs: [sk_mla_0057, sk_mla_0013, sk_mla_0015]
+  source_system_refs: []
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Records the source's risk-transfer and choice-moment devices as executed acts: the
+    locally-signed money-back warrant, the first unit bought at retail for the applicant, and the
+    personally signed referral card carrying an undisclosed gift into the ordering moment.
+    Referenced, not restated.
+  applicability:
+    when: "never, as stated — parked pending a Production IR that does not exist"
+    limits: >
+      Depends on a neighbourhood retailer with a standing personal reputation, on posted catalogues
+      and on physical enclosures. NOT translated to any guarantee, returns-policy or incentive
+      mechanic in a contemporary setting. The strongest instances were also patent-medicine
+      campaigns the source itself repudiates (sk_mla_0014).
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_mla_0026, t_mla_0027, t_mla_0034]
+  status: production_candidate
+  status_reason: "Production IR does not exist; physical-era mechanic recorded untranslated"
+
+- binding_id: bnd_mla_014
+  source_knowledge_refs: [sk_mla_0065, sk_mla_0052]
+  source_system_refs: []
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Records the source's typographic and space-economy rules as setting decisions in letterpress
+    print. Referenced, not restated; see sk_mla_0065 for the habituation argument and sk_mla_0052
+    for the cost arithmetic.
+  applicability:
+    when: "never, as stated — parked pending a Production IR that does not exist"
+    limits: >
+      Specific to 1920s American letterpress: 8-point ordinary reading matter, 6-point mail-order
+      practice, space bought by area at roughly $10 per word nationally. This source is NOT
+      evidence for any modern legibility standard, and no inference to WCAG or to any contemporary
+      type guidance is licensed by it. The all-capitals claim here is a habituation argument from
+      1927, not a legibility measurement.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_mla_0035, t_mla_0036]
+  status: production_candidate
+  status_reason: "Production IR does not exist; era-specific print mechanic recorded untranslated"
+
+- binding_id: bnd_mla_015
+  source_knowledge_refs: [sk_mla_0046, sk_mla_0045, sk_mla_0021]
+  source_system_refs: [scs_mla_001]
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Records the source's operational test procedures as executed: the small-town test campaign, the
+    weekly keyed report carrying the headline alongside its result, and the existing-user preference
+    test conducted by writing to users after a bought first package. Referenced, not restated.
+  applicability:
+    when: "never, as stated — parked pending a Production IR that does not exist"
+    limits: >
+      A test-city procedure resting on geographically separable print media, postal response, and a
+      billing cycle long enough for repeat purchase to arrive first. NOT translated to any
+      contemporary experimentation or holdout design; the source's procedure is a ranking method
+      with no controls, and it should not be presented as one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_mla_0007, t_mla_0003]
+  repair_ontology_refs: [t_mla_0005, t_mla_0006]
+  status: production_candidate
+  status_reason: "Production IR does not exist; physical-era test procedure recorded untranslated"

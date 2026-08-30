@@ -1,0 +1,229 @@
+# CANON-014 — SPEC-04 bindings for Parameswaran, "Nawabs, Nudes, Noodles", against SPEC-01 v0.1.
+# Written after the source representation was complete. All proposed; nothing reviewed.
+#
+# Deliberately few. Most of this book's knowledge is Indian advertising HISTORY and Indian cultural
+# CONTEXT, and the honest answer for a history object is that nothing in this system currently
+# consumes it. Zero bindings for an object is a normal outcome and no binding was manufactured to
+# raise coverage.
+#
+# NOTHING here infers anything about what a generative model can do. Two production bindings exist
+# and both carry status production_candidate with a null target_path, because Production IR does not
+# exist (PROJECT-CONTRACT, separation 2).
+
+source_id: parameswaran_nawabs_nudes_noodles
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_nnn_0001
+  source_knowledge_refs: [sk_nnn_0005, sk_nnn_0001]
+  source_system_refs: [scs_nnn_001]
+  target_type: governance
+  target_path:
+  role: [constrains, flags]
+  rationale: >
+    The source states that an advertisement depicts what an advertiser judged aspirational rather
+    than what is common, and evidences a decade in which advertising did not track the social mood at
+    all. Any process in this project that reasons from advertising corpora to statements about a
+    population needs that separation stated where it can be seen, or it will read depiction as
+    prevalence. This binds the constraint, not the thesis.
+  applicability:
+    when: "any use of advertising material as evidence about an audience, a market or a culture"
+    limits: >
+      The constraint is general; the evidence for it is one practitioner's account of one country.
+      It tells you not to make an inference, which is safe; it does not license any inference.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nnn_0031]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_nnn_0002
+  source_knowledge_refs: [sk_nnn_0040]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  role: [flags]
+  rationale: >
+    The source records a gating measurement (the commercial ad pre-test) being raised by a
+    controllable input (casting a celebrity) that is not obviously connected to the outcome the
+    measurement predicts, and records that this alone is enough to buy the input. This project builds
+    evaluators that will gate work, so the failure shape — an instrument selecting for what it scores
+    — belongs in governance where instrument design is discussed. It binds a hazard, not a method.
+  applicability:
+    when: "designing or adopting any evaluator that stands between candidate work and its acceptance"
+    limits: >
+      The source names no instrument and gives no effect size, so this supports naming the hazard and
+      nothing quantitative. It is not evidence that any particular evaluator has this property.
+  governance_consumer: taxonomy_governance
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nnn_0032]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_nnn_0003
+  source_knowledge_refs: [sk_nnn_0019, sk_nnn_0017]
+  source_system_refs: [scs_nnn_003]
+  target_type: creative_ir
+  target_path: creative.constraints
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains, flags]
+  rationale: >-
+    OWNED AS EXTRACTOR INFERENCE. Two inspected executions carry their whole argument through locally held knowledge: a scene the audience recognises without explanation (the crowded suburban train), and a common noun set in the local script (Devanagari "Thanda matlab"). The source describes neither execution's construction and never claims either stops working for an audience that lacks the reference - that is the extractor's inference from opening the plates, and this binding, not the SourceKnowledge, is where it lives. A Creative IR that specifies an audience by locale therefore has a question worth recording: whether the intended audience holds the reference the execution depends on.
+  applicability:
+    when: "a Creative IR whose audience is specified by locale, language or script"
+    limits: >
+      Derived from two Indian executions inspected by the extractor, not from any study of transfer.
+      It flags a question to record; it does not predict whether any particular reference travels.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_nnn_0033]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; rests on an extractor inference now owned by this binding rather than by any SourceKnowledge mechanism"
+
+- binding_id: bnd_nnn_0004
+  source_knowledge_refs: [sk_nnn_0021]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.hierarchy
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [fills]
+  rationale: >
+    The Amul topical, inspected here, is a fixed form with exactly one variable slot: ground,
+    character, lettering manner and signature are constant across executions and only the joke and
+    its illustrated subject change. That is a directly expressible hierarchy — which elements are
+    invariant across a series and which carry the per-execution content — and a Creative IR for any
+    serial format needs to state it.
+  applicability:
+    when: "a Creative IR for a recurring or serial format rather than a single asset"
+    limits: >
+      Inferred from ONE reproduced execution plus the source's statement that hundreds followed. No
+      second execution is reproduced in this copy, so the invariant set is not directly verified.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; invariant set inferred from a single execution"
+
+- binding_id: bnd_nnn_0005
+  source_knowledge_refs: [sk_nnn_0022]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  role: [diagnoses]
+  rationale: >
+    The NDDB frames set the sung word as the picture rather than as a subtitle. That makes a
+    checkable property of a rendered frame: whether a word the audio carries is present as a
+    designed graphic element, and whether the frame remains attributable with the sound off. This is
+    an inspection question about a produced frame, which is what an evaluation binding is for.
+  observation_unit: frame
+  applicability:
+    when: "inspecting a rendered frame in which audio and on-screen text are meant to carry the same token"
+    limits: >
+      One inspected two-frame plate. The source proposes no criterion and no threshold, so this
+      supports asking the question, not scoring the answer.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_nnn_0006
+  source_knowledge_refs: [sk_nnn_0016]
+  source_system_refs: [scs_nnn_003]
+  target_type: evaluation
+  target_path:
+  role: [diagnoses]
+  rationale: >
+    The Tuffs plate shows the product reduced to two postage-stamp insets beside a full-bleed image.
+    The ratio of area given to the subject versus to the product is directly measurable on a rendered
+    asset, and the inspected plate supplies a real instance at one extreme of that range.
+  observation_unit: whole_asset
+  applicability:
+    when: "inspecting a rendered asset that must both attract and identify a product"
+    limits: >
+      The source supplies no threshold and makes no claim that either extreme is better. This
+      supports measuring the ratio and noticing it, not judging it.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_nnn_0007
+  source_knowledge_refs: [sk_nnn_0050]
+  source_system_refs: []
+  target_type: production
+  target_path:
+  target_schema:
+  role: [derives]
+  rationale: >-
+    The source states the practice directly: no baby shoot is booked with fewer than three interchangeable infants standing by, against a stated yield of roughly five seconds of usable footage per day. This binds THE PRACTICE, which is the source's. It does not bind any explanation of why redundant casting helps - that reasoning was the extractor's and has been removed from the SourceKnowledge mechanism. Recorded as a physical-production pattern only.
+  applicability:
+    when: "planning a live-action shoot with an undirectable subject"
+    limits: >
+      Physical camera and live human subjects. This is NOT translated to generative control, and
+      nothing about a generative model's behaviour may be inferred from it. Pass 2 required.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: production_candidate
+  status_reason: "Production IR does not exist; rationale weakened to the source-stated practice after the extractor's causal explanation was withdrawn"
+
+- binding_id: bnd_nnn_0008
+  source_knowledge_refs: [sk_nnn_0013, sk_nnn_0010, sk_nnn_0051]
+  source_system_refs: [scs_nnn_002]
+  target_type: production
+  target_path:
+  target_schema:
+  role: [constrains]
+  rationale: >
+    Clearance and contracting constraints that bind a real production before any asset exists:
+    independent approval gates that can reject work a previous gate passed, animal-use clearance that
+    may impose a supervisor on the shoot, and a contracted performer's bounded day plus entourage
+    costs. These are properties of producing an advertisement, not of generating an image.
+  applicability:
+    when: "planning a real advertising production under a regulatory regime"
+    limits: >
+      The regime described is substantially historical and specific to India. It records the SHAPE
+      of the constraint — independent gates, third-party clearances, bounded performer availability —
+      not a current compliance path for any market. Pass 2 required.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nnn_0034]
+  repair_ontology_refs: []
+  status: production_candidate
+  status_reason: "Production IR does not exist"
+
+- binding_id: bnd_nnn_0009
+  source_knowledge_refs: [sk_nnn_0053, sk_nnn_0054]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  role: [flags]
+  rationale: >
+    Two reported-figure objects that must never be consumed as current market context: a television
+    penetration series whose measurement base changes across the series, and a content analysis that
+    is invoked without its results, method or attribution. Binding them under governance keeps the
+    caution attached to the numbers rather than in prose that nothing reads.
+  applicability:
+    when: "any downstream use of a numeric claim taken from this source"
+    limits: "the figures are historical and third-party; this source measured nothing"
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_nnn_0035]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"

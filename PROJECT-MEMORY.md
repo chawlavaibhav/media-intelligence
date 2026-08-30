@@ -5,9 +5,11 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 28 Aug 2026 — restructured by the context-architecture migration into a compact
-current map. The last Governor content refresh was **GOV-006** against `main` at `91984f5`
-(`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES). The
+**Last refresh:** 30 Aug 2026 — CANON-014 integration refresh. The last full Governor
+reconciliation remains **GOV-006** against `main` at `91984f5`
+(`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES);
+CANON-014 received a bounded Level-1 review at
+`governance/reviews/GOV-L1-CANON-014-FULL-CORPUS.md`. The
 full pre-migration text is preserved byte-for-byte at
 `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md`; detailed narrative now lives under
 `history/` (see §8).
@@ -127,10 +129,14 @@ only; not authorised) · Production IR / Planner.
   negative-direction-only); RES-005 acquired 12 rights-cleared base clips (12/12 clean; only a
   representative **3/3** passed ingest — **not** 12/12; role `MAT-TEMPORAL-BASE`, not
   `PACK-AV-CLEAN`; content requirement is pack-level).
-- **Canon:** 19 live accepted sources (historical CANON-003 baseline stays 16). **CANON-011:** 18
-  marketplace-derived buyer cases from Upwork buyer postings, 16 runnable — the preferred
-  real-demand pool for Stage-C selection; not a Canon source; the Media Request Grammar was **not**
-  reopened (GG-01…GG-04 are recorded observations only).
+- **Canon:** **24 live accepted sources** plus **18 durable HOLD/candidate sources**. CANON-014 also
+  preserves **1,028 grounded, ungraded, uncalibrated Q&A items** across 23 banks. HOLD material is
+  not accepted Canon and current runtime retrieval still reads `canon/knowledge/current/**` only.
+  The corpus index and separate accepted/full/Q&A fingerprints are under
+  `canon/knowledge/CANON-CORPUS-INDEX.yaml`. **CANON-011:** 18 marketplace-derived buyer cases
+  from Upwork buyer postings, 16 runnable — the preferred real-demand pool for Stage-C selection;
+  not a Canon source; the Media Request Grammar was **not** reopened (GG-01…GG-04 are recorded
+  observations only).
 - **Resources corpus:** 34,786 items / 5.70 GB across 8 sources; IndicSTR12 and IIIT-ILST are one
   source lineage (173 shared files); BSTD is the only genuine cross-lineage reserve, held untouched.
   Rights: internal research/evaluation only.
@@ -144,22 +150,25 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 
 ## 6. Current direction and blockers
 
-**Read `coordination/CONTROL-STATE.md` for the live version.** As of the newest Controller decision
-(`coordination/decisions/CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md`):
+**Read `coordination/CONTROL-STATE.md` for the live version.** The 29-Aug programme reset is in
+force under `coordination/decisions/CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`.
 
-- **No domain execution lane is active.** EVAL-031 stopped; EVAL-032/033 stopped as immediate
-  priorities (valid future lab tasks); EVAL-034 cancelled; RES-006 deferred; **EVAL-028 cancelled —
-  must not run**; EVAL-006 paused with spend authority withdrawn; GOV-007 unauthorised.
-- **The next Controller priority is a real customer vertical-slice pilot** — prompt → Normalized
-  Request → Creative IR → manually authored production recipe → real generation → explicit human
-  inspection → bounded repair → candidate accepted outcome. Product-learning, not Registry evidence,
-  not Stage C. **No pilot execution is authorised by this text.**
-- Persistent blockers: prices incomplete (0 of 4 stages price-complete; `Frontier Clouds`
-  unidentified); HED-1 (which human review time counts in CpAO) undecided; any tranche beyond
-  EMP-001 needs explicit user approval; three stream handoffs are stale (GOV-006 G6-04/05/06) and
-  the temporal spec understates human adjudication (G6-01 — the frozen
-  `eval/pre-execution-freeze/EVALUATOR-QUALIFICATION-MAP.yaml` says **five** capabilities are
-  `model_based_plus_human`, not four).
+- **T2A / EVAL-036 is the authorised next execution task at USD 0:** import recovered Media Factory
+  evidence as provenance-preserving historical empirical priors. It creates no Registry row and
+  makes no current model-capability claim.
+- **T2B follows T2A:** freeze a reasoning-only comparison of the same model without Canon versus
+  with Canon access before any media-generation propagation. Exact model roster, call count,
+  retrieval interface and spend remain to be frozen/authorised; this document does not authorise
+  provider calls.
+- **CANON-014 is integrated independently of T2B:** 24 sources are accepted, 18 are durable HOLD
+  candidates, and 1,028 Q&A items are retained. If an experiment elects to expose HOLD material or
+  Q&A, it must name the exact full-corpus/Q&A fingerprints and preserve source status; ordinary
+  runtime retrieval remains accepted-only today.
+- **No paid tranche is currently authorised.** PILOT-001 is closed at USD 1.60 provisional consumed
+  / 0 accepted and no further provider call is authorised.
+- Persistent blockers include HED-1 (which human review time counts in fully loaded CpAO), the
+  empty Capability Registry by deliberate admission policy, stale stream handoffs noted by GOV-006,
+  and the temporal-spec human-adjudication correction noted by GOV-006.
 
 ## 7. Critical traps for a fresh session
 
@@ -179,7 +188,10 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
    imported. No mandatory human-in-the-loop step exists in the production API architecture.
 9. **Cancelled work stays cancelled** (EVAL-028, EVAL-034; EVAL-006 paused) unless a **newer**
    Controller decision reopens it.
-10. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
+10. **Do not treat CANON-014 HOLD/candidate material as accepted Canon merely because it is durable.**
+    Runtime retrieval remains accepted-only unless a separately frozen experiment explicitly exposes
+    the status-carrying full corpus.
+11. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
     `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` §6.
 
 ## 8. History — where the narrative went
@@ -219,12 +231,14 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 | v2 contracts (request, capability, condition, topology, CpAO) | `canon/experiments/pre-execution-freeze/`, `eval/pre-execution-freeze/`, `eval/pre-execution-integration/`, `resources/pre-execution-freeze/` — merged and in force despite stale status headers |
 | The 36 capabilities, 100-item bank, 30 briefs, persistence contract (V1 historical baselines) | `eval/v1/capability-contract.yaml`, `eval/v1/bank/`, `canon/experiments/v1/brief-bank/`, `resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml` |
 | Canon admission method | `canon/audit/AUDIT-GATE-v0.2.md` |
-| Which Canon sources are live (19) | `canon/audit/records/` + `canon/knowledge/current/` |
+| Which Canon sources are live (24) | `canon/audit/records/` + `canon/knowledge/current/` |
+| Full Canon map, HOLD candidates and corpus fingerprints | `canon/knowledge/CANON-CORPUS-INDEX.yaml` + `canon/candidates/canon-014/` |
+| CANON-014 grounded Q&A corpus | `canon/qa/canon-014/` |
 | The authoritative Eval battery (96-item validated view) | `eval/battery/devanagari-exactness/human-validation/` |
 | Real customer demand evidence (external, not a Canon source) | `canon/research/marketplace-demand-v1/`; derived bank under its `derived/` |
 | What media we hold | `resources/manifests/corpus-pilot-v0.jsonl`, `source-registry-v0.csv` |
 | Governor role and review modes | `governance/GOVERNOR-CONTRACT.md` |
-| Current Governor review | `governance/reviews/GOV-L1-EVAL-035-PILOT-VIDEO-SUBSTRATE.md` (Level-1, EVAL-035 — PASS WITH NON-BLOCKING NOTES, 103/103 independently reproduced, no correction required before merge; last full reconciliation remains `GOV-006-POST-PARALLEL-RECONCILIATION.md`) |
+| Current Governor review | `governance/reviews/GOV-L1-CANON-014-FULL-CORPUS.md` (Level-1, CANON-014; last full reconciliation remains `GOV-006-POST-PARALLEL-RECONCILIATION.md`) |
 | What is believed but untested | `coordination/ASSUMPTIONS.md` |
 | Known limitations / unresolved questions | preserved in `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` §7; live blockers in `CONTROL-STATE.md` |
 

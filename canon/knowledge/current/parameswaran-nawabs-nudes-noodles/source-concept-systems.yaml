@@ -1,0 +1,365 @@
+source_id: parameswaran_nawabs_nudes_noodles
+source_concept_systems:
+- scs_id: scs_nnn_001
+  source_id: parameswaran_nawabs_nudes_noodles
+  label: the_mirror_thesis_and_the_brakes_the_author_puts_on_it
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: 'The book''s organising thesis (advertising records social change) together with the two
+    explicit qualifications the author himself supplies, and the one place where the thesis''s most quantitative-sounding
+    support turns out to be unsupplied. The members qualify each other: the thesis is what makes the book
+    worth reading, and the brakes are what make it safe to consume.
+
+    '
+  whole_system_claim:
+    text: 'Advertising may be read as evidence about which social ideas were available and salient at
+      a time, but not as evidence about how common the depicted arrangements were, and not universally
+      — the author records a full decade in which Indian advertising did not track the dominant social
+      mood at all.
+
+      '
+    origin: extractor_synthesis
+    interpretation_basis: 'The author never assembles these. He states the thesis in the Introduction,
+      records the Angry-Young-Man exception in one chapter and the depiction-is-not-prevalence brake in
+      another, roughly two hundred pages apart, and does not connect them. The grouping is entirely the
+      extractor''s. What justifies it is that the two qualifications are the only things in the book that
+      bound the thesis, and consuming the thesis without them would licence exactly the inference the
+      author refuses to make.
+
+      '
+    source_ref: null
+  members:
+  - sk_ref: sk_nnn_0001
+    role_in_system: the_thesis
+    order: 1
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0002
+    role_in_system: scope_limit
+    order: 2
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0004
+    role_in_system: counter_instance
+    order: 3
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0005
+    role_in_system: inference_brake
+    order: 4
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0054
+    role_in_system: unsupplied_support
+    order: 5
+    membership_origin: extractor_inferred
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+    - between:
+      - sk_nnn_0001
+      - sk_nnn_0005
+      nature: the thesis may only be consumed with the depiction/prevalence brake attached
+      origin: extractor_inferred
+    tradeoffs: []
+    conflicts:
+    - between:
+      - sk_nnn_0001
+      - sk_nnn_0004
+      nature: the author's own counter-instance contradicts his organising thesis for 1975-1985 and he
+        does not resolve it
+      origin: source_stated
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics:
+    - explicitly_stated
+    - argued
+    - culturally_bounded
+    - historical_claim
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: 'High. The members are individually well supported and directly quoted,
+      but the claim that they form ONE mutually qualifying structure is entirely the extractor''s — the
+      author states them separately, in different chapters, and never treats the later two as bounding
+      the first. A reader could equally regard the counter-instance as an aside. What the grouping asserts,
+      and what must be attributed to CANON-014 rather than to Parameswaran, is that the brakes are load-bearing
+      rather than decorative.
+
+      '
+  provenance:
+    chapter: Introduction; 'The Tingling Freshness of Teens'; 'Jo Biwi Se Kare Pyaar…'
+    section: assembled across chapters
+    page_start: null
+    page_end: null
+    source_support: text
+- scs_id: scs_nnn_002
+  source_id: parameswaran_nawabs_nudes_noodles
+  label: indian_advertising_clearance_as_a_multi_gate_route
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: extractor_inferred
+  description: 'The clearance route an Indian advertisement had to pass, as the book describes it: broadcaster
+    pre-approval of the storyboard, broadcaster approval of the finished film, self-regulatory review
+    by ASCI on complaint, and separate production clearances (Animal Welfare Board; cinema censor certificate
+    for theatrical shorts). Each gate can reject work the previous gate passed.
+
+    '
+  whole_system_claim:
+    text: 'Clearance in Indian advertising is not one decision but a series of independent ones held by
+      different bodies at different moments, and passing an earlier gate carries no guarantee at a later
+      one — so clearance risk is distributed across the whole production timeline rather than concentrated
+      before it starts.
+
+      '
+    origin: extractor_synthesis
+    interpretation_basis: 'The author describes each of these bodies, but he describes them as episodes
+      in one chapter''s narrative rather than as a route. The claim that they constitute a sequence with
+      independent gates is the extractor''s. What justifies it is the Sweetex case he reports first-hand,
+      in which storyboard approval demonstrably did not bind the finished-film decision, and the KamaSutra
+      case, in which Doordarshan withdrew a storyboard approval it had already given. The independence
+      of the gates is a fact he evidences twice; that it is a general structure is our reading.
+
+      '
+    source_ref: null
+  members:
+  - sk_ref: sk_nnn_0010
+    role_in_system: broadcaster_gates
+    order: 1
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0012
+    role_in_system: self_regulatory_gate
+    order: 2
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0013
+    role_in_system: production_and_exhibition_gates
+    order: 3
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0011
+    role_in_system: worked_evasion
+    order: 4
+    membership_origin: extractor_inferred
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: extractor_inferred
+    dependencies:
+    - between:
+      - sk_nnn_0010
+      - sk_nnn_0012
+      nature: broadcaster clearance and self-regulatory review are independent; passing one does not settle
+        the other
+      origin: extractor_inferred
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics:
+    - explicitly_stated
+    - anecdotal
+    - historical_claim
+    - culturally_bounded
+    - mechanism_given
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: 'Moderate. The existence and remit of each body is stated by the source
+      and the independence of the first two gates is evidenced twice from the author''s own experience.
+      What is the extractor''s is the ordering into one route and the claim that this is the general structure
+      rather than a set of episodes. Note also that the regime described is substantially historical:
+      the Doordarshan monopoly gates no longer operate as described, and the ASCI figures are as at 2016.
+      The system should be consumed as a shape, not as a current compliance path.
+
+      '
+  provenance:
+    chapter: No Squeeze, No Wheeze, No Navel Please!
+    section: whole chapter
+    page_start: null
+    page_end: null
+    source_support: text
+- scs_id: scs_nnn_003
+  source_id: parameswaran_nawabs_nudes_noodles
+  label: devices_by_which_a_reproduced_indian_advertisement_carries_its_whole_argument
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: 'Six devices observed by inspecting the book''s plate insert, in which the advertisement''s
+    argument is carried by the image and its construction rather than by copy: a familiar everyday scene
+    recruited as the demonstration; a single abstract symbol under an instruction headline; a mascot inserted
+    into a foreign icon set at reduced scale; a fixed form with one variable joke slot; a sung word typeset
+    as the picture; and vernacular appropriation carried simultaneously by word, script and setting.
+
+    '
+  whole_system_claim:
+    text: 'Across these executions the verbal load is low or absent and the work is done by what is depicted
+      and how it is arranged — which means a text-only representation of this book would lose the evidence
+      for most of its craft claims, and which also means each device depends on cultural knowledge the
+      viewer must already hold.
+
+      '
+    origin: extractor_synthesis
+    interpretation_basis: 'The source supplies only a one-line caption per plate and never discusses composition,
+      typography, scale or layout for any of them. Every structural observation in this system was made
+      by CANON-014 opening the images. The grouping asserts a family resemblance the author never proposes.
+      It is offered as a hypothesis about the plates, not as a report of the book.
+
+      '
+    source_ref: null
+  members:
+  - sk_ref: sk_nnn_0017
+    role_in_system: familiar_scene_as_demonstration
+    order: 1
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0018
+    role_in_system: single_symbol_plus_instruction
+    order: 2
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0020
+    role_in_system: mascot_in_a_foreign_icon_set
+    order: 3
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0021
+    role_in_system: fixed_form_one_variable_slot
+    order: 4
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0022
+    role_in_system: word_as_picture
+    order: 5
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0019
+    role_in_system: vernacular_by_word_script_and_setting
+    order: 6
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0015
+    role_in_system: canonical_text_framing
+    order: 7
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0016
+    role_in_system: image_dominant_product_minimised
+    order: 8
+    membership_origin: extractor_inferred
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs:
+    - between:
+      - sk_nnn_0017
+      - sk_nnn_0018
+      nature: dense documentary photograph versus one abstract symbol — opposite ends of a density range,
+        both carrying the whole argument
+      origin: extractor_inferred
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics:
+    - visually_demonstrated
+    - culturally_bounded
+    - historical_claim
+    source_uncertainty: none
+    extraction_uncertainty: inferred_from_layout
+    system_level_uncertainty: 'High, and higher than any member. Each member is an observation about one
+      plate that CANON-014 made first-hand and can be re-checked against the named image file. The claim
+      that the eight constitute one family of devices is entirely the extractor''s synthesis over a plate
+      insert the book''s own text never analyses. A different reader could group them differently or reject
+      the grouping. This system is a hypothesis about Indian advertising craft, and it must not be consumed
+      as Parameswaran''s position — he does not have one on this.
+
+      '
+  provenance:
+    chapter: plate insert (unpaginated)
+    section: all 19 plates
+    page_start: null
+    page_end: null
+    source_support: text_and_visual
+- scs_id: scs_nnn_004
+  source_id: parameswaran_nawabs_nudes_noodles
+  label: why_indian_advertising_became_saturated_with_celebrities
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: 'The four reasons the author himself gives, in one passage, for the saturation of Indian
+    advertising with film and cricket stars: celebrity cost is small relative to media weight; celebrity
+    credibility helps drive categories down the socio-economic pyramid; the corporatisation of the film
+    industry made stars available; and pre-testing rewards celebrity presence.
+
+    '
+  whole_system_claim:
+    text: 'Celebrity saturation is over-determined: several independent forces each push the same way,
+      so no single one of them needs to be the cause, and at least one of them — the pre-test — pushes
+      for reasons unconnected to whether the advertising works.
+
+      '
+    origin: extractor_synthesis
+    interpretation_basis: 'The author does list these as reasons, in sequence, in one passage ("The answer
+      may lie somewhere else… The second reason is… One final reason…"), so the membership and the ordering
+      are his. What is the extractor''s is the over-determination claim: the observation that the forces
+      are independent of one another and that this makes the phenomenon insensitive to any one of them.
+      The author draws no such conclusion.
+
+      '
+    source_ref: Ch. 'Meri Khubsurti Ka Raaz', 'Why this celebrity obsession, you may ask.'
+  members:
+  - sk_ref: sk_nnn_0043
+    role_in_system: credibility_for_unfamiliar_categories
+    order: 1
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0040
+    role_in_system: measurement_incentive
+    order: 2
+    membership_origin: source_stated
+  - sk_ref: sk_nnn_0041
+    role_in_system: consequence_for_the_form
+    order: 3
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0042
+    role_in_system: proprietary_selection_study
+    order: 4
+    membership_origin: extractor_inferred
+  - sk_ref: sk_nnn_0051
+    role_in_system: cost_structure
+    order: 5
+    membership_origin: source_stated
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies: []
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics:
+    - explicitly_stated
+    - argued
+    - practitioner_assertion
+    - culturally_bounded
+    - historical_claim
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: 'Moderate. The membership and sequence are the source''s own — he enumerates
+      the reasons — so unlike the other three systems here the grouping is not invented. The over-determination
+      reading is the extractor''s.
+
+
+      A RECORDED CONFLICT BETWEEN sk_nnn_0041 AND sk_nnn_0042 WAS REMOVED IN THE CANON-014 FINAL RECONCILIATION,
+      and the tension it pointed at is kept here as prose because it is real and the conflict edge was
+      not. sk_nnn_0042 reports a study concluding that a celebrity''s aura dominates; sk_nnn_0041 reports
+      that agencies began casting stars as characters once mere celebrity endorsement stopped differentiating.
+      Those two statements create a tension worth noticing and they do not contradict each other: a performer
+      can carry high aura AND be deliberately cast as a character, and on the source''s own account the
+      second practice exists precisely because the first became universal and therefore stopped distinguishing
+      one advertiser from another. Encoding that as a structural `conflict` asserted a logical incompatibility
+      the source does not contain and the statements do not support. What the source genuinely does is
+      state both without reconciling them, which is recorded here and is an observation about the source
+      rather than a defect in the knowledge.
+
+      '
+  provenance:
+    chapter: Meri Khubsurti Ka Raaz
+    section: '''Why this celebrity obsession, you may ask.'''
+    page_start: null
+    page_end: null
+    source_support: text

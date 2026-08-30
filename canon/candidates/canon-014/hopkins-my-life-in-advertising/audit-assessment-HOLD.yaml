@@ -1,0 +1,90 @@
+# CANON-014 — CANDIDATE HOLD ASSESSMENT. NOT an Audit Gate record. Nothing here admits
+# anything to live Canon. See `why_no_audit_gate_record` below.
+
+assessment_kind: candidate_hold_assessment
+assessment_version: canon-014-final-v1
+audit_gate_record: none
+why_no_audit_gate_record: 'A held source must never carry an Audit Gate record, because the existence
+  of a record is what the Gate reads as admission. This file is deliberately NOT one: it has a different
+  shape, a different name and its own kind, and it lives in the candidate tree rather than in canon/audit/records/.
+  Nothing here admits anything.'
+source_id: hopkins_my_life_in_advertising
+title: Claude Hopkins — My Life in Advertising (1927)
+knowledge_dir: canon/candidates/canon-014/hopkins-my-life-in-advertising
+status: HOLD
+status_reason: evidence_insufficient
+recorded_at_commit: bf02dd1f31a9b1d0b790f4a2a09a68f3b39748fa
+structural_validation: 'PASSES canon/validation/validate_source_artifact_schema.py against SPEC-03,
+  SPEC-04 and SPEC-05 with zero errors. A STRUCTURAL PASS IS NOT ADMISSION and is not evidence about
+  the source: it says the artifacts are well formed, not that what they record was verified.'
+candidate_artifact_fingerprint:
+  algorithm: sha256-of-sorted-path-and-content
+  note: Covers the four artifacts this candidate has. It is NOT an Audit Gate source snapshot, which
+    fingerprints five files including a visual-evidence ledger this source does not have. Recorded so
+    a later re-audit can prove whether the candidate changed between now and then.
+  files:
+  - path: ontology-mappings.yaml
+    digest: c425183de91a299b5ed1be6d6a1a8750af9468da607eabb24d5ed6a54c05a431
+  - path: operational-bindings.yaml
+    digest: e6464ce992e29de0c0a9deccb4edf81454629526cf142dc9b6fd478618dea4fd
+  - path: source-concept-systems.yaml
+    digest: 60d5283b52298800ac111bd6d596d17c3dc092098aa798f4ee0afe8818f8437c
+  - path: source-knowledge.yaml
+    digest: 0676ba51ad7fd84df75ab78a1a43fe0c8b8195d5dd051ef09a3b3ccba1fedbb8
+  combined_digest: 9f30ef9e7edb33ca7d5d11eb290e566509f21f5fc48906e69e1914d9391da7b0
+local_copy_seen_in_this_environment: ~/Downloads/Books/My Life in Advertising.pdf
+blocker_shared_by_all_seventeen: 'NO VISUAL OR FIGURE-LEVEL INSPECTION HAS EVER BEEN RUN ON THIS SOURCE,
+  so it has no
+
+  `visual-evidence-ledger.yaml`. That file is one of the five the Audit Gate fingerprints, and the
+
+  Gate reports a missing covered artifact rather than skipping it, so no Audit Gate record can be
+
+  written for this source at all. It cannot be authored from the committed extraction either: a
+
+  visual-evidence ledger records what an inspection found, and transcribing a previous run''s
+
+  self-report into it would be fabricating an inspection.
+
+  '
+access_position: 'THE ACCESS BLOCKER RECORDED BY THE EARLIER PASSES NO LONGER HOLDS, AND THIS IS A CHANGE
+  OF FACT THE
+
+  CONTROLLER SHOULD SEE. Those passes recorded `evidence_insufficient` partly because the source could
+
+  not be opened: the extraction had read a local library that did not exist in the container the
+
+  repair ran in, and that container had no external network egress. Both were true there. NEITHER IS
+
+  TRUE IN THE ENVIRONMENT THIS RECONCILIATION RAN IN - the book is present locally, and network egress
+
+  was tested and works. What remains unresolved is therefore NOT access. It is that the inspection has
+
+  not been done. That is a matter of cost and authorisation, and it is a materially better position
+
+  than being blocked, but it is not a pass and this task does not treat it as one.
+
+  '
+source_specific_blockers:
+- blocker: lineage_dependence_on_a_live_source
+  detail: 'Shares its author and its position with `hopkins-scientific-advertising-ch1-7`, which is
+    ACCEPTED
+
+    LIVE CANON, and its chapter 17 is explicitly about that book. Under the Audit Gate that is
+
+    `shared_author`, a dependence relation, so this work is NOT an independent origin against the live
+
+    Hopkins material and must never be counted as corroborating it. A different title is not a different
+
+    origin. This does not by itself prevent admission - it prevents the pair being used as agreement
+    -
+
+    but it is the fact most likely to be mishandled if this source is read quickly.'
+what_would_move_this_to_ready: A first-hand figure-level inspection of the source, authored as a visual-evidence-ledger.yaml,
+  followed by a full Audit Gate v0.2 record written against the exact bytes - plus resolution of each
+  source-specific blocker listed above, where there are any. For most of the seventeen the inspection
+  is now the only missing step, which is a materially different position from the one recorded by the
+  earlier passes.
+qa_bank: canon/qa/canon-014/hopkins-my-life-in-advertising-qa-bank.yaml
+qa_status_note: 'The Q&A bank for this source is retained in full and carries `source_status: hold`
+  on every item. Held knowledge stays available and stays visibly held.'

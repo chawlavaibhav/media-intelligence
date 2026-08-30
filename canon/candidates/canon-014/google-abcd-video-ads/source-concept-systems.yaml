@@ -1,0 +1,169 @@
+source_id: google-abcd-video-ads
+source_concept_systems:
+# google-abcd-video-ads — SourceConceptSystem (SPEC-03 Object 2)
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# Two systems only. Both were checked against the source before being asserted: the question was
+# whether the source treats the four principles as jointly applied or as a menu, and whether the
+# objective table varies membership or only emphasis. Both answers are readable off the source's
+# own text and table, and both are recorded below with the parts that are ours marked as ours.
+
+- scs_id: scs_abcd_001
+  source_id: google-abcd-video-ads
+  label: abcd_four_principle_execution_framework
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >-
+    The four principles — Attention, Branding, Connection, Direction — as the source presents them:
+    one set applied to each execution decision on a YouTube video ad, with the claimed effectiveness
+    result attached to the set rather than to any member.
+  whole_system_claim:
+    text: >-
+      The source treats the four as jointly applied rather than as a menu. Its instruction is to
+      factor all four principles into each decision; its effectiveness figures are stated for "the
+      ABCDs" as a whole and are never decomposed by principle; and its objective table, which is
+      where a menu reading would show up, never drops a principle — where an objective needs no
+      special treatment of one, the cell reads "Apply core principles" rather than being empty.
+    origin: source_explicit
+    interpretation_basis:
+    source_ref:
+      locator: >-
+        Think with Google, "Understanding the ABCDs of effective creative on YouTube", section
+        "Crafting a successful ad" ("By factoring four simple principles into each decision, your
+        work is more likely to achieve your marketing goals"); Google Ads Help, "About the ABCDs of
+        effective video ads", sections "Benefits" and "ABCDs by marketing objectives"
+  members:
+  - {sk_ref: sk_abcd_0001, role_in_system: frame, order: 0, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0005, role_in_system: principle, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0010, role_in_system: principle, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0015, role_in_system: principle, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0019, role_in_system: principle, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0002, role_in_system: boundary, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+    - between: [sk_abcd_0010, sk_abcd_0014]
+      nature: >-
+        The "richly" half of the branding principle, and the see-and-say guideline under it, rest
+        on the source's claim that YouTube audio is almost always heard.
+      origin: extractor_inferred
+    - between: [sk_abcd_0019, sk_abcd_0014]
+      nature: >-
+        Reinforcing the on-screen call to action with voice-over rests on the same audio premise.
+      origin: extractor_inferred
+    tradeoffs:
+    - between: [sk_abcd_0018, sk_abcd_0017]
+      nature: >-
+        Engagement devices — humour, surprise, intrigue — against the instruction to focus the
+        message and avoid doing too much. The source states the second as a brake on the first:
+        "Lean into emotional levers ... But avoid doing too much in your ad."
+      origin: source_stated
+      source_ref:
+        locator: >-
+          Think with Google, "Understanding the ABCDs of effective creative on YouTube", section
+          "C = Connection: Help people think or feel something"
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref:
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >-
+      The membership, the joint-application claim and the trade-off between engaging and focusing
+      are all the source's own. What is ours: the decision not to record an ordering. The source
+      always presents the principles in the fixed sequence A, B, C, D, but that is a mnemonic — it
+      never says an earlier letter takes precedence over a later one, nor that the letters map to
+      positions in the ad's timeline. Recording A–D as a priority order or a sequence would assert
+      something the source does not, so the ordering scheme is "none" and that choice is ours.
+      Also ours: the two dependencies on the sound-on claim. The source states the audio premise on
+      one page and the audio-dependent guidelines on others, and never connects them itself.
+  provenance:
+    chapter: 'Google Ads Help, "About the ABCDs of effective video ads"; Think with Google, "Understanding the ABCDs of effective creative on YouTube"; Google for Business resources, "ABCDs of effective video ads"'
+    section: 'Sections "Core ABCDs" / "Crafting a successful ad" / "A – Attention" through "D – Direction"'
+    page_start:
+    page_end:
+    source_support: text
+
+- scs_id: scs_abcd_002
+  source_id: google-abcd-video-ads
+  label: objective_weighted_abcds
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >-
+    The source's second-stage rule: having applied the core ABCDs, vary the emphasis given to each
+    of the four principles according to the campaign's marketing objective — awareness,
+    consideration, action, or all three combined as full funnel.
+  whole_system_claim:
+    text: >-
+      Across the four objectives the membership of the framework is constant and only the emphasis
+      moves. Every one of the sixteen cells carries an instruction; where an objective calls for no
+      special treatment of a principle the cell reads "Apply core principles", which happens three
+      times — Direction under awareness, and Attention under both consideration and action. The
+      full-funnel row is the only one with no such cell, and the only one whose instructions include
+      ordering within the ad.
+    origin: extractor_synthesis
+    interpretation_basis: >-
+      The source publishes the matrix and states the two-stage rule ("Great video ads start when
+      you apply the Core ABCDs, but you can optimize your ads for specific marketing objectives"),
+      but it never characterises the matrix's own shape. The claim that membership is constant and
+      only emphasis varies, and the count of where "Apply core principles" falls, are read off the
+      published table by us. They are directly checkable against it, but they are our reading, not
+      the source's statement.
+    source_ref:
+  members:
+  - {sk_ref: sk_abcd_0022, role_in_system: rule, order: 0, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0023, role_in_system: objective_variant, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0024, role_in_system: objective_variant, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0025, role_in_system: objective_variant, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_abcd_0026, role_in_system: objective_variant, order: 4, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+    - between: [sk_abcd_0023, sk_abcd_0022]
+      nature: "each objective variant presupposes the core principles it modifies"
+      origin: source_stated
+      source_ref:
+        locator: >-
+          Google Ads Help, "About the ABCDs of effective video ads", section "ABCDs by marketing
+          objectives", introductory paragraph
+    tradeoffs:
+    - between: [sk_abcd_0024, sk_abcd_0025]
+      nature: >-
+        How directly the ad asks. Consideration is to "plant the seed of urgency"; action is to
+        "present the ask after the context is set"; full funnel escalates directness through the
+        ad. This is the source's whole account of how the ask varies with objective.
+      origin: extractor_inferred
+    conflicts:
+    - between: [sk_abcd_0025, sk_abcd_0016]
+      nature: >-
+        The action row's "Make the product the ad" pulls against the core Connection guideline to
+        build the story on people's experience of the product. The source publishes both and does
+        not address the tension.
+      origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref:
+  evidence:
+    characteristics: [explicitly_stated, historical_claim, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: inferred_from_layout
+    system_level_uncertainty: >-
+      The four objectives, the two-stage rule and the sixteen cell contents are the source's. The
+      characterisation of the matrix's shape — constant membership, varying emphasis, three
+      "Apply core principles" cells — is ours, and so are the trade-off and the conflict recorded
+      above. One extraction note matters: the plain-text capture of the Google Ads Help page
+      linearises the table and loses which cell each instruction belongs to, and two rows carry two
+      bullets in a single Connection cell. The cell-to-column mapping used here was resolved by
+      re-fetching the page and reading the table markup, not inferred from reading order.
+  provenance:
+    chapter: 'Google Ads Help, "About the ABCDs of effective video ads"'
+    section: 'Section "ABCDs by marketing objectives", introductory paragraph and four-row table'
+    page_start:
+    page_end:
+    source_support: text

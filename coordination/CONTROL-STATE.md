@@ -5,11 +5,13 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 28 Aug 2026 — post context-architecture migration, with the revised outcome-first
-programme and zero-spend pre-pilot tranche authorised by
-`CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`. The previous full text is preserved
-at `history/CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md`; the last Governor reconciliation
-was GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`).
+**Updated:** 30 Aug 2026 — CANON-014 integrated on top of the 29-Aug Media Factory programme reset.
+The current programme authority remains
+`coordination/decisions/CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`; CANON-014
+integration is recorded in
+`coordination/decisions/CONTROLLER-CANON-014-INTEGRATION-2026-08-30.md`. The previous full text is
+preserved at `history/CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md`; the last full Governor
+reconciliation remains GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`).
 
 **Read `PROJECT-MEMORY.md` first.**
 
@@ -62,6 +64,7 @@ where it disagrees with a newer Controller decision, the decision wins.
 
 | Lane | One-line result | Spend | Authority (under `coordination/decisions/`) |
 |---|---|---|---|
+| CANON-014 | **Merged / closed.** Full durable Canon reconciliation: 24 accepted sources total, 18 HOLD/candidate sources retained, 1,028 grounded/ungraded/uncalibrated Q&A items; candidate/Q&A retrieval is **not** enabled in ordinary runtime | USD 0 | `CONTROLLER-CANON-014-INTEGRATION-2026-08-30.md` |
 | CANON-011 | 18 marketplace-derived buyer cases (Upwork buyer postings only), 16 runnable; preferred real-demand pool for Stage-C; grammar **not** reopened (GG-01…GG-04 observations only); `MKT-015` blocked evidence only | USD 0 | `CONTROLLER-CANON-011-INTEGRATION-2026-08-28.md` |
 | EVAL-024 | 16/16 A-TEXT coordinates generated and **sealed as committed bytes** — durable evidence, **do not regenerate** (manifest fingerprint `1e124343…`) | USD 0.904 | `CONTROLLER-EVAL-024-INTEGRATION-2026-08-28.md` |
 | EVAL-029 | Cloud Vision `TEXT_DETECTION` (no language hints) **benchmark-qualified** on Devanagari and Latin; **strict-exactness disqualified**; evidence sealed, recomputable from a fresh clone | USD 0.4320 | `CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md` |
@@ -89,6 +92,10 @@ customer-outcome CpAO observations · Production IR / Planner.
 - **12 real temporal base clips**, rights-cleared, 12/12 clean.
 - **5 instrument configurations scientifically disqualified** under the strict standard, with the
   literalness mechanism finding attached (`history/EMP-001.md`).
+- **Canon corpus expanded:** 24 accepted sources plus 18 durable HOLD/candidate sources and 1,028
+  grounded, ungraded, uncalibrated Q&A items. The separate accepted/full/Q&A fingerprints are in
+  `canon/knowledge/CANON-CORPUS-INDEX.yaml`. HOLD material remains non-accepted and ordinary
+  runtime retrieval remains `canon/knowledge/current/**` only.
 
 **The Registry is empty deliberately.** `benchmark_qualified` is weaker than the Registry's
 `qualified`/`deterministic` admission bar; **admission must not be weakened to create a first row**
@@ -162,9 +169,12 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
    Eval ownership as a provenance-preserving **historical empirical prior** set. Task:
    `eval/tasks/EVAL-036-MEDIA-FACTORY-HISTORICAL-PRIORS.md`. Preserve evidence tiers, dates,
    hashes, contradictions and freshness risk. **Do not create Registry rows.**
-3. **T2B — after T2A:** freeze a small reasoning-only controlled experiment comparing the **same
-   strong reasoning LLM without Canon vs with relevant Canon retrieval**, with repeated runs and
-   blind/brief-grounded human judgment. No media generation in the first experiment.
+3. **T2B — after T2A:** freeze a reasoning-only controlled experiment comparing each selected
+   reasoning model without Canon versus the same model with Canon access, with repeated runs and
+   blind/brief-grounded human judgment. No media generation in the first experiment. CANON-014 is
+   already integrated independently. Any T2B treatment that exposes HOLD candidates and/or Q&A must
+   name the exact full-corpus/Q&A fingerprints and use a status-carrying experimental retrieval
+   interface; ordinary runtime retrieval remains accepted-only.
 4. **No paid tranche is active or authorised.** Exact model/call count/cost for T2B must be frozen
    before seeking user approval.
 5. **PILOT-001 / T1 remains closed** with USD 1.60 provisional consumed / 0 accepted and no further

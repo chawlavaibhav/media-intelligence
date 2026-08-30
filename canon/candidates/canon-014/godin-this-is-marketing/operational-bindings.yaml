@@ -1,0 +1,182 @@
+# OperationalBindings — Seth Godin, "This Is Marketing" (Portfolio/Penguin, 2018).
+# source_id: godin-this-is-marketing
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# FIVE bindings from twenty-nine SourceKnowledge objects. Three evaluation, two benchmark. The empty
+# categories are recorded rather than filled:
+#
+#   * NO creative_ir bindings. None was attempted. Nothing about a Creative IR path is inferred from
+#     a trade book about positioning, and the task forbids it outright.
+#   * NO production bindings. There is no production act in this book. Godin's remedies are
+#     decisions and postures — choose these people, claim these two axes, refuse to measure this,
+#     keep the promise — and the two that come closest to an act (buy or do not buy the ads; send a
+#     signal that resembles one already trusted) are commercial and design decisions, not acts
+#     performed on an asset.
+#   * NO governance bindings. Examined and refused; see EXTRACTION-NOTES.md. The nearest candidate
+#     is sk_god_0013 (better is not a single scale), which resembles evidence_interpretation until
+#     you notice it is a claim about how buyers rank offerings, not about how this project weighs
+#     evidence. Under SPEC-04's guard, a candidate fitting none of the six permitted consumers is
+#     not a governance binding, so the knowledge is left unbound.
+#
+# NO model capability is inferred from this source anywhere.
+
+source_id: godin-this-is-marketing
+
+operational_bindings:
+
+- binding_id: bnd_god_001
+  source_knowledge_refs: [sk_god_0002, sk_god_0003]
+  source_system_refs: [scs_god_002]
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    This is the only place in the three sources of this lane group where a source supplies a
+    ready-made brief specification. Godin prints a thirteen-question worksheet opening with "Who's
+    it for?" and "What's it for?", and a three-sentence promise template with three blanks. Both
+    generate test cases directly: a brief that cannot fill the blanks is a brief that has not
+    answered the questions, and pairs of briefs that differ only in the audience blank are
+    comparable by construction.
+  applicability:
+    when: "specifying a brief before anything is produced, and comparing briefs that differ in stated audience"
+    limits: >
+      The worksheet is a checklist, not a rubric — it names what must be answered and says nothing
+      about what a good answer looks like. Godin's own warning applies: an answer can be
+      reverse-engineered from what you already intended to make, and he says such answers arrive
+      loaded with buzzwords. The questions detect an unanswered brief reliably and a bad answer not
+      at all. Nothing here is a scoring scheme; treating the thirteen questions as a scale would
+      invent a metric the source does not have.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_god_0001, t_god_0002]
+  repair_ontology_refs: [t_god_0021, t_god_0022]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_god_002
+  source_knowledge_refs: [sk_god_0004, sk_god_0005]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Godin names a detectable property of finished work: it has been made to offend no one and
+    satisfy everyone, which is what pursuing mass produces, and what rejection pressure converts
+    good work into. The diagnostic is not "is this bland" but the sharper question he supplies —
+    could this asset be shown to have failed, and for whom. Work aimed at an unspecified audience
+    is unfalsifiable by construction, and that is inspectable at the whole-asset level.
+  applicability:
+    when: "an asset whose stated audience is absent, or broad enough that no outcome could contradict it"
+    limits: >
+      Godin's own counter-discipline sets the limit and it is a real one: some negative response
+      genuinely is about the work, and he distinguishes feedback from advice without supplying a
+      test that separates them. This binding can flag that an asset has no audience it could fail
+      with. It cannot tell a defensible edge from work that is simply not good enough — Godin
+      concedes both are possible and offers no way to choose.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_god_0002, t_god_0003]
+  repair_ontology_refs: [t_god_0022]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_god_003
+  source_knowledge_refs: [sk_god_0026]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Godin's two constraints on being talked about generate a specific inspection: the asset must
+    give the person who shares it something to say about themselves, and that reason must be part of
+    what the asset is rather than a request attached to it. An asset built to be shared, with no
+    answer to "what will I tell my friends and why", fails a condition the source states, and the
+    inspection is of the whole asset rather than of any part.
+  applicability:
+    when: "an asset whose distribution plan depends on people choosing to pass it on"
+    limits: >
+      Godin's definition — if they remark on it, then it is remarkable — is circular, so this
+      binding can only check for the presence of a stated reason for the sharer, never predict that
+      sharing will occur. It also cannot distinguish the mechanism working from the negative case he
+      names, where people talk about something in order to signal that it should be shunned.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_god_0011, t_god_0012]
+  repair_ontology_refs: [t_god_0025]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_god_004
+  source_knowledge_refs: [sk_god_0019, sk_god_0020]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    The tension/fear distinction is the only ethical boundary this source draws around its own
+    method, and it has an inspectable form: does the asset present a route the viewer can take that
+    closes the gap it opened, or does it open a gap with no available motion. Godin's own claim is
+    that the second case produces paralysis rather than change, so it is both a values check and a
+    failure diagnosis.
+  applicability:
+    when: "an asset that deliberately creates discomfort in order to prompt an action"
+    limits: >
+      The test Godin actually supplies is the maker's own feeling — if you feel like you are
+      coercing or frightening people, you are probably doing it wrong — which is not an evaluation
+      criterion at all. What is bound here is the structural half of the distinction: whether a
+      route out is present in the asset. Whether that route is genuinely available, or only appears
+      to be, is precisely the question Godin does not ask, and several of his own approved cases sit
+      on the wrong side of it.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_god_0013, t_god_0014]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_god_005
+  source_knowledge_refs: [sk_god_0014, sk_god_0013]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The XY method generates minimal pairs, and unusually for this lane it generates them by
+    construction rather than by accident: the same offering placed at opposite extremes of the same
+    two axes is a controlled comparison with one variable changed. Godin's own worked case is
+    exactly that — two music teachers, same subject, same neighbourhood, opposite positions on
+    rigour and outcomes — and he prints a list of two dozen candidate axes to draw from.
+  applicability:
+    when: "generating comparison cases in which the offering is held constant and the claimed position varies"
+    limits: >
+      The method organises a decision it does not make: the axes are chosen by the practitioner from
+      an open list, so the quality of the generated pair is entirely the quality of the axis choice.
+      Godin also attaches conditions the generated pair cannot satisfy on its own — the claims must
+      be true and continually doubled down on in all your actions — so a positioning pair tests
+      distinctness, never deliverability.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_god_0004, t_god_0005]
+  repair_ontology_refs: [t_god_0023]
+  status: proposed
+  status_reason: "experimental; not reviewed"

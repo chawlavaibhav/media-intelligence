@@ -1,0 +1,119 @@
+# CANON-014 — visual-evidence ledger for Pandey, "Pandeymonium".
+#
+# The visual pass RAN and COMPLETED. Its central finding is documentary rather than observational:
+# the book's own copyright page states that the campaign evidence was published OUTSIDE the book.
+
+source_id: pandey_pandeymonium
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+inspection:
+  method: >
+    The EPUB was unpacked and all three image assets enumerated. Both non-cover images were opened
+    and read. The absence of campaign imagery was then checked against the book's own front and back
+    matter rather than assumed to be a conversion loss - which is how the copyright-page statement
+    below was found.
+  images_in_archive: 3
+  figures_carrying_argument: 0
+  images_opened: 2
+  images:
+    - {file: "GoogleDoc/GoogleDoc/cover.jpg", size: 583265, identified_as: "publisher cover; cover design credited to Rajiv Rao on the copyright page. Not evidence."}
+    - {file: "GoogleDoc/images/image1.png", size: 74932, opened: true,
+       observed: "Publisher title page: 'PIYUSH PANDEY' over a rule, 'PANDEYMONIUM', the Penguin colophon, 'PENGUIN BOOKS'. Carries no argument."}
+    - {file: "GoogleDoc/images/image2.png", size: 154065, opened: true,
+       observed: "Black-and-white photograph of a woman in a sari with a bindi and a man in a bandhgala, both middle-aged. From position and context, the author's parents, illustrating the memoir. Illustrative only; carries no argument."}
+
+# ── the finding that settles the visual question ────────────────────────────
+evidence_location:
+  statement_in_source: >
+    "All images and television commercials mentioned in this book are available for viewing on
+    www.pandeymonium.in"
+  where: "copyright page (spine 136)"
+  consequence: >
+    The campaigns this book discusses - Fevicol, Cadbury Dairy Milk, the Vodafone Zoozoos, Asian
+    Paints, Luna, the Indian Railways film - were NEVER reproduced in the book. The publisher
+    deliberately located them on a companion website. A reader of the printed 2015 edition was in
+    exactly the position this extraction is: able to read what Pandey says about the work and unable
+    to see the work.
+  route_reachable_in_this_session: false
+  route_evidence: >
+    No external network egress was available in this environment. Both a direct HTTPS request and
+    the harness fetch tool were refused by the egress proxy for every external host tried, so
+    www.pandeymonium.in could not be reached, and no claim in this record rests on it. The evidence
+    is named, located, and unreachable HERE - recoverable in principle, not in this environment.
+
+observed_loss_patterns:
+
+  - pattern: source_evidence_never_printed
+    affects: "every campaign the book discusses"
+    detectability: named_by_text
+    recoverability: recoverable_not_attempted
+    evidence: >
+      Established from the source's own copyright page, quoted above, not inferred from the file.
+      This is the pattern's defining case: the gap is not a digitisation loss and is NOT this
+      project's problem to fix. It does bound what the source can support - every claim here about a
+      named campaign is a claim about what Pandey SAYS about it, never about what the work looks
+      like or does.
+
+  - pattern: text_layer_order_damage
+    affects: "10 sentences, at 10 positions across the book"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The printed book's pull-quotes have been flattened into the body text, so each appears twice -
+      once inside its paragraph and once standing alone. Found mechanically: a scan for sentences
+      over 90 characters occurring more than once returned exactly 10, each occurring exactly twice.
+      They include "Whatever you say, say it with respect for the audience…", "When you work with a
+      celebrity, the viewer must find the celebrity, the script and the idea memorable…", "Don't be
+      scared of systems and processes…" and "Successful national companies ensure that there is a
+      knowledge and resource pool…". The consequence for extraction is specific: a naive pass could
+      read the pull-quote as a second, separate claim and double-count it, and any word-frequency or
+      emphasis analysis over this copy is corrupted. All 10 were identified and none is extracted
+      twice.
+
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB, no page map, no folio in the text. Every locator is a numbered chapter title,
+      which is stable. No page number was interpolated.
+
+  - pattern: no_loss_detected
+    affects: "chapter completeness"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Every entry in the book's own table of contents was checked against the body text. All 47
+      entries resolve, including chapter 8 'The Indian Advertising Business' and the Afterword. The
+      apparent absences in a first case-sensitive pass were formatting differences - part headings
+      set in capitals without their "Part One:" prefix - and not missing content. All 138 spine items
+      carry text; none is empty. The front matter, Amitabh Bachchan's foreword, the author's note,
+      acknowledgements and both copyright pages are present.
+
+# ── a correction this ledger records deliberately ──────────────────────────
+extraction_note_on_a_corrected_reading: >
+  The EPUB's internal folders are named "GoogleDoc/", which on first inspection suggested this might
+  be a re-typeset copy rather than a publisher file. That reading was WRONG and the check that
+  corrected it is recorded here so the conclusion can be re-examined: the file carries Penguin's full
+  copyright page, the Portfolio imprint, "First published in Portfolio by Penguin Books India 2015",
+  the print ISBN 978-0-670-08859-1, and a digital-edition statement with e-ISBN 978-9-352-14004-6
+  which MATCHES the ISBN declared in the OPF metadata. The folder name is a converter artefact. The
+  filename's "2016" is also wrong; the book is 2015.
+
+demonstrations: []
+visual_only_observations:
+  - "The only photograph in the book is of the author's parents, which is consistent with the Preface's account of his father improvising verse each morning as the origin of his interest in communication. It illustrates a memoir passage and argues nothing."
+
+extraction_constraint_applied: >
+  No object carries source_support: visual or text_and_visual, and provenance.inspected.figures is
+  empty on every object - correctly, because the book contains no argument-bearing figure. No claim
+  anywhere in this record depends on an image, and no claim describes what any campaign looks like.
+
+claim_resolution_after_inspection: not_applicable
+consequence: >
+  The visual pass could not resolve claims about the campaigns because the campaigns are not in the
+  book, by the publisher's design. What the pass DID establish is why - which converts an apparent
+  representation defect into a documented property of the published work, and separates it cleanly
+  from the two real defects in this copy (pull-quote flattening, no authored page).

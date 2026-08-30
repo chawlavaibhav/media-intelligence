@@ -1,0 +1,374 @@
+source_id: freeman-photographers-eye-beyond-parts1-3
+operational_bindings:
+# Michael Freeman, The Photographer's Eye: A Graphic Guide — Parts 4-10 — operational bindings
+# EXPERIMENTAL — NOT LIVE CANON. Lane of book-expansion-qa-v1.
+# scope_extension_of: freeman-photographers-eye-graphic-guide · independence: none — same work
+#
+# NO creative_ir binding is made here. Nothing in this span gives a defensible SPEC-01 path: the
+# source's variables are camera position, lens movement, aperture, shutter and the moment of
+# release, none of which is an authorable field of a creative request.
+#
+# The large block of physical camera advice is bound ONCE, as target_type: production with
+# status: production_candidate and target_path: null (bnd_pex_010), and is explicitly NOT
+# translated into any generative instruction.
+#
+# No evidence_basis of cross_source_supported or empirically_supported appears anywhere.
+
+- binding_id: bnd_pex_001
+  source_knowledge_refs: [sk_pex_0046]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, evaluates]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    The source demonstrates a check that transfers cleanly and costs nothing: strip the chroma and
+    see whether the composition still stands. We adopt it as an evaluation step for any finished
+    frame whose interest is claimed to rest on a colour accent. Rendering the source's own pair
+    confirmed the strength of the demonstration — the figure does not merely weaken, it becomes
+    hard to find. See sk_pex_0046 for the claim itself; this binding does not restate it.
+  applicability:
+    when: "A finished single frame whose subject is a small, strongly coloured element in an otherwise low-chroma field."
+    limits: >
+      The source ran this on one photograph to settle one argument about one frame. It is not a
+      general test of whether an image uses colour well, and a frame that survives desaturation is
+      not thereby a worse colour photograph. The threshold — how much loss counts as failure — is
+      ours to set and the source gives none.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_pex_0068]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_002
+  source_knowledge_refs: [sk_pex_0015]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer:
+  rationale: >
+    The source's field-image condition is stated as an absolute and is directly checkable at the
+    frame boundary rather than requiring a judgement about the interior. We bind it as an
+    inspection of the four edges. The converse — that an element completing inside the edge makes
+    the field read as a finite object — is read off the source's diagram and is recorded as ours,
+    not as the source's, in sk_pex_0015.
+  applicability:
+    when: "A frame presented as a field or an all-over pattern, where the intent is that the subject continues past the frame."
+    limits: >
+      Applies only to field and pattern intent. Many good photographs deliberately contain their
+      subject, and this check says nothing about them. The source also insists a field needs a
+      surprise or sheer weight of content before the framing question arises at all, so passing
+      this check is necessary and nowhere near sufficient.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_pex_0037]
+  repair_ontology_refs: [t_pex_0053]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_003
+  source_knowledge_refs: [sk_pex_0039, sk_pex_0040]
+  source_system_refs: [scs_pex_004]
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer:
+  rationale: >
+    This is the most valuable shape in the span for evaluation purposes because it is a rule with
+    its own stated exception, so the check is conditional rather than absolute: locate any moving
+    element, locate the frame's own directional bias, and only then decide whether the placement
+    is answerable. A checker that applied the entry-side rule unconditionally would fail the
+    source's own preferred frame.
+  applicability:
+    when: "A frame containing a figure or object whose motion the viewer can infer, in a setting the photographer chose in advance."
+    limits: >
+      The source hedges the rule in the same paragraph it states it — not compulsory, just
+      natural — and a third case overrides both halves where the setting is strongly graphic.
+      This binding can flag a placement for a human to consider; it cannot decide one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_pex_0044]
+  repair_ontology_refs: [t_pex_0065]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_004
+  source_knowledge_refs: [sk_pex_0008]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer:
+  rationale: >
+    A claim that a frame contains a line, a triangle or a dominant mass is cheap to make and hard
+    to falsify in prose. Reducing the frame to a handful of flat tones and re-asking the question
+    makes the claim answerable. We bind it as a check on shape assertions, and we record that this
+    is our reading of an illustration technique, not a procedure the source proposes.
+  applicability:
+    when: "Any assertion that a specific line, shape or mass structures a frame."
+    limits: >
+      Says nothing about colour, focus or motion claims. The source's own reductions are drawn by
+      hand and therefore already encode his reading, so the technique communicates a shape claim
+      more reliably than it tests one; an automated posterisation is a different instrument from
+      what the book shows.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_pex_0069]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_005
+  source_knowledge_refs: [sk_pex_0027]
+  source_system_refs: [scs_pex_005]
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer:
+  rationale: >
+    The source distinguishes a frame that is far from its subject from a frame that shows the
+    distance, and names the cues that do the second. That converts a vague impression into an
+    inventory a reviewer can walk: is the intervening ground visible and continuous, is the
+    viewpoint raised enough to see it, is there aerial perspective, is there anything of known
+    scale standing over the subject.
+  applicability:
+    when: "A landscape or wide frame whose intent is to convey how far away something is."
+    limits: >
+      The source presents the cues as its account of one photograph, not as an enumeration. It
+      does not claim any cue is necessary and its own qualification shows a telephoto frame
+      passing on a different combination. A frame that has none of these cues is not thereby
+      faulty; it is simply not doing this job.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_pex_0041]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_006
+  source_knowledge_refs: [sk_pex_0042]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer:
+  rationale: >
+    Gaze and reaching gestures are locatable in a finished frame and their directions can be
+    traced, which makes a crowded frame's coherence inspectable rather than merely felt. Rendering
+    the source's coincidence diagram showed the vectors forming a closed loop rather than
+    converging on a point, so the inspection has two possible passes — a convergence and a
+    circuit — and that observation is recorded as ours in sk_pex_0042.
+  applicability:
+    when: "A frame containing two or more people or figures whose gaze or gesture direction is legible."
+    limits: >
+      The source is explicit that this route to coherence often fails and that camera angle and
+      light are the more reliable routes. This binding can say whether the vectors happen to
+      resolve; it cannot say a frame should have been made differently, because the source's own
+      answer when they do not resolve is that the picture was not there.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_pex_0042]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_007
+  source_knowledge_refs: [sk_pex_0026, sk_pex_0021]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, flags]
+  observation_unit: frame
+  governance_consumer:
+  rationale: >
+    The useful part here is not the alignment check but the gate in front of it. The source ranks
+    alignment below expression, action and gesture for most photographs, and names the narrow
+    condition — nested or repeated identical geometry in an otherwise simple frame — under which
+    alignment becomes compulsory. Binding the gate keeps an alignment checker from firing on the
+    great majority of frames where the source says it should not.
+  applicability:
+    when: "A frame containing nested or repeated identical forms, or one presented as a squared-up frontal treatment."
+    limits: >
+      Outside that condition the source's position is that alignment is the least important
+      variable in the frame. The four-square case adds a second reason to be careful: a small
+      angular deviation there changes the reading from deliberate to casual, which is a change of
+      meaning and not a defect to be corrected.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_pex_0040]
+  repair_ontology_refs: [t_pex_0054]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_008
+  source_knowledge_refs: [sk_pex_0045]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [evaluates]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >
+    The source is unusually explicit that a colour theme is a property of a set of images and not
+    of any one of them, and that it may be recognised after the fact rather than planned. That
+    makes the set the correct observation unit and rules out per-frame evaluation of the property
+    entirely — a single frame cannot pass or fail a theme check.
+  applicability:
+    when: "A body of images intended to read as one story, campaign or assignment."
+    limits: >
+      The source's example is a two-week assignment in one place, where the theme came from the
+      subject rather than from a decision. A theme imposed on unrelated material is not what it
+      describes. The palette half of the same case is weaker still and is reported by the source
+      as its own hedged self-assessment.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_009
+  source_knowledge_refs: [sk_pex_0043]
+  source_system_refs: [scs_pex_001]
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    The source's colour solid gives named looks as regions of a three-axis space, which is the one
+    thing in this span that could support a labelled comparison set — rich, pastel, muted, theme,
+    contrast — with each label defined by position rather than by taste. We record it as a
+    benchmark candidate and nothing more.
+  applicability:
+    when: "Constructing a labelled set of photographs for comparing colour characterisations."
+    limits: >
+      Two of the source's own seven categories do not survive this treatment and the benchmark
+      must exclude them. Muted cannot be separated from drab by any position in the solid, because
+      the source says the difference is the viewer's mood. A palette is attributed to a place, not
+      to a region. Building a benchmark that includes either would encode a distinction the source
+      explicitly denies exists in the image.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_010
+  source_knowledge_refs: [sk_pex_0017, sk_pex_0019, sk_pex_0020, sk_pex_0023, sk_pex_0029, sk_pex_0031, sk_pex_0032, sk_pex_0033, sk_pex_0034, sk_pex_0036, sk_pex_0038, sk_pex_0041, sk_pex_0051]
+  source_system_refs: [scs_pex_003]
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    This binding exists to record that a large block of this source is deliberately left unbound.
+    Thirteen objects and one system describe what a person does with a camera before the exposure
+    — walk the viewpoints, kneel or climb, tilt or shift a lens, choose where the focus plane
+    falls, pick a shutter speed, wait for a figure to reach a gap. There is no product consumer
+    for any of it, and rewriting it as generative control would change what the source said.
+    Recorded in the source's own frame, unbound, and parked.
+  applicability:
+    when: "Physical photographic production by a person operating a camera."
+    limits: >
+      Nothing here is evidence about what any generative system can do, and none of it is
+      translated. Several members are additionally equipment-gated — tilt and shift require lenses
+      or camera bodies that most photographers do not own, and the overhead case required a
+      helicopter with the door open.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_pex_0051, t_pex_0052, t_pex_0055, t_pex_0056, t_pex_0058, t_pex_0059, t_pex_0060, t_pex_0061, t_pex_0062, t_pex_0063, t_pex_0064, t_pex_0065, t_pex_0066, t_pex_0067]
+  status: production_candidate
+  status_reason: "experimental; physical-production advice recorded in the source's frame and explicitly not translated"
+
+- binding_id: bnd_pex_011
+  source_knowledge_refs: [sk_pex_0044]
+  source_system_refs: [scs_pex_001]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source names a quality, places it in a coordinate system, and then says the coordinate
+    system cannot separate it from its pejorative twin — the difference between muted and drab
+    lies in the viewer's own value judgement and not in the colour scheme. Any downstream process
+    that turns this source's colour vocabulary into detectable image properties must exclude this
+    one, and the exclusion needs to be recorded where it will be found rather than left as a
+    caveat inside one object.
+  applicability:
+    when: "Interpreting this source's colour vocabulary as evidence about an image."
+    limits: >
+      Confined to the muted/drab pair. The source's other colour categories do have image-side
+      definitions and are not affected. The same caution does not automatically extend to other
+      sources' uses of the same words.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_pex_012
+  source_knowledge_refs: [sk_pex_0050]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit:
+  governance_consumer: taxonomy_governance
+  rationale: >
+    The source opens one case by saying it could as easily have placed it in a different part of
+    the book. That is an explicit statement that its ten part headings are organisational rather
+    than principled, and it matters for anything that would treat the book's structure as a
+    taxonomy. Several claims in this lane sit under one heading and belong equally under another —
+    compression under juxtaposing and optics, the coincidence case under juxtaposing and motion,
+    the tunnel case under viewpoint and optics. No inference should be drawn from where a case
+    appears.
+  applicability:
+    when: "Using this book's part structure as evidence of how its concepts are categorised."
+    limits: >
+      The source makes the admission once, about one case. Reading it as a general statement about
+      all ten parts is ours, though the cases that straddle headings support it. This flag is
+      about the book's own organisation only and implies nothing about any other taxonomy.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

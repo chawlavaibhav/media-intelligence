@@ -1,0 +1,449 @@
+# David Ogilvy, Ogilvy on Advertising (1983) — chapters BEYOND chapter 2 — SPEC-04 bindings
+# EXPERIMENTAL — NOT LIVE CANON. Lane: ogilvy-beyond-ch2, book-expansion-qa-v1. Non-merge.
+#
+# NO creative_ir BINDINGS ARE MADE HERE. A creative_ir binding requires a real SPEC-01 path with a
+# justification, and this lane's knowledge is either a diagnostic question about a finished asset,
+# a physical print or mailing production setting, or a measurement procedure. None of those is a
+# field in a creative specification, and inventing a path to make the lane look useful is the exact
+# distortion SPEC-03 was written to stop.
+#
+# The honest bindings here are `evaluation` — his diagnostic cues really are checkable questions
+# about an asset — plus two `benchmark` bindings, two `governance` bindings with named consumers,
+# and three `production` bindings that are PARKED, NOT TRANSLATED. Physical print production is
+# never rewritten as a generative instruction.
+#
+# NOTHING here infers any model capability. This is a 1983 book and it is not evidence about what
+# any generative system can do.
+#
+# Every `evidence_basis` is derived_from_source or extractor_inference. Neither
+# cross_source_supported nor empirically_supported is used anywhere: no cross-source promotion is
+# authorised in this task and no empirical record is attached.
+
+source_id: ogilvy-beyond-ch2
+operational_bindings:
+
+- binding_id: bnd_ogx_001
+  source_knowledge_refs: [sk_ogx_0004, sk_ogx_0029]
+  source_system_refs: [scs_ogx_001]
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    The source's readership ordering yields a small set of yes-or-no questions that can be asked of
+    a finished print asset without any judgement of quality: is there a headline at all, does it
+    name the product, does it stand below rather than above the illustration, and does the element
+    order run illustration, headline, copy. Each question is checkable by looking, and each has a
+    stated consequence in the source rather than being a matter of taste.
+  applicability:
+    when: "a static print or print-derived asset with an illustration, a headline and body copy"
+    limits: >
+      The source's evidence is magazine and newspaper readership of 1983 and his stated scanning
+      order is asserted rather than demonstrated. Whether the ordering holds for any other surface,
+      crop or viewing duration is untested here and is not claimed.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0001, t_ogx_0002, t_ogx_0012]
+  repair_ontology_refs: [t_ogx_0030, t_ogx_0029]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_002
+  source_knowledge_refs: [sk_ogx_0026]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    The caption rule is the single cheapest check the source offers: every illustration either has a
+    caption beneath it or does not, and where it does, the caption either carries the brand name and
+    the promise or does not. Two observable facts, one stated consequence.
+  applicability:
+    when: "a print asset containing one or more illustrations"
+    limits: >
+      The source states the caption readership multiplier inconsistently — four times the body copy
+      in one chapter, twice in another — so the check can be applied while the size of the effect
+      cannot be quoted from him. Nothing here carries the rule beyond print of his period.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_ogx_0032]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_003
+  source_knowledge_refs: [sk_ogx_0028]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    His legibility failures are a checklist of physically observable settings rather than opinions:
+    type reversed out, headline in capitals, headline over the illustration, a full stop closing a
+    headline, a measure far from the familiar width, copy set into a shape. Each is present or
+    absent in the asset.
+  applicability:
+    when: "any asset carrying typeset text intended to be read"
+    limits: >
+      Every item rests on the reading habits of a 1983 print audience, which the source states
+      explicitly as his principle. The checklist may be applied as a description of what the source
+      would flag; the underlying claims are not verified here for any other audience or surface, and
+      the source's own two exceptions to the reverse-type rule turn on the page not being the light
+      source.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0010, t_ogx_0011, t_ogx_0012, t_ogx_0013, t_ogx_0009]
+  repair_ontology_refs: [t_ogx_0034, t_ogx_0035]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_004
+  source_knowledge_refs: [sk_ogx_0040, sk_ogx_0039]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: sequence
+  governance_consumer:
+  rationale: >
+    Two of the source's television cues are properties of a time span rather than of any single
+    frame: whether the brand name occurs within the opening seconds, and whether the opening frames
+    contain a surprise rather than an establishing lull. Neither can be seen in one frame, so the
+    evaluator must receive the opening sequence.
+  applicability:
+    when: "a time-based asset with an opening the viewer may leave during"
+    limits: >
+      The source states both for the thirty-second broadcast commercial of 1983, inside a viewing
+      environment he describes as thirty thousand commercials a year. A separate lane covers modern
+      platform guidance; any resemblance is an observation and no claim is transferred here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0016, t_ogx_0019]
+  repair_ontology_refs: [t_ogx_0039, t_ogx_0040]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_005
+  source_knowledge_refs: [sk_ogx_0042]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: shot
+  governance_consumer:
+  rationale: >
+    The super rule is exactly checkable and exactly mechanical: the words set over the picture are
+    either identical to the words spoken beneath them or they are not. It requires the picture and
+    the audio of the same shot together, and it is one of very few cues in this source with no
+    interpretive slack at all.
+  applicability:
+    when: "a time-based asset carrying superimposed text over spoken audio"
+    limits: >
+      The source's claim that divergence confuses the viewer is asserted without measurement; only
+      the check itself is mechanical.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0018]
+  repair_ontology_refs: [t_ogx_0042]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_006
+  source_knowledge_refs: [sk_ogx_0044]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >
+    The interchangeability test — could a competitor sign this line — cannot be answered from one
+    asset. It requires the line together with the competitor lines it sits among, which makes it a
+    property of a set rather than of a piece.
+  applicability:
+    when: "a standing line, slogan or endline, assessed against the category's other standing lines"
+    limits: >
+      The source applies it to nineteen corporate slogans of 1983 and offers it as an observation
+      rather than as a rule. His claimed second consequence — that such lines depress readership of
+      the copy by cluttering the layout — is asserted without measurement and is not carried into
+      this binding.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0020]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_007
+  source_knowledge_refs: [sk_ogx_0060, sk_ogx_0009]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    The source designates one question the most important in his book, and it is answerable of a
+    finished asset: is a benefit to the consumer promised anywhere in it, and is the promise stated
+    in specifics rather than in generalities or superlatives. Uniqueness, his second criterion,
+    is deliberately excluded from this binding because he supplies no way to assess it.
+  applicability:
+    when: "any advertising asset making a claim about a product"
+    limits: >
+      Presence of a promise is checkable; whether the promise is the right one is not, and the
+      source says selecting it requires research. His uniqueness criterion has no stated method and
+      is not bound here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0004]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_008
+  source_knowledge_refs: [sk_ogx_0021, sk_ogx_0020, sk_ogx_0035]
+  source_system_refs: [scs_ogx_003]
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >
+    The displacement question — after this element is in, what is the most memorable thing in the
+    asset, and is it the product — is one check that covers four failures the source reports
+    separately across three chapters. It is proposed as a single flag because the repairs differ
+    while the observation is the same.
+  applicability:
+    when: "an asset containing a celebrity, an analogy, a named competitor or a borrowed symbol"
+    limits: >
+      The grouping of these four failures into one shape is OURS, not the source's, and it is
+      recorded as such in scs_ogx_003. The flag identifies a candidate for review; it does not
+      select a repair, because the four repairs are not interchangeable.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0005, t_ogx_0006, t_ogx_0007]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; the grouping is an extractor hypothesis and has not been reviewed"
+
+- binding_id: bnd_ogx_009
+  source_knowledge_refs: [sk_ogx_0016, sk_ogx_0070]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer:
+  rationale: >
+    Two of the source's diagnoses turn on who the work appears designed to please rather than on
+    anything inside a single asset: the subject chosen because it interests the maker, and the
+    category whose advertising is aimed at the audience that approves it. Detecting either needs a
+    body of work over time, not one piece.
+  applicability:
+    when: "reviewing a body of work from one maker or one category"
+    limits: >
+      Both are inferences from content to intended audience. The source offers no evidence about how
+      the work he diagnoses was actually approved, and this binding inherits that weakness.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0022, t_ogx_0027]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_010
+  source_knowledge_refs: [sk_ogx_0028, sk_ogx_0038, sk_ogx_0042, sk_ogx_0029]
+  source_system_refs: []
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    Four of the comparisons this source reports are minimal pairs in his own telling — reverse type
+    against black on white, voice-over against on-camera, cartoon against live action, headline
+    above the illustration against below — and each names one varied element with a direction of
+    result. They are usable as a small set of contrast cases whose expected direction is on record,
+    which is exactly what a benchmark needs and what most of this book does not supply.
+  applicability:
+    when: "constructing contrast cases where a stated expected direction is wanted"
+    limits: >
+      Directions only. The source gives no magnitude for three of the four, no sample for any, and
+      in each case the two arms differed in more than the named element. These are contrast cases
+      with a recorded expectation, not validated effects, and they belong to print and broadcast of
+      1983.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_011
+  source_knowledge_refs: [sk_ogx_0030, sk_ogx_0047, sk_ogx_0055, sk_ogx_0045]
+  source_system_refs: []
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    The medium- and situation-specific chapters yield a set of brief categories whose constraints
+    the source states explicitly and differently: a transit card with a long dwell time, a poster
+    with a glance, a specialist trade audience with high prior interest, a destination sold to
+    someone who already wants to go, and a response asset that must complete a sale in one exposure.
+    They are useful as a spread of briefs precisely because the source refuses to give them one set
+    of rules.
+  applicability:
+    when: "assembling a spread of briefs that vary audience prior interest, dwell time and the act being asked for"
+    limits: >
+      Each brief carries its era's media conditions inside it — dwell times, publication economics,
+      ordering infrastructure — and those must be stated when the brief is used, not silently
+      updated.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_012
+  source_knowledge_refs: [sk_ogx_0023, sk_ogx_0032, sk_ogx_0039, sk_ogx_0020]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  observation_unit:
+  governance_consumer: evidence_interpretation
+  rationale: >
+    This source repeatedly says research established something and never supplies the finding. Four
+    clear instances are recorded in this lane, and in every one the withheld result is doing the
+    load-bearing work in the argument. That is a distinguishable evidence state from a result
+    claimed without controls, and it argues for weighting a citation by whether the finding was
+    supplied rather than by whether research was invoked.
+  applicability:
+    when: "weighting a source's claim that is supported by a named but unreported measurement"
+    limits: >
+      The distinction is drawn from this one source's habits. SPEC-03's `outcome_claimed` covers a
+      result asserted without controls; the pattern here is narrower, and the lane records it as an
+      ontology term rather than proposing any change to the fixed vocabulary.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ogx_0068]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_013
+  source_knowledge_refs: [sk_ogx_0011, sk_ogx_0030, sk_ogx_0040, sk_ogx_0056, sk_ogx_0002]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains, flags]
+  observation_unit:
+  governance_consumer: rule_application
+  rationale: >
+    Twenty-seven objects in this lane carry `historical_claim`, and several state their own media
+    conditions as the reason the rule holds — the density of headlines on a newspaper page, the
+    dwell time of a transit rider, the length of a broadcast slot, the economics of colour printing.
+    A rule whose stated mechanism is a media condition may not be applied where that condition does
+    not hold, and this lane's position is that such a rule is retrieved with its condition or not at
+    all.
+  applicability:
+    when: "retrieving a rule from this source for application outside 1983 print, broadcast or direct mail"
+    limits: >
+      This constrains retrieval and application; it makes no judgement about which of the source's
+      claims survive. The audit record for the live chapter-2 material classified two comparable
+      objects as `uncertain` rather than deciding, and this lane takes the same position.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ogx_014
+  source_knowledge_refs: [sk_ogx_0025, sk_ogx_0028]
+  source_system_refs: []
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    The typographic settings — drop-initial, leading between paragraphs, point size, column measure,
+    type colour — are physical print production decisions in the source's frame. They are recorded
+    here as production actions and PARKED. No generative equivalent is asserted, and no instruction
+    is derived from them for any other kind of system.
+  applicability:
+    when: "setting type for physical print, in the source's own frame"
+    limits: >
+      Physical typesetting for the presses and paper of 1983. Not translated. Production IR does not
+      exist, and producing a generative equivalent would be a hypothesis this lane is not authorised
+      to make.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_ogx_0033, t_ogx_0034, t_ogx_0035, t_ogx_0036, t_ogx_0038]
+  status: production_candidate
+  status_reason: "Production IR does not exist; physical print production, parked and not translated"
+
+- binding_id: bnd_ogx_015
+  source_knowledge_refs: [sk_ogx_0053, sk_ogx_0055]
+  source_system_refs: []
+  target_type: production
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  observation_unit:
+  governance_consumer:
+  rationale: >
+    The direct mail production variables — piece size, number of print colours, personalisation,
+    enclosures, the presence of a brochure — and the direct-response television mechanics of
+    ordering time and on-screen numbers are physical production and broadcast decisions of their
+    period. Recorded in the source's frame and parked.
+  applicability:
+    when: "producing a physical mailing or a response commercial, in the source's own frame"
+    limits: >
+      Physical mailing production and 1983 telephone and postal ordering infrastructure. Not
+      translated into any other frame, and nothing here is evidence about any generative system.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_ogx_0046, t_ogx_0044]
+  status: production_candidate
+  status_reason: "Production IR does not exist; physical production, parked and not translated"
