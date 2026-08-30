@@ -1,0 +1,3829 @@
+{
+  "experiment": "EVAL-037",
+  "lane_id": "gemma-controlled-canon",
+  "branch": "work/eval-037-gemma-controlled-canon",
+  "substrate": {
+    "freeze_fingerprint": "899eb3f5e3ba7bab8ef43006bb632a8bea59543b7b020607cbb89e10cbd311dc",
+    "canon_base_commit": "c6f8d910f7a3cdaaeafa2280313abfb9b898cddd",
+    "execution_commit": "86dabdd892084a3f4b1738fdaa86105ff5b87918"
+  },
+  "runner_commit": "86dabdd892084a3f4b1738fdaa86105ff5b87918",
+  "model": "gemma-4-31b-it",
+  "condition": "FULL_CANON",
+  "treatment": "CONTROLLED_CANON",
+  "attempts": [
+    {
+      "trial_id": "E037GCC-gemma-B02-R3",
+      "brief_id": "B02",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:45:32.662592+00:00",
+      "fresh_context": true,
+      "request_digest": "4b88a911634fe2aec9db125a89293d0ce5769de43623e823c8f90b5420954123",
+      "request_path": "requests/E037GCC-gemma-B02-R3-a0.request.json",
+      "ended_at": "2026-08-30T17:46:52.283769+00:00",
+      "response_digest": "f9562f49dcc724594cfe9e3a7d5f1e9e46c2560d249fce5981aa1eb4b4daa494",
+      "raw_response_path": "raw/E037GCC-gemma-B02-R3-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B02-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "PWyUatPvKOWjqfkP4ZjfsAw",
+          "input_tokens": 1213,
+          "cached_input_tokens": null,
+          "output_tokens": 44,
+          "reasoning_tokens": 331,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 12250,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 44,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1213,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1213
+              }
+            ],
+            "thoughts_token_count": 331,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1588,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "SmyUauySKuz1g8UPpKevmQI",
+          "input_tokens": 8480,
+          "cached_input_tokens": null,
+          "output_tokens": 1267,
+          "reasoning_tokens": 1070,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 65988,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1267,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 8480,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 8480
+              }
+            ],
+            "thoughts_token_count": 1070,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 10817,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 9693,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1311,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1401,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 78238
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {
+            "url": "https://getaight.ai"
+          },
+          "arguments_digest": "db994b4a62f4b821817ebedd318687c0c2a8e0b705d59102f53e2d0fb19eeee6",
+          "result_digest": "3688d9b1b33de0dce9c3f99cb67302d282f8c99df8635e2f8d4fefe6e23b9201",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037GCC-gemma-B02-R3-a0.jsonl#0"
+        },
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium Indian festive visual design AI infrastructure"
+          },
+          "arguments_digest": "8771f259920417f87c75c428dbdcfa8fa4a012ac0aa8ed616be541bceef76e96",
+          "result_digest": "bb787520a058ce29a33740ef22caf32c2733eda34736e24caacb2bd9ff491635",
+          "result_bytes": 19819,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 4,
+          "hold_items": 2,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_rbwl_0080",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 12.787109
+            },
+            {
+              "item_id": "qa_abcd_0002",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 10.444956
+            },
+            {
+              "item_id": "qa_rbwl_0008",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 3,
+              "score": 10.333512
+            },
+            {
+              "item_id": "qa_dpci_0006",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 9.284897
+            },
+            {
+              "item_id": "sk_dpci_0070",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 8.590847
+            },
+            {
+              "item_id": "bnd_ogx_015",
+              "source_id": "ogilvy-beyond-ch2",
+              "source_dir": "ogilvy-beyond-ch2",
+              "source_status": "HOLD",
+              "kind": "binding",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 8.274992
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B02-R3-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B01-R2",
+      "brief_id": "B01",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:46:52.288541+00:00",
+      "fresh_context": true,
+      "request_digest": "dfba7fe00ab753a1999896b7a0db74e34081f5a01eb9666c9f5b829146c33dd9",
+      "request_path": "requests/E037GCC-gemma-B01-R2-a0.request.json",
+      "ended_at": "2026-08-30T17:48:19.617672+00:00",
+      "response_digest": "63ebcbb4550a1ae12b58dbd4e60187c58707adfd87e1cc045cee3c61039a5548",
+      "raw_response_path": "raw/E037GCC-gemma-B01-R2-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B01-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "jWyUatCnBI-sg8UPqKOiiQw",
+          "input_tokens": 1233,
+          "cached_input_tokens": null,
+          "output_tokens": 45,
+          "reasoning_tokens": 406,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 14691,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 45,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1233,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1233
+              }
+            ],
+            "thoughts_token_count": 406,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1684,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "m2yUaovdHvD_4-EPu6XVoQc",
+          "input_tokens": 9678,
+          "cached_input_tokens": null,
+          "output_tokens": 1485,
+          "reasoning_tokens": 1071,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 72584,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1485,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 9678,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 9678
+              }
+            ],
+            "thoughts_token_count": 1071,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 12234,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 10911,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1530,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1477,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 87275
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {
+            "url": "https://rentok.com"
+          },
+          "arguments_digest": "d41f7c48cdbbb2ecdc60751d74f066f30a1e351ab34f4735e498efdbeb59e221",
+          "result_digest": "01cff979f904ee7db3055e65318d1cc514e4dd78bb379add03f5e109946f7be7",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R2-a0.jsonl#0"
+        },
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "Indian small business operational chaos visual motifs property management"
+          },
+          "arguments_digest": "22fd5370d0428fd222cc8e958ded433f19bfef196587f2083a95608c2c9fabab",
+          "result_digest": "3e5e7cd6c6484306d292774cb8cc6445d4426b97cb8779cf3232bed0f8d90fc6",
+          "result_bytes": 21085,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 6,
+          "hold_items": 0,
+          "qa_items": 0,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_rbwl_0020",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 13.760618
+            },
+            {
+              "item_id": "sk_rbwl_0170",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 12.803177
+            },
+            {
+              "item_id": "sk_rbwl_0120",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 12.659775
+            },
+            {
+              "item_id": "t_rbwl_0004",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 12.227532
+            },
+            {
+              "item_id": "t_rbwl_0008",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 12.196066
+            },
+            {
+              "item_id": "sk_nnn_0002",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 10.437232
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R2-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B03-R3",
+      "brief_id": "B03",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:48:19.619792+00:00",
+      "fresh_context": true,
+      "request_digest": "6a9d2e1547ac12f9af28aaa9c6f1e743e554334a9b7a5b5d87cbd2716e030844",
+      "request_path": "requests/E037GCC-gemma-B03-R3-a0.request.json",
+      "ended_at": "2026-08-30T17:49:28.332450+00:00",
+      "response_digest": "b26ba2dd93d53d07eb3783ad6da7e27ac90af0da03386fc54700e71b5d661c35",
+      "raw_response_path": "raw/E037GCC-gemma-B03-R3-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B03-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "5GyUat2pEf7Dg8UP4K63yQE",
+          "input_tokens": 1096,
+          "cached_input_tokens": null,
+          "output_tokens": 22,
+          "reasoning_tokens": 199,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 8055,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 22,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1096,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1096
+              }
+            ],
+            "thoughts_token_count": 199,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1317,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "7GyUatK_Bv7Dg8UPqq6nuAE",
+          "input_tokens": 6859,
+          "cached_input_tokens": null,
+          "output_tokens": 21,
+          "reasoning_tokens": 538,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 16984,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 21,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 6859,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 6859
+              }
+            ],
+            "thoughts_token_count": 538,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 7418,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 2,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "_WyUavvTB6Dbg8UPkIPiYA",
+          "input_tokens": 11697,
+          "cached_input_tokens": null,
+          "output_tokens": 964,
+          "reasoning_tokens": 530,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 43612,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 964,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 11697,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 11697
+              }
+            ],
+            "thoughts_token_count": 530,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 13191,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 19652,
+        "input_tokens_turns_reporting": 3,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1007,
+        "output_tokens_turns_reporting": 3,
+        "reasoning_tokens": 1267,
+        "reasoning_tokens_turns_reporting": 3,
+        "provider_turns": 3,
+        "latency_ms": 68651
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium beverage visual language modern Indian aesthetic"
+          },
+          "arguments_digest": "58e18b28105c25f721615c0667f951547c946257be8d56d2ed09e8638e33ad11",
+          "result_digest": "4297a6aef2b6ac8f5df2d3c63950bf91a5377dcb689dbfa1cafeb8fd1f92774e",
+          "result_bytes": 21334,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 6,
+          "hold_items": 0,
+          "qa_items": 2,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_dpci_0012",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 15.820973
+            },
+            {
+              "item_id": "sk_nnn_0019",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 15.154251
+            },
+            {
+              "item_id": "sk_rbwl_0080",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 12.787109
+            },
+            {
+              "item_id": "sk_dpci_0150",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 12.736307
+            },
+            {
+              "item_id": "qa_nnn_0023",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 5,
+              "score": 12.65767
+            },
+            {
+              "item_id": "sk_nnn_0052",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 12.590081
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R3-a0.jsonl#0"
+        },
+        {
+          "turn_index": 1,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium product photography lighting minimalist beverage"
+          },
+          "arguments_digest": "75cf798e4670befb087b21c2339fb853f330e142b20fce51fc5c4eb12ba9c1d7",
+          "result_digest": "5fc2b8140844358495fcdb818e6a6bf7d942896ed5ef4336c819f2fa7f34389c",
+          "result_bytes": 14498,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 1,
+          "hold_items": 5,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_lsmx_0035",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 11.013186
+            },
+            {
+              "item_id": "qa_lsmx_0027",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 10.403323
+            },
+            {
+              "item_id": "t_nnn_0005",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 10.053313
+            },
+            {
+              "item_id": "qa_lsmx_0002",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 10.039171
+            },
+            {
+              "item_id": "sk_sa8_0008",
+              "source_id": "hopkins-scientific-advertising-ch8-21",
+              "source_dir": "hopkins-scientific-advertising-ch8-21",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 9.923966
+            },
+            {
+              "item_id": "t_mla_0018",
+              "source_id": "hopkins-my-life-in-advertising",
+              "source_dir": "hopkins-my-life-in-advertising",
+              "source_status": "HOLD",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 9.163153
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R3-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B02-R2",
+      "brief_id": "B02",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:49:28.336859+00:00",
+      "fresh_context": true,
+      "request_digest": "4b88a911634fe2aec9db125a89293d0ce5769de43623e823c8f90b5420954123",
+      "request_path": "requests/E037GCC-gemma-B02-R2-a0.request.json",
+      "ended_at": "2026-08-30T17:50:48.249139+00:00",
+      "response_digest": "da1ce666db5e8ed5809dbbe8c8e3aa05cd8f0e3b202657b8134b95c6fe7ea0dd",
+      "raw_response_path": "raw/E037GCC-gemma-B02-R2-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B02-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "KW2Uar2cEY70g8UPq_ic0Qo",
+          "input_tokens": 1213,
+          "cached_input_tokens": null,
+          "output_tokens": 22,
+          "reasoning_tokens": 392,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 13436,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 22,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1213,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1213
+              }
+            ],
+            "thoughts_token_count": 392,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1627,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "Nm2UapmuCsikg8UPupGj8A8",
+          "input_tokens": 3677,
+          "cached_input_tokens": null,
+          "output_tokens": 24,
+          "reasoning_tokens": 353,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 11620,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 24,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 3677,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 3677
+              }
+            ],
+            "thoughts_token_count": 353,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 4054,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 2,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "QW2Uatu8MfvHg8UP_d_GsQI",
+          "input_tokens": 9284,
+          "cached_input_tokens": null,
+          "output_tokens": 1320,
+          "reasoning_tokens": 608,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 54812,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1320,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 9284,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 9284
+              }
+            ],
+            "thoughts_token_count": 608,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 11212,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 14174,
+        "input_tokens_turns_reporting": 3,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1366,
+        "output_tokens_turns_reporting": 3,
+        "reasoning_tokens": 1353,
+        "reasoning_tokens_turns_reporting": 3,
+        "provider_turns": 3,
+        "latency_ms": 79868
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {
+            "url": "https://getaight.ai"
+          },
+          "arguments_digest": "db994b4a62f4b821817ebedd318687c0c2a8e0b705d59102f53e2d0fb19eeee6",
+          "result_digest": "3688d9b1b33de0dce9c3f99cb67302d282f8c99df8635e2f8d4fefe6e23b9201",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037GCC-gemma-B02-R2-a0.jsonl#0"
+        },
+        {
+          "turn_index": 1,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium typography minimalist promotional design B2B AI"
+          },
+          "arguments_digest": "c885217c813603e8adefe8d8a38a9af74f0225bfcbc5d235b2ffa98dc4bbcf79",
+          "result_digest": "c7d6d1459e58d2391b2cb1ce2b13c3ae6a3a63c52442e5f6f42825014fc45868",
+          "result_bytes": 19392,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 1,
+          "hold_items": 5,
+          "qa_items": 2,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_sgb_0025",
+              "source_id": "samara-breaking-the-grid-ch2",
+              "source_dir": "samara-breaking-the-grid-ch2",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 11.439
+            },
+            {
+              "item_id": "sk_logo_0018",
+              "source_id": "airey-logo-design-love",
+              "source_dir": "airey-logo-design-love",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 10.459059
+            },
+            {
+              "item_id": "qa_abcd_0002",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 3,
+              "score": 10.444956
+            },
+            {
+              "item_id": "qa_logo_0008",
+              "source_id": "airey-logo-design-love",
+              "source_dir": "airey-logo-design-love",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 9.845122
+            },
+            {
+              "item_id": "sk_sam_c003_0047",
+              "source_id": "samara_making_breaking_grid_ch1",
+              "source_dir": "samara-making-breaking-grid-ch1",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 8.883351
+            },
+            {
+              "item_id": "sk_logo_0002",
+              "source_id": "airey-logo-design-love",
+              "source_dir": "airey-logo-design-love",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 8.836744
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B02-R2-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B06-R2",
+      "brief_id": "B06",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:50:48.250408+00:00",
+      "fresh_context": true,
+      "request_digest": "5d36bdbd48dfdf77705e8ba095cad4dd45a9ff01d185bffff9c9c23e674e5d5a",
+      "request_path": "requests/E037GCC-gemma-B06-R2-a0.request.json",
+      "ended_at": "2026-08-30T17:51:50.055959+00:00",
+      "response_digest": "305e5abd3544da37fb7eb70816c7e358c06a3820e184c0b82106de6681a1ec75",
+      "raw_response_path": "raw/E037GCC-gemma-B06-R2-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B06-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "eG2UarLwO5bQg8UPuriWsAk",
+          "input_tokens": 1129,
+          "cached_input_tokens": null,
+          "output_tokens": 25,
+          "reasoning_tokens": 316,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 10993,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 25,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1129,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1129
+              }
+            ],
+            "thoughts_token_count": 316,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1470,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "g22Uau2XJ930g8UPo47smAg",
+          "input_tokens": 6533,
+          "cached_input_tokens": null,
+          "output_tokens": 997,
+          "reasoning_tokens": 799,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 50776,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 997,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 6533,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 6533
+              }
+            ],
+            "thoughts_token_count": 799,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 8329,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 7662,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1022,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1115,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 61769
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "luxury watch photography lighting materials sunburst dial brushed steel"
+          },
+          "arguments_digest": "a1d5b720e1bdaf468589a198dfb63e7bad14b009a7cd83fd64d9af9ae17c1ea7",
+          "result_digest": "2cf4890d5e5938243d40531d6dd848ccbd9b3431e2b821ec9f26ff6c564c42ce",
+          "result_bytes": 19050,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 3,
+          "hold_items": 3,
+          "qa_items": 2,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_lsmx_0036",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 18.390868
+            },
+            {
+              "item_id": "qa_lsmx_0061",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 15.88144
+            },
+            {
+              "item_id": "bnd_lsmx_002",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "binding",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 10.357557
+            },
+            {
+              "item_id": "sk_af_c003_0021",
+              "source_id": "bayles_orland_art_and_fear_part_one_opening",
+              "source_dir": "bayles-orland-art-and-fear",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 9.8703
+            },
+            {
+              "item_id": "sk_ppm_0010",
+              "source_id": "pandey_pandeymonium",
+              "source_dir": "pandey-pandeymonium",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 9.602487
+            },
+            {
+              "item_id": "sk_af_c003_0022",
+              "source_id": "bayles_orland_art_and_fear_part_one_opening",
+              "source_dir": "bayles-orland-art-and-fear",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 9.362879
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B06-R2-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B01-R1",
+      "brief_id": "B01",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:51:50.061566+00:00",
+      "fresh_context": true,
+      "request_digest": "dfba7fe00ab753a1999896b7a0db74e34081f5a01eb9666c9f5b829146c33dd9",
+      "request_path": "requests/E037GCC-gemma-B01-R1-a0.request.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B01-R1-a0.jsonl",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "contemporary Indian visual aesthetic production design commercial"
+          },
+          "arguments_digest": "34fe39581c83ef12be362a043ea93f25e1768da41af15a4e7454b8b871437952",
+          "result_digest": "9617c29bfaf1314882cfca7a634935d5b60ef900478d79fa9a239581f5fe86ae",
+          "result_bytes": 16017,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 3,
+          "hold_items": 3,
+          "qa_items": 4,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_dpci_0012",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 16.04136
+            },
+            {
+              "item_id": "qa_logo_0032",
+              "source_id": "airey-logo-design-love",
+              "source_dir": "airey-logo-design-love",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 14.125021
+            },
+            {
+              "item_id": "bnd_mla_015",
+              "source_id": "hopkins-my-life-in-advertising",
+              "source_dir": "hopkins-my-life-in-advertising",
+              "source_status": "HOLD",
+              "kind": "binding",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 13.138368
+            },
+            {
+              "item_id": "qa_dpci_0014",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 12.725793
+            },
+            {
+              "item_id": "sk_logo_0042",
+              "source_id": "airey-logo-design-love",
+              "source_dir": "airey-logo-design-love",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 12.5008
+            },
+            {
+              "item_id": "qa_dpci_0022",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 6,
+              "score": 12.432786
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R1-a0.jsonl#0"
+        },
+        {
+          "turn_index": 1,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "01cff979f904ee7db3055e65318d1cc514e4dd78bb379add03f5e109946f7be7",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R1-a0.jsonl#1"
+        },
+        {
+          "turn_index": 2,
+          "name": "canon_search",
+          "arguments": {
+            "query": "commercial video pacing problem solution contrast"
+          },
+          "arguments_digest": "689f1588635e94e473144cb4e6ba419521701dafa3ddc7f61cb30c56f749f64e",
+          "result_digest": "28ad517b21cfb43f7deb26ae4d5e65f7509bbcb999a50d19abf92e52cacb9350",
+          "result_bytes": 18366,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 0,
+          "hold_items": 6,
+          "qa_items": 2,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_abcd_0006",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 14.313375
+            },
+            {
+              "item_id": "t_abcd_0006",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 13.628573
+            },
+            {
+              "item_id": "qa_abcd_0023",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 3,
+              "score": 12.497887
+            },
+            {
+              "item_id": "qa_abcd_0018",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 12.244462
+            },
+            {
+              "item_id": "sk_dmpl_0043",
+              "source_id": "desai_mother_pious_lady",
+              "source_dir": "desai-mother-pious-lady",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 12.056636
+            },
+            {
+              "item_id": "sk_ogx_0055",
+              "source_id": "ogilvy-beyond-ch2",
+              "source_dir": "ogilvy-beyond-ch2",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 11.71438
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R1-a0.jsonl#2"
+        }
+      ],
+      "ended_at": "2026-08-30T17:52:26.991095+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 33.07238476s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'L",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "tm2UauaqO8SkqfkPmdnG8AE",
+          "input_tokens": 1233,
+          "cached_input_tokens": null,
+          "output_tokens": 22,
+          "reasoning_tokens": 271,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 9993,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 22,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1233,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1233
+              }
+            ],
+            "thoughts_token_count": 271,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1526,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "wG2Uar3aH8ikg8UPupGj8A8",
+          "input_tokens": 5808,
+          "cached_input_tokens": null,
+          "output_tokens": 10,
+          "reasoning_tokens": 497,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 15349,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 10,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 5808,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 5808
+              }
+            ],
+            "thoughts_token_count": 497,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 6315,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 2,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "z22Uap-tNbjQg8UPsLCayAE",
+          "input_tokens": 9026,
+          "cached_input_tokens": null,
+          "output_tokens": 21,
+          "reasoning_tokens": 336,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 11147,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 21,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 9026,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 9026
+              }
+            ],
+            "thoughts_token_count": 336,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 9383,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 16067,
+        "input_tokens_turns_reporting": 3,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 53,
+        "output_tokens_turns_reporting": 3,
+        "reasoning_tokens": 1104,
+        "reasoning_tokens_turns_reporting": 3,
+        "provider_turns": 3,
+        "latency_ms": 36489
+      }
+    },
+    {
+      "trial_id": "E037GCC-gemma-B01-R1",
+      "brief_id": "B01",
+      "repetition": 1,
+      "attempt_index": 1,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:26.991931+00:00",
+      "fresh_context": true,
+      "request_digest": "dfba7fe00ab753a1999896b7a0db74e34081f5a01eb9666c9f5b829146c33dd9",
+      "request_path": "requests/E037GCC-gemma-B01-R1-a1.request.json",
+      "ended_at": "2026-08-30T17:52:27.640943+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 32.442314257s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B01-R1",
+      "brief_id": "B01",
+      "repetition": 1,
+      "attempt_index": 2,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:27.642551+00:00",
+      "fresh_context": true,
+      "request_digest": "dfba7fe00ab753a1999896b7a0db74e34081f5a01eb9666c9f5b829146c33dd9",
+      "request_path": "requests/E037GCC-gemma-B01-R1-a2.request.json",
+      "ended_at": "2026-08-30T17:52:27.922268+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 32.125776755s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B05-R1",
+      "brief_id": "B05",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:27.924919+00:00",
+      "fresh_context": true,
+      "request_digest": "bd4f3dc8c09fb04cc1cbc93d82fdb2a844480d584800802b4efb66614f893975",
+      "request_path": "requests/E037GCC-gemma-B05-R1-a0.request.json",
+      "ended_at": "2026-08-30T17:52:28.198980+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 31.841677038s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B05-R1",
+      "brief_id": "B05",
+      "repetition": 1,
+      "attempt_index": 1,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:28.199835+00:00",
+      "fresh_context": true,
+      "request_digest": "bd4f3dc8c09fb04cc1cbc93d82fdb2a844480d584800802b4efb66614f893975",
+      "request_path": "requests/E037GCC-gemma-B05-R1-a1.request.json",
+      "ended_at": "2026-08-30T17:52:28.869137+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 31.192845158s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B05-R1",
+      "brief_id": "B05",
+      "repetition": 1,
+      "attempt_index": 2,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:28.870582+00:00",
+      "fresh_context": true,
+      "request_digest": "bd4f3dc8c09fb04cc1cbc93d82fdb2a844480d584800802b4efb66614f893975",
+      "request_path": "requests/E037GCC-gemma-B05-R1-a2.request.json",
+      "ended_at": "2026-08-30T17:52:29.499398+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 30.54417268s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'L",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R1",
+      "brief_id": "B04",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:29.501959+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R1-a0.request.json",
+      "ended_at": "2026-08-30T17:52:30.116871+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 29.933459102s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R1",
+      "brief_id": "B04",
+      "repetition": 1,
+      "attempt_index": 1,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:30.118022+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R1-a1.request.json",
+      "ended_at": "2026-08-30T17:52:30.407713+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 29.635277627s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R1",
+      "brief_id": "B04",
+      "repetition": 1,
+      "attempt_index": 2,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:30.409357+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R1-a2.request.json",
+      "ended_at": "2026-08-30T17:52:30.705389+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 29.346875685s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R2",
+      "brief_id": "B04",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:30.707328+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R2-a0.request.json",
+      "ended_at": "2026-08-30T17:52:31.404399+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 28.716361379s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R2",
+      "brief_id": "B04",
+      "repetition": 2,
+      "attempt_index": 1,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:31.405867+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R2-a1.request.json",
+      "ended_at": "2026-08-30T17:52:32.011025+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 28.03235142s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'L",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R2",
+      "brief_id": "B04",
+      "repetition": 2,
+      "attempt_index": 2,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:32.012494+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R2-a2.request.json",
+      "ended_at": "2026-08-30T17:52:32.314537+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 27.732473939s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R3",
+      "brief_id": "B04",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:32.315939+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R3-a0.request.json",
+      "ended_at": "2026-08-30T17:52:32.957236+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 27.099547796s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R3",
+      "brief_id": "B04",
+      "repetition": 3,
+      "attempt_index": 1,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:32.958533+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R3-a1.request.json",
+      "ended_at": "2026-08-30T17:52:33.266742+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 26.789800776s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [],
+      "usage": null
+    },
+    {
+      "trial_id": "E037GCC-gemma-B04-R3",
+      "brief_id": "B04",
+      "repetition": 3,
+      "attempt_index": 2,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:52:33.267841+00:00",
+      "fresh_context": true,
+      "request_digest": "e18c438518a2fcb87441f8f10f6ec03077d23e76c3b1217a31c429d5f2a38ac1",
+      "request_path": "requests/E037GCC-gemma-B04-R3-a2.request.json",
+      "ended_at": "2026-08-30T17:53:46.286954+00:00",
+      "response_digest": "d65d3e16497f81510341108b9957ddf16429ae77dc4110b19ce13b0d65d07774",
+      "raw_response_path": "raw/E037GCC-gemma-B04-R3-a2.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B04-R3-a2.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "4W2UauuvKImsg8UPvLm-gQI",
+          "input_tokens": 1119,
+          "cached_input_tokens": null,
+          "output_tokens": 22,
+          "reasoning_tokens": 289,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 9817,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 22,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1119,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1119
+              }
+            ],
+            "thoughts_token_count": 289,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1430,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "622UaqjmHJbQg8UPuriWsAk",
+          "input_tokens": 5120,
+          "cached_input_tokens": null,
+          "output_tokens": 25,
+          "reasoning_tokens": 706,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 21479,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 25,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 5120,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 5120
+              }
+            ],
+            "thoughts_token_count": 706,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 5851,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 2,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "AW6UargQyKSDxQ-6kaPwDw",
+          "input_tokens": 7436,
+          "cached_input_tokens": null,
+          "output_tokens": 1219,
+          "reasoning_tokens": 244,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 41632,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1219,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 7436,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 7436
+              }
+            ],
+            "thoughts_token_count": 244,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 8899,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 13675,
+        "input_tokens_turns_reporting": 3,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1266,
+        "output_tokens_turns_reporting": 3,
+        "reasoning_tokens": 1239,
+        "reasoning_tokens_turns_reporting": 3,
+        "provider_turns": 3,
+        "latency_ms": 72928
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "UGC performance video skincare creator codes"
+          },
+          "arguments_digest": "7a9dfe21fe25d4335cc62cdfc57f354e095ac72d4a04f7cad2dd0fd093cb7db8",
+          "result_digest": "eeb2a8374c0de3ee3b946d7c660ab8ea7dc588930cc1dc8f2b71219f038ba573",
+          "result_bytes": 13071,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 2,
+          "hold_items": 4,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_abcd_0012",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 11.741871
+            },
+            {
+              "item_id": "qa_abcd_0014",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 11.717366
+            },
+            {
+              "item_id": "t_abcd_0011",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 10.916338
+            },
+            {
+              "item_id": "qa_abcd_0026",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 10.496729
+            },
+            {
+              "item_id": "qa_jgb_0004",
+              "source_id": "jain_gods_in_the_bazaar",
+              "source_dir": "jain-gods-in-the-bazaar",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 5,
+              "score": 10.409508
+            },
+            {
+              "item_id": "t_cat_c003_0011",
+              "source_id": "catmull_creativity_inc_ch5_honesty_and_candor",
+              "source_dir": "catmull-creativity-inc-ch5",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 9.08461
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B04-R3-a2.jsonl#0"
+        },
+        {
+          "turn_index": 1,
+          "name": "canon_read",
+          "arguments": {
+            "item_id": "sk_abcd_0012"
+          },
+          "arguments_digest": "d217ac16bce77338527b5b88bcdc18a27e24798ceeaaa18742cd02431bccffba",
+          "result_digest": "93ef8a4fa2912eb871e256c78c6fbd631237ccde749edbafef1440415b5cdb95",
+          "result_bytes": 3644,
+          "tool_family": "canon",
+          "result_item_count": 1,
+          "accepted_items": 0,
+          "hold_items": 1,
+          "qa_items": 0,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_abcd_0012",
+              "source_id": "google-abcd-video-ads",
+              "source_dir": "google-abcd-video-ads",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": null,
+              "score": null
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B04-R3-a2.jsonl#1"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B06-R3",
+      "brief_id": "B06",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:53:46.290122+00:00",
+      "fresh_context": true,
+      "request_digest": "5d36bdbd48dfdf77705e8ba095cad4dd45a9ff01d185bffff9c9c23e674e5d5a",
+      "request_path": "requests/E037GCC-gemma-B06-R3-a0.request.json",
+      "ended_at": "2026-08-30T17:54:52.918607+00:00",
+      "response_digest": "b71ef60d84642b17e92ef3ca553aaf4c01dffc2709120e142ad6206dbd3ca205",
+      "raw_response_path": "raw/E037GCC-gemma-B06-R3-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B06-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "Km6UauicOMrQg8UP0uiWIA",
+          "input_tokens": 1129,
+          "cached_input_tokens": null,
+          "output_tokens": 24,
+          "reasoning_tokens": 268,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 9659,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 24,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1129,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1129
+              }
+            ],
+            "thoughts_token_count": 268,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1421,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "NG6UasfVF_vHg8UP5vPysQI",
+          "input_tokens": 6386,
+          "cached_input_tokens": null,
+          "output_tokens": 1158,
+          "reasoning_tokens": 840,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 56923,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1158,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 6386,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 6386
+              }
+            ],
+            "thoughts_token_count": 840,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 8384,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 7515,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1182,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1108,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 66582
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "luxury watch photography lighting sunburst dial brushed steel"
+          },
+          "arguments_digest": "05dd09e1fe8c7cfcda2b143c011c6a6d4dd98a8b5e78b1b3ba03cca6920628a3",
+          "result_digest": "ccccd6552de092a03e567425ae53600bdcf0c6d8a8f9cc6401b61d572022e844",
+          "result_bytes": 18902,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 3,
+          "hold_items": 3,
+          "qa_items": 2,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_lsmx_0036",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 18.390868
+            },
+            {
+              "item_id": "qa_lsmx_0061",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 15.88144
+            },
+            {
+              "item_id": "bnd_lsmx_002",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "binding",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 10.357557
+            },
+            {
+              "item_id": "sk_ppm_0010",
+              "source_id": "pandey_pandeymonium",
+              "source_dir": "pandey-pandeymonium",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 9.602487
+            },
+            {
+              "item_id": "sk_alt_c003_0020",
+              "source_id": "alton_painting_with_light_ch2_motion_picture_illumination",
+              "source_dir": "alton-painting-with-light-ch2",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 9.292865
+            },
+            {
+              "item_id": "sk_nnn_0055",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 9.16063
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B06-R3-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B05-R2",
+      "brief_id": "B05",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:54:52.921184+00:00",
+      "fresh_context": true,
+      "request_digest": "bd4f3dc8c09fb04cc1cbc93d82fdb2a844480d584800802b4efb66614f893975",
+      "request_path": "requests/E037GCC-gemma-B05-R2-a0.request.json",
+      "ended_at": "2026-08-30T17:56:02.794186+00:00",
+      "response_digest": "1cd26dac7563738b1f5ed1a5f777074fe0c39c84dfa10fed529d892480de59b1",
+      "raw_response_path": "raw/E037GCC-gemma-B05-R2-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B05-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "bW6Uaq-pH4bVqfkPg6Wh0QE",
+          "input_tokens": 1100,
+          "cached_input_tokens": null,
+          "output_tokens": 27,
+          "reasoning_tokens": 295,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 10442,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 27,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1100,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1100
+              }
+            ],
+            "thoughts_token_count": 295,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1422,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "d26UauTRLfzEg8UP2IvhiQM",
+          "input_tokens": 6028,
+          "cached_input_tokens": null,
+          "output_tokens": 1193,
+          "reasoning_tokens": 901,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 59383,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1193,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 6028,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 6028
+              }
+            ],
+            "thoughts_token_count": 901,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 8122,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 7128,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1220,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1196,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 69825
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "spatial clarity dialogue shots cinematic tension 180 degree rule"
+          },
+          "arguments_digest": "f1e9e7dc2252becc713c730427b2ef19bf442578e4ebd6819b2ea4ed7ca693d2",
+          "result_digest": "549d1ab95acfad188d2c7d45b63be6f4b085757f1de4d7b561df3898aa50fbe2",
+          "result_bytes": 15023,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 6,
+          "hold_items": 0,
+          "qa_items": 0,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_gos_c003_0010",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 21.862202
+            },
+            {
+              "item_id": "sk_gos_c003_0011",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 20.745719
+            },
+            {
+              "item_id": "sk_gos_c003_0014",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 18.864209
+            },
+            {
+              "item_id": "sk_gote_c003_0054",
+              "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+              "source_dir": "grammar-of-the-edit-ch3-5",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 18.554502
+            },
+            {
+              "item_id": "t_gote_c003_0041",
+              "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+              "source_dir": "grammar-of-the-edit-ch3-5",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 18.41263
+            },
+            {
+              "item_id": "sk_gos_c003_0009",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 16.651336
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B05-R2-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B06-R1",
+      "brief_id": "B06",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:56:02.796940+00:00",
+      "fresh_context": true,
+      "request_digest": "5d36bdbd48dfdf77705e8ba095cad4dd45a9ff01d185bffff9c9c23e674e5d5a",
+      "request_path": "requests/E037GCC-gemma-B06-R1-a0.request.json",
+      "ended_at": "2026-08-30T17:56:59.077084+00:00",
+      "response_digest": "a78c139c61c5a47bb990a30d4758f2caf93592968c5fb30f4c47e21b5744b06f",
+      "raw_response_path": "raw/E037GCC-gemma-B06-R1-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B06-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "s26UaqrpIPD_4-EPu6XVoQc",
+          "input_tokens": 1129,
+          "cached_input_tokens": null,
+          "output_tokens": 20,
+          "reasoning_tokens": 283,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 9796,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 20,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1129,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1129
+              }
+            ],
+            "thoughts_token_count": 283,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1432,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "vG6UavbqPOuHjuMPwuTWyQ8",
+          "input_tokens": 6099,
+          "cached_input_tokens": null,
+          "output_tokens": 1018,
+          "reasoning_tokens": 615,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 46440,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1018,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 6099,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 6099
+              }
+            ],
+            "thoughts_token_count": 615,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 7732,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 7228,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1038,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 898,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 56236
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "luxury watch photography lighting composition"
+          },
+          "arguments_digest": "72594ca0ee147c34b5a861b93ac8bb766836120cc98e38793aadbf4731487286",
+          "result_digest": "504e2a66cfaeac76457e92cea2a84daa5551ade3b913a3d3cad945df48be9a2f",
+          "result_bytes": 17327,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 2,
+          "hold_items": 4,
+          "qa_items": 4,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_fre_c003_0025",
+              "source_id": "freeman_photographers_eye_graphic_guide_parts1_3",
+              "source_dir": "freeman-photographers-eye-graphic-guide",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 10.160178
+            },
+            {
+              "item_id": "qa_crl_0026",
+              "source_id": "carroll-read-this-photographs",
+              "source_dir": "carroll-read-this-photographs",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 10.126217
+            },
+            {
+              "item_id": "qa_lsmx_0049",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 3,
+              "score": 9.80067
+            },
+            {
+              "item_id": "qa_sgb_0006",
+              "source_id": "samara-breaking-the-grid-ch2",
+              "source_dir": "samara-breaking-the-grid-ch2",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 9.617591
+            },
+            {
+              "item_id": "sk_alt_c003_0020",
+              "source_id": "alton_painting_with_light_ch2_motion_picture_illumination",
+              "source_dir": "alton-painting-with-light-ch2",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 9.292865
+            },
+            {
+              "item_id": "qa_crl_0005",
+              "source_id": "carroll-read-this-photographs",
+              "source_dir": "carroll-read-this-photographs",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 6,
+              "score": 8.950693
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B06-R1-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B01-R3",
+      "brief_id": "B01",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:56:59.082256+00:00",
+      "fresh_context": true,
+      "request_digest": "dfba7fe00ab753a1999896b7a0db74e34081f5a01eb9666c9f5b829146c33dd9",
+      "request_path": "requests/E037GCC-gemma-B01-R3-a0.request.json",
+      "ended_at": "2026-08-30T17:58:30.752943+00:00",
+      "response_digest": "86eb12e5d483384f7df4946187e872afc5d5635c92493db609553375384dc66f",
+      "raw_response_path": "raw/E037GCC-gemma-B01-R3-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B01-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "626UavmdHZzeg8UPnIjK4Qs",
+          "input_tokens": 1233,
+          "cached_input_tokens": null,
+          "output_tokens": 44,
+          "reasoning_tokens": 253,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 9681,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 44,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1233,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1233
+              }
+            ],
+            "thoughts_token_count": 253,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1530,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "9W6UauOSC6zFg8UP65Nc",
+          "input_tokens": 9524,
+          "cached_input_tokens": null,
+          "output_tokens": 1757,
+          "reasoning_tokens": 1182,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 81942,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1757,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 9524,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 9524
+              }
+            ],
+            "thoughts_token_count": 1182,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 12463,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 10757,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1801,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1435,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 91623
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {
+            "url": "https://rentok.com"
+          },
+          "arguments_digest": "d41f7c48cdbbb2ecdc60751d74f066f30a1e351ab34f4735e498efdbeb59e221",
+          "result_digest": "01cff979f904ee7db3055e65318d1cc514e4dd78bb379add03f5e109946f7be7",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R3-a0.jsonl#0"
+        },
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "Indian commercial visual aesthetics B2B SaaS"
+          },
+          "arguments_digest": "3627ea4e746c4bcda1a06cdf444e1ea7168c1accbb01fc4adc8d68f965fbc7dd",
+          "result_digest": "0ab75b071005500fbcfa2fad1dcb5851acd84df3581b1091806619be695d4f91",
+          "result_bytes": 22138,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 6,
+          "hold_items": 0,
+          "qa_items": 1,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_jgb_0140",
+              "source_id": "jain_gods_in_the_bazaar",
+              "source_dir": "jain-gods-in-the-bazaar",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 14.037124
+            },
+            {
+              "item_id": "sk_nnn_0022",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 10.401481
+            },
+            {
+              "item_id": "sk_nnn_0005",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 10.13337
+            },
+            {
+              "item_id": "sk_nnn_0055",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 9.880062
+            },
+            {
+              "item_id": "sk_rbwl_0060",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 9.859445
+            },
+            {
+              "item_id": "qa_jgb_0014",
+              "source_id": "jain_gods_in_the_bazaar",
+              "source_dir": "jain-gods-in-the-bazaar",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 6,
+              "score": 9.455299
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B01-R3-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B03-R1",
+      "brief_id": "B03",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:58:30.755479+00:00",
+      "fresh_context": true,
+      "request_digest": "6a9d2e1547ac12f9af28aaa9c6f1e743e554334a9b7a5b5d87cbd2716e030844",
+      "request_path": "requests/E037GCC-gemma-B03-R1-a0.request.json",
+      "ended_at": "2026-08-30T17:59:46.209335+00:00",
+      "response_digest": "f198d9f95f4733a8687d840b13d627622a218d39176005edee1c6ef12ab74108",
+      "raw_response_path": "raw/E037GCC-gemma-B03-R1-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B03-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "R2-UauH7K6Dbg8UPkIPiYA",
+          "input_tokens": 1096,
+          "cached_input_tokens": null,
+          "output_tokens": 41,
+          "reasoning_tokens": 697,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 22734,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 41,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1096,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1096
+              }
+            ],
+            "thoughts_token_count": 697,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1834,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "XW-UarHVPPi6g8UPqNfw0Qc",
+          "input_tokens": 12026,
+          "cached_input_tokens": null,
+          "output_tokens": 1108,
+          "reasoning_tokens": 748,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 52667,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1108,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 12026,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 12026
+              }
+            ],
+            "thoughts_token_count": 748,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 13882,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 13122,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1149,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1445,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 75401
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium beverage photography lighting composition"
+          },
+          "arguments_digest": "1d7b51baef9ef9b2c27d542561622028ec6671561b67068f6cb71dde5b7b56ee",
+          "result_digest": "28799f13129aba95d938a315ae5a4a62883de8c340c35b3764b1579ee96d948a",
+          "result_bytes": 16892,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 3,
+          "hold_items": 3,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_fre_c003_0025",
+              "source_id": "freeman_photographers_eye_graphic_guide_parts1_3",
+              "source_dir": "freeman-photographers-eye-graphic-guide",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 10.160178
+            },
+            {
+              "item_id": "t_nnn_0005",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 10.053313
+            },
+            {
+              "item_id": "qa_lsmx_0049",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 3,
+              "score": 9.80067
+            },
+            {
+              "item_id": "qa_lsmx_0035",
+              "source_id": "light-science-magic-beyond-ch3",
+              "source_dir": "light-science-magic-beyond-ch3",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 9.356629
+            },
+            {
+              "item_id": "sk_fre_c003_0001",
+              "source_id": "freeman_photographers_eye_graphic_guide_parts1_3",
+              "source_dir": "freeman-photographers-eye-graphic-guide",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 8.879086
+            },
+            {
+              "item_id": "qa_snt_0028",
+              "source_id": "sontag-on-photography",
+              "source_dir": "sontag-on-photography",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 6,
+              "score": 8.496367
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R1-a0.jsonl#0"
+        },
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "modern Indian visual language premium aesthetic"
+          },
+          "arguments_digest": "8ba329f2cbd1feed046299e5827a29d0b6a3941de5b27f3fb72fbd7d3dc26262",
+          "result_digest": "ae75305f8d2e4c242fb32ea9368384eeb41d9dba3ded955b1f31848830b600e1",
+          "result_bytes": 21258,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 5,
+          "hold_items": 1,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_dpci_0012",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 15.820973
+            },
+            {
+              "item_id": "sk_rbwl_0080",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 12.787109
+            },
+            {
+              "item_id": "sk_dpci_0150",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 12.736307
+            },
+            {
+              "item_id": "qa_nnn_0023",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 4,
+              "score": 12.65767
+            },
+            {
+              "item_id": "sk_nnn_0052",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 12.590081
+            },
+            {
+              "item_id": "qa_sgb_0008",
+              "source_id": "samara-breaking-the-grid-ch2",
+              "source_dir": "samara-breaking-the-grid-ch2",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 6,
+              "score": 11.63557
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R1-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B03-R2",
+      "brief_id": "B03",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T17:59:46.211156+00:00",
+      "fresh_context": true,
+      "request_digest": "6a9d2e1547ac12f9af28aaa9c6f1e743e554334a9b7a5b5d87cbd2716e030844",
+      "request_path": "requests/E037GCC-gemma-B03-R2-a0.request.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B03-R2-a0.jsonl",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium beverage photography sophisticated contemporary visual cues"
+          },
+          "arguments_digest": "f60435c4f51987e25fa9bff93e2f3a4101dc0e179f5bbd315f396a65074d403f",
+          "result_digest": "00e7a9ae39c993d8fb4ece3a5c3ffbaf437bdec3abdd14de67ee79ef52d39463",
+          "result_bytes": 18326,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 3,
+          "hold_items": 3,
+          "qa_items": 1,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "t_nnn_0005",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 10.053313
+            },
+            {
+              "item_id": "qa_r22_0019",
+              "source_id": "ries-22-immutable-laws-branding",
+              "source_dir": "ries-22-immutable-laws-branding",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 9.991661
+            },
+            {
+              "item_id": "t_sgb_0009",
+              "source_id": "samara-breaking-the-grid-ch2",
+              "source_dir": "samara-breaking-the-grid-ch2",
+              "source_status": "HOLD",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 9.739715
+            },
+            {
+              "item_id": "sk_sut_alc_0031",
+              "source_id": "sutherland_alchemy_introduction",
+              "source_dir": "sutherland-alchemy-introduction",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 9.162968
+            },
+            {
+              "item_id": "sk_rbwl_0080",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 8.974985
+            },
+            {
+              "item_id": "sk_pex_0027",
+              "source_id": "freeman-photographers-eye-beyond-parts1-3",
+              "source_dir": "freeman-photographers-eye-beyond-parts1-3",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 8.785004
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R2-a0.jsonl#0"
+        },
+        {
+          "turn_index": 1,
+          "name": "canon_search",
+          "arguments": {
+            "query": "contemporary Indian aesthetic design color palette minimalist"
+          },
+          "arguments_digest": "d51a4484a8b9d67a64f6d4f3c2d716f5885630cb7f61518d8bf328cbee2d5f43",
+          "result_digest": "f4d2f12079ceb8602a5cfb2a4066ec833fa8d17375d1239940185bab5a4f5b7a",
+          "result_bytes": 19423,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 4,
+          "hold_items": 2,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_dpci_0022",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 18.791317
+            },
+            {
+              "item_id": "qa_dpci_0012",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 16.04136
+            },
+            {
+              "item_id": "sk_pex_0045",
+              "source_id": "freeman-photographers-eye-beyond-parts1-3",
+              "source_dir": "freeman-photographers-eye-beyond-parts1-3",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 14.885729
+            },
+            {
+              "item_id": "bnd_r22_005",
+              "source_id": "ries-22-immutable-laws-branding",
+              "source_dir": "ries-22-immutable-laws-branding",
+              "source_status": "HOLD",
+              "kind": "binding",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 13.103754
+            },
+            {
+              "item_id": "qa_dpci_0014",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 5,
+              "score": 12.725793
+            },
+            {
+              "item_id": "sk_dpci_0150",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 11.930417
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R2-a0.jsonl#1"
+        }
+      ],
+      "ended_at": "2026-08-30T18:00:21.826505+00:00",
+      "outcome": "transient_failure",
+      "failure_class": "rate_limit_429",
+      "failure_is_transient": true,
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_3_input_token_count, limit: 16000, model: gemma-4-31b\\nPlease retry in 38.234370649s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': '",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "k2-UaqW6Cavdg8UPobPpkAI",
+          "input_tokens": 1096,
+          "cached_input_tokens": null,
+          "output_tokens": 22,
+          "reasoning_tokens": 693,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 21909,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 22,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1096,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1096
+              }
+            ],
+            "thoughts_token_count": 693,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1811,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "qG-Uau25H53Rg8UP7qjs4Ag",
+          "input_tokens": 7083,
+          "cached_input_tokens": null,
+          "output_tokens": 22,
+          "reasoning_tokens": 400,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 13223,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 22,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 7083,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 7083
+              }
+            ],
+            "thoughts_token_count": 400,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 7505,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 8179,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 44,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1093,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 35132
+      }
+    },
+    {
+      "trial_id": "E037GCC-gemma-B03-R2",
+      "brief_id": "B03",
+      "repetition": 2,
+      "attempt_index": 1,
+      "attempt_kind": "technical_retry",
+      "phase": "creative",
+      "started_at": "2026-08-30T18:00:21.827701+00:00",
+      "fresh_context": true,
+      "request_digest": "6a9d2e1547ac12f9af28aaa9c6f1e743e554334a9b7a5b5d87cbd2716e030844",
+      "request_path": "requests/E037GCC-gemma-B03-R2-a1.request.json",
+      "ended_at": "2026-08-30T18:01:31.689466+00:00",
+      "response_digest": "1bea8debe17174b6386845fb5565f51580e9c8c36b13c345e6399b6426c8c2fe",
+      "raw_response_path": "raw/E037GCC-gemma-B03-R2-a1.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B03-R2-a1.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "tm-UarWKFcr1g8UPuabe-Ao",
+          "input_tokens": 1096,
+          "cached_input_tokens": null,
+          "output_tokens": 21,
+          "reasoning_tokens": 386,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 12934,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 21,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1096,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1096
+              }
+            ],
+            "thoughts_token_count": 386,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1503,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "w2-UapS5DfvHg8UP5vPysQI",
+          "input_tokens": 6850,
+          "cached_input_tokens": null,
+          "output_tokens": 21,
+          "reasoning_tokens": 372,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 12203,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 21,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 6850,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 6850
+              }
+            ],
+            "thoughts_token_count": 372,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 7243,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 2,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "z2-UaqjZGvjEg8UPgoTVEA",
+          "input_tokens": 7715,
+          "cached_input_tokens": null,
+          "output_tokens": 985,
+          "reasoning_tokens": 587,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 44675,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 985,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 7715,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 7715
+              }
+            ],
+            "thoughts_token_count": 587,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 9287,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 15661,
+        "input_tokens_turns_reporting": 3,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1027,
+        "output_tokens_turns_reporting": 3,
+        "reasoning_tokens": 1345,
+        "reasoning_tokens_turns_reporting": 3,
+        "provider_turns": 3,
+        "latency_ms": 69812
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "contemporary indian premium aesthetic visual language"
+          },
+          "arguments_digest": "1f63e6498e6fe3344a0a85c3ab50e03419958cfd841c5aba2dd6b6116e72fb85",
+          "result_digest": "ff21b65ab7a60e082bb81f575993985886afa542026173dcfa41de55e1ab3ac4",
+          "result_bytes": 20244,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 6,
+          "hold_items": 0,
+          "qa_items": 3,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "qa_dpci_0012",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 1,
+              "score": 21.497513
+            },
+            {
+              "item_id": "qa_dpci_0022",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 2,
+              "score": 16.3439
+            },
+            {
+              "item_id": "sk_dpci_0130",
+              "source_id": "dwyer_patel_cinema_india",
+              "source_dir": "dwyer-patel-cinema-india",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 13.864687
+            },
+            {
+              "item_id": "sk_rbwl_0080",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 12.787109
+            },
+            {
+              "item_id": "qa_nnn_0023",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 5,
+              "score": 12.65767
+            },
+            {
+              "item_id": "sk_nnn_0052",
+              "source_id": "parameswaran_nawabs_nudes_noodles",
+              "source_dir": "parameswaran-nawabs-nudes-noodles",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 12.590081
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R2-a1.jsonl#0"
+        },
+        {
+          "turn_index": 1,
+          "name": "canon_search",
+          "arguments": {
+            "query": "modern indian architectural aesthetic interiors materials"
+          },
+          "arguments_digest": "272d0f1ce2e78e509d193b8ca52393c5043880a12625cb092333e7c6fc69ae50",
+          "result_digest": "addbddcef2a084d29d173dc2241c08491a70cd0f861d5d73c7edc458d49d5ebc",
+          "result_bytes": 341,
+          "tool_family": "canon",
+          "result_item_count": 0,
+          "accepted_items": 0,
+          "hold_items": 0,
+          "qa_items": 0,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [],
+          "transcript_ref": "transcripts/E037GCC-gemma-B03-R2-a1.jsonl#1"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B02-R1",
+      "brief_id": "B02",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T18:01:31.694951+00:00",
+      "fresh_context": true,
+      "request_digest": "4b88a911634fe2aec9db125a89293d0ce5769de43623e823c8f90b5420954123",
+      "request_path": "requests/E037GCC-gemma-B02-R1-a0.request.json",
+      "ended_at": "2026-08-30T18:02:59.454303+00:00",
+      "response_digest": "1bb6c27bfaa40cac9723959274fe1cace05335b77b87a579dcd20a7de47bf9b7",
+      "raw_response_path": "raw/E037GCC-gemma-B02-R1-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B02-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "_G-Uau2WBsr1g8UP2cbguAY",
+          "input_tokens": 1213,
+          "cached_input_tokens": null,
+          "output_tokens": 43,
+          "reasoning_tokens": 513,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 16625,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 43,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1213,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1213
+              }
+            ],
+            "thoughts_token_count": 513,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1769,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "DHCUarH5K9Olg8UPmaGQyAI",
+          "input_tokens": 8605,
+          "cached_input_tokens": null,
+          "output_tokens": 1365,
+          "reasoning_tokens": 1171,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 71088,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1365,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 8605,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 8605
+              }
+            ],
+            "thoughts_token_count": 1171,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 11141,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 9818,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1408,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 1684,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 87713
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {
+            "url": "https://getaight.ai"
+          },
+          "arguments_digest": "db994b4a62f4b821817ebedd318687c0c2a8e0b705d59102f53e2d0fb19eeee6",
+          "result_digest": "3688d9b1b33de0dce9c3f99cb67302d282f8c99df8635e2f8d4fefe6e23b9201",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037GCC-gemma-B02-R1-a0.jsonl#0"
+        },
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "premium typography layout pricing AI product"
+          },
+          "arguments_digest": "cf1cb5c966383d3ca2691ba5dcee8588e2a5455cdf34018db5689f2a833a1b15",
+          "result_digest": "88c749d43abb12038f90a3e4d36e02ec4fcc46e5a512fe6835baa235daeb3b63",
+          "result_bytes": 18717,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 2,
+          "hold_items": 4,
+          "qa_items": 1,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_ogx_0067",
+              "source_id": "ogilvy-beyond-ch2",
+              "source_dir": "ogilvy-beyond-ch2",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 12.531308
+            },
+            {
+              "item_id": "bnd_sam_c003_0001",
+              "source_id": "samara_making_breaking_grid_ch1",
+              "source_dir": "samara-making-breaking-grid-ch1",
+              "source_status": "ACCEPTED",
+              "kind": "binding",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 12.456671
+            },
+            {
+              "item_id": "sk_r22_0025",
+              "source_id": "ries-22-immutable-laws-branding",
+              "source_dir": "ries-22-immutable-laws-branding",
+              "source_status": "HOLD",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 11.894886
+            },
+            {
+              "item_id": "t_ogx_0054",
+              "source_id": "ogilvy-beyond-ch2",
+              "source_dir": "ogilvy-beyond-ch2",
+              "source_status": "HOLD",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 10.851593
+            },
+            {
+              "item_id": "sk_rbwl_0080",
+              "source_id": "bijapurkar_we_are_like_that_only",
+              "source_dir": "bijapurkar-we-are-like-that-only",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 10.784808
+            },
+            {
+              "item_id": "qa_sgb_0017",
+              "source_id": "samara-breaking-the-grid-ch2",
+              "source_dir": "samara-breaking-the-grid-ch2",
+              "source_status": "HOLD",
+              "kind": "qa",
+              "is_qa": true,
+              "not_benchmark_ground_truth": true,
+              "rank": 6,
+              "score": 10.668839
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B02-R1-a0.jsonl#1"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037GCC-gemma-B05-R3",
+      "brief_id": "B05",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T18:02:59.456483+00:00",
+      "fresh_context": true,
+      "request_digest": "bd4f3dc8c09fb04cc1cbc93d82fdb2a844480d584800802b4efb66614f893975",
+      "request_path": "requests/E037GCC-gemma-B05-R3-a0.request.json",
+      "ended_at": "2026-08-30T18:04:01.611921+00:00",
+      "response_digest": "02906ee39d180a953f3aa24a77f517360013f2733f0f6738c48aa669330611dc",
+      "raw_response_path": "raw/E037GCC-gemma-B05-R3-a0.response.json",
+      "transcript_path": "transcripts/E037GCC-gemma-B05-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "VHCUapekF5Cr4-EP7cLHuAY",
+          "input_tokens": 1100,
+          "cached_input_tokens": null,
+          "output_tokens": 26,
+          "reasoning_tokens": 252,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 9783,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 26,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 1100,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 1100
+              }
+            ],
+            "thoughts_token_count": 252,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1378,
+            "traffic_type": null
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Google Gemini API",
+          "provider_model_version": "gemma-4-31b-it",
+          "provider_request_id": "XXCUaoXrJv7Dg8UPyNH3wAE",
+          "input_tokens": 4917,
+          "cached_input_tokens": null,
+          "output_tokens": 1351,
+          "reasoning_tokens": 505,
+          "stop_reason": "FinishReason.STOP",
+          "latency_ms": 52319,
+          "provider_reported_usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 1351,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 4917,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 4917
+              }
+            ],
+            "thoughts_token_count": 505,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 6773,
+            "traffic_type": null
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 6017,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": null,
+        "cached_input_tokens_turns_reporting": 0,
+        "output_tokens": 1377,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": 757,
+        "reasoning_tokens_turns_reporting": 2,
+        "provider_turns": 2,
+        "latency_ms": 62102
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": null,
+      "cost_basis": "price not established for gemma-4-31b-it at freeze time",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "canon_search",
+          "arguments": {
+            "query": "spatial continuity 180 degree rule cinematic tension caf\u00e9"
+          },
+          "arguments_digest": "2687c8e41f7f7e5cabb207978d59841610fc1680a08e2dcc6212a2022a0ac1ae",
+          "result_digest": "9807026f7117651f20e4edd89bd838a24aa23c0ce4b3298c62cc8bac9f7409db",
+          "result_bytes": 10684,
+          "tool_family": "canon",
+          "result_item_count": 6,
+          "accepted_items": 6,
+          "hold_items": 0,
+          "qa_items": 0,
+          "every_item_carried_source_status": true,
+          "retrieved_refs": [
+            {
+              "item_id": "sk_gos_c003_0010",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 1,
+              "score": 22.212354
+            },
+            {
+              "item_id": "sc_gote_line_geometry",
+              "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+              "source_dir": "grammar-of-the-edit-ch3-5",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_concept",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 2,
+              "score": 21.070177
+            },
+            {
+              "item_id": "t_gos_c003_0006",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_term",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 3,
+              "score": 20.646919
+            },
+            {
+              "item_id": "sc_gos_c003_continuity_geometry",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "ontology_concept",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 4,
+              "score": 20.458708
+            },
+            {
+              "item_id": "sk_gos_c003_0009",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 5,
+              "score": 20.335815
+            },
+            {
+              "item_id": "sk_gos_c003_0011",
+              "source_id": "grammar_of_the_shot_ch4_continuity",
+              "source_dir": "grammar-of-the-shot-ch4",
+              "source_status": "ACCEPTED",
+              "kind": "knowledge",
+              "is_qa": false,
+              "not_benchmark_ground_truth": null,
+              "rank": 6,
+              "score": 19.655316
+            }
+          ],
+          "transcript_ref": "transcripts/E037GCC-gemma-B05-R3-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [],
+      "outcome": "ok"
+    }
+  ]
+}
