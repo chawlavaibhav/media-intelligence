@@ -1,0 +1,394 @@
+# Claude C. Hopkins, "Scientific Advertising" (1923), chapters 8-21 (printed pp. 25-64).
+# SPEC-03 Object 2 — SourceConceptSystem.
+#
+# EXPERIMENTAL — NOT LIVE CANON. Lane: canon/experimental/book-expansion-qa-v1/.
+# SCOPE EXTENSION of the live `hopkins_scientific_advertising_ch1_7`. Same work. Not an
+# independent origin. No system here may be read as agreement between sources.
+#
+# Four systems are recorded. Each exists because atomising the knowledge would destroy it — a
+# trade-off that is incoherent when either half is retrieved alone, a screen whose members are
+# consecutive filters, a machine whose parts pay for each other, an apparatus whose value is that
+# its stages feed one another. Systems were NOT created to make the extraction look complete: the
+# doctrinal chapters (8, 17, 18, 21) produce good objects and no system, and that is recorded as
+# the correct outcome rather than a gap.
+#
+# ORIGIN MARKING: the grouping is ours in every case except where noted. Hopkins numbers nothing,
+# builds no framework and cross-references his own chapters only four times in this span. Each
+# system's `system_level_uncertainty` states plainly how much of it is ours.
+
+source_id: hopkins-scientific-advertising-ch8-21
+
+source_concept_systems:
+
+- scs_id: scs_sa8_001
+  source_id: hopkins-scientific-advertising-ch8-21
+  label: the_economics_of_pictorial_space
+  label_origin: extractor_assigned
+  system_type: trade_off_set
+  system_type_origin: extractor_inferred
+  description: >
+    Chapter 9's five claims about pictures are not five independent rules. They are one budget
+    problem stated from five sides: what a picture costs (space, not artwork), what it must beat to
+    justify that cost (the same space set in type), the one condition under which it reliably beats
+    it (depicting the condition the buyer covets), the way a picture can win the comparison on
+    attention and still lose the sale (eccentricity overshadowing the headline), and the source's
+    own ranking of the whole category against the decisions that actually move results.
+  whole_system_claim:
+    text: >
+      A picture is an item of purchased space competing against every other use of that space, so
+      every pictorial decision is a comparison rather than a preference — and the same chapter that
+      makes this comparison "of paramount importance" ends by ranking the entire class of decisions
+      as minor economies beside the basic principles. Both positions are the source's and the
+      source does not reconcile them.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each claim separately and never states the system. Three things justify
+      grouping them. First, all five arguments are conducted in the same currency — space and its
+      cost — and each explicitly compares one use of space against another. Second, the chapter
+      itself is bounded and self-referential: it opens with the cost premise and closes by ranking
+      the whole chapter's subject matter. Third, the members are incoherent alone: sk_sa8_0005 read
+      by itself makes Hopkins an opponent of pictures, which sk_sa8_0006 shows he is not, and
+      sk_sa8_0009 read by itself makes the chapter's own subject unimportant. The contradiction
+      recorded in `conflicts` is the source's, not ours; the decision to hold these five together
+      so that it is visible is ours.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sa8_0005, role_in_system: premise_and_test, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0006, role_in_system: condition_under_which_the_test_is_passed, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0007, role_in_system: failure_mode, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0008, role_in_system: bounded_exception, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0009, role_in_system: priority_ranking, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_sa8_0008, to: sk_sa8_0005, nature: "the colour verdict is the space-cost test applied to the colour premium", origin: extractor_inferred}
+      - {from: sk_sa8_0009, to: sk_sa8_0003, nature: "the repetition economy rests on always addressing new customers, which is a chapter 8 claim", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sa8_0006, sk_sa8_0007]
+        nature: >
+          A picture must be striking enough to carry an aspirational argument and not so striking
+          that it overshadows the headline. The source gives no way to locate the line between them.
+        origin: source_stated
+        source_ref: {chapter: "9", page_start: 29}
+      - between: [sk_sa8_0005, sk_sa8_0008]
+        nature: >
+          Colour raises the cost of the space without adding area, so it must clear the same bar on
+          a worse ratio; the source's answer is that it generally does not.
+        origin: extractor_inferred
+    conflicts:
+      - between: [sk_sa8_0005, sk_sa8_0009]
+        nature: >
+          Art is "a study of paramount importance" with one-third to one-half of a campaign staked
+          on it (p.28) and art questions are "minor questions... mere economies, not largely
+          affecting the results of a campaign" (p.30). Two pages apart, in one chapter, unresolved
+          by the source. A reconciliation is available — the stake is in the SPACE, which is a basic
+          decision, while execution quality is a minor one — but the source does not state it and it
+          is not recorded here as the source's position.
+        origin: source_stated
+        source_ref: {chapter: "9", page_start: 28, page_end: 30}
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, historical_claim]
+    source_uncertainty: source_asks_open_question
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Members are individually well recorded and every one is an explicit source claim. The claim
+      that they form ONE budget problem is OURS. The internal contradiction is the SOURCE'S and is
+      quoted rather than inferred. The whole system is technology- and cost-contingent on 1923 print
+      economics — space sold by area, halftone reproduction, a colour premium, preparation cost
+      small beside insertion cost — and none of it is asserted to survive a different cost
+      structure.
+  provenance:
+    chapter: "9 — Art in Advertising"
+    section: "whole chapter"
+    page_start: 28
+    page_end: 30
+    source_support: text
+
+- scs_id: scs_sa8_002
+  source_id: hopkins-scientific-advertising-ch8-21
+  label: the_feasibility_screen_applied_before_a_campaign_exists
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    A set of tests the source applies before any advertising is written, each capable of ruling a
+    project out on its own: is the object affordable at any scale, does the demand created stay with
+    the advertiser or pass to rivals, does revenue per customer repay the cost of getting one, which
+    claim can reach enough readers to carry the cost of the circulation, what price regime is the
+    line in, and does the name secure the demand the campaign will create.
+  whole_system_claim:
+    text: >
+      Most of what determines whether advertising can succeed is decided before the advertising
+      exists, by arithmetic over the product's economics rather than by anything about the
+      advertising itself — and each test is a veto rather than a score, since failing any one of
+      them cannot be compensated by strength in the others.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source never assembles these. They are drawn from chapters 10, 12 and 20 and the grouping
+      is entirely ours. What justifies it is that every member shares one structure the source does
+      state repeatedly: a quantity is computed, compared against the cost of getting a customer, and
+      the project is abandoned if the comparison fails. Chapter 10 says this explicitly of itself —
+      "every project and method should be weighed and determined by a known scale of cost and
+      result" — and chapter 12 opens by listing the same decisions as things settled in advance,
+      "in the foundations". The VETO character is our reading: the source presents each test as
+      decisive in its own passage and never discusses trading one against another, and we record
+      that as the framework's form rather than as something the source asserts.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sa8_0010, role_in_system: veto_test, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0011, role_in_system: veto_test, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0012, role_in_system: veto_test, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0014, role_in_system: veto_test, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0013, role_in_system: qualifier_on_claim_selection, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0020, role_in_system: parameter_selection, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0023, role_in_system: structural_defence, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0046, role_in_system: structural_defence, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0047, role_in_system: structural_defence, order: 9, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_sa8_0012, to: sk_sa8_0020, nature: "consumption per customer decides both feasibility and which price regime applies", origin: extractor_inferred}
+      - {from: sk_sa8_0014, to: sk_sa8_0017, nature: "the reachable percentage the claim test needs is produced by the chapter 11 canvass", origin: source_stated}
+      - {from: sk_sa8_0023, to: sk_sa8_0047, nature: "the strategic substitution defence is executed through the naming taxonomy", origin: source_stated}
+    tradeoffs:
+      - between: [sk_sa8_0046, sk_sa8_0047]
+        nature: >
+          A descriptive name sells in space that is spent anyway; an exclusive coined name protects
+          the demand but must be given meaning by advertising the advertiser pays for. The source
+          states both sides and does not choose.
+        origin: source_stated
+        source_ref: {chapter: "20", page_start: 60}
+      - between: [sk_sa8_0012, sk_sa8_0014]
+        nature: >
+          Breadth of appeal and revenue per customer are independent and can point opposite ways.
+          The Dakin-fluid germicide is the source's own case of a product sellable to half the homes
+          in the country that still cannot repay its acquisition cost.
+        origin: source_stated
+        source_ref: {chapter: "10", page_start: 32}
+    conflicts:
+      - between: [sk_sa8_0010, sk_sa8_0016]
+        nature: >
+          Chapter 10 prices habit change out of reach; chapter 11's pork-and-beans campaign, held up
+          as a success, exists precisely to move households off a home-baking habit. The source does
+          not address this.
+        origin: extractor_inferred
+      - between: [sk_sa8_0013, sk_sa8_0001]
+        nature: >
+          If mentioning a narrow claim can destroy a broad one, chapter 8's rule to include every
+          claim in every advertisement cannot hold unconditionally. The source states both and never
+          puts them together.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "10 — Things Too Costly; 12 — Strategy; 20 — A Name That Helps"
+    section: "assembled across three chapters"
+    page_start: 31
+    page_end: 61
+    source_support: text
+
+- scs_id: scs_sa8_003
+  source_id: hopkins-scientific-advertising-ch8-21
+  label: the_apparatus_for_replacing_opinion_with_knowledge
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The stages by which the source says an advertising decision stops being an opinion: gather
+    information (read the literature, canvass consumers, verify the maker's claims, commission the
+    figures), obtain an instrument (the sample coupon, which keys a general advertiser's
+    advertising), run the test (four or five towns, or twenty-five letter cells, or paired towns for
+    a single variable), extrapolate (the small-scale average asserted always to hold), and apply the
+    verdict to disputes, expenditures and personnel. Chapter 21 states what the apparatus exists to
+    prevent: a growing business absorbing unmeasured advertising into its own success story.
+  whole_system_claim:
+    text: >
+      The stages are load-bearing on each other, and the chain has one weak link that the source
+      never strengthens. Information decides what to test; the coupon makes a general advertiser
+      testable at all; the test returns per-customer quantities; and the whole apparatus is
+      decision-useful only if small-scale averages hold at scale — which is the one step in the
+      chain the source asserts without any evidence, mechanism or condition.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The grouping across chapters 11, 13, 15, 16, 19 and 21 is ours, but three of the links are the
+      source's own. Chapter 12 names the intelligence function as a stage: "Our intelligence
+      department is a vital factor, as told in the previous chapter." Chapter 13 states that samples
+      pay "by keying your advertisements... Thus you can compare one with another ad, headline, plan
+      and method", which is the coupon presented as the instrument of the test. Chapter 19 states
+      that letter testing is done "Just as men are doing now in all scientific advertising",
+      explicitly filing it under the same apparatus. What is entirely ours is the identification of
+      sk_sa8_0034 as the chain's weak link — the source treats it as its firmest ground, not its
+      weakest. That reading is recorded as ours and the reason is stated in that object's caveats.
+    source_ref: null
+  members:
+    - {sk_ref: sk_sa8_0015, role_in_system: information_stage, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0016, role_in_system: information_stage, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0017, role_in_system: information_stage, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0018, role_in_system: information_stage, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0019, role_in_system: information_stage, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0025, role_in_system: instrument, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0033, role_in_system: test_procedure, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0043, role_in_system: test_procedure, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0029, role_in_system: test_procedure, order: 9, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0038, role_in_system: test_procedure, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_sa8_0034, role_in_system: inferential_premise, order: 11, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0035, role_in_system: application_of_the_verdict, order: 12, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0036, role_in_system: application_of_the_verdict, order: 13, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0037, role_in_system: application_of_the_verdict, order: 14, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0048, role_in_system: what_the_apparatus_prevents, order: 15, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_sa8_0033, to: sk_sa8_0034, nature: "the procedure produces a decision only under the always-hold premise", origin: source_stated}
+      - {from: sk_sa8_0033, to: sk_sa8_0025, nature: "the test starts users with a sample offer, which is also what keys it", origin: source_stated}
+      - {from: sk_sa8_0033, to: sk_sa8_0024, nature: "the offer must be free for the test to start users quickly and cheaply", origin: extractor_inferred}
+      - {from: sk_sa8_0037, to: sk_sa8_0036, nature: "the agent audition is the champion/challenger arrangement used on a supplier instead of a plan", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_sa8_0033, sk_sa8_0029]
+        nature: >
+          Two different test shapes sit side by side and the source does not distinguish them. The
+          chapter 15 test measures absolute levels in a few towns with no comparison arm; the
+          chapters 13 and 16 tests are paired-town comparisons with an arm held back. The second
+          answers "which is better", the first answers "is it viable", and only the second controls
+          anything.
+        origin: extractor_inferred
+    conflicts:
+      - between: [sk_sa8_0034, sk_sa8_0017]
+        nature: >
+          "Those averages always hold" against chapter 11's instruction to gather appeal percentages
+          by class because "the percentage may differ on farms and in cities". If response varies by
+          class, an average from four or five towns generalises only if those towns match the
+          national class mix, which the source never mentions.
+        origin: extractor_inferred
+      - between: [sk_sa8_0037, sk_sa8_0029]
+        nature: >
+          Chapter 13 warns that arguments about advertising expenditure are usually biased and names
+          the interest behind them; chapter 15 predicts that applying the audition method would move
+          a large percentage of all advertising — a prediction in the direct commercial interest of
+          the author's own agency, made without noting it.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, argued, mechanism_given, empirical_within_source, outcome_claimed, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The stages are the source's; the assembly into one apparatus is ours, though the source links
+      three of the joins itself. The critical judgement — that sk_sa8_0034 is the unsupported link
+      on which everything else depends — is entirely ours and is the opposite of the source's own
+      view of it. Two of the fifteen members carry a reported measurement (sk_sa8_0035's 91 per
+      cent, sk_sa8_0036's 75 per cent) and neither is a test-campaign return; the remainder assert
+      measurement and withhold the result. A reader should treat this system as a well-specified
+      METHOD with almost no reported OUTPUT.
+  provenance:
+    chapter: "11 — Information; 13 — Use of Samples; 15 — Test Campaigns; 16 — Leaning on Dealers; 19 — Letter Writing; 21 — Good Business"
+    section: "assembled across six chapters"
+    page_start: 34
+    page_end: 63
+    source_support: text
+
+- scs_id: scs_sa8_004
+  source_id: hopkins-scientific-advertising-ch8-21
+  label: the_sample_offer_as_a_machine_that_pays_for_itself_several_times
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    Chapters 13 and 14 describe one device doing five jobs at once. A free sample offer licenses the
+    word "Free" and so multiplies readership of the advertisement; it keys the advertisement and
+    makes comparison possible; it converts an unconvinced reader into a named prospect who can be
+    followed up; it is fulfilled through retailers in a way that recruits them into stocking; and
+    the pre-announced full-package coupon forces general distribution without a sales force. The
+    gate on who receives a sample, and the cost of policing that gate, are part of the same machine.
+  whole_system_claim:
+    text: >
+      The sample offer is not an expense with a benefit; it is one instrument whose separate returns
+      are claimed to cover its cost several times over, which is why it must be evaluated at the
+      level of cost per customer for the whole system rather than as a line item. Each function
+      also constrains the others: the offer must be free for the readership and keying gains, and it
+      must be gated for the impression gain, so "free" and "freely distributed" are opposite
+      requirements of the same device.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The linkage between the sample apparatus and distribution is stated by the source directly —
+      "The sample plans dealt with in the previous chapter aid quick distribution. They often pay
+      for themselves in this way alone" — which is why `system_type_origin` is `source_stated`. The
+      multiple-payback structure is also the source's: chapter 13 enumerates readership, keying,
+      prospect capture and referral as separate ways in which "samples pay". What is OURS is the
+      identification of the free/gated tension as a constraint internal to the device, and the
+      framing of the whole as one machine to be evaluated jointly rather than as a set of benefits
+      to be listed.
+    source_ref: {chapter: "14", locator: "printed p.45, 'The sample plans dealt with in the previous chapter aid quick distribution.'"}
+  members:
+    - {sk_ref: sk_sa8_0024, role_in_system: readership_gain_and_the_free_requirement, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0025, role_in_system: measurement_gain_and_prospect_capture, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0026, role_in_system: cost_driver, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0027, role_in_system: gate_and_the_constraint_on_free, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0028, role_in_system: cost_of_policing_the_gate, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0029, role_in_system: evaluation_rule_for_the_whole, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0030, role_in_system: distribution_gain, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0031, role_in_system: distribution_gain, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_sa8_0032, role_in_system: failure_condition_and_repair, order: 9, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_sa8_0025, to: sk_sa8_0024, nature: "the key registers interest cheaply only if the offer is free", origin: source_stated}
+      - {from: sk_sa8_0031, to: sk_sa8_0024, nature: "the distribution mechanism runs on the free full-size package", origin: source_stated}
+      - {from: sk_sa8_0032, to: sk_sa8_0030, nature: "routing fulfilment through a shop is how demand becomes stocking", origin: source_stated}
+      - {from: sk_sa8_0028, to: sk_sa8_0027, nature: "the gate needs enforcement, and the enforcement is itself costed", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_sa8_0024, sk_sa8_0027]
+        nature: >
+          The offer must cost the prospect nothing, and must not be handed to anyone who has not
+          asked and been told the story. Free and freely given are opposite requirements of one
+          device, and the source states both without naming the tension.
+        origin: extractor_inferred
+      - between: [sk_sa8_0026, sk_sa8_0032]
+        nature: >
+          Local redemption produces inquiries at a fraction of the cost of mail, but restricts the
+          offer to towns with distribution — which is why out-of-town respondents are invited to
+          write and are then routed back to a shop rather than posted a sample.
+        origin: source_stated
+        source_ref: {chapter: "14", page_start: 45, page_end: 46}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    Printed p.43: "Samples sometimes seem to double advertising cost. They often cost more than the
+    advertising. Yet, rightly used, they almost invariably form the cheapest way to get customers."
+    The source explicitly warns that judging the sampling expenditure on its own line item — rather
+    than on cost per customer across the whole machine — inverts the answer. Printed p.43 also warns
+    that samples given out without the gate "probably never pay", so the device is not to be adopted
+    piecewise.
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, argued, mechanism_given, practitioner_assertion, outcome_claimed, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      This is the best-evidenced system in the span and still not well evidenced. Two members carry
+      reported returns (sk_sa8_0026's 70 cents against 18-22 cents, which is also the only
+      controlled comparison in chapters 8-21; sk_sa8_0028's repeater check) and the rest assert
+      results without showing them. The claim that the returns SUM to more than the cost — the
+      system's whole point — is never computed anywhere in the source for any product. The machine
+      is also thoroughly 1923: bearer coupons redeemable at any retailer, samples consigned to
+      shops, mailed proofs to dealers, published circulation figures. Nothing here is translated.
+  provenance:
+    chapter: "13 — Use of Samples; 14 — Getting Distribution"
+    section: "two consecutive chapters the source itself links"
+    page_start: 40
+    page_end: 46
+    source_support: text

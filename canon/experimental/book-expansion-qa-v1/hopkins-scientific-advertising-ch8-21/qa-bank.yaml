@@ -1,0 +1,1746 @@
+# Claude C. Hopkins, "Scientific Advertising" (1923), chapters 8-21 (printed pp. 25-64).
+# Q&A bank.
+#
+# EXPERIMENTAL — NOT LIVE CANON. Lane: canon/experimental/book-expansion-qa-v1/.
+# SCOPE EXTENSION of the live `hopkins_scientific_advertising_ch1_7`. Same work, same author.
+# No item is drawn from chapters 1-7, and no item asserts agreement with any other source.
+#
+# LOCATORS are PRINTED page numbers (printed = PDF page - 8), every one inside pp. 25-64. Twenty-two
+# were spot-checked line by line against the page text; see EXTRACTION-NOTES.md section 7.
+#
+# STANCE. Where the source states a practitioner opinion, an outcome without controls, or a claim
+# contingent on 1923 technology or trade structure, the ANSWER SAYS SO. `answer_type:
+# source_position` is used wherever the item is about what Hopkins holds rather than about how the
+# world is. Nothing here is presented as established fact about advertising, and no 1923 mechanism
+# is translated into a modern digital equivalent.
+
+qa_items:
+
+# ─────────────────────────── Chapter 8 ───────────────────────────
+
+- qa_id: qa_sa8_0001
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 25-26 (Chapter 8, 'Tell Your Full Story')"
+  question: >
+    Hopkins forbids running a case across successive advertisements. What is the mechanism he gives,
+    and why does it make the prohibition follow rather than being a matter of taste?
+  answer: >
+    His mechanism is that the decision, not the exposure, is the scarce event: in one reading of an
+    advertisement a person decides for or against the proposition, and that verdict then operates
+    against ever reading it again. People do not read successive advertisements on one line any more
+    than they read a news item twice. So an argument withheld from the reading that happens is an
+    argument the reader will never meet, and serials, he says, almost never connect. The prohibition
+    follows from the mechanism: if there is only one reading, splitting the case guarantees part of
+    it is never delivered.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: >
+    p.25: "In one reading of an advertisement one decides for or against a proposition. And that
+    operates against a second reading." p.25 on serials: "There is no greater folly. Those serials
+    almost never connect."
+  confounders:
+    - "That serials fail through weak recall between issues — a memory argument. Hopkins's argument is that the second reading does not happen at all."
+    - "That the objection is to length or to frequency. It is to splitting the case."
+    - "The modern default that repeated exposure across a sequence builds the argument cumulatively."
+
+- qa_id: qa_sa8_0002
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 26 (Chapter 8, 'Tell Your Full Story')"
+  question: >
+    A client wants a section of every advertisement to thank existing customers and reassure them
+    about a recent formula change. On Hopkins's chapter 8 position, what should be done, and what is
+    the one concession he allows?
+  answer: >
+    On his position the section should not run in the body copy at all. He holds that people using
+    the product will not read the advertising for it — they have already read and decided — so every
+    line addressed to them is space wasted, and he says he would rather assume the reader is always
+    an unconverted prospect. His single concession is that something aimed at present users may be
+    said in a HEADLINE, because a headline reaches people who do not read the advertisement. Note
+    this is a 1923 position about periodical readership, argued from the cost of paid space at a time
+    when an advertiser had no way to address existing and prospective customers separately, and he
+    offers no readership measurement for it.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: true
+  support: >
+    p.26: "In every ad consider only new customers. People using your product are not going to read
+    your ads." "So never waste one line of your space to say something to present users, unless you
+    can say it in headlines." "Bear in mind always that you address an unconverted prospect."
+  confounders:
+    - "That he forbids speaking to users entirely — the headline exception is explicit and easy to drop."
+    - "The modern default that retention communication is a separate and valuable job."
+    - "That his objection is about tone or relevance rather than about the cost of paid space."
+
+- qa_id: qa_sa8_0003
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 25 (Chapter 8, 'Tell Your Full Story')"
+  question: >
+    Hopkins says the best advertisers learn their appealing claims by comparing headline results.
+    What do they then do with the claims that did not win, and why does this not contradict testing?
+  answer: >
+    They keep them. The winners of the headline comparisons are not run alone; claims that prove
+    important enough are added to a standing list, and all of them then appear in every advertisement
+    thereafter. His reason is that different facts convince different people, so a claim that loses
+    a headline comparison can still be the fact that converts a share of readers once they are
+    reading. The headline test measures pulling power; the standing list preserves converting power.
+    He gives no threshold for "important enough", which is the decision the procedure actually turns
+    on.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.25: "They learn their appealing claims by tests—by comparing results from various headlines.
+    Gradually they accumulate a list of claims important enough to use. All those claims appear in
+    every ad thereafter." "One fact appeals to some, one to another."
+  confounders:
+    - "That testing selects a single winning claim to run — the standard read of Hopkins as an optimiser."
+    - "That the losing claims are discarded and re-tested later."
+    - "Confusing this with running several appeals as several parallel advertisements; here they are co-resident in one."
+
+- qa_id: qa_sa8_0004
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 26 (Chapter 8, 'Tell Your Full Story')"
+  question: >
+    Does Hopkins prescribe long copy? State his actual rule and the boundary he puts on it.
+  answer: >
+    No. He explicitly says there is no fixed rule on brevity — one sentence may tell a complete story
+    on a line like chewing gum, or on an article like Cream of Wheat. What he prescribes is
+    COMPLETENESS, not length: whether long or short, the story should be reasonably complete. The
+    length follows from what completeness requires for that product, which is why a car, as a
+    lifetime investment involving an important expenditure, will absorb columns while chewing gum
+    will not.
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: copywriting
+  requires_application: false
+  support: >
+    p.26: "There is no fixed rule on this subject of brevity. One sentence may tell a complete story
+    on a line like chewing gum... But, whether long or short, an advertising story should be
+    reasonably complete."
+  confounders:
+    - "The very common summary of Hopkins as an advocate of long copy per se."
+    - "That the rule scales with media space bought rather than with what the purchase decision requires."
+    - "That 'complete' means comprehensive about the product; he means complete as a case for the sale."
+
+- qa_id: qa_sa8_0005
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 26 (Chapter 8, 'Tell Your Full Story')"
+  question: >
+    In the Marmon anecdote, what does Hopkins say the famous expensive cars did wrong, and what does
+    the anecdote actually demonstrate on the evidence he supplies?
+  answer: >
+    He reports a man inclined toward a Rolls-Royce who also considered a Pierce-Arrow and a
+    Locomobile, but found their advertisements very short and offering no information — their makers
+    evidently thinking it undignified to argue comparative merits. The Marmon told a complete story,
+    the man read columns and books about it, and bought a Marmon. On the evidence supplied it
+    demonstrates nothing: it is one unnamed buyer, recounted second-hand, with no sales figure and no
+    test. It also undercuts itself, since the same man is described as never sorry and yet as later
+    learning facts about a car at nearly three times the price that would have sold him that car.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: >
+    p.26, the Marmon passage: the short advertisements of the famous cars "offered no information";
+    the Marmon "told a complete story"; the buyer "afterwards learned facts about another car at
+    nearly three times the price which would have sold him that car had he known them."
+  confounders:
+    - "Reading the anecdote as evidence rather than illustration."
+    - "That the criticism is of the cars' prestige positioning; his criticism is of the information withheld."
+    - "That Hopkins reports the Marmon's sales; he reports one man's purchase."
+
+- qa_id: qa_sa8_0006
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 27 (Chapter 8, 'Tell Your Full Story')"
+  question: >
+    A colleague justifies a proposed layout by pointing to a well-known campaign that uses it. What
+    is Hopkins's chapter 8 rule about that argument, and what weakness does the rule have when
+    applied to his own book?
+  answer: >
+    His rule disqualifies the argument outright: never be guided in any way by advertisements that
+    are untraced, never be led in new paths by the blind, and take the opinion and the verdict of
+    nobody who knows nothing about his returns. His reasoning is that an advertiser who cannot see
+    his returns cannot have learned anything from them, so his practice records only his preferences.
+    The weakness is that the rule applied consistently disqualifies the book: his own returns are
+    equally unavailable to the reader, and he supports the observation that "brief ads are never
+    keyed" and "every traced ad tells a complete story" with no sample, no count and no advertisement
+    reproduced anywhere in the volume.
+  answer_type: application
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: true
+  support: >
+    p.27: "Never be guided in any way by ads which are untraced... Never be led in new paths by the
+    blind... Take the opinion of nobody, the verdict of nobody, who knows nothing about his returns."
+    "Note that brief ads are never keyed."
+  confounders:
+    - "That he objects to imitation generally; he objects to imitating the unmeasured specifically."
+    - "That the rule is about creative originality rather than about evidence admissibility."
+    - "Missing the self-application: readers routinely take the rule as authority for the book rather than as a standard the book fails."
+
+# ─────────────────────────── Chapter 9 ───────────────────────────
+
+- qa_id: qa_sa8_0007
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 28 (Chapter 9, 'Art in Advertising')"
+  question: >
+    Hopkins says pictures in advertising are very expensive. Expensive in what, on his accounting,
+    and what test does that cost imply?
+  answer: >
+    Expensive in SPACE, not merely in the cost of the artwork — and he says from one-third to one-half
+    of an advertising campaign is often staked on the power of the pictures. Because the picture is
+    bought with paid space, its cost is the selling argument that space would have carried otherwise,
+    which gives him a single admission test: use a picture only when it forms a better selling
+    argument than the same amount of space set in type. This is arithmetic over 1923 print economics
+    — space priced by area, with a page of type a live alternative to a page of picture — and he
+    offers no source for the one-third-to-one-half figure.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: composition
+  requires_application: false
+  support: >
+    p.28: "Pictures in advertising are very expensive. Not in the cost of good art work alone, but in
+    the cost of space. From one-third to one-half of an advertising campaign is often staked on the
+    power of the pictures." "Use them only when they form a better selling argument than the same
+    amount of space set in type."
+  confounders:
+    - "That the expense he means is illustration fees — he explicitly rules that out as the main cost."
+    - "That the test is a quality standard ('is this a good picture'); it is a comparison against an alternative use of the space."
+    - "Treating this as a general claim about images rather than an arithmetic over a specific cost structure."
+
+- qa_id: qa_sa8_0008
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 28-29 (Chapter 9, 'Art in Advertising')"
+  question: >
+    Chapter 9 is often quoted as hostile to pictures. Where does Hopkins say pictures DO pay, and
+    what is the common structure of those cases?
+  answer: >
+    He names apparel, correspondence schools and beauty articles, and the common structure is that
+    the picture depicts the condition the buyer wants to reach rather than the article for sale.
+    Arrow Collars and clothing advertising picture not only the collar but men whom others envy in
+    surroundings others covet, so the picture subtly suggests the article will aid a man to those
+    desired positions; correspondence schools picture men in high positions or taking upward steps;
+    beauty articles picture beautiful women, admired and attractive. He also names Puffed Grains,
+    where pictures of the grains themselves beat every figure drawing tried because they awake
+    curiosity. The picture pays when it is an argument made pictorially — which is exactly what lets
+    it beat type.
+  answer_type: comparison
+  difficulty: medium
+  knowledge_type: photography
+  requires_application: false
+  support: >
+    pp.28-29: "picturing men whom others envy, in surroundings which others covet. The pictures
+    subtly suggest that these articles of apparel will aid men to those desired positions." p.29 on
+    Puffed Grains: "the pictures of the grains were found to be most effective. They awake curiosity."
+  confounders:
+    - "The widespread reading of Hopkins as simply anti-illustration."
+    - "That he favours product photography generally — Puffed Grains is a stated case, not the general rule, and he sets aside 'the lines where the article itself should be pictured'."
+    - "That the mechanism is attention; he says the mechanism is implied argument."
+
+- qa_id: qa_sa8_0009
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 29 (Chapter 9, 'Art in Advertising')"
+  question: >
+    A designer proposes a striking, unexpected image on the ground that it will make the
+    advertisement impossible to ignore. Give Hopkins's two separate objections.
+  answer: >
+    First, an attention objection: a picture that is eccentric or unique takes attention from the
+    subject, and since the main appeal lies in the headline, overshadowing the headline kills it —
+    "Don't, to gain general and useless attention, sacrifice the attention that you want." Second, a
+    respect objection: treating the subject lightly or attempting frivolity lowers regard for the
+    advertiser and the article, because people do not patronise a clown; his figures are the man who
+    gains attention by wearing a fool's cap and the salesman in conspicuous clothes, whom the sane
+    and thrifty majority despise. He supplies no comparison of an eccentric and a plain treatment for
+    either objection, and this is squarely a period position at odds with much later practice that
+    buys attention deliberately.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: composition
+  requires_application: true
+  support: >
+    p.29: "a picture which is eccentric or unique takes attention from your subject... Your main
+    appeal lies in your headline. Over-shadow that and you kill it." "People do not patronize a
+    clown." "Don't be like a salesman who wears conspicuous clothes."
+  confounders:
+    - "Collapsing the two objections into one; the attention argument and the respect argument are separable and only one concerns the headline."
+    - "That he objects to distinctiveness as such — chapter 17 says the opposite about manner and tone."
+    - "The modern default that attention is the scarce resource and worth buying with surprise."
+
+- qa_id: qa_sa8_0010
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 30 (Chapter 9, 'Art in Advertising')"
+  question: >
+    What is Hopkins's verdict on colour, what exception does he state, and what makes the exception
+    work?
+  answer: >
+    His verdict is that colour does not generally pay better than black and white, "according to the
+    evidence we have gathered to date" — one of the few explicit provisionality hedges in the book.
+    His exception is lines whose appeal is the appearance of the product itself: certain food dishes
+    look far better in colours, and tests on lines like oranges and desserts are said to show colour
+    paying. What makes it work is that colour "comes close to placing the products on actual
+    exhibition" — it does selling work no other treatment can do. Colour used to amuse or to gain
+    attention falls back under his general rule: it may attract many times as many people yet secure
+    a hearing from no more of the people wanted. The verdict is a judgement on a 1923 colour-printing
+    premium he never states, so it is a cost finding rather than a claim about colour perception.
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: colour
+  requires_application: false
+  support: >
+    p.30: "Do color pictures pay better than black and white? Not generally, according to the
+    evidence we have gathered to date. Yet there are exceptions... Color comes close to placing the
+    products on actual exhibition."
+  confounders:
+    - "Reading the verdict as a claim about colour and attention rather than about a price premium."
+    - "That the exception is 'food' as a category; his stated principle is exhibition of appearance, which is why oranges and desserts qualify."
+    - "Dropping the hedge 'to date', which is the source scoping its own finding."
+
+- qa_id: qa_sa8_0011
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 28 and 30 (Chapter 9, 'Art in Advertising')"
+  question: >
+    Chapter 9 contains an unresolved contradiction about how much art matters. State both halves and
+    say what the source does about it.
+  answer: >
+    The chapter opens by calling art in advertising "a study of paramount importance", with one-third
+    to one-half of a campaign often staked on the pictures. It closes by ruling the whole class of art
+    questions minor: "these are minor questions. They are mere economies, not largely affecting the
+    results of a campaign" — because some decisions cut results in two while others multiply them,
+    and one man may do business in a shed and another in a palace without it mattering. The source
+    does nothing about it; the two positions sit two pages apart and are never reconciled. A
+    reconciliation is available — that the stake is in the SPACE, which is a basic decision, while
+    execution quality is a minor one — but Hopkins does not state it.
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: production_reasoning
+  requires_application: false
+  support: >
+    p.28: "So art in advertising is a study of paramount importance." p.30: "But these are minor
+    questions. They are mere economies, not largely affecting the results of a campaign."
+  confounders:
+    - "Resolving the contradiction on Hopkins's behalf and attributing the resolution to him."
+    - "That he means art matters less than copy; his contrast is between minor economies and basic principles generally."
+    - "Quoting only one half, which is how the chapter is usually cited in either direction."
+
+- qa_id: qa_sa8_0012
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 29-30 (Chapter 9, 'Art in Advertising')"
+  question: >
+    On fine versus ordinary art work, and on whether a picture may be repeated, what does Hopkins
+    actually conclude?
+  answer: >
+    On fine versus ordinary art he declines to decide. He gives both cases — some advertisers pay up
+    to $2,000 per drawing on the reasoning that the space is expensive and the art small by
+    comparison; others hold that art judges are too small a percentage to consider and bring their
+    ideas out well at a fraction of the cost, mail order advertisers generally being in this class —
+    and concludes only that good art pays as well as mediocre and that preparation cost is very small
+    beside insertion cost. On repetition he offers a probability rather than a finding: repetition is
+    probably an economy, because the advertiser is always after new customers who are unlikely to
+    remember a picture used before, and if they do remember it repetition does not detract. Note that
+    the repetition answer is derived from his new-customers-only premise, not from any test.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: production_reasoning
+  requires_application: false
+  support: >
+    p.29-30: "Some advertisers pay up to $2,000 per drawing... The question is one of small moment.
+    Certainly good art pays as well as mediocre." "The probability is that repetition is an economy.
+    We are after new customers always."
+  confounders:
+    - "Supplying a verdict he explicitly withholds."
+    - "That he condemns expensive art work; he says good art pays as well as mediocre and calls the question small."
+    - "Treating the repetition answer as a tested finding rather than a deduction from the new-customers premise."
+
+# ─────────────────────────── Chapter 10 ───────────────────────────
+
+- qa_id: qa_sa8_0013
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 31 (Chapter 10, 'Things Too Costly')"
+  question: >
+    What figure does Hopkins report for the cost of converting someone to the tooth-brush habit, what
+    two reasons does he give for it, and what is missing from the report?
+  answer: >
+    He reports that tests he knows of have indicated the cost of such converts may run from $20 to
+    $25 each. His two reasons are the difficulty of the change itself, and the fact that much of the
+    advertising goes to people already converted. What is missing is everything that would let anyone
+    check it: no product, no advertiser, no date, no method, no sample size, and no definition of
+    what counts as a convert. It is a reported number without a reported study — and it is one of
+    only a handful of places in chapters 8-21 where he says what a measurement returned rather than
+    that a measurement was made.
+  answer_type: factual
+  difficulty: easy
+  knowledge_type: effectiveness
+  requires_application: false
+  support: >
+    p.31: "Tests which we know of have indicated that the cost of such converts may run from $20 to
+    $25 each. Not only because of the difficulty, but because much of the advertising goes to people
+    already converted."
+  confounders:
+    - "Attributing the figure to Pepsodent or another named brand; the maker is unnamed."
+    - "Treating $20-$25 as a cost per customer for the product rather than per habit convert."
+    - "Missing the second reason — wasted reach on the already-converted — which is half the arithmetic."
+
+- qa_id: qa_sa8_0014
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 31-32 (Chapter 10, 'Things Too Costly')"
+  question: >
+    An advertiser accepts that educating the market to a new habit is unaffordable as a campaign, so
+    proposes devoting a quarter of each advertisement's space to it instead. What does Hopkins say?
+  answer: >
+    He calls it the same folly on a smaller scale and says it is not good business. His rule is that
+    what cannot be done profitably on a large scale cannot be done on a small scale: the cost per
+    convert does not fall with reduced commitment, only the number of converts does, so a fractional
+    budget buys a fraction of an already unaffordable result. He notes there are many advertisers who
+    know facts like these and concede them, would not think of devoting a whole campaign to such an
+    object, and then devote a share of their space to it anyway. His own example of doing it right is
+    the dentifrice maker who learned the convert cost by test and thereafter devoted not one line to
+    the tooth-brush habit.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: media_planning
+  requires_application: true
+  support: >
+    pp.31-32: "What cannot be done on a large scale profitably cannot be done on a small scale."
+    "Yet they devote a share of their space to that object. That is only the same folly on a smaller
+    scale. It is not good business."
+  confounders:
+    - "That a smaller commitment is a reasonable compromise — the intuitive answer and the one he names as the error."
+    - "That the objection is about focus or message clarity rather than about unit economics."
+    - "Confusing this with his separate point that co-operative advertising by many growers CAN build category demand."
+
+- qa_id: qa_sa8_0015
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 32 (Chapter 10, 'Things Too Costly')"
+  question: >
+    Hopkins says no single orange or raisin grower could increase consumption of those fruits. What
+    is the mechanism, and what exception does he name?
+  answer: >
+    The mechanism is that demand created attaches to the category rather than to the brand that paid
+    for it, so the spender funds the whole benefit and captures only his share — the cost, he says,
+    might be a thousand times one grower's share of the returns, and a maker educating people to a
+    habit finds the new business shared by his rivals. His exception is co-operation: thousands of
+    growers combined have done it on those and many other lines, and he calls this one of the great
+    possibilities of advertising development, adding that the general consumption of scores of foods
+    can be profitably increased if it is done through wide co-operation. The alternative he
+    recommends for a single advertiser is to watch a popular trend developing and offer at the right
+    time to satisfy the want already created, as was done on yeasts and antiseptics.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: >
+    p.32: "The cost might be a thousand times his share of the returns. But thousands of growers
+    combined have done it on those and many other lines." "But it must be done through wide
+    co-operation." "watch the development of a popular trend... Then at the right time offer to
+    satisfy those desires."
+  confounders:
+    - "That he holds category demand cannot be built — he says it can, just not by one advertiser."
+    - "That the trend-riding advice is about timing a launch; it is about not funding the want."
+    - "Treating 'a thousand times his share' as a measured ratio; it is a rhetorical magnitude."
+
+- qa_id: qa_sa8_0016
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 32 (Chapter 10, 'Things Too Costly')"
+  question: >
+    A product could be sold to half the homes in the country. On Hopkins's chapter 10 reasoning, why
+    might that still be a project to refuse?
+  answer: >
+    Because breadth of appeal and revenue per customer are independent, and only revenue pays. His
+    case is a Dakin-fluid germicide: it might be sold to half the homes in the country, but
+    consumption would be very small, a small bottle might last for years, customers might cost $1.50
+    each, and the revenue per customer might not repay the cost of getting in ten years. Acquisition
+    cost is roughly fixed per customer regardless of how much that customer then buys, so a
+    low-consumption product cannot amortise it however wide its potential market. He adds two
+    reference figures for the cost side — mail order sales on single articles rarely cost less than
+    $2.50 each, and it is reasonable to suppose dealer sales on like articles cost approximately as
+    much — and notes these facts must be considered on any one-sale article. The germicide figures
+    are explicitly hypothetical.
+  answer_type: application
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: true
+  support: >
+    p.32: "the consumption would be very small. A small bottle might last for years. Customers might
+    cost $1.50 each. And the revenue per customer might not in ten years repay the cost of getting."
+    "Mail order sales on single articles, however popular, rarely cost less than $2.50 each."
+  confounders:
+    - "That wide appeal makes a product a good advertising candidate — the intuitive answer he is attacking."
+    - "Reading the $1.50 and $2.50 figures as measurements; the first is hypothetical and the second is asserted without a source."
+    - "Confusing this with his separate reach argument about the percentage of readers a claim can address."
+
+- qa_id: qa_sa8_0017
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 32-33 (Chapter 10, 'Things Too Costly')"
+  question: >
+    What is Hopkins's position on prevention as an appeal, and what evidence does he give?
+  answer: >
+    His position is that prevention is not a popular subject however much it should be: people will
+    do much to cure a trouble and little to prevent one. He applies it to a tooth paste that both
+    prevents decay and beautifies the teeth, saying tests will probably show the beauty appeal many
+    times as strong, and reports that the most successful tooth paste advertiser never features tooth
+    troubles in his headlines because tests have proved them unappealing. His evidence is: "This has
+    been proved by many disappointments", naming no disappointment, and "Tests have proved them
+    unappealing", reporting no test, no advertiser and no margin. Measurement is asserted and the
+    result is withheld in both places.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    p.32: "People will do much to cure a trouble, but people in general will do little to prevent it.
+    This has been proved by many disappointments." p.33: "The most successful tooth paste advertiser
+    never features tooth troubles in his headlines. Tests have proved them unappealing."
+  confounders:
+    - "Treating the claim as demonstrated because he uses the word 'proved' twice."
+    - "That the prevention weakness is about credibility rather than about motive to act now."
+    - "Naming the tooth paste advertiser; Hopkins does not."
+
+- qa_id: qa_sa8_0018
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 33 (Chapter 10, 'Things Too Costly')"
+  question: >
+    Hopkins makes two DIFFERENT arguments against featuring a narrow claim. Separate them, and say
+    which one he leaves unexplained.
+  answer: >
+    The first is reach arithmetic: a claim reaching one in a hundred requires covering a hundred
+    useless readers to get one, so the cost of results might be twenty times as high as for an
+    article appealing to one in five — an excess he says would probably mean disaster. The second is
+    an interference claim of a different kind entirely: for a soap that cures eczema and also improves
+    the complexion, "to even mention the eczema claims might destroy the beauty claim". The first is
+    a cost calculation and follows from bought circulation. The second says the narrow claim damages
+    the broad one by being present, not by displacing it — and he gives no mechanism for it at all,
+    hedges it with "might", and reports no comparison. They also imply different repairs: choose the
+    bigger claim, versus remove the smaller one even where the space is free.
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    p.33: "he would need to cover a hundred useless readers to reach the one he wants. His cost of
+    results might be twenty times as high..." and "The eczema claim may appeal to one in a hundred
+    while the beauty claims would appeal to nearly all. To even mention the eczema claims might
+    destroy the beauty claim."
+  confounders:
+    - "Merging the two into one 'pick the bigger claim' rule, which loses the interference claim entirely."
+    - "Assuming a mechanism for the interference — audience self-selection, or category association — that Hopkins does not give."
+    - "Treating the one-in-a-hundred and one-in-five figures as measured; they are figures inside a stated hypothetical."
+
+- qa_id: qa_sa8_0019
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 33 (Chapter 10, 'Things Too Costly')"
+  question: >
+    A claim appeals to about a quarter of your possible customers — not enough to lead on. On
+    Hopkins's rule, what happens to it?
+  answer: >
+    It is not dropped. He says a claim popular enough to influence a certain number of people — say
+    one-fourth of your possible customers — may be featured to advantage in a certain PERCENTAGE of
+    headlines, and should probably be included in EVERY advertisement. So the claim earns a share of
+    headline slots and a permanent place in the body copy. He immediately adds that these are not
+    things to guess at and should be decided by actual knowledge, usually by traced returns. The
+    one-fourth threshold is offered casually and is not derived from anything; the structure of the
+    rule is the reusable part.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: copywriting
+  requires_application: true
+  support: >
+    p.33: "say one-fourth of your possible customers. Such a claim may be featured to advantage in a
+    certain percentage of headlines. It should probably be included in every advertisement. But those
+    are not things to guess at."
+  confounders:
+    - "Dropping the claim because it cannot lead — the intuitive optimiser's answer."
+    - "Featuring it in every headline rather than a share of them."
+    - "Treating one-fourth as a threshold he established rather than an illustrative figure."
+
+# ─────────────────────────── Chapter 11 ───────────────────────────
+
+- qa_id: qa_sa8_0020
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 34 (Chapter 11, 'Information')"
+  question: >
+    What single fact did Hopkins say reframed a caffeine-free coffee, and what problem did it solve?
+  answer: >
+    The problem was that caffeine-free coffee had been advertised for years and people regarded it
+    like near-beer — a diminished version of the real thing. The fact, found in one scientific article
+    out of a thousand he read, was that caffeine stimulation comes two hours after drinking, so the
+    immediate bracing effect people seek from coffee does not come from the caffeine at all. Removing
+    caffeine therefore removes neither the kick nor the taste, since caffeine is tasteless and
+    odourless. The physiological claim is his 1923 statement of the science and is recorded here as
+    his claim, not as verified fact; what is being learned from the passage is the method of hunting
+    for a fact that dissolves a misperception, not the fact itself.
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: concept_development
+  requires_application: false
+  support: >
+    p.34: "It was the fact that caffeine stimulation comes two hours after drinking. So the immediate
+    bracing effects which people seek from coffee do not come from the caffeine. Removing caffeine
+    does not remove the kick." "People regarded it like near-beer."
+  confounders:
+    - "Taking the caffeine pharmacology as established fact rather than as the source's 1923 claim."
+    - "That the fact was a product improvement; it was a fact about the existing product."
+    - "That the campaign argued the health benefit of removing caffeine — his angle is that nothing desirable is lost."
+
+- qa_id: qa_sa8_0021
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 35 (Chapter 11, 'Information')"
+  question: >
+    In the pork and beans case, what did the canvass find and how did it change the campaign's task?
+  answer: >
+    A canvass of some thousands of homes found that only 4 per cent of people used any canned pork
+    and beans and 96 per cent baked their beans at home. All previous pork and bean advertising had
+    been based on "Buy my brand", which could address only that 4 per cent. The task was therefore
+    not to sell a particular brand but to win people away from home-baked beans. Hopkins says the
+    resulting advertising, which without that knowledge must have failed, proved a great success. The
+    canvass half is a genuine reported measurement with numbers; the outcome half is asserted with no
+    figure, no advertiser and no period, and "must have failed" is a counterfactual he cannot test.
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: concept_development
+  requires_application: false
+  support: >
+    p.35: "That canvass showed that only 4 per cent of the people used any canned pork and beans.
+    Ninety-six per cent baked their beans at home... The right appeal was to win the people away from
+    home-baked beans."
+  confounders:
+    - "That the finding refined the brand message; it replaced the competitive frame entirely."
+    - "Treating 'proved a great success' as reported evidence on a par with the 4/96 split."
+    - "Missing that the recommended campaign is precisely the household-habit change chapter 10 prices out of reach — a tension Hopkins never addresses."
+
+- qa_id: qa_sa8_0022
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 35 (Chapter 11, 'Information')"
+  question: >
+    Hopkins lists three quantities that must be learned before a campaign. Name them with the
+    decision each protects.
+  answer: >
+    What a user spends a year, because otherwise it is unknown whether users are worth the cost of
+    getting. Total consumption, because otherwise the advertiser may overspend. And the percentage of
+    readers to whom the product appeals — often gathered by class, because the percentage may differ
+    on farms and in cities — because the cost of advertising largely depends on the percentage of
+    waste circulation. The third is the one he treats as dominant, and it is arithmetic over 1923
+    media buying, where circulation was bought whole and paid for whether or not it contained
+    prospects.
+  answer_type: factual
+  difficulty: medium
+  knowledge_type: media_planning
+  requires_application: false
+  support: >
+    p.35: "We must learn what a user spends a year, else we shall not know if users are worth the cost
+    of getting. We must learn the total consumption, else we may overspend. We must learn the
+    percentage of readers to whom our product appeals... The cost of advertising largely depends on
+    the percentage of waste circulation."
+  confounders:
+    - "Reciting the quantities without the decision each protects, which is where the value is."
+    - "Treating the class breakdown as optional; he specifies it because the percentage varies."
+    - "Missing that this third quantity directly contradicts chapter 15's claim that small-scale averages always hold."
+
+- qa_id: qa_sa8_0023
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 35-36 (Chapter 11, 'Information')"
+  question: >
+    Hopkins describes two different verification controls in chapter 11. What failure does each one
+    catch, and why does he need both?
+  answer: >
+    The first tests the advertiser's own assertions: chemists are employed to prove or disprove
+    doubtful claims, because a true claim will be a big factor while an untrue one may prove a
+    boomerang and may bar the advertising from good mediums — and he notes it is remarkable how often
+    a maker proves wrong about assertions he has made for years. The second guards the writer's
+    reasoning rather than the client's facts: in every line involving scientific details a censor is
+    appointed, because a well-informed ad-writer may still draw wrong inferences from correct facts,
+    so an authority passes on every advertisement. He needs both because they catch different
+    failures — a false premise, and a false inference from a true premise — and testing the premise
+    does nothing about the second.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: creative_process
+  requires_application: false
+  support: >
+    p.35: "Often chemists are employed to prove or disprove doubtful claims... If untrue, it may prove
+    a boomerang. And it may bar our ads from good mediums." p.36: "The ad-writer, however
+    well-informed, may draw wrong inferences from facts. So an authority passes on every
+    advertisement."
+  confounders:
+    - "Treating the censor as a legal or compliance review; his stated concern is inference from facts."
+    - "Collapsing both into 'fact-checking', which loses the distinction the passage exists to make."
+    - "Reading the motive as ethical; his stated reasons are persuasive force, boomerang risk and medium admissibility."
+
+- qa_id: qa_sa8_0024
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 36 (Chapter 11, 'Information')"
+  question: >
+    You have a claim that is true but vague — a drink has "a large food value". What does Hopkins do
+    about it, and what uncomfortable feature does the procedure have?
+  answer: >
+    He commissions a measurement to make the claim exact, then restates the figure against something
+    familiar: the drink goes to a laboratory, the answer is 425 calories per pint, and that is
+    expressed as one pint equal to six eggs in calories of nutriment — which he says makes a great
+    impression. His principle is that impressive claims are made far more impressive by making them
+    exact, so experiments are often made to get the actual figures. The uncomfortable feature, which
+    he does not address, is that the measurement is undertaken because the copy needs a number rather
+    than to find out whether the claim is true — a different activity from the verification he
+    describes a paragraph earlier, and he places the two side by side without distinguishing them.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: copywriting
+  requires_application: false
+  support: >
+    p.36: "Impressive claims are made far more impressive by making them exact. So many experiments
+    are often made to get the actual figures... its food value is 425 calories per pint. One pint is
+    equal to six eggs in calories of nutriment."
+  confounders:
+    - "Stopping at 'be specific' and missing that he manufactures the specificity by commissioning it."
+    - "Missing the second step — the familiar comparison — without which the raw figure is unusable."
+    - "Assuming the measurement was a verification; the passage frames it as a copy requirement."
+
+# ─────────────────────────── Chapter 12 ───────────────────────────
+
+- qa_id: qa_sa8_0025
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 37-38 (Chapter 12, 'Strategy')"
+  question: >
+    Hopkins treats price as having more than one regime. Set out the three he describes and what
+    determines which applies.
+  answer: >
+    Volume: the greatest profits are made on great volume at small profit — Campbell's Soups,
+    Palmolive Soap, Karo Syrup, Ford cars — and a price that appeals only to, say, 10 per cent
+    multiplies the cost of selling. Low consumption: on some lines high price is unimportant but high
+    profit is essential, because sale per customer is small; a buyer hardly cares what he pays for a
+    corn remedy because he uses little, so the maker must have a large margin. Judgement: on other
+    lines a higher price is itself an inducement, because the line is judged largely by price and a
+    product costing more than the ordinary is considered above the ordinary. What determines the
+    regime is how much the customer consumes and whether he has any way to judge the product other
+    than by price — though Hopkins never states a test for placing a new product, which is the
+    decision the passage is about.
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.38: "the greatest profits are made on great volume at small profit... A price which appeals only
+    to—say 10 per cent—multiplies the cost of selling." "The maker must have a large margin because of
+    small consumption." "A product which costs more than the ordinary is considered above the
+    ordinary."
+  confounders:
+    - "Reducing him to 'low price wins volume', which is only the first regime."
+    - "Treating the price-as-quality-signal point as the same as his chapter 6 claim that people judge value by stated price; here it is a pricing decision, not a copy effect."
+    - "Assuming he supplies a rule for classifying a new product; he does not."
+
+- qa_id: qa_sa8_0026
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 38 (Chapter 12, 'Strategy')"
+  question: >
+    What does Hopkins say makes a competitive field almost impregnable, and how much does the
+    diagnosis actually help?
+  answer: >
+    The near-impregnable fields are, he says, usually lines that created a new habit or custom and
+    which typify that custom with consumers — so the incumbent's name is how buyers think of the
+    behaviour itself — combined with the volume and profit to make a tremendous fight. It helps less
+    than it looks. He immediately concedes such fields are constantly invaded, and the two routes he
+    allows — some convincing advantage, or very superior salesmanship-in-print — are what any
+    challenger would attempt anyway. He names no field as impregnable and no invasion as successful.
+    The diagnosis identifies difficulty; it does not discriminate between actions.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.38: "They are usually lines which created a new habit or custom and which typify that custom
+    with consumers... Such fields are being constantly invaded. But it is done through some convincing
+    advantage, or through very superior salesmanship-in-print."
+  confounders:
+    - "Reading the diagnosis as actionable strategy; the qualification empties most of it."
+    - "That scale alone makes a field impregnable — he specifies habit creation and typification as the mechanism."
+    - "Confusing this with the new shaving soap case, which he places in a lesser tier."
+
+- qa_id: qa_sa8_0027
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 38 (Chapter 12, 'Strategy')"
+  question: >
+    A manufacturer says frankly that his product is good but much like every rival's, and that he has
+    nothing exclusive to offer. Quote Hopkins's answer precisely — including the word that makes it
+    uncomfortable.
+  answer: >
+    He answers that there is nearly always something impressive which others have not told, that it
+    must be discovered, and — in his own words — "We must have a SEEMING advantage." The word is
+    "seeming", and it should not be softened into "differentiator": the chapter does not require the
+    advantage to be real, only to be perceived. His justification is that people don't quit habits
+    without reason, so a switching campaign supplying no reason cannot work whatever the product's
+    quality. He gives no case in this chapter, and the claim that something untold nearly always
+    exists is unfalsifiable as stated, since failing to find one is always attributable to
+    insufficient search.
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.38: "However, there is nearly always something impressive which others have not told. We must
+    discover it. We must have a seeming advantage. People don't quit habits without reason."
+  confounders:
+    - "Paraphrasing 'seeming advantage' as 'genuine differentiation', which reverses the source."
+    - "Attributing to him a claim that the product must actually be improved."
+    - "Confusing this with his chapter 7 process-fact tactic, which is the execution rather than the strategic premise."
+
+- qa_id: qa_sa8_0028
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 39 (Chapter 12, 'Strategy')"
+  question: >
+    Why does Hopkins hold up Vaseline, and what does the case rest on evidentially?
+  answer: >
+    Vaseline established a new demand and then almost monopolised that demand through wisdom at the
+    start — the name. To have called it some brand of petroleum jelly, he says, might have made a
+    difference of millions in results, because a pioneer's demand attaches to whatever name the market
+    can use for the thing, and if that name is available to everyone the competitors inherit demand
+    the pioneer funded. He sets Royal Baking Powder, Toasted Corn Flakes and Horlick's Malted Milk
+    against it as pioneers who left the way open to perpetual substitution. Evidentially it rests on
+    nothing testable: every case is selected on its outcome and read backwards, the "difference of
+    millions" is an untestable counterfactual, and the chapter contains no case where an exclusive
+    name failed or a generic one succeeded.
+  answer_type: comparison
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.39: "Vaseline is an example. That product established a new demand, then almost monopolized
+    that demand through wisdom at the start. To have called it some brand of petroleum jelly might
+    have made a difference of millions in results."
+  confounders:
+    - "Treating the Vaseline case as evidence rather than as retrospective explanation."
+    - "That the lesson is about trademark law; his argument is about which demand the name captures."
+    - "Confusing this with his chapter 7 tactic of inviting comparison, which is a copy response to substitution rather than a structural one."
+
+# ─────────────────────────── Chapter 13 ───────────────────────────
+
+- qa_id: qa_sa8_0029
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 41 (Chapter 13, 'Use of Samples')"
+  question: >
+    A client wants to charge ten cents for the sample to filter out non-serious enquirers. What does
+    Hopkins say it costs, and what is his reasoning about half-price offers?
+  answer: >
+    He says getting that dime may cost them from 40 cents to $1 — that is, it may add that much to
+    the cost of each reply — and it also forfeits the word "Free" in the advertisement, which he
+    holds generally more than pays for the samples on its own. Three in four will refuse to pay, he
+    says, perhaps nine in ten. On half-price constructions — "You buy one package, we will buy the
+    other", or a coupon good for part of the purchase price — his position is that any keyed returns
+    will clearly prove such offers do not pay, because before a prospect is converted it is
+    approximately as hard to get half price for the article as to get the full price. The barrier is
+    the act of paying, not the amount: an unconverted prospect has no basis for valuing the article,
+    so any price is a full-price decision to him.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: true
+  support: >
+    p.41: "Getting that dime may cost them from 40 cents to $1... Three in four will refuse to
+    pay—perhaps nine in ten." "Before a prospect is converted, it is approximately as hard to get half
+    price for your article as to get the full price for it."
+  confounders:
+    - "The intuitive qualification argument — that a small charge filters for intent — which is what he is refuting."
+    - "That half price is a reasonable middle course; he places it in the same class as full price."
+    - "Confusing this with his separate chapter 6 point that the MAKER should buy the sample at retail rather than give away his own stock."
+
+- qa_id: qa_sa8_0030
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 42 (Chapter 13, 'Use of Samples')"
+  question: >
+    Hopkins reports the same advertisement producing inquiries at two very different costs. Give the
+    figures and the explanation, and say why this passage is evidentially stronger than most of the
+    book.
+  answer: >
+    On a line then before him, sample inquiries obtained by mail averaged 70 cents each, and the same
+    advertisement brought inquiries at 18 to 22 cents each when the coupons were presented at a local
+    store; he adds that often four times as many will present a coupon at a store as will mail it. On
+    another line, where three routes were offered — write, telephone, or call at a store — 70 per cent
+    of inquiries came by telephone. His explanation is friction, not motivation: most people write few
+    letters, writing is an effort, they may have no stamps in the house, and most will pay carfare to
+    get a sample rather than two cents postage. It is stronger than most of the book because it holds
+    the advertisement constant — "the same ad" — varies one factor, and reports a returned cost on
+    both arms. It is still one unnamed line, with no market, period, volume, or statement of whether
+    the arms ran simultaneously.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.42: "sample inquiries obtained by mail average 70 cents each. The same ad brings inquiries at
+    from 18 cents to 22 cents each when the coupons are presented at a local store." "Seventy per cent
+    of the inquiries came by telephone."
+  confounders:
+    - "Attributing the difference to the copy or the offer rather than to the response route."
+    - "Reading the 70-per-cent telephone figure as a cost finding; it is a distribution of choices."
+    - "Generalising a 1923 finding about stamps, telephones and carfare into a claim about response friction in any other setting."
+
+- qa_id: qa_sa8_0031
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 43 (Chapter 13, 'Use of Samples')"
+  question: >
+    Hopkins says samples should be free. He also condemns handing them out. Reconcile the two and
+    state the gate he specifies.
+  answer: >
+    Free to the prospect is not the same as freely distributed. His gate has three conditions, stated
+    as three sentences: give samples to interested people only; only to people who exhibit that
+    interest by some effort; and only to people to whom you have told your story. The reason is that
+    the product sells itself only inside a mental impression and atmosphere the advertising has placed
+    around it — first create an atmosphere of respect, a desire, an expectation, and then the sample
+    will usually confirm the qualities claimed. Samples distributed to homes "like waifs on the
+    doorsteps" probably never pay: many never reach the housewife, and where they do there is no
+    predilection for them and the product is cheapened. Store demonstrations are put in the same
+    class.
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: >
+    p.43: "Give samples to interested people only. Give them only to people who exhibit that interest
+    by some effort. Give them only to people to whom you have told your story." "Samples distributed
+    to homes, like waifs on the doorsteps, probably never pay."
+  confounders:
+    - "Reading 'free' as 'widely distributed' — the confusion the gate exists to prevent."
+    - "Giving two conditions instead of three; the 'told your story' condition is the one most often dropped."
+    - "Assuming he reports the cost of doorstep sampling; he concedes it has not been traced."
+
+- qa_id: qa_sa8_0032
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 42-43 (Chapter 13, 'Use of Samples')"
+  question: >
+    Sample abuse worries a client: people taking several, children collecting coupons, dealers buying
+    up newspapers. Give Hopkins's four measures and the finding that governs how far to go.
+  answer: >
+    Declared limits: say to the woman "Only one sample to a home" and few will try for more, since
+    the few who cheat are not generally people who would buy — the loss is samples, not purchasers.
+    Declared eligibility: say "adults only" in the coupon, and children will not present such coupons
+    and will rarely mail them. And two structural precautions against bulk exploitation of a
+    full-package coupon: do not announce the date of such offers, and insert them in Sunday papers,
+    which are not so easily bought up. The governing finding is that he checked repeaters in certain
+    territories for a time and found the loss much less than the cost of checking — so verification
+    is priced against the loss it prevents, and where the loss is smaller than the check, the check is
+    the more expensive error. He adds that repeaters form a small percentage and should simply be
+    figured into cost.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: true
+  support: >
+    pp.42-43: "Say to the woman, 'Only one sample to a home'..." "Then say in your coupon 'adults
+    only.'" "We do not announce the date of such offers. And we insert them in Sunday papers." "we
+    have checked up on repeaters. And we found the loss much less than the cost of checking."
+  confounders:
+    - "Proposing enforcement rather than declaration — the intuitive answer he prices out."
+    - "Missing the cost-of-control finding, which is the only measured thing in the passage."
+    - "Treating 'repeaters form a small percentage' as a reported rate; the rate is never given."
+
+- qa_id: qa_sa8_0033
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 43 (Chapter 13, 'Use of Samples')"
+  question: >
+    A sampling budget looks extravagant — it costs more than the media. What two things does Hopkins
+    say to do about the disagreement?
+  answer: >
+    First, change the measure. Samples sometimes seem to double advertising cost and often cost more
+    than the advertising, but he holds that rightly used they almost invariably form the cheapest way
+    to get customers, because cost per customer is the only way to gauge advertising — any measure
+    short of it can move in the opposite direction to the result. Second, look at who is arguing and
+    then stop arguing: the arguments against samples are usually biased and may come from advertising
+    agents who like to see all the advertising money spent in print, and such arguments should be
+    answered by tests — try some towns with them, some without them. Note that he prescribes the test
+    and reports no result from one, for any line; and that the same conflict-of-interest logic applies
+    to a practitioner author recommending his own methods, which he does not note.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: >
+    p.43: "Samples sometimes seem to double advertising cost... Yet, rightly used, they almost
+    invariably form the cheapest way to get customers." "The arguments against samples are usually
+    biased... Answer such arguments by tests. Try some towns with them, some without them."
+  confounders:
+    - "Giving only the cost-per-customer half and missing the paired-town procedure."
+    - "Treating 'almost invariably' as a reported finding; no town comparison is reported anywhere."
+    - "Reading the bias observation as an argument about samples rather than about the arguer."
+
+# ─────────────────────────── Chapter 14 ───────────────────────────
+
+- qa_id: qa_sa8_0034
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 44 (Chapter 14, 'Getting Distribution')"
+  question: >
+    Magazine advertising suits the product best. Why does Hopkins nevertheless say to start local,
+    and what is his stated scope limit on the advice?
+  answer: >
+    Because distribution is a precondition rather than a consequence: national advertising is
+    unthinkable without it, and a venture cannot be profitable if nine in ten of the converts fail to
+    find the goods. So distribution is built town by town with local advertising first, even where
+    magazine advertising is best adapted to the article, and the campaign converts to national
+    afterwards. His scope limit is explicit and stated twice: this chapter deals with articles of wide
+    appeal and repeated sales, like foods or proprietary articles, and other lines require different
+    methods too numerous to discuss in a book like that one.
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: media_planning
+  requires_application: false
+  support: >
+    p.44: "A venture cannot be profitable if nine in ten of the converts fail to find the goods." "We
+    usually start with local advertising, even though magazine advertising is best adapted to the
+    article." "We shall deal here with articles of wide appeal and repeated sales, like foods or
+    proprietary articles."
+  confounders:
+    - "Reading the local-first rule as a budget-phasing or risk-management principle rather than a supply precondition."
+    - "Generalising past his stated scope to considered or infrequent purchases."
+    - "Confusing town-by-town rollout with his chapter 1 town-by-town measurement method — same words, different purpose."
+
+- qa_id: qa_sa8_0035
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 45 (Chapter 14, 'Getting Distribution')"
+  question: >
+    Describe the pre-announced coupon mechanism and say exactly why a dealer stocks under it.
+  answer: >
+    A coupon good at any store for a full-size package is placed in the advertising, and before it
+    appears a proof of that advertisement is mailed to dealers — in the national version with the list
+    of magazines to be used and their circulations. Each dealer is shown that many of his customers
+    are bound to present that coupon, and that each coupon means a cash sale at full profit. He stocks
+    because refusing has a visible cost to him: no average dealer will let those customers go
+    elsewhere. What makes it work rather than a promise of advertising is that it converts a future
+    promise into an itemised forecast of paying customers arriving at his counter — evidence rather
+    than persuasion. Hopkins claims makers have sometimes attained reasonable national distribution in
+    one week this way, without a single salesman, naming Palmolive Soap and Puffed Grains — with no
+    dates, dealer counts or costs, and no case where the method failed.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: >
+    p.45: "Mail to dealers proofs of the ad which will contain the coupon... Each coupon means a cash
+    sale at full profit. No average dealer will let those customers go elsewhere." "In this way, in one
+    week sometimes, makers attain a reasonable national distribution."
+  confounders:
+    - "That the dealer is persuaded by the promise of advertising support — the thing he says dealers no longer believe."
+    - "Omitting the pre-announcement, which is the whole mechanism; the coupon alone is not the device."
+    - "Treating Palmolive and Puffed Grains as evidence; they are outcome-selected names with no figures."
+
+- qa_id: qa_sa8_0036
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 45-46 (Chapter 14, 'Getting Distribution')"
+  question: >
+    Half a newspaper's circulation goes to towns where you have no distribution. Those readers write
+    in for a sample. What does Hopkins say to do, and what failure is he avoiding?
+  answer: >
+    Invite them to write — otherwise that half of the circulation is wasted — but do NOT mail them the
+    sample. Send the samples to a store near the inquirer and refer him there. The failure he is
+    avoiding is the convert who cannot be supplied: mailing the sample may make a convert with no
+    route to purchase, and the full cost of the conversion has then been paid with none of the revenue
+    collectable. Routing it through a shop also does the second job, since the store that supplies the
+    sample will usually supply the demand that follows. Note this is a 1923 physical-fulfilment device
+    that depends on retailers accepting consignment samples, and no measurement of it is reported.
+  answer_type: application
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: true
+  support: >
+    pp.45-46: "Say in your coupon that outside people should write you for a sample. When they write,
+    do not mail the sample. Send the samples to a local store, and refer inquirers to that store...
+    Mailing a sample may make a convert who cannot be supplied."
+  confounders:
+    - "Mailing the sample, which is the direct and obvious fulfilment and the specific error named."
+    - "Suppressing the offer to outside towns, which wastes the circulation he is trying to recover."
+    - "Reading the point as customer-experience rather than as demand routed into a stocking decision."
+
+# ─────────────────────────── Chapter 15 ───────────────────────────
+
+- qa_id: qa_sa8_0037
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 48 (Chapter 15, 'Test Campaigns')"
+  question: >
+    Set out Hopkins's test campaign procedure exactly as he specifies it: scale, how users are
+    started, and the sequence of questions it answers.
+  answer: >
+    Scale: four or five towns. Starting method: a sample offer or a free package, used to get users
+    started quickly. The first measure is the cost per customer started. Then he waits, and the
+    remaining questions come in a fixed sequence — do the users buy those samples; if they do, will
+    they continue; how much will they buy; and how long does it take for the profit to return the cost
+    of selling. He puts the cost of such a test at $3,000 to $5,000 and argues the real cost is less
+    because some sales are made even on an unpopular product and nearly every test will in time bring
+    back its entire cost. The payback answer is what determines financing: on some products the cost
+    returns before the bills are due, meaning the product can be advertised without investment; on
+    another it may take three months, and the advertiser must finance accordingly when he spreads out.
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.48: "Perhaps we try out our project in four or five towns. We may use a sample offer or a free
+    package to get users started quickly. We learn in this way the cost per customer started. Then we
+    wait and see if users buy those samples. If they do, will they continue? How much will they buy?
+    How long does it take for the profit to return our cost of selling?" "A test like this may cost
+    $3,000 to $5,000."
+  confounders:
+    - "Adding a control or comparison town; the procedure as he describes it has no comparison arm."
+    - "Reading $3,000-$5,000 as something a test returned; it is what a test costs."
+    - "Assuming a duration for the test itself — he gives payback periods, never a test length."
+
+- qa_id: qa_sa8_0038
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 47-48 (Chapter 15, 'Test Campaigns')"
+  question: >
+    What is the inferential premise that makes the test campaign decision-useful, how strongly does
+    Hopkins state it, and what does he offer in support?
+  answer: >
+    The premise is that averages established on a small scale always hold. He states it without any
+    qualification: from what a thousand customers cost we know almost exactly what a million will
+    cost; from what they buy, what a million will buy; before spreading out we prove the undertaking
+    absolutely safe; an advertiser who branches out knows to a certainty just what his results will
+    be; and there are today no advertising disasters piloted by men who know. In support he offers
+    nothing. No mechanism is given for why a four-or-five-town average should generalise, no
+    conditions are named, and not one paired figure — predicted from a test, observed at scale —
+    appears anywhere. The strongest statement in his measurement doctrine is the one he supports
+    least, and the last claim is unfalsifiable as constructed, since any disaster shows the pilot did
+    not know.
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.47: "When we learn what a thousand customers cost, we know almost exactly what a million will
+    cost... We establish averages on a small scale, and those averages always hold... So there are
+    today no advertising disasters piloted by men who know."
+  confounders:
+    - "Assuming the chapter validates the extrapolation somewhere later; it does not."
+    - "Reading the 91 per cent or 75 per cent figures as support for this claim; neither is an extrapolation checked against a national result."
+    - "Missing that it contradicts his own chapter 11 instruction to gather appeal percentages by class because they differ on farms and in cities."
+
+- qa_id: qa_sa8_0039
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 48-49 (Chapter 15, 'Test Campaigns')"
+  question: >
+    Chapter 15 reports a 91 per cent result. What exactly was measured, and is it a test-campaign
+    return?
+  answer: >
+    It is a vote on a product form, not an advertising return. A large food advertiser and all his
+    advisers were certain a product would be more popular in another form and were willing to act
+    without consulting consumers. A test was run instead — an advertisement in a few towns with a
+    coupon good at any store for a package of the new-style product, followed by writing to the users
+    — and they were almost unanimous in disapproval. When a further variant was proposed, he submitted
+    it to a few thousand women the same way and 91 per cent voted for it. Each test cost about $1,000.
+    So the number is a survey result from self-selected coupon redeemers, and it is not cost per
+    customer, repeat rate, purchase volume or payback — none of which chapter 15 reports for any
+    product. The first test's result is given only qualitatively, with no figure to set against the 91
+    per cent.
+  answer_type: factual
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.49: "he submitted the question to a few thousand women in a similar way and 91 per cent voted
+    for it... These tests cost about $1,000 each. The first one saved him a very costly mistake."
+  confounders:
+    - "Reading 91 per cent as an advertising response or sales result."
+    - "Treating 'saved him a very costly mistake' as established; it assumes the disapproval was correct, which the test cannot show."
+    - "Assuming the respondents were a representative sample; they were people who redeemed a coupon."
+
+- qa_id: qa_sa8_0040
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 49 (Chapter 15, 'Test Campaigns')"
+  question: >
+    Your current campaign is working and you do not want to risk it, but you think a better approach
+    exists. What arrangement does Hopkins describe, and what is wrong with the 75 per cent figure he
+    attaches to it?
+  answer: >
+    Run the new methods as tests alongside the campaign rather than in place of it, so better methods
+    can be sought constantly without interrupting plans already proved out. He reports doing this for
+    one food advertiser over five years, trying more than fifty separate plans, finding an improvement
+    every little while, and ending with a best plan that reduced the cost of selling by 75 per cent —
+    four times more effective than the best plan used before. What is wrong with the figure is that it
+    is the winner of fifty attempts reported as if it were the effect of the method: he gives no
+    distribution of outcomes across the fifty, and a 75 per cent reduction accumulated over five years
+    against a baseline that was itself the best of an earlier search cannot be attributed to the final
+    plan alone. The advertiser, product, plans and absolute costs are all unnamed. The durable content
+    is the structure — the proved plan keeps running while the candidate is tested beside it — not the
+    number.
+  answer_type: application
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: true
+  support: >
+    p.49: "we use test campaigns to try out new methods on advertising already successful... without
+    interrupting plans already proved out. In five years for one food advertiser we tried out over
+    fifty separate plans... It reduced our cost of selling by 75 per cent."
+  confounders:
+    - "Quoting the 75 per cent as a demonstrated effect size for a testing programme."
+    - "That the improvement came from one change; he describes fifty attempts over five years."
+    - "Missing the champion/challenger structure, which is the part that does not depend on the figure."
+
+- qa_id: qa_sa8_0041
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 49 (Chapter 15, 'Test Campaigns')"
+  question: >
+    Hopkins proposes settling a claim of superior advertising skill by test. Describe the arrangement
+    and the two problems with it that he does not raise.
+  answer: >
+    The challenger takes a few towns without interfering with the general campaign, and his results
+    are compared with the general results; the advertiser makes no commitment, which he likens to
+    telling a salesman to go out for a week and prove. He adds that a large percentage of all the
+    advertising then being done would change hands if the method were applied. Two problems he does
+    not raise. First, the comparison is not clean: a few towns worked by a motivated challenger
+    against the general results of a national campaign differ in market, scale, attention and effort
+    as well as in skill, and nothing is held constant. Second, the prediction is in the direct
+    commercial interest of his own agency — a conflict of the exact kind he warns about in chapter 13
+    when he says arguments against samples may come from agents who want the money spent in print.
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: true
+  support: >
+    p.49: "The new agent may take a few towns, without interfering with the general campaign. Then
+    compare his results with the general results and prove his greater skill... A large percentage of
+    all the advertising done would change hands if this method were applied."
+  confounders:
+    - "Accepting the design as a controlled comparison because it uses the word 'test'."
+    - "Treating the change-hands prediction as a finding."
+    - "Missing the parallel with his own chapter 13 warning about biased advisers."
+
+- qa_id: qa_sa8_0042
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 47-50 (Chapter 15, 'Test Campaigns')"
+  question: >
+    Chapter 15 is the book's chapter on measurement. Does it report what any test campaign returned?
+  answer: >
+    No. It specifies the procedure fully and reports no test campaign's returns at all — not one cost
+    per customer started, repeat rate, purchase volume or payback period for any product in any town.
+    The only dollar figures in it are the cost of RUNNING a test ($3,000 to $5,000 for a town test,
+    about $1,000 for a coupon question), not anything a test brought back. The two numbers it does
+    report belong to side-uses of the apparatus: 91 per cent, a vote on a product form, and 75 per
+    cent, the cost reduction of the best of fifty plans over five years. The claim on which everything
+    rests — that small-scale averages always hold — is stated as an absolute and supported by nothing.
+    So the chapter supplies a well-specified METHOD and almost no reported OUTPUT.
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.48: cost of a test given as $3,000-$5,000; p.49: tests "cost about $1,000 each"; the reported
+    outcomes at p.49 are a 91 per cent product-form vote and a 75 per cent cost reduction from a
+    five-year programme. No cost per customer started, repeat rate, volume or payback is reported
+    anywhere in pp.47-50.
+  confounders:
+    - "Assuming the book's most-quoted chapter must contain its evidence."
+    - "Counting the 91 per cent or 75 per cent as test-campaign returns; neither is."
+    - "Treating the detailed procedure as evidence — specificity of method is not reporting of result."
+
+# ─────────────────────────── Chapter 16 ───────────────────────────
+
+- qa_id: qa_sa8_0043
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 51-52 (Chapter 16, 'Leaning on Dealers')"
+  question: >
+    A window display measurably lifts sales at the shop that runs it. On Hopkins's argument, what has
+    been measured, and what measurement would settle it?
+  answer: >
+    What has been measured is redistribution, not gain. A window display acting as a reminder may
+    bring one dealer a lion's share of the trade and yet not increase total sales at all; dealer
+    effort, if made, does not usually increase total sales but merely swings trade from one store to
+    another. The advertiser has no interest in centring trade at any particular store. What would
+    settle it is a comparison at the town level: try one town in one way, one in another, and compare
+    TOTAL sales in those towns — which is the only measure that distinguishes a gain from a
+    reallocation. He predicts that in many lines such tests will show costly displays to be worthless
+    and says a growing number of experienced advertisers spend no money on displays, but reports no
+    such test and names no line.
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: >
+    pp.51-52: "A window display, acting as a reminder, may bring to one dealer a lion's share of the
+    trade. Yet it may not increase your total sales at all." "Try one town in one way, one in another.
+    Compare total sales in those towns."
+  confounders:
+    - "Accepting the shop-level lift as evidence — the intuitive reading and the one he attacks."
+    - "That his objection is to the expense of displays rather than to the level at which they are measured."
+    - "Treating 'such tests will show' as a report of tests run."
+
+- qa_id: qa_sa8_0044
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 51 (Chapter 16, 'Leaning on Dealers')"
+  question: >
+    What does Hopkins claim about a sale made on a dealer's recommendation rather than by
+    advertising, and how well supported is it?
+  answer: >
+    He claims a sale without a convert does not count for much on most lines: sales made by conviction
+    — by advertising — are likely to bring permanent customers, while people who buy through casual
+    recommendations do not often stick, because next time someone else gives other advice. The
+    mechanism is that a recommendation transfers no reason to the buyer, so nothing in him resists the
+    next recommendation. It is supported by nothing whatever: no retention comparison between
+    advertising-acquired and dealer-recommended customers is reported and no rate is given for either.
+    It is also the justification for moving money from the trade into consumer advertising, which is
+    the same direction the rest of the chapter argues in and, in a practitioner author's book, worth
+    noticing.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.51: "On most lines, making a sale without making a convert does not count for much. Sales made
+    by conviction—by advertising—are likely to bring permanent customers. People who buy through
+    casual recommendations do not often stick."
+  confounders:
+    - "Treating it as an established retention finding rather than an unevidenced assertion."
+    - "Dropping his own scope limit, 'on most lines'."
+    - "Reading it as a claim about word of mouth generally; his case is a shopkeeper's recommendation at the counter."
+
+# ─────────────────────────── Chapter 17 ───────────────────────────
+
+- qa_id: qa_sa8_0045
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 53 (Chapter 17, 'Individuality')"
+  question: >
+    Chapter 9 rules out eccentricity; chapter 17 requires standing out. How does Hopkins hold both,
+    and what selection rule does he give?
+  answer: >
+    He distinguishes two kinds of uniqueness: one that belittles and arouses resentment, and one that
+    is refreshing, that enhances, and that we welcome and remember. Being eccentric or abnormal is not
+    a distinction to covet; doing admirable things in a different way is. So the requirement is
+    distinctiveness in manner and tone rather than in appearance or subject treatment. His selection
+    rule is fit to audience: each advertiser is given an individuality best suited to the people he
+    addresses — rugged and honest in a line where rugged honesty counts, a good fellow where choice is
+    a matter of favour, an authority in other lines. He gives no way to classify a candidate persona
+    in advance as refreshing rather than belittling, which is the decision the chapter exists to
+    support, and he attaches no line, product or result to any of the three castings.
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.53: "There is uniqueness which belittles and arouses resentment. There is refreshing uniqueness
+    which enhances." "He is given an individuality best suited to the people he addresses. One man
+    appears rugged and honest in a line where rugged honesty counts."
+  confounders:
+    - "Reading chapters 9 and 17 as contradicting; the distinction is between kinds of distinctiveness and between appearance and manner."
+    - "That the persona expresses the client; he says it is selected to fit the audience."
+    - "Assuming he supplies an operational test for the two kinds of uniqueness; he does not."
+
+- qa_id: qa_sa8_0046
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 53-54 (Chapter 17, 'Individuality')"
+  question: >
+    A new writer takes over a long-running account and wants to refresh the tone. What does Hopkins
+    require of him, on what grounds, and what exception exists?
+  answer: >
+    He requires the writer to get into the spirit the advertiser has adopted before writing anything —
+    to play a part as an actor plays it — and to never change the tone. Two grounds. Recognition:
+    people know an advertiser by looks and mannerisms, not by name alone, so appearing different every
+    meeting never builds confidence, and a change in characteristics would compel the advertising's
+    best friends to get acquainted all over. Concealment: the appeals must not seem created, studied
+    or artificial, but must seem to come from the heart, and the same heart always. The exception is
+    stated in a subordinate clause and easily missed — a complete change is allowed where a wrong tack
+    forces it. The constancy rule applies to a PROVED individuality, and his warrant for it is only
+    that what won so many is "probably" the best way to win others.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    pp.53-54: "Before a man writes a new ad on that line, he gets into the spirit adopted by the
+    advertiser. He plays a part as an actor plays it." "They must seem to come from the heart, and the
+    same heart always, save where a wrong tack forces a complete change."
+  confounders:
+    - "Stating the rule as absolute and missing the wrong-tack exception."
+    - "Justifying constancy by brand-recall arguments Hopkins does not make; his grounds are acquaintance and concealment of effort."
+    - "Missing the tension with his own account of the persona as constructed, coached and signed — which he presents as compatible with seeming to come from the heart."
+
+# ─────────────────────────── Chapter 18 ───────────────────────────
+
+- qa_id: qa_sa8_0047
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 55 (Chapter 18, 'Negative Advertising')"
+  question: >
+    Hopkins claims a positive advertisement outpulls a negative one four to one. State the claim
+    exactly as he makes it, including what he attaches to it.
+  answer: >
+    He says: compare the results of two advertisements, one negative and one positive, one presenting
+    the dark side and one the bright, one warning and the other inviting — "You will find that the
+    positive ad outpulls the other four to one, IF YOU HAVE OUR EXPERIENCE." The conditional is his
+    and it is routinely dropped in quotation. He reports no comparison at all: no product, no pair of
+    advertisements, no returns. It is an outcome claimed on records he does not show, explicitly
+    conditioned on the reader's records resembling his. Note also that the figure is attached only to
+    the framing claim, not to his separate claims that attacking rivals is bad policy or that assuming
+    compliance outperforms implying neglect.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    p.55: "Compare the results of two ads, one negative, one positive... You will find that the
+    positive ad outpulls the other four to one, if you have our experience."
+  confounders:
+    - "Quoting 'four to one' as a measured result — the standard citation of this passage."
+    - "Extending the figure to the whole chapter's doctrine rather than the one claim it is attached to."
+    - "Reading the prohibition on attacking rivals as evidenced by the four-to-one claim; it rests on policy and on 1923 medium acceptance rules."
+
+- qa_id: qa_sa8_0048
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 55-56 (Chapter 18, 'Negative Advertising')"
+  question: >
+    You are advertising a wrinkle treatment. On Hopkins's rule, what goes in the picture, what goes
+    in the call to action, and what exception does he allow?
+  answer: >
+    The picture shows the face as it will appear, not the wrinkles you propose to remove — his reason
+    being that your customers know all about the wrinkles already; picture what others wish to be, not
+    what they may be now, and envied people rather than the envious. The call to action assumes
+    compliance: "Send now for this sample", not "Why do you neglect this offer?", because the second
+    suggests that people are neglecting, and the reader should be invited to follow the crowd. Tell
+    people what to do, not what to avoid. His one exception is historical and grudging: the "before
+    and after taking" advertisements, which he calls follies of the past that never had a place save
+    with the afflicted.
+  answer_type: application
+  difficulty: easy
+  knowledge_type: copywriting
+  requires_application: true
+  support: >
+    p.55: "Don't show the wrinkles you propose to remove, but the face as it will appear. Your
+    customers know all about the wrinkles." "Assume that people will do what you ask." p.56: "The
+    'Before and after taking' ads are follies of the past. They never had a place save with the
+    afflicted."
+  confounders:
+    - "Showing the problem to establish relevance — the standard before/after construction he rejects."
+    - "Missing the call-to-action half; the rule covers the instruction as well as the image."
+    - "Treating the afflicted exception as a general licence for problem-first advertising."
+
+# ─────────────────────────── Chapter 19 ───────────────────────────
+
+- qa_id: qa_sa8_0049
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 57 (Chapter 19, 'Letter Writing')"
+  question: >
+    Describe the letter test Hopkins reports, including its two possible outcomes. How does its
+    specification compare with the test campaign of chapter 15?
+  answer: >
+    Before sending five million letters, the publisher puts a few thousand to test: he may try
+    twenty-five letters, each with a thousand prospects, and learns what results will cost. Two
+    outcomes are provided for, and the first is the notable one — the plan may be abandoned altogether
+    because it appears unprofitable; only otherwise is the letter that pays best the one he uses. Its
+    specification is TIGHTER than chapter 15's own procedure: it states arm count and cell size, which
+    chapter 15 never does, and it can kill the programme as well as rank the candidates. What it still
+    omits is randomisation, simultaneity and list comparability — and, like everything else in the
+    span, any reported result: no cost per result, no winning margin, no letters.
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    p.57: "Before the publisher sends out five million letters he puts a few thousands to test. He may
+    try twenty-five letters, each with a thousand prospects. He learns what results will cost. Perhaps
+    the plan is abandoned because it appears unprofitable."
+  confounders:
+    - "Assuming chapter 15 is the book's most precise test description; this one is."
+    - "Missing the abandonment branch, which is what makes it a go/no-go design and not merely a ranking."
+    - "Reading twenty-five thousand pieces as a validated sample size rather than as one publisher's reported practice."
+
+- qa_id: qa_sa8_0050
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 58 (Chapter 19, 'Letter Writing')"
+  question: >
+    What does Hopkins say about fine stationery, and how far does he take the claim?
+  answer: >
+    Further than "it does not help". His first claim is neutral: experience generally shows a two-cent
+    letter gets no more attention than a one-cent letter and fine stationery no more than poor,
+    because the whole appeal lies in the matter. His second is stronger — it has been FOUND that fine
+    stationery and pamphlets LESSEN the effect, because they indicate an effort to sell on other lines
+    than merit, which he says has the same effect in letters as in advertisements. So visible
+    expenditure on the vehicle actively reduces response by making the effort to sell apparent. His
+    evidence is "experience generally shows" and "it has been found": no test, no comparison, no
+    return, with the harder of the two claims asserted in the passive voice. The artefacts are 1923
+    postage classes, stationery grades and mailed pamphlets.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: production_reasoning
+  requires_application: false
+  support: >
+    p.58: "a two-cent letter gets no more attention than a one-cent letter. Fine stationery no more
+    than poor stationery. The whole appeal lies in the matter." "It has been found that fine
+    stationery and pamphlets lessen the effect. They indicate an effort to sell on other lines than
+    merit."
+  confounders:
+    - "Stopping at the neutral claim and missing that he says it actively reduces response."
+    - "Reading the mechanism as perceived cheapness or trustworthiness; his mechanism is visible selling effort read as a substitute for merit."
+    - "Treating it as an evidenced production finding; it is asserted twice in the passive voice."
+
+- qa_id: qa_sa8_0051
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 58-59 (Chapter 19, 'Letter Writing')"
+  question: >
+    Someone sends for your sample after an advertisement about durability. Your follow-up letter is
+    drafted around price. What is Hopkins's objection, and what does he add about timing?
+  answer: >
+    His objection is that you are discarding the only information the inquiry gave you. A letter to an
+    inquirer is like a salesman going to an interested prospect: you know what created that interest,
+    so follow it up along THAT line and not on some different argument — complete the impression
+    already created, and don't undertake another on a guess. On timing, he says people are naturally
+    dilatory, they postpone, and a postponed action is too often forgotten, so something should be done
+    to get immediate action: offer an inducement for it, or tell what delay may cost, and note how many
+    successful selling letters place a limit on an offer expiring on a certain date purely to force a
+    prompt decision. You can afford to pay for prompt action rather than lose by delay. He adds that
+    the specific device rarely transfers between two lines even though the principles are universal.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: copywriting
+  requires_application: true
+  support: >
+    p.58: "You know what created that interest. Then follow it up along that line, not on some
+    different argument. Complete the impression already created. Don't undertake another on a guess."
+    "Note how many successful selling letters place a limit on an offer."
+  confounders:
+    - "Broadening the follow-up to cover more benefits, which is the natural instinct and the error he names."
+    - "Reading the dated limit as artificial scarcity for its own sake; his stated purpose is overcoming delay."
+    - "Assuming a device that worked on one line can be reused on another — he says the reverse."
+
+# ─────────────────────────── Chapter 20 ───────────────────────────
+
+- qa_id: qa_sa8_0052
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 60 (Chapter 20, 'A Name That Helps')"
+  question: >
+    Why does Hopkins argue about names in terms of space rather than in terms of memorability?
+  answer: >
+    Because he treats the name as an item of purchased display. The name is usually prominently
+    displayed, so to justify the space it occupies it should aid the advertising — and a name like
+    Cream of Wheat, May Breath or Dutch Cleanser is almost a complete advertisement in itself, obtained
+    in space that was going to be spent regardless. The failure he names is general: a vast amount of
+    space is wasted displaying names and pictures which tell no selling story. It is the same argument
+    he makes about pictures in chapter 9 — an element that occupies paid display must outperform what
+    else that display could carry — applied to a different element, though he does not draw the
+    parallel himself. He adds that the service of the product, not the name, is the important thing.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    p.60: "The name is usually prominently displayed. To justify the space it occupies, it should aid
+    the advertising." "A vast amount of space is wasted in displaying names and pictures which tell no
+    selling story."
+  confounders:
+    - "Framing his argument as being about recall or distinctiveness, which is the modern default."
+    - "Missing that his examples are outcome-selected, and that he supplies successful non-descriptive names a paragraph later."
+    - "Reading 'the service of the product, not the name, is the important thing' as an argument for generic names."
+
+- qa_id: qa_sa8_0053
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 60-61 (Chapter 20, 'A Name That Helps')"
+  question: >
+    You must choose between a descriptive name, a meaningless coined name, and an ingredient name.
+    Set out the trade-off as Hopkins does, including the patent complication.
+  answer: >
+    Descriptive: protectable while still describing the product, so the display is valuable and the
+    name sells in space spent anyway. Meaningless coined — Kodak, Karo, Mazda, Vaseline, Postum: also
+    protectable, and long-continued advertising may give it a meaning, at which point it becomes very
+    valuable, but the great majority never attain that status, so such names do not aid the
+    advertising and it is very doubtful whether they justify display. Ingredient names — Syrup of
+    Figs, Tar Soap, Palmolive Soap: may dominate a market if the price is reasonable, but they invite
+    substitution and are naturally classified with other products having like ingredients, so the
+    price must remain in that class. The patent complication is separate and severe: on a patented
+    product the right to a name expires with the patent — Castoria, Aspirin, Shredded Wheat Biscuit
+    became common property — which he says often makes a patent an undesirable protection. And where a
+    product must be called by a common name, the best auxiliary is a man's name, better than a coined
+    one because it shows some man is proud of his creation.
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    pp.60-61: "Such names do not aid the advertising. It is very doubtful if they justify display."
+    "They invite substitution... so the price must remain in that class." "the right to a name expires
+    with the patent." "the best auxiliary name is a man's name."
+  confounders:
+    - "Reading him as simply preferring descriptive names; he sets out a real trade-off with exclusivity."
+    - "Missing the price-class consequence of an ingredient name, which is the sharpest point in the chapter."
+    - "Treating the patent reasoning as legal fact; it is his 1923 understanding, recorded as his claim."
+
+# ─────────────────────────── Chapter 21 ───────────────────────────
+
+- qa_id: qa_sa8_0054
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 62-63 (Chapter 21, 'Good Business')"
+  question: >
+    An advertiser of many years spends $700,000 a year and says he does not know whether his
+    advertising is worth anything. What does Hopkins propose, what does the proposal measure, and what
+    is his diagnosis of how the situation arose?
+  answer: >
+    He proposes ending an advertisement with an offer to pay five dollars to anyone who writes in that
+    he read the advertisement through, predicting that the scarcity of replies will amaze the
+    advertiser — he claims he could prove the advertising utterly unprofitable in one week. What it
+    measures is READING, not selling, which is a narrower question than the one asked, and he does not
+    distinguish them. His diagnosis is default attribution: advertising is taken as prima facie
+    evidence that the man who pays believes in it, so he takes it like a secret tonic others have
+    endorsed, and if the business thrives the tonic gets the credit while otherwise the failure is put
+    down to fate. His contrast is the big store, where every line is charged to the proper department
+    and every inch must justify its cost the next day. Note that he predicts the result in the same
+    sentence as the proposal and reports no run of it.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: >
+    p.62: the $700,000 advertiser; "End an ad with an offer to pay five dollars to anyone who writes
+    you that he read the ad through. The scarcity of replies will amaze you." p.63: "So he takes it
+    like some secret tonic which others have endorsed. If the business thrives, the tonic gets the
+    credit."
+  confounders:
+    - "Treating the five-dollar test as something he reports running; it is a proposal with a predicted result."
+    - "Assuming the instrument answers the profitability question; it measures readership only."
+    - "Missing the default-attribution diagnosis, which is the durable part and explains why the situation persists."
+
+# ─────────────────── Additional application items across chapters ───────────────────
+
+- qa_id: qa_sa8_0055
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 33 and 35 (Chapter 10, 'Things Too Costly'; Chapter 11, 'Information')"
+  question: >
+    An inventor brings you a remedy for a condition he suffers from and is certain it is a great
+    advertising possibility. Walk through what Hopkins would do before agreeing, and what would make
+    him refuse.
+  answer: >
+    First, find out how many readers have the condition, because he says plainly that he has no
+    statistics on it — a canvass is the instrument, and chapter 11 lists the reachable percentage as
+    one of the quantities that must be learned before space is bought, gathered by class because it
+    may differ on farms and in cities. Then do the arithmetic: if the condition affects one in a
+    hundred, the advertiser must cover a hundred useless readers to reach one, and his cost of
+    results might run twenty times as high as for an article appealing to one in five — an excess
+    Hopkins says would probably mean disaster, because the cost of advertising largely depends on the
+    percentage of waste circulation. He would refuse on that arithmetic, not on the merit of the
+    remedy, and he notes that the inventor's own certainty is exactly the input the procedure exists
+    to override. He also warns that every new advertiser should seek wise advice and that no one with
+    the interests of advertising at heart will advise a dubious venture.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: media_planning
+  requires_application: true
+  support: >
+    p.33: "We have no statistics on this subject... A canvass might show it to be one in a hundred...
+    His cost of results might be twenty times as high as on another article which appeals to one in
+    five." p.35: "We must learn the percentage of readers to whom our product appeals... The cost of
+    advertising largely depends on the percentage of waste circulation."
+  confounders:
+    - "Judging the project on the strength of the product or of the inventor's conviction."
+    - "Proposing a smaller test budget as a compromise, which chapter 10 calls the same folly on a smaller scale."
+    - "Treating the one-in-a-hundred figure as an established prevalence; Hopkins states he does not know it."
+
+- qa_id: qa_sa8_0056
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed p. 38 (Chapter 12, 'Strategy')"
+  question: >
+    A maker wants to price a small remedy low to widen its market, reasoning that volume is where the
+    profit is. On Hopkins's chapter 12 reasoning, when is that right and when is it wrong?
+  answer: >
+    It is right in the volume regime — he does say the greatest profits are made on great volume at
+    small profit, and that a price appealing only to, say, 10 per cent multiplies the cost of selling.
+    But he places small remedies in a different regime. Where sale per customer is small, high price
+    is unimportant and high PROFIT is essential: a buyer hardly cares what he pays for a corn remedy
+    because he uses little, so the maker must have a large margin precisely because consumption is
+    small. Widening the market at a low margin does not help when each customer buys once or twice —
+    which is the same variable, consumption per customer, that governs chapter 10's feasibility test.
+    So the reasoning is wrong here, and Hopkins would want to know which regime the line is in first.
+    He never states a test for placing a new product in a regime, which is the weakness of the
+    framework.
+  answer_type: application
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    p.38: "the greatest profits are made on great volume at small profit... A price which appeals only
+    to—say 10 per cent—multiplies the cost of selling. But on other lines high price is unimportant.
+    High profit is essential... One hardly cares what he pays for a corn remedy because he uses
+    little."
+  confounders:
+    - "Applying the volume rule universally, which is how Hopkins is usually summarised on price."
+    - "Confusing the low-consumption regime with the judged-by-price regime, where a higher price is an inducement for a different reason."
+    - "Reading this as his chapter 6 claim that people judge value by stated price; that is a copy effect, this is a margin decision."
+
+- qa_id: qa_sa8_0057
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_title: "Claude C. Hopkins, Scientific Advertising (1923; local copy a 2009 Snowball/BN Publishing reprint)"
+  source_locator: "printed pp. 28-29 (Chapter 9, 'Art in Advertising')"
+  question: >
+    A layout devotes half a page to a lifestyle photograph of people enjoying the product. Apply
+    Hopkins's chapter 9 test, and say what evidence he would accept as settling it.
+  answer: >
+    The test is not whether the photograph is good but whether it forms a better selling argument than
+    that same half-page set in type — because the picture is bought with space, and its cost is the
+    argument the space would otherwise have carried. A lifestyle photograph can pass, but only on a
+    specific condition: it must depict the condition the buyer covets, so that it implies the product
+    is a route to it, as with men others envy in surroundings others covet. A photograph that merely
+    interests, decorates or attracts fails, since he holds that advertisements are not written to
+    interest, please or amuse. As for what would settle it, he is explicit that generalities cannot
+    well be applied to art, that each line must be studied by itself, and that the only way to know is
+    by compared results — with the further instruction that where no principles exist for a line, the
+    advertiser should work out his own by tests.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: composition
+  requires_application: true
+  support: >
+    p.28: "Use them only when they form a better selling argument than the same amount of space set in
+    type." "Ads are not written to interest, please or amuse." p.29: "Generalities cannot well be
+    applied to art... Each line must be studied by itself." "The only way to know, as is with most
+    other questions, is by compared results."
+  confounders:
+    - "Judging the photograph on craft quality, which he calls a question of small moment."
+    - "Assuming he would reject a lifestyle image outright; his apparel and beauty cases are exactly that."
+    - "Offering engagement or attention evidence; his stated criterion is compared selling results."

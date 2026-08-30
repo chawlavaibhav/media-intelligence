@@ -1,0 +1,385 @@
+# SourceConceptSystem — Claude C. Hopkins, "My Life in Advertising" (Harper & Brothers, 1927)
+# source_id: hopkins-my-life-in-advertising
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# Five systems. Two are close to source-stated (scs_mla_001 and scs_mla_005, both of which the
+# source presents as connected wholes in chapters 16 and 17); three are extractor groupings over
+# material the source scatters across campaign narratives, and each says so in
+# `system_level_uncertainty`. Nothing here asserts anything about any other source.
+
+- scs_id: scs_mla_001
+  source_id: hopkins-my-life-in-advertising
+  label: the_traced_return_method_and_its_refusal_rule
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The source's account of how advertising knowledge is made: a countable response is attached to
+    each advertisement, alternatives are compared on cost and result, a cheap local test is run
+    before any commitment, the test is read on repeat purchase rather than first response, the
+    weekly reporting loop caps the cost of a wrong theory, and evidence not obtained this way is
+    refused. The refusal rule is what makes the rest a method rather than a habit.
+  whole_system_claim:
+    text: >
+      The parts are load-bearing on each other. The keyed response makes comparison possible; the
+      comparison makes a principle; the refusal rule excludes the untraced successes that would
+      otherwise swamp the principles; the small test bounds the cost of being wrong; the
+      repeat-purchase criterion prevents a strong first response from being mistaken for success;
+      and the always-experiment clause prevents the resulting principles from hardening. Remove the
+      refusal rule and the system degenerates into anecdote collection, which is what the source
+      says most advertising theory is. Remove the repeat-purchase criterion and the system passes a
+      campaign that destroys its client, which the source reports happening.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each element separately and states two of the linkages itself: that safe
+      principles are evolved only by those who know with reasonable exactness what the advertising
+      does (p. 176), and that regardless of principles one must always experiment (p. 177). It does
+      not present the elements as one interlocking system, and it never draws the connection
+      between the Mitchell disaster (p. 119-120) and the repeat-purchase criterion (p. 135) — that
+      connection is the extractor's. The claim that the parts fail without each other is therefore
+      synthesis over material the source supplies but does not assemble.
+    source_ref: null
+  members:
+    - {sk_ref: sk_mla_0061, role_in_system: foundation, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0062, role_in_system: refusal_rule, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0001, role_in_system: constraint, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0021, role_in_system: assumption, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0039, role_in_system: criterion, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0020, role_in_system: worked_instance, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0046, role_in_system: operational_loop, order: 7, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0053, role_in_system: principal_variable, order: 8, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0047, role_in_system: general_rule, order: 9, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0045, role_in_system: worked_instance, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0054, role_in_system: worked_instance, order: 11, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0051, role_in_system: calibration_discipline, order: 12, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0003, role_in_system: rival_knowledge_route, order: 13, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0005, role_in_system: motivation, order: 14, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0041, role_in_system: worked_instance, order: 15, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_mla_0061, to: sk_mla_0062, nature: "the method is only a method because untraced evidence is refused", origin: source_stated}
+      - {from: sk_mla_0001, to: sk_mla_0021, nature: "small-test caution is worthless unless the small test predicts", origin: extractor_inferred}
+      - {from: sk_mla_0046, to: sk_mla_0053, nature: "the loop mostly varies the headline because the body is held complete", origin: source_stated}
+      - {from: sk_mla_0039, to: sk_mla_0021, nature: "the repeat criterion is what licenses the scale-up", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_mla_0003, sk_mla_0061]
+        nature: "unmediated personal contact versus keyed measurement as the route to knowledge; the source uses both and never ranks them"
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_mla_0047, sk_mla_0028]
+        nature: "test everything new against keep what is proved; the source states both and reconciles them only by requiring a local test before any change"
+        origin: source_stated
+        source_ref: {chapter: "Ten — Automobile Advertising", page_start: 117}
+    conflicts:
+      - between: [sk_mla_0062, sk_mla_0020]
+        nature: >
+          The refusal rule disqualifies untraced success narratives as evidence, and the book's own
+          campaign narratives are almost entirely untraced success narratives. The source does not
+          apply its rule to itself.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref: {chapter: "Seventeen — Scientific Advertising", page_start: 176, page_end: 177, note: "the source warns that methods succeeding in one line cannot be applied to another and that one must always experiment regardless of principles"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members are individually well supported and four of them are grouped by the source itself
+      in chapter 17. The claim that they constitute one interlocking system whose parts fail
+      without each other is OURS, and so is the identified conflict between the refusal rule and
+      the book's own evidential practice. The source presents chapter 17 as a list of principles,
+      not as a system diagram.
+  provenance:
+    chapter: "Seventeen — Scientific Advertising, with members drawn from chapters 1, 8, 12, 13, 14 and 15"
+    section: null
+    page_start: 175
+    page_end: 177
+    source_support: text
+
+- scs_id: scs_mla_002
+  source_id: hopkins-my-life-in-advertising
+  label: the_coupon_introduction_sequence
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The source's named plan for introducing a low-price packaged good: announce the buying offer
+    above story advertisements, run the story so desire is created, mail advance proofs to the
+    trade so stocking becomes the retailer's own interest, publish the coupon page, let the earned
+    trial occur, and read the campaign on repeat sales. Distribution is obtained without a sales
+    force at any point.
+  whole_system_claim:
+    text: >
+      The order is the mechanism. The pre-announcement multiplies readership of the story; the
+      story creates the desire the coupon then converts; the advance proof reaches the trade before
+      demand arrives, so the retailer stocks in self-defence rather than being sold to; and the
+      coupon makes the sample earned rather than pressed on the buyer. Run out of order — sample
+      first, or coupon without story — the source reports each element failing on its own.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source presents the plan as a plan, states that it originated it and used it in many of
+      its best campaigns, and gives the steps in order at pp. 133-134. It separately reports the
+      failure of unsequenced sampling (pp. 105, 146) and the trade-notification step (pp. 104,
+      136-137). The claim that the ordering itself carries the effect, and that each element fails
+      when detached, is assembled by the extractor from those separate reports rather than stated
+      by the source as a property of the sequence.
+    source_ref: {chapter: "Twelve — Early History of Palmolive", page_start: 133, page_end: 134}
+  members:
+    - {sk_ref: sk_mla_0038, role_in_system: step, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0025, role_in_system: step, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0026, role_in_system: constraint, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0044, role_in_system: constraint, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0039, role_in_system: exit_criterion, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0035, role_in_system: governing_principle, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0036, role_in_system: alternative_route, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0008, role_in_system: alternative_route, order: 8, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: procedural
+      origin: source_stated
+    dependencies:
+      - {from: sk_mla_0025, to: sk_mla_0035, nature: "the coupon exists to make consumer demand pull distribution rather than buying it", origin: source_stated}
+      - {from: sk_mla_0038, to: sk_mla_0026, nature: "the pre-announcement is what makes the later sample requested rather than pressed", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_mla_0026, sk_mla_0044]
+        nature: "effort demanded of the buyer selects for interest, but any money demanded collapses response; the admissible band is narrow and the source never states its edges"
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_mla_0035, sk_mla_0008]
+        nature: "consumer pull versus trade privilege as the route to distribution; the source uses both in different eras and insists you cannot pay for both"
+        origin: source_stated
+        source_ref: {chapter: "Eleven — Tire Advertising", page_start: 129, page_end: 130}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: {chapter: "Twelve — Early History of Palmolive", page_start: 134, page_end: 135, note: "the source states that sampling detached from created interest is a very bad plan and that products handed out without asking lose respect"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, outcome_claimed, empirical_within_source, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The sequence itself is the source's, presented as a named plan it says it originated. What is
+      OURS is the inclusion of the two alternative distribution routes as members, the framing of
+      the effort-versus-price band as a trade-off internal to the system, and the claim that each
+      element fails when detached from the order.
+  provenance:
+    chapter: "Twelve — Early History of Palmolive; Nine — The Start of My Seventeen Years"
+    section: null
+    page_start: 133
+    page_end: 137
+    source_support: text
+
+- scs_id: scs_mla_003
+  source_id: hopkins-my-life-in-advertising
+  label: the_screen_for_whether_a_product_can_be_advertised_at_all
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    A set of conditions the source applies before any campaign is designed, and on which it reports
+    refusing most propositions brought to it: is there a real or statable advantage; is the product
+    standard or distinguishable; is the demand a habit that already exists or one that would have
+    to be created; is the affected class large enough to reach economically; is the repeat cycle
+    short enough for acquisition cost to be recovered; and is there a theory to build on at all.
+    Failing these, the source's stated action is to refuse rather than to advertise well.
+  whole_system_claim:
+    text: >
+      The source treats campaign quality as unable to rescue a product that fails these conditions,
+      and treats refusal as the correct professional act rather than a lost opportunity. Read as a
+      set, the conditions are largely economic rather than creative: three of them are arithmetic
+      about acquisition cost against lifetime return, and the creative conditions only matter once
+      the arithmetic closes.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Every condition is stated by the source, but in six different chapters and never as a list.
+      The source states the refusal ratio (p. 131), the advantage condition (pp. 77-78), the
+      standard-product condition (p. 103), the habit condition (pp. 147-148), the cost conditions
+      (pp. 185-186, 191-192) and the theory condition (pp. 193-195). Assembling them into one
+      pre-campaign screen, and the observation that the screen is mostly arithmetic, are both the
+      extractor's. The source never says these are the criteria the advisory board applied.
+    source_ref: null
+  members:
+    - {sk_ref: sk_mla_0037, role_in_system: outcome, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0017, role_in_system: condition, order: 2, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0024, role_in_system: condition, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0022, role_in_system: condition, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0042, role_in_system: condition, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0066, role_in_system: condition, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0068, role_in_system: condition, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0069, role_in_system: condition, order: 8, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0056, role_in_system: exemption, order: 9, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0033, role_in_system: failure_consequence, order: 10, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0029, role_in_system: escape_route, order: 11, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_mla_0066, to: sk_mla_0068, nature: "the repeat-cycle screen is a special case of the acquisition-cost rule", origin: extractor_inferred}
+      - {from: sk_mla_0017, to: sk_mla_0029, nature: "where no real advantage exists, a statable one built from figures can substitute", origin: source_stated}
+    tradeoffs:
+      - between: [sk_mla_0066, sk_mla_0056]
+        nature: "a slow repeat cycle disqualifies a product unless auxiliary lines carry the profit, which the source demonstrates but never offers as the answer to its own screen"
+        origin: extractor_inferred
+        source_ref: null
+    conflicts:
+      - between: [sk_mla_0022, sk_mla_0042]
+        nature: >
+          The source claims to have moved most of a market off a household habit in one chapter and
+          states that habits cannot be changed profitably in paid print in another. Both are its own
+          accounts of its own campaigns and it never addresses the contradiction. This conflict is
+          load-bearing for the screen: as stated, it is not decidable whether a habit-displacement
+          proposition passes.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, outcome_claimed, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      This system is substantially OURS. The source never presents a screen, a checklist or an
+      order of evaluation. Every member is a real and separately stated source claim, but the claim
+      that they form one pre-campaign decision framework is a hypothesis about how the source
+      worked, inferred from the fact that it reports refusing nineteen propositions in twenty and
+      gives, elsewhere, exactly these grounds. The unresolved conflict between two of the members is
+      recorded rather than smoothed over, and it means the framework as assembled does not decide
+      every case.
+  provenance:
+    chapter: "Twelve; Seven; Nine; Thirteen; Seventeen; Eighteen"
+    section: null
+    page_start: 131
+    page_end: 195
+    source_support: text
+
+- scs_id: scs_mla_004
+  source_id: hopkins-my-life-in-advertising
+  label: the_offer_forms_and_their_category_dependence
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    The source's several rules about how a trial or premium should be framed — free, bought for the
+    buyer at retail, charged for, half-price, described gift, undisclosed gift, guaranteed purchase
+    — none of which holds on its own, because each is qualified by the others and by the product
+    category.
+  whole_system_claim:
+    text: >
+      Read together, these rules say that the trial device is not a single variable with a single
+      sign. The buyer must expend effort but not money; the advertiser should buy the product
+      rather than give it, except where giving is what the category expects; the word free
+      multiplies readership in one category and divides results by four in another when featured;
+      a described premium selects and an undisclosed one does not; and a half-price offer, which
+      looks like a milder version of a free offer, does not work at all because it addresses price
+      rather than conviction. Any one of these rules quoted alone will be wrong roughly as often as
+      it is right.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Each rule is explicitly stated by the source, and the source itself states the strongest
+      qualification — the free-offer reversal between food and hygiene (p. 154), which it presents
+      as a discovery about psychology. What the source never does is put the rules side by side and
+      note that they qualify one another, or draw the conclusion that its trial-offer doctrine is
+      category-conditional rather than general. That reading is the extractor's, and it is the
+      reason this system exists rather than leaving the members to be retrieved singly.
+    source_ref: null
+  members:
+    - {sk_ref: sk_mla_0004, role_in_system: general_rule, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0026, role_in_system: qualifier, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0044, role_in_system: qualifier, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0038, role_in_system: qualifier, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0050, role_in_system: boundary_condition, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0010, role_in_system: qualifier, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0013, role_in_system: qualifier, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0011, role_in_system: governing_principle, order: 8, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {from: sk_mla_0050, to: sk_mla_0038, nature: "the free-versus-bought choice is decided by the category, not by a general rule", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_mla_0026, sk_mla_0044]
+        nature: "effort demanded selects for interest; money demanded destroys response; the source states both and never marks the boundary"
+        origin: extractor_inferred
+        source_ref: null
+      - between: [sk_mla_0038, sk_mla_0050]
+        nature: "buying the product for the buyer signals confidence in most categories and reads as trading rather than benefiting in hygiene"
+        origin: source_stated
+        source_ref: {chapter: "Fourteen — Pepsodent", page_start: 154}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: {chapter: "Fourteen — Pepsodent", page_start: 154, note: "the source states that such things are not easy to discover and that the same device reversed sign between categories"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, practitioner_assertion, outcome_claimed, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The members and the key reversal are the source's. The grouping is OURS, and so is the
+      conclusion that the trial-offer rules are category-conditional as a class rather than in the
+      single case the source noticed. This system exists chiefly as a retrieval guard: retrieving
+      any one of these rules in isolation reproduces exactly the error the source spent money
+      discovering.
+  provenance:
+    chapter: "Fourteen — Pepsodent; Twelve; Thirteen; Nine; Two"
+    section: null
+    page_start: 154
+    page_end: 154
+    source_support: text
+
+- scs_id: scs_mla_005
+  source_id: hopkins-my-life-in-advertising
+  label: the_three_interests_and_the_practitioners_position_within_them
+  label_origin: extractor_assigned
+  system_type: priority_order
+  system_type_origin: source_stated
+  description: >
+    The source's own numbered ordering of the three parties an advertising writer serves —
+    publisher first, agency second, advertiser third — together with the risk and reward asymmetry
+    that follows from a publisher-paid commission, and the consequence the source draws from it for
+    the practitioner's career.
+  whole_system_claim:
+    text: >
+      The ordering and the structural consequences are the same fact seen twice. Because the
+      publisher pays the commission and the agency funds the development, the advertiser is last in
+      obligation and first in eventual gain; because the practitioner is anonymous and paid on
+      expenditure rather than on equity, the value he creates accrues elsewhere; and because an
+      established business no longer needs him, he loses the account he built and must keep
+      starting new ventures. The source's stated remedy is to hold equity in what he creates.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref: {chapter: "Sixteen — Reasons for Success; Eighteen — My Great Mistake", page_start: 167, page_end: 197, note: "the source numbers the three interests explicitly at pp. 167-172 and states the career consequence at pp. 190-193"}
+  members:
+    - {sk_ref: sk_mla_0059, role_in_system: structure, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0067, role_in_system: consequence, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_mla_0012, role_in_system: proximate_cause, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0028, role_in_system: proximate_cause, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_mla_0056, role_in_system: remedy, order: 5, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {from: sk_mla_0059, to: sk_mla_0067, nature: "the commission structure is what determines who captures the value created", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, anecdotal, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The ordering and the whole-system claim are the source's, stated in its own numbered form in
+      chapter 16 and carried into chapter 18. What is OURS is the inclusion of the two proximate
+      causes of account loss as members, and the reading of the auxiliary-line economics as the
+      remedy the source arrived at. The system is also the most self-interested material in the
+      book — it is one man's account of why he should have been paid differently — and that should
+      be visible whenever it is retrieved.
+  provenance:
+    chapter: "Sixteen — Reasons for Success; Eighteen — My Great Mistake"
+    section: null
+    page_start: 167
+    page_end: 197
+    source_support: text

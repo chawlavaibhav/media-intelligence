@@ -1,0 +1,875 @@
+# kahneman-sibony-sunstein-noise — SourceKnowledge (SPEC-03)
+# Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, "Noise: A Flaw in Human Judgment"
+# (Little, Brown Spark / Hachette Book Group, first ebook edition May 2021, ISBN 978-0-316-45138-3).
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# FORMAT: EPUB, reflowable. THERE ARE NO AUTHORED PAGE NUMBERS. Every provenance block carries
+# page_start: null and page_end: null, and locates the claim by chapter and section name, with the
+# spine marker given only as a secondary file-position aid. Audit pattern: no_authored_page.
+#
+# THREE CAUTIONS APPLY TO THIS WHOLE FILE AND ARE REPEATED AS CAVEATS WHERE THEY BITE:
+#
+#   (1) EVIDENCE ORIGIN. This book reports a great deal of measurement, and almost none of it is
+#       the authors' own. `empirical_within_source` is used ONLY where the authors report a study
+#       THEY conducted. Everywhere else the study is a third party's and the caveat names whose it
+#       was, with origin: extractor_observed. See EXTRACTION-NOTES.md for the full roster.
+#
+#   (2) REPLICATION IS NOT VERIFIED BY THIS EXTRACTION and is out of its scope. These objects
+#       record what the book CLAIMS about a cited finding. Nothing here asserts that any cited
+#       finding has since held up, and nothing here should be read as such an assertion.
+#
+#   (3) DOMAIN. Every object below is about HUMAN professional judgement in organisations. The book
+#       says nothing whatever about machine or model evaluators, and no object in this file claims
+#       or implies anything about them. Any application to an automated pipeline is OURS and lives
+#       only in operational-bindings.yaml with evidence_basis: extractor_inference.
+#
+# The book contains eighteen numbered figures. The extraction is from text only; no figure was
+# inspected. Objects whose support the text renders in full carry extraction_uncertainty: none;
+# objects where a figure plainly carries quantitative content the prose only gestures at carry
+# extraction_uncertainty: figure_not_inspected. See the figure_semantic_binding_lost note in
+# EXTRACTION-NOTES.md.
+
+- sk_id: sk_nse_0001
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "bias"
+    - "noise"
+    - "Bias and noise—systematic deviation and random scatter—are different components of error"
+  concept_label: bias_and_noise_as_distinct_components_of_error
+  label_origin: extractor_assigned
+  claim: >-
+    Error in judgement has two components that are different in kind. Bias is systematic deviation:
+    judgements are off target in a consistent direction, which supports a prediction about the next
+    one and invites a causal explanation. Noise is scatter: judgements that should have been
+    identical are spread out, with no direction to them and usually no available explanation. A
+    judgement system can exhibit either, both, or neither, and the two must be understood
+    separately.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source's shooting-range figure holds the target fixed and varies the pattern of hits: a
+      tight cluster off centre (biased), a wide scatter centred on the bull's-eye (noisy), and both
+      together. Consistency of a deviation is what makes it predictable and explicable; scatter is
+      by construction neither.
+  scope:
+    domain_discussed_by_source: [human_professional_judgment, organisational_decision_making]
+    conditions: >-
+      Judgements made by people who are expected to agree — the source's phrase is "the diverse
+      decisions that people make on behalf of organizations".
+  caveats:
+    - text: >-
+        The distinction is introduced through an illustrative metaphor, not a study. The source
+        presents it as a framing device for the rest of the book.
+      origin: extractor_observed
+    - text: >-
+        The source is explicit that its "bias" is statistical bias — average error — and warns
+        separately that this is not a synonym for social discrimination.
+      origin: source_stated
+  source_stated_problems:
+    - "Many organizations, unfortunately, are afflicted by both bias and noise"
+    - "in public conversations about human error and in organizations all over the world, noise is rarely recognized"
+  source_stated_remedies:
+    - "To understand error in judgment, we must understand both bias and noise"
+  examples:
+    positive:
+      - {description: "four shooting teams: tight on target, tight off target, scattered on target, scattered off target", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_nse_0005, note: "the error equation quantifies the distinction this object states qualitatively"}
+    - {relation: demonstrated_together_with, target: sk_nse_0002, note: "the same figure, seen from the back of the target"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Introduction: Two Kinds of Error"
+    section: "opening argument, the four shooting teams (spine 7)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0002
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "A general property of noise is that you can recognize and measure it while knowing nothing about the target or bias"
+    - "look at the back of the target"
+  concept_label: noise_measurable_without_a_true_value
+  label_origin: extractor_assigned
+  claim: >-
+    Noise can be measured without knowing the correct answer. All that is required is several
+    judgements of the same case by people who were aiming at the same thing; the spread of those
+    judgements is the measurement. Bias, by contrast, cannot be measured at all until the true value
+    is known. This asymmetry is what makes noise tractable in the many professional domains where
+    the right answer is unknown, unknowable, or arrives too late to be useful.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Shown only the backs of the targets, an observer cannot tell which team is closer to the
+      bull's-eye but can see at a glance which teams are scattered. Scatter is a property of the
+      set of judgements alone; distance from truth is a property of the set plus the truth.
+  scope:
+    domain_discussed_by_source: [human_professional_judgment, measurement_of_error]
+    conditions: >-
+      The judges must be answering the same question about the same case and aiming at the same
+      target. The source is explicit that this last condition is what licenses the measurement.
+  caveats:
+    - text: >-
+        The source is careful that this establishes the presence and size of disagreement, not who
+        is right. It repeatedly declines to infer accuracy from consistency.
+      origin: source_stated
+    - text: >-
+        Noise so measured is a property of a SET of judgements. A single judgement, however
+        examined, cannot exhibit it. This constrains what any one observation can show.
+      origin: extractor_observed
+  source_stated_problems:
+    - "many of our conclusions are drawn from judgments whose true answer is unknown or even unknowable"
+  source_stated_remedies:
+    - "All we have to do to measure noise is look at the back of the target"
+  examples:
+    positive:
+      - {description: "physicians offering different diagnoses for the same patient can be studied without knowing what ails the patient", figure_ref: null}
+      - {description: "film executives estimating a market can be studied without knowing what the film made, or whether it was made", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0001, note: "the asymmetry only exists because bias and noise are different components"}
+    - {relation: generalises, target: sk_nse_0013, note: "this property is what a noise audit exploits"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Introduction: Two Kinds of Error"
+    section: "the back of the target; restated in Ch. 4 'Matters of Judgment', section 'Undesirable but Measurable' (spine 7, spine 13)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0003
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "system noise"
+    - "unwanted variability in judgments that should ideally be identical"
+    - "In noisy systems, errors do not cancel out. They add up."
+  concept_label: system_noise
+  label_origin: source_verbatim
+  claim: >-
+    System noise is unwanted variability in judgements that should ideally be identical. It arises
+    wherever an organisation assigns a case to one of several interchangeable professionals, so that
+    the outcome depends on which one was picked — a lottery the affected party never consented to.
+    The common defence that random errors cancel out is wrong for systems: noisy systems do not make
+    repeated judgements of the same case, they make single judgements of different cases, so one
+    overpriced and one underpriced contract are two costly errors, not an average that is right.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source's account is that judgement is informal, so two qualified people applying the same
+      shared rules will diverge; and that the assignment of a case to a person is effectively random,
+      so the divergence becomes a lottery on the outcome. Cancellation requires averaging multiple
+      judgements OF THE SAME CASE, which is exactly what an operating system does not do.
+  scope:
+    domain_discussed_by_source: [insurance_underwriting, claims_adjusting, organisational_decision_making]
+    conditions: >-
+      Systems, not markets: the source restricts the concept to settings where one person is chosen
+      to judge on the organisation's behalf, and excludes competitive settings where variation is
+      selected on.
+  caveats:
+    - text: >-
+        The 55% median underwriting difference and 43% for claims adjusters come from the authors'
+        own noise audit at one insurance company. One company, one audit, cases constructed for the
+        audit; the source does not present the numbers as an industry rate.
+      origin: extractor_observed
+    - text: >-
+        The 41% median figure at the asset-management firm was produced by that firm's own
+        exploratory audit, run after the authors presented their findings — reported to the authors
+        rather than conducted by them.
+      origin: extractor_observed
+    - text: >-
+        The source states no threshold at which system noise becomes unacceptable; it says the
+        acceptable level is itself a judgement call.
+      origin: source_stated
+  source_stated_problems:
+    - "we operate under the wrong assumption that another expert would produce a similar judgment"
+    - "the price a customer is asked to pay depends to an uncomfortable extent on the lottery that picks the employee"
+    - "System noise is inconsistency, and inconsistency damages the credibility of the system"
+  source_stated_remedies:
+    - "a noise audit"
+  examples:
+    positive:
+      - {description: "underwriters quoting premiums for the same risk: median difference 55%, against a 10% expectation", figure_ref: null}
+      - {description: "an asylum courthouse where one judge admitted 88% of applicants and another 5%", figure_ref: null}
+    counter:
+      - {description: "ten film critics rating the same film — variability wanted, not system noise", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_nse_0004, note: "not all variability is system noise"}
+    - {relation: generalises, target: sk_nse_0007, note: "level noise is one component"}
+    - {relation: generalises, target: sk_nse_0008, note: "pattern noise is the other"}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 2 — A Noisy System"
+    section: "'Noise Audits Reveal System Noise' and 'A Lottery That Creates Noise' (spine 10)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0004
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "Unwanted Variability Versus Wanted Diversity"
+    - "A defining feature of system noise is that it is unwanted"
+    - "in a market as in nature, selection cannot work without variation"
+  concept_label: unwanted_variability_versus_wanted_diversity
+  label_origin: extractor_assigned
+  claim: >-
+    Variability in judgement is not always a defect, and the concept of noise does not apply to it
+    when it is not. Where the judgements are matters of taste, disagreement is expected and welcome.
+    Where the setting is competitive — several teams attacking the same problem, several traders
+    pricing the same stock — variation is the raw material selection works on, and suppressing it
+    would destroy the mechanism. Noise is a problem of SYSTEMS, which are organisations, not markets.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      In a competitive setting variation is only the first phase; a second phase pits the results
+      against one another and the best wins. In a system there is no second phase — one judgement
+      is made on the organisation's behalf and acted on, so the variation is never selected, only
+      suffered.
+  scope:
+    domain_discussed_by_source: [organisational_decision_making, markets, matters_of_taste]
+    conditions: >-
+      The distinction turns on whether the variation is subsequently selected on. The source notes
+      the boundary is crossable in one direction: personal taste mistaken for professional judgement
+      is an error, not welcome diversity.
+  caveats:
+    - text: >-
+        The source gives no test for deciding which side of the line a given judgement task falls
+        on. It supplies clear cases at each end and leaves the middle to judgement.
+      origin: extractor_observed
+    - text: >-
+        The source notes the same person can be on both sides: a film producer's personal liking is
+        welcome diversity as taste and a major mistake if it stands in for a professional judgement
+        about an audience.
+      origin: source_stated
+  source_stated_problems:
+    - "diversity of tastes can help account for errors if a personal taste is mistaken for a professional judgment"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "multiple research teams attacking a vaccine from different angles — variation wanted", figure_ref: null}
+      - {description: "traders disagreeing on a stock's value: disagreements make markets", figure_ref: null}
+    counter:
+      - {description: "one trader randomly chosen to value a stock on the firm's behalf while colleagues would differ sharply — system noise", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0003, note: "bounds where the concept of system noise applies at all"}
+    - {relation: trades_off_with, target: sk_nse_0035, note: "the source elsewhere insists judgement is not the place for individuality; here it protects variation in idea generation"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 2 — A Noisy System"
+    section: "Unwanted Variability Versus Wanted Diversity (spine 10)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0005
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "the error equations"
+    - "Overall Error (MSE) = Bias 2 + Noise 2"
+    - "mean squared error"
+  concept_label: error_equation
+  label_origin: source_verbatim
+  claim: >-
+    Under mean squared error — the standard scoring rule for accuracy, and the only one for which
+    the arithmetic mean is the best estimate — overall error decomposes into the square of bias plus
+    the square of noise. Bias and noise are independent of each other and enter with equal weight,
+    so reducing either by the same amount reduces overall error by the same amount. The source is
+    explicit that this equation does NOT apply to evaluative judgements, where there is no true
+    value, error costs are rarely symmetrical, and there is no reason to think they are proportional
+    to the square.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Squaring gives large errors far more weight than small ones, and MSE is minimised by the mean —
+      which the source presents as the reason to accept it, since the intuition that the mean is the
+      best estimate is one most readers already hold. The decomposition then follows algebraically,
+      with the Pythagorean form as the visualisation.
+  scope:
+    domain_discussed_by_source: [predictive_judgment, forecasting, measurement_of_error]
+    conditions: >-
+      "The rule is appropriate for purely predictive judgments, including forecasts and estimates,
+      all of which aim to approach a true value." Not evaluative judgements; not decisions whose
+      error costs are asymmetric.
+  caveats:
+    - text: >-
+        "The error equation does not apply to evaluative judgments" — the source's own stated
+        boundary, with worked counter-cases: elevator load limits, when to leave for a train,
+        insurance pricing.
+      origin: source_stated
+    - text: >-
+        The source concedes that MSE conflicts with common intuitions about scoring — people care
+        about near-misses and are insensitive to the difference between two large errors, "almost
+        the mirror image of what they should be".
+      origin: source_stated
+    - text: >-
+        The worked illustration is a constructed, "implausibly smooth" example in which bias and
+        noise are set equal for exposition. It is not a measurement.
+      origin: extractor_observed
+    - text: >-
+        Figures 3-8 carry the quantitative content of this argument and were not inspected; the
+        prose states the numbers used, but the visual comparison of the two panels is not available
+        to this extraction.
+      origin: extractor_observed
+  source_stated_problems:
+    - "how, and how much, bias and noise contribute to error"
+  source_stated_remedies:
+    - "the measurement and reduction of noise should have the same high priority as the measurement and reduction of bias"
+    - "you should not mix your values and your facts"
+  examples:
+    positive:
+      - {description: "GoodSell's forecasters: halving bias and halving noise produce identical reductions in MSE", figure_ref: null}
+    counter:
+      - {description: "elevator maximum load — underestimation costly, overestimation catastrophic; squared error irrelevant", figure_ref: null}
+      - {description: "when to leave for a train — one minute late and five minutes late cost the same", figure_ref: null}
+  intra_source_relations:
+    - {relation: generalises, target: sk_nse_0006, note: "the practical consequence drawn from the equation"}
+    - {relation: demonstrated_together_with, target: sk_nse_0010, note: "the same sum-of-squares form is reused to decompose noise itself"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 5 — Measuring Error"
+    section: "'Mean Squares', 'The Error Equations' and 'The Cost of Noise' (spine 14)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0006
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "Whenever you observe noise, you should work to reduce it!"
+    - "the benefit of reducing noise is the same, regardless of the amount of bias"
+  concept_label: noise_reduction_valuable_independent_of_bias
+  label_origin: extractor_assigned
+  claim: >-
+    Because bias and noise are independent terms in the error equation, there is no need to know how
+    biased a set of predictive judgements is before deciding whether reducing their noise is
+    worthwhile. Waiting to discover the bias first — the intuitively sensible course — is wrong. The
+    source also warns that noise reduction can LOOK like deterioration: halving noise while bias
+    stands makes the judgements more uniformly wrong and makes the bias impossible to miss, which is
+    a presentational effect, not a loss of accuracy.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The relevant measure of bias is average error — the distance from the peak of the distribution
+      to the true value — not the imbalance of positive and negative errors. Concentrating the
+      distribution leaves that distance unchanged while raising the proportion of errors falling on
+      one side, which reads as worse and is not.
+  scope:
+    domain_discussed_by_source: [predictive_judgment, forecasting]
+    conditions: >-
+      Predictive judgements scored by MSE. The source adds one condition: noise-reduction procedures
+      help "as long as they do not increase bias to a larger extent".
+  caveats:
+    - text: >-
+        The source concedes the priority does shift: "reducing noise would be less of a priority if
+        bias were much larger than noise."
+      origin: source_stated
+    - text: >-
+        The argument inherits the error equation's boundary and therefore does not extend to
+        evaluative judgements.
+      origin: extractor_observed
+    - text: >-
+        This is a mathematical argument about a scoring rule, not an empirical finding. The source
+        presents no study showing that organisations which reduced noise first did better.
+      origin: extractor_observed
+  source_stated_problems:
+    - "how could we reduce errors when we don't know if our forecasts are right or wrong?"
+    - "noise reduction seems to have made the forecasts more precisely wrong"
+  source_stated_remedies:
+    - "Reducing noise in predictive judgment is always useful, regardless of what you know about bias"
+  examples:
+    positive:
+      - {description: "Amy Simkin's boss refusing the noise project until the bias is known; the equation shows him wrong", figure_ref: null}
+      - {description: "84% of forecasts on one side of the truth is what a bias as large as the noise looks like", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_nse_0005, note: "follows from the independence of the two terms"}
+    - {relation: qualified_by, target: sk_nse_0044, note: "cost can still make a particular reduction not worth doing"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 5 — Measuring Error"
+    section: "'The Error Equations', the two-panel comparison of halving bias vs halving noise (spine 14)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0007
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "level noise"
+    - "level errors"
+    - "the average level of sentencing functions like a personality trait"
+  concept_label: level_noise
+  label_origin: source_verbatim
+  claim: >-
+    Level noise is the variability in the average level of different judges' judgements — some
+    people are across-the-board more severe, more generous, more optimistic or more aggressive than
+    others. It behaves like a personality trait: stable, correlated with background, opinions and
+    experience, and having nothing to do with the case in front of the judge.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source attributes level differences to characteristics of the person rather than of the
+      case — in the sentencing study, to stated views on the purpose of sentencing, geography and
+      political outlook. It also notes a second, separable cause that produces the same signature:
+      judges may form the same impression and merely use the response scale differently.
+  scope:
+    domain_discussed_by_source: [criminal_sentencing, performance_appraisal, forecasting, clinical_recommendation]
+    conditions: >-
+      "Variability in level errors will be found in any judgment task." The source asserts this as
+      general.
+  caveats:
+    - text: >-
+        The 2.4-year standard deviation of judge severity comes from the 1981 study of 208 federal
+        judges, conducted by third parties as part of the sentencing-reform movement, not by the
+        authors.
+      origin: extractor_observed
+    - text: >-
+        "Error is defined here as a deviation from the average; an error may in fact correct an
+        injustice, if the average judge is wrong" — the source's own warning about its terminology.
+      origin: source_stated
+    - text: >-
+        The source explicitly leaves ambiguous whether a level difference is a difference in
+        impression or a difference in scale use; the two are not separated by the measurement.
+      origin: source_stated
+  source_stated_problems:
+    - "judges have reputations, some for being harsh 'hanging judges' … others for being 'bleeding-heart judges'"
+    - "This variability has nothing to do with justice"
+  source_stated_remedies:
+    - "the organizations that employ them could aim to equalize the average level of their judgments"
+  examples:
+    positive:
+      - {description: "supervisors who are systematically more generous raters than their peers", figure_ref: null}
+      - {description: "bail judges: most lenient quintile released 83% of defendants, least lenient 61%", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_nse_001}
+    - {relation: trades_off_with, target: sk_nse_0008, note: "the two components of system noise, separable only across multiple cases"}
+    - {relation: qualified_by, target: sk_nse_0012, note: "level noise is the only component visible without an audit, which distorts what organisations believe about their noise"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 6 — The Analysis of Noise"
+    section: "Some Judges Are Severe: Level Noise (spine 15)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0008
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "pattern noise"
+    - "pattern errors"
+    - "judge × case interaction"
+    - "consistency without consensus"
+  concept_label: pattern_noise
+  label_origin: source_verbatim
+  claim: >-
+    Pattern noise is the variability in how individual judges respond to particular cases, over and
+    above their general severity. Two judges of equal average severity can rank the same set of cases
+    differently, because each has an idiosyncratic sensitivity to particular features and
+    combinations of features. The source's technical name for it is the judge-by-case interaction.
+    Pattern errors sum to zero for each judge and for each case, and still contribute to noise,
+    because the contributions are squared.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source's account is by analogy with personality: behaviour is a function of person and
+      situation and the joining is not additive, so two people with the same trait score still have
+      different signature patterns of response to triggers. Applied to judgement, the "judgment
+      personality" is a unique pattern of sensitivity to features, formed from values, memories,
+      training and associations, and mostly opaque to the judge.
+  scope:
+    domain_discussed_by_source: [criminal_sentencing, bail_decisions, recruitment, performance_appraisal, medical_admission]
+    conditions: >-
+      Detectable only when the same judges evaluate multiple cases. "Pattern noise is pervasive" —
+      the source asserts it wherever different judges produce different rankings.
+  caveats:
+    - text: >-
+        The bail-judge evidence — 173 modelled judges, 141,833 cases, stable pattern noise nearly
+        four times level noise — is a special analysis carried out at the authors' request by the
+        original researchers (Mullainathan and colleagues). The data and the modelling are theirs,
+        not the authors'.
+      origin: extractor_observed
+    - text: >-
+        The Todorov group's "consistency without consensus" studies are third-party work using paid
+        online participants; the source itself notes their judgement quality is often lower than in
+        professional settings.
+      origin: extractor_observed
+    - text: >-
+        The source concedes pattern noise is not always error: where judges differ in what they are
+        good at, or where one judge is genuinely more accurate and no outcome data exists to show it,
+        superior accuracy "will look like pattern noise".
+      origin: source_stated
+  source_stated_problems:
+    - "judges are not equally severe in their sentencing of all cases"
+    - "because pattern noise is, in practice, difficult to predict, it adds uncertainty"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a judge harsher than average in general but relatively lenient toward white-collar offenders", figure_ref: null}
+      - {description: "recruiters whose models weight leadership and communication differently, producing different candidate rankings", figure_ref: null}
+    counter:
+      - {description: "a team deliberately assembled from complementary specialists — the same variability becomes an asset once judgements are aggregated", figure_ref: null}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_nse_001}
+    - {relation: generalises, target: sk_nse_0009, note: "occasion noise is the transient part of pattern noise"}
+    - {relation: depends_on, target: sk_nse_0017, note: "conflicting cues are what give idiosyncratic weighting room to operate"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 6 — The Analysis of Noise"
+    section: "Judges Differ: Pattern Noise; developed in Ch. 16 'Patterns', section 'The Personality Analogy' (spine 15, spine 27)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0009
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "occasion noise"
+    - "the second lottery"
+    - "you are not the same person at all times"
+  concept_label: occasion_noise
+  label_origin: source_verbatim
+  claim: >-
+    Occasion noise is variability in the judgements of the same case by the same person on different
+    occasions. It is produced by a second lottery — one that picks the moment, the mood, the cases
+    freshly in mind, the sequence of preceding decisions and countless other circumstances that
+    should not bear on the judgement. The source's stronger claim is that a judgement is drawn from
+    an internal distribution rather than computed from all the judge's knowledge: the answer given is
+    one point in a cloud of answers the same mind could have produced.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Two mechanisms are given. External: mood changes both what you notice and retrieve AND how you
+      think — good mood raises reliance on first impressions and receptivity to unfounded claims;
+      fatigue, weather and sequence effects act similarly. Internal: variability in the efficiency of
+      endogenous neural processes, which the source argues cannot be controlled away.
+  scope:
+    domain_discussed_by_source: [medical_diagnosis, forensic_examination, wine_judging, software_estimation, asylum_adjudication]
+    conditions: >-
+      "Occasion noise affects all our judgments, all the time." The source asserts universality while
+      also asserting that it is the SMALLEST of the three noise components.
+  caveats:
+    - text: >-
+        Every quantitative example is a third party's study: Vul and Pashler on the crowd within,
+        Herzog and Hertwig on dialectical bootstrapping, Forgas on mood, Kahana and colleagues on
+        memory, the asylum-sequence and opioid-prescribing analyses. The authors report none of their
+        own measurements of occasion noise.
+      origin: extractor_observed
+    - text: >-
+        Direct measurement is blocked wherever cases are memorable: a judge who recognises a case
+        will reproduce the earlier answer to save effort and stay consistent, so within-session
+        retests systematically understate occasion noise.
+      origin: source_stated
+    - text: >-
+        "In every case we reviewed in which the share of occasion noise in total system noise could
+        be measured, occasion noise was a smaller contributor than were differences among
+        individuals." The source states this as a review of a limited set, not a law.
+      origin: source_stated
+  source_stated_problems:
+    - "we do not always produce identical judgments when faced with the same facts on two occasions"
+    - "your mood in the moment may influence your approach to the problem … even when you can confidently justify the answer you found"
+  source_stated_remedies:
+    - "make the same judgment yourself a second time to create an 'inner crowd'"
+    - "Sleep on it, and think again in the morning"
+    - "unless you have very strong reasons to put more weight on one of the estimates, your best bet is to average them"
+  examples:
+    positive:
+      - {description: "wine experts at a US competition scoring only 18% of the same wines identically in a blind re-tasting", figure_ref: null}
+      - {description: "asylum judges 19% less likely to grant asylum when the previous two cases were approved", figure_ref: null}
+    counter:
+      - {description: "the highly controlled memory study where all measured predictors together explained only 11% of within-person variation — the residual had no identifiable external cause", figure_ref: null}
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_nse_001}
+    - {relation: specialises, target: sk_nse_0008, note: "the transient component of pattern noise"}
+    - {relation: depends_on, target: sk_nse_0036, note: "sequencing information is the hygiene strategy the source aims at occasion noise"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 7 — Occasion Noise"
+    section: "'The Second Lottery', 'Measuring Occasion Noise', 'Sources of Occasion Noise', 'Sizing Occasion Noise' (spine 16)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0010
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "System Noise 2 = Level Noise 2 + Pattern Noise 2"
+    - "(Pattern Noise) 2 = (Stable Pattern Noise) 2 + (Occasion Noise) 2"
+  concept_label: decomposition_of_system_noise
+  label_origin: extractor_assigned
+  claim: >-
+    System noise decomposes by the same sum-of-squares logic as the error equation: into level noise
+    and pattern noise, and pattern noise in turn into a stable component and occasion noise. The
+    decomposition is not merely descriptive — it is what a noise audit with multiple judges and
+    multiple cases can actually recover, and separating the components is what tells an organisation
+    which remedy could help.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The components are independent and uncorrelated, so variances add. The source stresses that
+      the split requires the same people to judge SEVERAL cases: with one case per judge, level and
+      pattern are not separable, and separating stable pattern noise from occasion noise requires two
+      independent judgements of each case by each judge.
+  scope:
+    domain_discussed_by_source: [noise_audits, criminal_sentencing, punitive_damages, performance_appraisal]
+    conditions: >-
+      Requires a design in which multiple judges evaluate multiple common cases; the stable/transient
+      split additionally requires repeat judgements that the judge does not recognise.
+  caveats:
+    - text: >-
+        The source states that in the sentencing study "the conservative spirit of statistical
+        analysis" made the residual default to random error, and that the authors themselves held
+        that default for a long time before abandoning it. The decomposition is therefore an
+        interpretive choice about the residual, not only an arithmetic one.
+      origin: source_stated
+    - text: >-
+        Figure 16 carries the combined graphical decomposition and was not inspected; the prose
+        states all three equations, so the content is recoverable, but the figure's presentation is
+        not available to this extraction.
+      origin: extractor_observed
+  source_stated_problems:
+    - "there is no way of telling whether the residual error … is transient or stable"
+  source_stated_remedies:
+    - "An essential benefit is the assessment of separate types of noise"
+  examples:
+    positive:
+      - {description: "the 208-judge study, in which level and pattern noise contributed approximately equally", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: member_of_system, target: scs_nse_001}
+    - {relation: specialises, target: sk_nse_0005, note: "the same sum-of-squares form, applied one level down"}
+    - {relation: depends_on, target: sk_nse_0013, note: "recoverable only from a multi-case, multi-judge audit"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Chapter 17 — The Sources of Noise"
+    section: "The Components of Noise; equations first given in Ch. 6 and Ch. 16 (spine 28, spine 15, spine 27)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0011
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "stable pattern noise"
+    - "The most important component of system noise is the one we had initially neglected"
+    - "Noise is mostly a by-product of our uniqueness, of our 'judgment personality'"
+  concept_label: stable_pattern_noise_is_the_largest_component
+  label_origin: extractor_assigned
+  claim: >-
+    On the evidence the authors assemble, the largest single component of system noise is stable
+    pattern noise: the persistent, idiosyncratic way a particular person responds to particular
+    cases. This reverses the authors' own earlier working assumption — that the residual after level
+    noise was essentially random — and it changes what noise reduction has to attack, because the
+    component that is easiest to see and to correct, level noise, is not where most of the problem is.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Stability is argued rather than shown directly: if all pattern noise were transient, an
+      individual judge's own sentences for the same case would vary by about 2.8 years across
+      occasions, which the authors call implausible and grotesque. The positive account is the
+      personality analogy — idiosyncratic sensitivities rooted in values and experience recur because
+      their causes recur.
+  scope:
+    domain_discussed_by_source: [criminal_sentencing, bail_decisions, insurance_underwriting, punitive_damages, personnel_decisions]
+    conditions: >-
+      Drawn from a small assembled set of studies. The source explicitly flags one exception:
+      asylum-judge variability is "almost certainly due more to level noise".
+  caveats:
+    - text: >-
+        "Though we want to be careful not to overgeneralize from what remains a limited selection of
+        examples … it requires some triangulation to formulate this tentative conclusion." The source
+        marks this as tentative, in its own words.
+      origin: source_stated
+    - text: >-
+        The supporting figures split by origin. The insurance company's 20%-level / 80%-pattern split
+        is the authors' own audit. The 208-judge split, the Todorov face and punitive-intent
+        replications, and the bail-judge 26%/7% analysis are third parties' studies. The punitive
+        damages 63/62/61% pattern share is the authors' own study.
+      origin: extractor_observed
+    - text: >-
+        The claim is about the RELATIVE size of components across a handful of domains. It is not a
+        claim that any particular organisation's noise has this composition.
+      origin: extractor_observed
+  source_stated_problems:
+    - "focusing on level noise misses a large part of what individual differences are about"
+    - "these already-shocking findings understate the magnitude of the noise problem by at least a factor of two"
+  source_stated_remedies:
+    - "Reducing level noise is still a worthwhile objective, but attaining only this objective would leave most of the problem of system noise without a solution"
+  examples:
+    positive:
+      - {description: "insurance underwriters: level differences only 20% of system noise, the remaining 80% pattern", figure_ref: null}
+      - {description: "punitive damages: pattern share roughly constant at 63%, 62%, 61% across three different response scales", figure_ref: null}
+    counter:
+      - {description: "asylum judges, where the source expects level noise to dominate", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0007, note: "level noise is real but is not where most of the problem lies"}
+    - {relation: depends_on, target: sk_nse_0008}
+    - {relation: member_of_system, target: scs_nse_001}
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, argued, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 17 — The Sources of Noise"
+    section: "Sizing the Components (spine 28)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_nse_0012
+  source_id: kahneman-sibony-sunstein-noise
+  source_terms:
+    - "level noise is the only form of noise that organizations can (sometimes) monitor without conducting noise audits"
+  concept_label: level_noise_is_the_only_component_visible_without_an_audit
+  label_origin: extractor_assigned
+  claim: >-
+    Where cases are assigned more or less randomly, an organisation can see level noise in its
+    ordinary operating records: the differing average severity, generosity or grant rates of its
+    people show up without any special study. Pattern noise cannot be seen this way at all. The
+    consequence is a systematic bias in what organisations believe about their own noise — the
+    component they can see is the smaller one, so every finding based on operating data alone
+    understates the problem.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >-
+      Level noise is a difference in a per-person average, which random assignment makes visible
+      across enough cases. Pattern noise is an interaction between a judge and a case; recovering it
+      requires several judges to have judged the SAME case, which normal operations never arrange.
+  scope:
+    domain_discussed_by_source: [patent_examination, child_protection, organisational_decision_making]
+    conditions: >-
+      Requires that cases be assigned to professionals approximately at random, so that differences
+      in average outcome are attributable to the professional rather than to the caseload.
+  caveats:
+    - text: >-
+        The patent-office and child-protection findings cited are third parties' studies; the source
+        uses them as illustrations of what level-noise-only observation looks like.
+      origin: extractor_observed
+    - text: >-
+        The "factor of two" understatement depends on the tentative conclusion that pattern noise
+        exceeds level noise, which the source itself hedges.
+      origin: extractor_observed
+  source_stated_problems:
+    - "If there is more pattern noise than level noise, then these already-shocking findings understate the magnitude of the noise problem"
+  source_stated_remedies:
+    - "conducting noise audits"
+  examples:
+    positive:
+      - {description: "patent examiners differing in propensity to grant, observed from operating records alone", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_nse_0013, note: "explains why an audit is required rather than optional"}
+    - {relation: depends_on, target: sk_nse_0011}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Chapter 17 — The Sources of Noise"
+    section: "Sizing the Components (spine 28)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

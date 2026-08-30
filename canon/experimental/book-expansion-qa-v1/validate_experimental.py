@@ -339,14 +339,17 @@ def main(root):
             conf = item.get("confounders")
             if not isinstance(conf, list) or not [c for c in conf if str(c).strip()]:
                 err(f"[{sd}/{qid}] confounders must be a non-empty list")
-            # E. page locators must be inside the real span
+            # E. page locators must be inside the real span.
+            # Only numbers introduced by a p./pp. marker count as pages. A locator legitimately
+            # carries other integers -- "Chapter 11", "SB7", a year -- and treating those as
+            # pages produced a wave of false failures on the first run.
             if sd in PAGE_SPANS:
                 lo, hi = PAGE_SPANS[sd]
-                pages = [int(n) for n in re.findall(r"\b(?:pp?\.?\s*)?(\d{1,3})\b", loc)]
-                for p in pages:
-                    if p < lo or p > hi:
-                        err(f"[{sd}/{qid}] locator page {p} outside printed span "
-                            f"{lo}-{hi}: {loc!r}")
+                for m in re.finditer(r"\bpp?\.\s*([\d\s,–\-and]+)", loc):
+                    for p in [int(n) for n in re.findall(r"\d{1,3}", m.group(1))]:
+                        if p < lo or p > hi:
+                            err(f"[{sd}/{qid}] locator page {p} outside printed span "
+                                f"{lo}-{hi}: {loc!r}")
             if sd in PAGELESS and re.search(r"\bp{1,2}\.\s*\d", loc):
                 err(f"[{sd}/{qid}] pageless source carries a page locator: {loc!r}")
             all_qa.append(item)
