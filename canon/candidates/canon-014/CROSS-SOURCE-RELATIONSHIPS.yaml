@@ -1,0 +1,164 @@
+# CANON-014 — ontology relationships that cross source boundaries.
+#
+# These were written inside individual sources' ontology-mappings.yaml, where they point at
+# terms that live in a DIFFERENT source's file. That is the wrong home for two reasons: a
+# relationship between two sources is not a property of either one, and a per-source
+# validator cannot resolve a reference it cannot see, so the reference silently rots.
+#
+# They are moved here unchanged. NONE OF THEM ASSERTS AGREEMENT. Under SPEC-05 a claim that
+# two sources describe the same thing is a `cross_source_concept`, needs two INDEPENDENT
+# origins established from Audit Gate lineage records, and requires Controller review.
+# CANON-014 creates none, and every source named here is a HOLD candidate with no audit
+# record, so no independence is established for any of these pairs. Read them as recorded
+# observations awaiting review.
+
+task: CANON-014
+asserts_agreement_between_sources: false
+relationships:
+- from: t_pex_0012
+  to: t_fre_c003_0043
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: SAME BOOK, live Parts 1-3. The live term is a flat frontal viewpoint used to isolate deliberate
+    diagonals; four-square is the same physical stance argued for a different reason. Observation only,
+    no promotion
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+- from: t_pex_0029
+  to: t_fre_c003_0020
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'SAME BOOK, live Parts 1-3. Checked and rejected: figure-in-a-landscape is about a scale reference
+    registering at all; near-far requires both elements sharp and demands a compared relationship between
+    them'
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+- from: t_pex_0069
+  to: t_fre_c003_0022
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'SAME BOOK, live Parts 1-3. Checked and rejected: tonal weight is a quantity that unbalances a
+    division; the tonal reduction here is an illustration method for testing a shape claim'
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+- from: t_pex_0025
+  to: t_fre_c003_0012
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'SAME BOOK, live Parts 1-3. Checked and rejected: edge magnetism is an attraction between a subject
+    edge and a frame edge; a scene-level vector is a direction the whole setting carries'
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+- from: t_pex_0024
+  to: t_fre_c003_0019
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: SAME BOOK, live Parts 1-3. The two-shot case makes attention travel between a pair; the eyeline
+    case names the force that does it. One author's vocabulary across his own chapters, not two sources
+    agreeing
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+- from: t_sa8_0034
+  to: t_hop_sa_0019
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'OBSERVATION against live Canon, not a promotion. The live term `town_by_town_comparison` (chapter
+    1) is a MEASUREMENT substitute where direct returns are impossible. The chapter 13/16 paired-town
+    comparison is a designed experiment with an arm deliberately held back. Related in apparatus, different
+    in kind — and note that ch.14''s town-by-town DISTRIBUTION rollout (sk_sa8_0030) is a third thing
+    again, sharing only the word "town".
+
+    '
+  declared_in: hopkins-scientific-advertising-ch8-21
+- from: t_sa8_0022
+  to: t_hop_sa_0008
+  relation: narrower_than
+  confidence_basis: extractor_judgement
+  note: 'OBSERVATION against live Canon. The live problem term `useless_pictures` (chapter 4) names the
+    failure; `better_than_the_same_space_set_in_type` is the chapter 9 test that decides it, which chapters
+    1-7 do not supply. No duplicate problem term was created for chapter 9''s restatement of the failure.
+
+    '
+  declared_in: hopkins-scientific-advertising-ch8-21
+- from: t_sa8_0020
+  to: t_hop_sa_0031
+  relation: broader_than
+  confidence_basis: extractor_judgement
+  note: 'OBSERVATION against live Canon. The live remedy `tell_the_complete_story` (chapter 4) is scoped
+    to mail order and immediate-sale advertising. Chapter 8 generalises the same remedy to advertising
+    at large and supplies the mechanism. No duplicate remedy term was created; the chapter 8 term is registered
+    as the broader one and the relationship records why.
+
+    '
+  declared_in: hopkins-scientific-advertising-ch8-21
+- from: t_sa8_0019
+  to: t_hop_sa_0011
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: 'OBSERVATION against live Canon, and a genuinely easy false merge to make. The live problem `cheapened_by_giving_it_away`
+    (chapter 6) is about the SELLER giving the article away, which sets its value at zero. `charging_for_the_sample`
+    is about the BUYER being asked to pay, which suppresses the reply. They point in opposite directions
+    and both are held by the source at once: the prospect pays nothing, and the maker buys the sample
+    at retail rather than donating stock.
+
+    '
+  declared_in: hopkins-scientific-advertising-ch8-21
+- from: t_sa8_0030
+  to: t_hop_sa_0026
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: 'OBSERVATION against live Canon. The live remedy `sample_bought_at_retail_price` (chapter 6) governs
+    who pays the dealer; the chapter 13 three-part gate governs who receives the sample. Complementary
+    halves of one policy, not the same term.
+
+    '
+  declared_in: hopkins-scientific-advertising-ch8-21
+- from: t_sa8_0046
+  to: t_hop_sa_0035
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: 'OBSERVATION against live Canon, and the load-bearing one for this whole lane. The live term `fixed_principle`
+    (chapter 1) is what a method becomes when it "invariably proves best". `the_small_scale_average` is
+    the inferential step chapter 15 needs in order to get from a few towns to a national commitment. Chapter
+    1 promised chapter 15 would supply the evidence for it. It does not. Recorded as related_to and explicitly
+    NOT as `maps_to`, because asserting a correspondence would imply the second grounds the first, which
+    is the opposite of the finding.
+
+    '
+  declared_in: hopkins-scientific-advertising-ch8-21
+- from: t_ogx_0067
+  to: t_sa8_0002
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: OBSERVATION ONLY. Hopkins's term is space_spent_on_present_users, a problem; Ogilvy states in
+    his chapter on Hopkins that this position was disproved by later research and that users read a product's
+    advertisements more than non-users. That is one author reporting another as overturned, with no study
+    named. It needs review, not a merge, and nothing is promoted here
+  declared_in: ogilvy-beyond-ch2
+- from: t_ogx_0011
+  to: t_mla_0035
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: OBSERVATION ONLY. Hopkins's ordinary_type_and_upper_and_lower_case and Ogilvy's capitals_retard_reading
+    point the same way about capitals; the two are separated by decades and neither supplies a study,
+    so this records a resemblance and asserts nothing
+  declared_in: ogilvy-beyond-ch2
+- from: t_ogx_0031
+  to: t_mla_0032
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: OBSERVATION ONLY. Hopkins's headline_as_salutation and Ogilvy's flag_them_down both treat the
+    headline as selecting its audience rather than as announcing
+  declared_in: ogilvy-beyond-ch2
+- from: t_ogx_0045
+  to: t_mla_0005
+  relation: related_to
+  confidence_basis: extractor_judgement
+  note: OBSERVATION ONLY. Both are procedures for deciding by measured response rather than by argument;
+    Ogilvy's split run varies one element inside a live advertisement, Hopkins's test campaign runs a
+    whole campaign in a limited area. Similar purpose, different unit
+  declared_in: ogilvy-beyond-ch2
+- from: t_ogx_0056
+  to: t_whip_0024
+  relation: distinct_from
+  confidence_basis: extractor_judgement
+  note: OBSERVATION ONLY, and a negative one. Sullivan's two_second_outdoor_test compresses an out-of-home
+    message to what can be read in passing; Ogilvy reasons from exposure duration in the opposite direction
+    and warns explicitly against designing a transit card like a billboard. Both are about out-of-home
+    and they are not the same claim
+  declared_in: ogilvy-beyond-ch2

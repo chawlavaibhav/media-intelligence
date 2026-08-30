@@ -1,0 +1,2151 @@
+# W3C, Web Content Accessibility Guidelines (WCAG) 2.2 — SPEC-03 SourceKnowledge
+# EXPERIMENTAL — NOT LIVE CANON. Lane 3, book-expansion-qa-v1. Non-merge, exploratory.
+#
+# LOCATORS: this source has NO page numbers. page_start / page_end are null in every object and the
+# real locator lives in provenance.section (a Success Criterion number, a glossary term, or an
+# Understanding document + section heading). No page number is invented anywhere.
+#
+# AUTHORITY LEVEL: sk_wcag_0001-0029 are supported by the normative Success Criteria or the
+# normative glossary. sk_wcag_0030-0038 are supported ONLY by the non-normative "Understanding"
+# W3C Working Group Notes. Every object states its level in a caveat with origin: source_stated.
+#
+# SCOPE CAUTION: this is an accessibility conformance standard for web content. It makes no claim
+# about commercial or creative effectiveness. No claim below asserts one.
+
+source_id: w3c-wcag22-text-legibility
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART A — NORMATIVE SUCCESS CRITERIA (Guideline 1.4 Distinguishable)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_wcag_0001
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "The visual presentation of text and images of text has a contrast ratio of at least 4.5:1"
+  concept_label: minimum_contrast_ratio_for_text_is_4_5_to_1
+  label_origin: extractor_assigned
+  claim: >
+    At conformance level AA, the visual presentation of text, and of images of text, must have a
+    contrast ratio of at least 4.5:1 against its background. Three carve-outs modify this: large-scale
+    text, incidental text, and text that is part of a logo or brand name.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "web content being assessed for conformance at Level AA; applies to the visual presentation of text and of images of text"
+  caveats:
+    - text: "normative — this is a Success Criterion, which the source's glossary defines as 'required for conformance'"
+      origin: source_stated
+    - text: "the criterion is a conformance threshold for accessibility, chosen for readers with low vision; the source nowhere claims that meeting it makes communication effective, or that failing it makes a design bad"
+      origin: extractor_observed
+    - text: "the criterion states the threshold but gives no mechanism; the reasoning appears only in the non-normative Understanding note (see sk_wcag_0030)"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_wcag_0002, note: "the large-text carve-out lowers the threshold to 3:1"}
+    - {relation: qualified_by, target: sk_wcag_0003, note: "incidental text is exempted entirely"}
+    - {relation: qualified_by, target: sk_wcag_0004, note: "logotypes are exempted entirely"}
+    - {relation: depends_on, target: sk_wcag_0014, note: "the number is only meaningful via the contrast ratio formula"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.3 Contrast (Minimum)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0002
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Large-scale text and images of large-scale text have a contrast ratio of at least 3:1"
+  concept_label: large_scale_text_carve_out_lowers_the_threshold_to_3_to_1
+  label_origin: extractor_assigned
+  claim: >
+    Text that meets the source's definition of large scale, and images of such text, need only reach
+    3:1 rather than 4.5:1 at Level AA. The carve-out is a size-and-weight test, not a discretionary
+    judgement about headlines.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "text meeting the glossary definition of large scale (text)"
+  caveats:
+    - text: "normative — a named exception clause inside SC 1.4.3"
+      origin: source_stated
+    - text: "the carve-out is defined by the glossary term 'large scale (text)', so it cannot be applied without that definition; point size alone is insufficient because weight and script are part of the test"
+      origin: extractor_observed
+    - text: "the reason larger text is allowed less contrast is stated only in the non-normative Understanding note (sk_wcag_0031)"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0001, note: "lowers the AA threshold for qualifying text"}
+    - {relation: depends_on, target: sk_wcag_0021, note: "the definition of large scale (text) supplies the test"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.3 Contrast (Minimum), 'Large Text' exception"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0003
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Text or images of text that are part of an inactive user interface component, that are pure decoration, that are not visible to anyone, or that are part of a picture that contains significant other visual content, have no contrast requirement."
+  concept_label: incidental_text_has_no_contrast_requirement
+  label_origin: extractor_assigned
+  claim: >
+    Four categories of text carry no contrast requirement at all under SC 1.4.3 and SC 1.4.6: text
+    belonging to an inactive user interface component; text that is pure decoration; text not visible
+    to anyone; and text that is part of a picture containing significant other visual content. The
+    source calls this group "Incidental". It is an exemption from the requirement, not a lower
+    threshold.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "text falling into one of the four named situations"
+  caveats:
+    - text: "normative — a named exception clause inside SC 1.4.3 and repeated verbatim in SC 1.4.6"
+      origin: source_stated
+    - text: "'pure decoration' and 'part of a picture that contains significant other visual content' are both defined terms; the exemption cannot be claimed by asserting that text merely looks decorative"
+      origin: extractor_observed
+    - text: "no contrast requirement is not a statement that such text is readable; the source removes the test, it does not certify the outcome"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a submit button visible at the foot of a form but not activatable until required fields are complete — an inactive user interface component, exempt", figure_ref: null}
+      - {description: "a street sign that happens to appear in a photograph — incidental text inside a picture with significant other visual content", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0001, note: "removes the requirement rather than lowering it"}
+    - {relation: qualifies, target: sk_wcag_0005, note: "the same clause appears verbatim in SC 1.4.6"}
+    - {relation: depends_on, target: sk_wcag_0027, note: "'pure decoration' is a defined glossary term"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.3 Contrast (Minimum), 'Incidental' exception"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0004
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Text that is part of a logo or brand name has no contrast requirement."
+  concept_label: logotype_text_has_no_contrast_requirement
+  label_origin: extractor_assigned
+  claim: >
+    Text forming part of a logo or brand name is exempt from the contrast requirements of SC 1.4.3 and
+    SC 1.4.6 entirely. The criterion states the exemption without qualification.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "text that is part of a logo or brand name"
+  caveats:
+    - text: "normative — a named exception clause in SC 1.4.3 and SC 1.4.6"
+      origin: source_stated
+    - text: "the exemption is from the requirement only; the source does not claim a low-contrast logotype is readable, and the non-normative notes explicitly treat it as a problem when the logo also acts as a control (sk_wcag_0034)"
+      origin: extractor_observed
+    - text: "SC 1.4.5's own note separately declares logotypes 'essential', which exempts them from a different criterion on different grounds"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0001, note: "removes the requirement for logotype text"}
+    - {relation: qualified_by, target: sk_wcag_0034, note: "the Understanding notes narrow the exemption where the low-contrast presentation was an author choice"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.3 Contrast (Minimum), 'Logotypes' exception"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0005
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "The visual presentation of text and images of text has a contrast ratio of at least 7:1"
+    - "Large-scale text and images of large-scale text have a contrast ratio of at least 4.5:1"
+  concept_label: enhanced_contrast_is_7_to_1_with_4_5_to_1_for_large_text
+  label_origin: extractor_assigned
+  claim: >
+    SC 1.4.6 Contrast (Enhanced) is a Level AAA criterion requiring 7:1 for text and images of text,
+    with large-scale text and images of large-scale text at 4.5:1. Its Incidental and Logotypes
+    exceptions are worded identically to those in SC 1.4.3. The two criteria are the same structure at
+    two levels: the value that is the AA general threshold becomes the AAA large-text threshold.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "web content being assessed at Level AAA"
+  caveats:
+    - text: "normative — a Success Criterion, at Level AAA"
+      origin: source_stated
+    - text: "the observation that the two criteria share a structure is the extractor's, though both texts are quoted; the source presents them as separate criteria and cross-references them"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_wcag_0001, note: "same structure, stricter values, higher conformance level"}
+    - {relation: member_of_system, target: scs_wcag_002}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.6 Contrast (Enhanced)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0006
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "The visual presentation of the following have a contrast ratio of at least 3:1 against adjacent color(s)"
+    - "Visual information required to identify user interface components and states"
+    - "Parts of graphics required to understand the content"
+  concept_label: non_text_contrast_is_3_to_1_against_adjacent_colours
+  label_origin: extractor_assigned
+  claim: >
+    SC 1.4.11 requires 3:1 against adjacent colours for two things: the visual information needed to
+    identify a user interface component and its states, and the parts of graphics required to
+    understand the content. It exempts inactive components, appearances determined by the user agent
+    and not modified by the author, and graphics where a particular presentation is essential to the
+    information conveyed. The comparison is against adjacent colours, not against a page background in
+    the abstract.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "user interface components and graphical objects in web content, at Level AA"
+  caveats:
+    - text: "normative — a Success Criterion at Level AA"
+      origin: source_stated
+    - text: "the requirement is scoped by 'required to identify' and 'required to understand'; it does not apply to every graphic or every part of a graphic"
+      origin: source_stated
+    - text: "the phrase 'adjacent color(s)' does substantial work and its interpretation is developed only in the non-normative Understanding note"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_wcag_0014, note: "applies the same contrast ratio measure to non-text content"}
+    - {relation: qualified_by, target: sk_wcag_0036, note: "the Understanding note supplies the 'required for understanding' test"}
+    - {relation: member_of_system, target: scs_wcag_004}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.11 Non-text Contrast"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0007
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Color is not used as the only visual means of conveying information, indicating an action, prompting a response, or distinguishing a visual element."
+  concept_label: colour_must_not_be_the_only_visual_means
+  label_origin: extractor_assigned
+  claim: >
+    Colour must not be the only visual means of conveying information, indicating an action, prompting
+    a response, or distinguishing a visual element. The criterion is about colour perception
+    specifically; the source's own note directs other forms of perception, including programmatic
+    access to colour, to Guideline 1.3. This is a Level A criterion — the lowest conformance level,
+    and therefore the most broadly binding of the criteria in this extraction.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "wherever colour differences carry meaning in web content"
+  caveats:
+    - text: "normative — a Success Criterion at Level A, with a normative note scoping it to colour perception"
+      origin: source_stated
+    - text: "the criterion does not forbid colour coding; it forbids colour coding that carries the meaning alone"
+      origin: extractor_observed
+    - text: "the mechanism, the visited-link carve-out and the luminance-difference allowance all live in the non-normative Understanding note, not in the criterion"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualified_by, target: sk_wcag_0038, note: "a sufficient luminance difference can itself be the additional visual means"}
+    - {relation: member_of_system, target: scs_wcag_004}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.1 Use of Color"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0008
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "If the technologies being used can achieve the visual presentation, text is used to convey information rather than images of text"
+    - "The image of text can be visually customized to the user's requirements"
+    - "A particular presentation of text is essential to the information being conveyed."
+    - "Logotypes (text that is part of a logo or brand name) are considered essential."
+  concept_label: real_text_is_preferred_over_images_of_text_with_two_exceptions
+  label_origin: extractor_assigned
+  claim: >
+    Where the technologies in use can achieve the intended visual presentation, information must be
+    conveyed with text rather than with an image of text. Two exceptions are named: Customizable — the
+    image of text can be visually customised to the user's requirements; and Essential — a particular
+    presentation of text is essential to the information being conveyed. A note declares logotypes to
+    be essential. The obligation is conditional on the technology: it applies only where the
+    presentation can actually be achieved with text.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "web content at Level AA, where the technologies in use can achieve the desired visual presentation"
+  caveats:
+    - text: "normative — a Success Criterion at Level AA, with a normative note on logotypes"
+      origin: source_stated
+    - text: "'Essential' is a defined glossary term with a stringent test, not a claim that the designer preferred that presentation"
+      origin: extractor_observed
+    - text: "the criterion concerns whether information is conveyed as text; it is not a rule about whether images may contain letterforms"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "headings set with CSS rather than as bitmap images", figure_ref: null}
+      - {description: "a server-generated image of text accompanied by controls that let the user set its font size and its foreground and background colours — the Customizable exception", figure_ref: null}
+      - {description: "a representation of a font family, where substituting another font would defeat the purpose — the Essential exception", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_wcag_0025, note: "the glossary definition of image of text bounds what the criterion covers"}
+    - {relation: depends_on, target: sk_wcag_0028, note: "'Essential' is a defined term"}
+    - {relation: qualified_by, target: sk_wcag_0009, note: "SC 1.4.9 removes the Customizable exception and the technology condition"}
+    - {relation: member_of_system, target: scs_wcag_003}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.5 Images of Text"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0009
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Images of text are only used for pure decoration or where a particular presentation of text is essential to the information being conveyed."
+    - "Logotypes (text that is part of a logo or brand name) are considered essential."
+  concept_label: images_of_text_no_exception_permits_only_decoration_or_essential
+  label_origin: extractor_assigned
+  claim: >
+    At Level AAA, SC 1.4.9 permits images of text only where they are pure decoration or where a
+    particular presentation of text is essential. The Customizable exception of SC 1.4.5 is gone, and
+    so is SC 1.4.5's condition that the technologies must be able to achieve the presentation.
+    Logotypes remain essential. The two criteria differ in their exceptions, not in their subject.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "web content being assessed at Level AAA"
+  caveats:
+    - text: "normative — a Success Criterion at Level AAA, with a normative note on logotypes"
+      origin: source_stated
+    - text: "the Understanding note for SC 1.4.5 adds a distinction the criteria themselves do not state: SC 1.4.5 is met where an image of text is used in addition to the same information as text, whereas SC 1.4.9 applies to all images of text regardless"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_wcag_0008, note: "same subject, narrower exceptions, higher level"}
+    - {relation: member_of_system, target: scs_wcag_003}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.9 Images of Text (No Exception)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0010
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Except for captions and images of text, text can be resized without assistive technology up to 200 percent without loss of content or functionality."
+  concept_label: text_must_survive_resizing_to_200_percent
+  label_origin: extractor_assigned
+  claim: >
+    Text must be resizable to 200 percent without assistive technology and without loss of content or
+    functionality. Captions and images of text are excepted. The obligation is on the content not to
+    break, not on the content to provide the resizing mechanism.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "visually rendered text in web content, at Level AA"
+  caveats:
+    - text: "normative — a Success Criterion at Level AA"
+      origin: source_stated
+    - text: "images of text are excepted here precisely because they cannot satisfy it; the non-normative Understanding note for this criterion explains that images of text pixelate rather than scale, and that it is harder to change their foreground and background colours"
+      origin: extractor_observed
+    - text: "the division of responsibility between author and user agent is stated only in the non-normative Understanding note"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_wcag_0025, note: "the exception turns on the defined term image of text"}
+    - {relation: member_of_system, target: scs_wcag_003}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.4 Resize Text"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0011
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Vertical scrolling content at a width equivalent to 320 CSS pixels"
+    - "Horizontal scrolling content at a height equivalent to 256 CSS pixels"
+    - "Except for parts of the content which require two-dimensional layout for usage or meaning."
+  concept_label: reflow_without_two_dimensional_scrolling_at_320_css_pixels
+  label_origin: extractor_assigned
+  claim: >
+    Content must be presentable without loss of information or functionality and without requiring
+    scrolling in two dimensions, at a width equivalent to 320 CSS pixels for vertically scrolling
+    content and a height equivalent to 256 CSS pixels for horizontally scrolling content. The source's
+    note derives 320 CSS pixels from a 1280 CSS pixel viewport at 400% zoom. Parts of the content that
+    require two-dimensional layout for usage or meaning are excepted, and the source names images
+    required for understanding such as maps and diagrams, video, games, presentations, data tables and
+    toolbar-bearing interfaces.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "web content at Level AA"
+  caveats:
+    - text: "normative — a Success Criterion at Level AA, with two normative notes"
+      origin: source_stated
+    - text: "the numbers are zoom-derived viewport equivalences, not device sizes; a CSS pixel is separately defined as a visual angle of about 0.0213 degrees, not a hardware pixel"
+      origin: source_stated
+    - text: "the criterion governs a resizable rendered layout under user control; a fixed-size rendered image has no reflow behaviour for it to describe"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_wcag_0010, note: "both concern content surviving user-side enlargement"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.10 Reflow"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0012
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Line height (line spacing) to at least 1.5 times the font size"
+    - "Spacing following paragraphs to at least 2 times the font size"
+    - "Letter spacing (tracking) to at least 0.12 times the font size"
+    - "Word spacing to at least 0.16 times the font size"
+    - "Content is not required to use these text spacing values."
+  concept_label: content_must_survive_a_user_text_spacing_override
+  label_origin: extractor_assigned
+  claim: >
+    In content implemented with markup languages that support the relevant text style properties, no
+    loss of content or functionality may occur when a user sets line height to at least 1.5 times the
+    font size, spacing after paragraphs to at least 2 times, letter spacing to at least 0.12 times and
+    word spacing to at least 0.16 times, changing no other style property. The source's own note
+    states plainly that content is not required to use these values: the requirement is that content
+    survives the override. Human languages and scripts that do not use one or more of these properties
+    may conform using only the properties that exist for that combination of language and script.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "content implemented using markup languages that support these text style properties, at Level AA"
+  caveats:
+    - text: "normative — a Success Criterion at Level AA, with two normative notes and a normative exception for languages and scripts"
+      origin: source_stated
+    - text: "these four numbers are the most commonly misread values in this criterion: they are a resilience test, not a typographic specification"
+      origin: extractor_observed
+    - text: "the Understanding note states that the criterion currently does not apply to PDF, because PDF is not implemented using markup, and that canvas implementations of text count as images of text"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_wcag_0013, note: "SC 1.4.8 states leading and paragraph spacing as presentation values available through a mechanism; SC 1.4.12 states superficially similar numbers as an override the content must survive — the two must not be read as one rule"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.12 Text Spacing"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0013
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "For the visual presentation of blocks of text, a mechanism is available to achieve the following"
+    - "Foreground and background colors can be selected by the user."
+    - "Width is no more than 80 characters or glyphs (40 if CJK)."
+    - "Text is not justified (aligned to both the left and the right margins)."
+    - "Line spacing (leading) is at least space-and-a-half within paragraphs, and paragraph spacing is at least 1.5 times larger than the line spacing."
+    - "Content is not required to use these values."
+  concept_label: a_mechanism_must_be_available_for_five_presentation_aspects_of_blocks_of_text
+  label_origin: extractor_assigned
+  claim: >
+    For blocks of text — defined as more than one sentence — a mechanism must be available to achieve
+    five things: user-selected foreground and background colours; a width of no more than 80 characters
+    or glyphs, 40 if CJK; text that is not justified to both margins; line spacing of at least
+    space-and-a-half within paragraphs with paragraph spacing at least 1.5 times the line spacing; and
+    resizing to 200 percent without horizontal scrolling to read a line on a full-screen window. The
+    source's first note states that content is not required to use these values and that the mechanism
+    may be provided by the browser or another user agent rather than by the content.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "blocks of text — more than one sentence — at Level AAA"
+  caveats:
+    - text: "normative — a Success Criterion at Level AAA, with two normative notes"
+      origin: source_stated
+    - text: "this is the source's only line-length and justification content, and it is stated as an availability requirement rather than as a typographic rule; reading '80 characters' as an authoring instruction misreads the criterion"
+      origin: extractor_observed
+    - text: "the source's second note allows writing systems that do not use one of these presentation aspects to conform without it, and encourages authors to follow guidance for their own writing system"
+      origin: source_stated
+    - text: "the reasoning for each of the five items appears only in the non-normative Understanding note (sk_wcag_0037)"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_wcag_0010, note: "the fifth item restates the 200 percent resize requirement with an added no-horizontal-scrolling condition"}
+    - {relation: demonstrated_together_with, target: sk_wcag_0012, note: "similar-looking spacing numbers, different obligations; they must not be read as one rule"}
+  evidence:
+    characteristics: [explicitly_stated, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Guideline 1.4 Distinguishable"
+    section: "SC 1.4.8 Visual Presentation"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART B — NORMATIVE GLOSSARY DEFINITIONS AND THEIR NOTES
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_wcag_0014
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "(L1 + 0.05) / (L2 + 0.05)"
+    - "L1 is the relative luminance of the lighter of the colors"
+    - "L2 is the relative luminance of the darker of the colors"
+    - "Contrast ratios can range from 1 to 21 (commonly written 1:1 to 21:1)."
+  concept_label: contrast_ratio_is_a_relative_luminance_formula_bounded_at_1_and_21
+  label_origin: source_verbatim
+  claim: >
+    Contrast ratio is defined as (L1 + 0.05) / (L2 + 0.05), where L1 is the relative luminance of the
+    lighter colour and L2 that of the darker. Because the lighter colour is always the numerator, the
+    measure is symmetric — dark text on a light ground and its inverse give the same number. The
+    source's first note bounds the scale: ratios range from 1 to 21, commonly written 1:1 to 21:1. The
+    quantity is dimensionless and is a property of a pair of colours, not of a single colour.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The Understanding note explains the 0.05 offset: the ANSI/HFS 100-1988 standard requires the
+      contribution from ambient light to be included in L1 and L2, and 0.05 is taken from the Typical
+      Viewing Flare value in IEC/4WD 61966-2-1. The note also explains why the terms "contrast ratio"
+      and "relative luminance" are used instead of "luminance" — web content does not emit light
+      itself, so the ratio measures the relative luminance that would result when displayed.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "any pair of colours being assessed under WCAG"
+  caveats:
+    - text: "normative — a glossary definition, and the glossary is part of the Recommendation"
+      origin: source_stated
+    - text: "the mechanism text above is drawn from the non-normative Understanding note 'Notes on formula'; the formula itself is normative"
+      origin: extractor_observed
+    - text: "the symmetry observation is the extractor's reading of the lighter/darker assignment, not a statement the source makes"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_wcag_0020, note: "relative luminance is separately defined"}
+    - {relation: qualified_by, target: sk_wcag_0015, note: "note 2, evaluation with anti-aliasing off"}
+    - {relation: qualified_by, target: sk_wcag_0016, note: "note 3, which background the measurement is taken against"}
+    - {relation: qualified_by, target: sk_wcag_0017, note: "note 4, the unpaired-specification failure"}
+    - {relation: qualified_by, target: sk_wcag_0018, note: "note 5, letter borders"}
+    - {relation: qualified_by, target: sk_wcag_0019, note: "note 6, which pairs to evaluate"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: contrast ratio (definition and Note 1)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0015
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Because authors do not have control over user settings as to how text is rendered (for example font smoothing or anti-aliasing), the contrast ratio for text can be evaluated with anti-aliasing turned off."
+  concept_label: contrast_may_be_evaluated_with_anti_aliasing_turned_off
+  label_origin: extractor_assigned
+  claim: >
+    Because authors have no control over user settings for text rendering, including font smoothing
+    and anti-aliasing, the contrast ratio for text may be evaluated with anti-aliasing turned off. The
+    measured object is therefore the specified colour pair, not the pixels a particular reader's
+    screen actually produces.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Authors do not control the user's rendering settings, so evaluation is defined against what the author did specify."
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "evaluating text contrast"
+  caveats:
+    - text: "normative — Note 2 to the glossary definition of contrast ratio"
+      origin: source_stated
+    - text: "this note is the reason a conforming measurement can differ from what a reader sees; the non-normative Understanding note draws the consequence out explicitly (sk_wcag_0033)"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0014, note: "defines the rendering conditions of the measurement"}
+    - {relation: qualified_by, target: sk_wcag_0033, note: "the Understanding note names the resulting nominal-pass problem"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: contrast ratio, Note 2"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0016
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "contrast is measured with respect to the specified background over which the text is rendered in normal usage"
+    - "If no background color is specified, then white is assumed."
+  concept_label: contrast_is_measured_against_the_specified_background_and_white_is_assumed
+  label_origin: extractor_assigned
+  claim: >
+    For SC 1.4.3 and SC 1.4.6, contrast is measured against the specified background over which the
+    text is rendered in normal usage. Where no background colour is specified, white is assumed. The
+    measurement is defined against a declared value, and a default is supplied rather than the
+    measurement being treated as undefined.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "evaluating SC 1.4.3 and SC 1.4.6 specifically"
+  caveats:
+    - text: "normative — Note 3 to the glossary definition of contrast ratio"
+      origin: source_stated
+    - text: "the note names SC 1.4.3 and SC 1.4.6 explicitly, so it does not on its face govern the 'adjacent colors' comparison in SC 1.4.11"
+      origin: extractor_observed
+    - text: "'the specified background' presumes a background that can be specified; the note does not describe how to measure text over a photograph, which the associated failure F83 treats as a failure condition rather than a measurement method"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0014, note: "fixes what the second colour in the pair is"}
+    - {relation: depends_on, target: sk_wcag_0017, note: "Note 4 makes unpaired specification a failure"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: contrast ratio, Note 3"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0017
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "It is a failure if no background color is specified when the text color is specified, because the user's default background color is unknown and cannot be evaluated for sufficient contrast."
+    - "it is a failure if no text color is specified when a background color is specified"
+  concept_label: specifying_one_colour_of_the_pair_without_the_other_is_a_failure
+  label_origin: extractor_assigned
+  claim: >
+    Specifying a text colour without specifying a background colour is a failure, because the user's
+    default background colour is unknown and cannot be evaluated for sufficient contrast. The converse
+    is equally a failure: specifying a background colour without specifying a text colour. The failure
+    is symmetric and it is a failure of specification, not of appearance — the rendered result may look
+    perfectly readable to the author and still fail.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The unspecified half of the pair falls to a user default that the author does not know and cannot evaluate, so no contrast ratio can be established."
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "content that specifies colours in its own styling"
+  caveats:
+    - text: "normative — Note 4 to the glossary definition of contrast ratio; the corresponding documented failure is F24, listed under the non-normative Understanding note for SC 1.4.3"
+      origin: source_stated
+    - text: "the source's sufficient technique G148 permits the opposite strategy — specifying neither colour and not using technology features that change the defaults; leaving both unspecified is not the same act as leaving one unspecified"
+      origin: source_stated
+    - text: "this failure mode is specific to declarative styling that a user default can fill in; it has no counterpart in a flattened raster where both colours are baked into pixels"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the user's default background color is unknown and cannot be evaluated for sufficient contrast"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0016, note: "note 3 assumes white where nothing is specified; note 4 makes half-specification a failure"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: contrast ratio, Note 4"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0018
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "A narrow border around the letter would be used as the letter."
+    - "A wide border around the letter that fills in the inner details of the letters acts as a halo and would be considered background."
+  concept_label: a_narrow_letter_border_counts_as_the_letter_and_a_wide_one_as_background
+  label_origin: extractor_assigned
+  claim: >
+    Where a letter has a border, the border can add contrast and is used in the calculation. A narrow
+    border around the letter is treated as the letter itself. A wide border that fills in the inner
+    details of the letterform acts as a halo and is treated as background. The same visual device
+    therefore changes which side of the contrast pair it belongs to, according to how heavy it is.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A wide border fills the counters and interior detail of the letterform, so what the reader
+      distinguishes is no longer letter against page but letter against halo; the halo becomes the
+      effective background.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "text that carries an outline, stroke or halo treatment"
+  caveats:
+    - text: "normative — Note 5 to the glossary definition of contrast ratio"
+      origin: source_stated
+    - text: "the note gives no numeric boundary between narrow and wide; the test is whether the border fills the inner details of the letters"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0014, note: "determines which pixels count as the foreground colour"}
+    - {relation: qualifies, target: sk_wcag_0016, note: "can substitute the halo for the specified background"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: contrast ratio, Note 5"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0019
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "WCAG conformance should be evaluated for color pairs specified in the content that an author would expect to appear adjacent in typical presentation."
+    - "Authors need not consider unusual presentations, such as color changes made by the user agent, except where caused by authors' code."
+  concept_label: only_colour_pairs_expected_to_appear_adjacent_are_evaluated
+  label_origin: extractor_assigned
+  claim: >
+    Conformance is evaluated for colour pairs that are specified in the content and that an author
+    would expect to appear adjacent in typical presentation. Authors need not consider unusual
+    presentations such as colour changes made by the user agent, except where the author's own code
+    causes them. The evaluation set is bounded by authorial expectation, not by every combination the
+    content could theoretically produce.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "selecting which colour pairs to test"
+  caveats:
+    - text: "normative — Note 6 to the glossary definition of contrast ratio"
+      origin: source_stated
+    - text: "'typical presentation' is not further defined, so the boundary of the evaluation set rests on a judgement the source leaves to the evaluator"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0014, note: "bounds which pairs are measured at all"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: contrast ratio, Note 6"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0020
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "the relative brightness of any point in a colorspace, normalized to 0 for darkest black and 1 for lightest white"
+    - "L = 0.2126 * R + 0.7152 * G + 0.0722 * B"
+  concept_label: relative_luminance_is_a_weighted_linearised_srgb_quantity
+  label_origin: extractor_assigned
+  claim: >
+    Relative luminance is the relative brightness of any point in a colourspace, normalised to 0 for
+    darkest black and 1 for lightest white. For sRGB it is L = 0.2126 R + 0.7152 G + 0.0722 B, where
+    each channel is first linearised from its 8-bit value by a piecewise transform with a breakpoint at
+    0.04045. The three channel weights are markedly unequal: green contributes roughly seven tenths of
+    the luminance and blue roughly seven hundredths. The source directs authors to evaluate in sRGB
+    unless another colour space is known to be used.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The channel weights model the eye's unequal sensitivity across the spectrum, which is why a
+      luminance-based measure can be computed without regard to a particular colour deficiency; the
+      Understanding note adds that most of the luminance contribution comes from the mid and long wave
+      receptors, which largely overlap in their spectral responses.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "sRGB-encoded content; the source notes almost all systems used today to view web content assume sRGB"
+  caveats:
+    - text: "normative — a glossary definition with six notes"
+      origin: source_stated
+    - text: "the source records that the 0.04045 breakpoint was 0.03928 before May 2021, and states the change has no practical effect on the calculations in this context"
+      origin: source_stated
+    - text: "the mechanism sentence above blends the normative definition with the non-normative Understanding note's account of spectral overlap"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_wcag_0014, note: "the contrast ratio formula consumes two relative luminance values"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: relative luminance (definition and Notes 1-4)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0021
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "with at least 18 point or 14 point bold or font size that would yield equivalent size for Chinese, Japanese and Korean (CJK) fonts"
+  concept_label: large_scale_text_is_18_point_or_14_point_bold_or_cjk_equivalent
+  label_origin: extractor_assigned
+  claim: >
+    Large scale text is text at 18 point or greater, or 14 point bold or greater, or a font size that
+    would yield an equivalent size for Chinese, Japanese and Korean fonts. The test is not a point size
+    alone: weight is part of it, and for CJK the criterion is defined by equivalence rather than by
+    the same numbers.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "classifying text for the large-text carve-out in SC 1.4.3 and SC 1.4.6"
+  caveats:
+    - text: "normative — a glossary definition with five notes"
+      origin: source_stated
+    - text: "the definition is the gate for a threshold change from 4.5:1 to 3:1, so misclassifying text as large is not a minor error"
+      origin: extractor_observed
+    - text: "the source explicitly makes the CJK case an equivalence rather than a number, which means the definition cannot be applied to a CJK setting by measuring points"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0002, note: "supplies the test that the carve-out turns on"}
+    - {relation: qualified_by, target: sk_wcag_0022, note: "note 1 warns about thin and unusual letterforms"}
+    - {relation: qualified_by, target: sk_wcag_0023, note: "notes 2-4 fix which size is measured"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: large scale (text)"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0022
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Fonts with extraordinarily thin strokes or unusual features and characteristics that reduce the familiarity of their letter forms are harder to read, especially at lower contrast levels."
+  concept_label: thin_or_unfamiliar_letterforms_are_harder_to_read_especially_at_lower_contrast
+  label_origin: extractor_assigned
+  claim: >
+    Fonts with extraordinarily thin strokes, or unusual features and characteristics that reduce the
+    familiarity of their letterforms, are harder to read — and the source specifies that this is
+    especially so at lower contrast levels. Stroke weight and letterform familiarity interact with
+    contrast rather than being independent of it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "text set in thin-stroked or unfamiliar letterforms"
+  caveats:
+    - text: "normative in placement — Note 1 to the glossary definition of large scale (text) — but it is a warning attached to a definition, and no Success Criterion converts it into a testable requirement"
+      origin: source_stated
+    - text: "this is the source's clearest statement that its numeric thresholds do not fully capture legibility, and it is stated as a general readability observation without supporting measurement inside the document"
+      origin: extractor_observed
+    - text: "the Understanding note for SC 1.4.3 gives the same warning a second time, adding that '18 point' and 'bold' can mean different things in different fonts but should be sufficient except for very thin or unusual fonts"
+      origin: source_stated
+  source_stated_problems:
+    - "fonts with extraordinarily thin strokes or unusual features ... are harder to read"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0021, note: "warns that the size test does not settle readability"}
+    - {relation: qualifies, target: sk_wcag_0002, note: "warns against relying on the 3:1 carve-out with a thin display face"}
+    - {relation: demonstrated_together_with, target: sk_wcag_0033, note: "the Understanding note develops the same point into the anti-aliasing nominal-pass problem"}
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: large scale (text), Note 1"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0023
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Font size is the size when the content is delivered. It does not include resizing that may be done by a user."
+    - "The point size should be obtained from the user agent, or calculated based on font metrics as the user agent does"
+    - "If a level 1 heading is rendered in 14pt bold or higher on major browsers, then it would be reasonable to assume it is large text."
+  concept_label: the_size_that_counts_is_the_size_as_delivered_obtained_from_the_user_agent
+  label_origin: extractor_assigned
+  claim: >
+    The font size that determines large-scale classification is the size at which the content is
+    delivered, excluding any resizing the user performs. Because the size a reader actually sees depends
+    on both the author-defined size and the user's display and user-agent settings, the point size is
+    to be obtained from the user agent, or calculated from font metrics the way a user agent does. The
+    source gives working equivalences — for many mainstream body fonts 14 and 18 point are roughly 1.2
+    and 1.5 em, or 120% and 150% of the default body size — and instructs authors to check them for
+    the particular fonts in use.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      When fonts are defined in relative units the actual point size is calculated by the user agent
+      for display, so a size expressed in the stylesheet is not by itself the size to test.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "determining the point size of text for the large-scale test"
+  caveats:
+    - text: "normative — Notes 2, 3 and 4 to the glossary definition of large scale (text)"
+      origin: source_stated
+    - text: "the em and percentage equivalences are given as approximations for mainstream body fonts and are explicitly to be checked, not applied as constants"
+      origin: source_stated
+    - text: "the whole procedure presumes a user agent that can be asked for a computed size; it does not describe how to establish point size in a delivered raster image, and the Understanding note separately warns that specifying point sizes inside an image editor is unreliable because applications default to different pixel densities"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0021, note: "fixes which measurement of size the definition means"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: large scale (text), Notes 2-4"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0024
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "The 18 and 14 point sizes for roman texts are taken from the minimum size for large print (14pt) and the larger standard font size (18pt)."
+  concept_label: the_18_and_14_point_figures_come_from_large_print_conventions
+  label_origin: extractor_assigned
+  claim: >
+    The 18 and 14 point figures for roman text are not derived from a contrast experiment. They are
+    taken from existing large-print conventions: 14 point is the minimum size for large print and 18
+    point the larger standard size. For other scripts such as CJK, the equivalent sizes are the minimum
+    large-print size used for those languages and the next larger standard large-print size.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "The thresholds are imported from established large-print practice rather than computed, which is why the CJK case is defined by the corresponding large-print convention rather than by a converted point value."
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "the provenance of the large-scale numbers"
+  caveats:
+    - text: "normative — Note 5 to the glossary definition of large scale (text)"
+      origin: source_stated
+    - text: "the Understanding note for SC 1.4.3 cites the American Printing House for the Blind large-printing guidelines and the Library of Congress large-print reference guide as the resources behind these sizes; those citations are non-normative"
+      origin: source_stated
+    - text: "these are conventions of print for readers with low vision, carried into a screen standard; the source does not claim they are optimal, only that they are the established sizes"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0021, note: "records where the numbers came from"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: large scale (text), Note 5"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0025
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "text that has been rendered in a non-text form (e.g., an image) in order to achieve a particular visual effect"
+    - "This does not include text that is part of a picture that contains significant other visual content."
+    - "A person's name on a nametag in a photograph."
+  concept_label: image_of_text_is_text_rendered_as_image_to_get_a_visual_effect
+  label_origin: extractor_assigned
+  claim: >
+    An image of text is text that has been rendered in a non-text form, for example as an image, in
+    order to achieve a particular visual effect. The definition explicitly excludes text that is part
+    of a picture containing significant other visual content, and the source's example of the excluded
+    case is a person's name on a nametag in a photograph. The test is about intent and context — text
+    put into pixels to get a look — not about whether letterforms appear in an image.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "classifying rendered text for SC 1.4.3, 1.4.4, 1.4.5, 1.4.9 and 1.4.12"
+  caveats:
+    - text: "normative — a glossary definition with a note and an example"
+      origin: source_stated
+    - text: "this single definition gates five separate criteria, and its excluding note is what keeps photographs out of scope"
+      origin: extractor_observed
+    - text: "the Understanding note for SC 1.4.12 adds that canvas implementations of text are treated as images of text for that criterion"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a heading rendered as a bitmap to obtain a specific font and size", figure_ref: null}
+    counter:
+      - {description: "a person's name on a nametag inside a photograph — the source's own excluded case", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0008, note: "SC 1.4.5 is built on this definition"}
+    - {relation: qualified_by, target: sk_wcag_0035, note: "the Understanding note explains the intent of the excluding clause"}
+    - {relation: member_of_system, target: scs_wcag_003}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: image of text"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0026
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "sequence of characters that can be programmatically determined, where the sequence is expressing something in human language"
+  concept_label: text_is_a_programmatically_determinable_sequence_expressing_human_language
+  label_origin: source_verbatim
+  claim: >
+    In this source, "text" is a sequence of characters that can be programmatically determined, where
+    the sequence expresses something in human language. Two conditions must both hold. Characters that
+    are used for their appearance rather than to express language — the source's separate definition of
+    non-text content names ASCII art, emoticons, leetspeak and images representing text — are therefore
+    not text in this document's sense, even though they are made of characters.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "throughout the document; the source notes in its glossary that 'text' is used in a very specific way in WCAG 2, which is why a definition is supplied"
+  caveats:
+    - text: "normative — a glossary definition"
+      origin: source_stated
+    - text: "this is a machine-readability definition, not a typographic one; whether a reader can read something has no bearing on whether it is 'text' here"
+      origin: extractor_observed
+    - text: "the consequence — that a character used as a symbol counts as non-text content and falls under SC 1.4.11 rather than SC 1.4.3 — is spelled out only in the non-normative Understanding note for SC 1.4.11"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter:
+      - {description: "an uppercase X used as a close button and a greater-than character used as a right-pointing arrow: characters used for their visual appearance, treated as non-text content", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0025, note: "text and image of text are the two sides SC 1.4.5 sits between"}
+    - {relation: qualified_by, target: sk_wcag_0006, note: "characters used as symbols are assessed under non-text contrast"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: text"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0027
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "serving only an aesthetic purpose, providing no information, and having no functionality"
+    - "Text is only purely decorative if the words can be rearranged or substituted without changing their purpose."
+    - "The cover page of a dictionary has random words in very light text in the background."
+  concept_label: pure_decoration_requires_that_the_words_be_interchangeable
+  label_origin: extractor_assigned
+  claim: >
+    Pure decoration means serving only an aesthetic purpose, providing no information and having no
+    functionality. For text the source adds a sharp operational test: text is only purely decorative if
+    the words can be rearranged or substituted without changing their purpose. The source's example is
+    random words set in very light text as a background on a dictionary cover.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      If swapping the words would change what the element is doing, the words are carrying something,
+      so the element is not purely aesthetic and the exemption does not apply.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "claiming the decoration exemption under SC 1.4.3, SC 1.4.6 or SC 1.4.9"
+  caveats:
+    - text: "normative — a glossary definition with a note and an example"
+      origin: source_stated
+    - text: "the substitution test is unusually strict: a word chosen because it is that word is not decoration, however faint or aesthetic its treatment"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "random words in very light text behind a dictionary cover — the words could be any words", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0003, note: "supplies one of the four incidental situations"}
+    - {relation: qualifies, target: sk_wcag_0009, note: "SC 1.4.9 permits images of text for pure decoration"}
+    - {relation: member_of_system, target: scs_wcag_001}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: pure decoration"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0028
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "if removed, would fundamentally change the information or functionality of the content, and information and functionality cannot be achieved in another way that would conform"
+  concept_label: essential_is_a_two_part_test_including_a_no_conforming_alternative_clause
+  label_origin: extractor_assigned
+  claim: >
+    Essential means that removing the thing would fundamentally change the information or functionality
+    of the content, and that the information and functionality cannot be achieved in another way that
+    would conform. Both halves must hold. The second half is the demanding one: a presentation is not
+    essential merely because it matters, if a conforming alternative could deliver the same information
+    and functionality.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "claiming an Essential exception under SC 1.4.5, SC 1.4.9 or SC 1.4.11"
+  caveats:
+    - text: "normative — a glossary definition"
+      origin: source_stated
+    - text: "the definition is stated once and consumed by several criteria, so the same two-part test governs images of text and graphical objects alike"
+      origin: extractor_observed
+    - text: "the source separately declares logotypes essential by note, which short-circuits the test for that one case rather than satisfying it"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0008, note: "the Essential exception in SC 1.4.5"}
+    - {relation: qualifies, target: sk_wcag_0006, note: "the essential-presentation exception for graphical objects in SC 1.4.11"}
+    - {relation: qualified_by, target: sk_wcag_0034, note: "the Understanding note applies the second half to author-chosen low-contrast logos"}
+    - {relation: member_of_system, target: scs_wcag_003}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: essential"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0029
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "normative: required for conformance"
+    - "informative: for information purposes and not required for conformance"
+    - "Content identified as \"informative\" or \"non-normative\" is never required for conformance."
+  concept_label: the_source_defines_its_own_two_authority_levels
+  label_origin: extractor_assigned
+  claim: >
+    The source defines its own authority levels in its glossary. Normative means required for
+    conformance. Informative means for information purposes and not required for conformance, and the
+    source states that content identified as informative or non-normative is never required for
+    conformance. The Success Criteria and the glossary are normative; the "Understanding" documents are
+    W3C Working Group Notes and are not.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "reading any statement in or around this document"
+  caveats:
+    - text: "normative — the glossary defines both terms; the non-normative status of the Understanding documents is stated by their own publication status as W3C Working Group Notes"
+      origin: source_stated
+    - text: "this distinction is load-bearing for every other object in this extraction: the rationale, mechanism and worked examples that make the standard usable are almost all non-normative, while the bare thresholds are normative"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_wcag_0030, note: "every Understanding-only object in this extraction sits at the weaker level this object defines"}
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "6. Glossary"
+    section: "Glossary: normative; Glossary: informative"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART C — NON-NORMATIVE "UNDERSTANDING" NOTES (W3C Working Group Notes)
+# Every object below is supported ONLY by material the source itself classifies as
+# not required for conformance. None of it may be presented as a requirement.
+# ─────────────────────────────────────────────────────────────────────────────
+
+- sk_id: sk_wcag_0030
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "A contrast ratio of 3:1 is the minimum level recommended by [ISO-9241-3] and [ANSI-HFES-100-1988] for standard text and vision."
+    - "the empirical finding that in the population, visual acuity of 20/40 is associated with a contrast sensitivity loss of roughly 1.5"
+    - "A user with 20/40 would thus require a contrast ratio of 3 * 1.5 = 4.5 to 1."
+  concept_label: 4_5_and_7_are_derived_from_a_3_to_1_baseline_times_a_contrast_sensitivity_loss
+  label_origin: extractor_assigned
+  claim: >
+    The two headline numbers are derived rather than chosen. A 3:1 ratio is the minimum recommended by
+    ISO 9241-3 and ANSI/HFES 100-1988 for standard text and normal vision. The population finding cited
+    is that visual acuity of 20/40 carries a contrast sensitivity loss of roughly 1.5, so such a user
+    requires 3 x 1.5 = 4.5:1 — which is the AA threshold. Following the same logic, a user at 20/80
+    requires about 7:1, which is the AAA threshold. The source adds that 20/40 is commonly reported as
+    typical visual acuity at roughly age 80, and that people with worse loss than 20/80 usually use
+    assistive technology with contrast enhancement and magnification built in.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Baseline contrast requirement for a normal observer, multiplied by the contrast sensitivity loss
+      associated with a specified level of acuity, gives the ratio that restores an equivalent
+      experience for that reader. The thresholds are compensation factors, not readability optima.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance, low_vision_readership]
+    conditions: "explaining why SC 1.4.3 and SC 1.4.6 use the values they do"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.3 is a W3C Working Group Note; the source's own glossary states that content identified as informative or non-normative is never required for conformance"
+      origin: source_stated
+    - text: "the source further notes that the ISO and ANSI calculations are for body text, and that a relaxed ratio is provided for text that is much larger"
+      origin: source_stated
+    - text: "the chain rests on cited external studies (ARDITI-FAYE, GITTINGS-FOZARD) that are not reproduced or re-examined in the document"
+      origin: extractor_observed
+    - text: "this derivation is about restoring contrast perception for readers with acuity loss; it is not, and is not offered as, a model of what draws attention or reads well"
+      origin: extractor_observed
+  source_stated_problems:
+    - "the loss in contrast sensitivity that typically accompanies aging"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0001, note: "supplies the reasoning the criterion omits"}
+    - {relation: qualifies, target: sk_wcag_0005, note: "supplies the reasoning for 7:1"}
+    - {relation: member_of_system, target: scs_wcag_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.3, Rationale for the Ratios Chosen"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0031
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Text that is larger and has wider character strokes is easier to read at lower contrast. The contrast requirement for larger text is therefore lower."
+    - "This allows authors to use a wider range of color choices for large text, which is helpful for design of pages, particularly titles."
+  concept_label: larger_text_with_wider_strokes_reads_at_lower_contrast
+  label_origin: extractor_assigned
+  claim: >
+    The reason large text is allowed 3:1 rather than 4.5:1 is that text which is larger and has wider
+    character strokes is easier to read at lower contrast. The source names a second, design-side
+    consequence directly: the lower requirement lets authors use a wider range of colour choices for
+    large text, which it says is helpful for page design and particularly for titles. It notes that
+    "18 point" and "bold" can mean different things in different fonts but should be sufficient except
+    for very thin or unusual fonts, which is why the thin-stroke warning is attached to the definition.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: "Size and stroke width both increase the amount of ink presented to the reader per glyph, so less luminance separation is needed to resolve the letterform."
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "explaining the large-text exception to SC 1.4.3"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.3 is a W3C Working Group Note"
+      origin: source_stated
+    - text: "this is the one place where the source acknowledges a design motive for a threshold, and even there the acknowledgement is that the relaxed threshold gives authors more colour latitude — not that lower contrast is better for the design"
+      origin: extractor_observed
+    - text: "the mechanism sentence is the source's reasoning; no measurement is reported in the document"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0002, note: "supplies the reason the carve-out exists"}
+    - {relation: demonstrated_together_with, target: sk_wcag_0022, note: "the thin-stroke warning is the stated limit of this reasoning"}
+    - {relation: member_of_system, target: scs_wcag_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.3, Intent"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0032
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "For people with color vision deficiency who are not able to distinguish certain shades of color, hue and saturation have minimal or no effect on legibility as assessed by reading performance."
+    - "Therefore, in the recommendation, contrast is calculated in such a way that color (hue) is not a key factor."
+    - "color deficiencies are so diverse that prescribing effective general use color pairs (for contrast) based on quantitative data is not feasible"
+  concept_label: contrast_is_computed_so_that_hue_is_not_a_key_factor
+  label_origin: extractor_assigned
+  claim: >
+    The measure is deliberately hue-insensitive. The source's reasoning: for people with colour vision
+    deficiency who cannot distinguish certain shades, hue and saturation have minimal or no effect on
+    legibility as assessed by reading performance, and the inability to distinguish shades does not
+    itself damage light-dark contrast perception. Colour deficiencies are too diverse for prescribing
+    effective general-use colour pairs from quantitative data to be feasible, so the standard requires
+    luminance contrast instead, which is independent of colour perception. Most of the luminance
+    contribution comes from mid and long wave receptors whose spectral responses largely overlap. The
+    source names one exception: predominantly long-wavelength colours against dark colours for readers
+    with protanopia, for which it provides an advisory technique on avoiding red on black.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Because luminance is carried mostly by receptor classes that overlap across common colour
+      deficiencies, a luminance-only measure generalises across a population whose hue perception
+      cannot be generalised over.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance, colour_vision_deficiency]
+    conditions: "explaining why the contrast measure ignores hue"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.3 is a W3C Working Group Note; the hue-free formula it explains is normative"
+      origin: source_stated
+    - text: "the source states the protanopia case as a known exception and handles it with an advisory technique rather than a requirement, so a red-on-black pair can pass the normative test while the source's own note counsels against it"
+      origin: extractor_observed
+    - text: "'no effect on legibility as assessed by reading performance' is scoped to reading performance for that population; it is not a general claim that hue does not matter visually"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0020, note: "explains why a luminance-only quantity was chosen"}
+    - {relation: qualifies, target: sk_wcag_0014, note: "explains why the ratio has no hue term"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.3, Intent and Rationale for the Ratios Chosen"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0033
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "the computed values should not be rounded (e.g., 4.499:1 would not meet the 4.5:1 threshold)"
+    - "refer to the foreground and background colors obtained from the user agent, or the underlying markup and stylesheets, rather than the text as presented on screen"
+    - "This can lead to situations where text has a contrast ratio that nominally passes the Success Criterion, but has a much lower contrast in practice."
+  concept_label: thresholds_are_unrounded_and_a_nominal_pass_can_be_a_practical_failure
+  label_origin: extractor_assigned
+  claim: >
+    Two evaluation points that pull in opposite directions. First, the ratios are threshold values and
+    computed results are not rounded: 4.499:1 does not meet 4.5:1, and the same rule is restated for
+    3:1 under SC 1.4.11, where 2.999:1 does not pass. Second, the measurement is taken from colours
+    obtained from the user agent or the underlying markup and stylesheets rather than from the text as
+    presented on screen — and because anti-aliasing can render particularly thin or unusual fonts much
+    fainter than their declared colour, text can nominally pass while having much lower contrast in
+    practice. The source's stated best practice in that case is to choose a font with stronger, thicker
+    lines, or to aim for a colour combination that exceeds the normative requirement. The same warning
+    is repeated for thin lines and shapes in non-text elements.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The conformance measurement is defined on specified colour values, not on rendered pixels;
+      anti-aliasing acts between the two, so the measured quantity and the perceived quantity can
+      diverge, always in the direction of the rendering being fainter.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "evaluating text and non-text contrast"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.3 and SC 1.4.11 are W3C Working Group Notes; the no-rounding instruction and the exceed-the-threshold advice are both non-normative, though the underlying anti-aliasing allowance is normative (glossary contrast ratio, Note 2)"
+      origin: source_stated
+    - text: "this is the source explicitly conceding that conformance and legibility can come apart, and recommending — not requiring — that authors exceed the number"
+      origin: extractor_observed
+  source_stated_problems:
+    - "text has a contrast ratio that nominally passes the Success Criterion, but has a much lower contrast in practice"
+  source_stated_remedies:
+    - "choose a font with stronger/thicker lines"
+    - "aim for a foreground/background color combination that exceeds the normative requirements"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0015, note: "draws out the consequence of evaluating with anti-aliasing off"}
+    - {relation: qualifies, target: sk_wcag_0001, note: "fixes how the threshold comparison is performed"}
+    - {relation: demonstrated_together_with, target: sk_wcag_0022, note: "the thin-stroke warning and the anti-aliasing warning are the same concern at two authority levels"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.3, Intent; and Understanding SC 1.4.11, Intent"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0034
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "under the assumption that logos/logotypes must comply with stricter color choices mandated by corporate identity or brand guidelines"
+    - "Corporate identity or brand guidelines beyond logo and logotype are not included in the exception."
+    - "If logos are presented with an insufficient contrast, but their presentation was an author choice rather than being mandated by corporate identity or brand guidelines, then that particular low contrast presentation is not \"essential\", and the logo is not exempt from the contrast requirements."
+  concept_label: the_logo_exemption_rests_on_a_brand_mandate_and_fails_without_one
+  label_origin: extractor_assigned
+  claim: >
+    The Understanding notes state the assumption behind the logo exemption and then narrow it in three
+    ways. The exemption is granted on the assumption that logos and logotypes must comply with stricter
+    colour choices mandated by corporate identity or brand guidelines. Corporate identity or brand
+    guidelines beyond the logo and logotype are explicitly not covered by the exception. And under SC
+    1.4.11 the source states directly that where a low-contrast logo presentation was an author choice
+    rather than mandated by brand guidelines, that presentation is not "essential" and the logo is not
+    exempt. The source also flags that the exemption becomes problematic when a logo acts as a user
+    interface component such as a link, and recommends as best practice choosing a higher-contrast
+    variant if brand guidelines allow, or providing an equivalent control that meets the requirements.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The exemption is a deference to an external constraint that the author cannot alter. Where no
+      such constraint exists, the justification for the exemption is absent, so the general Essential
+      test applies and fails.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "logos, logotypes and brand marks in web content"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.3 and Understanding SC 1.4.11 are W3C Working Group Notes; the bare exemptions they narrow are normative and are worded without this condition"
+      origin: source_stated
+    - text: "there is therefore real tension between levels: SC 1.4.3 exempts logotype text unconditionally, while the SC 1.4.11 note conditions the graphical exemption on a brand mandate; an evaluation that treats the note as binding is over-applying a non-normative document"
+      origin: extractor_observed
+    - text: "the source treats brand guidelines as a constraint to be deferred to, not as a justification it endorses; it does not claim a low-contrast logo is a good logo"
+      origin: extractor_observed
+  source_stated_problems:
+    - "this can be problematic when logos or logotypes act as user interface components (such as a link or other interactive control)"
+  source_stated_remedies:
+    - "consider choosing a variant of the logo or logotype that has sufficient text contrast, if allowed by the corporate identity or brand guidelines"
+    - "consider providing an equivalent user interface component which serves the same purpose and meets contrast requirements"
+  examples:
+    positive: []
+    counter:
+      - {description: "an author displays company logos at low contrast by default and raises the contrast only on hover; the source states that being a logo does not exempt this, because the initial low-contrast presentation is not essential", figure_ref: "Understanding SC 1.4.11, Figure 40"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0004, note: "narrows the unconditional logotype exemption"}
+    - {relation: qualifies, target: sk_wcag_0028, note: "applies the Essential test to an author-chosen presentation"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, visually_demonstrated]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.11, Logos; and Understanding SC 1.4.3, Intent"
+    page_start: null
+    page_end: null
+    figure_refs: ["Understanding SC 1.4.11, Figure 40"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0035
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "This exception is intended to separate pictures that have text in them from images of text that are done to replace text in order to get a particular look."
+    - "This requirement applies to situations in which images of text were intended to be understood as text."
+    - "Incidental text, such as in photographs that happen to include a street sign, are not included."
+  concept_label: the_picture_exception_separates_pictures_containing_text_from_text_made_into_a_picture
+  label_origin: extractor_assigned
+  claim: >
+    The Understanding note states the purpose of the "part of a picture that contains significant other
+    visual content" exception: it exists to separate pictures that happen to have text in them from
+    images of text produced to replace text in order to obtain a particular look. The contrast
+    requirement applies where images of text were intended to be understood as text. Incidental text —
+    the source's example is a street sign that happens to appear in a photograph — is not included, and
+    neither is text deliberately made invisible to all viewers. The note for SC 1.4.5 adds that
+    examples of pictures with significant other visual content include graphs, screenshots and diagrams
+    that convey important information through more than just text.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The distinction turns on why the letterforms are in pixels: to be read as the content, or as part
+      of a depicted scene. The first is in scope, the second is not.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "deciding whether text inside an image is in scope for the contrast requirement"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.3 and Understanding SC 1.4.5 are W3C Working Group Notes; the exception clause and the glossary note they explain are normative"
+      origin: source_stated
+    - text: "the source separately requires that text within a graphic must meet SC 1.4.3 where it is used to convey the values or labels of that graphic, so this exception does not extend to chart labels"
+      origin: source_stated
+    - text: "the boundary is an intent test, and intent is not directly observable from a delivered image; applying it to a generated composite is a judgement, not a measurement"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter:
+      - {description: "a photograph that happens to include a street sign — out of scope", figure_ref: null}
+      - {description: "a heading rendered as a bitmap to obtain a particular typeface — in scope", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0025, note: "explains the excluding note in the definition of image of text"}
+    - {relation: qualifies, target: sk_wcag_0003, note: "explains the fourth incidental situation"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.3, Intent; and Understanding SC 1.4.5, Intent"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0036
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "Not every graphical object needs to contrast with its surroundings - only those that are required for a user to understand what the graphic is conveying."
+    - "If the least-contrasting area is less than 3:1, assume that area is invisible, is the graphical object still understandable?"
+    - "If there are multiple colors and/or a gradient, choose the least contrasting area to test"
+  concept_label: the_required_for_understanding_test_is_to_assume_the_low_contrast_area_is_invisible
+  label_origin: extractor_assigned
+  claim: >
+    The Understanding note supplies an operational test for "required for understanding". Identify what
+    part of an image is needed to grasp what it represents; where there are several colours or a
+    gradient, test the least-contrasting area; if that area falls below 3:1, assume it is invisible and
+    ask whether the graphical object is still understandable. If enough remains to understand it, it
+    passes. The note names four situations in which a graphic is not required for understanding at all:
+    where text embedded or overlaid conveys the same information, such as labels and values on a chart;
+    where the graphic is aesthetic and need not be seen to understand the content or use the
+    functionality; where the information is available in another form such as a following table or a
+    long description; and where the graphic is part of a logo or brand name. It adds that text within a
+    graphic must itself meet SC 1.4.3.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Treating the sub-threshold region as absent converts a contrast question into a comprehension
+      question, which is what the criterion is actually protecting; a graphic can therefore keep
+      low-contrast parts as long as the parts that carry the meaning survive their removal.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "assessing icons, charts, diagrams and other graphics under SC 1.4.11"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.11 is a W3C Working Group Note; the criterion's phrase 'required to understand the content' is normative but the test procedure is not"
+      origin: source_stated
+    - text: "the note allows Gestalt reasoning — it cites the law of continuity as a ground for ignoring minor overlaps between graphical objects — which makes the test partly a perceptual judgement rather than a pure measurement"
+      origin: source_stated
+    - text: "the worked examples are figures (a magnet, a phone icon, pie charts, network infographics) whose captions state the colours and ratios; the figures themselves were not inspected in this extraction"
+      origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies:
+    - "add a darker border around a low-contrast slice or shape to reach the required level"
+    - "use darker colors for the backgrounds, or add text labels and values for each item"
+  examples:
+    positive:
+      - {description: "a pie chart with visible labels and values conveying equivalent information to the slices is not applicable — the slices are no longer required for understanding", figure_ref: "Understanding SC 1.4.11, Figure 45"}
+      - {description: "a magnet graphic where the U shape may be conveyed either by its outline or by its solid red fill, and the lighter tips must contrast with the red so it does not read as a horseshoe", figure_ref: "Understanding SC 1.4.11, Figures 36 and 37"}
+    counter:
+      - {description: "a pie chart with labels but with less than 3:1 between adjacent slices fails, because the slice edges are the objects conveying the proportions", figure_ref: "Understanding SC 1.4.11, Figure 44"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0006, note: "supplies the test for the criterion's scoping phrase"}
+    - {relation: member_of_system, target: scs_wcag_004}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, visually_demonstrated]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.11, Required for Understanding and Testing Principles"
+    page_start: null
+    page_end: null
+    figure_refs: ["Understanding SC 1.4.11, Figures 35-48"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0037
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "long lines of text can become a significant barrier. They have trouble keeping their place and following the flow of text."
+    - "The uneven spacing between words in fully justified text can cause \"rivers of white\" space to run down the page making reading difficult and in some cases impossible."
+    - "Studies have shown that Chinese, Japanese and Korean (CJK) characters are approximately twice as wide as non-CJK characters when both types of characters are displayed with characteristics that achieve the same readability"
+  concept_label: reasons_behind_the_line_length_justification_and_leading_provisions
+  label_origin: extractor_assigned
+  claim: >
+    The Understanding note gives a separate reason for each item of SC 1.4.8. Long lines are a barrier
+    for some readers with reading or vision disabilities because they lose their place and cannot follow
+    the flow; a narrow block makes continuing to the next line easier. The 40-glyph CJK limit is half
+    the 80-character limit because CJK characters are described as approximately twice as wide as
+    non-CJK characters at equal readability. Full justification is a problem because uneven word spacing
+    creates "rivers of white" running down the page, and because it can push words so close together
+    that word boundaries become hard to locate. Extra line and paragraph spacing helps readers track to
+    the next line and recognise the end of a paragraph, and the note recommends offering several
+    options rather than one.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Each provision addresses a specific reading-process failure: losing the return sweep on a long
+      line, losing word boundaries in uneven justified spacing, and losing the line or paragraph
+      boundary in tight leading.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance, low_vision_readership, cognitive_disability]
+    conditions: "blocks of text presented for reading"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.8 is a W3C Working Group Note, attached to a Level AAA criterion that is itself framed as an availability requirement rather than a set of authoring values"
+      origin: source_stated
+    - text: "the CJK width claim is attributed to unnamed studies with no citation given in the document"
+      origin: extractor_observed
+    - text: "these reasons are about reading blocks of continuous text for comprehension; the source is not discussing display typography, headlines or short-form text and makes no claim about them"
+      origin: extractor_observed
+  source_stated_problems:
+    - "long lines of text can become a significant barrier"
+    - "\"rivers of white\" space to run down the page making reading difficult"
+    - "it is difficult for them to locate word boundaries"
+  source_stated_remedies:
+    - "having a narrow block of text makes it easier for them to continue on to the next line in a block"
+    - "providing extra space between lines and paragraphs"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0013, note: "supplies the reasoning for each of the five items"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.8, Intent"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0038
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "If content is conveyed through the use of colors that differ not only in their hue, but that also have a significant difference in lightness, then this counts as an additional visual distinction, as long as the difference in relative luminance between the colors leads to a contrast ratio of 3:1 or greater."
+    - "However, if content relies on the user's ability to accurately perceive or differentiate a particular color an additional visual indicator will be required regardless of the contrast ratio between those colors."
+  concept_label: a_3_to_1_lightness_difference_can_satisfy_the_colour_alone_rule_unless_the_colour_must_be_identified
+  label_origin: extractor_assigned
+  claim: >
+    The Understanding notes supply the boundary between SC 1.4.1 and SC 1.4.11. Where two colours differ
+    not only in hue but also significantly in lightness, that lightness difference itself counts as the
+    additional visual distinction SC 1.4.1 demands, provided the relative luminance difference reaches
+    3:1. Inverting an element's foreground and background colours passes on the same ground. But where
+    the content relies on the reader accurately perceiving or differentiating a particular colour — the
+    source's example is knowing whether an outline is green for valid or red for invalid — an additional
+    visual indicator is required regardless of the contrast ratio between them. The SC 1.4.11 note draws
+    the resulting division of labour: a star rating distinguished by yellow versus white fill is likely
+    to fail Use of Color rather than Non-text Contrast, and a change of background colour within a
+    component is not in scope of Non-text Contrast at all while still failing Use of Color.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A lightness difference survives colour vision deficiency, so it does the same work as a shape or
+      text cue. Identification of a specific hue does not survive it, so no amount of luminance
+      separation substitutes for a second cue in that case.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance, colour_vision_deficiency]
+    conditions: "content that distinguishes states, categories or elements by colour"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.1 and Understanding SC 1.4.11 are W3C Working Group Notes; the criteria they reconcile are normative and say none of this"
+      origin: source_stated
+    - text: "the source also records a carve-out from the same notes: where colour alone distinguishes visited from unvisited links, it does not fail SC 1.4.1, because user agents constrain visited-state exposure for privacy reasons and authors cannot style it non-chromatically"
+      origin: source_stated
+    - text: "the note further states that SC 1.4.1 does not apply where colour has not been used to convey anything — a link styled identically to surrounding text does not fail it, though the source observes that this could be poor usability for everyone"
+      origin: source_stated
+  source_stated_problems:
+    - "content relies on the user's ability to accurately perceive or differentiate a particular color"
+  source_stated_remedies:
+    - "an additional visual indicator will be required regardless of the contrast ratio between those colors"
+  examples:
+    positive:
+      - {description: "a light green and a dark red differing in both hue and lightness pass if their contrast ratio is at least 3:1", figure_ref: null}
+      - {description: "an inline link distinguished from surrounding text by a colour meeting 3:1 against the non-link text colour is treated as relying on contrast as well as hue, and satisfies Use of Color", figure_ref: null}
+    counter:
+      - {description: "a star rating whose only distinction between full and empty is yellow versus white fill fails Use of Color", figure_ref: "Understanding SC 1.4.11, Figure 7"}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0007, note: "supplies the condition under which a luminance difference is itself the second means"}
+    - {relation: qualifies, target: sk_wcag_0006, note: "divides the labour between the two criteria"}
+    - {relation: member_of_system, target: scs_wcag_004}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, visually_demonstrated]
+    source_uncertainty: none
+    extraction_uncertainty: figure_not_inspected
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.1, Intent; and Understanding SC 1.4.11, Relationship with Use of Color"
+    page_start: null
+    page_end: null
+    figure_refs: ["Understanding SC 1.4.11, Figures 6, 7 and 15"]
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_wcag_0039
+  source_id: w3c-wcag22-text-legibility
+  source_terms:
+    - "The Essential exception is intended to apply when there is no way of presenting the graphic with sufficient contrast without undermining the meaning."
+    - "Flags: Flags may not be identifiable if the colors are changed to have sufficient contrast."
+    - "Sensory: There is no requirement to change pictures of real life scenes such as photos of people or scenery."
+  concept_label: the_essential_exception_for_graphics_covers_cases_where_raising_contrast_would_destroy_the_meaning
+  label_origin: extractor_assigned
+  claim: >
+    The Understanding note bounds the Essential exception for graphics: it applies where there is no way
+    to present the graphic with sufficient contrast without undermining the meaning. It names the
+    categories — logos and logotypes, presented in a brand's specific colours; flags, which may become
+    unidentifiable if their colours are changed; sensory content, with no requirement to alter pictures
+    of real-life scenes such as photographs of people or scenery; and cases where the thing cannot be
+    represented any other way, for which it names screenshots showing how a site appeared, medical
+    diagrams using the colours found in biology, and colour gradients representing a measurement such
+    as heat maps.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The exception is grounded in destructive interference: the remedy for low contrast is to change
+      colours, and in these cases changing colours removes the very information the graphic exists to
+      carry.
+  scope:
+    domain_discussed_by_source: [web_content_accessibility_conformance]
+    conditions: "graphical objects under SC 1.4.11"
+  caveats:
+    - text: "NON-NORMATIVE — Understanding SC 1.4.11 is a W3C Working Group Note; the criterion's Essential exception is normative but names no categories"
+      origin: source_stated
+    - text: "the photograph carve-out is the widest of these and is stated plainly: there is no requirement to change pictures of real-life scenes; it is an exemption from a contrast requirement, not a statement that photographs are legible"
+      origin: extractor_observed
+    - text: "the same note elsewhere denies the exemption to a logo whose low-contrast presentation was the author's choice, so 'it is a photograph or a logo' is not by itself a sufficient claim"
+      origin: source_stated
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a flag whose colours cannot be altered without making it unidentifiable", figure_ref: null}
+      - {description: "a heat map in which a colour gradient is itself the measurement", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_wcag_0006, note: "bounds the essential-presentation exception in the criterion"}
+    - {relation: qualifies, target: sk_wcag_0028, note: "applies the glossary definition of essential to graphics"}
+    - {relation: demonstrated_together_with, target: sk_wcag_0034, note: "the logo case appears in both, exempt in one direction and not exempt in the other"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Understanding WCAG 2.2 (non-normative)"
+    section: "Understanding SC 1.4.11, Essential Exception"
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

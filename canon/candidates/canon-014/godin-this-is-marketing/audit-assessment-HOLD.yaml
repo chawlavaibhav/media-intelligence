@@ -1,0 +1,76 @@
+# CANON-014 — CANDIDATE HOLD ASSESSMENT. NOT an Audit Gate record. Nothing here admits
+# anything to live Canon. See `why_no_audit_gate_record` below.
+
+assessment_kind: candidate_hold_assessment
+assessment_version: canon-014-final-v1
+audit_gate_record: none
+why_no_audit_gate_record: 'A held source must never carry an Audit Gate record, because the existence
+  of a record is what the Gate reads as admission. This file is deliberately NOT one: it has a different
+  shape, a different name and its own kind, and it lives in the candidate tree rather than in canon/audit/records/.
+  Nothing here admits anything.'
+source_id: godin_this_is_marketing
+title: Seth Godin — This Is Marketing
+knowledge_dir: canon/candidates/canon-014/godin-this-is-marketing
+status: HOLD
+status_reason: evidence_insufficient
+recorded_at_commit: bf02dd1f31a9b1d0b790f4a2a09a68f3b39748fa
+structural_validation: 'PASSES canon/validation/validate_source_artifact_schema.py against SPEC-03,
+  SPEC-04 and SPEC-05 with zero errors. A STRUCTURAL PASS IS NOT ADMISSION and is not evidence about
+  the source: it says the artifacts are well formed, not that what they record was verified.'
+candidate_artifact_fingerprint:
+  algorithm: sha256-of-sorted-path-and-content
+  note: Covers the four artifacts this candidate has. It is NOT an Audit Gate source snapshot, which
+    fingerprints five files including a visual-evidence ledger this source does not have. Recorded so
+    a later re-audit can prove whether the candidate changed between now and then.
+  files:
+  - path: ontology-mappings.yaml
+    digest: 66bd6757e0a4ce31f3a8bfbd0fec444a83809dfae8f76398249873109a7337e1
+  - path: operational-bindings.yaml
+    digest: 4933ba1d0cf8bdec4067ab178632d2d4f4fbb089d4b1732e1b35ea6e062b3bbb
+  - path: source-concept-systems.yaml
+    digest: a1c520438dc54745d231fc246e2f1aed340e3f0caa1900ba1374d0f44ec6d7fe
+  - path: source-knowledge.yaml
+    digest: 50cd969ae4456034d71a85f467d720b3aa0767ba2d88aed9352ce8c5b654f73a
+  combined_digest: 22e3bb1bfa4f413986047d11058aac853957988a5153fe949ec56865b0e88dc2
+local_copy_seen_in_this_environment: ~/Downloads/Books/This Is Marketing.epub
+blocker_shared_by_all_seventeen: 'NO VISUAL OR FIGURE-LEVEL INSPECTION HAS EVER BEEN RUN ON THIS SOURCE,
+  so it has no
+
+  `visual-evidence-ledger.yaml`. That file is one of the five the Audit Gate fingerprints, and the
+
+  Gate reports a missing covered artifact rather than skipping it, so no Audit Gate record can be
+
+  written for this source at all. It cannot be authored from the committed extraction either: a
+
+  visual-evidence ledger records what an inspection found, and transcribing a previous run''s
+
+  self-report into it would be fabricating an inspection.
+
+  '
+access_position: 'THE ACCESS BLOCKER RECORDED BY THE EARLIER PASSES NO LONGER HOLDS, AND THIS IS A CHANGE
+  OF FACT THE
+
+  CONTROLLER SHOULD SEE. Those passes recorded `evidence_insufficient` partly because the source could
+
+  not be opened: the extraction had read a local library that did not exist in the container the
+
+  repair ran in, and that container had no external network egress. Both were true there. NEITHER IS
+
+  TRUE IN THE ENVIRONMENT THIS RECONCILIATION RAN IN - the book is present locally, and network egress
+
+  was tested and works. What remains unresolved is therefore NOT access. It is that the inspection has
+
+  not been done. That is a matter of cost and authorisation, and it is a materially better position
+
+  than being blocked, but it is not a pass and this task does not treat it as one.
+
+  '
+source_specific_blockers: None beyond the shared blocker above.
+what_would_move_this_to_ready: A first-hand figure-level inspection of the source, authored as a visual-evidence-ledger.yaml,
+  followed by a full Audit Gate v0.2 record written against the exact bytes - plus resolution of each
+  source-specific blocker listed above, where there are any. For most of the seventeen the inspection
+  is now the only missing step, which is a materially different position from the one recorded by the
+  earlier passes.
+qa_bank: canon/qa/canon-014/godin-this-is-marketing-qa-bank.yaml
+qa_status_note: 'The Q&A bank for this source is retained in full and carries `source_status: hold`
+  on every item. Held knowledge stays available and stays visibly held.'

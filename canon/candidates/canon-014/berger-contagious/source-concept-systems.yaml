@@ -1,0 +1,381 @@
+# Jonah Berger, *Contagious* — SPEC-03 SourceConceptSystems
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory lane.
+#
+# EPUB: no authored page. page_start / page_end are null in every system; the chapter and named
+# section carry the location.
+#
+# Five systems. Two of them (scs_ctg_001, scs_ctg_002) are groupings the source itself names and
+# numbers, so their membership is source_stated and only the system_type label is ours. Two
+# (scs_ctg_004, scs_ctg_005) are structures the source builds explicitly in the text — the
+# immediate/ongoing split and the arousal-by-valence grid — but does not name as systems, so the
+# system framing is ours over source-stated content. One (scs_ctg_003) is assembled by us from
+# material spread across a chapter, and its whole-system claim is entirely our synthesis.
+#
+# Origin is marked at every structural level. Every extractor_synthesis whole_system_claim carries a
+# non-null interpretation_basis stating how much of the system is ours.
+
+source_id: berger-contagious
+
+source_concept_systems:
+
+- scs_id: scs_ctg_001
+  source_id: berger-contagious
+  label: the_six_stepps
+  label_origin: source_verbatim
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    The book's organising structure: six named drivers of transmission — Social Currency, Triggers,
+    Emotion, Public, Practical Value, Stories — each given a chapter, a one-line summary and a
+    diagnostic question in the closing checklist. The source presents them as a set to be applied
+    selectively to a product, idea or behaviour, which is what makes decision_framework the closest
+    fit in the fixed vocabulary; he explicitly rejects the two labels that would imply more
+    structure, calling them ingredients rather than a recipe and pointing out that a recipe implies
+    a conjunction he does not claim.
+  whole_system_claim:
+    text: >
+      The six drivers are RELATIVELY INDEPENDENT LEVERS, NOT JOINTLY NECESSARY CONDITIONS AND NOT A
+      RANKED LIST. The source's own position, stated in an Introduction footnote and confirmed in
+      the back-matter interview, is that not all six are required; that a product strong on one and
+      absent on another will not fail for the absence; that they can be picked and chosen; that
+      more of them is better; and that no one of them is most important. He separates independence
+      from ease: which drivers are easy to apply varies by category — Emotion comes readily to
+      nonprofits, Public to things with a physical component — and he advises attempting the hard
+      ones rather than settling for the easy ones. The acronym ordering is a memory aid he says so
+      himself, not a sequence and not a priority.
+    origin: source_explicit
+    interpretation_basis: null
+    source_ref:
+      chapter: "Introduction — Why Things Catch On"
+      section: "the author's second footnote, on the recipe analogy; and 'A Conversation with Jonah Berger', question 9"
+      locator: "Introduction, author's footnote beginning 'Note, however, that the recipe analogy breaks down in one respect', and the paragraph following it; corroborated in the Readers Group Guide interview (spine 5, spine 14)"
+  members:
+    - {sk_ref: sk_ctg_0008, role_in_system: anchor_definition, order: 0, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0009, role_in_system: driver, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0019, role_in_system: driver, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0028, role_in_system: driver, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0034, role_in_system: driver, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0041, role_in_system: driver, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0050, role_in_system: driver, order: 6, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0007, role_in_system: constraint_on_the_set, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: source_stated
+    dependencies: []
+    tradeoffs: []
+    conflicts:
+      - between: [sk_ctg_0007, sk_ctg_0008]
+        nature: >
+          The book contradicts itself about its own framework's logical form. The Introduction
+          footnote says the six are relatively independent and not all required. The Epilogue says
+          'there is a recipe for success' and closes 'if you follow these six key STEPPS, you can
+          make any product or idea contagious', which asserts sufficiency, while also saying 'follow
+          these six key STEPPS, or even just a few of them' two paragraphs earlier. This extraction
+          takes the footnote and the interview as the source's position and records the summary
+          language as the source overstating itself.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, argued]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The membership, the names, the one-line summaries and the whole-system claim are ALL the
+      source's — this is the least extractor-constructed system in the lane. What is ours is only
+      the choice of system_type from the fixed vocabulary, and the observation that the Epilogue's
+      language conflicts with the footnote. What NOBODY has established, source included, is that
+      the six are actually separable: no analysis in the book measures them jointly and tests
+      whether their contributions are independent, so the whole-system claim is an assertion the
+      source makes rather than a finding he reports.
+  provenance:
+    chapter: "Introduction — Why Things Catch On; chapters 1-6; Epilogue"
+    section: "Six Principles of Contagiousness; the Epilogue checklist"
+    locator: "Introduction, section 'Six Principles of Contagiousness'; one chapter per driver; the checklist in the Epilogue (spine 5 through spine 12)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ctg_002
+  source_id: berger-contagious
+  label: the_three_routes_to_social_currency
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Inside the Social Currency chapter the source numbers three ways to mint it — "(1) find inner
+    remarkability; (2) leverage game mechanics; and (3) make people feel like insiders" — and gives
+    each its own section. All three produce the same effect by different routes: remarkability makes
+    the thing itself worth mentioning; game mechanics manufacture an achievement worth boasting
+    about; scarcity and exclusivity manufacture a status worth revealing. The chapter's summary
+    restates all three together.
+  whole_system_claim:
+    text: >
+      The three routes are alternative supplies of the same commodity, so a thing that has none of
+      them naturally can be given any one of them. What unifies them is not a shared psychological
+      mechanism but a shared output — something the teller gains by telling — which is why a
+      remarkable product, a status tier and an invitation-only membership are interchangeable for
+      this driver's purposes and not for any other.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The numbering, the three names, the sections and the closing restatement are all the source's.
+      What is ours is the reading that they are INTERCHANGEABLE alternatives rather than components
+      to be combined. The source never says this. It is inferred from the fact that each of his
+      worked cases uses exactly one of the three — Blendtec uses remarkability, airlines use game
+      mechanics, Rue La La uses exclusivity — and from his footnote position that the drivers
+      generally are pick-and-choose. That inference could be wrong: the McRib and Please Don't Tell
+      cases arguably combine remarkability with exclusivity, and the source does not comment.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ctg_0009, role_in_system: parent_claim, order: 0, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0011, role_in_system: route, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0014, role_in_system: route, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0015, role_in_system: route, order: 3, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: source_numbered
+      origin: source_stated
+    dependencies:
+      - {between: [sk_ctg_0014, sk_ctg_0034], nature: "a status system produces talk only if the standing is visible to others", origin: source_stated}
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership and ordering are the source's, stated by explicit numbering. The claim that the
+      three are interchangeable rather than combinable is OURS and is not asserted anywhere in the
+      book. No measurement compares the three routes against each other.
+  provenance:
+    chapter: "1. Social Currency"
+    section: "Minting a New Type of Currency through to the chapter summary"
+    locator: "Ch. 1 'Social Currency', the numbered list closing 'Minting a New Type of Currency', the three sections that follow it, and the chapter's closing restatement (spine 6)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ctg_003
+  source_id: berger-contagious
+  label: the_four_constraints_on_trigger_design
+  label_origin: extractor_assigned
+  system_type: trade_off_set
+  system_type_origin: extractor_inferred
+  description: >
+    Across the Triggers chapter the source states four conditions a cue must satisfy, but never
+    collects them. It must occur OFTEN in the audience's environment. It must be linked to few
+    enough other things that the association stays strong. It must fire NEAR the desired action in
+    time and place. And it must exist in the environment the specific audience actually inhabits,
+    which makes the whole set relative to geography, season and routine. The first two pull against
+    each other and the source says so; the second two are independent filters that a cue passing the
+    first two can still fail.
+  whole_system_claim:
+    text: >
+      No single property makes a good trigger, and the four constraints can each veto a cue that
+      satisfies the others. Frequency and associative strength are a genuine trade-off with an
+      interior optimum; proximity and environmental presence are filters rather than dials. A cue
+      chosen for frequency alone (the colour red) fails on strength; a cue chosen for strength alone
+      (holidays) fails on frequency; a cue passing both can still fire in a bathroom where nothing
+      can be bought, or be a caveman nobody meets. Critically, the whole set is a property of the
+      AUDIENCE'S environment rather than of the message, so the same creative work has a different
+      trigger value for different audiences and the evaluation cannot be done on the artefact alone.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each constraint separately and states the frequency-versus-strength
+      trade-off explicitly, with the paper-cup analogy. He does NOT collect the four, does not say
+      they are jointly required, does not say each can veto, and does not draw the conclusion that
+      trigger value is a property of the audience rather than the artefact. All of that is ours,
+      assembled from 'What Makes for an Effective Trigger?' and 'Consider the Context'. The claim
+      that these are FOUR and not three or five is also ours. No measurement in the book bears on
+      the system as a whole; each constraint has at most its own separate support.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ctg_0019, role_in_system: parent_claim, order: 0, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ctg_0020, role_in_system: underlying_mechanism, order: 1, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ctg_0024, role_in_system: constraint, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0025, role_in_system: constraint, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0026, role_in_system: constraint, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0023, role_in_system: constructive_method, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0021, role_in_system: supporting_evidence, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ctg_0022, role_in_system: supporting_evidence, order: 7, membership_origin: extractor_inferred}
+    - {sk_ref: sk_ctg_0027, role_in_system: boundary_case, order: 8, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - {between: [sk_ctg_0023, sk_ctg_0024], nature: "which cue may be paired is constrained by the frequency-strength trade-off", origin: source_stated}
+      - {between: [sk_ctg_0024, sk_ctg_0026], nature: "frequency must be counted in the specific audience's environment, not in general", origin: extractor_inferred}
+    tradeoffs:
+      - between: [sk_ctg_0019, sk_ctg_0024]
+        nature: >
+          Raising trigger frequency by choosing a more common cue lowers the strength of the
+          association, because a cue divides its associative strength among everything it is linked
+          to. The source's image is water pressure through holes punched in a paper cup.
+        origin: source_stated
+        source_ref: {section: "What Makes for an Effective Trigger?", locator: "Ch. 2 'Triggers', section 'What Makes for an Effective Trigger?' (spine 7)"}
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, empirical_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      HIGH, and the highest in this lane. The individual constraints are the source's and one of
+      them — the frequency-strength trade-off — is stated by him as a trade-off. Everything above
+      that level is ours: that there are four, that they are jointly required, that two are dials
+      and two are filters, and that the set is a property of the audience's environment rather than
+      of the artefact. The source supplies no procedure for finding the optimum on the one real
+      trade-off, which means this system names a design problem it cannot solve.
+  provenance:
+    chapter: "2. Triggers"
+    section: "What Makes for an Effective Trigger?; Consider the Context; Kit Kat and Coffee: Growing the Habitat"
+    locator: "Ch. 2 'Triggers', assembled from 'Kit Kat and Coffee: Growing the Habitat', 'What Makes for an Effective Trigger?' and 'Consider the Context' (spine 7)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ctg_004
+  source_id: berger-contagious
+  label: immediate_versus_ongoing_word_of_mouth
+  label_origin: source_verbatim
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    The source's own distinction between word of mouth soon after an experience and word of mouth in
+    the weeks and months that follow, and the finding that the two have different predictors.
+    Interest predicts the first and not the second; trigger frequency predicts both. He states that
+    which one matters depends on the product — films and new grocery items live or die on immediate
+    word of mouth because theatre bookings and shelf space are reallocated fast, while campaigns and
+    policy initiatives need the ongoing kind.
+  whole_system_claim:
+    text: >
+      The two members qualify each other because neither is interpretable alone. The interest result
+      is a null only against the ongoing outcome and a positive only against the immediate one, so
+      reporting either without the other misstates it — which is exactly what happened inside the
+      source's own research process, where a genuine effect looked like no effect until the outcome
+      was split. The practical consequence the source draws is that the choice of outcome window is
+      a substantive decision, not a measurement detail, and that a study measuring the wrong window
+      will produce a confident wrong answer rather than a noisy one.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The distinction, the two terms, the finding and the observation that different products need
+      different kinds are all explicitly the source's. What is ours is the framing of the two as
+      MUTUALLY QUALIFYING and the generalisation that outcome-window choice is a substantive
+      decision that can produce a confident wrong answer. The source narrates his own experience of
+      exactly this but does not state it as a methodological principle.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ctg_0018, role_in_system: outcome_split_and_null_result, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0019, role_in_system: predictor_of_both, order: 2, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies: []
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: >
+    The source states directly that focusing on WHETHER certain aspects matter without asking WHEN
+    they matter is what produced his null result — "we had been focused on whether certain aspects
+    matter... but as we soon realized, we also should have been examining when they matter."
+    Ch. 2 'Triggers', section 'The Difference Between Immediate and Ongoing Word of Mouth'.
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Members and finding are the source's own research, reported with the analytic history intact.
+      The system framing and the methodological generalisation are ours. The system rests on a
+      single dataset — several hundred BzzAgent campaigns with self-reported conversations — and no
+      replication of the immediate/ongoing distinction is reported anywhere in the book.
+  provenance:
+    chapter: "2. Triggers"
+    section: "The Difference Between Immediate and Ongoing Word of Mouth; Triggered to Talk"
+    locator: "Ch. 2 'Triggers', sections 'The Difference Between Immediate and Ongoing Word of Mouth' and 'Triggered to Talk' (spine 7)"
+    page_start: null
+    page_end: null
+    source_support: text
+
+- scs_id: scs_ctg_005
+  source_id: berger-contagious
+  label: the_arousal_model_of_emotional_transmission
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The source's two-dimensional account of which emotions produce sharing. Emotions are placed on
+    valence (positive or negative) and on physiological arousal (high or low), producing four cells
+    that he lists explicitly: awe, excitement and amusement as positive high-arousal; contentment as
+    positive low-arousal; anger and anxiety as negative high-arousal; sadness as negative
+    low-arousal. Arousal is the causal variable — a state of activation and readiness for action —
+    and valence is not. The model is assembled in the text in the order the findings arrived: awe
+    up, sadness down, positivity slightly up, anger and anxiety up, and only then the dimension that
+    makes all four cohere.
+  whole_system_claim:
+    text: >
+      The model claims arousal is the cause and valence is at most a secondary association. Its
+      strength is that it was built to reconcile results that contradicted the obvious hypothesis
+      rather than to confirm it, and that the source then tested it two ways his correlational data
+      could not: by manipulating the arousal of otherwise identical content, and by inducing arousal
+      physically, with sixty seconds of jogging, so that the aroused state had nothing to do with
+      what was shared. The physical-arousal result is what makes this a causal model rather than a
+      classification, because it shows the effect survives complete separation from content.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Every element is the source's: the two dimensions, the four cells with their contents, the
+      claim that arousal drives sharing, and all three studies. What is ours is the reading of the
+      three designs as a deliberate escalation — correlation, then content manipulation, then
+      content-independent induction — and the judgement that the third is what licenses the causal
+      label. The source presents the jogging study as an extension of scope rather than as the
+      identification strategy.
+    source_ref: null
+  members:
+    - {sk_ref: sk_ctg_0028, role_in_system: causal_claim, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0029, role_in_system: measured_cell, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0030, role_in_system: measured_cells_and_the_puzzle, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0031, role_in_system: manipulated_test, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0032, role_in_system: content_independent_test, order: 5, membership_origin: source_stated}
+    - {sk_ref: sk_ctg_0033, role_in_system: application, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - {between: [sk_ctg_0030, sk_ctg_0028], nature: "the arousal claim exists to reconcile the three valence results that do not cohere on their own", origin: source_stated}
+      - {between: [sk_ctg_0033, sk_ctg_0028], nature: "the advice to focus on feelings is only actionable once arousal specifies WHICH feeling", origin: extractor_inferred}
+    tradeoffs: []
+    conflicts:
+      - between: [sk_ctg_0028, sk_ctg_0030]
+        nature: >
+          A residual the source does not resolve. His measured positivity effect is +13 percent in
+          favour of positive content, which is a valence effect that survives after arousal is
+          introduced. The model says arousal is the organising variable; it does not say valence
+          does nothing, and the book never states what the leftover valence association means.
+        origin: extractor_inferred
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source, controlled_comparison, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The best-evidenced system in this lane and the one most often misreported outside it. Members
+      and structure are the source's own published research. Ours is the reading of the three
+      designs as an escalation and the flagging of the unresolved valence residual. Limits that
+      remain: the correlational tier is one newspaper over six months with human-rated predictors;
+      the manipulation tier is reported in two sentences with no figures at all; the
+      content-independent tier is one laboratory study with one stimulus. Two cells of the grid —
+      excitement and contentment — carry no measurement in the book.
+  provenance:
+    chapter: "3. Emotion"
+    section: "Does Any Emotion Boost Sharing?; Kindling the Fire: The Science of Physiological Arousal; Exercise Makes People Share"
+    locator: "Ch. 3 'Emotion', sections 'The Power of Awe', 'Does Any Emotion Boost Sharing?', 'Kindling the Fire: The Science of Physiological Arousal', 'Kindling the Fire with High-Arousal Emotions' and 'Exercise Makes People Share' (spine 8)"
+    page_start: null
+    page_end: null
+    source_support: text

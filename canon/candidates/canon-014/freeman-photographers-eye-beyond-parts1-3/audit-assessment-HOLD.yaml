@@ -1,0 +1,95 @@
+# CANON-014 — CANDIDATE HOLD ASSESSMENT. NOT an Audit Gate record. Nothing here admits
+# anything to live Canon. See `why_no_audit_gate_record` below.
+
+assessment_kind: candidate_hold_assessment
+assessment_version: canon-014-final-v1
+audit_gate_record: none
+why_no_audit_gate_record: 'A held source must never carry an Audit Gate record, because the existence
+  of a record is what the Gate reads as admission. This file is deliberately NOT one: it has a different
+  shape, a different name and its own kind, and it lives in the candidate tree rather than in canon/audit/records/.
+  Nothing here admits anything.'
+source_id: freeman_photographers_eye_beyond_parts1_3
+title: 'Michael Freeman — The Photographer''s Eye: Graphic Guide, beyond Parts 1-3'
+knowledge_dir: canon/candidates/canon-014/freeman-photographers-eye-beyond-parts1-3
+status: HOLD
+status_reason: evidence_insufficient
+recorded_at_commit: bf02dd1f31a9b1d0b790f4a2a09a68f3b39748fa
+structural_validation: 'PASSES canon/validation/validate_source_artifact_schema.py against SPEC-03,
+  SPEC-04 and SPEC-05 with zero errors. A STRUCTURAL PASS IS NOT ADMISSION and is not evidence about
+  the source: it says the artifacts are well formed, not that what they record was verified.'
+candidate_artifact_fingerprint:
+  algorithm: sha256-of-sorted-path-and-content
+  note: Covers the four artifacts this candidate has. It is NOT an Audit Gate source snapshot, which
+    fingerprints five files including a visual-evidence ledger this source does not have. Recorded so
+    a later re-audit can prove whether the candidate changed between now and then.
+  files:
+  - path: ontology-mappings.yaml
+    digest: 204fd1c4721b005de9adf440c819318174ee2a045281e496266147b0c4b24c38
+  - path: operational-bindings.yaml
+    digest: 40b96e29e247b4136d9a8c0dc9096f75d854dc2300de45311f73b44ce4e837c1
+  - path: source-concept-systems.yaml
+    digest: 82e9afdb211215d00a46535cc27737d13a2e33a142cf5dbac4c9439abf09b660
+  - path: source-knowledge.yaml
+    digest: 71ae9a41d12f14a49c967022e29b10db7370dcd6f8d769d09054a980bc57cc07
+  combined_digest: de9d86af21bca15b5d11c2d2e3aea52400dec2da829655a1887662fd70571688
+local_copy_seen_in_this_environment: ~/Downloads/Books/The Photographer’s Eye_ Graphic Guide_ Composition
+  and Design for Better Digital Photos.pdf
+blocker_shared_by_all_seventeen: 'NO VISUAL OR FIGURE-LEVEL INSPECTION HAS EVER BEEN RUN ON THIS SOURCE,
+  so it has no
+
+  `visual-evidence-ledger.yaml`. That file is one of the five the Audit Gate fingerprints, and the
+
+  Gate reports a missing covered artifact rather than skipping it, so no Audit Gate record can be
+
+  written for this source at all. It cannot be authored from the committed extraction either: a
+
+  visual-evidence ledger records what an inspection found, and transcribing a previous run''s
+
+  self-report into it would be fabricating an inspection.
+
+  '
+access_position: 'THE ACCESS BLOCKER RECORDED BY THE EARLIER PASSES NO LONGER HOLDS, AND THIS IS A CHANGE
+  OF FACT THE
+
+  CONTROLLER SHOULD SEE. Those passes recorded `evidence_insufficient` partly because the source could
+
+  not be opened: the extraction had read a local library that did not exist in the container the
+
+  repair ran in, and that container had no external network egress. Both were true there. NEITHER IS
+
+  TRUE IN THE ENVIRONMENT THIS RECONCILIATION RAN IN - the book is present locally, and network egress
+
+  was tested and works. What remains unresolved is therefore NOT access. It is that the inspection has
+
+  not been done. That is a matter of cost and authorisation, and it is a materially better position
+
+  than being blocked, but it is not a pass and this task does not treat it as one.
+
+  '
+source_specific_blockers:
+- blocker: scope_extension_of_a_live_source
+  detail: 'A SCOPE EXTENSION of `freeman-photographers-eye-graphic-guide`, accepted live Canon. Independence
+    is
+
+    ZERO.'
+- blocker: conversion_destroyed_the_designed_spreads
+  detail: 'The copy is a calibre-converted PDF whose pages are the converter''s invention, not the book''s
+    - the
+
+    Audit Gate''s `false_page_affordance`, recorded honestly by citing "converted-PDF page N" and never
+
+    an authored page. The deeper loss is structural: the conversion destroyed the designed-spread
+
+    relationships, and in a book that teaches composition by juxtaposing images across a spread, the
+
+    relationship between two facing pages IS a unit of meaning. A different copy, not a better
+
+    extraction, is what fixes this.'
+what_would_move_this_to_ready: A first-hand figure-level inspection of the source, authored as a visual-evidence-ledger.yaml,
+  followed by a full Audit Gate v0.2 record written against the exact bytes - plus resolution of each
+  source-specific blocker listed above, where there are any. For most of the seventeen the inspection
+  is now the only missing step, which is a materially different position from the one recorded by the
+  earlier passes.
+qa_bank: canon/qa/canon-014/freeman-photographers-eye-beyond-parts1-3-qa-bank.yaml
+qa_status_note: 'The Q&A bank for this source is retained in full and carries `source_status: hold`
+  on every item. Held knowledge stays available and stays visibly held.'

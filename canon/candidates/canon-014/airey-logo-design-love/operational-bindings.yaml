@@ -1,0 +1,549 @@
+# David Airey, Logo Design Love — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. Lane `airey-logo-design-love`, book-expansion-qa-v1.
+#
+# THE GAP, STATED ONCE AND ASSUMED IN EVERY applicability.limits BELOW:
+# This is a practitioner's book about static identity marks, written in 2010, whose evidence is a
+# selection of famous surviving marks with no comparison set and no controls. It says nothing
+# whatever about generated media, and NOTHING IN IT IS EVIDENCE ABOUT WHAT ANY MODEL CAN DO.
+# Where a binding turns one of its checks into something a system could run, that translation is
+# OURS and every such binding carries `evidence_basis: extractor_inference`.
+#
+# WHY THERE ARE NO creative_ir BINDINGS.
+# Deliberate. Two reasons, both honest. First, SPEC-01 was not in this lane's read set, so naming a
+# target path would mean guessing at a schema this lane has not read — and an invented path is
+# worse than an absent binding. Second, and more important: Airey's knowledge is about a STATIC
+# IDENTITY ARTEFACT and its reproduction behaviour, not about specifying a generated asset. The
+# honest home for it is evaluation of a rendered mark, which is what these bindings do.
+#
+# WHY THE PRODUCTION BINDINGS ARE UNBOUND.
+# Three of the source's checks are physical acts on paper and board — printing a size-and-colour
+# sweep, checking the substrate, supplying artwork for a one-colour press run. They are recorded in
+# the source's own frame with `target_type: production`, `target_path: null` and
+# `status: production_candidate`, and are NOT rewritten as generative or rendering instructions.
+#
+# Per the schema contract, `cross_source_supported` and `empirically_supported` appear nowhere.
+
+source_id: airey-logo-design-love
+
+operational_bindings:
+
+# ── EVALUATION: THE REDUCTION TESTS (determinate; a checker can run these) ────
+
+- binding_id: bnd_logo_001
+  source_knowledge_refs: [sk_logo_0006, sk_logo_0007, sk_logo_0002]
+  source_system_refs: [scs_logo_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, flags]
+  observation_unit: whole_asset
+  rationale: >
+    The Canon holds nothing about identity marks and no acceptance criterion of any kind for one.
+    This source supplies a reduction check with a stated target, which makes it usable as a
+    reported measure on a rendered mark: downsample the asset to the equivalent of about one inch
+    at the intended output resolution, and report which elements have ceased to be resolvable. The
+    value of the binding is that the failure is observable and reproducible, not that the source's
+    number is the right target for any particular job.
+  applicability:
+    when: "a rendered wordmark or symbol exists as an image and an intended smallest physical application can be named"
+    limits: >
+      The source gives "around one inch" as a practitioner's rule of thumb with no derivation, no
+      viewing distance, no substrate and no reproduction process attached. It is a print-era figure
+      and the source says nothing about screen sizes below it beyond naming the favicon. Reporting
+      what disappears at the reduction is defensible; treating "passes at one inch" as evidence that
+      a mark is good, or "fails" as evidence that it is bad, is not something this source supports.
+      Report the elements lost and the size at which each was lost, and label the one-inch target as
+      Airey's.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0015]
+  repair_ontology_refs: [t_logo_0026]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_002
+  source_knowledge_refs: [sk_logo_0009, sk_logo_0011, sk_logo_0012]
+  source_system_refs: [scs_logo_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source's strongest structural claim about colour — that it is secondary to form, and that
+    gradients and colour options will not rescue a badly designed mark — becomes checkable when
+    run backwards: flatten the rendered mark to a single ink and report whether its elements remain
+    separable and its meaning intact. A mark that survives is one whose distinctiveness sits in
+    form; a mark that collapses was carrying its distinctiveness in colour, which is the failure
+    the source names.
+  applicability:
+    when: "a rendered mark carrying more than one colour, where a monochrome reduction can be produced without hand redrawing"
+    limits: >
+      The source requires a one-colour version to be SUPPLIED; it never says the mechanical flatten
+      is that version, and a designer would in practice redraw rather than desaturate. So a failure
+      of this check is not evidence that no one-colour version is possible — only that the naive
+      reduction does not survive, which is a weaker and more honest finding. Report the collapse,
+      not a verdict on the mark.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0016]
+  repair_ontology_refs: [t_logo_0027, t_logo_0032]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_003
+  source_knowledge_refs: [sk_logo_0010, sk_logo_0018]
+  source_system_refs: [scs_logo_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, flags]
+  observation_unit: whole_asset
+  rationale: >
+    The source requires a version that works on dark grounds and, separately, requires contrast to
+    be checked both against the ground and between the mark's own elements. Composited together
+    these give one check with two outputs: place the mark on a dark ground and report (a) whether it
+    remains separable from the ground and (b) whether elements that were distinguished only by
+    their difference from white have now merged. The second output is the one a designer working
+    against white will not have seen, and it is the one the source's own tip 16 is pointing at.
+  applicability:
+    when: "a rendered mark for which a dark-ground composite can be produced"
+    limits: >
+      The source supplies NO threshold — its pass condition is that the mark be 'clearly identified',
+      which is a judgement, not a measurement. This binding can report what merges and what
+      separates; it cannot report a pass. It also cannot see the case the source actually cares
+      about, where a mark's meaning lives in internal negative space and inverts under reversal.
+      Note also that the source's own page for this tip prints its example mark unreversed, so the
+      book does not demonstrate its own instruction.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0016]
+  repair_ontology_refs: [t_logo_0028]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_004
+  source_knowledge_refs: [sk_logo_0019, sk_logo_0044]
+  source_system_refs: [scs_logo_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: whole_asset
+  rationale: >
+    The source asks for the mark to be inspected inverted and from every angle, and names a specific
+    class of harm found that way. Rotating a rendered mark and presenting each orientation for
+    inspection is trivial to do and is not done by default, which is the whole argument for the
+    binding: it costs nothing and surfaces a category of failure that no forward-facing check sees.
+  applicability:
+    when: "any rendered mark, before it is treated as final"
+    limits: >
+      The source names one class of unintended reading and gives no procedure for finding others.
+      This binding can only PRESENT the rotations; deciding whether an inverted form reads as
+      something unwanted is a human judgement and the source offers no criterion for it. Nothing
+      here licenses an automated verdict.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0011]
+  repair_ontology_refs: [t_logo_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ── EVALUATION: THE JUDGEMENT TESTS (need a person; no threshold exists) ──────
+
+- binding_id: bnd_logo_005
+  source_knowledge_refs: [sk_logo_0013, sk_logo_0012]
+  source_system_refs: [scs_logo_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates]
+  observation_unit: whole_asset
+  rationale: >
+    The source's distinctiveness standard — recognisable from its shape or outline alone — can be
+    STAGED even though it cannot be scored: reduce the rendered mark to a filled silhouette and
+    present that alongside the competitor set for a human judgement. The binding's contribution is
+    the staging, not a verdict.
+  applicability:
+    when: "a rendered mark, a nameable competitor set, and a human assessor"
+    limits: >
+      The source states this as an aspiration, not a threshold, and supplies no protocol — who is
+      shown the outline, against what alternatives, and what counts as passing. Any numeric score
+      attached to this would be invented here and attributed to Airey, which is exactly the error to
+      avoid. Report the silhouette comparison; do not report a result as the source's.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0020]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_006
+  source_knowledge_refs: [sk_logo_0014, sk_logo_0002]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  rationale: >
+    The source's describability observation supports a diagnostic that costs nothing: ask an
+    assessor who has not been told what the mark means to describe it in one short phrase, and treat
+    a description that needs several clauses or that misses the intended reading as a signal that
+    the mark is carrying more than one idea. This is the cheapest of the source's checks and the
+    only one that needs no rendering pipeline at all.
+  applicability:
+    when: "a rendered symbol or monogram and an assessor who has not been briefed on the intended reading"
+    limits: >
+      The source asserts the entailment in ONE direction only — distinctive marks are describable —
+      and hedges it with 'almost always'. The diagnostic use, that an undescribable mark is
+      therefore not distinctive, is the extractor's reading of the same sentence and is not the
+      source's claim. Its single demonstration is the author describing a mark he had just been told
+      the meaning of, which is the opposite of the blind condition this binding proposes.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0018]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_007
+  source_knowledge_refs: [sk_logo_0017, sk_logo_0005]
+  source_system_refs: [scs_logo_001]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  rationale: >
+    The source's single most usable diagnostic is a count. Enumerate the distinct devices a rendered
+    mark asks a viewer to process, and flag any count above one. Its power is that it catches the
+    failure the source cares about most — an element that is genuinely relevant and still harmful —
+    which no relevance check can catch, because relevance is exactly what such an element has.
+  applicability:
+    when: "a rendered mark whose devices can be enumerated by an assessor"
+    limits: >
+      "Distinct device" is not defined by the source and the enumeration is a judgement: a
+      negative-space reading, a colour split and a letterform substitution may be one device or
+      three. The source's own praised example at printed 101 is a wordmark said to carry five
+      conceptual themes in one graphic, so a naive count would flag it. Use the count to open a
+      question, never to close one.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0018]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_008
+  source_knowledge_refs: [sk_logo_0015, sk_logo_0028]
+  source_system_refs: [scs_logo_002]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, flags]
+  observation_unit: whole_asset
+  rationale: >
+    For any mark carrying lettering the source sets a gate that is checkable by transcription: show
+    the rendered mark briefly to an assessor who does not know the name, and record whether they
+    read it correctly. The gate matters most under exactly the condition this project's own first
+    pilot sits in — a brand nobody has heard of yet — which the source states as its scope
+    condition rather than leaving implicit.
+  applicability:
+    when: "a rendered mark containing letterforms, for a brand with low existing recognition"
+    limits: >
+      "Most people" and "straight away" are not operationalised anywhere in the source: no test
+      population, no exposure time, no viewing distance. Any specific timing used in practice is
+      invented by whoever runs the test and must not be attributed to Airey. The source's own
+      concession is the useful half — an established brand can carry lettering that is not
+      immediately readable — so a failure here is a finding about a NEW brand's mark specifically.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0024]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_009
+  source_knowledge_refs: [sk_logo_0020, sk_logo_0021, sk_logo_0022]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  rationale: >
+    The source names literal depiction of the business as a distinct and common failure, and — this
+    is the part worth binding — supplies the exception rather than an absolute ban. A diagnostic can
+    therefore ask two questions and not one: does the mark depict the product or trade, and if so,
+    does the depiction sit inside a letterform or secondary device rather than being the mark. The
+    second question is what keeps the check from flagging the source's own approved cases.
+  applicability:
+    when: "a rendered mark for a business whose product or trade has an obvious visual form"
+    limits: >
+      The source's exception criterion is 'without hitting you over the head with the idea', which
+      is taste and not a test. This binding can identify that depiction is present and where it
+      sits; it cannot decide whether the depiction is overstated. Note also that every one of the
+      source's non-depicting exemplars is a large established brand, so the examples do not show
+      that a new brand can carry a non-depicting mark.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0017]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ── EVALUATION ACROSS A SET ──────────────────────────────────────────────────
+
+- binding_id: bnd_logo_010
+  source_knowledge_refs: [sk_logo_0029, sk_logo_0030, sk_logo_0034]
+  source_system_refs: [scs_logo_004]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, diagnoses]
+  observation_unit: asset_set_over_time
+  rationale: >
+    This is the one place the source's knowledge is about a SET rather than an artefact, and it is
+    the binding most directly useful to a project that will produce brand-consistent creative over
+    time rather than one mark. Take the assets produced for one identity across a period and report
+    the divergences: which reproduce the mark's proportions and clear space, which substitute
+    typefaces, which alter colour. The source supplies both the property (consistency) and the
+    instrument (the style guide) and assigns responsibility for the instrument to the designer.
+  applicability:
+    when: "two or more assets carrying the same identity, produced at different times or by different hands"
+    limits: >
+      The source states that consistency breeds trust and trust wins customers, and offers no
+      evidence for either link — its case is a century-old cereal packet with a century of
+      confounded marketing behind it. So this binding may report DIVERGENCE, which is observable,
+      and must not report that divergence has cost trust, which is not. The source also pulls the
+      other way at printed 15, where the approved practice is a template deliberately MODIFIED per
+      application; the source never says how much variation is still one mark, so a divergence
+      report cannot distinguish drift from sanctioned adaptation without a guide to check against.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0012]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ── BENCHMARK ────────────────────────────────────────────────────────────────
+
+- binding_id: bnd_logo_011
+  source_knowledge_refs: [sk_logo_0033, sk_logo_0020, sk_logo_0013]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives, evaluates]
+  observation_unit: null
+  rationale: >
+    The source's account of distinctiveness is explicitly relative — a mark is distinctive by being
+    separable from a named competitor set, and the designer's job is to find the weaknesses in how
+    competitors brand themselves. That supports assembling the competitor mark set for a category as
+    a standing reference against which a candidate is compared, rather than judging a mark in
+    isolation. This is the only defensible sense in which anything in this book is a benchmark.
+  applicability:
+    when: "a category with a nameable competitor set whose marks can be collected"
+    limits: >
+      The source gives no method for identifying a 'weakness' in a competitor's branding and
+      explicitly declines to say how much research is enough. There is no scoring here and none can
+      be derived: the reference set supports a human comparison, not a metric. Anything numeric
+      layered on top is invented downstream and must not be attributed to this source.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0020]
+  repair_ontology_refs: [t_logo_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_012
+  source_knowledge_refs: [sk_logo_0031, sk_logo_0032]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: null
+  rationale: >
+    The source states that collision with an existing mark is near-certain given how many companies
+    exist and how simple iconic marks are, and supplies the discriminator that makes a collision
+    consequential — same industry or same profession. A prior-art reference set built on that
+    discriminator is a legitimate check to run before a mark is committed to, and it is the
+    source's own answer to the problem its own simplicity requirement creates.
+  applicability:
+    when: "before finalising a mark, where a set of existing marks in the same industry can be assembled"
+    limits: >
+      THE LEGAL CHARACTERISATION IS NOT LEGAL ADVICE. It is a designer's second-hand summary from
+      2010, attached to no jurisdiction and no statute, and it conflates copyright infringement with
+      trademark confusion inside a single passage. This binding supports flagging resemblance within
+      a category as a thing to look at; any conclusion about infringement requires a lawyer and this
+      source cannot supply one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0020]
+  repair_ontology_refs: [t_logo_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ── PRODUCTION: RECORDED IN THE SOURCE'S OWN FRAME, DELIBERATELY UNBOUND ──────
+
+- binding_id: bnd_logo_013
+  source_knowledge_refs: [sk_logo_0008]
+  source_system_refs: [scs_logo_002]
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates]
+  observation_unit: null
+  rationale: >
+    Recorded as a physical act in the source's own terms and left unbound. The source instructs the
+    designer to print the mark, replicated across a range of sizes and colours on a single sheet,
+    and to inspect the paper for cleanliness, contrast and pixelation. This is a press-and-paper
+    check performed by a person on physical output.
+  applicability:
+    when: "a mark approaching delivery, where physical print output is available"
+    limits: >
+      THIS MUST NOT BE REWRITTEN AS A RENDERING OR GENERATIVE INSTRUCTION. The check is defined on
+      ink on paper and its three pass conditions — clean, good contrast, not pixelated — are the
+      designer's eye applied to a printed sheet. Rendering a contact sheet on screen is a DIFFERENT
+      act with different failure modes and the source does not endorse it as a substitute.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_logo_0015]
+  repair_ontology_refs: [t_logo_0029]
+  status: production_candidate
+  status_reason: "experimental; physical print check, recorded in the source's frame and left unbound"
+
+- binding_id: bnd_logo_014
+  source_knowledge_refs: [sk_logo_0042, sk_logo_0009]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  observation_unit: null
+  rationale: >
+    Recorded as a commercial print constraint in the source's own terms. Colour count drives
+    commercial print cost; the client's print budget is therefore a design constraint to be
+    established before the colour decision is taken, and a one-colour version is to be supplied so
+    the client can commission a one-colour run without returning to the designer.
+  applicability:
+    when: "an identity whose client will commission commercial print volume"
+    limits: >
+      Physical print economics of 2010 commercial printing, and the source explicitly refuses to
+      give figures because every printer's prices differ. It is not a claim about any digital
+      pipeline and must not be translated into one. Its transferable content is the ordering — find
+      out the budget before choosing the colour — not the economics.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_logo_0027]
+  status: production_candidate
+  status_reason: "experimental; physical print economics, recorded in the source's frame and left unbound"
+
+- binding_id: bnd_logo_015
+  source_knowledge_refs: [sk_logo_0018]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  rationale: >
+    Recorded as a physical materials constraint. The paper or board a mark appears on can drastically
+    change its colour and its sharpness in the final presentation, so the possibilities for
+    variation are to be discussed with the commercial printer — or the client advised to — before
+    final production.
+  applicability:
+    when: "an identity going to physical print on a substrate not yet fixed"
+    limits: >
+      A property of ink and stock. It has no analogue in a rendering pipeline and none is invented
+      here. The source gives no method and no tolerances, only the instruction to raise it with the
+      printer before committing.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_logo_0030]
+  status: production_candidate
+  status_reason: "experimental; physical substrate behaviour, recorded in the source's frame and left unbound"
+
+# ── GOVERNANCE ───────────────────────────────────────────────────────────────
+
+- binding_id: bnd_logo_016
+  source_knowledge_refs: [sk_logo_0049, sk_logo_0036, sk_logo_0037, sk_logo_0029]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  governance_consumer: evidence_interpretation
+  rationale: >
+    This source carries several commercial outcome figures — a 20 per cent sales fall, a $33 million
+    loss, 400,000 complaints, 8.3 million copies in 24 hours, tens of millions of pounds saved —
+    every one of them cited to trade press or asserted by a party to the project, with no controls
+    and no alternative explanation examined. They are the most quotable material in the book and the
+    least supported. This binding exists to make the handling rule explicit rather than leaving each
+    downstream reader to decide: figures from this source may be reported as WHAT THIS SOURCE
+    CLAIMS, attributed and dated, and may never be used as evidence that a design property causes a
+    commercial result.
+  applicability:
+    when: "any downstream use of a numeric or commercial outcome claim originating in this source"
+    limits: >
+      The rule is about how to READ this source, not about the world. It does not assert the figures
+      are wrong — Tropicana's reversal is well documented — only that this source is not evidence
+      for the causal link it draws, and that its whole example set is survivorship-selected: famous
+      surviving marks, chosen after the fact, with no unsuccessful comparison set anywhere in the
+      book.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_logo_017
+  source_knowledge_refs: [sk_logo_0046, sk_logo_0025, sk_logo_0001]
+  source_system_refs: [scs_logo_001]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  governance_consumer: rule_application
+  rationale: >
+    The source withdraws the necessity of its own criteria in the closing paragraph of the chapter
+    that states them, and separately prints a qualification demoting simple-and-appropriate to
+    necessary-but-insufficient. Anything downstream that applies the seven elements as a
+    specification is reading the source against itself. This binding records the constraint: the
+    criteria may be applied as diagnostics that open a question, and may not be applied as pass/fail
+    rules, because the source explicitly declines to make them that.
+  applicability:
+    when: "any downstream rule, checklist or automated check derived from this source's criteria chapter"
+    limits: >
+      This constrains OUR use of the source; it makes no claim about design. Note the source's own
+      precondition on the exemption — the licence to break the rules is extended to a designer who
+      knows them, not to one who does not — so the constraint is not a licence to ignore the
+      criteria either.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

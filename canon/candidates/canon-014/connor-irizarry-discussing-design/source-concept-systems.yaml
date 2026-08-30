@@ -1,0 +1,392 @@
+# Adam Connor & Aaron Irizarry, *Discussing Design* — SPEC-03 SourceConceptSystems
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory.
+#
+# Six systems. Each is recorded because the knowledge genuinely lives in the relationships and
+# would be misleading if the members were read singly. Four of the six are structures the source
+# itself presents as a set and numbers or names as such (the three forms, the four questions, the
+# four characteristics of bad critique, the four rules); their membership is therefore
+# source_stated and only the system_type label is ours. Two — the foundation and the timing
+# envelope — are assembled by us from material the source presents as prose, and both carry the
+# origin marking that requires.
+#
+# Origin is marked at every structural level, as SPEC-03 requires. Where a whole_system_claim is
+# extractor_synthesis it carries a non-null interpretation_basis stating plainly how much of the
+# system is ours rather than the source's.
+
+source_id: connor-irizarry-discussing-design
+
+source_concept_systems:
+
+- scs_id: scs_disc_001
+  source_id: connor-irizarry-discussing-design
+  label: the_three_forms_of_feedback
+  label_origin: source_verbatim
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The source's core move: "feedback" is split into reaction, direction and critique, and each of
+    the three is defined by contrast with the other two rather than on its own. A reaction is about
+    the responder's state; a direction is about the responder's preferred solution; a critique is
+    about the relationship between an element of the work and a stated objective. The taxonomy is
+    also the book's diagnostic instrument — Chapter 6's handling of unsolicited feedback opens by
+    asking "Is it reaction, direction, or critique?" before deciding what to do.
+  whole_system_claim:
+    text: >
+      No member of this set can be understood or used without the other two. The definition of
+      critique in the source is largely a set of negations — not the instant reaction, not how the
+      responder would change it — so removing reaction and direction from the picture leaves
+      "analysis against objectives" without the boundary that gives it force. Conversely, reaction
+      and direction are not defects to be eliminated but categories to be recognised, because the
+      source's prescribed response to each is different: a reaction is questioned into
+      specificity, a direction is decoded for the diagnosis it encodes.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the three forms, states that reaction and direction are limited in the same
+      respect, and uses the classification as a routing step in Chapter 6. It does not state that
+      the three are mutually defining or that the taxonomy's value lies in the differential
+      response — that reading is ours, assembled from the definitions in Chapter 1 and the handling
+      procedures in Chapter 6. The membership and the names are the source's.
+    source_ref: null
+  members:
+    - {sk_ref: sk_disc_0002, role_in_system: the_taxonomy_itself, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0003, role_in_system: first_form_reaction, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0004, role_in_system: second_form_direction, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0005, role_in_system: third_form_critique, order: 4, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0001, role_in_system: the_problem_the_taxonomy_answers, order: 0, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - "sk_disc_0005 is defined partly by negation of sk_disc_0003 and sk_disc_0004"
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The membership, the names and the ordering of presentation are entirely the source's; it
+      states the three forms in a numbered discussion and restates them in the Chapter 7 summary.
+      The claim that they are mutually defining, and the framing of the taxonomy as a routing step
+      with a different remedy per branch, are ours. Nothing about exhaustiveness is claimed by
+      either party: the source offers no argument that there are exactly three.
+  provenance:
+    chapter: "1. Understanding Critique"
+    section: "The Problem with Asking for 'Feedback'; Three Kinds of Feedback"
+    page_start: 2
+    page_end: 11
+    source_support: text
+
+- scs_id: scs_disc_002
+  source_id: connor-irizarry-discussing-design
+  label: the_four_question_framework_and_the_three_elements_it_produces
+  label_origin: extractor_assigned
+  system_type: sequence
+  system_type_origin: source_stated
+  description: >
+    The source pairs a specification with a procedure. The specification is the three elements a
+    good critique contains: a specific aspect or decision, its relation to an objective or best
+    practice, and how and why it does or does not support that objective. The procedure is four
+    ordered questions — what is the objective; what elements relate to it; are those elements
+    effective; why or why not — which exist to make sure all three elements are produced. The
+    source presents the questions in a fixed downward flow (Figure 2-1, rendered and inspected)
+    and states one permitted variation: the first two may be reversed depending on how the work is
+    being presented.
+  whole_system_claim:
+    text: >
+      The order carries the method. Fixing the objective before looking for elements directs the
+      search, so what counts as pertinent is settled before anyone starts finding fault; running
+      the same four questions in the reverse direction would be an exercise in justifying reactions
+      after the fact. The fourth question is what stops the output being a verdict: it asks for the
+      result the choice will actually produce, and explicitly admits the case where an element
+      serves the objective only in conjunction with others.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the four questions, their order, the permitted reversal of the first two,
+      and that they exist to uncover the three elements. It calls the third question "the crux of
+      critical thinking". It does not state that the ordering is what makes the search directed, or
+      contrast the procedure with a reversed one — that argument is ours, inferred from the
+      source's own insistence throughout that objectives are established before analysis begins and
+      from its treatment of after-the-fact justification as preferential critique.
+    source_ref: null
+  members:
+    - {sk_ref: sk_disc_0006, role_in_system: specification_of_the_output, order: 0, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0015, role_in_system: the_ordered_procedure, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0029, role_in_system: invariance_claim_across_artifacts, order: 2, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+      - "the procedure presupposes that an objective exists and is known; where it does not, scs_disc_005 is the source's answer"
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: "sk_disc_0015 — the source warns that the two supplementary questions it offers alongside the four are the main route to scope creep, and that the group must be prepared to end or defer a discussion that leaves scope"
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, practitioner_assertion, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Almost none of this system is ours. The four questions, their order, the reversal rule, the
+      three elements and the claim that the framework is invariant across artifacts are all stated
+      by the source, twice (printed pp. 9 and 33, and again at p. 92 and p. 175). Our contribution
+      is the argument for why the order matters and the grouping of the specification with the
+      procedure as one system rather than two.
+  provenance:
+    chapter: "1. Understanding Critique; 2. What Critique Looks Like"
+    section: "Critique: The third form of feedback; A Simple Framework for Critique"
+    page_start: 9
+    page_end: 36
+    source_support: text_and_visual
+
+- scs_id: scs_disc_003
+  source_id: connor-irizarry-discussing-design
+  label: the_four_characteristics_of_bad_critique
+  label_origin: source_verbatim
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    The source names four characteristics that make a critique bad — selfish, untimely, incomplete,
+    preferential — and summarises them at the end of Chapter 2 as the things that make feedback
+    unhelpful: driven from personal goals, untimely, incomplete, based on preference. Two concern
+    the giver's position (selfish, untimely) and two concern the content of what is said
+    (incomplete, preferential). Appendix A restates the set as bad habits, adding defensiveness on
+    the recipient's side.
+  whole_system_claim:
+    text: >
+      The four are not degrees of the same fault; they fail at different points and have different
+      remedies, which is why treating "bad feedback" as one thing produces no repair. Selfishness
+      and untimeliness are defects of the occasion and are fixed before anything is said, by
+      declining to speak or by asking first. Incompleteness is a defect of form and is fixed by
+      asking for the why. Preference is a defect of referent and is fixed by asking which objective
+      the judgement is made against — and is the only one of the four that can become structural,
+      when the preference-holder also holds approval.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source lists the four, defines each, and gives remedies for each in separate places. It
+      does not group them by where they fail, does not contrast their remedies, and does not
+      single out preference as the one that can become structural — although it does state that
+      consequence for preference alone. The organising argument is ours; the members and their
+      names are the source's.
+    source_ref: null
+  members:
+    - {sk_ref: sk_disc_0009, role_in_system: defects_of_occasion_selfish_and_untimely, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0010, role_in_system: defect_of_form_incomplete, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0011, role_in_system: defect_of_referent_preferential, order: 3, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies: []
+    tradeoffs: []
+    conflicts:
+      - "the remedy for incompleteness (supply the why) and the prohibition on prescription pull in opposite directions if 'why' is answered with 'because you should do X'; the source resolves this at sk_disc_0010 by defining actionable as sufficient understanding to explore alternatives, not as an instruction"
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Four source-named characteristics are carried by three of our objects, because selfish and
+      untimely were consolidated where the source's own remedies for them coincide ("don't invite
+      yourself" answers untimeliness, and both are failures of giver intent). That consolidation is
+      ours and a reader reconstructing the source's list should expect four names, not three.
+  provenance:
+    chapter: "2. What Critique Looks Like; Appendix A"
+    section: "The Characteristics of Bad Critique; Wrapping Up; Appendix A"
+    page_start: 22
+    page_end: 45
+    source_support: text
+
+- scs_id: scs_disc_004
+  source_id: connor-irizarry-discussing-design
+  label: the_four_rules_of_critique
+  label_origin: source_verbatim
+  system_type: interacting_set
+  system_type_origin: source_stated
+  description: >
+    The source states four key rules for a critique session and says it is the facilitator's job to
+    see they are adhered to, that they should be shared with the team, and that they can be
+    reviewed at the start or posted in the room. They are: everyone is equal; everyone is a critic;
+    avoid problem solving; and don't rush to make decisions on the changes to be made. The source
+    summarises them at the end of Chapter 5 as: everyone is equal, everyone participates, avoid
+    problem solving, don't rush to make decisions.
+  whole_system_claim:
+    text: >
+      The four rules divide cleanly into two that protect the input and two that protect the output,
+      and each pair fails in a characteristic way if the other is enforced alone. Equality and
+      participation govern what enters the session — they exist because deference and silence
+      remove observations before they are voiced. Avoiding problem solving and refusing to decide
+      govern what leaves it — they exist because a session that produces a change list has
+      substituted a remedy for the diagnosis. Enforcing only the input rules yields a full, noisy
+      room that still emits a to-do list; enforcing only the output rules yields a well-formed set
+      of findings drawn from a fraction of the knowledge present.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source presents four rules in sequence with no grouping and no statement of how they
+      interact. The input/output division and the two failure modes of partial enforcement are
+      entirely ours. What the source does supply, and what the reading rests on, is a mechanism for
+      each rule individually: suppression under hierarchy (p. 111), concerns surfacing too late
+      (p. 112), fragmentation of mental process (p. 113), and premature decision closing the option
+      space (p. 115).
+    source_ref: null
+  members:
+    - {sk_ref: sk_disc_0034, role_in_system: input_rule_everyone_is_equal, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0018, role_in_system: input_rule_everyone_is_a_critic, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0035, role_in_system: output_rule_avoid_problem_solving, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0036, role_in_system: output_rule_do_not_rush_decisions, order: 4, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: source_numbered, origin: source_stated}
+    dependencies:
+      - "sk_disc_0036 is stated by the source to follow from sk_disc_0035 — 'this goes back to the previous rule'"
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: false
+  source_warning_ref: null
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Membership, names, order and the dependency between the third and fourth rules are the
+      source's, stated twice (printed pp. 111-116 and the Chapter 5 wrap-up at p. 139). The
+      input/output grouping and the account of what partial enforcement produces are ours and
+      should not be attributed to the authors.
+  provenance:
+    chapter: "5. Facilitating Critique"
+    section: "Understanding the Rules of Critique"
+    page_start: 111
+    page_end: 116
+    source_support: text
+
+- scs_id: scs_disc_005
+  source_id: connor-irizarry-discussing-design
+  label: the_foundation_that_makes_a_judgement_checkable
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    The source's four foundational artifacts — personas, scenarios, goals and principles — are
+    presented as a set whose members do different jobs and are meaningless apart. Personas and
+    scenarios supply the setting for the analysis: through whose eyes, with what expectations, in
+    what contexts. Goals and principles supply the finish line: the outcome sought and the
+    qualities the thing must exhibit. The source states the relation between them in one sentence:
+    the objectives for a product are to reach its goals, for the given audiences, by creating a
+    design with the right behaviours and characteristics, to produce the desired experience in the
+    applicable contexts. Each member carries its own quality test — personas explicit rather than
+    demographic, scenarios grounded in real observation, goals measurable rather than binary or
+    output-shaped, principles specific enough to eliminate more ideas than they retain.
+  whole_system_claim:
+    text: >
+      The set is what critique compares against, so a defect in any member propagates into every
+      judgement made using it. This is why the source's two strongest diagnostics run backwards
+      through the system: a comment that cannot be related to the foundation may mean the
+      foundation is incomplete, and a foundation that never rejects anything during a critique is
+      evidence the criteria are too broad. The foundation is therefore not a prerequisite to be
+      satisfied once but a standing artifact that the critiques it enables continue to test.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states the four elements, the sentence relating them, and the individual quality
+      tests. It also states both backward diagnostics, in two separate places and without
+      connecting them (printed p. 64 for the missing-element case, p. 165 for the too-broad case).
+      What is ours is putting the two together as a single property of the system — that the
+      foundation is under test by the critiques it supports — and the claim that a defect in one
+      member propagates. Kim Goodwin's sidebar supplies a third qualification the authors' own text
+      does not: that these artifacts are not shared merely by being documented.
+    source_ref: null
+  members:
+    - {sk_ref: sk_disc_0023, role_in_system: the_four_elements_and_goal_quality, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0024, role_in_system: the_discriminating_power_test_for_principles, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0022, role_in_system: the_failure_the_foundation_prevents, order: 0, membership_origin: extractor_inferred}
+    - {sk_ref: sk_disc_0025, role_in_system: the_condition_under_which_documentation_is_not_sharing, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_disc_0054, role_in_system: the_backward_test_on_the_criteria_themselves, order: 4, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - "sk_disc_0017 (return to the foundation) is unavailable without this system"
+      - "sk_disc_0005 (critique as analysis against objectives) presupposes it"
+    tradeoffs:
+      - "the source warns against over-elaborate personas and scenarios (flowery detail, demographic proxies, storytelling) while also requiring enough specificity for the artifacts to discriminate; the balance is left to judgement"
+    conflicts:
+      - "Kim Goodwin's sidebar warns against using personas and goals 'like hammers to end arguments', which is close to the use the authors' own return-to-the-foundation prescription invites; the source does not reconcile the two"
+  source_warns_against_isolated_use: true
+  source_warning_ref: "sk_disc_0025 — 'evaluation criteria are not truly shared unless everyone both understands them and believes in them'; and sk_disc_0023, the persona and scenario cautions"
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Roughly half of this system is ours. The four elements, the relating sentence and the quality
+      tests are the source's and are stated plainly. The assembly into one system with a
+      propagation property, the pairing of the two backward diagnostics, and the inclusion of the
+      Goodwin sidebar and the too-broad test as members are ours — three of the five memberships
+      are marked extractor_inferred for that reason. The unreconciled conflict between the
+      hammer warning and the return-to-the-foundation prescription is recorded rather than resolved.
+  provenance:
+    chapter: "3. Culture and Critique; 6. Critiquing with Difficult People"
+    section: "Setting the Foundation for Critique; Creating an Effective, Common Foundation; Step 4: Critique together"
+    page_start: 56
+    page_end: 165
+    source_support: text_and_visual
+
+- scs_id: scs_disc_006
+  source_id: connor-irizarry-discussing-design
+  label: the_envelope_within_which_critique_pays
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: extractor_inferred
+  description: >
+    Two of the source's answers about when to critique combine into a single decision about
+    whether a given critique is worth holding. One bounds position in the life of a design: after
+    the idea is clear enough to communicate, before the point where the work must be let go to be
+    produced. The other bounds frequency within that span: there is such a thing as too much
+    critique, signalled by stalled advancement between sessions, circling discussions, formal
+    critiques required faster than the design can move, and critique being used for validation.
+    Both bounds are stated as judgements informed by named conditions and cues rather than as
+    thresholds, and the source explicitly refuses to supply numbers for either.
+  whole_system_claim:
+    text: >
+      The two bounds are not independent, because both are set by the same quantity: how much has
+      changed since the last look. Position asks whether there is yet enough to analyse and whether
+      there is still time to act; frequency asks whether enough has changed since the previous
+      analysis for another one to add information. A team can therefore be inside the window and
+      still be critiquing too often, and the four frequency cues are the source's only way of
+      detecting that — none of which is available in advance.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source presents the timing window (Chapter 4, "When Should You Critique?") and the
+      frequency limit ("How Often Should You Critique?") as consecutive but separate answers to
+      separate audience questions. It does not join them, does not state that both are governed by
+      rate of change, and does not observe that the cues are all retrospective. That reading is
+      ours. What the source does state, and what it rests on, is the two conditions for the window,
+      the four cues for excess, and its own refusal to give numbers for either.
+    source_ref: null
+  members:
+    - {sk_ref: sk_disc_0027, role_in_system: bound_on_position_in_the_life_of_the_work, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0028, role_in_system: bound_on_frequency_within_that_span, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_disc_0021, role_in_system: the_process_precondition_that_sets_both, order: 0, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+      - "both bounds depend on the process permitting iteration at all (sk_disc_0021)"
+      - "sk_disc_0032 records a common case where the position bound is violated by construction: design reviews are timed by the project plan"
+    tradeoffs:
+      - "critiquing earlier gains time to act on findings but risks the idea not yet being communicable; critiquing later gains clarity but approaches the point where nothing can be changed"
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: "sk_disc_0027 — the source warns that percentage labels such as '20 percent to 80 percent baked' can be taken too literally and prefers judgement informed by the two stated conditions"
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_hedges
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The two bounds and all of their conditions and cues are the source's, stated in consecutive
+      sections. The joining of them into one decision, the claim that both are governed by rate of
+      change, and the observation that every frequency cue is retrospective are ours. The third
+      member is included by us; the source does not present iteration-as-precondition as part of
+      any timing framework.
+  provenance:
+    chapter: "4. Making Critique a Part of Your Process; 3. Culture and Critique"
+    section: "When Should You Critique?; How Often Should You Critique?; Incremental Versus Iterative Processes"
+    page_start: 53
+    page_end: 91
+    source_support: text

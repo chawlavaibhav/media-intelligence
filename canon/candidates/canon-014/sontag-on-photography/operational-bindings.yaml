@@ -1,0 +1,148 @@
+# OperationalBindings — Susan Sontag, "On Photography" (essays 1973-77, book 1977).
+# source_id: sontag-on-photography
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# THREE bindings from twenty-two SourceKnowledge objects, and all three are evaluation bindings of
+# one narrow kind: they fix the UNIT AND CONDITIONS OF OBSERVATION under which an image is read.
+# None of them says anything about how any image should be made. That restriction is the whole
+# design of this file and the reason it is short.
+#
+# WHY SO FEW. The project's own coverage map records that Berger and Sontag are "critique, not
+# craft", and the CANON-V1 portfolio warns that admitting a source of this kind "risks importing
+# analysis the product cannot act on". The warning is correct and this file honours it. A book of
+# cultural criticism about what photographs do to the people who look at them contains no method, no
+# procedure and no instruction, so the binding count is low for a reason internal to the source
+# rather than because the extraction was thin.
+#
+# EMPTY CATEGORIES, EACH EXAMINED AND REFUSED:
+#
+#   * NO creative_ir. Not attempted, and forbidden by the task. Nothing here is a field.
+#   * NO production. This is the load-bearing refusal. sk_snt_0011 (the medium beautifies whatever
+#     it records) and sk_snt_0013 (aestheticisation neutralises the distress it conveys) are the two
+#     objects a careless extractor would convert into "avoid aestheticising difficult subjects" or
+#     "do not beautify suffering". Sontag makes NO such recommendation, and a binding of that form
+#     would be an invention of this lane's, attributed to her. It is not made. Both objects carry an
+#     explicit caveat saying so, and neither is bound to anything.
+#   * NO benchmark. She generates no test case and no comparison. Her comparisons are between
+#     historical episodes read differently by different publics, which are not minimal pairs and
+#     could not be constructed as any.
+#   * NO governance. Two candidates were examined and both refused. sk_snt_0007 (a photograph's
+#     meaning is its use) resembles retrieval_governance — what may be retrieved together and what
+#     must not be split — until you notice its subject is how PHOTOGRAPHS behave when separated from
+#     context, not how this project's knowledge behaves when separated from its. sk_snt_0003 and
+#     sk_snt_0004 (the trace, and what falsifying a photograph falsifies) resemble
+#     evidence_interpretation — how evidence characteristics are weighted — until you notice they
+#     govern how a VIEWER weighs a photograph, not how this project weighs a source. Under SPEC-04's
+#     rule that a candidate fitting none of the six permitted consumers is not a governance binding,
+#     both are left unbound.
+#
+# NO model capability is inferred from this source anywhere.
+
+source_id: sontag-on-photography
+
+operational_bindings:
+
+- binding_id: bnd_snt_001
+  source_knowledge_refs: [sk_snt_0008, sk_snt_0007]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Sontag's caption claim has a consequence about the unit of observation, and only about that. An
+    image is physically mute and talks through the text placed with it; words override the evidence
+    of the eyes. So an image assessed without the text it will travel with is not being assessed as
+    a weaker version of the thing — it is a different artefact from the one anyone will encounter.
+    This binding flags that mismatch of unit and does nothing else. It is not a rule about
+    captioning, and the source contains none.
+  applicability:
+    when: "an image is being assessed apart from the words that will accompany it in use"
+    limits: >
+      The second half of Sontag's claim limits this binding as much as the first half licenses it:
+      no caption can permanently restrict or secure a picture's meaning, and even an entirely
+      accurate caption is only one interpretation. So assessing image and text together does not
+      determine how the pair will be read either — it only removes an error that is certain. She
+      reports and REJECTS the proposal that the right caption could rescue a picture; nothing here
+      revives it. And her whole argument is about photographs circulating in a 1970s publishing
+      culture, which is the scope recorded on the objects.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_snt_0006, t_snt_0007]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_snt_002
+  source_knowledge_refs: [sk_snt_0014, sk_snt_0012]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    Both of Sontag's attrition claims say the same thing about the unit: the effect of an image is a
+    function of what preceded it. Response is a function of novelty and the threshold rises with the
+    proliferation of similar images; and a convention of beauty is used up by the very images that
+    established it, so that what once took an intelligent eye to see, anyone can see now. Neither
+    effect is a property of any single asset, so an assessment made one asset at a time cannot
+    detect either. This binding names the unit and stops there.
+  applicability:
+    when: "assessing images of a kind that an audience has encountered repeatedly, or that repeat a convention"
+    limits: >
+      Two hard limits. First, Sontag DISTINGUISHES the two attritions and warns against collapsing
+      them — increased familiarity does not entirely explain why certain conventions get used up
+      while others remain, and the attrition is moral as well as perceptual, a residue she leaves
+      unanalysed. So this binding names the unit and cannot say what will wear out or when. Second,
+      it generates no instruction. It does not say to vary anything, to refresh anything or to avoid
+      anything; Sontag recommends none of that and is explicitly sceptical of the search for new
+      shocks, treating it as a treadmill the medium is on rather than a strategy. Her claims are
+      also stated within a premise about how images circulated in the 1970s, and this lane asserts
+      nothing about any other circulation regime.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_snt_0010, t_snt_0011]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_snt_003
+  source_knowledge_refs: [sk_snt_0010, sk_snt_0016]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Two of Sontag's claims are about what must already be true before an image can be read at all,
+    and both are conditions on the assessor rather than properties of the asset. Identification of
+    the subject dominates perception: a visually ambiguous image cannot be reacted to until the
+    viewer knows what piece of the world it is, which means an assessment made without that
+    knowledge is an assessment of a different question. And an image lands inside a frame of
+    understanding it cannot itself supply, so its effect on an audience depends on what that
+    audience already holds. This binding flags both preconditions.
+  applicability:
+    when: "assessing how an image will be read, where the assessor's identification of the subject or the audience's prior frame may differ from the intended one"
+    limits: >
+      This is the binding closest to over-reach and its limit is correspondingly strict. It supports
+      NO claim about what an image should show, how it should be framed or what subject it should
+      take — Sontag makes no such claim anywhere. It records only that two things must be settled
+      before a reading can be assessed. Her evidence for the second is a set of historical readings
+      of American political episodes, argued rather than shown, and she sets against her own argument
+      a case she says probably did more than a hundred hours of television. Both are unreconciled by
+      her and are unreconciled here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_snt_0013, t_snt_0014]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

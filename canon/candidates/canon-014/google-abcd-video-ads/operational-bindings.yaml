@@ -1,0 +1,283 @@
+source_id: google-abcd-video-ads
+operational_bindings:
+# google-abcd-video-ads — OperationalBindings (SPEC-04)
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# These are OUR interpretations of what today's system could do with this source, recorded as ours.
+# None of them restates a source claim; each references one.
+#
+# Nothing here asserts or assumes that any generative model can execute these guidelines. Where a
+# guideline is executed by a person shooting or cutting an ad, that is where it is left. No
+# creative_ir and no production binding is proposed: this source describes evaluable properties of
+# finished ads, not fields of an intermediate representation.
+#
+# Every applicability.limits below repeats the two standing cautions, because a binding is the
+# place where a caution is most easily dropped: (1) the publisher sells advertising on the platform
+# whose guidance this is; (2) the guidance is contingent on one platform's behaviour at one time.
+
+- binding_id: bnd_abcd_001
+  source_knowledge_refs: [sk_abcd_0006, sk_abcd_0007, sk_abcd_0011]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: sequence
+  governance_consumer:
+  rationale: >-
+    The source's opening guidance concerns how an ad begins and what has appeared by the time it
+    has begun — how quickly the narrative reaches its point, how it is framed at the top, and
+    whether the brand or product is present. None of that is visible in any single frame: it is a
+    property of the opening span, and an evaluator receiving frames independently cannot see it.
+    The unit of observation is therefore the opening sequence.
+  applicability:
+    when: >-
+      evaluating the opening of a video ad intended for YouTube, where the campaign objective is
+      known and the ad's own story has an identifiable point to reach
+    limits: >-
+      The source sets no duration for "the start" and no target time to the heart of the story, so
+      this diagnoses direction only and cannot produce a pass/fail threshold. Any seconds figure
+      used in an implementation is the implementer's, not the source's — the one number the source
+      prints, five seconds, describes a single illustrative ad and is not stated as a rule. The
+      guidance is for YouTube ads at the pages' stated dates and the publisher sells advertising on
+      that platform; both cautions travel with any use of this binding.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_abcd_0006, t_abcd_0010]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_002
+  source_knowledge_refs: [sk_abcd_0010, sk_abcd_0011, sk_abcd_0012, sk_abcd_0013]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses, evaluates]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >-
+    Three of the source's branding questions cannot be answered from a part of the ad. Whether
+    presence is maintained throughout is a property of the whole; whether a variety of branding
+    asset types was used is a count over the whole; and whether an on-screen brand visual is
+    accompanied by a spoken mention requires the picture and the audio track of the same asset
+    together. An evaluator that receives silent frames can answer none of them.
+  applicability:
+    when: >-
+      evaluating a complete video ad, with its audio track, against the source's branding principle
+    limits: >-
+      "Early", "often" and "richly" are unquantified in the source, so this yields checkable
+      questions and not thresholds. The see-and-say check presupposes the source's claim that
+      YouTube audio is heard; on a surface where audio is off by default the check's premise fails
+      and the source does not address that case. Publisher-interest and platform-contingency
+      cautions apply.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_abcd_0010, t_abcd_0011, t_abcd_0012]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_003
+  source_knowledge_refs: [sk_abcd_0019, sk_abcd_0020, sk_abcd_0021]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >-
+    The Direction principle generates three questions about a finished ad — is there an explicit
+    ask, does it name a specific action, and is it carried by both the picture and the voice-over —
+    and the source itself widens the first: the ask may be carried by a scene rather than by a
+    caption, so an evaluator looking only for end-card text would return a false negative.
+  applicability:
+    when: "evaluating a complete video ad, with its audio track, where a campaign objective is stated"
+    limits: >-
+      The source says nothing about where the ask should sit except within its objective table, so
+      no placement rule may be drawn from the core guidance. The audio-reinforcement check rests on
+      the sound-on premise. Publisher-interest and platform-contingency cautions apply.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_abcd_0019]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_004
+  source_knowledge_refs: [sk_abcd_0008, sk_abcd_0017]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >-
+    Two of the source's faults — competing elements, and doing too much — are both counts over an
+    asset rather than properties of a moment, and neither can be judged from a still. The first
+    asks whether picture, text and audio are carrying the same key message at the same time; the
+    second asks how many distinct messages the ad attempts.
+  applicability:
+    when: "evaluating a complete video ad against the source's focus and reinforcement guidance"
+    limits: >-
+      Neither fault is quantified anywhere in the source. It defines no threshold for "too much"
+      and no test for when two elements compete rather than reinforce, so any threshold used is the
+      implementer's. Publisher-interest and platform-contingency cautions apply.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_abcd_0008, t_abcd_0016]
+  repair_ontology_refs: [t_abcd_0007, t_abcd_0015]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_005
+  source_knowledge_refs: [sk_abcd_0009]
+  source_system_refs: []
+  target_type: evaluation
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [flags]
+  observation_unit: whole_asset
+  governance_consumer:
+  rationale: >-
+    The source ties brightness and contrast to a stated purpose — the ad must survive being watched
+    on a small screen — which turns an aesthetic preference into a checkable question about an
+    asset. The unit is the whole asset rather than the frame because the source's concern is that
+    the ad holds up across its length on the smallest device, not that any one frame does.
+  applicability:
+    when: "screening a finished video ad intended for viewing across device sizes"
+    limits: >-
+      The source supplies no measurable target — no contrast ratio, no luminance figure, no
+      reference screen — and points readers elsewhere for specs. This binding can flag for human
+      review; it cannot score. Publisher-interest and platform-contingency cautions apply.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_abcd_0009]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_006
+  source_knowledge_refs: [sk_abcd_0022, sk_abcd_0023, sk_abcd_0024, sk_abcd_0025, sk_abcd_0026]
+  source_system_refs: [scs_abcd_002]
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  governance_consumer:
+  rationale: >-
+    The objective table is already a comparison design. It holds the product and the four
+    principles constant and varies only the marketing objective, which makes it a ready-made axis
+    for a brief set: one proposition, four briefs, differing in exactly the way the source says
+    they should differ. The differences it predicts are concrete enough to be checked — the ask
+    should be softest under consideration, ordered after the context under action, and repeated
+    with escalating directness under full funnel.
+  applicability:
+    when: "constructing a brief set or comparison set that varies marketing objective"
+    limits: >-
+      This yields a test axis, not a predicted result. The source attaches no evidence to any cell
+      of the table, and its headline lift figures are stated for the ABCDs as a set, never
+      decomposed by objective or by principle — so nothing here supports a claim about which
+      variant will perform better. Publisher-interest and platform-contingency cautions apply.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_007
+  source_knowledge_refs: [sk_abcd_0001, sk_abcd_0002]
+  source_system_refs: [scs_abcd_001]
+  target_type: benchmark
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [derives]
+  governance_consumer:
+  rationale: >-
+    The source's own worked example is a minimal pair: one concept, one storyboard, taken through
+    the four principles, and the two versions offered side by side. That construction — hold the
+    idea fixed, vary only the execution — is the comparison this source is actually built to
+    support, and it follows the source's own limit that the ABCDs govern execution and not the
+    idea.
+  applicability:
+    when: "constructing a comparison that isolates execution while holding the creative concept fixed"
+    limits: >-
+      The source's pair is two human-authored versions of one storyboard, presented as an
+      illustration with no measurement attached; it reports no result for the comparison and asks
+      the reader which is more compelling. Nothing here says any system can produce either version.
+      Publisher-interest and platform-contingency cautions apply.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_008
+  source_knowledge_refs: [sk_abcd_0003, sk_abcd_0004]
+  source_system_refs: []
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains, flags]
+  governance_consumer: evidence_interpretation
+  rationale: >-
+    Anything weighing this source's numbers against other evidence needs three facts that are not
+    visible in the numbers themselves: the publisher sells the product the research validates; the
+    study is named but not published, so no method, baseline or dispersion can be inspected; and
+    the publisher's own three pages state the identical finding as an upper bound, as an average,
+    and with no qualifier at all. Third-party involvement moderates the first of these and does not
+    remove it. The figures may be reported; they may not be treated as an inspectable measurement.
+  applicability:
+    when: "any retrieval, comparison or aggregation involving this source's effectiveness figures"
+    limits: >-
+      The discount is qualitative. The source supplies no correction factor and none is invented
+      here. The discrepancy between the three phrasings is recorded and deliberately not resolved:
+      nothing in the source settles which is correct.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_abcd_009
+  source_knowledge_refs: [sk_abcd_0014, sk_abcd_0002]
+  source_system_refs: [scs_abcd_001]
+  target_type: governance
+  target_path:
+  target_schema:
+  target_schema_version:
+  role: [constrains]
+  governance_consumer: rule_application
+  rationale: >-
+    Two limits on how this source may be applied, both of which a retrieval would otherwise strip.
+    First, the sound-on assertion is scoped by the source to one named platform, and generalising
+    it to short-form or feed video would invert the sound-off default those surfaces are usually
+    designed against — every guideline in this source that depends on audio inherits that scope.
+    Second, the source states its own boundary: the ABCDs are not a method for generating creative
+    ideas, and applying them as one uses the framework for something it disclaims.
+  applicability:
+    when: "any application of this source outside YouTube video advertising, or at the concept stage"
+    limits: >-
+      This constrains application; it does not modify any claim. The scope restriction is the
+      source's own statement about its own platform, not a finding about other platforms — nothing
+      here is evidence about how any other surface is watched.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

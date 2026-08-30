@@ -1,0 +1,218 @@
+# OperationalBindings — Henry Carroll, "Read This If You Want to Take Great Photographs"
+# (Laurence King, 2014). source_id: carroll-read-this-photographs
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# SIX bindings from thirty SourceKnowledge objects. Four evaluation, two production. That ratio is
+# the honest one for this source and is not a shortfall:
+#
+#   * NO creative_ir bindings. None was attempted. This lane infers nothing about any Creative IR
+#     path from a photography primer, and the task forbids it outright.
+#   * NO governance bindings. Nothing in Carroll addresses how the ontology admits terms, what may
+#     be retrieved together, how conflicts are settled, how evidence is weighted, whether a
+#     principle may be applied alone, or when sources may be combined. His one candidate — the
+#     warning that using the composition techniques as a checklist makes work safe and predictable —
+#     looks like rule_application until you notice it is advice to a photographer about their own
+#     practice, not a rule about how knowledge is consumed. It is left unbound and recorded in
+#     EXTRACTION-NOTES.md.
+#   * NO benchmark binding. The obvious candidate is the hard/soft light comparison, which the book
+#     structures as alternating spreads. It is not a minimal pair: different photographer, subject
+#     and scene each time, nothing held constant. Creating a benchmark from it would manufacture a
+#     controlled comparison the source does not contain.
+#
+# EVERY production binding here carries status: production_candidate and target_path: null.
+# Carroll's remedies are physical camera acts — set this shutter, open this aperture, stand here,
+# get lower, fire or suppress this flash. NONE of them is rewritten as a generative instruction.
+# The corresponding remedy terms in ontology-mappings.yaml carry executable_by: [physical_production]
+# and are deliberately not translated.
+
+source_id: carroll-read-this-photographs
+
+operational_bindings:
+
+- binding_id: bnd_crl_001
+  source_knowledge_refs: [sk_crl_0026, sk_crl_0025]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, evaluates]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    sk_crl_0026 supplies a test whose form survives translation out of photography: the asset is
+    judged on what is in it, and any quality that has to be supplied by an account of the
+    circumstances is not in it. Its second half is the part with teeth — the cost of producing an
+    asset must not enter the judgement of it. sk_crl_0025 supplies the counterweight, so the pair
+    can be applied without collapsing into either indulgence or perfectionism.
+  applicability:
+    when: "reviewing a finished asset against what it actually shows, rather than against intent"
+    limits: >
+      The source is talking about a photographer reviewing their own frames after a shoot. Whether
+      the same test is meaningful where there is no unrepeatable moment to have missed — and
+      generated assets have none — is exactly the question it does not answer. Carroll's whole
+      priority in sk_crl_0025 rests on the moment being irrecoverable, which is a premise that may
+      not hold outside his domain. Applying the excuse test without that premise is our leap, not
+      his claim.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_crl_0021, t_crl_0022]
+  repair_ontology_refs: [t_crl_0023]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_crl_002
+  source_knowledge_refs: [sk_crl_0007, sk_crl_0009]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    Between them these two objects supply a named inventory of what a practitioner inspects in a
+    single frame: regions that contribute nothing, elements intruding at the edges, an object cut
+    rather than framed, a vertical that is not vertical, the eye led out of the picture, an element
+    awkwardly meeting the frame edge, a subject at the extreme edge with its gaze cut short, a
+    horizon crossing a head. The list is a single-frame checklist, which is the reason for the
+    observation unit.
+  applicability:
+    when: "inspecting one still frame for compositional faults the source names"
+    limits: >
+      Two limits, both real. First, sk_crl_0009 supplies the same list as the things a great
+      photograph may be right to do, so the checklist detects candidates for attention, never
+      failures — a cue found is a question, not a verdict. Second, the list is stated about a
+      reproduced photograph that was not inspected; what is bound here is Carroll's vocabulary for
+      compositional wrongness, not any claim about how that image looks.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_crl_0009, t_crl_0010, t_crl_0011, t_crl_0012]
+  repair_ontology_refs: [t_crl_0013]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_crl_003
+  source_knowledge_refs: [sk_crl_0019, sk_crl_0017]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    sk_crl_0019 states a conditional relationship rather than a preference: where the light supplies
+    no tonal difference, eye guidance must come from composition alone. That converts into an
+    inspection with an order of operations — first read whether the frame's light is directional or
+    flat, and only then judge whether the composition is doing enough work, because how much work it
+    must do is set by the light. sk_crl_0017 supplies the other side, where the light is doing the
+    guiding.
+  applicability:
+    when: "an image whose lighting is flat or diffuse and whose reading depends on the eye reaching a particular element"
+    limits: >
+      Carroll states this once, about one photograph, in a single spread, and he sets the reader an
+      exercise about it whose answer is behind unresolvable print-edition page references. It is his
+      only stated interaction between two of his chapters and it is asserted, not demonstrated. The
+      conditional shape is what is bound; the strength of the effect is unestablished.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_crl_0014]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_crl_004
+  source_knowledge_refs: [sk_crl_0030]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    This is the only object in the lane that names a unit larger than the frame. Carroll's claim is
+    that a body of work carries meaning no member carries, that consistency of style and the order
+    of the set are the load-bearing properties, and — the operative part — that assessing members
+    independently destroys exactly the property being claimed. As a binding it flags a scope error:
+    a set intended to work as a set cannot be evaluated one asset at a time.
+  applicability:
+    when: "a body of work made about one subject and intended to be seen in a fixed order"
+    limits: >
+      Carroll's evidence is autobiographical — he reports having read a famous photobook wrongly as
+      a student and rightly two years later. He gives no method for judging a series while making
+      one and never describes what a failing series looks like, so this binding can flag the wrong
+      unit of observation and nothing more. It cannot score anything.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_crl_0024]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_crl_005
+  source_knowledge_refs: [sk_crl_0011, sk_crl_0012, sk_crl_0013, sk_crl_0014, sk_crl_0016, sk_crl_0020]
+  source_system_refs: [scs_crl_001]
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The exposure and flash knowledge determines settings on a physical camera: which shutter speed
+    blurs or freezes, which aperture restricts or extends the zone of sharpness, which direction to
+    move exposure compensation for a backlit subject, whether to let the flash fire. It is recorded
+    here in the source's own frame and parked. Production IR does not exist, and no generative
+    equivalent is asserted, implied or hinted at anywhere in this binding.
+  applicability:
+    when: "operating a camera of roughly the described generation, in the situations the source names"
+    limits: >
+      Physical camera only. Not translated to generative control; Pass 2 would be required and is
+      not performed here. The thresholds (about 1/60, about 1/125, ISO 800 for visible noise) are
+      practitioner rules of thumb of about 2014, stated without reference to subject speed, focal
+      length or sensor, and the interface described (mode dials, P/S/A/M, exposure-compensation
+      buttons) is of its period.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_crl_0016, t_crl_0017, t_crl_0018]
+  repair_ontology_refs: [t_crl_0019, t_crl_0020]
+  status: production_candidate
+  status_reason: "physical production act; Production IR does not exist; deliberately untranslated"
+
+- binding_id: bnd_crl_006
+  source_knowledge_refs: [sk_crl_0021, sk_crl_0022, sk_crl_0023, sk_crl_0004, sk_crl_0027, sk_crl_0003]
+  source_system_refs: [scs_crl_004]
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    Carroll's strongest single idea is that the picture is largely decided by where the photographer
+    physically stood and what focal length put them there — close enough to be in the encounter,
+    far enough to be concealed, low enough to escape head height, positioned so that the near
+    material falls into the frame. All of it is an act performed with a body and a lens before any
+    exposure is made, so it is parked as production and left in the source's frame.
+  applicability:
+    when: "a photographer choosing a lens and a standing position in front of a real subject"
+    limits: >
+      Physical production only. The temptation to restate "stand closer" or "get lower" as a
+      generative instruction is explicitly refused here: the source's own mechanism is that the
+      photographer's real position and real exposure to the subject are what the picture carries,
+      which is a claim that has no meaning where no one stood anywhere. Rewriting it would keep the
+      words and discard the mechanism. Carroll also declines to fix a frame of reference for "wide"
+      and "long", so even the optical half is not portable without one.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_crl_0025, t_crl_0026]
+  repair_ontology_refs: [t_crl_0027, t_crl_0028]
+  status: production_candidate
+  status_reason: "physical production act; Production IR does not exist; deliberately untranslated"

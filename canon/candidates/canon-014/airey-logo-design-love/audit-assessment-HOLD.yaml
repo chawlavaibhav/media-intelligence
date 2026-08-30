@@ -1,0 +1,99 @@
+# CANON-014 — CANDIDATE HOLD ASSESSMENT. NOT an Audit Gate record. Nothing here admits
+# anything to live Canon. See `why_no_audit_gate_record` below.
+
+assessment_kind: candidate_hold_assessment
+assessment_version: canon-014-final-v1
+audit_gate_record: none
+why_no_audit_gate_record: 'A held source must never carry an Audit Gate record, because the existence
+  of a record is what the Gate reads as admission. This file is deliberately NOT one: it has a different
+  shape, a different name and its own kind, and it lives in the candidate tree rather than in canon/audit/records/.
+  Nothing here admits anything.'
+source_id: airey_logo_design_love
+title: David Airey — Logo Design Love
+knowledge_dir: canon/candidates/canon-014/airey-logo-design-love
+status: HOLD
+status_reason: evidence_insufficient
+recorded_at_commit: bf02dd1f31a9b1d0b790f4a2a09a68f3b39748fa
+structural_validation: 'PASSES canon/validation/validate_source_artifact_schema.py against SPEC-03,
+  SPEC-04 and SPEC-05 with zero errors. A STRUCTURAL PASS IS NOT ADMISSION and is not evidence about
+  the source: it says the artifacts are well formed, not that what they record was verified.'
+candidate_artifact_fingerprint:
+  algorithm: sha256-of-sorted-path-and-content
+  note: Covers the four artifacts this candidate has. It is NOT an Audit Gate source snapshot, which
+    fingerprints five files including a visual-evidence ledger this source does not have. Recorded so
+    a later re-audit can prove whether the candidate changed between now and then.
+  files:
+  - path: ontology-mappings.yaml
+    digest: 33128925e0ec6199aeaccec85b3df2112a4a5976ab9c21aa69f30ca09c4709fe
+  - path: operational-bindings.yaml
+    digest: 20e7e69ad3f2ddf3980221995c899459d6c072b0dfb67c87ec51119ece72b13b
+  - path: source-concept-systems.yaml
+    digest: c70aed368c79e16ec1b4176ce7caaa885db0d980b3fd7673d433b9e4b058cc63
+  - path: source-knowledge.yaml
+    digest: 180207969108e37ddd2d67a778b23add349ae26706ae267566b3ac37fef7667a
+  combined_digest: 429b93293a1856c3d53ec86a88055f3d28cbf7a8d888fbff10f9464440a8b42e
+local_copy_seen_in_this_environment: ~/Downloads/Books/Logo Design Love_ A Guide to Creating Iconic
+  Brand Identities.pdf
+blocker_shared_by_all_seventeen: 'NO VISUAL OR FIGURE-LEVEL INSPECTION HAS EVER BEEN RUN ON THIS SOURCE,
+  so it has no
+
+  `visual-evidence-ledger.yaml`. That file is one of the five the Audit Gate fingerprints, and the
+
+  Gate reports a missing covered artifact rather than skipping it, so no Audit Gate record can be
+
+  written for this source at all. It cannot be authored from the committed extraction either: a
+
+  visual-evidence ledger records what an inspection found, and transcribing a previous run''s
+
+  self-report into it would be fabricating an inspection.
+
+  '
+access_position: 'THE ACCESS BLOCKER RECORDED BY THE EARLIER PASSES NO LONGER HOLDS, AND THIS IS A CHANGE
+  OF FACT THE
+
+  CONTROLLER SHOULD SEE. Those passes recorded `evidence_insufficient` partly because the source could
+
+  not be opened: the extraction had read a local library that did not exist in the container the
+
+  repair ran in, and that container had no external network egress. Both were true there. NEITHER IS
+
+  TRUE IN THE ENVIRONMENT THIS RECONCILIATION RAN IN - the book is present locally, and network egress
+
+  was tested and works. What remains unresolved is therefore NOT access. It is that the inspection has
+
+  not been done. That is a matter of cost and authorisation, and it is a materially better position
+
+  than being blocked, but it is not a pass and this task does not treat it as one.
+
+  '
+source_specific_blockers:
+- blocker: representation_is_a_degraded_unattributed_translation
+  detail: 'THE STRONGEST BLOCKER ON ANY OF THE SEVENTEEN, AND ONE THAT SURVIVES HAVING THE FILE IN HAND.
+    The
+
+    local copy is not the English original. It is an UNATTRIBUTED, DEGRADED SPANISH MACHINE TRANSLATION
+
+    of it, so Airey''s own wording cannot be recovered from it and all 45 ontology terms are correctly
+
+    marked `verbatim: false` - which for a book about naming and identity vocabulary removes much of
+    the
+
+    point. The translation is also WRONG in at least one load-bearing place: on printed p.64 it calls
+    the
+
+    FAILED Tropicana redesign the "successfully renamed identity", contradicting the body text around
+    it.
+
+    That error was caught only by rendering the page. A copy that inverts a case study''s outcome cannot
+
+    be trusted for the others, and the only real repair is a different copy.'
+- blocker: image_led_book_with_no_figure_inspection
+  detail: The book teaches through reproduced logos and identity systems, none of which was inspected.
+what_would_move_this_to_ready: A first-hand figure-level inspection of the source, authored as a visual-evidence-ledger.yaml,
+  followed by a full Audit Gate v0.2 record written against the exact bytes - plus resolution of each
+  source-specific blocker listed above, where there are any. For most of the seventeen the inspection
+  is now the only missing step, which is a materially different position from the one recorded by the
+  earlier passes.
+qa_bank: canon/qa/canon-014/airey-logo-design-love-qa-bank.yaml
+qa_status_note: 'The Q&A bank for this source is retained in full and carries `source_status: hold`
+  on every item. Held knowledge stays available and stays visibly held.'

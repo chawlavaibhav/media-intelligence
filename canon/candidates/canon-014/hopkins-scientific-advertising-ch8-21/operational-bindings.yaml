@@ -1,0 +1,370 @@
+# Claude C. Hopkins, "Scientific Advertising" (1923), chapters 8-21 (printed pp. 25-64).
+# SPEC-04 operational bindings.
+#
+# EXPERIMENTAL — NOT LIVE CANON. Lane: canon/experimental/book-expansion-qa-v1/.
+# SCOPE EXTENSION of the live `hopkins_scientific_advertising_ch1_7`. Same work, same author.
+#
+# STANCE. Eleven bindings against forty-eight SourceKnowledge objects. Most of chapters 8-21 is
+# 1923 media buying, coupon mechanics, dealer distribution and print production, and has no honest
+# consumer here. It is left unbound, which SPEC-04 states is a normal outcome and information about
+# the product rather than about the knowledge.
+#
+# THREE RULES APPLIED THROUGHOUT:
+#  1. Physical-era production advice is NOT rewritten as a generative-model instruction. Two
+#     production bindings are recorded, both `status: production_candidate`, both `target_path:
+#     null`, both stating in `limits` that no generative equivalent is asserted.
+#  2. `evidence_basis` is never `cross_source_supported` or `empirically_supported`. No cross-source
+#     promotion is authorised in this task and no empirical record is attached to anything here.
+#  3. A binding never restates the source claim; it references the sk_ id and says what WE would do.
+#
+# NOTE ON EVIDENCE CHAINS. Several of these bind knowledge whose own `evidence.characteristics` are
+# `practitioner_assertion` and `outcome_claimed`. Where the binding then rests on
+# `extractor_inference`, it is two inferential steps from anything demonstrated. That chain is
+# readable from these records deliberately.
+
+source_id: hopkins-scientific-advertising-ch8-21
+
+operational_bindings:
+
+- binding_id: bnd_sa8_001
+  source_knowledge_refs: [sk_sa8_0034]
+  source_system_refs: [scs_sa8_003]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, constrains]
+  governance_consumer: evidence_interpretation
+  observation_unit: null
+  rationale: >
+    A worked case of a source whose entire evidential authority rests on one inferential step that
+    the source states as a law and never supports. sk_sa8_0034 is the step; sk_sa8_0033 is the
+    procedure that depends on it. The pair is directly useful to how evidence characteristics are
+    weighted, because it demonstrates that a well-specified METHOD and a reported RESULT are
+    independent, and that a source can supply the first in full while supplying none of the second.
+    Any weighting scheme that credits methodological specificity as if it were evidence would score
+    chapter 15 highly and be wrong.
+  applicability:
+    when: "weighing a source that describes a measurement procedure in detail"
+    limits: >
+      This is one source, of one period, in one trade. It illustrates a distinction; it does not
+      establish how often the distinction bites.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0046]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_002
+  source_knowledge_refs: [sk_sa8_0004, sk_sa8_0048]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  governance_consumer: evidence_interpretation
+  observation_unit: null
+  rationale: >
+    The source states an admissibility rule for practice evidence — that a practitioner who cannot
+    see his returns has no experience to transmit, only preferences — and then does not meet it
+    itself, since its own returns are equally unavailable to the reader. The rule and its
+    self-application are both useful precedents for how a corpus should treat authority claims from
+    practitioners: the reasoning is sound and applies to the source that supplies it.
+  applicability:
+    when: "a source justifies a practice by pointing at existing practice"
+    limits: >
+      The source's rule is stated about advertising specifically and is not a general epistemology.
+      Applying it to a corpus of craft books is our extension, not the source's.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0016]
+  repair_ontology_refs: [t_sa8_0041]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_003
+  source_knowledge_refs: [sk_sa8_0038]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  governance_consumer: null
+  observation_unit: asset_set_over_time
+  rationale: >
+    sk_sa8_0038 is an observation-unit argument, not a retailing argument: an effect measured where
+    it is largest can be a redistribution rather than a gain, and only a total across the whole
+    population distinguishes them. That is exactly the failure an evaluator scoring individual
+    assets cannot see, and it names the unit required to see it. Recorded here because the
+    structural point survives the 1923 setting even though nothing else in the chapter does.
+  applicability:
+    when: "an intervention shows a gain on the subset it was applied to"
+    limits: >
+      The source is discussing shop trade in 1923 and reports no such measurement. The transfer from
+      shops-in-a-town to any other population is ours, and the source supplies no evidence for the
+      general form of the claim.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0012]
+  repair_ontology_refs: [t_sa8_0034]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_004
+  source_knowledge_refs: [sk_sa8_0032, sk_sa8_0030]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  governance_consumer: null
+  observation_unit: whole_asset
+  rationale: >
+    A named failure state that is invisible to any measure of persuasion: a fully converted
+    respondent with no route to act. The source's phrasing — a convert who cannot be supplied — makes
+    the point that conversion and fulfilment are separate conditions and that success on the first
+    without the second is a loss rather than a partial success. Useful as an acceptance check on any
+    asset that asks for an action.
+  applicability:
+    when: "an asset issues a call to action"
+    limits: >
+      The source's case is physical retail stock in 1923. Whether an equivalent gap exists in any
+      other setting is not something this source can establish, and no equivalence is asserted here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0011]
+  repair_ontology_refs: [t_sa8_0033]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_005
+  source_knowledge_refs: [sk_sa8_0005, sk_sa8_0009]
+  source_system_refs: [scs_sa8_001]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates]
+  governance_consumer: null
+  observation_unit: whole_asset
+  rationale: >
+    The chapter supplies a comparison test rather than a quality standard — does this element beat
+    what the same space would carry otherwise — and, in the same chapter, a ranking that puts
+    execution quality below the decisions that halve or multiply the result. Both are useful as a
+    stance for an evaluator: comparative rather than absolute, and explicit about which findings
+    are minor. The internal contradiction between them (scs_sa8_001 `conflicts`) is part of what
+    makes the pair worth binding rather than a reason not to.
+  applicability:
+    when: "assessing whether a visual element earns its place in a bounded composition"
+    limits: >
+      The source's arithmetic is 1923 print economics — space priced by area, art cost small beside
+      insertion cost. It is bound here as a STANCE (compare against the alternative use of the same
+      space) and NOT as its conclusions, which do not survive a different cost structure. The
+      source's own conclusions about colour, art quality and picture repetition are deliberately
+      NOT bound.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0003, t_sa8_0004]
+  repair_ontology_refs: [t_sa8_0022]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_006
+  source_knowledge_refs: [sk_sa8_0023, sk_sa8_0046, sk_sa8_0047]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  governance_consumer: null
+  observation_unit: null
+  rationale: >
+    Chapter 20's taxonomy generates a set of named test cases with a stated expected consequence for
+    each: descriptive-and-protectable, meaningless-coined, ingredient-derived, patent-dependent,
+    frivolous, and man's-name. The source supplies real 1923 examples in every class, which makes it
+    a usable comparison set for naming judgements without requiring anyone to accept the source's
+    verdicts.
+  applicability:
+    when: "assembling test cases for naming or brand-structure judgement"
+    limits: >
+      Every example is selected on its outcome and the trademark reasoning is the author's
+      understanding of 1923 American law. The cases are usable as a spread of name TYPES; the
+      source's outcome claims are not usable as ground truth.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0014, t_sa8_0015]
+  repair_ontology_refs: [t_sa8_0040]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_007
+  source_knowledge_refs: [sk_sa8_0043, sk_sa8_0036]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  governance_consumer: null
+  observation_unit: null
+  rationale: >
+    Two designs specified precisely enough to be reproduced as comparison structures: twenty-five
+    equal cells of a thousand before committing to a large mailing, and a champion/challenger
+    arrangement in which the proved plan keeps running while candidates are tested beside it. Both
+    are structures rather than results, which is what makes them usable when none of the source's
+    figures are.
+  applicability:
+    when: "designing a comparison that must not risk a currently working configuration"
+    limits: >
+      Neither design is reported with a result. The letter test also omits randomisation,
+      simultaneity and list comparability, and the champion/challenger case reports only the winner
+      of fifty attempts, so its 75 per cent figure is a selection outcome rather than an effect size.
+      The structures are bound; the numbers are not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sa8_0036, t_sa8_0034]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_008
+  source_knowledge_refs: [sk_sa8_0013, sk_sa8_0014]
+  source_system_refs: [scs_sa8_002]
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  governance_consumer: null
+  observation_unit: null
+  rationale: >
+    The claim-selection cases are minimal pairs in the source's own construction — decay against
+    beauty for a tooth paste, eczema against complexion for a soap, prevention against cure, asthma
+    at one in a hundred against an article at one in five. Each varies one property of the claim and
+    states an expected direction, which is the shape a benchmark item needs. Their value is that
+    they test a judgement most modern defaults would get backwards.
+  applicability:
+    when: "building test items about claim selection where audience size and claim merit disagree"
+    limits: >
+      The source reports no measurement for any of these pairs and hedges most of them. Items built
+      from them test agreement with THIS SOURCE'S POSITION and must be labelled that way, not as
+      tests of fact.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0009, t_sa8_0008]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_009
+  source_knowledge_refs: [sk_sa8_0029, sk_sa8_0037]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  governance_consumer: conflict_resolution
+  observation_unit: null
+  rationale: >
+    The source supplies a two-part procedure for settling a disagreement about a practice: identify
+    whose interest the argument serves, then replace the argument with a comparison the disputants
+    do not control. It is directly applicable to how contradictions between pieces of knowledge are
+    settled, and it is more useful than its conclusions because the source demonstrates both halves
+    — it applies the bias test to advertising agents in chapter 13 and fails to apply it to its own
+    agency in chapter 15.
+  applicability:
+    when: "two positions on a practice conflict and each is argued rather than measured"
+    limits: >
+      The source's remedy assumes a comparison is cheaply available, which is the case it happens to
+      be discussing and not the general case. Where no comparison can be run, the procedure gives
+      nothing.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sa8_0034]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sa8_010
+  source_knowledge_refs: [sk_sa8_0006, sk_sa8_0042]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  governance_consumer: null
+  observation_unit: null
+  rationale: >
+    Records, in the source's own frame, a pictorial instruction that is specific enough to act on:
+    depict the condition the buyer wants to reach rather than the article or the defect, and show
+    it in use to its intended effect. Parked as a production candidate because Production IR does
+    not exist.
+  applicability:
+    when: "an illustration or photograph is being commissioned for a persuasive print advertisement"
+    limits: >
+      This is 1923 art direction — a commissioned drawing or photograph for a print advertisement.
+      NO generative equivalent is asserted, proposed or implied here. The instruction is recorded
+      as the source's physical-production action and left untranslated; the ontology term
+      `t_sa8_0023` carries `executable_by: physical_production` for the same reason. The source's
+      account of why the beauty case works is a period claim about women's motives and is not
+      carried forward as a production rule.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: [t_sa8_0023]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked untranslated"
+
+- binding_id: bnd_sa8_011
+  source_knowledge_refs: [sk_sa8_0044]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  governance_consumer: null
+  observation_unit: null
+  rationale: >
+    A production-cost claim with a stated mechanism running the opposite way to intuition: spending
+    visibly on the artefact reduces its effect, because the expenditure is read as a substitute for
+    merit. Parked as a production candidate; its interest is that it is a testable prediction about
+    production spend rather than a taste preference.
+  applicability:
+    when: "deciding how much to spend on the physical presentation of a persuasive message"
+    limits: >
+      The source's evidence is "experience generally shows" and "it has been found" — no test, no
+      comparison, no return. The artefacts are 1923 stationery grades, postage classes and mailed
+      pamphlets. Recorded in the source's frame and NOT rewritten as an instruction about any
+      generated artefact.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sa8_0017]
+  repair_ontology_refs: []
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked untranslated"
+
+# ── DELIBERATELY UNBOUND ─────────────────────────────────────────────────────
+# Recorded so the absence reads as a decision rather than an oversight.
+#
+# Chapter 13's sampling mechanics, chapter 14's distribution mechanics and chapter 19's letter
+# devices are the most operationally detailed material in the span and are left entirely unbound.
+# They are 1923 coupon, retail and postal machinery. Binding them would require asserting a modern
+# analogue, which this lane is not authorised to do and the source cannot support.
+#
+# Chapter 10's cost figures, chapter 12's price regimes and chapter 11's research programme are
+# unbound because their consumer would be a business-planning system that does not exist here.
+#
+# Chapter 17's individuality doctrine and chapter 18's positive-framing doctrine are unbound
+# because the only honest binding would be an evaluation check ("is the tone consistent", "does
+# this show the desired state") whose source support is one hedged four-to-one claim and no
+# comparison at all. A binding was drafted for each and both were discarded: an evaluator that
+# scores tone consistency does not need Hopkins to justify it, and one that scores positive framing
+# would be encoding an unevidenced 1923 preference as an acceptance criterion.

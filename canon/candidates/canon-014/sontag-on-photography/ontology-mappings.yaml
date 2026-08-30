@@ -1,0 +1,487 @@
+# Ontology mappings (SPEC-05) — Susan Sontag, "On Photography" (essays 1973-77, book 1977).
+# source_id: sontag-on-photography
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# THE MOST IMPORTANT FACT ABOUT THIS FILE: it contains 14 problem terms, 13 property terms and
+# TWO remedy terms, neither of which is a remedy anyone could perform. That ratio is not an artefact
+# of the extraction — it is the single strongest piece of evidence for the project's standing warning
+# that this source is critique and not craft. Sontag diagnoses continuously and prescribes almost
+# nothing, and the one remedy she reports she reports in order to refute it.
+#
+#   * t_snt_0021 (the_right_caption) is BENJAMIN'S proposal, reported by Sontag and ARGUED AGAINST
+#     by her. It is recorded because the source discusses it and because omitting it would hide a
+#     refutation; it is recorded as a proposal she rejects, and the relationship layer records the
+#     rejection. It must never be read as her advice.
+#   * t_snt_0022 (an_ecology_of_images) is the last sentence of the book and is a gesture toward a
+#     remedy with no method of any kind attached. executable_by: [unknown], because this lane cannot
+#     say what performing it would consist of.
+#
+# NO remedy term carries generative_respecification, physical_production or deterministic_composite.
+# Nothing in this file is translated into an instruction for making anything.
+#
+# NO cross_source_concept (xs_) is created. NO same_failure_family relation is used. No relationship
+# points outside this lane.
+
+source_id: sontag-on-photography
+terms:
+
+  # ── properties: Sontag's names for what a photograph is and does ─────────────
+
+- term_id: t_snt_0001
+  term: the_photograph_as_trace
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    A photograph is not only an image, an interpretation of the real, but also a trace — something
+    directly stencilled off the real, like a footprint or a death mask; the registering of an
+    emanation, a material vestige of its subject in a way no painting can be.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0002
+  term: presumption_of_veracity
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    The credit a photograph is given regardless of its maker's competence or ambition: the picture
+    may distort, but there is always a presumption that something exists, or did exist, which is
+    like what is in it. It is what gives all photographs authority, interest and seductiveness.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0003
+  term: pieces_of_the_world_not_statements_about_it
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    How photographs are received, as against writing and handmade images, which are frankly
+    interpretations: photographed images do not seem to be statements about the world so much as
+    pieces of it, miniatures of reality that anyone can make or acquire.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0004
+  term: photographic_seeing
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    Both a new way for people to see and a new activity for them to perform: the mentality that
+    looks at the world as a set of potential photographs. Sontag credits it with an aptitude for
+    finding beauty in what is neglected as too ordinary, and calls it, on examination, a kind of
+    dissociative seeing that creates estrangement rather than union.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0005
+  term: acquisition
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    Photographing as appropriation, in three forms she separates: surrogate possession of a
+    cherished person or thing; a consumer's relation to events; and, most inclusively, acquiring
+    something as information rather than as experience.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0008
+  term: the_interesting
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    The quality photography specialises in producing, which erases the distinctions between
+    beautiful and ugly, true and false, useful and useless, good taste and bad. What makes
+    something interesting is that it can be seen to be like, or analogous to, something else.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0009
+  term: recycling
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    Photography does not simply reproduce the real, it recycles it: things and events are put to
+    new uses and assigned new meanings, so that clichés recycled become meta-clichés, unique
+    objects become clichés and clichés become distinctive artefacts.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0012
+  term: the_privileged_moment
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    What a still is, against a flow: a neat slice of time rather than a stream, turned into an
+    object one can keep and look at again, whose force is that it keeps open to scrutiny instants
+    the normal flow of time immediately replaces.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0015
+  term: photographs_as_the_standard_of_the_beautiful
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    The reversal in which the copy becomes the measure: photographs rather than the world have
+    become the standard of the beautiful, and it is reality which is scrutinised and evaluated for
+    its fidelity to photographs.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0016
+  term: memento_mori
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    Sontag's claim that all photographs are memento mori: by slicing out a moment and freezing it
+    they testify to time's relentless melt, so that to photograph is to participate in another
+    person's or thing's mortality, vulnerability and mutability.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0017
+  term: certifying_and_refusing_experience
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    The double action of the camera in travel: a way of certifying experience which is also a way
+    of refusing it, by limiting experience to a search for the photogenic and converting it into
+    an image, a souvenir.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0018
+  term: photographs_acknowledge_they_do_not_explain
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    Sontag's limit on photographic knowledge: photographs do not explain, they acknowledge, because
+    understanding is based on how something functions, functioning takes place in time, and only
+    that which narrates can make us understand.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0019
+  term: what_a_photograph_is_of
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: property
+  definition_in_origin_frame: >
+    The claim that identification of the subject always dominates perception of a photograph, as it
+    does not necessarily in a painting, so that formal qualities of style are at most secondary
+    while what a photograph is of is always primary.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── problems: what Sontag says goes wrong, in her frame ─────────────────────
+
+- term_id: t_snt_0006
+  term: the_meaning_is_the_use
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    A photograph changes according to the context in which it is seen; each situation suggests a
+    different use and none can secure the meaning. Recorded as a problem rather than a property
+    because Sontag raises it as the reason a photograph's political or moral weight drains away.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0007
+  term: the_caption_glove
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    A photograph is physically mute and talks through the mouth of the text beneath it; captions
+    do override the evidence of our eyes, and yet the caption-glove slips on and off so easily
+    that no caption can permanently restrict or secure a picture's meaning.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0010
+  term: the_ante_keeps_getting_raised
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    Photographs shock insofar as they show something novel, and the threshold rises — partly
+    through the very proliferation of such images — so that the shock wears off with repeated
+    viewing and the horrible comes to seem ordinary, familiar, remote and inevitable.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0011
+  term: conventions_of_beauty_get_used_up
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    Photographs create the beautiful and, over generations of picture-taking, use it up: seeing
+    accommodates to photographs, so what once took a very intelligent eye to see anyone can see
+    now. Sontag adds that familiarity does not entirely explain which conventions die, and that
+    the attrition is moral as well as perceptual.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0013
+  term: the_frame_severs_the_circumstance
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    All borders seem arbitrary: anything can be separated from anything else and anything made
+    adjacent to anything else, since all that is necessary is to frame the subject differently.
+    The camera makes reality atomic, manageable and opaque.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0014
+  term: photographs_cannot_create_a_moral_position
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    An image cannot supply the frame it needs to be read within: it can reinforce a moral position
+    and help build a nascent one, but the contribution of photography always follows the naming of
+    the event, and without a relevant political consciousness such photographs are experienced as
+    unreal.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0020
+  term: the_medium_beautifies
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    Photography still beautifies notwithstanding any declared aim to reveal truth and not beauty;
+    the camera is incapable of photographing a tenement or a rubbish-heap without transfiguring it,
+    and the real has a pathos which is itself beauty. RECORDED AS A PROBLEM IN SONTAG'S FRAME AND
+    AS NOTHING ELSE — it names no action, and no instruction about composing or avoiding anything
+    is stated here or anywhere in this lane.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_snt_0023
+  term: aestheticisation_neutralises_distress
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    The medium which conveys distress ends by neutralising it: cameras miniaturise experience and
+    transform history into spectacle, and as much as photographs create sympathy they also cut
+    sympathy and distance the emotions. Sontag says this holds for the most well-intentioned and
+    properly captioned work. AS ABOVE: this is her diagnosis of an effect on viewers, not a
+    recommendation about how anything should be made, and none is inferred.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_snt_0024
+  term: the_ethical_content_is_fragile
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    Most photographs do not keep their emotional charge: their particular qualities and intentions
+    are swallowed up in the generalised pathos of time past, and time eventually positions most
+    photographs, even the most amateurish, at the level of art.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0025
+  term: a_fake_photograph_falsifies_reality
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    A forged painting falsifies the history of art; a photograph that has been retouched or
+    tampered with, OR WHOSE CAPTION IS FALSE, falsifies reality — because photographs make a claim
+    to be true that paintings can never make.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0026
+  term: imposing_standards_on_the_subject
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    In deciding how a picture should look and in preferring one exposure to another, photographers
+    are always imposing standards on their subjects, even when most concerned with mirroring
+    reality, because they are haunted by tacit imperatives of taste and conscience.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0027
+  term: image_junkies
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    Needing to have reality confirmed and experience enhanced by photographs, which Sontag calls
+    an aesthetic consumerism to which everyone is addicted; industrial societies, in her phrase,
+    turn their citizens into image-junkies.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0028
+  term: photographing_is_essentially_an_act_of_non_intervention
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    The person who intervenes cannot record and the person who is recording cannot intervene; to
+    take a picture is to have an interest in things as they are, in the status quo remaining
+    unchanged at least until a good picture is got.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_snt_0029
+  term: a_semblance_of_knowledge
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: problem
+  definition_in_origin_frame: >
+    The knowledge gained through still photographs will always be some kind of sentimentalism,
+    whether cynical or humanist — a knowledge at bargain prices, a semblance of knowledge and of
+    wisdom, which makes us feel the world is more available than it really is.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── remedies: TWO, and neither is performable. See the header. ──────────────
+
+- term_id: t_snt_0021
+  term: the_right_caption
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: remedy
+  definition_in_origin_frame: >
+    BENJAMIN'S PROPOSAL, REPORTED BY SONTAG AND ARGUED AGAINST BY HER. He held that the right
+    caption beneath a picture could rescue it from the ravages of modishness and confer on it a
+    revolutionary use value, and urged writers to start taking photographs. Sontag's reply is that
+    what the moralists demand is that a photograph do what no photograph can ever do, which is
+    speak; that even an entirely accurate caption is only one limiting interpretation; and that no
+    caption can permanently secure a picture's meaning. Recorded here because the source discusses
+    it and because omitting a refuted proposal would hide the refutation. IT IS NOT HER ADVICE AND
+    MUST NEVER BE READ AS ANY.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: [human_edit]
+
+- term_id: t_snt_0022
+  term: an_ecology_of_images
+  origin: source
+  origin_ref: sontag-on-photography
+  kind: remedy
+  definition_in_origin_frame: >
+    The last sentence of the book: if there can be a better way for the real world to include the
+    world of images, it will require an ecology not only of real things but of images as well. A
+    gesture toward a remedy with no method, no agent and no procedure attached — she names a
+    conservationist remedy and says nothing about who would perform it or how.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: [unknown]
+
+relationships:
+
+- {from: t_snt_0021, to: t_snt_0007, relation: distinct_from, confidence_basis: extractor_judgement, note: "The most important relationship in this file. The right caption is a proposed fix for the caption-glove problem, and Sontag argues it cannot work: the glove slips on and off, and even an accurate caption is only one limiting interpretation. Recorded as distinct_from so that a proposal she refutes is never retrieved as her remedy for the problem it addresses."}
+- {from: t_snt_0020, to: t_snt_0023, relation: same_mechanism, confidence_basis: extractor_judgement, note: "Sontag states the link herself: the neutralising of distress follows from the medium's beautification. Two names for two points in one process, not two problems."}
+- {from: t_snt_0010, to: t_snt_0011, relation: distinct_from, confidence_basis: extractor_judgement, note: "Recorded as a NEGATIVE finding because these look like one thing and are not. The first is a response to a SUBJECT wearing out through repeated exposure; the second is a CONVENTION of beauty being used up by assimilation. Sontag warns explicitly that increased familiarity does not entirely explain the second and that its attrition is moral as well as perceptual, so merging them on the shared word 'familiarity' would discard her own qualification."}
+- {from: t_snt_0010, to: t_snt_0024, relation: distinct_from, confidence_basis: extractor_judgement, note: "Also a negative finding. Decay by repetition acts on images an audience has seen before; decay by time acts on every photograph regardless, and converts what it is affecting FOR — from its subject to its pastness. Different drivers, different scope."}
+- {from: t_snt_0001, to: t_snt_0002, relation: related_to, confidence_basis: extractor_judgement, note: "The trace is this lane's reading of where the presumption comes from. Recorded as related_to and not as a causal relation, because Sontag develops the two in different essays and never joins them."}
+- {from: t_snt_0002, to: t_snt_0026, relation: distinct_from, confidence_basis: extractor_judgement, note: "Sontag holds both at once and does not reconcile them: a photograph seems to have a more innocent relation to reality than other made images, and photographers are always imposing standards on their subjects. Recorded as distinct so the tension is preserved rather than resolved by the ontology."}
+- {from: t_snt_0013, to: t_snt_0006, relation: related_to, confidence_basis: extractor_judgement, note: "If the frame severed the circumstance, the meaning has to be supplied by placement. She states the dependency."}
+- {from: t_snt_0006, to: t_snt_0009, relation: related_to, confidence_basis: extractor_judgement, note: "Recycling is possible precisely because no placement secures a meaning; the unsecured meaning is what makes the same image reusable for an unrelated purpose."}
+- {from: t_snt_0008, to: t_snt_0009, relation: same_mechanism, confidence_basis: extractor_judgement, note: "Sontag defines the interesting by analogy and recycling by relayering, and treats them as one operation of the medium: what makes something interesting is that it can be seen to be like something else."}
+- {from: t_snt_0018, to: t_snt_0029, relation: related_to, confidence_basis: extractor_judgement, note: "The semblance of knowledge is what is left when acknowledgement is mistaken for explanation."}
+- {from: t_snt_0014, to: t_snt_0018, relation: related_to, confidence_basis: extractor_judgement, note: "An image that cannot explain cannot supply the frame it would need to be read within, which is her stated reason the contribution of photography follows the naming of the event."}
+- {from: t_snt_0004, to: t_snt_0017, relation: related_to, confidence_basis: extractor_judgement, note: "The search for the photogenic in travel is photographic seeing in its ordinary, non-professional form."}
+- {from: t_snt_0005, to: t_snt_0027, relation: related_to, confidence_basis: extractor_judgement, note: "Acquisition is the act and image-junkies is her name for the condition of a population that performs it habitually."}
+- {from: t_snt_0012, to: t_snt_0018, relation: distinct_from, confidence_basis: extractor_judgement, note: "The stasis that gives a still its force is the same stasis that removes the duration understanding requires. Recorded as distinct_from because the two claims pull opposite ways and Sontag states both without reconciling them."}
+- {from: t_snt_0015, to: t_snt_0020, relation: related_to, confidence_basis: extractor_judgement, note: "The standard could only shift to photographs because the medium beautifies. Recorded as related_to rather than causal, since the dependency is this lane's reading."}
+- {from: t_snt_0025, to: t_snt_0007, relation: related_to, confidence_basis: extractor_judgement, note: "A false caption is inside Sontag's definition of a fake photograph, which places the caption problem inside the falsification problem rather than beside it."}
+
+concepts:
+
+- concept_id: sc_snt_the_authority_of_the_photograph
+  kind: source_specific_concept
+  origin_ref: sontag-on-photography
+  children_terms: [t_snt_0001, t_snt_0002, t_snt_0003, t_snt_0025, t_snt_0026]
+  origin: extractor_inferred
+
+- concept_id: sc_snt_what_a_photograph_cannot_do_alone
+  kind: source_specific_concept
+  origin_ref: sontag-on-photography
+  children_terms: [t_snt_0013, t_snt_0006, t_snt_0007, t_snt_0018, t_snt_0014, t_snt_0019, t_snt_0029]
+  origin: extractor_inferred
+
+- concept_id: sc_snt_the_aesthetic_cycle
+  kind: source_specific_concept
+  origin_ref: sontag-on-photography
+  children_terms: [t_snt_0020, t_snt_0023, t_snt_0011, t_snt_0015, t_snt_0004]
+  origin: extractor_inferred
+
+- concept_id: sc_snt_acquisition_and_consumption
+  kind: source_specific_concept
+  origin_ref: sontag-on-photography
+  children_terms: [t_snt_0005, t_snt_0017, t_snt_0027, t_snt_0009, t_snt_0008, t_snt_0028]
+  origin: extractor_inferred
+
+- concept_id: cc_snt_attrition_of_response
+  kind: canonical_concept
+  label: attrition_of_response
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: sontag-on-photography
+  children_terms: [t_snt_0010, t_snt_0011, t_snt_0024, t_snt_0023]
+  origin: extractor_inferred
+
+- concept_id: cc_snt_the_photograph_and_time
+  kind: canonical_concept
+  label: the_photograph_and_time
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: sontag-on-photography
+  children_terms: [t_snt_0012, t_snt_0016, t_snt_0024]
+  origin: extractor_inferred
