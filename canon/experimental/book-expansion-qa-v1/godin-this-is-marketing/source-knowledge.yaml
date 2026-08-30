@@ -1586,3 +1586,536 @@ source_knowledge:
     inspected:
       text: true
       figures: []
+
+# ─────────────────────────────────────────────────────────────
+# HOW IT TRAVELS — adoption, remarkability, permission, money
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_god_0023
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "neophiliacs"
+    - "Good marketers have the humility to understand that you shouldn't waste a minute (not of your time or of their time) on anyone who isn't on the left part of the curve"
+    - "If someone is satisfied with what they have, you're unlikely to have the time or the money to reach out to them directly and cause them to become dissatisfied"
+    - "It's not for them. Not right now"
+    - "the only people we can serve are curious, dissatisfied, or bored"
+  concept_label: the_satisfied_are_not_reachable_and_should_not_be_spent_on
+  label_origin: extractor_assigned
+  claim: >
+    Godin turns the adoption curve into a spending rule. The people at the innovating end are
+    neophiliacs — addicted to the new, thrilled by discovery, forgiving of missteps while the thrill
+    lasts and unforgiving afterwards — and they are the only audience worth beginning with. His
+    reason for excluding the rest is a resource argument rather than a judgement: if someone is
+    satisfied with what they have, you are unlikely to have the time or money to make them
+    dissatisfied enough to become interested, so a minute spent there is wasted for both of you. He
+    states the consequence starkly: the only people you can serve are the curious, the dissatisfied
+    or the bored, and everyone else can opt out and refuse to pay attention. The satisfied may be
+    reached later, horizontally, person to person — but not now and not directly.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Manufacturing dissatisfaction in a satisfied person is expensive because it must first
+      dislodge a working pattern; the same spend on someone already looking for better buys
+      attention that is already available.
+  scope:
+    domain_discussed_by_source: [product_launch, marketing, technology_adoption]
+    conditions: "the early stage of any offering, before word of mouth exists"
+  caveats:
+    - text: >
+        Godin ties the neophiliac's motive to a desire for uniqueness rather than for the product,
+        citing a study in which conspiracy believers were markedly less enthusiastic about a theory
+        described as widely held than about one described as fringe. He is careful that this is a
+        cited study, not his own work, and this lane records it the same way.
+      origin: source_stated
+    - text: >
+        "You can't be perfect in the eyes of an early adopter; the best you can do is be
+        interesting" sets an expectation that the same audience will leave. The rule buys a
+        beginning, not a base.
+      origin: source_stated
+    - text: >
+        The Rogers curve numbers Godin quotes are a normal distribution's proportions applied to
+        adoption behaviour, presented as though they were measurements of it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "They're actively avoiding you, in fact"
+    - "the marketplace of people who are happy with boring is static"
+  source_stated_remedies:
+    - "It's the neophiliacs ... that you can begin with"
+    - "prime the pump with ads that are aimed at neophiliacs, people looking to find you"
+  examples:
+    positive:
+      - {description: "a comic convention used to launch a film a year before release, chosen because that audience has given permission to be shown new things", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0021, note: "the satisfied are the people with the most established pattern"}
+    - {relation: qualified_by, target: sk_god_0024, note: "beginning here creates the gap that has to be crossed later"}
+    - {relation: member_of_system, target: scs_god_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 14 "Treat Different People Differently", section "In search of the neophiliacs" (spine 21)'
+    section: 'with Ch. 5, section "Early adopters are not adapters: They crave the new" (spine 12)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0024
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "the chasm"
+    - "The mass market wants something that works. Something safe. A pattern match, not a pattern interrupt"
+    - "in order to satisfy the early adopters, you may just need to annoy the masses"
+    - "The bridge across the chasm lies in network effects"
+    - "What will I tell my friends? Why will I tell them?"
+    - "It is never the case that people will tell their friends because you want them to, or because you ask them to, or because you worked hard"
+  concept_label: early_adopters_do_not_carry_you_across_and_the_bridge_is_a_network_effect
+  label_origin: extractor_assigned
+  claim: >
+    Godin denies the intuitive assumption that early adopters hand your idea to the mass market. The
+    two groups want opposite things: the mass market wants something that works and is safe, a
+    pattern match rather than an interrupt, and takes "people like us do things like this" very
+    seriously — so satisfying the early adopters may require annoying the masses, and the very thing
+    that made the innovation attractive is the thing the mass market does not want to happen. The
+    bridge he names is structural, not persuasive: an idea that works better when others also use it
+    gives the early adopter a selfish reason to recruit, because their own life improves. He reduces
+    the design question to two: what will I tell my friends, and why will I tell them. And he states
+    the negative plainly — nobody tells their friends because you want them to, asked them to, or
+    worked hard.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Word of mouth requires the teller to benefit from telling. A network effect supplies that
+      benefit structurally, so the recruiting is self-interested rather than altruistic and does not
+      depend on enthusiasm surviving.
+  scope:
+    domain_discussed_by_source: [technology_adoption, consumer_products, social_change, public_health]
+    conditions: "offerings that have won early adopters and are stalled before the mass market"
+  caveats:
+    - text: >
+        The failure case is Godin's own and he tells it against himself: a project of his got trial —
+        thousands of pages built — and failed because it found no whales, the tension dissipated too
+        quickly, people had no reason to return, and it never created the dynamic that would have
+        turned early users into ambassadors. His stated lessons are that they were not specific
+        enough about who the first customers would be and did not tell a story about status.
+      origin: source_stated
+    - text: >
+        Not every worthwhile offering has a network effect. His own counter-example — there is no
+        reason to talk about a chocolate you like, because it does not improve your life if others
+        eat it — leaves such categories without a bridge, and he does not supply one.
+      origin: source_stated
+    - text: >
+        He credits the chasm to Geoffrey Moore and the hype cycle to Gartner. Both are cited
+        frameworks, not findings of this book.
+      origin: extractor_observed
+  source_stated_problems:
+    - "few innovations glide from one part of the market to the other"
+    - "This is the moment when you need a bridge"
+    - "becoming an outlier isn't a strategy. It's a wish"
+  source_stated_remedies:
+    - "Make things better by making better things—things that have a network effect, a ratchet, a reason for sharing"
+    - "Give them a why"
+  examples:
+    positive:
+      - {description: "a village water programme where distinctive containers, a school demonstration and visible adoption by respected households produced social isolation for non-adopters, crossing a local chasm within months", figure_ref: null}
+      - {description: "a schoolyard fad crossing a local chasm because a well-chosen first adopter brought spare units for other leaders", figure_ref: null}
+    counter:
+      - {description: "the author's own project, which achieved trial but produced no reason to return and no ambassadors", figure_ref: null}
+  intra_source_relations:
+    - {relation: qualifies, target: sk_god_0023, note: "the cost of the strategy of beginning with neophiliacs"}
+    - {relation: depends_on, target: sk_god_0026, note: "the network effect must be designed into the offering itself"}
+    - {relation: member_of_system, target: scs_god_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, anecdotal, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 19 "The Funnel", sections "Bridging the chasm", "Where''s your bridge?", "You might not find the bridge" and "Crossing the local chasm" (spine 26)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0025
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "We remember what we rehearse"
+    - "The market has been trained to associate frequency with trust"
+    - "frequency teaches us that there's a very real dip—a gap between when we get bored and when people get the message"
+    - "Don't change your ads when you're tired of them ... Change them when your accountant is tired of them"
+    - "For any tribal behavior that's not energetically maintained, half of the activity will disappear"
+  concept_label: the_gap_between_when_you_get_bored_and_when_they_get_the_message
+  label_origin: extractor_assigned
+  claim: >
+    Godin names a timing failure that follows from a memory claim. People remember what they
+    rehearse — what they see and do again and again — and the market has come to associate
+    frequency with trust, so the familiar is normal and the normal is trusted. The failure is that
+    the maker's boredom arrives long before the audience's comprehension, producing what he calls a
+    very real dip: you change the story exactly when the frequency was about to start paying, and
+    never earn the trust. He quotes the rule that you change your advertising when your accountant
+    is tired of it, not when you or your employees or your friends are, and generalises it beyond
+    advertising to every kind of storytelling — new talks, new markets, new businesses abandoned
+    just before the good part. He adds a decay claim: any tribal behaviour not energetically
+    maintained loses half its activity, so persistence is not optional even after it works.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Trust is built by repetition rather than by content, so the asset accumulates on a schedule set
+      by the audience's exposure, not by the maker's engagement. Because the maker's exposure is far
+      higher, the two clocks are guaranteed to disagree.
+  scope:
+    domain_discussed_by_source: [advertising, publishing, speaking, freelancing, community_organising]
+    conditions: "any story told repeatedly to an audience that encounters it far less often than you do"
+  caveats:
+    - text: >
+        "Change them when your accountant is tired of them" is a quoted maxim, attributed by Godin
+        to Jay Levinson. It gives a memorable heuristic and no actual stopping rule, and it cannot
+        distinguish persistence from stubbornness.
+      origin: extractor_observed
+    - text: >
+        The memory claim is asserted with an evolutionary rationale — we prune memories relentlessly
+        and the easiest to prune are random noise — offered without support.
+      origin: extractor_observed
+    - text: >
+        The half-life figure is unquantified in time: he says it is not clear what the half-life for
+        a given movement is, only that it exists.
+      origin: source_stated
+  source_stated_problems:
+    - "we get bored with our stuff ... And so we change it"
+    - "If you quit right in the middle of building that frequency, it's no wonder you never got a chance to earn the trust"
+    - "half of the activity will disappear"
+  source_stated_remedies:
+    - "The best marketers are farmers, not hunters. Plant, tend, plow, fertilize, weed, repeat"
+    - "reinvest ... have the guts to sit with those you have"
+  examples:
+    positive:
+      - {description: "a door-to-door salesman who took a room in each town and stayed, engaging middle-of-the-curve buyers five or six times over a month instead of taking the easy early sales and driving on", figure_ref: null}
+    counter:
+      - {description: "people who give a talk a few times, or start a business and raise money and spend it fast, hitting the wall just before the good stuff happens", figure_ref: null}
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_god_0024, note: "the persistence case is a human bridge across a local chasm"}
+    - {relation: depends_on, target: sk_god_0027, note: "frequency requires the permission to keep showing up"}
+    - {relation: member_of_system, target: scs_god_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, anecdotal, historical_claim]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 15 "Reaching the Right People", section "Frequency" (spine 22)'
+    section: 'with Ch. 20 "Organizing and Leading a Tribe", sections "It will fade if you let it" and "Take a room in town" (spine 27)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0026
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "whether something is remarkable isn't up to you, the creator ... If they remark on it, then it's remarkable"
+    - "You must do it with intent, building it deep into the product or service"
+    - "The best reason someone talks about you is because they're actually talking about themselves: 'Look at how good my taste is'"
+    - "People aren't going to spread the word because it's important to you. They'll only do it because it's important to them"
+    - "Offensive/juvenile/urgent/selfish is not the same thing as purple"
+  concept_label: remarkability_is_the_audiences_verdict_and_must_be_built_into_the_thing
+  label_origin: extractor_assigned
+  claim: >
+    Godin gives two constraints on being talked about that together rule out most of what is
+    attempted. The first is that the verdict is not the maker's: whether something is remarkable is
+    decided by the user, and if they remark on it then it is remarkable — so remarkability cannot be
+    claimed, only observed. The second is that the motive belongs to the teller: people spread the
+    word when it benefits them, because talking about your thing is a way of talking about
+    themselves — look how good my taste is, look how good I am at spotting important ideas — and
+    never because it matters to you or you asked. The consequence is that it must be designed into
+    the product or service rather than added afterwards, which he says makes the marketer
+    responsible for the customer's experience. He separates this from the impatient substitute:
+    stunts come from a place of selfishness, and offensive or urgent is not the same thing as
+    remarkable.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Sharing is an act of self-presentation, so the thing shared must give the sharer something to
+      say about themselves. A property added after the artefact exists cannot do that; one designed
+      into what the artefact is can.
+  scope:
+    domain_discussed_by_source: [product_design, marketing, publishing, community_organisations]
+    conditions: "anything whose spread depends on people choosing to talk about it"
+  caveats:
+    - text: >
+        Godin's negative case is precise and worth keeping: when people criticise you publicly they
+        are also signalling to their friends — that you are to be shunned — so being talked about is
+        not evidence of the mechanism working.
+      origin: source_stated
+    - text: >
+        "If they remark on it, then it's remarkable" is definitional. It makes the claim
+        unfalsifiable as stated: the property is defined by the outcome it is invoked to explain.
+      origin: extractor_observed
+  source_stated_problems:
+    - "impatient marketers resort to stunts. Stunts come from a place of selfishness"
+    - "It's almost impossible to spread your word directly. Too expensive, too slow"
+  source_stated_remedies:
+    - "intentionally create a product or service that people decide is worth talking about"
+    - "designing evangelism into the very fabric of what you're creating"
+  examples:
+    positive:
+      - {description: "a fellowship organisation whose members treat talking about it as a generous act and a shame killer, so the telling is built into the practice", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0017, note: "the sharer's motive is a status motive"}
+    - {relation: generalises, target: sk_god_0024, note: "a network effect is the strongest version of a reason to tell"}
+    - {relation: member_of_system, target: scs_god_003}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 17 "Permission and Remarkability in a Virtuous Cycle", sections "Transform your project by being remarkable", "Offensive/juvenile/urgent/selfish is not the same thing as purple" and "Designing for evangelism" (spine 24)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0027
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "anticipated, personal, and relevant messages to people who want to get them"
+    - "Real permission is different from presumed or legalistic permission"
+    - "Real permission works like this: If you stop showing up, people are concerned. They ask where you went"
+    - "the promise is the promise until both sides agree to change it"
+    - "It's not your land. You don't have permission to contact people; they do"
+  concept_label: permission_is_anticipated_personal_relevant_and_its_test_is_being_missed
+  label_origin: extractor_assigned
+  claim: >
+    Godin defines permission as the privilege of delivering anticipated, personal and relevant
+    messages to people who want them, and then supplies a test that rules out most of what is
+    called permission: if you stopped showing up, would people be concerned and ask where you went.
+    He is explicit that having someone's address, their failure to complain, or a clause in a privacy
+    policy is not permission. Two consequences follow. The promise made in exchange for permission
+    is binding until both sides agree to change it — a launch, a quarter-end or an election does not
+    create a right to break it. And an audience assembled on a platform is not an asset you own: you
+    do not have permission to contact those people, the platform does, which makes you a
+    sharecropper on someone else's land.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Attention is finite and cannot be replaced once spent, so a message that was not anticipated
+      is taken rather than given. Permission converts each subsequent contact into something the
+      recipient already agreed to, which is what makes repeated low-cost contact possible at all.
+  scope:
+    domain_discussed_by_source: [email_marketing, publishing, podcasting, politics, direct_marketing]
+    conditions: "any ongoing relationship where the marketer initiates contact"
+  caveats:
+    - text: >
+        Godin's own supporting numbers are from a company he founded in the 1990s — open rates over
+        seventy per cent and a thirty-three per cent response rate, which he contrasts with typical
+        commercial email in 2018. Reported by the person who ran it, unaudited, and about a media
+        environment that no longer exists.
+      origin: extractor_observed
+    - text: >
+        The sharecropper argument is a claim about platform incentives in 2018. The underlying point
+        — that permission held by an intermediary is not yours — is structural; the specific
+        platforms are of their period.
+      origin: extractor_observed
+  source_stated_problems:
+    - "presumed or legalistic permission"
+    - "you're a sharecropper. It's not your land"
+    - "spam didn't scale"
+  source_stated_remedies:
+    - "earn it and keep it. Communicate only with those who choose to hear from you"
+    - "How many people would reach out and wonder (or complain) if you didn't send out that next email blast? That's a metric worth measuring and increasing"
+  examples:
+    positive:
+      - {description: "a curated music playlist that grew to millions of subscribers and became, in Godin's account, a more important asset than any radio station because the audience had opted in", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0025, note: "permission is what makes frequency affordable and welcome"}
+    - {relation: trades_off_with, target: sk_god_0028, note: "permission is earned slowly; advertising is bought instantly"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, outcome_claimed, historical_claim, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 17 "Permission and Remarkability in a Virtuous Cycle", sections "Permission is anticipated, personal, and relevant" and "Earn your own permission and own it" (spine 24)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0028
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Direct marketing is action oriented. And it is measured. Brand marketing is culturally oriented. And it can't be measured"
+    - "The danger is in being confused"
+    - "If you're buying direct marketing ads, measure everything ... If you're buying brand marketing ads, be patient. Refuse to measure"
+    - "If you can't see the funnel, don't buy the ads"
+    - "you definitely, certainly, and surely don't have enough time and money to build a brand for everyone. You can't. Don't try"
+  concept_label: direct_and_brand_marketing_have_opposite_disciplines_and_must_not_be_mixed
+  label_origin: extractor_assigned
+  claim: >
+    Godin's most operational claim is a separation. Direct marketing is action-oriented and is
+    measured; brand marketing is culturally oriented and cannot be measured. The disciplines that
+    follow are opposites and he states both as instructions: if you are buying direct ads, measure
+    everything — what attention costs, what a click costs, what an order costs — and if you cannot
+    measure it, it does not count; if you are buying brand ads, be patient, refuse to measure, be
+    consistent, and if you cannot afford to be consistent and patient, do not buy them at all. The
+    danger he names is not doing either badly but confusing the two, which is what makes a shift to
+    a measured environment destroy a business built on unmeasurable brand advertising. He adds the
+    gate: if you cannot see the funnel, do not buy the ads, and if you can see it and it costs too
+    much, fix the funnel first. And he insists brand marketing is subject to the same narrowing rule
+    as everything else — you cannot afford to build a brand for everyone.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      The two do different work on different timescales, so they require opposite decision rules.
+      Applying measurement to culturally-oriented spending kills it before it accumulates; declining
+      to measure action-oriented spending removes the only control it has.
+  scope:
+    domain_discussed_by_source: [advertising, direct_marketing, brand_marketing, small_business]
+    conditions: "any organisation buying attention rather than earning it"
+  caveats:
+    - text: >
+        Godin says these two paragraphs ought to have paid for the book. Read against the rest of
+        the book, that is also a signal about how much of the rest is not this operational.
+      origin: extractor_observed
+    - text: >
+        The economics are of 2018 and are stated as such — a named duopoly taking about half of
+        global online ad spend, the CPM figures, the observation that ads keep being bought until
+        they stop paying for themselves. The separation between the two disciplines is structural;
+        the numbers are period evidence.
+      origin: extractor_observed
+    - text: >
+        He immediately undercuts the funnel's promise: the lifetime value of a new customer rarely
+        exceeds the cost of the ads needed to acquire one, so most brands that matter are primed by
+        advertising but built by everything else. The measurement discipline is a control, not an
+        engine.
+      origin: source_stated
+  source_stated_problems:
+    - "The danger is in being confused"
+    - "They're spending and praying, hoping it all comes out in the wash"
+    - "if you do it by making a ridiculous promise in the ad you run, it'll backfire"
+  source_stated_remedies:
+    - "Assign values to each step. If you can't, don't run any direct-response ads until you can"
+    - "Fix the funnel first"
+    - "Be specific. Be very specific. And then ... overdo your brand marketing"
+  examples:
+    positive:
+      - {description: "a household-goods manufacturer whose model is described as failing when unmeasurable television brand advertising is replaced with measured digital direct advertising", figure_ref: null}
+  intra_source_relations:
+    - {relation: trades_off_with, target: sk_god_0027, note: "bought attention against earned permission"}
+    - {relation: depends_on, target: sk_god_0003, note: "the narrowing rule applies to brand spending too"}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 15 "Reaching the Right People", sections "Brand marketing makes magic; direct marketing makes the phone ring", "A simple guide to online direct marketing" and "A simple guide to brand marketing" (spine 22)'
+    section: 'with Ch. 19 "The Funnel", sections "The sustainable direct marketing funnel" and "The truth about your funnel" (spine 26)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0029
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Marketing changes your pricing. Pricing changes your marketing"
+    - "Your price should be aligned with the extremes you claimed as part of your positioning"
+    - "Low price is the last refuge of a marketer who has run out of generous ideas"
+    - "When you're the cheapest, you're not promising change. You're promising the same, but cheaper"
+    - "Lowering your price doesn't make you more trusted. It does the opposite"
+  concept_label: price_is_part_of_the_positioning_and_cheapness_promises_no_change
+  label_origin: extractor_assigned
+  claim: >
+    Godin treats price as a component of positioning rather than as a separate commercial decision:
+    people form assumptions from your price and your price shapes what they believe about your
+    service, so it must align with the extremes claimed on the positioning axes. His argument
+    against competing on price is that it is a claim of no change — when you are the cheapest you
+    are promising the same, but cheaper — which removes the only thing he says a marketer has to
+    offer. He also inverts the intuition about trust: lowering a price does not increase trust, it
+    decreases it, because where a transaction is risky or expensive people construct a justifying
+    story that carries trust with it. And he adds the operating consequence that price creates the
+    margin available to do any marketing at all.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Price is read as a signal about what is on offer before the offer is examined. Heavy
+      investment — of money, effort or reputation — produces a story that justifies the commitment,
+      and that story carries trust; a low price gives nothing to justify.
+  scope:
+    domain_discussed_by_source: [pricing, retail, professional_services, restaurants, nonprofit_fundraising]
+    conditions: "categories where the buyer cannot verify quality before purchase"
+  caveats:
+    - text: >
+        Godin exempts genuine efficiency: unless you have found an extraordinary new way to deliver
+        the thing, racing to be cheapest means you are not investing in change. The objection is to
+        cheapness as a position, not to a real cost advantage.
+      origin: source_stated
+    - text: >
+        The trust-from-cost mechanism is cognitive-dissonance reasoning offered without citation, and
+        Godin notes without embarrassment that every confidence trickster relies on it. That is a
+        strong reason to hold the claim loosely.
+      origin: extractor_observed
+    - text: >
+        The bakery arithmetic is illustrative: he takes fixed ingredient and overhead costs and
+        varies only the retail price to produce twenty-fold profit differences. It demonstrates
+        operating leverage, not that customers would pay the higher price.
+      origin: extractor_observed
+  source_stated_problems:
+    - "'Cheap' is another way to say 'scared'"
+    - "the race to the bottom is tempting, because nothing is easier to sell than cheaper"
+    - "Better to apologize for the price once than to have to excuse a hundred small slights again and again"
+  source_stated_remedies:
+    - "Your price should be aligned with the extremes you claimed as part of your positioning"
+  examples:
+    positive:
+      - {description: "a resort selling ice cream far below the price a margin analysis would set, because the cone is a beacon rather than a product", figure_ref: null}
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0014, note: "price must sit on the axes already claimed"}
+    - {relation: demonstrated_together_with, target: sk_god_0013, note: "cheapest is a position on a single scale, which he denies exists for appeal"}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 16 "Price Is a Story", sections "Pricing is a marketing tool, not simply a way to get money", "Cheap is another way to say scared" and "Trust and risk, trust and expense" (spine 23)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

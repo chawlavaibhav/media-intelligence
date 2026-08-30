@@ -71,6 +71,25 @@ is a number attached to why.
    ("reports measurement constantly, almost none of it their own"). **Flagged for audit; not
    corrected in this run**, because deciding it is an audit-layer question, not an extraction one.
 
+### 1.1 The counter-case, and why it makes the aggregate more trustworthy
+
+*Contagious* is the one source that inverts the pattern, and its lane did the work that makes the
+number defensible: it built an **attribution ledger from the book's own Notes before writing any
+evidence field**, then checked each candidate against it. Result — 19 objects carry
+`empirical_within_source`; 16 rest on formal studies Berger conducted or co-authored, 3 on informal
+demonstrations he ran himself (each flagged as informal, with the stricter count of 16 stated so a
+reviewer can adopt it instead). **21 distinct third-party studies were identified and excluded**,
+including several of the book's most quotable figures — the 7% online figure, the sale-sign result,
+the Rule of 100, the 70% rumour decay. Roughly **45% of identifiable measurement in that book is the
+author's own.**
+
+That matters twice over. It shows the classification can discriminate — the low counts elsewhere are
+not an artefact of a lazy default. And it is the exact inverse of the live *Made to Stick* case the
+Audit Gate cites, which means the corpus now holds both poles of the same distinction: a trade book
+that reports measurement constantly and almost none of it its own, and one that reports measurement
+constantly and nearly half of it its own. **That contrast is the reason the origin question needs its
+own audit field rather than one shared characteristic.**
+
 ---
 
 ## 2. Dependence relationships that would defeat promotion
