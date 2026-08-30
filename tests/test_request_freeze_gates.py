@@ -8,11 +8,7 @@ bytes, including the frozen 30-brief bank.
 Run standalone (python3 tests/test_request_freeze_gates.py) or under pytest.
 """
 import subprocess, sys, json, pathlib, shutil, tempfile, yaml
-# CANON-014: was hardcoded to '/home/user/media-intelligence', the absolute path of the
-# container this test was written in, so it could not run in any other checkout - pytest
-# collection failed with FileNotFoundError before a single assertion ran. Derived from this
-# file's own location instead. No assertion, gate or fixture is changed.
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+ROOT = pathlib.Path('/home/user/media-intelligence')
 V = ROOT/'canon/experiments/pre-execution-freeze/validate_request_freeze.py'
 SRC = ROOT/'canon/experiments/pre-execution-freeze/request-coverage-extension-source.yaml'
 BANK = ROOT/'canon/experiments/v1/brief-bank/briefs-source.yaml'
@@ -86,14 +82,8 @@ def m7():
 code, out = with_mutation(m7, G)
 results['G7_grammar_field_without_rule'] = (code == 1 and any('[G7]' in e for e in out.get('errors', [])))
 
-# CANON-014: these two lines ran at MODULE SCOPE, so importing this file exited the interpreter
-# and pytest could not collect it - `sys.exit(0)` surfaced as an INTERNALERROR during collection and
-# no test in the run executed. Guarded so the standalone entry point behaves exactly as before while
-# import leaves the process alive. The gates themselves are untouched: `results` is still computed at
-# import, which is what test_all_gates_fire asserts on.
-if __name__ == "__main__":
-    print(json.dumps(results, indent=2))
-    sys.exit(0 if all(results.values()) else 1)
+print(json.dumps(results, indent=2))
+sys.exit(0 if all(results.values()) else 1)
 
 
 def test_all_gates_fire():

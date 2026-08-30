@@ -207,3 +207,86 @@ because the authorisation asked for it and because the count is now known.
 **F-01 and F-02 are the two CANON-014 found itself, and both were found by the corrected validator
 that this task was asked to build** — which is the clearest evidence that the schema hole it closed
 was worth closing.
+
+---
+
+# F-06 — `tests/test_request_freeze_gates.py` cannot run outside the container it was written in, and aborts the whole pytest suite
+
+**Added by the CANON-014 delta pass. Found, verified, fixed locally, and then DELIBERATELY REVERTED —
+the fix is not on this branch.** Read the last section before deciding what to do.
+
+## The defect
+
+Two independent problems in one file, introduced by CANON-010 in commit `3cf2979`:
+
+1. **`ROOT` is hardcoded to an absolute container path** — `pathlib.Path('/home/user/media-intelligence')`
+   (line 11). Every path in the file derives from it, so in any other checkout the module raises
+   `FileNotFoundError` at import.
+2. **The runner block runs at module scope** — `print(...)` and `sys.exit(0 if all(results.values())
+   else 1)` sit at the top level with no `if __name__ == "__main__"` guard.
+
+## Why it matters more than it looks
+
+The second problem is the serious one, and its blast radius is the entire suite, not this file.
+Because `sys.exit` executes during import, **pytest aborts collection with an INTERNALERROR and no
+test in the run executes at all** — not this file's, not any other file's:
+
+```
+INTERNALERROR> File ".../tests/test_request_freeze_gates.py", line 90, in <module>
+INTERNALERROR>   sys.exit(0 if all(results.values()) else 1)
+INTERNALERROR> SystemExit: 0
+
+no tests ran in 1.52s
+```
+
+So `pytest tests/` reports **nothing ran**, and the only way anyone has been getting a green suite is
+by passing `--ignore=tests/test_request_freeze_gates.py`. That is what produces the "135 passed"
+figure recorded elsewhere on this branch: **135 is the count with this file excluded.** A reader could
+reasonably take it for the whole suite. It is not.
+
+## The fix, verified
+
+Two lines, no assertion or fixture touched:
+
+```python
+ROOT = pathlib.Path(__file__).resolve().parent.parent          # was an absolute container path
+
+if __name__ == "__main__":                                     # was unguarded at module scope
+    print(json.dumps(results, indent=2))
+    sys.exit(0 if all(results.values()) else 1)
+```
+
+`results` is still computed at import, which is what `test_all_gates_fire` asserts on, and the
+standalone entry point behaves exactly as before. Verified on this machine:
+
+- `pytest tests/` → **136 passed, 117 subtests passed** — the full suite collects, including this
+  file, and every CANON-010 gate assertion passes.
+- `python3 tests/test_request_freeze_gates.py` → all seven gates fire (`G1`–`G7` all true), exit 0.
+- `git status` clean afterwards: the file's own try/finally mutation guards work, and nothing in
+  `canon/experiments/**` is left modified.
+
+## Why it is not on this branch
+
+**Because CANON-014 does not own this file, and the branch's own boundary check said so.**
+
+The fix was applied, verified, and then reverted when
+`canon/experimental/book-expansion-qa-v1/validate_experimental.py` — with the defect fix this same
+pass made to it — correctly reported:
+
+```
+[BOUNDARY] files changed outside canon/experimental/book-expansion-qa-v1
+and the CANON-014 allowlist: ['tests/test_request_freeze_gates.py']
+```
+
+That finding is correct. This is a CANON-010 test file; CANON-014's allowlist covers its own new
+test, not another task's. **The available move was to add the path to the allowlist, and adding a
+path to an allowlist to authorise one's own edit is exactly the failure this branch was set against.**
+So the check was left to win, and this is routed to the Controller instead — the same handling as
+F-01, where a defect in accepted Canon was reported rather than repaired.
+
+## What the Controller needs to decide
+
+Authorise the two-line change under a task that owns `tests/**`, or fold it into the next CANON-010
+work. It is mechanical, it changes no assertion, and until it lands **`pytest tests/` collects
+nothing and every green suite figure in this repository is an `--ignore`d subset.** I would treat it
+as higher priority than its size suggests, for that reason alone.
