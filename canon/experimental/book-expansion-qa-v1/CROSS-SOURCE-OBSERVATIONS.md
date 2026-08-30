@@ -212,6 +212,17 @@ is treated as such.
 2. **Rendering pages caught errors text alone would have passed through.** The *Logo Design Love*
    caption on printed p.64 calls a failed redesign "successfully renamed" — a translation artefact
    that a text-only pass would have extracted as a confident claim.
+
+2a. **A live Canon finding was extended with new evidence, and sharpened.** The live
+   `freeman-photographers-eye-graphic-guide` audit records `false_page_affordance` on the strength
+   of **five** broken internal cross-references in Parts 1–3. The scope-extension lane found
+   **eight more** in Parts 4–10 and every one is wrong — **nine for nine**, plus the index. It also
+   found an asymmetry the live record does not have: the book's **title-level cross-references are
+   correct** while its **numeric ones are uniformly wrong**, which is exactly what a conversion that
+   re-paginates but preserves text would produce. Notably, the lane **refused the folio mapping its
+   own source header asserted** (a detector had reported "printed = PDF − 0" with agreement on 302
+   pages) on the correct ground that a calibre conversion matching its own injected folios against
+   its own pagination proves nothing. **Routed as an observation; the live record was not modified.**
 3. **A copy can be the wrong artefact entirely.** *Logo Design Love* is an unattributed Spanish
    machine translation; the author's English terminology is unrecoverable, and all its ontology terms
    are marked `verbatim: false`. Filename and title were not enough to establish source identity.
