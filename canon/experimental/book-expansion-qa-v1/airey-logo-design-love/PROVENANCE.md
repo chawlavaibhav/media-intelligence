@@ -70,18 +70,31 @@ USE THE PRINTED NUMBER IN LOCATORS.
 This is **Case 1** of the locator addendum: a PDF with a verified authored folio. All locators in
 this lane use the **printed** page number.
 
-- **Offset verified independently by this lane** by rendering pages and reading the printed folio:
-  PDF 20 → folio `7`; PDF 36 → `23`; PDF 38 → `25`; PDF 45 → `32`; PDF 50 → `37`; PDF 86 → `73`;
-  PDF 124 → `111`; PDF 126 → `113`; PDF 153 → `140`; PDF 201 → `188`. All agree with
-  printed = PDF − 13. No disagreeing folio was found.
+- **Offset verified independently by this lane** by rendering pages and reading the printed folio
+  off each one. **All 23 rendered pages carry a visible folio and all 23 agree** with
+  printed = PDF − 13:
+
+  | PDF | 20 | 28 | 36 | 37 | 38 | 39 | 40 | 42 | 43 | 44 | 45 | 46 |
+  |---|---|---|---|---|---|---|---|---|---|---|---|---|
+  | **folio** | 7 | 15 | 23 | 24 | 25 | 26 | 27 | 29 | 30 | 31 | 32 | 33 |
+
+  | PDF | 48 | 50 | 77 | 86 | 114 | 119 | 124 | 125 | 126 | 153 | 201 |
+  |---|---|---|---|---|---|---|---|---|---|---|---|
+  | **folio** | 35 | 37 | 64 | 73 | 101 | 106 | 111 | 112 | 113 | 140 | 188 |
+
+  **No disagreeing folio was found.**
 - **Printed range present in the file:** −11 (PDF 2) to 204 (PDF 217). Negative and zero numbers are
   the marker's arithmetic on the unfoliated front matter, not authored page numbers.
-- **Author's own text:** printed **1–191** (Part I opens at printed 1; the last chapter ends at
-  printed 191). Printed **192–197** is the "Design resources" appendix (blog and book lists);
+- **Author's own text:** printed **1–191**. Printed 1 is a part title; the first body page is
+  printed 2 and the last chapter ends at printed 191, so the **extraction span used by this lane is
+  printed 2–191**. Printed **192–197** is the "Design resources" appendix (blog and book lists);
   printed **198–204** is the index. **Nothing was extracted from printed 192–204.**
-- **Every locator used in this lane falls inside printed 7–191**, and every cited page was read in
-  the page-marked text; the pages carrying figures that a claim depends on were additionally
-  rendered and looked at.
+- **Every locator used in this lane falls inside printed 8–191**, asserted mechanically rather than
+  by eye: 90 `p.`/`pp.` page markers were parsed out of the 57 Q&A locators and every one tested
+  against the span (74 distinct pages cited, range 8–190, zero failures), and the same assertion was
+  run over `provenance.page_start`/`page_end` on all 50 SourceKnowledge objects and all 4 concept
+  systems. Every cited page was read in the page-marked text; the pages carrying figures that a
+  claim depends on were additionally rendered and looked at. See `EXTRACTION-NOTES.md` §9.
 - **Printed 99–100 (PDF 112–113) contain no extractable text** — they are full-bleed images from the
   Tenth Church project. This is why the page markers jump from 98 to 101. Recorded rather than
   silently passed over.
@@ -141,6 +154,20 @@ with an ownership claim that cannot be checked.
 
 ## Figure inspection
 
-This is a book about marks, so a text-only pass would lose the evidence. **Twenty-two pages were
-rendered with `pdftoppm` at 100–300 dpi and looked at directly.** The full inventory, and the honest
-count of which objects rest on an inspected figure versus on text alone, is in `EXTRACTION-NOTES.md`.
+This is a book about marks, so a text-only pass would lose the evidence. **23 pages were rendered
+with `pdftoppm` at 90 dpi and looked at directly**, chosen for claim-dependence rather than sampled
+— out of roughly 81 pages in the span that carry a figure credit caption, so **about 26 % of the
+book's captioned figure pages were inspected**.
+
+The honest counts, of 50 SourceKnowledge objects:
+
+| | count | share |
+|---|---|---|
+| rest at least partly on a **rendered and inspected** figure | **16** | 32 % |
+| rest on **text alone** | **34** | 68 % |
+| carry `extraction_uncertainty: figure_not_inspected` | **7** | 14 % |
+
+In every flagged object the visual claim is **not inferred from the text**; the `inspected.figures`
+field names which pages were not rendered. The full inventory, what inspecting the pages actually
+changed, and where a text-only pass would still be trusted and should not be, are in
+`EXTRACTION-NOTES.md` §5.
