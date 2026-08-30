@@ -1,0 +1,570 @@
+# Ontology mappings (SPEC-05) — Henry Carroll, "Read This If You Want to Take Great Photographs"
+# (Laurence King, 2014). source_id: carroll-read-this-photographs
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# Terms are Carroll's own words wherever he supplies one; where he supplies only a description the
+# term is ours and carries verbatim: false.
+#
+# THE POINT OF THIS FILE, STATED ONCE: almost every remedy in this book is a physical camera act.
+# Fifteen of the sixteen remedy terms below carry executable_by: [physical_production] and exactly
+# one carries [human_edit]. NONE carries generative_respecification. That is not an omission — the
+# gap is what the field exists to make visible, and translating any of these into a generative
+# instruction is a Pass 2 hypothesis that is not performed here and is not implied anywhere.
+#
+# NO cross_source_concept (xs_) is created. NO same_failure_family relation is used. No relationship
+# points outside this lane: the nearest live neighbour (Freeman) is discussed in prose in
+# PROVENANCE.md §4 as an observation about what to extract, and is deliberately absent from this
+# machine-readable layer.
+
+terms:
+
+  # ── properties: what the source names as a thing in a picture ────────────────
+
+  - term_id: t_crl_0001
+    term: leading_line
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      A line in the scene along which the eye is carried on a controlled path to the element the
+      photographer wants reached. Strongest when it sweeps in from the edge of the frame; one is
+      usually enough.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0002
+    term: foreground_interest
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      Material deliberately positioned in the near foreground that gives the viewer a stepping stone
+      into the image and heightens its sense of depth. Not found but positioned for.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0003
+    term: visual_weight
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      The apparent heaviness of an area of a picture, read from its tone rather than its content;
+      dark areas are said to read as heavier than light ones, and the space each element is given
+      has to answer to it.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0004
+    term: depth_of_field
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      The extent of the zone rendered sharp, governed by aperture and by distance from the camera.
+      Shallow removes detail and makes the subject stand out; deep carries foreground to background.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0005
+    term: hard_light
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      Light from one direction and of high intensity: anything in its path becomes a highlight and
+      everything else stays dark, and its shadows have razor-sharp edges.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0006
+    term: soft_light
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      Less intense light with no stark divide between highlight and shadow; shadow edges fade rather
+      than stop abruptly, and shadow areas keep visible detail.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0007
+    term: decisive_moment
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      An instant in which separate, unrelated elements converge into one arrangement and after which
+      they disperse; capturing it is said to require anticipation and instinct rather than reaction.
+      Carroll attributes the phrase to Cartier-Bresson.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0008
+    term: telephoto_compression
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      The illusion, given by a long focal length, that depth is compressed: space reads as flatter,
+      receding elements behave like layered cut-out shapes and the image looks more graphic.
+      Carroll calls it an illusion and offers no account of it.
+    first_seen: 2026-08-30
+    verbatim: false
+
+    executable_by: null
+
+  - term_id: t_crl_0038
+    term: internal_frame
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      An opening found inside the scene — a doorway, a window, an aperture — placed around one
+      element so that attention settles on it; described as a photograph within the photograph.
+    first_seen: 2026-08-30
+    verbatim: false
+    executable_by: null
+
+  - term_id: t_crl_0030
+    term: correct_exposure_is_a_matter_of_opinion
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      Carroll's stance that the camera's reported exposure is one balance among several that satisfy
+      the light, not the right answer; the choice among them is a question about the picture.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0031
+    term: the_essence_of_your_subject
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: property
+    definition_in_origin_frame: >
+      The criterion by which a departure from the composition techniques is warranted: the
+      composition's register corresponds to the subject's. Carroll offers no test for it.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  # ── problems: the source's own words for what goes wrong ─────────────────────
+
+  - term_id: t_crl_0009
+    term: passive_area
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      A region of the frame that "doesn't add much"; the named failure in composing, and the reason
+      for the small positional adjustment that removes it.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0010
+    term: something_creeping_into_the_frame_that_doesnt_belong
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      An element admitted at the frame edge that the photographer did not choose to include; one of
+      the checks in Carroll's pre-exposure scan, alongside an object cut in two rather than framed.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0011
+    term: gaze_cut_short_by_the_edge_of_the_frame
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      A subject placed at the extreme edge whose direction of look runs immediately out of the
+      picture. Named among the things that ordinarily read as wrong — and, in the same passage,
+      defended as right for one particular sitter.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0012
+    term: eyes_pulled_out_of_the_image
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      A line or path that carries attention off the edge of the picture rather than through it.
+      Named as wrongness, and in the same breath argued to be right where the subject warrants it.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0014
+    term: flat_light
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Very low-contrast overcast light that casts little or no shadow and makes everything seem
+      flatter. Carroll's problem with it is specific: it removes the tonal differences that would
+      otherwise guide the eye, so the composition must carry the whole burden.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0015
+    term: clumsy_placement
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Off-centre placement that fails in either of two directions Carroll names: too near the edge
+      of the frame, or only slightly off centre. Neither is quantified.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0029
+    term: too_perfectly_mirrored
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Symmetry carried far enough that the image feels soulless and phony; the failure on the far
+      side of the balance Carroll recommends.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0016
+    term: camera_shake
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Movement of the camera during a slow exposure, which blurs everything in the frame rather than
+      only what moved. Carroll calls it the most common cause of death for night shots and gives its
+      onset for handheld work at slower than about 1/60.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0017
+    term: underexposure_from_a_fast_shutter
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      The stated cost of freezing movement: a faster shutter admits less light, so the frame darkens
+      unless aperture or ISO pays for it.
+    first_seen: 2026-08-30
+    verbatim: false
+    executable_by: null
+
+  - term_id: t_crl_0037
+    term: you_will_lose_detail_somewhere
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      The unavoidable cost of hard light: the range is uneven, so detail is lost at one end or the
+      other and exposure compensation only chooses which end to keep.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0018
+    term: the_snapshot_look
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      The characteristic result of on-axis built-in flash used without skill: shadows thrown forward
+      out of sight, near or reflective things overexposed, and a rendering Carroll calls wholly
+      unflattering.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0021
+    term: a_shot_with_excuses
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      A photograph the maker defends by describing conditions just before or just after the
+      exposure. The excuse names the gap between what was seen and what the frame contains, and the
+      viewer only ever has the frame.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0022
+    term: effort_warping_the_judgement_of_quality
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Letting the fact that a shot was hard to get change the estimate of how good it is. Carroll
+      states it as a discipline: do not let the sole fact that they were hard to get warp your idea
+      of their quality.
+    first_seen: 2026-08-30
+    verbatim: false
+    executable_by: null
+
+  - term_id: t_crl_0024
+    term: judging_a_series_frame_by_frame
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Reading a body of work as individual pictures and analysing each separately, when its meaning
+      is carried by style and order across the set. Carroll reports having done this himself and
+      calls it having looked at the work all wrong.
+    first_seen: 2026-08-30
+    verbatim: false
+    executable_by: null
+
+  - term_id: t_crl_0025
+    term: predatory_distance
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      The reading an image acquires when the photographer could have approached the subject and
+      chose not to. Carroll flags it as a fault only where approach was possible, and concedes that
+      one photographer wanted exactly that reading.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0026
+    term: head_height_neutrality
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      The default camera height, which Carroll calls boring: an all too familiar point of view with
+      a punch-pulling neutrality that contributes nothing to the reading.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0034
+    term: kodak_moment
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      The fully explained picture that answers its own question and leaves the viewer nothing to do.
+      Carroll's instruction is to steer clear of them and watch what is going on in between.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  - term_id: t_crl_0035
+    term: nice_subjects
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: problem
+    definition_in_origin_frame: >
+      Conventionally beautiful subjects — his examples are sunsets, pretty flowers, hot air
+      balloons — which arrive with their beauty supplied, so the photograph can at best substitute
+      for the thing itself.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: null
+
+  # ── remedies: every one carries executable_by ────────────────────────────────
+
+  - term_id: t_crl_0013
+    term: change_position_even_very_slightly
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      A little lower, a touch to the left, a couple of steps back: the small movement of the
+      photographer that re-arranges relationships in the frame without changing the subject.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0019
+    term: exposure_compensation
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Scroll towards + to make the whole image brighter and recover shadow detail, towards − to
+      darken it and recover highlight detail or produce a silhouette. Carroll gives the direction of
+      the correction and explicitly refuses to give its size.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0020
+    term: use_a_tripod
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Mount the camera so it cannot move during a slow exposure. Carroll calls it the only cure at
+      genuinely slow shutter speeds; stabilisation buys margin but not immunity.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0027
+    term: get_close_and_then_get_closer
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Move physically toward the subject until it fills the frame, accepting the social cost of the
+      approach. Carroll explicitly denies that cropping later is the same act.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0028
+    term: get_below_or_above_head_height
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Hunch, squat, lie on the ground or climb on something so the camera occupies a height the
+      viewer does not occupy every day.
+    first_seen: 2026-08-30
+    verbatim: false
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0032
+    term: diffuse_the_light
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Spread the source so the transition between lit and unlit is gradual — a soft box in the
+      studio, or in uncontrolled conditions simply avoiding powerful directional sources.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0036
+    term: set_your_camera_up_in_advance
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Configure the camera before the moment arrives — for him, shutter priority and a fast shutter
+      speed — so that the only decision left at the moment is when to press.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0033
+    term: hold_a_little_back
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Decline to explain the picture: pose questions rather than answers, look away from "the
+      subject" toward what is going on in between, and leave the viewer's imagination somewhere to
+      go.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [physical_production]
+
+  - term_id: t_crl_0023
+    term: write_it_off_as_the_one_that_got_away
+    origin: source
+    origin_ref: carroll-read-this-photographs
+    kind: remedy
+    definition_in_origin_frame: >
+      Discard a shot that needs an excuse, and refuse to let the effort it cost enter the judgement.
+      The only remedy in this book that is an act of assessment rather than an act with a camera.
+    first_seen: 2026-08-30
+    verbatim: true
+    executable_by: [human_edit]
+
+relationships:
+
+  - {from: t_crl_0016, to: t_crl_0004, relation: distinct_from, confidence_basis: extractor_judgement,
+     note: "Carroll himself separates these in the Troubleshooting appendix: a picture that looks wholly out of focus is usually camera shake from a slow shutter, not a focusing fault. The remedies differ completely — a tripod or more sensitivity against a change of focus point — so the string similarity between 'blurred' and 'out of focus' must not be allowed to merge them. Recorded as a negative finding under SPEC-05 governance rule 4."}
+  - {from: t_crl_0005, to: t_crl_0006, relation: distinct_from, confidence_basis: extractor_judgement,
+     note: "Named by the source as the two fundamental types, with opposite consequences for contrast, shadow edge, modelling and flattery. Not two degrees of one property in his frame."}
+  - {from: t_crl_0014, to: t_crl_0006, relation: narrower_than, confidence_basis: extractor_judgement,
+     note: "Carroll develops flat light as the extreme of the soft end, and it inherits soft light's evenness while losing its modelling."}
+  - {from: t_crl_0009, to: t_crl_0010, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Both are found by the same pre-exposure frame scan and both are answered by the same remedy, but one is an area contributing nothing and the other is an element that should not be present at all."}
+  - {from: t_crl_0011, to: t_crl_0015, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Both concern a subject too close to the frame edge. They are NOT the same term: t_crl_0015 is a balance failure Carroll wants avoided, t_crl_0011 is a cue he names as wrong and then defends in the same passage."}
+  - {from: t_crl_0021, to: t_crl_0022, relation: same_mechanism, confidence_basis: extractor_judgement,
+     note: "Both are the maker substituting knowledge of the circumstances for what the frame contains; the excuse is the audible form, the warped judgement is the silent one. Carroll states them together as one discipline."}
+  - {from: t_crl_0025, to: t_crl_0026, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Both are faults of the photographer's physical position rather than of the frame, and both are answered by moving. They are not equivalent: one is about distance and its ethics, the other about height and its familiarity."}
+  - {from: t_crl_0034, to: t_crl_0035, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Two ways a picture can be finished before it is made — by explaining itself, or by borrowing beauty already present in the subject."}
+  - {from: t_crl_0027, to: t_crl_0025, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Approaching is the stated remedy for the predatory reading, but only where approach was possible; where it was not, Carroll treats the distance as legitimate."}
+  - {from: t_crl_0019, to: t_crl_0037, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Compensation is offered as the handling for hard light's detail loss, but it chooses which end of the range to keep rather than recovering both. Recorded so the remedy is not read as a fix."}
+  - {from: t_crl_0007, to: t_crl_0036, relation: related_to, confidence_basis: extractor_judgement,
+     note: "The pre-set is the operational consequence of the moment being shorter than a settings decision."}
+  - {from: t_crl_0001, to: t_crl_0014, relation: related_to, confidence_basis: extractor_judgement,
+     note: "Carroll's one stated cross-chapter interaction: under flat light the leading line has to do the guiding the light would otherwise do."}
+
+concepts:
+
+  - concept_id: sc_crl_the_pre_exposure_frame_scan
+    kind: source_specific_concept
+    origin_ref: carroll-read-this-photographs
+    children_terms: [t_crl_0009, t_crl_0010, t_crl_0013, t_crl_0003, t_crl_0015]
+    origin: source_stated
+
+  - concept_id: sc_crl_light_quality_as_a_two_term_choice
+    kind: source_specific_concept
+    origin_ref: carroll-read-this-photographs
+    children_terms: [t_crl_0005, t_crl_0006, t_crl_0014, t_crl_0032, t_crl_0037]
+    origin: source_stated
+
+  - concept_id: sc_crl_the_exposure_trio
+    kind: source_specific_concept
+    origin_ref: carroll-read-this-photographs
+    children_terms: [t_crl_0030, t_crl_0004, t_crl_0016, t_crl_0017, t_crl_0019, t_crl_0020]
+    origin: source_stated
+
+  - concept_id: sc_crl_position_as_the_decision
+    kind: source_specific_concept
+    origin_ref: carroll-read-this-photographs
+    children_terms: [t_crl_0008, t_crl_0025, t_crl_0026, t_crl_0027, t_crl_0028, t_crl_0002]
+    origin: source_stated
+
+  - concept_id: cc_crl_self_assessment_of_finished_work
+    kind: canonical_concept
+    label: self_assessment_of_finished_work
+    purpose: retrieval_and_aggregation
+    created_by: extractor
+    asserts_equivalence: false
+    origin_ref: carroll-read-this-photographs
+    children_terms: [t_crl_0021, t_crl_0022, t_crl_0023, t_crl_0024]
+    origin: extractor_inferred
+
+  - concept_id: cc_crl_what_the_picture_withholds
+    kind: canonical_concept
+    label: what_the_picture_withholds
+    purpose: retrieval_and_aggregation
+    created_by: extractor
+    asserts_equivalence: false
+    origin_ref: carroll-read-this-photographs
+    children_terms: [t_crl_0033, t_crl_0034, t_crl_0035, t_crl_0031]
+    origin: extractor_inferred

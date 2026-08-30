@@ -1,0 +1,786 @@
+# SourceKnowledge — Seth Godin, "This Is Marketing" (Portfolio/Penguin, 2018).
+# source_id: godin-this-is-marketing
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# LOCATORS: EPUB, reflowable. NO AUTHORED PAGE NUMBERS. page_start/page_end are null everywhere.
+# Locators are chapter number + chapter title + the section heading Godin prints inside the chapter,
+# with "(spine n)" as a file-position aid. No page number was used or invented.
+#
+# CENTRAL HAZARD: this book is written in aphorisms, and an aphorism is not a claim. "Low price is
+# the last refuge of a marketer who has run out of generous ideas" is a good sentence and asserts
+# nothing testable. Every object below was admitted only after asking what it would mean for the
+# claim to be false. Where the only content was a maxim, it was refused; where a maxim sits on top
+# of a real claim, the claim is recorded and the maxim is quoted as a source_term, not as the claim.
+#
+# SOURCE POSITION: a practitioner arguing a position from a career of projects. There is no study he
+# ran, no control group, no measured comparison. empirical_within_source appears on NO object in
+# this lane — see EXTRACTION-NOTES.md §"The one number in the book" for why the VisionSpring
+# doubling is typed outcome_claimed and not empirical_within_source.
+#
+# REPETITION: Godin restates heavily. "Who's it for? What's it for?", the smallest viable market and
+# "people like us do things like this" each recur in a dozen places. Each idea is extracted ONCE, at
+# the place where the mechanism is actually given, and the other appearances are not re-recorded.
+
+source_id: godin-this-is-marketing
+
+source_knowledge:
+
+# ─────────────────────────────────────────────────────────────
+# WHO IT IS FOR — audience selection before anything is made
+# ─────────────────────────────────────────────────────────────
+
+- sk_id: sk_god_0001
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "It doesn't make any sense to make a key and then run around looking for a lock to open"
+    - "The only productive solution is to find a lock and then fashion a key"
+    - "It's easier to make products and services for the customers you seek to serve than it is to find customers for your products and services"
+  concept_label: the_audience_is_chosen_before_the_artefact_is_made
+  label_origin: extractor_assigned
+  claim: >
+    Godin states an ordering constraint on the work: the audience is selected first and the thing is
+    built for that audience, not the other way round. His argument for it is asymmetry of
+    difficulty — it is easier to make products and services for the customers you seek to serve than
+    to find customers for the products and services you already made. He returns to this as the
+    difference between being marketing-driven, which he calls a dead end, and being market-driven.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A key has one shape and must find the single lock it fits; a lock can be measured and a key cut
+      to it. Choosing the audience first turns an unbounded search into a specification problem.
+  scope:
+    domain_discussed_by_source: [marketing, product_development, nonprofit_fundraising, entrepreneurship]
+    conditions: "any project whose success depends on being chosen by people who are not obliged to choose it"
+  caveats:
+    - text: >
+        Argued by analogy. Godin offers no case in which the reverse order was tried and failed, and
+        the whole book is written for people who have not yet committed to a product — the ordering
+        constraint says nothing about what to do when the artefact already exists.
+      origin: extractor_observed
+    - text: >
+        His own contrary case is uncomfortable and he does not resolve it: he says the crowd did not
+        invent the Model T, the smartphone or rap, and that people are terrible at inventing new ways
+        to address their wants. So the audience is chosen first but not consulted first.
+      origin: source_stated
+  source_stated_problems:
+    - "run around looking for a lock to open"
+    - "marketing-driven ... it's a dead end"
+  source_stated_remedies:
+    - "find a lock and then fashion a key"
+    - "be market-driven — to hear the market, to listen to it, and even more important, to influence it"
+  examples:
+    positive:
+      - {description: "an online meditation community built after noticing a need retreat attendees kept voicing, rather than a course built and then promoted", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_god_0002, note: "the two questions are the operational form of this ordering"}
+    - {relation: depends_on, target: sk_god_0010, note: "choosing an audience first is only useful if you can model people unlike yourself"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 1 "Not Mass, Not Spam, Not Shameful . . .", section "The lock and the key" (spine 8)'
+    section: 'with "Market-driven: Who''s driving the bus?" in Ch. 3 (spine 10)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0002
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Who's it for and what's it for are the two questions that guide all of our decisions"
+    - "What change are you trying to make?"
+    - "It has a subtle but magic power, the ability to shift the product you make, the story you tell, and where you tell it"
+    - "Change is best made with intent. 'What's it for?' is the posture of work that matters"
+  concept_label: whos_it_for_and_whats_it_for_are_settled_before_execution
+  label_origin: source_verbatim
+  claim: >
+    Godin's operating rule is that two questions — who is it for, and what is it for — are answered
+    before anything is made, and that everything downstream is derived from them. "What's it for" is
+    put in its strong form as "what change are you trying to make?", which he insists is a claim of
+    responsibility: you are an actor with intent trying to change other human beings, and denying
+    that is a form of hiding. He claims the answers are not descriptive but generative: once you are
+    clear who it is for, the answer shifts the product you make, the story you tell and where you
+    tell it. His worksheet makes the pair the first two lines of a thirteen-question specification.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      An unspecified audience cannot constrain a decision, so every later choice is made on the
+      maker's own taste. Naming the audience and the change converts taste questions into fit
+      questions, which have answers.
+  scope:
+    domain_discussed_by_source: [marketing, nonprofit_fundraising, politics, internal_persuasion, entrepreneurship]
+    conditions: "before the product, the story and the channel are chosen"
+  caveats:
+    - text: >
+        Godin names two ways the "what change" answer goes wrong and both are worth keeping: picking
+        a grandiose, nearly impossible change, which he calls both a heavy burden and a convenient
+        excuse; and reverse-engineering a change to match what you were already going to sell, which
+        he says arrives loaded with buzzwords.
+      origin: source_stated
+    - text: >
+        The claim that answering the two questions shifts the product, the story and the channel is
+        asserted throughout and demonstrated nowhere with a case where the answers changed and the
+        work changed with them.
+      origin: extractor_observed
+  source_stated_problems:
+    - "hiding behind everyone or anyone"
+    - "you reverse-engineer a 'change' that matches that thing, and you load it up with buzzwords that mean nothing to anyone"
+    - "It's tempting to pick a grandiose, nearly impossible change"
+  source_stated_remedies:
+    - "Who's it for? What's it for?"
+    - "be very specific about the change you seek to make, and to make it happen"
+    - "My product is for people who believe ___. I will focus on people who want ___. I promise that engaging with what I make will help you get ___."
+  examples:
+    positive:
+      - {description: "a gluten-free bakery whose stated change is that no one is left out of a family occasion — hosts move from exclusive to inclusive, guests from outsiders to insiders", figure_ref: null}
+    counter:
+      - {description: "'Activation and engagement for a new thriller that makes a meta-statement about viewer identity', quoted by Godin as a reverse-engineered change", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0001, note: "the operational form of the ordering constraint"}
+    - {relation: generalises, target: sk_god_0003, note: "the smallest viable market is the answer to who's it for"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", sections "What change are you trying to make?", "Who are you seeking to change?" and "The simple marketing promise" (spine 11)'
+    section: 'with the thirteen questions in "A Simple Marketing Worksheet" (spine 32)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0003
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "the smallest viable market"
+    - "The relentless pursuit of mass will make you boring, because mass means average, it means the center of the curve, it requires you to offend no one and satisfy everyone"
+    - "What's the minimum number of people you would need to influence to make it worth the effort?"
+    - "find a corner of the market that can't wait for your attention. Go to their extremes"
+    - "The smallest viable market is the focus that, ironically and delightfully, leads to your growth"
+  concept_label: narrowing_the_audience_improves_the_work_rather_than_merely_reducing_reach
+  label_origin: extractor_assigned
+  claim: >
+    Godin's mechanism for the smallest viable market is not that a small audience is easier to
+    reach. It is that pursuing mass forces the work itself to become average: mass means the centre
+    of the curve, which requires offending no one and satisfying everyone, and therefore leads to
+    compromises and generalisations. Narrowing removes that constraint. Once the audience is small
+    and specific, you can go to their extremes, find a position where you alone are the perfect
+    answer, and overwhelm their wants with attention — producing change profound enough that people
+    cannot help but talk about it. The size question is asked as a floor, not a target: what is the
+    minimum number of people you would need to influence to make it worth the effort.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Satisfying everyone and offending no one are constraints on the artefact, not on the audience.
+      Removing them by shrinking the audience is what permits extremity, and extremity is what makes
+      the work worth remarking on, which is how it then spreads back outward.
+  scope:
+    domain_discussed_by_source: [marketing, restaurants, music, publishing, politics, nonprofit_advocacy]
+    conditions: "projects that can survive on a defined minimum audience and can be made more extreme"
+  caveats:
+    - text: >
+        The word "viable" is load-bearing and Godin says so: no fair shipping junk; it does not help
+        to release something that does not work yet. The minimum is a minimum audience, not a minimum
+        standard.
+      origin: source_stated
+    - text: >
+        Every supporting case is a survivor — a restaurant that became famous, a band that grossed
+        hundreds of millions, a lobbying organisation with five million members. Projects that
+        narrowed to a small audience and simply stayed small are absent and cannot appear.
+      origin: extractor_observed
+    - text: >
+        The promise that focus "leads to your growth" is the part with least support. Godin shows
+        cases where narrow beginnings preceded growth; he shows nothing about the rate at which they
+        do.
+      origin: extractor_observed
+  source_stated_problems:
+    - "mass means average ... it requires you to offend no one and satisfy everyone"
+    - "It will lead to compromises and generalizations"
+    - "the hubris of everyone"
+  source_stated_remedies:
+    - "Begin instead with the smallest viable market"
+    - "Go to their extremes. Find a position on the map where you, and you alone, are the perfect answer"
+    - "Choose the people you serve, choose your future"
+  examples:
+    positive:
+      - {description: "a restaurant that could seat only six hundred a day, whose founder treated the constraint as a reason to curate which six hundred", figure_ref: null}
+      - {description: "a band with one top-40 hit that grossed hundreds of millions from concerts by serving a small audience intensely and letting them spread the word", figure_ref: null}
+      - {description: "a lobbying organisation with about two per cent of the population as members, comfortable saying 'it's not for you'", figure_ref: null}
+    counter:
+      - {description: "the hit machine, which Godin explicitly says is a different job and probably not yours", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0002, note: "the answer to who's it for"}
+    - {relation: qualified_by, target: sk_god_0005, note: "the failure mode that follows from abandoning it under rejection"}
+    - {relation: depends_on, target: sk_god_0015, note: "the smallest viable market works because it maximises the chance of changing a culture"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source, anecdotal]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", sections "Forcing a focus", "Coloring the ocean purple" and "Winner take all rarely is" (spine 11)'
+    section: 'with Ch. 8 "More of the Who", sections "A thousand true fans" and "What would Jerry do?" (spine 15)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0004
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Specific is a kind of bravery"
+    - "Specific means accountable. It worked or it didn't. It matched or it didn't. It spread or it didn't"
+    - "Are you hiding behind everyone or anyone?"
+    - "You'll never be able to serve everyone, which is comforting, since you're less likely to be disappointed when it doesn't happen"
+  concept_label: everyone_is_unfalsifiable_and_therefore_comfortable
+  label_origin: extractor_assigned
+  claim: >
+    Godin gives an unusually sharp reason why practitioners choose broad audiences, and it is not
+    ambition. A specific audience makes the work accountable — it matched or it did not, it spread or
+    it did not — and an unspecified one cannot fail, because no outcome can contradict it. He calls
+    "everyone" a place to hide and notes the comfort explicitly: you will never serve everyone,
+    which is comforting, because you are less likely to be disappointed when it does not happen. So
+    specificity is framed as bravery rather than as technique.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A target that cannot be missed cannot be aimed at. Naming the audience creates a condition
+      under which the work can be shown to have failed, and it is the exposure to that judgement,
+      not the arithmetic, that people avoid.
+  scope:
+    domain_discussed_by_source: [marketing, creative_work, entrepreneurship]
+    conditions: "whenever a maker must state who the work is for"
+  caveats:
+    - text: >
+        This is a claim about practitioners' motives — that vagueness is chosen for psychological
+        cover — offered with no evidence beyond Godin's observation of the people he teaches.
+      origin: extractor_observed
+  source_stated_problems:
+    - "hiding behind everyone or anyone"
+  source_stated_remedies:
+    - "committed to the smallest viable audience"
+    - "Organize your project, your life, and your organization around the minimum"
+  examples:
+    positive: []
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_god_0003, note: "explains why the narrowing is resisted"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "Specific is a kind of bravery" (spine 11)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0005
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "When we seek to serve the largest possible audience, that audience will turn us down. The chorus of 'no' will become deafening"
+    - "In the face of so much rejection, it's easy to sand off the edges and fit in. Fit in all the way. Fit in more than anyone else"
+    - "Resist. It's not for them"
+  concept_label: reach_pressure_removes_the_edges_that_made_the_work_work
+  label_origin: extractor_assigned
+  claim: >
+    Godin names a specific mechanism by which more reach makes work worse, and it operates through
+    the maker rather than the audience. Seeking the largest possible audience guarantees mass
+    rejection — the chorus of no becomes deafening, and the feedback is direct, personal and
+    specific. Under that pressure the natural response is to sand off the edges and fit in, and to
+    fit in more than anyone else. Since the edges were what made the work fit its intended audience,
+    the pursuit of reach destroys the thing that was working. His instruction is to resist on the
+    ground that the rejection is not information: it is not for them.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Rejection from people the work was never for is indistinguishable, as an experience, from
+      rejection from people it was for. Acting on the volume of the response rather than on its
+      source converts a fit problem into an averaging process.
+  scope:
+    domain_discussed_by_source: [marketing, creative_work, publishing, comedy, product_launch]
+    conditions: "any work exposed to an audience wider than the one it was designed for"
+  caveats:
+    - text: >
+        Godin supplies the counter-discipline himself and it is easy to miss: some negative response
+        genuinely is about the work. His distinction is between feedback, which asks to be proven
+        wrong, and advice, which asks how the work could fit this person's worldview more closely.
+        Advice reveals fears and wants; criticism often reports a sore spot the work happened to
+        touch. This lane records the distinction as his, not as a reliable test.
+      origin: source_stated
+    - text: >
+        "Resist" is an instruction with no stopping rule. Nothing here distinguishes a work whose
+        edges should be defended from one that is simply not good enough, and Godin concedes
+        elsewhere that both are possible.
+      origin: extractor_observed
+  source_stated_problems:
+    - "the chorus of 'no' will become deafening"
+    - "it's easy to sand off the edges and fit in"
+    - "It's tempting to make a boring product or service for everyone. Boring because boring is beyond criticism"
+  source_stated_remedies:
+    - "Resist. It's not for them"
+    - "What advice do you have for how I could make it fit your worldview more closely?"
+  examples:
+    positive:
+      - {description: "a best-selling children's novel of which twelve per cent of twenty-one thousand reviews gave one or two stars, offered as evidence that a desired and an accidental audience both engage with any successful work", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: qualifies, target: sk_god_0003, note: "the failure mode that follows from abandoning the narrow audience"}
+    - {relation: demonstrated_together_with, target: sk_god_0006, note: "'it's not for you' is the stance that resists the pressure"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "Shun the nonbelievers!" (spine 11)'
+    section: 'with Ch. 8 "More of the Who", section "All critics are right (all critics are wrong)" (spine 15), and Ch. 7, section "Always be testing" (spine 14)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0006
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "'It's not for you'"
+    - "shows the ability to respect someone enough that you're not going to waste their time, pander to them, or insist that they change their beliefs"
+    - "It's impossible to create work that both matters and pleases everyone"
+    - "the freedom to ignore the critics who don't get the joke, the privilege of polishing your story for those that most need to hear it"
+  concept_label: exclusion_is_the_other_face_of_the_choice_to_serve
+  label_origin: extractor_assigned
+  claim: >
+    Godin treats deliberate exclusion as constitutive of positioning rather than as its regrettable
+    side effect: "I made this for you, not for the other folks" and "it's not for you" are two sides
+    of the same coin. His argument is that exclusion is an act of respect — refusing to waste
+    someone's time, to pander to them, or to insist that they change their beliefs — and that the
+    alternative is impossible anyway, since no work both matters and pleases everyone. What the
+    stance buys is operational: freedom to ignore critics outside the audience, and the ability to
+    polish the work for those who most need it.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      A promise made to a specific group is a promise not made to everyone else. Saying so
+      explicitly converts an unavoidable exclusion into information the excluded person can act on,
+      and frees the maker from a judgement that was never relevant.
+  scope:
+    domain_discussed_by_source: [marketing, publishing, restaurants, comedy, nonprofit_advocacy]
+    conditions: "any offering that has chosen a specific audience"
+  caveats:
+    - text: >
+        Godin's own worked case shows what it costs. A restaurant group that ended tipping had to
+        accept that diners who enjoyed the status of a large tip could no longer get it — "It's not
+        for you, sorry." The choice is stated as choosing whom to disappoint, not as avoiding
+        disappointment.
+      origin: source_stated
+    - text: >
+        The framing of exclusion as respect is Godin's ethical position, not a finding about how
+        excluded audiences experience it.
+      origin: extractor_observed
+  source_stated_problems:
+    - "waste their time, pander to them, or insist that they change their beliefs"
+    - "It's impossible to create work that both matters and pleases everyone"
+  source_stated_remedies:
+    - "I made this for you. Not for the other folks, but for you"
+    - "I'm sorry, this isn't for you, here's the phone number of my competitor"
+  examples:
+    positive:
+      - {description: "a restaurant group eliminating tipping, accepting that some diners lose a status they valued, in exchange for regulars whose worldview is fairness and dignity", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: demonstrated_together_with, target: sk_god_0005, note: "the stance that answers the rejection pressure"}
+    - {relation: depends_on, target: sk_god_0013, note: "you can only say it is not for them once you accept better is not a single scale"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "It''s not for you" (spine 11)'
+    section: 'with Ch. 16 "Price Is a Story", case study "No tipping at USHG" (spine 23)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0007
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "The comedian's dilemma"
+    - "Then he discovers that the audience is an Italian tour group, and no one understands English"
+    - "It's entirely possible that your work isn't as good as it needs to be. But it's also possible that you failed to be clear about who it was for in the first place"
+  concept_label: work_that_lands_badly_has_two_candidate_causes_and_they_need_different_fixes
+  label_origin: extractor_assigned
+  claim: >
+    Godin insists on a diagnostic split that practitioners routinely collapse. When work fails in
+    front of an audience there are two candidate explanations: the work is not good enough, or the
+    audience was never the one it was for. His illustration puts a skilled comedian in front of a
+    tour group that does not speak his language — the failure is total and tells him nothing about
+    his material. The consequence is that the same symptom licenses opposite responses, and the
+    diagnosis must be made before either is attempted.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: false
+    text: null
+  scope:
+    domain_discussed_by_source: [comedy, marketing, creative_work]
+    conditions: "work that failed in front of an actual audience"
+  caveats:
+    - text: >
+        Godin gives no test for telling the two cases apart. In his illustration the answer is
+        discovered by accident after the show. As a diagnostic it names the branch without supplying
+        the decision rule, which is a real limit and not a summary artefact.
+      origin: extractor_observed
+    - text: >
+        The illustration is a story told without attribution and is doing rhetorical rather than
+        evidential work.
+      origin: extractor_observed
+  source_stated_problems:
+    - "he's beating himself up, thinking of quitting comedy altogether"
+    - "you failed to be clear about who it was for in the first place"
+  source_stated_remedies: []
+  examples:
+    positive:
+      - {description: "a comedian bombing in front of an audience that does not speak his language", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0005, note: "the case where the rejection genuinely carries no information about the work"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "The comedian''s dilemma" (spine 11)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0008
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Begin by choosing people based on what they dream of, believe, and want, not based on what they look like"
+    - "use psychographics instead of demographics"
+    - "worldviews"
+    - "Yes, we're typecasting—willfully exaggerating people's attitudes and beliefs in order to serve them better"
+    - "Everyone has a problem, a desire, and a narrative"
+  concept_label: group_people_by_what_they_believe_not_by_what_they_look_like
+  label_origin: extractor_assigned
+  claim: >
+    Godin's grouping rule is psychographic rather than demographic: choose people by what they dream
+    of, believe and want, and treat the resulting group as sharing a worldview — the lens, the
+    assumptions and biases through which they see. He is explicit that this is a deliberate
+    simplification and defends it as one: we are typecasting, willfully exaggerating people's
+    attitudes and beliefs in order to serve them better. The payoff he claims is predictive — with
+    evidence about a worldview you can make reasonable assumptions about how someone will respond to
+    a piece of news or a work. His example is that two coffee chains sold to groups distinguished
+    not by external markers but by an internal set of beliefs about coffee, time, money, community
+    and luxury.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Response is generated by the story a person tells themselves, so grouping by the story groups
+      by the thing that actually predicts the response. Appearance-based grouping predicts only what
+      it measures.
+  scope:
+    domain_discussed_by_source: [marketing, retail, politics, product_positioning]
+    conditions: "audiences that can be described by shared beliefs rather than shared attributes"
+  caveats:
+    - text: >
+        Godin flags the ethical edge himself: everyone deserves to be treated as an individual, with
+        dignity and respect for their choices, and the personas are exaggerations adopted for the
+        marketer's convenience. He does not resolve the tension between those two statements; he
+        states both and moves on.
+      origin: source_stated
+    - text: >
+        The predictive claim — that a worldview lets you make pretty good assumptions about response
+        — is asserted with no accuracy claim and no failed prediction anywhere in the book.
+      origin: extractor_observed
+    - text: >
+        The named personas ("Bargain Bill", "Hurried Henry", "Careful Karla") are illustrative
+        caricatures, not a taxonomy, and are not treated here as one.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Assume that everyone is like you, knows what you know, wants what you want"
+  source_stated_remedies:
+    - "use psychographics instead of demographics"
+    - "begin with a worldview, and invite people who share that worldview to join us"
+  examples:
+    positive:
+      - {description: "two coffee chains that for two decades did not sell to each other's customers, distinguished by beliefs about coffee, time, money, community and luxury rather than by external markers", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: depends_on, target: sk_god_0010, note: "requires accepting that other people's narratives are not yours"}
+    - {relation: generalises, target: sk_god_0009, note: "the failure that follows from substituting your own worldview"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, mechanism_given, repeated_within_source, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "Worldviews and personas" (spine 11)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0009
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Johnson took that action based on his worldview, on his bias about how to shop"
+    - "he abandoned Penney's true fans: people who loved the sport of bargain hunting"
+    - "As a result, sales plummeted by more than 50 percent"
+    - "Penney's customers were playing a game, one that made them feel like they were winning"
+  concept_label: substituting_your_own_worldview_for_the_audiences_destroys_the_fit
+  label_origin: extractor_assigned
+  claim: >
+    Godin's worked failure case is an executive who ended a retailer's constant discounts and sales
+    because he could not imagine a quality store behaving that way — a judgement made from his own
+    worldview as a luxury buyer. Godin's reading is that the existing customers were not enduring the
+    discounts but playing a game that made them feel like they were winning, so removing the
+    discounts removed the product. He reports sales falling by more than fifty per cent. The general
+    claim is that a change made from the maker's own preferences, however competently executed,
+    breaks the fit with an audience whose worldview differs.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      What the customer was buying was not the stated product but the experience of winning at it.
+      A decision taken from a different worldview optimises the stated product and deletes the
+      experience, which is the part the audience was actually there for.
+  scope:
+    domain_discussed_by_source: [retail, marketing]
+    conditions: "an established audience whose worldview differs from the decision-maker's"
+  caveats:
+    - text: >
+        This is a single retrospective case with a dramatic outcome and no controls. The
+        fifty-per-cent figure is reported, not sourced, and the causal attribution to worldview
+        mismatch is Godin's reading of a decision with many other moving parts.
+      origin: extractor_observed
+    - text: >
+        Period-bound: a US department-store episode of 2011-13, in a retail environment that no
+        longer exists in that form.
+      origin: extractor_observed
+  source_stated_problems:
+    - "he tried to transform [the store] into his kind of store"
+    - "Assume that everyone is like you, knows what you know, wants what you want"
+  source_stated_remedies: []
+  examples:
+    positive: []
+    counter:
+      - {description: "a retail chief who ended constant discounting because he would not shop in a store that discounted, and lost the customers who valued the hunt", figure_ref: null}
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0008, note: "the failure case for the worldview rule"}
+    - {relation: demonstrated_together_with, target: sk_god_0010, note: "the same error stated as a principle rather than a case"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, practitioner_assertion, mechanism_given, historical_claim]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 4 "The Smallest Viable Market", section "Worldviews and personas" (spine 11)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0010
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "People don't believe what you believe. They don't know what you know. They don't want what you want"
+    - "sonder"
+    - "they use marketing to solve other people's problems. They have the empathy to know that those they seek to serve don't want what the marketer wants, don't believe what they believe, and don't care about what they care about. They probably never will"
+    - "if you're unwilling to have empathy for the narrative of the person you seek to serve, you're stealing"
+  concept_label: you_are_not_your_customer_and_they_will_probably_never_be
+  label_origin: extractor_assigned
+  claim: >
+    Godin's empathy principle is not a disposition but a working constraint with a hard edge: the
+    people you seek to serve do not believe what you believe, do not know what you know, do not want
+    what you want, and — the clause that does the work — probably never will. So the task is not to
+    persuade them into your position but to model theirs. He names the two symmetrical errors:
+    assuming the people you serve are well-informed, rational, independent, long-term choice makers,
+    and assuming that everyone is like you. His strongest form of the argument inverts the usual
+    ethics: refusing to imagine the other person's narrative is not modesty but theft, because it
+    withholds an option they would have benefited from.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Every purchase is a bargain from the buyer's side — they paid less than it was worth to them,
+      or they would not have bought. Judging the offer by what it would be worth to you substitutes
+      the wrong valuer, and the mismatch is not corrected by better argument.
+  scope:
+    domain_discussed_by_source: [marketing, nonprofit_fundraising, sales, politics]
+    conditions: "any offer made to someone who is not the maker"
+  caveats:
+    - text: >
+        Godin sets the bar for accepting difference unusually high and it should be kept: "we're not
+        faking our points of view, our dreams, and our fears. And neither are you." He rejects the
+        assumption that people on the other side of a divide secretly agree with you.
+      origin: source_stated
+    - text: >
+        The "you're stealing" formulation is rhetoric doing ethical work. The extractable claim is
+        the narrower one about modelling the other's narrative; the theft framing is his position.
+      origin: extractor_observed
+    - text: >
+        Adjacent to, and not identical with, the empathy argument in the live corpus. Nothing here
+        is asserted about any other source.
+      origin: extractor_observed
+  source_stated_problems:
+    - "Assume that the people you're seeking to serve are well-informed, rational, independent, long-term choice makers"
+    - "Assume that everyone is like you, knows what you know, wants what you want"
+    - "insisting that they get with our program"
+  source_stated_remedies:
+    - "It's so much more productive to dance with them instead"
+    - "the empathy to imagine what someone else would want, what they might believe, what story would resonate with them"
+  examples:
+    positive:
+      - {description: "a fundraiser unable to ask for a large donation because she could not imagine making one, when the donation was never for her", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: generalises, target: sk_god_0011, note: "the loss-aversion case is this principle at its sharpest"}
+    - {relation: generalises, target: sk_god_0009, note: "the retail failure is this principle violated"}
+    - {relation: member_of_system, target: scs_god_002}
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given, repeated_within_source]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 5 "In Search of Better", sections "Empathy is at the heart of marketing", "A million-dollar bargain" and "One last thing about sonder" (spine 12)'
+    section: 'with the executive summary in Ch. 2 (spine 9)'
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []
+
+- sk_id: sk_god_0011
+  source_id: godin-this-is-marketing
+  source_terms:
+    - "Desire for gain versus avoidance of loss"
+    - "Here are your new glasses. If they work and you like them, please pay us three dollars. If you don't want them, please give them back"
+    - "One thing that doubled the percentage of glasses sold"
+    - "Maybe the people we were trying to serve saw shopping for something new as a threat, not as a fun activity"
+    - "My narrative is simply my narrative, and if it's not working, it's arrogant to insist on it"
+  concept_label: which_frame_works_depends_on_the_audiences_relation_to_risk
+  label_origin: extractor_assigned
+  claim: >
+    Godin's sharpest case for "you are not your customer" turns on one change of frame. Selling
+    reading glasses in a village, about a third of the people who needed them, knew they needed them
+    and had the money bought a pair. The offer had been framed as shopping — a choice of ten styles,
+    a mirror, new stock in sleeves. Changing it to loss avoidance — here are your glasses, pay to
+    keep them or hand them back — is reported to have doubled the proportion sold. His explanation
+    is about risk capacity rather than psychology in general: shopping is a risk, and it is
+    enjoyable only to people for whom being wrong is not costly, because being wrong does not cost
+    them dinner or a medical check-up. For an audience without that margin, the same offer reads as
+    a threat. He draws the general rule that his own narrative is not better or worse, only his,
+    and that insisting on it when it is not working is arrogance.
+  claim_type: explicit_source_claim
+  interpretation_basis: null
+  mechanism:
+    stated_by_source: true
+    text: >
+      Whether a choice is experienced as an opportunity or as an exposure depends on what being
+      wrong costs the chooser. The frame does not change the goods; it changes which of those two
+      experiences the offer presents.
+  scope:
+    domain_discussed_by_source: [social_enterprise, retail, marketing]
+    conditions: "audiences whose capacity to absorb a wrong choice differs from the marketer's"
+  caveats:
+    - text: >
+        The doubling is an outcome claimed without controls: one afternoon, one village, one
+        observer, no comparison group, no count reported beyond "about a third" and "doubled". It is
+        recorded as outcome_claimed and anecdotal, NOT as a measurement, and nothing in this lane
+        treats it as a rate.
+      origin: extractor_observed
+    - text: >
+        Godin's own framing of the episode is that he was mystified and changed one thing; the
+        explanation about risk capacity is his interpretation afterwards, not a tested hypothesis.
+      origin: extractor_observed
+    - text: >
+        Culturally and materially bounded: a specific village, a specific income level, a specific
+        moment. Godin uses it to argue that the marketer's assumptions do not transfer, which is an
+        argument that would be undermined by treating the result itself as transferable.
+      origin: extractor_observed
+  source_stated_problems:
+    - "it's not helpful to imagine that everyone knows what you know, wants what you want, believes what you believe"
+    - "To go shopping is to take a risk"
+  source_stated_remedies:
+    - "caring enough about those we serve to imagine the story that they need to hear"
+  examples:
+    positive:
+      - {description: "an offer reframed from a purchase decision to a decision about giving something back, in a setting where a wrong purchase would be materially costly", figure_ref: null}
+    counter: []
+  intra_source_relations:
+    - {relation: specialises, target: sk_god_0010, note: "the principle at its sharpest, with a reported result"}
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, outcome_claimed, mechanism_given, practitioner_assertion, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: 'Ch. 3 "Marketing Changes People Through Stories, Connections, and Experience", case study "VisionSpring—Selling glasses to people who need them" (spine 10)'
+    section: null
+    page_start: null
+    page_end: null
+    figure_refs: []
+    source_support: text
+    inspected:
+      text: true
+      figures: []

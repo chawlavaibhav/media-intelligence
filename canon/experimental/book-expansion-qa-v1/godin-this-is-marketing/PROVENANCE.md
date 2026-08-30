@@ -63,10 +63,16 @@ this is recorded in `EXTRACTION-NOTES.md` under `figure_semantic_binding_lost`.
 "A Simple Marketing Worksheet". Front matter, the reading list, acknowledgments, index and
 "About the Author" were skimmed for identity only and not extracted from.
 
-**Span extracted from:** Author's Note and Chapters One to Nineteen, plus Chapter Twenty-One
-(case studies used only as evidence for claims already stated elsewhere) and the worksheet.
-Chapters Twenty, Twenty-Two and Twenty-Three yielded almost nothing extractable — see
-`EXTRACTION-NOTES.md` §"What was deliberately not extracted".
+**Span extracted from:** Author's Note and Chapters One to Nineteen, plus the worksheet.
+
+Two later chapters contributed to objects whose primary anchor is earlier in the book, and are
+listed here so the span is not overstated. **Chapter Twenty** ("Organizing and Leading a Tribe")
+supplies the half-life claim about unmaintained tribal behaviour and the Ziglar case of crossing a
+local chasm by persistence, both of which support `sk_god_0025`. **Chapter Twenty-One** ("Some Case
+Studies Using the Method") supplies the Tesla case, which supports `sk_god_0021`, and the NRA case,
+which supports `sk_god_0003`; in both instances the case is used as evidence for a claim stated
+elsewhere and no object is anchored there. **Chapters Twenty-Two and Twenty-Three** yielded nothing
+extractable. See `EXTRACTION-NOTES.md` §"What was deliberately not extracted".
 
 ## 4. Overlap with live Canon
 

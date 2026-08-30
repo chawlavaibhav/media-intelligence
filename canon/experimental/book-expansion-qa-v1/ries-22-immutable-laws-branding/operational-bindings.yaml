@@ -1,0 +1,346 @@
+# Al Ries & Laura Ries, *The 22 Immutable Laws of Branding* — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory.
+#
+# THE GAP, STATED ONCE AND REPEATED IN EVERY applicability.limits:
+# This book is about brands and markets. Its unit of analysis is a name in a buyer's mind, its
+# evidence is selected corporate anecdote, and its time horizon is decades. It contains nothing
+# about generative media, and nothing in it establishes that any of its claims is true. Where a
+# binding below reaches beyond naming and positioning judgement into anything this project would
+# actually run, the reach is OURS and the binding says so.
+#
+# WHAT IS NOT BOUND, AND WHY. Most of this source is deliberately left unbound:
+#   - the whole growth-strategy apparatus (sk_r22_0006, 0020, 0027, 0033, 0036, 0041, 0044) — these
+#     are decisions a company makes about its product portfolio over years, and this project makes
+#     no such decisions;
+#   - the market-structure claims (sk_r22_0026, 0030, 0034, 0035) — they concern industries;
+#   - the advertising and publicity economics (sk_r22_0012, 0014, 0015, 0016) — they concern media
+#     budgets, and the source's own position on them is one this project has a live source that
+#     contradicts, which is a reason to leave them unbound rather than to bind either side;
+#   - every claim about what customers believe (sk_r22_0021, 0024, 0025, 0057) — the book measures
+#     none of it.
+# Per SCHEMA-CONTRACT §5.9, zero bindings would have been a legitimate outcome. Nine are written
+# because nine of this source's objects are about a *checkable textual property of a name or a
+# position* or about *how a body of conflicting practitioner advice should be held*, which is what
+# the benchmark and governance targets cover.
+#
+# NO creative_ir BINDING: SPEC-01 was not supplied to this lane, so no target_path could be named
+# honestly, and in any case nothing in a book about brand portfolios belongs in a creative IR.
+# NO production BINDING: this source describes no physical production act.
+# Per the schema contract, neither cross_source_supported nor empirically_supported is used
+# anywhere in this file. There is no empirical evidence attached to any of it.
+#
+# OBSERVATION UNITS. Three bindings target evaluation. For two of them the honest unit is
+# `asset_set_over_time`, and both say plainly that a single asset cannot carry the property: brand
+# scope and colour ownership are properties of a portfolio observed across time, and asking one
+# asset whether a brand has over-extended is a category error. Only the wordmark legibility binding
+# takes `whole_asset`, because legibility genuinely is a property of the artefact in front of you.
+
+source_id: ries-22-immutable-laws-branding
+
+operational_bindings:
+
+- binding_id: bnd_r22_001
+  source_knowledge_refs: [sk_r22_0037, sk_r22_0038]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The Law of the Generic and its constructive counterpart give a discriminable, textual, checkable
+    property that a naming benchmark can be built on: whether a candidate name is a common
+    descriptive phrase, or an ordinary word displaced from its usual context, or a truncation. The
+    source supplies both sides of the discrimination with worked pairs — General Video Rental
+    against Blockbuster, Low-Cost Car Rental against Budget, Intelligent Chip Company against Intel
+    — and a set of near-identical generics that a benchmark item can use as distractors. The value
+    is that the discrimination can be scored without knowing whether the source's claim about
+    outcomes is true, which is exactly the property a benchmark item needs.
+  applicability:
+    when: "building a benchmark that tests whether a system can classify a proposed brand name against this source's distinction, and can produce a displaced or truncated alternative to a generic one"
+    limits: >
+      The benchmark tests agreement with Ries & Ries, not correctness. The source establishes
+      nothing about whether generic names actually perform worse — its historical objection is
+      handled by asserting that the General/Standard/National companies succeeded in spite of their
+      names, which means neither outcome can disconfirm the rule. A system scoring well here has
+      learned this source's taxonomy and nothing more. It must never be reported as naming skill.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0029]
+  repair_ontology_refs: [t_r22_0042]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_002
+  source_knowledge_refs: [sk_r22_0017, sk_r22_0018, sk_r22_0048]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The book's own recurring probe — say the name and see what comes back — is already a test item.
+    It opens chapter 1 with Chevrolet returning "a large, small, cheap, expensive car . . . or
+    truck" and closes chapter 22 with the same form applied to three more names. A benchmark can be
+    built from it in two directions: given a described brand, name the single word it owns; given a
+    list of attributes attached to a name, judge whether the name still carries a singular idea. The
+    substitution test at printed p. 110 gives a third form, asking whether a proper noun can stand
+    in for a common phrase.
+  applicability:
+    when: "building benchmark items about positioning vocabulary, single-attribute ownership, and the detection of a name that has been stretched across contradictory attributes"
+    limits: >
+      This measures whether a system reproduces this source's frame. The frame's central capacity
+      claim — that a mind cannot hold more than one attribute per brand — is supported in the book
+      by comparing an individual's vocabulary to a national trademark register, which is not
+      evidence. Items built here must be scored as agreement with a stated position, and the
+      benchmark must not be described as measuring positioning quality.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0031, t_r22_0050]
+  repair_ontology_refs: [t_r22_0039]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_003
+  source_knowledge_refs: [sk_r22_0040, sk_r22_0032]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives, flags]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    Two of this source's diagnostics are unusual in being mechanically statable, which makes them
+    unusually good benchmark material. The first is the question-nobody-asks test: render the demand
+    a proposed extension serves as a sentence a customer would say aloud, and judge whether anybody
+    would say it. The second is the deficiency-signal test: where an extension is named by a
+    subtracted attribute — light, clear, healthy, free-of-something — ask what the name asserts about
+    the original product. Both can be posed as items with a right answer inside the source's frame,
+    and both require reasoning rather than recall.
+  applicability:
+    when: "building benchmark items that ask a system to diagnose a proposed brand-architecture move against this source's two stated tests"
+    limits: >
+      The tests are the authors' inventions and are supported by cases chosen after their outcomes
+      were known. The book itself records a counter-case it cannot explain — Marquis by Waterford,
+      conceded as a success and disposed of by predicting future erosion — so the second test does
+      not even hold across the book's own material. Items must be scored against the source's
+      position, never against commercial outcome.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0027, t_r22_0023]
+  repair_ontology_refs: [t_r22_0043]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_004
+  source_knowledge_refs: [sk_r22_0005, sk_r22_0008, sk_r22_0048]
+  source_system_refs: [scs_r22_001]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    Where this project produces work for a brand repeatedly over months, the source supplies a
+    diagnosis for a drift that no per-item check can see: the set of things the brand has been made
+    to stand for growing until no single idea can be retrieved from it. The observable is the
+    accumulated set of attributes and claims across everything produced for that brand in a period,
+    and the flag is that the set has stopped being reducible to one idea. THE UNIT IS NOT
+    NEGOTIABLE HERE. A single asset cannot carry this property, and asking one asset whether a
+    brand has over-extended is a category error — each individual piece may be internally
+    consistent and on-brief while the set has drifted. This is the whole reason the binding exists;
+    a per-asset check would miss precisely what the source is describing.
+  applicability:
+    when: "reviewing the accumulated output for one brand across a period, not when reviewing any single piece of it"
+    limits: >
+      The source is about a brand's meaning in a market's mind, formed over years by everything a
+      company does, and it measures none of it. What a production pipeline accumulates is not that;
+      it is a body of work, which may or may not be what any buyer sees. Treating drift in the work
+      as drift in the brand is OUR leap, and it is a substantial one. The flag is a prompt for a
+      human to look, and it carries no claim that drift harms anything — the source's own evidence
+      for that is a set of before-and-after share pairs with no comparison group.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0031, t_r22_0050, t_r22_0024]
+  repair_ontology_refs: [t_r22_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_005
+  source_knowledge_refs: [sk_r22_0043, sk_r22_0045]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    The Law of Color's operative property is not "is this colour good" but "is this colour held, and
+    is it the one the competitor does not have". Both halves are relational and temporal. A single
+    execution cannot answer either: a brand's colour is differentiating only relative to a named
+    competitor's, and it is an asset only if it has been held long enough to be recognised, which is
+    the whole of the source's Tiffany argument. So the honest observable is the colour distribution
+    across a brand's output over a period, checked against the leading competitor's. Again a single
+    asset cannot carry the property — every individual piece can be on-palette while the palette
+    itself has been changing, or while it collides with the category leader's.
+  applicability:
+    when: "reviewing colour use across a brand's accumulated output over a period, with the competitor's palette available"
+    limits: >
+      The source's rule is for a brand's whole visual identity, decided once and held for decades by
+      a company, not for the palette of a production run. Its physiological justification —
+      wavelengths focusing in front of or behind the retina, producing the emotional readings of red
+      and blue — is offered without a source and does not support the cultural meanings the chapter
+      derives from it. The colour associations listed are Western conventions. Nothing here should
+      be applied to a brand whose market this project has not looked at.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0035]
+  repair_ontology_refs: [t_r22_0045]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_006
+  source_knowledge_refs: [sk_r22_0042]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, flags]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    This is the one binding in the file whose property a single artefact genuinely carries, and it
+    is recorded partly to mark the contrast with the two above. The source's claim is that legibility
+    outranks expression in a wordmark, and that the trade is not worth making, because a face
+    exaggerated enough for its mood to register is a face the prospect cannot read — and an unread
+    name cannot be remembered. Whether the words in a mark can be read is a property of the mark in
+    front of you, checkable on one asset without reference to any other and without reference to time.
+  applicability:
+    when: "reviewing a single rendered asset that carries a brand wordmark, for whether the name is readable at the size and context it will appear in"
+    limits: >
+      The source supplies no legibility threshold, no measurement, and no method — it supplies an
+      argument and a paraphrase of David Ogilvy. Any actual threshold used in evaluation must come
+      from somewhere else; this source can motivate the check, not calibrate it. The 2.25:1 shape
+      ratio in the same chapter is NOT bound: it is given with no derivation, and the binocular
+      argument the authors offer does not produce a number.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0016]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_007
+  source_knowledge_refs: [sk_r22_0049, sk_r22_0010, sk_r22_0036, sk_r22_0034, sk_r22_0015]
+  source_system_refs: [scs_r22_001]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  governance_consumer: conflict_resolution
+  observation_unit: null
+  rationale: >
+    This source contains conflicts INSIDE itself — a share ceiling against a domination objective, a
+    smothering prescription against a welcoming one, "never change" against three permitted changes
+    — and the project needs a settled way to hold them. The constraint this binding imposes is that
+    intra-source conflict is retained and surfaced, never silently resolved by preferring whichever
+    passage a retrieval happened to reach first. Any consumer that returns one side of a recorded
+    conflict must return the other with it. The conflicts are enumerated in scs_r22_001's
+    internal_structure and each is a pair of citable passages, so this is mechanically enforceable.
+  applicability:
+    when: "any consumer retrieves a claim from this source that appears in scs_r22_001's recorded conflict list"
+    limits: >
+      This governs how conflicts are held, not how they are decided — nothing here says which side
+      of any pair is right, and this lane deliberately did not decide. Note also the scope of the
+      rule: it covers conflicts WITHIN this source. Disagreements between this source and any other
+      are outside it, are recorded as prose observations in EXTRACTION-NOTES.md, and require
+      Controller review before anything at all is done with them.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0055]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_008
+  source_knowledge_refs: [sk_r22_0004, sk_r22_0007, sk_r22_0026, sk_r22_0049]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  governance_consumer: evidence_interpretation
+  observation_unit: null
+  rationale: >
+    The single largest hazard this source presents is lexical: it calls its contents "immutable
+    laws", and the word will do evidential work downstream that the book does not support. The
+    constraint is that no claim from this source may be weighted by the word "law" in its name.
+    Every object here carries `practitioner_assertion`, most carry `anecdotal` and `outcome_claimed`,
+    and none carries `empirical_within_source` — that is what a consumer must weight on. The binding
+    also names the specific pattern that makes the claims untestable and that a consumer should
+    flag: the weak-competition clause, by which a successful counter-example is reassigned to the
+    competitor's weakness rather than counted, used four times in this span.
+  applicability:
+    when: "any consumer weighs a claim originating in this source, or compares it against a claim from a source that reports measurement"
+    limits: >
+      This is a rule about weighting, not about truth. Nothing here says the authors are wrong —
+      several of their claims may well be right, and this lane took no position on any of them. It
+      says only that this book supplies no evidence for them beyond selected anecdote, and that a
+      consumer must not infer otherwise from the title. The rule cannot be used to dismiss the
+      source either: `practitioner_assertion` is a real category of knowledge and this is an
+      unusually articulate instance of it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0061]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_r22_009
+  source_knowledge_refs: [sk_r22_0005, sk_r22_0031, sk_r22_0041, sk_r22_0045, sk_r22_0046]
+  source_system_refs: [scs_r22_001, scs_r22_003]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  governance_consumer: rule_application
+  observation_unit: null
+  rationale: >
+    Several of this source's rules are stated absolutely and then qualified elsewhere in the book by
+    a different law. "Never put your name on anything else" is qualified by the Law of Siblings.
+    "Markets may change but brands shouldn't. Ever." is qualified by the Law of Change. "Narrow the
+    focus" is qualified by the four permitted growth routes. Applying any of these in its absolute
+    form is applying something the authors themselves did not hold. The constraint is that when a
+    rule from this source is applied, its qualifying partner is applied with it, and the pairs are
+    recorded in scs_r22_001 and scs_r22_003 so that the requirement is checkable rather than a
+    matter of memory.
+  applicability:
+    when: "a rule originating in this source is being applied to a decision, as opposed to merely retrieved"
+    limits: >
+      The source supplies no criterion for when a qualification takes over — no test for when the
+      'time and place' for a second brand has arrived, none for distinguishing a real market shift
+      from a passing one, none for deciding whether a brand is weak enough in the mind to be
+      changed. So this binding can make the qualification visible; it cannot make the rule
+      decidable, and no consumer should treat a pair of qualified rules as an algorithm. The
+      judgement remains a human one, exactly as it is in the book.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_r22_0033, t_r22_0034]
+  repair_ontology_refs: [t_r22_0043, t_r22_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"

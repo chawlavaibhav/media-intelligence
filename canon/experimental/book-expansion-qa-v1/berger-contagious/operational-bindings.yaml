@@ -1,0 +1,542 @@
+# Jonah Berger, *Contagious* — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory lane.
+#
+# THE GAP, STATED ONCE AND REPEATED IN EVERY applicability.limits:
+# This source is about TRANSMISSION BETWEEN PEOPLE. Its dependent variable is whether one person
+# passes something to another, its data are conversations, purchases, votes and email forwards, and
+# its unit of time is weeks. Nothing in it is evidence about what any generative system can do, and
+# nothing in it is a model instruction. Where a binding below carries a claim of this source into
+# our evaluation or benchmarking work, the target is OUR target and not the source's, and that is
+# recorded on every binding.
+#
+# THE OBSERVATION-UNIT PROBLEM, WHICH IS THE MOST USEFUL THING THIS SOURCE CONTRIBUTES HERE.
+# Transmission is observed over time and across people. For most of this source's properties a
+# single asset CANNOT carry the property at all, because the property lives in the audience's
+# environment or in a population's behaviour over weeks. Where that is true it is stated in the
+# binding rather than disguised by picking `whole_asset` because it is convenient. Three of this
+# source's properties are exceptions and genuinely ARE properties of one artefact — whether the
+# sponsor is detachable from the narrative, which emotion the artefact evokes, and whether the
+# artefact makes anything visible — and those get `whole_asset` honestly.
+#
+# NO creative_ir BINDING: SPEC-01 was not supplied to this lane, so no target_path could be named
+# honestly, and this source has no field to fill in any case.
+# NO production BINDING: this source describes no physical-production act that we perform. The two
+# physical-production remedies in the ontology (self-advertising product design, behavioural
+# residue) are recorded in the source's frame and left UNBOUND, per SCHEMA-CONTRACT §5.1.
+# Neither `cross_source_supported` nor `empirically_supported` is used anywhere.
+
+source_id: berger-contagious
+
+operational_bindings:
+
+- binding_id: bnd_ctg_001
+  source_knowledge_refs: [sk_ctg_0052, sk_ctg_0053, sk_ctg_0054]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, evaluates]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Of everything in this source, this is the one property a single artefact genuinely carries, and
+    it is checkable by inspection rather than by waiting to see what happens. The source supplies a
+    binary test with a stated mechanism behind it, and the mechanism — that retelling keeps what the
+    plot needs and discards what it does not — is what makes the test predictive rather than
+    stylistic. Our interest is that we routinely produce artefacts whose entertaining element and
+    whose subject are separable, and we have no admission test that catches it. This one is
+    performable on the artefact alone by a reader who has never seen the campaign brief.
+  applicability:
+    when: >
+      Reviewing any artefact intended to be retold, forwarded or described to someone else, rather
+      than merely viewed. Ask whether a person recounting it to a friend could give an account that
+      makes sense, and lands, without naming the subject. If they could, the subject is detachable.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. The source offers this as advice to marketers designing
+      campaigns, not as an evaluation criterion applied to a produced asset, and he supplies no way
+      to grade partial integration — his test is binary and most real artefacts are not. The
+      underlying research is his own but is cited only as an unpublished Wharton working paper
+      (Akpinar and Berger, 'Valuable Virality') whose design the book never describes, and both
+      worked cases are recounted businesses with press-reported outcomes. What transfers is the
+      TEST; the confidence attached to it in the book does not transfer with it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0020]
+  repair_ontology_refs: [t_ctg_0044, t_ctg_0043]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_002
+  source_knowledge_refs: [sk_ctg_0018, sk_ctg_0019]
+  source_system_refs: [scs_ctg_004]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    The source ran into this problem inside his own research and it cost him a null result: he
+    measured whether a property mattered without asking when it mattered, found nothing, and only
+    recovered the finding by splitting the outcome window. The transferable point for us is that the
+    choice of observation window is a substantive decision that can produce a CONFIDENT WRONG ANSWER
+    rather than a noisy one — an evaluation that samples early will report that a property works,
+    and an evaluation that pools across time will report that it does nothing, from the same
+    underlying reality. This binding exists to force the window to be named before the result is
+    read.
+  applicability:
+    when: >
+      Any evaluation of whether a property of an artefact affects downstream response, where the
+      response is observed across a period rather than at a single moment.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. The source's finding concerns human word of mouth about
+      consumer products measured over ten-week campaigns with self-reported conversations from
+      people who received free product. Neither the mechanism he gives for the split — that
+      interesting things are not re-cued and triggered things are — nor the ten-week horizon has any
+      established analogue in our work. What transfers is the METHODOLOGICAL warning, which is
+      general; the specific finding does not.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0005]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_003
+  source_knowledge_refs: [sk_ctg_0028, sk_ctg_0030]
+  source_system_refs: [scs_ctg_005]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    We already ask reviewers whether an asset is emotionally effective, which in practice collapses
+    to whether it is positive or negative. The source's grid replaces that single axis with two, and
+    the second axis is the one that predicts. The value is that WHICH EMOTION AN ARTEFACT EVOKES is
+    genuinely a property of the artefact and can be judged on it alone, so this is a real
+    single-asset criterion. It also names a specific failure that a valence-only review cannot see:
+    an artefact that is moving, well made and sad.
+  applicability:
+    when: >
+      Reviewing an artefact intended to be passed on. Classify the emotion it evokes on both axes,
+      and flag artefacts whose dominant emotion is deactivating — sad, wistful, contented, gently
+      reassuring — as a distinct condition from artefacts that are simply weak.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET, and this binding must be read with its ceiling stated. WHICH
+      emotion an artefact evokes is a property of the artefact. WHETHER IT WILL BE SHARED IS NOT,
+      and no amount of reviewing the artefact can establish it — the source's own sharing figures
+      come from a population's behaviour over six months, not from an asset. Two further limits:
+      the underlying measurements are correlational and single-outlet, with human raters scoring
+      articles rather than readers reporting feelings; and the arousal grid has four cells of which
+      only some carry measurement in the book, with excitement and contentment placed on theoretical
+      grounds and disgust used later without ever appearing in the grid at all.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0010, t_ctg_0011]
+  repair_ontology_refs: [t_ctg_0032, t_ctg_0033]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_004
+  source_knowledge_refs: [sk_ctg_0019, sk_ctg_0024, sk_ctg_0025, sk_ctg_0026]
+  source_system_refs: [scs_ctg_003]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    This binding exists mainly to record a NEGATIVE result about evaluation, and that is its value.
+    Trigger value is not a property of an artefact. It is a property of the relationship between an
+    artefact and the environment its audience actually inhabits — how often the cue occurs there,
+    what else that cue is attached to for those people, whether it fires where they can act. No
+    review of an asset, however careful, can establish any of it, because none of the information is
+    in the asset. The honest unit is a set of assets observed over time against a described
+    audience, and even that only measures the outcome rather than the property. What an artefact
+    review CAN do is name which cue the artefact is betting on, so that the bet is at least visible
+    and can be checked against the audience later.
+  applicability:
+    when: >
+      Reviewing an artefact whose effect depends on being recalled later, away from the moment of
+      exposure. Record which environmental cue it relies on and flag the artefact as unevaluable on
+      this dimension without audience information.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. Beyond the general gap: the source names four constraints and
+      states one of them as a trade-off, but supplies NO procedure for finding the balance between
+      cue frequency and association strength, which is the decision a practitioner actually faces.
+      The system that collects the four constraints is our synthesis, not his — he never gathers
+      them — and it names a design problem it cannot solve. A binding that promises more than
+      flagging here would be promising something neither the source nor we can deliver.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0006, t_ctg_0007, t_ctg_0008, t_ctg_0009]
+  repair_ontology_refs: [t_ctg_0029, t_ctg_0030, t_ctg_0031]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_005
+  source_knowledge_refs: [sk_ctg_0034, sk_ctg_0038, sk_ctg_0039]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    A narrow but real single-asset criterion: whether an artefact SHOWS the behaviour or the use it
+    is about, or merely asserts it. The source's claim is that a behaviour nobody can see cannot be
+    imitated or easily discussed, and the artefact-level version of that is checkable — does the
+    piece depict use, does it make a private choice legible, or does it describe an outcome nobody
+    can observe. This catches a specific and common defect in work that otherwise reviews well.
+  applicability:
+    when: >
+      Reviewing an artefact intended to prompt adoption of a product or behaviour. Ask what a
+      viewer could observe another person doing, having seen it.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET, and the ceiling is low. Real observability is a property of the
+      world — whether the product is used in public, whether a residue persists — and the source's
+      two constructive remedies for it are PHYSICAL: a product feature, a durable object. Neither is
+      translated here, per the schema contract, and neither is within reach of an artefact review.
+      All this binding covers is the depiction. The source's own measured evidence for observability
+      is an observational car-sales study whose observability proxies are commuting mode and
+      weather, both heavily confounded.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0012]
+  repair_ontology_refs: [t_ctg_0036]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_006
+  source_knowledge_refs: [sk_ctg_0047, sk_ctg_0041]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, evaluates]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Two form conditions the source attaches to useful content, both checkable on one artefact:
+    whether the usefulness is visible rather than buried, and whether it is bounded small enough to
+    be passed on whole. The second is the more useful to us because it is structural — a reviewer
+    can see whether a piece has one point and a scannable shape, or twenty-five links across fifteen
+    topics, without knowing anything about the audience.
+  applicability:
+    when: >
+      Reviewing an artefact whose value to its audience is informational and which is meant to be
+      forwarded.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. The source offers no measurement for either condition anywhere
+      in the chapter: the visibility proposal is a hypothetical he invents, and the packaging
+      argument rests on his own forwarding habits plus an observation about list-structured articles
+      that he never checks against his own dataset, which recorded article features and presumably
+      could have. This is the least evidenced binding in the set and is included because the
+      criterion is cheap and structural, not because the source established it.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0019, t_ctg_0022]
+  repair_ontology_refs: [t_ctg_0042]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_007
+  source_knowledge_refs: [sk_ctg_0031, sk_ctg_0032]
+  source_system_refs: [scs_ctg_005]
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The source's arousal manipulations are a minimal-pair recipe we can run as test cases: hold a
+    piece of content fixed and vary only the arousal of the emotion it evokes — the same account
+    written to evoke more anger, the same piece made funnier. The pairs are cheap to construct and
+    the expected direction is stated, which gives a benchmark a prediction to be wrong about. Their
+    value to us is diagnostic of the JUDGE rather than of the content: a reviewer or scoring
+    procedure that cannot separate a high-arousal from a low-arousal version of matched content is
+    scoring something else, most likely valence or craft.
+  applicability:
+    when: >
+      Constructing test cases for any procedure that claims to assess the emotional character of an
+      artefact. Build pairs matched on subject, length and quality, varying only arousal, and
+      include cross-valence pairs — angry against sad, amused against content — so that a judge
+      collapsing arousal onto valence fails visibly.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. The source ran these to test a psychological claim about
+      humans, not to calibrate a judge. And the reporting is the thinnest in the book: two sentences,
+      no sample sizes, no effect sizes, and no description of what was changed in either stimulus.
+      We are borrowing the DESIGN, which is sound, and we cannot borrow a magnitude because none is
+      given. Nothing here licenses an inference about what any model can perceive.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0010]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_008
+  source_knowledge_refs: [sk_ctg_0052, sk_ctg_0053]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The source performs exactly the manipulation a benchmark needs, on his own favourite example: he
+    observes that the Panda advertisement would be just as funny with a chicken suit and a used-car
+    tagline, which holds entertainment constant and varies only whether the subject is load-bearing.
+    That is a minimal pair, and it generates a whole family of them — for any artefact, the variant
+    in which the subject is swapped for an unrelated one. A judge that rates both variants the same
+    is not measuring what it claims to measure.
+  applicability:
+    when: >
+      Constructing test cases for any procedure that claims to assess whether an artefact serves the
+      thing it is about. Generate subject-swapped variants and require the procedure to separate
+      them.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. The source's counterfactual is an argument, not an experiment —
+      he did not build the chicken-suit version and measure anything — and his supporting cases are
+      recounted campaigns whose outcome figures come from trade press. In particular the Evian
+      pairing of 50 million views with a sales fall of almost 25 percent is two facts placed side by
+      side, not a demonstrated causal relation, and a benchmark built on this should not import that
+      implication.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0020]
+  repair_ontology_refs: [t_ctg_0044]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_009
+  source_knowledge_refs: [sk_ctg_0027]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives, flags]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    A scoping test case rather than a performance one. The source reports that negative attention
+    RAISED sales for unknown authors by 45 percent and LOWERED them for established ones, which
+    means the sign of the effect flips on a moderator. It is a compact way to test whether a
+    judgement procedure carries moderators at all, or whether it has learned an unconditional rule
+    such as "negative sentiment is bad". Cases differing only in the prior awareness of the subject
+    should receive different verdicts.
+  applicability:
+    when: >
+      Constructing test cases for any procedure that scores sentiment, tone or reception, to check
+      that it conditions on context rather than applying a fixed sign.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET. The moderator is stated and NOT QUANTIFIED — 'new or relatively
+      unknown' has no threshold anywhere in the book — so test cases built on it encode our reading
+      of where the line falls, not the source's. The study is his own and published, and it concerns
+      book sales after newspaper reviews in the United States; nothing establishes the moderator
+      transfers to other categories.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_010
+  source_knowledge_refs: [sk_ctg_0042, sk_ctg_0043, sk_ctg_0046]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The deal-framing material is the only part of this source that yields mechanically checkable
+    cases with a right answer stated in advance. The same reduction expressed two ways, the same
+    saving on two base prices, the same price with and without a reduction marker — each pair has a
+    predicted direction, and the Rule of 100 in particular is a deterministic rule that can simply
+    be executed and checked. Cheap, exact, and useful precisely because most of this source is
+    neither.
+  applicability:
+    when: >
+      Constructing test cases for any procedure that assesses or generates promotional framing.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET, and two limits are load-bearing. First, the hundred-dollar
+      threshold is an ARTEFACT OF ARITHMETIC IN A CURRENCY QUOTED IN UNITS OF ONE, not a
+      psychological constant; in a currency of a different scale the crossover sits elsewhere, and
+      the source does not say so. Second, the underlying human evidence is the weakest in the book —
+      stated intentions in hypothetical scenarios, one hundred respondents per condition, scenarios
+      adapted from Thaler rather than devised for the purpose — while its figures are the most
+      precisely reported, which is a mismatch a benchmark built on this should carry rather than
+      inherit.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0018]
+  repair_ontology_refs: [t_ctg_0039, t_ctg_0040, t_ctg_0041]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_011
+  source_knowledge_refs: [sk_ctg_0002]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  governance_consumer: evidence_interpretation
+  rationale: >
+    The source states a methodological rule against a mistake this corpus is structurally prone to:
+    inferring what works from examples of what worked, without the failures. His formulation is that
+    a characteristic must be shown to be more often than not linked to success, which requires the
+    population and not the hits. Our knowledge layer is built largely from books that recount
+    successful cases, so a standing rule that a claim supported only by selected successes is
+    admitted as an assertion rather than as evidence is worth having, and it comes from inside a
+    source rather than from us.
+  applicability:
+    when: >
+      Interpreting any source claim whose support is a set of recounted successful cases. Record the
+      claim; do not upgrade its evidence characteristics on the strength of the cases.
+    limits: >
+      This rule is the source's own and it is general, so importing it is a small step. But note
+      that the source does not fully satisfy it himself: he states the standard in the Introduction
+      and then supports a substantial part of the book with recounted business successes, and he
+      never shows that his own analyses meet it. Two of his datasets do — the BzzAgent campaigns and
+      the six months of New York Times articles are populations rather than hit lists — and that had
+      to be established here study by study rather than taken from his statement of principle.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0003]
+  repair_ontology_refs: [t_ctg_0045]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_012
+  source_knowledge_refs: [sk_ctg_0007, sk_ctg_0008]
+  source_system_refs: [scs_ctg_001]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  observation_unit: null
+  governance_consumer: rule_application
+  rationale: >
+    Named frameworks arrive in this project as checklists, and a checklist implies that every item
+    must be satisfied. This source's own position is the opposite and he states it plainly: the six
+    are relatively independent, not all are required, an artefact strong on one and absent on
+    another does not fail for the absence, and no one of them is most important. This binding exists
+    so that if the six are ever used as review criteria, they are applied as a MENU with more-is-
+    better and not as a conjunction to be completed — which is the reading the book's own Epilogue
+    invites and its footnote forbids.
+  applicability:
+    when: >
+      Applying this source's six drivers, or any similarly structured named framework, as review
+      criteria. Score coverage, never completeness, and never treat an absent driver as a defect.
+    limits: >
+      The independence claim is ASSERTED BY THE SOURCE AND NOT TESTED ANYWHERE. No analysis in the
+      book measures the six jointly and checks whether their contributions separate. So this binding
+      constrains us on the source's authority, not on evidence, and it should be applied as a
+      protection against over-reading rather than as a finding about how the drivers behave. Note
+      also that the source contradicts himself: the Epilogue asserts sufficiency ('if you follow
+      these six key STEPPS, you can make any product or idea contagious') in language the footnote
+      denies, so the framework's own summary is the first thing this rule has to defend against.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_013
+  source_knowledge_refs: [sk_ctg_0030, sk_ctg_0028]
+  source_system_refs: [scs_ctg_005]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags, constrains]
+  observation_unit: null
+  governance_consumer: conflict_resolution
+  rationale: >
+    This source's emotion findings circulate in the wider culture in two mutually contradictory
+    garbled forms — "negative content spreads more" and "positive content spreads more" — and both
+    are wrong by the source's own numbers. He reports positive content as 13 percent MORE likely to
+    be shared, which refutes the first; and he reports anger and anxiety increasing sharing, which
+    is why he abandoned valence and which refutes the second. When a received summary of a source in
+    this corpus conflicts with the source, this binding says the extraction record governs and the
+    conflict is recorded rather than averaged. This case is the clearest available instance and is
+    worth holding as the worked example.
+  applicability:
+    when: >
+      Resolving a conflict between what a source is popularly held to say and what the extraction
+      records it saying. Prefer the extraction, cite the locator, and record the popular version as
+      a distinct claim rather than merging the two.
+    limits: >
+      Applies to conflicts of ATTRIBUTION, not to conflicts of fact. This binding settles what
+      Berger reported; it settles nothing about whether he was right. Replication status is outside
+      this extraction's scope entirely and no claim about it is made here. The residual the source
+      himself never resolves — a 13 percent valence association surviving after arousal is
+      introduced — is recorded in the concept system and is not resolved by this binding either.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_ctg_014
+  source_knowledge_refs: [sk_ctg_0040, sk_ctg_0037]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  governance_consumer: rule_application
+  rationale: >
+    The most consequential rule in the source, because it is signed and reverses. A message intended
+    to REDUCE a behaviour that reports how many people perform it makes the behaviour more common,
+    and the source has two supporting cases where it did — anti-drug campaigns on which almost a
+    billion dollars was appropriated, and park signs that almost doubled theft. The rule is simple
+    enough to hold as a standing constraint and the failure is invisible to ordinary review, because
+    such a message looks responsible and reads as concerned. Its counterpart is equally clean:
+    prescribe the desired behaviour and give its reason instead of describing what people do.
+  applicability:
+    when: >
+      Reviewing or drafting any message whose purpose is to reduce a behaviour. Flag any statement
+      of how many people currently perform it.
+    limits: >
+      OURS, NOT THE SOURCE'S TARGET, and there is a condition the source never states as a rule
+      although his own material contains it. Publishing a norm HELPED on the Arizona drinking
+      campaign and HARMED in the anti-drug campaigns, and the distinguishing variable — whether the
+      true norm favours the desired behaviour — is visible in the two cases and is never named.
+      Applying this rule without that condition would forbid the intervention that worked. On
+      evidence: neither supporting study is Berger's. Hornik's anti-drug analysis is observational
+      with unassigned exposure, and Cialdini's park-sign comparison, which is a genuine field
+      manipulation, is the stronger of the two.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_ctg_0014, t_ctg_0013]
+  repair_ontology_refs: [t_ctg_0038, t_ctg_0037]
+  status: proposed
+  status_reason: "experimental; not reviewed"

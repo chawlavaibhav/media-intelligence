@@ -55,7 +55,14 @@ sets `provenance.page_start` / `page_end` to `null` with the roman range recorde
 
 **No folio disagreement was found.** The chapter-opening pages are not a disagreement: the number in
 the head is the chapter number and the folio is printed at the foot, which is a normal design
-convention.
+convention. Reading the head as a folio on those pages would have produced badly wrong locators, so
+three of them were checked deliberately.
+
+**The offset was additionally re-verified mechanically across the whole file.** All 256
+`<<<PRINTED_PAGE n | PDF_PAGE m>>>` markers were tested against `n = m - 17`: **zero violations**.
+The positive printed folios present in the file run **1–240**, which is the real printed span of
+this volume and the span every locator in this lane is asserted against. See `EXTRACTION-NOTES.md`
+§5.2 for the assertion output.
 
 ---
 
@@ -188,7 +195,25 @@ immutable law.
 | `PROVENANCE.md` | this file |
 | `source-knowledge.yaml` | 49 SPEC-03 SourceKnowledge objects |
 | `source-concept-systems.yaml` | 3 SPEC-03 SourceConceptSystem objects |
-| `operational-bindings.yaml` | 9 SPEC-04 bindings (benchmark, evaluation, governance) |
-| `ontology-mappings.yaml` | SPEC-05 terms / relationships / concepts |
-| `qa-bank.yaml` | 50 Q&A items |
+| `operational-bindings.yaml` | 9 SPEC-04 bindings (3 benchmark, 3 evaluation, 3 governance) |
+| `ontology-mappings.yaml` | SPEC-05 ontology — 61 terms, 20 relationships, 9 source-specific concepts |
+| `qa-bank.yaml` | 50 Q&A items, 19 of them `requires_application` (0.38) |
 | `EXTRACTION-NOTES.md` | method, hazards, refusals, cross-source observations, self-check results |
+
+All counts above were written before the files existed, as targets, and all four were met exactly.
+
+---
+
+## 9. Self-check outcome (summary; full results in `EXTRACTION-NOTES.md` §5)
+
+- Every YAML file parses, and every controlled vocabulary, required key and internal reference was
+  checked in code. Zero errors, zero dangling references across all five files.
+- **Locators: 87 page numerals across the 50 Q&A items, every one inside the real printed span
+  1–240 and inside this lane's extracted span 3–110. Zero failures, zero corrections.** Thirty-four
+  items were spot-checked against the actual page text (the brief required twenty); the single flag
+  was a false positive on a passage that spans a page break, investigated and confirmed correct.
+- **`empirical_within_source`: ZERO.** See §7 above.
+- **Application fraction: 19/50 = 0.38**, against a required minimum of one third.
+- No cross-source concept, term relationship or binding was created. The disagreements with
+  `binet-field-effectiveness-in-context-ch1` are recorded as unadjudicated prose observations in
+  `EXTRACTION-NOTES.md` §6 and nowhere else.

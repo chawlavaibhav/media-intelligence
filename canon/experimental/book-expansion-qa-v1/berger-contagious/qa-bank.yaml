@@ -1,0 +1,1386 @@
+# Jonah Berger, *Contagious: Why Things Catch On* (Simon & Schuster, 2013) — Q&A bank
+# EXPERIMENTAL — NOT LIVE CANON. book-expansion-qa-v1, non-merge, exploratory lane.
+#
+# LOCATORS: EPUB, reflowable. THERE IS NO AUTHORED PAGE IN THIS BOOK. Every source_locator is a
+# chapter plus a named section, with the spine document number as a secondary file-position aid.
+# No locator contains a page number, and none is derived from the page numbers in the book's Notes,
+# which are page ranges inside OTHER works. Asserted mechanically; see EXTRACTION-NOTES.md.
+#
+# EVIDENCE STATUS: this is the corpus's strongest empirical-social source, and the `support` field
+# of every item states WHOSE measurement the answer rests on. Where the answer rests on a study
+# Berger conducted or co-authored, the support says so and names the design. Where it rests on
+# someone else's study, the support NAMES THAT RESEARCHER, because the book's narration often does
+# not make the distinction audible. Where it rests on a recounted business case with a
+# press-reported outcome, or on an argument, the support says that instead.
+#
+# SCOPE: this book is about transmission between people. No item here asserts or implies that the
+# source says anything about generative models or about what any automated system can do. That
+# extrapolation lives only in operational-bindings.yaml.
+
+qa_items:
+
+# ── WHAT THE BOOK IS ARGUING AGAINST ────────────────────────────────────────
+
+- qa_id: qa_ctg_0001
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, section 'Generating Word of Mouth' (spine 5)"
+  question: >
+    Berger opens by claiming practitioners systematically misjudge where word of mouth happens. What
+    figure does he report, what do audiences typically guess, and what two reasons does he give for
+    the gap?
+  answer: >
+    He reports that only about 7 percent of word of mouth happens online, against a typical estimate
+    of around 50 percent. Two reasons for the overestimate. First, time: people spend roughly eight
+    times as long offline as online, which creates far more occasions for offline conversation.
+    Second, and the more interesting one, visibility — online conversation leaves a written record
+    and offline conversation leaves none, so the countable channel is mistaken for the large one. He
+    also disputes the assumption that online reach is larger in practice: potential reach is larger,
+    but most recipients never see any given message.
+  answer_type: factual
+  difficulty: easy
+  knowledge_type: media_planning
+  requires_application: false
+  support: >
+    The 7 percent figure is NOT Berger's measurement — he attributes it to the Keller Fay Group and
+    points to Keller and Fay's The Face-to-Face Book, with no design described. The counter-estimate
+    of around 50 percent IS his own reported measurement, but it is an informal poll of hundreds of
+    students and executives, with no control or sampling frame. Sharply period-bound to roughly
+    2011-2012.
+  confounders:
+    - "reading this as a claim that online word of mouth is unimportant, which he does not say — his endnote adds that online is the better channel when the desired action is a click away"
+    - "assuming the 7 percent figure is one of Berger's own studies; it is not, and the book gives no design for it"
+    - "treating the 50 percent figure as a survey finding rather than as an informal classroom poll"
+
+- qa_id: qa_ctg_0002
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, the passage on viral 'theories' in 'Generating Word of Mouth' (spine 5)"
+  question: >
+    Berger says the popular theories of what makes content viral — that it must be funny or cute —
+    are built on a specific methodological error. What is the error, what is his illustration of it,
+    and what standard does he say a proper account must meet?
+  answer: >
+    The error is selecting cases on the outcome: the theories are induced from a handful of hits,
+    and the features they identify are equally present in the vast population of content that
+    failed. His illustration is that Bill Clinton, Bill Gates and Bill Cosby are all famous, so
+    changing your name to Bill is the route to fame — where, as he puts it, the initial observation
+    is correct and the conclusion is patently ludicrous. The standard he sets is that you must
+    examine successes and failures together and ask whether a characteristic is more often than not
+    linked to success. He notes that most cute cat clips get fewer than a few dozen views; the
+    million-view ones are the outliers.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    A methodological argument, not a measurement. Note that Berger states this standard and does not
+    demonstrate that his own analyses meet it; establishing that requires checking each study, and
+    two of his datasets — the BzzAgent campaigns and six months of New York Times articles — are
+    populations rather than hit lists.
+  confounders:
+    - "reading it as a claim that humour and cuteness do not help, which is not the claim — the claim is that the inference is invalid"
+    - "confusing this with the separate argument about influentials, which is about the messenger rather than about method"
+    - "assuming Berger exempts himself; he states the standard and never shows his own work satisfies it"
+
+- qa_id: qa_ctg_0003
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, section 'Generating Word of Mouth' and its endnote on 'making things go viral'; Epilogue, second point (spine 5, spine 12, spine 17)"
+  question: >
+    Berger rejects the influentials thesis in the body text and states something noticeably weaker in
+    his endnote. What does each say, and why does the difference matter?
+  answer: >
+    The body text says conventional wisdom is wrong: some people are more persuasive and some have
+    more friends, but in most cases that does not make them more influential in spreading things,
+    and contagious content spreads regardless of whether the messenger has ten friends or ten
+    thousand. The endnote says something different in kind — that right now there is little good
+    empirical evidence that better-connected or more persuasive people have a bigger impact. That is
+    an absence-of-evidence statement, not a demonstration that messengers do not matter. The
+    difference matters because the body text's confident refutation is not what the endnote
+    supports, and the book's whole shift of attention to the message rests on it. Berger does not
+    deny that individuals supply an initial spark; his borrowed comparison, from Duncan Watts, is
+    that big forest fires are not caused by big sparks.
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Berger's argument, with the empirical support cited only in the Notes and all of it third-party:
+    Bakshy, Hofman, Mason and Watts's Twitter influence study, and Watts and Dodds. The forest-fire
+    comparison is Watts's, and Berger attributes it.
+  confounders:
+    - "reporting the body text alone, which overstates what the source establishes"
+    - "reading the claim as 'messengers never matter'; he explicitly allows that individuals provide the spark"
+    - "attributing the forest-fire argument to Berger; he credits Duncan Watts for it"
+
+- qa_id: qa_ctg_0004
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, the author's first footnote defining 'viral' (spine 5)"
+  question: >
+    Berger uses the word "viral" constantly. In his own footnote he narrows it. What does he say it
+    does and does not mean, and what does that narrowing do to the rest of the book's promises?
+  answer: >
+    He says that when he claims something will make an idea more viral, he means only that it will
+    be more likely to spread from one person to another — and expressly not that one person will
+    generate a long chain that infects a population. He says the disease analogy holds only up to a
+    point, that the key difference is expected chain length, and that long chains may be less common
+    with products and ideas than the analogy implies. The effect on the book is substantial: every
+    promise to make something contagious means raising the probability of a single pass-on, not
+    producing an epidemic. He hedges the empirical half — long chains "may be" less common — and
+    cites Goel, Watts and Goldstein for it.
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: >
+    Berger's own explicit definition, placed in a footnote to the Introduction, with a single
+    parenthetical third-party citation. He does not claim to have established the short-chain point
+    himself.
+  confounders:
+    - "assuming 'viral' in this book means what it means in ordinary usage, namely explosive population-wide spread"
+    - "missing the placement: the book's most important self-limitation is in a footnote, and the body text never repeats it"
+    - "treating the short-chain claim as Berger's finding rather than as a hedged citation"
+
+- qa_id: qa_ctg_0005
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, the author's second footnote on the recipe analogy, and 'A Conversation with Jonah Berger', question 9 (spine 5, spine 14)"
+  question: >
+    What does Berger actually claim about how his six drivers relate to one another — are they
+    jointly necessary, individually sufficient, ranked, or something else? Quote his own framing and
+    note where the book contradicts it.
+  answer: >
+    A menu, not a recipe. He states that not all six ingredients are required; that a product which
+    is Public will not fail because it is not wrapped in a Story; that the principles are relatively
+    independent so you can pick and choose; and that more is better. His own image is that they are
+    "less like a recipe and more like tasty salad toppings" — a Cobb salad with just cheese and
+    bacon is still delicious. In the back-matter interview he adds that no one of the drivers is
+    most important, though some are easier to apply in some categories, and that the payoff lies in
+    attempting the difficult ones. The contradiction is in his own Epilogue, which says "there is a
+    recipe for success" and closes that following the six will make any product or idea contagious —
+    a sufficiency claim the footnote denies — while also saying "or even just a few of them" two
+    paragraphs earlier.
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: concept_development
+  requires_application: false
+  support: >
+    The Introduction footnote and the Readers Group Guide interview, both explicit. Note that the
+    independence claim is ASSERTED and never tested: no analysis in the book measures the six
+    jointly and checks whether their contributions separate.
+  confounders:
+    - "the checklist reading — treating the six as boxes all of which must be ticked, which the Epilogue's diagnostic checklist invites and the footnote forbids"
+    - "reading STEPPS as a priority order or a sequence; Berger says the ordering is a memory aid"
+    - "taking the Epilogue's 'recipe for success' as the source's position; it contradicts his own footnote"
+    - "assuming independence is a finding; it is an assertion with no supporting analysis in the book"
+
+- qa_id: qa_ctg_0006
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, section 'Six Principles of Contagiousness'; restated in the Epilogue checklist (spine 5, spine 12)"
+  question: >
+    Name Berger's six drivers in his own terms and give the diagnostic question he attaches to each
+    in the closing checklist.
+  answer: >
+    Social Currency — does talking about your product or idea make people look good. Triggers — what
+    cues make people think about it, and how can you grow the habitat so it comes to mind more
+    often. Emotion — does talking about it generate feeling, and how can you kindle the fire. Public
+    — does it advertise itself, can people see when others are using it, and can you create
+    behavioural residue that persists after use. Practical Value — does talking about it help people
+    help others, and can you package your expertise into useful information others will pass on.
+    Stories — what is your Trojan Horse, and is the story not only viral but valuable. The initials
+    spell STEPPS, which Berger says is a memory aid rather than an order.
+  answer_type: concept_definition
+  difficulty: easy
+  knowledge_type: concept_development
+  requires_application: false
+  support: >
+    Berger's own framework, stated in the Introduction and restated as a checklist in the Epilogue.
+    The six were derived inductively by noticing common themes across contagious content; he does
+    not claim the set is exhaustive and offers no test that would reveal a missing seventh.
+  confounders:
+    - "substituting the Heaths' six principles from Made to Stick, which is a different framework aimed at a different outcome — being remembered rather than being passed on"
+    - "reading 'Public' as meaning publicity rather than observability of use"
+    - "reading 'Stories' as meaning storytelling craft rather than as a carrier for information"
+
+- qa_id: qa_ctg_0007
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Introduction, the passage beginning 'Word of mouth is more effective than traditional advertising for two key reasons' (spine 5)"
+  question: >
+    Berger gives two reasons word of mouth beats advertising. The second is the less obvious one.
+    What is it, and what is his image for how it works?
+  answer: >
+    The second is targeting. Advertising can buy proximity to an interested audience but not
+    knowledge of who within it actually needs the thing now; word of mouth is naturally directed,
+    because a sharer selects the specific person they judge would find the information relevant and
+    skips everyone else. His image is a searchlight: each recipient sweeps their own network for the
+    one person the thing suits. His example is a publisher who sent him two copies of a book with a
+    note suggesting he pass the second to a colleague — outsourcing the targeting to someone with
+    private knowledge no media buy could purchase. The first reason is credibility: advertising will
+    always argue its product is best, so it is discounted, whereas a friend will report a negative
+    as readily as a positive.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: media_planning
+  requires_application: false
+  support: >
+    Berger's argument from premises about incentives and private knowledge, illustrated by one
+    personal anecdote. Every supporting figure in this passage is third-party and appears only in the
+    Notes — the twenty-to-fifty-percent purchasing figure is a McKinsey white paper, the restaurant
+    and Amazon figures are Godes and Mayzlin and Chevalier and Mayzlin.
+  confounders:
+    - "giving only the credibility reason, which is the one most accounts remember"
+    - "reading targeting as demographic targeting; his point is that the sharer holds private knowledge about relevance that no targeting system has"
+    - "treating the 'ten times more effective' figure as Berger's measurement; it rests on third-party work cited only in the Notes"
+
+# ── SOCIAL CURRENCY ─────────────────────────────────────────────────────────
+
+- qa_id: qa_ctg_0008
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', section 'Inner Remarkability' (spine 6)"
+  question: >
+    Berger defines "remarkable" and insists on a particular emphasis in the word. What is the
+    definition, what is the emphasis, and what does he report about how remarkability relates to
+    being discussed?
+  answer: >
+    Remarkable things are unusual, extraordinary, or worthy of notice or attention — novel,
+    surprising, extreme, or just plain interesting. His emphasis is on the second half of the word:
+    the most important aspect is that they are worthy of REMARK, worthy of mention. The test is
+    whether a thing is worth saying out loud, not whether it is impressive. He reports his own
+    analysis, with Raghu Iyengar, of 6,500 products and brands scored for perceived remarkability
+    against how frequently each was discussed online: more remarkable brands were talked about
+    almost twice as often as less remarkable ones. The mechanism he gives is transfer — telling
+    someone a remarkable thing makes the teller seem remarkable.
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    Berger's OWN study with Raghu Iyengar, cited in the Notes as a Wharton working paper at the time
+    of writing. The design is CORRELATIONAL — remarkability was rated and discussion counted, nothing
+    manipulated — and the outcome measured is ONLINE discussion, which by the book's own account is
+    about 7 percent of word of mouth.
+  confounders:
+    - "reading remarkability as impressiveness or quality; his test is mentionability"
+    - "treating the 'almost twice as often' result as causal; the design is correlational and the source's narration does not mark that"
+    - "missing that this finding sits in unreconciled tension with the BzzAgent null in the next chapter, where interest, novelty and surprise showed no relationship with word of mouth"
+
+- qa_id: qa_ctg_0009
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', the University of Illinois cockroach study in 'Inner Remarkability' (spine 6)"
+  question: >
+    A study in this chapter shows that how a story is retold depends on who is listening. Describe
+    the design and the result, and say whose study it is.
+  answer: >
+    It is not Berger's — it is by a group of psychologists at the University of Illinois. Pairs of
+    students were brought to a working kitchen for what appeared to be a study of group cooking,
+    with vegetables, chicken and shrimp laid out. Live cockroaches had been planted among the
+    ingredients. After the students recoiled, the experimenter cancelled the study and sent them to
+    another one supposedly next door. On the way, half were questioned about what had happened by
+    the experimenter and half by someone who appeared to be another student but was working with the
+    experimenter. That is the manipulated variable: the audience. Those talking to a peer described
+    larger and more numerous cockroaches and a more disgusting experience. When the goal was to
+    impress and entertain rather than to report, the details were amplified.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Third-party research, reported by Berger. It IS a genuine manipulated comparison — audience type
+    varied, everything else held. Note the reported outcome is a difference in a SINGLE retelling,
+    not a measured drift across a chain; the game-of-telephone extrapolation is Berger's.
+  confounders:
+    - "attributing the study to Berger; the audience manipulation is one of the cleanest designs in the book and it belongs to someone else"
+    - "assuming the amplification is deliberate lying — Berger gives a second, non-strategic route through reconstructive memory"
+    - "reading this as showing stories grow richer as they travel, which conflicts with the Allport and Postman result Berger reports later, where about 70 percent of detail is lost in five or six transmissions"
+
+- qa_id: qa_ctg_0010
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', sub-section 'Building a Good Game' within 'Leverage Game Mechanics' (spine 6)"
+  question: >
+    A membership scheme awards more than a hundred differently named badges for different kinds of
+    activity, and users are proud of them. On Berger's account, what is wrong with it and what is
+    his contrasting case?
+  answer: >
+    It fails his legibility requirement. Berger says effective status systems are easy to understand
+    even by people unfamiliar with the domain, and a scheme with a hundred unrankable badges fails
+    that: he asks whether anyone on the street could say whether being the mayor of a location beats
+    a School Night badge or a Super User badge. Since the whole payoff of a status system is being
+    SEEN to be ahead, standing that an outsider cannot read confers no social currency, and the
+    achievement produces no talk. His contrasting case is Olympic medals — tell someone you won
+    silver and they know exactly how you did, even if they know nothing about the sport. He gives
+    credit card tiers as the same failure: once gold was issued broadly, companies added platinum,
+    sapphire and diamond, and nobody can rank them, producing what he calls a chaos of consumer
+    confusion. He also cites British supermarket traffic-light nutrition labels as an intuitive
+    system anyone can read immediately.
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    Berger's argument from constructed contrasts, not measured. No comparison of outcomes between
+    legible and illegible schemes is reported anywhere. Heavily period-bound to roughly 2011-2012.
+  confounders:
+    - "diagnosing the problem as too many badges rather than as unrankable ones; Berger's criterion is legibility to outsiders, not count"
+    - "assuming internal satisfaction is enough — his mechanism runs through interpersonal comparison, so private pride produces no word of mouth"
+    - "recommending better badge design or naming without addressing whether a stranger can rank the levels"
+
+- qa_id: qa_ctg_0011
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', section 'Make People Feel Like Insiders' (spine 6)"
+  question: >
+    Berger distinguishes scarcity from exclusivity, which are usually run together. What is the
+    distinction, and what does he insist about what can serve as the basis for exclusivity?
+  answer: >
+    Scarcity restricts HOW MUCH is offered — through high demand, limited production, or limits on
+    the time or place something can be acquired. Exclusivity restricts WHO may have it, by criteria.
+    His insistence is that the criterion need not be money or celebrity: exclusivity is also about
+    knowledge — knowing certain information, or being connected to people who do. That is why a bar
+    with no sign, reachable only through a phone booth inside a hot dog restaurant, is exclusive
+    without being expensive, and why an invitation-only site is exclusive in a way money cannot
+    purchase. Both raise perceived desirability, by two inferences he names: difficulty of
+    acquisition is read as evidence of worth, and unavailability is read as evidence that many other
+    people wanted it.
+  answer_type: comparison
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    Berger's distinction, illustrated by recounted business cases with uncontrolled outcomes. The
+    supporting effects he lists — cookbooks rated better in limited supply, cookies tasting better
+    when scarce — are third-party findings compressed to a clause each with no citation in the body
+    text.
+  confounders:
+    - "collapsing the two into 'limited availability', which loses the knowledge-based route to exclusivity that his best cases depend on"
+    - "assuming exclusivity requires price or status; he explicitly rejects that"
+    - "treating the Rue La La versus SmartBargains comparison as controlled; the two also differed in timing, brand and merchandising"
+
+- qa_id: qa_ctg_0012
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', the author's footnote following the Disney Vault passage (spine 6)"
+  question: >
+    A restaurant reads the chapter on scarcity and starts turning away most callers, on the grounds
+    that difficulty of access builds demand. Bookings rise briefly and then customers stop calling.
+    What does Berger's own footnote say about this, and what operating rule does he report?
+  answer: >
+    His footnote bounds exactly this. Making access difficult is different from making it
+    impossible: getting a reservation at Please Don't Tell is hard, but people who keep calling
+    should be able to get one. He warns that restricting availability can come off as snooty or
+    standoffish, and that people are used to getting what they want and will go elsewhere if they
+    hear no too often. The operating rule he reports, from Jim Meehan, is to convert every refusal
+    into a "no, but" — no at eight-thirty, but how about eleven; no to that brand, but would you try
+    this one. Managing the disappointment preserves the allure while preserving satisfaction. He
+    also adds a lifecycle qualification: using scarcity and exclusivity early and relaxing them
+    later is a particularly good way to build demand, which makes restriction a launch phase rather
+    than a permanent setting.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    Berger's own stated boundary condition on his own advice — but placed in a FOOTNOTE, so a reader
+    taking the chapter from its body text and summary would never meet it. No evidence is offered
+    for the boundary or the rule; both are a practitioner's operating procedure attributed to Jim
+    Meehan.
+  confounders:
+    - "doubling down on scarcity on the grounds that demand takes time; the footnote says the opposite"
+    - "reading the fix as better communication of the scarcity rather than as an alternative offered with each refusal"
+    - "missing the lifecycle point — that the restriction is meant to be relaxed later, not held forever"
+
+- qa_id: qa_ctg_0013
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', section 'A Brief Note on Motivation' (spine 6)"
+  question: >
+    A company is deciding whether to pay customers a hundred dollars per successful referral.
+    Berger's objection is not that it is expensive. What is it, and what does he propose instead?
+  answer: >
+    His objection is substitution. People already talk about products they like, for free and
+    unprompted, and as soon as you pay them for doing it you crowd out the intrinsic motivation. The
+    consequence is that sharing decisions stop tracking how good the product is: the quality and
+    quantity of buzz becomes proportional to the money received rather than to the customer's
+    opinion, so the referral stops carrying the signal that made it valuable. He grants that paying
+    works in the narrow sense — lots of people will refer for a hundred dollars — and that it scales
+    in cost rather than in quality. His alternative is social incentives: harness the desire to look
+    good, which is what makes people publicise airline status and check-ins without being paid, and
+    which he says is more effective in the long term.
+  answer_type: tradeoff
+  difficulty: medium
+  knowledge_type: effectiveness
+  requires_application: true
+  support: >
+    Berger's argument, carried entirely by a personal anecdote about playing fantasy football
+    unpaid. NO evidence is cited — the crowding-out literature is large and he cites none of it —
+    and the anecdote does not test the claim, since enjoying an unpaid game does not show that
+    payment would have reduced motivation. He states it absolutely, with no boundary conditions on
+    payment size or context.
+  confounders:
+    - "objecting on cost grounds, which is not his argument"
+    - "assuming a smaller payment avoids the problem; he states the effect without any threshold, though he also offers no evidence for that absoluteness"
+    - "confusing crowding out with the separate claim that paid endorsements lack credibility"
+
+- qa_id: qa_ctg_0014
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', section 'Minting a New Type of Currency', the Mitchell and Tamir studies (spine 6)"
+  question: >
+    Berger reports two studies about the reward value of talking about oneself. What did each find,
+    whose studies are they, and what inferential step does Berger take that the studies do not test?
+  answer: >
+    They are by Harvard neuroscientists Jason Mitchell and Diana Tamir, not by Berger. In the first,
+    subjects in brain scanners shared either their own opinions ("I like snowboarding") or another
+    person's ("He likes puppies"); sharing personal opinions activated the same reward circuits that
+    respond to food and money. In the second, participants made hundreds of quick choices between
+    waiting a few seconds and answering a question about themselves, with small payments varied
+    across trials; people accepted a 25 percent pay cut in order to share their opinions, valuing an
+    act of self-disclosure at just under a cent against five seconds of doing nothing. The step
+    Berger takes that the studies do not test is the one that matters for his book: from
+    self-disclosure being rewarding to people therefore sharing products and brands. What was
+    measured was disclosure of personal opinions, not transmission of commercial content.
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Third-party research — Tamir and Mitchell (2012) — reported by Berger. The supporting base rates
+    are also third-party: the 40-percent conversation figure is Dunbar, Marriott and Duncan, and the
+    tweet figure is Naaman, Boase and Lai.
+  confounders:
+    - "attributing the brain-scanner work to Berger"
+    - "reading the 25 percent pay cut as a large sum; the absolute value was just under a cent"
+    - "assuming the studies show people enjoy sharing content about products; they measured self-disclosure only"
+
+- qa_id: qa_ctg_0015
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 1 'Social Currency', section 'Inner Remarkability', the passages on breaking expected patterns and on mystery (spine 6)"
+  question: >
+    A brand in a category with rigid customer expectations wants remarkability and has no unusual
+    product feature to point at. What two constructive routes does Berger offer, and what does each
+    exploit?
+  answer: >
+    First, break an expected pattern. Remarkability is relative to an expectation, so the
+    expectation itself is the raw material — which means a category with a firm norm is an advantage
+    rather than an obstacle. His cases are a low-cost airline supplying a comfortable seat, varied
+    snacks and seat-back television against no-frills expectations, and a hundred-dollar cheesesteak
+    against what a cheesesteak is. Second, unresolved mystery or controversy, which works by a
+    different mechanism: an open question that undermines a settled belief gives people a reason to
+    ask others to help settle it, and the disagreement itself generates more discussion. His case is
+    the 1999 film whose viewers could not tell whether the footage was real. He insists remarkability
+    can be found in anything, and offers black toilet paper at a party as his cheapest demonstration.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: concept_development
+  requires_application: true
+  support: >
+    Berger's argument, supported by recounted cases with press-reported outcomes — the film shot for
+    about $35,000 grossing more than $248 million worldwide. No control case is examined, and the
+    many pattern-breaking products that failed are not counted, which is the error his own
+    Introduction warns against. The mystery route is period-bound: the 1999 ambiguity depended on an
+    information environment in which the question could not be settled quickly.
+  confounders:
+    - "reaching for a striking execution rather than for the category expectation the audience actually holds"
+    - "treating mystery as the same mechanism as pattern-breaking; his mystery route works by prompting people to consult each other, not by surprising them"
+    - "assuming a strong category norm is a constraint; on his account it is the material"
+
+# ── TRIGGERS ────────────────────────────────────────────────────────────────
+
+- qa_id: qa_ctg_0016
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', sections 'Why Do People Buzz About Some Products More Than Others?' and 'The Difference Between Immediate and Ongoing Word of Mouth' (spine 7)"
+  question: >
+    Berger set out to test the most intuitive hypothesis in word-of-mouth marketing and got a null.
+    Describe the sequence of what he tested, what he found each time, and how the null was
+    eventually resolved.
+  answer: >
+    With Eric Schwartz he analysed several hundred BzzAgent campaigns. First test: how interesting a
+    product was rated against how much word of mouth it got over a ten-week campaign. No
+    relationship. Second: suspecting "interest" was too vague, he rescored the products on more
+    concrete dimensions — novelty and surprise. Still no relationship. Third: suspecting the raters,
+    he replaced the undergraduate scorers with a new set of people of all ages and backgrounds.
+    Still nothing. The resolution was not that interest fails but that the outcome was the wrong
+    one. Splitting word of mouth into immediate — soon after the experience — and ongoing — in the
+    weeks and months after — showed that interesting products got more IMMEDIATE word of mouth and
+    no more ONGOING word of mouth than boring ones. His own image is arriving at work dressed as a
+    pirate: discussed all day, not discussed the following month.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    Berger's OWN study with Eric Schwartz, published in the Journal of Marketing (2011). The
+    strongest empirical item in the book and it is his. Limits: the design is observational, not
+    experimental — interest was rated, not assigned; the outcome is conversations self-reported by
+    people who received free product; and the immediate/ongoing split was made AFTER the null, so it
+    was not pre-specified.
+  confounders:
+    - "reporting only the null, which misstates the finding — interest does predict immediate talk"
+    - "reporting only the split result, which loses the three failed tests that make the null credible"
+    - "treating this as an experiment; nothing was manipulated in this dataset"
+    - "assuming the finding generalises beyond consumer products discussed by volunteer product-testers over ten weeks"
+
+- qa_id: qa_ctg_0017
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', sections 'Triggered to Talk' and 'Why Cheerios Gets More Word of Mouth Than Disney World' (spine 7)"
+  question: >
+    In the same dataset that produced the interest null, what did predict word of mouth, by how
+    much, and what mechanism does Berger give for why dull products can out-talk exciting ones?
+  answer: >
+    Trigger frequency. More frequently triggered products got 15 percent more word of mouth — and,
+    unlike interest, they got more of BOTH kinds, immediate and ongoing. His mechanism is that most
+    conversation is small talk whose purpose is to fill conversational space rather than to impress,
+    and what fills it is whatever is accessible. If something is top of mind it is usually relevant
+    to the situation at hand, so it is what people reach for. Frequent use or frequent environmental
+    cues keep a thing accessible, so it keeps being reached for. This is why Ziploc bags and
+    moisturiser get discussed week after week while a theme park visited once a year does not: the
+    park has high social currency and emotion and almost no triggers. His summary is that social
+    currency gets people talking and triggers keep them talking — top of mind means tip of tongue.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    Berger's OWN study with Eric Schwartz, same dataset. Limits: 15 percent is the only figure
+    given, with no baseline rate and no statement of how trigger frequency was operationalised per
+    product; the design is observational; and the Cheerios-versus-theme-park comparison switches
+    instrument mid-argument, resting partly on this dataset and partly on counted Twitter mentions.
+  confounders:
+    - "assuming the mechanism is that people love the product; his mechanism is accessibility in low-stakes conversation, which is indifferent to enthusiasm"
+    - "reading the 15 percent as an effect of an intervention; nothing was manipulated in this dataset"
+    - "concluding that boring is better; the claim is that frequency of cueing beats interest for sustained talk, not that dullness helps"
+
+- qa_id: qa_ctg_0018
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', the dining-hall tray experiment in 'From Mars Bars to Voting: How Triggers Affect Behavior' (spine 7)"
+  question: >
+    Berger reports an experiment in which the less-liked message won. Describe the design, what
+    participants said about the two messages, and what they actually did — and say what the result
+    implies about testing messages by asking audiences which they prefer.
+  answer: >
+    With Gráinne Fitzsimons he paid students to record everything they ate for two weeks. Halfway
+    through, framed as an unrelated study by a different researcher, students were shown a
+    public-health slogan more than twenty times in varied colours and fonts. One group saw "Live the
+    healthy way, eat five fruits and veggies a day"; the other saw "Each and every dining-hall tray
+    needs five fruits and veggies a day". Both encourage the same behaviour; only the second uses a
+    trigger the students physically encounter at the moment of the decision. Students called the
+    tray slogan corny and rated it less than half as attractive, and those shown it were
+    significantly more likely to say it would not influence them. Behaviour ran the other way: the
+    generic slogan changed nothing, and students who saw the tray slogan and used trays ate 25
+    percent more fruit and vegetables. The implication is that preference and self-prediction are
+    poor instruments — the audience disliked the message that worked and correctly identified
+    neither.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    Berger's OWN experiment with Gráinne Fitzsimons, published in the Journal of Marketing Research
+    (2008). A genuine manipulated comparison with a behavioural outcome. Limits: the effect is
+    CONDITIONAL on the cue being present — it holds for students who saw the slogan AND used trays —
+    and the book gives no sample size, no interval and no attrition, with intake self-reported.
+  confounders:
+    - "reporting the behaviour change without the liking result, which is the transferable half"
+    - "assuming the tray slogan worked because it was more specific or more memorable, rather than because the cue was physically present at the decision"
+    - "dropping the conditionality: the effect holds for tray users, not for everyone shown the slogan"
+
+- qa_id: qa_ctg_0019
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', the Arizona polling-place study in 'From Mars Bars to Voting: How Triggers Affect Behavior' (spine 7)"
+  question: >
+    Berger reports a field study on where people vote. Describe the data, the result, and the two
+    steps he took to rule out the obvious alternative explanations.
+  answer: >
+    With Marc Meredith and Christian Wheeler he took every polling place in Arizona's 2000 general
+    election and classified it by building type from its name and address — 40 percent churches, 26
+    percent schools, 10 percent community centres, the rest apartment buildings, golf courses and
+    even RV parks. He then examined support for a contested initiative raising sales tax from 5.0 to
+    5.6 percent to fund public schools. More than ten thousand additional votes were cast in favour
+    where the polling place was a school. Two steps against alternatives: the difference persisted
+    after controlling for regional political preference and demographics; and he compared two
+    similar groups directly — people who lived near schools and were assigned to vote in one, against
+    people who lived near schools and were assigned to a different building type such as a
+    firehouse. The school group was significantly more supportive. The initiative passed.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Berger's OWN study with Marc Meredith and S. Christian Wheeler, published in PNAS (2008).
+    Important limit the book does not state: it is OBSERVATIONAL. Voters were not randomly assigned
+    by the researchers; assignment was administrative. The matched near-school comparison is a real
+    design strength and is not random assignment.
+  confounders:
+    - "treating this as a randomised experiment; assignment was administrative, not researcher-controlled"
+    - "generalising to issues with no match between building and ballot content; the tested initiative matched the building type exactly"
+    - "reading the comparison with the 2000 presidential margin as an effect size; the book never reports the effect in proportional terms"
+
+- qa_id: qa_ctg_0020
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', section 'What Makes for an Effective Trigger?' (spine 7)"
+  question: >
+    A team is choosing a cue to link a product to and proposes the colour red because everyone sees
+    red constantly. State the trade-off Berger names, his image for it, and what he says about how to
+    resolve it.
+  answer: >
+    The trade-off is frequency against strength of link. A cue must occur often or it will rarely
+    fire — his case is a beer brand moving from "Holidays are made for Michelob" to "Weekends are
+    made for Michelob" because holidays are too rare. But the more things a cue is already
+    associated with, the weaker any one association becomes, and red is his own example of the
+    failure: roses, love, Coca-Cola, fast cars, so it retrieves none of them strongly. His image is
+    a paper cup with holes punched in the bottom — one hole gives a strong stream, many holes give a
+    trickle from each. His recommendation is a fresher, more original link, with peanut butter
+    reliably retrieving jelly as the standard to aim at. On how to resolve it: he names the two
+    failure modes and stops. He gives no procedure for locating the balance point, which is exactly
+    the decision a practitioner faces.
+  answer_type: tradeoff
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    Berger's stated trade-off, supported by an analogy and an advertising history that is credited
+    in his Notes to Cialdini's Influence rather than to a study. No measurement is offered for either
+    side of the trade-off or for the optimum.
+  confounders:
+    - "optimising for frequency alone, which is what makes red look attractive"
+    - "optimising for distinctiveness alone, which is the holidays failure"
+    - "expecting Berger to supply a method for finding the balance; he does not, and treating his advice as operable overstates it"
+
+- qa_id: qa_ctg_0021
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', the bath-mat and 'Man Drinks Fat' comparison in 'What Makes for an Effective Trigger?', and the reusable-bag passage in 'Consider the Context' (spine 7)"
+  question: >
+    A public safety film is vivid, memorable, and viewers report thinking about it often. Berger
+    would still call it a failed trigger. Why, and what is his contrasting case?
+  answer: >
+    Because the trigger fires where the person cannot act. His example is a New Zealand spot about
+    bathroom slips that is so memorable he says he thinks of it every time he showers in a room
+    without a mat — and, as he puts it, you cannot buy a bath mat in a bathroom. The message is
+    physically removed from the desired behaviour, so it must survive unaided until the action
+    becomes possible, which is the failure the trigger was supposed to prevent. His contrast is a
+    New York City health video showing fat pouring from a soda can, which fires the message at
+    precisely the moment someone is about to drink one. He gives the same structure for reusable
+    shopping bags: the supermarket is a strong cue for the bags and a badly timed one, since the
+    bags are at home. The useful cue is the shopping list, seen before leaving the house. He adds
+    the corollary that the longer the delay between exposure and action, the more the trigger
+    matters — and that market research measuring immediate reaction is measuring the wrong moment.
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: short_form
+  requires_application: true
+  support: >
+    Berger's argument. NO measurement supports the proximity condition: both films are analysed by
+    the author from the armchair and neither is compared on outcomes. The reusable-bag case, which
+    states the condition most cleanly, is an invented illustration.
+  confounders:
+    - "treating memorability as evidence the trigger works; on his account the bath-mat spot is memorable and useless"
+    - "proposing a more striking execution rather than moving the cue to the point of action"
+    - "confusing this with the frequency condition; a bathroom is encountered daily, so the spot passes on frequency and fails on proximity"
+
+- qa_id: qa_ctg_0022
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', section 'Kit Kat and Coffee: Growing the Habitat', including the Boston Market experiment (spine 7)"
+  question: >
+    What does Berger mean by a habitat, and what evidence does he offer that one can be deliberately
+    grown rather than inherited? Be precise about who the reported effect applies to.
+  answer: >
+    A habitat is the set of triggers that cause people to think of a product or idea, on an analogy
+    with the environment that sustains an organism. Hot dogs have a thick habitat — barbecues,
+    summer, baseball, dachshunds; he says Ethiopian food has a thin one. Some habitats are
+    inherited: a chocolate bar shares a name with a planet, and a song called "Friday" is cued by
+    the day. He claims a habitat can be grown by repeated pairing with a cue already prevalent in
+    the audience's environment, and his manipulated evidence is a six-week campaign for a
+    fast-casual restaurant: one group received messages pairing it with dinner, another a generic
+    "thinking about a place to eat" message. Precision matters here — the reported 20 percent
+    increase in word of mouth is for a SUBGROUP, people who had previously associated the brand only
+    with lunch. He does not report the effect in the whole sample.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    The restaurant test is Berger's OWN, run with BzzAgent and reported in Berger and Schwartz
+    (2011), and it is a genuine manipulated comparison with a control message. The confectionery
+    case that opens the section is an uncontrolled business outcome, and Berger himself lists
+    competing causes and says only that he would like to ADD triggers to the list.
+  confounders:
+    - "reporting the 20 percent as a whole-sample effect; it is conditional on prior single-occasion association"
+    - "citing the confectionery campaign as evidence; the author explicitly declines to claim he has isolated the trigger effect there"
+    - "assuming any repeated pairing works, without the frequency and strength constraints stated two sections later"
+
+- qa_id: qa_ctg_0023
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', section 'Consider the Context', with the caveman and 'Wassup' comparison from 'Triggered to Talk' (spine 7)"
+  question: >
+    Two campaigns are both witty and well made. One is built on prehistoric characters, the other on
+    a greeting young men were using at the time. On Berger's account, what separates them, and what
+    does that imply about whether a trigger is a property of the work?
+  answer: >
+    The cue has to be something the specific audience actually encounters. Cavemen are not met in
+    daily life, so the advertisement is unlikely to come to mind and unlikely to be talked about;
+    the greeting was in constant use in the target demographic, so greeting a friend cued the brand.
+    The implication is the important part: trigger value is not a property of the work at all. It is
+    a property of the relationship between the work and the environment the audience inhabits, which
+    is why the same idea has different value in different places and at different times. Berger gives
+    both variants — a hundred-dollar cheesesteak is remarkable anywhere but frequently cued only
+    where cheesesteaks are everywhere; and he reports his own finding that people were far more
+    likely to think of orange-coloured products the day before Halloween than a week after, because
+    the orange cues in the environment disappeared with the holiday.
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: media_planning
+  requires_application: true
+  support: >
+    The seasonal finding is Berger's own, from Berger and Fitzsimons (2008), and what it measured is
+    a change in what people THOUGHT OF, not in what they bought or discussed. The campaign
+    comparison is the author's analysis, not a measured comparison, and he never reports how the
+    caveman campaign actually performed. He hedges the greeting explanation — "at least part of its
+    success" — and the chapter summary drops the hedge.
+  confounders:
+    - "judging the two campaigns on wit or craft, which is the dimension on which they are hard to separate"
+    - "treating the caveman verdict as a measured result; it is an armchair analysis and no performance data is given"
+    - "assuming a trigger, once chosen, travels with the work to any audience"
+
+- qa_id: qa_ctg_0024
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 2 'Triggers', the New York Times book-review analysis at the end of 'Triggered to Talk' (spine 7)"
+  question: >
+    Berger tests the slogan that any publicity is good publicity and finds it is conditionally true.
+    What did he find, what is the moderator, and what mechanism does he propose?
+  answer: >
+    With Alan Sorensen and Scott Rasmussen he analysed hundreds of New York Times book reviews
+    against sales. Negative reviews HURT sales for some books — which contradicts the slogan
+    outright. But for books by new or relatively unknown authors, negative reviews INCREASED sales by
+    45 percent. The moderator is prior awareness. His mechanism runs through triggers rather than
+    persuasion: negative attention has two effects that pull in opposite directions, lowering
+    evaluation and raising accessibility, and where nobody knew the thing existed the accessibility
+    gain dominates because there was nothing to lower. One book given a hostile review sold more
+    than four times as many copies afterwards.
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: effectiveness
+  requires_application: false
+  support: >
+    Berger's OWN study with Alan Sorensen and Scott Rasmussen, published in Marketing Science (2010).
+    Limit: the moderator is stated and NOT quantified — "new or relatively unknown" has no threshold
+    anywhere in the book. The mechanism is his reading, not something the study tests; the study
+    establishes the moderated effect.
+  confounders:
+    - "reporting the 45 percent without the moderator, which turns a conditional finding into the slogan it refutes"
+    - "assuming the mechanism is curiosity or contrarian appeal; his account is accessibility, and the study does not distinguish them"
+    - "citing the wine and exercise-gadget examples as evidence for the moderator; they are single cases with press figures"
+
+# ── EMOTION ─────────────────────────────────────────────────────────────────
+
+- qa_id: qa_ctg_0025
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 3 'Emotion', section 'Does Any Emotion Boost Sharing?' (spine 8)"
+  question: >
+    This is the most misremembered finding in the book. State all three of Berger's valence results
+    with their figures and directions, and say what the correct conclusion is.
+  answer: >
+    Three results, from the same corpus of almost seven thousand New York Times articles. One:
+    sadness, a negative emotion, made an article 16 percent LESS likely to make the Most E-Mailed
+    list. Two: overall positivity, measured by counting emotion words with Jamie Pennebaker's
+    textual analysis program, RAISED sharing — positive articles were on average 13 percent more
+    likely to make the list than negative ones. Three: anger and anxiety, also negative, INCREASED
+    sharing. Berger states plainly that this left him confused. The correct conclusion is neither of
+    the two things the book is usually quoted for. He does NOT report that negative content spreads
+    more — his positivity effect runs the other way. And he does NOT report that positive content is
+    what spreads — his anger and anxiety results are precisely why he abandoned valence. The
+    conclusion is that valence has a real but small association and is not the organising variable;
+    arousal is.
+  answer_type: factual
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: >
+    Berger's OWN study with Katherine Milkman, published in the Journal of Marketing Research (2012).
+    Two limits that bear directly on the figures: the predictors are measured by DIFFERENT
+    instruments — sadness, anger and anxiety by human research assistants, positivity mechanically
+    by word count — so the 13 and 16 percent figures are not commensurable; and no effect size is
+    given for anger or anxiety at all, only the direction.
+  confounders:
+    - "'negativity spreads' — refuted by his own +13 percent positivity result"
+    - "'positivity spreads' — refuted by his own anger and anxiety results, which are why he dropped valence"
+    - "quoting a figure for anger; the book gives none"
+    - "assuming the three figures are directly comparable; they come from two different measurement instruments"
+
+- qa_id: qa_ctg_0026
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 3 'Emotion', section 'Kindling the Fire: The Science of Physiological Arousal' (spine 8)"
+  question: >
+    Set out Berger's two-dimensional classification of emotion with the contents of each cell as he
+    gives them, and state which dimension he says does the predicting and why.
+  answer: >
+    Two axes: valence, positive or negative, and physiological arousal, high or low. Positive and
+    high-arousal: awe, excitement, amusement. Positive and low-arousal: contentment. Negative and
+    high-arousal: anger, anxiety. Negative and low-arousal: sadness. Arousal is the dimension that
+    predicts. His reason is what arousal is — a state of activation and readiness for action,
+    evolved for fight or flight, in which heart rate and blood pressure rise. Activation drives
+    doing things generally, and sharing is one of the things done. Low-arousal states do the
+    opposite: sad people power down and content people relax, and neither disposes anyone to act.
+    His practical form is to kindle the fire — excite or inspire on the positive side, and on the
+    negative side make people mad, not sad.
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Berger's own model, built on his own published research with Katherine Milkman and his own 2011
+    arousal experiment; the two-dimensional classification of emotion is imported from existing
+    psychology and he says so. Note that two cells carry no measurement in the book — excitement and
+    contentment are placed on theoretical grounds — and disgust, used later to justify a public
+    health film, never appears in the grid at all.
+  confounders:
+    - "treating high-arousal as a synonym for negative; anger and awe sit in different valence cells and both raise sharing"
+    - "treating contentment as a mild positive that helps a little; on his account it deactivates and reduces sharing"
+    - "assuming every cell is measured; excitement and contentment are placed theoretically"
+
+- qa_id: qa_ctg_0027
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 3 'Emotion', sections 'Systematically Analyzing the Most E-Mailed List' and 'The Power of Awe' (spine 8)"
+  question: >
+    Berger describes an anomaly in his data that led him to awe. What was the anomaly, how did he
+    build the dataset, and what did awe turn out to be worth?
+  answer: >
+    The anomaly was science articles. They out-shared politics, fashion and business news while
+    scoring low on both social currency and practical value — his opening case is a piece on a
+    photographic technique that renders a cough visible, which readers rated as neither useful nor
+    especially interesting and shared anyway. The dataset was built with a web crawler, suggested by
+    Katherine Milkman after he had been clipping most-emailed lists out of newspapers by hand: it
+    scanned the New York Times home page every fifteen minutes for six months and recorded almost
+    seven thousand articles with author, section and page placement, plus which made the Most
+    E-Mailed list. Research assistants then scored articles for the constructs. More interesting
+    articles were 25 percent more likely to make the list, more useful articles 30 percent, and
+    awe-inspiring articles 30 percent. Awe is what explained the science anomaly.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: effectiveness
+  requires_application: false
+  support: >
+    Berger's OWN study with Katherine Milkman. The dataset is a whole population over a window, not
+    a sample of hits, which meets the standard his own Introduction sets. Limits: correlational and
+    single-outlet; the predictor is human-rated awe applied after the fact, which measures raters'
+    judgements about articles rather than readers' states. The DEFINITION of awe is not his — he
+    credits psychologists Dacher Keltner and Jonathan Haidt.
+  confounders:
+    - "attributing the definition of awe to Berger; it is Keltner and Haidt's"
+    - "assuming awe was measured in readers; research assistants scored articles"
+    - "treating the singing-competition video as data; it is an illustration with no comparison content"
+
+- qa_id: qa_ctg_0028
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 3 'Emotion', section 'Exercise Makes People Share' (spine 8)"
+  question: >
+    Berger's correlational data could not show that arousal causes sharing rather than merely
+    accompanying it. Describe the experiment he ran to separate them, and say precisely what it
+    establishes.
+  answer: >
+    In a behavioural lab, half of participants were asked to sit still and relax for sixty seconds
+    and half to jog lightly in place for sixty seconds, in whatever clothes they had come in. Both
+    groups then took part in an apparently unrelated second study, read an article from the school
+    newspaper, and were offered the chance to email it to anyone they liked. Seventy-five percent of
+    the joggers shared it — more than twice the rate of the relaxed group. The point of jogging is
+    that it evokes no emotion at all while raising heart rate and blood pressure, so the design
+    separates arousal from emotional content completely. What it establishes is that arousal alone
+    increases transmission, even when the aroused state has nothing whatever to do with what is
+    being shared. Berger draws the further consequence that situational arousal explains
+    oversharing — after a turbulent flight, a near-accident, or a treadmill.
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Berger's OWN experiment, published in Psychological Science (2011). Randomised two-condition
+    design with a behavioural outcome — the cleanest identification in the book. Limits: one
+    laboratory study, a student pool, one stimulus, one channel, and no replication reported; the
+    control rate is given only as "less than half".
+  confounders:
+    - "assuming the jogging made the article more interesting; the content was identical across conditions"
+    - "reading it as showing that exercise makes people talkative in general; the measured outcome was sharing one specific article"
+    - "extending it confidently to advertising placement — Berger's own applications here are hedged with 'should' and 'may', and no media test is reported"
+
+- qa_id: qa_ctg_0029
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 3 'Emotion', section 'Kindling the Fire with High-Arousal Emotions' (spine 8)"
+  question: >
+    Berger reports two experiments that manipulate arousal directly. What were they, what did they
+    find, and what is notable about how they are reported?
+  answer: >
+    In one, the details of a story were changed to make it evoke more anger; in the other, an
+    advertisement was made funnier. In both, the higher-arousal version was shared more, and Berger
+    attributes the increase specifically to the added arousal rather than to the content change as
+    such. What is notable is the reporting. These are the book's cleanest minimal pairs — one
+    variable changed, everything else held — and they get two sentences with no figures, no sample
+    sizes, and no description of what was altered in either stimulus. For the book's most decisive
+    designs, that is the thinnest reporting in it: a practitioner cannot tell how much arousal was
+    added or how much sharing resulted.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    Berger's OWN experiments, reported in Berger and Milkman (2012). Two experiments, two emotions,
+    on stimuli of the authors' construction; nothing establishes that arousal can be raised without
+    limit or that the relationship is monotonic.
+  confounders:
+    - "supplying a figure; the book gives none for either experiment"
+    - "assuming these are the same studies as the Most E-Mailed analysis; those are correlational and these are manipulated"
+    - "concluding that maximum arousal is optimal; no dose-response relationship is reported"
+
+- qa_id: qa_ctg_0030
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 3 'Emotion', section 'Focus on Feelings' (spine 8)"
+  question: >
+    A campaign wants to reduce a harmful behaviour and plans to publish clearer, better-designed
+    information about its risks. What is Berger's objection, what does he propose instead, and whose
+    technique does he credit for finding it?
+  answer: >
+    His objection is that information is the wrong instrument in the common case where the audience
+    already holds it. Teenagers do not smoke because they think it is healthy; people eating a
+    supersized meal are not unaware of the risks. Where the fact is already held, adding more of it
+    changes nothing, and what is missing is the motivation to act, which is emotional. He proposes
+    focusing on feelings rather than features or facts — and, given the previous section, on a
+    high-arousal feeling specifically, since the choice of which emotion is not free. For finding the
+    emotional core he credits the "Three Whys" explicitly to Chip and Dan Heath's Made to Stick, by
+    name: write down why people do something, then ask why that is important three times, noting
+    each answer. His own worked example runs from search being quick, to getting answers, to
+    connecting with people and fulfilling dreams.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: true
+  support: >
+    An argument from premises about smoking and fast food; NO measurement supports it. The search-
+    engine case he offers is a recounted production history whose reported outcome is internal
+    enthusiasm and a decision to release the film, not a comparison against an informational version.
+    Note also that the argument as stated is broader than what it establishes: that information is
+    insufficient WHERE ALREADY HELD does not show it is generally the wrong instrument.
+  confounders:
+    - "attributing the Three Whys to Berger; he credits the Heaths by name in the text"
+    - "choosing any emotion; his own model says the emotion must be high-arousal, so a sad appeal satisfies this advice and defeats the aim"
+    - "reading the claim as 'facts never matter' rather than as 'facts the audience already has do not move them'"
+
+# ── PUBLIC ──────────────────────────────────────────────────────────────────
+
+- qa_id: qa_ctg_0031
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', the laptop logo decision in the opening and the shirts-and-socks argument in 'The Power of Observability' (spine 9)"
+  question: >
+    Berger opens this chapter with a company deliberately making its product worse for the person
+    who bought it. What was the decision, what was traded for what, and what general claim does he
+    build on it?
+  answer: >
+    The laptop logo. It had faced the owner when the machine was closed, so that a person pulling it
+    from a bag could tell which way up it went — a small usability gain, consistent with the
+    company's obsession with the buyer's experience. But once opened, the logo was upside down to
+    everyone else in the room. The trade was made explicitly: the customer's orientation cue was
+    given up so that the logo read correctly to onlookers. The general claim is that seeing others
+    do something makes people more likely to do it themselves, and the operative word is SEEING — if
+    it is hard to see what others are doing, it is hard to imitate it. So observability bounds how
+    far social influence can carry anything, which he compresses into: if something is built to
+    show, it is built to grow. His category test is shirts against socks, cars against toothpaste.
+  answer_type: mechanism
+  difficulty: easy
+  knowledge_type: brand_communication
+  requires_application: false
+  support: >
+    A recounted decision, told through the agency creative director who was in the room, with NO
+    outcome measurement — what is reported is that the logo was flipped and why, not what it
+    produced. The shirts-versus-socks contrasts are illustrative categories chosen by the author.
+    The measured evidence for observability arrives separately, in the car-sales study.
+  confounders:
+    - "reading the chapter as being about publicity or PR rather than about whether use is visible"
+    - "treating the logo case as evidence; no outcome is reported for it"
+    - "assuming the claim is only about imitation — he adds a second channel, that visible things are easier to bring up in conversation"
+
+- qa_id: qa_ctg_0032
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', section 'The Power of Observability', the 1.5 million car sales analysis (spine 9)"
+  question: >
+    Berger reports a study that measures both the size of social influence and its dependence on
+    visibility. Describe the design and both results, and say what carries the identification of the
+    second one.
+  answer: >
+    With Blake McShane and Eric Bradlow he analysed data on 1.5 million car sales. First result:
+    people were more likely to buy a new car if neighbours had recently bought one, and roughly one
+    in every eight cars sold was attributable to social influence. Second, and the more interesting
+    one: the effect varied by city in a patterned way. Influence was stronger in Los Angeles and
+    Miami, where people commute by car and the weather is clear, than in New York, where people
+    commute by subway, and Seattle, where it rains. What carries the identification is that
+    commuting mode and weather are being used as PROXIES for how easily cars can be seen — natural
+    variation in observability, holding the product category constant. Where behaviour was more
+    observable, social influence was larger.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: >
+    Berger's OWN study with Blakely McShane and Eric Bradlow, forthcoming in the Journal of
+    Marketing Research at the time of writing. Limits the book does not state: it is OBSERVATIONAL,
+    nothing was manipulated, and both proxies are confounded with a great deal else — density,
+    income, dealer networks, model mix, replacement cycles. "One in eight cars sold was because of
+    social influence" is a causal statement from a model applied to observational data, and the
+    identifying assumptions are not given.
+  confounders:
+    - "treating the city comparison as a controlled experiment; it is natural variation with confounded proxies"
+    - "reporting the one-in-eight figure as a measured count rather than a model output"
+    - "assuming the study manipulated visibility; it inferred it from commuting mode and weather"
+
+- qa_id: qa_ctg_0033
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', the campus drinking case in 'The Power of Observability' and the remedy in 'Making the Private Public . . . with Moustaches' (spine 9)"
+  question: >
+    Most students on a campus privately dislike heavy drinking and heavy drinking is nonetheless the
+    norm. Explain the mechanism Berger gives for this and the intervention he reports, and state the
+    condition that the intervention silently depends on.
+  answer: >
+    The mechanism is an asymmetry: behaviour is public and thoughts are private. Each student sees
+    the drinking, cannot see anyone's discomfort with it, and concludes they are the outlier — so
+    they drink more, which becomes part of what the next student sees. The error sustains itself
+    because everyone's visible behaviour is already an accommodation to it. His second illustration
+    is the silence after a bewildering presentation, where the absence of questions is read by
+    everyone present as evidence that they alone failed to understand. The intervention was to
+    publish the true private norm: newspaper advertisements stating that most students had one or
+    two drinks and 69 percent had four or fewer when they partied, with heavy drinking reported to
+    have fallen by almost 30 percent. The silent condition is that THE TRUE NORM HAPPENS TO FAVOUR
+    THE DESIRED BEHAVIOUR. The same chapter's final section shows what publishing a norm does when
+    it does not, and Berger never states the distinguishing variable as a rule.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: true
+  support: >
+    The intervention outcome is a PRACTITIONER'S REPORT of a campus campaign, not a study Berger
+    conducted: no control campus, no control period, no design described. The nearest controlled
+    evidence, cited only in his Notes, is third-party — Schroeder and Prentice on pluralistic
+    ignorance and college alcohol use. The evidence that students privately disliked the culture is
+    the practitioner's own asking, reported at second hand.
+  confounders:
+    - "recommending more information about health consequences, which is what the same practitioner had already tried without effect"
+    - "generalising 'publish the true norm' as a rule; it works only where the true norm favours the desired behaviour, which the source never states"
+    - "treating the 30 percent reduction as a measured effect; it is an uncontrolled outcome report"
+
+- qa_id: qa_ctg_0034
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', section 'Anti-Drug Commercials?' (spine 9)"
+  question: >
+    This chapter's own disconfirmation. What happened when large anti-drug campaigns were evaluated,
+    what mechanism does Berger give, and whose research is it?
+  answer: >
+    The campaigns did not merely fail — they appear to have backfired. Communications professor Bob
+    Hornik, not Berger, collected data on thousands of teenagers over the period the National Youth
+    Anti-Drug Media Campaign ran, recording exposure to the advertisements and marijuana use;
+    twelve-and-a-half to eighteen-year-olds who saw the advertisements were MORE likely to smoke
+    marijuana. Berger's mechanism is that such an advertisement says two things at once — drugs are
+    bad, and other people are taking them — and social proof does not distinguish approval from
+    prevalence, so the second is the one that transmits. He adds a second route: the existence of the
+    campaign is itself evidence of prevalence, since nobody makes announcements about not cutting
+    your hand off with a saw. Hornik's own quoted hypothesis is the same: the more kids saw the ads,
+    the more they believed other kids were using, and the more interested they became.
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    NOT Berger's research — Hornik, Jacobsohn, Orwin, Piesse and Kalton (2008), American Journal of
+    Public Health. The design is observational and exposure was not assigned, which Berger does not
+    note while reporting the causal reading. Almost $1 billion was appropriated for the campaign
+    between 1998 and 2004.
+  confounders:
+    - "attributing the study to Berger"
+    - "diagnosing the failure as poor execution or unpersuasive creative; the mechanism is that the message is accurate about prevalence"
+    - "reading the finding as causal without noting that exposure was self-selected"
+
+- qa_id: qa_ctg_0035
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', the Petrified Forest sign comparison in 'Anti-Drug Commercials?' (spine 9)"
+  question: >
+    A park is losing wood to visitors taking souvenirs. Two signs are trialled on different trails.
+    One reports how many past visitors have removed wood; one asks visitors not to remove it in
+    order to preserve the park. What happened, whose study is it, and what is the general rule?
+  answer: >
+    The sign reporting how many past visitors had removed wood ALMOST DOUBLED the theft. The sign
+    asking visitors not to remove it, and giving the reason, reduced it. The study is Bob Cialdini
+    and colleagues', not Berger's, and it is a genuine field comparison — different signs on
+    different trails, everything else held. The general rule Berger states is that if you want to get
+    people not to do something, do not tell them that lots of their peers are doing it, and that
+    preventing a behaviour requires the inverse of his own chapter: making the public private,
+    making others' behaviour less observable. The constructive form is to highlight what people
+    should be doing rather than to report what they are doing. He extends the diagnosis to a music
+    industry site warning that only 37 percent of music was paid for — a message he says he suspects
+    has the opposite of the intended effect.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: persuasion
+  requires_application: true
+  support: >
+    NOT Berger's research — Cialdini and colleagues (2006). This is the stronger of the two pieces
+    of evidence in the section because it IS a manipulated field comparison, where the anti-drug
+    analysis is observational. The music-industry example is the author's reasoning about a message
+    he expects to backfire, and he says himself he is not sure; it is not a measured case.
+  confounders:
+    - "assuming the reporting sign failed because it was too weak or too polite; it worked, in the wrong direction, by supplying social proof"
+    - "attributing the sign study to Berger"
+    - "concluding that the fix is a stronger prohibition; the effective sign was a request with a reason, not a stronger warning"
+
+- qa_id: qa_ctg_0036
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', sections 'Making the Private Public . . . with Moustaches' and 'Anti-Drug Commercials?' (spine 9)"
+  question: >
+    Berger gives two opposite instructions in one chapter — make the private public, and make the
+    public private. When does each apply, and what does he leave unsaid?
+  answer: >
+    Make the private public when you want a behaviour to SPREAD: generate public signals for private
+    choices, actions and opinions, so others can see and imitate them. His case is a men's health
+    campaign in which participants grow moustaches for a month, turning support for an abstract
+    cause into something visible that provokes the question and then the conversation. Make the
+    public private when you want a behaviour PREVENTED: make others' behaviour less observable and
+    stop reporting how many people do the thing you oppose. What he leaves unsaid is the variable
+    that selects between them in the hard case. Publishing the true norm HELPED on the campus
+    drinking campaign and HARMED in the anti-drug campaigns, and the difference is whether the true
+    norm favours the desired behaviour — which is visible in his own two cases and is never stated
+    as the rule. Applied without that condition, the make-it-private instruction would forbid the
+    intervention that worked.
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: true
+  support: >
+    Both instructions are Berger's, stated explicitly, in the same chapter. The gap between them is
+    an extractor observation: the source never puts the campus case and the anti-drug case side by
+    side, and never names the condition that reconciles them.
+  confounders:
+    - "treating 'make the private public' as a general rule; it is signed and reverses"
+    - "assuming the reversal turns on whether the behaviour is good or bad; it turns on which way the TRUE NORM points, which is a different question"
+    - "expecting the source to supply the selection rule; he does not, and this is a gap rather than a subtlety"
+
+- qa_id: qa_ctg_0037
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', section 'Advertising Itself: Sharing Hotmail with the World' (spine 9)"
+  question: >
+    A small organisation with no advertising budget wants existing users to generate awareness.
+    Berger's remedy is not to ask them to. What is it, and what are the non-textual forms he gives?
+  answer: >
+    Build the signal into the act of use, so that consumption broadcasts without anyone being asked
+    to do anything. His paradigm case is the free email service that appended a line and a link to
+    every outgoing message, so each user sent prospective customers an implicit endorsement in the
+    course of writing to exactly the people they already wrote to. The non-textual forms matter more
+    for his general claim: distinctive shape, in a crisp packaging tube; distinctive sound, in an
+    operating system's startup chime; unexpected colour, in white earphone cords in a market where
+    every competitor shipped black ones, and in red-lacquered shoe soles that make a brand
+    recognisable to people who know nothing about it; and enlarged logos. He notes the white cords
+    did double duty — they also supplied visible social proof of how many people had switched, in a
+    market where the standard was contested. He stresses this is disproportionately valuable to
+    organisations with no advertising money, because existing customers become the medium.
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    Recounted business cases with company and press outcome figures that are uncontrolled and given
+    for the whole business rather than for the mechanism. Berger concedes in passing that such
+    signals can be switched off — device signature lines can be changed and mostly are not — which
+    makes the mechanism partly a default-setting effect; he attributes the low switch-off rate to
+    social currency without evidence. Period-bound to the late 1990s and early 2000s.
+  confounders:
+    - "reading the remedy as asking customers to advertise, which is what he is offering an alternative to"
+    - "treating it as a text-and-logo tactic; his stronger examples are shape, sound and colour"
+    - "assuming the business outcome figures isolate the mechanism; they are whole-business figures"
+
+- qa_id: qa_ctg_0038
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', section 'Livestrong Wristbands as Behavioral Residue' (spine 9)"
+  question: >
+    A cause has budget for either a large national event or a cheap durable object. Berger reports
+    exactly this decision. What is the concept that settled it, how does he define it, and what is
+    unusual about how honestly he handles the case?
+  answer: >
+    Behavioural residue — the physical traces or remnants that most actions leave in their wake. The
+    argument that settled it is stated by the person who made the call: the wristband lives on and
+    the ride does not; there will be photographs of the ride and people will talk about the ride,
+    but even repeated annually it does not act as a daily reminder, and the band does. The concept
+    generalises: a sticker worn after voting converts a private act into a visible one, and a
+    shopping bag built to be reused keeps generating social proof on other errands. He extracts a
+    selection rule for giveaways — choose the item whose use is public over the item whose use is
+    frequent, so a gym bag over a make-up case. What is unusual is his handling: he says outright
+    that it is hard to know how the ride would have done, and easy to declare a successful strategy
+    obviously correct after the fact. That is the book's most honest treatment of a selected success.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: >
+    A recounted decision with press-reported outcomes and an explicit concession from the author
+    that the counterfactual is unknown. The TERM is not his — he credits it in the Notes to
+    psychologist Sam Gosling. His own endnote lists competing causes he does not weigh in the text,
+    including a one-dollar price and the fact that a band, unlike a pinned ribbon, could be worn
+    continuously — while the body text presents colour as decisive.
+  confounders:
+    - "attributing 'behavioural residue' to Berger; the term is Sam Gosling's"
+    - "reading the case as proof the object beat the event; the author explicitly declines that claim"
+    - "choosing the giveaway that gets used most often rather than the one whose use is seen"
+
+- qa_id: qa_ctg_0039
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', section 'The Psychology of Imitation', the kidney study (spine 9)"
+  question: >
+    Berger reports a case where social proof kills people. Describe the situation, the two figures,
+    and which of them is actually the social-proof result.
+  answer: >
+    Organ waiting lists are strictly ordered, so a patient low on the list who is offered a kidney
+    knows the organ has already been refused by everyone above them. That refusal history is
+    visible; the reasons for it are not. Patients infer from the sequence of refusals that the organ
+    must be poor quality, and refuse it themselves. The two figures are 97.1 percent of kidney
+    offers refused, and one in every ten refusals made in ERROR because of this inference — thousands
+    of patients turning down organs they should have accepted. Only the second is the social-proof
+    result. The 97.1 percent headline is mostly tissue and blood-type mismatch, which Berger says,
+    but the two figures sit close enough together to be conflated. The general point is that social
+    proof is an inference under uncertainty and it is fallible in a specific way: observers see the
+    choice and not the reason for it, so a decision made for a private reason is read as a verdict on
+    quality.
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: >
+    NOT Berger's research — MIT professor Juanjuan Zhang, published in Marketing Science (2010),
+    from an examination of hundreds of kidney donations. The 'social proof' term is credited by
+    Berger to Cialdini, not claimed.
+  confounders:
+    - "quoting 97.1 percent as the social-proof effect; the social-proof result is the one-in-ten error rate"
+    - "attributing the study to Berger"
+    - "reading social proof as irrationality; his account is that it is a valid inference applied to information the observer cannot fully see"
+
+- qa_id: qa_ctg_0040
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', the author's footnote following 'Most products, ideas, and behaviors are consumed privately' (spine 9)"
+  question: >
+    Berger's footnote to this chapter addresses a category where invisibility has a specific cause
+    rather than being incidental. What is the category, and what does he say the remedy has to do
+    differently?
+  answer: >
+    Behaviour people are not comfortable being seen doing — stigmatised behaviour. His examples are
+    online dating, which many people had tried and which remained socially awkward; erectile
+    dysfunction, where he notes the makers of a drug coined a term precisely to make the subject
+    speakable; and campus "wear jeans if you're gay" days run partly to raise visibility and
+    discussion. The difference is in the direction of causation. Ordinary invisibility is a property
+    of the product — socks are worn inside shoes. Stigma-driven invisibility is self-sustaining in
+    the same way as the misread drinking norm: people do not know how many others have done it
+    BECAUSE nobody says, and nobody says because they do not know how many others have. So the
+    remedy is not to make use more visible but to make the prevalence known, which the footnote says
+    is what such categories need.
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: persuasion
+  requires_application: false
+  support: >
+    Berger's own footnote, argued rather than measured, with three illustrative cases and no study.
+    Period-bound and culturally specific in its examples.
+  confounders:
+    - "treating stigma as ordinary low observability, which would suggest making individual use more visible — a remedy that runs against the reason for the invisibility"
+    - "confusing this with 'make the public private', which is the instruction for behaviours you want to prevent"
+    - "reading the coined-term example as a naming tactic rather than as a move to make a subject speakable"
+
+- qa_id: qa_ctg_0041
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 4 'Public', section 'The Psychology of Imitation', the MBA cohort exercise (spine 9)"
+  question: >
+    Berger runs an annual exercise with his own students that he presents as evidence of social
+    influence. Describe the design, the result, and the alternative explanation he concedes.
+  answer: >
+    Every year he asks his second-year MBA students a question, splitting the class in half. One
+    half is asked what they thought they wanted to do with their life when they STARTED the
+    programme; the other is asked what they want to do NOW. Neither half sees the other's question
+    and responses are anonymous. The result: the pre-programme answers are diverse — reforming
+    health care, building a travel site, entertainment, politics, entrepreneurship, with a handful
+    naming investment banking or consulting. The current answers are concentrated, with more than
+    two-thirds naming banking or consulting. He describes the mechanism as snowballing: fewer than
+    20 percent were interested initially, but that was still larger than any other option, so a few
+    switched, which made others more likely to switch. The alternative he concedes is that students
+    genuinely learn about opportunities during the programme; he attributes only part of the
+    convergence to social influence.
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: >
+    Berger's OWN reported measurement, and a two-condition design with a sensible blinding — but an
+    informal annual classroom exercise, not a study: one institution, one cohort type, no sampling
+    frame, recall-based for the pre-programme half. He concedes an alternative explanation before
+    attributing the remainder.
+  confounders:
+    - "citing it as a study; it is a classroom exercise"
+    - "ignoring the recall problem — the pre-programme half are remembering, not reporting at the time"
+    - "reading the concession as decorative; it is the alternative explanation and he does not rule it out"
+
+# ── PRACTICAL VALUE ─────────────────────────────────────────────────────────
+
+- qa_id: qa_ctg_0042
+  source_id: berger-contagious
+  source_title: "Jonah Berger, Contagious: Why Things Catch On (Simon & Schuster, 2013)"
+  source_locator: "Ch. 5 'Practical Value', the opening cases and the barn-raising passage (spine 10)"
+  question: >
+    Berger's fifth driver overlaps heavily with his first — both explain why people pass things on.
+    How does he distinguish them, and what does he choose as his opening cases to make the point?
+  answer: >
+    He distinguishes them by whose interests the sharing serves. Social Currency is about the SENDER
+    and how sharing makes them look; Practical Value is about the RECEIVER, and it transmits because
+    people want to help — saving someone time or money or trouble. He concedes the sender still
+    benefits, since helping feels good and reflects well, but says the core of the mechanism is
+    other-directed, and his analogy is a barn raising: mutual help that distance has made rare in
+    physical form and that useful information restores. His opening cases are chosen to be
+    unglamorous on purpose, because glamour would let social currency explain them: an eighty-six-
+    year-old's video about removing silk from corn, watched more than five million times and skewing
+    to viewers over fifty-five, and hikers on a mountain trail discussing vacuum cleaner models. He
+    goes through the other drivers explicitly to show none of them accounts for the vacuum
+    conversation.
+  answer_type: comparison
+  difficulty: medium
+  knowledge_type: concept_development
+  requires_application: false
+  support: >
+    No measurement supports the sender-versus-receiver distinction; it is an interpretive framing,
+    and the same act is compatible with either motive, which Berger concedes without separating
+    them. The one measurement bearing on the driver is his own New York Times finding, reported in
+    the previous chapter, that more useful articles were 30 percent more likely to make the Most
+    E-Mailed list — which establishes the association, not the helping motive behind it. He ranks
+    this driver the easiest of the six to apply, as a judgement without a cross-driver comparison.
+  confounders:
+    - "collapsing the two drivers because both make the sharer look good; his distinction is about who the content is for"
+    - "reading the opening cases as evidence; they are anecdotes, and the driver is assigned to them by elimination"
+    - "treating 'easiest to apply' as a measured ranking"
