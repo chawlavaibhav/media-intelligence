@@ -5,7 +5,7 @@
 **Audited `main`:** `bf02dd1f31a9b1d0b790f4a2a09a68f3b39748fa`.  
 **Branch reviewed:** `work/canon-014-final-full-canon` at
 `bfd0fcd1926c991a5cd626d2e96bef56189a66ff` before this review artifact was added.  
-**PR:** #68.  
+**PR:** #69. Draft PR #69 was closed only because the connector could not transition it to ready-for-review; #69 points to the same reviewed branch.  
 **Date:** 30 Aug 2026.  
 **Spend / provider calls:** none for this review.
 
@@ -15,8 +15,8 @@ benchmark. Domain correctness remains with Canon + Controller.
 
 # Verdict: PASS WITH NON-BLOCKING NOTES
 
-No repository-coherence defect was found that should block PR #68. The merge is coherent provided
-the Controller uses PR #68 as the sole integration branch and does not merge donor PR #66 or #67
+No repository-coherence defect was found that should block PR #69. The merge is coherent provided
+the Controller uses PR #69 as the sole integration branch and does not merge donor PR #66 or #67
 afterward.
 
 ## 1. Scope and branch shape — coherent
@@ -33,7 +33,7 @@ Mechanical comparison against current `main` at the reviewed head shows:
 - the branch is **8 commits ahead / 0 behind** the audited `main` at the reviewed head.
 
 The Controller-owned changes are integration bookkeeping, not a Canon worker crossing stream
-boundaries. They make the state documents true at the moment PR #68 lands.
+boundaries. They make the state documents true at the moment PR #69 lands.
 
 ## 2. Accepted / HOLD separation — independently reproduced
 
@@ -95,7 +95,7 @@ declares. These are different checksums, not contradictory bytes, but the shared
 
 ## 5. Current-state coherence — corrected before merge
 
-Without integration bookkeeping, merging PR #68 would have left `PROJECT-MEMORY.md` saying
+Without integration bookkeeping, merging PR #69 would have left `PROJECT-MEMORY.md` saying
 “19 live accepted sources”. The Writer Controller corrected that on this branch before this review.
 
 The reviewed branch now records coherently:
@@ -156,10 +156,9 @@ block.
 
 ## 8. Merge posture
 
-**Governor advice: merge PR #68.**
+**Governor advice: merge PR #69.**
 
-PR #68 is the sole integration surface for CANON-014. PR #66 and PR #67 are donor history and must
-not be merged afterward.
+PR #69 is the sole integration surface for CANON-014. PR #66 and PR #67 are donor history; PR #68 is the closed draft predecessor. None must be merged afterward.
 
 After merge, the durable state is:
 
