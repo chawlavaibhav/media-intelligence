@@ -4,8 +4,8 @@
 **Authorisation:** `coordination/decisions/CONTROLLER-CANON-014-INTEGRATION-2026-08-30.md`.  
 **Audited `main`:** `bf02dd1f31a9b1d0b790f4a2a09a68f3b39748fa`.  
 **Branch reviewed:** `work/canon-014-final-full-canon` at
-`bfd0fcd1926c991a5cd626d2e96bef56189a66ff` before this review artifact was added.  
-**PR:** #69. Draft PR #69 was closed only because the connector could not transition it to ready-for-review; #69 points to the same reviewed branch.  
+`bfd0fcd1926c991a5cd626d2e96bef56189a66ff` before this review artifact was added. Subsequent commits only add this Governor review and retarget Controller/Governor integration metadata from closed draft PR #68 to replacement PR #69; no Canon corpus bytes changed.  
+**PR:** #69. Draft PR #68 was closed only because the connector could not transition it to ready-for-review; #69 points to the same reviewed branch.  
 **Date:** 30 Aug 2026.  
 **Spend / provider calls:** none for this review.
 
