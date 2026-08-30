@@ -2,7 +2,7 @@
 
 **Status:** ACCEPTED FOR MERGE  
 **Role:** Writer Controller  
-**Target:** PR #68, `work/canon-014-final-full-canon`
+**Target:** PR #69, `work/canon-014-final-full-canon`
 
 ## Decision
 
@@ -22,7 +22,7 @@ authorise any model/provider call and does not itself define the T2B treatment.
 - **1,028 grounded, ungraded, uncalibrated Q&A items** retained under `canon/qa/canon-014/`.
 - The corpus index at `canon/knowledge/CANON-CORPUS-INDEX.yaml` records separate fingerprints for
   accepted Canon, the full knowledge corpus, and the Q&A corpus.
-- PR #68 supersedes PR #66 and PR #67 for integration purposes; those donor PRs must not be merged.
+- PR #69 is the integration PR. It replaces draft PR #68 after the GitHub connector failed to transition #68 from draft to ready-for-review; the reviewed branch/content is the same. PRs #66, #67 and #68 must not be merged.
 
 ## Retrieval boundary
 
