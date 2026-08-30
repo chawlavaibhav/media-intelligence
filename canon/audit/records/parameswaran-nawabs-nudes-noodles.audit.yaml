@@ -1,0 +1,332 @@
+# Audit Gate v0.2 record — Parameswaran, "Nawabs, Nudes, Noodles"
+# Written by CANON-014 against the exact bytes fingerprinted below, AFTER the source
+# representation was complete and committed. The source was NOT reopened for this audit; the
+# extraction and the visual pass had already been done in the same session from the supplied copy.
+
+audit_record_version: v0.2
+audit_id: aud_nawabs_nudes_noodles
+source_id: parameswaran_nawabs_nudes_noodles
+knowledge_dir: canon/knowledge/current/parameswaran-nawabs-nudes-noodles
+recorded_at_commit: work-branch-canon-014-web-cleanup
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 0b011dc28a59a7b017d50e2e01227968b60bce97d25b471cdc5a1f5a1c3d914d
+    - path: operational-bindings.yaml
+      digest: b389d402445e337fad60a2896feb0d17a5cee42c48e95eb9f7bd7b447b5d581b
+    - path: source-concept-systems.yaml
+      digest: ebdd5204f399fe895575f886372ddd4a51bbd02195b1e610a58093993c7e13f1
+    - path: source-knowledge.yaml
+      digest: ee7a9f6d0f32fc573c2afac2ace8382e61021ccd650812b0aed6bce0f7ef145d
+    - path: visual-evidence-ledger.yaml
+      digest: 5467886d144261a95d39e9fe351cfc65cd4b2a725bb194a1577bfc55821b23a6
+  combined_digest: 14052c565a6dc5af95462ee6bbc699e8d330870a027377ee187655845b38e6c7
+
+evidence_basis_for_this_audit:
+- canon/knowledge/current/parameswaran-nawabs-nudes-noodles/source-knowledge.yaml
+- canon/knowledge/current/parameswaran-nawabs-nudes-noodles/source-concept-systems.yaml
+- canon/knowledge/current/parameswaran-nawabs-nudes-noodles/operational-bindings.yaml
+- canon/knowledge/current/parameswaran-nawabs-nudes-noodles/ontology-mappings.yaml
+- canon/knowledge/current/parameswaran-nawabs-nudes-noodles/visual-evidence-ledger.yaml
+- canon/knowledge/current/parameswaran-nawabs-nudes-noodles/PROVENANCE.md
+- canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml
+source_reopened: false
+
+# ── A. Representation integrity ─────────────────────────────────────────────
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable EPUB with no page map declared in the OPF and no folio anywhere in the text. Every
+    locator in the extraction is a chapter title, optionally with a spine index as a secondary file
+    position. No page number was interpolated anywhere. Where the book's own text refers to a printed
+    page, that reference is unresolvable in this copy and was not resolved by guessing.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source, plates and running text alike"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Established from the OPF and from a scan of the text layer. Not a fault and unfixable in this
+      format.
+  - pattern: in_figure_text_absent
+    affects: "body copy on every plate that carries body copy - Rasna, KamaSutra, Incredible India, Tuffs"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Plates reproduce at roughly 566 px on the long edge. Display type and headlines are legible
+      throughout; small-set body copy resolves as texture. On the Incredible India plate the whole
+      footline is illegible; on KamaSutra a column of roughly fifteen lines is. No extracted object
+      rests on any plate's body copy, and each affected object says so.
+  - pattern: figure_inspected_claim_underdetermined
+    affects: "4 of 19 plates - Rasna, Naukri, Pepsi, Asian Paints"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Each was opened and each still fails to establish its caption, because the artefact
+      reproduced is not the artefact the caption describes: a press ad under a caption about a
+      television line; a silent frame under a caption quoting spoken abuse; a cricketer and a
+      bottle under a caption quoting a line absent from the frame; and a later festival execution
+      under a caption about the campaign that established the phrase it puns on. Recorded as
+      sk_nnn_0023 and itemised in the ledger.
+  - pattern: caption_coverage_uneven
+    affects: "the relation between the plates and the chapters they illustrate"
+    detectability: silent
+    recoverability: recoverable_not_attempted
+    evidence: >
+      Every plate has a caption, so coverage is complete in the narrow sense. What is uneven is
+      what a caption DOES: some describe the execution, some assert an unevidenced commercial
+      outcome, and some name a campaign the plate does not show. A reader trusting captions
+      uniformly would draw four different strengths of conclusion from the same kind of line. This
+      is the one silent pattern here and it was found only by the visual pass.
+  - pattern: no_loss_detected
+    affects: "the running text"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Prose extracts cleanly and in order across all 41 spine items. A duplicate-sentence scan
+      found no sentence above 90 characters occurring twice, so no pull-quote flattening or
+      reading-order damage. Endnotes are present, complete and correctly grouped by chapter, which
+      is what made section B below answerable at all.
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    The visual pass materially changed the extraction rather than confirming it, in both directions.
+    Six craft mechanisms in this record exist ONLY because the plates were opened - the book's text
+    describes none of them, supplying one-line captions instead. In the opposite direction, four
+    captions were found not to be settled by their own plates, which a text-only pass would have
+    transcribed as established fact. The residual limit is body copy: no claim here rests on any
+    plate's small-set copy, and that is permanent in this copy.
+
+# ── B. Evidence and claim origin ────────────────────────────────────────────
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 32 objects were classified. This source's endnotes survive intact and grouped by chapter,
+    which is unusual for the corpus and is what allowed several claims that read as the author's to
+    be traced to Bijapurkar, Mehta, Padamsee, Goffman, McNeal, UNICEF or the Census.
+  categories:
+  - category: source_author_assertion
+    sk_refs: [sk_nnn_0001, sk_nnn_0002, sk_nnn_0004, sk_nnn_0005, sk_nnn_0013, sk_nnn_0032, sk_nnn_0033, sk_nnn_0041, sk_nnn_0050, sk_nnn_0051, sk_nnn_0052, sk_nnn_0055, sk_nnn_0015, sk_nnn_0016, sk_nnn_0017, sk_nnn_0018, sk_nnn_0019, sk_nnn_0020, sk_nnn_0021, sk_nnn_0022, sk_nnn_0023]
+    evidence: >
+      The author writing in his own voice, from his own career or his own reading of a campaign.
+      The nine visually grounded objects are in this category because what the SOURCE supplies for
+      them is a caption in its own voice; the structural observations on those plates are the
+      extractor's and are marked claim_type source_interpretation on the objects themselves.
+  - category: measurement_claimed_result_not_supplied
+    sk_refs: [sk_nnn_0054, sk_nnn_0042]
+    evidence: >
+      Two clear cases. sk_nnn_0054: the Introduction invokes "a frame-by-frame content analysis of
+      consumer product television advertising in India, released over the last fifty years" and
+      reports two directional findings from it, with no numbers, sample, method, period breakdown
+      or attribution - and the Introduction's endnotes cite only Lears and Mehta, neither of which
+      is a content analysis. sk_nnn_0042: the Cogito 2002 celebrity study is reported with three
+      named indices and a dominance conclusion, and no sample, method, outcome measure or effect
+      size. NEITHER object carries empirical_within_source, as this category requires.
+  - category: third_party_measurement_reported
+    sk_refs: [sk_nnn_0053, sk_nnn_0031]
+    evidence: >
+      sk_nnn_0053: television penetration figures cited to N. Mehta, *Behind a Billion Screens*
+      (HarperCollins, 2015), on bases that change across the series. sk_nnn_0031: the pester-power
+      bands attributed to "consumer researchers" and "research said". Neither carries
+      empirical_within_source. Note the difference between them: one names its source and one does
+      not, which is why the next category exists.
+  - category: source_quotes_unnamed_third_party
+    sk_refs: [sk_nnn_0031]
+    evidence: >
+      The pester-power passage attributes its three-band finding to unnamed "consumer researchers"
+      with no study, sample or date, and the chapter's endnotes do not cover it. Recorded in both
+      categories deliberately: it IS a third-party measurement being reported, AND the third party
+      is unidentified, and the two facts have different consequences for a consumer.
+  - category: source_quotes_named_third_party
+    sk_refs: [sk_nnn_0014, sk_nnn_0043, sk_nnn_0033]
+    evidence: >
+      sk_nnn_0014: the three naming requirements are the anthropologist William Mazzarella's,
+      reached by interviewing the campaign team after the fact. sk_nnn_0043: the bazaar-art
+      argument is Arvind Rajagopal's, reported without a specific citation in the passage.
+      sk_nnn_0033 additionally carries Subhas Chakravarty's assertion that Indian male grooming was
+      created single-handedly by marketing, which is a strong causal claim with no evidence behind
+      it in this source.
+  - category: origin_unresolved
+    sk_refs: [sk_nnn_0010, sk_nnn_0011, sk_nnn_0012, sk_nnn_0030, sk_nnn_0040]
+    evidence: >
+      Five objects where the author is a PARTICIPANT recounting events he took part in, decades
+      later, without a contemporaneous record: his own Sweetex rejection at Doordarshan, the
+      nikhri substitution at a competitor, the ASCI account written by an industry insider, the
+      launch-timing argument he lost to T. Krishnakumar, and the pre-testing incentive. These are
+      neither disinterested reports nor measurements, and the Audit Gate has no category for
+      "insider recollection of an institutional fact". origin_unresolved is the honest placement
+      and the gap in the vocabulary is routed to the Controller in the CANON-014 brief.
+  relation_to_evidence_characteristics: >
+    NO object in this source carries empirical_within_source, which is correct: the author performs
+    no measurement anywhere in the book. Every numeric or study-shaped claim is either reported from
+    a third party or invoked without its result, and both of those categories are forbidden from
+    carrying empirical_within_source by the consistency rule. The two categories above that assert a
+    measurement was not the source's own therefore hold no sk_id that carries the characteristic, and
+    the category that would require it holds none at all.
+
+# ── C. Application fit ──────────────────────────────────────────────────────
+application_fit:
+  audited: true
+  findings:
+  - consumer: creative_ir
+    outcome: binding_exists
+    existing_binding_refs: [bnd_nnn_0003, bnd_nnn_0004]
+    note: >
+      Two, both modest. One records that an execution may depend on a reference the audience must
+      already hold (a locally recognised scene, a common noun in the local script), which a
+      Creative IR specifying an audience by locale has a real reason to carry. One records the
+      fixed-form-with-one-variable-slot hierarchy observed in the Amul topical. The second is
+      inferred from a single reproduced execution and its status_reason says so.
+  - consumer: production_ir
+    outcome: blocked_target_schema_absent
+    existing_binding_refs: [bnd_nnn_0007, bnd_nnn_0008]
+    note: >
+      Production IR does not exist. Both production bindings carry status production_candidate and
+      a null target_path, as PROJECT-CONTRACT separation 2 requires. One is live-action shoot
+      practice with an undirectable subject; one is the clearance and contracting constraint shape.
+      Neither says anything about any generative model and neither may be read as doing so.
+  - consumer: evaluation
+    outcome: binding_exists
+    existing_binding_refs: [bnd_nnn_0005, bnd_nnn_0006]
+    note: >
+      Two inspection questions derived from inspected plates: whether a word the audio carries is
+      present as a designed graphic element in a frame, and the ratio of area given to subject
+      versus product in a whole asset. Both support asking a question; NEITHER supplies a
+      threshold, because the source supplies none and inventing one is forbidden here.
+  - consumer: governance
+    outcome: binding_exists
+    existing_binding_refs: [bnd_nnn_0001, bnd_nnn_0002, bnd_nnn_0009]
+    note: >
+      The strongest fit in this source, and all three are prohibitions rather than capabilities:
+      do not read advertising depiction as prevalence; a gating measurement can be raised by an
+      input that does not raise the outcome; and the source's reported numbers are historical,
+      third-party and on shifting bases.
+  - consumer: benchmark
+    outcome: no_current_binding
+    note: >
+      Nothing here is a benchmark dimension. The source performs no measurement, proposes no
+      criterion and supplies no threshold anywhere, and the one instrument-shaped thing in it
+      (bnd_nnn_0002) is a warning ABOUT instruments rather than a dimension for one.
+  - consumer: deterministic_composition
+    outcome: no_current_binding
+    note: >
+      Considered and declined. The inspected plates contain layout facts that look measurable - the
+      Tuffs area ratio, the Amul invariant set - but the source states no geometry, and deriving
+      executable composition rules from a 566 px reproduction would be inventing precision the
+      representation cannot carry. bnd_nnn_0006 records the ratio as an inspection question under
+      evaluation instead, which is what the evidence supports.
+  - consumer: human_workflow
+    outcome: candidate_no_binding_made
+    note: >
+      Real fit exists and no binding was written. Three of the four remedies in the ontology act on
+      a person or a process rather than on material - attach the prevalence caution to an evidence
+      set, settle a third-party clearance route before approving a script, book redundant
+      interchangeable subjects - and each names its executor. They are recorded as remedies with
+      executable_by values rather than as bindings, because naming a fit in an audit is not
+      creating a binding and no SPEC-04 target type covers this consumer.
+  unbound_knowledge_of_note:
+  - sk_refs: [sk_nnn_0011, sk_nnn_0012, sk_nnn_0010, sk_nnn_0013]
+    observation: >
+      The Indian regulatory material - the two-gate Doordarshan structure, the nikhri substitution,
+      ASCI's constitution and how the 2007 Cable TV Network Rules amendment gave it reach beyond
+      its members, the Animal Welfare Board - is the densest institutional knowledge in this source
+      and almost none of it is bound. That is correct rather than a gap: this project has no
+      consumer for market-specific advertising regulation, and manufacturing one would be coverage
+      for its own sake. It is durable and it is worth keeping unbound.
+  - sk_refs: [sk_nnn_0052, sk_nnn_0053, sk_nnn_0055, sk_nnn_0004]
+    observation: >
+      Indian advertising history proper - the shift of Hindi from a translation department to
+      origination, television penetration, cause-related campaigns, and the decade in which
+      advertising did not track the social mood. Unbound and unbindable by anything currently
+      built. It is also the material that most directly addresses the gap CANON-013 recorded as
+      having zero contributors.
+  conclusion: >
+    This source's fit is concentrated in governance, where it contributes three prohibitions, and is
+    thin everywhere else. Its real value is not application: it is the first Indian advertising and
+    Indian cultural material in the corpus at all, and most of what it holds is durable knowledge
+    with no current consumer. That is a legitimate reason to hold a source and a poor reason to bind
+    one, and no binding was written to improve the look of this section.
+
+# ── D. Lineage and independence ─────────────────────────────────────────────
+lineage:
+  authors: ["Ambi Parameswaran"]
+  publisher: "Pan Macmillan"
+  series:
+  first_published: 2016
+  copy_edition: "publisher EPUB; ISBN 9781509840632 declared in the OPF. Printed edition not independently established."
+  related_sources_in_corpus:
+  - source_id: pandey_pandeymonium
+    relation: no_known_relation
+    evidence: >
+      Tested against shared_primary_informant and REJECTED. Parameswaran names Piyush Pandey in a
+      single passage, in a list of four writers, illustrating a point about Hindi-originated
+      copywriting. The Audit Gate is explicit that incidental quotation is not sufficient and that
+      the relation applies only where a practitioner's claims are load-bearing in both works. No
+      claim extracted from this source rests on Pandey's account of anything, and Pandey does not
+      cite Parameswaran. The campaigns both books discuss (Fevicol, Cadbury Dairy Milk, Asian
+      Paints) are common property of the industry both worked in: shared subject matter is not
+      shared origin.
+  independence_verdict: independent_origin
+  independence_basis: >-
+    No shared author, work, series, publisher or informant with any of the 19 live accepted sources or with either other new candidate. Checked pairwise against the full live list rather than asserted. The nearest category adjacency is to ogilvy-ch2-advertising-that-sells - both concern advertising, both authors ran agencies - and Parameswaran does not cite Ogilvy's book in the endnotes for any chapter extracted here. RECORDED FORWARD: this source CITES Rama Bijapurkar's *We Are Like That Only* and *A Never-Before World*, and Rachel Dwyer's *Picture Abhi Baaki Hai*. cites_source is deliberately not disqualifying and none of those works is in the corpus. The rows are recorded in the CANON-014 lineage matrix so that if a Bijapurkar source is ever admitted, an auditor knows this source's account of Indian youth partly rests on her work. Note that *Picture Abhi Baaki Hai* is a DIFFERENT work from *Cinema India*: citing one book by an author creates no relation to a different, uncited book by the same author. ALSO RECORDED FORWARD: this source's bazaar-art material is SECOND-HAND, reporting Arvind Rajagopal. If a primary source on Indian calendar art is ever admitted, this source must not be counted as independently corroborating it.
+        RECORDED FORWARD (not a corpus relation): Desai's *Mother Pious Lady* was processed by CANON-014 and is HELD, not accepted - it sits under canon/candidates/canon-014/ with audit_status evidence_insufficient, so it is not in the corpus and cannot be a related_sources_in_corpus entry. The assessed relation is no_known_relation: different authors, publishers, works and methods, and neither cites the other. Both authors have advertising careers and both write about Indian consumer culture, which is category adjacency and not a relation in the controlled vocabulary; both cite Malcolm Gladwell's *Blink*, which creates no dependence between them. This row becomes live if Desai is ever admitted.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Lupton, Ogilvy and Light: Science & Magic as
+      worked examples. None quotes this source, which was not in the corpus when the specs were
+      written. The extractor had no prior exposure to any finding from this book through the specs.
+
+# ── E. Technology contingency ───────────────────────────────────────────────
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    Much of this source is explicitly about a technology and regulatory regime that no longer exists
+    - a state television monopoly with pre-broadcast clearance, cinema advertising on 100-foot film
+    shorts, print matrimonial and press advertising - and the book itself narrates the transition
+    away from it. Failing to ask the question here would be the CANON-004 failure exactly.
+  assessed: true
+  classes:
+  - class: historical_convention
+    sk_refs: [sk_nnn_0010, sk_nnn_0011, sk_nnn_0013, sk_nnn_0053]
+    evidence: >
+      The Doordarshan two-gate clearance structure, the gori/nikhri prohibition, the 100-foot
+      cinema short with its censor certificate, and the television penetration series are all
+      conventions of a regime that has passed. They are recorded as history and every one carries a
+      period bound in its scope. bnd_nnn_0008 binds the SHAPE of the constraint - independent
+      gates, third-party clearances - and states explicitly that it is not a current compliance
+      path for any market.
+  - class: technology_contingent
+    sk_refs: [sk_nnn_0040, sk_nnn_0042, sk_nnn_0051, sk_nnn_0030]
+    evidence: >
+      The pre-test incentive depends on commercial pre-testing being the gate a marketing manager
+      must clear; the Cogito celebrity study is dated 2002; the entourage and eight-hour
+      contracting norms are market- and period-specific; and the school-timing argument depends on
+      a pre-digital school day supplying the child's audience, which the source does not address.
+      Each of these could have expired without anyone noticing, and each object says so.
+  - class: durable_mechanism
+    sk_refs: [sk_nnn_0005, sk_nnn_0031, sk_nnn_0033, sk_nnn_0041, sk_nnn_0014, sk_nnn_0011]
+    evidence: >
+      Six mechanisms whose statement does not depend on the technology that carried them: a
+      depiction is not evidence of prevalence; a child's influence is a veto in some categories and
+      a selection in others; accumulated equity can prevent an incumbent from taking a category a
+      newcomer can; a differentiating asset stops differentiating once every competitor holds it; a
+      taboo category may need a name that supplies reach, connotation and legitimacy at once; and a
+      lexical ban acts on a token rather than on the meaning an audience assigns. Note sk_nnn_0011
+      appears in both this class and historical_convention, deliberately: the 1980s prohibition is
+      a dead convention, the substitution mechanism it demonstrates is not.
+  - class: uncertain
+    sk_refs: [sk_nnn_0032, sk_nnn_0054, sk_nnn_0055]
+    evidence: >
+      The sachet conjecture rests on usage frequencies the author asserts for one period and is
+      marked as a suspicion by him. The content analysis cannot be classified at all because its
+      method and date are absent. The cause-related pattern is reported with named campaigns but no
+      outcome, so whether it describes a durable practice or a period fashion is not settled.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
+correction_note: "This record was rewritten by the CANON-014 web-cleanup lane against corrected artifacts. The source was still NOT reopened - every correction was made from the committed bytes. What changed in the artifacts: free prose was replaced by the controlled enum in evidence.source_uncertainty and extraction_uncertainty with the prose moved to caveats; invalid intra_source_relations were mapped to SPEC-03 relations or removed with the nuance moved to caveats; label_origin values outside SPEC-03's vocabulary were corrected; ontology term kinds outside SPEC-05's four values were corrected; every repair term gained the required executable_by; and mechanisms that were the extractor's generalisation were re-attributed with stated_by_source: false. The source_snapshot below is recomputed against those corrected bytes."
+controller_delta_note: "Controller delta correction at head 66c70bd, applied without reopening the source. Three residual semantic defects were fixed: an intra-source relation that asserted a dependence the source does not have; a reciprocal `contradicts` between two claims that pull in different directions without being logically contradictory; and 13 SourceKnowledge mechanisms that carried the extractor's own causal explanation while stated_by_source was false. Every such mechanism text is now null, with the reasoning moved to interpretation_basis where it justifies a source_interpretation and to an extractor_observed caveat where it was an analytical observation. Two bindings that rested on a withdrawn inference were reviewed: one now owns the inference explicitly as extractor_inference, the other was weakened to the source-stated practice. The source_snapshot below is recomputed against those bytes."

@@ -1,0 +1,203 @@
+# CANON-014 — visual-evidence ledger for Parameswaran, "Nawabs, Nudes, Noodles".
+#
+# The visual pass RAN and COMPLETED. All 19 plates in the insert were extracted from the EPUB and
+# opened individually in this session. This is the first source in the corpus whose reproduced
+# advertisements were inspected first-hand rather than described from captions.
+
+source_id: parameswaran_nawabs_nudes_noodles
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+# ── what was inspected ──────────────────────────────────────────────────────
+inspection:
+  method: >
+    The EPUB was unpacked and every image asset enumerated. Each plate was opened and read directly.
+    No caption was accepted as a description of a plate without looking at the plate.
+  images_in_archive: 22
+  plates: 19
+  ornaments_not_plates:
+    - {file: "images/00003.jpg", dimensions: "29x25", note: "decorative rule, not a plate"}
+    - {file: "images/00009.jpg", dimensions: "10x15", note: "decorative glyph, appears twice in ch. 'The Tingling Freshness of Teens'"}
+  cover: "cover.jpeg — publisher cover, not evidence"
+  plates_inspected: 19
+  plates_not_inspected: 0
+  reproduction_scale: >
+    Every plate is approximately 566 px on its long edge (range 460-566). At that scale composition,
+    casting, setting, colour, pack and display type are legible; body copy is NOT.
+
+# ── the plate insert as an object ───────────────────────────────────────────
+plate_insert:
+  location: "spine 19, index_split_018.html"
+  paginated: false
+  binding_to_text: >
+    The insert is a single unpaginated run of 19 image-plus-caption pairs. Nothing in the running
+    text cross-references a plate, and no plate carries a figure number. The one-line captions are
+    the ONLY link between a plate and the chapter whose subject it illustrates, and the extractor
+    had to make that link by subject matter.
+  numbering_gap:
+    observed: "image files run 00001-00015 and 00018-00023; 00016 and 00017 are absent from the archive"
+    consequence: >
+      No caption is orphaned: 19 captions, 19 plates. The gap is in the file numbering, not in the
+      evidence, so no plate is missing from the insert as this copy presents it.
+
+# ── loss patterns observed, using the Audit Gate vocabulary ────────────────
+observed_loss_patterns:
+
+  - pattern: no_authored_page
+    affects: "the entire source, plates and running text alike"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB. The OPF declares no page map and no plate or paragraph carries an authored
+      folio. Every locator in this extraction is a chapter title or the plate insert, never a page.
+      The book's printed edition certainly has pages; this copy does not, and none was interpolated.
+
+  - pattern: in_figure_text_absent
+    affects: "body copy on every plate that carries body copy — principally Rasna, KamaSutra, Incredible India, Tuffs"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      At ~566 px the body copy on these plates resolves as texture, not letterforms. On the
+      Incredible India plate the entire footline is illegible; on KamaSutra a column of perhaps
+      fifteen lines is illegible; on Rasna the flavour list and body block are illegible. Display
+      type and headlines ARE legible throughout, so the loss is confined to small-set copy. Every
+      extracted object that touches one of these plates states that no claim rests on its body copy.
+
+  - pattern: figure_inspected_claim_underdetermined
+    affects: "4 of 19 plates — Rasna, Naukri, Pepsi, Asian Paints"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Each was opened and each still fails to establish its caption, because the artefact reproduced
+      is not the artefact the caption describes. Rasna's caption is about a television line; the
+      plate is a press advertisement. Naukri's caption quotes spoken abuse; the plate is a silent
+      frame of a shouting man. Pepsi's caption quotes a line; the plate shows a cricketer and a
+      bottle. Asian Paints' caption describes a campaign that made a phrase famous; the plate is a
+      later festival execution punning on the phrase as already established. Recorded as
+      sk_nnn_0023.
+
+  - pattern: caption_coverage_uneven
+    affects: "the relation between plates and the chapters they belong to"
+    detectability: silent
+    recoverability: recoverable_not_attempted
+    evidence: >
+      Every plate has a caption, so caption coverage is complete in the narrow sense. What is uneven
+      is what a caption does: some describe the execution (Amul, Jenson & Nicholson), some assert an
+      unevidenced commercial outcome ("made condom-wearing appealing and attractive", "creating a new
+      drinking habit across India"), and some name a campaign the plate does not show. A reader who
+      trusts captions uniformly would draw four different strengths of conclusion from the same kind
+      of line.
+
+  - pattern: no_loss_detected
+    affects: "the running text"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      The prose extracts cleanly and in order across all 41 spine items. A duplicate-sentence scan
+      over the whole text found no duplicated sentence above 90 characters, so no pull-quote
+      flattening or reading-order damage of the kind found in other candidates. Endnotes are present,
+      complete and correctly separated by chapter, which is what let evidence_origin be settled.
+
+# ── plate-by-plate record ───────────────────────────────────────────────────
+# settles_caption: does the plate itself establish what its caption asserts?
+demonstrations:
+
+- {file: "images/00010.jpg", subject: "Rasna", form: press_advertisement, settles_caption: false,
+   observed: "Headline 'Rasna presents delicious cool summer thrills'; girl at left, array of glasses and a pitcher; foot band 'INDIA'S LARGEST SELLING SOFT DRINK CONCENTRAT[E]'. 'I love you Rasna' appears only as a small lockup beside the logo.",
+   why_not: "the caption describes a television line and a national drinking habit; this is a press execution and evidences neither"}
+
+- {file: "images/00011.jpg", subject: "Liril", form: television_frames, settles_caption: true,
+   observed: "Four-up grid of frame grabs: waterfall, green two-piece, and a pack shot reading 'Liril THE FRESHNESS SOAP' with lemons.",
+   why_not: null}
+
+- {file: "images/00013.jpg", subject: "Coca-Cola 'Thanda matlab'", form: outdoor_or_press, settles_caption: true,
+   observed: "Unstyled small-town street: whitewashed wall, stacked red crates, squatting child, dog, leaning pole. Logo lockup bottom right with 'Thanda matlab' set in DEVANAGARI beside the Latin logotype. Almost no copy.",
+   why_not: null}
+
+- {file: "images/00014.jpg", subject: "Pepsi / 1996 World Cup", form: television_frame, settles_caption: false,
+   observed: "Sachin Tendulkar in India ODI yellow, bat and Pepsi bottle, Pepsi hoarding behind.",
+   why_not: "the caption quotes 'Nothing official about it'; the line does not appear in the frame"}
+
+- {file: "images/00015.jpg", subject: "Bajaj Electricals 'Ab main bilkul boodha hoon'", form: television_storyboard, settles_caption: true,
+   observed: "Eight-frame grid. Old man in a dressing gown eating; a boy in bed with a torch and a comic; a night fridge raid; a woman in a nightgown looking cross; end frame 'The right light' with a radiating bulb and 'bajaj THE LIGHTING PEOPLE SINCE 1938'. The cross-cut between the old man's present and a boy's childhood is visible across the frames.",
+   why_not: null}
+
+- {file: "images/00019.jpg", subject: "Maggi 2-Minute Noodles", form: television_frames, settles_caption: true,
+   observed: "Two frames: woman in a yellow sari with a child; three pack shots with a bowl and the line 'FAST TO COOK! GOOD TO EAT!' set in capitals with exclamation marks.",
+   why_not: null}
+
+- {file: "images/00020.jpg", subject: "Surf 'Lalita ji'", form: television_frames, settles_caption: true,
+   observed: "Four-up grid: woman in a sari gesturing in a vegetable market; pack reading 'High Power Surf washes whitest'.",
+   why_not: null}
+
+- {file: "images/00021.jpg", subject: "Amul topical", form: outdoor_hoarding, settles_caption: true,
+   observed: "Flat yellow ground; hand-lettered 'THOROUGHBREAD' as the only headline; cartoon Amul girl on a black horse holding buttered bread; 'utterly butterly Amul' in a small casual hand at lower right. Horse-racing subject confirms the Derby occasion the caption names.",
+   why_not: null}
+
+- {file: "images/00023.jpg", subject: "Hero Pleasure", form: television_frames, settles_caption: true,
+   observed: "Two stacked frames: a bride in a WESTERN white gown and groom on a turquoise scooter with guests cheering; then a purple scooter with 'Why should boys have all the fun?' in an italic script and 'Pleasure' in a pink lozenge.",
+   why_not: null}
+
+- {file: "images/00005.jpg", subject: "Fevicol", form: press_or_outdoor, settles_caption: true,
+   observed: "Photograph of an overcrowded suburban train, dozens of men hanging off the carriage, with a 'FEVICOL — The Ultimate Adhesive' panel mounted on it. NO headline and no body copy.",
+   why_not: null}
+
+- {file: "images/00006.jpg", subject: "Asian Paints 'Mera wala blue'", form: press_advertisement, settles_caption: false,
+   observed: "Kalighat/Jamini-Roy-idiom Krishna with a flute in strong blue, yellow and red on white; handwritten beneath, 'Mera' struck through and replaced by 'Meera' — '~~Mera~~ Meera Wala Blue'; 'asian paints' mark top right; foot line 'Celebrate this Janmashtami with the colours of devotion. Apcolite'.",
+   why_not: "the caption says the campaign MADE 'Mera wala blue' a household phrase; this is a later festival execution punning on the phrase as already established, so it shows the phrase in use, not its origin"}
+
+- {file: "images/00008.jpg", subject: "Jenson & Nicholson", form: outdoor_hoarding, settles_caption: true,
+   observed: "White ground; black headline 'Whenever you see colour, think of us.'; one large red cross-shaped block; foot 'Jenson & Nicholson [J&N monogram] The most trusted name in paints'. No product, no pack, no person, no body copy.",
+   why_not: null}
+
+- {file: "images/00001.jpg", subject: "Incredible India", form: press_advertisement, settles_caption: true,
+   observed: "Kerala backwater; two Indian boatmen punting four Western tourists; white serif line set into the canopy: 'That day, man will travel at the speed of thought. Pity.'; 'Incredible !ndia' logotype bottom right with the exclamation mark replacing the I. Footline illegible.",
+   why_not: null}
+
+- {file: "images/00012.jpg", subject: "Air India Maharaja", form: poster, settles_caption: true,
+   observed: "'London' in a heavy blue display face; four flat-illustrated Buckingham Palace guardsmen in red tunics and bearskins; the Maharaja mascot standing among them at roughly half their height; 'AIR·INDIA' in red at the foot.",
+   why_not: null}
+
+- {file: "images/00004.jpg", subject: "Naukri", form: television_frame, settles_caption: false,
+   observed: "Single low-resolution frame: an enraged man in a suit shouting across a desk toward camera, a second man behind him.",
+   why_not: "the caption quotes 'Hitler. Arrogant. Rascal. Idiot…'; that is carried in the audio and no words appear in the frame"}
+
+- {file: "images/00018.jpg", subject: "Cadbury Dairy Milk", form: press_spread, settles_caption: true,
+   observed: "Left page full-bleed: a woman in a floral dress dancing on a cricket field with pigeons. Right page near-empty: the Dairy Milk pack and 'The real taste of Life' in a script face. The spread asymmetry is the notable property.",
+   why_not: null}
+
+- {file: "images/00007.jpg", subject: "NDDB Operation Flood", form: television_frames, settles_caption: true,
+   observed: "Two frames: a man in shirt, tie and red braces singing, beside 'doodh' set FOUR TIMES in a heavy rounded yellow display face on black; then a glass of milk, an 'Operation FLOOD' mark and a cartoon buffalo. The sung word is the picture, not a subtitle.",
+   why_not: null}
+
+- {file: "images/00022.jpg", subject: "KamaSutra", form: press_advertisement, settles_caption: true,
+   observed: "Red textured field; ruled box headed 'THE KAMASUTRA ON COURTING A MAID' in small capitals; inset of the pack; a long column of body copy (ILLEGIBLE at this scale); a calligraphic black brush figure suggesting a female form at right; foot 'KamaSutra … JUST ASK FOR KS'.",
+   why_not: null}
+
+- {file: "images/00002.jpg", subject: "Tuffs", form: press_advertisement, settles_caption: true,
+   observed: "Left half full-bleed black and white: two nude models embracing with a python, both in white trainers. Right half a flat purple field carrying 'His. And hers.' in a small script, two postage-stamp product insets, and 'TUFFS / HARDWEAR FOR FEET' in a heavy condensed sans. The product is the smallest element on the page.",
+   why_not: null}
+
+# ── observations available only from the images ─────────────────────────────
+visual_only_observations:
+  - "Four plates are low-resolution television frame-grab composites (Liril, Surf, Bajaj, Hero Pleasure, Naukri, Pepsi, Maggi, NDDB). Nothing may be asserted from them about edit, pace or duration — only about casting, setting, wardrobe, pack and end-frame typography."
+  - "The Coca-Cola plate sets 'Thanda matlab' in Devanagari. The book's text names the Hindi word but never says the execution used the Indian script. Script choice is visible only in the image."
+  - "The Asian Paints plate is executed in a Kalighat / Jamini Roy folk-painting idiom, which is the same borrowing-from-bazaar-art mechanism the book attributes to Arvind Rajagopal for the 1950s — appearing here in a modern execution the text does not connect to that argument."
+  - "The Hero Pleasure frame shows the bride in a Western white wedding gown rather than Indian bridal red. The chapter is about women's mobility and does not mention the wardrobe choice."
+  - "On the Incredible India plate the boatmen are Indian and the passengers are Western. The book presents the campaign as successful international tourism advertising and does not discuss the composition."
+  - "The Tuffs layout gives roughly half the page to the contested photograph and reduces the product to two small insets. The book recounts the fourteen-year obscenity case in detail and never mentions the composition."
+
+extraction_constraint_applied: >
+  Nine SourceKnowledge objects carry source_support: text_and_visual and name the exact image file
+  in provenance.inspected.figures. No object claims visual demonstration from a plate that was not
+  opened. No object rests on body copy, because body copy is illegible on every plate that has it.
+  Where a plate was opened and still did not settle its caption, that is recorded as a finding
+  (sk_nnn_0023) rather than resolved in the caption's favour.
+
+claim_resolution_after_inspection: some_underdetermined
+consequence: >
+  The visual pass materially changed the extraction rather than confirming it. Six craft mechanisms
+  in this record exist ONLY because the plates were opened — the book's text describes none of them.
+  In the opposite direction, four captions were found not to be settled by their own plates, which a
+  text-only pass would have transcribed as established fact. Both directions are recorded.

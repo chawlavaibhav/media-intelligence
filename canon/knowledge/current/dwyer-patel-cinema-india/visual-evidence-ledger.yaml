@@ -1,0 +1,182 @@
+# CANON-014 — visual-evidence ledger for Dwyer and Patel, "Cinema India".
+#
+# The visual pass RAN and was PARTIAL, and the partiality is the first thing recorded here because it
+# is the thing an auditor most needs. Eleven of approximately 121 numbered illustrations were opened
+# and read directly. The other 110 were not. No claim in this record rests on an illustration that
+# was not opened, and every object that does rest on one says so in its caveats and names the plate.
+
+source_id: dwyer_patel_cinema_india
+pass: attempted_and_partially_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+# ── the copy as an object ───────────────────────────────────────────────────
+copy_form:
+  form: page_image_scan_with_ocr_text_layer
+  evidence: >
+    The PDF carries 732 image objects over 244 pages in a repeating pattern of roughly three per page
+    (1965x3186 rgb, 1965x3186 gray, 655x1062 rgb), and its Creator string is "Internet Archive
+    (Scribe Version 4.5-initial-80-gce32ee1e)". This is a page-image scan of a print copy with an OCR
+    text layer over it, NOT a born-digital text. The consequence that matters: the illustrations are
+    not separable image files, they are regions inside page images, so inspecting one means rendering
+    its page.
+  library_provenance_visible: >
+    The scanned copy carries the stamps of a library — "CHESTER COLLEGE" / "A College of the University
+    of Liverpool", accession number 01090206, and a class mark — which OCR into the text layer as
+    noise at printed pp. 2 and 45. Recorded as a fact about the artefact. No extracted claim rests on
+    any page carrying this noise.
+
+# ── what was inspected ──────────────────────────────────────────────────────
+inspection:
+  method: >
+    The scan-to-printed-page mapping was established mechanically before anything was inspected, by
+    locating three chapter openings and one running folio and comparing them with the book's own
+    contents page: printed = pdf - 2, verified at printed pp. 13, 42, 58, 101, 183 and 215. Eight PDF
+    pages were then rendered at 110 dpi and read directly. No caption was accepted as a description of
+    a plate without looking at the plate.
+  numbered_illustrations_in_book: "approximately 121 (highest cross-reference in the text is 'illus. 121'; the caption-numbering sequence detected in the OCR runs past that with false positives from folios, so the figure is given as approximate)"
+  plates_inspected: 11
+  plates_not_inspected: "approximately 110"
+  pages_rendered: [164, 168, 176, 177, 193, 198, 199, 208]
+  plates_inspected_list:
+    - {illus: 92, subject: "Awara, reprint of original 1951 poster design", printed_page: 162}
+    - {illus: 93, subject: "Shri 420, reprint of original 1955 poster design", printed_page: 162}
+    - {illus: 96, subject: "Seth Studios, Mother India, 1980s poster", printed_page: 166}
+    - {illus: 100, subject: "close-up showing Diwakar Karkare's technique of overpainting", printed_page: 174}
+    - {illus: 101, subject: "C. Mohan, Sholay, 1975, booklet cover", printed_page: 174}
+    - {illus: 102, subject: "C. Mohan, Sholay, 1975, poster", printed_page: 175}
+    - {illus: 108, subject: "Diwakar Karkare, Deewaar, 1975, poster", printed_page: 191}
+    - {illus: 109, subject: "Diwakar Karkare, Deewaar, 1975, poster", printed_page: 196}
+    - {illus: 110, subject: "Diwakar Karkare, Deewaar, 1975, poster", printed_page: 197}
+    - {illus: 117, subject: "back cover of booklet for Daaera (1953), early advertisement for Pakeezah", printed_page: 206}
+    - {illus: 121, subject: "not inspected — listed here only to mark the top of the numbering"}
+  selection_basis: >
+    The eleven were chosen because they are the plates the extracted objects lean on: the four that
+    Patel reads in detail in her argument about character types and the star mask (108, 109, 110,
+    plus 92/93 for the earlier period), the one that documents a technique (100), the two that
+    illustrate the memory-activation redesign and the monumentality claim (96, 102), and one caption
+    quoted verbatim in the text (117). Selection was by argument load, not at random, and the record
+    is therefore not a sample from which anything about the other 110 plates may be inferred.
+  reproduction_quality: >
+    Plates are reproduced in full colour at print quality and render legibly: display type, palette,
+    brushwork and facial modelling are all readable. Small-set body copy within a reproduced poster
+    is generally not legible at the rendered resolution, and no claim rests on any.
+
+# ── what the inspection actually established ────────────────────────────────
+claims_checked_against_plates:
+  - claim: "Patel: in a Deewaar poster Bachchan's face is split in two, one half coloured in reds and pinks and the other in shades of blue"
+    plate: "illus. 110, printed p. 197"
+    outcome: confirmed
+    note: >
+      Opened and read directly. The split is plainly visible and runs vertically down the face, warm
+      reds on one side and blue-violet on the other. This is one of the few claims in the book that is
+      checkable purely from the artefact, and it checks.
+  - claim: "Patel: the pyramidal structure of a Deewaar poster places Bachchan at the top, a long-suffering mother figure below, a softer-featured second male, and two female figures associated with the two men"
+    plate: "illus. 109, printed p. 196"
+    outcome: confirmed
+    note: >
+      All five figures are present in the described arrangement. What the plate does NOT establish is
+      Patel's further claim about what a viewer reads from it; the arrangement is verifiable, the
+      reading is not.
+  - claim: "Patel: on the Sholay poster the male portraits are rendered by overpainting to emphasise defiant expressions while the female portraits are smaller and have a smooth photographic appearance"
+    plate: "illus. 102, printed p. 175"
+    outcome: confirmed
+    note: >
+      The contrast is visible: Bachchan's face carries visible directional brushwork, Jaya Bhaduri's
+      is markedly smoother and reads as a tinted photograph. The size difference is also as described.
+  - claim: "Patel: the Sholay lettering is formed from rocks and stones representing the boulders and desert setting, with a three-dimensional quality"
+    plate: "illus. 101, printed p. 174"
+    outcome: confirmed
+    note: "The letterforms carry a cracked-rock surface texture and are drawn with depth."
+  - claim: "Patel: overpainting was applied over a photographic base, often with a knife in thick textured strokes"
+    plate: "illus. 100, printed p. 174"
+    outcome: confirmed
+    note: >
+      The close-up shows thick, directional, knife-laid paint over a photographic underlayer, with the
+      photographic base still visible at the edges of the strokes. The technique is confirmed from the
+      artefact and not from the caption.
+  - claim: "Patel: the 1980s Mother India redesign shows Radha's arm outstretched across the poster on a diagonal, seen from a low viewpoint, in rich oranges, reds, yellows and browns, with three-dimensional lettering"
+    plate: "illus. 96, printed p. 166"
+    outcome: confirmed
+    note: "Every element of the description is present."
+  - claim: "Patel: the early Pakeezah advertisement carries the caption 'But ... they could not crush my purity'"
+    plate: "illus. 117, printed p. 206"
+    outcome: confirmed
+    note: "The line reads verbatim across the foot of the advertisement."
+
+# ── coverage bound ──────────────────────────────────────────────────────────
+# DELIBERATELY NOT RECORDED AS A LOSS PATTERN. Nothing is missing from the copy; the pass was
+# bounded by cost. The Audit Gate loss vocabulary describes damage to the artefact, and using one of
+# its terms here would misdescribe an intact source.
+inspection_coverage_bound:
+  not_inspected: "approximately 110 of approximately 121 numbered illustrations"
+  blocked: false
+  evidence: >
+    Eleven plates were opened. The rest were not, and could have been: the copy is complete, the page
+    mapping is established and reproducible, and any plate could be rendered on demand. This is a
+    bounded pass, not a blocked one, and the distinction matters for the audit — nothing prevented a
+    fuller pass except its cost. No claim in this record rests on an uninspected plate.
+
+# ── loss patterns observed, using the Audit Gate vocabulary ────────────────
+observed_loss_patterns:
+
+  - pattern: display_type_ocr_damage
+    affects: "front matter, and isolated words throughout"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The OCR layer is reliable for running prose and for captions but degrades on display type,
+      old-style numerals and stylised lettering. Observed instances: the authors' names on the title
+      page render as "Ree ie VW Ver Ren dally VAMP AT EL"; "DKNY" renders as "pkNny"; "1990s" renders
+      as "r990s"; running folios render as "IO", "IRL", "T§", "ly". These are visible as noise rather
+      than as plausible text, which is why they are recoverable: a wrong page number that reads as
+      "T§" cannot be mistaken for a real one. Every printed page number used as a locator in this
+      record was taken from the mechanically established mapping, NOT from the OCR of the folio.
+
+  - pattern: in_figure_text_absent
+    affects: "small-set body copy inside reproduced posters and booklets"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      At the rendered resolution the credit blocks and small copy within a reproduced poster resolve as
+      texture. Display type, titles and the large credit lines ARE legible. No extracted object rests
+      on small copy within any plate.
+
+  - pattern: no_loss_detected
+    affects: "text-layer ordering and completeness"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Checked rather than assumed. A duplicate-sentence scan over the whole extracted text for
+      sentences above 90 characters returned ZERO duplicates, so there is no pull-quote flattening and
+      no reading-order damage of the kind found in the Pandey copy on this branch. All four chapters,
+      the Introduction, Conclusion, References and Select Bibliography are present and extract in
+      order.
+
+  - pattern: source_evidence_never_printed
+    affects: "hoardings, the form the source names as the most distinctive of its medium"
+    detectability: named_by_text
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      This is a property of the published work, not of this copy, and is recorded to keep it separate
+      from digitisation loss. The source states in its Introduction that hoardings are destroyed once a
+      film finishes its run and that "there is little surviving evidence of the type of imagery
+      depicted on early hoardings", so the study rests on handbills, posters and booklets. One
+      hoarding is reproduced (illus. 105, Balkrishna Arts, 2000) and it is a late one. A reader of the
+      2002 print edition was in exactly the position this extraction is; the gap is the medium's, not
+      the digitisation's, and not this project's to fix. Captured as sk_dpci_0160.
+
+# ── consequence ─────────────────────────────────────────────────────────────
+claim_resolution_after_inspection: some_underdetermined
+consequence: >
+  Seven distinct visual claims by Patel were checked against the plates they describe and all seven
+  hold. That is a real and slightly unusual result: the book's descriptions of its own plates are
+  accurate, so where an object rests on a described plate the description can be relied on for the
+  seven checked, and is unverified for the rest.
+
+  The bound this places on the record is specific. What inspection CAN establish here is what is on a
+  plate — a split-coloured face, a diagonal arm, knife-laid paint, a caption's wording. What it cannot
+  establish, and what no plate in this book can establish, is what a viewer read from it. Patel's
+  claims about hierarchies of response, triggered memory and inferred filial relations are readings,
+  not observations, and remain readings after inspection. Every object drawn from them is typed and
+  caveated accordingly.
