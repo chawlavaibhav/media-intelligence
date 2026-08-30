@@ -1,0 +1,140 @@
+# EVAL-037 — FULL_CANON condition, REQUIRED_CANON supplemental treatment.
+#
+# Supplemental to the frozen `conditions/full-canon.yaml`, which is UNCHANGED and
+# remains the definition the original lanes ran under. Every field below is copied
+# from that file verbatim except:
+#
+#   * `treatment` / `mandatory_canon_use` / `model_discretion.decides`, which record
+#     that Canon use is no longer the model's choice;
+#   * `addendum`, which is the frozen FULL_CANON addendum text verbatim, followed by
+#     the mandatory-retrieval instruction.
+#
+# The corpus, its fingerprints, the three tools, the status invariants and the
+# retrieval freedoms (no top-K, no token budget, no retrieval-count budget) are
+# identical. Retrieval is forced; the answer is not supplied.
+#
+# This file is read ONLY by the REQUIRED_CANON lane.
+
+condition_id: FULL_CANON
+treatment_id: REQUIRED_CANON
+experiment: EVAL-037
+
+corpus:
+  description: >-
+    The merged status-aware full corpus produced by CANON-014: accepted Canon,
+    HOLD candidate knowledge, and the grounded Q&A banks, in one retrievable
+    surface with epistemic status preserved on every returned object.
+  base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  roots:
+    accepted: canon/knowledge/current
+    hold: canon/candidates/canon-014
+    qa: canon/qa/canon-014
+  index: canon/knowledge/CANON-CORPUS-INDEX.yaml
+  artifact_filenames:
+    - source-knowledge.yaml
+    - source-concept-systems.yaml
+    - operational-bindings.yaml
+    - ontology-mappings.yaml
+    - visual-evidence-ledger.yaml
+
+fingerprints:
+  algorithm: sha256-of-sorted-path-and-content
+  full_knowledge:
+    file_count: 193
+    combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+  qa:
+    file_count: 23
+    combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+  verification: >-
+    Recomputed from the working tree at the frozen base commit and matched
+    exactly. An execution worker MUST re-verify both digests during preflight
+    and MUST stop rather than run if either differs.
+
+tools_exposed:
+  - name: canon_catalog
+    access: read-only
+    purpose: List every source the corpus represents with its source_status and counts.
+  - name: canon_search
+    access: read-only
+    purpose: Search knowledge items, concept systems, bindings, ontology terms and Q&A items.
+  - name: canon_read
+    access: read-only
+    purpose: Read a specific source's artifact, or a specific item by id.
+
+status_invariants:
+  - Every returned object MUST carry source_status.
+  - source_status is one of ACCEPTED or HOLD, verbatim from the corpus. It is never inferred.
+  - HOLD MUST NEVER be represented, relabelled, summarised or defaulted as accepted.
+  - An object whose status cannot be established is not returned.
+  - Q&A items carry the source_status of their source and are additionally marked
+    not_benchmark_ground_truth. Q&A is accessible knowledge, not independent
+    corroboration and not benchmark truth.
+
+model_discretion:
+  # THE SINGLE TREATMENT CHANGE. Retrieval is compelled; every choice inside it
+  # remains the tested model's own. The harness curates no query, names no source or
+  # object, and supplies no preselected Canon packet.
+  decides:
+    - what to search        # the model composes its own query
+    - what to read          # the model chooses the object(s)
+    - whether to consume Q&A
+    - how much additional retrieval to perform
+    - what retrieved knowledge to actually apply
+  no_longer_decides:
+    - whether to use Canon at all
+  no_aggregate_top_k: true
+  no_canon_token_budget: true
+  no_retrieval_count_budget: true
+  mandatory_canon_use: true
+  mandatory_minimum:
+    canon_search: 1
+    canon_read: 1
+    canon_catalog_counts_as_canon_use: false
+  compliance_gate:
+    id: REQUIRED_CANON
+    satisfied_when: >-
+      The trial's retained evidence contains at least one canon_search call AND at
+      least one canon_read call. canon_catalog alone is never Canon use.
+    on_violation:
+      retain_output: true
+      status: failed_required_canon_use
+      quality_retry: forbidden
+      resample: forbidden
+
+# ---------------------------------------------------------------------------
+# The FULL_CANON addendum, plus the REQUIRED_CANON treatment instruction.
+# The first block is the frozen FULL_CANON addendum text, byte-for-byte. The
+# second block is the treatment, and is the only prompt change in this run.
+# Appended to the common system prompt exactly as the frozen lane appends it.
+# ---------------------------------------------------------------------------
+addendum: |
+  You have access to a media-production knowledge library through the available Canon tools.
+
+  It contains ACCEPTED knowledge, HOLD knowledge and grounded Q&A representations.
+
+  Use any amount of it if useful, or none.
+
+  ACCEPTED means the source passed the project's Audit Gate.
+  HOLD means the extracted knowledge has an unresolved evidence or representation blocker and must be treated cautiously.
+
+  Q&A items are alternate grounded representations, not independent corroboration or benchmark truth.
+
+  Canon is creative/production knowledge, not evidence about current model capability, provider pricing or reliability.
+
+  Decide for yourself what is relevant.
+
+  For this experiment, using the Canon library is required.
+
+  Before finalizing each production package:
+  - search Canon at least once for knowledge relevant to the customer request;
+  - read at least one Canon object returned by your search;
+  - decide yourself what is useful and how to apply it.
+
+  You choose the search query, the object(s) to read, how much additional
+  retrieval to perform, and what retrieved knowledge to use.
+
+  Do not retrieve merely to satisfy a formality: search for knowledge you believe
+  could improve the eventual customer outcome.
+
+  Canon is creative/production knowledge only. It is not evidence about current
+  generation-model quality, provider selection, pricing or reliability.

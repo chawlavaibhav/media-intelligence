@@ -221,6 +221,52 @@ def main():
          all(tc.get("snapshot_sha256") in sealed and tc.get("live_browsing") is False
              for tc in wcalls), f"{len(wcalls)} calls")
 
+    # ---- REQUIRED_CANON treatment (supplemental lanes only) ----------------------
+    if result.get("treatment") == "REQUIRED_CANON":
+        ok34 = ok35 = ok36 = ok37 = True
+        for t in result["trials"]:
+            calls = [tc for at in by_trial.get(t["trial_id"], [])
+                     for tc in (at.get("tool_calls") or [])
+                     if tc.get("tool_family") == "canon"]
+            searches = [tc for tc in calls if tc.get("name") == "canon_search"]
+            reads = [tc for tc in calls if tc.get("name") == "canon_read"]
+            # the compliance flag is DERIVED from the transcript, never asserted
+            derived = bool(searches) and bool(reads)
+            ok34 &= t.get("required_canon_use_satisfied") is derived
+            ok34 &= t.get("canon_search_calls") == len(searches)
+            ok34 &= t.get("canon_read_calls") == len(reads)
+            # catalog alone must never register as compliance
+            if not searches and not reads:
+                ok35 &= t.get("required_canon_use_satisfied") is False
+            # a violation is recorded, retained, and never resampled
+            if not derived:
+                ok36 &= (t["status"] == "failed_required_canon_use"
+                         and t["eligible_for_media_generation"] is False)
+                atts = by_trial.get(t["trial_id"], [])
+                ok36 &= all(x["attempt_kind"] != "technical_retry"
+                            or x.get("phase") == "creative" for x in atts)
+                # no extra creative attempt was bought by non-compliance
+                creative_ok = [x for x in atts if x["phase"] == "creative"
+                               and x["outcome"] == "ok"]
+                ok36 &= len(creative_ok) <= 1
+            else:
+                ok36 &= t["status"] != "failed_required_canon_use"
+            # the model composed its own query; the harness curated nothing
+            for tc in searches:
+                q = (tc.get("arguments") or {}).get("query")
+                ok37 &= isinstance(q, str) and bool(q.strip())
+        gate("R34 required-Canon compliance is DERIVED from the transcript, not asserted",
+             ok34)
+        gate("R35 canon_catalog alone never counts as Canon use", ok35)
+        gate("R36 a non-compliant trial is retained, marked, and never resampled", ok36)
+        gate("R37 every canon_search carries the model's OWN non-empty query", ok37)
+        addendum = (PKG / "conditions/full-canon-required.yaml").read_text()
+        base = yaml.safe_load((PKG / "conditions/full-canon.yaml").read_text())["addendum"]
+        req = yaml.safe_load(addendum)["addendum"]
+        gate("R38 the treatment addendum contains the frozen FULL_CANON text verbatim",
+             req.startswith(base.rstrip("\n"))
+             and "using the Canon library is required" in req)
+
     # ---- substrate identity ------------------------------------------------------
     sub = result["substrate"]
     gate("R31 substrate identity records the fingerprint and names the Canon commit "

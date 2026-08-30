@@ -117,9 +117,17 @@ def canon_fingerprints():
                             for p in glob.glob(str(REPO / "canon/qa/canon-014/*-qa-bank.yaml"))))}
 
 
-def expected_trial_order(lane_id):
-    """Recompute the frozen order: sort trial ids by sha256('EVAL-037|' + trial_id)."""
-    ids = [f"E037-{lane_id}-{b}-R{r}"
+def expected_trial_order(lane_id, trial_id_prefix=None):
+    """Recompute the frozen order: sort trial ids by sha256('EVAL-037|' + trial_id).
+
+    The ORDERING METHOD is unchanged and is the only thing frozen here. A lane may
+    declare its own `trial_id_prefix` so a supplemental treatment can occupy a separate
+    trial-id namespace; the ids then differ, so the resulting permutation differs, but
+    it is derived by the identical rule. Absent a declared prefix this is bit-identical
+    to the original `E037-<lane_id>` behaviour for every existing lane.
+    """
+    prefix = trial_id_prefix or f"E037-{lane_id}"
+    ids = [f"{prefix}-{b}-R{r}"
            for r in (1, 2, 3) for b in ["B01", "B02", "B03", "B04", "B05", "B06"]]
     return sorted(ids, key=lambda t: sha256_text("EVAL-037|" + t))
 
@@ -185,7 +193,8 @@ def preflight(lane, fake=None):
     if len(ids) != 18 or len(set(ids)) != 18:
         problems.append(f"trials_plan has {len(ids)} entries ({len(set(ids))} unique), "
                         f"expected 18 unique")
-    expected = expected_trial_order(lane["lane_id"])
+    expected = expected_trial_order(lane["lane_id"],
+                                    lane["execution"].get("trial_id_prefix"))
     if ids != expected:
         problems.append("trial order does not match the frozen SHA-256 ordering")
     notes.append("trial order recomputed from sha256('EVAL-037|'+trial_id) and matches")
@@ -428,6 +437,24 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
                              totals["input_tokens"], totals["output_tokens"])
     canon_calls = [t for t in all_tools if t.get("tool_family") == "canon"]
     web_calls = [t for t in all_tools if t.get("tool_family") == "website"]
+
+    # -- REQUIRED_CANON treatment gate -------------------------------------
+    # Mechanical, and evaluated ONLY from evidence already collected. It issues no
+    # further provider call: a trial that ignored the mandatory instruction keeps its
+    # output and is recorded as `failed_required_canon_use`. It is never quality-
+    # retried and never resampled — that would select on behaviour and destroy the
+    # comparison. `canon_catalog` alone is deliberately NOT Canon use: the treatment
+    # requires a search the model composed and an object the model chose to read.
+    n_search = sum(1 for t in canon_calls if t.get("name") == "canon_search")
+    n_read = sum(1 for t in canon_calls if t.get("name") == "canon_read")
+    n_catalog = sum(1 for t in canon_calls if t.get("name") == "canon_catalog")
+    treatment = (lane.get("treatment") or {}).get("id")
+    required_canon = treatment == "REQUIRED_CANON"
+    canon_satisfied = n_search >= 1 and n_read >= 1
+    format_outcome = status
+    if required_canon and not canon_satisfied:
+        status = "failed_required_canon_use"
+
     eligible = package is not None and status in ("complete", "format_repaired")
 
     result = {
@@ -443,8 +470,14 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
         "package_digest": sha256_text(package) if package else None,
         "sections_present": sections_present(package) if package else [],
         "eligible_for_media_generation": eligible,
+        "treatment": treatment,
+        "format_outcome": format_outcome,
+        "required_canon_use_satisfied": (canon_satisfied if required_canon else None),
         "canon_used": (bool(canon_calls) if lane["condition"] == "FULL_CANON" else None),
         "canon_tool_calls": len(canon_calls),
+        "canon_search_calls": n_search,
+        "canon_read_calls": n_read,
+        "canon_catalog_calls": n_catalog,
         "canon_items_returned": {
             "accepted": sum(t.get("accepted_items", 0) for t in canon_calls),
             "hold": sum(t.get("hold_items", 0) for t in canon_calls),
@@ -498,7 +531,8 @@ def main():
         trials.append(res); all_attempts += atts
         print(f"  [{res['order_index']:2d}/18] {res['trial_id']}  {res['status']}  "
               f"attempts={res['attempts_used']}  turns={res['usage_totals']['provider_turns']}"
-              f"  web={res['website_tool_calls']}  canon={res['canon_tool_calls']}")
+              f"  web={res['website_tool_calls']}  canon={res['canon_tool_calls']}"
+              f" (search={res['canon_search_calls']} read={res['canon_read_calls']})")
 
     # Substrate identity recorded into the evidence: the freeze fingerprint is
     # COMPUTED from the tree that actually ran (preflight already proved it matches
@@ -507,9 +541,11 @@ def main():
     identity = {"freeze_fingerprint": substrate_digests()["freeze_fingerprint"],
                 "canon_base_commit": lane["substrate"]["canon_base_commit"],
                 "execution_commit": head}
+    treatment_id = (lane.get("treatment") or {}).get("id")
     ledger = {"experiment": "EVAL-037", "lane_id": lane["lane_id"], "branch": lane["branch"],
               "substrate": identity, "runner_commit": head,
               "model": lane["model"]["model_id"], "condition": lane["condition"],
+              "treatment": treatment_id,
               "attempts": all_attempts}
 
     lane_turns = [t for a_ in all_attempts for t in (a_.get("provider_turns") or [])]
@@ -519,7 +555,8 @@ def main():
     result = {"experiment": "EVAL-037", "lane_id": lane["lane_id"], "branch": lane["branch"],
               "substrate": identity, "runner_commit": head,
               "provider": lane["model"]["provider"], "model": lane["model"]["model_id"],
-              "condition": lane["condition"], "trial_count": len(trials),
+              "condition": lane["condition"], "treatment": treatment_id,
+              "trial_count": len(trials),
               "price_snapshot": prices["snapshot_id"],
               "lane_usage_totals": lane_totals,
               "lane_calculated_cost_usd": lcost, "lane_cost_basis": lbasis,

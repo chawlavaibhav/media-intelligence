@@ -8,7 +8,7 @@
   "required": ["experiment", "lane_id", "branch", "substrate", "runner_commit", "model", "condition", "attempts"],
   "properties": {
     "experiment": { "const": "EVAL-037" },
-    "lane_id": { "type": "string", "pattern": "^(sol|sonnet|haiku|gemma)-(no|full)-canon$" },
+    "lane_id": { "type": "string", "pattern": "^((sol|sonnet|haiku|gemma)-(no|full)-canon|gemma-required-canon)$" },
     "branch": { "type": "string", "pattern": "^work/eval-037-" },
     "substrate": { "$ref": "#/$defs/substrate" },
     "runner_commit": {
@@ -17,6 +17,7 @@
     },
     "model": { "type": "string" },
     "condition": { "enum": ["NO_CANON", "FULL_CANON"] },
+    "treatment": { "type": ["string", "null"], "enum": [null, "REQUIRED_CANON"], "description": "The supplemental experimental treatment, or null for the original untreated lanes. REQUIRED_CANON makes Canon retrieval mandatory: the model must issue at least one canon_search of its own composition and read at least one object it chose. It does not curate the query, name a source, or supply a Canon packet." },
     "attempts": { "type": "array", "items": { "$ref": "#/$defs/attempt" } }
   },
   "$defs": {
@@ -122,7 +123,7 @@
       "additionalProperties": false,
       "required": ["trial_id", "brief_id", "repetition", "attempt_index", "attempt_kind", "phase", "started_at", "ended_at", "outcome", "fresh_context", "request_digest", "request_path"],
       "properties": {
-        "trial_id": { "type": "string", "pattern": "^E037-(sol|sonnet|haiku|gemma)-(no|full)-canon-B0[1-6]-R[1-3]$" },
+        "trial_id": { "type": "string", "pattern": "^(E037-(sol|sonnet|haiku|gemma)-(no|full)-canon|E037GRC-gemma)-B0[1-6]-R[1-3]$" },
         "brief_id": { "enum": ["B01", "B02", "B03", "B04", "B05", "B06"] },
         "repetition": { "type": "integer", "minimum": 1, "maximum": 3 },
         "attempt_index": { "type": "integer", "minimum": 0, "maximum": 5 },

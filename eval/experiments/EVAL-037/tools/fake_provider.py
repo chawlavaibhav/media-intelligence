@@ -16,7 +16,10 @@ Scenarios:
   malformed           a named trial returns a malformed answer once, then a valid one
   always_malformed    never well-formed (one repair, then failed_format)
   repair_flaky        the FORMAT REPAIR call fails transiently once, then succeeds
-  canon_user          the model calls the Canon tools before answering
+  canon_user          the model calls canon_catalog + canon_search (NO canon_read),
+                      i.e. the shape that must FAIL the REQUIRED_CANON gate
+  required_canon_user the model calls canon_search then canon_read, i.e. the shape that
+                      must SATISFY the REQUIRED_CANON gate
   website_user        the model calls website_read before answering
   tool_user           the model calls both Canon and website tools
 
@@ -129,6 +132,7 @@ class FakeAdapter:
         turns, tool_log, t = [], [], 0
 
         want_canon = self.scenario in ("canon_user", "tool_user")
+        want_required = self.scenario == "required_canon_user"
         want_web = self.scenario in ("website_user", "tool_user")
 
         if want_canon and dispatch is not None and "canon_search" in names:
@@ -137,6 +141,20 @@ class FakeAdapter:
                 turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
                 _, meta = self._tool(dispatch, name, args, t)
                 tool_log.append(meta)
+
+        # Test-only. Exists so the REQUIRED_CANON compliance gate can be exercised in
+        # both directions with NO network call. It reads back an id the search itself
+        # returned, so it also drives the mixed-key evidence-digest path.
+        if want_required and dispatch is not None and "canon_search" in names:
+            turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+            out, meta = self._tool(dispatch, "canon_search",
+                                   {"query": "colour hierarchy contrast", "limit": 5}, t)
+            tool_log.append(meta)
+            hits = out.get("results") or []
+            target = {"item_id": str(hits[0]["item_id"])} if hits else {"item_id": "none"}
+            turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+            _, meta = self._tool(dispatch, "canon_read", target, t)
+            tool_log.append(meta)
 
         if want_web and dispatch is not None and "website_read" in names:
             turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1

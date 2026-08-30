@@ -150,8 +150,17 @@ def _get(obj, *names):
 
 
 def turn_record(turn_index, started, raw, provider):
-    """One provider turn's complete usage/cost evidence. Missing fields stay null."""
-    usage = _get(raw, "usage") or {}
+    """One provider turn's complete usage/cost evidence. Missing fields stay null.
+
+    INSTRUMENTATION FIX (Gemini usage capture). The google-genai response object names
+    its usage block `usage_metadata`, not `usage`, so a lookup on `usage` alone found
+    nothing and every Gemini token field was recorded as null while the provider had in
+    fact reported them. Both names are consulted, `usage` first, so the Anthropic and
+    OpenAI branches resolve exactly as before. The provider-reported object is retained
+    verbatim in `provider_reported_usage` either way; this only makes the parsed fields
+    reach the ledger. It changes no request, no prompt and no model behaviour.
+    """
+    usage = _get(raw, "usage", "usage_metadata") or {}
     u = _serialise(usage) if not isinstance(usage, dict) else usage
 
     if provider == "Anthropic":
@@ -386,6 +395,32 @@ class GeminiAdapter(Adapter):
 
 
 # ---------------------------------------------------------------------------
+def _digest_keys(obj):
+    """Copy `obj` with every mapping key coerced to a string. DIGEST PATH ONLY.
+
+    INSTRUMENTATION FIX (Canon evidence digest). Canon YAML sources contain mappings
+    whose keys are a mix of booleans and strings — YAML 1.1 reads a bare `on:`/`yes:`/
+    `no:` key as a boolean — and `json.dumps(..., sort_keys=True)` then tries to order a
+    bool against a str and raises TypeError. That aborted a Canon retrieval that had
+    already succeeded, purely while computing an evidence hash.
+
+    This normalisation is applied ONLY on the way to a hash. The object returned to the
+    caller, and therefore to the model, is the untouched original: Canon content,
+    ranking and status semantics are unaffected. All-string-key results digest exactly
+    as they did before.
+    """
+    if isinstance(obj, dict):
+        return {str(k): _digest_keys(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_digest_keys(v) for v in obj]
+    return obj
+
+
+def _digest_blob(obj):
+    """The canonical serialisation used for evidence hashes. Never sent to a model."""
+    return json.dumps(_digest_keys(obj), sort_keys=True, default=str)
+
+
 def _run_tool(dispatch, name, args, turn_index):
     """Execute one tool call and build its COMPLETE transcript record.
 
@@ -400,13 +435,12 @@ def _run_tool(dispatch, name, args, turn_index):
         raise ProviderError(f"model called {name!r} but no tool is exposed here",
                             "tool_schema_rejected")
     out = dispatch(name, args)
-    blob = json.dumps(out, sort_keys=True, default=str)
+    blob = _digest_blob(out)
     meta = {
         "turn_index": turn_index,
         "name": name,
         "arguments": args,                       # actual arguments, not only a hash
-        "arguments_digest": hashlib.sha256(
-            json.dumps(args, sort_keys=True, default=str).encode()).hexdigest(),
+        "arguments_digest": hashlib.sha256(_digest_blob(args).encode()).hexdigest(),
         "result_digest": hashlib.sha256(blob.encode()).hexdigest(),
         "result_bytes": len(blob),
     }

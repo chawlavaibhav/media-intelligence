@@ -21,13 +21,15 @@ algorithm: sha256-of-sorted-path-and-content
 canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
 canon_base_commit_role: the CANON-014 merge the corpus fingerprints were computed against
 
-file_count: 45
-freeze_fingerprint: 5fc021d96d23299e977600735cc8cf0f950f61d6ed7cd8b39099f9a10aa189ee
-common_substrate_file_count: 37
-common_substrate_digest: d8b2c045c61e22668bf6bb8b6b387250efce8c80b1e909029e21d3d6a6c0ebc2
+file_count: 48
+freeze_fingerprint: c9f2da92fc3fa98fccc22e6a9ddb72950fafb3ae2abdf820b03b3bf3a0771f26
+common_substrate_file_count: 39
+common_substrate_digest: 8d2680905271c480c06efa2564a16b40d935c7d7d46195a99e3ed8ee2fff81fc
 files:
   - path: EXECUTION-CONTRACT.md
     sha256: b4af51a3e9b891110b347233d5b3f959400fa7a8d0431ec3318608888b4d92ad
+  - path: SUPPLEMENTAL-FREEZE.md
+    sha256: 1a5745439900601ca625f739e8f6e1cdc55ddd94e5813448a35e8c7c42926354
   - path: common/briefs/B01.txt
     sha256: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
   - path: common/briefs/B02.txt
@@ -66,6 +68,8 @@ files:
     sha256: 4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6
   - path: common/websites/rentok.com/page.txt
     sha256: ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79
+  - path: conditions/full-canon-required.yaml
+    sha256: 09a2f3c6b6ccfa255e8709f9f82ec4bb894a5c83f5ed27ae2247fa1e92b3678d
   - path: conditions/full-canon.yaml
     sha256: ff03c79829c1d9bb6db6c10bbd5ea38e9b2782647db19209a58eeec0e695f91b
   - path: experiment.yaml
@@ -74,6 +78,8 @@ files:
     sha256: 0a355093a63fa16406f14332cbb3c7b06465a57400d8b1e2af25f4d7eef47c87
   - path: lanes/gemma-no-canon.yaml
     sha256: 57d8097239210a7444b84fddcada42dceb122009d96257700d26c40d19bb4481
+  - path: lanes/gemma-required-canon.yaml
+    sha256: 96d8d738f85fa6809f5a2c193bdd14884b8f1d7a344e282918ce4e9f3380c6be
   - path: lanes/haiku-full-canon.yaml
     sha256: f9e0bf8bdca2db73f10930d3da9fc8d26119aa563e1cb367284f30fb964c9a40
   - path: lanes/haiku-no-canon.yaml
@@ -87,15 +93,15 @@ files:
   - path: lanes/sonnet-no-canon.yaml
     sha256: b857d149a5aa80df47bd4df2f8444a7bcfa434145b0c85d7e1f9b0183cccbec9
   - path: schemas/attempt-ledger.schema.json
-    sha256: 5fbc3a17fa2167a35ef723298428ff1fff2537692edf910640356f9da2b624cb
+    sha256: fa29f2ed72753a7806911457b28f714e2916def273e648b783462528f49eccb7
   - path: schemas/result.schema.json
-    sha256: f45f2fa05b631ea418222a91a92a4adb2bdb8fa159799778c461235ce3dd7cd3
+    sha256: 6f5197b7252423c9e99a1b00bd735ef3066c75e83bad6ae6f4622db54fc39468
   - path: tools/build_lanes.py
     sha256: 575d2aa29b0fb3c77fcbd155bf465ae1770dc269499bc5e07a3bfe3435c70bed
   - path: tools/canon_tools.py
     sha256: c2f476a7c7885cbe15af636f015b3e8280a76e03ce3208b1fb891111d9920ad3
   - path: tools/fake_provider.py
-    sha256: a21825bf9fe94ed694570fa82b44f5d235f327ac0455a7b731cdcb8a20b5c98e
+    sha256: 0b5ea7b1c7db7abbfeabfca670fda3b224f296ae90ee2d7816af79a18fb3a71b
   - path: tools/freeze_fingerprint.py
     sha256: aa4d5787a9a88cfbd183c4ac841c8edc64a2a3ce7de091d7b04e8185a712b25f
   - path: tools/jsonschema_mini.py
@@ -103,9 +109,9 @@ files:
   - path: tools/preflight.py
     sha256: 203a731c63d665a473cab0675c113e8d892876313c762451bc3e551d76189c3b
   - path: tools/providers.py
-    sha256: 2395bcf5ad8769b11528fcaaf8bfb6b0cb4de5c9c735acff149c9076ffba4c49
+    sha256: a68bd9c7f29a4b4981c75eb35c111785c836854ee99cafa64be204df6de3036d
   - path: tools/runner.py
-    sha256: 11afdd3087a4b892d0b72ef8a53dfc82f46af3b558ec7d7828080d69453231ac
+    sha256: ed5b56164b4c69fa6d42c335d1028fa2260540614c3e470b5d6f0d73217505ce
   - path: tools/snapshot_websites.py
     sha256: d2906418a6fadb1d26bef68dc914537e7090620401f6b711572dea338dac880a
   - path: tools/website_tools.py
@@ -115,4 +121,4 @@ files:
   - path: validators/validate_freeze.py
     sha256: c0375195298c1c2f87b07aeb0ab82ac2845852708b7de681293a9ce5043698e5
   - path: validators/validate_lane_run.py
-    sha256: e03668335fab184acbda15b3177fd29379164dfec957da629e3bf6ab501ef7a0
+    sha256: 8edd3e6d56d99194da03d5703052ab8e2e16b086cb177298dbfcef3d6c0210c1
