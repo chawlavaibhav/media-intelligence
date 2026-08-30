@@ -64,12 +64,28 @@ is a number attached to why.
    studies it does not reproduce. *Light: Science & Magic* scores zero on `empirical_within_source`
    but 16 on `controlled_comparison`, because it argues by minimal-pair demonstration — one variable
    changed — which is a different and entirely legitimate evidential form.
-3. **Ogilvy's 30 needs review before anyone relies on it.** He reports many specific figures, which
-   is why the count is high. But at least one object rests on a **Starch** readership finding, which
-   is a third party's measurement reported by the source, not the source's own. SPEC-03 has only one
-   slot here, and the Audit Gate design already documents this exact failure on *Made to Stick*
-   ("reports measurement constantly, almost none of it their own"). **Flagged for audit; not
-   corrected in this run**, because deciding it is an audit-layer question, not an extraction one.
+3. **Ogilvy's 30 is over-applied against SPEC-03's wording, and this is now quantified.** The lane
+   was transparent about its test and published a justification table for all 30, which is how this
+   was checkable at all. But the test it applied was *"the source reports a measurement **and states
+   what it returned**"*, whereas SPEC-03 defines `empirical_within_source` as *"the source reports
+   **its own** measurement."* Those are not the same test.
+
+   Reading its own table, **at least four of the 30 name an independent research firm as the
+   measurer** — `sk_ogx_0008` and `sk_ogx_0027` and `sk_ogx_0060` (Starch Readership Service),
+   `sk_ogx_0013` (Gallup). Those are third-party measurements reported by the source. The Audit Gate
+   design documents this exact failure against *Made to Stick* ("reports measurement constantly,
+   almost none of it their own"), and it is the reason evidence **origin** was given its own audit
+   section rather than left to share one characteristic slot.
+
+   **Mitigating, and genuinely arguable:** Ogilvy commissioned much of this research through his own
+   agency, so "his own" is legitimately ambiguous for Ogilvy & Mather work in a way it is not for
+   Starch or Gallup. **Not corrected in this run** — which slot these belong in is an audit-layer
+   decision, not an extraction one, and correcting it silently would destroy the evidence that the
+   ambiguity exists.
+
+   **Consequence for the headline number:** the corpus-wide 10.1% is, if anything, **an
+   over-estimate**. Correcting Ogilvy alone would move it to roughly 9.6%. The direction of the
+   finding is unaffected and the argument only gets stronger.
 
 ### 1.1 The counter-case, and why it makes the aggregate more trustworthy
 

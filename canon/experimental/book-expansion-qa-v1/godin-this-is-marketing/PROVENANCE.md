@@ -71,8 +71,9 @@ supplies the half-life claim about unmaintained tribal behaviour and the Ziglar 
 local chasm by persistence, both of which support `sk_god_0025`. **Chapter Twenty-One** ("Some Case
 Studies Using the Method") supplies the Tesla case, which supports `sk_god_0021`, and the NRA case,
 which supports `sk_god_0003`; in both instances the case is used as evidence for a claim stated
-elsewhere and no object is anchored there. **Chapters Twenty-Two and Twenty-Three** yielded nothing
-extractable. See `EXTRACTION-NOTES.md` §"What was deliberately not extracted".
+elsewhere and **no SourceKnowledge object is anchored in Chapter Twenty-One**. One Q&A item
+(`qa_god_0037`) is anchored to its section "Getting the boss to say yes", which applies the method
+to a single-person audience. **Chapters Twenty-Two and Twenty-Three** yielded nothing extractable. See `EXTRACTION-NOTES.md` §"What was deliberately not extracted".
 
 ## 4. Overlap with live Canon
 
