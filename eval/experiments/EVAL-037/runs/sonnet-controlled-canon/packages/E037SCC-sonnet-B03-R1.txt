@@ -1,0 +1,68 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One (1) premium advertising still image, 4:5 vertical (recommended output 1080×1350 px, scalable to print resolution), for a new Indian mosambi + sparkling water beverage. Single final composited image, no variants.
+
+OBJECTIVE_INTERPRETATION
+The customer needs a hero product image that can carry paid social/OOH-style advertising for a new premium sparkling beverage. The brief's real creative problem is a positioning tightrope: the drink must look expensive, modern and credible to an urban 22–35 audience (who default-associate "Indian soft drink" with cheap, syrupy, primary-colour carbonated products), while still being legible as mosambi-based rather than a generic "citrus fizz" — and it must do this without leaning on the stock ethnic-signifier vocabulary (marigolds, henna, brass thalis, saris, diyas, Rajasthani textile, Taj Mahal silhouettes, spice piles) that "Indian premium" ads over-rely on. The fruit itself — its actual botanical identity, not a cultural symbol — is the one culturally-familiar element allowed to carry weight.
+
+CORE_CREATIVE_IDEA
+"The fruit, elevated." A single, unmistakably premium glass bottle of the drink is shot as a quiet, editorial still-life object — the kind of restrained, material-led photography used for artisanal spirits or fine mixers — with real mosambi (sweet lime, pale green-gold skin, distinct from lemon/orange) cut and beaded with juice beside it as the only cultural anchor. No ethnic props, no festival colour, no crowd or lifestyle scene. Sophistication comes from material honesty (matte glass, natural stone, controlled light, muted warm palette) rather than decoration.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Product identity (bottle + liquid colour + fruit) — dominant, ~65–70% of visual weight, sharp focus, largest and tallest element, brightest specular highlight in the frame.
+2. Fruit/flavour proof (halved mosambi, peel curl, droplets) — secondary, smaller scale, slightly softer focus, physically touching/orbiting the bottle so the eye reads "made from this."
+3. Brand wordmark + one-line descriptor — tertiary, minimal type, placed in the reserved negative-space band at top (wordmark) and bottom (descriptor/volume), added as a clean deterministic overlay, not part of the generated scene.
+4. Atmosphere (condensation, light, background material) — supporting only; must never compete with 1 or 2.
+
+VISUAL_SYSTEM
+- Format: 4:5 vertical, product occupies the central-to-lower-middle vertical axis, rule-of-thirds placement slightly left or right of centre, generous negative space top and bottom reserved for type (per compositional principle that negative space is a designed shape, not leftover area).
+- Palette: warm neutrals — bone, warm plaster/terracotta, soft sage, brushed brass — with the drink's own pale chartreuse-gold as the single accent colour. No neon green, no cyan, no rainbow gradient, no glossy plastic sheen.
+- Bottle: slim 250ml glass bottle, matte or lightly frosted finish, crown cap or brushed-metal cap, minimal debossed/foil-adjacent label area (kept visually clean/blank-textured in the generated plate — see Deterministic section).
+- Liquid: pale, slightly cloudy mosambi-gold, visible fine carbonation bead trail, not neon yellow (avoid reading as "lemonade").
+- Props: 1 whole mosambi, 1 halved mosambi showing segments and juice beads, one thin peel twist, a few loose condensation droplets/scattered water beads on the stone surface. Nothing else.
+- Background: warm, textured, minimal — a single plane of natural material (limewashed plaster, honed stone, or raw linen) lit by soft, large, directional daylight-style light from one side, gentle falloff to shadow at the edges. No pattern, no busy set-dressing.
+- Lighting: large soft key camera-left or camera-right (soft-box/window quality), gentle fill, a controlled large-but-dimmed highlight along the bottle's glass body (a big soft highlight reads as glass surface information; keep it dim, not a small blown hot spot) plus a crisper small highlight on the cap for material contrast.
+- Camera: eye-level to very slightly above, macro-adjacent product-photography lens character (85–100mm equivalent), shallow-to-moderate depth of field — bottle fully sharp, background and foremost fruit slightly softened to separate planes.
+
+PRODUCTION_RECIPE
+Step 1 — Generate the photographic plate (bottle, fruit, surface, background, light, condensation) with the label area left clean/blank-textured, no legible text baked in.
+Step 2 — Colour/contrast pass to lock the warm-neutral premium palette and confirm the liquid colour reads as mosambi, not lemon or lime.
+Step 3 — Deterministic compositing pass: place real vector wordmark, tagline, volume/regulatory microcopy, and label graphic onto the bottle and into the reserved top/bottom negative space using actual brand typography assets (not generated text).
+Step 4 — Final grade and 4:5 crop lock; check product remains the single largest, sharpest, brightest element.
+
+GENERATION_PROMPTS
+Single image — one executable final generation prompt (photographic plate, pre-type-compositing):
+
+"Premium editorial product photograph, vertical 4:5 composition. A single slim 250ml matte-frosted glass bottle of pale, subtly cloudy chartreuse-gold sparkling beverage stands slightly off-centre on a honed warm-stone surface, fine carbonation bubbles visible rising inside the liquid, cap in brushed brass or matte metal, label area on the bottle left clean and softly textured with no legible text or logo. Beside the bottle: one whole pale-green-skinned mosambi (Indian sweet lime, botanically distinct from lemon or orange), one mosambi cut in half showing pale yellow-green segments and a few beads of fresh juice, and a single thin curl of mosambi peel. Fine condensation droplets bead on the bottle's glass surface and scatter lightly on the stone surface nearby. Background is a single plane of warm limewashed plaster or raw linen in muted bone/terracotta tones, softly out of focus, lit by one large soft directional daylight-quality light source from the side, gentle shadow falloff at the frame edges, one large but dimmed soft highlight running down the glass body of the bottle plus one smaller crisper highlight on the cap. Shallow-to-moderate depth of field: bottle and cut fruit tack-sharp, background and farthest props gently softened. Muted, warm, sophisticated colour palette — no neon colours, no bright primary red/blue/green, no glossy plastic look, no splash or spray effects, no cartoon citrus burst, no confetti or festive colour. Negative space reserved at the top 12% and bottom 15% of frame, kept clean and uncluttered for later typography. Mood: quiet, confident, tactile, minimal, expensive — closer to an artisanal spirits or fine-mixer advertisement than a soft-drink ad. Shot on a product-photography macro-capable lens, eye-level, soft studio-quality light. No text, no logos, no watermark, no people, no hands, no marigolds, no henna, no diyas, no rangoli, no sari or turban fabric, no brass religious objects, no spice piles, no Taj Mahal or monument imagery, no elephants, no bindis, no festival colour powder, no plastic bottle, no can, no straw, no ice cubes, no splash droplet crown, no rainbow gradient background."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Brand wordmark, tagline/descriptor line ("Sparkling Mosambi" or brand-supplied equivalent), volume, and any regulatory/legal microcopy: rendered as vector typography and composited in post — not generated inside the image model, to guarantee crisp, on-brand, legible type (generative text rendering is unreliable and would undermine the "premium" read).
+- Bottle label graphic/final logo lockup: applied as a deterministic overlay onto the pre-left-blank label area identified in the prompt.
+- Any regulatory FSSAI/nutrition mark or barcode required for the market: added as deterministic post-production elements, sized to remain visually subordinate to the hero product.
+
+AUDIO_AND_EDIT
+Not applicable — static single advertising image, no audio or motion edit required.
+
+FAILURE_PREVENTION
+- Risk: liquid or bottle reads as generic lemon-lime soda → mitigated by explicit mosambi fruit reference, pale chartreuse-gold (not neon yellow) colour direction, and negative prompt against soda-splash/rainbow-gradient tropes.
+- Risk: image defaults to clichéd "Indian" prop vocabulary → mitigated by explicit, itemised negative list (marigolds, henna, diyas, rangoli, sari/turban, brass religious objects, monuments, elephants, festival colour) and by restricting cultural signalling to the fruit alone.
+- Risk: garbled or fake-looking generated text on label/bottle → mitigated by leaving label area blank/textured in the generation prompt and compositing real typography deterministically afterward.
+- Risk: product not read as unmistakable hero → mitigated by explicit compositional dominance instructions (largest, sharpest, brightest element; fruit and props subordinate and slightly softer focus).
+- Risk: cheap soft-drink look via glossy plastic/oversaturated colour → mitigated by matte glass, muted warm-neutral palette, and explicit "no plastic bottle / no can / no neon colour" exclusions.
+
+HARD_CONSTRAINT_CHECK
+- 4:5 advertising image: met.
+- Urban 22–35 sophistication + refreshing + culturally contemporary: met via editorial minimal styling and fruit-led (not symbol-led) cultural cue.
+- Retains familiarity of mosambi: met via visible, correctly identified mosambi fruit (not generic citrus).
+- Avoids clichéd "Indian" visual shorthand: met via explicit exclusion list.
+- Avoids cheap soft-drink look: met via glass bottle, matte finishes, muted palette, no splash/plastic tropes.
+- Product is unmistakable hero: met via compositional and lighting dominance rules.
+- No celebrity: none included.
+- No external website: none referenced or used.
+
+KNOWLEDGE_AND_WEBSITE_USE
+- Ogilvy, "Make the product the hero" (ogilvy_on_advertising_ch2, ACCEPTED) — used to set the compositional dominance rule (product as largest, sharpest, central element) and to justify a simplicity-first, non-gimmicky treatment for a product that could otherwise be treated as a parity item.
+- Samara, "negative space is a shape of equal importance" (samara_making_breaking_grid_ch1, ACCEPTED) — used to justify deliberately reserving and shaping the top/bottom negative-space bands for typography rather than treating them as leftover space.
+- Sullivan, "Hey Whipple" — category-specific visual-cliché avoidance procedure (sk_whip_0030/qa_whip_0032, HOLD status, used cautiously as a process heuristic only, not as settled fact) — informed the decision to build an explicit, itemised exclusion list of Indian advertising visual clichés rather than relying on generic "avoid stereotypes" instruction.
+No external website was consulted or used.

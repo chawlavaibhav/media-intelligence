@@ -1,0 +1,74 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One static poster, 4:5 aspect ratio (1080×1350 px minimum working canvas, scalable), print/digital-ready, single final composite. No alternate versions.
+
+OBJECTIVE_INTERPRETATION
+Aight is a rupee-native AI infrastructure/API reseller for Indian businesses (per getaight.ai: prepaid wallet, hard caps, one domestic GST invoice, curated text/voice/image models, founder-level support). The festive promotion must state two exact, easy-to-read prices (₹9/image, ₹99/video) as the single commercial hook, but the poster must read as enterprise infrastructure collateral — closer to a rate card or invoice than a sale banner. The customer's real risk is tonal: festive + ultra-low price naturally pulls toward discount-retail visual language (starbursts, "SALE," strikethroughs, confetti). The brief explicitly forbids that outcome, so the creative solution must make the prices feel like precision-engineered unit economics, not a markdown.
+
+CORE_CREATIVE_IDEA
+"The Festive Rate Card." Treat the poster as if Aight printed its own official price list for the festive season — the same artifact language the brand already uses on its site (counter, ledger, invoice, wallet, hard caps). The two prices are presented as two ledger line-items in a quiet, tabular, invoice-grade layout, not as promo tags. Festivity is expressed only through material and light (warm brass/gold on deep charcoal, a single restrained diya-glow and fine jali/rangoli hairline border) — never through discount iconography. Typography (weight, scale, tabular numerals, rule lines) is the entire hierarchy engine.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+Reading order, top to bottom, strictly grid-governed (each information kind gets its own fixed column/row band so ordering is signalled by geometry, not decoration):
+
+1. Brand band (smallest, top): wordmark "aight." + tagline "Where Indian businesses buy AI."
+2. Occasion line (quiet, small caps, gold): "Festive Season Rate Card" — states occasion without shouting sale.
+3. HERO PRICE MODULE (dominant, centre, ~55% of vertical space): two stacked ledger rows separated by a thin gold hairline rule —
+   Row A: "IMAGE GENERATION" (small label, letterspaced) → "₹9" (huge, tabular numerals) → "per generation" (small, beneath)
+   Row B: "VIDEO GENERATION" (small label, letterspaced) → "₹99" (huge, tabular numerals) → "per generation" (small, beneath)
+   ₹9 and ₹99 are set at identical cap-height so both register as equally serious, not as "small price / big price" joke pairing.
+4. Credibility strip (small, monospace, one line): "Prepaid rupee wallet · One domestic GST invoice · GPT · Claude · Gemini · curated image & video models"
+5. CTA band (bottom, quiet): "Talk to us — getaight.ai"
+
+Per Samara's grid logic used here: like information (both prices) is grouped into one visually identical module so they're read as a matched pair; unlike information (brand, occasion, credibility, CTA) is separated into its own band with its own type size, so the eye path is unambiguous without needing arrows, badges or colour noise. In a visually busy/festive field, the size/weight contrast on the two price numerals is pushed further than usual (near-maximum type scale) precisely because everything else on the page is deliberately quiet — this is the single loud gesture the page is allowed.
+
+VISUAL_SYSTEM
+- Palette: near-black charcoal/ink base (#14140F–#1A1A14 range), warm brass/gold (#C9A063–#D4AF6A range) for numerals, rules and hairline motifs, warm off-white/parchment (#EDE6D6) for supporting text. No red/green/discount-tag colours anywhere.
+- Typography: a serious grotesk or humanist sans for all labels/tagline/CTA (measured, not display-decorative); tabular/monospaced numerals specifically for ₹9 and ₹99 so they read like metered infrastructure pricing (ledger/terminal feel) rather than retail signage. Generous negative space around the price module — space itself signals premium.
+- Motif: one fine gold hairline geometric border (rangoli/jali-inspired, abstracted to straight/radial line work, not floral clipart) confined to the outer 5–8% frame margin; one small, soft diya-glow light pool low in the frame (warm bokeh, no literal diya illustration) as the only "festive" light cue.
+- Explicitly excluded: starbursts, ribbons, "SALE"/"OFFER" badges, strikethrough pricing, confetti, marigolds, fireworks, gradients that read as app-store or e-commerce banner style.
+- Rule of thumb applied: when in doubt, remove an element rather than add one — the page should feel closer to a bank/API pricing page than a shop flyer.
+
+PRODUCTION_RECIPE
+Two-layer construction, because price accuracy is non-negotiable and generative text rendering is unreliable at this precision:
+1. Generate a text-free background/atmosphere layer: dark charcoal canvas, fine gold hairline geometric border motif, single warm diya-glow light pool bottom-third, subtle premium paper/ink micro-texture, 4:5 framing, ample dark negative space at centre and top for type overlay.
+2. Compose all typography, the wordmark, both prices, rules, credibility strip and CTA deterministically in a layout/vector tool, using the exact grid and type spec above, locked to the hex palette. Nothing textual is left to the generative pass.
+3. Final export at 4:5, checked at thumbnail size to confirm ₹9 and ₹99 remain instantly legible even when scaled down (mobile feed size test).
+
+GENERATION_PROMPTS
+Single image-generation prompt (background/atmosphere layer only — no text, no numerals, no logos to be rendered by the model):
+
+"A premium, minimal dark charcoal-black background for a 4:5 vertical infrastructure/fintech-style poster. Deep ink-black canvas (#14140F) with a fine hairline geometric border motif in warm brass-gold, inspired by abstracted rangoli/jali line patterns, confined to the outer edge only — no floral or figurative ornament. A single soft warm amber-gold glow pool of light, like a diya's light, positioned low and slightly off-centre, casting gentle bokeh upward, subtle enough not to overpower a large empty central and upper area reserved for typography. Extremely subtle fine paper-grain or brushed-metal micro-texture across the black field for material depth. No text, no numbers, no logos, no people, no product renders, no confetti, no starbursts, no discount badges. Mood: serious enterprise technology brand quietly acknowledging a festive season — restrained, dark, metallic-gold accent, high production value, ample negative space, symmetrical composition, vertical 4:5 format."
+
+Construction plan overlay (deterministic, specified above in PRODUCTION_RECIPE step 2) supplies every word, numeral, rule and logo exactly as written in MESSAGE_AND_INFORMATION_HIERARCHY.
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Both prices (₹9, ₹99), all labels, tagline, credibility strip, CTA and URL: set as real vector/type, not generated — mandatory for numeral accuracy and legibility.
+- Wordmark "aight." reproduced exactly as the brand's own lockup/typeface convention (lowercase, period), taken from the official site, not reinterpreted.
+- Grid, column widths, rule-line placement and hairline border geometry: built deterministically to the spec above, not left to model interpretation.
+
+AUDIO_AND_EDIT
+Not applicable — static image deliverable.
+
+FAILURE_PREVENTION
+- Risk: model renders "sale-like" ornament (bursts, ribbons, percentage-off badges) when it sees "festive + price." Mitigation: background prompt explicitly excludes these, and no pricing/promo language is ever sent to the image model — prices are added deterministically afterward.
+- Risk: ₹9 next to ₹99 reads as a joke/mismatch (one price looks like an afterthought). Mitigation: identical cap-height, identical row treatment, separated only by a thin rule, framed as two rows of one table, not as "from ₹9."
+- Risk: festive motif drifts into generic diya/marigold clipart look, undercutting premium infra tone. Mitigation: motif restricted to abstract hairline geometry and light glow only; no illustrated festival objects.
+- Risk: text illegible at small feed sizes. Mitigation: thumbnail legibility check specified in production recipe; price numerals sized to remain dominant at reduced scale.
+- Risk: brand misrepresentation. Mitigation: all brand claims (models offered, wallet, GST invoice, support model) restricted to what getaight.ai actually states; no invented feature claims.
+
+HARD_CONSTRAINT_CHECK
+- Single poster only, no alternates: met.
+- 4:5 ratio: met.
+- Both prices immediately understandable: met via matched hero ledger module, largest type on page.
+- Premium AI-infrastructure feel, not discount retail flyer: met via rate-card framing, ledger typography, restrained palette, explicit exclusion of discount iconography.
+- Typography/hierarchy does most of the work: met — grid-governed bands, tabular numerals, weight/scale contrast are the sole hierarchy mechanism; imagery is reduced to atmosphere only.
+- Only getaight.ai used for brand/product facts: met — tagline, wordmark form, model roster (GPT/Claude/Gemini/curated image), wallet/GST/support claims all sourced from the site snapshot; no other source used for brand facts.
+- No model/provider recommended: met.
+
+KNOWLEDGE_AND_WEBSITE_USE
+- Website: https://getaight.ai (frozen snapshot) — used for brand name/wordmark form, tagline "Where Indian businesses buy AI," product facts (prepaid rupee wallet, hard caps, one domestic GST invoice, model roster GPT/Claude/Gemini/curated image models, founder-level support), used to write the credibility strip and CTA.
+- Canon (ACCEPTED, samara_making_breaking_grid_ch1, sk_sam_c003_0023 and sk_sam_c003_0003): used to justify the column/row-based information hierarchy — assigning each kind of information its own fixed band/width so ordering is read from geometry rather than styling, and grouping like information (the two prices) together while separating unlike information.
+- Canon (ACCEPTED, bijapurkar_we_are_like_that_only, sk_rbwl_0080): used to support the core creative reframing — very low pricing should be presented as an "up-traded"/engineered infrastructure offer (a rate card reflecting real platform economics) rather than styled as a consumer discount, avoiding the "down-trade/discount" visual register entirely.
+- Note: HOLD-status items surfaced in search (Samara Ch.2 "push contrast to extremes in busy fields," Desai's festival-as-sanctioned-indulgence) informed background creative reasoning only as unattributed general design sense, not cited as evidentiary support, given their HOLD status.
