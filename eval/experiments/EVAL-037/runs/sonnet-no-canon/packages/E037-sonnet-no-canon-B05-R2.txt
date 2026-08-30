@@ -1,0 +1,100 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+A single continuous short film scene, 16:9, ~40 seconds, six shots, depicting a restrained confrontation between two people at a café table after one discovers the other concealed something important. No shouting; tension carried through stillness, silence, and controlled dialogue. No external site or reference material used.
+
+OBJECTIVE_INTERPRETATION
+The customer wants an emotionally charged but quiet two-hander that reads as directed cinema, not mechanical shot/reverse-shot coverage. Key non-negotiables: exactly six shots, ~40s runtime, 16:9, minimal camera movement, and unbroken spatial clarity (viewer always knows who is where relative to the other). "No external website" is treated as a constraint that no outside sourcing/reference is required — this is a self-contained fictional scene needing no research.
+
+CORE_CREATIVE_IDEA
+A worn photograph on the table is the physical proof of what was hidden. The scene never explains the backstory in dialogue — it lets the object, the stillness, and two controlled faces carry the meaning. Classic scene grammar (master → OTS/singles → insert → return to master) is used deliberately, not as generic coverage, so the geography and escalation feel authored rather than assembled.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Spatial/relational fact first: two people, a table, an object between them (the master shot).
+2. Evidence: the concealed item is real and undeniable (insert shot).
+3. Verbal confrontation: brief, restrained exchange — accusation, deflection, refusal to excuse.
+4. Emotional residue: silence, held gaze, no resolution (final shot).
+
+VISUAL_SYSTEM
+- Aspect ratio: 16:9 throughout.
+- Fixed 180-degree line: Person A (the discoverer) is always frame-left in wides/OTS; Person B (the concealer) is always frame-right. This never flips.
+- Palette: warm, slightly desaturated café interior — cream walls, brass fixtures, soft afternoon window light from camera-left, low contrast, muted browns/ambers.
+- Lensing: master shot ~35mm (deeper focus, both bodies + table + object legible); singles/OTS ~50–85mm (shallow depth, isolating each face); insert macro-equivalent (~90mm, very shallow, object tack-sharp).
+- Camera movement: locked-off tripod for all shots except one almost imperceptible slow push-in on the final shot (under 5% frame-scale change) to add a last beat of pressure without calling attention to itself. No pans, no handheld, no whip cuts.
+- Continuity anchors: same wardrobe, hairstyle, table setting (two coffee cups, one folded napkin, the photograph), and window light direction across all six shots so the eye never has to re-orient.
+
+PRODUCTION_RECIPE
+Six shots, total ≈40s, cut on action/breath rather than on a rhythm-driven beat.
+
+1. MASTER / ESTABLISHING — 8s
+2. MEDIUM TWO-SHOT, OTS favoring Person A (B's shoulder in foreground-right, A visible frame-left) — 6s
+3. SINGLE, Person B — 6s
+4. SINGLE, Person A — 6s
+5. INSERT, the photograph on the table — 4s
+6. RETURN TO WIDE/MEDIUM TWO-SHOT, held, slow push-in — 10s
+
+Dialogue distribution (quiet, restrained, no raised voices, long micro-pauses):
+- Shot 2: A: "How long have you had this."
+- Shot 3: B: (silence, breath, looks down) then quietly: "It wasn't the right moment."
+- Shot 4: A: "You knew. This whole time." … "There's no right moment for this."
+- Shot 5: no dialogue — silence, ambient only.
+- Shot 6: no dialogue — B looks down at the table, A holds the stare, scene ends on held silence.
+
+GENERATION_PROMPTS
+
+Reference/continuity anchor (generate first, use as visual lock for character/set consistency across all six shots):
+"A small café table by a window, warm muted afternoon light from the left, two coffee cups, a folded napkin, a worn photograph face-down near the center. Two adults seated opposite each other, one frame-left (mid-30s, dark cardigan, tense composed posture), one frame-right (mid-30s, pale shirt, guarded posture). Naturalistic, cinematic color grade, shallow ambient café background, soft bokeh."
+
+Shot 1 — MASTER, 8s:
+"Static wide shot, 35mm equivalent, café interior, warm afternoon window light from camera-left. Two people seated opposite each other at a small round table, person A frame-left, person B frame-right, both fully visible with the table and photograph between them. Neither speaks. Stillness, restrained body language, soft ambient café movement in the background out of focus. No camera movement. Duration 8 seconds."
+
+Shot 2 — MEDIUM TWO-SHOT / OTS favoring A, 6s:
+"Static medium shot, ~50mm, over the near shoulder of person B (frame-right, blurred foreground shoulder) toward person A (frame-left, in focus). Person A speaks quietly, controlled, no raised volume: 'How long have you had this.' Micro-expression of restrained anger, hands still on the table. No camera movement. Duration 6 seconds."
+
+Shot 3 — SINGLE, Person B, 6s:
+"Static close-up, ~85mm, shallow depth of field, person B frame-right position maintained in the framing logic (looking screen-left toward A, off-camera). Long silent beat, eyes drop briefly, then quiet restrained line: 'It wasn't the right moment.' No movement, no raised voice, controlled breathing visible. Duration 6 seconds."
+
+Shot 4 — SINGLE, Person A, 6s:
+"Static close-up, ~85mm, shallow depth of field, person A frame-left position maintained (looking screen-right toward B, off-camera). Controlled, low, restrained delivery: 'You knew. This whole time.' Short pause. 'There's no right moment for this.' No shouting, tight jaw, minimal movement. Duration 6 seconds."
+
+Shot 5 — INSERT, the photograph, 4s:
+"Static macro-style insert, ~90mm equivalent, shallow depth of field, top-down/table-level angle on the worn photograph resting on the table between two out-of-focus coffee cups. No hands enter frame. Silence, only ambient café tone. Duration 4 seconds."
+
+Shot 6 — RETURN WIDE/MEDIUM TWO-SHOT, 10s:
+"Medium-wide shot, ~35mm, same table geography as shot 1 (A frame-left, B frame-right), very slow almost imperceptible push-in over the full duration. Person B looks down at the table; person A holds a steady gaze. No dialogue, no camera cuts within the shot, ambient café sound only. Duration 10 seconds."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- A single locked reference image (the anchor prompt above) is generated first and used to seed/condition all six shots so wardrobe, faces, table props, and light direction remain consistent.
+- The photograph prop and its screen position (center table, slightly toward B's side, face-down) is fixed as a non-negotiable continuity asset across shots 1, 2, 5, 6.
+- A uniform color-grade LUT (warm/muted, low contrast) is applied in post across all six generated clips to guarantee visual consistency regardless of per-shot generation variance.
+- Exact shot count (6) and per-shot durations are treated as fixed editorial timecodes, not generative suggestions.
+
+AUDIO_AND_EDIT
+- Ambient bed: low café room tone (distant murmur, occasional cup clink) throughout, mixed low so dialogue reads as intimate/near.
+- Score: sparse, minor-key solo piano or cello, entering subtly under shot 3, staying under threshold of "score," never swelling — restraint mirrors the performances.
+- Dialogue mix: close, dry, slightly intimate perspective; no reverb suggesting the wider room.
+- Cuts: on breath/blink transitions rather than on dialogue peaks, per shot order 1→2→3→4→5→6. Shot 6 held longest deliberately to let silence do the final work.
+- No non-diegetic sound effects, no music sting at the end — cut to black on ambient tone only.
+
+FAILURE_PREVENTION
+- Risk: crossing the 180-degree line → Mitigation: A is explicitly locked frame-left, B frame-right in every prompt, including the OTS and inserts, with no shot description that could invert this.
+- Risk: character/appearance drift between generated shots → Mitigation: single locked reference anchor image conditions all six shots; wardrobe/hair described identically in every prompt.
+- Risk: dialogue timing not fitting the specified duration → Mitigation: lines are short, single-beat, with built-in pause instructions matching the 6–8s shot lengths; editor trims silence, not dialogue.
+- Risk: photograph prop inconsistency (position/appearance changes) → Mitigation: prop position and description fixed identically across shots 1, 2, 5, 6.
+- Risk: shots reading as "shouted" or over-performed → Mitigation: every dialogue prompt explicitly specifies quiet, controlled, restrained delivery and prohibits raised volume.
+- Risk: exceeding six shots or adding camera flourishes during execution → Mitigation: shot count and "no camera movement except single slow push in shot 6" are stated as hard constraints in the recipe, not suggestions.
+
+HARD_CONSTRAINT_CHECK
+- Exactly six shots: yes (1–6 listed).
+- Two people at a café table, opposite each other: yes.
+- One discovered the other concealed something important: yes (photograph as evidence, dialogue confirms).
+- Tense but restrained, nobody shouts: yes, explicit in all dialogue prompts.
+- Viewer always understands relative position: yes, fixed 180-degree line, consistent left/right blocking, master/insert/return-to-master structure.
+- Minimal, non-elaborate camera movement: yes, locked-off except one subtle push-in on final shot.
+- Cinematic, not mechanical coverage: yes, achieved via master→OTS→singles→insert→return structure with consistent lens logic and light.
+- Target duration ~40s: yes, 8+6+6+6+4+10 = 40s exactly.
+- Aspect ratio 16:9: yes.
+- No external website: yes, none used.
+
+KNOWLEDGE_AND_WEBSITE_USE
+None. This is an original fictional scene requiring no factual research or external sourcing; the customer explicitly excluded external website use, and no claims in the package depend on outside information.
