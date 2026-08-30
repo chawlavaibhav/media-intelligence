@@ -452,7 +452,12 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
     required_canon = treatment == "REQUIRED_CANON"
     canon_satisfied = n_search >= 1 and n_read >= 1
     format_outcome = status
-    if required_canon and not canon_satisfied:
+    # The gate speaks ONLY about a trial the model actually completed. A transient or
+    # deterministic provider failure is never relabelled as non-compliance: the model
+    # never got its chance to comply, and masking a transport fault as a behavioural
+    # result would misreport the experiment.
+    if required_canon and not canon_satisfied and status in (
+            "complete", "format_repaired", "failed_format"):
         status = "failed_required_canon_use"
 
     eligible = package is not None and status in ("complete", "format_repaired")

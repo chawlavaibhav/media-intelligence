@@ -78,7 +78,42 @@ untouched original — verified: the returned item still carries its original `b
 All-string-key results digest exactly as before, and the corpus contains no
 `str(key)` collisions.
 
-Both fixes are instrumentation only. Neither alters Canon content returned to the model,
+### 2b. `tools/providers.py` — instrumentation fix: Gemini tool-result transport
+
+**Found at the first provider call, not before it, and authorised separately.** The
+first freeze was executed as specified with only the two named fixes. Four trials were
+then dispatched and all four died at the model's first Canon retrieval:
+
+```
+google/genai/_api_client.py:1470   data = json.dumps(http_request.data)   # no default=
+TypeError: Object of type date is not JSON serializable
+  ... 'first_seen' -> 'item' -> 'results' -> 'functionResponse' -> 'contents'
+```
+
+`google-genai` serialises the outgoing request with a bare `json.dumps()` and no
+`default=`, so any `datetime.date` raises before the call leaves the process. The Canon
+corpus carries **1410** such values — YAML reads a bare date as `datetime.date`. The
+OpenAI and Anthropic adapters already pre-serialise their tool results with exactly
+`json.dumps(out, default=str)`; the Gemini adapter alone passed the raw Python object
+into `contents`. The fix aligns it with the other two and does nothing else: a date
+becomes its ISO-8601 string, no other value is touched.
+
+This defect **could not have surfaced in the frozen `gemma-full-canon` lane**, which
+called Canon zero times. Forcing retrieval is precisely what exposes it.
+
+The four dead trials were discarded, not retained as results — they are transport
+failures under a superseded freeze, not observations of the treatment. The run below was
+executed in full from a clean re-freeze.
+
+### 2c. `tools/runner.py` — compliance gate must not mask a provider failure
+
+Exposed by those same four trials: the gate overrode `failed_execution` with
+`failed_required_canon_use`, reporting a transport fault as a behavioural result. The
+gate now applies only to a trial the model actually completed
+(`complete` / `format_repaired` / `failed_format`). A transient or deterministic
+provider failure keeps its own status: the model never got its chance to comply.
+
+All four fixes are instrumentation only. None alters Canon content returned to the model,
 BM25 ranking, any prompt, any brief, the model configuration, or retry behaviour.
 
 ### 3. Treatment wiring (not a cleanup — the treatment itself)

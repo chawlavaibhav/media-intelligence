@@ -386,8 +386,20 @@ class GeminiAdapter(Adapter):
             for c in calls:
                 out, meta = _run_tool(dispatch, c.name, dict(c.args or {}), turn)
                 tool_log.append(meta)
-                replies.append({"function_response": {"name": c.name,
-                                                      "response": {"result": out}}})
+                # INSTRUMENTATION FIX (Gemini tool-result transport). google-genai
+                # serialises the outgoing request with a bare json.dumps() and no
+                # `default=`, so any datetime.date reaching it raises TypeError before
+                # the call leaves the process. The Canon corpus carries 1410 such values
+                # (YAML reads a bare date as datetime.date), so every Canon retrieval on
+                # this adapter died on the wire. The OpenAI and Anthropic adapters above
+                # already pre-serialise their tool results with exactly this
+                # `json.dumps(out, default=str)`; the Gemini adapter alone passed the raw
+                # object through. This aligns it with them and nothing more: a date
+                # becomes its ISO-8601 string, and no other value is touched. Canon
+                # content, ranking and status semantics are unchanged.
+                replies.append({"function_response": {
+                    "name": c.name,
+                    "response": {"result": json.loads(json.dumps(out, default=str))}}})
             contents.append({"role": "user", "parts": replies})
         raise ProviderError(
             f"tool loop guard: {MAX_TOOL_TURNS} provider turns without a final answer",
