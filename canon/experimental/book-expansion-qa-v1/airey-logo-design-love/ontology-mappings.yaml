@@ -1,0 +1,680 @@
+# David Airey, Logo Design Love — SPEC-05 ontology (terms, relationships, concepts)
+# EXPERIMENTAL — NOT LIVE CANON. Lane `airey-logo-design-love`, book-expansion-qa-v1.
+#
+# No cross_source_concept (xs_...) is created — cross-source promotion is forbidden in this task.
+# No `same_failure_family` relation is used — SPEC-05 requires human review for it.
+# No cross-lane relationship is written: the parallel lanes' term ids are not resolvable from
+# here, and an unresolvable reference is worse than a missing observation. The two live-Canon
+# neighbours (vignelli-canon-intangibles, miller-storybrand-sb7) are discussed as PROSE
+# OBSERVATIONS ONLY in EXTRACTION-NOTES.md and appear nowhere in this file.
+#
+# VERBATIM: every term below is marked `verbatim: false`. This is not carelessness. The local copy
+# is a Spanish machine translation of the English original, so no English word in this lane is
+# demonstrably Airey's own. `definition_in_origin_frame` records the SUBSTANCE as it appears in the
+# Spanish text; the label is the extractor's English.
+#
+# REMEDY TERMS: every `kind: remedy` term carries `executable_by`. Several are
+# `physical_production` — printing a test sheet, supplying artwork for a one-colour press run,
+# checking the substrate. Those are NOT translated into generative instructions anywhere in this
+# lane, and the bindings that touch them are `target_type: production` with `target_path: null`.
+
+source_id: airey-logo-design-love
+extraction_date: 2026-08-30
+
+terms:
+
+# ── Properties of a mark ─────────────────────────────────────────────────────
+
+- term_id: t_logo_0001
+  term: minimum_reproduction_size
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    The smallest size at which a mark still works with no loss of detail. The source sets the target
+    at around one inch and treats failing it as disqualifying for an identity that must reach small
+    physical carriers.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0002
+  term: single_colour_reducibility
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Whether a mark that carries several colours still functions when reduced to one. The source
+    treats the one-colour version as a required deliverable rather than as a property to be
+    discovered, which implies the property must hold.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0003
+  term: reversibility_on_dark_ground
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Whether the mark works on dark backgrounds, which the source glosses as there being a usable
+    white version of it.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0004
+  term: outline_recognisability
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    The degree to which a mark's shape or outline alone identifies it. The source states this as the
+    standard to aim for when pursuing distinctiveness, without supplying a way to administer it.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0005
+  term: verbal_describability
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Whether a mark can be described easily in a short phrase. The source asserts that distinctive
+    marks are almost always simple enough for this to be true of them.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0006
+  term: single_distinguishing_feature
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    The count of features doing the work of making a mark stand out. The source requires exactly
+    one, and is emphatic that this means not two, three or four.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0007
+  term: category_appropriateness
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Fit between the register of a mark and the industry, the client and the client's audience. The
+    source teaches it almost entirely through violations — a fun approach for a law firm, a smiling
+    face for a cancer organisation.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0008
+  term: immediate_legibility
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Whether most people can read the lettering in a mark straight away. The source treats failure as
+    disqualifying and scopes the requirement most strongly to brands that are not well known.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0009
+  term: figure_ground_and_internal_contrast
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Two contrast relationships the source names together: between the mark and its background, and
+    between the elements inside the mark. Its single pass condition for both is that the tonal range
+    be contrasting enough for the mark or symbol to be clearly identified.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0010
+  term: media_versatility
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    The range of carriers and processes a mark survives, from posters down to a website favicon,
+    including processes that remove colour entirely such as glass engraving.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0011
+  term: orientation_robustness
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Whether a mark that reads correctly the right way up also reads acceptably inverted or seen from
+    other angles. The source's named failure is an unintended phallic reading upside down.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0012
+  term: application_consistency
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Whether everyone inside the client's organisation uses the identity the same way. A property of
+    a set of applications over time, not of a single artefact.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0013
+  term: brand_equity_in_an_existing_mark
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    Accumulated recognition held by the audience for an existing identity. The source treats it as
+    the quantity that makes redesign risky and that determines whether refinement is preferable to
+    replacement.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0014
+  term: scalable_vector_artwork
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: property
+  definition_in_origin_frame: >
+    That the delivered artwork can be scaled to any size, for use on posters or the side of a
+    building. The source names the failure case explicitly: a low-resolution web file enlarged onto
+    the cover of a printed sales manual.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+# ── Problems ─────────────────────────────────────────────────────────────────
+
+- term_id: t_logo_0015
+  term: detail_loss_at_small_size
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    A mark whose detail disappears at the smallest application it must serve, so that the mark stops
+    working there.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0016
+  term: colour_dependent_identity
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    A mark that reads as distinctive only because of its colour. The source's position is that
+    colour is secondary to form and shape, and that gradients and colour options will not rescue a
+    badly designed mark.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0017
+  term: literal_illustration_of_the_business
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    A mark that simply depicts what the company does — a computer for a computer company, teeth for
+    a dentist. The source rules that a logo does not have to say what a company does, while allowing
+    a literal reference that does not hit the viewer over the head with the idea.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0018
+  term: unnecessary_but_relevant_element
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    An element that genuinely relates to the subject and still damages the mark, because the viewer
+    is forced to process it and the design becomes less memorable. The source's case is the Eiffel
+    Tower that was correctly left out of a French property mark.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0019
+  term: trend_following_in_identity
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    Investing the designer's time and the client's money in a direction that will date overnight.
+    The source's stated remedy is to leave trends to the fashion industry, on the ground that a logo
+    should last the lifetime of the company.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0020
+  term: look_alike_collision
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    Resemblance between two marks. The source treats it as near-inevitable given millions of
+    companies and the simplicity of iconic marks, and reports that what makes it consequential is
+    whether the two are used in the same industry or profession.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0021
+  term: equity_destroying_redesign
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    A redesign that removes the device by which existing customers find the product. The source's
+    case is the Tropicana packaging, after which the line's sales are reported to have fallen 20 per
+    cent in under two months.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0022
+  term: weakest_option_selected_from_the_presented_set
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    The failure mode of showing a client every idea: the client picks the weakest candidate out of
+    an otherwise strong set, or is overwhelmed and picks nothing at all.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0023
+  term: non_designer_specifying_execution
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    Feedback in the form of "make the blue darker" rather than a strategic concern. The source holds
+    that if the discussion becomes non-designers naming colours and typefaces, the identity will
+    inevitably be weakened.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0024
+  term: unreadable_lettering
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    Lettering in a mark that most people cannot read straight away. The source's example is a
+    client's handwriting, which may look attractive and still fail.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0025
+  term: appropriation_of_a_communitys_sacred_mark
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: problem
+  definition_in_origin_frame: >
+    Using a living community's sacred identifying symbol without asking. The source's designer names
+    the concrete harm she was conscious of: the Zia symbol being slapped at random onto the side of
+    any old work van as an identity.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+# ── Remedies ─────────────────────────────────────────────────────────────────
+
+- term_id: t_logo_0026
+  term: reduce_to_one_inch_and_inspect
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Check the mark at around one inch and confirm no detail is lost. The source names simplification
+    as the only route to passing.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0027
+  term: supply_a_one_colour_version
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Deliver, alongside the full-colour mark, a version using only one colour, so the identity is
+    more versatile and the client need not return to the designer for a one-colour press run.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0028
+  term: supply_a_reversed_version
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Deliver a white version of the mark for use on dark backgrounds.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0029
+  term: print_a_size_and_colour_sweep_and_inspect_on_paper
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Print the mark replicated across a range of sizes and colours on one sheet, and check on paper
+    that it is clean, holds contrast and is not pixelated. A physical print check, stated as such.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_logo_0030
+  term: check_the_substrate_before_final_production
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Discuss variation with the commercial printer, or advise the client to, because the paper or
+    board a mark appears on can drastically change its colour and its sharpness in the final
+    presentation.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_logo_0031
+  term: invert_the_mark_and_look
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Turn the design upside down and consider it from every angle before finalising it, to catch
+    readings that only appear in another orientation.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0032
+  term: develop_and_present_in_black_before_colour
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Work and present only in black and white until the client is behind a direction, then render in
+    colour. Two reasons are given: colour skews the client's ability to focus on form and idea, and
+    working in black emphasises shape, which helps produce more distinctive marks.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0033
+  term: build_the_clients_suggestion_and_show_it_beside_yours
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Rather than argue against a client's design request, execute it, pair it with the alternative
+    you believe is better, explain the reasoning, and present both so the comparison can be seen.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0034
+  term: restrict_the_presented_set_to_ideas_you_would_accept
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Render only ideas you are convinced would work, on the ground that anything shown can be chosen.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0035
+  term: request_permission_from_the_holding_community
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Where the symbol belongs to a living community, have the client formally request an audience and
+    ask for permission to use it, rather than adopting it.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0036
+  term: check_the_same_industry_condition
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    When resemblance to an existing mark is alleged or discovered, establish whether the two marks
+    are used in the same industry or by the same profession, which the source reports is what a
+    trademark lawyer weighs most heavily.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0037
+  term: ask_for_strategic_input_and_execution_freedom
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    State the feedback boundary to the client group in advance: tell me if the creative is not
+    meeting the agreed strategy, but do not specify the fix.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_logo_0038
+  term: refine_rather_than_replace
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: remedy
+  definition_in_origin_frame: >
+    Where an identity has dated but consumer familiarity with it is high, adjust it while keeping the
+    elements that carry the equity, rather than commissioning a complete overhaul.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+# ── Entities ─────────────────────────────────────────────────────────────────
+
+- term_id: t_logo_0039
+  term: logo
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    One mark. In the source's own framing, only one part of a company's brand identity.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0040
+  term: brand_identity
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    The complete visual identity: the source enumerates business cards, compliment slips, vehicle
+    graphics and signage design, and elsewhere packaging, marketing materials and the website. The
+    source uses "brand identity" and "visual identity" interchangeably in this copy.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0041
+  term: brand
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    More than either of the above: the company's mission, its history, and people's perception of it.
+    The level at which the source says an effective logo cannot save a poor product or a weak
+    mission.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0042
+  term: logotype_or_wordmark
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    A mark made of the company's name in a treated setting, with no accompanying symbol. The source
+    treats choosing this over a symbol as a real early decision, and notes a symbol could prove
+    restrictive for a company planning expansion into other markets.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0043
+  term: design_brief
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    A succinct, easily accessible, easily shared document held by both designer and client, built
+    from the answers to the questioning stage, and used as the reference both return to when a
+    decision is disputed.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0044
+  term: style_guide
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    A document illustrating for the client's company how to use, and how not to use, the design. The
+    source states that creating it is the designer's responsibility.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+- term_id: t_logo_0045
+  term: committee
+  origin: source
+  origin_ref: airey-logo-design-love
+  kind: entity
+  definition_in_origin_frame: >
+    The source's term for any client decision-making body of more than one person, whether a board,
+    a partnership or an internal team. Used because the clients worth attracting will probably have
+    more than one person involved in choosing a visual identity.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: null
+
+relationships:
+
+- {from: t_logo_0002, to: t_logo_0016, relation: distinct_from, confidence_basis: extractor_judgement, note: "single-colour reducibility is a property of the artwork; colour-dependence is a failure of the design. A mark can reduce cleanly to one colour and still have been designed colour-first."}
+- {from: t_logo_0003, to: t_logo_0009, relation: related_to, confidence_basis: extractor_judgement, note: "reversal is the operation that changes the figure-ground contrast the source asks to be checked; the source names both and never connects them"}
+- {from: t_logo_0001, to: t_logo_0015, relation: related_to, confidence_basis: extractor_judgement, note: "the property and the failure it is defined against"}
+- {from: t_logo_0004, to: t_logo_0005, relation: related_to, confidence_basis: extractor_judgement, note: "both are the source's proxies for distinctiveness, one visual and one verbal; the source states them two pages apart and does not pair them"}
+- {from: t_logo_0005, to: t_logo_0006, relation: related_to, confidence_basis: extractor_judgement, note: "a one-feature mark is describable in one clause almost by construction"}
+- {from: t_logo_0006, to: t_logo_0018, relation: related_to, confidence_basis: extractor_judgement, note: "the problem is what having more than one feature produces"}
+- {from: t_logo_0007, to: t_logo_0017, relation: distinct_from, confidence_basis: extractor_judgement, note: "CHECKED AND REJECTED. Appropriateness and literal depiction are easy to conflate and the source separates them explicitly: a mark can be relevant without depicting anything (BMW, Hawaiian Airlines), and a depicting mark can still be appropriate if it does not overstate (La Internacional)."}
+- {from: t_logo_0008, to: t_logo_0009, relation: related_to, confidence_basis: extractor_judgement, note: "the source states both as conditions on whether the mark can be taken in, one about reading and one about tonal separation"}
+- {from: t_logo_0010, to: t_logo_0001, relation: broader_than, confidence_basis: extractor_judgement, note: "minimum size is one dimension of the media range; the source treats it as the binding one"}
+- {from: t_logo_0012, to: t_logo_0044, relation: related_to, confidence_basis: extractor_judgement, note: "the style guide is the source's named instrument for the property"}
+- {from: t_logo_0013, to: t_logo_0021, relation: related_to, confidence_basis: extractor_judgement, note: "equity is the quantity a redesign can destroy"}
+- {from: t_logo_0013, to: t_logo_0038, relation: related_to, confidence_basis: extractor_judgement, note: "high familiarity is the source's stated trigger for refining rather than replacing"}
+- {from: t_logo_0014, to: t_logo_0010, relation: narrower_than, confidence_basis: extractor_judgement, note: "vector artwork is a file-level precondition for part of the media range, not the range itself"}
+- {from: t_logo_0019, to: t_logo_0013, relation: distinct_from, confidence_basis: extractor_judgement, note: "CHECKED AND REJECTED. Both concern time, but a trend is a property of the design's vocabulary and equity is a property of the audience's memory. A trend-following mark can accumulate equity; the source's own JCJ case is a dated mark that had."}
+- {from: t_logo_0020, to: t_logo_0004, relation: related_to, confidence_basis: extractor_judgement, note: "the source argues collision is likely precisely BECAUSE iconic marks are simple, which makes this a cost of the property the book demands"}
+- {from: t_logo_0022, to: t_logo_0034, relation: related_to, confidence_basis: extractor_judgement, note: "problem and its stated remedy"}
+- {from: t_logo_0023, to: t_logo_0037, relation: related_to, confidence_basis: extractor_judgement, note: "problem and its stated remedy"}
+- {from: t_logo_0023, to: t_logo_0033, relation: related_to, confidence_basis: extractor_judgement, note: "the comparison method is the source's repair when the boundary has already been crossed"}
+- {from: t_logo_0024, to: t_logo_0008, relation: related_to, confidence_basis: extractor_judgement, note: "problem and property"}
+- {from: t_logo_0025, to: t_logo_0035, relation: related_to, confidence_basis: extractor_judgement, note: "problem and its stated remedy"}
+- {from: t_logo_0026, to: t_logo_0029, relation: distinct_from, confidence_basis: extractor_judgement, note: "CHECKED AND REJECTED as the same act. One is a design-stage reduction check the designer performs on the artwork; the other is a physical print check on paper output. Only the second is physical_production, and conflating them would licence rewriting a press check as a rendering instruction."}
+- {from: t_logo_0027, to: t_logo_0032, relation: related_to, confidence_basis: extractor_judgement, note: "a mark developed black-first arrives with its one-colour version already made"}
+- {from: t_logo_0029, to: t_logo_0030, relation: related_to, confidence_basis: extractor_judgement, note: "both are physical print-stage checks and both are physical_production"}
+- {from: t_logo_0031, to: t_logo_0011, relation: related_to, confidence_basis: extractor_judgement, note: "remedy and property"}
+- {from: t_logo_0036, to: t_logo_0020, relation: related_to, confidence_basis: extractor_judgement, note: "remedy and problem; the legal characterisation is second-hand and unscoped, see the caveat on sk_logo_0031"}
+- {from: t_logo_0039, to: t_logo_0040, relation: narrower_than, confidence_basis: extractor_judgement, note: "the source states the containment: a logo is one part of a brand identity"}
+- {from: t_logo_0040, to: t_logo_0041, relation: narrower_than, confidence_basis: extractor_judgement, note: "the source states the containment: the brand as a whole represents much more"}
+- {from: t_logo_0042, to: t_logo_0039, relation: narrower_than, confidence_basis: extractor_judgement, note: "a wordmark is one kind of logo; the source's decision is whether a symbol is added to it"}
+- {from: t_logo_0043, to: t_logo_0045, relation: related_to, confidence_basis: extractor_judgement, note: "the brief is what the designer returns to when the committee's feedback exceeds the agreed strategy"}
+- {from: t_logo_0007, to: t_logo_0006, relation: uncertain, confidence_basis: extractor_judgement, note: "RECORDED AS UNRESOLVED. Appropriateness argues for including what the category needs; the one-feature rule argues for excluding everything but one thing. The source rules once, in one direction, on one project (printed 37) and never states a general precedence. We do not supply one."}
+
+concepts:
+
+- concept_id: sc_logo_reproduction_robustness
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0001, t_logo_0002, t_logo_0003, t_logo_0009, t_logo_0010, t_logo_0011, t_logo_0014]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_distinctiveness_proxies
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0004, t_logo_0005, t_logo_0006]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_appropriateness_and_depiction
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0007, t_logo_0017, t_logo_0018, t_logo_0025, t_logo_0035]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_reproduction_remedies
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0026, t_logo_0027, t_logo_0028, t_logo_0029, t_logo_0030, t_logo_0031, t_logo_0032]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_identity_levels
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0039, t_logo_0040, t_logo_0041, t_logo_0042, t_logo_0012, t_logo_0044]
+  origin: source_stated
+
+- concept_id: sc_logo_longevity_and_equity
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0013, t_logo_0019, t_logo_0021, t_logo_0038]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_client_process_instruments
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0043, t_logo_0045, t_logo_0022, t_logo_0023, t_logo_0033, t_logo_0034, t_logo_0037]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_ownability
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0020, t_logo_0036]
+  origin: extractor_inferred
+
+- concept_id: sc_logo_legibility_of_lettering
+  kind: source_specific_concept
+  origin_ref: airey-logo-design-love
+  children_terms: [t_logo_0008, t_logo_0024]
+  origin: source_stated

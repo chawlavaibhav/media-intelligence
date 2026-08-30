@@ -1,0 +1,347 @@
+# Light: Science & Magic, 5th ed., chapters beyond ch.3 — SPEC-03 SourceConceptSystems
+# EXPERIMENTAL — NOT LIVE CANON. Lane of book-expansion-qa-v1.
+# scope_extension_of: light-science-magic-ch3 · independence: none — same work
+#
+# Five systems. Each is recorded because the knowledge genuinely lives in the relationships between
+# the members: these chapters are largely about what happens when two surfaces, or two goals, are
+# present at once, and the individual objects do not carry that.
+# Origin is marked at every structural level. Where the ORDER or the GROUPING is ours rather than
+# the source's, the interpretation_basis says so plainly.
+#
+# EPUB, reflowable: page_start / page_end are null in every system below.
+
+source_id: light-science-magic-beyond-ch3
+
+source_concept_systems:
+
+- scs_id: scs_lsmx_001
+  source_id: light-science-magic-beyond-ch3
+  label: the_surface_class_decision_framework
+  label_origin: extractor_assigned
+  system_type: decision_framework
+  system_type_origin: source_stated
+  description: >
+    The book's operative procedure for any subject, stated once in chapter 4 and then executed in each
+    of the surface chapters. First classify the subject by which reflection type is responsible for its
+    appearance. That classification then selects the whole arrangement, and the arrangements it selects
+    are not variations on each other — they are opposites. A light-toned diffuse subject wants a small
+    raking source; a black glossy subject wants a large source overhead filling the family of angles;
+    metal wants the family filled or vacated depending on a prior tonal decision; glass wants the two
+    limits of the family occupied or vacated and the front surface ignored; a black subject wants
+    metal's arrangement whatever it is actually made of. The classification is not descriptive
+    background — it is the branch that determines everything downstream.
+  whole_system_claim:
+    text: >
+      The reflection-type classification is a branch, not a preamble. Two subjects of the same tone,
+      the same size and the same shape can require arrangements that differ on every variable — source
+      size, source direction, and whether light is placed inside or outside the family of angles — and
+      the only thing that selects between them is which reflection channel the surface actually has.
+      This is why a lighting rule stated without its surface precondition is unsafe: the book's own
+      worked case is a raking light that is correct for a sponge and, applied unchanged to black
+      leather, is the worst possible choice.
+    origin: source_explicit
+    interpretation_basis:
+    source_ref: "Ch. 4, 'Photographer as an Editor' (the two-step statement) and 'Capitalizing on Direct Reflections' (the sponge/leather pair)"
+  members:
+  - {sk_ref: sk_lsmx_0003, role_in_system: decision_rule, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0004, role_in_system: classification_basis, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0010, role_in_system: branch_outcome, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0011, role_in_system: failure_of_wrong_branch, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0012, role_in_system: branch_outcome, order: 5, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0026, role_in_system: branch_outcome, order: 6, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0039, role_in_system: branch_outcome, order: 7, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0057, role_in_system: branch_outcome, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+    - {from: sk_lsmx_0010, on: sk_lsmx_0003, note: "the raking-light arrangement is what step two produces for a light diffuse surface", origin: source_stated}
+    - {from: sk_lsmx_0012, on: sk_lsmx_0003, note: "the large overhead source is what step two produces for a dark glossy surface", origin: source_stated}
+    - {from: sk_lsmx_0057, on: sk_lsmx_0026, note: "the source says to light black-on-black as if it were metal", origin: source_stated}
+    tradeoffs: []
+    conflicts:
+    - {between: [sk_lsmx_0010, sk_lsmx_0012], note: "opposite on source size and source direction; the source states the contradiction explicitly and resolves it by the classification", origin: source_stated}
+    - {between: [sk_lsmx_0023, sk_lsmx_0035], note: "a glossy non-metallic box has direct reflection removed and a metal box has it created, from identical geometry", origin: source_stated}
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 4, 'Capitalizing on Direct Reflections': 'It shows how applying a good technique at the wrong time can produce a bad picture.'"
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The two-step rule and the sponge/leather contradiction are the source's own words and its own
+      worked demonstration; the whole-system claim quotes its reasoning rather than adding to it. What
+      is OURS is the membership list: the source never gathers these branch outcomes into one set, and
+      collecting metal, glass and black-on-black alongside the chapter-4 pair is our grouping. The
+      conflicts recorded are stated by the source pairwise, in the chapters where each arises, never
+      side by side.
+  provenance:
+    chapter: "4, 6, 7, 9"
+    section: "Ch. 4 'Photographer as an Editor' and 'Capitalizing on Direct Reflections'; Ch. 6 'Bright or Dark?'; Ch. 7 'Principles'; Ch. 9 'Lighting Black-on-Black Scenes'"
+    page_start:
+    page_end:
+    source_support: text_and_visual
+
+- scs_id: scs_lsmx_002
+  source_id: light-science-magic-beyond-ch3
+  label: the_four_controls_that_all_act_on_the_family_of_angles
+  label_origin: extractor_assigned
+  system_type: interacting_set
+  system_type_origin: extractor_inferred
+  description: >
+    Four separate things a photographer can move all act on the same quantity — the family of angles
+    that produces direct reflection — and therefore cannot be adjusted independently. The light's
+    position decides whether it is inside or outside the family. The light's size and distance decide
+    how much of the family it fills, which sets whether the surface carries direct reflection across
+    all of itself or only part. The camera's position and focal length set the WIDTH of the family
+    itself, and so how far the light may travel before the arrangement breaks. And an occluder — a
+    gobo, a black card, a dark background, a tent wall — subtracts a region from the family, which is
+    the same act performed negatively. Each of these appears in a different chapter, attached to a
+    different subject, and the source never lists them together.
+  whole_system_claim:
+    text: >
+      The four controls are one control with four handles, and the interactions are what make the later
+      chapters difficult rather than the individual facts. Moving the camera to escape a reflection
+      changes the perspective and the width of the family at the same time; moving the light to set the
+      background's brightness is bounded by how much of the family the light still covers; the freedom
+      to move the light at all is decided by the lens; and every occluder placed to solve one surface's
+      problem enters some other surface's family and appears there. A photographer who has learned the
+      four separately, as four rules, will find them contradicting one another. Learning them as one
+      quantity with four inputs is what makes the contradictions dissolve.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source states each dependency where it arises but never assembles them. It says viewpoint
+      determines both perspective distortion and the family (ch. 5); that camera distance and focal
+      length change the family's size (ch. 4 and ch. 6); that the light's distance changes how much of
+      the family it fills and therefore the metal-versus-background balance (ch. 6); that a gobo cut to
+      the family removes the metal's light (ch. 6); and that a gobo cut larger than a label's family
+      will reflect in the glass beside it (ch. 7). Reading those five separate statements as four
+      handles on one quantity is our synthesis, and the strength of the claim — that this is what makes
+      the later chapters hard — is ours, not the source's.
+    source_ref:
+  members:
+  - {sk_ref: sk_lsmx_0006, role_in_system: control, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0016, role_in_system: coupling, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0017, role_in_system: control, order: 3, membership_origin: extractor_inferred}
+  - {sk_ref: sk_lsmx_0032, role_in_system: control, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0033, role_in_system: bound, order: 5, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0030, role_in_system: control, order: 6, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0042, role_in_system: control, order: 7, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0049, role_in_system: interaction_failure, order: 8, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: extractor_inferred}
+    dependencies:
+    - {from: sk_lsmx_0032, on: sk_lsmx_0033, note: "how far the light may be moved is set by the lens", origin: source_stated}
+    - {from: sk_lsmx_0042, on: sk_lsmx_0006, note: "the background's effective size is a camera-distance effect", origin: source_stated}
+    tradeoffs:
+    - {between: [sk_lsmx_0016, sk_lsmx_0033], note: "the viewpoint that maximises lighting freedom also fixes the perspective; the source says sometimes there is not much choice", origin: source_stated}
+    conflicts:
+    - {between: [sk_lsmx_0049, sk_lsmx_0030], note: "an occluder sized for one surface's family becomes a visible black reflection in another's", origin: source_stated}
+  source_warns_against_isolated_use: false
+  source_warning_ref:
+  evidence:
+    characteristics: [explicitly_stated, argued, repeated_within_source, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Every member is a source claim and every dependency and trade-off recorded is one the source
+      states. The SYSTEM is ours: the source distributes these across four chapters, attaches each to a
+      different subject, and never says they are one quantity with four inputs. The whole-system claim
+      is an extractor synthesis and is marked as such. A reader should treat the grouping as a reading
+      aid, not as the book's own structure.
+  provenance:
+    chapter: "4, 5, 6, 7"
+    section: "Ch. 4 'The Angle of Light'; Ch. 5 'Depth Clues', 'The Size of the Light'; Ch. 6 'Controlling the Effective Size of the Light', 'Keeping the Metal Dark'; Ch. 7 'Position the Camera', 'Secondary Opaque Subjects'"
+    page_start:
+    page_end:
+    source_support: text
+
+- scs_id: scs_lsmx_003
+  source_id: light-science-magic-beyond-ch3
+  label: the_glossy_box_remedy_ladder
+  label_origin: extractor_assigned
+  system_type: priority_order
+  system_type_origin: source_stated
+  description: >
+    An ordered list of remedies for unwanted direct reflection on a glossy non-metallic box, presented
+    by the source as a sequence to work through rather than as alternatives to choose among. The
+    geometric moves come first — background tone, light position, camera height, falloff, black card,
+    tipping the subject, longer lens — because they cost nothing but working space. The polarizer comes
+    late for a stated optical reason, not merely because it is fussy: a box carries polarized reflection
+    on more than one face, polarized in mutually perpendicular planes, so the filter trades one
+    reflection for another and is only worth spending once the geometric remedies have reduced what is
+    left to a single worst case. Dulling spray is last because it damages the subject's appearance and
+    can destroy the fine detail it was applied to save.
+  whole_system_claim:
+    text: >
+      The ordering is by reversibility and by side effect, not by effectiveness. Each earlier rung
+      changes only the arrangement and can be undone; the polarizer changes the balance among surfaces
+      and cannot clear them all; the spray changes the subject itself. The source's stated reason for
+      the polarizer's position is the one that makes the ladder a system rather than a list: the
+      remedies interact, and the polarizer's usefulness depends on how much the earlier rungs have
+      already removed.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      The source gives the sequence and gives the polarizer's optical reason for being late, and says
+      the spray is a last resort. It does not state the organising principle — reversibility and side
+      effect — nor does it say the polarizer's value depends on prior progress in those words; it says
+      'whatever direct reflection is left is that which is the most difficult thing to eliminate. Then
+      we use the polarizer to reduce that reflection.' Reading that as a dependency of the last rungs on
+      the earlier ones is ours.
+    source_ref:
+  members:
+  - {sk_ref: sk_lsmx_0023, role_in_system: the_ladder, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0006, role_in_system: mechanism_behind_several_rungs, order: 2, membership_origin: extractor_inferred}
+  - {sk_ref: sk_lsmx_0024, role_in_system: supporting_technique, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0009, role_in_system: revised_by_this_system, order: 4, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: procedural, origin: source_stated}
+    dependencies:
+    - {from: sk_lsmx_0023, on: sk_lsmx_0006, note: "raising or lowering the camera and using a longer lens work by moving or shrinking the family", origin: source_stated}
+    - {from: sk_lsmx_0023, on: sk_lsmx_0024, note: "the falloff rung is the chapter's own falloff technique reused subtractively", origin: source_stated}
+    tradeoffs:
+    - {between: [sk_lsmx_0023, sk_lsmx_0009], note: "the polarizer is early in chapter 4 and late in chapter 5; the same authors revising their own ordering because the geometry changed", origin: source_stated}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 5, 'Try a Polarizer': the polarizer is explicitly reserved as a next-to-last resort for boxes, unlike the chapter-4 advice"
+  evidence:
+    characteristics: [explicitly_stated, argued, practitioner_assertion, mechanism_given]
+    source_uncertainty: source_concedes_difficulty
+    extraction_uncertainty: figure_not_inspected
+    system_level_uncertainty: "Moderate and asymmetric. The source states the ladder's existence and its procedural order (system_type_origin and ordering.origin are source_stated), so the sequence of remedies is the source's own. What is the extractor's is the whole-system claim, recorded as extractor_synthesis: the assertion that these remedies form one escalating ladder governed by a single rationale is a synthesis over passages the source presents separately, and some members carry membership_origin: extractor_inferred. This system's own extraction_uncertainty is figure_not_inspected, so its member-level evidence is weaker here than elsewhere in this source. Field authored by CANON-014 from this object's own recorded origin fields; the source was NOT reopened."
+  provenance:
+    chapter: "5 — Revealing Shape and Contour"
+    section: "The Glossy Box"
+    page_start:
+    page_end:
+    source_support: text
+
+- scs_id: scs_lsmx_004
+  source_id: light-science-magic-beyond-ch3
+  label: bright_field_and_dark_field_as_mutually_exclusive_opposites
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: source_stated
+  description: >
+    Two glass-lighting methods that are exact inverses of one another, generated from the same
+    geometric fact: the appearance of a glass edge is decided by what occupies the two extreme limits
+    of its family of angles. Vacate those limits and the edge is dark, so it must be shown against a
+    bright ground. Occupy them and only them and the edge is bright, so it must be shown against a dark
+    ground. Each method then imposes the same subsidiary requirement from opposite directions — the
+    background must exactly fill the frame, too large in either case reaching into the family and
+    destroying the edge — and each has its own metering procedure and its own characteristic failure.
+    The pair is a mutual qualification rather than a menu, because the source's central warning is that
+    running both at once produces the one arrangement that cannot work.
+  whole_system_claim:
+    text: >
+      The two methods are not two techniques but one geometric fact read in two directions, and their
+      most important joint property is that they cannot be superposed. Light-on-light and dark-on-dark
+      both leave the edge with no tonal difference against its ground, so a set-up that partially
+      implements both — a tent, or a background slightly too large — fails in a way neither method fails
+      on its own. Where both are wanted in one frame they must be kept spatially separate, with the
+      transition zone kept small, because the transition is where the two mix and where the definition
+      is lost.
+    origin: source_explicit
+    interpretation_basis:
+    source_ref: "Ch. 7, 'Two Attractive Opposites' and 'The Best of Both Worlds'"
+  members:
+  - {sk_ref: sk_lsmx_0039, role_in_system: shared_premise, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0040, role_in_system: pole, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0041, role_in_system: pole, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0042, role_in_system: shared_requirement, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0044, role_in_system: per_pole_procedure, order: 5, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0043, role_in_system: joint_failure, order: 6, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0047, role_in_system: cost_of_one_pole, order: 7, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: none, origin: source_stated}
+    dependencies:
+    - {from: sk_lsmx_0040, on: sk_lsmx_0042, note: "both poles require the background to exactly fill the frame", origin: source_stated}
+    - {from: sk_lsmx_0041, on: sk_lsmx_0042, note: "same requirement from the opposite direction", origin: source_stated}
+    tradeoffs:
+    - {between: [sk_lsmx_0041, sk_lsmx_0047], note: "dark field gives the strongest edges and the worst flare in the book", origin: source_stated}
+    conflicts:
+    - {between: [sk_lsmx_0040, sk_lsmx_0041], note: "running both simultaneously produces light-on-light or dark-on-dark and destroys the edge", origin: source_stated}
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 7, 'The Best of Both Worlds': 'Most failures in photographing glass result from deliberately or naively using both simultaneously.'"
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Almost entirely the source's own. It names the pair, calls them opposites, derives both from the
+      same limits of the family of angles, states the shared background requirement in both sequences,
+      and devotes a section to the failure of combining them. What is ours is only the membership of
+      the flare object in the system, and the framing of the pair as a mutual qualification rather than
+      as two techniques.
+  provenance:
+    chapter: "7 — The Case of the Disappearing Glass"
+    section: "Two Attractive Opposites through The Best of Both Worlds, plus Stopping Flare"
+    page_start:
+    page_end:
+    source_support: text_and_visual
+
+- scs_id: scs_lsmx_005
+  source_id: light-science-magic-beyond-ch3
+  label: why_the_extremes_need_lighting_and_exposure_together
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: source_stated
+  description: >
+    A short causal chain the source builds explicitly for white-on-white and black-on-black subjects.
+    The medium compresses tones at both ends of its range, so a scene made entirely of one extreme is
+    recorded where the least detail survives, and the compression cannot be undone afterwards. Exposure
+    can move the scene toward the middle of the range and back again, which preserves whatever
+    distinctions exist, but it cannot create a distinction: a light grey against an identical light grey
+    remains identical however it is exposed. Only lighting can make one of the two greys different. Which
+    of them should be different is then settled not by optics but by perception — the viewer accepts the
+    scene as an extreme only if the BACKGROUND carries the extreme — and how different is bounded on one
+    side by the subject's edge disappearing and on the other by flare. And which techniques are available
+    to make the difference is decided by the ratio of direct to diffuse reflection, which is why the
+    white case is deprived of direct reflection and the black case is handed it back.
+  whole_system_claim:
+    text: >
+      Neither exposure nor lighting is sufficient alone, and the source says so directly: good lighting
+      control produces the tonal distinctions and good exposure control preserves them. The chain runs
+      medium → exposure → lighting → perception, and each link constrains the next. The practical
+      consequence is that the two extreme scene types are not mirror images in method even though they
+      are mirror images in description, because the reflection ratio differs: the white case must
+      manufacture separation with gobos, translucent panels and black cards, while the black case can
+      simply be lit as metal.
+    origin: source_explicit
+    interpretation_basis:
+    source_ref: "Ch. 9, 'Using Every Resource' and 'Lighting White-on-White Scenes'"
+  members:
+  - {sk_ref: sk_lsmx_0052, role_in_system: cause, order: 1, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0053, role_in_system: partial_remedy, order: 2, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0054, role_in_system: constraint_on_available_techniques, order: 3, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0055, role_in_system: perceptual_requirement, order: 4, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0056, role_in_system: technique_set_for_the_white_case, order: 5, membership_origin: source_stated}
+  - {sk_ref: sk_lsmx_0057, role_in_system: technique_set_for_the_black_case, order: 6, membership_origin: source_stated}
+  internal_structure:
+    ordering: {scheme: causal, origin: source_stated}
+    dependencies:
+    - {from: sk_lsmx_0053, on: sk_lsmx_0052, note: "the exposure shift exists because of the compression", origin: source_stated}
+    - {from: sk_lsmx_0056, on: sk_lsmx_0054, note: "the white case needs manufactured separation because direct reflection is unusable there", origin: source_stated}
+    - {from: sk_lsmx_0057, on: sk_lsmx_0054, note: "the black case can be lit as metal because direct reflection is usable there", origin: source_stated}
+    tradeoffs:
+    - {between: [sk_lsmx_0053, sk_lsmx_0055], note: "the exposure shortcut fails exactly where a secondary subject sits at the opposite extreme", origin: source_stated}
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 9, 'Lighting White-on-White Scenes': 'Good lighting control produces tonal distinctions in white-on-white subjects. Good exposure control preserves those distinctions. Neither control alone is adequate to do the job.'"
+  evidence:
+    characteristics: [explicitly_stated, visually_demonstrated, controlled_comparison, argued, historical_claim, mechanism_given]
+    source_uncertainty: none
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      The chain and its two ends are the source's, quoted above. What is OURS is the inclusion of the
+      perceptual requirement as a link in the causal chain rather than as a separate observation, and
+      the closing claim that the two extreme types differ in method because of the reflection ratio —
+      the source states both halves but does not present the ratio as the reason the methods diverge.
+      The first link is partly technology-contingent: the compression the source describes is a property
+      of film and of the sensor generation of this edition, and the source itself notes that Raw
+      straightens the curve.
+  provenance:
+    chapter: "9 — The Extremes"
+    section: "The Characteristic Curve through Keeping the Subject Away from the Background"
+    page_start:
+    page_end:
+    source_support: text_and_visual

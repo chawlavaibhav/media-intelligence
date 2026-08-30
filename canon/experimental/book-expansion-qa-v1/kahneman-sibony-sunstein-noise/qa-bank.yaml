@@ -1,0 +1,2212 @@
+qa_items:
+- qa_id: qa_nse_0001
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Introduction: ''Two Kinds of Error'', the four shooting teams and the back of the target
+    (spine 7)'
+  question: 'Noise and bias are both components of error in this book''s scheme. State what distinguishes
+    them, and then state the asymmetry in what it takes to MEASURE each.
+
+    '
+  answer: 'Bias is systematic deviation — errors mostly in one direction, so the deviation is predictable
+    and invites a causal explanation. Noise is scatter: judgements that should have been identical are
+    spread out, with no direction and usually no available explanation. The measurement asymmetry follows
+    from that. Measuring bias requires knowing the true value, because bias is defined as the average
+    distance from it. Measuring noise requires only several judgements of the same case by people aiming
+    at the same thing; the spread IS the measurement. The book''s image is looking at the back of the
+    target: the bull''s-eye is invisible, so you cannot tell which team is closer to it, but you can see
+    at a glance which team is scattered. This is why noise is tractable in the many professional domains
+    where the right answer is unknown, unknowable, or arrives too late to matter.
+
+    '
+  answer_type: concept_definition
+  difficulty: easy
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own framing device, introduced as an illustrative metaphor rather than a study.
+    The condition it names for the measurement to be licensed is that all the judges were aiming at the
+    same target.
+
+    '
+  confounders:
+  - reading 'bias' as social discrimination — the book uses it in the statistical sense of average error
+    and warns separately against that reading
+  - assuming you need to know the right answer before you can say anything about a set of judgements
+  - treating noise as a small residual once bias is removed; the book's whole argument is that it is frequently
+    the larger term
+  requires_application_canon013: false
+- qa_id: qa_nse_0002
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 2 ''A Noisy System'', section ''A Lottery That Creates Noise''; Ch. 6 ''The Analysis
+    of Noise'', ''Some Judges Are Severe: Level Noise''; Ch. 7 ''Occasion Noise'', ''The Second Lottery'''
+  question: 'Give the book''s three components of system noise in its own terms, say what each one is
+    a property of, and state which of the three the book reports as smallest.
+
+    '
+  answer: 'System noise is unwanted variability in judgements that should ideally be identical. It decomposes
+    into level noise and pattern noise, and pattern noise decomposes again into stable pattern noise and
+    occasion noise. Level noise is variability in the average level of different judges'' judgements —
+    some are across-the-board more severe or more generous, which the book says behaves like a personality
+    trait and has nothing to do with the case in front of them. Pattern noise is variability in how a
+    given judge responds to particular cases over and above their general severity; the technical name
+    is the judge-by-case interaction. Occasion noise is variability in the same person''s judgements of
+    the same case on different occasions. The book states that in every case it reviewed where the share
+    could be measured, occasion noise was the SMALLEST contributor — you are less consistent with yourself
+    than you think, but still more similar to yourself last week than to a colleague today.
+
+    '
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The taxonomy is the book''s own and is stated as three nested sum-of-squares equations. The
+    claim that occasion noise is smallest is explicitly presented as a review of a limited set of cases,
+    not a law.
+
+    '
+  confounders:
+  - treating occasion noise as a sibling of pattern noise rather than as its transient component
+  - assuming occasion noise is the biggest problem because it is the most vivid — mood, weather, hunger
+  - 'confusing level noise with bias: level noise is variability BETWEEN judges'' averages, bias is the
+    distance of the average from truth'
+  requires_application_canon013: false
+- qa_id: qa_nse_0003
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 2 'A Noisy System', section 'Noise Audits Reveal System Noise'; procedure in Appendix
+    A 'How to Conduct a Noise Audit'
+  question: 'What, exactly, is a noise audit? Name the design requirements the book puts on it, and say
+    what an audit does and does not tell you.
+
+    '
+  answer: 'It is an experiment in which several interchangeable professionals independently judge the
+    same cases, real or constructed, without being told that the variability of their answers is what
+    is being studied. The spread of the answers is the measurement. The design requirements the book names:
+    the judges must be genuinely interchangeable — the test is that if one were unavailable another would
+    be assigned and expected to reach a similar judgement; each judge should handle several cases, because
+    the level-versus-pattern split is only recoverable from a multi-case design; the task should be completable
+    from written information and answerable numerically; participants work at the same time, physically
+    separated, and do not communicate. What it tells you is how much your people disagree, and in what
+    proportions. What it does NOT tell you is who is right. The book is explicit that no one in its insurance
+    audit could say how much error there was, because no one knew the right premium for any case.
+
+    '
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: 'The book''s own audit at an insurance company, plus the procedural guide in Appendix A. The
+    audit is the authors'' own study; the numbers it produced are from one company.
+
+    '
+  confounders:
+  - assuming an audit measures accuracy — it measures disagreement, and the book keeps these strictly
+    apart
+  - thinking one case per judge is enough; that design cannot separate level noise from pattern noise
+  - confusing an audit with test-retest reliability, which measures one person against themselves
+  requires_application_canon013: false
+- qa_id: qa_nse_0004
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 4 'Matters of Judgment', opening argument on bounded disagreement
+  question: 'The book says a "matter of judgment" is defined by an expectation of bounded disagreement.
+    What lies on either side of that space, and what does the book say about how the bound is set?
+
+    '
+  answer: 'On one side are matters of fact or computation, where reasonable people are expected to agree
+    perfectly and disagreement is not admissible. On the other are matters of taste or opinion, where
+    unresolved disagreement is entirely acceptable and the concept of noise does not apply. Judgement
+    occupies the space between: people may differ, but not by much, and they act as though there were
+    an invisible bull''s-eye whether or not one exists. On the bound itself the book gives no procedure
+    — it says explicitly that how much disagreement is acceptable "is itself a judgment call" and depends
+    on the difficulty of the problem. What it offers instead is a boundary marker at the extremes: judges
+    who differ widely on an ordinary fraud sentence will still concur that a one-dollar fine and a life
+    sentence are both unreasonable, and wine judges who disagree about medals are often unanimous in contempt
+    for the rejects. Agreement on absurdity marks the edges without fixing any point inside.
+
+    '
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own conceptual framing. The wine and sentencing illustrations are used to locate
+    the boundary, not to measure it.
+
+    '
+  confounders:
+  - reading 'bounded disagreement' as a numeric tolerance the book supplies — it does not
+  - assuming that because reasonable people may differ, any amount of difference is acceptable
+  - treating the fact that colleagues agree an outlier is absurd as evidence that they agree on ordinary
+    cases — the book identifies this as a source of the illusion of agreement
+  requires_application_canon013: false
+- qa_id: qa_nse_0005
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 4 ''Matters of Judgment'', section ''What Judgment Aims to Achieve: The Internal
+    Signal''; Ch. 11 ''Objective Ignorance'', opening section'
+  question: 'Define the internal signal of judgment completion, and explain why the book treats it as
+    misleading rather than merely uninformative.
+
+    '
+  answer: 'It is the feeling that a judgement fits the evidence coherently, which is what tells a judge
+    the judgement is finished. The book stresses that it is self-administered and unrelated to any outside
+    information — which is why making a judgement about a fictitious person feels exactly like making
+    one about a real one, and why an unverifiable judgement still feels complete. It is misleading, not
+    merely uninformative, because of how it is construed: the emotional experience "the evidence feels
+    right" masquerades as rational confidence in validity, "I know, even if I don''t know why." The book
+    adds that the coherence producing the signal is often manufactured, "bolstered by hiding or ignoring
+    pieces of evidence that don''t fit", so confidence needs only a coherent story and no attractive alternative
+    in mind — both achievable by suppression rather than by being right.
+
+    '
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The internal signal is the authors'' proposed construct, offered as an interpretation of the
+    managerial-intuition literature. It is not a measured quantity, and the definition of intuition it
+    builds on is a third party''s review.
+
+    '
+  confounders:
+  - treating confidence as weak evidence of accuracy rather than as evidence of nothing about accuracy
+  - assuming the book wants intuition eliminated — its position is that intuition should be delayed, not
+    banned
+  - reading the signal as a property of experts only; the book presents it as universal
+  requires_application_canon013: false
+- qa_id: qa_nse_0006
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 18 'Better Judges for Better Judgments', section 'Experts and Respect-Experts'
+  question: 'What is a respect-expert in this book''s terms, and what warning does the book attach to
+    the category?
+
+    '
+  answer: 'A respect-expert is someone whose expertise cannot be checked against outcomes, so the confidence
+    placed in them rests entirely on the regard of their peers. The book insists the term is not meant
+    to be disrespectful — many professors, scholars and consultants are in this position, and it is a
+    fact of life in domains like underwriting, sentencing, wine tasting and essay grading rather than
+    a criticism. The warning is that the traits producing respect are not the traits producing accuracy.
+    Respect-experts command trust through shared professional doctrine, experience, and the ability to
+    construct a coherent story with confidence — and the book notes that confident people carry extra
+    weight in a group whether or not the confidence is warranted. It also flags the trap: high general
+    ability improves your ability to convince others as well as your judgement, so in the absence of reality
+    feedback it manufactures respect-experts. "Medieval astrologers must have been among the highest-GMA
+    people of their time."
+
+    '
+  answer_type: concept_definition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own coinage and argument. The supporting material on general mental ability and
+    cognitive style is third-party research the book reports.
+
+    '
+  confounders:
+  - reading 'respect-expert' as a slur for a fake expert — the book explicitly rejects that reading
+  - assuming shared professional training produces agreement on cases; the book says doctrine eliminates
+    some possibilities without specifying a positive answer, so trained professionals drift apart
+  - treating verifiability as a property of the person rather than of the domain
+  requires_application_canon013: false
+- qa_id: qa_nse_0007
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 2 'A Noisy System', section 'The Illusion of Agreement'
+  question: 'Colleagues who disagree substantially can work together for years without noticing. Give
+    the book''s account of why — both the psychological half and the organisational half.
+
+    '
+  answer: 'Psychologically, the book invokes naive realism: we hold one interpretation of a situation
+    at a time, experience it as simply true, and invest little effort in generating plausible alternatives
+    — from which it is one small step to assuming others see it as we do. Because we never imagine the
+    alternative reading, we never expect the disagreement. Organisationally, three things reinforce the
+    illusion. Shared doctrine and vocabulary create constant apparent agreement while never specifying
+    a positive answer to any particular case, so drift between colleagues is invisible. Confidence is
+    built by agreeing with your own past self, not by ever checking agreement with others — the book quotes
+    an underwriter who discussed three-quarters of cases with a supervisor as a novice and none as a veteran,
+    growing confident by exercising judgement rather than testing it. And post-mortems examine only judgements
+    far outside the norm, which everyone finds easy to condemn; that easy consensus about bad judgements
+    can even reinforce the illusion, because the real lesson — that people disagree about ordinary, broadly
+    acceptable cases — never surfaces.
+
+    '
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own diagnosis, following its own insurance audit and its polling of executives
+    whose median expected difference was 10% against a measured 55%. Naive realism is third-party work
+    it invokes; the admissions-office anecdote was related to the authors by a colleague.
+
+    '
+  confounders:
+  - attributing the invisibility to bad faith or conflict avoidance alone — the book gives conflict avoidance
+    as one contributing mechanism among several
+  - assuming that professionals who share training and rules therefore reach similar conclusions
+  - thinking experience corrects the illusion; the book argues experience deepens it
+  requires_application_canon013: false
+- qa_id: qa_nse_0008
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 2 'A Noisy System', section 'Unwanted Variability Versus Wanted Diversity'; closing
+    paragraphs
+  question: '"Random errors cancel out, so noise doesn''t matter." Reconstruct the book''s answer, and
+    be precise about the condition under which cancellation actually would occur.
+
+    '
+  answer: 'Cancellation requires averaging multiple judgements OF THE SAME CASE. That is exactly what
+    an operating system does not do. A noisy system makes single judgements of different cases: one underwriter
+    prices one policy, one adjuster handles one claim, one judge sentences one defendant. So one overpriced
+    contract and one underpriced contract are not an average that comes out right — they are two costly
+    errors, one losing business and the other losing money. The book''s sentence is "In noisy systems,
+    errors do not cancel out. They add up." It concedes the cancellation property itself is real and says
+    it is precisely what noise-reduction strategies exploit: averaging several independent judgements
+    of the same case does reduce noise, which is why aggregation is one of its recommended remedies. The
+    error in the objection is applying a property of repeated measurement to a process that never repeats
+    a measurement.
+
+    '
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument, illustrated with its insurance material and with sentencing. It
+    grants the underlying statistical property and disputes only its applicability to operating systems.
+
+    '
+  confounders:
+  - 'conceding the point for evaluative judgements because there is no true value — the book''s fairness
+    argument applies there too: two felons who both deserve five years getting three and seven is not
+    justice on average'
+  - confusing the wisdom of crowds, which averages many judgements of one case, with a system, which makes
+    one judgement of many cases
+  - assuming the objection is simply wrong; the book's position is that the property is real but misapplied
+  requires_application_canon013: false
+- qa_id: qa_nse_0009
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 16 ''Patterns'', sections ''Problems: Hard and Easy'' and ''The Personality Analogy'''
+  question: 'Why, on this book''s account, do some judgement problems produce far more disagreement than
+    others? Give the mechanism, not just the observation.
+
+    '
+  answer: 'The driver is whether the cues in the case point the same way. Where they cohere — as in the
+    description of Bill, where every detail supports the same stereotype — fast intuitive thinking makes
+    sense of the evidence easily and most people converge on the same answer. Where the cues conflict,
+    there is more than one defensible way to construct a coherent story, so different people select different
+    pieces of evidence as the core of their narrative and reach different conclusions, each of which feels
+    coherent to its owner. The book states the rule bluntly: "if there is more than one way to see anything,
+    people will vary in how they see it." It locates the variability at three points in the judgement
+    process — selective attention and recall over the available cues, informal (not formal) integration
+    of them into an impression, and conversion of that impression into a value on a scale. Cue conflict
+    pulls the first two apart. This is where pattern noise comes from, and it is why the book says complex
+    problems are noisier than simple ones.
+
+    '
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument, demonstrated with two cases it wrote itself — the Gambardi CEO problem,
+    where estimates from 115 MBA students ranged from 10 to 95, and the extended Julie description. Both
+    were designed to be difficult; they illustrate rather than test the claim.
+
+    '
+  confounders:
+  - attributing the difference to how much information is available rather than to whether it coheres
+  - assuming coherent cases produce accurate judgements — the Bill case produces agreement AND a shared
+    logical error
+  - treating this as a claim about task difficulty in general; the book's variable is specifically cue
+    conflict
+  requires_application_canon013: false
+- qa_id: qa_nse_0010
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 13 'Heuristics, Biases, and Noise', section 'Psychological Biases Cause Noise'
+  question: 'The book argues that a psychological bias does not necessarily produce a statistical bias.
+    Explain the mechanism, and give the two conditions under which the same bias produces noise instead.
+
+    '
+  answer: 'A psychological bias is a mechanism; whether it shows up as bias or as noise in a set of judgements
+    depends on how uniformly it operates. If everyone is pulled the same way by the same amount, the errors
+    are shared and the result is statistical bias — the book''s example is Bill the jazz-playing accountant,
+    where nearly everyone makes the same substitution and the same logical error, producing no noise at
+    all. The two conditions that convert the same mechanism into noise are: individual differences in
+    the bias, and context-dependence in its trigger. Half of hiring managers biased against women and
+    half in their favour produce no overall bias and a great many wrong hires. "Is there climate change?"
+    answered by "do I trust the people who say so?" gives a different answer per person depending on their
+    social circle. And where the order in which evidence arrives varies haphazardly from case to case,
+    excessive coherence converts that arbitrary order into system noise.
+
+    '
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument. Its striking supporting instance — that training designed to reduce
+    forecasters'' biases in fact improved their scores mainly by reducing noise — comes from the BIN analysis
+    by Satopää, Tetlock, Mellers and Salikhov, not from the authors.
+
+    '
+  confounders:
+  - assuming 'bias' in the psychological sense implies a directional error in the aggregate
+  - treating noise and bias as competing explanations rather than as two possible expressions of one mechanism
+  - concluding that anti-bias training is pointless — the book reports it worked, just not through the
+    channel intended
+  requires_application_canon013: false
+- qa_id: qa_nse_0011
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 8 'How Groups Amplify Noise', section 'Cascades'
+  question: 'Walk through the book''s ten-person hiring meeting and explain how a cascade makes noise
+    ACROSS similar groups, not merely error within one.
+
+    '
+  answer: 'Arthur speaks first and favours Thomas. Barbara is unsure, trusts Arthur, and agrees. Charles
+    privately thinks Julie is the better candidate but goes along — not out of cowardice, the book is
+    careful to say, but because he is a respectful listener who assumes Arthur and Barbara have grounds.
+    David, lacking strong reason to think the first three are wrong, follows too. By the time Erica, Frank
+    and George speak, the consensus is self-sustaining, and the private information Charles and David
+    held was never shared. The noise point is counterfactual: had Barbara spoken first and favoured Sam,
+    or had Arthur felt slightly differently and preferred Julie, the group would plausibly have landed
+    there instead — not because the candidate was better but because that is how the cascade would have
+    run. So very similar groups reach very different conclusions, which is variability, not just error.
+    The book adds that cascading is often individually rational, which is what makes it hard to stop,
+    and that the same pattern arises from social pressure alone with no learning at all.
+
+    '
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The hiring example is the book''s own illustration, which it calls highly artificial. The
+    supporting measurements are all third-party: Salganik and colleagues'' parallel music-download worlds,
+    Macy and colleagues on political positions, and Muchnik and colleagues, where a single artificial
+    early up-vote raised a comment''s mean rating by 25% five months later.
+
+    '
+  confounders:
+  - reading cascade participants as cowards or conformists — the book's point is that deference can be
+    reasonable
+  - treating a cascade as producing a wrong answer; its signature is that the answer is arbitrary, which
+    is a different complaint
+  - assuming a large group is safer than a small one; the book says the effect can be more dramatic in
+    small ones
+  requires_application_canon013: false
+- qa_id: qa_nse_0012
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 8 'How Groups Amplify Noise', section 'Group Polarization'
+  question: 'The book compares "statistical juries" with deliberating juries. Describe the comparison,
+    what it found, and the two mechanisms offered for the result.
+
+    '
+  answer: 'In the authors'' own experiments, 899 participants first made independent judgements of case
+    vignettes on scales of outrage, punitive intent and dollars. Millions of virtual six-person "statistical
+    juries" were then assembled by computer, with the median of the six independent judgements taken as
+    the verdict. These were markedly less noisy — the book calls that "a mechanical effect of statistical
+    aggregation". A follow-up with more than three thousand jury-eligible citizens forming more than five
+    hundred real six-person juries deliberating on the same cases found the deliberating juries were far
+    NOISIER than the statistical ones. They were also more extreme in whichever direction their median
+    member already leaned, and 27% chose an award as high as or higher than their most severe member.
+    The two mechanisms: informational — a group leaning one way hears mostly arguments for that way —
+    and reputational — members who care about standing shift toward the dominant tendency. The book adds
+    that group dynamics amplify whatever level, pattern and occasion noise the individuals brought in,
+    notably through whoever speaks first.
+
+    '
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The authors'' own studies, using mock jurors and constructed product-liability vignettes rather
+    than real trials. The finding is about noise and about polarisation; because punitive damages have
+    no true value, no claim is made that deliberating juries were less accurate.
+
+    '
+  confounders:
+  - concluding that discussion is always harmful — the book reports the opposite result for the Good Judgment
+    Project's teaming intervention and leaves the two standing
+  - reading the result as being about jury competence rather than about what deliberation does to variability
+  - assuming polarisation means groups become more severe; the book found shifts toward greater leniency
+    too, in the direction the median member already leaned
+  requires_application_canon013: false
+- qa_id: qa_nse_0013
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 9 ''Judgments and Models'', section ''Goldberg: The Model of You Beats You'''
+  question: 'A simple linear model of your own past judgements outperforms you at predicting outcomes.
+    A model can only subtract information, never add it. Reconcile these two facts using the book''s argument.
+
+    '
+  answer: 'The model subtracts exactly two things, and one of them is worth more than the other. It drops
+    the complex, case-specific rules you apply — the intuition that a perfect 10 on communication deserves
+    a bigger boost than the gap between 7 and 6, or that a well-rounded candidate beats a spiky one with
+    the same average. And it drops your pattern noise and occasion noise: the arbitrary reactions to particular
+    cases and the influence of your momentary state, which are not correlated with anything and behave
+    as random. Losing the subtlety costs accuracy only to the extent the subtlety is valid; losing the
+    noise always improves it. The book''s finding is that the second gain reliably exceeds the first:
+    "You may believe that you are subtler, more insightful, and more nuanced than the linear caricature
+    of your thinking. But in fact, you are mostly noisier." It adds why valid subtlety pays so little:
+    complex rules apply only under rarely-observed conditions, and measurement error at both ends drowns
+    their advantage before it can show up.
+
+    '
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'Goldberg''s model-of-the-judge research and its replications, all third-party. One early replication
+    found the model beat the participant for every one of ninety-eight participants predicting student
+    GPAs. The book reports the average correlation between a model of a judge and that judge''s actual
+    judgements as about .80.
+
+    '
+  confounders:
+  - concluding that human subtlety is always worthless — the book says some subtleties are valid and simply
+    do not pay enough
+  - assuming this shows models are highly accurate; the book insists elsewhere that models are consistently
+    better than people but not much better
+  - reading it as an argument to replace judges, which the book explicitly declines to make
+  requires_application_canon013: false
+- qa_id: qa_nse_0014
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 14 ''The Matching Operation'', section ''Noise in Matching: Limitations of Absolute
+    Judgment'''
+  question: 'Explain why the book expects a twenty-point rating scale to be noisier than a five-point
+    one, and what it recommends instead of simply reducing the number of points.
+
+    '
+  answer: 'The constraint is on absolute judgement. People can reliably assign items to roughly seven
+    categories on an intensity scale — the book cites the classic "magical number seven, plus or minus
+    two" — and beyond that they start making errors, such as putting A in a higher category than B when
+    a head-to-head comparison would rank B higher. Strikingly, the limit barely moves when the range of
+    the stimuli widens. Any scale finer than that resolution therefore manufactures disagreement that
+    has nothing to do with the thing being judged. The book''s recommendation is not merely a coarser
+    scale but a change of operation: comparison is not subject to the same limit, so people can rank items
+    they cannot reliably label. The recipe is to sort into about five categories first, then rank within
+    each — "you probably know whether you prefer Joe''s Pizza to Fred''s Burgers … even if you assigned
+    them to the same category." It concedes the cost: comparative procedures are more effortful and slower.
+
+    '
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The magical-number-seven result is a 1956 third-party classic about lines, tones and brightness.
+    Its extension to professional rating tasks is the authors'' argument rather than a demonstration on
+    professional work.
+
+    '
+  confounders:
+  - assuming the fix is a coarser absolute scale; the book's fix is to change from labelling to comparing
+  - believing the limit widens with the range of the material, which the book says it does not
+  - reading this as endorsing forced ranking — the book rejects the forcing while endorsing the ranking
+  requires_application_canon013: false
+- qa_id: qa_nse_0015
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 15 'Scales', sections 'Dollars and Anchors' and 'An Unfortunate Conclusion'
+  question: 'In the punitive-damages study, dollar awards were 94% noise. Replacing each juror''s awards
+    with their rank cut that to 49%. Explain what that transformation reveals and why the finding is a
+    problem for real courtrooms specifically.
+
+    '
+  answer: 'It reveals that the jurors agreed about the relative severity of the cases all along and disagreed
+    only about the absolute numbers. The dollar scale is a ratio scale — meaningful zero, unbounded top
+    — and Stevens''s finding is that such a scale is tied down by a single anchor, with both the judgements
+    and their standard deviation scaling proportionally with whatever anchor is supplied. Given no anchor,
+    each juror invents one on the first case and then judges everything else consistently against it.
+    So the absolute values are arbitrary while the ordering is not; converting to ranks strips out all
+    the judge-level differences mechanically, because the 1-to-10 distribution of ranks is the same for
+    everyone. The problem for real courtrooms is that the remedy is unavailable there. Jurors in the study
+    judged ten cases, which is what made ranking possible. A real jury sees one case, and American law
+    explicitly prohibits telling them the size of awards in other cases. The book calls the assumption
+    behind that rule "psychological nonsense — it assumes an ability that humans do not have."
+
+    '
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The authors'' own study (Kahneman, Schkade and Sunstein), 899 mock jurors on constructed vignettes.
+    The percentages rest on an assumption the book flags as possibly wrong: that the average of individual
+    judgements is the unbiased just value and every deviation from it is error. Stevens''s ratio-scale
+    work is third-party.
+
+    '
+  confounders:
+  - concluding that jurors were incompetent — the study shows their punitive intentions were largely shared
+    and the scale hid them
+  - assuming the fix is better instructions to jurors rather than an anchor case
+  - generalising the 94% figure to professional judgement; the book calls punitive damages an extreme
+    case and says professional judgements are rarely expressed on scales this ambiguous
+  requires_application_canon013: false
+- qa_id: qa_nse_0016
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 20 'Sequencing Information in Forensic Science', sections 'The Forensic Confirmation
+    Bias' and 'Sequencing Information'
+  question: 'The book reports that biasing context changed not only fingerprint examiners'' conclusions
+    but what they saw. Explain the finding and why it matters for the design of any remedy.
+
+    '
+  answer: 'In work by Dror and colleagues, examiners shown a latent print alongside a target exemplar
+    recorded significantly fewer details — minutiae — than examiners shown the latent print alone. A later
+    independent study confirmed it and added that how this happens "is not obvious". So context does not
+    merely tilt the interpretation of a fixed perception; it changes the perception. That matters for
+    remedy design because it rules out the intuitive fix. If bias operated only on interpretation, you
+    could ask an expert to set the context aside and judge the evidence on its merits. If it operates
+    on what gets perceived in the first place, the only reliable intervention is at the input: withhold
+    the biasing information until the judgement that must not depend on it has been recorded. That is
+    why the book''s remedy is sequencing — reveal information gradually, document the judgement at each
+    step, and record any later change of mind and its reasons — rather than instruction or awareness training.
+
+    '
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'All third-party: Itiel Dror and colleagues, with independent replication. The book reports
+    the effects as modest in absolute terms — four of twenty-four decisions changed in one study, about
+    one decision in ten in an FBI re-test of seventy-two examiners — with most changes to or from "inconclusive"
+    and none producing false identifications.
+
+    '
+  confounders:
+  - assuming awareness of the risk is protective; the book reports 71% of forensic scientists surveyed
+    thought bias was a concern for their field and only 26% thought it affected their own judgements
+  - reading the finding as being about incompetence rather than about an ordinary cognitive process
+  - treating fingerprinting as a special case; the book's point is that if the most objective-seeming
+    forensic discipline is susceptible, others are too
+  requires_application_canon013: false
+- qa_id: qa_nse_0017
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 12 'The Valley of the Normal', sections 'Understanding in the Valley of the Normal'
+    and 'Inside and Outside'; Ch. 17 'The Sources of Noise', 'Noise Is Statistical'
+  question: 'Why does the book say noise is invisible while bias is easy to see? Give the cognitive mechanism,
+    not the sociology.
+
+    '
+  answer: 'Because our default mode of understanding is causal and noise is inherently statistical. Most
+    events fall in what the book calls the valley of the normal — neither actively expected nor especially
+    surprising. When one occurs, memory is searched for a candidate cause, and the search almost always
+    succeeds because causes can be drawn from an unlimited reservoir of facts and beliefs; the same news
+    flow explains a market rise and a market fall. Because the explanation arrives only after the outcome
+    is known, the outcome feels like it could have been anticipated, and the story leaves no room for
+    the possibility that it could easily have gone otherwise. Applied to judgement errors, that habit
+    finds a bias every time — motive, incompetence, overconfidence — and never finds noise, because noise
+    cannot appear in a single case at all. It becomes visible only when an ensemble is examined statistically,
+    and statistical thinking is effortful and must be learned. The book''s line: "Causally, noise is nowhere;
+    statistically, it is everywhere."
+
+    '
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument. Its supporting evidence about the ceiling on prediction — the Fragile
+    Families common-task challenge, where 160 teams predicted eviction at a correlation of .22 — is third-party
+    work it reports.
+
+    '
+  confounders:
+  - attributing the invisibility to organisations preferring not to look; the book gives that as a separate,
+    additional reason
+  - assuming causal thinking is simply a defect — the book says it avoids unnecessary effort while retaining
+    vigilance for genuinely abnormal events
+  - confusing this with hindsight bias alone; the book's claim is broader, about how understanding itself
+    works
+  requires_application_canon013: false
+- qa_id: qa_nse_0018
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 4 'Matters of Judgment', sections 'Evaluative Judgments' and "What's Wrong with
+    Noise"
+  question: 'Noise is a problem in both predictive and evaluative judgements, but for different reasons.
+    Give both reasons, and say what follows for a system whose judgements are largely evaluative.
+
+    '
+  answer: 'In predictive judgement, disagreement is evidence of error: the judgements aim at a true value,
+    so two different answers cannot both be right. In evaluative judgement there is no true value to be
+    wrong about, and the complaint is different — fairness and credibility. People affected by an evaluation
+    expect it to reflect the values of the system, not of whichever individual was assigned; when identical
+    cases get different outcomes, the assignment has become a lottery. The book''s phrase is "System noise
+    is inconsistency, and inconsistency damages the credibility of the system," and its example is deliberately
+    mundane: one customer with a defective laptop reimbursed and another given an apology. What follows
+    for a largely evaluative system is that the book''s quantitative apparatus does not apply — it says
+    explicitly that the error equation does not cover evaluative judgements, error costs there are rarely
+    symmetric, and there is no reason to think they are proportional to the square of the deviation. The
+    fairness and consistency argument survives; the arithmetic does not.
+
+    '
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own distinction and its own stated boundary on the error equation. It concedes
+    the boundary is fuzzy and that practitioners feel, act and justify themselves identically on both
+    sides.
+
+    '
+  confounders:
+  - assuming noise matters less where there is no true value; the book argues the fairness complaint is
+    if anything sharper there
+  - importing the mean-squared-error reasoning into evaluative settings, which the book rules out by name
+  - treating a decision as purely one or the other; the book says most consequential decisions contain
+    both, with predictive judgements as inputs and evaluative ones resolving the trade-offs
+  requires_application_canon013: false
+- qa_id: qa_nse_0019
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 19 ''Debiasing and Decision Hygiene'', sections ''A Limitation of Debiasing'' and
+    ''Noise Reduction: Decision Hygiene'''
+  question: 'Compare debiasing with decision hygiene as the book presents them. What does each assume,
+    and what situation makes debiasing the wrong tool?
+
+    '
+  answer: 'Debiasing — whether ex post correction, nudging, or training — targets a specific bias which
+    it assumes is present and directional. It works where the general direction of error is known and
+    shows up as a clear statistical bias; the planning fallacy is the book''s example of a finding robust
+    enough to warrant it. Decision hygiene assumes nothing about which error is present: like handwashing,
+    it adopts techniques that prevent an unspecified range of errors without your ever knowing which one
+    you avoided. Debiasing is the wrong tool when the direction of error is not known in advance — which
+    is exactly the noise case, where the effect of psychological biases varies unpredictably between judges.
+    The book''s worked illustration is a project team you assume is overconfident: the leader may have
+    been burned before and be over-conservative; the team may have anchored on an analogous project; or,
+    anticipating your buffer, it may have made its estimate more bullish to pre-empt you. In any situation
+    of some complexity, multiple biases may be conspiring or offsetting with unpredictable net effect.
+    Hygiene''s cost is that its victory is invisible: you never learn which error it prevented.
+
+    '
+  answer_type: comparison
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own framework. It also proposes a middle option it says has not been systematically
+    explored — a designated decision observer detecting biases in real time with a checklist — and reports
+    only encouraging results from informal, small-scale efforts.
+
+    '
+  confounders:
+  - assuming decision hygiene is a form of debiasing; the book keeps them distinct by what they assume
+  - reading the decision observer as an established technique — the book explicitly says it is not aware
+    of any systematic exploration of it
+  - believing hygiene is superior in general; the book says debiasing is useful where the error direction
+    genuinely is known
+  requires_application_canon013: false
+- qa_id: qa_nse_0020
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 23 'Defining the Scale in Performance Ratings', sections 'In Praise of Relative
+    Judgments' and 'Rank but Do Not Force'
+  question: 'The book endorses ranking and rejects forced ranking. Set out both halves of that position
+    precisely.
+
+    '
+  answer: 'The endorsement: rankings are less noisy than ratings, and they attack both components. You
+    are less likely to be inconsistent comparing two people than grading each separately, which reduces
+    pattern noise; and rankings eliminate level noise mechanically, because a lenient ranker and a tough
+    ranker use the same ranks even though their average ratings would differ. The rejection is of the
+    forcing, not the ranking — "the fatal flaw of forced ranking is not the ''ranking,'' but the ''forced.''"
+    Two specific objections. First, confusing relative with absolute performance: it is impossible for
+    98% of people to be in the top 20%, but it is perfectly possible for all of them to meet expectations
+    defined in advance in absolute terms, and the book notes you would not sneer at NASA if every astronaut
+    on a successful mission fully met expectations. Second, a mandated distribution assumes the population
+    distribution reproduces in each small group, which it does not — pick ten people from several thousand
+    and the chance that exactly two fall in the top 20% is about 30%. Forcing a differentiated distribution
+    on an undifferentiated reality increases error rather than reducing it.
+
+    '
+  answer_type: tradeoff
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own analysis, drawing on performance-appraisal research it reports. The related
+    finding that relative judgements are less noisy than absolute ones is demonstrated in the authors''
+    own punitive-damages study.
+
+    '
+  confounders:
+  - reading the critique of forced ranking as a critique of ranking, which is the common objection the
+    book explicitly sets aside
+  - assuming relative scales are always right; the book says they suit an organisation only if it actually
+    cares about relative performance, as with a fixed promotion quota
+  - believing rating inflation proves standards are too low — the book allows that most employees may
+    genuinely meet high expectations
+  requires_application_canon013: false
+- qa_id: qa_nse_0021
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 28 'Rules or Standards?', sections 'A Framework' and 'The Return of the Repressed'
+  question: 'On what two factors does the book''s choice between rules and standards turn, and what failure
+    mode does it warn about when an institution shifts to firm rules?
+
+    '
+  answer: 'The two factors are the costs of decisions and the costs of errors. Standards make every decision
+    expensive, because whoever applies them must do the work of giving open-ended terms content — deciding
+    what counts as "unreasonably fast" or "feasible". Rules make each decision cheap but make writing
+    the rule expensive, sometimes prohibitively; that is why legal systems and companies resort to words
+    like reasonable and prudent in the first place. On the error side there is no general winner: a perfect
+    rule produces no errors but rules are rarely perfect, while a standard applied by trustworthy agents
+    practising decision hygiene may produce few. The book collapses this into a question about trust:
+    "Principals need to impose rules when they have reason to distrust their agents." The failure mode
+    is that rules producing terrible results in particular cases get quietly ignored — jury nullification,
+    prosecutors declining to bring a third felony charge, employees disregarding rules that seem stupid.
+    Discretion is driven underground, "there will be noise, but no one will hear it." Hence the instruction
+    to monitor rules and treat reappearing noise as a clue that they need revising.
+
+    '
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own framework, illustrated with legal and corporate examples including a social
+    media company''s public standards against its non-public implementation rules. Analytical, not empirical.
+
+    '
+  confounders:
+  - assuming rules always reduce noise; the book notes fact-finding under a rule is itself judgement and
+    can be noisy
+  - treating the choice as binary — the book says they are a continuum and can be mixed, a rule constraining
+    the pool and a standard choosing within it
+  - 'overlooking the reason for standards that has nothing to do with quality: where a group is divided
+    or lacks information, a standard may be the only thing agreeable at all'
+  requires_application_canon013: false
+- qa_id: qa_nse_0022
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 17 'The Sources of Noise', section 'Sizing the Components'
+  question: 'Why does the book say that findings about professional variability drawn from ordinary operating
+    records understate the problem "by at least a factor of two"?
+
+    '
+  answer: 'Because operating records can only show level noise. Where cases are assigned to professionals
+    more or less at random, the differing averages — patent examiners with different propensities to grant,
+    case officers with different propensities to place children in foster care, judges with different
+    grant rates — become visible across enough cases without any special study. Pattern noise cannot appear
+    this way at all, because it is an interaction between a judge and a case, and recovering it requires
+    several judges to have judged the SAME case, which normal operations never arrange. Since the book''s
+    assembled evidence suggests pattern noise is generally the larger component, the component an organisation
+    can see is the smaller one, and any finding based on operating data alone understates the total. The
+    book is careful to hedge the sizing claim itself: it calls the conclusion tentative, says it required
+    "some triangulation", warns against overgeneralising from a limited selection of examples, and names
+    an exception — asylum-judge variability, which it expects is due more to level noise.
+
+    '
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument. The mix it rests on is split by origin: the 20%-level/80%-pattern
+    split at the insurance company and the punitive-damages pattern shares are the authors'' own studies;
+    the 208-judge sentencing analysis, the bail-judge analysis and the patent and child-protection findings
+    are third parties''.
+
+    '
+  confounders:
+  - assuming a random-assignment analysis of operating data is a substitute for an audit
+  - importing the factor of two as a general constant rather than as a consequence of a hedged sizing
+    claim
+  - 'forgetting the precondition: without approximately random assignment, differences in average outcome
+    may reflect the caseload rather than the person'
+  requires_application_canon013: false
+- qa_id: qa_nse_0023
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 11 'Objective Ignorance', sections 'Poor Judges and Barely Better Models' and 'The
+    Denial of Ignorance'
+  question: 'Distinguish objective ignorance from noise, and explain why the book insists that a small
+    improvement in predictive accuracy is nevertheless worth having.
+
+    '
+  answer: 'Objective ignorance is a property of the TASK — intractable uncertainty about what cannot be
+    known, plus imperfect information about what could be known but is not. It sets a ceiling on achievable
+    accuracy that no improvement in judges can lift. Noise is a property of a SET OF JUDGEMENTS and is
+    reducible below that ceiling. Confusing them produces the executive''s fatalism the book records:
+    if human judges achieve a correlation of .28 with performance and mechanical prediction achieves .44,
+    both are far from perfect, so why bother? The book''s answer is that the same executives routinely
+    make significant changes to capture smaller gains, and that "none of them would buy a lottery ticket
+    that had a 59% chance of winning if they could buy, for the same price, one with a 65% chance." It
+    then names why the price is not in fact the same: intuitive judgement comes with the internal signal,
+    an emotional reward that a mechanical process offering no claim of high validity cannot match. So
+    the resistance is not about the arithmetic. It is about giving up the feeling of knowing.
+
+    '
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The ceiling evidence is entirely third-party — Tetlock''s expert political judgement work,
+    the Fragile Families challenge, the personnel-selection reviews, the Mullainathan and Obermeyer heart-attack
+    model. The argument about why the improvement is refused is the authors''.
+
+    '
+  confounders:
+  - treating a low ceiling as a licence to tolerate noise; the ceiling caps accuracy, not agreement
+  - assuming objective ignorance is the same as the judge being poorly informed — the book includes what
+    cannot be known by anyone
+  - reading the resistance to formal methods as irrational; the book's account is that the internal signal
+    is a genuine reward being given up
+  requires_application_canon013: false
+- qa_id: qa_nse_0024
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 21 'Selection and Aggregation in Forecasting', section 'Where Selection and Aggregation
+    Work'
+  question: 'The book says the average of a noisy group can be more accurate than the average of a unanimous
+    one. Explain the reasoning, and what it implies about how to assemble a panel.
+
+    '
+  answer: 'Because the validity of pooled judgements rises faster when the individual judgements are uncorrelated
+    with each other than when they are redundant. The book draws the analogy with assembling a battery
+    of predictive tests using multiple regression: the first test chosen is the most valid, but the second
+    is not necessarily the next most valid — it is the one that adds the most predictive power by being
+    valid AND non-redundant. A personality test correlating .30 with performance but uncorrelated with
+    aptitude may beat a second aptitude test correlating .45. Applied to a panel: pick the best judge
+    first, then prefer a moderately valid judge who brings a new skill over a more valid one who duplicates
+    the first. Such a team will show relatively high pattern noise, because its members will differ case
+    by case — and that is the point, not a defect. The book''s example of complementarity is four witnesses
+    to a crime who saw it from four different angles: the requirement is that they are kept from influencing
+    one another, and the bonus is that they saw different things.
+
+    '
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument, built on standard regression reasoning. The empirical support for
+    selection and aggregation comes from the Good Judgment Project, third-party work.
+
+    '
+  confounders:
+  - concluding that pattern noise is desirable in general; the book's claim is narrowly about a panel
+    whose judgements will be aggregated, not about individuals judging alone
+  - assuming diversity substitutes for independence — the book states aggregation reduces noise only if
+    judgements are truly independent, regardless of diversity
+  - reading unanimity as a quality signal, which is what the book is arguing against
+  requires_application_canon013: false
+- qa_id: qa_nse_0025
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 7 'Occasion Noise', section 'One Is a Crowd'
+  question: 'You cannot get a second opinion from anyone else. What does the book say you can do instead,
+    how much of the benefit does it deliver, and what should you do with the two answers?
+
+    '
+  answer: 'Make the same judgement yourself a second time to create what the research calls the crowd
+    within. The book reports three variants and their sizes, all as fractions of the value of a genuine
+    second opinion. Simply answering again immediately gets you about one tenth. Letting time pass first
+    — Vul and Pashler used three weeks — raises it to about one third; this is the book''s rationale for
+    "sleep on it, and think again in the morning." Herzog and Hertwig''s dialectical bootstrapping, where
+    you assume your first estimate was off, list reasons it might have been, ask what those imply about
+    the direction of the error, and then make a deliberately different second estimate, gets about one
+    half immediately. What to do with the two answers: unless you have very strong reasons to weight one
+    more heavily, average them. The book''s larger point is that the first answer was never the sum of
+    your knowledge — it was one point drawn from an internal distribution of answers your mind could have
+    produced.
+
+    '
+  answer_type: comparison
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'Third-party research: Vul and Pashler on the crowd within, Herzog and Hertwig on dialectical
+    bootstrapping. The gains are modest and the book reports them as such.
+
+    '
+  confounders:
+  - assuming the inner crowd approaches the value of a real second opinion — at best it is about half,
+    and only with deliberate effort
+  - taking the second estimate as a correction of the first rather than averaging them
+  - expecting a benefit from an immediate re-answer without either delay or the dialectical instruction
+  requires_application_canon013: false
+- qa_id: qa_nse_0026
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 2 'A Noisy System', section 'The Illusion of Agreement'; Ch. 8 'How Groups Amplify
+    Noise', 'Cascades'
+  question: 'A review board of six people has signed off unanimously on every one of the last forty submissions,
+    with high stated confidence. A manager reads this as evidence that the review criteria are clear and
+    well applied. Using this book''s material only, give the two readings the manager has not considered
+    and say what would distinguish them.
+
+    '
+  answer: 'First reading: contagion rather than agreement. If the six express views in sequence and can
+    see each other, an informational or social-pressure cascade will produce unanimity regardless of what
+    the members privately think, and the book stresses that observers systematically underestimate how
+    much of an apparent consensus is people following predecessors. Group polarisation compounds it, since
+    discussion also produces greater confidence and unity. Second reading: the illusion of agreement.
+    If the board''s records simply never contained a mechanism capable of surfacing disagreement, the
+    absence of recorded disagreement is not evidence of its absence — the book''s insurance underwriters
+    worked alongside one another for years without discovering that they differed by a median of 55%.
+    What distinguishes them from real agreement is the same thing in both cases: collect each member''s
+    judgement independently and before any discussion, on the same submissions. If the pre-discussion
+    spread is small, the manager''s reading survives. If it is large, the unanimity was manufactured.
+    The book adds that unanimity should be treated with more suspicion than a split, not less.
+
+    '
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'Combines the illusion of agreement (the authors'' own insurance audit and executive polling)
+    with the cascade and polarisation material (their own jury studies plus third-party work by Salganik,
+    Macy and Muchnik). The remedy — record judgements before discussion — is the book''s own stated procedure.
+
+    '
+  confounders:
+  - treating high stated confidence as corroboration; the book's whole argument on the internal signal
+    is that confidence is not evidence of accuracy
+  - proposing to interview the board members about whether they really agreed — a self-report that the
+    illusion of agreement predicts will be reassuring and wrong
+  - concluding the board should be disbanded; the book's move is to measure first, and it says nothing
+    about whether this board is accurate
+  requires_application_canon013: true
+- qa_id: qa_nse_0027
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 20 'Sequencing Information in Forensic Science', section 'The Forensic Confirmation
+    Bias'
+  question: 'A quality process routes every item flagged as failing to a second reviewer for confirmation,
+    and the second reviewer is shown the first reviewer''s verdict and reasoning. Management treats agreement
+    between the two as strong evidence. Diagnose this using the book, and state the minimal change.
+
+    '
+  answer: 'The second review is not an independent observation, so the agreement carries almost none of
+    the weight management is putting on it. This is precisely the flaw the book identifies in the ACE-V
+    verification step in fingerprint work: because the verifier knows the first examiner concluded an
+    identification, "the verification step therefore does not provide the benefit normally expected from
+    the aggregation of independent judgments, because verifications are not, in fact, independent." The
+    book''s Mayfield case shows how far it can run — three FBI experts concurred on an erroneous identification,
+    the later investigation found that once the first examiner erred "the subsequent examinations were
+    tainted", and even an independent expert appointed for the defence agreed. Two further defects here.
+    Only failures are double-checked, so the process is structurally incapable of catching a wrongly-passed
+    item. And routing on the flag itself supplies the biasing context. The minimal change is the book''s:
+    the second reviewer should not be aware of the first judgement. Withholding the verdict and the reasoning
+    costs nothing and restores the independence the aggregation assumes.
+
+    '
+  answer_type: repair
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: true
+  support: 'Directly parallels the book''s forensic case: Dror and colleagues'' work on the forensic confirmation
+    bias, plus the official investigation of the Mayfield error. Third-party evidence throughout; the
+    procedural recommendation is the book''s own.
+
+    '
+  confounders:
+  - assuming a second opinion is valuable regardless of what the reviewer was told
+  - proposing to instruct the second reviewer to ignore the first verdict; the book's finding that context
+    changes what is perceived makes instruction an unreliable remedy
+  - treating this as a problem of reviewer independence in the organisational sense — seniority, reporting
+    lines — rather than of informational independence
+  requires_application_canon013: true
+- qa_id: qa_nse_0028
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 23 'Defining the Scale in Performance Ratings', section 'What's Next?'; Ch. 15 'Scales',
+    'Noisy Scales'
+  question: 'A team''s rubric asks reviewers to rate outputs from 1 to 10 on "overall quality", with 10
+    labelled "outstanding" and 1 "unacceptable". Reviewers disagree constantly. Using only this book,
+    name the three separate defects in that rubric and the repair for each.
+
+    '
+  answer: 'First, the scale is too fine for absolute judgement. People reliably discriminate about seven
+    categories, and a ten-point absolute scale manufactures disagreement that has nothing to do with the
+    outputs. Repair: fewer points, or better, convert to a comparison — sort into a small number of categories
+    and rank within each. Second, the anchors are ambiguous words. "Outstanding" and "unacceptable" are
+    interpreted differently by different people, so two reviewers who agree entirely about an output can
+    record different numbers; the book identifies scale ambiguity as a source of level noise, and its
+    punitive-damages study showed noise tracking scale specificity rather than content. Repair: anchor
+    the scale in concrete reference cases known to everyone — a case scale — installed by having reviewers
+    practise on shared examples and see how their ratings compare, which is frame-of-reference training.
+    Third, "overall quality" is a single aggregate judgement, so the halo effect has nothing to work against.
+    Repair: decompose into named dimensions and score each separately; the book is explicit that ranking
+    on an ill-defined aggregate would not reduce halo at all.
+
+    '
+  answer_type: repair
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'Combines three of the book''s strands: the limits of absolute judgement (third-party classic),
+    scale ambiguity (the authors'' own punitive-damages study), and structuring against the halo effect
+    (personnel-selection research the book reports). All remedies are the book''s own.
+
+    '
+  confounders:
+  - fixing only the wording of the anchors, which the book says behaviourally anchored scales alone do
+    not suffice to do
+  - adding more dimensions to the rubric — the book warns that overengineered questionnaires make halo
+    worse and exhaust raters
+  - mandating a distribution across the ten points, which is the forcing the book rejects
+  requires_application_canon013: true
+- qa_id: qa_nse_0029
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Appendix A 'How to Conduct a Noise Audit', sections 'Construction of Case Materials',
+    'Prelaunch Meeting with Executives', 'Administration of the Study'
+  question: 'You have been asked to run a noise audit on a team of eight reviewers and you expect the
+    result to be unwelcome. Following the book''s Appendix A, list the design choices that protect the
+    audit from being dismissed, and say what each one blocks.
+
+    '
+  answer: 'Build the cases with subject-matter experts from inside the team, so the most likely critics
+    are the authors — this blocks dismissal of the finding as an outsider''s artefact. Apply the book''s
+    acceptance test to the materials before running anything: if we find high disagreement on these simulated
+    cases, will people here accept that there is disagreement in real work? "The noise audit is only worth
+    carrying out if the answer is a clear yes." Hold a pre-launch meeting where leadership states, on
+    the record, what difference it expects between two randomly chosen reviewers and what difference would
+    be unacceptable, and document the answers — this blocks the result being reinterpreted afterwards
+    as normal. Obtain a commitment to accept the results whatever they are; without it, do not proceed.
+    Do not use the words "noise" or "noisy" to participants, especially about people — call it a decision-making
+    study. Guarantee individual anonymity, hiring an outside firm to anonymise if necessary. Include every
+    qualified reviewer, not a sample. Run everyone at the same time, physically separated and not communicating
+    — this blocks the contamination that would destroy the independence the measurement depends on. Administer
+    the reasoning questionnaire only after all cases are done.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: true
+  support: 'Appendix A, the book''s own procedural guide, generalised from the authors'' two audits —
+    federal sentencing and the insurance company. It is a practitioner''s protocol; the book offers no
+    comparison of audits run with and without these precautions.
+
+    '
+  confounders:
+  - sampling a few reviewers to save time, which the book rules out for credibility
+  - telling participants the study is about consistency, which invites them to manage their answers
+  - collecting the executives' expectations after the results are in, which is exactly what the pre-launch
+    documentation exists to prevent
+  requires_application_canon013: true
+- qa_id: qa_nse_0030
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 6 ''The Analysis of Noise'', ''Judges Differ: Pattern Noise''; Ch. 17 ''The Sources
+    of Noise'', ''Sizing the Components'''
+  question: 'An organisation discovers two of its five reviewers are systematically harsher than the rest
+    and equalises their averages through calibration training. It declares the consistency problem solved.
+    What has it actually fixed, what has it not touched, and what design would have revealed the rest?
+
+    '
+  answer: 'It has fixed level noise — the differences in reviewers'' across-the-board severity — which
+    is genuinely worth fixing and which the book says organisations can sometimes see without an audit,
+    provided cases are assigned roughly at random. What it has not touched is pattern noise: the variability
+    in how each reviewer responds to particular items over and above their general severity. Two reviewers
+    with identical averages can still rank the same set of items differently, because each has an idiosyncratic
+    sensitivity to particular features and combinations of features. On the book''s assembled evidence
+    that is generally the larger component, which is why it says that "attaining only this objective would
+    leave most of the problem of system noise without a solution." Equalising averages can even conceal
+    the residual by making the summary statistics look healthy. The design that would have revealed the
+    rest is a multi-case, multi-judge audit: several reviewers judging the SAME items, which is the only
+    way an interaction between a reviewer and an item becomes recoverable, and which ordinary operations
+    never arrange.
+
+    '
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: true
+  support: 'The book''s own decomposition. The sizing claim it rests on is explicitly hedged by the book
+    as tentative, from a limited selection of examples, with asylum adjudication named as an exception
+    where level noise probably dominates.
+
+    '
+  confounders:
+  - assuming equalised averages imply equalised judgements — the book's central point about the two components
+  - importing a specific ratio of pattern to level noise, which the book declines to generalise
+  - concluding that calibration training was worthless; the book says reducing level noise remains a worthwhile
+    objective
+  requires_application_canon013: true
+- qa_id: qa_nse_0031
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 10 ''Noiseless Rules'', section ''More Complexity: Toward Machine Learning''; Ch.
+    25, ''The Decision Meeting'''
+  question: 'A reviewer wants to overturn a rule-based recommendation. Apply the book''s test, and say
+    what should happen in each of the two possible outcomes.
+
+    '
+  answer: 'The test is a question about information, not about strength of feeling: does the reviewer
+    hold decisive information that the rule could not take into account? If yes, that is a broken leg
+    — the reference is Meehl''s example of a model predicting who will go to the cinema tonight and someone
+    who knows a particular person just broke a leg — and the override is right; the private fact is decisive
+    and outside the model''s inputs. If no, and the reviewer simply disagrees having seen the same predictors
+    the rule used, then what they are applying is a personal pattern, which the book says is "highly likely
+    to be invalid", and overriding "is likely to make the prediction less accurate." The reviewer should
+    refrain. The book''s own phrasing for the challenge is "You disagree with the model''s forecast. I
+    get it. But is there a broken leg here, or do you just dislike the prediction?" It keeps a place for
+    the override at the end of a structured process precisely so that unanticipated decisive factors can
+    still be caught — but the licence is the private information, not the disagreement.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The broken-leg principle is Meehl''s example, presented by the book as a decision rule. The
+    book supplies no evidence about how often overrides that pass the test actually improve outcomes.
+
+    '
+  confounders:
+  - treating a strongly-held professional intuition as sufficient grounds; the test asks specifically
+    for information the rule lacked
+  - concluding that overrides should be forbidden, which is not the book's position
+  - assuming a model that has been wrong before earns a general licence to override — the book notes people
+    abandon algorithms as soon as they see a mistake, and calls the expectation of perfection the problem
+  requires_application_canon013: true
+- qa_id: qa_nse_0032
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 24 'Structure in Hiring', section 'Improving Personnel Selection Through Structure'
+  question: 'A team already has a list of four criteria every reviewer is supposed to consider, and its
+    judgements are still noisy. Using the book''s three principles of structured judgement, explain why
+    the list alone was never going to be enough, and what has to be added.
+
+    '
+  answer: 'The list gives you decomposition and nothing else, and the book is explicit that decomposition
+    is one of three necessary parts. Its remark about interviewers applies directly: "most recruiters
+    conducting traditional interviews also know the four or five things they look for in a candidate.
+    The problem is that, in the conduct of the interview, they do not evaluate these elements separately.
+    Each assessment influences the others, which makes each assessment very noisy." What has to be added
+    is independence and delay. Independence: evidence for each criterion must be gathered and SCORED separately,
+    one at a time, with the score recorded before moving to the next — otherwise the halo effect keeps
+    the ratings within a narrow band and the four criteria are really one judgement wearing four labels.
+    Delay: the holistic verdict is not banned but is forbidden until every criterion has been scored,
+    so the final intuition is anchored on the recorded assessments rather than on a first impression.
+    The book adds a fourth thing worth doing first — investing in the problem definition, so that the
+    criteria are specific enough to score rather than a vague wish list.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s three principles — decomposition, independence, delayed holistic judgement — illustrated
+    with a technology company''s hiring process. The supporting validity figures for structured versus
+    unstructured interviews are from the personnel-selection literature, not the authors'' work.
+
+    '
+  confounders:
+  - adding more criteria, which the book warns makes the halo effect worse and exhausts raters
+  - banning intuition from the final decision — the book's prescription is to delay it, not exclude it
+  - assuming written criteria imply independent assessment; the book's point is precisely that they do
+    not
+  requires_application_canon013: true
+- qa_id: qa_nse_0033
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 25 'The Mediating Assessments Protocol', sections 'The Decision Meeting' and 'What
+    the Protocol Changes'
+  question: 'A committee runs the mediating assessments protocol and the resulting profile is uneven —
+    some assessments strongly positive, others weak. A member argues the analysis must be flawed because
+    a good option should look good on everything. How does the book answer this?
+
+    '
+  answer: 'The unevenness is the expected result of doing it correctly, not evidence of a flaw. The book
+    has its CEO character notice exactly this on reading the report: because the assessments were kept
+    independent of one another, they did not paint a simple, all-systems-go picture. "When excessive coherence
+    is kept in check, reality is not as coherent as most board presentations make it seem." A conventional
+    report looks uniform because each section is written in the light of the conclusion the team is already
+    reaching — which is the contamination the protocol exists to prevent. The book then treats the discrepancies
+    as the point: "These discrepancies between assessments will raise questions and trigger discussions.
+    That''s just what we need to have a good debate… The diverse results will not make the decision easier,
+    for sure—but they will make it better." The instruction to the analysts reinforces it: include all
+    relevant factual information in each chapter, and "if there is information that seems inconsistent
+    or even contradictory with the main rating, don''t sweep anything under the rug."
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s own protocol, illustrated with a stylised composite of real cases rather than
+    a reported study. No measured effect on decision quality is offered.
+
+    '
+  confounders:
+  - treating a coherent, uniformly favourable analysis as a sign of quality — the book treats it as a
+    symptom of contamination
+  - resolving the unevenness by averaging the assessment ratings, which the book's protocol explicitly
+    declines to do at the final step
+  - assuming the protocol is meant to make decisions easier or faster; the book claims better, not easier
+  requires_application_canon013: true
+- qa_id: qa_nse_0034
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 14 'The Matching Operation', 'The Bias of Matching Predictions'; Appendix C 'Correcting
+    Predictions'
+  question: 'A reviewer sees an exceptionally strong first submission from a new supplier and predicts
+    that supplier will be in the top tier within a year. Apply the book''s four-step correction and say
+    what determines how far the prediction should move.
+
+    '
+  answer: 'Step one: keep the intuitive guess. It is not worthless — it is the prediction that would be
+    correct if the evidence were perfectly predictive, so write it down. Step two: find the outside-view
+    value — what you would predict knowing nothing about this supplier at all, which is the average outcome
+    for the reference class of new suppliers. Step three, the hard one: estimate the diagnostic value
+    of the evidence you actually have, expressed as a correlation with the outcome. The book warns this
+    will almost always be a back-of-the-envelope estimate, and supplies calibration: correlations above
+    .50 are very rare in the social sciences and many meaningful ones sit around .20. Step four: move
+    from the outside-view value toward your intuitive guess by that proportion. So what determines the
+    distance is solely the predictive value of the evidence — one strong submission, not the strength
+    of the impression it made. The book''s parallel case is an interview so impressive it suggests $1m
+    of first-year sales against a $500k mean; at a generous r = .40 the corrected estimate is $700k. It
+    also warns what you are accepting: corrected predictions never bet on outliers, so in hindsight they
+    will produce some highly visible misses.
+
+    '
+  answer_type: application
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'Appendix C, the book''s own procedure. The correlation benchmarks come from reviews of the
+    social science literature that the book reports.
+
+    '
+  confounders:
+  - discarding the intuitive guess entirely, which the book says would waste real information
+  - adjusting by how confident the reviewer feels rather than by the diagnostic value of the evidence
+  - assuming that because corrected predictions sometimes miss spectacularly they are worse — the book
+    argues the opposite error, predicting outliers stay outliers, is far more frequent
+  requires_application_canon013: true
+- qa_id: qa_nse_0035
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 3 'Singular Decisions', sections 'Noise in Singular Decisions' and 'Controlling
+    Noise in Singular Decisions'
+  question: 'A team faces a one-off decision with no precedent and argues that noise-reduction procedures
+    are irrelevant because there is nothing to be consistent with. Give the book''s reply, and be honest
+    about what kind of argument it is.
+
+    '
+  answer: 'The book''s reply is that unmeasurability is a property of the observation, not of the process.
+    Its image is the shooting range run in reverse: watching only the first shooter tells you nothing
+    about the team''s scatter, but the unsteady hand that produces the scatter is present in that first
+    shot too. Every factor that produces disagreement among judges of recurrent cases is still operating
+    — a different but equally competent team, with different backgrounds, or the same team in a different
+    mood, or with the facts presented in a slightly different order, could plausibly have concluded otherwise.
+    So "we cannot measure noise in a singular decision, but if we think counterfactually, we know for
+    sure that noise is there," and the practical rule is that "a singular decision is a recurrent decision
+    that happens only once" — the same hygiene applies. Honestly: this is an argument from counterfactual
+    reasoning, not a measurement, and the book says so. Nothing in it establishes HOW MUCH noise a singular
+    decision carries, and the book concedes the prescription is more counterintuitive than it looks, since
+    the instinct with a one-of-a-kind decision is to treat it as one of a kind.
+
+    '
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s own argument. Its COVID-19 cross-country illustration is offered as a demonstration
+    of the counterfactual — variation that would have been invisible had the epidemic struck one country
+    — not as evidence about any particular decision.
+
+    '
+  confounders:
+  - accepting the objection because noise is defined as variability and there is no variability to see
+  - assuming the book claims to have measured noise in singular decisions
+  - treating singular and recurrent as a clean category distinction; the book says there is a continuum,
+    with a fourth house purchase shading into a recurrent decision
+  requires_application_canon013: true
+- qa_id: qa_nse_0036
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 4 ''Matters of Judgment'', section ''How Judgment Is Evaluated: The Outcome and
+    the Process'''
+  question: 'A reviewer''s assessment turned out to be wrong on one item, and a colleague''s lucky guess
+    turned out right. Management wants to act on this. Apply the book''s position on evaluating judgement.
+
+    '
+  answer: 'The book''s position is that the two ways of evaluating a judgement — against its outcome,
+    and by the quality of the process — can reach different conclusions in any single case, and that the
+    process is the right target. Its own illustration is exactly this pair: "A skilled and careful forecaster
+    using the best possible tools and techniques will often miss the correct number… Meanwhile, in a single
+    quarter, a dart-throwing chimpanzee will sometimes be right." One outcome does not reveal whether
+    the process that produced it was sound. The book gives two ways to assess the process instead: how
+    it performs across an ensemble of similar cases, and whether it conforms to the principles of logic
+    and probability. It also supplies a specific test to apply to whatever explanation management reaches
+    for: a bias counts as an explanation only if it could have been predicted in advance or detected in
+    real time, or if it yields a prediction about future cases. "In that case they failed, so they must
+    have been overconfident" is, in the book''s words, completely vacuous — it feels like understanding
+    and predicts nothing. The book does concede this is not standard practice; professionals are usually
+    evaluated against outcomes.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s own argument on process versus outcome, plus its test for what counts as a bias
+    explanation, from the chapter on the sources of noise.
+
+    '
+  confounders:
+  - concluding outcomes should be ignored entirely; the book's rule is about a SINGLE case, and it endorses
+    evaluating a process across an ensemble of outcomes
+  - accepting a post-hoc bias label as an explanation of the miss
+  - treating the lucky right answer as evidence for the colleague's method
+  requires_application_canon013: true
+- qa_id: qa_nse_0037
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 21 'Selection and Aggregation in Forecasting', section 'Improving Forecasts'
+  question: 'You want to halve the disagreement in a scored set by averaging more independent assessors.
+    How many do you need, what exactly does that buy, and what does it not touch?
+
+    '
+  answer: 'Four. Averaging divides noise by the square root of the number of judgements averaged, so four
+    judgements halve it; a hundred cut it by 90% and four hundred by 95%, essentially eliminating it.
+    What it buys is a reduction in the noise term only. What it does not touch is bias: the book states
+    plainly that "averaging does nothing to reduce bias", so its effect on total error depends on the
+    proportions of bias and noise present, and this is why the wisdom of crowds works best where the judgements
+    are independent and therefore less likely to contain shared errors. Two practical qualifications the
+    book adds. The arithmetic assumes genuine independence — assessors who have seen each other''s answers
+    are not supplying the sample size the formula assumes. And returns diminish in practice sooner than
+    the arithmetic suggests: it reports a company that cut its interviews from twenty-five to four on
+    finding that additional interviews added almost no predictive validity beyond the first four.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: testing_method
+  requires_application: false
+  support: 'The square-root relation is standard statistics, stated by the book. The diminishing-returns
+    example is a company''s own reported review, and the wisdom-of-crowds material is third-party.
+
+    '
+  confounders:
+  - expecting averaging to improve accuracy when all the assessors share the same misconception — it will
+    produce a precise, unanimous wrong answer
+  - counting non-independent assessments toward the four
+  - assuming more assessors is always proportionally better; the book records real diminishing returns
+    and a cost
+  requires_application_canon013: true
+- qa_id: qa_nse_0038
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 7 'Occasion Noise', sections 'Measuring Occasion Noise' and 'Sizing Occasion Noise'
+  question: 'You want to measure how much a single reviewer''s own judgements vary across occasions. Design
+    the test according to the book, and name the trap that makes the naive version useless.
+
+    '
+  answer: 'The trap is recognition. When people form a considered opinion they associate it with the reasons
+    that justify it, and if presented with the same problem again and recognising it, they will reproduce
+    the earlier answer both to save effort and to remain consistent. So a within-session retest, or any
+    retest on memorable material, systematically understates occasion noise; the book notes that reviews
+    of studies where experts judged twice in the same session unsurprisingly found they agreed with themselves.
+    The design must therefore make the repeat unrecognisable. The book''s examples all do this: wine judges
+    in a blind re-tasting scored only 18% of the same wines identically; fingerprint examiners were shown
+    pairs they had already seen but weeks or months later and without being told; software experts were
+    re-asked about tasks they had already estimated, again after an interval and without being told. Some
+    examiners consented in advance to being tested unannounced at any point over five years, and the exercise
+    was embedded in routine casework so they did not know they were being studied. The book also names
+    an indirect route where a large sample of past decisions exists: check statistically whether irrelevant
+    occasion-specific factors — time of day, weather, the sequence of preceding cases — moved the decisions.
+
+    '
+  answer_type: application
+  difficulty: hard
+  knowledge_type: testing_method
+  requires_application: false
+  support: 'Third-party studies throughout — the US wine competition re-tasting, Dror and colleagues on
+    fingerprints, software estimation research, and the econometric analyses of asylum sequencing and
+    opioid prescribing. The authors report no occasion-noise measurement of their own.
+
+    '
+  confounders:
+  - re-testing in the same session, or on material distinctive enough to be recognised
+  - telling participants the second pass is a consistency check
+  - expecting occasion noise to be the dominant component; the book reports it as the smallest wherever
+    the share could be measured
+  requires_application_canon013: true
+- qa_id: qa_nse_0039
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 13 'Heuristics, Biases, and Noise', 'Substitution'; Ch. 15 'Scales', 'The Outrage
+    Hypothesis'
+  question: 'Reviewers are asked "how likely is this to succeed with the audience?" and their answers
+    correlate almost perfectly with how much they personally liked the item. Diagnose this with the book,
+    and say what evidence would confirm the diagnosis.
+
+    '
+  answer: 'The diagnosis is substitution: an easier question is being answered in place of the hard one,
+    without the reviewers noticing. The book''s structurally identical case is the outrage hypothesis
+    — asked how much a defendant should be punished, ordinary people answer the easy question "how angry
+    am I?", and across twenty-eight scenarios the mean outrage ratings correlated 0.98 with mean punitive
+    intent. The consequence is not merely relabelling: substitution guarantees error, because the evidence
+    gets weights appropriate to the substituted question rather than the one asked. The confirming evidence
+    is a misweighting test, which is how the book confirms psychological bias where no true value exists
+    — show that a factor which SHOULD matter to the real question does not move the answers, or that one
+    which should not does. The book ran exactly this: harm suffered barely moved outrage ratings (4.24
+    for severe versus 4.19 for mild) but did move punitive intent (4.93 versus 4.65) and doubled the median
+    award, revealing which question each scale was really answering. The analogue here is to vary something
+    that should affect audience outcome but not personal taste, and see whether the answers move.
+
+    '
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The authors'' own punitive-damages study for the outrage result and the harm manipulation;
+    the general substitution mechanism is from the heuristics-and-biases programme the book reviews. The
+    0.98 figure is between MEAN ratings of scenarios, not between individuals.
+
+    '
+  confounders:
+  - reading the near-perfect correlation as evidence that liking is a valid predictor of audience success
+  - treating substitution as dishonesty — the book stresses the participants were unaware they were assigning
+    weights at all
+  - concluding that the reviewers agree; the outrage study showed agreement on averages coexisting with
+    very large case-by-case disagreement
+  requires_application_canon013: true
+- qa_id: qa_nse_0040
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 19 'Debiasing and Decision Hygiene', section 'The Decision Observer'; Appendix B
+    'A Checklist for a Decision Observer'
+  question: 'Set up a decision observer for a recurring review meeting. What does the book say the role
+    requires, what tool does it use, and what does the book warn will make it fail?
+
+    '
+  answer: 'The role is someone who watches the group in real time and uses a checklist to diagnose whether
+    familiar biases are pushing the judgement away from the best available one — as opposed to correcting
+    a bias afterwards or preventing a specific one beforehand. It rests on the observation that people
+    recognise biases more easily in others than in themselves, the bias blind spot. The tool is a bias
+    checklist, which the book says should be customised rather than generic, and should focus on the most
+    frequent and consequential biases rather than attempting to be exhaustive; its Appendix B example
+    follows the chronology of a discussion, asking about substitution, whether the outside view was used,
+    diversity of views, prejudgments and premature closure, availability, anchoring, nonregressive prediction,
+    and the planning fallacy. The failures the book warns about: it does not work if the ultimate decision
+    makers are not committed to fighting biases, and the decision makers must be the ones who initiate
+    the role and support it. "We certainly do not recommend that you make yourself a self-appointed decision
+    observer. You will neither win friends nor influence people." It also names a structural cost of one
+    variant — a bias-buster inside the team becomes a devil''s advocate and "may quickly run out of political
+    capital."
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own proposal, which it explicitly flags as not systematically explored: it reports
+    encouraging results only from informal, small-scale efforts and says it is not aware of any study
+    of the approach or of the trade-offs among ways to deploy it.
+
+    '
+  confounders:
+  - treating the decision observer as an established, evidenced technique
+  - assuming the observer should be a neutral outsider by default — the book lists three options with
+    different trade-offs, including a supervisor and an outside facilitator
+  - confusing this with decision hygiene; the book places the observer under debiasing, because it targets
+    identifiable directional errors
+  requires_application_canon013: true
+- qa_id: qa_nse_0041
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 25 'The Mediating Assessments Protocol', section 'The Decision Meeting'
+  question: 'Describe estimate-talk-estimate as the book''s CEO character runs it, and explain which specific
+    problem each of the three phases addresses.
+
+    '
+  answer: 'Phase one: after a brief factual summary of one assessment, every participant records their
+    own rating privately — in the book''s staging, on a phone app — and the distribution is projected
+    without identifying anyone. "This is not a vote. We are just taking the temperature of the room on
+    each topic." This addresses cascades and social influence: by capturing each independent opinion BEFORE
+    anyone speaks, it removes the possibility that early speakers set the room, and it makes the true
+    extent of disagreement visible instead of letting it be talked away. Phase two: discussion, concentrated
+    where the first round revealed opposing views rather than where it revealed consensus, with both sides
+    required to speak and to argue with facts, nuance and humility. This addresses the loss of private
+    information that a cascade causes — the reasons people hold different views get shared. Phase three:
+    a second private rating, whose average is the consensus. This captures whatever was genuinely learned
+    in the discussion while keeping the aggregation mechanical rather than letting the loudest voice or
+    a drift toward apparent unanimity settle it. The whole sequence is repeated per assessment, before
+    any discussion of the overall decision.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own protocol, illustrated with a stylised composite case. Estimate-talk-estimate
+    is described as a single-meeting form of the Delphi method, which is third-party.
+
+    '
+  confounders:
+  - treating the first round as a vote or a decision rather than as a measurement of spread
+  - spending equal time on assessments that produced immediate consensus
+  - letting the discussion produce the conclusion directly, without the second independent round
+  requires_application_canon013: true
+- qa_id: qa_nse_0042
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 22 'Guidelines in Medicine', the Apgar discussion
+  question: 'Using the book''s account of why the Apgar score reduces noise, list the three things a guideline
+    does, and say which of them a checklist of criteria alone would NOT give you.
+
+    '
+  answer: 'Three things. It focuses the judge on a fixed set of predictors known to matter, so attention
+    cannot wander to unimportant cues or skip important ones depending on the day or the mood. It specifies
+    how each cue is to be evaluated, which makes each sub-judgement simple enough that "practitioners
+    with even a modest degree of training are unlikely to disagree a great deal" — in the Apgar score
+    only heart rate is strictly numerical and the other four components still involve judgement, but each
+    is easy. And it specifies how to combine the components mechanically, removing the judge''s discretion
+    over the weights, which human clinicians would otherwise differ on. A bare checklist of criteria gives
+    you only the first. It does not tell a reviewer how to assess each criterion, so each sub-judgement
+    stays as noisy as it was; and it does not fix the weights, so two reviewers agreeing on every component
+    can still disagree on the conclusion. The book''s summary of the mechanism is exactly these three:
+    "A focus on the relevant predictors, simplification of the predictive model, and mechanical aggregation—all
+    of these reduce noise." It also stresses what a guideline is not: unlike a rule, it does not eliminate
+    judgement, and disagreement on each component remains possible.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'Third-party medical instruments — Apgar, Centor, BI-RADS — reported by the book, with the
+    mechanism supplied by the authors'' own analysis in terms of simple prediction models.
+
+    '
+  confounders:
+  - assuming a guideline removes judgement; the book insists it decomposes it instead
+  - believing the naming of criteria is the load-bearing part, when the book's mechanism puts equal weight
+    on the assessment rules and the fixed weights
+  - expecting the same benefit where the criteria are open-ended — the book's psychiatric case is the
+    counter-example
+  requires_application_canon013: true
+- qa_id: qa_nse_0043
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 2 'A Noisy System', section 'Unwanted Variability Versus Wanted Diversity'
+  question: 'Where does the concept of noise NOT apply, on the book''s own account, and what test separates
+    the cases?
+
+    '
+  answer: 'Two places. Matters of preference or taste: ten critics rating a film, ten tasters rating a
+    wine, ten readers on a novel — the book says diversity of tastes is welcome and entirely expected,
+    and "no one would want to live in a world in which everyone has exactly the same likes and dislikes."
+    And competitive settings, where the best judgement will be rewarded: several teams attacking a problem
+    from different angles, several traders pricing a stock, the analyst who calls a recession no one else
+    saw. There, variation is the raw material selection works on, and suppressing it would destroy the
+    mechanism. The test is whether the variation is subsequently SELECTED ON. In a competitive setting
+    variation is only the first phase; a second phase pits the results against one another and the best
+    wins. In a system there is no second phase — one judgement is made on the organisation''s behalf and
+    acted on, so the variation is never selected, only suffered. Hence "System noise is a problem of systems,
+    which are organisations, not markets." The book adds that the boundary is crossable in one direction:
+    a producer''s personal liking is welcome diversity as taste and a major mistake if it stands in for
+    a professional judgement about an audience.
+
+    '
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own scoping argument. It gives clear cases at each end and explicitly leaves the
+    middle to judgement, supplying no test for deciding which side a given task falls on.
+
+    '
+  confounders:
+  - assuming any disagreement among reviewers is noise
+  - reading 'markets versus organisations' as being about the sector rather than about whether a second
+    selection phase exists
+  - expecting the book to supply a decision procedure for the middle of the range, which it does not
+  requires_application_canon013: false
+- qa_id: qa_nse_0044
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 5 'Measuring Error', sections 'The Error Equations' and 'The Cost of Noise'
+  question: 'The book''s error equation says bias and noise contribute equally to overall error. Give
+    the exact class of judgements it applies to, and the counter-cases the book uses to mark the boundary.
+
+    '
+  answer: 'It applies to purely predictive judgements — forecasts and estimates that aim to approach a
+    true value — scored by mean squared error. MSE is the two-hundred-year-old standard for scientific
+    measurement; it yields the sample mean as the best estimate, treats positive and negative errors equally,
+    and penalises large errors disproportionately. The book states the boundary itself: "The error equation
+    does not apply to evaluative judgments." Its counter-cases show why. A lift''s maximum load: underestimating
+    is costly, overestimating is catastrophic, and squared error is beside the point. When to leave for
+    a train: being one minute late and five minutes late cost you the same thing, the train. Insurance
+    pricing, where the costs of the two directions of error are different in kind. In all of these the
+    error costs are asymmetric and there is no reason to think they are proportional to the square of
+    the deviation. The book also concedes that MSE conflicts with common intuition — people care about
+    near-misses and are insensitive to the difference between two large errors, which it calls "almost
+    the mirror image of what they should be".
+
+    '
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: 'The book''s own statement of its scope. The worked illustration in which halving bias and
+    halving noise produce identical reductions is a constructed, deliberately smooth example, not a measurement.
+
+    '
+  confounders:
+  - applying the equal-contribution result to acceptance or grading decisions, which are evaluative
+  - reading MSE as a description of what error actually costs; the book says it does not reflect the real,
+    often asymmetric costs of judgement errors
+  - assuming that because MSE is standard it is uncontroversial — the book records its clash with intuition
+  requires_application_canon013: false
+- qa_id: qa_nse_0045
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 5 'Measuring Error', 'The Error Equations'; Ch. 26 'The Costs of Noise Reduction'
+  question: 'The book says reducing noise is worthwhile regardless of what you know about bias. State
+    the argument, then state the three qualifications the book itself attaches to it.
+
+    '
+  answer: 'The argument: because bias and noise are independent terms entering the error equation with
+    equal weight, you do not need to know how biased a set of predictive judgements is before deciding
+    whether reducing their noise is worth it. Waiting to discover the bias first — the intuitively sensible
+    course — is wrong. The book adds a presentational warning: halving noise while bias stands makes the
+    judgements more uniformly wrong and makes the bias impossible to miss, which can look like deterioration
+    and is not, since the relevant measure of bias is the average error, not the imbalance of positive
+    and negative errors. The three qualifications. First, the priority does shift: "reducing noise would
+    be less of a priority if bias were much larger than noise." Second, noise-reduction procedures help
+    only "as long as they do not increase bias to a larger extent" — and the book''s own later chapters
+    give cases where a blunt instrument does exactly that. Third, this is a mathematical argument about
+    a scoring rule, inheriting the equation''s boundary: it does not extend to evaluative judgements,
+    and the book presents no study showing that organisations which reduced noise first did better.
+
+    '
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: 'The book''s own argument from the error equation, with the qualifications stated in its own
+    words. The illustration is constructed rather than measured.
+
+    '
+  confounders:
+  - reading 'always useful' without the condition that the procedure must not increase bias more
+  - concluding that a set of judgements that became more uniformly wrong has got worse
+  - extending the argument to evaluative judgements, which the equation does not cover
+  requires_application_canon013: false
+- qa_id: qa_nse_0046
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Part VI 'Optimal Noise', introduction listing the seven objections
+  question: 'The book raises seven objections to noise reduction against itself. List them, and state
+    the single structural reply it gives to nearly all of them.
+
+    '
+  answer: 'One: reducing noise can be expensive and might not be worth the trouble, or even be feasible.
+    Two: the strategies used can introduce errors of their own, including systematic bias. Three: dignity
+    — people want an individualised hearing and a real person with the power to act, and noise may be
+    its price. Four: noise leaves room for moral and political values to evolve, where a noise-free system
+    might freeze existing values. Five: clear rules that remove noise create clear edges that people can
+    game, so a little vagueness may prevent wrongdoing. Six: unpredictable penalties may deter better
+    than certain ones. Seven: people do not want to be treated as cogs, and some strategies squelch creativity
+    and morale. The structural reply is that these are objections to particular INSTRUMENTS — nearly always
+    firm rules — and not to noise reduction as such: "whether an objection is convincing depends on the
+    particular noise-reduction strategy to which it is meant to apply. You might, for example, object
+    to rigid guidelines while also agreeing that aggregation of independent judgments is a good idea."
+    Hence the reply to a crude instrument is a better instrument, not tolerated noise. The book states
+    it presents the objections as sympathetically as it can and by no means endorses them as reasons to
+    reject the goal.
+
+    '
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own enumeration and its own stated stance. Chapters 26 to 28 work through the
+    seven.
+
+    '
+  confounders:
+  - reading the catalogue as concessions the book accepts
+  - assuming an objection that defeats one strategy defeats the programme
+  - missing that the book concedes real force to some of them, particularly cost and demoralisation
+  requires_application_canon013: false
+- qa_id: qa_nse_0047
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 26 'The Costs of Noise Reduction', opening section and 'Less Noise, More Mistakes?'
+  question: 'Give the book''s own worked example of a case where noise reduction may not be worth doing,
+    and then state the condition under which it says the cost objection stops being a good reason.
+
+    '
+  answer: 'The example is a high school teacher grading twenty-five essays a week at fifteen minutes each.
+    The grading is probably noisy and therefore unfair, and several remedies are available: a colleague
+    reading every paper too, more time per essay, structuring the assessment, reading each essay more
+    than once and in different orders, a detailed grading guideline used as a checklist, or grading at
+    the same time of day to reduce occasion noise. The book''s judgement is that if the teacher''s own
+    judgements are pretty accurate and not terribly noisy, it might be sensible to do none of these —
+    it might not be worth the bother. It then makes the stakes explicit: the same limit should be different
+    when the essays are ninth-graders'' or senior theses with university admission on the line. The condition
+    under which the objection fails is measurement. The comparison of benefits with costs "is one reason
+    noise audits are so important. In many situations, the audits reveal that noise is producing outrageous
+    levels of unfairness, very high costs, or both. If so, the cost of noise reduction is hardly a good
+    reason not to make the effort." The book''s sharper formulation elsewhere: without an audit, invoking
+    the difficulty of reducing noise "is nothing but an excuse not to measure it."
+
+    '
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: effectiveness
+  requires_application: false
+  support: 'The book''s own worked example and its own concession that "the belief that it is too expensive
+    to reduce noise is not always wrong". It calls for a disciplined analysis without specifying one.
+
+    '
+  confounders:
+  - treating the book as claiming noise should always be reduced
+  - reading the cost objection as settled by the stakes alone, without measuring the noise
+  - assuming the book supplies a cost-benefit procedure; it does not
+  requires_application_canon013: false
+- qa_id: qa_nse_0048
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 26 'The Costs of Noise Reduction', section 'Noiseless, Biased Algorithms'
+  question: 'The book argues that consistency can make bias worse, not better. Reconstruct that argument,
+    and give the one structural advantage it claims for a rule-based process over human judges.
+
+    '
+  answer: 'A noise-free process applies the same treatment every time. If that treatment embeds a directional
+    error, the error is applied every time too — so "since they eliminate noise, they could be more reliably
+    biased than human judges." The book names two routes by which this happens without anyone intending
+    it: predictors that correlate with a protected characteristic even when the characteristic itself
+    is not used, such as height and weight with gender or location with race; and training data that already
+    encodes the problem, as with predictive policing built on records reflecting the overpolicing of particular
+    neighbourhoods, or a hiring model trained on past promotion decisions, which will replicate every
+    bias in them. The parallel case for a simple rule is a content filter removing all posts containing
+    certain words: less noisy, and taking down many posts that should stay. The one structural advantage
+    claimed is auditability — not fairness. "The fact that this question can be raised at all, however,
+    is a distinct advantage." A rule can be inspected for inadmissible inputs and tested for objectionable
+    discrimination; "it is much harder to subject individual human beings, whose judgments are often opaque,
+    to the same kind of scrutiny." The book is careful to say algorithms CAN outperform humans on accuracy
+    and discrimination together, not that they will.
+
+    '
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own argument. The favourable results it cites — a bail algorithm jailing 41% fewer
+    people of colour at constant crime rate, a résumé screener selecting a more diverse pool — are third-party
+    studies, and it records the opposing literature without adjudicating it.
+
+    '
+  confounders:
+  - concluding the book opposes rules or algorithms; its stated conclusion is that a crude instrument
+    calls for a better one
+  - assuming that excluding a protected characteristic from the inputs prevents discrimination
+  - reading the auditability point as a claim that rule-based processes are fairer
+  requires_application_canon013: false
+- qa_id: qa_nse_0049
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 27 'Dignity', opening section and 'Creativity, Morale, and Fresh Ideas'
+  question: 'Two of the book''s objections concern people rather than accuracy: dignity and morale. State
+    each, and state precisely how far the book concedes them.
+
+    '
+  answer: 'Dignity: people want to be treated as individuals, to have a real human being consider their
+    particular circumstances with power to act, and they may regard noise as a price worth paying for
+    it. The book treats this as a genuine value with deep moral foundations in politics, law, theology
+    and literature, and quotes Portia on mercy. Morale: people in positions of authority do not like having
+    discretion taken away, may feel diminished, constrained and even humiliated, and a noisy system may
+    be good for morale — not because it is noisy but because it lets people decide as they see fit; it
+    may also leave room for new ideas. The concessions are precise and limited. On dignity: "We are not
+    saying that the interest in individualized treatment does not matter. But there is a high price to
+    pay if such treatment leads to all sorts of terrible consequences, including palpable unfairness."
+    On morale: "Demoralization is itself a cost and leads to other costs, such as poor performance." In
+    both cases the book''s escape is the same — most strategies do not run into the objection at all.
+    Three decision makers rather than one still give an individualised hearing; guidelines leave discretion;
+    structuring complex judgements leaves room for fresh ideas. Only rigid rules bite. Its closing position
+    is that "most of the efforts to defend noise aren''t convincing."
+
+    '
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own objections chapter. The dignity argument is legal, literary and philosophical;
+    no evidence is offered about how much people actually value individualised hearings or what they would
+    trade for them.
+
+    '
+  confounders:
+  - reading the concessions as acceptance of the objections
+  - assuming the objections apply to all noise-reduction strategies equally
+  - missing that the book grants the morale objection real force while still rejecting it as a defence
+    of noise
+  requires_application_canon013: false
+- qa_id: qa_nse_0050
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 22 'Guidelines in Medicine', section 'The Depressing Case of Psychiatry'
+  question: 'Guidelines are one of the book''s noise-reduction strategies, and psychiatry is its own worst
+    case for them. What does that case show about the limits of the strategy?
+
+    '
+  answer: 'It shows that a guideline reduces noise only to the extent that its components can actually
+    be assessed consistently, because the mechanism is decomposition into easier sub-judgements. Psychiatry
+    has pursued noise reduction since at least the 1940s; early studies found agreement between two psychiatrists
+    on the kind of illness present around 50 to 57% of the time. Successive revisions of the diagnostic
+    manual introduced explicit criteria and did help, but the book reports that noise remained high, that
+    field trials for the 2013 edition found "minimal agreement" — highly trained specialists agreeing
+    that a patient has depression between 4 and 15% of the time — and that on some field trials that edition
+    made things worse, with some diagnoses "so unreliable as to appear useless in clinical practice."
+    The book''s explanation is exactly the mechanism''s precondition: "the diagnostic criteria of some
+    disorders are still vague and difficult to operationalize… to the extent that such criteria are relatively
+    open-ended, noise remains likely." It reports the proposed remedies — clarifying criteria, reference
+    definitions of symptoms and severity, structured interviews — and declines to predict whether they
+    will work. Notably, it also concedes that the explanations for the noise are themselves contested.
+
+    '
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'Third-party psychiatric reliability research from 1964 onwards, including the field trials,
+    reported by the book. It presents this as a genuine negative case rather than explaining it away,
+    while maintaining that guidelines have been highly successful in medicine generally.
+
+    '
+  confounders:
+  - generalising from psychiatry to guidelines in general, which the book explicitly refuses to do
+  - assuming more detailed criteria always reduce noise; one revision appears to have increased it
+  - reading the failure as being about psychiatrists rather than about the operationalisability of the
+    criteria
+  requires_application_canon013: false
+- qa_id: qa_nse_0051
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: 'Ch. 16 ''Patterns'', section ''Pattern Noise: Stable or Transient'''
+  question: 'The book concedes that pattern noise is not always error. Give the two cases it names, and
+    say what would be needed to tell them apart.
+
+    '
+  answer: 'First, a judge who is genuinely more accurate than the others. "Imagine a single forecaster
+    with crystal-ball powers that no one knows about (including herself). Her accuracy would make her
+    deviate in many cases from the average forecast. In the absence of outcome data, these deviations
+    would be regarded as pattern errors." The book''s blunt statement: "When judgments are unverifiable,
+    superior accuracy will look like pattern noise." Second, systematic differences in what people are
+    good at. Where a coach, a physician and a psychologist each evaluate the same athletes on the aspects
+    they know best, "pattern noise is better described as variability in what people know than as error."
+    What would tell them apart is outcome data — the ability to check who was right — which is precisely
+    what these settings lack. The book adds a consequence for the second case: variability in skills is
+    simply noise when professionals decide alone, but becomes a potential asset when judgements are aggregated
+    across complementary specialists, because they cover different aspects and complement one another.
+    The defect and the asset are the same measurement; what changes is whether the judgements are pooled.
+
+    '
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own concession, stated in its own words in the chapter that develops pattern noise.
+
+    '
+  confounders:
+  - treating all pattern noise as error, which is the book's usual but not universal framing
+  - assuming the two cases can be distinguished by examining the reasoning rather than the outcomes
+  - concluding that complementary skills make pattern noise harmless; the book says this holds only once
+    the judgements are aggregated
+  requires_application_canon013: false
+- qa_id: qa_nse_0052
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Review and Conclusion 'Taking Noise Seriously', section 'How to Reduce Noise (and Bias,
+    Too)', first principle
+  question: '"The goal of judgment is accuracy, not individual expression." State what this principle
+    rests on, and the boundary the book draws around it.
+
+    '
+  answer: 'It rests on the book''s finding about where noise comes from: stable pattern noise is the largest
+    component of system noise, and it is a direct consequence of individual differences — judgement personalities
+    that lead different people to form different views of the same problem. So the uniqueness that makes
+    a person interesting is the same thing that makes a judgement system noisy, and the book accepts this
+    conclusion "will be as unpopular as it is inescapable: judgment is not the place to express your individuality."
+    Its operational form is perspectival: when you expect others to agree with you, "you should also consider
+    what other competent judges would think if they were in your place." The boundary is explicit and
+    generous. "To be clear, personal values, individuality, and creativity are needed, even essential,
+    in many phases of thinking and decision making, including the choice of goals, the formulation of
+    novel ways to approach a problem, and the generation of options." The principle bites only at the
+    moment of judging between options. Two honest caveats: the finding it rests on is one the book itself
+    marks as tentative, and the book concedes elsewhere that removing discretion can leave people feeling
+    diminished, which is a real cost.
+
+    '
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'The book''s own first principle of decision hygiene, grounded on its tentative sizing conclusion
+    about stable pattern noise.
+
+    '
+  confounders:
+  - extending the principle to idea generation or problem framing, which the book explicitly protects
+  - treating the sizing finding it rests on as established rather than as the book's own hedged conclusion
+  - reading it as a claim that individuality is undesirable in professionals generally
+  requires_application_canon013: false
+- qa_id: qa_nse_0053
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 28 'Rules or Standards?', section 'A Framework'; 'Bosses, Controlling Subordinates'
+  question: 'An organisation currently instructs reviewers to "use your judgement, applying our quality
+    bar", and is considering replacing that with a specific list of disqualifying conditions. Apply the
+    book''s two-factor framework, and name the one thing it says should be monitored afterwards.
+
+    '
+  answer: 'Factor one, the cost of decisions. The current instruction is a standard, so every reviewer
+    must do the work of giving "quality bar" content on every item, which is burdensome and — the book
+    adds — will be noisy. A rule makes each decision cheap. But the book insists on the offsetting cost:
+    someone has to decide what the rule IS, and producing a good rule can be hard and sometimes prohibitively
+    costly, which is exactly why organisations reach for words like reasonable and appropriate in the
+    first place. Factor two, the cost of errors, where the book says there is no general winner. A rule
+    is error-free only if it is perfect, and rules rarely are; a standard applied by knowledgeable, reliable
+    agents practising decision hygiene may produce few errors. It collapses this into trust: "Principals
+    need to impose rules when they have reason to distrust their agents." Volume matters too — where many
+    similar decisions must be made, the book says there are real advantages to moving toward rules. The
+    thing to monitor afterwards is whether the rule is actually being followed. The book warns that rules
+    producing bad results in particular cases get quietly ignored, driving discretion underground, where
+    "there will be noise, but no one will hear it" — and that reappearing noise is the clue that the rule
+    needs revising.
+
+    '
+  answer_type: application
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s own framework, illustrated with legal and corporate cases including a social media
+    company''s public standards against its non-public implementation rules. The framework is analytical,
+    not empirical.
+
+    '
+  confounders:
+  - treating the choice as all-or-nothing; the book says they mix, e.g. a rule constraining the pool and
+    a standard choosing within it
+  - assuming a rule ends the noise, when fact-finding under it is itself judgement
+  - adopting the rule for its cheapness without counting the cost of writing an accurate one
+  requires_application_canon013: true
+- qa_id: qa_nse_0054
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 13 'Heuristics, Biases, and Noise', base-rate discussion; Review and Conclusion,
+    'Think statistically, and take the outside view of the case'
+  question: 'A reviewer is asked to predict whether a particular submission will meet its target. They
+    begin by studying the submission in detail. Using the book, say what they have skipped, why skipping
+    it produces noise as well as error, and what taking the outside view would concretely involve.
+
+    '
+  answer: 'They have skipped the base rate — how often submissions of this kind meet that target — and
+    gone straight to the specifics. The book''s parallel is the Gambardi CEO case: almost no reader thinks
+    to ask what proportion of incoming CEOs are still in the job after two years, though a few minutes''
+    research gives about 15% annual turnover and hence roughly a 72% two-year survival rate. Skipping
+    it produces error, through base-rate neglect, and it produces NOISE as well, because when people apply
+    their unique experience to a unique reading of a case, the result is pattern noise; judges who share
+    a reference class are less noisy. Concretely, taking the outside view means defining a reference class
+    of comparable submissions, finding the rate in that class, anchoring on it, and only then adjusting
+    for the specifics of this one — and the adjustment should be proportional to how predictive the specifics
+    actually are, which the book''s correction procedure makes explicit. Two honest points. The base rate
+    is a starting point, not the answer; the specifics do move it. And defining a defensible reference
+    class is itself work — the book''s own example has analysts having to determine which past transactions
+    count as comparable enough.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s own material on base-rate neglect and the outside view, plus its enumerated decision
+    hygiene principle. It concedes the authors themselves missed the base-rate reading of their own Gambardi
+    case for weeks.
+
+    '
+  confounders:
+  - treating the outside view as a substitute for examining the case rather than as the anchor to adjust
+    from
+  - assuming the reference class is obvious; the book treats defining it as a distinct task
+  - reading this as an accuracy fix only — the noise-reduction rationale is that a shared reference class
+    replaces private associations
+  requires_application_canon013: true
+- qa_id: qa_nse_0055
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 18 'Better Judges for Better Judgments', section 'Cognitive Style'; Ch. 21 'Perpetual
+    Beta'
+  question: 'You can choose who joins a review panel but cannot test candidates formally. What does the
+    book suggest you look for, what does it warn against, and what does it report about the alternatives
+    it tested?
+
+    '
+  answer: 'Look for the sort of people who actively search for new information that could contradict their
+    prior beliefs, who are methodical in integrating it, and who are willing — even eager — to change
+    their minds as a result. That is the book''s description of actively open-minded thinking, and it
+    is the one cognitive-style measure it reports as predicting forecasting performance. The warning is
+    against the obvious proxy. High general ability improves both judgement and the ability to convince
+    others, so in the absence of reality feedback it produces respect-experts rather than accurate ones
+    — "Medieval astrologers must have been among the highest-GMA people of their time." The book also
+    cautions against the confident, decisive personality: people trust leaders who seem to know immediately
+    what is right, but "if the goal is to reduce error, it is better for leaders (and others) to remain
+    open to counterarguments and to know that they might be wrong. If they end up being decisive, it is
+    at the end of a process, not at the start." On alternatives tested: the need-for-cognition scale did
+    NOT reliably predict forecasting performance, and did not predict who would work harder to seek information.
+    The book records that negative result rather than glossing it.
+
+    '
+  answer_type: application
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: false
+  support: 'Third-party research throughout — Baron''s actively open-minded thinking scale, the cognitive
+    reflection test, the need-for-cognition scale, Haran, Ritov and Mellers'' negative result, and Tetlock''s
+    superforecaster work. The book does not claim to have tested any of them.
+
+    '
+  confounders:
+  - selecting for intelligence alone, which the book says is necessary but produces convincing respect-experts
+    as readily as accurate judges
+  - assuming all cognitive-style measures work; the book reports one of them failing to predict
+  - selecting for decisiveness and confidence, which the book identifies as the traits that earn trust
+    without earning accuracy
+  requires_application_canon013: true
+- qa_id: qa_nse_0056
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 7 'Occasion Noise', 'Sources of Occasion Noise'; Ch. 20, closing section on sequencing
+    as a safeguard against occasion noise
+  question: 'A team wants to eliminate occasion noise from its review process by controlling the reviewers''
+    working conditions. Using the book, say how far that can get them and what it recommends instead.
+
+    '
+  answer: 'Some way, but not all the way, and the book is explicit about the ceiling. Known triggers can
+    be dampened: mood, which changes both what you notice and how you think — people in a good mood rely
+    more on first impressions and are more receptive to unfounded claims; stress and fatigue, with physicians
+    significantly more likely to prescribe opioids at the end of a long day; the weather; and the sequence
+    of preceding cases, where asylum judges were 19% less likely to grant asylum after two approvals.
+    But the book reports a tightly controlled memory study in which alertness, sleep, time of day, practice,
+    within-session position and material difficulty together explained only 11% of the within-person variation.
+    The residual had no identifiable external cause, and the researchers attributed it to "the efficiency
+    of endogenous neural processes". The book''s conclusion is that this "should give pause to anyone
+    who thinks occasion noise can be eliminated." What it recommends instead is to shield judgements from
+    the most obvious triggers rather than chase all of them: sequence the information so that an early
+    impression cannot organise everything after it, and where you can, revisit a judgement at a different
+    time, when the triggers of occasion noise will be different.
+
+    '
+  answer_type: application
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'Third-party studies throughout — Forgas on mood, the opioid-prescribing and asylum-sequencing
+    analyses, and Kahana and colleagues'' memory study. The authors report no occasion-noise measurement
+    of their own.
+
+    '
+  confounders:
+  - assuming occasion noise is fully controllable given a tidy enough environment
+  - prioritising occasion noise over the between-person components; the book reports it as the smallest
+    wherever the share could be measured
+  - treating mood as affecting only what is noticed, when the book's point is that it also changes how
+    you think
+  requires_application_canon013: true
+- qa_id: qa_nse_0057
+  source_id: kahneman-sibony-sunstein-noise
+  source_title: 'Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, Noise: A Flaw in Human Judgment (Little,
+    Brown Spark, 2021)'
+  source_locator: Ch. 23 'Defining the Scale in Performance Ratings', 'A Problem Long Recognized but Not
+    Solved'; Ch. 26 'The Costs of Noise Reduction'
+  question: 'A team proposes fixing rater disagreement by expanding its review form from six questions
+    to thirty-two, and adding more raters. Using the book, give three reasons this may make things worse.
+
+    '
+  answer: 'First, halo. The book says the proliferation of dimensions is pernicious as well as useless,
+    because "the halo effect implies that supposedly separate dimensions will in fact not be treated separately.
+    A strong positive or negative rating on one of the first questions will tend to pull answers to subsequent
+    questions in the same direction." Its cited horror case is a system with forty-six ratings on eleven
+    dimensions per rater and ratee. Second, rater capacity. "It would take a superhuman rater to recall
+    and process accurate, relevant facts about numerous people being evaluated on so many dimensions,"
+    and the explosion in demands on time-constrained raters "cannot be expected to improve the quality
+    of the information they supply." Third, cost against benefit. The book puts this case directly in
+    the noise-reduction-costs frame: "In this case, the reduction of noise may not be worth the cost."
+    Its example of where that lands is a firm calculating it spent two million hours a year on evaluations.
+    What the book would do instead is not more questions but better scales: make the dimensions few and
+    specific, anchor them in concrete reference cases, train raters to use the scale consistently, and
+    score each dimension separately — the length of the form is not the lever.
+
+    '
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: 'The book''s own analysis of 360-degree feedback systems, drawing on performance-appraisal
+    research it reports. The forty-six-rating example is cited from that literature, not measured by the
+    authors.
+
+    '
+  confounders:
+  - assuming more dimensions means more structure — the book's structuring principle requires independent
+    SCORING, not more questions
+  - assuming more raters always helps; the book records diminishing returns and a real cost
+  - treating the problem as insufficient detail rather than as ambiguous scales and contaminated dimensions
+  requires_application_canon013: true

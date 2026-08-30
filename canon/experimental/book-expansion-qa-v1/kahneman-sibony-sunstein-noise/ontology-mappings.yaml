@@ -1,0 +1,643 @@
+# kahneman-sibony-sunstein-noise — Ontology mappings (SPEC-05)
+# Daniel Kahneman, Olivier Sibony & Cass R. Sunstein, "Noise: A Flaw in Human Judgment"
+# (Little, Brown Spark / Hachette Book Group, first ebook edition May 2021, ISBN 978-0-316-45138-3).
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# TERM POLICY FOR THIS LANE
+#   - `verbatim: true` marks terms that are the book's own coinage or its own phrase. The noise
+#     vocabulary — noise, bias, system noise, level noise, pattern noise, occasion noise, noise audit,
+#     decision hygiene, stable pattern noise, illusion of agreement, respect-expert, objective
+#     ignorance, internal signal, matching, case scale, mediating assessments protocol, broken leg —
+#     is preserved exactly as the book uses it. These terms are the highest-value output of this lane.
+#   - Every `kind: remedy` term carries `executable_by`. Every remedy in this source acts on PEOPLE
+#     and PROCESSES, so the only values used are `human_edit` and `unknown`. `generative_respecification`
+#     is never used here and would be a category error: nothing in this book is about respecifying a
+#     generated artefact, and nothing in it is about machine evaluators at all.
+#   - No `xs_` cross-source concept is created. No `same_failure_family` relation is used.
+#   - Cross-lane relationships: none are asserted. Nothing in the other lanes of this run was inspected
+#     for this purpose, and a relationship recorded without inspection would be a fabrication.
+
+source_id: kahneman-sibony-sunstein-noise
+terms:
+
+  # ── The noise vocabulary (the core of this lane) ────────────────────────────
+
+- term_id: t_nse_0001
+  term: noise
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Unwanted variability in judgements that should be identical. Scatter with no direction to it, as
+    opposed to bias, which is systematic deviation in a consistent direction. A property of a SET of
+    judgements: a single judgement cannot exhibit it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0002
+  term: bias
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Statistical bias: the average error in a set of judgements — errors mostly in the same direction.
+    The source distinguishes this sharply from PSYCHOLOGICAL bias, which is a mechanism, and warns
+    that its "bias" is not a synonym for social discrimination.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0003
+  term: system_noise
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    The noise observed in an organisation that assigns a case to one of several interchangeable
+    professionals, so that the outcome depends on which one was picked. A problem of systems, which
+    are organisations, not of markets.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0004
+  term: level_noise
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Variability in the average level of different judges' judgements — some generally more severe,
+    generous, optimistic or lenient than others. Behaves like a personality trait and has nothing to
+    do with the case in front of the judge.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0005
+  term: pattern_noise
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Variability in how individual judges respond to particular cases, over and above their general
+    severity. The source's technical name for it is the judge-by-case interaction. Two judges of equal
+    average severity rank the same cases differently.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0006
+  term: occasion_noise
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Variability in the judgements of the same case by the same person on different occasions. The
+    transient component of pattern noise, produced by a second lottery that picks the moment, mood,
+    recent cases and countless other circumstances. The source states it is the SMALLEST of the three
+    components in every case it reviewed where the share could be measured.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0007
+  term: stable_pattern_noise
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    The persistent, idiosyncratic component of a judge's response to particular cases — the "judgment
+    personality". On the evidence the authors assemble, the largest single component of system noise,
+    a conclusion they mark as tentative.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0008
+  term: noise_audit
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    An experiment in which several interchangeable professionals independently judge the same
+    constructed cases, without being told that variability is the object of study. Measures the amount
+    of disagreement and, given several cases per judge, its composition. Requires no true value.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0009
+  term: decision_hygiene
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    The source's name for noise-reduction practice, by analogy with handwashing: techniques adopted to
+    prevent an unspecified range of errors, where you never learn which error a given application
+    prevented. Contrasted with debiasing, which targets a specific, directional error.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0010
+  term: illusion_of_agreement
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    The belief, held by colleagues who in fact disagree systematically, that they see cases the same
+    way. Sustained by shared vocabulary, by easy consensus on absurd judgements, and by organisational
+    procedures that minimise exposure to disagreement.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0011
+  term: the_second_lottery
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: property
+  definition_in_origin_frame: >-
+    The chance process that picks the moment, mood and circumstances of a judgement, as distinct from
+    the first lottery, which picks WHICH professional is assigned the case.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── Judgement, measurement, and their limits ───────────────────────────────
+
+- term_id: t_nse_0012
+  term: bounded_disagreement
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: property
+  definition_in_origin_frame: >-
+    The defining expectation of a matter of judgement: competent people may differ, but not by much.
+    Marks the space between computation, where no disagreement is allowed, and taste, where it is
+    entirely acceptable.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0013
+  term: predictive_judgment
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: entity
+  definition_in_origin_frame: >-
+    A judgement that aims at a true value, whether or not that value will ever be revealed. Includes
+    diagnosis of an existing condition; does not imply predicting the future.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0014
+  term: evaluative_judgment
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: entity
+  definition_in_origin_frame: >-
+    A judgement that matches a response to the merits of a case, with no true value to aim at —
+    sentencing, grading, reviewing, and the resolution of trade-offs between options. The source's
+    error equation explicitly does not apply to these.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0015
+  term: internal_signal_of_judgment_completion
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    The feeling of coherent fit that tells a judge the judgement is finished. Self-administered,
+    unrelated to any outside information, and available for fictitious cases as readily as real ones.
+    A problem because it is construed as a belief about validity rather than as a feeling.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0016
+  term: objective_ignorance
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: property
+  definition_in_origin_frame: >-
+    Intractable uncertainty plus imperfect information — what cannot be known plus what could be known
+    but is not. A characteristic of the task, not of the judge, that sets a ceiling on achievable
+    accuracy that no reduction of noise or bias can lift.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0017
+  term: illusion_of_validity
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Being as confident in a prediction of an outcome as in an evaluation of the case. The source
+    insists these are two different tasks and that you have most of the information you need only for
+    the first.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0018
+  term: respect_expert
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: entity
+  definition_in_origin_frame: >-
+    Someone whose expertise rests entirely on peers' regard because no outcome data exists to test it.
+    The source insists the term is not disrespectful and that the condition is a fact of life in many
+    domains — but that the traits producing respect are not the traits producing accuracy.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0019
+  term: actively_open_minded_thinking
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: property
+  definition_in_origin_frame: >-
+    Actively searching for information that contradicts one's own hypotheses, weighing dissent and new
+    evidence against old belief. The only cognitive-style measure the source reports as reliably
+    predicting forecasting performance; the source notes there is some evidence it is teachable.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── Mechanisms that generate noise ─────────────────────────────────────────
+
+- term_id: t_nse_0020
+  term: substitution
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Answering an easier question in place of the hard one asked, without noticing. Produces error by
+    giving the evidence weights appropriate to the substituted question. Produces NOISE rather than
+    bias when the substitute varies from person to person or occasion to occasion.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0021
+  term: excessive_coherence
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    Forming an impression quickly from early evidence and being slow to revise it, so that later
+    evidence is distorted or discounted to preserve the story. Where the order of arrival varies
+    haphazardly, it converts that arbitrary order into system noise.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0022
+  term: halo_effect
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    The special case of excessive coherence in multi-dimensional rating: a strong early rating on one
+    dimension pulls the ratings of nominally separate dimensions in the same direction, so that they
+    are not in fact assessed separately.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0023
+  term: matching
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: property
+  definition_in_origin_frame: >-
+    The operation that maps an impression onto a value on a response scale. Versatile — people match
+    across wildly unrelated intensity dimensions — and crude, because its resolution is bounded by the
+    limits of absolute judgement.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0024
+  term: matching_prediction
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    A prediction that carries the intensity of the evidence straight onto the outcome scale, as if the
+    evidence were perfectly predictive. Systematically too extreme in whichever direction the evidence
+    points; the technical term is nonregressive.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0025
+  term: ambiguous_response_scale
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    A scale whose points are defined by words or by an unbounded unit that different judges interpret
+    differently, so that agreement about substance is recorded as disagreement about numbers. Named by
+    the source as one of the sources of level noise.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_nse_0026
+  term: informational_cascade
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    A sequence in which each speaker reasonably defers to the apparent weight of opinion already
+    expressed, so private information is never shared and the group's conclusion is set by who spoke
+    first. Makes noise across similar groups likely, not merely possible.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0027
+  term: group_polarization
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    After discussion, a group ends at a more extreme point in line with its original inclination, with
+    greater confidence and greater unity. In the authors' jury experiments, deliberating groups were
+    both noisier and more extreme than the median of their own members.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0028
+  term: bias_cascade
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    An initial error prompted by confirmation bias becoming the biasing information that influences a
+    second expert, whose judgement biases a third. The source's instance is a verification step in
+    which the verifier is told what conclusion is being verified.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_nse_0029
+  term: causal_thinking
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: problem
+  definition_in_origin_frame: >-
+    The default mode of understanding: creating stories in which specific events affect one another,
+    searching memory for a cause once an outcome is known, and stopping when a good narrative is found.
+    The reason noise is invisible — a single case cannot display a statistical property.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── Remedies (all acting on people and processes) ──────────────────────────
+
+- term_id: t_nse_0030
+  term: sequencing_information
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Giving judges only the information they need, when they need it, and requiring each step's
+    judgement to be documented before the next information is revealed. Applies to accurate
+    information as much as to misleading information.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0031
+  term: aggregating_independent_judgments
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Averaging judgements made without knowledge of one another. Divides noise by the square root of
+    the number averaged; does nothing whatever to bias. Requires genuine independence — a second
+    opinion that knows the first is not a second observation.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_nse_0032
+  term: structuring_complex_judgments
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Decomposition into predefined assessments, independent collection and scoring of evidence for each,
+    and delay of the holistic judgement until all assessments are complete. All three parts are
+    required; listing the dimensions without scoring them separately achieves nothing.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0033
+  term: case_scale
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    A rating scale whose anchor points are concrete reference cases known to everyone, so that rating a
+    new case becomes a comparison. The source's stronger alternative to behaviourally anchored scales;
+    installed by frame-of-reference training and requiring periodic updating.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0034
+  term: the_outside_view
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Treating a case as a member of a reference class and thinking statistically about that class,
+    rather than causally about the case. Reduces pattern noise because judges sharing a reference class
+    are less noisy, and supplies the base rate a matching prediction skips.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0035
+  term: mediating_assessments_protocol
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Six steps: define the assessments up front; ground each in an outside view; keep the analysis of
+    each independent; review each separately; take individual judgements before discussion, then
+    estimate-talk-estimate; delay the final holistic judgement without banning it. Presented as an
+    integration of the other strategies, not a new one.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0036
+  term: estimate_talk_estimate
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Silent individual estimates, then explanation and debate, then a second estimate; the consensus is
+    the average of the second round. A single-meeting form of the Delphi method that keeps the first
+    round independent.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0037
+  term: judgment_guidelines
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    A decomposition of a complex judgement into predefined sub-judgements with specified assessment
+    criteria and a mechanical rule for combining them. Does not eliminate judgement. Buys little where
+    the criteria themselves remain vague.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0038
+  term: decision_observer
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    A trained observer who watches a group's decision process in real time with a bias checklist,
+    rather than correcting biases before or after. The source stresses that the decision makers must
+    initiate the role and that a self-appointed observer will fail.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0039
+  term: broken_leg_exception
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    The source's single test for when a person may override a mechanical recommendation: whether they
+    hold decisive information the rule could not take into account. Mere disagreement fails the test,
+    because it is a personal pattern applied to the same predictors.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_nse_0040
+  term: comparative_judgment
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Ranking or explicitly comparing cases instead of labelling them one at a time. Less noisy because
+    the ability to compare far exceeds the ability to place items on an absolute scale, which the source
+    puts at roughly seven categories. More effortful and time-consuming.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_nse_0041
+  term: forced_ranking
+  origin: source
+  origin_ref: kahneman-sibony-sunstein-noise
+  kind: remedy
+  definition_in_origin_frame: >-
+    Ranking under a mandated distribution. The source's verdict is that "the fatal flaw of forced
+    ranking is not the 'ranking,' but the 'forced'": forcing a differentiated distribution on an
+    undifferentiated reality increases error rather than reducing it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: unknown
+
+relationships:
+
+- {from: t_nse_0003, to: t_nse_0004, relation: broader_than, confidence_basis: extractor_judgement, note: "the source states System Noise squared = Level Noise squared + Pattern Noise squared"}
+- {from: t_nse_0003, to: t_nse_0005, relation: broader_than, confidence_basis: extractor_judgement, note: "second component of the same stated equation"}
+- {from: t_nse_0005, to: t_nse_0006, relation: broader_than, confidence_basis: extractor_judgement, note: "Pattern Noise squared = Stable Pattern Noise squared + Occasion Noise squared"}
+- {from: t_nse_0005, to: t_nse_0007, relation: broader_than, confidence_basis: extractor_judgement, note: "the stable component of the same stated equation"}
+- {from: t_nse_0001, to: t_nse_0002, relation: distinct_from, confidence_basis: extractor_judgement, note: "the book's central move; conflating them is the error the whole work exists to correct"}
+- {from: t_nse_0002, to: t_nse_0020, relation: distinct_from, confidence_basis: extractor_judgement, note: "statistical bias is an outcome property; substitution is a psychological mechanism that can produce either bias or noise"}
+- {from: t_nse_0006, to: t_nse_0011, relation: maps_to, confidence_basis: extractor_judgement, note: "the second lottery is the source's own name for what produces occasion noise"}
+- {from: t_nse_0021, to: t_nse_0022, relation: broader_than, confidence_basis: extractor_judgement, note: "the halo effect is excessive coherence in a multi-dimensional rating task"}
+- {from: t_nse_0023, to: t_nse_0024, relation: broader_than, confidence_basis: extractor_judgement, note: "a matching prediction is the matching operation applied to a prediction question"}
+- {from: t_nse_0020, to: t_nse_0024, relation: same_mechanism, confidence_basis: extractor_judgement, note: "the source derives the matching prediction from substitution of an evidence-intensity question for a prediction question"}
+- {from: t_nse_0026, to: t_nse_0027, relation: related_to, confidence_basis: extractor_judgement, note: "the source gives the same informational and reputational explanations for both"}
+- {from: t_nse_0026, to: t_nse_0028, relation: same_mechanism, confidence_basis: extractor_judgement, note: "the forensic bias cascade is the cascade mechanism operating inside a verification step"}
+- {from: t_nse_0029, to: t_nse_0010, relation: related_to, confidence_basis: extractor_judgement, note: "causal thinking is the cognitive half of the explanation for which the illusion of agreement is the social half"}
+- {from: t_nse_0015, to: t_nse_0017, relation: related_to, confidence_basis: extractor_judgement, note: "the internal signal fires on the evaluation task and is read as confidence in the prediction task"}
+- {from: t_nse_0016, to: t_nse_0001, relation: distinct_from, confidence_basis: extractor_judgement, note: "objective ignorance is a property of the task and caps accuracy; noise is a property of a set of judgements and is reducible below that cap"}
+- {from: t_nse_0008, to: t_nse_0001, relation: related_to, confidence_basis: extractor_judgement, note: "the audit is the measuring instrument for the problem"}
+- {from: t_nse_0009, to: t_nse_0030, relation: broader_than, confidence_basis: extractor_judgement, note: "sequencing is one of the enumerated decision hygiene strategies"}
+- {from: t_nse_0009, to: t_nse_0031, relation: broader_than, confidence_basis: extractor_judgement, note: "aggregation is one of the enumerated decision hygiene strategies"}
+- {from: t_nse_0009, to: t_nse_0032, relation: broader_than, confidence_basis: extractor_judgement, note: "structuring is one of the enumerated decision hygiene strategies"}
+- {from: t_nse_0009, to: t_nse_0034, relation: broader_than, confidence_basis: extractor_judgement, note: "the outside view is one of the enumerated decision hygiene strategies"}
+- {from: t_nse_0009, to: t_nse_0033, relation: broader_than, confidence_basis: extractor_judgement, note: "the shared scale grounded in an outside view is one of the enumerated decision hygiene strategies"}
+- {from: t_nse_0009, to: t_nse_0038, relation: distinct_from, confidence_basis: extractor_judgement, note: "the source places the decision observer under debiasing, not decision hygiene: it targets identifiable directional errors, not unspecified variability"}
+- {from: t_nse_0030, to: t_nse_0021, relation: related_to, confidence_basis: extractor_judgement, note: "sequencing is aimed at excessive coherence: withhold the input that would let an impression form early"}
+- {from: t_nse_0032, to: t_nse_0022, relation: related_to, confidence_basis: extractor_judgement, note: "structuring is the source's remedy for the halo effect"}
+- {from: t_nse_0031, to: t_nse_0026, relation: related_to, confidence_basis: extractor_judgement, note: "aggregation fails exactly where a cascade has removed the independence it assumes"}
+- {from: t_nse_0040, to: t_nse_0041, relation: broader_than, confidence_basis: extractor_judgement, note: "forced ranking is comparative judgment plus a mandated distribution; the source endorses the first and rejects the second"}
+- {from: t_nse_0033, to: t_nse_0025, relation: related_to, confidence_basis: extractor_judgement, note: "the case scale is the source's answer to scale ambiguity"}
+- {from: t_nse_0034, to: t_nse_0029, relation: distinct_from, confidence_basis: extractor_judgement, note: "the outside view is the statistical mode; causal thinking is the default it displaces"}
+- {from: t_nse_0037, to: t_nse_0032, relation: narrower_than, confidence_basis: extractor_judgement, note: "a guideline is a structured judgement with the decomposition and the weights fixed in advance"}
+- {from: t_nse_0039, to: t_nse_0005, relation: related_to, confidence_basis: extractor_judgement, note: "an override that fails the broken-leg test is the judge's own pattern noise reasserting itself"}
+- {from: t_nse_0018, to: t_nse_0019, relation: distinct_from, confidence_basis: extractor_judgement, note: "checked and rejected: respect tracks confidence and fluent storytelling; the source reports only actively open-minded thinking as predicting forecasting performance"}
+- {from: t_nse_0013, to: t_nse_0014, relation: distinct_from, confidence_basis: extractor_judgement, note: "the source's error equation applies to the first and explicitly not to the second; noise is a defect in both, for different reasons"}
+- {from: t_nse_0012, to: t_nse_0001, relation: related_to, confidence_basis: extractor_judgement, note: "noise is disagreement in excess of the bound a matter of judgement expects"}
+- {from: t_nse_0010, to: t_nse_0008, relation: related_to, confidence_basis: extractor_judgement, note: "the source states the audit is what shatters the illusion"}
+
+concepts:
+
+- concept_id: sc_nse_noise_taxonomy
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0001, t_nse_0002, t_nse_0003, t_nse_0004, t_nse_0005, t_nse_0006, t_nse_0007, t_nse_0011]
+  origin: source_stated
+
+- concept_id: sc_nse_measuring_disagreement
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0008, t_nse_0010, t_nse_0012, t_nse_0013, t_nse_0014]
+  origin: source_stated
+
+- concept_id: sc_nse_confidence_without_accuracy
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0015, t_nse_0016, t_nse_0017, t_nse_0018, t_nse_0019, t_nse_0029]
+  origin: extractor_inferred
+
+- concept_id: sc_nse_mechanisms_of_variability
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0020, t_nse_0021, t_nse_0022, t_nse_0023, t_nse_0024, t_nse_0025]
+  origin: extractor_inferred
+
+- concept_id: sc_nse_group_contagion
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0026, t_nse_0027, t_nse_0028]
+  origin: source_stated
+
+- concept_id: sc_nse_decision_hygiene
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0009, t_nse_0030, t_nse_0031, t_nse_0032, t_nse_0033, t_nse_0034, t_nse_0035, t_nse_0036, t_nse_0037, t_nse_0040]
+  origin: source_stated
+
+- concept_id: sc_nse_bounded_overrides
+  kind: source_specific_concept
+  origin_ref: kahneman-sibony-sunstein-noise
+  children_terms: [t_nse_0038, t_nse_0039, t_nse_0041]
+  origin: extractor_inferred

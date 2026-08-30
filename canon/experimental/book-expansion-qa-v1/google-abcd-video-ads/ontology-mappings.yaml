@@ -1,0 +1,446 @@
+# google-abcd-video-ads — Knowledge ontology (SPEC-05)
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# No cross_source_concept (xs_...) is created here — forbidden in this task.
+# No same_failure_family relation is used — it requires human review under SPEC-05 governance.
+# No cross-lane relationships are asserted: the parallel lanes' term identifiers are not knowable
+# at extraction time, so any such relation would be a dangling reference. Recorded as a gap in
+# EXTRACTION-NOTES.md rather than guessed.
+#
+# No remedy in this file carries executable_by: generative_respecification. Nothing in this source
+# is evidence about what any generative model can do, and no such inference is made.
+
+source_id: google-abcd-video-ads
+terms:
+- term_id: t_abcd_0001
+  term: abcds
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The publisher's name for its four principles of effective YouTube video ads — Attention,
+    Branding, Connection, Direction — taken together as one set.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0001]
+
+- term_id: t_abcd_0002
+  term: attention
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The first principle: hook and sustain the viewer's attention with an immersive story built
+    from audio and visuals together.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0005]
+
+- term_id: t_abcd_0003
+  term: branding
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The second principle: brand early, often and richly, using a broad range of branding elements
+    to show and tell viewers who the advertiser is.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0010]
+
+- term_id: t_abcd_0004
+  term: connection
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The third principle: help people think or feel something, by way of the experience of the
+    product rather than claims about it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0015]
+
+- term_id: t_abcd_0005
+  term: direction
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The fourth principle: ask the viewer to take action, with clear, concise direction that is
+    easy to follow.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0019]
+
+- term_id: t_abcd_0006
+  term: jump_in
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Get to the heart of the story faster, using engaging pacing and tight framing to draw viewers
+    in.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0006]
+
+- term_id: t_abcd_0007
+  term: support_the_story_with_audio_and_supers
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Reinforce the message with audio and on-screen text, and avoid competing elements. The
+    resources article names the same guideline "Emphasize key points".
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0008]
+
+- term_id: t_abcd_0008
+  term: competing_elements
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: problem
+  definition_in_origin_frame: >-
+    Elements in the ad that pull against each other rather than reinforcing the same key message
+    at the same moment. The source names the fault and does not define its threshold.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0008]
+
+- term_id: t_abcd_0009
+  term: keep_visuals_bright_and_high_contrast
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Keep the ad's visuals bright and high in contrast so that they hold up across every device
+    the ad may be watched on, small screens included.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: physical_production
+  arising_from: [sk_abcd_0009]
+
+- term_id: t_abcd_0010
+  term: show_up_early_and_throughout
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Introduce the brand or the product from the start of the ad and maintain that presence across
+    its length.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0011]
+
+- term_id: t_abcd_0011
+  term: see_and_say
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Pair an on-screen brand visual with a spoken brand mention; the source claims the audio
+    mention raises the visual's performance. Google Ads Help names the same guideline
+    "Reinforce with audio".
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0012]
+
+- term_id: t_abcd_0012
+  term: draw_on_all_your_branding_assets
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Work the brand identity into the story through a variety of branding elements — product
+    shots, pack shots, in-situ branding, graphic elements, voice-overs, musical treatments —
+    chosen to fit the message and the objective.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0013]
+
+- term_id: t_abcd_0013
+  term: sound_on_experience
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The source's assertion that YouTube is almost entirely watched with sound on, offered as the
+    reason to treat the medium as multisensory. A claim about one platform at one time; the
+    source states it for YouTube and for nothing else.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0014]
+
+- term_id: t_abcd_0014
+  term: humanize_the_story
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Feature people and their experience of the product, and let the people shown represent the
+    advertiser's consumer.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: physical_production
+  arising_from: [sk_abcd_0016]
+
+- term_id: t_abcd_0015
+  term: focus_the_message
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Keep the ad's messaging and language focused and simple; do not attempt too much in one ad.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0017]
+
+- term_id: t_abcd_0016
+  term: doing_too_much
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: problem
+  definition_in_origin_frame: >-
+    Attempting more than one ad can carry. The source places this fault under Connection, and
+    states it as the limit on how far to push humour, surprise and other emotional levers.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0017]
+
+- term_id: t_abcd_0017
+  term: engage
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Lean into emotional levers and storytelling techniques such as humour, surprise and intrigue.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0018]
+
+- term_id: t_abcd_0018
+  term: call_to_action
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: entity
+  definition_in_origin_frame: >-
+    The ad's explicit ask, chosen intentionally to drive a specific marketing objective and
+    stating what the advertiser would like viewers to do. The source says it may be carried by
+    written text, graphics, audio, or a scene from the story.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0019, sk_abcd_0020]
+
+- term_id: t_abcd_0019
+  term: supercharge_ctas_with_audio
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: remedy
+  definition_in_origin_frame: >-
+    Reinforce the on-screen call to action with voice-over so that the next step is clear. The
+    resources article names the same guideline "Boost CTAs with audio".
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+  arising_from: [sk_abcd_0021]
+
+- term_id: t_abcd_0020
+  term: passive_viewer
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: problem
+  definition_in_origin_frame: >-
+    Treating the viewer as passive rather than as someone to be educated, inspired or
+    entertained. Stated by the source as an instruction against — "Don't think of your viewer as
+    passive."
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+  arising_from: [sk_abcd_0015]
+
+- term_id: t_abcd_0021
+  term: short_term_sales_likelihood
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    One of the two outcome measures the source's headline lift figures are stated in. The source
+    does not define it, does not name the baseline it is lifted against, and does not publish the
+    study.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0003]
+
+- term_id: t_abcd_0022
+  term: long_term_brand_contribution
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The second of the two outcome measures the headline lift figures are stated in. Likewise
+    undefined and unpublished in the source.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0003]
+
+- term_id: t_abcd_0023
+  term: objective_driven_abcds
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The source's second-stage rule: after the core ABCDs, vary the emphasis on each principle
+    according to the campaign's marketing objective.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0022]
+
+- term_id: t_abcd_0024
+  term: awareness_objective
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: 'The objective the source states as "Get noticed".'
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0023]
+
+- term_id: t_abcd_0025
+  term: consideration_objective
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The objective the source states as "Show users how your product fits into their lives".
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0024]
+
+- term_id: t_abcd_0026
+  term: action_objective
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The objective the source states as "Present an enticing call-to-action with the right
+    context".
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0025]
+
+- term_id: t_abcd_0027
+  term: full_funnel_objective
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The combined objective the source states as "Maximize effectiveness by incorporating all
+    objectives". It appears only in the Google Ads Help table.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0026]
+
+- term_id: t_abcd_0028
+  term: apply_core_principles
+  origin: source
+  origin_ref: google-abcd-video-ads
+  kind: property
+  definition_in_origin_frame: >-
+    The objective table's own instruction for a principle that takes no objective-specific
+    tailoring. It occupies three of the sixteen cells and is what keeps every principle present
+    in every objective.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+  arising_from: [sk_abcd_0022, sk_abcd_0023, sk_abcd_0024, sk_abcd_0025]
+
+relationships:
+- {from: t_abcd_0002, to: t_abcd_0006, relation: broader_than, confidence_basis: source_stated, note: "Jump in is listed under Attention in the source's own table"}
+- {from: t_abcd_0002, to: t_abcd_0007, relation: broader_than, confidence_basis: source_stated, note: "listed under Attention"}
+- {from: t_abcd_0002, to: t_abcd_0009, relation: broader_than, confidence_basis: source_stated, note: "listed under Attention"}
+- {from: t_abcd_0003, to: t_abcd_0010, relation: broader_than, confidence_basis: source_stated, note: "listed under Branding"}
+- {from: t_abcd_0003, to: t_abcd_0011, relation: broader_than, confidence_basis: source_stated, note: "listed under Branding"}
+- {from: t_abcd_0003, to: t_abcd_0012, relation: broader_than, confidence_basis: source_stated, note: "listed under Branding"}
+- {from: t_abcd_0004, to: t_abcd_0014, relation: broader_than, confidence_basis: source_stated, note: "listed under Connection"}
+- {from: t_abcd_0004, to: t_abcd_0015, relation: broader_than, confidence_basis: source_stated, note: "listed under Connection"}
+- {from: t_abcd_0004, to: t_abcd_0017, relation: broader_than, confidence_basis: source_stated, note: "listed under Connection"}
+- {from: t_abcd_0005, to: t_abcd_0019, relation: broader_than, confidence_basis: source_stated, note: "listed under Direction"}
+- {from: t_abcd_0005, to: t_abcd_0018, relation: related_to, confidence_basis: source_stated, note: "the CTA is the object the Direction principle acts on, not a special case of it"}
+- {from: t_abcd_0001, to: t_abcd_0002, relation: broader_than, confidence_basis: source_stated, note: "A of the ABCDs"}
+- {from: t_abcd_0001, to: t_abcd_0003, relation: broader_than, confidence_basis: source_stated, note: "B of the ABCDs"}
+- {from: t_abcd_0001, to: t_abcd_0004, relation: broader_than, confidence_basis: source_stated, note: "C of the ABCDs"}
+- {from: t_abcd_0001, to: t_abcd_0005, relation: broader_than, confidence_basis: source_stated, note: "D of the ABCDs"}
+- {from: t_abcd_0015, to: t_abcd_0016, relation: related_to, confidence_basis: source_stated, note: "the source pairs the remedy with the fault in one line: avoid doing too much, keep messaging focused and simple"}
+- {from: t_abcd_0007, to: t_abcd_0008, relation: related_to, confidence_basis: source_stated, note: "the guideline carries 'avoid competing elements' as its negative half"}
+- {from: t_abcd_0014, to: t_abcd_0020, relation: related_to, confidence_basis: extractor_judgement, note: "featuring people is the source's move against treating the viewer as passive; the source states both under Connection but does not connect them"}
+- {from: t_abcd_0011, to: t_abcd_0013, relation: related_to, confidence_basis: extractor_judgement, note: "the see-and-say guideline presupposes the sound-on claim; the source states them on different pages and never links them"}
+- {from: t_abcd_0019, to: t_abcd_0013, relation: related_to, confidence_basis: extractor_judgement, note: "same presupposition, applied to the CTA"}
+- {from: t_abcd_0007, to: t_abcd_0013, relation: related_to, confidence_basis: extractor_judgement, note: "same presupposition, applied to the message"}
+- {from: t_abcd_0011, to: t_abcd_0019, relation: related_to, confidence_basis: extractor_judgement, note: "identical construction — pair the on-screen element with a voice-over — applied to branding and to the ask. Recorded as related_to and not as same_mechanism: the source gives no mechanism for either, so asserting a shared one would be ours alone."}
+- {from: t_abcd_0023, to: t_abcd_0024, relation: broader_than, confidence_basis: source_stated, note: "objective row"}
+- {from: t_abcd_0023, to: t_abcd_0025, relation: broader_than, confidence_basis: source_stated, note: "objective row"}
+- {from: t_abcd_0023, to: t_abcd_0026, relation: broader_than, confidence_basis: source_stated, note: "objective row"}
+- {from: t_abcd_0023, to: t_abcd_0027, relation: broader_than, confidence_basis: source_stated, note: "objective row, Google Ads Help only"}
+- {from: t_abcd_0028, to: t_abcd_0023, relation: related_to, confidence_basis: extractor_judgement, note: "the default cell value that keeps every principle present in every objective"}
+- {from: t_abcd_0001, to: t_abcd_0021, relation: related_to, confidence_basis: source_stated, note: "the lift is claimed for the set against this measure"}
+- {from: t_abcd_0001, to: t_abcd_0022, relation: related_to, confidence_basis: source_stated, note: "the lift is claimed for the set against this measure"}
+- {from: t_abcd_0006, to: t_abcd_0010, relation: distinct_from, confidence_basis: extractor_judgement, note: "Checked and rejected. Both concern the opening of the ad and both are easy to collapse into 'start strong', but Jump in is about how fast the narrative reaches its point, and Show up early is about when the brand or product first appears. An ad can satisfy either without the other."}
+- {from: t_abcd_0006, to: t_abcd_0015, relation: distinct_from, confidence_basis: extractor_judgement, note: "Checked and rejected. Both read as 'keep it short', but Jump in constrains pacing in time while Focus the message constrains how many things the ad says. A tightly paced ad can still carry three messages."}
+- {from: t_abcd_0009, to: t_abcd_0007, relation: distinct_from, confidence_basis: extractor_judgement, note: "Checked and rejected. Both bear on whether the viewer can read the ad on a phone, but the source scopes bright-and-high-contrast to device coverage and supers to message reinforcement, and never states a legibility rationale for the text."}
+
+concepts:
+- concept_id: sc_abcd_four_principle_framework
+  kind: source_specific_concept
+  origin_ref: google-abcd-video-ads
+  children_terms: [t_abcd_0001, t_abcd_0002, t_abcd_0003, t_abcd_0004, t_abcd_0005]
+  origin: source_stated
+
+- concept_id: sc_abcd_objective_driven_abcds
+  kind: source_specific_concept
+  origin_ref: google-abcd-video-ads
+  children_terms: [t_abcd_0023, t_abcd_0024, t_abcd_0025, t_abcd_0026, t_abcd_0027, t_abcd_0028]
+  origin: source_stated
+
+- concept_id: cc_abcd_audio_visual_pairing
+  kind: canonical_concept
+  label: audio_visual_pairing
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: google-abcd-video-ads
+  children_terms: [t_abcd_0007, t_abcd_0011, t_abcd_0019, t_abcd_0013]
+  origin: extractor_inferred
+
+- concept_id: cc_abcd_opening_discipline
+  kind: canonical_concept
+  label: opening_discipline
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: google-abcd-video-ads
+  children_terms: [t_abcd_0006, t_abcd_0010]
+  origin: extractor_inferred

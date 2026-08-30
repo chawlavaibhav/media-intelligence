@@ -1,0 +1,242 @@
+# OperationalBindings (SPEC-04) — Timothy Samara, "Making and Breaking the Grid", 2nd ed.,
+# Chapter 2 "Breaking the Grid".
+# source_id: samara-breaking-the-grid-ch2   |   scope_extension_of: samara-making-breaking-grid-ch1
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# WHAT IS NOT HERE, AND WHY:
+#
+# * No creative_ir binding. SPEC-01 was not supplied to this lane, so no target_path could be named
+#   honestly. Guessing one would be worse than leaving the knowledge unbound.
+#
+# * No production binding. Nothing in this chapter is a physical-production act in the SPEC-04
+#   sense; the one physically executed remedy it contains (flinging or dropping material as a random
+#   physical chance operation) is a studio process for generating a layout, not a production step,
+#   and rewriting it as a generative-media instruction is exactly what the schema contract forbids.
+#
+# * No benchmark binding. There is no measured quantity anywhere in this chapter.
+#
+# * Every evaluation binding here inspects a LAYOUT — a designed surface. The whole hazard of this
+#   lane is that the surface Samara argues from does not exist in this copy. Each binding therefore
+#   carries the honest evidence_basis, and applicability.limits states what the source actually
+#   covers versus where we would be applying it.
+#
+# * `deterministic_composition` — a layout engine executing exact geometry — is the consumer several
+#   of this chapter's remedies genuinely fit. SPEC-04 has no target type for it, the live chapter-1
+#   audit already recorded that gap, and this lane does NOT invent one. Those remedies are recorded
+#   as unbound and discussed in EXTRACTION-NOTES.md §7.
+#
+# Per the schema contract, neither cross_source_supported nor empirically_supported is used.
+
+source_id: samara-breaking-the-grid-ch2
+
+operational_bindings:
+
+- binding_id: bnd_sgb_001
+  source_knowledge_refs: [sk_sgb_0031, sk_sgb_0032, sk_sgb_0034]
+  source_system_refs: [scs_sgb_003]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Where a layout without a regular structure is judged to be failing a viewer, this gives a
+    two-place diagnosis to run before anything is changed: can the most important element be
+    identified at all, and does anything establish where the eye goes next. Our contribution is
+    treating the source's pair as an ordered check applied to a finished asset; the source states it
+    as advice to a designer mid-work, not as an inspection.
+  applicability:
+    when: "a static designed surface — page, spread, poster, screen — organised by something other than a regular grid"
+    limits: >
+      Samara is describing print and desktop-era screen layouts held or viewed by a reader who has
+      chosen to look. Nothing here was written about a feed, a thumbnail, a five-second view or an
+      autoplaying frame, and the eye-path half is explicitly scoped by the source to Western readers.
+      Applying it outside those conditions is ours, not his. The source offers no threshold, so this
+      diagnoses and cannot score.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sgb_0031, t_sgb_0032, t_sgb_0043]
+  repair_ontology_refs: [t_sgb_0045, t_sgb_0044]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sgb_002
+  source_knowledge_refs: [sk_sgb_0038, sk_sgb_0039, sk_sgb_0040]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [evaluates, diagnoses]
+  observation_unit: asset_set_over_time
+  governance_consumer: null
+  rationale: >
+    A set of irregular assets that is meant to read as one system can be checked against the
+    source's own two constraints: how many rules are actually operating, and whether every variation
+    completes across the set. Referenced rather than restated. The value is that it applies to sets
+    with no shared grid, where the usual consistency checks have nothing to measure.
+  applicability:
+    when: "a series of related layouts intended to read as a single system, with no regular grid in common"
+    limits: >
+      The rule-count limit is a practitioner's number offered with a mechanism and no evidence, and
+      the completed-variation test is stated for a set of exactly four posters. Neither is validated
+      and the source does not say how the reasoning changes for large sets. Counting rules also
+      requires reading the assets as designed objects, which is precisely what an EPUB route cannot
+      do — the check is proposed, never exercised here.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sgb_0039, t_sgb_0041]
+  repair_ontology_refs: [t_sgb_0040, t_sgb_0042]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sgb_003
+  source_knowledge_refs: [sk_sgb_0036, sk_sgb_0037]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, repairs]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    Two named classes of element — crisp inset photography, and charts or tables — are singled out
+    by the source as the parts most likely to refuse an expressive layout. That makes them a useful
+    place to look first when an asset reads as assembled rather than composed, and the source
+    supplies a ranked repair for the second class.
+  applicability:
+    when: "an expressive or spatially ambiguous layout containing rectangular photography or data graphics"
+    limits: >
+      The source is talking about a designer with the ability to re-encode a chart or re-render an
+      image. Where that control does not exist, only the source's own last resort remains available,
+      and the source calls it a last resort for a reason. The data-integrity limit the source places
+      on every one of these moves must travel with the binding.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sgb_0034, t_sgb_0035]
+  repair_ontology_refs: [t_sgb_0036, t_sgb_0037]
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sgb_004
+  source_knowledge_refs: [sk_sgb_0013, sk_sgb_0022, sk_sgb_0028]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    The chapter states the same condition three times in three unrelated places — a broken grid
+    should leave a recognisable vestige, symmetry and asymmetry combine only while both stay
+    distinct, and a chance operation is chosen even though its outcome is not. Read together these
+    supply one inspectable question about an irregular asset: is the state being departed from still
+    legible as a state. Our contribution is the merging; the source never joins them.
+  applicability:
+    when: "an asset that departs from a familiar structure and must still be navigable"
+    limits: >
+      Samara gives no test for how much remnant is enough, and states the condition each time about
+      a specific project. The merged question is the extractor's reading of a repeated rule shape,
+      which makes this a prompt for judgement rather than a criterion. It cannot be automated and
+      should not be presented as though it could.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_sgb_0043]
+  repair_ontology_refs: [t_sgb_0008]
+  status: proposed
+  status_reason: "experimental; not reviewed; the merge across three sections is ours"
+
+- binding_id: bnd_sgb_005
+  source_knowledge_refs: [sk_sgb_0041, sk_sgb_0042]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    The source refuses to relax any usability requirement for unconventional screen work and lists
+    the requirements explicitly. Used as a constraint rather than a diagnosis: whatever structural
+    liberty an asset takes, this list is what it still owes. The companion object supplies the honest
+    caveat that unusual arrangements need area, which the source raises and does not resolve.
+  applicability:
+    when: "screen-based layouts organised by an alternative to the grid"
+    limits: >
+      This is a 2017 practitioner's list, written for desktop browsers with mouseover and flyout
+      navigation and for phones of that moment. It is not a conformance standard, it overlaps
+      accessibility requirements without being one, and it must not be cited as though it carried the
+      authority of one. The small-screen question is left open by the source; any answer would be
+      ours.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_sgb_0031, t_sgb_0032]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sgb_006
+  source_knowledge_refs: [sk_sgb_0001, sk_sgb_0002, sk_sgb_0003, sk_sgb_0009, sk_sgb_0030]
+  source_system_refs: [scs_sgb_001]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  governance_consumer: evidence_interpretation
+  observation_unit: null
+  rationale: >
+    This chapter is unusually easy to quote out of context: its opening three paragraphs read as a
+    licence and its constraint arrives much later under a different heading. Any retrieval that
+    surfaces the opening without the practicality obligation misrepresents the source's position.
+    The binding exists to flag that pairing requirement to whatever interprets this material, not to
+    restate the claims.
+  applicability:
+    when: "any retrieval or summarisation that surfaces this chapter's argument for departing from a grid"
+    limits: >
+      This governs how this lane's own material is read. It asserts nothing about layouts, and it
+      confers no authority on the source's position — which remains a practitioner's argued opinion
+      throughout.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_sgb_007
+  source_knowledge_refs: [sk_sgb_0029, sk_sgb_0038, sk_sgb_0039, sk_sgb_0016]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [flags]
+  governance_consumer: conflict_resolution
+  observation_unit: null
+  rationale: >
+    Several objects in this lane point the opposite way from material already held about the same
+    book's first chapter — building a grid before assessing content, whether grids enable or impede
+    variation, whether fragmenting text harms or helps reading. Every one of those is one author
+    qualifying his own earlier statement across a chapter boundary in a single work. The binding
+    exists so that a later conflict-resolution step handles them as intra-source qualification and
+    never as two sources disagreeing, and so that no aggregation counts this lane as corroboration of
+    the first chapter.
+  applicability:
+    when: "any step that compares this lane's objects against material drawn from chapter 1 of the same book"
+    limits: >
+      This is a statement about provenance, not about layouts. It does not decide which of the two
+      statements is right — in most cases the source itself does not, because the contexts differ —
+      and it must not be used to suppress either.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

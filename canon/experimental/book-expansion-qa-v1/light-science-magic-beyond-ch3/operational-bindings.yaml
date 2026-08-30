@@ -1,0 +1,519 @@
+# Light: Science & Magic, 5th ed., chapters beyond ch.3 — SPEC-04 OperationalBindings
+# EXPERIMENTAL — NOT LIVE CANON. Lane of book-expansion-qa-v1.
+# scope_extension_of: light-science-magic-ch3 · independence: none — same work
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# THE RULE THAT GOVERNS THIS FILE, STATED ONCE AND ENFORCED IN EVERY BINDING:
+#
+# This source is about PHYSICAL LIGHT, PHYSICAL CAMERAS AND PHYSICAL SURFACES. Every action it
+# prescribes is a person moving a light, a camera, a card, a filter, a support or a gobo.
+# "Move the light outside the family of angles" does NOT become "regenerate with a different
+# lighting prompt." Exactly one binding below carries target_type: production, it is
+# status: production_candidate with target_path: null, and its applicability.limits says in
+# terms that nothing in it has been translated. The gap ledger calls physical-to-generative
+# translation G11 and records that no book supplies it. This lane does not attempt it.
+#
+# The EVALUATION bindings are the honest ones: what to LOOK AT in a finished image. Each carries an
+# observation_unit. They do not claim any generator can produce these behaviours — that is a
+# Capability Lab question and is not asserted anywhere here.
+#
+# Neither cross_source_supported nor empirically_supported is used, per the schema contract.
+# ─────────────────────────────────────────────────────────────────────────────
+
+source_id: light-science-magic-beyond-ch3
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+# ── CREATIVE IR ─────────────────────────────────────────────────────────────
+
+- binding_id: bnd_lsmx_001
+  source_knowledge_refs: [sk_lsmx_0003, sk_lsmx_0004, sk_lsmx_0013, sk_lsmx_0025, sk_lsmx_0039, sk_lsmx_0054]
+  source_system_refs: [scs_lsmx_001]
+  target_type: creative_ir
+  target_path: creative.visual_language
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [derives, constrains]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    SPEC-01's visual_language field lists lighting alongside palette, texture and genre without saying
+    what a lighting specification must decide. The live chapter-3 binding supplied the general answer:
+    which reflection type is to dominate. This span supplies the vocabulary that answer needs to be
+    written in — a set of named surface classes, each with a stated governing reflection channel and a
+    stated failure when the wrong one is chosen. A brief that says "polished tin, glass jar, foil
+    wrapper, glossy label" is naming exactly the classes this source separates, and each class carries a
+    different consequence for what "well lit" means.
+  applicability:
+    when: "specifying lighting or material intent for a still containing named product surfaces of differing finish"
+    limits: >
+      This supplies vocabulary for expressing an intent, not a rule for choosing one, and it says nothing
+      about how any intent is to be realised. The source's own account of how these appearances are
+      produced is entirely physical and is parked in bnd_lsmx_010, untranslated. Nothing here asserts
+      that a generative model reproduces the optical behaviour that makes these classes distinct.
+      NOT AN INDEPENDENT SOURCE against the live chapter-3 binding on the same field — same book, same
+      authors.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0017, t_lsmx_0018, t_lsmx_0021]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_002
+  source_knowledge_refs: [sk_lsmx_0025, sk_lsmx_0032, sk_lsmx_0037, sk_lsmx_0016]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: entities.allowed_variation
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [constrains]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    SPEC-01 lets an entity declare `allowed_variation: {lighting: true, viewing_angle: true}` alongside
+    the invariants that constitute its identity. This source supplies a physical basis for setting those
+    two flags per surface rather than per product. A matte surface's recorded brightness is independent
+    of viewing angle, so its appearance is close to an identity property. A polished one's is not: what a
+    mirror-like product shows is an image of its surroundings, so the same physical object legitimately
+    looks different from a different angle or in a different room, and its centre will show whatever is
+    in front of it. Declaring viewing_angle variation permissible for a brushed-metal tin and
+    impermissible for a matte carton is a different decision, and the source says why.
+  applicability:
+    when: "declaring which appearance changes count as identity violations for a product entity with reflective surfaces"
+    limits: >
+      The source is describing what a physical camera records from a physical object. Whether a generator's
+      variation across angles corresponds to this physics is unknown and is not claimed. The flags this
+      informs are declarations of intent, not measurements. Treat as extractor inference: the source never
+      discusses identity, invariants, or any specification format.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0020]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed; the leap from optical behaviour to identity declaration is ours"
+
+# ── EVALUATION — the honest bindings. Every one names what to inspect. ───────
+
+- binding_id: bnd_lsmx_003
+  source_knowledge_refs: [sk_lsmx_0004, sk_lsmx_0010, sk_lsmx_0011, sk_lsmx_0012, sk_lsmx_0054]
+  source_system_refs: [scs_lsmx_001]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    A single question to ask of any highlight in a rendered or photographed frame: is it a diffuse
+    highlight or a direct reflection? The source supplies the discriminators. A diffuse highlight sits
+    where the light falls and does not move with viewpoint; a direct reflection is an image of the source
+    and its size, shape and evenness are the source's. On a textured surface the two produce visibly
+    different results — a light diffuse surface shows a shadow and a lit face on every particle, a dark
+    glossy one shows a raised overall highlight with the texture legible inside it. The diagnostic value
+    is that a frame in which a dark textured material shows neither is a frame in which the material is
+    not reading as its class.
+  applicability:
+    when: "inspecting a frame containing a textured or finished surface to judge whether it reads as its material"
+    limits: >
+      The source describes what a camera records from a real surface, and its two demonstrations are
+      photographs of a sponge and a leather notebook. Applying the discriminators to a generated image is
+      ours, and a generator that produces a plausible highlight without any underlying geometry may satisfy
+      the cue without the mechanism. The check therefore diagnoses appearance, not correctness.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0017]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_004
+  source_knowledge_refs: [sk_lsmx_0039, sk_lsmx_0040, sk_lsmx_0041, sk_lsmx_0042, sk_lsmx_0043]
+  source_system_refs: [scs_lsmx_004]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    A specific, checkable acceptance question for any frame containing transparent glassware: does the
+    glass have defined edges, and are they defined the same way all the way round? The source's two
+    correct answers are continuous dark lines against a brighter ground, or continuous bright lines
+    against a darker one. Its named failure is the mixture — edges that go bright in one region and
+    vanish in another, or a subject whose outline merges with the ground. That failure has a name in this
+    lane and a stated cause. This is the most inspectable claim in the whole span: the two acceptable
+    outcomes are visually distinct, mutually exclusive, and describable without reference to how the frame
+    was made.
+  applicability:
+    when: "inspecting a frame containing transparent glass or a transparent container"
+    limits: >
+      The source is describing physical glass photographed with real backgrounds. The check transfers
+      because it is stated entirely in terms of the finished image rather than the set-up — but the
+      REMEDIES do not transfer, and none has been rewritten as one. When this check fails, the source's
+      answers are all physical: resize the background, move the subject toward the camera, separate the
+      two field regions. Those stay in bnd_lsmx_010.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0018, t_lsmx_0019]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_005
+  source_knowledge_refs: [sk_lsmx_0025, sk_lsmx_0028, sk_lsmx_0029, sk_lsmx_0031, sk_lsmx_0035, sk_lsmx_0038]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    Three inspections for any frame containing polished metal, each with a stated physical reason. First,
+    is the metal reading as metal or as a grey card? Polished metal records at close to the brightness of
+    whatever it reflects, so a metal surface sitting at a plausible mid grey across its whole area, with
+    no bright region and no dark one, is showing the tonal signature of a diffuse surface rather than a
+    mirror. Second, does the metal's edge separate from what it stands on? The source names the failure
+    exactly — a near-pure direct reflector standing on its own light source records at the same brightness
+    as that source, and the boundary disappears. Third, does the frame contain the source's own image?
+    Because a direct reflection is a picture of the source, a shiny surface reports the size and shape of
+    what lit it, and a hard-edged rectangle in a product's face is a legible artefact.
+  applicability:
+    when: "inspecting a frame containing polished or brushed metal, foil or another strongly direct-reflecting product surface"
+    limits: >
+      Everything here is a statement about what a real camera records from real metal. Applying the three
+      checks to a rendered frame is ours. The second check in particular assumes the depicted metal really
+      is standing on the surface that appears to light it, which a generated image need not honour. Nothing
+      about how to FIX any of these is bound outside bnd_lsmx_010: the source's answers are a light-toned
+      background, a black card, a gobo, a polarizer or dulling spray, all physical.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0021]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_006
+  source_knowledge_refs: [sk_lsmx_0048]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    Two checks for any frame containing liquid in a transparent container, both with stated optics behind
+    them. First, does the liquid's colour belong to the liquid or to what is behind it? The source states
+    flatly that a liquid in a transparent container always takes some of the colour and texture of its
+    background, and its demonstration pair is beer that is murky brown against a mottled ground and bright
+    amber with a shaped card behind it. A brief asking for an appetising drink is asking, in this source's
+    terms, for a controlled secondary background. Second, does what is visible THROUGH the liquid agree
+    with what is visible beside it? A round liquid-filled container is a lens with a wider field than the
+    camera, so the region seen through it legitimately shows more of the surroundings — and, in a
+    fabricated image, is a place where the surroundings may simply fail to be consistent.
+  applicability:
+    when: "inspecting a frame containing a drink, a liquid product or any transparent container of liquid"
+    limits: >
+      The lens behaviour is a physical fact about refraction; whether a generated image obeys it is exactly
+      the sort of thing this check would reveal, and this lane makes no claim about the answer. The colour
+      check is a diagnosis of appearance: it can say a liquid looks murky and can point at the background as
+      the source's stated cause, and it cannot verify that the depicted cause is the actual one.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0023, t_lsmx_0011]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_007
+  source_knowledge_refs: [sk_lsmx_0049, sk_lsmx_0045, sk_lsmx_0013]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    The conflict check, and the most transferable thing in this span. Where two surfaces of different
+    class occupy one frame, the treatment that serves one degrades the other, and the source's worked case
+    is the packshot's own: the light that gives a bottle its describing highlight puts a sheen across the
+    paper label and reduces its legibility. The inspection is therefore not "is the glass well lit" or "is
+    the label legible" but both at once, plus the third question the source insists comes first — which of
+    them is the principal subject. A frame where the container looks superb and the type has gone soft is
+    not a frame with a legibility defect; it is a frame lit for the wrong principal subject, and the source
+    says that decision cannot be made technically.
+  applicability:
+    when: "inspecting any frame in which a legible element sits on a reflective or transparent product"
+    limits: >
+      The source treats one case — a paper label on a glass bottle — and generalises it only loosely. The
+      diagnosis is honest as far as naming the conflict; the source's remedies are a light moved higher and
+      a gobo cut to the label's family of angles, both physical, both parked. Note also that in the copy
+      inspected, the improvement between the source's before and after frames is smaller than its prose
+      implies, so the DEMONSTRATION is weaker than the mechanism.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0022]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_008
+  source_knowledge_refs: [sk_lsmx_0055, sk_lsmx_0053, sk_lsmx_0021]
+  source_system_refs: [scs_lsmx_005]
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, evaluates]
+  observation_unit: frame
+  governance_consumer: null
+  rationale: >
+    Two checks for frames pushed toward either end of the tonal range, which is most packshots on white
+    and most dramatic product work on black. First, does the background carry the extreme? The source
+    demonstrates with matched pairs that a viewer accepts a light-grey subject on a white ground as
+    white-on-white but reads a white subject on a light-grey ground as white-on-gray, and the same
+    asymmetry in reverse at the dark end. The frame can be technically separated and still read as the
+    wrong thing. Second, does the subject's edge survive against the ground? The source gives a numeric
+    window for its own examples — background between half a stop and one stop beyond the subject's edge
+    tones — with a stated failure on each side: below it the edge is lost, above it flare costs contrast.
+    A frame whose product silhouette dissolves into a white ground is failing the first of those bounds.
+  applicability:
+    when: "inspecting a high-key or low-key frame, or a packshot on a white or black ground"
+    limits: >
+      The half-to-one-stop window is stated by the source for its own remaining examples and is not
+      presented as a universal, so it is a starting reference and not a threshold. The perceptual claim
+      about which element must carry the extreme is asserted from the source's own matched pairs, without
+      a study. The exposure half of the underlying system is technology-contingent — the compression the
+      source describes belongs to film and to the sensor generation of this edition.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0025, t_lsmx_0024, t_lsmx_0014]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_009
+  source_knowledge_refs: [sk_lsmx_0058, sk_lsmx_0060]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [diagnoses, flags]
+  observation_unit: whole_asset
+  governance_consumer: null
+  rationale: >
+    A colour-error triage that is worth having because it separates a fixable defect from an unfixable
+    one before anyone spends time on it. Is the colour error uniform across the asset, or does it vary by
+    region? A uniform cast is the source's mixed-colour case: one global correction removes it, and the
+    result differs from a correct original only under side-by-side comparison. A cast that changes from
+    the subject to the background, or that appears in a shadow but not on the surface casting it, is the
+    unmixed case: no single correction is right anywhere, and a compromise leaves nothing right. The
+    source adds a specific artefact to look for after any global correction — a clipped highlight, having
+    recorded white regardless of the colour that produced it, takes on the colour of the correction, so a
+    tinted specular highlight in an otherwise corrected asset is evidence of the correction rather than of
+    the lighting.
+  applicability:
+    when: "triaging a colour cast across a delivered asset, or inspecting an asset after a global colour correction"
+    limits: >
+      The source's context is a photographer on location with a flash and existing fluorescent light, and
+      its remedy is to gel the physical sources. Only the DIAGNOSIS is bound here. The uniform-versus-
+      varying test is a property of the image and transfers; the remedy is physical and is parked. The
+      catalogue of nonstandard sources is period-specific and is not part of this binding.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0013, t_lsmx_0012]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ── PRODUCTION — PARKED, NOT TRANSLATED ─────────────────────────────────────
+
+- binding_id: bnd_lsmx_010
+  source_knowledge_refs:
+    - sk_lsmx_0005
+    - sk_lsmx_0008
+    - sk_lsmx_0009
+    - sk_lsmx_0010
+    - sk_lsmx_0012
+    - sk_lsmx_0013
+    - sk_lsmx_0019
+    - sk_lsmx_0023
+    - sk_lsmx_0026
+    - sk_lsmx_0027
+    - sk_lsmx_0030
+    - sk_lsmx_0031
+    - sk_lsmx_0032
+    - sk_lsmx_0033
+    - sk_lsmx_0034
+    - sk_lsmx_0035
+    - sk_lsmx_0036
+    - sk_lsmx_0037
+    - sk_lsmx_0038
+    - sk_lsmx_0040
+    - sk_lsmx_0041
+    - sk_lsmx_0042
+    - sk_lsmx_0043
+    - sk_lsmx_0045
+    - sk_lsmx_0046
+    - sk_lsmx_0047
+    - sk_lsmx_0048
+    - sk_lsmx_0049
+    - sk_lsmx_0050
+    - sk_lsmx_0051
+    - sk_lsmx_0056
+    - sk_lsmx_0057
+    - sk_lsmx_0059
+  source_system_refs: [scs_lsmx_002, scs_lsmx_003]
+  target_type: production
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    The operative content of these chapters is a large, unusually complete set of physical procedures:
+    locate the family of angles with a test light at the lens position; fill it, vacate it, or subtract
+    part of it with a shaped gobo; move the light to set the background's brightness while the metal holds;
+    choose the lens that decides how far the light may travel; stand the subject on glass, on glossy black
+    acrylic, on a mirror or on velvet; put the light at the limits of the family and a smaller dark card
+    inside it; cut a secondary background to the subject's own outline; block a label's family and no more;
+    gobo the lens on four sides; polarize a source and cross the lens; gel a window rather than the lamps.
+    Every one of these is a person moving a physical object in a physical room.
+  applicability:
+    when: "Production IR exists and a physical photographic set-up is being specified"
+    limits: >
+      NOT TRANSLATED, and the refusal is the point of this binding. Production IR does not exist, so there
+      is nowhere for these to go, and the correct response is to park them in the source's own frame rather
+      than to paraphrase them into generative instructions. The project's gap ledger names
+      physical-to-generative translation as G11 and records that no book supplies it; this book, which
+      supplies the richest physical procedures in the corpus, supplies none of that translation either.
+      "Place the light outside the family of angles" is a statement about a light stand. It does not become
+      a prompt, a negative prompt, a control image, a parameter, or a respecification of any kind, and no
+      object referenced above has been rewritten in any such form anywhere in this lane.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0015, t_lsmx_0016, t_lsmx_0017, t_lsmx_0018, t_lsmx_0019, t_lsmx_0020, t_lsmx_0021, t_lsmx_0022, t_lsmx_0023, t_lsmx_0024, t_lsmx_0025]
+  repair_ontology_refs: [t_lsmx_0026, t_lsmx_0027, t_lsmx_0028, t_lsmx_0029, t_lsmx_0030, t_lsmx_0031, t_lsmx_0032, t_lsmx_0033, t_lsmx_0034, t_lsmx_0035, t_lsmx_0036, t_lsmx_0037, t_lsmx_0038, t_lsmx_0039, t_lsmx_0040, t_lsmx_0041, t_lsmx_0042, t_lsmx_0043]
+  status: production_candidate
+  status_reason: "Production IR does not exist; parked in the source's own frame, not translated"
+
+# ── GOVERNANCE ──────────────────────────────────────────────────────────────
+
+- binding_id: bnd_lsmx_011
+  source_knowledge_refs: [sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0035, sk_lsmx_0036, sk_lsmx_0057]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains]
+  observation_unit: null
+  governance_consumer: conflict_resolution
+  rationale: >
+    A worked precedent for a distinction the ontology has to be able to draw and currently draws by hand:
+    a source qualifying its OWN earlier statement is not a disagreement between sources. This span
+    contains at least three clean instances, all within one book by one author team. The polarizer is
+    offered early among the remedies for competing surfaces in chapter 4 and demoted to a next-to-last
+    resort for glossy boxes in chapter 5, with the optical reason given. Identical box geometry is used to
+    REMOVE direct reflection when the box is glossy wood and to CREATE it when the box is metal, and the
+    source says so in as many words. The transparent-support-plus-polarizer trick that solves the metal box
+    is explicitly withdrawn for black subjects in chapter 9, on the ground that a black subject's direct
+    reflection is polarized like the support's. In each case the later statement supersedes the earlier
+    within a stated scope, and none of the three is a contradiction: the scopes differ and the source names
+    the difference. Any consolidation that flattened these into "the source contradicts itself", or worse
+    into two sources disagreeing, would destroy the information.
+  applicability:
+    when: "deciding how to record an apparent conflict between two claims, and whether it is a disagreement at all"
+    limits: >
+      Three instances from one work. It shows that self-qualification is common enough within a single
+      author team to need a name, and that the qualifying statement usually carries its own scope marker.
+      It does not establish how to detect the pattern where the source does NOT state the scope, which is
+      the harder case.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+- binding_id: bnd_lsmx_012
+  source_knowledge_refs: [sk_lsmx_0007, sk_lsmx_0010, sk_lsmx_0011, sk_lsmx_0021]
+  source_system_refs: [scs_lsmx_001]
+  target_type: governance
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [constrains, flags]
+  observation_unit: null
+  governance_consumer: rule_application
+  rationale: >
+    Two clean demonstrations that a rule extracted without its precondition is not merely incomplete but
+    actively harmful, and that the source treats this as the central pedagogical point rather than as an
+    aside. The 45-degree copy rule is a real rule that usually works and that fails silently because it is
+    stated as an angle while depending on two distances; the source's correction is not to replace it but
+    to name what it omits. The raking light that reveals a sponge's texture is the same rule applied to
+    black leather, where the source says the earlier theory predicts the worst possible arrangement — and
+    the reason is a precondition, the presence of a diffuse channel, that the rule never mentioned. Both
+    are directly relevant to how this project should record craft rules: a rule whose scope condition is
+    dropped will be applied confidently in exactly the cases where it inverts.
+  applicability:
+    when: "deciding how much scope condition must travel with an extracted craft rule before it may be applied"
+    limits: >
+      Two instances, both from one chapter of one book, both about surface lighting. They demonstrate the
+      failure mode vividly and do not establish how often it occurs, nor give a test for detecting an
+      unstated precondition in a rule that has not yet been seen to fail.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_lsmx_0017, t_lsmx_0016]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"
+
+# ── BENCHMARK ───────────────────────────────────────────────────────────────
+
+- binding_id: bnd_lsmx_013
+  source_knowledge_refs: [sk_lsmx_0011, sk_lsmx_0012, sk_lsmx_0032, sk_lsmx_0048, sk_lsmx_0055, sk_lsmx_0057]
+  source_system_refs: []
+  target_type: benchmark
+  target_path: null
+  target_schema: null
+  target_schema_version: null
+  role: [derives]
+  observation_unit: null
+  governance_consumer: null
+  rationale: >
+    Five matched pairs in which exactly one variable changes and the predicted outcome follows from stated
+    physics rather than from taste, and — unlike the live chapter-3 pass — all five were actually inspected
+    in this copy. Black leather under raking light against the same leather under a large source filling the
+    family of angles, with the source stating the incident light is unchanged, so the recovered texture
+    cannot be an exposure effect. The same spatula and soft box at two distances, where the background lifts
+    from mid grey to near white and the blade holds its tone. The same beer against a mottled ground and
+    against a shaped white card. The same bust lit so the background is white and then so the subject is.
+    The same flashlight on black paper and on black velvet at identical exposure. Each has a definite
+    expected result, each isolates one variable, and each is stated before it is shown.
+  applicability:
+    when: "constructing stimuli whose expected outcome follows from stated physics rather than from a practitioner's judgement"
+    limits: >
+      Candidate stimuli, not instruments. They are photographs of physical set-ups made by these authors,
+      and reproducing them would require reproducing the set-ups. Nothing here is a measurement of any
+      generator's behaviour, and the fact that the expected outcomes follow from physics makes them easier
+      to validate independently — it does not remove the need to. Note also that the fifth pair's variable,
+      the material of the background, is confounded with everything else about velvet versus paper; the
+      source controls the exposure and the lighting, not the material's other properties.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "experimental; not reviewed"

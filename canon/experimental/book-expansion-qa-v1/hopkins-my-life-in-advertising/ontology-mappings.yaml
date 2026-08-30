@@ -1,0 +1,646 @@
+# Ontology mappings (SPEC-05) — Claude C. Hopkins, "My Life in Advertising" (1927)
+# source_id: hopkins-my-life-in-advertising
+# EXPERIMENTAL — NOT LIVE CANON.
+#
+# NO `xs_` CROSS-SOURCE CONCEPT IS CREATED HERE, and none may be built from this source against
+# `hopkins-scientific-advertising-ch1-7` or `hopkins-scientific-advertising-ch8-21`: all three are
+# the same author, which is a `shared_author` dependence relation under SPEC-05 §Governance 5.
+# `same_failure_family` is not used anywhere in this file (SPEC-05 requires human review).
+# No cross-lane relationship is asserted: this lane cannot resolve another lane's term_ids, and a
+# dangling reference would be worse than a recorded observation. See EXTRACTION-NOTES.md.
+#
+# Terms are the SOURCE's words wherever the source has one; `verbatim: false` marks an extractor
+# label for a concept the source states without naming. Every `kind: remedy` term carries
+# `executable_by`, and the physical-production ones are NOT translated.
+
+source_id: hopkins-my-life-in-advertising
+terms:
+
+  # ── the source's method vocabulary ─────────────────────────────────────────
+- term_id: t_mla_0001
+  term: keyed_advertising
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    An advertisement carrying a coded coupon or reply device so that the responses it produces
+    can be attributed to it and counted, allowing cost per reply and cost per sale to be computed.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0002
+  term: traced_returns
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    Responses whose origin is known, so that an advertisement can be held responsible for its
+    cost and its result. The source treats the presence or absence of this as the dividing line
+    between advertising that teaches and advertising that does not.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0003
+  term: advertising_blindly
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Spending on advertising without any trace on cost and result. The source states it teaches
+    one nothing and usually leads to the rocks.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0004
+  term: judging_ads_by_appearance
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Selecting between advertisements on how attractive they look, which is what an advertiser
+    without a cost trace is necessarily doing. The source presents a case where this produced a
+    cost per reply of $14.20 against 42 cents for the advertisement rejected as unattractive.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0005
+  term: test_campaign
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    A small local campaign, in the source's cases $700 to $5,000, run to observe the response
+    before any large commitment is made.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: physical_production
+
+- term_id: t_mla_0006
+  term: repeat_sales_before_the_bills_are_due
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    The source's pass criterion for a test campaign: repeat purchases in the test town cover the
+    advertising cost inside the advertising credit period. It measures the product, not the
+    appeal.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0007
+  term: rashness
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Committing at scale before the response has been observed. The source distinguishes this from
+    ordinary failure, which it calls expected and cheap, and calls rashness needless and
+    inexcusable.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+  # ── failures the source names ──────────────────────────────────────────────
+- term_id: t_mla_0008
+  term: buy_my_brand
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    An appeal whose content is a request that the reader transfer his purchase to the advertiser
+    — including "mine is the original", "be sure to get the genuine", "insist on this brand",
+    "avoid imitations". The source glosses every variant as "give me the money which you give to
+    others" and holds it has no effect.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0009
+  term: selfish_appeal
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Any appeal in which the advertiser's own advantage is the visible motive. The source states
+    it creates corresponding resistance and that a single such phrase can kill an advertisement.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0010
+  term: institutional_advertising
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Advertising that features the firm — the plant, the output, the growth, the policies — rather
+    than offering the buyer anything. The source calls boasting repulsive and reports losing
+    accounts over refusing it.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0011
+  term: superlative_claim
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    "Best in the world", "cheapest in the long run", "the supreme creation of its kind". The
+    source holds these make no impression because they are expected, and that they additionally
+    cause everything else the advertiser says to be discounted.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0012
+  term: promiscuous_sampling
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Distributing samples to people who did not request them, house to house or on the doorstep.
+    The source states such products lose respect, that the giving cheapens the product, and that
+    grocers are offended by free distribution of goods they sell.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0013
+  term: selling_the_goods_twice
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Paying to create consumer demand and then paying jobbers and retailers in concessions and
+    free goods to supply that demand. The source calls the resulting doubled selling expense the
+    cause of the greatest calamities in advertising.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0014
+  term: playing_too_high_a_note_for_the_product
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    A campaign whose promise exceeds what the product delivers, so that each additional sale
+    damages the name and the rate of destruction rises with the effectiveness of the advertising.
+    The source's own phrase for the case where its most successful automobile campaign ruined its
+    client.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0015
+  term: changing_habits_in_paid_print
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Spending advertising money to create a practice the buyer does not have, rather than to
+    direct a practice he already has. The source calls it one of the greatest mistakes of its
+    life and states no new user repays the cost of his conversion.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0016
+  term: charging_for_the_sample
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Asking the interested buyer to pay part of the cost of trying. The source's illustrative
+    magnitudes are 25 cents per inquiry free against $1.25 or more at a ten-cent charge, with
+    about a fifth as many users started for the same money.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0017
+  term: featuring_free_on_a_hygiene_appeal
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Placing a free offer as the chief appeal at the top of an advertisement for a health or
+    hygiene product, which the source reports divided its results by four because it reclassified
+    the advertiser from a scientist conferring a benefit to a trader seeking a sale.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0018
+  term: medium_reaching_a_class_that_cannot_buy
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: problem
+  definition_in_origin_frame: >
+    Paid reach landing outside the group able to afford the product. The source's case is a
+    premium cereal in newspapers where it estimates nine in ten readers reached could not afford
+    it.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+  # ── remedies and devices ───────────────────────────────────────────────────
+- term_id: t_mla_0019
+  term: offer_service_not_a_purchase
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Present something useful to the buyer and leave the advertiser's gain unstated — never ask
+    people to buy, rarely name the price, offer a favour. The source states it never asked for a
+    purchase in its whole career.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_mla_0020
+  term: give_actual_figures
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Replace a superlative with a definite measured quantity — 3 1/2 times the light, 9 per cent
+    profit, lather multiplied 250 times, 3 per cent net margin — on the ground that a definite
+    statement is either a fact or a lie and is therefore credited at par.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_mla_0021
+  term: tell_the_commonplace_process_facts
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Publish the ordinary production facts of a category that every competent maker could also
+    claim and none has yet stated, so the first to state them is taken to own them. The source's
+    case is a brewery's purity processes.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_mla_0022
+  term: we_will_buy_offer
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    An offer in which the advertiser buys the product at retail for the applicant and pays the
+    dealer his price, announced above the story advertisements before the coupon page appears.
+    The source distinguishes it sharply from a free offer, which it says cheapens the product.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: physical_production
+
+- term_id: t_mla_0023
+  term: coupon_good_at_any_store
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    A printed coupon redeemable by the bearer at any retailer, who is reimbursed at retail price
+    by the advertiser. It makes the sample earned, it makes the trade stock, and it keys the
+    advertisement for measurement. Not translated: this is a physical retail mechanic of its era.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: physical_production
+
+- term_id: t_mla_0024
+  term: dealer_privilege_on_a_signed_agreement
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    A scarce, finality-framed offer granted to a retailer only against a signed undertaking to
+    display the goods until sold, display the supplied cards, and enclose the supplied pamphlet
+    in every package leaving the store for a stated period. Not translated: a physical trade
+    mechanic.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_mla_0025
+  term: naming_stocking_dealers_in_the_advertisement
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Listing in each local advertisement every dealer who carries a stated minimum stock, so that
+    stocking buys the dealer prominence against his named rivals. Not translated: a physical
+    trade mechanic.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_mla_0026
+  term: local_guarantor
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Having the neighbourhood retailer the buyer pays sign the money-back warrant, rather than a
+    manufacturer a thousand miles away whom the source calls a stranger to the buyer.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_mla_0027
+  term: undisclosed_gift
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    A premium offered without describing it, on the source's stated ground that describing a gift
+    lets some readers decide they do not want it while everybody wants a secret gift. Conditional
+    on the gift not disappointing.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_mla_0028
+  term: name_that_tells_a_story
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    A product name constructed so that it states the main claim and therefore functions as a
+    complete advertisement wherever it is displayed. The source calls coining the right name
+    often the major step in good advertising.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_mla_0029
+  term: named_personality_as_sponsor
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Attaching a product to an individual by name — an engineer, a designer, a practical user, a
+    public figure — and where useful writing the copy in that person's voice and over that
+    person's signature. The source states a man can be made famous more easily than an
+    institution.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_mla_0030
+  term: trend_of_the_crowd
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Presenting the observable direction of other buyers as the argument, on the ground that
+    buyers cannot judge value and substitute the verdict of the majority. The source calls it the
+    most effective thing it ever found in advertising.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+- term_id: t_mla_0031
+  term: complete_story_in_every_advertisement
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Including every appeal that has proved important in every advertisement, because readers do
+    not read advertisements in series and an omitted argument never reaches the reader it would
+    have converted.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_mla_0032
+  term: headline_as_salutation
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    The headline's function of calling out the particular readers wanted, like a bell-boy calling
+    a name. Because completeness makes bodies similar, the source holds the headline is where
+    nearly all the controllable difference between advertisements lies.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by:
+
+- term_id: t_mla_0033
+  term: reward_appeal_not_prevention
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Featuring the happier result rather than the penalty or the affliction, on the source's
+    ground that people will do little to prevent a trouble they do not have and that those who
+    already have it are, in most lines, too small a percentage to build on.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: human_edit
+
+- term_id: t_mla_0034
+  term: take_the_risk_on_the_buyer
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Structuring the offer so the seller bears the risk of disappointment — money-back warrants,
+    approval shipments, a first unit bought outright for the buyer. The source's rule is that
+    asking a person to take a chance on you is a fight and offering to take a chance on him is
+    easy.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_mla_0035
+  term: ordinary_type_and_upper_and_lower_case
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Setting body text in the size the audience habitually reads (8-point ordinary matter,
+    6-point in mail order at the time of writing) and display lines in upper and lower case,
+    because the unfamiliar has to be studied out and oversize type doubles the space cost.
+    Historically specific to 1920s American print.
+  first_seen: 2026-08-30
+  verbatim: false
+  executable_by: physical_production
+
+- term_id: t_mla_0036
+  term: economy_of_space
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: remedy
+  definition_in_origin_frame: >
+    Removing anything occupying paid space that does not sell — large type, borders, decoration,
+    pictures with no selling value, repeated words. The source's arithmetic is that doubling the
+    space doubles the cost per reply.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by: human_edit
+
+  # ── the source's own boundary and position markers ─────────────────────────
+- term_id: t_mla_0037
+  term: no_longer_approve_of_medicine_advertising
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    The source's stated repudiation of patent-medicine advertising as a class, made before it
+    recounts the campaigns that established its reputation, including a $900,000 appropriation it
+    says it is refusing as it writes. A position, not a technique.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0038
+  term: confined_to_the_common_people
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    The source's own scope limit: it writes for mass-market purchasers, states it does not know
+    the reactions of the wealthy, and expects it would fail on luxury lines. The most important
+    boundary condition on everything else it claims. Culturally bounded 1920s American framing.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0039
+  term: too_costly_to_attempt
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    The source's disqualifying conditions: a product of narrow incidence reached only through
+    universal-circulation media, or a repeat cycle so long that acquisition cost exceeds
+    recoverable return before funds and patience are exhausted.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+- term_id: t_mla_0040
+  term: enduring_as_the_alps
+  origin: source
+  origin_ref: hopkins-my-life-in-advertising
+  kind: property
+  definition_in_origin_frame: >
+    The source's claim that human nature does not change and its principles are permanent, stated
+    alongside its own concession that fads and desires change like a kaleidoscope and every
+    campaign needs a different key-note. Recorded as the source's position, not as a finding.
+  first_seen: 2026-08-30
+  verbatim: true
+  executable_by:
+
+relationships:
+
+  # within-source mappings
+- {from: t_mla_0003, to: t_mla_0004, relation: broader_than, confidence_basis: extractor_judgement, note: "judging by appearance is what an advertiser without a cost trace necessarily does; the source states both together at pp. 158-159"}
+- {from: t_mla_0002, to: t_mla_0001, relation: broader_than, confidence_basis: extractor_judgement, note: "keying is one way of obtaining traced returns; the source names coupons as the usual one"}
+- {from: t_mla_0009, to: t_mla_0008, relation: broader_than, confidence_basis: extractor_judgement, note: "the source glosses every brand-insistence variant as an instance of the selfish appeal"}
+- {from: t_mla_0009, to: t_mla_0010, relation: broader_than, confidence_basis: extractor_judgement, note: "institutional boasting is the source's second named form of visible self-interest"}
+- {from: t_mla_0019, to: t_mla_0009, relation: related_to, confidence_basis: extractor_judgement, note: "the source's stated remedy for the selfish appeal"}
+- {from: t_mla_0020, to: t_mla_0011, relation: related_to, confidence_basis: extractor_judgement, note: "the source's stated remedy for the superlative"}
+- {from: t_mla_0021, to: t_mla_0020, relation: narrower_than, confidence_basis: extractor_judgement, note: "commonplace process facts are told in the form of actual figures; the source runs the two together"}
+- {from: t_mla_0023, to: t_mla_0012, relation: distinct_from, confidence_basis: extractor_judgement, note: "NEGATIVE FINDING, checked and rejected: both are called sampling and both put product in a buyer's hands, but the source treats them as opposites — one requires an act of interest and stocks the trade, the other arrives unrequested and cheapens the product. Do not merge on the string 'sample'."}
+- {from: t_mla_0022, to: t_mla_0023, relation: related_to, confidence_basis: extractor_judgement, note: "the pre-announced buying offer and the coupon page are stages one and two of one plan"}
+- {from: t_mla_0016, to: t_mla_0012, relation: distinct_from, confidence_basis: extractor_judgement, note: "NEGATIVE FINDING: both are ways a trial offer fails, but the mechanisms are opposite — one filters out the interested by demanding money, the other reaches the uninterested by demanding nothing. The repairs are opposite too."}
+- {from: t_mla_0017, to: t_mla_0022, relation: related_to, confidence_basis: extractor_judgement, note: "the free-versus-bought framing whose sign reverses between categories; retrieve together or not at all"}
+- {from: t_mla_0024, to: t_mla_0025, relation: related_to, confidence_basis: extractor_judgement, note: "two routes to distribution without a sales force, both physical trade mechanics"}
+- {from: t_mla_0013, to: t_mla_0024, relation: related_to, confidence_basis: extractor_judgement, note: "the dealer-privilege mechanic exists so that distribution need not be bought with concessions"}
+- {from: t_mla_0014, to: t_mla_0006, relation: related_to, confidence_basis: extractor_judgement, note: "the repeat-sales criterion is what would have caught the too-high note; the source never connects them"}
+- {from: t_mla_0007, to: t_mla_0005, relation: related_to, confidence_basis: extractor_judgement, note: "the test campaign is the source's stated guard against rashness"}
+- {from: t_mla_0015, to: t_mla_0039, relation: related_to, confidence_basis: extractor_judgement, note: "both are acquisition-cost disqualifications; the source states the arithmetic in nearly the same terms"}
+- {from: t_mla_0028, to: t_mla_0029, relation: distinct_from, confidence_basis: extractor_judgement, note: "NEGATIVE FINDING: both are naming decisions the source treats as major, but a story-telling name carries a product claim while a named personality carries a sponsor's credibility. The source uses them separately and sometimes together, and they are not variants of one device."}
+- {from: t_mla_0035, to: t_mla_0036, relation: narrower_than, confidence_basis: extractor_judgement, note: "the type rule is the space-economy argument applied to type size"}
+- {from: t_mla_0033, to: t_mla_0032, relation: related_to, confidence_basis: extractor_judgement, note: "the source found the reward appeal by keyed headline testing"}
+- {from: t_mla_0037, to: t_mla_0034, relation: related_to, confidence_basis: extractor_judgement, note: "the risk-transfer doctrine was developed on the product class the source repudiates; recorded so the entanglement is visible"}
+- {from: t_mla_0038, to: t_mla_0018, relation: related_to, confidence_basis: extractor_judgement, note: "the same class reasoning bounds the source's own competence and its medium choices"}
+- {from: t_mla_0040, to: t_mla_0038, relation: uncertain, confidence_basis: extractor_judgement, note: "the timelessness claim is asserted over a body of work the source elsewhere scopes to one class, one market and one era; the relation between the two claims is unresolved in the source"}
+
+concepts:
+
+- concept_id: sc_mla_traced_return_method
+  kind: source_specific_concept
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0001, t_mla_0002, t_mla_0003, t_mla_0005, t_mla_0006, t_mla_0007]
+  origin: source_stated
+
+- concept_id: sc_mla_selfishness_failures
+  kind: source_specific_concept
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0008, t_mla_0009, t_mla_0010, t_mla_0011, t_mla_0019, t_mla_0020]
+  origin: source_stated
+
+- concept_id: sc_mla_trial_offer_mechanics
+  kind: source_specific_concept
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0012, t_mla_0016, t_mla_0017, t_mla_0022, t_mla_0023, t_mla_0027, t_mla_0034]
+  origin: extractor_inferred
+
+- concept_id: sc_mla_distribution_without_salesmen
+  kind: source_specific_concept
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0013, t_mla_0024, t_mla_0025, t_mla_0026]
+  origin: source_stated
+
+- concept_id: sc_mla_disqualifying_economics
+  kind: source_specific_concept
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0015, t_mla_0018, t_mla_0039]
+  origin: extractor_inferred
+
+- concept_id: sc_mla_source_scope_markers
+  kind: source_specific_concept
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0037, t_mla_0038, t_mla_0040]
+  origin: extractor_inferred
+
+- concept_id: cc_response_attribution
+  kind: canonical_concept
+  label: response_attribution
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0001, t_mla_0002, t_mla_0003, t_mla_0004]
+  origin: extractor_inferred
+
+- concept_id: cc_claim_credibility
+  kind: canonical_concept
+  label: claim_credibility
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0011, t_mla_0020, t_mla_0021, t_mla_0026, t_mla_0030]
+  origin: extractor_inferred
+
+- concept_id: cc_offer_framing
+  kind: canonical_concept
+  label: offer_framing
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0016, t_mla_0017, t_mla_0022, t_mla_0027, t_mla_0033, t_mla_0034]
+  origin: extractor_inferred
+
+- concept_id: cc_text_economy_and_legibility_convention
+  kind: canonical_concept
+  label: text_economy_and_legibility_convention
+  purpose: retrieval_and_aggregation
+  created_by: extractor
+  asserts_equivalence: false
+  origin_ref: hopkins-my-life-in-advertising
+  children_terms: [t_mla_0031, t_mla_0032, t_mla_0035, t_mla_0036]
+  origin: extractor_inferred
