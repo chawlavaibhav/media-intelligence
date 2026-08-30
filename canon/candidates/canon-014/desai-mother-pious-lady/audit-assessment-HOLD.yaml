@@ -1,0 +1,304 @@
+# Audit Gate v0.2 record — Desai, "Mother Pious Lady"
+# Written by CANON-014 against the exact bytes fingerprinted below. The source was NOT reopened.
+
+audit_record_version: v0.2
+audit_id: aud_mother_pious_lady
+source_id: desai_mother_pious_lady
+knowledge_dir: canon/candidates/canon-014/desai-mother-pious-lady
+recorded_at_commit: work-branch-canon-014
+audit_status: evidence_insufficient
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+  - path: ontology-mappings.yaml
+    digest: e7093aa1732afecd92b75d464059bd7b7e1e9881f554e8c2f5eb89507f722094
+  - path: operational-bindings.yaml
+    digest: 573eaf4ee652de38c63c42f2aa2e88a858a128a94c12c65d9b9dc2f23714e9a4
+  - path: source-concept-systems.yaml
+    digest: 1aa7d6a01cb3119331cb2bce62ca40add7ccfa9681188ef3b0ac925dda5a1857
+  - path: source-knowledge.yaml
+    digest: 726a01ef762610f86d5c3304712ff5e59a65f9a17129f3a1d1d8bc4fa0d7dfb5
+  - path: visual-evidence-ledger.yaml
+    digest: 72b037a819cf100c1dfc21277a3f9adf908087bfce6fddb8aadf6bb3da40ce04
+  combined_digest: efa309a3a23dc18584c2e1836fa856a008b5570764f52989427f541cda4241b1
+
+evidence_basis_for_this_audit:
+- canon/knowledge/current/desai-mother-pious-lady/source-knowledge.yaml
+- canon/knowledge/current/desai-mother-pious-lady/source-concept-systems.yaml
+- canon/knowledge/current/desai-mother-pious-lady/operational-bindings.yaml
+- canon/knowledge/current/desai-mother-pious-lady/ontology-mappings.yaml
+- canon/knowledge/current/desai-mother-pious-lady/visual-evidence-ledger.yaml
+- canon/knowledge/current/desai-mother-pious-lady/PROVENANCE.md
+- canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml
+source_reopened: false
+
+# ── A. Representation integrity ─────────────────────────────────────────────
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable EPUB, no page map declared, no folio in the text. Every locator is an ESSAY TITLE,
+    which is unusually safe here: the essays are individually titled, no title repeats, and the
+    table of contents matches the essays present. No page number was interpolated.
+  inspection_state: inspected_figure_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: "Established from the OPF and a scan of the text layer. Not a fault; unfixable in this format."
+  - pattern: text_layer_order_damage
+    affects: "one paragraph of the Introduction, and ten front-matter and section-break positions"
+    detectability: announced_by_placeholder
+    recoverability: recovered_in_this_copy
+    evidence: >
+      THIS COPY HAS BEEN MODIFIED BY A REDISTRIBUTOR. The string "GAPPAA.ORG" is injected at 11
+      positions. Ten stand alone in front matter, the dedication, the contents, section openers and
+      chapter heads, where they are obviously not authorial. ONE is a complete non-authorial
+      sentence sitting INSIDE an authorial paragraph of the Introduction, carrying no
+      distinguishing markup and reading as prose: "My effort in this book has been to examine
+      Middle India from within. This book has been downloaded from gappaa dot org. I have grown up
+      in a middle class family; ...". All 11 were located by string search, enumerated in the
+      ledger, and excluded from extraction. Recorded as announced_by_placeholder because the
+      injected text names itself; the pattern is text_layer_order_damage because what it does is
+      insert non-authorial content into the reading order.
+  - pattern: no_loss_detected
+    affects: "the visual dimension - the pass ran and found nothing missing, because there is nothing visual to lose"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Recorded as no_loss_detected rather than as a visual-loss pattern, deliberately: the source
+      makes no visual argument (see visual_argument_role above, which is where that fact belongs),
+      so there is no visual evidence for this copy to have lost.
+      30 of the 33 images are 700-1,840-byte decorative ornaments recurring at essay openings; the
+      other three are the cover and two front-matter marks. Both non-ornament images were opened.
+      The book argues about objects - a scooter, a thali, a matrimonial column, a nightie - entirely
+      in prose and never reproduces or points at an image of any of them. No sentence in the book
+      directs the reader to look at anything. A text-only representation loses NOTHING of this
+      argument, which is the opposite of the situation in the other two CANON-014 candidates.
+  - pattern: no_loss_detected
+    affects: "the body text of the essays"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Apart from the 11 enumerated injections the prose extracts cleanly and in order across all
+      137 spine items. A duplicate-sentence scan found no sentence above 90 characters occurring
+      twice, so no pull-quote flattening.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The visual pass changed nothing and could not have, because there is no visual argument; that is
+    recorded as a completed inspection with a null result rather than as a gap, which is the
+    distinction the two-axis vocabulary exists to make.
+    The material limit is elsewhere and it is NOT the 11 injections that were found. It is that a
+    redistributor demonstrably willing to insert a sentence into an author's prose may have made
+    other changes carrying no marker, which would be undetectable in this copy. That risk is silent
+    and unbounded. The extraction is built to survive it: no object rests on a single verbatim
+    sentence, and every object is supported by an argument the author develops across a whole essay,
+    which no plausible injection would fabricate. The metadata is separately overwritten - dc:publisher
+    reads GAPPAA.ORG - so the EDITION is not establishable from this copy, though the work's identity
+    is not in doubt and no locator depends on the edition.
+
+# ── B. Evidence and claim origin ────────────────────────────────────────────
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 17 objects classified. This source is overwhelmingly the author's own voice: 10 of 17 objects
+    are typed source_interpretation, which is the correct shape for a collection of interpretive
+    essays and not a defect.
+  categories:
+  - category: source_own_measurement_reported
+    sk_refs: [sk_dmpl_0020, sk_dmpl_0045]
+    evidence: >
+      The ONE measurement in the book: a content analysis of matrimonial advertisements across
+      thirty years which the author says he was involved in, and the structural finding drawn from
+      it that the format's surface changed while its underlying model did not. Both carry
+      empirical_within_source, as this category requires.
+      What the source supplies is thin and is recorded as such on the objects: no sample size, no
+      sampling frame, no publication list, no coding scheme, no date range, no inter-coder check
+      and not a single number - every finding is directional. It is nonetheless the author's own
+      measurement with results reported, which is what distinguishes this category from
+      measurement_claimed_result_not_supplied, and its most valuable result is a NULL one (caste
+      mention did not change), which runs against the book's own modernisation narrative.
+  - category: source_author_assertion
+    sk_refs: [sk_dmpl_0001, sk_dmpl_0002, sk_dmpl_0010, sk_dmpl_0011, sk_dmpl_0012, sk_dmpl_0013, sk_dmpl_0021, sk_dmpl_0022, sk_dmpl_0030, sk_dmpl_0031, sk_dmpl_0040, sk_dmpl_0041, sk_dmpl_0042, sk_dmpl_0043, sk_dmpl_0044]
+    evidence: >
+      Fifteen objects in the author's own voice, argued from observation and recollection. This is
+      the whole of the rest of the book. Several are essayistic generalisations of considerable
+      rhetorical force and no evidential force - the Imperfect Solution thesis, the reading of
+      hierarchy, the SRK essay - and each carries a caveat saying so on the object rather than
+      relying on this record to bound it.
+  - category: source_quotes_named_third_party
+    sk_refs: [sk_dmpl_0021]
+    evidence: >
+      The source invokes Malcolm Gladwell's *Blink* and the notion of thin-slicing to characterise
+      the matrimonial advertisement as a very thin slice. It is a borrowed frame used
+      illustratively rather than a reported finding, and nothing in the extraction depends on it.
+  relation_to_evidence_characteristics: >
+    Exactly two objects carry empirical_within_source and both are listed under
+    source_own_measurement_reported, as the consistency rule requires. No sk_id appears under
+    third_party_measurement_reported or measurement_claimed_result_not_supplied - correctly, because
+    this source reports no third-party measurement anywhere and never invokes a study whose result it
+    withholds. The single named third party is invoked for a concept, not for a measurement.
+
+# ── C. Application fit ──────────────────────────────────────────────────────
+application_fit:
+  audited: true
+  findings:
+  - consumer: creative_ir
+    outcome: binding_exists
+    existing_binding_refs: [bnd_dmpl_0004]
+    note: >
+      One only. A Creative IR that states a benefit for a specified audience has a real question to
+      record: whether that audience holds the premise that makes the benefit meaningful. Derived
+      from the source's account of why safety was not a saleable proposition in one market; its
+      status_reason records that the observation is dated and the explanation interpretive.
+  - consumer: production_ir
+    outcome: no_current_binding
+    note: >
+      Nothing in this source concerns making anything. It is a book about how things already made
+      are read. There is no production knowledge here to be blocked by the absent schema, which is
+      why this is no_current_binding rather than blocked_target_schema_absent.
+  - consumer: evaluation
+    outcome: binding_exists
+    existing_binding_refs: [bnd_dmpl_0003]
+    note: >
+      One: descriptor saturation is directly checkable over a corpus - whether a claimed attribute
+      is claimed by substantially everything in the set and therefore discriminates nothing. The
+      observation unit is asset_set_over_time because the question cannot be asked of one asset.
+      No threshold; the source supplies none.
+  - consumer: governance
+    outcome: binding_exists
+    existing_binding_refs: [bnd_dmpl_0001, bnd_dmpl_0002]
+    note: >
+      The strongest fit, and both are prohibitions. One carries the source's own scope statement
+      with anything retrieved from it, because this source's most quotable material is its least
+      supported and would otherwise be lifted as a claim about Indian consumers. One records that
+      surface change in a convention licenses no inference about the model underneath.
+  - consumer: benchmark
+    outcome: no_current_binding
+    note: >
+      No dimension, criterion or threshold anywhere in this source. The one measurement it reports
+      is directional only, so not even its findings could seed a benchmark dimension.
+  - consumer: deterministic_composition
+    outcome: no_current_binding
+    note: >
+      Considered and declined without difficulty. Nothing in this source is executable geometry or
+      specifiable layout; it contains no figure, no measurement of any artefact, and no procedure.
+  - consumer: human_workflow
+    outcome: candidate_no_binding_made
+    note: >
+      Real fit, no binding written. Both remedies in the ontology act on a process or a person -
+      carry the source's scope statement with the retrieved object, and check a descriptor against
+      its whole category before treating it as differentiating - and both name their executor.
+      Naming a fit in an audit is not creating a binding, and no SPEC-04 target type covers this
+      consumer.
+  unbound_knowledge_of_note:
+  - sk_refs: [sk_dmpl_0010, sk_dmpl_0011, sk_dmpl_0012, sk_dmpl_0013]
+    observation: >
+      The account of how value is settled in the household the source describes - use realised over
+      time, a free extra that closes the transaction, indulgence licensed by occasion, and a second
+      social-return currency in the same budget - is the most substantive consumer-culture material
+      in the corpus and NONE of it is bound. Correctly: this project has no consumer for it. It is
+      durable, it is the kind of context a system operating in this market would otherwise lack
+      entirely, and it is worth holding unbound.
+  - sk_refs: [sk_dmpl_0043, sk_dmpl_0044, sk_dmpl_0040, sk_dmpl_0041]
+    observation: >
+      Deliberately unbound: the Imperfect Solution thesis, the SRK essay, and the two hierarchy
+      objects. These are the most quotable material in the book and they are cultural criticism.
+      Binding them would convert criticism into production advice, which the CANON-014
+      authorisation names as a failure mode, and their generalisations are exactly what the source's
+      own Introduction disclaims. They stay in the record as source truth with no consumer.
+  conclusion: >
+    Four bindings from seventeen objects, and 13 objects with none. The fit is concentrated in
+    governance, where this source contributes two prohibitions that bear directly on how any Indian
+    cultural material is consumed. Its real value is that it is the corpus's only account of Indian
+    everyday material culture from inside it, and that value is not application-shaped. No binding was
+    manufactured to raise coverage, and the most quotable material was deliberately left unbound.
+
+# ── D. Lineage and independence ─────────────────────────────────────────────
+lineage:
+  authors: ["Santosh Desai"]
+  publisher: "HarperCollins Publishers India"
+  series:
+  first_published: 2010
+  copy_edition: >
+    NOT ESTABLISHED and not establishable from this copy. The OPF publisher field has been overwritten
+    by a redistributor (reads GAPPAA.ORG), there is no ISBN, and the only date is a file modification
+    date. The work's identity is not in doubt - the title page image still reads HarperCollins
+    Publishers India - and no locator depends on the edition, since every locator is an essay title.
+    first_published is given as the work's known first publication, not as a property of this file.
+  related_sources_in_corpus:
+  - source_id: parameswaran_nawabs_nudes_noodles
+    relation: no_known_relation
+    evidence: >
+      Different authors, publishers, works and methods; neither cites the other. Both cite Malcolm
+      Gladwell's *Blink*, which creates no dependence between them. Both authors have advertising
+      careers and both write about Indian consumer culture in overlapping periods - category
+      adjacency, not a relation in the controlled vocabulary.
+  - source_id: pandey_pandeymonium
+    relation: no_known_relation
+    evidence: >
+      Different authors, publishers, works and subjects; neither cites the other. Both authors have
+      advertising careers, which is not a relation.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, work, series, publisher or informant with any of the 19 live accepted sources
+    or with either other new candidate, checked pairwise against the full live list. This is the
+    corpus's first source on Indian everyday material culture and has no near neighbour in it.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Lupton, Ogilvy and Light: Science & Magic. None
+      quotes this source, which was not in the corpus when the specs were written.
+
+# ── E. Technology contingency ───────────────────────────────────────────────
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The book is explicitly organised around a transition - its three sections move from
+    pre-liberalisation India, through the changes the author observes, to the dilemmas of change -
+    so nearly everything in it is dated by construction, and several objects describe practices the
+    author himself says are passing.
+  assessed: true
+  classes:
+  - class: historical_convention
+    sk_refs: [sk_dmpl_0012, sk_dmpl_0010, sk_dmpl_0042]
+    evidence: >
+      Indulgence licensed by festival occasion and the three-stage recycling ladder are described
+      by the author as belonging to the household of his childhood, and the book's second section
+      is about their loosening. The claim that no vehicle brand was sold on safety is a market
+      observation from the late 2000s and is exactly the kind that expires; the object says so.
+  - class: technology_contingent
+    sk_refs: [sk_dmpl_0021, sk_dmpl_0022, sk_dmpl_0045, sk_dmpl_0020, sk_dmpl_0030, sk_dmpl_0031]
+    evidence: >
+      All the matrimonial material is contingent on the PRINT COLUMN as the medium - the
+      twenty-five-word limit is what forces the compression, and the shared decoding convention is
+      what a print column can sustain. The book predates the migration of Indian matrimonial
+      matching to websites and apps and does not discuss it, so whether any of this survived the
+      change is open. The scooter objects are contingent on a market in which the scooter preceded
+      the motorcycle in middle-class ownership, which the author writes about retrospectively
+      because it had already ended.
+  - class: durable_mechanism
+    sk_refs: [sk_dmpl_0011, sk_dmpl_0013, sk_dmpl_0022, sk_dmpl_0041, sk_dmpl_0045, sk_dmpl_0002]
+    evidence: >
+      Six statements whose form does not depend on the technology that carried them: a disposition
+      can outlive the condition that produced it and change function; two return currencies can
+      operate in one budget without being felt to conflict; a descriptor everyone claims stops
+      discriminating; a status signal that is not received does no work; surface change in a
+      convention licenses no inference about the model underneath; and reflexive action is less
+      filtered evidence than deliberate statement. Note sk_dmpl_0022 and sk_dmpl_0045 appear in both
+      this class and technology_contingent, deliberately: the print column is the dead medium, the
+      mechanisms it demonstrates are not.
+  - class: uncertain
+    sk_refs: [sk_dmpl_0043, sk_dmpl_0044, sk_dmpl_0040]
+    evidence: >
+      The Imperfect Solution thesis, the SRK essay and the hierarchy essay cannot be classified,
+      because they are not claims of a kind that expires or endures - they are interpretive theses
+      about a culture, argued by assertion, for which no evidence is offered in either direction.
+      Placing them in durable_mechanism would credit them with a durability nothing establishes;
+      placing them in historical_convention would credit them with a specificity they do not have.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
+audit_status_reason: "HOLD. This copy has been modified by a redistributor: the publisher metadata is overwritten (dc:publisher reads GAPPAA.ORG rather than HarperCollins), the string is injected at 11 positions, and one complete non-authorial sentence sits INSIDE an authorial paragraph of the Introduction carrying no distinguishing markup. All 11 sites were located mechanically and excluded from extraction.\nThat is not the blocker. The blocker is what cannot be established: a redistributor demonstrably willing to insert a sentence into an author's prose may have made further changes carrying no marker, which would be undetectable in this copy. That risk is SILENT and UNBOUNDED, and excluding the marked injections does not bound it.\nSettling it requires comparing this copy against an independent clean representation. No such copy is available in this environment and there is no external network egress, so the question cannot be closed here. `evidence_insufficient` is the Audit Gate's designed outcome for exactly this: the committed record does not settle the audit's questions and the original would have to be re-opened.\nThe extraction is retained as source evidence and is NOT accepted knowledge. It sits outside canon/knowledge/current/ and has no record in canon/audit/records/, because a record there would imply it passed the gate."
+snapshot_note: 'Recomputed against the held candidate directory. This is a fingerprint of held evidence, not an admission snapshot: no accepted-source record exists for this source.'

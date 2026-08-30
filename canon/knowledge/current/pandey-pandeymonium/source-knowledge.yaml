@@ -1,0 +1,530 @@
+# CANON-014 — Piyush Pandey, "Pandeymonium: Piyush Pandey on Advertising"
+# (Portfolio / Penguin Books India, 2015). SPEC-03 extraction over the whole book.
+#
+# Epistemic shape, established by reading it: this is a practitioner MEMOIR, not an argument. Pandey
+# is India's best-known advertising creative director; the book is organised as short chapters each
+# ending in a lesson drawn from a story about his own career. Almost everything in it is
+# `practitioner_assertion` + `anecdotal`, and almost every lesson is drawn from a case that
+# succeeded.
+#
+# THE SURVIVORSHIP PROBLEM IS STRUCTURAL HERE AND IS RECORDED ON EVERY OBJECT IT AFFECTS.
+# The book's characteristic move is: I did X, it worked, therefore do X. The cases where someone did
+# X and failed are not in the book and could not be, because the book is a memoir of a successful
+# career. Pandey occasionally supplies the counterfactual himself — he notes he would have been
+# "history" had the Tata Cement pitch been lost — and where he does, it is extracted.
+#
+# Two further things this extraction does NOT do:
+#   * it does not convert his rejection of research procedures into a claim that pre-testing is
+#     invalid. He rejects specific procedures and proposes a different observation; both are
+#     recorded as his position, and his evidence for it is survivorship-shaped.
+#   * it does not treat his campaigns' commercial outcomes as established. The book asserts them
+#     and reproduces no evidence for any of them.
+#
+# Locators: EPUB, reflowable, no authored page. Chapter titles are the locator.
+
+source_id: pandey_pandeymonium
+
+source_knowledge:
+
+- sk_id: sk_ppm_0001
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "Whatever you say, say it with respect for the audience, say it in a context that the audience can understand, say it spontaneously, say it without fear, say it not to intimidate or frighten, but to delight."
+  concept_label: the_authors_stated_communication_principle
+  label_origin: extractor_assigned
+  claim: >
+    Pandey states his governing communication principle in the Preface, drawn from his father's habit
+    of improvising verse to the household each morning: say it with respect for the audience, in a
+    context the audience can understand, spontaneously, without fear, and to delight rather than to
+    intimidate. He calls these his "kindergarten lessons in communication" and the book returns to
+    them.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: false
+    text:
+  scope:
+    domain_discussed_by_source: [advertising_creative_practice]
+    conditions: "the author's stated personal principle, offered as autobiography rather than as a rule for others"
+  caveats:
+  - text: "this is a credo, not a testable proposition; 'respect for the audience' and 'delight' are not defined and no way of checking whether a piece of work has them is offered"
+    origin: extractor_observed
+  - text: "the sentence appears TWICE in this copy — once inside the paragraph and once standing alone as a flattened pull-quote. See visual-evidence-ledger.yaml; the duplication is a conversion artefact, not emphasis by the author"
+    origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Preface"
+    section: "the cooked tea"
+    page_start:
+    page_end:
+    locator: "Preface (spine 5)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0010
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "I reject the procedures that I have seen, but I don't undervalue homework and thoroughness."
+  - "I hate researches where regular human beings are asked stupid questions. Obviously, you will get a stupid reply."
+  - "I don't want to hear stupid answers to stupid questions. I would much rather watch their body language. If they are chatting and not looking at the TV commercial after five seconds, we have lost them."
+  concept_label: rejects_the_procedure_not_the_homework_and_proposes_behavioural_observation
+  label_origin: extractor_assigned
+  claim: >
+    Pandey distinguishes his position carefully: he rejects the research *procedures* he has seen,
+    not homework or thoroughness, and states he has attended more research sessions than most
+    creative people. His objection to the group discussion is that asking people to report a feeling
+    about a pack produces a fabricated answer, and that the first fabrication then propagates round
+    the group as agreement. In place of self-report he proposes direct behavioural observation:
+    discard the headphones, watch body language, and treat a respondent who is chatting and not
+    looking at the commercial after five seconds as lost.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: true
+    text: >
+      A respondent asked a question they have no genuine answer to will supply one to save face in
+      front of a group, and subsequent respondents can then agree cheaply. The fabricated answer is
+      then reported as a finding. Observed attention is not subject to that failure because it is not
+      a report.
+  scope:
+    domain_discussed_by_source: [advertising_research, creative_practice]
+    conditions: >
+      Indian agency and client qualitative research as the author encountered it over a career from
+      1982; focus groups, one-way mirrors, dial meters. He explicitly extends the scepticism to
+      neuro-response research ("Take it easy, folks") without having used it.
+  caveats:
+  - text: "the five-second attention criterion is offered in passing and is not a validated threshold; the author proposes no way of checking it"
+    origin: extractor_observed
+  - text: "his evidence is a list of his own successful campaigns that he says would have failed research. That is survivorship: campaigns that failed research AND would have failed in market are not counted, and neither are campaigns that passed research and succeeded"
+    origin: extractor_observed
+  - text: "the dismissal of neuro-response research is asserted from no stated experience of it"
+    origin: extractor_observed
+  - text: "the fabrication-and-propagation mechanism he describes is a real and independently recognised failure of group self-report; the mechanism is stronger than the evidence he gives for his conclusion"
+    origin: extractor_observed
+  source_stated_problems:
+  - "asking people to report feelings they do not have produces fabricated answers that propagate through a group"
+  source_stated_remedies:
+  - "observe attention and body language rather than collecting self-report"
+  examples: {positive: []}
+  intra_source_relations:
+  - {relation: depends_on, target: sk_ppm_0011, note: "the list of campaigns he says research would have killed"}
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, anecdotal, culturally_bounded]
+    source_uncertainty: >-
+      none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Scratching beneath the Surface"
+    section: "what research I don't agree with"
+    page_start:
+    page_end:
+    locator: "Ch. 7 'Scratching beneath the Surface' (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0011
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "Most of my work would not have seen the light of day if it had gone through this kind of research. The Cadbury Dairy Milk girl dancing on the cricket field would have become a saint if she had been pre-tested. Most of the Fevicol work would not have happened because 'we did not show furniture'."
+  concept_label: named_campaigns_the_author_says_research_would_have_killed
+  label_origin: extractor_assigned
+  claim: >
+    Pandey lists specific work he says would not have survived pre-testing: the Cadbury Dairy Milk
+    dancing girl, most of the Fevicol campaign (on the objection that it did not show furniture), and
+    the Vodafone Zoozoos. He offers these as evidence that the procedures reject work that succeeds.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: false
+    text:
+  scope:
+    domain_discussed_by_source: [advertising_research, indian_advertising]
+    conditions: "India; the author's own campaigns, 1990s-2000s"
+  caveats:
+  - text: "counterfactual throughout. No pre-test was run on any of this work, so what a pre-test WOULD have returned is not established — it is the author's confident assertion about a test that never happened"
+    origin: extractor_observed
+  - text: "the Fevicol objection ('we did not show furniture') is the one concrete detail, and it is reported as a remembered objection rather than a recorded finding"
+    origin: extractor_observed
+  - text: "the commercial success of these campaigns is asserted, not evidenced; no sales, share or tracking data appears anywhere in this book"
+    origin: extractor_observed
+  - text: "NONE of this work is reproduced in the book — the copyright page directs the reader to a website instead — so a reader cannot see what is being defended"
+    origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, outcome_claimed, practitioner_assertion, anecdotal, culturally_bounded, mechanism_absent]
+    source_uncertainty: >-
+      none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Scratching beneath the Surface"
+    section: "work research would have killed"
+    page_start:
+    page_end:
+    locator: "Ch. 7 'Scratching beneath the Surface' (spine 32)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0020
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "Often, we write off people as 'the MBA', 'that brand manager', 'that marketing manager', and we forget that there is a human being behind the designation or the business card."
+  - "Once one accepts the realities of the processes, one instantly becomes part of a team."
+  - "Stay focused on the challenges of the brief and the client, and you become closer. This happens when you stop working at cross purposes and see a common enemy."
+  concept_label: treat_the_clients_process_as_a_shared_constraint_rather_than_an_obstacle
+  label_origin: extractor_assigned
+  claim: >
+    Pandey argues that the systems and processes creative people resent — research requirements,
+    approval stages, layers of management — should be accepted as a shared constraint rather than
+    fought, because accepting them converts the relationship from adversarial to joint. His stated
+    mechanism is that if the client's requirement to test an idea is treated as a problem for the
+    whole team, mutual understanding deepens and the process eventually becomes "a blur, a necessary
+    chore".
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: true
+    text: >
+      Where two parties each treat the other's constraints as obstacles, effort goes into the
+      conflict. Adopting the constraint as shared redirects that effort at the brief, and the shared
+      difficulty itself becomes the thing that binds the parties.
+  scope:
+    domain_discussed_by_source: [agency_client_relationships, creative_practice]
+    conditions: >
+      Indian agency practice, 1982 onward, and specifically large multinational clients with heavy
+      process (his examples are Hindustan Unilever, Cadbury, Asian Paints, Pidilite).
+  caveats:
+  - text: "every supporting case is one in which the relationship went well and the author's career advanced; clients with whom this posture failed are not in the book"
+    origin: extractor_observed
+  - text: "his examples are of exceptional individual generosity — a brand manager waiving a launch commitment, a company sending cash on a bereavement — rather than of the process working. They evidence that good people exist, which is not the same as the claim being argued"
+    origin: extractor_observed
+  - text: "'Don't be scared of systems and processes. There are ways to fool them. I found at least a hundred.' sits in the same chapter and is in tension with accepting the process as shared. The source does not reconcile them, and the line appears twice in this copy as a flattened pull-quote"
+    origin: extractor_observed
+  - text: every supporting case is one in which the relationship went well and the author's career advanced; relationships where this posture failed are not in the book
+    origin: extractor_observed
+  source_stated_problems:
+  - "treating a counterpart's constraints as obstacles turns joint work into conflict"
+  source_stated_remedies:
+  - "accept the constraint as shared, and direct the effort at the brief"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, anecdotal, culturally_bounded]
+    source_uncertainty: >-
+      none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "The Human Behind the Client"
+    section: "whole chapter"
+    page_start:
+    page_end:
+    locator: "Ch. 6 'The Human Behind the Client' (spine 29-31)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0021
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "However difficult it may be, if you are convinced that you are right, then you should stand up for your beliefs."
+  - "Of course, what was unsaid was that I would be history if we didn't win the pitch."
+  concept_label: stand_by_the_work_told_through_a_case_that_won
+  label_origin: extractor_assigned
+  claim: >
+    Pandey's stated position is that a creative person convinced they are right should stand by the
+    work, handled with tact and confidence. His central case is the Tata Cement pitch: his agency's
+    strategy review board rejected the campaign as beyond repair days before the presentation, he
+    refused to change it or to accept the rejection, the agency chairman let it go ahead, the pitch
+    was won, and the chairman said "the boy was right".
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: true
+    text: >-
+      The source states one condition, negatively: the reviewers had not seen the work develop over the preceding month, so their judgement was made without the context the team held - 'If any of the board members had been involved from the outset, we wouldn't have been in this sorry state.'
+  scope:
+    domain_discussed_by_source: [creative_practice, agency_politics]
+    conditions: "one Indian agency, early 1990s, one pitch"
+  caveats:
+  - text: "this is the book's clearest instance of survivorship, and the author himself supplies the counterfactual: he states he 'could have been sacked' and that being sacked at that seniority would have ended his career in advertising"
+    origin: source_stated
+  - text: "the lesson is drawn from an n of 1 in which the bet paid. A creative director who refused equally firmly and lost the pitch would have written no book"
+    origin: extractor_observed
+  - text: "the genuinely transferable observation is the one about REVIEW CONDITIONS — that reviewers who have not followed the work's development judge without the team's context — and that is separable from the lesson about conviction"
+    origin: extractor_observed
+  - text: the source offers no account whatever of why conviction should predict being right; only the review-conditions point is his
+    origin: extractor_observed
+  source_stated_problems:
+  - "work reviewed only at the end is judged by people who did not see it develop"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, anecdotal, practitioner_assertion, outcome_claimed, culturally_bounded, mechanism_absent]
+    source_uncertainty: >-
+      none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Standing Up for One's Beliefs"
+    section: "the Tata Cement pitch"
+    page_start:
+    page_end:
+    locator: "Ch. 17 'Standing Up for One's Beliefs' (spine 73-75)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0030
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "Successful national companies ensure that there is a knowledge and resource pool that defines the culture, ensuring a high level of output from any location. In addition, there is a locally knowledgeable team that understands local nuances and client expectations."
+  concept_label: domestic_multiculturalism_a_shared_pool_plus_local_knowledge
+  label_origin: extractor_assigned
+  claim: >
+    Pandey argues that what applies to a global company operating across countries applies equally to
+    a national company operating across locations within one country — which he calls domestic
+    multiculturalism. The stated structure has two parts: a shared knowledge and resource pool that
+    defines the culture and holds output quality up at any location, and a locally knowledgeable team
+    that understands local nuance and client expectation. His cases are his agency's Madras office
+    producing work that Bombay envied, including India's first brand music video.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: false
+    text:
+  scope:
+    domain_discussed_by_source: [agency_organisation, indian_advertising, regional_markets]
+    conditions: >
+      India, treated as internally multicultural to a degree comparable with operating across
+      countries. The author's cases are his own agency's offices, 1970s-2010s.
+  caveats:
+  - text: "the two-part structure is asserted, not derived, and the cases illustrate rather than test it"
+    origin: extractor_observed
+  - text: "this passage appears twice in this copy as a flattened pull-quote; the repetition is a conversion artefact"
+    origin: extractor_observed
+  - text: "the claim that India is internally multicultural to a degree comparable with cross-border operation is the interesting one, and the author asserts rather than argues it"
+    origin: extractor_observed
+  - text: "the chapter's most-developed material is about the durability of client relationships, not about the structure the chapter opens by stating"
+    origin: extractor_observed
+  source_stated_problems:
+  - "assuming a national market is culturally uniform"
+  source_stated_remedies:
+  - "hold a shared quality-defining pool centrally and a locally knowledgeable team locally"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, anecdotal, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Domestic Multiculturalism"
+    section: "whole chapter"
+    page_start:
+    page_end:
+    locator: "Ch. 25 'Domestic Multiculturalism' (spine 106-107)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0031
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "When you work with a celebrity, the viewer must find the celebrity, the script and the idea memorable, not just the celebrity."
+  concept_label: the_celebrity_must_not_be_the_only_memorable_element
+  label_origin: extractor_assigned
+  claim: >
+    Pandey's stated condition on celebrity work is that the viewer must find the celebrity, the
+    script and the idea all memorable, not the celebrity alone.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: false
+    text:
+  scope:
+    domain_discussed_by_source: [advertising_creative_practice, celebrity_endorsement]
+    conditions: "Indian advertising practice as at 2015"
+  caveats:
+  - text: "stated as a requirement with no account of how to establish whether it has been met, and no case in which it was not"
+    origin: extractor_observed
+  - text: "the sentence appears twice in this copy as a flattened pull-quote"
+    origin: extractor_observed
+  - text: "an adjacent Indian source (parameswaran_nawabs_nudes_noodles, sk_nnn_0041) reports the same shift toward casting a star as a character, on different evidence. The two are recorded as an OBSERVED AGREEMENT in the CANON-014 lineage matrix and are deliberately NOT promoted to a cross-source concept; no such promotion is authorised by this task"
+    origin: extractor_observed
+  source_stated_problems:
+  - "advertising in which only the celebrity is remembered"
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, practitioner_assertion, culturally_bounded, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Payback Time"
+    section: "working with celebrities"
+    page_start:
+    page_end:
+    locator: "Ch. 'Payback Time' region (spine 81-87)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0040
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "You have two options. Do scam ads for barber shops, dentists, weight-loss clinics, your girlfriend's boutique; or pick up an issue and do path-breaking work on it."
+  - "Even an award is difficult because the world and the juries have got smarter."
+  concept_label: the_authors_position_on_scam_advertising
+  label_origin: extractor_assigned
+  claim: >
+    Pandey addresses the practice of producing unpaid speculative work for tiny clients in order to
+    win awards. His stated position is that the alternative — taking a real issue and doing genuine
+    work on it, starting small and letting it spread — is both better and more likely to win, and
+    that juries have become harder to fool. He proposes a list of issues (women's safety, Swachch
+    Bharat, girl child education, energy conservation) and pre-empts the objection that he is
+    promoting a government agenda.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: true
+    text: >
+      Work that changes something real can propagate outward from a small beginning, which both
+      produces the effect and supplies the award case. A poster for a sweet shop can do neither.
+  scope:
+    domain_discussed_by_source: [advertising_industry_ethics, awards]
+    conditions: "Indian advertising, as at 2015, addressed to entrants early in their careers"
+  caveats:
+  - text: "the claim that juries have got smarter is asserted with no evidence"
+    origin: extractor_observed
+  - text: "the author anticipates and rebuts the charge of political alignment rhetorically ('Hold your horses, and think, for a change'), which is not an answer to it"
+    origin: extractor_observed
+  - text: "he is a senior figure recommending unpaid public-issue work to juniors, from a position where such work is career-safe for him; the asymmetry is not acknowledged"
+    origin: extractor_observed
+  source_stated_problems:
+  - "unpaid speculative work made only to win awards"
+  source_stated_remedies:
+  - "take a real issue and do genuine work on it, starting locally"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, culturally_bounded]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Look Back at Life, There Are Stories Hidden There / Scam Ads"
+    section: "scam ads"
+    page_start:
+    page_end:
+    locator: "Ch. 18, 'Scam Ads' section (spine 87-88)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0041
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "We've not been sensitive enough to the needs and compulsions of a woman."
+  - "This conflict has to be resolved by the business, not by the woman."
+  - "We haven't realized or been sensitive to the fact that a huge treasure of knowledge is lost when competent women leave our industry."
+  concept_label: retention_not_recruitment_is_where_the_industry_loses_women
+  label_origin: extractor_assigned
+  claim: >
+    Pandey states that Indian advertising has too few women leading agencies, accepts this as a
+    failing of the industry's senior men including himself, and locates the problem specifically at
+    retention rather than entry: competent women leave and their accumulated knowledge is lost. He
+    states that the conflict between the two roles he describes must be resolved by the business
+    rather than by the individual, and names extended maternity and paternity leave approvingly. He
+    contrasts advertising with Indian banking, where he names several women running major banks.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: true
+    text: >
+      Knowledge accumulated over a career is lost when the holder leaves, so an industry that cannot
+      retain people through a particular life stage loses seniority rather than merely headcount.
+  scope:
+    domain_discussed_by_source: [advertising_industry, women_in_advertising, india]
+    conditions: "Indian advertising and Indian banking, as at 2015"
+  caveats:
+  - text: "the author's account of WHY the conflict exists rests on an essentialist premise stated in his own voice — that a woman 'is also the nurturer of the family' and that the two roles conflict. The locus-of-responsibility conclusion he draws from it (the business must resolve it) does not depend on that premise, and the two are separated here rather than extracted together"
+    origin: extractor_observed
+  - text: "no data of any kind: no counts, no attrition rates, no comparison with the banking sector he uses as the contrast"
+    origin: extractor_observed
+  - text: "the banking comparison names individuals rather than establishing that banking retains women better"
+    origin: extractor_observed
+  source_stated_problems:
+  - "an industry loses accumulated seniority, not merely headcount, when competent people leave at a predictable life stage"
+  source_stated_remedies:
+  - "the author names extended maternity and paternity leave, and places the obligation on the business rather than the individual"
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, practitioner_assertion, culturally_bounded]
+    source_uncertainty: >-
+      none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Indian Advertising Has Been Unfair to Its Women"
+    section: "whole chapter"
+    page_start:
+    page_end:
+    locator: "Ch. 24 'Indian Advertising Has Been Unfair to Its Women' (spine 104-105)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}
+
+- sk_id: sk_ppm_0050
+  source_id: pandey_pandeymonium
+  source_terms:
+  - "All images and television commercials mentioned in this book are available for viewing on www.pandeymonium.in"
+  concept_label: the_books_own_evidence_was_published_outside_the_book
+  label_origin: extractor_assigned
+  claim: >
+    The book's copyright page states that all images and television commercials mentioned in the book
+    are available on a companion website. The work is therefore published with its campaign evidence
+    deliberately located outside its covers, and a reader of the book alone — in print or digital —
+    cannot see any of the work being discussed.
+  claim_type: explicit_source_claim
+  interpretation_basis:
+  mechanism:
+    stated_by_source: false
+    text:
+  scope:
+    domain_discussed_by_source: [source_representation]
+    conditions: "the published work as issued in 2015"
+  caveats:
+  - text: "this is a fact about how the WORK was published, not a defect in this copy. It is the Audit Gate's `source_evidence_never_printed` pattern: a reader of the printed book in 2015 was in the same position as this extraction is"
+    origin: extractor_observed
+  - text: "the named route was NOT reachable in this session — no external network egress was available — so the campaign evidence is named, located, and unreachable here. It is recoverable in principle, not in this environment"
+    origin: extractor_observed
+  - text: "every claim in this record about a named campaign is therefore a claim about what PANDEY SAYS about it, never about what the work looks like or does"
+    origin: extractor_observed
+  source_stated_problems: []
+  source_stated_remedies: []
+  examples: {positive: []}
+  intra_source_relations: []
+  evidence:
+    characteristics: [explicitly_stated, mechanism_absent]
+    source_uncertainty: none
+    extraction_uncertainty: none
+  provenance:
+    chapter: "Copyright page"
+    section: "publisher's note"
+    page_start:
+    page_end:
+    locator: "Copyright page (spine 136)"
+    figure_refs: []
+    source_support: text
+    inspected: {text: true, figures: []}

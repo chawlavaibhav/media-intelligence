@@ -1,0 +1,115 @@
+# CANON-014 — SPEC-04 bindings for Desai, "Mother Pious Lady", against SPEC-01 v0.1.
+#
+# Deliberately very few, and none to production. This is a book of cultural interpretation, and the
+# honest position is that almost none of it is currently consumable by anything this project is
+# building. Zero bindings for an object is the normal outcome here and no binding was manufactured
+# to raise coverage: 13 of 17 objects have none.
+#
+# In particular, NOTHING is bound from the Imperfect Solution essay, the SRK essay or the traffic
+# metaphysics. Those are cultural criticism, and converting criticism into production advice is a
+# failure mode this task was explicitly set against.
+
+source_id: desai_mother_pious_lady
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_dmpl_0001
+  source_knowledge_refs: [sk_dmpl_0001, sk_dmpl_0011, sk_dmpl_0043]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [constrains, flags]
+  rationale: >
+    This source states its own scope and bias more carefully than most, and its most quotable
+    material — the Imperfect Solution thesis, the traffic essay, the account of hierarchy — is
+    exactly the material most likely to be lifted as a claim about "Indian consumers". Binding the
+    source's own scope statement under governance keeps the constraint attached where a retrieval
+    process would meet it, rather than in prose nothing reads. The constraint is: nothing from this
+    source may be consumed as a claim about India or about Indians.
+  applicability:
+    when: "any retrieval or downstream use of an object from this source"
+    limits: >
+      This binds a prohibition, not a capability. It licenses no inference of any kind; it prevents
+      one.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dmpl_0031]
+  repair_ontology_refs: [t_dmpl_0051]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_dmpl_0002
+  source_knowledge_refs: [sk_dmpl_0045, sk_dmpl_0020]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [flags]
+  rationale: >
+    The source's one measurement produced a structurally useful negative: the surface of a convention
+    changed considerably across thirty years while the model underneath did not, and one measured
+    quantity (caste mention) did not move at all. That is a general caution about reading change from
+    surface features, and this project reasons about changing creative conventions constantly.
+  applicability:
+    when: "inferring that a practice or convention has changed from observed change in its surface features"
+    limits: >
+      The evidence is one unreported content analysis of one Indian print format. It supports naming
+      the hazard; it supports no quantitative claim and no claim outside that format.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dmpl_0032]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_dmpl_0003
+  source_knowledge_refs: [sk_dmpl_0022]
+  source_system_refs: []
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  rationale: >
+    Descriptor inflation is directly checkable on a corpus of assets: whether a claimed attribute is
+    claimed by substantially everything in the set, and therefore discriminates nothing. The source
+    supplies the mechanism and a worked instance ("VV Fair", "Really Beautiful"). This binds an
+    inspection question about a SET of assets, which is why the observation unit is asset_set.
+  observation_unit: asset_set_over_time
+  applicability:
+    when: "inspecting a body of assets in one category for whether a claimed attribute still discriminates"
+    limits: >
+      The source gives no threshold and no method, and its instance is an Indian print matrimonial
+      column. This supports asking whether a descriptor has saturated; it does not score the answer.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dmpl_0033]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_dmpl_0004
+  source_knowledge_refs: [sk_dmpl_0042]
+  source_system_refs: []
+  target_type: creative_ir
+  target_path: creative.constraints
+  target_schema: SPEC-01
+  target_schema_version: v0.1
+  role: [flags]
+  rationale: >
+    The source's account of why safety was not a saleable proposition in one market is a general
+    shape worth recording on a Creative IR: a benefit claim requires the audience to hold the premise
+    that makes the benefit meaningful, and where the premise is absent the claim has nothing to
+    attach to. A Creative IR that states a benefit and an audience has a real question to record —
+    whether that audience holds the enabling premise.
+  applicability:
+    when: "a Creative IR whose objective states a benefit for a specified audience"
+    limits: >
+      Derived from one dated, unsurveyed observation about one market, whose causal explanation is
+      the author's interpretation. This flags a question; it predicts nothing about any audience.
+  evidence_basis: extractor_inference
+  empirical_refs: []
+  failure_ontology_refs: [t_dmpl_0034]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; the source's explanation is interpretive and the observation is dated"
