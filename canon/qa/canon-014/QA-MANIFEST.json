@@ -1,0 +1,344 @@
+{
+ "manifest_version": "canon-014-final-v1",
+ "corpus": "canon/qa/canon-014",
+ "what_this_is": "The complete grounded question-and-answer corpus derived from the 23 CANON-014 source candidates. It is a Canon COMPANION corpus: it sits outside the Audit Gate source snapshot, because what establishes whether a source is true is the source artifacts and the audit, not questions written about them.",
+ "calibration": {
+  "state": "GROUNDED, UNGRADED, UNCALIBRATED",
+  "what_that_means": "Every item traces to one source and carries a real locator and a support quotation. No human and no model has answered any item. No difficulty label has been checked against any observed answer, so `difficulty` is an authored judgement and must never be reported as an empirical property.",
+  "not_benchmark_ground_truth": true,
+  "not_human_calibrated_truth": true,
+  "not_model_evaluation_evidence": true,
+  "not_proof_canon_improves_outcomes": true
+ },
+ "source_status": {
+  "what_it_means": "The epistemic state of the SOURCE the item came from, not of the answer. A held source's answers are as source-faithful as an accepted source's; what differs is whether the source has passed the Audit Gate. Status never changes the wording of a source-derived answer.",
+  "accepted": "the source is live Canon under canon/knowledge/current/",
+  "hold": "the source is a durable candidate under canon/candidates/canon-014/"
+ },
+ "application_question_policy": {
+  "floor": "NONE. The CANON-013 one-third floor is removed and was applied to no bank here.",
+  "criterion": "requires_application is true only where the question puts a case NOT in the source on the table and asks what follows. Restating, reconciling, comparing or critically evaluating the source's own positions is a knowledge question however hard it is.",
+  "observed_rates_are_not_targets": true
+ },
+ "totals": {
+  "banks": 23,
+  "qa_items": 1028,
+  "requires_application": 418,
+  "requires_application_pct": 40.7,
+  "accepted_source_items": 108,
+  "held_source_items": 920,
+  "accepted_source_banks": 5,
+  "held_source_banks": 18
+ },
+ "counts_by_answer_type": {
+  "application": 229,
+  "mechanism": 205,
+  "source_position": 145,
+  "boundary_condition": 93,
+  "failure_diagnosis": 81,
+  "comparison": 75,
+  "concept_understanding": 73,
+  "repair": 45,
+  "tradeoff": 45,
+  "factual_recall": 37
+ },
+ "counts_by_difficulty": {
+  "medium": 602,
+  "hard": 361,
+  "easy": 65
+ },
+ "counts_by_knowledge_type": {
+  "evaluation_diagnosis": 127,
+  "advertising": 123,
+  "brand_communication": 99,
+  "creative_process": 72,
+  "composition": 67,
+  "persuasion": 64,
+  "concept_development": 58,
+  "effectiveness": 53,
+  "testing_method": 49,
+  "cultural": 42,
+  "product_photography": 37,
+  "copywriting": 36,
+  "photography": 33,
+  "accessibility_legibility": 30,
+  "production_reasoning": 28,
+  "media_planning": 24,
+  "typography": 20,
+  "colour": 17,
+  "lighting": 14,
+  "shot_design": 12,
+  "production": 9,
+  "hierarchy": 8,
+  "short_form": 6
+ },
+ "answer_type_vocabulary_note": "The two contributing lanes used two vocabularies. Two pairs of genuine near-synonyms were merged - `factual` into `factual_recall` and `concept_definition` into `concept_understanding`, 89 items, each keeping `answer_type_as_written`. The four labels only one lane used (comparison, tradeoff, boundary_condition, repair) were KEPT, because each names a distinct kind of question and collapsing them would have destroyed information about 258 items.",
+ "items_removed": {
+  "count": 0,
+  "screen_run": "duplicate qa_id, duplicate question after normalisation, missing or empty required field, answer under 35 words, and items invalidated by a source correction made in this reconciliation.",
+  "result": "Nothing was removed. The screen found no duplicate id, no duplicate question, no malformed item and no answer under the floor. ONE ITEM WAS AMENDED rather than removed: qa_nnn_0012 was written against a structural `conflict` in scs_nnn_004 that this reconciliation removed, so its answer now says what the corrected record says - the two statements are in tension of emphasis, do not contradict each other, and the source states both without reconciling them. It carries `amended_by`."
+ },
+ "by_source": [
+  {
+   "source_id": "hopkins-my-life-in-advertising",
+   "source_dir": "hopkins-my-life-in-advertising",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/hopkins-my-life-in-advertising",
+   "bank": "hopkins-my-life-in-advertising-qa-bank.yaml",
+   "qa_items": 80,
+   "requires_application": 38,
+   "pct": 47.5,
+   "sha256": "43494d2efc25cd9f50d230dbb02c4a86f2286d780a81d0fd57f687539be8816d"
+  },
+  {
+   "source_id": "sullivan-hey-whipple",
+   "source_dir": "sullivan-hey-whipple",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/sullivan-hey-whipple",
+   "bank": "sullivan-hey-whipple-qa-bank.yaml",
+   "qa_items": 78,
+   "requires_application": 34,
+   "pct": 43.6,
+   "sha256": "658e0834cb31bd484c875c4e6df0bc0712da2fa192e58242613a9bd52da2340e"
+  },
+  {
+   "source_id": "ogilvy-beyond-ch2",
+   "source_dir": "ogilvy-beyond-ch2",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/ogilvy-beyond-ch2",
+   "bank": "ogilvy-beyond-ch2-qa-bank.yaml",
+   "qa_items": 76,
+   "requires_application": 35,
+   "pct": 46.1,
+   "sha256": "0ea0e250cdeb65286f61aed0a80e108b3b39ec305f8aaf2a0efb35353eee10fc"
+  },
+  {
+   "source_id": "light-science-magic-beyond-ch3",
+   "source_dir": "light-science-magic-beyond-ch3",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/light-science-magic-beyond-ch3",
+   "bank": "light-science-magic-beyond-ch3-qa-bank.yaml",
+   "qa_items": 62,
+   "requires_application": 31,
+   "pct": 50.0,
+   "sha256": "f48f24654a6ea26c97dae5252b181891ceddf6cf2f46dcbe44fa5777d61171b6"
+  },
+  {
+   "source_id": "berger-contagious",
+   "source_dir": "berger-contagious",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/berger-contagious",
+   "bank": "berger-contagious-qa-bank.yaml",
+   "qa_items": 60,
+   "requires_application": 20,
+   "pct": 33.3,
+   "sha256": "fec1a27be196defd9bf1fa3f198fd63c4897d84b81dce84414b56ceae0e8ef58"
+  },
+  {
+   "source_id": "freeman-photographers-eye-beyond-parts1-3",
+   "source_dir": "freeman-photographers-eye-beyond-parts1-3",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/freeman-photographers-eye-beyond-parts1-3",
+   "bank": "freeman-photographers-eye-beyond-parts1-3-qa-bank.yaml",
+   "qa_items": 58,
+   "requires_application": 27,
+   "pct": 46.6,
+   "sha256": "dd569b23e5efb2dc637a5f8d316a74045961d91b61eaea5318cac3d3d5a4d443"
+  },
+  {
+   "source_id": "airey-logo-design-love",
+   "source_dir": "airey-logo-design-love",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/airey-logo-design-love",
+   "bank": "airey-logo-design-love-qa-bank.yaml",
+   "qa_items": 57,
+   "requires_application": 30,
+   "pct": 52.6,
+   "sha256": "79ce65939836d1ea056a825ec2995f1477c41aff6cf9a97e4b897aaf98f1f3fe"
+  },
+  {
+   "source_id": "hopkins-scientific-advertising-ch8-21",
+   "source_dir": "hopkins-scientific-advertising-ch8-21",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21",
+   "bank": "hopkins-scientific-advertising-ch8-21-qa-bank.yaml",
+   "qa_items": 57,
+   "requires_application": 23,
+   "pct": 40.4,
+   "sha256": "e2c11dff0186652edf396a202bc4c58f122d2981c69096bca489220bc8639610"
+  },
+  {
+   "source_id": "kahneman-sibony-sunstein-noise",
+   "source_dir": "kahneman-sibony-sunstein-noise",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/kahneman-sibony-sunstein-noise",
+   "bank": "kahneman-sibony-sunstein-noise-qa-bank.yaml",
+   "qa_items": 57,
+   "requires_application": 16,
+   "pct": 28.1,
+   "sha256": "8d91668af7f5af55fc65fb598bf84e07e58d573dc7c17e76589c7b7fa6fe2aff"
+  },
+  {
+   "source_id": "connor-irizarry-discussing-design",
+   "source_dir": "connor-irizarry-discussing-design",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/connor-irizarry-discussing-design",
+   "bank": "connor-irizarry-discussing-design-qa-bank.yaml",
+   "qa_items": 51,
+   "requires_application": 17,
+   "pct": 33.3,
+   "sha256": "890fcd8cfefabeffb41c745fbd5c786fc28683a120978b11c009a316ed6eeaad"
+  },
+  {
+   "source_id": "ries-22-immutable-laws-branding",
+   "source_dir": "ries-22-immutable-laws-branding",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/ries-22-immutable-laws-branding",
+   "bank": "ries-22-immutable-laws-branding-qa-bank.yaml",
+   "qa_items": 50,
+   "requires_application": 25,
+   "pct": 50.0,
+   "sha256": "8a446887ae29444ccaecdb7b1a306d05b3ad15c76e77aec1b7275e4326da6913"
+  },
+  {
+   "source_id": "samara-breaking-the-grid-ch2",
+   "source_dir": "samara-breaking-the-grid-ch2",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/samara-breaking-the-grid-ch2",
+   "bank": "samara-breaking-the-grid-ch2-qa-bank.yaml",
+   "qa_items": 46,
+   "requires_application": 23,
+   "pct": 50.0,
+   "sha256": "c874fcf3d49c9c5545cb0b06e000415dad6db4c6f893838631e952734ef315a0"
+  },
+  {
+   "source_id": "w3c-wcag22-text-legibility",
+   "source_dir": "w3c-wcag22-text-legibility",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/w3c-wcag22-text-legibility",
+   "bank": "w3c-wcag22-text-legibility-qa-bank.yaml",
+   "qa_items": 41,
+   "requires_application": 17,
+   "pct": 41.5,
+   "sha256": "aae7ca4da23a939caa172aadd4c421cc1424d3f80c61146f6a5b9e3bc3df08c4"
+  },
+  {
+   "source_id": "godin-this-is-marketing",
+   "source_dir": "godin-this-is-marketing",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/godin-this-is-marketing",
+   "bank": "godin-this-is-marketing-qa-bank.yaml",
+   "qa_items": 37,
+   "requires_application": 12,
+   "pct": 32.4,
+   "sha256": "50ea87dc71cbb9bf1d79b23efc4232cade03a8295b44381e54657cae8633104c"
+  },
+  {
+   "source_id": "carroll-read-this-photographs",
+   "source_dir": "carroll-read-this-photographs",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/carroll-read-this-photographs",
+   "bank": "carroll-read-this-photographs-qa-bank.yaml",
+   "qa_items": 35,
+   "requires_application": 14,
+   "pct": 40.0,
+   "sha256": "965ab649b26c2cf7c1dca2e9ba6810171e852f73dd887bcf303287917bb0215b"
+  },
+  {
+   "source_id": "sontag-on-photography",
+   "source_dir": "sontag-on-photography",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/sontag-on-photography",
+   "bank": "sontag-on-photography-qa-bank.yaml",
+   "qa_items": 28,
+   "requires_application": 10,
+   "pct": 35.7,
+   "sha256": "9072831ea7181c2bb799b97372b3c7642c6f2f67e6047212477fc6eb9bff7d0c"
+  },
+  {
+   "source_id": "google-abcd-video-ads",
+   "source_dir": "google-abcd-video-ads",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/google-abcd-video-ads",
+   "bank": "google-abcd-video-ads-qa-bank.yaml",
+   "qa_items": 26,
+   "requires_application": 13,
+   "pct": 50.0,
+   "sha256": "966a9307e796e3270891139fc6f248b693409900ef46e82ad93018e86f54706e"
+  },
+  {
+   "source_id": "parameswaran_nawabs_nudes_noodles",
+   "source_dir": "parameswaran-nawabs-nudes-noodles",
+   "source_status": "accepted",
+   "knowledge_dir": "canon/knowledge/current/parameswaran-nawabs-nudes-noodles",
+   "bank": "parameswaran-nawabs-nudes-noodles-qa-bank.yaml",
+   "qa_items": 26,
+   "requires_application": 12,
+   "pct": 46.2,
+   "sha256": "b3c015d40e83a515806240535758dc0e402a36ebb427a6015d7cfac820275f34"
+  },
+  {
+   "source_id": "dwyer_patel_cinema_india",
+   "source_dir": "dwyer-patel-cinema-india",
+   "source_status": "accepted",
+   "knowledge_dir": "canon/knowledge/current/dwyer-patel-cinema-india",
+   "bank": "dwyer-patel-cinema-india-qa-bank.yaml",
+   "qa_items": 23,
+   "requires_application": 4,
+   "pct": 17.4,
+   "sha256": "cd76de642aeee321823e5c6e6eb871f516e7063129d86126cd5f32a32b810609"
+  },
+  {
+   "source_id": "bijapurkar_we_are_like_that_only",
+   "source_dir": "bijapurkar-we-are-like-that-only",
+   "source_status": "accepted",
+   "knowledge_dir": "canon/knowledge/current/bijapurkar-we-are-like-that-only",
+   "bank": "bijapurkar-we-are-like-that-only-qa-bank.yaml",
+   "qa_items": 21,
+   "requires_application": 3,
+   "pct": 14.3,
+   "sha256": "3c207b3d0463efacc14c9938d18065f96fb7fafc903a3076fbe4600417a6be3a"
+  },
+  {
+   "source_id": "desai_mother_pious_lady",
+   "source_dir": "desai-mother-pious-lady",
+   "source_status": "hold",
+   "knowledge_dir": "canon/candidates/canon-014/desai-mother-pious-lady",
+   "bank": "desai-mother-pious-lady-qa-bank.yaml",
+   "qa_items": 21,
+   "requires_application": 5,
+   "pct": 23.8,
+   "sha256": "15e3cf888a81b10fb0e081ea5d156859830473bead8d2c4bba12aa857efb16d2"
+  },
+  {
+   "source_id": "jain_gods_in_the_bazaar",
+   "source_dir": "jain-gods-in-the-bazaar",
+   "source_status": "accepted",
+   "knowledge_dir": "canon/knowledge/current/jain-gods-in-the-bazaar",
+   "bank": "jain-gods-in-the-bazaar-qa-bank.yaml",
+   "qa_items": 21,
+   "requires_application": 3,
+   "pct": 14.3,
+   "sha256": "e6f4356c3b7c7e0fe1f65e648c69b8a4b8d88c3baa2fb155637552962f471c0d"
+  },
+  {
+   "source_id": "pandey_pandeymonium",
+   "source_dir": "pandey-pandeymonium",
+   "source_status": "accepted",
+   "knowledge_dir": "canon/knowledge/current/pandey-pandeymonium",
+   "bank": "pandey-pandeymonium-qa-bank.yaml",
+   "qa_items": 17,
+   "requires_application": 6,
+   "pct": 35.3,
+   "sha256": "6e9f1f533f8b6d5bff91a162851edbfe1370a05528cac3d776c3dc5aa6b9db60"
+  }
+ ],
+ "corpus_fingerprint": {
+  "algorithm": "sha256-of-sorted-bankname-and-content",
+  "combined_digest": "25ac8bbc173d1593eae562d93802bd7bdbb0212a36b4a3cdf4279363878148c8"
+ },
+ "checks_run": {
+  "validator": "canon/qa/canon-014/validate_qa_corpus.py",
+  "errors": 0
+ }
+}

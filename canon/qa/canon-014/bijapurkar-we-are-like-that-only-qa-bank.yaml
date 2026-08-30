@@ -1,0 +1,573 @@
+# CANON-014 grounded Q&A bank.
+# GROUNDED, UNGRADED, UNCALIBRATED RESEARCH Q&A. Every item traces to one source and carries a
+# real locator and a support quotation. No human and no model has answered any item, and no
+# difficulty label has been checked against an observed answer.
+# THIS IS NOT benchmark ground truth, not human-calibrated truth, not model-evaluation evidence,
+# and not proof that Canon improves any outcome.
+# source_status: ACCEPTED — the epistemic state of the SOURCE, not of the answer. A held
+# source's answers are as source-faithful as an accepted source's; what differs is whether the
+# source has passed the Audit Gate.
+
+source_id: bijapurkar_we_are_like_that_only
+source_dir: bijapurkar-we-are-like-that-only
+knowledge_dir: canon/knowledge/current/bijapurkar-we-are-like-that-only
+source_status: accepted
+corpus: canon-014
+calibration: grounded, ungraded, uncalibrated research Q&A
+not_benchmark_ground_truth: true
+qa_items:
+- qa_id: qa_rbwl_0001
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 1, 'The Mixed Messages from Consumer India'
+  question: What is the reversed question this book opens with, and what does the reversal change about
+    what an analyst does first?
+  answer: 'Firms habitually arrive with a tried-and-tested strategy and ask what size of market exists
+    for it — how many buyers are there for what we already sell. Bijapurkar''s reversal is to ask first
+    what this market actually is and what it will buy, and only then what strategy fits it. What the reversal
+    changes is the ORDER OF THE EVIDENCE-GATHERING, and therefore what counts as a finding: on the first
+    question the market is a quantity to be estimated and the answer is a number that either justifies
+    entry or does not; on the second the market is a structure to be described, and the strategy is an
+    output rather than an input. Bijapurkar''s charge is that the first ordering makes the analysis unfalsifiable
+    in practice, because a firm that has already fixed its offer will keep re-estimating the size of the
+    segment that wants it rather than noticing that the offer is wrong. A CAVEAT BELONGS ON THIS OBJECT:
+    the author is a market strategy consultant and the book''s central argument is that firms need customized
+    market strategy for India. The interest is real, is not disclosed in the book, and does not by itself
+    make the argument wrong.'
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: Ch. 1, the book's organising argument.
+  confounders: The reversal is easy to agree with in the abstract and expensive in practice, because it
+    invalidates the market-sizing exercise a firm has usually already paid for.
+  source_status: accepted
+- qa_id: qa_rbwl_0002
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 4, 'Just How Much Purchasing Power'; Table 4.1, Figure 4.1
+  question: State the demand-structure claim this book rests on, and give the worked case that shows why
+    it changes which segment matters.
+  answer: 'The claim: ''Consumer demand in the emerging economies is made up of lots and lots of people
+    consuming a little bit each, adding up to a lot'' — so total demand can sit overwhelmingly in a segment
+    with low per-head consumption, simply because the segment is very large. The worked case is rural
+    two-wheelers, and its arithmetic was checked directly against Figure 4.1 in this pass: penetration
+    runs 42 / 25 / 10 / 2.7 per cent across four income groups, household counts 7 / 18 / 63 / 66 million,
+    and two-wheeler numbers 3.8 / 4.5 / 6.4 / 1.8 million. The lower-middle group has about one-fourth
+    the penetration of the high-income group and about nine times the households, and ends up with about
+    1.6 times the sales — 6.4 divided by 3.8 is 1.68, which matches the text. What it changes is which
+    segment a firm should care about: a penetration-led reading picks the top group, and the volume sits
+    below it. Source line on the figure: Indian Readership Survey, 2008 — third-party data, correctly
+    attributed by the author, and dated.'
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: '''lots and lots of people consuming a little bit each, adding up to a lot'''
+  confounders: The arithmetic is sound and the inputs are a 2008 survey. The structural point survives
+    the date; the specific numbers do not, and no figure here should be quoted as current.
+  source_status: accepted
+- qa_id: qa_rbwl_0003
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 3, 'The Dangerous Delusion of Pent-up Demand'
+  question: Describe the boom-extrapolation-stagnation cycle, and identify the distinction that makes
+    it a mechanism rather than an observation.
+  answer: 'A repeating pattern she says has recurred many times since 1991: an initial starburst of demand
+    caused by a confluence of one-time events — release of pent-up demand, a category first strongly promoted,
+    a distribution boom, a price threshold crossed by a sachet or an instalment scheme — followed by extrapolation
+    of those early rates into the future, followed by stagnation when the market ''hits a rock table and
+    growth grinds to a halt''. THE DISTINCTION THAT MAKES IT A MECHANISM IS STOCK VERSUS FLOW: a starburst
+    is produced by a STOCK being released, not by a FLOW being established, and a stock is finite by definition,
+    so the early rate was never a rate that could continue. That is why the pattern is predictable rather
+    than merely recurrent. She reports the 1990s instance — analysts extrapolated 20-30 per cent volume
+    growth, ''the myth of the Great Indian Middle Class was born'', large capacity investments followed,
+    and the consumption machine failed to materialise — and what she says is required at the rock table:
+    ''not a mop but actually a powerful drill fashioned from a good market strategy'', specifically searching
+    for weak areas rather than flogging the sales team with targets based on historical growth. THE OUTCOME
+    CLAIMS ARE NOT EVIDENCED: no series is supplied for the extrapolation or the stagnation.'
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: growth 'hits a rock table and growth grinds to a halt'
+  confounders: Told as a story about the 1990s it is a period anecdote. The stock-versus-flow distinction
+    is what makes it apply anywhere, and it is the part most often dropped.
+  source_status: accepted
+- qa_id: qa_rbwl_0004
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 5, 'The Indian Middle Class'; Table 5.1
+  question: What is the objection to 'the Indian middle class' as a planning input, and why is the author's
+    own position in the story evidentially interesting?
+  answer: 'That the category has no agreed definition, so its size varies enormously with whichever definition
+    is chosen, and a number quoted without its definition is therefore uninterpretable — yet it is routinely
+    used as a planning input, with capacity built against it. The objection is methodological rather than
+    empirical: she is not arguing the middle class is smaller than claimed, but that ''how big is it''
+    is not a well-formed question until the definition and the population base are stated. WHAT MAKES
+    HER POSITION EVIDENTIALLY INTERESTING is that she discloses her own role in creating the myth she
+    now attacks — she was part of the industry that produced and circulated the number. That is testimony
+    against interest, which is why the record treats the disclosure as STRENGTHENING the object rather
+    than as a caveat on it: an insider naming a construction she helped build is a more reliable witness
+    to how it was built than an outside critic. The affluence-layer material she offers instead was recovered
+    from Table 5.1 in this pass, which exists only as an image in this copy: income percentiles, household
+    counts and per-tier ownership of colour TV, refrigerator, two-wheeler, car, landline, washing machine
+    and PC, sourced to IRS 2008.'
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: Ch. 5; and the author's own account of her role in the middle-class myth.
+  confounders: The lesson is not 'the middle class is a myth' but 'a segment label without a stated definition
+    and population base is not a planning input'. The first is a claim about India; the second is a rule
+    about labels.
+  source_status: accepted
+- qa_id: qa_rbwl_0005
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 5, 'Solving the Income Data Puzzle'; Tables 5.2, 5.3
+  question: Give the author's rules for using Indian household income survey data, and say precisely whose
+    work this is.
+  answer: 'Her rules, given as an enumerated set on the ground that surveyed income is systematically
+    understated: do not use it literally; use it for RELATIVE distribution — who is richer than whom,
+    and by roughly how much — rather than for absolute level; and reconcile the survey distribution against
+    an independent aggregate, which is what her own analysis does by linking surveyed income distributions
+    to national accounts. WHOSE WORK IT IS matters and is stated here because the book blurs it: the ANALYSIS
+    is hers, co-authored with Laveesh Bhandari as ''Solving the Income Data Puzzle'' in the Businessworld
+    Marketing White Book 2006; the UNDERLYING SURVEYS ARE NOT — they are NCAER, IRS via Hansa Research,
+    and the national accounts. She did not field a survey; she reconciled other people''s surveys against
+    GDP. This is the only object in the record marked as carrying the source''s own empirical work, and
+    it is marked as mixed for exactly that reason. Two of the tables the argument rests on, 5.2 and 5.3,
+    exist only as images in this copy and were read directly — 5.3 is the source of the text''s US$367
+    billion bottom-of-pyramid figure, showing 690 million people against total GDP of US$367.4 billion.'
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: '''Solving the Income Data Puzzle'', Bijapurkar and Bhandari, Businessworld Marketing White
+    Book 2006.'
+  confounders: The rules are the durable part; the reconciliation itself is a 2006 analysis of pre-2006
+    data and its outputs are not current.
+  source_status: accepted
+- qa_id: qa_rbwl_0006
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 6, 'Value Orientation'
+  question: What is the axis of the segmentation this book proposes, and how does it differ from segmenting
+    by spending power?
+  answer: 'The axis is VALUE ORIENTATION — how a buyer thinks about benefit against cost — not how much
+    they can spend. Her five groups run from the rich as benefit maximizers, oriented to ''money is no
+    object if the benefit is right'', through to those for whom cost dominates absolutely. The difference
+    from spending-power segmentation is that the two cut the population differently and predict different
+    things: an income band tells you what a buyer CAN spend and says nothing about the trade-off they
+    will make, so two households at the same income can sit in different orientations, and one household''s
+    orientation can differ by category. It also explains behaviour that looks irrational on an income
+    reading — a low-income buyer deferring a purchase to get a better product rather than accepting a
+    cheaper worse one is anomalous by income and ordinary by orientation. NOTHING HERE IS BOUND IN THE
+    CANON RECORD and the reason is stated: this classifies Indian consumer households in 2008, using NCAER-derived
+    material, and this project classifies neither consumers nor households. What is interesting is the
+    SHAPE of the classification, not its content.'
+  answer_type: concept_understanding
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: the rich as benefit maximizers — 'money is no object if the benefit is right'
+  confounders: Any segmentation offered by a consultant is also a product. The scheme is presented without
+    validation data, and the source reports no test of its predictive power.
+  source_status: accepted
+- qa_id: qa_rbwl_0007
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 7, 'Socio-Economic Classification'; Tables 7.1, 7.2
+  question: What is the SEC system, why was it built the way it was, and what is the general design principle
+    it illustrates?
+  answer: 'A classification developed by the Market Research Society of India in the early 1980s, classifying
+    urban households by the occupation and education of the chief wage earner, and rural households by
+    education and house type. The full grids — ten occupation categories against seven education categories
+    mapping onto classes A1 to E2 for urban, and seven education categories against three house types
+    mapping onto R1 to R4 for rural — exist ONLY AS IMAGES in this copy and were recovered by direct inspection;
+    the running text describes the system and does not reproduce them. Why it was built that way: income
+    data is unreliable in this market, so the system classifies on OBSERVABLE PROXIES that a field interviewer
+    can record without asking what anyone earns. The general design principle it illustrates is that where
+    the variable you want is unmeasurable in the field, a classification built on stable observable correlates
+    can be more useful than a bad direct measurement — at the cost of inheriting whatever the proxies
+    do not capture. The system is a convention of its period, explicitly so, and has been revised in the
+    industry since.'
+  answer_type: concept_understanding
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: Tables 7.1 and 7.2, Market Research Society of India, read directly from the figure images.
+  confounders: House type and chief-wage-earner education are proxies for a household's economic position,
+    not that position. A household that is atypical on the proxies is misclassified by construction.
+  source_status: accepted
+- qa_id: qa_rbwl_0008
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 4, 'Premium, Popular and Discount'; Figure 4.2
+  question: Marketers observed richer consumers buying popular-segment products and called it down-trading.
+    What does this source say was actually happening, and what is the general shape of the error?
+  answer: 'That the direction of the inference was wrong. The observation was read as a consumer trait
+    — ''many have suggested that this is the nature of the Indian consumer — mean and stingy'' — and her
+    correction is that ''it is not the consumer who has "down-traded" but the supplier who has "up-traded"
+    his offer'', so the popular and discount segments in many cases now offered equivalent or better benefits
+    at a lower price. She supplies the supply-side cause: unequal tax and duty incentives were withdrawn,
+    forcing small manufacturers into open competition, which produced ''rogue'' marketers who refused
+    to respect the unwritten price-performance rules, so consumers faced an explosion of new price-performance
+    combinations. Her instances are automotive — a 125cc motorcycle at a 100cc popular price, premium
+    styling at discount prices, a B-segment car with premium features — and her conclusion is that ''the
+    paradigm of premium-popular-discount = rich-middle income-poor is now quite irrelevant''. THE GENERAL
+    SHAPE is attributing a change in observed behaviour to a change in the people, when what changed was
+    the set of options they faced. Figure 4.2 was opened in this pass and carries no data: it is a price-against-performance
+    schematic, so it illustrates the argument and is not evidence for it. No switching data is supplied
+    anywhere.'
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: '''it is not the consumer who has "down-traded" but the supplier who has "up-traded" his offer'''
+  confounders: Character explanations are attractive because they need no data and predict everything.
+    This is the book's clearest instance, and its correction is also unmeasured.
+  source_status: accepted
+- qa_id: qa_rbwl_0009
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 3, 'The Analogy School'
+  question: What is the 'analogy school', and what is the objection to it?
+  answer: 'The practice of predicting a market''s evolution by studying a more developed market assumed
+    to be analogous — plotting per-capita GDP against per-capita consumption of a category in the comparator,
+    locating the target market on that curve, and reading its future off the curve. The objection is that
+    the method assumes the two markets differ only in WHERE THEY ARE ON A SHARED PATH, when they may differ
+    in the path itself: the comparator''s trajectory was produced by its own particular cost structures,
+    infrastructure, credit availability, household structure and business models, none of which the target
+    market need share. A market that develops a business model the comparator never had will not follow
+    the curve, and the method has no way of representing that. The argument is made by exhibiting the
+    assumption rather than by testing the method against outcomes — no forecast made this way is scored
+    against what happened — so what the source establishes is that the assumption is doing unacknowledged
+    work, not that analogy forecasts have failed at any measured rate.'
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: Ch. 3, the argument against predicting by analogy with a more developed market.
+  confounders: The objection is not that comparators are useless; it is that the comparator's path is
+    an assumption about the target and is rarely stated as one.
+  source_status: accepted
+- qa_id: qa_rbwl_0010
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 5, 'Is There a Magic Number?'
+  question: This source gives both sides of the consumption take-off threshold. State the concession,
+    the objection, and the diagnosis of what the theory assumes.
+  answer: 'The concession is real and quantified: the top 30 per cent of India, classified as having consuming
+    power on proven aggressive consumption behaviour, did have a per-capita GDP of US$2,216 in 2008, ''so
+    there is some sanctity to the number''. The objection is category-level: consumption data for FMCG
+    items with a history of aggressive value innovation — detergents, tea, shampoo — and for two-wheelers
+    and cellphones ''shows that consumption can take off well below any "magic number"''. The diagnosis
+    is the useful part and identifies the hidden assumption: the theory ''is based on the notion that
+    prices of delivered goods and services will remain unchanged, and will conform to existing "global"
+    standards of existing companies ... The threshold theory assumes that no smart new business models
+    are possible which can achieve this.'' So a threshold derived by holding prices fixed measures THE
+    CURRENT COST STRUCTURE, not a property of consumers, and it moves whenever a business model changes
+    what delivery costs. THE IRONY OF THE DATE IS WORTH STATING: her instances are 2008, and the largest
+    demonstration of her own point in India came after — cheap mobile data and the sub-$100 smartphone
+    moved exactly this threshold for a whole category of services.'
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: '''The threshold theory assumes that no smart new business models are possible which can achieve
+    this.'''
+  confounders: 'She concedes the correlation rather than denying it, which is what makes the diagnosis
+    load-bearing: the number is real and it is a fact about supply, not about buyers.'
+  source_status: accepted
+- qa_id: qa_rbwl_0011
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 8, 'How to Read and Predict Change'
+  question: What is the molting/morphing distinction, what detection problem does it create, and what
+    evidence supports it?
+  answer: 'MOLTING change sheds the old for the new like a snake''s skin; MORPHING change is slow and
+    from within, ''like an amoeba which, with every tiny particle it ingests, infinitesimally changes
+    shape''. She argues Indian change is of the second kind and gives a physics analogy for why it still
+    matters: since Force = Mass x Acceleration, ''a small acceleration (small changes over long periods
+    of time) can also unleash a large force of change, if the mass that is changing is very large''. The
+    detection problem follows directly: morphing change ''is not visible through the usual run of the
+    mill "usage and attitude" type surveys that most companies ritualistically engage in'', because each
+    annual reading falls inside the noise — hence the executive who watches annually, finds nothing worth
+    mentioning, and five years later finds the market distinctly different and asks ''when did we blink
+    and not see this happening?''. Her proposed unit of observation is the CHANGE CONFLUENCE: a collection
+    of individually insignificant shifts that together cross a threshold. THE EVIDENCE IS THE WEAK PART
+    AND MUST BE SAID: the framework is illustrated by consulting cases with no client name, no date, no
+    sample size and no outcome, plus a reported executive experience. The mechanism is clear; nothing
+    measures it.'
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: morphing change 'is not visible through the usual run of the mill "usage and attitude" type
+    surveys'
+  confounders: The Force = Mass x Acceleration line is an analogy, not a model; nothing in the book quantifies
+    either term.
+  source_status: accepted
+- qa_id: qa_rbwl_0012
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 9, 'This as Well as That'; Tables 9.1, 9.2
+  question: Separate the transferable mechanism in the 'this as well as that' argument from the framing
+    it is wrapped in, and say why the separation matters.
+  answer: 'THE MECHANISM is a clean and general account of hybrid adoption: a bundled practice is adopted
+    by outsourcing the disliked component and retaining the valued one — which is why a successful entrant
+    unbundles rather than substitutes, and why the expected zero-sum contest between tradition and modernity,
+    with modernity winning, did not occur. That is testable in principle and applies wherever an incumbent
+    practice is a bundle. THE FRAMING treats this as an Indian cultural ''DNA'' with ''high tolerance
+    of ambiguity'', evidenced by avatars in the Hindu pantheon and by Brahmins in Bengal being permitted
+    fish. That framing is essentialist, is not evidenced, and does no work the mechanism does not already
+    do. THE SEPARATION MATTERS FOR TWO REASONS. First, the framing makes the mechanism sound like a fact
+    about Indians, which stops it being applied anywhere else and makes it unfalsifiable where it is applied.
+    Second, the framing''s own evidence is Table 9.2, which was opened in this pass: a two-column contrast
+    of asserted values — patriarchy against egalitarianism, ambiguity and low dissonance against clarity
+    and linearity, socially defined roles against individually chosen roles — WITH NO SOURCE LINE AND
+    NO DATA. The text says ''as can be seen in Table 9.2'' and stops. It is the author''s summary of her
+    own position presented in the visual form of evidence.'
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: cultural
+  requires_application: false
+  support: 'Table 9.2, read directly: a two-column contrast of asserted values with no source and no data.'
+  confounders: A table with no source line still reads as data because of its form. This is the clearest
+    instance in the batch of a layout carrying an authority its content does not have.
+  source_status: accepted
+- qa_id: qa_rbwl_0013
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 10, 'Women'; Figure 10.2
+  question: The popular theory held that household consumption was changing because more women worked
+    outside the home. What did the data show, and what is the general error?
+  answer: 'It showed the proxy was wrong in both level and direction. Only about 23 per cent of SEC A
+    housewives worked outside the home, and the incidence FALLS as households get richer before climbing
+    again at the bottom — Figure 10.2, opened directly in this pass, shows a clear U-shape in the urban
+    panel, declining from A1 through B2 and rising through D to E2, with the rural panel rising monotonically
+    from R1 to R4. So the group whose consumption was changing most was not the group whose workforce
+    participation was rising, and the trend used to explain the change ran the wrong way through the affluent
+    segment. THE GENERAL ERROR is adopting a plausible proxy for a driver and never checking its level
+    or its direction against the population you are reasoning about — ''women are working more, therefore
+    households buy differently'' is a chain in which neither link was measured. Note what the correction
+    does NOT establish: it removes an explanation without supplying one. The consumption change was real;
+    this source shows what was not causing it.'
+  answer_type: failure_diagnosis
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: Figure 10.2, 'Incidence of Housewives Working Outside the Home', read directly; urban panel
+    U-shaped.
+  confounders: The proxy is doubly attractive because it is both plausible and socially progressive, which
+    is why it went unchecked.
+  source_status: accepted
+- qa_id: qa_rbwl_0014
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 10, 'Youth'; Table 10.1
+  question: Quantify the sampling error the source identifies in discourse about Indian youth, and say
+    where the substantiating evidence actually is.
+  answer: 'Of roughly 187 million twelve- to nineteen-year-olds, about 110 million — close to 60 per cent
+    — are rural, while the surveys generating public claims about ''Indian youth'' cover the highest social
+    classes in four or five big cities, which is at worst under 1 per cent and at best about 3 per cent
+    of Indian youth. Findings from that base are then reported as findings about Indian youth. THE SUBSTANTIATING
+    EVIDENCE IS TABLE 10.1 AND IT EXISTS ONLY AS AN IMAGE: it profiles eight segments with SEC, town size,
+    absolute millions and share of total, running from Rich Brats at 0.8 million and 0.4 per cent, through
+    Creamy Layer at about 1 per cent and Consuming Class at about 3 per cent — all confined to the top
+    23 cities — to Rural Marginal Consumers at 137 million and 71 per cent. The table''s own shares support
+    the 1-3 per cent claim exactly, and its content appears nowhere in the running text. A reader of a
+    text-only extraction of this book would meet the assertion and never meet the evidence. Source line:
+    IRS 2008.'
+  answer_type: factual_recall
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: 'Table 10.1, read directly: Rich Brats 0.8mn/0.4%, Rural Marginal Consumers 137mn/71%.'
+  confounders: The failure is not the sample — a study of urban affluent youth is a legitimate study —
+    but the label put on it, and the fact that the label is what circulates.
+  source_status: accepted
+- qa_id: qa_rbwl_0015
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 12, 'The Bottom of the Pyramid'
+  question: Why do stripped-down offers for low-income buyers fail, on this account, and what is the state
+    of the evidence?
+  answer: 'Because the supplier and the buyer disagree about what is optional. Firms ''reduced the price
+    by reducing performance and assumed that this combination would work'' — reduced functionality, reduced
+    styling, old or obsolete products — and ''the consumer, as always the wiser, rejected all of it. Marketers
+    then blamed the consumer and the country for not being evolved, whereas, in reality, the consumer
+    was way ahead in sophistication.'' Her diagnosis is one line: ''What suppliers consider to be a frill,
+    consumers consider to be a necessity.'' The mechanism she gives is informational: these consumers
+    are ''aware of what is happening in the rest of the world — as it happens, in real time'', so ''a
+    better wood stove is not good enough in the world of LPG, nor is a black-and-white television or even
+    a colour one without a remote'', and they will defer a purchase to get a better product rather than
+    settle for a far lower standard. THE EVIDENCE IS THE WEAKEST IN THE BOOK AND THIS MUST TRAVEL WITH
+    THE CLAIM: no failed product is named. Not one firm, product, date or sales figure appears. What is
+    retained is the DERIVATION RULE — reduce unit size or decouple ownership from use, do not reduce performance
+    or currency — and never a claim about what any market did.'
+  answer_type: mechanism
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: '''What suppliers consider to be a frill, consumers consider to be a necessity.'''
+  confounders: The argument is widely quoted and rests on no named case at all. Its mechanism is plausible
+    and its outcome claim is unsupported; both facts hold at once.
+  source_status: accepted
+- qa_id: qa_rbwl_0016
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 12; Table 5.6
+  question: What two design moves does this source report for markets where per-head consumption is low,
+    and which part of the reported evidence is not evidence?
+  answer: 'Both decouple use from ownership or from unit size. COMMUNITY CONSUMPTION: models such as cyber
+    cafes, STD/ISD telephone booths and shared television, where the service is bought per use rather
+    than the asset per household. AND UNIT-SIZE REDUCTION: the sachet, which crosses a price threshold
+    by shrinking the purchase rather than degrading the product — which is the same move as the no-frills
+    rule seen from the other side, since it reduces quantity while holding performance. On the evidence:
+    Table 5.6 was opened in this pass and CONFIRMS THE PENETRATION CHANGE — rural shampoo penetration
+    13.3 per cent in 2000 to 68.7 per cent in 2008. What it does NOT confirm is the cause. The attribution
+    to packaging innovation and lower unit sizes is the author''s own footnote to her own table, not a
+    finding in the data, and the two are separated in the Canon record. A FRESHNESS NOTE THAT MATTERS
+    MORE HERE THAN ANYWHERE ELSE IN THE BOOK: the community-consumption instances were artefacts of a
+    cost structure that has since largely disappeared. STD/ISD booths and cyber cafes were displaced by
+    the cheap smartphone. The decoupling principle survives; these instances do not.'
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: 'Table 5.6: rural shampoo penetration 13.3% (2000) to 68.7% (2008); causal note is the author''s
+    own.'
+  confounders: A number in a table and a cause in the footnote below it look like one finding. They are
+    not, and the footnote here carries no evidence at all.
+  source_status: accepted
+- qa_id: qa_rbwl_0017
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 13, 'Winning in the Indian Market'
+  question: What does the book instruct an analyst to do about the word 'India', and why is that more
+    than a definitional nicety?
+  answer: 'To stop using it as a market construct and build one: ''the onus is on them to define what
+    their India is, and translate the geographic idea into a well-defined'' population. It is more than
+    a nicety because every quantitative claim in the book depends on which India is being counted, and
+    the differences are not marginal — the top 30 per cent and the bottom 60 per cent of the same country
+    behave as different markets with different price-performance frontiers, different information access
+    and different purchase units, and a single national figure averages them into a population that does
+    not exist. It also closes the loop on the book''s other arguments: the middle-class trap, the youth
+    sampling error and the analogy school are all instances of reasoning about an undefined or misdefined
+    population, and this is the general instruction they share. The instruction is an instruction, not
+    a finding — it is the author asserting how the work should be done, and no case in the book compares
+    a firm that followed it against one that did not.'
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: '''the onus is on them to define what their India is'''
+  confounders: 'It reads as advice about wording and is actually the book''s summary methodological claim:
+    name the population before any number about it means anything.'
+  source_status: accepted
+- qa_id: qa_rbwl_0018
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Preface to the revised edition; and Ch. 5
+  question: What does the author say about the life of her own numbers, and what does the Canon record
+    do about it?
+  answer: 'She says it twice and in her own voice. In the Preface to the revised edition she records exactly
+    what was updated — ''I have updated all the data to 2008, and rewritten'' — and in chapter 5 she raises
+    the objection against herself: ''Is a detailed tour of methodology and numbers from various sources
+    really necessary, particularly if the data will be outdated as soon as the book is published?'' Her
+    answer is that the durable contribution is THE FRAMEWORK FOR REASONING ABOUT THE NUMBERS, NOT THE
+    NUMBERS. What the Canon record does about it is structural rather than advisory: this statement is
+    grouped with every numerical object in the record, so no figure from this book can be retrieved without
+    it; and every operational binding drawn from the source binds a reasoning error, never a number —
+    no binding carries a segment size, a threshold, a penetration rate or a market fact. That is not a
+    conservative reading imposed on the book. It is the reading the author asks for, and it is the reason
+    this source is admissible at all seventeen years after its data.'
+  answer_type: source_position
+  difficulty: medium
+  knowledge_type: advertising
+  requires_application: false
+  support: '''Is a detailed tour of methodology and numbers from various sources really necessary, particularly
+    if the data will be outdated as soon as the book is published?'''
+  confounders: Most books with expiring data do not say so. This one does, twice, which converts a hazard
+    into a usable bound — but only if the statement travels with the numbers.
+  source_status: accepted
+- qa_id: qa_rbwl_0019
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 4, 'Premium, Popular and Discount'; Ch. 10, 'Women'
+  question: A product's usage among 25-34 year-olds has fallen for three quarters and the team concludes
+    that this cohort is becoming less brand-loyal. Apply this source, and say what it cannot settle.
+  answer: 'The source''s response is that a change in a measured series has been attributed to a change
+    in the PEOPLE without testing whether what changed was the OPTIONS, and it supplies two worked cases
+    of exactly that error. In the down-trading case the observation was read as ''the nature of the Indian
+    consumer — mean and stingy'', and the actual cause was supply-side: ''it is not the consumer who has
+    "down-traded" but the supplier who has "up-traded" his offer'', after tax and duty changes forced
+    small manufacturers into open competition and produced an explosion of new price-performance combinations.
+    In the working-women case a plausible driver was adopted and never checked, and the data ran the other
+    way through the affluent segment. The rule to apply here: BEFORE ACCEPTING A DEMAND-SIDE EXPLANATION
+    FOR A MOVED SERIES, ESTABLISH WHAT CHANGED ON THE SUPPLY SIDE — what entered the category, what changed
+    price, what changed in distribution, and what a competitor did in the same three quarters. Character
+    explanations should be the residual, not the first hypothesis, because they need no data and predict
+    everything. What this source CANNOT settle is whether the loyalty explanation is wrong in this case.
+    It supplies no test, no threshold and no metric — two cases in which a demand-side reading was wrong
+    establish that the check is worth running, not what it will return.'
+  answer_type: application
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: true
+  support: '''it is not the consumer who has "down-traded" but the supplier who has "up-traded" his offer'''
+  confounders: Both of the source's cases are ones where the supply-side explanation won, which is a selected
+    sample of two. The asymmetry it justifies is one of ORDER — check supply first — not a presumption
+    about the answer.
+  source_status: accepted
+- qa_id: qa_rbwl_0020
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 12, 'The Bottom of the Pyramid'; Ch. 5, 'Is There a Magic Number?'
+  question: A team proposes a cut-down free tier of a paid product for price-sensitive users, with reduced
+    functionality and last year's model of the underlying feature set. What does this source predict,
+    what is the alternative it points to, and how much confidence is warranted?
+  answer: 'It predicts the failure mode precisely and names the reason: ''What suppliers consider to be
+    a frill, consumers consider to be a necessity.'' The proposal has two components and the source objects
+    to both. Reduced FUNCTIONALITY assumes the supplier can identify which capabilities are optional,
+    and the source''s claim is that this judgement is systematically made from the supplier''s side and
+    is systematically wrong. Last year''s MODEL is the sharper error: her mechanism is that these buyers
+    are ''aware of what is happening in the rest of the world — as it happens, in real time'', so obsolescence
+    is visible, and ''a better wood stove is not good enough in the world of LPG''. She reports that such
+    buyers will defer a purchase to get a better product rather than settle for a far lower standard —
+    so the cut-down tier does not capture a cheap segment, it teaches that segment to wait. THE ALTERNATIVE
+    she points to is to reduce the UNIT rather than the PERFORMANCE: the sachet crosses a price threshold
+    by shrinking the purchase while holding the product, and community consumption decouples use from
+    ownership. In software terms that is usage-based or time-boxed access to the full product rather than
+    permanent access to a degraded one. HOW MUCH CONFIDENCE IS WARRANTED: not much, and the reason is
+    specific. The no-frills argument names no failed product anywhere — not one firm, product, date or
+    figure — so it is a mechanism with no measured instances. It is a good reason to design the experiment
+    differently and not a reason to believe the outcome in advance. The sachet evidence is stronger (Table
+    5.6 confirms rural shampoo penetration rose 13.3 to 68.7 per cent) but its attribution to unit-size
+    innovation is the author''s own footnote, not a finding, and it is a 2008 physical-goods case being
+    carried to a digital one where unit cost behaves differently.'
+  answer_type: application
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: true
+  support: '''a better wood stove is not good enough in the world of LPG, nor is a black-and-white television
+    or even a colour one without a remote'''
+  confounders: The reduce-the-unit-not-the-performance rule is derived from physical goods with real marginal
+    cost. Whether it transfers to a product whose marginal cost is near zero is a question this source
+    cannot answer.
+  source_status: accepted
+- qa_id: qa_rbwl_0021
+  source_id: bijapurkar_we_are_like_that_only
+  source_locator: Ch. 5, 'The Indian Middle Class'; Ch. 10, 'Youth'; Table 10.1
+  question: A dashboard reports that engagement among 'young professionals' rose 12 per cent this quarter,
+    and a budget is being set against it. What does this source require before that number is used, and
+    which of its two worked cases is the closer parallel?
+  answer: 'It requires two things stated before the number is usable: THE DEFINITION of ''young professionals''
+    and THE POPULATION BASE it was measured on. The book''s charge against ''the Indian middle class''
+    is exactly this — the category has no agreed definition, so its size varies enormously with whichever
+    definition is chosen, and a number quoted without its definition is uninterpretable, yet capacity
+    gets built against it. A percentage change makes this worse rather than better, because it hides the
+    base entirely: 12 per cent of a self-selected panel of existing engaged users and 12 per cent of the
+    addressable population are different findings with the same label. THE CLOSER PARALLEL IS THE YOUTH
+    CASE, and it is closer for a specific reason. The middle-class failure is that no definition exists;
+    the youth failure is that a definition exists, is narrow, and is REPORTED UNDER A BROADER LABEL —
+    surveys of the highest social classes in four or five big cities, covering at worst under 1 per cent
+    and at best about 3 per cent of Indian youth, reported as findings about Indian youth. Table 10.1
+    quantifies the gap: Rich Brats 0.4 per cent and Consuming Class about 3 per cent, all in the top 23
+    cities, against Rural Marginal Consumers at 71 per cent. A dashboard segment is almost always the
+    second case — a real measurement on a narrow tracked population, labelled with the name of the population
+    you wish you were measuring. The source supplies no threshold for when a base is too narrow; what
+    it supplies is the requirement to state it, and the demonstration that stating it sometimes ends the
+    argument.'
+  answer_type: application
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: true
+  support: Table 10.1, read directly; surveys covering 1-3 per cent of Indian youth reported as findings
+    about Indian youth.
+  confounders: Both of the source's cases are national-scale and this one is not, so the arithmetic does
+    not transfer. The requirement — definition and base before use — is what does.
+  source_status: accepted

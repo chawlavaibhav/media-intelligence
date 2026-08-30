@@ -1,0 +1,764 @@
+# CANON-014 grounded Q&A bank.
+# GROUNDED, UNGRADED, UNCALIBRATED RESEARCH Q&A. Every item traces to one source and carries a
+# real locator and a support quotation. No human and no model has answered any item, and no
+# difficulty label has been checked against an observed answer.
+# THIS IS NOT benchmark ground truth, not human-calibrated truth, not model-evaluation evidence,
+# and not proof that Canon improves any outcome.
+# source_status: HOLD — the epistemic state of the SOURCE, not of the answer. A held
+# source's answers are as source-faithful as an accepted source's; what differs is whether the
+# source has passed the Audit Gate.
+
+source_id: google-abcd-video-ads
+source_dir: google-abcd-video-ads
+knowledge_dir: canon/candidates/canon-014/google-abcd-video-ads
+source_status: hold
+corpus: canon-014
+calibration: grounded, ungraded, uncalibrated research Q&A
+not_benchmark_ground_truth: true
+qa_items:
+- qa_id: qa_abcd_0001
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, "About the ABCDs of effective video ads", section "Benefits"; Think
+    with Google, "Understanding the ABCDs of effective creative on YouTube", section "Crafting a successful
+    ad"; Google for Business resources, "ABCDs of effective video ads", headline statistic callouts and
+    footnote
+  question: Google states the same ABCD effectiveness result on three of its own pages. How does the phrasing
+    differ between them, and why does the difference matter?
+  answer: Three different strengths for one finding. Google Ads Help says the ABCDs "Deliver as much as
+    a 30% lift in short-term sales likelihood and a 17% lift in long-term brand contribution" — an upper
+    bound. Think with Google says "On average, the ABCDs deliver a 30% lift in short-term sales likelihood
+    and a 17% lift in long-term brand contribution" — a central tendency. The Google for Business resources
+    article prints the two numbers as bare callouts with no qualifier at all, above a page-footer line
+    reading "Actual results will vary by advertiser". An upper bound and an average are different statistics,
+    and a reader who meets one page will draw a different expectation from a reader who meets another.
+    Nothing on any of the three pages resolves which is right, and this bank does not resolve it either.
+  answer_type: factual_recall
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: The three phrasings are verbatim from the three pages named in the locator. The source offers
+    no reconciliation and the underlying study is not published on any of them.
+  confounders:
+  - assuming Google's own pages must state the same finding identically, and reporting only one phrasing
+  - reading 'as much as' as the average, which is the more flattering error and the more common one
+  - confusing this with an IPA-style databank figure of the kind Binet and Field report, which comes with
+    a published methodology appendix
+  - assuming the bare callouts on the resources article carry the 'on average' qualifier from elsewhere
+  requires_application_canon013: false
+  source_status: hold
+  answer_type_as_written: factual
+- qa_id: qa_abcd_0002
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google for Business resources, "ABCDs of effective video ads", footnote to the headline
+    statistics; Google Ads Help, section "Benefits", asterisked source note; Think with Google, "Sources
+    (1)"
+  question: What study are the 30% and 17% figures attributed to, and which of the three pages tells you
+    the sample size?
+  answer: All three attribute them to a Google/Kantar study called "The Short & the Long of ABCDs Effectiveness",
+    global, dated April 2021 — but only the Google for Business resources article gives a sample, "n=11,000
+    ads". Google Ads Help cites the same study, publisher, scope and month with no sample size. Think
+    with Google cites it as "Google/Kantar Link AI, Global, The Short and the Long of ABCDs Effectiveness,
+    2021", naming Kantar's Link AI, dropping the month and giving no sample size. The study itself is
+    not linked or published on any of the pages.
+  answer_type: factual_recall
+  difficulty: medium
+  knowledge_type: effectiveness
+  requires_application: false
+  support: The three footnotes differ as described. n=11,000 ads appears only in the resources article's
+    footnote.
+  confounders:
+  - attributing the sample size to the Google Ads Help page, which is the page most often cited but does
+    not give it
+  - assuming n=11,000 refers to people surveyed rather than ads
+  - conflating this Kantar study with the separate Ipsos collaboration described on Think with Google,
+    which has no stated sample
+  requires_application_canon013: false
+  source_status: hold
+  answer_type_as_written: factual
+- qa_id: qa_abcd_0003
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Benefits" and its source note; Think with Google, "Understanding
+    the ABCDs of effective creative on YouTube", opening paragraph
+  question: A colleague cites the 30% lift as independently verified evidence that the ABCDs work. On
+    the source's own presentation, what can honestly be said about that figure and what cannot?
+  answer: 'It is a reported measurement result, so it is more than an assertion — but it is reported by
+    the company that sells advertising on the platform the research validates, from a study named but
+    not published on any of the three pages. No method, comparison baseline, market coverage or dispersion
+    is given, and neither "short-term sales likelihood" nor "long-term brand contribution" is defined.
+    The independent-reviewer language on the Think with Google page (Ipsos as research partner, Nielsen
+    and Kantar as two independent reviewers) is stated about how the framework was arrived at, not offered
+    as verification of these two numbers. And the figure is claimed for the ABCDs as a set: the source
+    never decomposes it by principle. Third- party involvement moderates the publisher''s interest here;
+    it does not remove it.'
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: true
+  support: Ads Help "Benefits" carries the figure and the source note; the Ipsos/Nielsen/Kantar sentence
+    is on Think with Google and describes the derivation of the principles, not an audit of the lift figures.
+  confounders:
+  - reading 'two independent reviewers' as an independent audit of the 30%/17% figures
+  - treating a named study as a published one
+  - attributing part of the lift to a single principle, which the source never does
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0004
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Think with Google, "Understanding the ABCDs of effective creative on YouTube", section
+    "B = Branding: Brand early, often, and richly"'
+  question: The source states that "YouTube is almost entirely a sound-on experience". What is the scope
+    of that claim, and what would it be wrong to conclude from it?
+  answer: It is a claim about how one named platform was being watched, made once, on the Think with Google
+    page dated April 2022, and offered as the reason to exploit the multisensory nature of the medium.
+    It is not a claim about short-form or feed video in general, and it points the opposite way from the
+    sound-off default that other feed surfaces are usually designed against. No measurement, figure or
+    study is attached to it. Neither of the other two pages states it, even though guidelines on both
+    — reinforcing branding with audio, supercharging the CTA with voice-over, supporting the story with
+    audio — depend on it being true. Viewing behaviour changes, so a claim of this kind is true of a period,
+    and the source names no period beyond its own date.
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: short_form
+  requires_application: false
+  support: The sentence appears once, under Branding on the Think with Google page. The audio-dependent
+    guidelines appear on the other two pages without the premise being restated.
+  confounders:
+  - the widely repeated claim that most social video is watched on mute, which is about other surfaces
+    and points the other way
+  - generalising the claim to all vertical or short-form video
+  - assuming the Google Ads Help article states it, since that is where most of the audio guidelines live
+  - treating it as a measured finding; the source gives no number for it
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0005
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Think with Google, section "B = Branding"; Google Ads Help, section "Core ABCDs", rows
+    "Attention", "Branding" and "Direction"; Google Ads Help, section "ABCDs by marketing objectives",
+    table row "Awareness: Get noticed"'
+  question: You are adapting an ad built to this guidance for a feed placement that autoplays muted. Which
+    of the source's guidelines lose their premise, and what does the source itself say about that situation?
+  answer: 'Every audio-dependent guideline loses its premise, because the premise is the source''s assertion
+    that YouTube is almost entirely sound-on. That is: "Reinforce with audio" / "See and say" (an audio
+    brand mention enhancing the on-screen brand visual), "Supercharge CTAs with audio" (voice-over reinforcing
+    the on-screen CTA), the audio half of "Support the story with audio and supers", the audio component
+    of the Attention principle''s immersive opening, and the awareness row''s "Pump up the volume by using
+    audio to get viewers to pay attention". As to what to do instead, the source says nothing at all.
+    It addresses YouTube, asserts sound-on there, and offers no sound-off variant, no fallback and no
+    acknowledgement that other surfaces behave differently. Anything filled in here comes from outside
+    this source.'
+  answer_type: application
+  difficulty: hard
+  knowledge_type: short_form
+  requires_application: true
+  support: The five audio-dependent guidelines are at the locators given; the sound-on premise is stated
+    only on Think with Google. No page addresses a muted surface.
+  confounders:
+  - importing standard muted-feed practice (burn-in captions, text-first storytelling) and attributing
+    it to this source
+  - assuming the source's 'supers' guidance is a sound-off provision; it is stated as reinforcement, not
+    as substitution
+  - assuming the objective table has a sound-off row; it has four rows, all objectives
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0006
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs", the "Principle" column of all four rows
+  question: Give the source's own one-line statement of each of the four ABCD principles, as printed in
+    the core table.
+  answer: 'Attention — "Hook and sustain attention with an immersive story." Branding — "Brand early,
+    often, and richly." Connection — "Help people think or feel something." Direction — "Ask them to take
+    action." Two details are easy to lose. Attention asks for two things, hooking and sustaining, not
+    one. And Branding''s three adverbs are three separate dimensions: when the brand first appears, how
+    often it recurs, and how many different kinds of branding element carry it.'
+  answer_type: concept_understanding
+  difficulty: easy
+  knowledge_type: advertising
+  requires_application: false
+  support: The four principle statements are printed verbatim in the "Principle" column of the core ABCDs
+    table.
+  confounders:
+  - expanding Direction as 'drive conversions', which is a category the source does not use here
+  - reading Branding as a frequency instruction only, dropping 'richly'
+  - reading Attention as being about the opening alone, dropping 'sustain'
+  requires_application_canon013: false
+  source_status: hold
+  answer_type_as_written: concept_definition
+- qa_id: qa_abcd_0007
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs" (all four rows); Google for Business resources,
+    "ABCDs of effective video ads", sections "A – Attention" through "D – Direction"
+  question: The Google Ads Help table and the Google for Business resources article both enumerate the
+    core ABCD techniques. Where do the two lists differ?
+  answer: 'In naming and in one item of substance. Four techniques carry different names on the two pages:
+    "Support the story with audio and supers" against "Emphasize key points"; "Reinforce with audio" against
+    "See and say"; "Engage" against "Be engaging"; and "Supercharge CTAs with audio" against "Boost CTAs
+    with audio". The substantive difference is in Branding: Google Ads Help carries a third guideline,
+    "Draw on all your branding assets", that the resources article''s Branding section does not have —
+    it names only two. So the Ads Help table lists eleven techniques (3 Attention, 3 Branding, 3 Connection,
+    2 Direction) and the resources article lists ten (3, 2, 3, 2). Anyone retrieving on one page''s label
+    alone will miss the other page.'
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: false
+  support: Counted directly off the two pages' sub-headings. The naming differences are verbatim.
+  confounders:
+  - assuming the two lists are identical because both are Google-published
+  - treating 'See and say' and 'Reinforce with audio' as two different techniques rather than one under
+    two names
+  - assuming each principle carries three techniques; Direction carries two on both pages
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0008
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "ABCDs by marketing objectives", table row "Awareness: Get
+    noticed"'
+  question: For an awareness objective, what does the source's objective table prescribe for each of the
+    four principles?
+  answer: 'Attention: "Pump up the volume by using audio to get viewers to pay attention". Branding: "Put
+    your brand front and center". Connection carries two instructions in one cell — "Make the people core
+    to the story" and "Be different, yet simple". Direction: "Apply core principles", meaning no objective-specific
+    treatment. The awareness row is the only one in which Direction takes no special instruction.'
+  answer_type: factual_recall
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: Read from the awareness row of the four-column objective table on the Google Ads Help page.
+  confounders:
+  - expecting a stronger or softer CTA instruction for awareness; the source gives none
+  - assuming attention for awareness is won visually; the source's instruction here is specifically audio
+  - assigning 'Be different, yet simple' to Direction; both it and 'Make the people core to the story'
+    sit in the Connection cell
+  requires_application_canon013: false
+  source_status: hold
+  answer_type_as_written: factual
+- qa_id: qa_abcd_0009
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "ABCDs by marketing objectives", all four table rows
+  question: In the objective table, three cells read "Apply core principles". Which principle is left
+    at core under which objective, and what does that pattern tell you about the framework?
+  answer: 'Direction is left at core under awareness. Attention is left at core under both consideration
+    and action. The full-funnel row has no such cell — all four principles carry an objective-specific
+    instruction there. The pattern matters because it shows the objective table varies emphasis and never
+    varies membership: no principle is dropped for any objective, and where an objective calls for no
+    special treatment the cell says to apply the core guidance rather than being left empty. That is the
+    strongest textual evidence that the source treats the four as jointly applied rather than as a menu.'
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: false
+  support: Read off the four-row, four-column table; the "Apply core principles" cells are in the Direction
+    column of the awareness row and the Attention column of the consideration and action rows.
+  confounders:
+  - assuming action campaigns downweight Branding; the action row carries the table's strongest branding
+    instruction, 'Make the product the ad'
+  - assuming awareness campaigns drop Direction entirely rather than leaving it at core
+  - assuming full funnel is a blend of the other three rows rather than four instructions of its own
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0010
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "ABCDs by marketing objectives", table row "Awareness: Get
+    noticed"; section "Core ABCDs", rows "Attention", "Branding" and "Connection"'
+  question: A 20-second ad for a new energy drink opens on a silent slow-motion product beauty shot, brings
+    the logo up only at the very end, shows no people at all, and closes on a "Buy now" end card. The
+    brief is an awareness campaign. Judged strictly by this source, what is wrong with it — and what is
+    not?
+  answer: 'Three of the four awareness instructions are missed. Attention for awareness is to be won with
+    audio ("Pump up the volume by using audio to get viewers to pay attention") and the opening is silent.
+    Branding is to be "front and center" and the brand arrives last, which also fails the core guideline
+    to show up early and throughout. Connection is to "Make the people core to the story", and there are
+    no people, which also fails the core guideline to humanise the story. What is not wrong on this source''s
+    terms is the end card: awareness is the one row where Direction is left at "Apply core principles",
+    and the core guidance asks only that a CTA be present and intentionally chosen for a specific objective.
+    The source gives no basis for calling the ask misplaced or over-strong here, and asserting one would
+    go beyond it.'
+  answer_type: application
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: true
+  support: 'Awareness row: audio-led attention, brand front and centre, people core to the story, Direction
+    at core. Core rows supply the early-and-throughout and humanise guidelines.'
+  confounders:
+  - criticising the 'Buy now' CTA as wrong for awareness — a reasonable marketing instinct that this source
+    does not support
+  - citing 'Jump in' against the slow-motion opening; the source's pacing guidance is about reaching the
+    story's point, and a beauty shot is not judged on speed alone
+  - assuming a product-led ad satisfies Branding; the source's awareness instruction is about the brand
+    being front and centre, and its Branding guidance asks for variety of asset
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0011
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "ABCDs by marketing objectives", table row "Action: Present
+    an enticing call-to-action with the right context"; section "Core ABCDs", row "Direction"'
+  question: A performance team wants to put the call to action in the first two seconds of an action-objective
+    ad, to catch viewers who skip. What does this source's own guidance say about that placement?
+  answer: It says the opposite, and it is the source's only placement instruction anywhere. The action
+    row's Direction cell reads "Present the ask after the context is set", and the objective's own statement
+    is "Present an enticing call-to-action with the right context" — so on this source's account the context
+    precedes the ask for exactly this objective. Two qualifications belong in the answer. The core Direction
+    guidance says nothing about placement at all, so there is no general end-of-ad rule here to appeal
+    to either. And the full-funnel row goes a third way — "Use CTAs throughout your ad, and be more direct
+    as you go" — but that is a different objective, and it does not license a front-loaded ask on an action
+    brief.
+  answer_type: application
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: true
+  support: The action row's Direction cell and the objective's own description both order context before
+    the ask; the core Direction row contains no placement guidance.
+  confounders:
+  - asserting a general 'CTA at the end' rule; the core guidance names no placement
+  - borrowing the full-funnel row's 'CTAs throughout' to justify a front-loaded ask on an action brief
+  - importing the skippable-ad convention of front-loading everything, which this source does not discuss
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0012
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "ABCDs by marketing objectives", Direction column of all four
+    table rows
+  question: How does the source vary how directly the ad asks, across its four marketing objectives?
+  answer: 'Awareness: nothing objective-specific — "Apply core principles". Consideration: "Plant the
+    seed of urgency", the softest of the asks. Action: "Present the ask after the context is set", which
+    is an ordering instruction rather than a wording one. Full funnel: "Use CTAs throughout your ad, and
+    be more direct as you go", the only instruction that both distributes the ask and escalates it. Those
+    four cells are the entirety of the source''s guidance on how directness should vary with objective;
+    it offers no CTA taxonomy and no wording guidance beyond "say what you''d like viewers to do".'
+  answer_type: tradeoff
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: Direction column, four rows of the objective table, plus the core Direction guideline "Include
+    a call to action (CTA)".
+  confounders:
+  - supplying a hierarchy of CTA verbs; the source gives none
+  - assuming the action row asks for the most insistent CTA — its instruction is about ordering, and full
+    funnel is the row that escalates
+  - assuming awareness gets a soft CTA instruction; it gets none
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0013
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Think with Google, "Understanding the ABCDs of effective creative on YouTube", section
+    "Crafting a successful ad"
+  question: Does the source claim the ABCDs will help you arrive at a good creative idea?
+  answer: 'No, and it says so outright: "The ABCD principles are not a formula for generating creative
+    ideas." They are execution guidance, applied once the concept exists — the source''s own worked example
+    starts at an already-approved concept and enters at the storyboard. Its argument for caring about
+    execution at all is a third party''s: it says research from NCSolutions shows creative, concept through
+    execution, is the leading driver of campaign effectiveness and ROI, and concludes that execution matters
+    as much as the idea. Note that this boundary appears on the Think with Google page only; a reader
+    who arrives at the Google Ads Help article or the resources article never meets it.'
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: concept_development
+  requires_application: false
+  support: The disclaimer and the NCSolutions attribution are both in the "Crafting a successful ad" section
+    of the Think with Google page.
+  confounders:
+  - treating the four principles as a concept-generation checklist, which is what the framework's shape
+    invites
+  - attributing the NCSolutions claim to the Google/Kantar ABCDs study; they are separate and differently
+    sourced
+  - assuming the disclaimer appears in the Google Ads Help article
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0014
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs", row "Branding", guideline "Reinforce with audio";
+    Google for Business resources, section "B – Branding", sub-heading "See and say"
+  question: What exactly does the source claim about audio brand mentions, and is it an additive claim
+    or an interactive one?
+  answer: 'Interactive. The claim is that "Audio brand mentions enhance onscreen brand visuals'' performance"
+    — the spoken mention raises the performance of the visual it accompanies, rather than contributing
+    a separate increment of its own. That is why the instruction is to pair the two ("see and say") rather
+    than to choose between them. It is a performance claim with nothing attached: no figure, no measure,
+    no study at this level, and the headline lift the pages carry is stated for the ABCDs as a set and
+    never decomposed by principle. The claim also presupposes the audio is heard, which the source asserts
+    for YouTube and for nothing else.'
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: false
+  support: The verb is "enhance ... performance", applied to the on-screen visual. No quantity is given
+    at either locator.
+  confounders:
+  - reading it as 'audio branding also works', which is the additive reading and loses the interaction
+  - attaching part of the 30% lift to this technique; the source never decomposes the figure
+  - assuming a mechanism is given; the source states the effect and not the cause
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0015
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs", row "Attention", guideline "Keep visuals bright
+    and high-contrast"; Google for Business resources, section "A – Attention"; Google Ads Help, article
+    introduction
+  question: The source gives a reason for keeping visuals bright and high-contrast. What is the reason,
+    and what does the guidance not supply?
+  answer: 'The reason is device coverage: "Ensure visuals are optimized for all devices", and the source''s
+    own illustration reduces that to holding visual engagement on small screens. What it does not supply
+    is any measurable target — no contrast ratio, no luminance figure, no reference screen and no viewing
+    distance. The article instead points readers to a separate page for video specs and safe zones. So
+    the guidance is a direction, not a specification, and any threshold used to check an ad against it
+    is the implementer''s rather than the source''s.'
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: accessibility_legibility
+  requires_application: false
+  support: The device-coverage rationale is printed with the guideline; the introduction defers specs
+    and safe zones to a separate article.
+  confounders:
+  - supplying a WCAG-style contrast ratio, which this source neither gives nor references
+  - reading the guidance as being about legibility of on-screen text; the source scopes it to visuals
+    and devices, and states no legibility rationale for supers
+  - assuming the specs page is part of this guidance; it is a separate linked article
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0016
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "Core ABCDs", row "Attention"; Google for Business resources,
+    section "A – Attention"; Think with Google, section "A = Attention: Hook the viewer"'
+  question: The source's Attention principle asks for two distinct things. What are they, and what means
+    does it name for achieving them?
+  answer: 'Hooking attention and sustaining it — "Hook and sustain attention with an immersive story"
+    — so an arresting opening that then loses the viewer does not satisfy the principle. The means named
+    for both is audio and visuals together: "Drop viewers in from the start and immerse them with audio
+    and visuals that pique their interest." The audio half is the one part of Attention for which the
+    source gives a mechanism: music, voice-over and sound effects are said to create a rich, sensory experience
+    that helps people pay attention. What it never gives is a duration — no page names a number of seconds
+    for "the start".'
+  answer_type: mechanism
+  difficulty: medium
+  knowledge_type: short_form
+  requires_application: false
+  support: The principle statement is in the core table; the immersion instruction and the audio mechanism
+    are on the resources article and Think with Google respectively.
+  confounders:
+  - reading Attention as being about the opening only, which drops 'sustain'
+  - supplying a first-five-seconds rule; the only five-second figure in the source describes one illustrative
+    ad's brand introduction
+  - treating the hook as a visual problem; the source's stated mechanism here is the audio
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0017
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "Core ABCDs", row "Connection", guideline "Focus the message";
+    Think with Google, section "C = Connection: Help people think or feel something"'
+  question: Under which of the four principles does the source file the fault of doing too much in an
+    ad, and what does that filing imply?
+  answer: 'Under Connection — not Attention and not Direction. Google Ads Help lists "Focus the message:
+    Avoid doing too much in your ad. Keep messaging and language focused and simple" as a Connection guideline.
+    Think with Google is more explicit about why it sits there: it states the instruction as a brake on
+    the Connection instructions immediately preceding it — lean into humour and surprise, "But avoid doing
+    too much in your ad. Focus the message as you make your connection." So on the source''s arrangement
+    an overloaded ad is one that fails to connect, and the focus instruction is the stated limit on how
+    far the engagement devices may be pushed. The source quantifies neither side: no message count, and
+    no test for when an ad is doing too much.'
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: advertising
+  requires_application: true
+  support: '"Focus the message" is in the Connection row of the core table; the "But avoid doing too much"
+    construction is in the Connection section of the Think with Google page.'
+  confounders:
+  - filing message overload under Attention, which is where a clutter or competing-elements framing would
+    put it
+  - treating 'Focus the message' and 'Avoid competing elements' as one instruction; they sit under different
+    principles
+  - assuming the source sets a message count
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0018
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs", row "Connection", guideline "Focus the message",
+    and row "Attention", guideline "Support the story with audio and supers"; row "Attention", guideline
+    "Jump in"
+  question: An ad packs three separate product benefits into fifteen seconds, each with its own voice-over
+    line and its own super, over fast cutting. Which named faults does this source say it hits, under
+    which principles — and which element of the description does the source not object to?
+  answer: 'Two named faults, under two different principles. "Doing too much" under Connection, from "Focus
+    the message: Avoid doing too much in your ad. Keep messaging and language focused and simple." And
+    "competing elements" under Attention, from "Support the story with audio and supers: Reinforce your
+    message with audio and text. Avoid competing elements." — three voice-over lines and three supers
+    carrying three different messages are not reinforcing one message. The fast cutting is the element
+    the source does not object to: engaging pacing is what it asks for under "Jump in". Neither fault
+    is quantified anywhere — no message count, and no test for when two elements compete rather than reinforce
+    — so the diagnosis is directional and the threshold would be the implementer''s.'
+  answer_type: failure_diagnosis
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: Both faults are named at the locators given; "engaging pacing" is part of the Jump in guideline.
+  confounders:
+  - condemning the fast cutting, which the source's own Attention guidance encourages
+  - filing both faults under one principle
+  - supplying a 'one message per ad' rule as if the source stated it
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0019
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "Core ABCDs", row "Branding" (all three guidelines); Think
+    with Google, section "B = Branding: Brand early, often, and richly"'
+  question: An ad carries no brand presence at all until a five-second logo lockup at the end. Which parts
+    of the source's Branding guidance does that miss?
+  answer: All three of them. "Show up early and throughout" — the brand neither appears at the start nor
+    maintains a presence. "Reinforce with audio" — no spoken brand mention accompanies the on-screen visual,
+    so the see-and-say pairing is absent. "Draw on all your branding assets" — one asset type where the
+    source names six (product shots, pack shots, in-situ branding, graphic elements, voice-overs, musical
+    treatments) and asks for a variety fitted to the message and objective. Mapped to the principle's
+    own three adverbs, the ad fails early, fails often and fails richly. It is worth adding that the source
+    quantifies none of the three, so the judgement is about kind rather than degree.
+  answer_type: application
+  difficulty: medium
+  knowledge_type: brand_communication
+  requires_application: true
+  support: The three Branding guidelines are in the core table; the six-item asset list is on the Think
+    with Google page.
+  confounders:
+  - treating an end lockup as satisfying Branding because the brand is present somewhere
+  - assuming 'richly' means a bigger or longer logo rather than more kinds of branding element
+  - assuming the source sets a required time for the first brand appearance; the five-second figure in
+    the source describes one illustrative ad
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0020
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "ABCDs by marketing objectives", table row "Consideration:
+    Show users how your product fits into their lives"'
+  question: A brief asks to show existing customers how the product fits into their day and to leave them
+    wanting it soon, without pushing for a purchase now. Which of the source's objective rows is that,
+    and what does the row prescribe?
+  answer: 'Consideration — the source''s own statement of the objective is "Show users how your product
+    fits into their lives", which is the brief almost word for word. The row prescribes: Attention — apply
+    core principles, no objective-specific treatment; Branding — "Hero the product"; Connection — two
+    instructions in one cell, "Show how it works" and "Be relatable"; Direction — "Plant the seed of urgency",
+    which is exactly the soft ask the brief calls for. Note that the Branding instruction here is about
+    the product rather than about brand identity marks, which the core Branding guideline already permits
+    by saying "your brand or product".'
+  answer_type: application
+  difficulty: medium
+  knowledge_type: media_planning
+  requires_application: true
+  support: The consideration row's four cells, and the core Branding guideline's "brand or product" wording.
+  confounders:
+  - choosing the action row because the brief mentions wanting the product
+  - assuming Attention gets a special instruction here; the row leaves it at core
+  - assigning 'Be relatable' to Branding; both it and 'Show how it works' sit in the Connection cell
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0021
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "ABCDs by marketing objectives", table row "Full funnel: Maximize
+    effectiveness by incorporating all objectives"; section "Core ABCDs", row "Direction"'
+  question: The full-funnel row says something about calls to action that appears nowhere in the core
+    guidance. What is it, and does it contradict the core guidance?
+  answer: 'It says "Use CTAs throughout your ad, and be more direct as you go" — plural asks, distributed
+    across the ad, escalating in directness. Nothing in the core Direction guidance says that, or anything
+    else about count or placement: the core row asks only for an explicit, intentionally chosen CTA reinforced
+    by voice-over. So there is no contradiction with what the core guidance actually states — but it does
+    cut against the common reading of it as one ask at the end, and that reading is not supported anywhere
+    in the source. Two further points: the full-funnel row is the only one where all four principles carry
+    an objective-specific instruction, and it exists only in the Google Ads Help table — the Think with
+    Google page names three objectives and not this one.'
+  answer_type: comparison
+  difficulty: hard
+  knowledge_type: media_planning
+  requires_application: false
+  support: The full-funnel Direction cell against the core Direction row, which names neither count nor
+    placement; the Think with Google objectives paragraph names only awareness, consideration and action.
+  confounders:
+  - asserting the core guidance requires a single end-of-ad CTA, which it does not say
+  - assuming full funnel is a documented blend of the other three rows
+  - assuming all three pages carry a full-funnel variant
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0022
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Think with Google, "Understanding the ABCDs of effective creative on YouTube", opening
+    paragraph
+  question: On the source's own account, how were the ABCDs arrived at, and what does that method not
+    establish?
+  answer: 'The source says the question of what ads that drive results on YouTube have in common "inspired
+    a collaboration with Ipsos, and the involvement of two independent reviewers, Nielsen and Kantar",
+    and that what emerged is a set of principles "demonstrated across video ads that worked effectively
+    for brands". As described, that is selection on the outcome: the principles were read off ads that
+    already worked. The source reports no comparison against ads that did not work, no sample size for
+    this exercise, no market coverage, no selection rule, and no statement of what the two reviewers reviewed
+    or what they concluded. So the account establishes that the principles are common among successful
+    ads as the publisher selected them; it does not establish that they caused the success, and it is
+    a separate exercise from the Kantar study the lift figures come from.'
+  answer_type: source_position
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: false
+  support: The whole account is one paragraph on the Think with Google page. The n=11,000 sample sits
+    on a different page and is attached to the Kantar effectiveness study.
+  confounders:
+  - importing the n=11,000 sample into this derivation account; the source does not say they are the same
+    exercise
+  - reading 'independent reviewers' as peer review or as an audit of the effectiveness figures
+  - treating a set of common features of successful ads as a causal finding
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0023
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs", row "Attention", guideline "Jump in"; Google
+    for Business resources, section "B – Branding", sub-heading "Show up early and throughout"
+  question: You are asked to build an automated check for the source's "Jump in" guideline. Why can it
+    not be run on individual frames, and what does the source fail to give you?
+  answer: 'Because what "Jump in" describes is a property of a span, not of a still: how quickly the ad
+    reaches the heart of its story, and whether the pacing and framing across the opening draw the viewer
+    in. No single frame carries any of that, so the unit of observation has to be the opening sequence
+    at least. What the source fails to give you is every number the check would need — no target time
+    to the heart of the story, no definition of what the heart of the story is, and no reference point
+    for "faster", which is comparative with nothing to compare to. The only figure anywhere nearby is
+    a five-second mention in an illustrative caption about when one ad introduced its brand, which is
+    a different guideline and is not stated as a rule. A check built from this can be directional; any
+    threshold in it is the implementer''s.'
+  answer_type: application
+  difficulty: hard
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: '"Jump in" names pacing and framing over the opening and gives no duration; the five-second
+    figure belongs to the Weekendesk caption under "Show up early and throughout".'
+  confounders:
+  - borrowing the five-second figure as a Jump in threshold; it belongs to a different guideline and to
+    one example
+  - treating tight framing as a per-frame property that makes the check frame-level — the guideline is
+    about the opening's effect, not a single composition
+  - assuming the source's video specs page supplies a timing rule; it covers specs and safe zones
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0024
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Core ABCDs" (all four rows) and article introduction
+  question: Someone wants to turn the core ABCDs into a scored checklist. Which of the source's own terms
+    are left unquantified, and what is the one number the core guidance contains?
+  answer: Almost all of them. "The start" and "early" carry no number of seconds. "Often" carries no count.
+    "Richly" carries no minimum number of asset types. "Faster" has no reference point. "Too much" has
+    no message count. "Competing" has no test distinguishing competition from reinforcement. "Bright and
+    high-contrast" has no ratio, no luminance figure and no reference screen — the article defers specs
+    and safe zones to a separate page. The one number anywhere in the core guidance is a five-second figure,
+    and it appears inside a caption describing a single illustrative ad's brand introduction, not as a
+    rule. Anything scored would therefore be scored against thresholds the implementer supplied.
+  answer_type: boundary_condition
+  difficulty: medium
+  knowledge_type: evaluation_diagnosis
+  requires_application: true
+  support: Verified by reading every guideline in the core table and the two article versions of it; no
+    threshold appears in any of them.
+  confounders:
+  - supplying the widely circulated five-second branding rule as if this source stated it
+  - assuming the linked video-specs article completes these thresholds; it covers formats and safe zones
+  - assuming the objective table adds numbers; its sixteen cells are all qualitative
+  requires_application_canon013: false
+  source_status: hold
+- qa_id: qa_abcd_0025
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: 'Google Ads Help, section "Core ABCDs", row "Connection", guideline "Humanize the story";
+    section "ABCDs by marketing objectives", table row "Action: Present an enticing call-to-action with
+    the right context"'
+  question: 'Two teams building an action-objective ad both cite this source: one to justify a cast-led
+    human story, the other to justify cutting the people entirely and shooting the product. Which of them
+    has the source right?'
+  answer: 'Both are quoting it accurately, and the source does not settle it. The core Connection guideline
+    says "Humanize the story: Feature people to help you tell a better product story and relate to your
+    consumer.", which supports the first team. The action row''s Branding cell says "Make the product
+    the ad" — the strongest branding instruction in the whole table — and its Connection cell says "Be
+    exact and tangible", not "feature people", which supports the second. The source publishes both and
+    never addresses the tension between them. The only structural guidance it does supply for this objective
+    is about ordering: present the ask after the context is set. An answer that picks a winner is going
+    beyond the source.'
+  answer_type: tradeoff
+  difficulty: hard
+  knowledge_type: brand_communication
+  requires_application: true
+  support: The core Connection guideline and the action row's Branding and Connection cells, read together.
+    No page reconciles them.
+  confounders:
+  - resolving the tension in favour of the objective row, as if objective guidance always overrides core
+    guidance — the source states no such precedence
+  - resolving it in favour of the core guidance because it is called 'core'
+  - assuming 'Be exact and tangible' is a people instruction; it replaces the humanise instruction in
+    this row rather than restating it
+  requires_application_canon013: true
+  source_status: hold
+- qa_id: qa_abcd_0026
+  source_id: google-abcd-video-ads
+  source_title: Google, "ABCDs of effective video ads" — Google Ads Help, Google for Business resources
+    and Think with Google (retrieved 30 August 2026)
+  source_locator: Google Ads Help, section "Benefits" and its source note; section "Core ABCDs", row "Branding",
+    guideline "Reinforce with audio"
+  question: A planner wants to argue that adding a spoken brand mention on its own will deliver most of
+    the 30% short-term sales lift. Can this source support that argument?
+  answer: No, on three counts. The lift figures are stated for "the ABCDs" as a set on all three pages
+    and are never decomposed by principle, still less by individual technique, so no share of the 30%
+    can be assigned to anything. The source's only claim about audio brand mentions is qualitative — that
+    they enhance the on-screen brand visual's performance — with no figure attached at all. And the set-level
+    number itself is unstable across the publisher's own pages, appearing as an upper bound on one and
+    as an average on another, so it will not carry a per-campaign expectation even before anyone tries
+    to split it.
+  answer_type: boundary_condition
+  difficulty: hard
+  knowledge_type: effectiveness
+  requires_application: true
+  support: The lift is attached to the ABCDs as a set at the Benefits locator; the audio guideline carries
+    no quantity.
+  confounders:
+  - apportioning the lift across the four principles, or across techniques, as if the source had reported
+    components
+  - reading 'enhance performance' as a quantified uplift
+  - using the 'on average' phrasing from one page as a per-campaign expectation
+  requires_application_canon013: true
+  source_status: hold
