@@ -1,0 +1,201 @@
+# EVAL-037 — CONTROLLED_CANON condition definition (SUPPLEMENTAL).
+#
+# This file is read ONLY by the supplemental controlled-retrieval lane. No NO_CANON
+# worker and no original FULL_CANON worker ever opens it, and it does not modify,
+# replace or supersede conditions/full-canon.yaml.
+#
+# WHAT THIS CONDITION IS
+#   The same corpus, the same three read-only Canon tools, the same ACCEPTED/HOLD/Q&A
+#   status semantics as FULL_CANON. Exactly ONE thing differs: how retrieval is
+#   conducted. FULL_CANON gives the model unrestricted autonomous retrieval. This
+#   condition asks for a short, OBJECTIVE-DRIVEN, bounded research phase, which is
+#   what the production system we actually want would do — the reasoning model
+#   researches only what it needs to produce the customer's requested media outcome.
+#
+# WHAT IT IS NOT
+#   The allowance below is an EXPERIMENTAL TREATMENT, not a technical context-window
+#   guard. The harness does not cap, truncate or block a single call. Compliance is
+#   MEASURED after the fact (tools/controlled_retrieval.py). A trial that exceeds the
+#   allowance is recorded `failed_controlled_retrieval` and is NOT re-run.
+
+condition_id: CONTROLLED_CANON
+experiment: EVAL-037
+supplemental_to: FULL_CANON
+supersedes: none
+supersedes_note: >-
+  This is a supplemental treatment. The original FULL_CANON lane, its run and the
+  repaired unbounded-retrieval run remain the evidence of what unrestricted
+  autonomous Canon retrieval does. Nothing here replaces them.
+
+corpus:
+  description: >-
+    Byte-identical to FULL_CANON: the merged status-aware full corpus produced by
+    CANON-014 — accepted Canon, HOLD candidate knowledge and the grounded Q&A banks,
+    in one retrievable surface with epistemic status preserved on every returned
+    object.
+  base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  roots:
+    accepted: canon/knowledge/current
+    hold: canon/candidates/canon-014
+    qa: canon/qa/canon-014
+  index: canon/knowledge/CANON-CORPUS-INDEX.yaml
+  artifact_filenames:
+    - source-knowledge.yaml
+    - source-concept-systems.yaml
+    - operational-bindings.yaml
+    - ontology-mappings.yaml
+    - visual-evidence-ledger.yaml
+
+fingerprints:
+  algorithm: sha256-of-sorted-path-and-content
+  full_knowledge:
+    file_count: 193
+    combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+  qa:
+    file_count: 23
+    combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+  verification: >-
+    Recomputed from the working tree and matched exactly. The execution worker MUST
+    re-verify both digests during preflight and MUST stop rather than run if either
+    differs. Canon was NOT altered for this treatment.
+
+tools_exposed:
+  # Identical to FULL_CANON. Same module, same schemas, same ranking, same defaults.
+  - name: canon_catalog
+    access: read-only
+    purpose: List every source the corpus represents with its source_status and counts.
+  - name: canon_search
+    access: read-only
+    purpose: Search knowledge items, concept systems, bindings, ontology terms and Q&A items.
+  - name: canon_read
+    access: read-only
+    purpose: Read a specific source's artifact, or a specific item by id.
+
+tools_note:
+  tool_semantics_unchanged: true
+  tool_module: tools/canon_tools.py
+  harness_imposed_cap: none
+  harness_imposed_cap_note: >-
+    canon_search still returns EVERY scoring item unless the model itself passes
+    `limit`. That default is deliberately left alone, so a model that ignores the
+    treatment is observed doing so rather than being silently rescued by the harness.
+
+status_invariants:
+  # Byte-for-byte the FULL_CANON invariants. Unchanged.
+  - Every returned object MUST carry source_status.
+  - source_status is one of ACCEPTED or HOLD, verbatim from the corpus. It is never inferred.
+  - HOLD MUST NEVER be represented, relabelled, summarised or defaulted as accepted.
+  - An object whose status cannot be established is not returned.
+  - Q&A items carry the source_status of their source and are additionally marked
+    not_benchmark_ground_truth. Q&A is accessible knowledge, not independent
+    corroboration and not benchmark truth.
+
+retrieval_treatment:
+  id: OBJECTIVE_DRIVEN_CONTROLLED
+  objective: >-
+    Retrieve only knowledge that can materially improve execution of THIS customer's
+    requested media outcome. The objective is NOT "find everything relevant".
+  allowance:
+    max_knowledge_needs: 3
+    max_canon_search_calls: 3
+    max_results_per_search: 8
+    max_search_results_total: 24
+    max_canon_read_objects: 6
+  allowance_is_a_treatment_not_a_guard: true
+  enforced_by_harness: false
+  measured_by: tools/controlled_retrieval.py
+  violation_status: failed_controlled_retrieval
+  violation_policy: >-
+    A violation is recorded as failed_controlled_retrieval. It is NEVER silently
+    repaired by changing the treatment, never rescued by expanding the allowance, and
+    never re-run. If the model cannot produce a useful package inside this procedure,
+    that is a RESULT.
+  model_still_decides:
+    - which production questions matter for this brief
+    - what to query for each of them
+    - which returned items are worth reading
+    - whether to consume Q&A
+    - when it has enough and should stop
+  model_does_not_decide:
+    - how much retrieval allowance it has
+
+# ---------------------------------------------------------------------------
+# The CONTROLLED_CANON addendum. Appended to the common tested-model prompt for this
+# lane only. Stored here and nowhere else.
+#
+# Paragraphs 1-6 are the FULL_CANON addendum's corpus and status semantics, preserved
+# verbatim except for the two lines that grant unbounded discretion ("Use any amount
+# of it if useful, or none." / "Decide for yourself what is relevant."), which are the
+# variable under test and are replaced by the research procedure below.
+# ---------------------------------------------------------------------------
+addendum: |
+  You have access to a media-production knowledge library through the available Canon tools.
+
+  It contains ACCEPTED knowledge, HOLD knowledge and grounded Q&A representations.
+
+  ACCEPTED means the source passed the project's Audit Gate.
+  HOLD means the extracted knowledge has an unresolved evidence or representation blocker and must be treated cautiously.
+
+  Q&A items are alternate grounded representations, not independent corroboration or benchmark truth.
+
+  Canon is creative/production knowledge, not evidence about current model capability, provider pricing or reliability.
+
+  CANON RESEARCH PROCEDURE
+
+  Before producing the final package, conduct a short, objective-driven Canon research phase.
+
+  The objective of research is NOT "find everything relevant".
+
+  The objective is: retrieve only knowledge that can materially improve execution of this specific customer's requested media outcome.
+
+  STEP 1 — IDENTIFY KNOWLEDGE NEEDS
+
+  From the customer brief, identify at most THREE concrete production questions where external creative/production knowledge could materially improve the final media.
+
+  Examples of the kind of question this means:
+  - how to preserve spatial clarity in this scene;
+  - how to make this product photograph communicate material quality;
+  - how to structure information hierarchy in this poster;
+  - how to make direct-to-camera creator footage credible;
+  - how to light reflective surfaces.
+
+  Do not retrieve for facts the customer already supplied.
+  Do not retrieve current provider/model recommendations.
+  Do not conduct broad exploratory research.
+
+  Before your first Canon call, write your knowledge needs as a short list, in a message that begins with the line:
+
+  RESEARCH_NEEDS:
+
+  one need per line, at most three lines. This declaration is part of your working message, not part of the final package. Do not repeat it in the final package.
+
+  STEP 2 — TARGETED SEARCH
+
+  For each knowledge need:
+  - issue at most ONE canon_search;
+  - query only for that specific need;
+  - pass the `limit` argument, set to at most 8.
+
+  `limit` is not optional here. canon_search returns every matching item in the whole library when `limit` is omitted, which is thousands of items. Always pass it.
+
+  Your total allowance for the whole task is at most 3 canon_search calls and at most 24 search-result items.
+
+  STEP 3 — SELECTIVE READING
+
+  From the returned search results, decide which items are actually worth reading.
+
+  Read at most 3 Canon objects per knowledge need, and at most 6 Canon objects in total.
+
+  Use canon_read only for the items you selected. Prefer reading a specific item by its item_id. Do not read the entire result set. Do not read entire sources indiscriminately.
+
+  Do not call canon_catalog unless a targeted search genuinely cannot formulate a useful query.
+
+  STEP 4 — STOP WHEN SUFFICIENT
+
+  Stop researching as soon as you have enough to make the production decision. Do not use remaining retrieval allowance merely because it exists.
+
+  STEP 5 — PRODUCE
+
+  Produce the final package using the customer brief, the official website snapshot where permitted, and only the Canon knowledge you actually retrieved and judged useful.
+
+  KNOWLEDGE_AND_WEBSITE_USE must faithfully list what you actually used. Do not list knowledge you did not retrieve, and do not list retrieved knowledge you did not use.

@@ -30,6 +30,16 @@ USAGE
   Every provider turn - including every intermediate turn caused by a tool call - is
   recorded with its own usage, stop reason, latency, request id and model version. A
   field the provider does not expose is stored as null. Nothing is invented.
+
+EVIDENCE ON THE FAILURE PATH (EVIDENCE-002)
+  A call that dies part-way - context overflow, tool-loop guard, refusal, truncation,
+  an SDK exception - has usually already BILLED several provider turns and already
+  pulled real knowledge through the tools. Every raise out of an adapter loop therefore
+  carries `detail` built by `_detail()`: the completed turns, the completed tool calls
+  (still carrying their full results, so the transcript can still be written), and any
+  assistant text emitted alongside a tool call. Without this the spend and the
+  retrieval evidence of a failed trial are simply lost, and a failure cannot be told
+  apart from a trial that never retrieved anything at all.
 """
 import json
 import os
@@ -72,6 +82,17 @@ _TOOL_SCHEMA_MARKERS = ("tool", "function_declaration", "input_schema", "paramet
 
 def is_transient(failure_class):
     return failure_class in TRANSIENT_CLASSES
+
+
+def _detail(turns, tool_log, notes=None):
+    """EVIDENCE-002: everything a failing call still knows, for the runner to retain.
+
+    `turns` are the provider turns that COMPLETED (and were billed) before the failure.
+    `tool_calls` are the completed tool calls, still carrying `_full_result`, so the
+    runner can write the same transcript it would have written on success.
+    `intermediate_text` is assistant text emitted on turns that also called a tool.
+    """
+    return {"turns": turns, "tool_calls": tool_log, "intermediate_text": notes or []}
 
 
 class ProviderError(RuntimeError):
@@ -250,24 +271,28 @@ class OpenAIResponsesAdapter(Adapter):
     def call(self, request, dispatch=None, **_):
         from openai import OpenAI
         client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-        convo, turns, tool_log = list(request["input"]), [], []
+        convo, turns, tool_log, notes = list(request["input"]), [], [], []
         for turn in range(MAX_TOOL_TURNS):
             req = dict(request); req["input"] = convo
             t0 = time.time()
             try:
                 resp = client.responses.create(**req)
             except Exception as e:
-                raise ProviderError(str(e)[:600], classify_exception(e)) from e
+                raise ProviderError(str(e)[:600], classify_exception(e),
+                                    _detail(turns, tool_log, notes)) from e
             rec = turn_record(turn, t0, resp, self.provider)
             turns.append(rec)
             fail = check_stop_reason(rec)
             if fail:
                 raise ProviderError(f"provider stop reason {rec['stop_reason']!r}", fail,
-                                    {"turns": turns})
+                                    _detail(turns, tool_log, notes))
             calls = [o for o in (getattr(resp, "output", None) or [])
                      if getattr(o, "type", "") == "function_call"]
+            text_now = getattr(resp, "output_text", None)
             if not calls:
-                return _finish(getattr(resp, "output_text", None), tool_log, resp, turns)
+                return _finish(text_now, tool_log, resp, turns, notes)
+            if text_now and str(text_now).strip():
+                notes.append({"turn_index": turn, "text": str(text_now)})
             for c in calls:
                 convo.append(c)
                 out, meta = _run_tool(dispatch, c.name, json.loads(c.arguments or "{}"), turn)
@@ -276,7 +301,7 @@ class OpenAIResponsesAdapter(Adapter):
                               "output": json.dumps(out, default=str)})
         raise ProviderError(
             f"tool loop guard: {MAX_TOOL_TURNS} provider turns without a final answer",
-            "tool_loop_guard_exhausted", {"turns": turns, "tool_calls": len(tool_log)})
+            "tool_loop_guard_exhausted", _detail(turns, tool_log, notes))
 
 
 class AnthropicMessagesAdapter(Adapter):
@@ -302,7 +327,7 @@ class AnthropicMessagesAdapter(Adapter):
     def call(self, request, dispatch=None, **_):
         import anthropic
         client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-        messages, turns, tool_log = list(request["messages"]), [], []
+        messages, turns, tool_log, notes = list(request["messages"]), [], [], []
         for turn in range(MAX_TOOL_TURNS):
             req = dict(request); req["messages"] = messages
             t0 = time.time()
@@ -310,18 +335,21 @@ class AnthropicMessagesAdapter(Adapter):
                 with client.messages.stream(**req) as stream:
                     resp = stream.get_final_message()
             except Exception as e:
-                raise ProviderError(str(e)[:600], classify_exception(e)) from e
+                raise ProviderError(str(e)[:600], classify_exception(e),
+                                    _detail(turns, tool_log, notes)) from e
             rec = turn_record(turn, t0, resp, self.provider)
             turns.append(rec)
             fail = check_stop_reason(rec)
             if fail:
                 raise ProviderError(f"provider stop reason {rec['stop_reason']!r}", fail,
-                                    {"turns": turns})
+                                    _detail(turns, tool_log, notes))
             uses = [b for b in resp.content if getattr(b, "type", "") == "tool_use"]
+            text = "".join(b.text for b in resp.content
+                           if getattr(b, "type", "") == "text")
             if not uses:
-                text = "".join(b.text for b in resp.content
-                               if getattr(b, "type", "") == "text")
-                return _finish(text, tool_log, resp, turns)
+                return _finish(text, tool_log, resp, turns, notes)
+            if text.strip():
+                notes.append({"turn_index": turn, "text": text})
             messages.append({"role": "assistant", "content": resp.content})
             results = []
             for u in uses:
@@ -332,7 +360,7 @@ class AnthropicMessagesAdapter(Adapter):
             messages.append({"role": "user", "content": results})  # all results, one message
         raise ProviderError(
             f"tool loop guard: {MAX_TOOL_TURNS} provider turns without a final answer",
-            "tool_loop_guard_exhausted", {"turns": turns, "tool_calls": len(tool_log)})
+            "tool_loop_guard_exhausted", _detail(turns, tool_log, notes))
 
 
 class GeminiAdapter(Adapter):
@@ -352,26 +380,30 @@ class GeminiAdapter(Adapter):
     def call(self, request, dispatch=None, **_):
         from google import genai
         client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-        contents, turns, tool_log = list(request["contents"]), [], []
+        contents, turns, tool_log, notes = list(request["contents"]), [], [], []
         for turn in range(MAX_TOOL_TURNS):
             t0 = time.time()
             try:
                 resp = client.models.generate_content(
                     model=request["model"], contents=contents, config=request["config"])
             except Exception as e:
-                raise ProviderError(str(e)[:600], classify_exception(e)) from e
+                raise ProviderError(str(e)[:600], classify_exception(e),
+                                    _detail(turns, tool_log, notes)) from e
             rec = turn_record(turn, t0, resp, self.provider)
             turns.append(rec)
             fail = check_stop_reason(rec)
             if fail:
                 raise ProviderError(f"provider finish reason {rec['stop_reason']!r}", fail,
-                                    {"turns": turns})
+                                    _detail(turns, tool_log, notes))
             parts = []
             for cand in (getattr(resp, "candidates", None) or []):
                 parts += list(getattr(getattr(cand, "content", None), "parts", None) or [])
             calls = [p.function_call for p in parts if getattr(p, "function_call", None)]
+            text_now = getattr(resp, "text", None)
             if not calls:
-                return _finish(getattr(resp, "text", None), tool_log, resp, turns)
+                return _finish(text_now, tool_log, resp, turns, notes)
+            if text_now and str(text_now).strip():
+                notes.append({"turn_index": turn, "text": str(text_now)})
             contents.append({"role": "model", "parts": parts})
             replies = []
             for c in calls:
@@ -382,7 +414,7 @@ class GeminiAdapter(Adapter):
             contents.append({"role": "user", "parts": replies})
         raise ProviderError(
             f"tool loop guard: {MAX_TOOL_TURNS} provider turns without a final answer",
-            "tool_loop_guard_exhausted", {"turns": turns, "tool_calls": len(tool_log)})
+            "tool_loop_guard_exhausted", _detail(turns, tool_log, notes))
 
 
 # ---------------------------------------------------------------------------
@@ -461,12 +493,12 @@ def _run_tool(dispatch, name, args, turn_index):
     return out, meta
 
 
-def _finish(text, tool_log, raw, turns):
+def _finish(text, tool_log, raw, turns, notes=None):
     if text is None or not str(text).strip():
         raise ProviderError("provider returned an empty response", "empty_response",
-                            {"turns": turns})
+                            _detail(turns, tool_log, notes))
     return {"text": text, "tool_calls": tool_log, "turns": turns,
-            "raw": _serialise(raw)}
+            "intermediate_text": notes or [], "raw": _serialise(raw)}
 
 
 def _serialise(obj):
