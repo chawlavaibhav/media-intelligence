@@ -1,0 +1,52 @@
+experiment: EVAL-037
+what_this_is: Frozen one-time snapshots of the only two websites any EVAL-037 trial may use. Execution lanes read these bytes. No live browsing is permitted during any experimental call.
+live_browsing_permitted_during_trials: false
+other_websites_permitted: false
+text_extraction: deterministic; regenerate with `snapshot_websites.py seal` and compare digests
+sites:
+  - experiment: EVAL-037
+    brief: B01
+    host: rentok.com
+    requested_url: 'https://rentok.com'
+    final_url: 'https://rentok.com/'
+    http_status: 200
+    content_type: text/html; charset=utf-8
+    snapshot_taken: once, during the EVAL-037 setup/freeze task
+    immutable: true
+    files:
+      index.html:
+        sha256: 4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6
+        bytes: 352894
+      page.txt:
+        sha256: ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79
+        bytes: 8572
+      headers.txt:
+        sha256: 60094d00feb33bc19565a3fe5bb6b126b3ad5a6d1af5bbf86dbb9cdb67632da5
+        bytes: 482
+      fetch.json:
+        sha256: 5457f938796f204834ad9c50aaf07871260e0b597abaf64a89de2b2263dfa117
+        bytes: 380
+    path: common/websites/rentok.com
+  - experiment: EVAL-037
+    brief: B02
+    host: getaight.ai
+    requested_url: 'https://getaight.ai'
+    final_url: 'https://getaight.ai/'
+    http_status: 200
+    content_type: text/html; charset=utf-8
+    snapshot_taken: once, during the EVAL-037 setup/freeze task
+    immutable: true
+    files:
+      index.html:
+        sha256: 17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514
+        bytes: 363923
+      page.txt:
+        sha256: e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567
+        bytes: 5599
+      headers.txt:
+        sha256: 08a87b270bc22751b6d46c0b85b6cf8ef18741752f5f81c965b7200eb1ea7bfa
+        bytes: 656
+      fetch.json:
+        sha256: 078b5550997a6fa28c53ca997bdfe68addeeb9be56149c742aa864cd781ba442
+        bytes: 382
+    path: common/websites/getaight.ai

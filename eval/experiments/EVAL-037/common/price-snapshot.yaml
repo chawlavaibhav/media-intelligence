@@ -1,0 +1,62 @@
+# EVAL-037 — price reference snapshot, frozen with the substrate.
+#
+# Used ONLY to compute a cost figure alongside recorded token usage. It is a
+# reference, not a billing record, and it is never used to gate, cap or steer a run:
+# EVAL-037 has no experiment-level spend cap.
+#
+# A price that is not established here is `null`. A null price yields a null cost.
+# Nothing on this page is estimated, interpolated or inferred from a sibling model —
+# inventing a price would silently manufacture cost evidence.
+
+snapshot_id: eval-037-price-snapshot-v1
+captured_on: '2026-08-30'
+currency: USD
+unit: per 1,000,000 tokens
+
+models:
+  gpt-5.6-sol:
+    provider: OpenAI
+    input: null
+    cached_input: null
+    output: null
+    source: null
+    note: >-
+      Not established at freeze time. Cost is recorded as null for this model. Provider
+      -reported usage is still captured in full, so cost can be computed later from the
+      retained evidence once a price is established.
+
+  claude-sonnet-5:
+    provider: Anthropic
+    input: 2.00
+    cached_input: null
+    output: 10.00
+    source: Anthropic first-party API pricing table (claude-api reference, cached 2026-06-24)
+    note: >-
+      Cache-read pricing is not established here, so cached input tokens are recorded
+      but priced as null rather than billed at the standard input rate.
+
+  claude-haiku-4-5-20251001:
+    provider: Anthropic
+    input: 1.00
+    cached_input: null
+    output: 5.00
+    source: Anthropic first-party API pricing table (claude-api reference, cached 2026-06-24)
+    note: Same cache-read caveat as claude-sonnet-5.
+
+  gemma-4-31b-it:
+    provider: Google Gemini API
+    input: null
+    cached_input: null
+    output: null
+    source: null
+    note: >-
+      Not established at freeze time. Cost is recorded as null. Usage is still captured
+      in full.
+
+cost_rule: >-
+  calculated_cost_usd = (input_tokens / 1e6) * input + (output_tokens / 1e6) * output,
+  computed ONLY when both prices are non-null and both token counts are non-null.
+  Otherwise the cost is null and `cost_basis` states why. Reasoning/thinking tokens are
+  billed as output tokens by these providers and are already included in
+  output_tokens where the provider reports them that way; they are recorded separately
+  as well, and are NOT added twice.

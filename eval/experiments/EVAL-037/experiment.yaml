@@ -1,0 +1,228 @@
+# EVAL-037 — experiment manifest.
+#
+# This is the controller's view of the whole experiment. An execution worker does
+# NOT read this file: it reads EXECUTION-CONTRACT.md and its own lane YAML only.
+# Everything here is duplicated into each lane on purpose, so no lane depends on it.
+
+experiment: EVAL-037
+title: Reasoning-layer Canon effect across four models
+status: FROZEN — substrate only. No experimental call has been made.
+
+freeze_branch: work/eval-037-freeze
+
+substrate_identity:
+  # The experiment-defining BYTES are the authority. No commit SHA is, and none can be:
+  # the substrate was authored after the Canon merge, so no commit contains both the
+  # substrate and a fingerprint of itself.
+  authority: bytes
+  record: FREEZE-FINGERPRINT.yaml
+  freeze_fingerprint: covers the whole substrate including lanes/; recorded only in FREEZE-FINGERPRINT.yaml
+  common_substrate_digest: covers the substrate excluding lanes/; embedded in every lane YAML
+  verify: python3 tools/freeze_fingerprint.py --check
+  canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  canon_base_commit_subject: 'CANON-014: integrate full Canon corpus'
+  canon_base_commit_role: >-
+    Canon provenance ONLY — the merge the two corpus fingerprints were computed
+    against. It does NOT contain EVAL-037 and is NOT the execution-lane starting
+    commit.
+  execution_checkout_requirement: >-
+    Any checkout containing the approved frozen substrate, with canon_base_commit as an
+    ancestor. Verified by fingerprint before dispatch, never by commit-SHA equality.
+
+question: >-
+  Does exposing a reasoning model to the merged status-aware Canon corpus change the
+  production-ready creative package it returns, across four models of differing
+  capability? EVAL-037 produces the packages and the evidence. It does not score them.
+
+design:
+  briefs: 6
+  repetitions: 3
+  models: 4
+  conditions: 2
+  lanes: 8
+  trials_per_lane: 18
+  trials_total: 144
+  isolation: one model x one condition per isolated execution session
+  fresh_provider_context_per_trial: true
+  state_carried_between_trials: none
+  trial_order:
+    method: sort trial ids by sha256("EVAL-037|" + trial_id)
+    frozen_into: each lane YAML
+    validator: recomputes the whole ordering, not just order_index 1..18
+    rationale: >-
+      Decorrelates execution position from brief and repetition, so a position effect
+      cannot line up with either.
+
+explicitly_out_of_scope:
+  - creative-quality judging at the reasoning stage
+  - media generation
+  - final acceptance scoring
+  - selecting or recommending an image/video model or provider
+scope_note: >-
+  All valid packages remain eligible for later media generation. Eligibility is a
+  structural property and is never withdrawn on creative grounds.
+
+spend:
+  experiment_level_cap: none
+  note: Cost is recorded, not enforced.
+
+retry_policy:
+  transient_failure:
+    policy: initial attempt + maximum 2 technical retries, resending the identical request
+    classes: [timeout, connection_error, rate_limit_429, server_error_5xx]
+    on_exhaustion: failed_technical
+  deterministic_failure:
+    policy: zero retries; recorded distinctly
+    status: failed_execution
+    classes: [invalid_request_4xx, auth_error, tool_schema_rejected, context_overflow,
+              tool_loop_guard_exhausted, model_refusal, truncated_response,
+              empty_response, sdk_error]
+    note: >-
+      Context overflow or tool-loop exhaustion caused by the model's own retrieval is a
+      model+condition execution failure and a real result, not a transient provider
+      fault. Truncation and refusal are detected from the provider's own stop reason.
+  format_repair:
+    max: 1
+    scope: format only
+    request_contains: [the original brief, the original model answer verbatim,
+                       exactly the frozen format-only instruction]
+    records: repair_source_response_digest
+    on_transient_failure: retries THAT repair, never a fresh creative generation
+    if_still_invalid: {status: failed_format, eligible_for_media_generation: false}
+  creative_weakness: NEVER a reason for another attempt
+
+tool_loop_guard:
+  max_provider_turns: 100
+  purpose: emergency stop against literal runaway execution
+  is_a_retrieval_budget: false
+
+models:
+  # Exact ids. No moving aliases. Preflight and STOP rather than substitute.
+  sol:
+    provider: OpenAI
+    model_id: gpt-5.6-sol
+    api: Responses API
+    reasoning_effort: high
+    sampling: provider defaults
+  sonnet:
+    provider: Anthropic
+    model_id: claude-sonnet-5
+    api: Messages API
+    thinking: adaptive
+    effort: high
+    sampling: provider defaults
+  haiku:
+    provider: Anthropic
+    model_id: claude-haiku-4-5-20251001
+    api: Messages API
+    thinking:
+      type: enabled
+      budget_tokens: 8000
+    sampling: provider defaults
+  gemma:
+    provider: Google Gemini API
+    model_id: gemma-4-31b-it
+    credential: GEMINI_API_KEY
+    sampling: provider defaults
+    reasoning: provider defaults
+    do_not_invent_unsupported_reasoning_controls: true
+    capability_gate: none — Gemma 4 documents function calling and system instructions;
+      every lane gets the same exact-model preflight, and a live rejection stops that
+      lane with the concrete API error rather than substituting a model
+
+conditions:
+  NO_CANON:
+    canon_instruction: absent
+    canon_tools: []
+    worker_must_not_read:
+      - conditions/full-canon.yaml
+      - canon/**
+  FULL_CANON:
+    definition: conditions/full-canon.yaml
+    corpus: merged status-aware full corpus (accepted + HOLD + grounded Q&A)
+    tools_exposed: [canon_catalog, canon_search, canon_read]
+    access: read-only
+    retrieval: >-
+      canon_search is deterministic tokenized BM25 (k1=1.2, b=0.75) ranked retrieval
+      across source knowledge, concept systems, operational bindings, ontology terms and
+      concepts, visual-evidence items and Q&A. No embedding, no model call. Ties break on
+      (-score, source_dir, kind, item_id).
+    fingerprints:
+      algorithm: sha256-of-sorted-path-and-content
+      full_knowledge:
+        file_count: 193
+        combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+      qa:
+        file_count: 23
+        combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+      verified_at_freeze: recomputed from the working tree and matched exactly
+
+lanes:
+  - {lane_id: sol-no-canon,      config: lanes/sol-no-canon.yaml,      branch: work/eval-037-sol-no-canon}
+  - {lane_id: sol-full-canon,    config: lanes/sol-full-canon.yaml,    branch: work/eval-037-sol-full-canon}
+  - {lane_id: sonnet-no-canon,   config: lanes/sonnet-no-canon.yaml,   branch: work/eval-037-sonnet-no-canon}
+  - {lane_id: sonnet-full-canon, config: lanes/sonnet-full-canon.yaml, branch: work/eval-037-sonnet-full-canon}
+  - {lane_id: haiku-no-canon,    config: lanes/haiku-no-canon.yaml,    branch: work/eval-037-haiku-no-canon}
+  - {lane_id: haiku-full-canon,  config: lanes/haiku-full-canon.yaml,  branch: work/eval-037-haiku-full-canon}
+  - {lane_id: gemma-no-canon,    config: lanes/gemma-no-canon.yaml,    branch: work/eval-037-gemma-no-canon}
+  - {lane_id: gemma-full-canon,  config: lanes/gemma-full-canon.yaml,  branch: work/eval-037-gemma-full-canon}
+
+briefs:
+  B01: {path: common/briefs/B01.txt, website: 'https://rentok.com',  deliverable: 9:16 video, about 30s}
+  B02: {path: common/briefs/B02.txt, website: 'https://getaight.ai', deliverable: 4:5 poster}
+  B03: {path: common/briefs/B03.txt, website: null, deliverable: 4:5 image}
+  B04: {path: common/briefs/B04.txt, website: null, deliverable: 9:16 video, about 25s}
+  B05: {path: common/briefs/B05.txt, website: null, deliverable: 16:9 video, six shots, about 40s}
+  B06: {path: common/briefs/B06.txt, website: null, deliverable: 4:5 image}
+
+websites:
+  permitted: 2
+  tool: website_read
+  access: read-only
+  module: tools/website_tools.py
+  exposed_for_briefs: [B01, B02]
+  not_exposed_for_briefs: [B03, B04, B05, B06]
+  identical_across_conditions: true
+  identical_bytes_across_conditions: true
+  returns: [frozen page.txt, snapshot sha256 actually served, source URL]
+  snapshots_taken: once, during this setup task
+  manifest: common/websites/WEBSITE-SNAPSHOT-MANIFEST.yaml
+  live_browsing_during_experimental_calls: forbidden
+  other_domains: refused, not fetched
+  model_decides_whether_to_inspect: true
+  recording: >-
+    Every call records its arguments and the exact snapshot digest returned.
+    website_snapshot_used is derived from actual calls and is never hardcoded.
+
+substrate:
+  common_prompt: common/system-prompt.txt
+  condition_addendum: conditions/full-canon.yaml
+  schemas: [schemas/attempt-ledger.schema.json, schemas/result.schema.json]
+  price_snapshot: common/price-snapshot.yaml
+  evidence:
+    per_provider_turn: >-
+      input/cached/output/reasoning tokens, provider model version, provider request id,
+      stop reason, latency and the provider-reported usage object — for EVERY turn,
+      including intermediate tool turns. Summed to trial and lane totals. Unexposed
+      fields are null; nothing is invented.
+    per_attempt: the EXACT serialised request, not only a digest
+    per_tool_call: >-
+      real arguments, result item ids, source ids, source_status, item kind, Q&A flag,
+      result digest and the full tool result via an exact transcript_ref
+  tools:
+    - tools/runner.py            # the common lane runner
+    - tools/providers.py         # real provider adapters
+    - tools/fake_provider.py     # deterministic fake; no network
+    - tools/canon_tools.py       # read-only Canon surface, BM25 (FULL_CANON only)
+    - tools/website_tools.py     # read-only frozen-snapshot website tool (B01/B02)
+    - tools/preflight.py         # exact-model availability check
+    - tools/snapshot_websites.py # one-time website freeze
+    - tools/build_lanes.py       # lane generator
+    - tools/jsonschema_mini.py   # dependency-free schema checker
+  validators:
+    - validators/validate_freeze.py    # 27 gates on the frozen substrate
+    - validators/validate_lane_run.py  # 15 gates on one lane's evidence
+    - validators/test_substrate.py     # 63 behavioural tests, fake provider only
+  identity: FREEZE-FINGERPRINT.yaml
+
+zero_experimental_calls_at_freeze: true
