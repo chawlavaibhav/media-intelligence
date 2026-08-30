@@ -32,7 +32,10 @@ forward from any earlier report:
   not authorised to edit (recorded in `CANON-014-LIVE-SOURCE-REAUDIT-FINDINGS.md`). **All six
   CANON-014 READY sources: zero errors.**
 - `canon/experimental/book-expansion-qa-v1/validate_experimental.py` → **PASSED**, after a genuine
-  defect in its own boundary check was fixed (see "A validator defect was fixed, not worked around").
+  defect in its own boundary check was fixed (see "A validator defect was fixed, not worked around")
+- `pytest tests/ --ignore=tests/test_request_freeze_gates.py` → **135 passed, 117 subtests passed**.
+  **The `--ignore` is load-bearing and is not CANON-014's doing:** that file exits the interpreter at
+  import, so without it pytest collects nothing at all. Routed as finding **F-06**.
 
 ---
 

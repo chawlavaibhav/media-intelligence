@@ -354,6 +354,39 @@ written at all (`coordination/`, `PROJECT-MEMORY.md`, the frozen SPECs, `governa
 Registry) now error on **additions too**, which the old code would have missed; and inability to run
 the check is now an error. The validator passes on this branch with no false positives.
 
+**Then it immediately caught me, and I let it win.** I had fixed two real defects in
+`tests/test_request_freeze_gates.py` (F-06 — see O-15) and the strengthened check reported that file
+as outside CANON-014's allowlist. **The finding was correct**: that is a CANON-010 file and this
+task's allowlist covers its own new test, not another task's. The available move was to add the path
+to the allowlist — and adding a path to an allowlist in order to authorise one's own edit is exactly
+the failure this branch was set against. **The fix was reverted and the defect routed to you as a
+finding instead**, which is the same handling F-01 got. I record it because a boundary check that
+only ever fires on other people's work has not been tested.
+
+## O-15. [delta] `pytest tests/` currently collects nothing, and every green suite figure is a subset
+
+Found while running the full suite. `tests/test_request_freeze_gates.py`, from CANON-010 commit
+`3cf2979`, has two defects:
+
+- **`ROOT` is hardcoded** to `pathlib.Path('/home/user/media-intelligence')`, the absolute path of
+  the container it was written in, so every path derived from it fails in any other checkout.
+- **Its runner block runs at module scope** with no `if __name__ == "__main__"` guard, so importing
+  the file calls `sys.exit(0)` — and pytest aborts collection of the **entire suite** with an
+  INTERNALERROR. **No test in the run executes**, not this file's and not any other file's.
+
+**The consequence for how you read numbers in this repository:** the only way to get a green suite is
+`--ignore=tests/test_request_freeze_gates.py`, and **that is where the "135 passed" figure comes
+from** — everywhere it appears, on this branch and the last. It is the suite minus this file. A
+reader could reasonably take it for the whole thing.
+
+I fixed both (two lines, no assertion or fixture touched) and verified: the full suite then collects
+and reports **136 passed, 117 subtests**, all seven CANON-010 gates fire standalone, and nothing under
+`canon/experiments/**` is left mutated afterwards. **Then I reverted it**, for the reason in O-13. The
+verified patch is recorded in full as **F-06** in
+`canon/findings/CANON-014-LIVE-SOURCE-REAUDIT-FINDINGS.md`, and it needs a task that owns `tests/**`.
+I would treat it as higher priority than two lines suggests: until it lands, the repository has no
+runnable full test suite.
+
 ## O-14. [delta] No book bytes were committed — and a pre-existing condition you should see
 
 **CANON-014 adds no binary file of any kind.** Verified mechanically over both the committed diff and

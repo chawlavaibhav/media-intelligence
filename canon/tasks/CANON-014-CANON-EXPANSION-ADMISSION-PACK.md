@@ -108,8 +108,9 @@ creative_ir 3, production_candidate 5, benchmark 1.
   live exactly as predicted; a third correctly stayed forward.
 - Live-source re-audit findings, including two CANON-014 found itself.
 - Corrected schema validator + tests; **a boundary-check defect in `validate_experimental.py` fixed
-  at the root**; **two portability defects in `tests/test_request_freeze_gates.py` fixed** so the
-  whole suite collects and runs.
+  at the root**; **two defects in `tests/test_request_freeze_gates.py` found and verified but NOT
+  fixed on this branch** — CANON-014 does not own that file, the strengthened boundary check said so,
+  and the defect is routed to the Controller as finding F-06 with its verified patch.
 - **129-item grounded, ungraded, uncalibrated research Q&A** across six banks, kept outside the Canon
   source snapshot. **Not a benchmark and not benchmark ground truth.** Natural application rate
   **25.6%**; the one-third floor is removed and four of the six banks fall below it, which is the
@@ -153,7 +154,7 @@ creative_ir 3, production_candidate 5, benchmark 1.
 | 9 | Grounded Q&A + manifest | `canon/experimental/canon-014-qa/` |
 | 10 | Validator correction + tests | `canon/validation/validate_source_artifact_schema.py`, `tests/test_validate_source_artifact_schema.py` |
 | 10b | Boundary-check defect fix | `canon/experimental/book-expansion-qa-v1/validate_experimental.py` |
-| 10c | Test-suite portability fix | `tests/test_request_freeze_gates.py` |
+| 10c | Test-suite defect, routed not fixed | finding F-06 in `canon/findings/CANON-014-LIVE-SOURCE-REAUDIT-FINDINGS.md` |
 | 11 | Live-source re-audit findings | `canon/findings/CANON-014-LIVE-SOURCE-REAUDIT-FINDINGS.md` |
 | 12 | Controller Brief | `canon/findings/CANON-014-CONTROLLER-BRIEF.md` |
 
@@ -168,18 +169,25 @@ canon/validation/validate_source_artifact_schema.py    25 dirs, 3 errors (all pr
                                                        CANON-014 READY sources: 0 errors)
 canon/experimental/.../validate_experimental.py        PASSED (after its own boundary-check defect
                                                        was fixed at the root — see the manifest)
-pytest tests/                                          136 passed, 117 subtests passed
-tests/test_request_freeze_gates.py (standalone)        all 7 gates fire; exit 0
+pytest tests/ --ignore=tests/test_request_freeze_gates.py
+                                                       135 passed, 117 subtests passed
+pytest tests/ (without the ignore)                     COLLECTS NOTHING — see F-06
 ```
 
-**Two defects in `tests/test_request_freeze_gates.py` were fixed, and neither weakens it.** `ROOT`
-was hardcoded to `/home/user/media-intelligence`, the absolute path of the container the test was
-written in, so it could not run in any other checkout; and its runner block ran at module scope, so
-importing the file called `sys.exit(0)` and pytest aborted collection of the **entire suite** with an
-INTERNALERROR before a single test ran. `ROOT` is now derived from the file's own location and the
-runner block is guarded by `if __name__ == "__main__"`. No assertion, gate or fixture is changed, and
-the standalone entry point behaves exactly as before. The suite previously reported 135 passed only
-because that file was explicitly ignored; it now collects and passes with everything else.
+**The `--ignore` is not cosmetic and the number must not be read as the whole suite.**
+`tests/test_request_freeze_gates.py` runs its runner block at module scope, so importing it calls
+`sys.exit(0)` and pytest aborts collection of the **entire** suite with an INTERNALERROR — no test in
+the run executes. It also hardcodes `ROOT` to `/home/user/media-intelligence`, the absolute path of
+the container CANON-010 wrote it in, so it cannot run in any other checkout at all.
+
+**Both defects were found, fixed locally and verified — the full suite then collects and reports 136
+passed, and all seven CANON-010 gates fire standalone — and the fix was then REVERTED and is not on
+this branch.** The reason is recorded because it is the point: the boundary check this same pass
+strengthened correctly reported `tests/test_request_freeze_gates.py` as outside CANON-014's
+allowlist. It is a CANON-010 file. The available move was to add the path to the allowlist, and
+adding a path to an allowlist in order to authorise one's own edit is exactly the failure this branch
+was set against. The check was left to win and the defect is routed to the Controller as **F-06**,
+with its verified two-line patch — the same handling as F-01.
 
 **Mechanical checklist, all passing:** every YAML and JSON in `canon/` parses; IDs unique across the
 six sources; every internal reference resolves; every SourceConceptSystem carries
