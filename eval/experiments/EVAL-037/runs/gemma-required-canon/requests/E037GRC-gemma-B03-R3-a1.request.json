@@ -1,0 +1,115 @@
+{
+  "model": "gemma-4-31b-it",
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Create one premium 4:5 advertising image for a new Indian sparkling drink made from mosambi and sparkling water. It is aimed at urban consumers aged roughly 22\u201335. The product should feel refreshing, sophisticated and culturally contemporary while still retaining the familiarity of mosambi. Avoid clich\u00e9d \"Indian\" visual shorthand and avoid making it look like a cheap soft drink. The product must be the unmistakable hero. No celebrity and no external website.\n"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "system_instruction": "You are the creative-production reasoning layer for a media-production system.\n\nTurn the customer's request into exactly ONE production-ready creative package that can later be executed to produce the requested image or video.\n\nOptimize for the probability that the customer accepts the eventual media outcome and for production economy. Do not optimize for impressive prose.\n\nThink carefully before finalizing.\nRespect every explicit customer constraint.\nDo not generate multiple concepts or alternatives. Choose one solution.\n\nDo not select or recommend a current image/video model or provider.\n\nUse tools only when you judge them useful.\n\nReturn only:\n\nFINAL_PRODUCTION_PACKAGE\n\nDELIVERABLE\nOBJECTIVE_INTERPRETATION\nCORE_CREATIVE_IDEA\nMESSAGE_AND_INFORMATION_HIERARCHY\nVISUAL_SYSTEM\nPRODUCTION_RECIPE\nGENERATION_PROMPTS\nDETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS\nAUDIO_AND_EDIT\nFAILURE_PREVENTION\nHARD_CONSTRAINT_CHECK\nKNOWLEDGE_AND_WEBSITE_USE\n\nFor video, provide executable shot-level prompts, shot order, purpose and\napproximate duration.\n\nFor an image, provide one executable final generation prompt and construction\nplan.\n\nList only knowledge/website sources actually used.\n\nYou have access to a media-production knowledge library through the available Canon tools.\n\nIt contains ACCEPTED knowledge, HOLD knowledge and grounded Q&A representations.\n\nUse any amount of it if useful, or none.\n\nACCEPTED means the source passed the project's Audit Gate.\nHOLD means the extracted knowledge has an unresolved evidence or representation blocker and must be treated cautiously.\n\nQ&A items are alternate grounded representations, not independent corroboration or benchmark truth.\n\nCanon is creative/production knowledge, not evidence about current model capability, provider pricing or reliability.\n\nDecide for yourself what is relevant.\n\nFor this experiment, using the Canon library is required.\n\nBefore finalizing each production package:\n- search Canon at least once for knowledge relevant to the customer request;\n- read at least one Canon object returned by your search;\n- decide yourself what is useful and how to apply it.\n\nYou choose the search query, the object(s) to read, how much additional\nretrieval to perform, and what retrieved knowledge to use.\n\nDo not retrieve merely to satisfy a formality: search for knowledge you believe\ncould improve the eventual customer outcome.\n\nCanon is creative/production knowledge only. It is not evidence about current\ngeneration-model quality, provider selection, pricing or reliability.\n",
+    "max_output_tokens": 8192,
+    "tools": [
+      {
+        "function_declarations": [
+          {
+            "name": "canon_catalog",
+            "description": "List every source in the media-production knowledge library, with its epistemic status (ACCEPTED or HOLD), counts and available artifacts.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "source_status": {
+                  "type": "string",
+                  "enum": [
+                    "ACCEPTED",
+                    "HOLD"
+                  ],
+                  "description": "Optional filter."
+                },
+                "has_qa": {
+                  "type": "boolean",
+                  "description": "Optional: only sources with a Q&A bank."
+                }
+              },
+              "required": []
+            }
+          },
+          {
+            "name": "canon_search",
+            "description": "Ranked lexical (BM25) search across the whole knowledge library: source knowledge, concept systems, operational bindings, ontology terms and concepts, visual-evidence items and Q&A. Returns every scoring item by default, best first; there is no imposed result cap. Each result states its own source_status.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string",
+                  "description": "Free-text query. Ranked by BM25."
+                },
+                "kinds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "knowledge",
+                      "concept_system",
+                      "binding",
+                      "ontology_term",
+                      "ontology_concept",
+                      "qa",
+                      "visual_evidence"
+                    ]
+                  }
+                },
+                "source_status": {
+                  "type": "string",
+                  "enum": [
+                    "ACCEPTED",
+                    "HOLD"
+                  ]
+                },
+                "include_qa": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Optional cap you choose. Omit for all matches."
+                },
+                "min_score": {
+                  "type": "number",
+                  "description": "Optional BM25 score floor. Default 0."
+                }
+              },
+              "required": [
+                "query"
+              ]
+            }
+          },
+          {
+            "name": "canon_read",
+            "description": "Read one source's artifact, one source's overview, or one item by id. Artifacts: source-knowledge.yaml, source-concept-systems.yaml, operational-bindings.yaml, ontology-mappings.yaml, visual-evidence-ledger.yaml, qa-bank.yaml.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "source_dir": {
+                  "type": "string"
+                },
+                "artifact": {
+                  "type": "string"
+                },
+                "item_id": {
+                  "type": "string"
+                }
+              },
+              "required": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -238,19 +238,28 @@ def main():
             # catalog alone must never register as compliance
             if not searches and not reads:
                 ok35 &= t.get("required_canon_use_satisfied") is False
-            # a violation is recorded, retained, and never resampled
-            if not derived:
+            # A violation is recorded, retained, and never resampled — but the gate
+            # speaks only about a trial the model actually COMPLETED. A provider
+            # failure keeps its own status: the model never got its chance to comply,
+            # and relabelling a transport fault as non-compliance would misreport it.
+            atts = by_trial.get(t["trial_id"], [])
+            if not derived and t["format_outcome"] in ("complete", "format_repaired",
+                                                       "failed_format"):
                 ok36 &= (t["status"] == "failed_required_canon_use"
                          and t["eligible_for_media_generation"] is False)
-                atts = by_trial.get(t["trial_id"], [])
-                ok36 &= all(x["attempt_kind"] != "technical_retry"
-                            or x.get("phase") == "creative" for x in atts)
                 # no extra creative attempt was bought by non-compliance
                 creative_ok = [x for x in atts if x["phase"] == "creative"
                                and x["outcome"] == "ok"]
                 ok36 &= len(creative_ok) <= 1
+            elif not derived:
+                # provider failure: its own status stands, unmasked by the gate
+                ok36 &= t["status"] == t["format_outcome"] != "failed_required_canon_use"
             else:
                 ok36 &= t["status"] != "failed_required_canon_use"
+            # in NO case does non-compliance buy a retry that was not transient-licensed
+            ok36 &= all(x["attempt_kind"] not in ("technical_retry",
+                                                  "format_repair_technical_retry")
+                        or x.get("failure_is_transient") is not False for x in atts)
             # the model composed its own query; the harness curated nothing
             for tc in searches:
                 q = (tc.get("arguments") or {}).get("query")
