@@ -1,0 +1,337 @@
+# CANON-014 — Candidate lineage matrix
+#
+# WHY THIS EXISTS
+# The previous run was summarised to the Controller as "12 new independent origins + 5 scope
+# extensions". That summary is wrong in kind, not just in count: it reports independence as a
+# per-source property. The Audit Gate is explicit that INDEPENDENCE IS A PROPERTY OF A PAIR, not of
+# a source, and that the source-level verdict `not_independent_of_named_sources` points at pairwise
+# entries and does not block on its own.
+#
+# This file therefore records PAIRS. There is no global independence count anywhere in it, and one
+# cannot be derived from it by counting rows, because a source that is not an independent origin
+# against one counterpart remains a perfectly good one against every other.
+#
+# THE PROMOTION RULE (canon/audit/AUDIT-GATE-v0.2.md, section D)
+#   Two sources count as independent origins for a cross_source_concept ONLY IF neither one's audit
+#   record declares the other with relation shared_author, same_series, companion_volume,
+#   derivative_of or shared_primary_informant.
+#   shares_publisher_only and cites_source do NOT by themselves defeat independence.
+#   independence_not_established blocks promotion against everything until resolved.
+#
+# WHAT THIS FILE DOES NOT DO
+# No cross_source_concept is created by CANON-014, anywhere. This task is not authorised to make any
+# cross-source promotion. Apparent agreements and disagreements between sources are recorded at the
+# end as OBSERVATIONS for later Controller review, and they are observations about what two sources
+# happen to say - not findings that they converge.
+
+matrix_version: v1
+task: CANON-014
+recorded: 2026-08-30
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. THE CORRECTION TO THE PREVIOUS SUMMARY
+# ─────────────────────────────────────────────────────────────────────────────
+
+correction_to_canon013_reporting:
+  what_was_reported: "12 new independent origins + 5 scope extensions"
+  why_it_is_wrong:
+    - >
+      It reports a global independence count. Independence does not have a global value. Grammar of
+      the Shot is not an independent origin against Grammar of the Edit and is a perfectly good one
+      against every other source in the corpus; a single number cannot express that.
+    - >
+      A count of sources is not a count of origins even before that: five of the seventeen are scope
+      extensions of works already live and carry ZERO independence against their live counterpart,
+      which the previous run's own README states correctly while the summary does not.
+    - >
+      Hopkins's My Life in Advertising is a distinct WORK but shares its author and its position with
+      the live Hopkins material. It must not be treated as corroborating it. A different title is not
+      a different origin.
+    - >
+      Sullivan's relationship to the live Ogilvy material was recorded as unresolved. An unresolved
+      relation is `independence_not_established`, which BLOCKS promotion until settled - it does not
+      quietly count as independent.
+  the_correct_statement: >
+    There is no number. What exists is a set of pairs, each with a relation and a verdict. Any later
+    promotion must consult the pairs it actually intends to use, and must not count directories,
+    books, chapters or authors.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. PAIRS INVOLVING THE 17 REPAIRED CANDIDATES
+#    Every pair below defeats independence for that pair only.
+# ─────────────────────────────────────────────────────────────────────────────
+
+dependent_pairs:
+
+# -- same work, different span. Zero independence against the live counterpart. --
+- pair: [hopkins-scientific-advertising-ch8-21, hopkins-scientific-advertising-ch1-7]
+  relation: same_work_different_span
+  audit_gate_relation: derivative_of
+  live_counterpart: hopkins-scientific-advertising-ch1-7
+  independence_for_this_pair: none
+  basis: >
+    Chapters 8-21 of the work whose chapters 1-7 are live accepted Canon. Same author, same text,
+    same 1923 argument. Reading further into a book cannot corroborate the part already read.
+  evidence: "the candidate's own directory name and PROVENANCE state the span relation"
+
+- pair: [light-science-magic-beyond-ch3, light-science-magic-ch3]
+  relation: same_work_different_span
+  audit_gate_relation: derivative_of
+  live_counterpart: light-science-magic-ch3
+  independence_for_this_pair: none
+  basis: "Material beyond ch.3 of the work whose ch.3 is live accepted Canon."
+  note_of_substance: >
+    This pair is NOT merely redundant. The later material QUALIFIES and in places REVERSES the live
+    ch.3 guidance, and the later run inspected figures the live ch.3 extraction could not. That is a
+    re-audit finding, recorded separately in CANON-014-LIVE-SOURCE-REAUDIT-FINDINGS.md. A source with
+    zero independence against its counterpart can still be the best possible evidence ABOUT it.
+
+- pair: [samara-breaking-the-grid-ch2, samara-making-breaking-grid-ch1]
+  relation: same_work_different_span
+  audit_gate_relation: derivative_of
+  live_counterpart: samara-making-breaking-grid-ch1
+  independence_for_this_pair: none
+  basis: "Ch.2 of the work whose ch.1 is live accepted Canon."
+  note_of_substance: >
+    Ch.2 is the book's own counter-argument to the live ch.1 material. Recording it as a
+    disagreement between sources would be a category error: it is ONE author arguing with himself
+    across a chapter break, which is a different thing entirely and must not be counted as
+    cross-source disagreement.
+
+- pair: [ogilvy-beyond-ch2, ogilvy-ch2-advertising-that-sells]
+  relation: same_work_different_span
+  audit_gate_relation: derivative_of
+  live_counterpart: ogilvy-ch2-advertising-that-sells
+  independence_for_this_pair: none
+  basis: "Material beyond ch.2 of the work whose ch.2 is live accepted Canon."
+
+- pair: [freeman-photographers-eye-beyond-parts1-3, freeman-photographers-eye-graphic-guide]
+  relation: same_work_different_span
+  audit_gate_relation: derivative_of
+  live_counterpart: freeman-photographers-eye-graphic-guide
+  independence_for_this_pair: none
+  basis: "Material beyond parts 1-3 of the work whose parts 1-3 are live accepted Canon."
+  note_of_substance: >
+    Strengthens the evidence for broken numeric cross-references and false page affordance in the
+    live source's representation. Again: a re-audit finding, not corroboration of its content.
+
+# -- different work, same author and same position. --
+- pair: [hopkins-my-life-in-advertising, hopkins-scientific-advertising-ch1-7]
+  relation: shared_author
+  audit_gate_relation: shared_author
+  live_counterpart: hopkins-scientific-advertising-ch1-7
+  independence_for_this_pair: none
+  basis: >
+    A DISTINCT WORK (1927 autobiography) by the author of the live 1923 source, advancing the same
+    position, and whose chapter 17 is explicitly ABOUT the live work. Different title, same origin.
+    This is the pair the previous summary most obviously mishandled.
+  symmetry_required: true
+
+# -- unresolved. Blocks promotion until settled. --
+- pair: [sullivan-hey-whipple, ogilvy-ch2-advertising-that-sells]
+  relation: unresolved
+  audit_gate_relation: null
+  independence_for_this_pair: independence_not_established
+  basis: >
+    The previous run recorded the relationship as explicitly unresolved and CANON-014 cannot resolve
+    it: the Sullivan source is not available in this session, so the question of how far Sullivan's
+    account depends on Ogilvy's cannot be examined. Under the Audit Gate this verdict BLOCKS
+    promotion against everything until resolved; it does not silently pass as independent.
+  what_would_resolve_it: >
+    Re-opening Sullivan and establishing whether Ogilvy's claims are load-bearing in it or merely
+    cited, which is the shared_primary_informant test.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. PAIRS INVOLVING THE THREE NEWLY SUPPLIED SOURCES
+# ─────────────────────────────────────────────────────────────────────────────
+
+new_source_pairs:
+
+- pair: [parameswaran-nawabs-nudes-noodles, desai-mother-pious-lady]
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    Different authors, different publishers, different works, different methods (advertising history
+    versus interpretive essays). Neither cites the other.
+  what_might_have_looked_like_a_relation_and_is_not:
+    - >
+      SUBJECT ADJACENCY. Both write about Indian consumer culture in overlapping periods and both
+      authors are advertising practitioners. Shared subject matter and shared profession are not
+      shared origin, and the Audit Gate lists neither as a dependence relation.
+    - >
+      A SHARED CITATION. Both cite Malcolm Gladwell's *Blink*. Two sources citing the same third work
+      creates no dependence between them.
+
+- pair: [parameswaran-nawabs-nudes-noodles, pandey-pandeymonium]
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    Different authors, publishers and works. Pandey does not cite Parameswaran.
+  the_relation_that_was_tested_and_rejected:
+    candidate_relation: shared_primary_informant
+    why_tested: >
+      Parameswaran NAMES Piyush Pandey in his account of Hindi-originated copywriting, and both books
+      discuss several of the same campaigns (Fevicol, Cadbury Dairy Milk, Asian Paints).
+    why_rejected: >
+      The Audit Gate is explicit that incidental quotation is not sufficient, and that the relation
+      applies only where a practitioner's claims are LOAD-BEARING in both works. Pandey appears in
+      Parameswaran's book in a single passage, in a list of four writers, illustrating a point about
+      language. No claim extracted from Parameswaran rests on Pandey's account of anything. The
+      shared campaigns are common property of the industry both worked in and are discussed from
+      different positions.
+    verdict: "independent origins for this pair"
+
+- pair: [desai-mother-pious-lady, pandey-pandeymonium]
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    Different authors, publishers, works and subjects. Both authors have advertising careers, which
+    is not a relation. Neither cites the other.
+
+# -- new sources against live Canon --
+- pair_group: "each of the three new sources against each of the 19 live accepted sources"
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    No shared author, work, series, publisher or informant exists between any of the three new
+    sources and any live accepted source. Checked against the full list of 19 live directories.
+  the_one_near_miss:
+    pair: [parameswaran-nawabs-nudes-noodles, ogilvy-ch2-advertising-that-sells]
+    note: >
+      Both concern advertising, and both authors ran agencies. That is category adjacency, not
+      lineage. Parameswaran does not cite Ogilvy's book in the endnotes for any chapter extracted
+      here, and no extracted Parameswaran claim derives from Ogilvy.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. RELATIONS TO SOURCES NOT IN THE CORPUS
+#    Recorded now because they become live the moment a matching source is admitted.
+# ─────────────────────────────────────────────────────────────────────────────
+
+forward_relations_to_unadmitted_works:
+
+- from: parameswaran-nawabs-nudes-noodles
+  to: "Rama Bijapurkar, *We Are Like That Only* (Penguin India, 2007)"
+  relation: cites_source
+  independence_effect: >
+    NONE by itself. The Audit Gate states cites_source is deliberately not disqualifying: a source
+    citing an unrelated source is normal scholarly behaviour. But the relation must be RECORDED now,
+    because if a Bijapurkar source is ever admitted, an auditor needs to know that Parameswaran's
+    account of Indian youth partly rests on her work, and must check whether her claims are
+    load-bearing in him before treating the two as converging.
+  evidence: "Parameswaran endnotes, ch. 'The Tingling Freshness of Teens' note 4; and *A Never-Before World* at notes 5 of two further chapters"
+
+- from: parameswaran-nawabs-nudes-noodles
+  to: "Rachel Dwyer, *Picture Abhi Baaki Hai* (Hachette India, 2014)"
+  relation: cites_source
+  independence_effect: >
+    NONE by itself, and note carefully: this is a DIFFERENT WORK from *Cinema India*, which was named
+    for this task and was not supplied. Citing one book by an author creates no relation to a
+    different, uncited book by the same author. If *Cinema India* is ever admitted, the pair
+    (Parameswaran, Cinema India) starts at no_known_relation and this row does not change that.
+  evidence: "Parameswaran endnotes, ch. 'Jo Biwi Se Kare Pyaar…' note 1"
+
+- from: parameswaran-nawabs-nudes-noodles
+  to: "Arvind Rajagopal, on brands borrowing from Indian bazaar and calendar art"
+  relation: cites_source
+  independence_effect: >
+    NONE by itself, but materially relevant to a future Gods in the Bazaar admission. Parameswaran's
+    bazaar-art material is SECOND-HAND: he reports Rajagopal, without a specific citation in the
+    passage. If a primary source on Indian calendar art is admitted, Parameswaran must not be counted
+    as independently corroborating it - he is reporting a scholar, not observing the material.
+  evidence: "Ch. 'Meri Khubsurti Ka Raaz', Rajagopal passage; sk_nnn_0043"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. OBSERVATIONS ONLY - NO PROMOTION IS AUTHORISED OR MADE
+# ─────────────────────────────────────────────────────────────────────────────
+
+unadjudicated_observations:
+  status: >
+    RECORDED FOR LATER CONTROLLER REVIEW. None of these is a cross_source_concept, none is a
+    same_failure_family, and none may be consumed as agreement between sources. They are notes that
+    two sources happen to say adjacent things.
+  observations:
+
+    - observation_id: OBS-01
+      topic: "casting a celebrity as a character rather than presenting them as a star"
+      sources: [parameswaran-nawabs-nudes-noodles, pandey-pandeymonium]
+      pair_independence: independent_origin
+      what_each_says: >
+        Parameswaran (sk_nnn_0041) reports that a star declaring use of a product stopped
+        differentiating once celebrity use became universal, so agencies began casting stars as
+        characters. Pandey (sk_ppm_0031) states that the viewer must find the celebrity, the script
+        AND the idea memorable, not just the celebrity.
+      why_not_promoted: >
+        The pair is independent, so promotion is not BLOCKED by lineage - but no promotion is
+        authorised by this task, and there is a substantive reason for caution as well. Parameswaran
+        gives a market-structure mechanism (differentiation erodes once every competitor holds the
+        asset) while Pandey states a craft requirement with no mechanism at all. Similar words,
+        different claims. Merging them would manufacture a convergence out of a shared topic.
+
+    - observation_id: OBS-02
+      topic: "distrust of advertising pre-testing"
+      sources: [parameswaran-nawabs-nudes-noodles, pandey-pandeymonium]
+      pair_independence: independent_origin
+      what_each_says: >
+        Parameswaran (sk_nnn_0040) reports that pre-tests reward celebrity presence, so the
+        instrument creates a reason to cast a celebrity independent of whether it makes the work
+        better. Pandey (sk_ppm_0010, sk_ppm_0011) rejects the procedures outright and lists his own
+        campaigns he says they would have killed.
+      why_not_promoted: >
+        These are NOT the same claim and are arguably in tension. Parameswaran describes pre-testing
+        as an established practice with a distorting side-effect and does not say it should stop;
+        Pandey rejects it. One is a practitioner reporting an industry incentive, the other a
+        practitioner defending his own work. Recording them as one finding about pre-testing would
+        erase the difference.
+      why_it_matters_to_this_project: >
+        Both bear on evaluator design, which is live work here. That makes it MORE important not to
+        merge them prematurely, not less.
+
+    - observation_id: OBS-03
+      topic: "a word losing or gaining force through repeated use"
+      sources: [parameswaran-nawabs-nudes-noodles, desai-mother-pious-lady]
+      pair_independence: independent_origin
+      what_each_says: >
+        Parameswaran (sk_nnn_0011): a regulator banned *gori*, the advertiser substituted *nikhri*,
+        and consistent use loaded the permitted word with the forbidden meaning. Desai
+        (sk_dmpl_0022): once every matrimonial advertisement claims "fair", the descriptor stops
+        discriminating and writers escalate to "VV Fair".
+      why_not_promoted: >
+        THE MECHANISMS RUN IN OPPOSITE DIRECTIONS. One is a word ACQUIRING a meaning it did not have,
+        under an external prohibition, driven by one advertiser's sustained investment. The other is
+        a word LOSING force it did have, with no prohibition involved, driven by universal adoption
+        across many writers. They share only the surface feature that a word's meaning changed with
+        use. This is the clearest instance in CANON-014 of a pair that a keyword-similarity pass
+        would merge and that must not be merged, and the caveat is recorded on both objects as well
+        as here.
+
+    - observation_id: OBS-04
+      topic: "advertising depiction as evidence about society"
+      sources: [parameswaran-nawabs-nudes-noodles, desai-mother-pious-lady]
+      pair_independence: independent_origin
+      what_each_says: >
+        Parameswaran's whole book reads advertising as a record of social change, while he states
+        himself that a depiction shows what an advertiser judged aspirational rather than what was
+        common. Desai reads everyday objects and formats the same way, and separately reports the one
+        measured finding in either book: that across thirty years of matrimonial advertisements the
+        surface changed considerably while caste mention did not move at all.
+      why_not_promoted: >
+        Desai's finding is a genuine caution about Parameswaran's method, but the two are not making
+        the same claim and neither is evidence for the other. Recorded because a later reader
+        considering whether to use advertising corpora as social evidence should meet both.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 6. SOURCES NAMED FOR THIS TASK THAT WERE NOT SUPPLIED
+# ─────────────────────────────────────────────────────────────────────────────
+
+not_supplied:
+  note: >
+    Three of the six books named in the CANON-014 authorisation were not attached to this session and
+    no lineage can be recorded for them, because no lineage claim can be made about a work that was
+    not examined. They are listed so the gap is explicit rather than silent.
+  sources:
+    - "Rachel Dwyer & Divia Patel — Cinema India: The Visual Culture of Hindi Film"
+    - "Kajri Jain — Gods in the Bazaar: The Economies of Indian Calendar Art"
+    - "Rama Bijapurkar — We Are Like That Only: Understanding the Logic of Consumer India"
+  forward_relations_already_recorded: >
+    Two of the three already have inbound relations recorded in section 4 above, from Parameswaran's
+    endnotes. Those rows are live the moment either source is admitted.

@@ -27,8 +27,11 @@ inspection:
 
 observed_loss_patterns:
 
-  - pattern: no_visual_argument
-    affects: "the whole source"
+  # NOTE ON VOCABULARY: `no_visual_argument` is an Audit Gate `visual_argument_role` value, not a
+  # loss pattern, and is recorded as such at the head of this file. The fact that the pass ran and
+  # found nothing missing is a `no_loss_detected` entry.
+  - pattern: no_loss_detected
+    affects: "the visual dimension - nothing visual was lost because there is nothing visual to lose"
     detectability: detected_by_independent_check
     recoverability: not_applicable
     evidence: >

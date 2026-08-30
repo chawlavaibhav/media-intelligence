@@ -1,0 +1,298 @@
+# Audit Gate v0.2 record — Pandey, "Pandeymonium"
+# Written by CANON-014 against the exact bytes fingerprinted below. The source was NOT reopened.
+
+audit_record_version: v0.2
+audit_id: aud_pandeymonium
+source_id: pandey_pandeymonium
+knowledge_dir: canon/knowledge/current/pandey-pandeymonium
+recorded_at_commit: work-branch-canon-014
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: a7d88b8f7dee1f67ef1054db606c1551afe29d063d0630981d5ae2806bcd91e3
+    - path: operational-bindings.yaml
+      digest: f405132bb42bd7fe3f4fb9fe43e95324e672530402aaa92967d328053226312f
+    - path: source-concept-systems.yaml
+      digest: 5f01d4619834834a86a20a92d58d3d9025b85ed231d45e91e4539b9e168fa102
+    - path: source-knowledge.yaml
+      digest: 49fd184144838b6ca34e3e329ff7cfd5f888cd85f08f8a170b4430736a4c5297
+    - path: visual-evidence-ledger.yaml
+      digest: e66110fefbffe6d245cb943de8eaef07cc49dda222d9f916239af38115ca199d
+  combined_digest: 8336971c88678244732e3174476549c34c8d4904d1bcf7525325d3245d24e2a8
+
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/pandey-pandeymonium/source-knowledge.yaml
+  - canon/knowledge/current/pandey-pandeymonium/source-concept-systems.yaml
+  - canon/knowledge/current/pandey-pandeymonium/operational-bindings.yaml
+  - canon/knowledge/current/pandey-pandeymonium/ontology-mappings.yaml
+  - canon/knowledge/current/pandey-pandeymonium/visual-evidence-ledger.yaml
+  - canon/knowledge/current/pandey-pandeymonium/PROVENANCE.md
+  - canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml
+source_reopened: false
+
+# ── A. Representation integrity ─────────────────────────────────────────────
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable EPUB, no page map, no folio. Every locator is a numbered chapter title, which is
+    stable. No page number was interpolated.
+    On delivery_format: the archive's internal folders are named "GoogleDoc/", which on first
+    inspection suggested a re-typeset copy rather than a publisher artefact. That reading was WRONG.
+    The file carries Penguin's complete copyright page - the Portfolio imprint, "First published in
+    Portfolio by Penguin Books India 2015", both copyright lines, the cover-design credit, the print
+    ISBN 978-0-670-08859-1, and a separate digital-edition page whose e-ISBN 978-9-352-14004-6
+    MATCHES the ISBN declared in the OPF. publisher_epub is therefore correct and the folder name is
+    a conversion artefact. The correcting check is recorded so it can be re-run.
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: source_evidence_never_printed
+      affects: "every campaign the book discusses"
+      detectability: named_by_text
+      recoverability: recoverable_not_attempted
+      evidence: >
+        THE CENTRAL FINDING OF THIS AUDIT, and it is documentary rather than observational. The
+        book's own copyright page states: "All images and television commercials mentioned in this
+        book are available for viewing on www.pandeymonium.in". The campaigns this book argues from -
+        Fevicol, Cadbury Dairy Milk, the Vodafone Zoozoos, Asian Paints - were NEVER reproduced in
+        the book, in print or digital. The publisher deliberately located them elsewhere.
+        This is the pattern's defining shape: a reader of the printed 2015 edition was in exactly the
+        position this extraction is, so the gap is NOT a digitisation loss and is not this project's
+        to fix. Filing it with digitisation losses would misattribute it, which is precisely why the
+        pattern exists.
+        The named route could NOT be reached in this session: no external network egress was
+        available, and both a direct request and the harness fetch tool were refused by the egress
+        proxy for every external host tried. The evidence is named, located and unreachable HERE -
+        recoverable in principle, not in this environment. No claim in this record rests on it.
+    - pattern: text_layer_order_damage
+      affects: "10 sentences at 10 positions across the book"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The printed book's pull-quotes have been flattened into the body text, so each appears twice
+        - once inside its paragraph and once standing alone. Found mechanically: a scan for sentences
+        over 90 characters occurring more than once returned exactly 10, each occurring exactly
+        twice. The consequence is specific rather than cosmetic: a naive pass could read the
+        pull-quote as a second, separate claim and double-count it, and any word-frequency or
+        emphasis analysis over this copy is corrupted. All 10 were identified, none is extracted
+        twice, and the affected objects record the duplication.
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: "Established from the OPF and the text layer. Not a fault; unfixable in this format."
+    - pattern: no_loss_detected
+      affects: "chapter completeness"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        Checked rather than assumed. All 47 entries in the book's own table of contents were matched
+        against the body text and all 47 resolve, including chapter 8 "The Indian Advertising
+        Business" and the Afterword. A first case-sensitive pass appeared to show eight absences; all
+        eight were formatting differences - part headings set in capitals without their "Part One:"
+        prefix - not missing content. All 138 spine items carry text; none is empty.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The visual pass could not resolve claims about the campaigns because the campaigns are not in the
+    book, by the publisher's design; what it DID establish is why. That converts an apparent
+    representation defect into a documented property of the published work and separates it from the
+    two real defects in this copy.
+    The bound it places on the record is precise and is carried on the objects: every claim here about
+    a named campaign is a claim about what PANDEY SAYS about it. Nothing in this record describes what
+    any campaign looks like, and nothing asserts what any campaign achieved.
+
+# ── B. Evidence and claim origin ────────────────────────────────────────────
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 10 objects classified. This is a memoir, and its evidential form is uniform: the author in
+    his own voice, drawing a lesson from a case in his own career.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_ppm_0001, sk_ppm_0010, sk_ppm_0020, sk_ppm_0021, sk_ppm_0030, sk_ppm_0031,
+                sk_ppm_0040, sk_ppm_0041, sk_ppm_0050]
+      evidence: >
+        Nine of ten objects are the author asserting in his own voice, from his own career. Several
+        rest on cases he participated in and recounts decades later without a contemporaneous record.
+        None cites a study, a figure or an outside authority anywhere.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_ppm_0011]
+      evidence: >
+        The claim that named campaigns "would not have seen the light of day" under pre-testing. This
+        is a claim ABOUT what a measurement would have returned, for a measurement that was never
+        run: no pre-test was conducted on the Cadbury dancing girl, the Fevicol work or the Zoozoos.
+        It is the strongest-sounding evidence in the book and it is counterfactual throughout.
+        This object does NOT carry empirical_within_source, as this category requires.
+  relation_to_evidence_characteristics: >
+    NO object in this source carries empirical_within_source, which is correct: the author reports no
+    measurement of his own anywhere in the book, and there is no sales, share or tracking figure in
+    it. The consistency rule is satisfied trivially in one direction - no sk_id is listed under
+    source_own_measurement_reported - and non-trivially in the other: the single object under
+    measurement_claimed_result_not_supplied correctly lacks the characteristic.
+    Recorded here rather than left implicit: the absence of empirical_within_source across the whole
+    source is the single most important thing an auditor of this record should notice.
+
+# ── C. Application fit ──────────────────────────────────────────────────────
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      note: >
+        Considered and declined. This book is about how people work together and how work is judged,
+        not about what an artefact should be. Its nearest candidate - that a celebrity must not be the
+        only memorable element - is stated as a requirement with no account of how to establish
+        whether it has been met and no case in which it was not, so it fills no Creative IR field
+        without our inventing the test.
+    - consumer: production_ir
+      outcome: no_current_binding
+      note: >
+        Nothing here is production knowledge. The author describes creative and client processes, not
+        the making of anything. There is no production content to be blocked by the absent schema,
+        which is why this is no_current_binding rather than blocked_target_schema_absent.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ppm_0003]
+      note: >
+        One: whether a time-based asset holds attention through its opening is directly observable.
+        The source's five-second criterion is EXPLICITLY NOT ADOPTED - it is a rule of thumb offered
+        in passing with no validation - and the binding's status_reason says so. Adopting it would be
+        inventing a pass mark, which this project forbids.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ppm_0001, bnd_ppm_0002]
+      note: >
+        The strongest fit. One binds the group-self-report fabrication cascade the author names - a
+        respondent with no genuine answer fabricates one to save face, and the fabrication propagates
+        as agreement - and binds the MECHANISM only, explicitly not his conclusion that the
+        procedures should be rejected, because that conclusion rests on selected successes. One binds
+        the review-conditions observation the extractor separated out of the Tata Cement story:
+        reviewers who did not watch work develop judge it without the team's context.
+    - consumer: benchmark
+      outcome: no_current_binding
+      note: >
+        No dimension and no defensible threshold. The one number in the book - five seconds - is
+        precisely the kind of unvalidated figure that must not become a benchmark, and it is refused.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        Nothing executable, and nothing specifiable. The book contains no geometry, no measurement of
+        any artefact, and no reproduced work to measure.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        The best fit in the source and deliberately no binding. All three ontology remedies act on a
+        person or a process and each names its executor: observe attention rather than collecting
+        self-report (a human observer in the room - an automated attention measure would be a
+        DIFFERENT instrument with its own validation problem, which this source supports nothing
+        about); involve reviewers early enough to have seen the work develop (whoever schedules the
+        review, not the reviewer or the creator); and carry the survivorship bound with anything
+        retrieved here. Naming a fit is not creating a binding.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_ppm_0020, sk_ppm_0021, sk_ppm_0041, sk_ppm_0030]
+      observation: >
+        Most of the book is unbound and should be: agency-client relationship practice, standing by
+        one's work, the retention of women in the industry, and the structure of a multi-office
+        national agency. This is professional and organisational knowledge about an industry, and
+        this project has no consumer for it. It is genuine knowledge with no application here, which
+        is a legitimate state.
+    - sk_refs: [sk_ppm_0011]
+      observation: >
+        Deliberately unbound. The list of campaigns the author says research would have killed is the
+        rhetorical centre of the book and is the weakest evidence in it - counterfactual claims about
+        tests never run, on work the book does not reproduce. It is retained as source truth because
+        it is what he argues from, and bound to nothing.
+  conclusion: >
+    Three bindings from ten objects, seven with none, and none to Creative IR. The source's value
+    here is narrow and real: it names one specific failure of group self-report and one specific
+    failure of terminal review, both of which bear on evaluator and review design, which is live work
+    in this project. Everything else is professional memoir with no consumer. The survivorship
+    structure bounds all of it and is recorded on the objects rather than only here.
+
+# ── D. Lineage and independence ─────────────────────────────────────────────
+lineage:
+  authors: ["Piyush Pandey"]
+  publisher: "Portfolio / Penguin Books India"
+  series: null
+  first_published: 2015
+  copy_edition: >
+    Publisher digital edition, 2015. Established from the book's own copyright page: print ISBN
+    978-0-670-08859-1, e-ISBN 978-9-352-14004-6 matching the OPF metadata. Note the supplied
+    FILENAME says 2016; the copyright page says 2015 twice and is authoritative.
+  related_sources_in_corpus:
+    - source_id: parameswaran_nawabs_nudes_noodles
+      relation: no_known_relation
+      evidence: >
+        Tested against shared_primary_informant and REJECTED, symmetrically with that source's own
+        record. Parameswaran names Pandey in a single passage, in a list of four writers,
+        illustrating a point about Hindi-originated copywriting; the Audit Gate requires a
+        practitioner's claims to be LOAD-BEARING in both works and they are not. No claim extracted
+        from Parameswaran rests on Pandey's account, and Pandey does not cite Parameswaran. Both
+        books discuss Fevicol, Cadbury Dairy Milk and Asian Paints because those campaigns are common
+        property of the industry both worked in, from different positions: shared subject matter is
+        not shared origin.
+    - source_id: desai_mother_pious_lady
+      relation: no_known_relation
+      evidence: >
+        Different authors, publishers, works and subjects; neither cites the other. Both authors have
+        advertising careers, which is not a relation.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, work, series, publisher or informant with any of the 19 live accepted sources
+    or with either other new candidate, checked pairwise against the full live list.
+    RECORDED AS AN OBSERVATION, NOT A CONVERGENCE: this source and parameswaran_nawabs_nudes_noodles
+    say adjacent things about casting a celebrity as a character (OBS-01 in the lineage matrix) and
+    about distrust of pre-testing (OBS-02). The pair is independent, so promotion is not BLOCKED by
+    lineage - but no cross-source promotion is authorised by CANON-014, and there are substantive
+    reasons for caution recorded in the matrix: on celebrity, Parameswaran gives a market-structure
+    mechanism where Pandey states a bare craft requirement; on pre-testing, the two positions are
+    arguably in tension rather than in agreement.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Lupton, Ogilvy and Light: Science & Magic. None
+      quotes this source, which was not in the corpus when the specs were written.
+
+# ── E. Technology contingency ───────────────────────────────────────────────
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The book spans a career from 1982 to 2015 and its research material in particular describes
+    specific instruments of a period - focus groups behind one-way mirrors, dial meters, a named
+    pre-test - while gesturing at newer ones the author has not used. The question has to be asked.
+  assessed: true
+  classes:
+    - class: technology_contingent
+      sk_refs: [sk_ppm_0010, sk_ppm_0011, sk_ppm_0031]
+      evidence: >
+        The research critique is aimed at instruments the author encountered over a specific period,
+        and he extends his scepticism to neuro-response research from no stated experience of it,
+        which is exactly where a period-bound judgement is being generalised past its evidence. The
+        counterfactual campaign list is bound to the pre-testing practice of its decade. The celebrity
+        requirement is stated for Indian advertising as at 2015.
+    - class: durable_mechanism
+      sk_refs: [sk_ppm_0010, sk_ppm_0021, sk_ppm_0020]
+      evidence: >
+        Three mechanisms that do not depend on the instruments that revealed them: a respondent with
+        no genuine answer will fabricate one to save face and the fabrication propagates through a
+        group; reviewers who have not followed a work's development judge it without the context the
+        team holds; and treating a counterpart's constraints as shared rather than as obstacles
+        redirects effort at the problem. Note sk_ppm_0010 appears in both classes deliberately: the
+        specific instruments are dated, the self-report failure they exhibit is not.
+    - class: historical_convention
+      sk_refs: [sk_ppm_0030, sk_ppm_0041]
+      evidence: >
+        The multi-office national agency structure and the state of women's representation in Indian
+        advertising are both described as at 2015 and are the kind of organisational fact that moves.
+    - class: uncertain
+      sk_refs: [sk_ppm_0001, sk_ppm_0040, sk_ppm_0050]
+      evidence: >
+        The Preface credo cannot be classified because it is not a claim that could expire or endure.
+        The scam-ads position depends on an assertion about award juries that carries no evidence in
+        either direction. The publication fact about the companion website is a property of the 2015
+        edition, and whether that route still resolves is not knowable from here.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
