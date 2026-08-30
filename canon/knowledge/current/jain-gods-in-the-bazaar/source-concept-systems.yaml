@@ -1,0 +1,231 @@
+# CANON-014 — SPEC-03 SourceConceptSystems for Kajri Jain, "Gods in the Bazaar".
+#
+# Three. The first is the closest this record comes to a system the SOURCE builds: Jain does connect
+# frontality, colour, the non-muscular body and iconographic accuracy to a single account of what
+# these images are for. The second and third are the extractor's, and both exist to keep this
+# source's own bounds attached to its strongest-sounding material.
+
+source_id: jain_gods_in_the_bazaar
+
+source_concept_systems:
+
+- scs_id: scs_jgb_001
+  source_id: jain_gods_in_the_bazaar
+  label: the_production_constraints_that_follow_from_treating_an_image_as_a_housing_rather_than_a_depiction
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    The four production constraints this book documents, read back to the premise Jain identifies
+    behind them. If an image is held to HOUSE a presence rather than to depict one, then iconographic
+    correctness becomes an enabling condition rather than a quality criterion; the figure must return
+    the viewer's look, because the transaction is two-way; the body must not carry the marks of
+    instrumental agency, because the agency is held to be of another kind; and the image must claim
+    attention from outside the viewer's current task, because it is not waiting to be contemplated.
+  whole_system_claim:
+    text: >
+      In this tradition the four most conspicuous formal features of the images — frontality,
+      saturated colour, the smooth unmuscled divine body and stringent iconographic accuracy — are not
+      four stylistic preferences. They are four consequences of one premise about what the image is
+      for. That is why iconographic error is treated as functional failure rather than as ugliness,
+      why a figure's gaze overrides its depicted action, and why artists trained in anatomy are
+      forbidden to use it.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Jain does connect these. She states the aesthetics of presence and its consequence that an
+      incorrect icon will not "work" (ch. 6); she reports the frontal imperative and the devotional
+      reason given for it (ch. 4); she ties the non-muscular body to lila rather than labour (chs. 4
+      and 7); and she reads shouting colour as forcing the sacred into the public arena (ch. 4). What
+      she does NOT do is set them out together as one derivation, and the four sit in three different
+      chapters. Presenting them as a single causal model is the extractor's, and the ordering is the
+      extractor's. What the grouping ADDS, and what must be attributed to CANON-014, is the
+      observation that all four are enabling conditions rather than quality criteria — a property they
+      share that is visible across the set and not within any member.
+    source_ref: null
+  members:
+    - {sk_ref: sk_jgb_0130, role_in_system: the_premise, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0010, role_in_system: consequence_for_gaze, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0030, role_in_system: consequence_for_the_body, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0040, role_in_system: consequence_for_accuracy_and_where_it_bites, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0020, role_in_system: consequence_for_colour, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0070, role_in_system: what_is_left_free_to_vary, order: 6, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - between: [sk_jgb_0040, sk_jgb_0130]
+        nature: "iconographic accuracy is enforced so stringently because, on the aesthetics of presence, an incorrect icon is not a worse image but a vacant one. Jain states the doctrine in ch. 6 and the enforcement in ch. 1 without joining them"
+        origin: extractor_inferred
+      - between: [sk_jgb_0070, sk_jgb_0040]
+        nature: "the novelty-within-sameness constraint exists because accuracy closes the primary axis of variation, leaving background, colour, dress and ornament. This dependency is stated by practitioners in the source"
+        origin: source_stated
+      - between: [sk_jgb_0010, sk_jgb_0130]
+        nature: "the returned gaze is required by the same two-way transaction that makes correctness an enabling condition"
+        origin: source_stated
+    tradeoffs:
+      - between: [sk_jgb_0030, sk_jgb_0080]
+        nature: "the iconographic injunction and the artists' desire for realism are in direct tension, and the source records the artists losing: 'realism' cedes to iconographic prescription for a picture to succeed in the marketplace, and the attempt to depict action within the constraint produces images the artists themselves call ridiculous"
+        origin: source_stated
+      - between: [sk_jgb_0020, sk_jgb_0090]
+        nature: "the colour convention is produced by people who denigrate it. The industry supplies saturation it describes as cheap and shouting, which is a standing tension between what it makes and what it says about what it makes"
+        origin: source_stated
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 4, printed p. 192: 'these imperatives of the bazaar are not always or necessarily reflected in the images themselves: these are primarily discursive categories, part of the bazaar's self-understanding'; and Ch. 4, printed p. 174, on the status of the interview evidence"
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, empirical_within_source, practitioner_assertion, culturally_bounded, visually_demonstrated]
+    source_uncertainty: >
+      The constraints are attested from practitioners and three of the four were confirmed against the
+      artefacts in this pass. The reasons practitioners give for them are practitioner theories of
+      their own customers and are not measured anywhere.
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Moderate. Each member is individually well evidenced and three were checked first-hand against
+      plates. The RISK is at the system level and is specific: presenting four constraints from three
+      chapters as one derivation makes the source look tidier and more doctrinal than it is, and Jain
+      explicitly warns that these are partly discursive categories rather than observed regularities of
+      the artefacts. The system is recorded as a reading of how the constraints hang together, not as
+      a rule set, and emphatically not as a set of instructions for making an image.
+  provenance:
+    chapter: "1, Vernacularizing Capitalism; 4, The Sacred Icon; 6, The Efficacious Image"
+    section: "assembled across three chapters"
+    page_start: 58
+    page_end: 294
+    source_support: text_and_visual
+
+- scs_id: scs_jgb_002
+  source_id: jain_gods_in_the_bazaar
+  label: the_evidence_is_field_evidence_and_the_author_says_what_it_can_bear
+  label_origin: extractor_assigned
+  system_type: mutual_qualification
+  system_type_origin: extractor_inferred
+  description: >
+    A grouping of the source's own bounds on its own evidence together with the objects that depend on
+    that evidence. Jain states what her interview material is; she states that the bazaar's imperatives
+    are partly discursive; she records that her presence as a fine-art researcher shaped what she was
+    told; and she closes the book by denying that images are powerful in themselves.
+  whole_system_claim:
+    text: >
+      This source's strongest-sounding objects — the frontal imperative, the muscularity injunction,
+      the colour rationale — rest on what practitioners told a researcher between 1994 and 2001, in
+      conversations the author says were shaped by who she appeared to be. Where those accounts are
+      corroborated by observed practice or by the artefacts, the corroboration is recorded separately
+      and is the stronger evidence. Nowhere in this book is there a measurement of a viewer.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Each bound is quoted from the source and each is stated at the point where it applies, but the
+      source never gathers them. Attaching them to the specific objects that depend on them is the
+      extractor's, and is a statement about how this record should be read rather than a new claim
+      about calendar art.
+    source_ref: null
+  members:
+    - {sk_ref: sk_jgb_0180, role_in_system: what_the_interview_evidence_is, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0090, role_in_system: the_researcher_effect_worked_through, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0170, role_in_system: the_closing_bound_on_efficacy, order: 3, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0010, role_in_system: an_object_that_depends_on_it, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0030, role_in_system: an_object_that_depends_on_it, order: 5, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0020, role_in_system: an_object_that_depends_on_it, order: 6, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0150, role_in_system: the_object_with_the_worst_freshness_risk, order: 7, membership_origin: extractor_inferred}
+  internal_structure:
+    ordering:
+      scheme: none
+      origin: extractor_inferred
+    dependencies:
+      - between: [sk_jgb_0010, sk_jgb_0180]
+        nature: "the reason given for the frontal imperative is a practitioner's account of his customers' beliefs, and is therefore subject to the bound the author places on interview material"
+        origin: extractor_inferred
+      - between: [sk_jgb_0090, sk_jgb_0180]
+        nature: "the disavowal finding is built by applying the bound: it is precisely the gap between what informants said and what they did"
+        origin: source_stated
+    tradeoffs: []
+    conflicts: []
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 4, printed p. 174; Conclusion, printed p. 372"
+  evidence:
+    characteristics: [explicitly_stated, empirical_within_source]
+    source_uncertainty: >
+      The bounds are the author's own and are unambiguous.
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Low as to the bounds, which are quoted. What the EXTRACTOR adds is the attachment of the bounds
+      to specific objects, so that a downstream consumer cannot retrieve the frontal-gaze constraint
+      without also retrieving the author's statement about what her interview evidence is. That
+      attachment is a statement about this record.
+  provenance:
+    chapter: "4, The Sacred Icon; Conclusion"
+    section: "assembled"
+    page_start: 174
+    page_end: 372
+    source_support: text
+
+- scs_id: scs_jgb_003
+  source_id: jain_gods_in_the_bazaar
+  label: value_located_in_circulation_and_what_follows_for_reading_this_market
+  label_origin: extractor_assigned
+  system_type: causal_model
+  system_type_origin: extractor_inferred
+  description: >
+    Jain's political-economy argument, assembled: an image's value is held to emanate from its
+    circulation and exchange rather than from its production, which is why authorship registers so
+    weakly, why the same industrial system can address many segments without homogenising them, why
+    the catalogue is not a demand curve, and why publicness itself adds value.
+  whole_system_claim:
+    text: >
+      In this arena the artefact's value does not sit in it and was not put there by its maker. It
+      accrues through movement — through being gifted, displayed, worshipped, recognised as
+      recognised. That single relocation explains a cluster of otherwise disconnected observations:
+      that buyers choose by subject and not by artist; that signatures work as brand names; that
+      catalogues encode self-presentation rather than preference; and that an image's exposure to a
+      public gaze both creates its power and makes it vulnerable to desecration.
+    origin: extractor_synthesis
+    interpretation_basis: >
+      Jain states the location of value in circulation as her own thesis (chs. 5 and 6) and connects
+      it to the fetish, to the gift economy of the bazaar and to meta-popularity. She does not join it
+      to the subject-over-author finding or to the layered-catalogue finding, which sit in chapters 1
+      and 4. Assembling them under one relocation is the extractor's synthesis. What the grouping ADDS,
+      and what must be attributed to CANON-014, is the observation that four findings which look like
+      quirks of one trade are consequences of one premise about where value sits.
+    source_ref: null
+  members:
+    - {sk_ref: sk_jgb_0050, role_in_system: the_economic_frame, order: 1, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0110, role_in_system: value_from_imagined_collective_investment, order: 2, membership_origin: source_stated}
+    - {sk_ref: sk_jgb_0070, role_in_system: consequence_authorship_registers_weakly, order: 3, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0060, role_in_system: consequence_the_catalogue_is_not_a_demand_curve, order: 4, membership_origin: extractor_inferred}
+    - {sk_ref: sk_jgb_0100, role_in_system: the_method_that_makes_it_visible, order: 5, membership_origin: source_stated}
+  internal_structure:
+    ordering:
+      scheme: causal
+      origin: extractor_inferred
+    dependencies:
+      - between: [sk_jgb_0070, sk_jgb_0050]
+        nature: "if value accrues in circulation rather than in production, the producer's identity is not what is being bought, which is why the signature migrates from an authorship mark to a brand name"
+        origin: extractor_inferred
+      - between: [sk_jgb_0110, sk_jgb_0100]
+        nature: "meta-popularity is only visible once the image is treated as a circulating object rather than as a representation"
+        origin: source_stated
+    tradeoffs: []
+    conflicts:
+      - between: [sk_jgb_0050, sk_jgb_0150]
+        nature: "the post-liberalisation object describes a partial re-import of the production-centred regime — proprietary analytical templates, patenting pressure, corporate signage — into an arena the earlier chapters characterise as circulation-centred. Jain does not treat this as refuting her thesis, but the two describe different states of the same system and should not be read as simultaneous"
+        origin: extractor_inferred
+  source_warns_against_isolated_use: true
+  source_warning_ref: "Ch. 3, printed p. 119, and Conclusion, printed p. 369: the bazaar ethos 'is a hegemonic formation in itself and therefore should not be romanticized in the name of the popular'"
+  evidence:
+    characteristics: [explicitly_stated, argued, mechanism_given, empirical_within_source, historical_claim]
+    source_uncertainty: >
+      Grounded for one industry over roughly seven years of fieldwork; the wider claim about
+      capitalism is proposed rather than shown.
+    extraction_uncertainty: none
+    system_level_uncertainty: >
+      Moderate-to-high. This is the most theoretically loaded grouping in the record and the one where
+      an extractor is most likely to over-systematise a book that is arguing with other scholars rather
+      than laying down a model. Two of the five members are joined to the thesis by the extractor and
+      not by the author. It is recorded as a hypothesis about how Jain's political economy connects to
+      her trade observations, not as her stated system.
+  provenance:
+    chapter: "1, Vernacularizing Capitalism; 4, The Sacred Icon; 5, The Circulation of Images; 6, The Efficacious Image"
+    section: "assembled across four chapters"
+    page_start: 31
+    page_end: 295
+    source_support: text

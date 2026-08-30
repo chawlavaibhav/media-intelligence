@@ -1,0 +1,430 @@
+# Audit Gate v0.2 record — Dwyer and Patel, "Cinema India: The Visual Culture of Hindi Film"
+# Written by CANON-014 against the exact bytes fingerprinted below. The source was NOT reopened.
+
+audit_record_version: v0.2
+audit_id: aud_cinema_india
+source_id: dwyer_patel_cinema_india
+knowledge_dir: canon/knowledge/current/dwyer-patel-cinema-india
+recorded_at_commit: work-branch-canon-014
+audit_status: complete
+
+# Content fingerprint of the exact artifacts this audit was written against.
+# Computed mechanically by canon/validation/validate_audit_gate_v02.compute_source_snapshot;
+# not transcribed. Any later edit to any of these five files invalidates this record.
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: c08af02935d80582ce33156bc3d2add0e9f9ddd2b0cd0bd72d1859155b926d19
+    - path: operational-bindings.yaml
+      digest: c1088b72c635b13314959bba1de7eb3d14333885557e58838315e089ae8354d5
+    - path: source-concept-systems.yaml
+      digest: 434119b62570ed8fd463ebaee969fe67fb1a7ad6f50cf1241401cffbe1e4ce00
+    - path: source-knowledge.yaml
+      digest: c979b628e4c6748dc648e482be3d17ae5f51c45c0c5690bd521f186ad0004040
+    - path: visual-evidence-ledger.yaml
+      digest: 0d032f641eb778c679ae23e29384708dda1e37cc2f0cdd0c21f9846cc6fcb4d2
+  combined_digest: d3f2dd14a48637489451480f2d73d31efa1e5232c51a135cf8a548d9a412840a
+
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/dwyer-patel-cinema-india/source-knowledge.yaml
+  - canon/knowledge/current/dwyer-patel-cinema-india/source-concept-systems.yaml
+  - canon/knowledge/current/dwyer-patel-cinema-india/operational-bindings.yaml
+  - canon/knowledge/current/dwyer-patel-cinema-india/ontology-mappings.yaml
+  - canon/knowledge/current/dwyer-patel-cinema-india/visual-evidence-ledger.yaml
+  - canon/knowledge/current/dwyer-patel-cinema-india/PROVENANCE.md
+  - canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml
+source_reopened: false
+
+# ── A. Representation integrity ─────────────────────────────────────────────
+representation_integrity:
+  delivery_format: authored_print_scan
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    THIS IS THE FIRST SOURCE IN THE CANON-014 BATCH WITH REAL PAGES, and the claim was established
+    mechanically before any locator was written rather than assumed from the format. The copy is an
+    Internet Archive page-image scan of the Reaktion 2002 print edition and preserves the printed
+    folios. The scan-to-printed-page mapping is printed = pdf - 2, verified at SIX independent points:
+    the four chapter openings at printed 13, 42, 101 and 183, the Conclusion at 215 - each checked
+    against the book's own table of contents, which is an independent authority inside the artefact -
+    and one running folio (pdf 60 reading "58"). The offset is constant across all 244 pages.
+    Every provenance block in the frozen record carries a printed page range AND a chapter and
+    section, so a locator resolves either way. No page number was interpolated, and no printed page
+    number was taken from the OCR of a folio, because folio OCR in this copy is unreliable (see the
+    display_type_ocr_damage entry below).
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: display_type_ocr_damage
+      affects: "display type, old-style numerals, stylised lettering, and running folios throughout"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The OCR layer is reliable for running prose and for captions and unreliable for display type.
+        Established by inspection, with enumerated instances: the authors' names on the title page
+        render as "Ree ie VW Ver Ren dally VAMP AT EL"; "DKNY" renders as "pkNny"; "1990s" renders as
+        "r990s"; running folios render as "IO", "IRL", "T§", "ly". The damage is RECOVERABLE precisely
+        because it fails loudly: a folio that reads "T§" cannot be mistaken for a page number, unlike a
+        silent substitution. The consequence is recorded and acted on - every printed page number in
+        this record comes from the mechanically established mapping, not from folio OCR.
+    - pattern: in_figure_text_absent
+      affects: "small-set body copy inside reproduced posters, booklets and handbills"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        At the rendered resolution the credit blocks and small copy within a reproduced poster resolve
+        as texture. Display type, titles and large credit lines ARE legible throughout. No extracted
+        object rests on small copy within any plate.
+    - pattern: source_evidence_never_printed
+      affects: "hoardings, the form the source itself names as the most distinctive of its medium"
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        A property of the published work, not of this copy, and filed here deliberately so that it is
+        not confused with digitisation loss. The source states in its Introduction that hoardings are
+        destroyed once a film finishes its run and that "there is little surviving evidence of the type
+        of imagery depicted on early hoardings", so the study rests on handbills, posters and booklets
+        that survived. One late hoarding is reproduced (illus. 105, Balkrishna Arts, 2000). A reader of
+        the 2002 print edition was in exactly the position this extraction is; the gap is the medium's
+        and is not this project's to fix. Captured in the frozen record as sk_dpci_0160 and bound as
+        bnd_dpci_0003.
+    - pattern: no_loss_detected
+      affects: "text-layer ordering and completeness"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        Checked rather than assumed. A duplicate-sentence scan over the whole extracted text for
+        sentences above 90 characters returned ZERO duplicates, so there is no pull-quote flattening
+        and no reading-order damage of the kind found in the pandey_pandeymonium copy on this branch,
+        where the same scan returned ten. All four chapters, the Introduction, Conclusion, References
+        and Select Bibliography are present and extract in order.
+  # Coverage bound, deliberately NOT recorded as a loss pattern: nothing is missing from the copy.
+  # The Gate's loss vocabulary describes damage to the artefact, and using one of its terms for an
+  # intact source would misdescribe it. The bound is stated here instead, and in the ledger.
+  inspection_coverage_bound:
+    not_inspected: "approximately 110 of approximately 121 numbered illustrations"
+    blocked: false
+    evidence: >
+      The visual pass was PARTIAL and its bounds are stated exactly in the ledger: eleven
+      illustrations rendered and read, approximately 110 not. Bounded by cost, not blocked - the copy
+      is complete, the page mapping is established and reproducible, and any plate could be rendered
+      on demand. This is not an access failure. No claim in the frozen record rests on an uninspected
+      plate, and every object that rests on an inspected one names it in its caveats. The eleven were
+      chosen by argument load, so the set is NOT a sample and nothing about the remaining plates may
+      be inferred from it.
+
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    Seven distinct visual claims made by Patel were checked against the plates they describe and all
+    seven hold - including the split colouring of Bachchan's face in the Deewaar poster, the knife-laid
+    overpainting over a photographic base, and the composition of the 1980s Mother India redesign. That
+    the book's descriptions of its own plates are accurate is a real and slightly unusual result.
+
+    The resolution is nevertheless SOME_UNDERDETERMINED and not ALL_RESOLVED, for two reasons that are
+    different in kind. First, 110 plates were not opened, so any claim resting on them remains
+    unchecked; none does. Second, and more fundamentally: what inspection can settle here is WHAT IS ON
+    A PLATE. What it cannot settle, and what no plate in this book could settle, is what a viewer read
+    from it. Patel's claims about hierarchies of response, triggered memory and inferred filial
+    relations are readings, and they remain readings after inspection. Every object drawn from them is
+    typed and caveated accordingly, and bnd_dpci_0001 binds the DISTINCTION between the two levels
+    rather than either effect.
+
+# ── B. Evidence and claim origin ────────────────────────────────────────────
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 19 objects classified. The evidential form of this source is unusually uniform: two trained
+    specialists reading artefacts, supported by the scholarly literature and by practitioner
+    interviews. NO OBJECT IN THIS SOURCE CARRIES empirical_within_source, and that is correct rather
+    than an omission - see the note below, which is the single most important thing an auditor of this
+    record should notice.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_dpci_0030, sk_dpci_0040, sk_dpci_0050, sk_dpci_0060, sk_dpci_0070,
+                sk_dpci_0090, sk_dpci_0100, sk_dpci_0110, sk_dpci_0120, sk_dpci_0130,
+                sk_dpci_0140, sk_dpci_0150, sk_dpci_0160, sk_dpci_0170, sk_dpci_0180,
+                sk_dpci_0190]
+      evidence: >
+        Sixteen of nineteen objects are one or other author asserting in her own voice, from a reading
+        of artefacts and from professional knowledge of the field. Two of these carry documentary
+        rather than interpretive content and are called out because they are the closest this source
+        comes to reported fact: sk_dpci_0180 gives a campaign timeline with print-run and spot-count
+        figures for one named 2000 release, attributed to no source, and sk_dpci_0170 names firms,
+        individuals and dates for the shift to computer composition. Neither is a measured effect.
+        sk_dpci_0160 is the authors' declaration about their own evidence base.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_dpci_0010, sk_dpci_0020, sk_dpci_0080]
+      evidence: >
+        Three objects are reported from named scholars rather than advanced by the authors themselves,
+        and the record keeps the attribution: darshan from Prasad and Vasudevan (with Dwyer's own
+        endorsement explicitly bounded - she accepts it as operating inside the film to produce the
+        star and no further); frontality and iconicity from Geeta Kapur; and the
+        impersonation/personification distinction from Barry King. In the darshan case Dwyer marks the
+        topic as disputed and says so in the text, and the frozen record carries that.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: []
+      evidence: >
+        Recorded as EMPTY, deliberately and after checking. There is no claim anywhere in this source
+        about what a measurement returned or would have returned - which distinguishes it from
+        pandey_pandeymonium on this branch, where a counterfactual claim about pre-testing results
+        occupies this category and is the rhetorical centre of the book.
+  relation_to_evidence_characteristics: >
+    NO object in this source carries empirical_within_source, and this is the correct result: the
+    authors report no measurement of their own anywhere in the book. There is no audience study, no
+    survey, no viewing experiment, no eye-tracking and no box-office analysis of their own; there is
+    no count over any corpus. The consistency rule is therefore satisfied trivially in one direction -
+    no sk_id appears under source_own_measurement_reported - and non-trivially in the other, since the
+    two categories that assert a measurement was not the source's own are used only where the frozen
+    record correctly lacks the characteristic.
+
+    THE SINGLE MOST IMPORTANT CONSEQUENCE FOR A DOWNSTREAM CONSUMER: sk_dpci_0090, on the
+    attention-drawing power of the human face, must NOT be cited as evidence for that effect. It is a
+    2002 art-historical assertion resting on developmental and expressive premises with no test of any
+    kind. Its value to this project is the boundary it draws between a putatively general effect and a
+    culture-bound one, and bnd_dpci_0001 binds only that boundary.
+
+# ── C. Application fit ──────────────────────────────────────────────────────
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      note: >
+        Considered and declined. This is film history and art history: a study of how a body of
+        commercial work signalled meaning to an audience that shared its codes. Its nearest candidates -
+        the prop vocabulary, the sari grammar, the character types - are conventions of one cinema in
+        one period, dated by the source itself and closed by its own Conclusion. Lifting any of them
+        into a Creative IR field would install a 2002 historical description as a current requirement.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_dpci_0005]
+      note: >
+        One, and it is a CANDIDATE ONLY: status production_candidate with target_path null, because
+        Production IR does not exist (PROJECT-CONTRACT separation 2). What it binds is Dwyer's
+        mode-level account of exteriority - the reason a melodramatic mode asks setting and costume to
+        carry interior state - as informing how much meaning a scene's set dressing and costume are
+        expected to carry. The specific vocabularies are expressly NOT bound: they are period
+        conventions, two of them dated inside their own object, and transplanting them as a symbol
+        table is refused in the binding's limits.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_dpci_0004]
+      note: >
+        One, and it is a SCOPING question rather than a criterion. Dwyer describes a case in which
+        continuity violations are not defects because they fall inside a unit the audience understands
+        as suspending the work's rules - costume changes without elapsed time, continents crossed
+        without travel, inside a song sequence. Whether a discontinuity in a generated time-based asset
+        sits inside such a licensed unit is directly inspectable and determines whether it should be
+        scored at all. Dwyer's assertion that the audience "does not seem to be disturbed at all"
+        carries no evidence and is NOT bound; no pass mark is adopted and none exists.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_dpci_0001, bnd_dpci_0002, bnd_dpci_0003]
+      note: >
+        The strongest fit, three bindings. One binds the two-level distinction Patel draws twice and
+        explicitly - between a design effect available to any viewer and one available only to a viewer
+        holding the code - and binds the DISTINCTION, not either effect, because neither is measured.
+        One binds the difference between describing a work and indexing one, from the re-release
+        redesign case. One binds the survival bias the source declares in its own evidence base: the
+        form it calls most distinctive is the one systematically destroyed.
+    - consumer: benchmark
+      outcome: no_current_binding
+      note: >
+        No dimension and no defensible threshold. This source contains no number that could become
+        one: the only quantities in it are one campaign's print runs and television spot counts for a
+        single 2000 release, which are a historical record of a campaign shape and not a measure of
+        anything.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        Nothing executable and nothing specifiable. The book contains no geometry, no measurement of
+        any artefact, and no tolerance. Its most concrete formal observations - the placement of a
+        portrait at the centre of a poster, the returned gaze - are described qualitatively and would
+        have to be invented into parameters to be composable, which this project forbids.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        A genuine fit, and deliberately no binding. Both repair terms in the frozen ontology act on a
+        person and each names its executor: naming which level an effect belongs to is a discipline for
+        whoever makes the claim, and asking whether the brief is to describe or to index is a
+        discipline for whoever sets the brief. Neither is a test, and the source supplies no method for
+        either - it supplies no way of identifying a remembered signifier, and no way of establishing
+        which level an effect belongs to. Naming a fit is not creating a binding.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_dpci_0010, sk_dpci_0020]
+      observation: >
+        Deliberately unbound, and the reason is worth recording. Darshan and frontality/iconicity are
+        the most theoretically interesting material in the source and the most tempting to bind. They
+        are not bound because Dwyer herself bounds them severely: she accepts darshan only as operating
+        inside the film to produce the star and otherwise finds the Hindi star produced no differently
+        from the Hollywood star, and she states that the whole iconicity literature rests on early and
+        1950s films and was not extended to later ones. A binding would have had to ignore both bounds.
+    - sk_refs: [sk_dpci_0040, sk_dpci_0070, sk_dpci_0120, sk_dpci_0150, sk_dpci_0190]
+      observation: >
+        The convention-level material - props, costume, character types, the periodisation of
+        advertising style, and the Conclusion's statement that the style has ended - is retained as
+        source truth and bound to nothing. It is genuine knowledge about a specific cinema in a
+        specific period, and this project has no consumer for it. It is grouped as scs_dpci_002 so that
+        a downstream consumer cannot retrieve any of these conventions without also retrieving the
+        source's own expiry notice.
+  conclusion: >
+    Five bindings from nineteen objects, thirteen unbound, none to Creative IR and one production
+    candidate with no target. The source's value to this project is narrower than its richness
+    suggests and is concentrated in governance: it supplies one clean, twice-stated distinction between
+    culture-bound and general design effects, one documented case of a corpus survival bias declared by
+    the researchers themselves, and one well-worked account of the difference between describing a
+    work and indexing it. Everything else is film and art history with no consumer here, and the
+    source's own Conclusion dates the conventions it documents as ended.
+
+# ── D. Lineage and independence ─────────────────────────────────────────────
+lineage:
+  authors: ["Rachel Dwyer", "Divia Patel"]
+  publisher: "Reaktion Books Ltd, London"
+  series: "Envisioning Asia (series editors Homi Bhabha, Norman Bryson, Wu Hung)"
+  first_published: 2002
+  copy_edition: >
+    The Reaktion setting, first published 2002, copyright Rachel Dwyer and the Board of Trustees of the
+    Victoria and Albert Museum, ISBN 1 86189 124 5, printed in Hong Kong. Note the supplied FILENAME
+    says Rutgers University Press; the copyright page says Reaktion twice, with a London address and a
+    UK ISBN, and carries no Rutgers imprint, no US ISBN and no US copyright line anywhere. A Rutgers
+    North American edition is the obvious explanation and THIS COPY CONTAINS NO EVIDENCE FOR IT. The
+    imprint page governs, as it does for pandey_pandeymonium on this branch where the filename and the
+    copyright page likewise disagree on date.
+  related_sources_in_corpus:
+    - source_id: jain_gods_in_the_bazaar
+      relation: cites_source
+      evidence: >
+        A REAL, DIRECTIONAL AND CHECKABLE CITATION, recorded rather than buried. Dwyer and Patel cite
+        Kajri Jain by name in chapter 2, note 9: "Kajri Jain, 'Gods in the Bazaar', South Asia, XXI/1
+        (1998)". That is the article from which jain_gods_in_the_bazaar grew into a book five years
+        after this one appeared. The citation runs FROM this source TO Jain; Jain's book does not cite
+        Dwyer and Patel, and could not have been cited by them in its book form because it did not yet
+        exist.
+
+        The two also share a substantial third-source milieu: Christopher Pinney on chromolithography
+        and Camera Indica, Geeta Kapur on frontality and iconicity, Ashish Rajadhyaksha on Phalke,
+        Tapati Guha-Thakurta, Patricia Uberoi, Partha Chatterjee. Both treat Ravi Varma,
+        chromolithography and the Bombay School of Art, and both discuss the artist S. M. Pandit.
+
+        THIS DOES NOT DEFEAT INDEPENDENCE and is not treated as doing so. cites_source is not among the
+        dependency-defeating relations, and normal citation of a third party's earlier article is
+        normal scholarship. What it DOES require, and what has been done, is that no cross-source
+        concept be created between the two: the terms they share - frontality, iconicity - are held as
+        source-local terms in each record with each source's own gloss, because the two authors do not
+        use them identically. Dwyer reports Kapur's category and applies it to cinema; Jain treats
+        frontality as a functional requirement of ritual use. The full pairwise analysis is in
+        canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml.
+    - source_id: bijapurkar_we_are_like_that_only
+      relation: no_known_relation
+      evidence: >
+        Different authors, publishers, disciplines, evidence bases and subject matter; neither cites the
+        other and no shared informant. Both concern India in overlapping decades, which is subject
+        adjacency and not shared origin.
+    - source_id: parameswaran_nawabs_nudes_noodles
+      relation: no_known_relation
+      evidence: >
+        Tested and rejected. Both concern Indian commercial visual culture of overlapping decades and
+        both discuss advertising, but from opposite ends - one an academic study of film publicity, one
+        a practitioner's account of agency advertising. Different authors, publishers, works and
+        evidence; neither cites the other. Shared subject matter is not shared origin. Recorded as an
+        observation in the lineage matrix.
+
+        THE NEAR MISS IS WORTH STATING BECAUSE IT LOOKS LIKE A RELATION AND IS NOT. Parameswaran's
+        endnotes cite RACHEL DWYER - but they cite *Picture Abhi Baaki Hai* (Hachette India, 2014), a
+        DIFFERENT WORK by one of this source's two authors, published twelve years after this one.
+        Citing one book by an author creates no relation to a different, uncited book by the same
+        author, and no claim extracted from Parameswaran rests on anything in *Cinema India*. The
+        pair therefore starts and stays at no_known_relation. The distinction is recorded in the
+        lineage matrix so that a later reader who notices the shared author name does not read it as
+        a citation of this source.
+    - source_id: desai_mother_pious_lady
+      relation: no_known_relation
+      evidence: >
+        Different authors, publishers, works and evidence; neither cites the other. Both concern Indian
+        cultural interpretation, which is subject adjacency.
+    - source_id: pandey_pandeymonium
+      relation: no_known_relation
+      evidence: >
+        Different authors, publishers, works and evidence; neither cites the other.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, work, series, publisher or primary informant with any of the 19 live accepted
+    sources or with any of the other four CANON-014 candidates, checked pairwise against the full live
+    list.
+
+    THE ONE RELATION THAT REQUIRED A DECISION is the citation to Kajri Jain, recorded above. It is
+    recorded as cites_source, which does not defeat independence, and the reasoning is stated so the
+    Controller can disagree: the citation is to a third party's 1998 journal article, in one direction,
+    five years before that author's book existed; it supports a single footnote in a chapter about
+    chromolithography; and no claim extracted from this source rests on it. What the pair DOES share is
+    a body of third sources, which is normal for two works in the same field and is why the observed
+    conceptual adjacency between them is recorded as an OBSERVATION in the lineage matrix and NOT
+    promoted. No cross_source_concept exists anywhere in this repository and none was created here.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Lupton, Ogilvy and Light: Science & Magic. None
+      quotes this source, which was not in the corpus when the specs were written.
+
+# ── E. Technology contingency ───────────────────────────────────────────────
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    Unavoidably applicable. The book spans 1896 to 2002 and its own central argument in chapter 3 is a
+    PERIODISATION - that each phase of film advertising borrowed the aesthetic vocabulary of its
+    moment. It documents at least one complete technology transition inside itself, from hand-painted
+    overpainted montage to computer-composed imagery, naming the year the leading practitioner closed
+    his studio because of it. And its Conclusion states that the style the whole book documents has
+    ended. A source that dates itself this explicitly cannot be assessed as though its content were
+    timeless.
+  assessed: true
+  classes:
+    - class: historical_convention
+      sk_refs: [sk_dpci_0040, sk_dpci_0070, sk_dpci_0110, sk_dpci_0120, sk_dpci_0150,
+                sk_dpci_0170, sk_dpci_0180, sk_dpci_0190]
+      evidence: >
+        Eight objects are conventions or practices of a specific period, and in most cases the SOURCE
+        supplies the dates rather than the extractor inferring them. The prop vocabulary is dated
+        internally (piano = 1950s-60s, high-tech goods = 1990s). The costume code is dated by the
+        source's own statement that Western clothes on the heroine lost their moral charge by the
+        1990s. Overpainting is dated and closed: Studio Diwakar shut in 1988 and computer composition
+        displaced the technique through the 1990s. The character-type code is dated by Patel's own
+        statement that after about 1990 the oppositional female types ceased to be marked by clothing.
+        The periodisation and the campaign timeline are historical by construction. And sk_dpci_0190 is
+        the source's own expiry notice on the whole style.
+    - class: technology_contingent
+      sk_refs: [sk_dpci_0110, sk_dpci_0170, sk_dpci_0180]
+      evidence: >
+        Three objects are contingent on a specific production technology rather than merely on a
+        period, and are listed in both classes deliberately. Overpainting depends on a photographic
+        still as substrate and on hand application; its displacement depends on the arrival of
+        affordable image manipulation. The campaign timeline depends on physical print runs, lobby
+        cards and linear television scheduling - 250,000 one-sheet posters and six trailers a day on
+        one channel at peak time - none of which describes a current distribution environment.
+    - class: durable_mechanism
+      sk_refs: [sk_dpci_0090, sk_dpci_0140, sk_dpci_0160]
+      evidence: >
+        Three mechanisms that do not depend on the technology or period that revealed them, and these
+        are the three that carry the governance bindings. The distinction between an effect available
+        to any viewer and one available only to a viewer holding a code is not a fact about 2002. The
+        difference between an asset that describes a work and one that indexes a work the audience
+        already knows is a difference between two briefs, not two decades. And a corpus that
+        systematically failed to preserve the most characteristic artefacts of the practice it
+        documents is a general hazard of reasoning from what survived. Note that DURABLE here means
+        the mechanism is not period-bound; it does not mean the mechanism is measured, and none of
+        these three is.
+    - class: uncertain
+      sk_refs: [sk_dpci_0010, sk_dpci_0020, sk_dpci_0030, sk_dpci_0050, sk_dpci_0060,
+                sk_dpci_0080, sk_dpci_0100, sk_dpci_0130]
+      evidence: >
+        Eight objects cannot be classified, and the reason is the same for all of them: they are
+        accounts of how a convention SIGNIFIES, and whether such an account expires depends on whether
+        the code it describes is still held - which this source cannot tell us and which nothing in
+        this repository establishes. Darshan, frontality, melodramatic exteriority, the romance
+        chronotope, the song as a licensed suspension, personification, the cumulative star persona and
+        the text-minimal poster are all in this position. Dwyer states the difficulty herself for the
+        iconicity cluster: the underlying scholarship "draw[s] on early films and those from the 1950s
+        and do[es] not trace more recent changes in styles of looking." Classifying these as durable
+        would assert a persistence the source disclaims; classifying them as historical would assert an
+        expiry it does not state.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

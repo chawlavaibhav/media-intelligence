@@ -380,53 +380,118 @@ def main(root):
         }
 
     # ---- 6,7,8. write-boundary checks via git ---------------------------------
-    try:
-        changed = subprocess.run(
-            ["git", "-C", root, "diff", "--name-only", "origin/main...HEAD"],
-            capture_output=True, text=True, check=False,
-        ).stdout.split()
-        dirty = subprocess.run(
-            ["git", "-C", root, "status", "--porcelain"],
+    #
+    # DEFECT FIXED BY THE CANON-014 DELTA PASS. This block previously used
+    # `git diff --name-only`, which reports THAT a path changed and not HOW. Checks 6 and 7 exist to
+    # stop an accepted live source or an accepted audit record being MODIFIED. CANON-014's whole job
+    # is to ADD new candidate directories under exactly those two prefixes, so every added file
+    # tripped a check written to catch edits, and the run reported errors for work it explicitly
+    # allows two lines further down.
+    #
+    # The fix distinguishes additions from modifications rather than relaxing the check: a
+    # modification or deletion under those prefixes is still an error, and now so is an addition
+    # under a prefix where nothing may be written at all (coordination, PROJECT-MEMORY, the frozen
+    # SPECs, governance, the Capability Registry) — which the old code would also have missed if the
+    # path had merely been created rather than edited.
+    #
+    # SECOND DEFECT FIXED: the whole block was wrapped so that any failure became a WARNING. A
+    # boundary check that cannot run has verified nothing, and reporting that as a warning is how a
+    # run in an environment without `origin/main` fetched can report PASS while checking nothing.
+    # Inability to run the check is now an error.
+    def _status_of(code):
+        """First letter of a git status code: A(dded), M(odified), D(eleted), R(enamed), ?(untracked)."""
+        return (code or "?")[0]
+
+    ADDITION_CODES = {"A", "?"}
+
+    have_base = subprocess.run(
+        ["git", "-C", root, "rev-parse", "--verify", "--quiet", "origin/main"],
+        capture_output=True, text=True, check=False,
+    )
+    if have_base.returncode != 0:
+        err("[BOUNDARY] origin/main is not available in this checkout, so the write-boundary "
+            "checks (6, 7, 8) could not run. This is an error, not a warning: an unrun boundary "
+            "check has verified nothing. Fetch the remote and re-run.")
+        touched = {}
+    else:
+        diff = subprocess.run(
+            ["git", "-C", root, "diff", "--name-status", "origin/main...HEAD"],
             capture_output=True, text=True, check=False,
         ).stdout.splitlines()
-        dirty = [ln[3:].strip() for ln in dirty if ln.strip()]
-        touched = set(changed) | set(dirty)
-        stats["files_touched_vs_origin_main"] = len(touched)
-        forbidden = [
-            ("canon/knowledge/current/", "check 6: live Canon knowledge"),
-            ("canon/audit/records/", "check 7: accepted audit records"),
-            ("eval/v1/capability-registry", "check 8: Capability Registry"),
-            ("eval/capability-registry", "check 8: Capability Registry"),
-            ("canon/knowledge/SPEC-", "frozen SPEC files"),
-            ("coordination/", "Controller state"),
-            ("PROJECT-MEMORY.md", "project memory"),
-            ("governance/", "governance"),
-        ]
-        for path in sorted(touched):
-            for prefix, label in forbidden:
-                if path.startswith(prefix):
-                    err(f"[BOUNDARY] {label}: '{path}' was modified — forbidden")
-        # CANON-014 additionally writes the corrected schema validator and its tests, which by
-        # design must live outside this experimental directory: the hole being closed is that a
-        # package-local validator was the only thing checking a package-local claim.
-        CANON014_ALLOWED = (
-            "canon/validation/validate_source_artifact_schema.py",
-            "tests/test_validate_source_artifact_schema.py",
-            "canon/knowledge/current/",
-            "canon/audit/records/",
-            "canon/tasks/",
-            "canon/findings/",
-            "canon/candidates/",
-        )
-        outside = [
-            p for p in changed
-            if not p.startswith(EXP_REL) and p not in ("", ".")
-            and not p.startswith(CANON014_ALLOWED)
-        ]
-        if outside:
-            err(f"[BOUNDARY] files changed outside {EXP_REL} and the CANON-014 allowlist: {outside}")
-    except Exception as exc:  # noqa: BLE001
-        warn(f"git boundary check could not run: {exc}")
+        # path -> status letter. A path added on the branch and then edited in the working tree is
+        # recorded by whichever entry is the stronger claim, so a later modification is not masked.
+        touched = {}
+
+        def _record(path, code):
+            letter = _status_of(code)
+            if path in touched and touched[path] not in ADDITION_CODES:
+                return
+            if path in touched and letter in ADDITION_CODES:
+                return
+            touched[path] = letter
+
+        for line in diff:
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                _record(parts[-1], parts[0])
+        for line in subprocess.run(
+            ["git", "-C", root, "status", "--porcelain"],
+            capture_output=True, text=True, check=False,
+        ).stdout.splitlines():
+            if not line.strip():
+                continue
+            code, path = line[:2].strip(), line[3:].strip()
+            _record(path, "?" if code == "??" else code)
+
+    stats["files_touched_vs_origin_main"] = len(touched)
+
+    # Prefixes where an accepted artifact must not be EDITED, but where this task is authorised to
+    # add new candidate directories.
+    no_modify = [
+        ("canon/knowledge/current/", "check 6: live Canon knowledge"),
+        ("canon/audit/records/", "check 7: accepted audit records"),
+    ]
+    # Prefixes this task may not write to at all, in any form.
+    no_write = [
+        ("eval/v1/capability-registry", "check 8: Capability Registry"),
+        ("eval/capability-registry", "check 8: Capability Registry"),
+        ("canon/knowledge/SPEC-", "frozen SPEC files"),
+        ("coordination/", "Controller state"),
+        ("PROJECT-MEMORY.md", "project memory"),
+        ("governance/", "governance"),
+    ]
+    for path in sorted(touched):
+        status = touched[path]
+        for prefix, label in no_modify:
+            if path.startswith(prefix) and status not in ADDITION_CODES:
+                err(f"[BOUNDARY] {label}: '{path}' was MODIFIED ({status}) — forbidden. "
+                    f"CANON-014 may add new candidate directories here and may not edit accepted ones.")
+        for prefix, label in no_write:
+            if path.startswith(prefix):
+                err(f"[BOUNDARY] {label}: '{path}' was written ({status}) — forbidden, "
+                    f"additions included.")
+
+    # CANON-014 additionally writes the corrected schema validator and its tests, which by
+    # design must live outside this experimental directory: the hole being closed is that a
+    # package-local validator was the only thing checking a package-local claim.
+    CANON014_ALLOWED = (
+        "canon/validation/validate_source_artifact_schema.py",
+        "canon/validation/validate_audit_gate_v02.py",
+        "tests/test_validate_source_artifact_schema.py",
+        "canon/knowledge/current/",
+        "canon/audit/records/",
+        "canon/tasks/",
+        "canon/findings/",
+        "canon/candidates/",
+        "canon/experimental/canon-014-qa/",
+    )
+    outside = [
+        p for p in sorted(touched)
+        if not p.startswith(EXP_REL) and p not in ("", ".")
+        and not p.startswith(CANON014_ALLOWED)
+    ]
+    if outside:
+        err(f"[BOUNDARY] files changed outside {EXP_REL} and the CANON-014 allowlist: {outside}")
 
     # ---- report ---------------------------------------------------------------
     total_qa = len(all_qa)

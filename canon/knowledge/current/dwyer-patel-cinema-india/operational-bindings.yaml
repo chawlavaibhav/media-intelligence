@@ -1,0 +1,162 @@
+# CANON-014 — SPEC-04 bindings for Dwyer and Patel, "Cinema India", against SPEC-01 v0.1.
+#
+# Five bindings from eighteen objects. Thirteen objects have no binding, which is the honest outcome:
+# most of this book is film history and art history, and this project has no consumer for it.
+#
+# TWO RULES HELD TO THROUGHOUT THIS FILE.
+# First, nothing here binds a claim about audience effect, because the source measures none. Where a
+# binding rests on a device the source describes, it binds the QUESTION the device raises, never a
+# predicted outcome.
+# Second, every binding drawn from a convention carries the source's own expiry notice
+# (sk_dpci_0190) in its limits, because the book's Conclusion states that the style it documents has
+# ended. A binding that quietly dropped that would be presenting a 2002 historical description as a
+# current rule.
+
+source_id: dwyer_patel_cinema_india
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_dpci_0001
+  source_knowledge_refs: [sk_dpci_0090, sk_dpci_0120, sk_dpci_0130]
+  source_system_refs: [scs_dpci_001]
+  target_type: governance
+  target_path: null
+  role: [flags, constrains]
+  rationale: >
+    Patel separates, explicitly and in the same passage, an attentional effect she offers as general
+    (a human face draws the glance whether or not the person is recognised) from a recognition effect
+    she says does not travel (an Indian star "will be unknown to the wider Western audience ... and
+    the poster will not evoke the same response"). She draws the same line again for character types,
+    which "are not universally recognized". This project generates and evaluates media for audiences
+    it does not choose, and the distinction between what a design does for any viewer and what it does
+    only for a viewer holding the code is exactly the distinction that gets collapsed when a
+    convention is lifted out of its context. The binding is to that DISTINCTION, not to either effect.
+  applicability:
+    when: "assessing whether an observed or intended effect of a design is available to a viewer outside the culture that produced the convention"
+    limits: >
+      The source measures neither effect. The attentional claim is asserted from developmental and
+      expressive premises with no test of any kind, and must not be cited as evidence that faces draw
+      attention. What is usable is the two-level distinction and the source's insistence that the
+      second level is culture-bound. It supports asking which level an effect belongs to; it supports
+      no prediction about either level, and no threshold.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dpci_0031]
+  repair_ontology_refs: [t_dpci_0051]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_dpci_0002
+  source_knowledge_refs: [sk_dpci_0140]
+  source_system_refs: []
+  target_type: governance
+  target_path: null
+  role: [flags]
+  rationale: >
+    Patel documents a design problem this project will meet: producing an asset for a work the
+    audience has already encountered. The move she records is not to describe the work again but to
+    identify what has since become its remembered signifier and build on that — including, in the Aan
+    case, an image the original publicity did not carry at all. The general form of the observation is
+    that for a re-encountered work the asset's job changes from describing to indexing, and that what
+    indexes it best may not be what was salient the first time. That is a real distinction between two
+    briefs that are easy to confuse.
+  applicability:
+    when: "producing an asset for a work, product or campaign the intended audience has already encountered"
+    limits: >
+      One studio, one designer, one decade, eight titles, and no outcome data of any kind — the source
+      does not report whether the redesigns worked. It supports naming the two briefs and asking which
+      one is in play. It supports no method for identifying a remembered signifier, and no claim that
+      doing so improves any outcome.
+  governance_consumer: rule_application
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dpci_0032]
+  repair_ontology_refs: [t_dpci_0052]
+  status: proposed
+  status_reason: "not reviewed; single-studio case material"
+
+- binding_id: bnd_dpci_0003
+  source_knowledge_refs: [sk_dpci_0160]
+  source_system_refs: [scs_dpci_002]
+  target_type: governance
+  target_path: null
+  role: [flags]
+  rationale: >
+    The source declares, about its own study, that the form it calls the most distinctive feature of
+    its medium is the one systematically absent from its evidence, because hoardings are destroyed
+    when a film's run ends. This is a clean, self-reported instance of a survival bias in a corpus:
+    what is available to study is not what was most characteristic of the practice. This project
+    builds corpora and reasons from them, and the shape of the error is transferable even though the
+    particular corpus is not.
+  applicability:
+    when: "reasoning from any corpus of surviving artefacts about the practice that produced them"
+    limits: >
+      This is a single documented instance, not a general result about corpora, and the source neither
+      quantifies the loss nor attempts to correct for it. It supports asking what a corpus systematically
+      failed to preserve; it supports no correction and no estimate.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dpci_0033]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_dpci_0004
+  source_knowledge_refs: [sk_dpci_0060, sk_dpci_0050]
+  source_system_refs: [scs_dpci_003]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  rationale: >
+    Dwyer describes a case in which continuity violations that would ordinarily be defects are not
+    defects, because they occur inside a unit the audience understands as suspending the work's own
+    rules: within a song sequence, costume changes without elapsed time and cuts between continents
+    without travel are licensed. Whether a discontinuity in a generated time-based asset falls inside
+    or outside such a licensed unit is directly inspectable, and it determines whether the
+    discontinuity should be reported as a fault at all. This bears on how a checker should be scoped,
+    which is live work in this project.
+  observation_unit: whole_asset
+  applicability:
+    when: "inspecting a time-based asset for continuity, where part of the asset may belong to a convention that licenses discontinuity"
+    limits: >
+      Dwyer's assertion that the audience "does not seem to be disturbed at all" carries no evidence;
+      no audience study exists in this book. The binding supports asking whether a discontinuity sits
+      inside a licensed unit before scoring it. It does NOT license ignoring discontinuity, does not
+      identify which units are licensed in any other tradition, and supplies no pass mark. The
+      convention itself is dated by the source's Conclusion and must not be assumed current.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_dpci_0034]
+  repair_ontology_refs: []
+  status: proposed
+  status_reason: "not reviewed; scoping question only, no threshold adopted"
+
+- binding_id: bnd_dpci_0005
+  source_knowledge_refs: [sk_dpci_0030, sk_dpci_0040, sk_dpci_0070]
+  source_system_refs: [scs_dpci_003]
+  target_type: production
+  target_path: null
+  role: [informs]
+  rationale: >
+    Dwyer's account of exteriority states a reason why, in a particular mode, setting and costume are
+    asked to carry interior state rather than merely to locate an action, and she supplies worked
+    vocabularies for both. Production planning has to decide how much meaning a scene's set dressing
+    and costume are expected to carry, and this source names one coherent answer together with the
+    mode that produces it. It is bound as informing that decision and nothing more.
+  applicability:
+    when: "deciding how much of a scene's meaning is to be carried by setting and costume rather than by performance or dialogue"
+    limits: >
+      The specific vocabularies — pianos, tongas, trains, the sari grammar — are conventions of one
+      cinema in one period, dated by the source itself, two of them dated inside the object. They must
+      not be transplanted as a symbol table. What transfers is the mode-level reason, and even that
+      is argued from Western melodrama theory rather than demonstrated. Production IR does not exist;
+      this binding has no target and is a candidate only.
+  status: production_candidate
+  status_reason: "Production IR does not exist (PROJECT-CONTRACT separation 2); recorded as a candidate with target_path null"
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: []
+  repair_ontology_refs: []

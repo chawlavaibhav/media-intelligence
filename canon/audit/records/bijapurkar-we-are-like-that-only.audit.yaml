@@ -1,0 +1,516 @@
+# Audit Gate v0.2 record — Rama Bijapurkar, "We Are Like That Only: Understanding the Logic of
+# Consumer India" (revised edition, 2009; data to 2008).
+# Written by CANON-014 against the exact bytes fingerprinted below. The source was NOT reopened.
+
+audit_record_version: v0.2
+audit_id: aud_we_are_like_that_only
+source_id: bijapurkar_we_are_like_that_only
+knowledge_dir: canon/knowledge/current/bijapurkar-we-are-like-that-only
+recorded_at_commit: work-branch-canon-014
+audit_status: complete
+
+# Content fingerprint of the exact artifacts this audit was written against.
+# Computed mechanically by canon/validation/validate_audit_gate_v02.compute_source_snapshot;
+# not transcribed. Any later edit to any of these five files invalidates this record.
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 85a769a3860c061f2d75e7db2645a96db85189361366b7dad2bb4e5fbc717c46
+    - path: operational-bindings.yaml
+      digest: e70b3545d1b146d2dfc996daeb078f4889a7315492589c8b134d01bbc2dafc92
+    - path: source-concept-systems.yaml
+      digest: bb53e9c8824f880678393b041981fcfc5a199a00524ef08d8b231ffd4e8952e2
+    - path: source-knowledge.yaml
+      digest: 1f90d5401d115b3ba3a6c52cf635fce4fe4dac0a101a149608ca57dc8d0b606b
+    - path: visual-evidence-ledger.yaml
+      digest: 353899f910065f3d85a40cf31b231dcfae9af5986aac23f9cbb94cdd2aa961aa
+  combined_digest: 29c7ea1c33b445a74d7bb51a6cd69d32b4fde4193515dd3e9c96198ef2ff4583
+
+evidence_basis_for_this_audit:
+  - canon/knowledge/current/bijapurkar-we-are-like-that-only/source-knowledge.yaml
+  - canon/knowledge/current/bijapurkar-we-are-like-that-only/source-concept-systems.yaml
+  - canon/knowledge/current/bijapurkar-we-are-like-that-only/operational-bindings.yaml
+  - canon/knowledge/current/bijapurkar-we-are-like-that-only/ontology-mappings.yaml
+  - canon/knowledge/current/bijapurkar-we-are-like-that-only/visual-evidence-ledger.yaml
+  - canon/knowledge/current/bijapurkar-we-are-like-that-only/PROVENANCE.md
+  - canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml
+source_reopened: false
+
+# ── A. Representation integrity ─────────────────────────────────────────────
+representation_integrity:
+  delivery_format: converted_pdf
+  page_addressability: converter_pages_not_authored
+  page_addressability_evidence: >
+    THE PROSE SURVIVED THE CONVERSION AND THE EVIDENCE DID NOT. That sentence is the whole
+    representation finding for this source and it drove how the extraction was run.
+
+    The copy is a calibre conversion of the 2012 digital edition: Creator and Producer both
+    `calibre (5.34.0)`, page size US Letter 612x792 pt, which is a conversion default and not a trade
+    paperback trim. The text layer carries no running folios anywhere. The 279 pages are therefore
+    conversion artefacts, and the printed edition's pages are simply not present in this copy.
+
+    NO PAGE NUMBER WAS INTERPOLATED. Every provenance block in the frozen record carries
+    page_start: null and page_end: null together with a chapter number, chapter title and section
+    heading. This is workable for this source and was checked before it was relied on: the chapters
+    are numbered and titled in the book's own contents, the section headings are distinctive, set in
+    capitals, and no heading repeats. The same handling is already used on this branch for
+    desai-mother-pious-lady, pandey-pandeymonium and parameswaran-nawabs-nudes-noodles.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: in_figure_text_absent
+      affects: "all 30 data figures and tables; at least 9 tables whose content appears nowhere in the text"
+      detectability: named_by_text
+      recoverability: recovered_in_this_copy
+      evidence: >
+        THE MATERIAL FINDING OF THIS AUDIT, AND THE ONE AN AUDITOR SHOULD READ FIRST. The conversion
+        preserved the prose as text and every table and figure as a raster image, so their content is
+        absent from the extracted text stream entirely. The running prose NAMES its tables and reasons
+        from them without restating them - "Table 5.1 gives a stratification scheme (a special analysis
+        done by Hansa Research using IRS data)...", "as can be seen in Table 9.2", "Table 5.6 gives an
+        idea of consumption increase in rural India". A TEXT-ONLY EXTRACTION OF THIS BOOK WOULD HAVE
+        MET EVERY ASSERTION AND NEVER MET THE EVIDENCE, AND WOULD HAVE SHOWN NO SIGN OF THE LOSS: it
+        would have produced a record of confident numerical claims with nothing under them.
+
+        Recovered in this copy, and completely. All 46 image objects were extracted and classified and
+        all 30 data figures were opened and read. Nine tables were confirmed to carry content that
+        appears nowhere in the text, including the full urban and rural SEC classification grids
+        (Tables 7.1 and 7.2), the eight-layer consumption-intensity scheme (Table 5.2), the GDP
+        distribution that is the source of the text's US$367 billion bottom-of-pyramid figure
+        (Table 5.3), the liberalisation and values tables (9.1 and 9.2), and the youth-segment profile
+        that substantiates the book's sampling argument (Table 10.1). Four objects in the frozen
+        record - sk_rbwl_0050, sk_rbwl_0070, sk_rbwl_0120 and sk_rbwl_0140 - rest partly on tables
+        that could not have been read from the text.
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        Established from the PDF metadata and from the absence of running folios in the text layer,
+        and acted on rather than merely noted: the frozen record carries null pages throughout and
+        locates every object by chapter and section heading instead. The printed edition certainly has
+        pages; this copy does not, and none was invented.
+    - pattern: no_loss_detected
+      affects: "text-layer ordering and completeness"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        Checked rather than assumed, and the result is clean. A duplicate-sentence scan over the whole
+        extracted text for sentences above 90 characters returned ZERO duplicates: no pull-quote
+        flattening and no reading-order damage of the kind found in the Pandey copy on this branch.
+        The whole book is present and extracts in order - Foreword by C. K. Prahalad, Preface, all 13
+        chapters, Afterword by N. R. Narayana Murthy, Bibliography, Acknowledgements, endnotes and
+        copyright page.
+    - pattern: no_loss_detected
+      affects: "figure coverage"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        THE ONLY COMPLETE VISUAL PASS OF THE THREE SOURCES ADDED IN THIS BATCH, and it is complete for
+        the class that carries the argument: 30 of 30 data figures inspected, 0 not inspected, all
+        fully legible at native resolution. The 13 chapter-opener illustrations were classified
+        mechanically by dimension (all 224x300) and 6 of the 13 were opened to confirm they are a
+        decorative billboard bearing the chapter number and title, not evidence. There is no coverage
+        bound to record for this source.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    Six of the book's quantitative claims were checked against the tables they rest on and all six
+    hold, one of them - the rural shampoo penetration - only after separating the confirmed
+    measurement (13.3 per cent in 2000 to 68.7 per cent in 2008) from the causal attribution to
+    packaging innovation, which is the author's own footnote to her own table and is not evidence. One
+    figure, Figure 4.2, was opened and found to be a schematic carrying no data at all; it illustrates
+    the argument of sk_rbwl_0080 and is not evidence for it, and the object says so.
+
+    THE BOUND, WHICH MUST TRAVEL WITH THE all_resolved VERDICT. What inspection establishes is that
+    THE TEXT REPORTS ITS OWN TABLES ACCURATELY and that the tables say what the text says they say. It
+    establishes nothing about whether the underlying surveys are right, and nothing whatever about
+    whether any of it is still true: every figure inspected is dated 2008 or earlier.
+
+# ── B. Evidence and claim origin ────────────────────────────────────────────
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 18 objects classified. THIS IS THE SECTION THAT MATTERS MOST FOR THIS SOURCE. Bijapurkar draws
+    on three quite different kinds of material - named third-party survey data, one original analysis
+    she co-authored, and undated consulting anecdotes from her own assignments - AND WRITES ALL THREE
+    IN THE SAME CONFIDENT DECLARATIVE VOICE. The book does not mark the difference. The frozen record
+    marks it on every object, and the sorting is gathered as scs_rbwl_003 so that the mixed character
+    of the source is visible as a whole and not only object by object.
+  categories:
+    - category: third_party_measurement_reported
+      sk_refs: [sk_rbwl_0020, sk_rbwl_0040, sk_rbwl_0060, sk_rbwl_0070, sk_rbwl_0100,
+                sk_rbwl_0130, sk_rbwl_0140, sk_rbwl_0160]
+      evidence: >
+        Eight objects rest on measurements made by named third parties, properly sourced and dated in
+        the book: NCAER's Market Information Survey of Households; the Indian Readership Survey via
+        Hansa Research (an all-India sample of 242,118 households in the 2008 round); the National
+        Sample Survey; IIMS Dataworks; the Census of India; the World Bank; Goldman Sachs's BRIC
+        report. This is the best-evidenced material in the source and it is properly attributed by the
+        author.
+
+        NONE OF THESE OBJECTS CARRIES empirical_within_source IN THE FROZEN RECORD, and that is
+        deliberate rather than incidental. An earlier pass of this extraction had applied the
+        characteristic to objects resting on NCAER and IRS data, on the loose reading that the source
+        reports numbers. That was wrong on the Gate's definition - the characteristic asserts the
+        measurement was the SOURCE'S OWN - and it was corrected before this record was written, by
+        removing it from every object except sk_rbwl_0050. The correction is recorded here rather than
+        silently absorbed because it changes what these eight objects assert.
+    - category: mixed_own_and_third_party
+      sk_refs: [sk_rbwl_0050]
+      evidence: >
+        ONE OBJECT, AND THE ONLY ONE IN THIS SOURCE CARRYING empirical_within_source. Bijapurkar's
+        rules for using Indian household income survey data rest on an original analysis she
+        co-authored - "Solving the Income Data Puzzle", with Laveesh Bhandari, in the Businessworld
+        Marketing White Book 2006 - which links surveyed income distributions to national accounts and
+        establishes that the survey figures are systematically understated.
+
+        The category is mixed_own_and_third_party rather than source_own_measurement_reported because
+        that is the truthful description: THE ANALYSIS IS HERS AND THE UNDERLYING SURVEYS ARE NOT.
+        She did not field a survey; she reconciled other people's surveys against GDP. The
+        empirical_within_source characteristic on this object is correct on that reading - the
+        analytical result is her own reported work - and the record does not claim more.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_rbwl_0030, sk_rbwl_0080, sk_rbwl_0110, sk_rbwl_0150]
+      evidence: >
+        FOUR OBJECTS ASSERT AN OUTCOME AND SUPPLY NO DATA FOR IT, and they include two of the book's
+        most quoted arguments. This is the sharpest evidential finding of the audit.
+
+        sk_rbwl_0150, the no-frills failure argument, NAMES NO FAILED PRODUCT AT ALL: the claim that
+        firms "reduced the price by reducing performance" and that "the consumer, as always the wiser,
+        rejected all of it" is asserted without a single named product, firm, date or sales figure.
+        sk_rbwl_0110, the morphing-change framework, is illustrated by consulting cases with no client
+        name, no date, no sample size and no outcome, plus an executive's reported experience.
+        sk_rbwl_0030, the boom-extrapolation-stagnation cycle, reports that analysts extrapolated
+        20-30 per cent growth and that the consumption machine failed to materialise, without supplying
+        the series. sk_rbwl_0080 reports that richer consumers moved to popular-segment products
+        without supplying the switching data, and supports the correction with automotive instances
+        rather than measurement.
+
+        These are retained, not discarded, and the reason is stated in the frozen record: THE
+        MECHANISMS ARE CLEAR AND THE OUTCOME CLAIMS ARE NOT EVIDENCE. Every one of them carries
+        anecdotal or mechanism_absent in the frozen record, and none carries empirical_within_source.
+        Three of the four are bound, and what is bound in each case is the REASONING ERROR, never the
+        market outcome.
+    - category: source_author_assertion
+      sk_refs: [sk_rbwl_0010, sk_rbwl_0090, sk_rbwl_0120, sk_rbwl_0170, sk_rbwl_0180]
+      evidence: >
+        Five objects are the author arguing in her own voice from her own professional experience.
+        Two are methodological positions about how to reason (sk_rbwl_0010, that firms ask the market
+        question the wrong way round; sk_rbwl_0090, against predicting a market by analogy with a more
+        developed one) and establish no fact about any consumer. sk_rbwl_0170, that "India" is not a
+        usable market construct and the analyst must define their own, is an instruction rather than a
+        finding. sk_rbwl_0120 contains a clean general mechanism wrapped in an essentialist framing -
+        see the caution below. sk_rbwl_0180 is her own statement about the vintage of her data and is
+        the most important object in the record for how everything else may be used.
+
+        A CAUTION THAT BELONGS IN THIS SECTION. sk_rbwl_0120's "this as well as that" observation
+        contains a genuine and general account of hybrid adoption: a bundled practice is adopted by
+        outsourcing the disliked component and retaining the valued one, which is why a successful
+        entrant unbundles rather than substitutes. It is wrapped in a framing that treats this as an
+        Indian cultural "DNA" with "high tolerance of ambiguity", evidenced by avatars in the Hindu
+        pantheon and by Brahmins in Bengal being permitted fish. THAT FRAMING IS ESSENTIALIST, IS NOT
+        EVIDENCED, AND DOES NO WORK THE MECHANISM DOES NOT ALREADY DO. The frozen record separates
+        them, and Table 9.2 - which sets the framing out as a two-column list of asserted binary
+        contrasts with no source line at all - is recorded in the visual ledger as the author's summary
+        of her own position rather than as a finding.
+  relation_to_evidence_characteristics: >
+    Exactly one object, sk_rbwl_0050, carries empirical_within_source in the frozen record, and it
+    appears under mixed_own_and_third_party. No object under third_party_measurement_reported or under
+    measurement_claimed_result_not_supplied carries the characteristic, so the Gate's consistency rule
+    is satisfied in the direction that matters here and satisfied non-trivially: this source has
+    numbers throughout, and eight objects that report measurement are correctly marked as reporting
+    SOMEONE ELSE'S measurement.
+
+    A DISCLOSURE THE BOOK DOES NOT MAKE, RECORDED HERE BECAUSE IT BEARS ON CLAIM ORIGIN. Bijapurkar is
+    a market strategy consultant and the book's central argument is that firms need customized market
+    strategy for India. That is not a disqualification - her disclosure of her own role in creating
+    the middle-class myth she now attacks is unusually candid and is recorded as STRENGTHENING
+    sk_rbwl_0040 - but the interest is real, is undisclosed in the book, and is noted on sk_rbwl_0010.
+
+# ── C. Application fit ──────────────────────────────────────────────────────
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      note: >
+        Nothing, and the reason is categorical rather than a shortage of material. This source
+        contains no artefact-level knowledge of any kind: no claim about an image, a composition, a
+        shot, a type treatment or a colour. It is about market structure, measurement and the errors
+        analysts make. There is nothing here a Creative IR field could carry.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_rbwl_0005]
+      note: >
+        One, and a CANDIDATE ONLY: status production_candidate with target_path null, because
+        Production IR does not exist (PROJECT-CONTRACT separation 2). It binds the constraint behind
+        the failure of stripped-down offers - "what suppliers consider to be a frill, consumers
+        consider to be a necessity" - as a rule about how a low-cost variant should be derived: reduce
+        unit size or decouple ownership from use, do not reduce performance or currency. THE
+        EVIDENTIAL BOUND IS CARRIED ON THE BINDING because it is severe: sk_rbwl_0150 names no failed
+        product, so what is bound is the DERIVATION RULE and the reasoning behind it, never a claim
+        about what any market did.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_rbwl_0004]
+      note: >
+        One, on observation_unit measurement_series, and it is the most transferable thing in the
+        source. Bijapurkar supplies two worked cases in which a change in a measured series was
+        attributed to the wrong cause - working women read as the driver of household consumption
+        change when the workforce share was 23 per cent and falling with affluence, and consumers
+        "down-trading" when the suppliers had up-traded their offers. What is bound is the requirement
+        to test a supply-side explanation before accepting a demand-side one for a moved series. NO
+        THRESHOLD, NO METRIC AND NO SCORE IS ADOPTED, and neither case is evidence for any threshold.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_rbwl_0001, bnd_rbwl_0002, bnd_rbwl_0003]
+      note: >
+        Three, and the strongest fit by a distance. One binds the treatment of understated survey
+        income data - do not use it literally, use it for relative distribution rather than absolute
+        level, and reconcile against an independent aggregate - which is the source's own analysis and
+        the most directly reusable rule in it. One binds the requirement to state the definition and
+        the population base of any segment label before planning on it, from the two cases where the
+        source shows the failure with arithmetic: the undefined "middle class", and the youth surveys
+        that cover 1-3 per cent of Indian youth while being reported as findings about Indian youth.
+        One binds the requirement not to extrapolate early growth produced by a released stock as
+        though it were a flow. All three bind REASONING DISCIPLINE. None carries a number.
+    - consumer: benchmark
+      outcome: no_current_binding
+      note: >
+        Nothing, and this is a deliberate refusal rather than an absence. The source is full of
+        material that would LOOK like benchmark data - segment sizes, penetration series, income
+        percentiles, an eight-layer consumption-intensity scheme, an SEC grid. NONE OF IT IS BOUND.
+        Every number in this book is a 2008-or-earlier third-party survey figure about the Indian
+        consumer market, which is not a subject this project benchmarks, and the author states in her
+        own Preface that the data would be outdated on publication. Binding any of it would be
+        importing a stale market fact into a project that has no use for it and calling it a standard.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      note: >
+        Nothing, and nothing is close. The source contains no composable rule of any kind: no
+        parameter, no tolerance, no ordering, no test. Its arguments are about which question to ask
+        and which inference not to draw.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      note: >
+        A genuine fit and deliberately no binding, and this is where most of the source's value
+        actually sits. All four repair terms in the frozen ontology act on a person or a process and
+        each names its executor: state the definition and the population base before using a segment
+        label; reconcile survey income against an independent aggregate; look for a supply-side
+        explanation before attributing a moved series to consumer character; ask whether an observed
+        growth rate is a stock being released or a flow being established. None is a test, and the
+        source supplies no instrument for any of them. NAMING A FIT IS NOT CREATING A BINDING.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_rbwl_0060, sk_rbwl_0070]
+      observation: >
+        Two segmentation schemes are retained and bound to nothing: the author's own five-way
+        value-orientation segmentation, and the Market Research Society of India's SEC grid, whose
+        full urban and rural forms were recovered from Tables 7.1 and 7.2 in the visual pass. Both are
+        genuinely interesting as SHAPES of a classification - one keyed to how a buyer weighs benefit
+        against cost rather than to spending power, the other keyed to observable proxies where income
+        is unreliable. Neither is bound, because both classify Indian consumer households in 2008 and
+        this project classifies neither consumers nor households.
+    - sk_refs: [sk_rbwl_0100, sk_rbwl_0160]
+      observation: >
+        The take-off-threshold argument and the community-consumption/sachet material are retained
+        unbound and are the clearest instances of the source's freshness problem. The threshold
+        argument is a good general point - a threshold derived by holding prices fixed measures the
+        current cost structure, not a property of consumers - but its instances are 2008 GDP figures.
+        The business models the source celebrates were artefacts of a cost structure that has since
+        disappeared: STD/ISD booths, cyber cafes and community television have been displaced by the
+        cheap smartphone the book could not anticipate.
+    - sk_refs: [sk_rbwl_0180]
+      observation: >
+        The author's own vintage statement is retained, bound to nothing, and grouped as scs_rbwl_002
+        with every numerical object in the record SO THAT NO FIGURE FROM THIS SOURCE CAN BE RETRIEVED
+        WITHOUT IT. It is the single most load-bearing object in this extraction.
+  conclusion: >
+    Five bindings from eighteen objects, thirteen unbound, none to Creative IR, none to benchmark, one
+    production candidate with no target.
+
+    WHAT THIS SOURCE CONTRIBUTES IS A SET OF NAMED REASONING ERRORS WITH WORKED CASES, AND NOTHING
+    ELSE. Every binding is a rule about how to reason from a measurement; not one carries a number, a
+    segment size, a threshold or a market fact. That is not a conservative reading of the book - it is
+    the reading the author asks for. She raises the objection against herself in chapter 5 - "Is a
+    detailed tour of methodology and numbers from various sources really necessary, particularly if
+    the data will be outdated as soon as the book is published?" - and answers that the durable
+    contribution is the framework for reasoning about the numbers, not the numbers. This extraction is
+    built on that instruction.
+
+# ── D. Lineage and independence ─────────────────────────────────────────────
+lineage:
+  authors: ["Rama Bijapurkar"]
+  publisher: "Portfolio / Penguin"
+  series: null
+  first_published: 2007
+  copy_edition: >
+    THREE DATES ARE IN PLAY AND THEY ARE RECORDED RATHER THAN COLLAPSED. The supplied filename says
+    2009. The imprint page says the collection was published 2007 with copyright 2007, 2009, the
+    second date being the revised and updated edition. The digital edition this PDF was converted
+    from was published 2012. THE DATA IN THE BOOK IS 2008, which the author states in her Preface:
+    "in this paperback edition ... I have updated all the data to 2008." The 2012 digital edition did
+    not update the data further and nothing in the text refers to anything after 2009. The source is
+    treated as the 2009 revised edition with data to 2008, and every numerical object carries that
+    vintage. Foreword by C. K. Prahalad, Afterword by N. R. Narayana Murthy. Print ISBN
+    978-0-143-06597-5; e-ISBN 978-8-184-75001-0; "For sale in the Indian Subcontinent only".
+  related_sources_in_corpus:
+    - source_id: desai_mother_pious_lady
+      relation: cites_source
+      evidence: >
+        THE CLEAREST INTER-CANDIDATE RELATION IN THE CANON-014 BATCH, and it required a decision.
+
+        Bijapurkar cites Santosh Desai by name repeatedly and thanks him in her Acknowledgements:
+        "Santosh Desai (now managing director of Future Brands, formerly president of McCann Erickson)
+        has added a significant dimension to my understanding of changing consumer values and attitudes
+        and HAS BEEN QUOTED QUITE A BIT IN THIS BOOK." Santosh Desai is the author of
+        desai-mother-pious-lady, already extracted on this branch as a CANON-014 candidate.
+
+        THE DATE ORDER SETTLES WHAT THE RELATION IS. This book's first edition is 2007 and this
+        revision 2009; Mother Pious Lady is a 2010 collection of Desai's newspaper columns. Bijapurkar
+        is therefore citing Desai's columns and their conversations, NOT THIS BOOK - she cannot cite a
+        book that did not yet exist. The relation is cites_source, which does not defeat independence,
+        and it is directional and partial: it touches Bijapurkar's cultural-observation material in
+        chapters 8 and 9, and not the structural or quantitative arguments, which come from survey data
+        Desai has no part in.
+
+        WHAT WAS DONE ABOUT IT. The specific attributions observed are enumerated in
+        ontology-mappings.yaml under t_rbwl_0060, recorded AS AN ATTRIBUTION RECORD AND NOT AS A
+        CONCEPT, precisely because the party attributed is a separate CANON-014 candidate. No
+        cross_source_concept was created and no concept was merged. The relation is recorded pairwise,
+        with its direction and its date order, in canon/findings/CANON-014-CANDIDATE-LINEAGE-MATRIX.yaml
+        for the Controller to weigh. THE PRACTICAL CONSEQUENCE AN AUDITOR SHOULD NOTE: agreement
+        between these two sources on a cultural observation is NOT two independent observations, and
+        the matrix says so.
+    - source_id: parameswaran_nawabs_nudes_noodles
+      relation: cites_source
+      evidence: >
+        A REAL INBOUND RELATION, AND IT WAS PREDICTED BEFORE THIS SOURCE EXISTED IN THE CORPUS.
+        Parameswaran's endnotes cite THIS BOOK by name - *We Are Like That Only* - and also
+        Bijapurkar's *A Never-Before World*. His own audit record and the CANON-014 lineage matrix
+        recorded the row FORWARD, as a relation that would become live the moment a Bijapurkar source
+        was admitted, with the specific warning that his account of Indian youth partly rests on her
+        work. It is now live and is recorded here symmetrically so the pair reads the same from either
+        side.
+
+        THE DIRECTION IS PARAMESWARAN TO BIJAPURKAR AND ONLY THAT WAY. This book cites Parameswaran
+        nowhere; it precedes his by several years. cites_source does not defeat independence, so the
+        verdict for the pair is independent_origin. WHAT IT DOES REQUIRE is that where Parameswaran
+        and this source appear to agree about Indian consumers - and about youth in particular - that
+        is NOT two independent observations, and an auditor must check whether her claims are
+        load-bearing in him before treating the two as converging.
+
+        The rest of the pair is genuinely unrelated: different disciplines and evidence bases -
+        household survey data on one side, advertising-industry experience on the other - and both
+        cite C. K. Prahalad, who also wrote this book's Foreword, which is a shared third-party
+        citation of a widely cited management author and not shared origin.
+    - source_id: jain_gods_in_the_bazaar
+      relation: no_known_relation
+      evidence: >
+        Different authors, publishers, disciplines and evidence bases; neither cites the other. Both
+        concern Indian consumers in overlapping decades, which is subject adjacency and not shared
+        origin. Their evidence bases do not intersect at any point: national household surveys against
+        ethnographic fieldwork in the print trade.
+    - source_id: dwyer_patel_cinema_india
+      relation: no_known_relation
+      evidence: >
+        Different authors, publishers, disciplines, decades of subject matter and evidence; neither
+        cites the other.
+    - source_id: pandey_pandeymonium
+      relation: no_known_relation
+      evidence: >
+        Neither cites the other. Both authors are senior figures in the Indian marketing and
+        advertising world of the same period and could plausibly have met, which is why this was
+        checked rather than assumed: neither book names the other author anywhere, and their evidence
+        bases - household survey data against agency campaign experience - do not intersect.
+        Professional adjacency is not lineage.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, work, series, publisher or primary informant with any of the 19 live accepted
+    sources or with any of the other four CANON-014 candidates, checked pairwise against the full live
+    list. No live Canon source concerns Indian consumer markets at all, so there is no overlap to
+    adjudicate on that side.
+
+    THE ONE RELATION THAT REQUIRED A DECISION is the citation of Santosh Desai, recorded above. It is
+    recorded as cites_source, which is not among the dependence-creating relations, and the verdict is
+    independent_origin on three grounds: the citation is to Desai's newspaper columns and to
+    conversation, not to desai-mother-pious-lady, which did not yet exist; it touches a subset of this
+    book's material and not its structural or quantitative arguments; and normal citation does not
+    destroy independence.
+
+    WHAT THE VERDICT DOES NOT LICENSE. independent_origin means the pair is not blocked by lineage from
+    supporting a cross-source concept. It does not mean one was created - none was, anywhere in this
+    batch - and it does not mean agreement between these two sources on a cultural observation counts
+    as two independent observations. On that subset of material it does not, and the matrix records
+    why.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Lupton, Ogilvy and Light: Science & Magic. None
+      quotes this source, which was not in the corpus when the specs were written.
+
+# ── E. Technology contingency ───────────────────────────────────────────────
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    APPLICABLE, AND MORE SHARPLY THAN FOR ANY OTHER SOURCE IN THIS BATCH. This is a book of numbers
+    about a market, and the numbers are 2008 and earlier. Since publication the Indian market has
+    acquired mass mobile internet, UPI and consumer e-commerce at scale - none of which this book
+    could anticipate, and any of which would change its figures materially. Several of the business
+    models it celebrates were artefacts of a cost structure that has since disappeared. The author
+    states the problem herself, twice, and that statement is extracted as sk_rbwl_0180 and grouped
+    with every numerical object in the record.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_rbwl_0010, sk_rbwl_0040, sk_rbwl_0050, sk_rbwl_0080, sk_rbwl_0090,
+                sk_rbwl_0130, sk_rbwl_0140, sk_rbwl_0170]
+      evidence: >
+        Eight objects are reasoning errors and analytic disciplines that do not depend on the market
+        they were observed in, and they carry all five bindings. Asking what the market wants before
+        asking what one's existing strategy can sell is a general reversal. Planning on an undefined
+        category is a general error, and the source demonstrates it with arithmetic rather than
+        asserting it. Rules for using systematically understated survey data are rules about survey
+        data. Attributing a moved series to consumer character before testing a supply-side cause is a
+        general misattribution, and the source supplies two worked instances. Predicting a market by
+        analogy with a more developed one, generalising from a sample covering 1-3 per cent of the
+        population, and reasoning from a construct one has not defined are all errors of inference.
+
+        DURABLE HERE MEANS NOT PERIOD-BOUND. It does not mean measured, and none of these is measured:
+        the mechanisms are argued and illustrated, and the frozen record's caveats say so on each.
+    - class: technology_contingent
+      sk_refs: [sk_rbwl_0100, sk_rbwl_0160, sk_rbwl_0150]
+      evidence: >
+        Three objects depend directly on a cost structure that has changed. The take-off threshold
+        argument turns on what a delivered good costs, and the source's own point is that the
+        threshold moves when a business model changes the cost - which is exactly what happened after
+        2008 on a scale the book does not contemplate. The community-consumption and sachet material
+        celebrates STD/ISD booths, cyber cafes and community television, all of which the cheap
+        smartphone has largely displaced; the DECOUPLING PRINCIPLE survives, the instances do not, and
+        the frozen record separates them. The no-frills argument is contingent in a subtler way: its
+        mechanism is that low-income consumers know in real time what exists elsewhere, which is a
+        claim about information access, and information access is precisely what changed.
+    - class: historical_convention
+      sk_refs: [sk_rbwl_0060, sk_rbwl_0070, sk_rbwl_0120]
+      evidence: >
+        Three objects are conventions and characterisations of a period rather than standing facts.
+        The five-way value-orientation segmentation and the Market Research Society of India's SEC grid
+        are classification conventions in use in 2008 - the SEC system explicitly so, developed in the
+        early 1980s and subsequently revised in the industry - and neither is claimed by the source to
+        be stable. The "this as well as that" characterisation of Indian hybrid adoption describes an
+        observed pattern of a period, and its essentialist framing as cultural DNA is exactly the kind
+        of claim that survives its evidence.
+    - class: uncertain
+      sk_refs: [sk_rbwl_0020, sk_rbwl_0030, sk_rbwl_0110, sk_rbwl_0180]
+      evidence: >
+        Four objects cannot be classified honestly. The many-small-consumers demand structure
+        (sk_rbwl_0020) is the book's central structural claim and it is a claim about a distribution of
+        incomes that has since shifted in ways this source cannot speak to; whether it still holds is
+        an empirical question about India now, which nothing in this repository establishes. The
+        boom-extrapolation-stagnation cycle and the morphing-change framework are both proposed as
+        recurring patterns, and whether a pattern recurs is not settleable from a source that observed
+        it in one market over one period. sk_rbwl_0180 is the author's statement about her own data's
+        vintage: it is durable ADVICE and its own subject is expiry, and classifying it under any of
+        the other three classes would be a category error.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded, empirical_within_source,
+                                       anecdotal, practitioner_assertion, mechanism_absent]

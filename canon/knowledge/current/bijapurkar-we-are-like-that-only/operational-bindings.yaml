@@ -1,0 +1,171 @@
+# CANON-014 — SPEC-04 bindings for Rama Bijapurkar, "We Are Like That Only", against SPEC-01 v0.1.
+#
+# Five bindings from eighteen objects. Thirteen have none.
+#
+# WHAT IS AND IS NOT BOUND HERE. This book's durable content is a set of REASONING ERRORS, and that is
+# what is bound. Its market description is 2008-vintage and none of it is bound. No binding below
+# carries a number, a segment size, a threshold or a market fact, because every one of those in this
+# source is a historical observation about a market that has since changed fundamentally — and the
+# author says so herself (sk_rbwl_0180).
+#
+# NO BINDING TO CREATIVE IR. Considered and declined: this book is about market structure and demand,
+# not about what an artefact should be. There is no Creative IR field it fills.
+
+source_id: bijapurkar_we_are_like_that_only
+derived_against: {schema: SPEC-01, version: v0.1}
+
+operational_bindings:
+
+- binding_id: bnd_rbwl_0001
+  source_knowledge_refs: [sk_rbwl_0050]
+  source_system_refs: [scs_rbwl_001]
+  target_type: governance
+  target_path: null
+  role: [flags, constrains]
+  rationale: >
+    Bijapurkar states, with unusual precision for a book of this kind, the discipline for using an
+    instrument that is consistently biased: it is "reliable but not valid", so it can be used for
+    ranking and for change over time and must not be used for levels, and the operational form is to
+    work with percentiles rather than absolute bands or verbal labels. This project reasons from
+    instruments with known error — the benchmark-qualified text evaluator carries a stated false-pass
+    and false-fail rate on every row — and the general discipline of asking which comparisons an
+    instrument's error permits is exactly the one that already governs how that evaluator's output is
+    reported. This binds the general form of that discipline, and specifically the failure mode that
+    an instrument expressed in absolute units invites use for the one question it cannot answer.
+  applicability:
+    when: "using any instrument with a known or suspected systematic bias, to establish which comparisons its error permits"
+    limits: >
+      The 59.6 per cent figure, the named surveys and the Indian context are all specific and dated,
+      and none of them transfers. What transfers is the reliable-versus-valid distinction and the rule
+      that a consistent bias preserves rank and change while destroying level. This supports stating
+      which comparisons an instrument licenses; it supplies no test for detecting bias, no correction,
+      and no threshold. The author's attribution of the underreporting to cultural rather than
+      methodological causes is asserted without evidence and is NOT bound.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rbwl_0031]
+  repair_ontology_refs: [t_rbwl_0051]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rbwl_0002
+  source_knowledge_refs: [sk_rbwl_0140, sk_rbwl_0040]
+  source_system_refs: [scs_rbwl_001]
+  target_type: governance
+  target_path: null
+  role: [flags]
+  rationale: >
+    Two related failures are documented here with unusual concreteness. First, a sample covering 1-3
+    per cent of a population being generalised to that population — Bijapurkar quantifies it, names the
+    sampling frame (highest social classes in four or five big cities), and supports it with an
+    inspected table giving the actual segment sizes. Second, a category whose measured size is
+    determined by the analyst's own affordability threshold, documented from a research agency's own
+    finding that every professional it interviewed had a different definition. This project sizes
+    things — buyer-case pools, capability populations, corpora — and both failure shapes are directly
+    transferable even though the market is not.
+  applicability:
+    when: "generalising from a sample to a population, or using a bounded category as a sizing input"
+    limits: >
+      The Indian segment sizes are 2008 figures and are not bound. What is bound is the requirement to
+      state a sample's coverage of the population before projecting from it, and to check whether a
+      category's boundary was set by the analyst's own threshold. It supplies no sampling rule and no
+      correction for an unrepresentative sample.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rbwl_0032, t_rbwl_0033]
+  repair_ontology_refs: [t_rbwl_0052]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rbwl_0003
+  source_knowledge_refs: [sk_rbwl_0030, sk_rbwl_0110]
+  source_system_refs: [scs_rbwl_001]
+  target_type: governance
+  target_path: null
+  role: [flags, diagnoses]
+  rationale: >
+    Bijapurkar names two complementary forecasting failures and their mechanisms. A one-time release
+    of accumulated demand is indistinguishable from sustained growth by its rate alone, so
+    extrapolation cannot tell them apart until the stock is exhausted and capacity is committed;
+    and a small per-period change over a large base is invisible to a per-period trend instrument and
+    is discovered only in its accumulated state. This project will make projections from early
+    observations — of capability, of demand, of cost — and both failures are about the relationship
+    between an observation window and the process observed, which is not an Indian problem.
+  applicability:
+    when: "projecting forward from an observed rate, or concluding that nothing is changing because a per-period measure shows little"
+    limits: >
+      The source supplies the failure shapes and worked retrospective diagnoses. It supplies NO method
+      for distinguishing a starburst from sustained growth prospectively, and NO method for detecting
+      a change confluence before it has accumulated — which is precisely the limitation the objects
+      describe. It supports asking the question; it does not answer it. The Force = Mass x
+      Acceleration formulation is rhetorical and is not bound as a model.
+  governance_consumer: evidence_interpretation
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rbwl_0034, t_rbwl_0035]
+  repair_ontology_refs: [t_rbwl_0053]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rbwl_0004
+  source_knowledge_refs: [sk_rbwl_0130, sk_rbwl_0080]
+  source_system_refs: [scs_rbwl_001]
+  target_type: evaluation
+  target_path: null
+  role: [diagnoses]
+  rationale: >
+    Two documented instances of a single evaluation failure: a measured quantity moving for a reason
+    other than the one attributed to it. In the first, a countable proxy (women working outside the
+    home) was adopted because it was countable and tracked a variable that was not the operative one,
+    so the forecast built on it failed. In the second, observed buying behaviour shifted because the
+    price-performance frontier moved, and analysts attributed the shift to the buyer's character. This
+    project attributes changes in measured outcomes to causes, and both instances are cases of
+    attributing a movement to the wrong term.
+  observation_unit: measurement_series
+  applicability:
+    when: "attributing a change in a measured outcome to a cause, where the measurement instrument or the choice set may itself have moved"
+    limits: >
+      Both instances are Indian, dated and told without the underlying analysis being shown. They
+      support asking, of any attributed movement, whether the proxy tracks the operative variable and
+      whether the choice set moved. They establish no rate at which this error occurs, supply no test,
+      and licence no threshold. Note also that the source itself offers two unreconciled explanations
+      for one of its own examples (see the conflict recorded in scs_rbwl_003), which is a live
+      illustration of the difficulty rather than a solution to it.
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rbwl_0036]
+  repair_ontology_refs: [t_rbwl_0054]
+  status: proposed
+  status_reason: "not reviewed"
+
+- binding_id: bnd_rbwl_0005
+  source_knowledge_refs: [sk_rbwl_0150, sk_rbwl_0160, sk_rbwl_0020]
+  source_system_refs: []
+  target_type: production
+  target_path: null
+  role: [informs]
+  rationale: >
+    Bijapurkar states a design principle with a clear mechanism: where per-head consumption is low, the
+    binding constraint is the unit of purchase rather than total demand, so reducing the purchase unit
+    — by sharing the asset or shrinking the pack — converts latent aggregate demand into transactions
+    without waiting for incomes to rise. She states its converse failure with equal clarity: an offer
+    stripped by the supplier's own hierarchy removes attributes the buyer treats as defining, because
+    the buyer's reference set is global while the supplier's is its own product line. This project will
+    have to decide the granularity at which capability is offered and priced, and the principle bears
+    on that decision. It is bound as informing it and nothing more.
+  applicability:
+    when: "deciding the unit at which a capability or output is offered, where per-user consumption may be low relative to the unit"
+    limits: >
+      The named instances — sachets, STD/ISD booths, cyber cafes, community television, custom-hired
+      tractors — are pre-2009 and several no longer exist, having been artefacts of a cost structure
+      that mobile telephony removed. The MECHANISM outlived them; the instances did not, and none is
+      bound. This informs a framing question. Production IR does not exist; there is no target and
+      this is a candidate only. No pricing rule, no unit size and no threshold is adopted.
+  status: production_candidate
+  status_reason: "Production IR does not exist (PROJECT-CONTRACT separation 2); recorded as a candidate with target_path null"
+  evidence_basis: derived_from_source
+  empirical_refs: []
+  failure_ontology_refs: [t_rbwl_0037]
+  repair_ontology_refs: []

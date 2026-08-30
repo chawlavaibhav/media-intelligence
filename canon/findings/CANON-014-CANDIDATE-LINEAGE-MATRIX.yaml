@@ -24,9 +24,19 @@
 # end as OBSERVATIONS for later Controller review, and they are observations about what two sources
 # happen to say - not findings that they converge.
 
-matrix_version: v1
+matrix_version: v2
 task: CANON-014
 recorded: 2026-08-30
+revision_note: >
+  v2 records the three sources that the first pass listed as "not supplied". They were on the
+  Controller's machine as PDFs and have now been processed. Three consequences run through this
+  file and are not confined to the new section:
+    - Section 4's FORWARD relations to Bijapurkar and to a primary source on calendar art are no
+      longer forward. They are LIVE PAIRS and have moved into section 3B.
+    - The forward row for Dwyer stays forward and is now a documented near miss: Parameswaran cites
+      *Picture Abhi Baaki Hai*, a DIFFERENT work by one of *Cinema India*'s two authors. The pair
+      (Parameswaran, Cinema India) starts and stays at no_known_relation.
+    - Section 6 no longer lists any unsupplied source.
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 1. THE CORRECTION TO THE PREVIOUS SUMMARY
@@ -203,14 +213,220 @@ new_source_pairs:
       here, and no extracted Parameswaran claim derives from Ogilvy.
 
 # ─────────────────────────────────────────────────────────────────────────────
+# 3B. PAIRS INVOLVING THE THREE SOURCES ADDED IN THE DELTA PASS
+#     dwyer_patel_cinema_india · jain_gods_in_the_bazaar · bijapurkar_we_are_like_that_only
+#
+#     THREE REAL RELATIONS WERE FOUND AND NONE OF THEM DEFEATS INDEPENDENCE. Two are citations
+#     and one is a second-hand-reporting caution. All three are recorded because each changes what
+#     an apparent agreement between two sources would mean - which is the only thing this matrix is
+#     for. NO cross_source_concept, NO same_failure_family and NO cross-source equivalence is
+#     created anywhere by this pass.
+# ─────────────────────────────────────────────────────────────────────────────
+
+delta_pass_pairs:
+
+- pair: [dwyer_patel_cinema_india, jain_gods_in_the_bazaar]
+  relation: cites_source
+  direction: "dwyer_patel_cinema_india (2002) cites Kajri Jain (1998); NOT the reverse"
+  independence_for_this_pair: independent_origin
+  basis: >
+    cites_source is not a dependence-creating relation under the Audit Gate, the citation is to a
+    THIRD PARTY'S EARLIER ARTICLE rather than to the admitted book, and no claim in either record
+    rests on the other.
+  evidence: >
+    Dwyer & Patel, ch. 2 note 9: "Kajri Jain, 'Gods in the Bazaar', South Asia, XXI/1 (1998)" - the
+    journal article this book grew out of five years later. Jain's book cites Dwyer & Patel nowhere.
+  what_this_pair_requires:
+    - >
+      NO SHARED CONCEPT MAY BE BUILT ON THE SHARED VOCABULARY, and this is the substantive point.
+      Both books use FRONTALITY and ICONICITY, and they do not mean the same thing by them. Dwyer
+      reports Geeta Kapur's formal art-historical categories and applies them to cinema. Jain treats
+      frontality as a FUNCTIONAL REQUIREMENT OF RITUAL USE with a stated devotional mechanism,
+      attested from practitioners. Same words, different claims. Each record keeps the terms
+      source-local with its own author's gloss, and no promotion is made.
+    - >
+      THE SHARED MILIEU IS LARGE AND IS NOT A RELATION. Both draw on Christopher Pinney, Geeta Kapur,
+      Ashish Rajadhyaksha, Tapati Guha-Thakurta, Patricia Uberoi and Partha Chatterjee; both treat
+      Ravi Varma, chromolithography and the Bombay School of Art; both discuss the artist S. M.
+      Pandit. Two sources citing the same third parties creates no dependence between them.
+
+- pair: [bijapurkar_we_are_like_that_only, desai_mother_pious_lady]
+  relation: cites_source
+  direction: "bijapurkar cites Desai's columns and conversation; NOT Mother Pious Lady, which did not yet exist"
+  independence_for_this_pair: independent_origin
+  basis: >
+    cites_source does not defeat independence; the citation is partial, touching Bijapurkar's
+    cultural-observation material in chapters 8 and 9 and not her structural or quantitative
+    arguments, which rest on survey data Desai has no part in.
+  evidence: >
+    Bijapurkar's Acknowledgements: "Santosh Desai (now managing director of Future Brands, formerly
+    president of McCann Erickson) has added a significant dimension to my understanding of changing
+    consumer values and attitudes and has been quoted quite a bit in this book." The specific
+    attributions are enumerated in the Bijapurkar record's ontology-mappings.yaml under t_rbwl_0060,
+    recorded AS AN ATTRIBUTION RECORD AND NOT AS A CONCEPT, precisely because the party attributed is
+    another CANON-014 candidate.
+  the_date_order_settles_what_the_relation_is: >
+    Bijapurkar 2007, revised 2009. *Mother Pious Lady* is a 2010 collection of Desai's newspaper
+    columns. She is citing the columns and their conversations and CANNOT be citing the book. This is
+    why the relation is cites_source and not derivative_of.
+  what_this_pair_requires: >
+    AGREEMENT BETWEEN THESE TWO ON A CULTURAL OBSERVATION IS NOT TWO INDEPENDENT OBSERVATIONS on the
+    subset of material Desai supplied. It is one observation reported twice. No concept was merged and
+    none may be.
+
+- pair: [jain_gods_in_the_bazaar, parameswaran_nawabs_nudes_noodles]
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    Neither cites the other. Different authors, publishers, disciplines, methods and evidence.
+  the_caution_that_was_recorded_in_advance_and_is_now_live: >
+    THE PARAMESWARAN AUDIT FLAGGED THIS EXACT CASE FORWARD, before any calendar-art source existed in
+    the corpus: his bazaar and calendar art material is SECOND-HAND, reporting Arvind Rajagopal
+    without a specific citation in the passage (his sk_nnn_0043), and his record states that if a
+    primary source on Indian calendar art were ever admitted he must not be counted as independently
+    corroborating it. That source is now jain_gods_in_the_bazaar. Where the two appear to agree about
+    calendar art, one is a first-hand ethnography and the other is a practitioner relaying a scholar.
+    The relation remains no_known_relation - reporting a third party creates no dependence on a source
+    you have not read - but the corroboration value is nil and that is what this row records.
+  what_was_tested_and_rejected:
+    candidate_relation: "corroboration between two accounts of the same decades"
+    why_rejected: >
+      Jain's own chapter 1 argues that the two arenas were institutionally SEPARATE: the vernacular
+      print trade of Sivakasi publishers and mobile agents on one side, and the English-medium
+      corporate advertising agencies on the other, with "little use for calendar artists' skills".
+      Parameswaran writes from inside the second. The pair is COMPLEMENTARY - two accounts of arenas
+      the first source says did not meet - and complementary is not corroborating.
+
+- pair: [bijapurkar_we_are_like_that_only, parameswaran_nawabs_nudes_noodles]
+  relation: cites_source
+  direction: "parameswaran cites Bijapurkar; NOT the reverse"
+  independence_for_this_pair: independent_origin
+  basis: >
+    cites_source is not disqualifying, and the direction runs INTO the older work from the newer one.
+    Bijapurkar cites Parameswaran nowhere and precedes him.
+  evidence: >
+    Parameswaran's endnotes cite *We Are Like That Only* by name (ch. 'The Tingling Freshness of
+    Teens' note 4) and *A Never-Before World* at notes 5 of two further chapters. THIS ROW WAS
+    RECORDED FORWARD IN v1 OF THIS MATRIX and in the Parameswaran audit record, as a relation that
+    would become live the moment a Bijapurkar source was admitted. It is now live.
+  what_this_pair_requires: >
+    Parameswaran's account of INDIAN YOUTH partly rests on Bijapurkar's work. Where the two appear to
+    agree about Indian consumers, and about youth in particular, an auditor must check whether her
+    claims are load-bearing in him before treating the two as converging. The forward warning
+    recorded in v1 was correct and is now operative.
+
+- pair_group: "the three delta-pass sources against each other, on every axis the Gate tests"
+  pairs:
+    - [dwyer_patel_cinema_india, bijapurkar_we_are_like_that_only]
+    - [jain_gods_in_the_bazaar, bijapurkar_we_are_like_that_only]
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    Different authors, publishers, disciplines, decades of subject matter and evidence bases; neither
+    member of either pair cites the other. Shared national subject matter is adjacency, not lineage.
+
+- pair_group: "each of the three delta-pass sources against each of the 19 live accepted sources"
+  relation: no_known_relation
+  independence_for_this_pair: independent_origin
+  basis: >
+    No shared author, work, series, publisher or primary informant exists between any of the three and
+    any live accepted source, checked pairwise against the full live list. No live Canon source
+    concerns Indian cinema, Indian calendar art or Indian consumer markets at all, so there is no
+    overlap to adjudicate.
+  extractor_exposure_note: >
+    SPEC-03, SPEC-04 and SPEC-05 quote Molly Bang, Lupton, Ogilvy and Light: Science & Magic as worked
+    examples. None quotes any of the three, which were not in the corpus when the specs were written.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3C. OBSERVATIONS FROM THE DELTA PASS - NO PROMOTION IS AUTHORISED OR MADE
+# ─────────────────────────────────────────────────────────────────────────────
+
+delta_pass_observations:
+  status: >
+    RECORDED FOR LATER CONTROLLER REVIEW, on the same terms as section 5. None is a
+    cross_source_concept, none is a same_failure_family, and none may be consumed as agreement.
+
+  observations:
+
+    - observation_id: OBS-05
+      topic: "a production convention outliving the constraint that produced it"
+      sources: [jain_gods_in_the_bazaar, dwyer_patel_cinema_india]
+      pair_independence: independent_origin
+      what_each_says: >
+        Jain (sk_jgb_0020) documents one case END TO END: manual colour retouching began because
+        filters and film were inadequate, digital scanning removed that constraint, and the practice
+        migrated into software with a new justification attached. Dwyer & Patel (sk_dpci_0170)
+        document a convention being DISPLACED rather than persisting, when computer composition
+        replaced overpainted montage in the 1990s and the traditional artist was replaced by the
+        computer specialist.
+      why_not_promoted: >
+        THESE ARE OPPOSITE OUTCOMES OF THE SAME TRANSITION TYPE, not two instances of one finding. One
+        practice survived the loss of its justification and one did not. Merging them under a single
+        heading about technology and convention would erase the only interesting thing about the pair,
+        which is that the outcome differs. Recorded so a later reader meets both.
+
+    - observation_id: OBS-06
+      topic: "the front-facing figure that looks out of the frame"
+      sources: [jain_gods_in_the_bazaar, dwyer_patel_cinema_india]
+      pair_independence: independent_origin
+      what_each_says: >
+        Jain (sk_jgb_0010) records a production constraint attested from a named artist, with a
+        devotional reason given and a commercial consequence claimed - "if his eyes are downcast the
+        calendar will not sell". Dwyer (sk_dpci_0010, sk_dpci_0020) reports darshan and frontality as
+        SCHOLARS' CATEGORIES applied to cinema, and explicitly bounds her own agreement with them.
+      why_not_promoted: >
+        THE STRONGEST-LOOKING CONVERGENCE IN THIS BATCH AND THE ONE MOST CLEARLY TO BE REFUSED. The
+        two are not the same kind of claim: one is a rule practitioners say they follow in a print
+        trade, the other is an analytic category two film scholars apply to a medium. The pair also
+        carries a cites_source relation, so even the appearance of independent arrival is weakened.
+        Both records hold the terms source-local, and no cross_source_concept exists.
+
+    - observation_id: OBS-07
+      topic: "a demand signal that measures the purchaser's self-presentation rather than the viewer's preference"
+      sources: [jain_gods_in_the_bazaar, bijapurkar_we_are_like_that_only]
+      pair_independence: independent_origin
+      what_each_says: >
+        Jain (sk_jgb_0060) shows the calendar file indexing what publishers think clients want, which
+        indexes how those clients want to be seen - the purchaser is not the viewer. Bijapurkar
+        (sk_rbwl_0080, sk_rbwl_0130) shows two cases of a measured series attributed to the wrong
+        cause, where what changed was the supply side or the proxy, not the people.
+      why_not_promoted: >
+        Adjacent in spirit and different in mechanism. Jain's is about WHO THE SIGNAL COMES FROM;
+        Bijapurkar's is about WHAT CAUSED THE SIGNAL TO MOVE. A single "misread demand signal" concept
+        would be a keyword merge of two structurally different errors, which is exactly what this
+        matrix exists to prevent. Both bear on evaluation work that is live in this project, which
+        makes premature merging more costly rather than less.
+
+    - observation_id: OBS-08
+      topic: "a source stating the expiry of its own content"
+      sources: [dwyer_patel_cinema_india, bijapurkar_we_are_like_that_only, jain_gods_in_the_bazaar]
+      pair_independence: "independent_origin for each pair, except that Dwyer & Patel cite Jain"
+      what_each_says: >
+        Dwyer & Patel close by dating the filmi style they describe as already past (sk_dpci_0190).
+        Bijapurkar states twice that her data would be outdated on publication and that the durable
+        contribution is the reasoning framework (sk_rbwl_0180). Jain states what her interview
+        evidence can bear (sk_jgb_0180), which is a bound of a different kind - on evidential status
+        rather than on date.
+      why_not_promoted: >
+        This is an observation about the AUDIT, not about the sources' content: three sources in one
+        batch that state their own limits, which is unusual and worth the Controller's attention when
+        weighing them against sources that do not. It is not a claim any two of them share.
+
+# ─────────────────────────────────────────────────────────────────────────────
 # 4. RELATIONS TO SOURCES NOT IN THE CORPUS
-#    Recorded now because they become live the moment a matching source is admitted.
+#    Recorded because they become live the moment a matching source is admitted.
+#
+#    STATUS AFTER THE DELTA PASS: two of the three rows below HAVE become live and are superseded by
+#    the pairs in section 3B - they are kept here, marked, because the fact that they were recorded
+#    forward and then came true is itself the evidence that the forward-recording discipline works.
+#    The third row (Dwyer) stays forward and is now a documented near miss.
 # ─────────────────────────────────────────────────────────────────────────────
 
 forward_relations_to_unadmitted_works:
 
 - from: parameswaran-nawabs-nudes-noodles
   to: "Rama Bijapurkar, *We Are Like That Only* (Penguin India, 2007)"
+  status: "NOW LIVE - superseded by the pair in section 3B. The forward warning was correct."
   relation: cites_source
   independence_effect: >
     NONE by itself. The Audit Gate states cites_source is deliberately not disqualifying: a source
@@ -222,6 +438,12 @@ forward_relations_to_unadmitted_works:
 
 - from: parameswaran-nawabs-nudes-noodles
   to: "Rachel Dwyer, *Picture Abhi Baaki Hai* (Hachette India, 2014)"
+  status: >
+    STILL FORWARD, and now a DOCUMENTED NEAR MISS rather than a hypothetical one. *Cinema India* has
+    been admitted as a candidate and *Picture Abhi Baaki Hai* has not; they are different works
+    twelve years apart. The pair (parameswaran, dwyer_patel_cinema_india) starts and stays at
+    no_known_relation, and this row is why a reader who notices the shared author name must not read
+    it as a citation of the admitted source.
   relation: cites_source
   independence_effect: >
     NONE by itself, and note carefully: this is a DIFFERENT WORK from *Cinema India*, which was named
@@ -232,6 +454,11 @@ forward_relations_to_unadmitted_works:
 
 - from: parameswaran-nawabs-nudes-noodles
   to: "Arvind Rajagopal, on brands borrowing from Indian bazaar and calendar art"
+  status: >
+    NOW LIVE IN EFFECT - a primary source on Indian calendar art has been admitted as a candidate
+    (jain_gods_in_the_bazaar). See the pair in section 3B. The relation between Parameswaran and Jain
+    remains no_known_relation, and the corroboration value is nil, which is precisely what this row
+    predicted.
   relation: cites_source
   independence_effect: >
     NONE by itself, but materially relevant to a future Gods in the Bazaar admission. Parameswaran's
@@ -320,18 +547,48 @@ unadjudicated_observations:
         considering whether to use advertising corpora as social evidence should meet both.
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 6. SOURCES NAMED FOR THIS TASK THAT WERE NOT SUPPLIED
+# 6. THE SIX SOURCES NAMED FOR THIS TASK - FINAL STATUS
 # ─────────────────────────────────────────────────────────────────────────────
 
-not_supplied:
+named_source_status:
   note: >
-    Three of the six books named in the CANON-014 authorisation were not attached to this session and
-    no lineage can be recorded for them, because no lineage claim can be made about a work that was
-    not examined. They are listed so the gap is explicit rather than silent.
+    All six books named in the CANON-014 authorisation have now been located and processed. v1 of this
+    matrix recorded three as "not supplied"; they were not attached to that session but were present
+    on the Controller's machine as PDFs, which is why an EPUB-shaped search did not find them. They
+    were processed in the delta pass and their pairs are in section 3B.
   sources:
-    - "Rachel Dwyer & Divia Patel — Cinema India: The Visual Culture of Hindi Film"
-    - "Kajri Jain — Gods in the Bazaar: The Economies of Indian Calendar Art"
-    - "Rama Bijapurkar — We Are Like That Only: Understanding the Logic of Consumer India"
-  forward_relations_already_recorded: >
-    Two of the three already have inbound relations recorded in section 4 above, from Parameswaran's
-    endnotes. Those rows are live the moment either source is admitted.
+    - work: "Santosh Desai — Mother Pious Lady"
+      knowledge_dir: canon/knowledge/current/desai-mother-pious-lady
+      processed_in: "first pass"
+    - work: "Ambi Parameswaran — Nawabs, Nudes, Noodles"
+      knowledge_dir: canon/knowledge/current/parameswaran-nawabs-nudes-noodles
+      processed_in: "first pass"
+    - work: "Piyush Pandey — Pandeymonium"
+      knowledge_dir: canon/knowledge/current/pandey-pandeymonium
+      processed_in: "first pass"
+    - work: "Rachel Dwyer & Divia Patel — Cinema India: The Visual Culture of Hindi Film"
+      knowledge_dir: canon/knowledge/current/dwyer-patel-cinema-india
+      processed_in: "delta pass"
+    - work: "Kajri Jain — Gods in the Bazaar: The Economies of Indian Calendar Art"
+      knowledge_dir: canon/knowledge/current/jain-gods-in-the-bazaar
+      processed_in: "delta pass"
+    - work: "Rama Bijapurkar — We Are Like That Only: Understanding the Logic of Consumer India"
+      knowledge_dir: canon/knowledge/current/bijapurkar-we-are-like-that-only
+      processed_in: "delta pass"
+  what_the_forward_rows_proved: >
+    Two forward relations recorded in v1 - to Bijapurkar and to an unnamed primary source on calendar
+    art - became live in the delta pass, and both warnings turned out to be correct and material. The
+    third, to Dwyer, correctly stayed forward because the cited work is a different book by the same
+    author. That is three for three, and it is the argument for continuing to record forward relations
+    to works that are not yet in the corpus.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 7. WHAT THIS FILE STILL DOES NOT DO
+# ─────────────────────────────────────────────────────────────────────────────
+
+closing_statement: >
+  NO cross_source_concept EXISTS ANYWHERE IN CANON-014. No same_failure_family was created. No two
+  sources were merged on the ground that they sound similar, and the four cases in this file that
+  looked most like convergence - OBS-03, OBS-05, OBS-06 and OBS-07 - are all recorded as refusals
+  with the reason stated. Independence is recorded pairwise throughout and no global count of
+  independent origins appears in this file, because no such number exists.

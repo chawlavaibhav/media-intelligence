@@ -1,67 +1,98 @@
 {
- "manifest_version": "canon-014-v1",
+ "manifest_version": "canon-014-v2",
  "status": "EXPERIMENTAL COMPANION ASSET. Not Source Knowledge. Not admission evidence. No Audit Gate record covers it.",
+ "revision_note": "v2 adds the three sources processed in the CANON-014 delta pass (Cinema India, Gods in the Bazaar, We Are Like That Only). All totals below are recomputed mechanically from the six bank files as they stand; none is carried forward from v1.",
  "calibration": {
   "state": "GROUNDED, UNGRADED, UNCALIBRATED",
   "what_that_means": "Every item traces to one source and carries a real locator and a support quotation. No human and no model has answered any item. No difficulty label has been checked against any observed answer. `difficulty` is an authored judgement, not an empirical property, and must never be reported as one.",
-  "not_a_benchmark": true
+  "not_a_benchmark": true,
+  "never_call_it_ground_truth": "These banks are research Q&A. They are not benchmark ground truth and must not be described, cited or used as such."
  },
  "application_question_policy": {
-  "floor": "NONE. The CANON-013 one-third floor is removed and was not applied to these banks.",
+  "floor": "NONE. The CANON-013 one-third floor is removed and was not applied to any of these banks.",
   "criterion": "requires_application is true only where the question puts a case NOT in the source on the table and asks what follows. Restating, reconciling, comparing or critically evaluating the source's own positions is a knowledge question however hard it is.",
   "observed_rates_are_not_targets": true,
-  "note_on_the_spread": "The three natural rates are 46.2%, 23.8% and 35.3%. Desai's 23.8% would have FAILED the old one-third floor. That is the expected and correct result for a collection of interpretive essays: the source genuinely supports fewer questions that apply a principle to a new case, and under the old rule the bank would have had to be padded to pass. It is direct evidence that the floor was a construction target rather than a property of sources."
+  "note_on_the_spread": "The six natural rates span 14.3% to 46.2%. Three of the six — Desai 23.8%, Jain 14.3% and Bijapurkar 14.3% — would have FAILED the old one-third floor, and Dwyer & Patel at 17.4% would have failed it too. That is the expected and correct result. Rates track what a source is: Parameswaran's practitioner reflections on campaigns he ran support many transfer questions (46.2%); Jain's ethnography of a print trade and Dwyer & Patel's art history support few, because most of what those books establish is what was the case, not a principle to carry to a new case; Bijapurkar's rate is low for a different reason again — her material is almost all reasoning discipline, and asking a reader to restate a named error correctly is a knowledge question. Under the old rule four of six banks would have had to be padded with weak transfer questions to pass. This is direct evidence that the floor was a construction target rather than a property of sources."
  },
  "totals": {
-  "sources": 3,
-  "qa_items": 64,
-  "requires_application": 23,
-  "requires_application_pct": 35.9
+  "sources": 6,
+  "qa_items": 129,
+  "requires_application": 33,
+  "requires_application_pct": 25.6
  },
  "by_source": [
   {
    "source_id": "parameswaran_nawabs_nudes_noodles",
+   "file": "nawabs-qa-bank.yaml",
    "qa_items": 26,
    "requires_application": 12,
    "pct": 46.2
   },
   {
+   "source_id": "dwyer_patel_cinema_india",
+   "file": "cinema-india-qa-bank.yaml",
+   "qa_items": 23,
+   "requires_application": 4,
+   "pct": 17.4
+  },
+  {
    "source_id": "desai_mother_pious_lady",
+   "file": "desai-qa-bank.yaml",
    "qa_items": 21,
    "requires_application": 5,
    "pct": 23.8
   },
   {
+   "source_id": "jain_gods_in_the_bazaar",
+   "file": "gods-in-the-bazaar-qa-bank.yaml",
+   "qa_items": 21,
+   "requires_application": 3,
+   "pct": 14.3
+  },
+  {
+   "source_id": "bijapurkar_we_are_like_that_only",
+   "file": "we-are-like-that-only-qa-bank.yaml",
+   "qa_items": 21,
+   "requires_application": 3,
+   "pct": 14.3
+  },
+  {
    "source_id": "pandey_pandeymonium",
+   "file": "pandey-qa-bank.yaml",
    "qa_items": 17,
    "requires_application": 6,
    "pct": 35.3
   }
  ],
  "counts_by_answer_type": {
-  "source_position": 18,
-  "application": 16,
-  "mechanism": 13,
-  "failure_diagnosis": 9,
-  "concept_understanding": 7,
-  "factual_recall": 1
+  "source_position": 38,
+  "mechanism": 27,
+  "application": 26,
+  "concept_understanding": 17,
+  "failure_diagnosis": 17,
+  "factual_recall": 4
  },
  "counts_by_difficulty": {
-  "hard": 27,
-  "medium": 34,
-  "easy": 3
+  "hard": 63,
+  "medium": 62,
+  "easy": 4
  },
  "counts_by_knowledge_type": {
-  "advertising": 42,
-  "production": 1,
-  "cultural": 21
+  "advertising": 78,
+  "cultural": 42,
+  "production": 9
  },
  "checks_run": {
   "every_item_resolves_to_an_accepted_source_directory": true,
   "every_item_has_a_non_empty_locator": true,
   "every_item_has_a_support_quotation": true,
+  "every_item_source_id_matches_its_bank": true,
   "no_duplicate_qa_id": true,
   "no_answer_under_35_words": true,
   "errors": []
+ },
+ "note_on_locators": {
+  "authored_pages": "Cinema India and Gods in the Bazaar have real printed folios, established mechanically against each book's own contents page and running heads, so items in those two banks cite printed pages.",
+  "no_authored_pages": "We Are Like That Only, Mother Pious Lady, Pandeymonium and Nawabs, Nudes, Noodles have no authored page in the copies used. Items in those banks cite chapter and section headings, and no page number was interpolated."
  }
 }

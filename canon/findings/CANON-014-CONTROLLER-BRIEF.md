@@ -4,6 +4,21 @@
 project knowledge. Paths under `canon/knowledge/current/**` created by this task become live **only
 if you merge the branch**.
 
+> ## Delta pass — read this first
+>
+> **The three books this brief previously recorded as "never supplied" were found on your machine as
+> PDFs, and have been fully processed.** They were missed because the first pass searched for EPUBs.
+> A second correction matters as much: the delta brief that authorised this pass named Desai,
+> Parameswaran and Pandey as the missed three. **They were not missed** — they were already complete
+> on this branch, which was verified by matching their SHA-256 hashes against the values recorded in
+> their committed `PROVENANCE.md` files. The genuinely missed three were *Cinema India*, *Gods in the
+> Bazaar* and *We Are Like That Only*, and you confirmed that correction before the work proceeded.
+>
+> **What changed:** READY 3 → **6**. HOLD 20 → **17**. Total candidates unchanged at **23**.
+> Everything below is updated in place; sections carrying delta-pass findings are marked **[delta]**.
+> Counts everywhere were recomputed mechanically from the final files. **Nothing here is merged, and
+> nothing is marked ready for merge.**
+
 This brief separates **OBSERVED** (what is mechanically checkable in the repository or was read
 directly from a supplied file), **INFERRED** (my reading, which could be wrong), and **RECOMMENDED**
 (proposals, which are not decisions). Nothing in RECOMMENDED has been acted on.
@@ -12,17 +27,40 @@ directly from a supplied file), **INFERRED** (my reading, which could be wrong),
 
 # OBSERVED
 
-## O-1. Three of the six named books were supplied. Three were not.
+## O-1. [delta] All six named books have now been processed
 
-Attached to this session: **Parameswaran** (*Nawabs, Nudes, Noodles*), **Desai** (*Mother Pious
-Lady*), **Pandey** (*Pandeymonium*). Not attached: **Dwyer & Patel** (*Cinema India*), **Kajri Jain**
-(*Gods in the Bazaar*), **Bijapurkar** (*We Are Like That Only*).
+**First pass — supplied and processed:** Parameswaran (*Nawabs, Nudes, Noodles*), Desai (*Mother
+Pious Lady*), Pandey (*Pandeymonium*).
 
-The duplicate-upload point in your authorisation did not arise: Mother Pious Lady was supplied once.
+**Delta pass — found locally and processed:** Dwyer & Patel (*Cinema India*), Kajri Jain (*Gods in
+the Bazaar*), Bijapurkar (*We Are Like That Only*). All three were present in `~/Downloads/` as
+**PDFs**, which is why the first pass — searching for `*.epub` — did not find them.
 
-**This environment has no external network egress.** Verified rather than assumed — a direct HTTPS
-request and the harness fetch tool were both refused by the egress proxy for every external host
-tried, including `w3.org` and `gutenberg.org`. Nothing could be fetched to replace a missing book.
+| Book | SHA-256 | Bytes | Pages | Image objects |
+|---|---|---|---|---|
+| *Cinema India* | `d841c2ba964d4c00…36d1583` | 20,007,457 | 244 | 732 |
+| *Gods in the Bazaar* | `f019cfe3b7810591…0d34f0883` | 13,108,574 | 449 | 179 |
+| *We Are Like That Only* | `8c480391db2f37a9…4a53ca7` | 3,847,876 | 279 | 46 |
+
+**No raw book bytes and no page images are committed anywhere in this repository.** Only derived
+Canon artifacts. Confirmed mechanically before commit: no `.pdf`, `.epub`, `.mobi` or `.azw3` is
+staged or tracked on this branch.
+
+**The premise of the delta authorisation was wrong and I checked rather than assumed.** It named
+Desai, Parameswaran and Pandey as the three missed books. All three were already complete on this
+branch, verified by matching the local files' SHA-256 hashes against the values in their committed
+`PROVENANCE.md` — Desai `b0a2fb33…` (532,237 B), Parameswaran `a5be652e…` (1,213,464 B), Pandey
+`866597a9…` (1,046,663 B), all exact. Had I taken the brief at face value I would have re-processed
+three finished sources and left the three real gaps open.
+
+**Access handling.** Per your explicit instruction, acquisition provenance was not adjudicated. All
+three filenames carry a `libgen.li` marker; that is recorded as a fact about each artefact in its
+`PROVENANCE.md`, was not treated as a reason to exclude the source, and no replacement copy was
+sought. Nothing was acquired, purchased, downloaded or redistributed by this worker. Licence status
+is recorded as not independently verified.
+
+**The duplicate-upload point in your original authorisation did not arise:** Mother Pious Lady was
+supplied once, in one copy.
 
 ## O-2. The seventeen CANON-013 candidates cannot be opened here, and that is decisive
 
@@ -69,16 +107,37 @@ Neither was previously recorded anywhere. Both are mechanically reproducible.
   appears in the Audit Gate's own consumer vocabulary. Accepted live Canon governs, so `benchmark` is
   admitted in the new validator and the spec gap is routed to you.
 
-## O-5. Counts, recomputed mechanically from final files
+## O-5. [delta] Counts, recomputed mechanically from final files
 
-**The 777 ontology figure in the previous chat report is wrong. The correct figure is 823**, and it
-was already correct in that package's own README — the error was in the report, not the artifacts.
+**Recomputed from the files as they stand at this branch head. No number below is carried forward
+from any earlier report.** The 777 ontology figure in the original chat report was wrong; the
+correct figure for that package is 823, and it was already correct in the package's own README.
 
-CANON-013 package: **822** SourceKnowledge · **70** systems · **184** bindings · **823** ontology
-terms · **899** Q&A.
+**CANON-013 repaired package** (17 HOLD candidates, counted by its own validator):
+**822** SourceKnowledge · **70** systems · **184** bindings · **823** ontology terms · **899** Q&A
+items, **42.8%** application (observed, not required).
 
-CANON-014 accepted-shape additions: **59** SourceKnowledge · **8** systems · **16** bindings ·
-**52** ontology terms (plus 25 relationships, 8 concepts) across the three READY sources.
+**The six READY sources** (per-source, mechanically counted):
+
+| Source | SK | Systems | Bindings | Ontology terms |
+|---|---|---|---|---|
+| `parameswaran-nawabs-nudes-noodles` | 32 | 4 | 9 | 22 |
+| `dwyer-patel-cinema-india` | 19 | 3 | 5 | 25 |
+| `jain-gods-in-the-bazaar` | 18 | 3 | 6 | 30 |
+| `bijapurkar-we-are-like-that-only` | 18 | 3 | 5 | 31 |
+| `desai-mother-pious-lady` | 17 | 2 | 4 | 18 |
+| `pandey-pandeymonium` | 10 | 2 | 3 | 12 |
+| **Total** | **114** | **17** | **32** | **138** |
+
+The three delta-pass sources alone contribute **55** SourceKnowledge · **9** systems · **16**
+bindings · **86** ontology terms.
+
+**Binding distribution across the six:** governance **16**, evaluation **7**, creative_ir **3**,
+production_candidate **5**, benchmark **1**. Every `production` binding carries
+`status: production_candidate` and `target_path: null` (PROJECT-CONTRACT separation 2). The one
+`benchmark` binding **adopts no threshold and creates no scorable code**.
+
+**Q&A across the six banks:** **129** items, **33** requiring application, **25.6%** natural rate.
 
 ## O-6. The Q&A floor was distorting the labels, and the distortion is measurable
 
@@ -100,29 +159,49 @@ true→false. Natural rate **42.8%**, not 38.7%. Both labels retained.
 | banks below the old floor | **0** | **2** |
 
 Clustering just above a threshold, with nothing ever falling below, is what a construction target
-does to a distribution. The three **new** banks, written with no floor at all, come out at 46.2%,
-23.8% and 35.3% — and Desai's 23.8% would have failed the old rule, which is the correct outcome for
-a collection of interpretive essays.
+does to a distribution. The **six** new banks, written with no floor at all, come out at 46.2%, 35.3%, 23.8%, 17.4%, 14.3%
+and 14.3% — total **129 items, 33 application, 25.6%**. **[delta] Four of the six would have failed
+the old one-third floor**, and that is the correct outcome rather than a shortfall. The rate tracks
+what a source is: Parameswaran's practitioner reflections on campaigns he ran support many transfer
+questions; Jain's ethnography of a print trade and Dwyer & Patel's art history support few, because
+most of what those books establish is what WAS the case, not a principle to carry to a new case; and
+Bijapurkar's is low for a third reason — her material is almost all reasoning discipline, so asking a
+reader to restate a named error correctly is a knowledge question, not an application one. Under the
+old rule four of six banks would have had to be padded with weak transfer questions to pass. **The
+banks are labelled "grounded, ungraded, uncalibrated research Q&A" and are not benchmark ground
+truth.**
 
-## O-7. Three sources are READY; twenty are HOLD
+## O-7. [delta] Six sources are READY; seventeen are HOLD
 
-**READY — the three supplied books**, each in live shape with all five snapshot files plus
+**READY — all six named books**, each in live shape with all five snapshot files plus
 `PROVENANCE.md`, and an Audit Gate v0.2 record written against those exact bytes,
 `source_reopened: false`:
 
 | Source | SK | Sys | Bnd | Terms | Visual pass | `claim_resolution` |
 |---|---|---|---|---|---|---|
 | `parameswaran-nawabs-nudes-noodles` | 32 | 4 | 9 | 22 | **19/19 plates inspected** | `some_underdetermined` |
+| `dwyer-patel-cinema-india` | 19 | 3 | 5 | 25 | 11 of ~121 plates; 7 claims checked | `some_underdetermined` |
+| `jain-gods-in-the-bazaar` | 18 | 3 | 6 | 30 | 7 of ~156 figures; 7 claims checked | `some_underdetermined` |
+| `bijapurkar-we-are-like-that-only` | 18 | 3 | 5 | 31 | **30/30 data figures**; 7 claims checked | `all_resolved` |
 | `desai-mother-pious-lady` | 17 | 2 | 4 | 18 | completed, null result | `not_applicable` |
 | `pandey-pandeymonium` | 10 | 2 | 3 | 12 | completed, evidence never printed | `not_applicable` |
 
-**HOLD — 20:** the 17 CANON-013 candidates (blocker at O-2, plus the five specific representation
-defects your authorisation named, none of which is resolved) and the 3 books never supplied.
+**HOLD — 17:** the CANON-013 candidates (blocker at O-2, plus the five specific representation
+defects your original authorisation named, none of which is resolved). **No source is on HOLD for
+lack of supply any more.** No HOLD source appears anywhere under `canon/knowledge/current/**`.
 
-**Mechanical status:** Audit Gate validator **22 records, 0 errors**. Schema validator **22
-directories, 3 errors — all of them F-01**, in a source CANON-014 is not authorised to edit.
+**Mechanical status at this branch head:** Audit Gate validator **25 records, 0 errors**. Schema
+validator **25 directories, 3 errors — all of them F-01**, in a source CANON-014 is not authorised to
+edit. **All six READY sources: zero errors.**
 
-## O-8. The visual pass ran on all three supplied books and changed the extractions
+**Page addressability differs across the six and was established mechanically, never assumed.**
+*Cinema India* and *Gods in the Bazaar* have real printed folios — offsets of pdf − 2 and pdf − 13,
+each verified at multiple independent points against the book's own contents page and running heads.
+*We Are Like That Only* is a calibre conversion with **no authored page at all**, so `page_start` and
+`page_end` are `null` throughout and every locator is a chapter and section heading. **No page number
+was interpolated anywhere in this task.**
+
+## O-8. The visual pass ran on all six books and changed the extractions
 
 **Nawabs** — all 19 plates in the insert extracted and opened individually. Both directions matter:
 
@@ -147,6 +226,44 @@ copyright page states: *"All images and television commercials mentioned in this
 for viewing on www.pandeymonium.in"*. That is `source_evidence_never_printed` in its defining form: a
 2015 print reader was in exactly our position, so the gap is not ours to fix. The named route was
 unreachable here and no claim rests on it.
+
+**[delta] Cinema India** — 11 plates of about 121 opened. **Seven of Patel's own visual claims were
+checked against the plates she describes and all seven hold**, which is a real and slightly unusual
+result: where an object rests on a described plate, the description can be relied on for those seven
+and is unverified for the rest. The checks included the *Deewaar* split-coloured face, the knife-laid
+overpainting impasto over a photographic underlay, and a *Pakeezah* caption verified verbatim. The
+pass was **bounded by cost, not blocked** — the copy is complete, the page mapping is established and
+reproducible, and any plate can be rendered on demand. That distinction is recorded explicitly, and
+deliberately NOT as a loss pattern, because nothing is missing from the copy.
+
+**[delta] Gods in the Bazaar** — 7 figures of about 156, and the most productive pass of the three
+because Jain's constraints are claims about *what an artefact looks like* and are therefore settleable
+by looking. Seven checked, seven hold. Fig. 88 is the valuable one: it photographs a printed Hanuman
+beside the original painting it was made from, so the effect of the retouching stage is observed
+directly rather than taken from the caption — the print is visibly more saturated and higher in
+contrast. Fig. 92 shows the front-looking imperative in a single naturalistically implausible pose: a
+woman watching television with her face turned frontally out of frame, watching the screen from the
+corner of her eye. Fig. 93 shows Ram and Lakshman drawing bows in battle with half-lidded eyes and
+unmuscled bodies.
+
+**[delta] We Are Like That Only — this is the finding of the delta pass.** The calibre conversion
+preserved the prose as text and **every table and figure as a raster image**, so their content is
+absent from the extracted text stream entirely, while the running prose names them and reasons from
+them without restating them: *"Table 5.1 gives a stratification scheme…"*, *"as can be seen in Table
+9.2"*. **A text-only extraction of this book would have met every assertion, never met the evidence,
+and shown no sign of the loss.** All 46 image objects were enumerated and all 30 data figures opened.
+**At least nine tables carry content found nowhere in the text**, including the full urban and rural
+SEC classification grids, the eight-layer consumption-intensity scheme, the GDP distribution that is
+the source of the text's US$367 billion bottom-of-pyramid figure, and the youth-segment profile that
+substantiates the book's own sampling argument. Four objects rest partly on tables that could not
+have been read from the text. Six quantitative claims were checked against their tables and all six
+hold — one, the rural shampoo penetration, only after separating the confirmed measurement (13.3% in
+2000 to 68.7% in 2008) from the causal attribution to packaging innovation, which is the author's own
+footnote to her own table and is not evidence. A seventh, Figure 4.2, was opened and found to carry
+**no data at all**: it is a schematic that illustrates its argument and is not evidence for it.
+
+**Across the three delta sources: 21 authorial visual claims checked — 19 confirmed, 1 partially
+confirmed, 1 confirmed as schematic only.**
 
 ## O-9. Two representation defects in the supplied copies, both found mechanically
 
@@ -174,8 +291,85 @@ to re-run the check. It also corrects the supplied filename, which says 2016; th
 
 ## O-11. No cross-source promotion exists anywhere
 
-Verified repository-wide: **zero** concepts with `kind: cross_source_concept` and **zero** with
-`asserts_agreement_between_sources: true`. Four apparent agreements are recorded as observations only.
+Verified repository-wide **after the delta pass**: **zero** concepts with `kind:
+cross_source_concept` and **zero** with `asserts_agreement_between_sources: true`. No
+`same_failure_family` was created. **Eight** apparent agreements are now recorded as observations
+only — the original four plus four from the delta pass — each with the reason it was refused.
+
+## O-12. [delta] Three real lineage relations were found, and none defeats independence
+
+Independence is pairwise throughout; there is no global count in the matrix and none can be derived
+from it.
+
+1. **Dwyer & Patel cite Kajri Jain** — ch. 2 note 9, *"Kajri Jain, 'Gods in the Bazaar', South Asia,
+   XXI/1 (1998)"*, the journal article her book grew out of five years later. **Directional and
+   inbound to the earlier work**; Jain's book cites Dwyer & Patel nowhere. `cites_source`, verdict
+   `independent_origin`. **What it required, and what was done:** both books use *frontality* and
+   *iconicity* and do not mean the same thing by them — Dwyer reports Geeta Kapur's formal
+   art-historical categories applied to cinema, Jain treats frontality as a functional requirement of
+   ritual use with a stated devotional mechanism. Both terms are held **source-local with each
+   author's own gloss**. No concept was merged.
+2. **Bijapurkar cites Santosh Desai** — repeatedly, and thanks him in her Acknowledgements: he *"has
+   been quoted quite a bit in this book"*. Desai is another CANON-014 candidate. **The date order
+   settles what the relation is**: Bijapurkar is 2007/2009 and *Mother Pious Lady* is a 2010
+   collection of columns, so she cites his columns and conversations and cannot be citing the book.
+   `cites_source`, verdict `independent_origin`. The specific attributions are enumerated in her
+   `ontology-mappings.yaml` under `t_rbwl_0060` **as an attribution record and not as a concept**,
+   precisely because the party attributed is another candidate. **Practical consequence: agreement
+   between these two on a cultural observation is not two independent observations.**
+3. **Parameswaran cites Bijapurkar** — *We Are Like That Only* by name in his endnotes. **This row
+   was recorded FORWARD in v1 of the lineage matrix**, as a relation that would become live the
+   moment a Bijapurkar source was admitted, with the specific warning that his account of Indian
+   youth partly rests on her work. It is now live and the warning was correct.
+
+Two further predictions from v1 also resolved: the forward row warning that Parameswaran's bazaar-art
+material is **second-hand** (reporting Arvind Rajagopal) became operative the moment *Gods in the
+Bazaar* was admitted — where the two appear to agree about calendar art, one is a first-hand
+ethnography and the other a practitioner relaying a scholar, so the corroboration value is nil. And
+the forward row for Dwyer correctly **stayed** forward: Parameswaran cites *Picture Abhi Baaki Hai*,
+a different work by one of *Cinema India*'s two authors, twelve years later, so that pair starts and
+stays at `no_known_relation`. **Three forward rows, three correct outcomes.**
+
+## O-13. [delta] A validator defect was found and fixed at the root
+
+`validate_experimental.py` reported `[BOUNDARY] check 6: live Canon knowledge … was modified —
+forbidden` for every file in the three new source directories. **The finding was false and the
+validator was wrong**, in three separate ways:
+
+- It used `git diff --name-only`, which reports *that* a path changed and not *how*. Checks 6 and 7
+  exist to stop an accepted source being **modified**; this task's authorised job is to **add** new
+  candidate directories under exactly those prefixes, which its own allowlist two lines below
+  permits. Verified mechanically: `git diff --name-status origin/main...HEAD --
+  canon/knowledge/current/ canon/audit/records/ | grep -v "^A"` returns **nothing**. Every path is an
+  addition; **zero modifications**.
+- The whole block was wrapped so any failure became a **warning**. A boundary check that cannot run
+  has verified nothing — that is how a run without `origin/main` fetched can report PASS while
+  checking nothing.
+- `canon/experimental/canon-014-qa/`, where this task's own Q&A banks live, was missing from the
+  allowlist.
+
+**The fix strengthens the check.** Additions and modifications are now distinguished; a modification
+or deletion under the two candidate prefixes is still an error; the prefixes where nothing may be
+written at all (`coordination/`, `PROJECT-MEMORY.md`, the frozen SPECs, `governance/`, the Capability
+Registry) now error on **additions too**, which the old code would have missed; and inability to run
+the check is now an error. The validator passes on this branch with no false positives.
+
+## O-14. [delta] No book bytes were committed — and a pre-existing condition you should see
+
+**CANON-014 adds no binary file of any kind.** Verified mechanically over both the committed diff and
+the pending working tree: no `.pdf`, `.epub`, `.mobi`, `.azw3`, or image file is added by this
+branch. Only derived Canon artifacts are committed, per your instruction. All three book PDFs stayed
+in `~/Downloads/` and are recorded only by SHA-256, byte count and bibliographic detail.
+
+**Reported because I found it while checking that, and it is not mine to fix:** `canon/sources/` on
+`main` already contains **21 page-image JPGs** (`canon/sources/figures/p43-43.jpg` and siblings) and
+**six extracted book text files** — Molly Bang, Lupton, Ogilvy ch. 2, Williams, Grammar of the Shot
+ch. 4 and Light: Science & Magic ch. 3. They were committed by `2cf4988` ("Set up three-workstream
+operating structure"), long before this task, and this branch does not touch them.
+
+I am not adjudicating it and I have not changed anything. I am flagging it because it is the same
+class of artifact this task was explicitly instructed not to commit, it concerns in-copyright works,
+and the instruction I was given suggests it may not be intentional. Your call entirely.
 
 ---
 
@@ -264,17 +458,101 @@ meaning changed with use. Recorded as OBS-03, refused, with the caveat on both o
   that were never run. He counts the other branch exactly once, noting he would have been "history"
   had the Tata Cement pitch been lost.
 
-## I-8. The gap your authorisation aimed at is partly closed, and the visually demanding half is not
+## I-8. [delta] The gap your authorisation aimed at is now closed on five of six fronts
 
 You chose these six books to attack the Indian cultural and Indian visual gap, and made the visual
 pass mandatory because *Gods in the Bazaar* and *Cinema India* are the visually demanding ones.
-**Those two are exactly the ones not supplied.**
+**Those two were exactly the ones missing after the first pass. They are now in, and both had their
+visual passes run first-hand.**
 
-Gained: Indian advertising history, Indian everyday material culture, Indian creative practice, and
-19 reproduced Indian advertisements inspected first-hand. Not gained: anything on Hindi-film visual
-culture or Indian calendar/bazaar art. The only calendar-art material in the whole corpus is
-Parameswaran's **second-hand** paragraph reporting Arvind Rajagopal, explicitly marked as no
-substitute for a primary source. **Devanagari and Indic typography remains completely unclosed.**
+**Gained:** Indian advertising history; Indian everyday material culture; Indian creative practice;
+Hindi-film poster and publicity convention for a dated period; first-hand ethnography of the Indian
+calendar-print trade, 1994-2001, with named informants; and a set of named reasoning errors about the
+Indian consumer market, deliberately stripped of every number. Across the six, **48 reproduced Indian
+images inspected first-hand** (19 advertising plates, 11 film-publicity plates, 7 calendar-art
+figures, 30 data figures — of which 30 and 19 are complete passes) and **21 authorial visual claims
+checked**.
+
+**The calendar-art position has changed materially.** Before the delta pass the only calendar-art
+material anywhere in the corpus was Parameswaran's second-hand paragraph reporting Rajagopal. There
+is now a primary source, and the lineage matrix records that Parameswaran must **not** count as
+independently corroborating it.
+
+**Still unclosed: Devanagari and Indic typography.** Nothing in these six sources addresses it. The
+one Devanagari observation in the whole corpus remains the Coca-Cola "Thanda matlab" plate in
+Parameswaran, which shows a script decision and analyses none. The position is unchanged from
+CANON-013 and I would record it as deliberately open.
+
+**A second bound worth stating plainly.** *Cinema India* dates its own subject as ending in the 1990s,
+in its own Conclusion. *We Are Like That Only* states twice that its data expires. Jain's material
+runs to roughly 2006. **What the corpus has gained is historical Indian visual and market culture,
+carefully bounded — not a current picture of India.** Treating any of it as current would contradict
+all three sources.
+## I-9. [delta] What the three new sources materially add, and where they are weakest
+
+**Cinema India** adds a documented account of how a poster carries a plot without text — a
+compression code the *viewer* holds, built from character types the casting convention taught them —
+and a distinct design problem this project has no name for: **re-release publicity targets what the
+audience RETAINS, not what the film was originally sold on**, which is why *Aan*'s redesign acquired a
+sword fight that was not on the original poster. **Weakest:** everything in it is dated by its own
+authors, the evidence base is a survival sample of what happened to be collectable, and nothing in it
+is measured — no attendance, sales or recognition figure appears anywhere.
+
+**Gods in the Bazaar** adds the most operationally useful material in the batch and is therefore the
+one most at risk of being turned into a rule set. Four things: a **fully documented case of a
+production convention outliving its cause** (manual colour retouching, begun because filters and film
+were inadequate, migrating into software after digital scanning made it unnecessary); a structural
+account of **why a purchase signal is not a preference signal when the purchaser is not the viewer**;
+a distinction between an **enabling condition and a grading criterion** that this project's
+evaluation work lacks a name for; and two idiom constraints, confirmed against the plates, that a
+generator working from naturalist priors would violate by default. **Weakest:** the reasons given for
+the constraints are practitioner testimony, the author states herself what that testimony can bear,
+and no audience-level claim in the book is measured. There is no sample size anywhere in it.
+
+**We Are Like That Only** adds a set of **named reasoning errors with worked cases**: reading a
+supply-side change as a consumer character trait; planning on a segment label with no stated
+definition or population base; extrapolating a stock release as though it were a flow; and treating a
+threshold derived by holding prices fixed as a fact about buyers rather than about supply.
+**Weakest, and it must be said plainly:** two of its most quoted arguments rest on nothing. The
+no-frills failure argument **names no failed product at all** — not one firm, product, date or
+figure. The change-confluence framework is illustrated by undated, unattributed consulting cases with
+no outcomes. The mechanisms are clear and useful; the outcome claims are not evidenced, and every
+binding drawn from the source binds the reasoning and never the outcome.
+
+## I-10. [delta] The agreements I most expected to be asked to promote, and refused
+
+Four, recorded as observations in the lineage matrix with the reason on each:
+
+- **OBS-05** — Jain documents a convention **surviving** the loss of its justification; Dwyer & Patel
+  document one being **displaced**. These are opposite outcomes of the same transition type, and
+  merging them would erase the only interesting thing about the pair.
+- **OBS-06** — the front-facing figure. **The strongest-looking convergence in the batch and the one
+  most clearly to be refused.** Jain records a production rule practitioners say they follow in a
+  print trade; Dwyer reports an analytic category two film scholars apply to a medium, and bounds her
+  own agreement with it. The pair also carries a `cites_source` relation, so even the appearance of
+  independent arrival is weakened.
+- **OBS-07** — a misread demand signal. Jain's case is about **who the signal comes from**;
+  Bijapurkar's is about **what caused it to move**. A single concept would be a keyword merge of two
+  structurally different errors. Both bear on evaluation work that is live here, which makes
+  premature merging more costly, not less.
+- **OBS-08** — three sources in one batch that state their own limits. That is an observation about
+  the audit, worth your attention when weighing these against sources that do not, and it is not a
+  claim any two of them share.
+
+## I-11. [delta] What these books qualify in existing Canon
+
+Nothing in accepted live Canon is contradicted by the three new sources. Two qualifications are worth
+recording:
+
+- **Parameswaran's calendar-art paragraph is now superseded rather than merely flagged.** His own
+  audit record predicted this. Where his second-hand report and Jain's first-hand ethnography agree,
+  that is one observation, not two.
+- **Bijapurkar's cultural-observation material in her chapters 8 and 9 partly derives from Desai.**
+  Both are CANON-014 candidates. On that subset, agreement between them is one voice reported twice.
+
+Neither is a contradiction and neither requires a Controller decision now. Both would matter the
+moment anyone tried to build a cross-source concept from Indian cultural material, which is why they
+are recorded pairwise before anyone tries.
 
 ---
 
@@ -290,10 +568,15 @@ The branch is one PR but contains three things you could accept independently:
    It closes a hole that let a defective package report PASS, and it immediately found two defects in
    accepted Canon that nothing else had.
 2. **The CANON-013 repair** — mechanical, reversible, and leaves all 17 still HOLD.
-3. **The three new accepted sources** — the only part that changes what live Canon contains.
+3. **The six new accepted sources** — the only part that changes what live Canon contains. **[delta]**
+   These are now six rather than three, and they split further if you want them to: the three from
+   the first pass are practitioner and interpretive material, and the three from the delta pass are
+   two academic studies and one market-analysis book. Nothing couples them.
 
 If you want to accept (1) and (2) and defer (3), that is coherent and nothing in the branch prevents
-it.
+it. **[delta] The validator fix at O-13 is now part of (1)** and is the piece I would take first: it
+found and corrected a check that was reporting a false boundary violation while a second defect in
+the same block could have let a real one pass silently.
 
 ## R-2. Decide F-01 (Sutherland) explicitly rather than letting it sit
 
@@ -307,11 +590,22 @@ until it is dealt with, which is deliberate.
 A spec whose validation rule cites a "fixed list" it never states is a trap for the next person who
 writes a binding. Adding `benchmark` to an explicit list is a small edit and is yours to make.
 
-## R-4. Supply the three missing books, or formally drop them
+## R-4. [delta] Resolved — and one thing to decide in its place
 
-The two most valuable for the stated gap — *Gods in the Bazaar* and *Cinema India* — are the two
-missing. Either they get attached to a future session, or the Indian visual-culture gap should be
-recorded as deliberately still open rather than as pending. I would not leave it ambiguous.
+**This recommendation is closed.** All three books were found locally and processed; the Indian
+visual-culture gap is closed on the two fronts this recommendation named.
+
+**What replaces it is a decision about completeness of inspection.** The visual passes for *Cinema
+India* (11 of ~121 plates) and *Gods in the Bazaar* (7 of ~156 figures) are **bounded by cost, not
+blocked**: both copies are intact, both page mappings are established and reproducible, and any plate
+or figure can be rendered on demand. The ledgers say so explicitly, and the bound is recorded as a
+coverage statement rather than as a loss pattern, because nothing is missing from either copy.
+
+I would not treat this as urgent. No object in either record rests on an uninspected plate, and every
+object resting on an inspected one names it. But it is a real difference from *We Are Like That
+Only*, whose pass is complete — and the Bijapurkar case is the argument for finishing the other two,
+because its complete pass is precisely what surfaced nine tables whose content exists nowhere in the
+text. **A bounded pass cannot tell you what it did not look at.**
 
 ## R-5. Do not resolve OBS-02 by picking a side
 
@@ -340,6 +634,15 @@ There is a second, smaller vocabulary gap: **no loss pattern covers third-party 
 authorial paragraph** (O-9). I used `text_layer_order_damage`, which is the closest fit and is not
 quite right — nothing was reordered, something was inserted.
 
+## R-8. [delta] Decide whether "no authored page" needs a stronger convention than a null
+
+*We Are Like That Only* is the fourth source in this corpus with no authored page in the copy used,
+and the handling is by now consistent — `page_start` and `page_end` null, locators by chapter and
+section heading. It works because that book's headings are numbered, distinctive and non-repeating.
+**It would not work for a book with repeated or generic section headings**, and nothing in the specs
+says what to do then. That is a Controller decision of the same kind as the other vocabulary gaps in
+R-7, and I have not made it.
+
 ---
 
 # The one residual mechanical limitation
@@ -349,8 +652,10 @@ validator, all four test suites, all snapshot digests, every count, and the dupl
 scans. Snapshot digests were computed with the repository's **own** `compute_source_snapshot`
 function, so the validator recomputes exactly what was written.
 
-**The one thing that could not be done is re-opening any source that was not attached to this
-session,** because there is no local library and no network egress. That single limitation is the
+**[delta] The three books previously reported as unobtainable were found on the local machine and
+processed, so that limitation no longer applies to them.** What remains is unchanged in kind:
+
+**The one thing that could not be done is re-opening any source that is not present on this machine,** because there is no local library and no network egress. That single limitation is the
 whole reason the seventeen CANON-013 candidates are HOLD rather than assessed, and the reason F-03,
 F-04 and F-05 are reported as findings from another lane rather than as verified observations. I have
 not represented any of them as verified here.
