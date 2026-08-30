@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eval/experiments/EVAL-037/schemas/result.schema.json",
+  "title": "EVAL-037 lane result",
+  "description": "The sealed result of one lane: exactly 18 trials, one model, one condition. Contains NO creative-quality judgement of any kind and NO media. Scoring and media generation are outside EVAL-037.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["experiment", "lane_id", "branch", "base_commit", "runner_commit", "provider", "model", "condition", "trial_count", "trials"],
+  "properties": {
+    "experiment": { "const": "EVAL-037" },
+    "lane_id": { "type": "string", "pattern": "^(sol|sonnet|haiku|gemma)-(no|full)-canon$" },
+    "branch": { "type": "string", "pattern": "^work/eval-037-" },
+    "base_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "runner_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "provider": { "enum": ["OpenAI", "Anthropic", "Google Gemini API"] },
+    "model": {
+      "type": "string",
+      "description": "The exact resolved model id actually served. Moving aliases are forbidden.",
+      "not": { "pattern": "(latest|preview$|^gpt-5$|^claude-3-5-sonnet$)" }
+    },
+    "condition": { "enum": ["NO_CANON", "FULL_CANON"] },
+    "canon_fingerprints": {
+      "type": "object",
+      "description": "Present in FULL_CANON only. Absent in NO_CANON, which must not read the corpus at all.",
+      "additionalProperties": false,
+      "required": ["full_knowledge", "qa"],
+      "properties": {
+        "full_knowledge": { "const": "cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60" },
+        "qa": { "const": "1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd" }
+      }
+    },
+    "trial_count": { "const": 18 },
+    "trials": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": { "$ref": "#/$defs/trial" }
+    }
+  },
+  "$defs": {
+    "trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trial_id", "brief_id", "repetition", "order_index", "status", "attempts_used", "fresh_context", "package_path", "package_digest"],
+      "properties": {
+        "trial_id": { "type": "string", "pattern": "^E037-(sol|sonnet|haiku|gemma)-(no|full)-canon-B0[1-6]-R[1-3]$" },
+        "brief_id": { "enum": ["B01", "B02", "B03", "B04", "B05", "B06"] },
+        "brief_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "repetition": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "order_index": { "type": "integer", "minimum": 1, "maximum": 18 },
+        "status": {
+          "enum": ["complete", "format_repaired", "failed_technical"],
+          "description": "complete = a valid package on an attempt with no repair. format_repaired = valid after the one permitted format-only repair. failed_technical = exhausted the initial attempt plus 2 technical retries. There is no 'weak' status: creative quality is not judged here."
+        },
+        "attempts_used": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "technical_retries_used": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "format_repairs_used": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "fresh_context": { "const": true },
+        "package_path": { "type": ["string", "null"] },
+        "package_digest": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "sections_present": {
+          "type": "array",
+          "description": "Mechanical presence check of the 12 required package sections. Presence only, never a quality opinion.",
+          "items": {
+            "enum": ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
+                     "MESSAGE_AND_INFORMATION_HIERARCHY", "VISUAL_SYSTEM", "PRODUCTION_RECIPE",
+                     "GENERATION_PROMPTS", "DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS",
+                     "AUDIO_AND_EDIT", "FAILURE_PREVENTION", "HARD_CONSTRAINT_CHECK",
+                     "KNOWLEDGE_AND_WEBSITE_USE"]
+          }
+        },
+        "eligible_for_media_generation": {
+          "type": "boolean",
+          "description": "True for every trial whose package is structurally valid. Eligibility is never withdrawn on creative grounds. Media generation itself is outside EVAL-037."
+        },
+        "canon_used": {
+          "type": ["boolean", "null"],
+          "description": "FULL_CANON only: did the model call any Canon tool. null in NO_CANON. This is an observation, not a requirement."
+        },
+        "canon_tool_calls": { "type": "integer", "minimum": 0 },
+        "canon_items_returned": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "accepted": { "type": "integer", "minimum": 0 },
+            "hold": { "type": "integer", "minimum": 0 },
+            "qa": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "website_snapshot_used": { "type": "boolean" },
+        "wall_clock_ms": { "type": "integer", "minimum": 0 },
+        "usage": { "type": "object", "additionalProperties": true }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "failed_technical" } }, "required": ["status"] },
+          "then": {
+            "properties": {
+              "technical_retries_used": { "const": 2 },
+              "package_path": { "const": null },
+              "eligible_for_media_generation": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "format_repaired" } }, "required": ["status"] },
+          "then": { "properties": { "format_repairs_used": { "const": 1 } } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "complete" } }, "required": ["status"] },
+          "then": { "properties": { "format_repairs_used": { "const": 0 } } }
+        }
+      ]
+    }
+  }
+}

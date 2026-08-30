@@ -1,0 +1,313 @@
+# EVAL-037 lane: sonnet-no-canon
+#
+# SELF-CONTAINED. This file plus EXECUTION-CONTRACT.md plus the files named below
+# are everything this worker may read. Do not open a sibling lane config. Do not
+# look at another EVAL-037 branch, PR, log, output or report.
+#
+# THIS IS A NO_CANON LANE. Do NOT read conditions/full-canon.yaml. Do NOT read
+# anything under canon/. Do NOT import tools/canon_tools.py. The tested model
+# receives no Canon instruction and no Canon tool.
+
+experiment: EVAL-037
+lane_id: sonnet-no-canon
+branch: work/eval-037-sonnet-no-canon
+base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+base_commit_note: >-
+  The frozen common substrate. Start from exactly this commit. If your HEAD's
+  merge-base with this commit is not this commit, stop and escalate.
+
+model:
+  key: sonnet
+  provider: Anthropic
+  model_id: claude-sonnet-5
+  api: Messages API
+  credential_env: ANTHROPIC_API_KEY
+  moving_alias: false
+  alias_policy: >-
+    This exact model id, never a moving alias and never a substitute. Preflight the
+    id against the provider before the first trial. If it is unavailable, STOP and
+    report. Substituting a different model silently destroys the comparison.
+  settings:
+    thinking: adaptive
+    effort: high
+    sampling: provider defaults
+  settings_note: >-
+    Adaptive thinking with effort=high. Sampling parameters are left at provider defaults
+    and must not be set explicitly.
+
+condition: NO_CANON
+condition_detail:
+  canon_instruction: absent
+  addendum_path: null
+  canon_tools_exposed: []
+  forbidden_reads:
+    - conditions/full-canon.yaml
+    - tools/canon_tools.py
+    - canon/**
+  forbidden_reads_note: >-
+    The execution worker must not read the FULL_CANON condition file or any Canon
+    content. The tested model is given the common system prompt and the brief, and
+    nothing else. Reading Canon here would contaminate the control condition.
+
+prompt:
+  system_prompt_path: common/system-prompt.txt
+  system_prompt_sha256: aae58578f4300b3e6bd27e7812dced88bb955d77635cf521fcde17154e00889f
+  system_prompt_composition: common/system-prompt.txt verbatim, nothing appended
+  user_message: the brief file's contents, verbatim, and nothing else
+  no_few_shot_examples: true
+  no_lane_specific_prompt_text: true
+
+briefs:
+  B01:
+    path: common/briefs/B01.txt
+    sha256: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
+    website:
+      permitted_url: https://rentok.com
+      snapshot_dir: common/websites/rentok.com
+      snapshot_html: common/websites/rentok.com/index.html
+      snapshot_html_sha256: 4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6
+      snapshot_text: common/websites/rentok.com/page.txt
+      snapshot_text_sha256: ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79
+      live_browsing: forbidden
+      model_decides_whether_to_inspect: true
+  B02:
+    path: common/briefs/B02.txt
+    sha256: 1974ed4998e88de52cf50cc79c94f64c5573959355cd2e0d0b4a64c686dff87a
+    website:
+      permitted_url: https://getaight.ai
+      snapshot_dir: common/websites/getaight.ai
+      snapshot_html: common/websites/getaight.ai/index.html
+      snapshot_html_sha256: 17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514
+      snapshot_text: common/websites/getaight.ai/page.txt
+      snapshot_text_sha256: e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567
+      live_browsing: forbidden
+      model_decides_whether_to_inspect: true
+  B03:
+    path: common/briefs/B03.txt
+    sha256: 896df798a0f91b8fbb3af461051248675d746e3a95b78bc0b62b95bba4123492
+    website: null
+    website_note: this brief permits no website
+  B04:
+    path: common/briefs/B04.txt
+    sha256: 0d2b8a86fbc34551c2e10457beb104fd14160f136d759ee3d3ecee01456115ce
+    website: null
+    website_note: this brief permits no website
+  B05:
+    path: common/briefs/B05.txt
+    sha256: a5450117410e01e6eb8889977e463e6f697f0e6fb42f524c70784a254cd510c6
+    website: null
+    website_note: this brief permits no website
+  B06:
+    path: common/briefs/B06.txt
+    sha256: 27391665eb56d62f9788329ce994dabcb2a8f152073843594caf6bef74ab8ff4
+    website: null
+    website_note: this brief permits no website
+
+websites:
+  live_browsing_during_experimental_calls: forbidden
+  other_websites: forbidden
+  snapshots_taken: once, during the EVAL-037 setup/freeze task
+  manifest: common/websites/WEBSITE-SNAPSHOT-MANIFEST.yaml
+
+execution:
+  briefs: 6
+  repetitions: 3
+  trials: 18
+  trial_count_is_exact: true
+  one_model_one_condition_per_session: true
+  fresh_provider_context_per_trial: true
+  carry_state_between_trials: forbidden
+  creative_quality_judging: forbidden
+  media_generation: forbidden
+  order_note: >-
+    Execute in the order given. Repetition-major, so the three repetitions of a
+    brief are maximally separated. Every trial is a fresh stateless request
+    regardless.
+  trials_plan:
+    - order_index: 1
+      trial_id: E037-sonnet-no-canon-B01-R1
+      brief_id: B01
+      repetition: 1
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 2
+      trial_id: E037-sonnet-no-canon-B02-R1
+      brief_id: B02
+      repetition: 1
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 3
+      trial_id: E037-sonnet-no-canon-B03-R1
+      brief_id: B03
+      repetition: 1
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 4
+      trial_id: E037-sonnet-no-canon-B04-R1
+      brief_id: B04
+      repetition: 1
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 5
+      trial_id: E037-sonnet-no-canon-B05-R1
+      brief_id: B05
+      repetition: 1
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+    - order_index: 6
+      trial_id: E037-sonnet-no-canon-B06-R1
+      brief_id: B06
+      repetition: 1
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 7
+      trial_id: E037-sonnet-no-canon-B01-R2
+      brief_id: B01
+      repetition: 2
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 8
+      trial_id: E037-sonnet-no-canon-B02-R2
+      brief_id: B02
+      repetition: 2
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 9
+      trial_id: E037-sonnet-no-canon-B03-R2
+      brief_id: B03
+      repetition: 2
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 10
+      trial_id: E037-sonnet-no-canon-B04-R2
+      brief_id: B04
+      repetition: 2
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 11
+      trial_id: E037-sonnet-no-canon-B05-R2
+      brief_id: B05
+      repetition: 2
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+    - order_index: 12
+      trial_id: E037-sonnet-no-canon-B06-R2
+      brief_id: B06
+      repetition: 2
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 13
+      trial_id: E037-sonnet-no-canon-B01-R3
+      brief_id: B01
+      repetition: 3
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 14
+      trial_id: E037-sonnet-no-canon-B02-R3
+      brief_id: B02
+      repetition: 3
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 15
+      trial_id: E037-sonnet-no-canon-B03-R3
+      brief_id: B03
+      repetition: 3
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 16
+      trial_id: E037-sonnet-no-canon-B04-R3
+      brief_id: B04
+      repetition: 3
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 17
+      trial_id: E037-sonnet-no-canon-B05-R3
+      brief_id: B05
+      repetition: 3
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+    - order_index: 18
+      trial_id: E037-sonnet-no-canon-B06-R3
+      brief_id: B06
+      repetition: 3
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+
+retry_policy:
+  technical_failure:
+    initial_attempt: 1
+    max_technical_retries: 2
+    max_total_attempts_from_technical: 3
+    qualifying_classes:
+      - timeout
+      - connection_error
+      - rate_limit
+      - server_error_5xx
+      - empty_response
+      - truncated_response
+      - provider_refusal_non_content
+      - sdk_error
+    on_exhaustion: >-
+      Record the trial as failed_technical with every attempt retained. Do not
+      substitute a model, relax a setting or hand-write a package.
+  format_repair:
+    max: 1
+    scope: format only
+    permitted_when: >-
+      The response is present and substantive but does not carry the required
+      FINAL_PRODUCTION_PACKAGE section structure.
+    forbidden: >-
+      Changing, steering, enriching or improving the creative content. A format
+      repair may ask only for the same answer in the required shape.
+  forbidden_retry_reasons:
+    - the answer looks creatively weak
+    - the idea seems unoriginal or safe
+    - the package is shorter than expected
+    - a different sample would probably be better
+    - the model used no website
+  forbidden_retry_note: >-
+    Creative weakness is NEVER a reason for another attempt. Retrying on quality
+    silently selects the best-of-N and destroys the comparison this experiment exists
+    to make.
+
+spend:
+  experiment_level_cap: none
+  note: >-
+    EVAL-037 has no experiment-level spend cap. Cost is recorded, not enforced.
+
+evidence:
+  root: eval/experiments/EVAL-037/runs/sonnet-no-canon
+  attempt_ledger: eval/experiments/EVAL-037/runs/sonnet-no-canon/attempt-ledger.json
+  attempt_ledger_schema: schemas/attempt-ledger.schema.json
+  result: eval/experiments/EVAL-037/runs/sonnet-no-canon/result.json
+  result_schema: schemas/result.schema.json
+  raw_responses: eval/experiments/EVAL-037/runs/sonnet-no-canon/raw/
+  packages: eval/experiments/EVAL-037/runs/sonnet-no-canon/packages/
+  retention: >-
+    Retain every output regardless of apparent quality, including outputs from
+    failed and repaired attempts. Nothing is deleted, trimmed or tidied.
+  validator: validators/validate_lane_run.py
+
+downstream:
+  all_valid_packages_eligible_for_media_generation: true
+  media_generation_in_scope: false
+  acceptance_scoring_in_scope: false
+  note: >-
+    Media generation and final acceptance scoring are explicitly outside EVAL-037.
+    Eligibility is never withdrawn on creative grounds.
+
+worker_obligations:
+  - Start from the exact base_commit above.
+  - Read only EXECUTION-CONTRACT.md, this lane YAML, and files this YAML names.
+  - Never list or read a sibling lane config.
+  - Never inspect another EVAL-037 execution branch, PR, log, output or report.
+  - Preflight the exact model id; stop rather than substitute if unavailable.
+  - Freeze and commit the runner BEFORE the first experimental call.
+  - Make no runner, prompt or config change after the first call.
+  - Execute exactly 18 trials, in the listed order.
+  - Use a fresh stateless provider request for every trial.
+  - Never pass output or state from one trial into another.
+  - Retain every output regardless of apparent quality.
+  - Do no creative judging.
+  - Generate no media.
+

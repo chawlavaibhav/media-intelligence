@@ -1,0 +1,92 @@
+# EVAL-037 — FULL_CANON condition definition.
+#
+# This file is read ONLY by FULL_CANON lanes. A NO_CANON execution worker must
+# never open it. It is the sole home of the FULL_CANON addendum text.
+
+condition_id: FULL_CANON
+experiment: EVAL-037
+
+corpus:
+  description: >-
+    The merged status-aware full corpus produced by CANON-014: accepted Canon,
+    HOLD candidate knowledge, and the grounded Q&A banks, in one retrievable
+    surface with epistemic status preserved on every returned object.
+  base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  roots:
+    accepted: canon/knowledge/current
+    hold: canon/candidates/canon-014
+    qa: canon/qa/canon-014
+  index: canon/knowledge/CANON-CORPUS-INDEX.yaml
+  artifact_filenames:
+    - source-knowledge.yaml
+    - source-concept-systems.yaml
+    - operational-bindings.yaml
+    - ontology-mappings.yaml
+    - visual-evidence-ledger.yaml
+
+fingerprints:
+  algorithm: sha256-of-sorted-path-and-content
+  full_knowledge:
+    file_count: 193
+    combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+  qa:
+    file_count: 23
+    combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+  verification: >-
+    Recomputed from the working tree at the frozen base commit and matched
+    exactly. An execution worker MUST re-verify both digests during preflight
+    and MUST stop rather than run if either differs.
+
+tools_exposed:
+  - name: canon_catalog
+    access: read-only
+    purpose: List every source the corpus represents with its source_status and counts.
+  - name: canon_search
+    access: read-only
+    purpose: Search knowledge items, concept systems, bindings, ontology terms and Q&A items.
+  - name: canon_read
+    access: read-only
+    purpose: Read a specific source's artifact, or a specific item by id.
+
+status_invariants:
+  - Every returned object MUST carry source_status.
+  - source_status is one of ACCEPTED or HOLD, verbatim from the corpus. It is never inferred.
+  - HOLD MUST NEVER be represented, relabelled, summarised or defaulted as accepted.
+  - An object whose status cannot be established is not returned.
+  - Q&A items carry the source_status of their source and are additionally marked
+    not_benchmark_ground_truth. Q&A is accessible knowledge, not independent
+    corroboration and not benchmark truth.
+
+model_discretion:
+  # The tested model decides all of this. The harness imposes none of it.
+  decides:
+    - whether to use Canon at all
+    - what to search
+    - what to read
+    - whether to consume Q&A
+    - how much to retrieve
+    - when to stop
+  no_aggregate_top_k: true
+  no_canon_token_budget: true
+  no_retrieval_count_budget: true
+  mandatory_canon_use: false
+
+# ---------------------------------------------------------------------------
+# The FULL_CANON addendum. Appended to the common tested-model prompt for
+# FULL_CANON lanes only. Stored here and nowhere else.
+# ---------------------------------------------------------------------------
+addendum: |
+  You have access to a media-production knowledge library through the available Canon tools.
+
+  It contains ACCEPTED knowledge, HOLD knowledge and grounded Q&A representations.
+
+  Use any amount of it if useful, or none.
+
+  ACCEPTED means the source passed the project's Audit Gate.
+  HOLD means the extracted knowledge has an unresolved evidence or representation blocker and must be treated cautiously.
+
+  Q&A items are alternate grounded representations, not independent corroboration or benchmark truth.
+
+  Canon is creative/production knowledge, not evidence about current model capability, provider pricing or reliability.
+
+  Decide for yourself what is relevant.

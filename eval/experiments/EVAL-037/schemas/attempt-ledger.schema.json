@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eval/experiments/EVAL-037/schemas/attempt-ledger.schema.json",
+  "title": "EVAL-037 attempt ledger",
+  "description": "Every provider attempt made in one lane, in order. One row per attempt, including failed ones. Attempts are never deleted, rewritten or reordered. Creative weakness is NEVER a legal reason for another attempt.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["experiment", "lane_id", "branch", "base_commit", "runner_commit", "model", "condition", "attempts"],
+  "properties": {
+    "experiment": { "const": "EVAL-037" },
+    "lane_id": { "type": "string", "pattern": "^(sol|sonnet|haiku|gemma)-(no|full)-canon$" },
+    "branch": { "type": "string", "pattern": "^work/eval-037-" },
+    "base_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "runner_commit": {
+      "type": "string", "pattern": "^[0-9a-f]{40}$",
+      "description": "Commit that froze the runner. MUST predate every attempt in this ledger."
+    },
+    "model": { "type": "string" },
+    "condition": { "enum": ["NO_CANON", "FULL_CANON"] },
+    "attempts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/attempt" }
+    }
+  },
+  "$defs": {
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trial_id", "brief_id", "repetition", "attempt_index", "attempt_kind", "started_at", "ended_at", "outcome", "fresh_context", "request_digest"],
+      "properties": {
+        "trial_id": { "type": "string", "pattern": "^E037-(sol|sonnet|haiku|gemma)-(no|full)-canon-B0[1-6]-R[1-3]$" },
+        "brief_id": { "enum": ["B01", "B02", "B03", "B04", "B05", "B06"] },
+        "repetition": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "attempt_index": {
+          "type": "integer", "minimum": 0, "maximum": 3,
+          "description": "0 = initial attempt. 1-2 = technical retries. 3 = the single format-only repair, if used."
+        },
+        "attempt_kind": {
+          "enum": ["initial", "technical_retry", "format_repair"],
+          "description": "technical_retry is permitted ONLY after a technical failure. format_repair is permitted at most once per trial and may correct output shape only."
+        },
+        "technical_failure_class": {
+          "enum": ["timeout", "connection_error", "rate_limit", "server_error_5xx", "empty_response", "truncated_response", "provider_refusal_non_content", "sdk_error", null],
+          "description": "Required and non-null on any attempt whose outcome is technical_failure. This is what licenses a retry."
+        },
+        "started_at": { "type": "string", "format": "date-time" },
+        "ended_at": { "type": "string", "format": "date-time" },
+        "outcome": { "enum": ["ok", "technical_failure", "format_invalid", "abandoned"] },
+        "fresh_context": {
+          "const": true,
+          "description": "Every attempt is a fresh stateless provider request. No prior trial or attempt state is carried in."
+        },
+        "request_digest": {
+          "type": "string", "pattern": "^[0-9a-f]{64}$",
+          "description": "sha256 of the exact serialised request payload sent to the provider."
+        },
+        "response_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "raw_response_path": { "type": "string" },
+        "tool_calls": {
+          "type": "array",
+          "description": "Canon tool calls made by the model during this attempt. Empty in NO_CANON, and empty in FULL_CANON if the model chose not to retrieve.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "arguments_digest", "result_item_count", "accepted_items", "hold_items"],
+            "properties": {
+              "name": { "enum": ["canon_catalog", "canon_search", "canon_read"] },
+              "arguments_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "result_item_count": { "type": "integer", "minimum": 0 },
+              "accepted_items": { "type": "integer", "minimum": 0 },
+              "hold_items": { "type": "integer", "minimum": 0 },
+              "qa_items": { "type": "integer", "minimum": 0 },
+              "every_item_carried_source_status": { "const": true }
+            }
+          }
+        },
+        "website_snapshot_read": {
+          "type": "array",
+          "description": "Frozen snapshot paths the model chose to read. Live browsing is never permitted.",
+          "items": { "type": "string", "pattern": "^common/websites/" }
+        },
+        "usage": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "input_tokens": { "type": "integer", "minimum": 0 },
+            "output_tokens": { "type": "integer", "minimum": 0 },
+            "reasoning_tokens": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "error": { "type": ["string", "null"] },
+        "note": {
+          "type": ["string", "null"],
+          "description": "Mechanical note only. Never a creative judgement."
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "outcome": { "const": "technical_failure" } }, "required": ["outcome"] },
+          "then": {
+            "required": ["technical_failure_class"],
+            "properties": { "technical_failure_class": { "not": { "const": null } } }
+          }
+        },
+        {
+          "if": { "properties": { "attempt_kind": { "const": "initial" } }, "required": ["attempt_kind"] },
+          "then": { "properties": { "attempt_index": { "const": 0 } } }
+        },
+        {
+          "if": { "properties": { "attempt_kind": { "const": "format_repair" } }, "required": ["attempt_kind"] },
+          "then": { "properties": { "attempt_index": { "const": 3 } } }
+        },
+        {
+          "if": { "properties": { "attempt_kind": { "const": "technical_retry" } }, "required": ["attempt_kind"] },
+          "then": { "properties": { "attempt_index": { "type": "integer", "minimum": 1, "maximum": 2 } } }
+        }
+      ]
+    }
+  }
+}

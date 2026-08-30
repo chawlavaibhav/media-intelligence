@@ -1,0 +1,148 @@
+# EVAL-037 — experiment manifest.
+#
+# This is the controller's view of the whole experiment. An execution worker does
+# NOT read this file: it reads EXECUTION-CONTRACT.md and its own lane YAML only.
+# Everything here is duplicated into each lane on purpose, so no lane depends on it.
+
+experiment: EVAL-037
+title: Reasoning-layer Canon effect across four models
+status: FROZEN — substrate only. No experimental call has been made.
+
+base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+base_commit_subject: 'CANON-014: integrate full Canon corpus'
+freeze_branch: work/eval-037-freeze
+
+question: >-
+  Does exposing a reasoning model to the merged status-aware Canon corpus change the
+  production-ready creative package it returns, across four models of differing
+  capability? EVAL-037 produces the packages and the evidence. It does not score them.
+
+design:
+  briefs: 6
+  repetitions: 3
+  models: 4
+  conditions: 2
+  lanes: 8
+  trials_per_lane: 18
+  trials_total: 144
+  isolation: one model x one condition per isolated execution session
+  fresh_provider_context_per_trial: true
+  state_carried_between_trials: none
+
+explicitly_out_of_scope:
+  - creative-quality judging at the reasoning stage
+  - media generation
+  - final acceptance scoring
+  - selecting or recommending an image/video model or provider
+scope_note: >-
+  All valid packages remain eligible for later media generation. Eligibility is a
+  structural property and is never withdrawn on creative grounds.
+
+spend:
+  experiment_level_cap: none
+  note: Cost is recorded, not enforced.
+
+retry_policy:
+  technical_failure: initial attempt + maximum 2 technical retries
+  format_repair: exactly one, format only, if required
+  creative_weakness: NEVER a reason for another attempt
+
+models:
+  # Exact ids. No moving aliases. Preflight and STOP rather than substitute.
+  sol:
+    provider: OpenAI
+    model_id: gpt-5.6-sol
+    api: Responses API
+    reasoning_effort: high
+    sampling: provider defaults
+  sonnet:
+    provider: Anthropic
+    model_id: claude-sonnet-5
+    api: Messages API
+    thinking: adaptive
+    effort: high
+    sampling: provider defaults
+  haiku:
+    provider: Anthropic
+    model_id: claude-haiku-4-5-20251001
+    api: Messages API
+    thinking:
+      type: enabled
+      budget_tokens: 8000
+    sampling: provider defaults
+  gemma:
+    provider: Google Gemini API
+    model_id: gemma-4-31b-it
+    credential: GEMINI_API_KEY
+    sampling: provider defaults
+    reasoning: provider defaults
+    do_not_invent_unsupported_reasoning_controls: true
+
+conditions:
+  NO_CANON:
+    canon_instruction: absent
+    canon_tools: []
+    worker_must_not_read:
+      - conditions/full-canon.yaml
+      - canon/**
+  FULL_CANON:
+    definition: conditions/full-canon.yaml
+    corpus: merged status-aware full corpus (accepted + HOLD + grounded Q&A)
+    tools_exposed: [canon_catalog, canon_search, canon_read]
+    access: read-only
+    fingerprints:
+      algorithm: sha256-of-sorted-path-and-content
+      full_knowledge:
+        file_count: 193
+        combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+      qa:
+        file_count: 23
+        combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+      verified_at_freeze: recomputed from the working tree and matched exactly
+
+lanes:
+  - {lane_id: sol-no-canon,      config: lanes/sol-no-canon.yaml,      branch: work/eval-037-sol-no-canon}
+  - {lane_id: sol-full-canon,    config: lanes/sol-full-canon.yaml,    branch: work/eval-037-sol-full-canon}
+  - {lane_id: sonnet-no-canon,   config: lanes/sonnet-no-canon.yaml,   branch: work/eval-037-sonnet-no-canon}
+  - {lane_id: sonnet-full-canon, config: lanes/sonnet-full-canon.yaml, branch: work/eval-037-sonnet-full-canon}
+  - {lane_id: haiku-no-canon,    config: lanes/haiku-no-canon.yaml,    branch: work/eval-037-haiku-no-canon}
+  - {lane_id: haiku-full-canon,  config: lanes/haiku-full-canon.yaml,  branch: work/eval-037-haiku-full-canon}
+  - {lane_id: gemma-no-canon,    config: lanes/gemma-no-canon.yaml,    branch: work/eval-037-gemma-no-canon}
+  - {lane_id: gemma-full-canon,  config: lanes/gemma-full-canon.yaml,  branch: work/eval-037-gemma-full-canon}
+
+briefs:
+  B01: {path: common/briefs/B01.txt, website: 'https://rentok.com',  deliverable: 9:16 video, about 30s}
+  B02: {path: common/briefs/B02.txt, website: 'https://getaight.ai', deliverable: 4:5 poster}
+  B03: {path: common/briefs/B03.txt, website: null, deliverable: 4:5 image}
+  B04: {path: common/briefs/B04.txt, website: null, deliverable: 9:16 video, about 25s}
+  B05: {path: common/briefs/B05.txt, website: null, deliverable: 16:9 video, six shots, about 40s}
+  B06: {path: common/briefs/B06.txt, website: null, deliverable: 4:5 image}
+
+websites:
+  permitted: 2
+  snapshots_taken: once, during this setup task
+  manifest: common/websites/WEBSITE-SNAPSHOT-MANIFEST.yaml
+  live_browsing_during_experimental_calls: forbidden
+  other_websites: forbidden
+  model_decides_whether_to_inspect: true
+
+substrate:
+  common_prompt: common/system-prompt.txt
+  condition_addendum: conditions/full-canon.yaml
+  schemas: [schemas/attempt-ledger.schema.json, schemas/result.schema.json]
+  tools:
+    - tools/runner.py            # the common lane runner
+    - tools/providers.py         # real provider adapters
+    - tools/fake_provider.py     # deterministic fake; no network
+    - tools/canon_tools.py       # read-only Canon surface (FULL_CANON only)
+    - tools/preflight.py         # exact-model availability check
+    - tools/snapshot_websites.py # one-time website freeze
+    - tools/build_lanes.py       # lane generator
+    - tools/jsonschema_mini.py   # dependency-free schema checker
+  validators:
+    - validators/validate_freeze.py    # 27 gates on the frozen substrate
+    - validators/validate_lane_run.py  # 15 gates on one lane's evidence
+    - validators/test_substrate.py     # 63 behavioural tests, fake provider only
+  freeze_fingerprint: FREEZE-FINGERPRINT.yaml
+
+zero_experimental_calls_at_freeze: true
