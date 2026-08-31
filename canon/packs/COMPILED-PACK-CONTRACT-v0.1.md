@@ -230,6 +230,7 @@ only a Controller-authorised task can perform.
 | `canon/context/canon-context-schema-v0.1.yaml` | KEEP+ADAPT | schema substrate for `<pack_id>.compiled.yaml`; gains pack_id/applicability/fingerprint/marker blocks |
 | `canon/context/build_example_context.py` | KEEP+ADAPT | render-by-id generalizes into the compiler's projection step |
 | `canon/context/examples/B06-watch-hero.canon-context.yaml` | KEEP | worked example and regression fixture for the validator core |
+| `canon/context/confidence-marker-v0.yaml` | KEEP | REP-04 companion from this same tranche (PROPOSED, not PR #83): the marker decision table §3's `confidence_marker` field derives from; row added post-hoc because the file landed in `canon/context/` in parallel with this contract |
 | `canon/validation/validate_canon_context.py` | KEEP+ADAPT | (not under `canon/context/`, listed for completeness) validator core; extended with closure, marker recomputation, fingerprint staleness, trigger totality |
 
 ### 9.2 `canon/retrieval/` and companions at commit `8115400` (PR #84) — read via `git show 8115400:<path>`
