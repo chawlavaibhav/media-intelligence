@@ -7280,3 +7280,111 @@ Use frozen brief B06 from the top of this file.
 Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
 
 ---
+
+# IMAGE JOB I46 — B02
+
+Source key: E037-gemma-full-canon-B02-R1
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I46
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I47 — B02
+
+Source key: E037-gemma-full-canon-B02-R2
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I47
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I48 — B02
+
+Source key: E037-gemma-full-canon-B02-R3
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I48
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I49 — B03
+
+Source key: E037-gemma-full-canon-B03-R1
+Use frozen brief B03 from the top of this file.
+
+
+
+## GENERATE I49
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I50 — B03
+
+Source key: E037-gemma-full-canon-B03-R2
+Use frozen brief B03 from the top of this file.
+
+
+
+## GENERATE I50
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I51 — B03
+
+Source key: E037-gemma-full-canon-B03-R3
+Use frozen brief B03 from the top of this file.
+
+
+
+## GENERATE I51
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I52 — B06
+
+Source key: E037-gemma-full-canon-B06-R1
+Use frozen brief B06 from the top of this file.
+
+
+
+## GENERATE I52
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I53 — B06
+
+Source key: E037-gemma-full-canon-B06-R2
+Use frozen brief B06 from the top of this file.
+
+
+
+## GENERATE I53
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I54 — B06
+
+Source key: E037-gemma-full-canon-B06-R3
+Use frozen brief B06 from the top of this file.
+
+
+
+## GENERATE I54
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
