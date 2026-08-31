@@ -1,0 +1,139 @@
+# REP-07 — visual-evidence ledger for Hopkins, Scientific Advertising (1923), chapters 8-21.
+#
+# Scan-page pass (INSPECTION-RUNBOOK.md §6), executed 2026-09-01. The extraction recorded no
+# figure refs anywhere in printed pp.25-64; this pass therefore checks the scan pages themselves —
+# legibility, completeness, folio integrity — by rendering and OPENING every page of the span.
+# Ledger follows the desai null-result template with scan-page completeness rows added.
+
+source_id: hopkins-scientific-advertising-ch8-21
+pass: attempted_and_completed
+inspection_state: inspected_page_level
+visual_argument_role: no_visual_argument
+
+file_identity:
+  path: /Users/vaibhavchawla/Downloads/Books/Scientific Advertising.pdf
+  bytes: 3877926
+  sha256: e081207466c2f8da334bf6bdeba8c454c17107e6ddfe90cbccc0d95e8531b6fc
+  hash_on_arrival: >
+    Recomputed 2026-09-01 with shasum -a 256; matches the SHA-256 recorded in PROVENANCE.md §1
+    exactly, so this pass inspected the same copy the extraction read. Internet Archive scan
+    (Scribe 4.5) of the 2009 Snowball/BN Publishing reprint, 88 PDF pages, 404.8 x 608.8 pt.
+
+inspection:
+  method: >
+    Every PDF page of the span (PDF 33-72 = printed 25-64) was rendered with pdftoppm at 80 dpi
+    grayscale and every one of the 40 renders was opened and read. This is a full-span pass, not
+    a sample. The printed folio visible in each render was read off and checked against the
+    mapping printed = PDF - 8; the chapter heading on each chapter-opening page was read and
+    checked against the PROVENANCE.md §3 chapter table; every page was scanned visually for
+    figures, illustrations, tables, diagrams and reproduced advertisements. Additionally PDF 73-76
+    (printed 65-68, outside the span) were rendered to verify the span boundary, and pdftotext
+    was re-run on eight footer-damaged pages to confirm the recorded text-layer OCR errors.
+  pages_in_span: 40
+  pages_rendered: 40
+  pages_opened_and_read: 40
+  sampling_rule: "none - every page of printed 25-64 was opened"
+  figures_found: 0
+  illustrations_found: 0
+  tables_found: 0
+  reproduced_advertisements_found: 0
+
+scan_page_completeness:
+  folio_mapping: "printed page = PDF page - 8; read off the rendered folio on all 40 pages, no exception"
+  chapter_headings:
+    - {chapter: 8,  title: "Tell Your Full Story",  printed_page: 25, present: true}
+    - {chapter: 9,  title: "Art in Advertising",    printed_page: 28, present: true}
+    - {chapter: 10, title: "Things Too Costly",     printed_page: 31, present: true}
+    - {chapter: 11, title: "Information",           printed_page: 34, present: true}
+    - {chapter: 12, title: "Strategy",              printed_page: 37, present: true}
+    - {chapter: 13, title: "Use of Samples",        printed_page: 40, present: true}
+    - {chapter: 14, title: "Getting Distribution",  printed_page: 44, present: true}
+    - {chapter: 15, title: "Test Campaigns",        printed_page: 47, present: true}
+    - {chapter: 16, title: "Leaning on Dealers",    printed_page: 51, present: true}
+    - {chapter: 17, title: "Individuality",         printed_page: 53, present: true}
+    - {chapter: 18, title: "Negative Advertising",  printed_page: 55, present: true}
+    - {chapter: 19, title: "Letter Writing",        printed_page: 57, present: true}
+    - {chapter: 20, title: "A Name That Helps",     printed_page: 60, present: true}
+    - {chapter: 21, title: "Good Business",         printed_page: 62, present: true}
+  legibility_verdict: >
+    Every one of the 40 pages is a clean, fully legible single-column page of body text with an
+    italic running header and a printed folio. No page is skewed, cropped, water-damaged, blurred
+    or partially scanned. No text is cut at any margin. Chapter openings (larger roman heading
+    under a "Chapter N" line) render cleanly. The load-bearing numbers were re-read on the page
+    renders and match the extraction: $20-$25 per convert (p.31); one in a hundred / one in five
+    (p.33); 4% / 96% home baking (p.35); 425 calories per pint (p.36); 50c / 15c / 40c-$1 /
+    1,460,000 requests / one-fifth of coupons (p.41); 70c vs 18-22c same ad, 70% by telephone,
+    10c-50c full packages, repeater check (p.42); $3,000-$5,000 per test (p.48); 91%, ~$1,000
+    per test, fifty plans in five years, 75% (p.49); twenty-five letters of a thousand each,
+    five million pieces (p.57); four to one "if you have our experience" (p.55); $700,000, 30%
+    vs 150%, the five-dollar readership offer (pp.62-63).
+  text_layer_note: >
+    The scan IMAGES carry correct printed folios on all 40 pages. The TEXT LAYER's italic
+    page-number footers are OCR-damaged exactly as PROVENANCE.md §4 records - re-verified
+    mechanically in this pass with pdftotext: "Pf" (p.27), "752]" (p.29), "2/7" (p.37), "28)"
+    (p.53), "oo" (p.55), "nye" (p.57), "he" (p.59). None touches a word of body text, and the
+    printed folio is recoverable from the page image everywhere.
+  span_boundary: >
+    PDF 73-76 (printed 65-68) were rendered to bound the span: printed 65-66 blank leaves,
+    printed 67 is the 2009 reprint's "Recommended Readings" page (W. D. Gann titles, Earl
+    Nightingale, snowballpublishing.com) - confirmed visually, reprint matter, correctly excluded
+    from extraction - and printed 68 a blank verso. Matches PROVENANCE.md §3.
+
+observed_loss_patterns:
+
+  # NOTE ON VOCABULARY (per the desai template): no_visual_argument is a visual_argument_role
+  # value recorded at the head of this file, not a loss pattern.
+  - pattern: no_loss_detected
+    affects: "the visual dimension - nothing visual was lost because nothing visual exists in the span"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All 40 pages of printed 25-64 were opened. Zero figures, zero illustrations, zero tables,
+      zero diagrams, zero reproduced advertisements. Continuous single-column body text on every
+      page. The extraction's record that every source_support value is text and every
+      provenance.inspected.figures is empty is confirmed by direct inspection of every page.
+
+  - pattern: source_evidence_never_printed
+    affects: >
+      Every advertisement Hopkins argues from in chapters 8-21: the Arrow Collar and
+      correspondence-school pictures (ch.9), the Puffed Grains pictures of the grains (ch.9),
+      the Marmon columns of copy (ch.8), the coupon advertisements carrying full-package offers
+      (ch.13-14), the "before and after taking" ads and the positive/negative pair said to
+      outpull four to one (ch.18), the magazine publisher's twenty-five test letters (ch.19).
+    detectability: named_by_text
+    recoverability: not_applicable
+    evidence: >
+      Confirmed by opening every page of the span: not one of the advertisements the text argues
+      from is reproduced anywhere in printed 25-64. This is not digitisation loss - a reader of
+      the 1923 first edition was in exactly the same position - and the full-span page pass now
+      establishes it by direct inspection rather than by trusting the text layer. In chapter 9
+      (p.28) Hopkins instructs the reader to look at mail order advertisements to see how
+      pictures are used; the book itself makes the instruction impossible to follow.
+
+  - pattern: display_type_ocr_damage
+    affects: "the text layer's italic page-number footers on seven pages, and a stray mark in the p.28 text layer"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The damage is confined to the TEXT LAYER: pdftotext returns garbled folios ("Pf", "752]",
+      "2/7", "28)", "oo", "nye", "he") on printed 27, 29, 37, 53, 55, 57, 59. The page IMAGES
+      render every folio correctly and this pass read them all, so the loss is fully recovered
+      in this copy by page render. No word of Hopkins's body text is touched.
+
+demonstrations: []
+visual_only_observations: []
+
+extraction_constraint_applied: >
+  No object in this source carries source_support visual or text_and_visual, and
+  provenance.inspected.figures is empty on every object, correctly, because there are no figures
+  in the span. No claim anywhere in the extraction depends on an image, and nothing found in this
+  pass contradicts any frozen object.
+
+claim_resolution_after_inspection: not_applicable
+consequence: >
+  The scan-page pass ran over the whole span and changed nothing about the extraction, and could
+  not have: the span makes no visual argument. What the pass adds is (1) direct confirmation that
+  the copy is complete and legible page by page, (2) confirmation of the folio mapping at all 40
+  points rather than the extraction's eight, (3) confirmation that the text-layer OCR damage is
+  footer-only and image-recoverable, and (4) confirmation by exhaustive inspection - not
+  text-layer inference - that source_evidence_never_printed is the operative pattern.
