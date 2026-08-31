@@ -1,0 +1,298 @@
+# REP-07 — Audit Gate v0.2 record for hopkins-scientific-advertising-ch8-21, authored IN THE
+# CANDIDATE DIR.
+#
+# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
+# record there while under canon/candidates/). On admission this file moves unchanged to
+# canon/audit/records/hopkins-scientific-advertising-ch8-21.audit.yaml. Admission is a
+# Controller decision; nothing here performs it.
+#
+# Ruling (d) is DEFERRED per DN-04: this record asserts NOTHING about the scoped-extension
+# admission convention. The dependence facts are stated where v0.2 requires them anyway - as
+# lineage relations - and nowhere else.
+
+audit_record_version: v0.2
+audit_id: aud_hopkins_sa_ch8_21
+source_id: hopkins-scientific-advertising-ch8-21
+knowledge_dir: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21
+recorded_at_commit: 09d9c5e14e80191c961b27101234debffa7c6ecc
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: ffa30c34be7ce44b90e27e8eac450af5273ab497620c0e5b87b29308b9f0a508
+    - path: operational-bindings.yaml
+      digest: 637587386e34fd7c5096001792325760e5dcfe91003ee554e2cf7d232d798a79
+    - path: source-concept-systems.yaml
+      digest: f177dd75033342714b6fbe66058c5ea91c13dc697adeb80deb5f82acc44c1bb8
+    - path: source-knowledge.yaml
+      digest: 28501c8fbd8ad683086b0c7949ba0dde59fa2e1df7c9367666459e80a1a641ee
+    - path: visual-evidence-ledger.yaml
+      digest: 9f9bddf45315becbbe972c7a171d4c949ef71b03f7335dda7e806196cc224ee8
+  combined_digest: 60c73ef7efe3892a22ecfddeee2eed37710c27308ce1e70f9404211c7e471c7c
+
+evidence_basis_for_this_audit:
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/source-knowledge.yaml
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/source-concept-systems.yaml
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/operational-bindings.yaml
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/ontology-mappings.yaml
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/visual-evidence-ledger.yaml
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/PROVENANCE.md
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/audit-assessment-HOLD.yaml
+  - canon/audit/records/hopkins-scientific-advertising-ch1-7.audit.yaml
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: authored_print_scan
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    Internet Archive scan of the 2009 Snowball/BN Publishing reprint, 88 PDF pages, with real
+    printed folios. The REP-07 scan-page pass (visual-evidence-ledger.yaml) opened every page of
+    the span (PDF 33-72 = printed 25-64) and read the printed folio off each render: printed =
+    PDF - 8 holds at all 40 points, and all 14 chapter headings sit on exactly the printed pages
+    the extraction's chapter table records. The span boundary was verified by opening printed
+    65-68 (blank leaves and the reprint's Recommended Readings page).
+  inspection_state: inspected_page_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: no_loss_detected
+      affects: "the visual dimension of printed pp.25-64"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        All 40 pages opened: zero figures, illustrations, tables, diagrams or reproduced
+        advertisements; clean single-column body text throughout; every load-bearing number the
+        extraction cites re-read on the page render and matching ($20-$25, 4%/96%, 425 calories,
+        1,460,000, 70c vs 18-22c, 91%, 75%, four to one, $700,000 and the rest - full list in
+        the ledger).
+    - pattern: source_evidence_never_printed
+      affects: >
+        Every advertisement Hopkins argues from in chapters 8-21 - Arrow Collar, the Puffed
+        Grains pictures, Marmon's columns of copy, the coupon and "before and after taking"
+        advertisements, the positive/negative pair said to outpull four to one. Not one is
+        reproduced.
+      detectability: named_by_text
+      recoverability: not_applicable
+      evidence: >
+        Established in this pass by exhaustive page inspection, not text-layer inference. A 1923
+        reader was in the same position; no better copy repairs it. Chapter 9 (p.28) even
+        instructs the reader to look at mail order advertisements the book does not show.
+        figure_semantic_binding_lost is NOT applicable - nothing was lost because nothing was
+        ever printed.
+    - pattern: display_type_ocr_damage
+      affects: "text-layer italic page-number footers on seven pages (printed 27, 29, 37, 53, 55, 57, 59)"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Re-verified mechanically with pdftotext in this pass ("Pf", "752]", "2/7", "28)", "oo",
+        "nye", "he"); the page images carry correct folios everywhere, so the loss is text-layer
+        only and fully recovered by page render. No word of body text is touched;
+        extraction_uncertainty ocr_degraded is correctly used on zero objects.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The copy is complete and legible page by page and the folio affordance is real, so locators
+    are trustworthy at page granularity. The pattern that governs downstream use is the one that
+    is not our fault: the evidential advertisements were never printed, and bnd_sa8_001 exists
+    so a retrieval layer cannot serve a Hopkins claim as though its evidence were merely
+    un-digitised.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    48 objects. The same source class as the live chapters 1-7 record - the canonical
+    measurement_claimed_result_not_supplied case in AUDIT-GATE-v0.2.md - and categorised here
+    from the actual frozen objects, not by inheritance from that record.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_sa8_0010, sk_sa8_0016, sk_sa8_0019, sk_sa8_0024, sk_sa8_0026, sk_sa8_0028,
+                sk_sa8_0035, sk_sa8_0036]
+      evidence: >
+        The eight places in fourteen chapters where a measurement is described AND its return
+        given: $20-$25 per tooth-brush convert (p.31); 4%/96% canvass (p.35); the 425-calorie
+        laboratory return (p.36); the 1,460,000-request issue and coupon-charging costs (p.41);
+        70c mailed vs 18-22c store-presented on the same advertisement, 70% by telephone (p.42);
+        the repeater check (p.42); the 91% coupon-redeemer vote at ~$1,000 per test (p.49); the
+        best-of-fifty-plans 75% cost reduction over five years (p.49). All eight carry
+        empirical_within_source in the frozen record; sk_sa8_0026 is the span's single
+        controlled_comparison and the extraction argued rather than assumed it.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_sa8_0002, sk_sa8_0004, sk_sa8_0006, sk_sa8_0008, sk_sa8_0013, sk_sa8_0025,
+                sk_sa8_0029, sk_sa8_0033, sk_sa8_0034, sk_sa8_0038, sk_sa8_0044]
+      evidence: >
+        Eleven objects where the source asserts that measurement happened and reports nothing
+        from it, each carrying a "measurement asserted, result withheld" (or equivalent)
+        extractor_observed caveat in the frozen record. The two sharpest: sk_sa8_0033 - chapter
+        15 specifies the test-campaign procedure more fully than any other chapter and reports
+        not one campaign's return, the negative finding that closes the live record's chapter-15
+        gap - and sk_sa8_0034, "we establish averages on a small scale, and those averages
+        always hold", the doctrine's load-bearing premise with no paired predicted/observed
+        figure anywhere in the book. None of the eleven carries empirical_within_source,
+        consistently.
+    - category: source_author_assertion
+      sk_refs: [sk_sa8_0001, sk_sa8_0003, sk_sa8_0005, sk_sa8_0007, sk_sa8_0009, sk_sa8_0011,
+                sk_sa8_0012, sk_sa8_0014, sk_sa8_0015, sk_sa8_0017, sk_sa8_0018, sk_sa8_0020,
+                sk_sa8_0021, sk_sa8_0022, sk_sa8_0023, sk_sa8_0027, sk_sa8_0030, sk_sa8_0031,
+                sk_sa8_0032, sk_sa8_0037, sk_sa8_0039, sk_sa8_0040, sk_sa8_0041, sk_sa8_0042,
+                sk_sa8_0043, sk_sa8_0045, sk_sa8_0046, sk_sa8_0047, sk_sa8_0048]
+      evidence: >
+        The remaining 29 objects: doctrine stated in the practitioner's own voice, frequently
+        with mechanism (46 of 48 carry mechanism_given) and frequently with an outcome claimed
+        but never evidenced (21 of 48 carry outcome_claimed). sk_sa8_0043 (the magazine
+        publisher's twenty-five-letter cell test) is a described third-party practice with no
+        result reported - recorded here as assertion because the source neither owns the
+        measurement nor supplies a return from it.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record and with the vocabulary finding the live chapters 1-7
+    audit states: empirical_within_source appears on exactly the eight own-measurement objects;
+    none of the eleven measurement-claimed objects carries it. The 8-vs-21 ratio of reported
+    returns to claimed outcomes is the span's central evidential fact, and the audit layer
+    records the claims-an-empirical-basis fact the frozen characteristic cannot hold.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        No creative_ir binding exists; SPEC-01 was not supplied to the extraction lane and no
+        path was guessed. Deliberate, per EXTRACTION-NOTES.md §10.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sa8_010, bnd_sa8_011]
+      note: >
+        Both carry status production_candidate with target_path null, recording 1923 pictorial
+        and stationery instructions in the source's own frame; nothing was rewritten as a
+        generative-media instruction, and the four physical_production remedy terms stay
+        untranslated per SPEC-05 rule 6.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sa8_003, bnd_sa8_004, bnd_sa8_005]
+      note: Three evaluation bindings, each with an observation_unit, over the span's checkable failure states and comparison tests.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sa8_001, bnd_sa8_002, bnd_sa8_009]
+      note: >
+        bnd_sa8_001 (evidence_interpretation, over sk_sa8_0034) governs the one inference the
+        whole doctrine leans on; bnd_sa8_002 the admissibility rule; bnd_sa8_009 the
+        disagreement-settling procedure.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_sa8_006, bnd_sa8_007, bnd_sa8_008]
+      note: Named test cases from the chapter-20 name taxonomy, the two specified test designs, and the claim-selection minimal pairs.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No exactly executable geometry or composition rule exists in the span.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The chapter-15 test-campaign procedure and the town-comparison method are working
+        methods for an organisation - how a team learns, not what an asset contains - the same
+        finding the live chapters 1-7 record makes for the keyed-advertisement apparatus. No
+        workflow binding was made and none is manufactured here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_sa8_0033]
+      observation: >
+        The chapter-15 procedure specification - the resolution of the live record's explicit
+        NOT VERIFIED gap - binds to nothing directly (bnd_sa8_001 binds its extrapolation
+        premise, sk_sa8_0034). The negative finding it carries (procedure specified, returns
+        withheld) is the most audit-relevant content in the span.
+    - sk_refs: [sk_sa8_0030, sk_sa8_0031]
+      observation: >
+        The 1923 physical distribution mechanics (store-routed sampling, the pre-announced
+        full-package coupon) are left unbound and their remedy terms untranslated, correctly:
+        there is no generative-media equivalent of mailing a grocer a proof sheet.
+  conclusion: >
+    Right-shaped fit for a scope-continuation of an assertive 1923 trade manual: evaluation,
+    governance and benchmark bindings exist with the evidence-interpretation guard in front of
+    them; production content is held as candidates; nothing binds to creative IR.
+
+lineage:
+  authors: [Claude C. Hopkins]
+  publisher: Snowball Publishing / BN Publishing (2009 reprint of the 1923 work)
+  series: null
+  first_published: 1923
+  copy_edition: 2009 reprint, Internet Archive scan, same physical file as the live chapters 1-7 source (SHA-256 verified this pass)
+  related_sources_in_corpus:
+    - source_id: hopkins_scientific_advertising_ch1_7
+      relation: shared_author
+      evidence: >
+        Same author and in fact the SAME 1923 VOLUME: this candidate is chapters 8-21 (printed
+        pp.25-64) of the identical scan file (SHA-256
+        e081207466c2f8da334bf6bdeba8c454c17107e6ddfe90cbccc0d95e8531b6fc) whose chapters 1-7
+        (printed pp.1-24) are the live accepted source. The controlled vocabulary's
+        dependence-defeating relations were each assessed: companion_volume is false (one
+        volume, not two), derivative_of is false (neither span derives from the other; both are
+        spans of one continuous work), shared_primary_informant is subsumed (one man IS the
+        work). shared_author is declared as the true dependence-defeating relation, with the
+        same-volume fact recorded here because it is STRONGER than the relation name can say:
+        agreement between the two spans is one author restating himself inside one book and is
+        worth exactly zero as corroboration. Eighteen objects carry caveats naming the live
+        sk_hop_sa_ id they extend or are distinct from; six ontology relationships point at live
+        terms, all labelled observations.
+    - source_id: hopkins-my-life-in-advertising
+      relation: shared_author
+      evidence: >
+        Same practitioner, 1927 memoir, extracted in the sibling candidate. The doctrinal
+        overlap is near-total - EXTRACTION-NOTES.md §6.2 tabulates ten near-identical doctrine
+        pairs and flags that sk_mla_0020 supplies the Liquozone measurement chain chapter 15
+        withholds. Two books by one author are one origin; the memoir's numbers do not
+        corroborate the manual's doctrine.
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not independent of the two named Hopkins sources, per the pairwise entries above - against
+    hopkins_scientific_advertising_ch1_7 the dependence is same-volume, the strongest in the
+    corpus. Independence is a property of a pair: nothing here impugns this source's standing
+    against any non-Hopkins source, and no such pair was assessed as dependent.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other sources; no SPEC
+      quotes Hopkins (the live chapters 1-7 record states the same). Separately recorded for
+      honesty: the extraction lane deliberately read the live chapters 1-7 files before writing,
+      for the duplication diff in EXTRACTION-NOTES.md §9 - exposure to the sibling span, managed
+      by the diff itself, not spec exposure.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    A 1923 trade manual read 103 years later: area-priced space, halftone engraving, bearer
+    coupons redeemed at grocers, postal response routes, the telephone as novelty. Thirty-one of
+    forty-eight objects carry historical_claim and nine carry culturally_bounded in the frozen
+    record.
+  assessed: true
+  classes:
+    - class: technology_contingent
+      sk_refs: [sk_sa8_0005, sk_sa8_0008, sk_sa8_0009, sk_sa8_0011, sk_sa8_0012, sk_sa8_0014,
+                sk_sa8_0015, sk_sa8_0017, sk_sa8_0018, sk_sa8_0020, sk_sa8_0023, sk_sa8_0024,
+                sk_sa8_0025, sk_sa8_0028, sk_sa8_0030, sk_sa8_0031, sk_sa8_0032, sk_sa8_0033,
+                sk_sa8_0034, sk_sa8_0043, sk_sa8_0044, sk_sa8_0045, sk_sa8_0048]
+      evidence: >
+        All carry historical_claim (without culturally_bounded). Mechanics of 1923 trade
+        structure: the chapter-9 picture economics are an arithmetic over area-priced space and
+        engraving costs (EXTRACTION-NOTES.md §5 - nothing in the lane says anything about
+        whether images work); the sampling, coupon and distribution machinery runs on physical
+        retail; the dollar figures are 1923 amounts; test-campaign scale and letter-test cell
+        economics assume 1923 media buying and postage.
+    - class: historical_convention
+      sk_refs: [sk_sa8_0003, sk_sa8_0006, sk_sa8_0007, sk_sa8_0010, sk_sa8_0026, sk_sa8_0038,
+                sk_sa8_0042, sk_sa8_0046, sk_sa8_0047]
+      evidence: >
+        All carry culturally_bounded: period taste and period reader behaviour stated as fact -
+        the fool's-cap and clown strictures, the 1923 account of what women want in the beauty
+        instruction, telephone-vs-stamps habits, the naming conventions of 1923 brands.
+    - class: durable_mechanism
+      sk_refs: [sk_sa8_0004, sk_sa8_0029]
+      evidence: >
+        Neither carries historical_claim or culturally_bounded. The admissibility rule (opinions
+        from anyone who does not know his returns are inadmissible) and cost-per-customer as the
+        criterion settled by comparison are reasoning patterns about evidence and measurement,
+        not about a medium - the extraction's own §10 draws exactly this line between the
+        reasoning patterns and the mechanics. That they are durable says nothing about whether
+        they are evidenced; both remain assertion.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
