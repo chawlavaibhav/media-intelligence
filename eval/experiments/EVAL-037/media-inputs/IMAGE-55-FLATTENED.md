@@ -7388,3 +7388,19 @@ Use frozen brief B06 from the top of this file.
 Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
 
 ---
+
+# IMAGE JOB I55 — B02
+
+Source key: E037-sonnet-full-canon-B02-R2
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I55
+Generate one first-pass image. Persist/checkpoint. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# END OF IMAGE INPUT
+
+Expected total: **55 image jobs**.
