@@ -1,0 +1,758 @@
+{
+  "bundle_version": "canon-context-bundle-v0.1",
+  "contract": "canon/retrieval/RETRIEVAL-CONTRACT-v0.1.md",
+  "how_to_use": "This is the Canon knowledge selected for this request. It is durable creative and production knowledge — what makes work good and what commonly goes wrong. It says nothing about which image or video model to use, what a provider charges, or whether a model can execute something reliably. Read each item with its `epistemics`: a claim the source hedged is not a rule, a caveat marked extractor_observed is this project's doubt rather than the author's, and a binding marked proposed has not been reviewed by anyone. Items are delivered in full unless `delivered_complete` is false; `detail_ref` fetches the untruncated object in the rare case you need it.",
+  "status_legend": {
+    "ACCEPTED": "The source passed the project's Audit Gate: its extraction was checked against the exact bytes it was taken from. It does not mean the claim was independently tested.",
+    "claim_type.explicit_source_claim": "The source says this in words.",
+    "claim_type.source_interpretation": "This is our reading of the source, not its own words. `interpretation_basis` says what it was read from.",
+    "caveat_origin.source_stated": "The author limited their own claim this way.",
+    "caveat_origin.extractor_observed": "This project noticed a weakness in the support; the author did not state it.",
+    "binding_status.proposed": "Nobody has reviewed this suggested use. It is a proposal about how our system could apply the knowledge, not part of the source's claim.",
+    "evidence_basis.extractor_inference": "The step from the source's claim to this suggested use is our leap, not the source's."
+  },
+  "corpus": {
+    "surface": "accepted_only",
+    "production_default": true,
+    "diagnostic_reason": null,
+    "root": "canon/knowledge/current",
+    "accepted_sources_available": 24,
+    "items_available": 1623,
+    "corpus_fingerprint": {
+      "algorithm": "sha256-of-sorted-path-and-content",
+      "file_count": 120,
+      "combined_digest": "a9cee40fb433adc08ac98ba7c87e1ead790f60aa71d184327cc5e97f59ed7eb9"
+    }
+  },
+  "budgets": {
+    "max_items": 12,
+    "max_total_chars": 30000,
+    "max_chars_per_item": 4200,
+    "max_sources": 8,
+    "max_items_per_source": 3,
+    "max_items_per_lineage_group": 4,
+    "max_questions": 4,
+    "max_items_per_question": 5,
+    "max_candidates_per_question": 60
+  },
+  "plan": {
+    "detected_media": "video",
+    "question_count": 4,
+    "max_questions": 4,
+    "request_terms_used": [
+      "create",
+      "16",
+      "performance",
+      "oriented",
+      "video",
+      "fictional",
+      "indian",
+      "skincare",
+      "brand",
+      "product",
+      "free",
+      "acid"
+    ],
+    "declared_needs_supplied": 0,
+    "questions": [
+      {
+        "question_id": "shot_grammar",
+        "plain_english": "How should shots be chosen, ordered and cut so the scene reads correctly?",
+        "selected_by": "base_for_media",
+        "matched_request_cues": [
+          "camera",
+          "duration",
+          "video"
+        ]
+      },
+      {
+        "question_id": "failure_prevention",
+        "plain_english": "What commonly goes wrong in work like this, and what does the source say to inspect?",
+        "selected_by": "base_for_media",
+        "matched_request_cues": []
+      },
+      {
+        "question_id": "message_structure",
+        "plain_english": "How should the advertising message be structured so the point lands?",
+        "selected_by": "request_cue_match",
+        "matched_request_cues": [
+          "commercial",
+          "performance",
+          "purchase"
+        ]
+      },
+      {
+        "question_id": "persuasion_memory",
+        "plain_english": "What makes this communication persuasive and memorable rather than merely seen?",
+        "selected_by": "request_cue_match",
+        "matched_request_cues": [
+          "believable",
+          "credible"
+        ]
+      }
+    ],
+    "boundary_note": "Production questions ask what must be understood to specify the work. They never ask which model or provider should make it; that is capability routing and is out of Canon's scope."
+  },
+  "items": [
+    {
+      "n": 1,
+      "answers_question": "shot_grammar",
+      "kind": "knowledge",
+      "item_id": "sk_gote_c003_0017",
+      "source": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+        "title": "grammar-of-the-edit-ch3-5 (Roy Thompson, Christopher J. Bowen)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "continuity_of_movement_screen_direction_maintained",
+        "claim": "Screen direction — whether talent or objects move toward frame left or frame right — must hold across a cut whenever the next shot continues the same movement. Where the available shot contradicts the established direction, the editor must insert a shot that continues the narrative and breaks the audience's attention on the direction of travel.",
+        "source_words": [
+          "Screen direction is the movement of talent or objects toward frame right or frame left. This must be maintained as you transition from one shot to the next"
+        ],
+        "mechanism_stated_by_source": false,
+        "scope_domain": [
+          "film_editing",
+          "television_editing"
+        ],
+        "scope_conditions": "successive shots covering the same movement",
+        "source_stated_problems": [
+          "the shot contradicts the already established screen direction"
+        ],
+        "source_stated_remedies": [
+          "insert a logical shot that provides a visual break from the discontinuity of movement"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "practitioner_assertion",
+          "mechanism_absent"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source places responsibility with production, which should have respected screen direction and the 180 degree rule while shooting coverage",
+            "origin": "source_stated"
+          },
+          {
+            "text": "the inserted shot is said to offer the audience a break allowing the character time to reverse direction; no reason is given why elapsed screen time makes a reversal acceptable",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Chapter Three",
+        "section": "Continuity of Movement",
+        "page_start": 68,
+        "page_end": 68,
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 38.647655,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "continuity",
+          "coverage",
+          "cut",
+          "direction",
+          "editing",
+          "movement",
+          "of",
+          "screen",
+          "shot",
+          "transition"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_gote_c003_0017"
+      }
+    },
+    {
+      "n": 2,
+      "answers_question": "failure_prevention",
+      "kind": "knowledge",
+      "item_id": "sk_sb_c003_0006",
+      "source": {
+        "source_dir": "miller-storybrand-sb7",
+        "source_id": "miller_storybrand_sb7_framework_ch1_3",
+        "title": "miller-storybrand-sb7 (Donald Miller)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "the_seven_element_framework_as_the_unit_of_message_design",
+        "claim": "The framework itself: seven elements — character, problem, guide, plan, call to action, failure avoided, success — which the source says are the necessary elements of a compelling story and the categories a brand message should be reduced to. It is presented as derived from studying hundreds of films, novels, plays and musicals, and as a summation of best practices refined over thousands of years of storytelling.",
+        "source_words": [
+          "A CHARACTER who wants something encounters a PROBLEM before they can get it. At the peak of their despair, a GUIDE steps into their lives, gives them a PLAN, and CALLS THEM TO ACTION. That action helps them avoid FAILURE and ends in a SUCCESS."
+        ],
+        "mechanism_text": "The formula follows a well-worn path in the brain, so positioning a product along that path makes it easier to attend to.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "marketing",
+          "branding",
+          "websites",
+          "keynotes",
+          "elevator_pitch"
+        ],
+        "scope_conditions": "constructing a brand's core message",
+        "source_stated_remedies": [
+          "reduce the message to soundbites in seven categories"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "practitioner_assertion",
+          "repeated_within_source",
+          "mechanism_given"
+        ],
+        "source_uncertainty": "source_concedes_difficulty",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the diagram shows the last two elements as a fork from one junction rather than as consecutive steps, which the prose does not say",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the derivation is asserted, not shown: no sample, no criteria and no count of the films studied are given",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the source concedes some stories leave the guide out or use several, and calls indie films that break the formula critically successful but commercially unsuccessful, which is an outcome claim without evidence",
+            "origin": "source_stated"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "2-3",
+        "section": "Story in a Nutshell / The StoryBrand Framework",
+        "page_start": 21,
+        "page_end": 22,
+        "locator": "EPUB Chapter_2.xhtml and Chapter_3.xhtml; figures on printed pp.21-22",
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 17.705466,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "avoid",
+          "brand",
+          "failure",
+          "problem",
+          "product"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "miller-storybrand-sb7",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_sb_c003_0006"
+      }
+    },
+    {
+      "n": 3,
+      "answers_question": "message_structure",
+      "kind": "knowledge",
+      "item_id": "sk_sb_c003_0016",
+      "source": {
+        "source_dir": "miller-storybrand-sb7",
+        "source_id": "miller_storybrand_sb7_framework_ch1_3",
+        "title": "miller-storybrand-sb7 (Donald Miller)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "the_brandscript_as_a_single_page_message_specification",
+        "claim": "The framework's output artefact: one page holding the brand's whole message, with a named field for each element, created in the author's free web tool. The source instructs the reader to build one for the overall brand, then one for each division, then one for each product, and optionally one per customer segment — so the artefact nests across a company.",
+        "source_words": [
+          "your entire brand message is going to sit on a single sheet of paper",
+          "the StoryBrand BrandScript"
+        ],
+        "mechanism_stated_by_source": false,
+        "scope_domain": [
+          "branding",
+          "marketing_operations"
+        ],
+        "scope_conditions": "a company with more than one product or division",
+        "source_stated_remedies": [
+          "put the whole message on one page in seven named fields"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "practitioner_assertion",
+          "mechanism_absent"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the template contains sub-fields the processed chapters never list in prose — villain, internal, external and philosophical under the problem; empathy and authority under the guide; process and agreement under the plan; direct and transitional under the call to action — and a whole eighth box, Character Transformation, with a from and a to",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the artefact is a commercial product of the source's company and access is tied to the book purchase",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "3 — The Simple SB7 Framework",
+        "section": "When You Feel Confused, Clarify Your Message",
+        "page_start": 38,
+        "page_end": 39,
+        "locator": "EPUB Chapter_3.xhtml; figures on printed pp.38-39",
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 33.005676,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "action",
+          "brand",
+          "call",
+          "free",
+          "message",
+          "product",
+          "single",
+          "to"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "miller-storybrand-sb7",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_sb_c003_0016"
+      }
+    },
+    {
+      "n": 4,
+      "answers_question": "persuasion_memory",
+      "kind": "knowledge",
+      "item_id": "sk_hea_mts_0020",
+      "source": {
+        "source_dir": "heath-made-to-stick-introduction",
+        "source_id": "heath_made_to_stick_introduction",
+        "title": "heath-made-to-stick-introduction (Chip Heath, Dan Heath)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "the_six_principles_are_used_as_a_diagnostic_checklist",
+        "claim": "The six principles are meant to be run as a checklist against a specific idea, one question at a time, and the source demonstrates the procedure twice on the same page. \"Maximize shareholder value\" is scored: simple only in the sense of being short, not unexpected, not concrete, credible only because the CEO said it, not emotional, not a story. John F. Kennedy's 1961 call to put a man on the moon and return him safely by the end of the decade is scored on the same six questions and passes each. The source names the acronym SUCCESs and admits it is a little corny.",
+        "source_words": [
+          "here's our checklist for creating a successful idea: a Simple Unexpected Concrete Credentialed Emotional Story",
+          "They can be used as a kind of checklist.",
+          "Is this idea simple? Yes, in the sense that it's short, but it lacks the useful simplicity of a proverb. Is it unexpected? No. Concrete? Not at all."
+        ],
+        "mechanism_text": "Asking the six questions of an existing idea exposes which of them it fails, which is what a communicator otherwise has no way to see.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "communication",
+          "idea_design"
+        ],
+        "scope_conditions": "an idea already drafted, being evaluated or repaired",
+        "source_stated_problems": [
+          "opaque, abstract missions don't captivate and inspire people"
+        ],
+        "source_stated_remedies": [
+          "The six principles presented earlier are your best weapons. They can be used as a kind of checklist."
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "argued",
+          "anecdotal",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "The two worked examples were chosen for the demonstration and score six-for-six and zero-for-six respectively. No idea with a mixed score is worked, which is where a checklist would actually be difficult to apply.",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "Every question is answered yes or no by the authors' judgement. No test is given for any of the six, so the checklist's outputs depend entirely on who is running it.",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Introduction — What Sticks?",
+        "section": "Six Principles of Sticky Ideas; Tappers and Listeners",
+        "locator": "Introduction, checklist statement and the worked comparison",
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 22.465592,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "concrete",
+          "simplicity",
+          "story",
+          "unexpected"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "heath-made-to-stick-introduction",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_hea_mts_0020"
+      }
+    },
+    {
+      "n": 5,
+      "answers_question": "shot_grammar",
+      "kind": "concept_system",
+      "item_id": "scs_gote_c003_003",
+      "source": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+        "title": "grammar-of-the-edit-ch3-5 (Roy Thompson, Christopher J. Bowen)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "label": "the_four_continuities",
+        "system_type": "interacting_set",
+        "description": "Continuity is divided by the source into four kinds that must each be addressed separately: content, movement, position and sound. Each has its own failure and, for three of the four, its own remedy.",
+        "whole_system_claim": "The four are treated as one responsibility with four independent failure surfaces. A transition can satisfy any three and fail the fourth, and each failure looks different to the viewer — a mismatched object, a reversed direction of travel, a subject that jumps across the screen, sound that vanishes. Two of the four, movement and position, share a single underlying cause in the geometry of the action line, and the source treats them separately in Chapter Three before supplying the shared cause in Chapter Five.",
+        "member_count": 6,
+        "member_refs": [
+          "sk_gote_c003_0014",
+          "sk_gote_c003_0015",
+          "sk_gote_c003_0017",
+          "sk_gote_c003_0018",
+          "sk_gote_c003_0019",
+          "sk_gote_c003_0016"
+        ],
+        "source_warns_against_isolated_use": false
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "system_type_origin": "source_stated",
+        "whole_system_claim_origin": "extractor_synthesis",
+        "whole_system_claim_interpretation_basis": "The division into four and the requirement to address each is the source's own, stated at the head of the Continuity section and repeated in the chapter review. What is ours is the observation that movement and position both reduce to the action line, which the source supplies two chapters later without connecting it back, and the observation that the four are independently failable rather than aspects of one property.",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "controlled_comparison",
+          "practitioner_assertion",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "source_concedes_difficulty",
+        "extraction_uncertainty": "none",
+        "system_level_uncertainty": "Membership and ordering are the source's own. The grouping of the cut-away as a shared remedy serving two of the four is ours, though it rests on the source using the same action and the same stated mechanism in both places under two names."
+      },
+      "provenance": {
+        "chapter": "Chapter Three",
+        "section": "Continuity",
+        "page_start": 66,
+        "page_end": 70,
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 31.911511,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "action",
+          "continuity",
+          "cut",
+          "direction",
+          "line",
+          "movement",
+          "of",
+          "screen",
+          "shot",
+          "transition"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "artifact": "source-concept-systems.yaml",
+        "item_id": "scs_gote_c003_003"
+      }
+    },
+    {
+      "n": 6,
+      "answers_question": "failure_prevention",
+      "kind": "binding",
+      "item_id": "bnd_ogl_c003_0002",
+      "source": {
+        "source_dir": "ogilvy-ch2-advertising-that-sells",
+        "source_id": "ogilvy_on_advertising_ch2",
+        "title": "ogilvy-ch2-advertising-that-sells (David Ogilvy)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "what_it_binds_to": {
+          "target_type": "creative_ir",
+          "target_path": "brand.palette",
+          "role": [
+            "constrains",
+            "flags"
+          ]
+        },
+        "rationale": "SPEC-01 records brand palette and type with a tolerance. This source supplies the reason a tolerance matters: every execution contributes to one accumulating personality, so drift across executions is itself the defect. It also supplies a default — an impression of quality — and a named risk, that advertising which looks cheap transfers that to the product.",
+        "applicability_when": "brand constraints are being specified or a generated execution is being checked against them",
+        "applicability_limits": "The source is discussing consistency across years of campaigns, not across variants within one job. Whether the same argument holds at that much shorter timescale is untested here.",
+        "derived_from_source_knowledge": [
+          "sk_ogl_c003_0007",
+          "sk_ogl_c003_0008"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "binding_status": "proposed",
+        "binding_status_reason": "not reviewed",
+        "evidence_basis": "extractor_inference",
+        "review_note": "This is a proposed use of the knowledge by this project. It is not part of the source's claim."
+      },
+      "provenance": {
+        "target_schema": "SPEC-01",
+        "target_schema_version": "v0.1"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 9.542259,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "brand",
+          "defect",
+          "product"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "ogilvy-ch2-advertising-that-sells",
+        "artifact": "operational-bindings.yaml",
+        "item_id": "bnd_ogl_c003_0002"
+      }
+    },
+    {
+      "n": 7,
+      "answers_question": "message_structure",
+      "kind": "concept_system",
+      "item_id": "scs_sb_c003_002",
+      "source": {
+        "source_dir": "miller-storybrand-sb7",
+        "source_id": "miller_storybrand_sb7_framework_ch1_3",
+        "title": "miller-storybrand-sb7 (Donald Miller)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "label": "the_sb7_framework",
+        "system_type": "sequence",
+        "description": "The seven elements in the source's own order — a character who wants something, a problem, a guide, a plan, a call to action, a failure avoided, a success — each stated as a numbered principle with its own heading, its own icon, and its own field on the output artefact.",
+        "whole_system_claim": "The source states the sequence as one sentence and treats it as the necessary structure of a compelling story, transferred whole to a brand message. Two qualifications are the source's own and matter for anything applying it: the elements are not to be used evenly, with the failure element explicitly dosed like salt; and the diagram places success and failure as a fork from a single junction rather than as consecutive steps, so the last two elements are alternative outcomes of the same decision.",
+        "member_count": 10,
+        "member_refs": [
+          "sk_sb_c003_0006",
+          "sk_sb_c003_0009",
+          "sk_sb_c003_0007",
+          "sk_sb_c003_0008",
+          "sk_sb_c003_0010",
+          "sk_sb_c003_0011",
+          "sk_sb_c003_0012",
+          "sk_sb_c003_0013",
+          "sk_sb_c003_0016",
+          "sk_sb_c003_0017"
+        ],
+        "tradeoffs": [
+          {
+            "between": [
+              "sk_sb_c003_0012",
+              "sk_sb_c003_0006"
+            ],
+            "nature": "Stakes must be present or nothing is at issue, and stakes must be dosed or the message is ruined. The source gives the trade-off explicitly, in its salt analogy, and gives no way to judge the dose.",
+            "origin": "source_stated"
+          }
+        ],
+        "source_warns_against_isolated_use": true
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "system_type_origin": "source_stated",
+        "whole_system_claim_origin": "source_explicit",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "practitioner_assertion",
+          "repeated_within_source",
+          "mechanism_given"
+        ],
+        "source_uncertainty": "source_concedes_difficulty",
+        "extraction_uncertainty": "none",
+        "system_level_uncertainty": "Membership, order, naming and the artefact are all the source's own, so this is a reported system rather than a synthesised one. Ours is only the recorded conflict between the set-in-stone framing and the source's own concessions. One caution for any later reader: the order and the fork between the last two elements are carried by a diagram, not by the prose, so a text-only reconstruction of this system would be a straight list of seven and would be wrong in a way nothing in the text would reveal."
+      },
+      "provenance": {
+        "chapter": "2-3",
+        "page_start": 21,
+        "page_end": 39,
+        "locator": "EPUB Chapter_2.xhtml and Chapter_3.xhtml; figures on printed pp.21-22, 38-39",
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 17.988789,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "action",
+          "brand",
+          "call",
+          "claim",
+          "message",
+          "single",
+          "to"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "miller-storybrand-sb7",
+        "artifact": "source-concept-systems.yaml",
+        "item_id": "scs_sb_c003_002"
+      }
+    },
+    {
+      "n": 8,
+      "answers_question": "persuasion_memory",
+      "kind": "binding",
+      "item_id": "bnd_hea_mts_0001",
+      "source": {
+        "source_dir": "heath-made-to-stick-introduction",
+        "source_id": "heath_made_to_stick_introduction",
+        "title": "heath-made-to-stick-introduction (Chip Heath, Dan Heath)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "what_it_binds_to": {
+          "target_type": "evaluation",
+          "role": [
+            "diagnoses"
+          ]
+        },
+        "rationale": "The source supplies a six-question diagnostic and demonstrates it twice on worked examples. It is the most directly operational thing in this lane: given a finished asset, ask whether its central idea is simple, unexpected, concrete, credible, emotional and carried by a story, and the answers name what to repair. The unit is the whole asset because five of the six questions are about the idea rather than about any element of it.",
+        "applicability_when": "reviewing a generated asset whose purpose is to be remembered or acted on",
+        "applicability_limits": "The source gives no test for any of the six questions, so the checklist's outputs depend entirely on the judgement of whoever runs it — which is exactly the judgement the source elsewhere says is unreliable. It also states plainly that the traits are neither necessary nor sufficient, so a score is not a verdict. Anything built on this must report which questions failed, never a total.",
+        "observation_unit": "whole_asset",
+        "derived_from_source_knowledge": [
+          "sk_hea_mts_0020",
+          "sk_hea_mts_0019"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "binding_status": "proposed",
+        "binding_status_reason": "not reviewed",
+        "evidence_basis": "derived_from_source",
+        "review_note": "This is a proposed use of the knowledge by this project. It is not part of the source's claim."
+      },
+      "provenance": {},
+      "relevance": {
+        "kind_rank": 1,
+        "score": 10.116512,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "concrete",
+          "story",
+          "unexpected"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "heath-made-to-stick-introduction",
+        "artifact": "operational-bindings.yaml",
+        "item_id": "bnd_hea_mts_0001"
+      }
+    }
+  ],
+  "coverage": {
+    "questions_planned": [
+      "shot_grammar",
+      "failure_prevention",
+      "message_structure",
+      "persuasion_memory"
+    ],
+    "questions_with_at_least_one_item": [
+      "failure_prevention",
+      "message_structure",
+      "persuasion_memory",
+      "shot_grammar"
+    ],
+    "questions_with_no_item": []
+  },
+  "spread": {
+    "items": 8,
+    "distinct_sources": 4,
+    "sources": [
+      "grammar-of-the-edit-ch3-5",
+      "heath-made-to-stick-introduction",
+      "miller-storybrand-sb7",
+      "ogilvy-ch2-advertising-that-sells"
+    ],
+    "distinct_lineage_groups": 4,
+    "max_items_from_one_source": 3,
+    "max_items_from_one_lineage_group": 3,
+    "items_by_kind": {
+      "knowledge": 4,
+      "concept_system": 2,
+      "binding": 2
+    },
+    "source_stated_domains": {
+      "branding": 2,
+      "communication": 1,
+      "elevator_pitch": 1,
+      "film_editing": 1,
+      "idea_design": 1,
+      "keynotes": 1,
+      "marketing": 1,
+      "marketing_operations": 1,
+      "television_editing": 1,
+      "websites": 1
+    },
+    "domains_note": "What the selected sources say THEY are about. Retrieval is lexical, so a source written about one medium can answer a question about another. Check this against the job."
+  },
+  "size": {
+    "total_chars": 27499,
+    "estimated_tokens": 6874,
+    "chars_per_token_estimate": 4,
+    "budget_chars": 30000,
+    "items_delivered_complete": 8,
+    "items_delivered_complete_share": 1.0,
+    "within_budget": true
+  }
+}

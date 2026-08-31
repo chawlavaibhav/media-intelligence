@@ -1,0 +1,1077 @@
+{
+  "evaluation": "CANON-015 offline retrieval evaluation v0.1",
+  "spend_usd": 0,
+  "model_calls": 0,
+  "media_generated": 0,
+  "eval_set": "canon-015-offline-retrieval-eval-v0.1",
+  "eval_set_provenance": {
+    "generated_by": "canon/retrieval/evaluation/build_eval_set.py",
+    "sonnet_controlled_canon": {
+      "ref": "origin/work/eval-037-sonnet-controlled-canon",
+      "commit": "b4a2569cfbf60b3997697f51476e91953ecc3a50",
+      "lane": "sonnet-controlled-canon"
+    },
+    "gemma_controlled_canon": {
+      "ref": "origin/work/eval-037-gemma-controlled-canon",
+      "commit": "7bda868626afe087c22fba1c65557c166cd8e6b5",
+      "lane": "gemma-controlled-canon"
+    },
+    "gemma_required_canon": {
+      "ref": "origin/work/eval-037-gemma-required-canon",
+      "commit": "7af6de0db121514b6e6c11e4f3b22e929fdfc34f",
+      "lane": "gemma-required-canon"
+    },
+    "sonnet_full_canon_repair": {
+      "ref": "origin/work/eval-037-sonnet-full-canon-repair",
+      "commit": "0f8568e1048b205273295efe302143fd6658c9f7",
+      "lane": "sonnet-full-canon-repair-001"
+    },
+    "canon_fingerprints_used_by_eval_037": {
+      "full_knowledge": "cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60",
+      "qa": "1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd"
+    },
+    "note": "EVAL-037 searched the FULL status-aware corpus: accepted Canon, HOLD candidates and the Q&A banks. CANON-015 retrieves accepted Canon only. The accepted bytes are identical in both — the accepted-Canon fingerprint on main recomputes to the value the corpus index records — so a size and composition comparison is fair, and the difference in what is REACHABLE is itself one of the findings."
+  },
+  "accepted_corpus_fingerprint": {
+    "algorithm": "sha256-of-sorted-path-and-content",
+    "file_count": 120,
+    "combined_digest": "a9cee40fb433adc08ac98ba7c87e1ead790f60aa71d184327cc5e97f59ed7eb9"
+  },
+  "budgets_default": {
+    "max_items": 12,
+    "max_total_chars": 30000,
+    "max_chars_per_item": 4200,
+    "max_sources": 8,
+    "max_items_per_source": 3,
+    "max_items_per_lineage_group": 4,
+    "max_questions": 4,
+    "max_items_per_question": 5,
+    "max_candidates_per_question": 60
+  },
+  "budgets_compact": {
+    "max_items": 8,
+    "max_total_chars": 15000,
+    "max_chars_per_item": 2600,
+    "max_sources": 6,
+    "max_items_per_source": 2,
+    "max_items_per_lineage_group": 3,
+    "max_questions": 3,
+    "max_items_per_question": 3,
+    "max_candidates_per_question": 60
+  },
+  "what_this_does_not_measure": "Relevance, usefulness, and any effect on an accepted customer outcome. No item in the corpus is labelled relevant to any brief, so no precision or recall number is computed. Use HUMAN-REVIEW-RUBRIC.md for relevance and a controlled model experiment for outcome effect.",
+  "unbounded_lane_outcomes": {
+    "note": "Why an unbounded retrieval default is not an option. Neither lane is re-run by CANON-015; both are quoted from their committed results.",
+    "sonnet_full_canon_repair_001": {
+      "model": "claude-sonnet-5",
+      "trial_count": 18,
+      "statuses": {
+        "failed_execution": 16,
+        "complete": 2
+      }
+    },
+    "gemma_required_canon": {
+      "model": "gemma-4-31b-it",
+      "trial_count": 18,
+      "statuses": {
+        "failed_technical": 18
+      }
+    }
+  },
+  "totals": {
+    "briefs": 6,
+    "eval_037_total_searches": 53,
+    "eval_037_total_reads": 1,
+    "eval_037_total_bytes_exposed": 1205392,
+    "eval_037_mean_bytes_per_trial": 66966.3333,
+    "eval_037_mean_retrieval_operations": 3.0,
+    "eval_037_mean_accepted_share": 0.465,
+    "eval_037_mean_accepted_non_qa_share": 0.4233,
+    "eval_037_mean_distinct_sources": 8.9433,
+    "canon_015_mean_chars": 27861.5,
+    "canon_015_mean_items": 8.3333,
+    "canon_015_mean_distinct_sources": 6.6667,
+    "canon_015_mean_lineage_groups": 6.5,
+    "canon_015_retrieval_operations": 1,
+    "canon_015_accepted_share": 1.0,
+    "canon_015_mean_question_coverage": 1.0,
+    "canon_015_mean_pairwise_jaccard": 0.1169,
+    "canon_015_mean_delivered_complete_share": 0.9583,
+    "canon_015_compact_mean_chars": 13722,
+    "replayed_eval_037_mean_bytes": 66708.3333,
+    "replayed_eval_037_mean_accepted_share": 0.4653,
+    "replayed_eval_037_mean_pairwise_jaccard": 0.1527,
+    "context_reduction_vs_observed_eval_037": 0.5839
+  },
+  "per_brief": {
+    "B01": {
+      "title": "RentOK vertical video ad (Indian hostel/PG software)",
+      "observed_eval_037": {
+        "trials": 3,
+        "mean_retrieval_operations": 3,
+        "mean_bytes_exposed": 73112,
+        "mean_objects_returned": 24,
+        "mean_distinct_sources": 9.33,
+        "mean_accepted_share": 0.26,
+        "mean_accepted_non_qa_share": 0.26,
+        "mean_repeat_objects_within_trial": 0.67,
+        "max_objects_from_one_source_in_one_search": 7,
+        "per_trial": {
+          "E037SCC-sonnet-B01-R1": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 71091,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.375,
+            "accepted_non_qa_share": 0.375,
+            "distinct_sources": 8,
+            "max_objects_from_one_source_in_one_search": 5,
+            "objects_by_kind": {
+              "binding": 2,
+              "concept_system": 1,
+              "knowledge": 12,
+              "ontology_term": 3,
+              "qa": 5,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B01-R2": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 66335,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.2083,
+            "accepted_non_qa_share": 0.2083,
+            "distinct_sources": 10,
+            "max_objects_from_one_source_in_one_search": 6,
+            "objects_by_kind": {
+              "binding": 2,
+              "concept_system": 1,
+              "knowledge": 10,
+              "ontology_concept": 1,
+              "ontology_term": 4,
+              "qa": 6
+            },
+            "declared_knowledge_needs": 0
+          },
+          "E037SCC-sonnet-B01-R3": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 81909,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.2083,
+            "accepted_non_qa_share": 0.2083,
+            "distinct_sources": 10,
+            "max_objects_from_one_source_in_one_search": 7,
+            "objects_by_kind": {
+              "binding": 1,
+              "concept_system": 4,
+              "knowledge": 10,
+              "ontology_term": 1,
+              "qa": 8
+            },
+            "declared_knowledge_needs": 0
+          }
+        }
+      },
+      "canon_015_default": {
+        "retrieval_operations": 1,
+        "chars": 28228,
+        "estimated_tokens": 7057,
+        "items": 8,
+        "distinct_sources": 7,
+        "distinct_lineage_groups": 7,
+        "max_items_from_one_source": 2,
+        "items_by_kind": {
+          "knowledge": 4,
+          "concept_system": 2,
+          "binding": 2
+        },
+        "source_stated_domains": {
+          "agency_organisation": 1,
+          "branding": 1,
+          "corporate_identity": 1,
+          "film_editing": 1,
+          "graphic_design": 1,
+          "indian_advertising": 1,
+          "marketing": 1,
+          "regional_markets": 1,
+          "sales_copy": 1,
+          "television_editing": 1,
+          "websites": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "shot_grammar",
+          "failure_prevention",
+          "brand_handling",
+          "cultural_communication"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.117,
+        "items_delivered_complete_share": 1.0,
+        "second_read_would_be_needed_for": []
+      },
+      "canon_015_compact": {
+        "retrieval_operations": 1,
+        "chars": 13289,
+        "estimated_tokens": 3322,
+        "items": 4,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 3,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "knowledge": 1,
+          "binding": 3
+        },
+        "source_stated_domains": {
+          "film_editing": 1,
+          "television_editing": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "shot_grammar",
+          "failure_prevention",
+          "brand_handling"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1623,
+        "items_delivered_complete_share": 1.0,
+        "second_read_would_be_needed_for": []
+      },
+      "declared_need_term_coverage": {
+        "declared_need_terms": 45,
+        "present_in_bundle": 13,
+        "share": 0.2889,
+        "caveat": "Lexical overlap only. It is not a relevance score and must not be reported as one."
+      },
+      "declared_needs_recorded": 3,
+      "replayed_eval_037": {
+        "mean_bytes_exposed": 72788,
+        "mean_objects_returned": 24,
+        "mean_accepted_share": 0.2639,
+        "mean_accepted_non_qa_share": 0.2639,
+        "mean_distinct_sources": 9.33,
+        "mean_pairwise_jaccard": 0.1547
+      }
+    },
+    "B02": {
+      "title": "aight festive promotional poster (media-generation API pricing)",
+      "observed_eval_037": {
+        "trials": 3,
+        "mean_retrieval_operations": 2.67,
+        "mean_bytes_exposed": 70154,
+        "mean_objects_returned": 21.33,
+        "mean_distinct_sources": 7.67,
+        "mean_accepted_share": 0.57,
+        "mean_accepted_non_qa_share": 0.44,
+        "mean_repeat_objects_within_trial": 1.33,
+        "max_objects_from_one_source_in_one_search": 4,
+        "per_trial": {
+          "E037SCC-sonnet-B02-R1": {
+            "retrieval_operations": 2,
+            "canon_search_calls": 2,
+            "canon_read_calls": 0,
+            "bytes_exposed": 52439,
+            "objects_returned": 16,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.5,
+            "accepted_non_qa_share": 0.4375,
+            "distinct_sources": 6,
+            "max_objects_from_one_source_in_one_search": 3,
+            "objects_by_kind": {
+              "concept_system": 1,
+              "knowledge": 8,
+              "ontology_term": 2,
+              "qa": 4,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 0
+          },
+          "E037SCC-sonnet-B02-R2": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 83115,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 2,
+            "accepted_share": 0.5417,
+            "accepted_non_qa_share": 0.4167,
+            "distinct_sources": 9,
+            "max_objects_from_one_source_in_one_search": 3,
+            "objects_by_kind": {
+              "concept_system": 1,
+              "knowledge": 13,
+              "ontology_term": 2,
+              "qa": 7,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 0
+          },
+          "E037SCC-sonnet-B02-R3": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 74908,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 2,
+            "accepted_share": 0.6667,
+            "accepted_non_qa_share": 0.4583,
+            "distinct_sources": 8,
+            "max_objects_from_one_source_in_one_search": 4,
+            "objects_by_kind": {
+              "binding": 1,
+              "concept_system": 1,
+              "knowledge": 10,
+              "ontology_term": 4,
+              "qa": 7,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 0
+          }
+        }
+      },
+      "canon_015_default": {
+        "retrieval_operations": 1,
+        "chars": 28154,
+        "estimated_tokens": 7038,
+        "items": 8,
+        "distinct_sources": 7,
+        "distinct_lineage_groups": 7,
+        "max_items_from_one_source": 2,
+        "items_by_kind": {
+          "knowledge": 4,
+          "concept_system": 2,
+          "binding": 1,
+          "visual_evidence": 1
+        },
+        "source_stated_domains": {
+          "film_editing": 2,
+          "television_editing": 2,
+          "branding": 1,
+          "corporate_identity": 1,
+          "graphic_design": 1,
+          "marketing": 1,
+          "sales_copy": 1,
+          "websites": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "composition_hierarchy",
+          "failure_prevention",
+          "message_structure",
+          "brand_handling"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.115,
+        "items_delivered_complete_share": 0.875,
+        "second_read_would_be_needed_for": [
+          "scs_dpci_001"
+        ]
+      },
+      "canon_015_compact": {
+        "retrieval_operations": 1,
+        "chars": 13613,
+        "estimated_tokens": 3403,
+        "items": 4,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 4,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "knowledge": 1,
+          "binding": 3
+        },
+        "source_stated_domains": {
+          "graphic_design": 1,
+          "typography": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "composition_hierarchy",
+          "failure_prevention",
+          "message_structure"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1469,
+        "items_delivered_complete_share": 0.75,
+        "second_read_would_be_needed_for": [
+          "sk_sam_c003_0003"
+        ]
+      },
+      "declared_need_term_coverage": {
+        "declared_need_terms": 0,
+        "present_in_bundle": 0,
+        "share": null,
+        "caveat": "Lexical overlap only. It is not a relevance score and must not be reported as one."
+      },
+      "declared_needs_recorded": 0,
+      "replayed_eval_037": {
+        "mean_bytes_exposed": 69842,
+        "mean_objects_returned": 21.33,
+        "mean_accepted_share": 0.5695,
+        "mean_accepted_non_qa_share": 0.4375,
+        "mean_distinct_sources": 7.67,
+        "mean_pairwise_jaccard": 0.1508
+      }
+    },
+    "B03": {
+      "title": "mosambi sparkling drink premium advertising image",
+      "observed_eval_037": {
+        "trials": 3,
+        "mean_retrieval_operations": 3,
+        "mean_bytes_exposed": 64625,
+        "mean_objects_returned": 24,
+        "mean_distinct_sources": 10.33,
+        "mean_accepted_share": 0.47,
+        "mean_accepted_non_qa_share": 0.39,
+        "mean_repeat_objects_within_trial": 0,
+        "max_objects_from_one_source_in_one_search": 8,
+        "per_trial": {
+          "E037SCC-sonnet-B03-R1": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 63701,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.5,
+            "accepted_non_qa_share": 0.4583,
+            "distinct_sources": 13,
+            "max_objects_from_one_source_in_one_search": 5,
+            "objects_by_kind": {
+              "binding": 1,
+              "knowledge": 10,
+              "ontology_term": 7,
+              "qa": 6
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B03-R2": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 64986,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.375,
+            "accepted_non_qa_share": 0.2917,
+            "distinct_sources": 8,
+            "max_objects_from_one_source_in_one_search": 8,
+            "objects_by_kind": {
+              "binding": 2,
+              "concept_system": 1,
+              "knowledge": 7,
+              "ontology_term": 2,
+              "qa": 12
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B03-R3": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 65189,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.5417,
+            "accepted_non_qa_share": 0.4167,
+            "distinct_sources": 10,
+            "max_objects_from_one_source_in_one_search": 6,
+            "objects_by_kind": {
+              "concept_system": 1,
+              "knowledge": 9,
+              "ontology_term": 5,
+              "qa": 8,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 3
+          }
+        }
+      },
+      "canon_015_default": {
+        "retrieval_operations": 1,
+        "chars": 26931,
+        "estimated_tokens": 6732,
+        "items": 8,
+        "distinct_sources": 8,
+        "distinct_lineage_groups": 8,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "knowledge": 2,
+          "binding": 3,
+          "concept_system": 2,
+          "ontology_term": 1
+        },
+        "source_stated_domains": {
+          "advertising": 1,
+          "film_editing": 1,
+          "globalisation": 1,
+          "post_liberalisation_india": 1,
+          "television_editing": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "composition_hierarchy",
+          "failure_prevention",
+          "cultural_communication",
+          "product_legibility"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1104,
+        "items_delivered_complete_share": 0.875,
+        "second_read_would_be_needed_for": [
+          "sk_jgb_0150"
+        ]
+      },
+      "canon_015_compact": {
+        "retrieval_operations": 1,
+        "chars": 13756,
+        "estimated_tokens": 3439,
+        "items": 4,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 4,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "binding": 3,
+          "knowledge": 1
+        },
+        "source_stated_domains": {
+          "graphic_design": 1,
+          "typography": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "composition_hierarchy",
+          "failure_prevention",
+          "cultural_communication"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1338,
+        "items_delivered_complete_share": 0.75,
+        "second_read_would_be_needed_for": [
+          "sk_sam_c003_0003"
+        ]
+      },
+      "declared_need_term_coverage": {
+        "declared_need_terms": 91,
+        "present_in_bundle": 31,
+        "share": 0.3407,
+        "caveat": "Lexical overlap only. It is not a relevance score and must not be reported as one."
+      },
+      "declared_needs_recorded": 9,
+      "replayed_eval_037": {
+        "mean_bytes_exposed": 64315,
+        "mean_objects_returned": 24,
+        "mean_accepted_share": 0.4722,
+        "mean_accepted_non_qa_share": 0.3889,
+        "mean_distinct_sources": 10.33,
+        "mean_pairwise_jaccard": 0.1332
+      }
+    },
+    "B04": {
+      "title": "Indian D2C skincare UGC performance video",
+      "observed_eval_037": {
+        "trials": 3,
+        "mean_retrieval_operations": 3,
+        "mean_bytes_exposed": 69035,
+        "mean_objects_returned": 24,
+        "mean_distinct_sources": 11,
+        "mean_accepted_share": 0.28,
+        "mean_accepted_non_qa_share": 0.25,
+        "mean_repeat_objects_within_trial": 0.67,
+        "max_objects_from_one_source_in_one_search": 8,
+        "per_trial": {
+          "E037SCC-sonnet-B04-R1": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 65348,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.4167,
+            "accepted_non_qa_share": 0.375,
+            "distinct_sources": 13,
+            "max_objects_from_one_source_in_one_search": 4,
+            "objects_by_kind": {
+              "binding": 1,
+              "knowledge": 12,
+              "ontology_concept": 1,
+              "ontology_term": 2,
+              "qa": 5,
+              "visual_evidence": 3
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B04-R2": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 62976,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.2083,
+            "accepted_non_qa_share": 0.1667,
+            "distinct_sources": 12,
+            "max_objects_from_one_source_in_one_search": 7,
+            "objects_by_kind": {
+              "knowledge": 9,
+              "ontology_concept": 1,
+              "ontology_term": 3,
+              "qa": 10,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B04-R3": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 78780,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.2083,
+            "accepted_non_qa_share": 0.2083,
+            "distinct_sources": 8,
+            "max_objects_from_one_source_in_one_search": 8,
+            "objects_by_kind": {
+              "binding": 2,
+              "knowledge": 17,
+              "ontology_concept": 1,
+              "qa": 4
+            },
+            "declared_knowledge_needs": 3
+          }
+        }
+      },
+      "canon_015_default": {
+        "retrieval_operations": 1,
+        "chars": 27499,
+        "estimated_tokens": 6874,
+        "items": 8,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 4,
+        "max_items_from_one_source": 3,
+        "items_by_kind": {
+          "knowledge": 4,
+          "concept_system": 2,
+          "binding": 2
+        },
+        "source_stated_domains": {
+          "branding": 2,
+          "communication": 1,
+          "elevator_pitch": 1,
+          "film_editing": 1,
+          "idea_design": 1,
+          "keynotes": 1,
+          "marketing": 1,
+          "marketing_operations": 1,
+          "television_editing": 1,
+          "websites": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "shot_grammar",
+          "failure_prevention",
+          "message_structure",
+          "persuasion_memory"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1313,
+        "items_delivered_complete_share": 1.0,
+        "second_read_would_be_needed_for": []
+      },
+      "canon_015_compact": {
+        "retrieval_operations": 1,
+        "chars": 14061,
+        "estimated_tokens": 3515,
+        "items": 4,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 3,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "knowledge": 2,
+          "binding": 2
+        },
+        "source_stated_domains": {
+          "branding": 1,
+          "film_editing": 1,
+          "marketing_operations": 1,
+          "television_editing": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "shot_grammar",
+          "failure_prevention",
+          "message_structure"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1363,
+        "items_delivered_complete_share": 0.5,
+        "second_read_would_be_needed_for": [
+          "sk_gote_c003_0054",
+          "sk_sb_c003_0016"
+        ]
+      },
+      "declared_need_term_coverage": {
+        "declared_need_terms": 103,
+        "present_in_bundle": 19,
+        "share": 0.1845,
+        "caveat": "Lexical overlap only. It is not a relevance score and must not be reported as one."
+      },
+      "declared_needs_recorded": 9,
+      "replayed_eval_037": {
+        "mean_bytes_exposed": 68765,
+        "mean_objects_returned": 24,
+        "mean_accepted_share": 0.2778,
+        "mean_accepted_non_qa_share": 0.25,
+        "mean_distinct_sources": 11,
+        "mean_pairwise_jaccard": 0.1557
+      }
+    },
+    "B05": {
+      "title": "two-person café dialogue scene, six shots",
+      "observed_eval_037": {
+        "trials": 3,
+        "mean_retrieval_operations": 3.33,
+        "mean_bytes_exposed": 58244,
+        "mean_objects_returned": 24,
+        "mean_distinct_sources": 7.33,
+        "mean_accepted_share": 0.88,
+        "mean_accepted_non_qa_share": 0.88,
+        "mean_repeat_objects_within_trial": 1.33,
+        "max_objects_from_one_source_in_one_search": 7,
+        "per_trial": {
+          "E037SCC-sonnet-B05-R1": {
+            "retrieval_operations": 4,
+            "canon_search_calls": 3,
+            "canon_read_calls": 1,
+            "bytes_exposed": 55786,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.875,
+            "accepted_non_qa_share": 0.875,
+            "distinct_sources": 8,
+            "max_objects_from_one_source_in_one_search": 7,
+            "objects_by_kind": {
+              "binding": 3,
+              "concept_system": 1,
+              "knowledge": 13,
+              "ontology_concept": 1,
+              "ontology_term": 4,
+              "qa": 1,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B05-R2": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 51856,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.9583,
+            "accepted_non_qa_share": 0.9583,
+            "distinct_sources": 5,
+            "max_objects_from_one_source_in_one_search": 6,
+            "objects_by_kind": {
+              "binding": 1,
+              "knowledge": 12,
+              "ontology_concept": 2,
+              "ontology_term": 5,
+              "qa": 1,
+              "visual_evidence": 3
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B05-R3": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 67089,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 2,
+            "accepted_share": 0.7917,
+            "accepted_non_qa_share": 0.7917,
+            "distinct_sources": 9,
+            "max_objects_from_one_source_in_one_search": 6,
+            "objects_by_kind": {
+              "binding": 2,
+              "concept_system": 1,
+              "knowledge": 14,
+              "ontology_term": 2,
+              "qa": 3,
+              "visual_evidence": 2
+            },
+            "declared_knowledge_needs": 3
+          }
+        }
+      },
+      "canon_015_default": {
+        "retrieval_operations": 1,
+        "chars": 28636,
+        "estimated_tokens": 7159,
+        "items": 9,
+        "distinct_sources": 7,
+        "distinct_lineage_groups": 6,
+        "max_items_from_one_source": 3,
+        "items_by_kind": {
+          "knowledge": 4,
+          "concept_system": 2,
+          "binding": 1,
+          "ontology_term": 1,
+          "visual_evidence": 1
+        },
+        "source_stated_domains": {
+          "film_editing": 2,
+          "television_editing": 2,
+          "corporate_identity": 1,
+          "graphic_design": 1,
+          "motion_picture_production": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "shot_grammar",
+          "failure_prevention",
+          "brand_handling"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1236,
+        "items_delivered_complete_share": 1.0,
+        "second_read_would_be_needed_for": []
+      },
+      "canon_015_compact": {
+        "retrieval_operations": 1,
+        "chars": 13531,
+        "estimated_tokens": 3382,
+        "items": 4,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 3,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "knowledge": 1,
+          "binding": 3
+        },
+        "source_stated_domains": {
+          "film_editing": 1,
+          "television_editing": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "shot_grammar",
+          "failure_prevention",
+          "brand_handling"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1653,
+        "items_delivered_complete_share": 0.75,
+        "second_read_would_be_needed_for": [
+          "sk_gote_c003_0054"
+        ]
+      },
+      "declared_need_term_coverage": {
+        "declared_need_terms": 113,
+        "present_in_bundle": 40,
+        "share": 0.354,
+        "caveat": "Lexical overlap only. It is not a relevance score and must not be reported as one."
+      },
+      "declared_needs_recorded": 9,
+      "replayed_eval_037": {
+        "mean_bytes_exposed": 58075,
+        "mean_objects_returned": 24,
+        "mean_accepted_share": 0.875,
+        "mean_accepted_non_qa_share": 0.875,
+        "mean_distinct_sources": 7.33,
+        "mean_pairwise_jaccard": 0.1796
+      }
+    },
+    "B06": {
+      "title": "Aster Meridian 38 watch e-commerce hero image",
+      "observed_eval_037": {
+        "trials": 3,
+        "mean_retrieval_operations": 3,
+        "mean_bytes_exposed": 66628,
+        "mean_objects_returned": 24,
+        "mean_distinct_sources": 8,
+        "mean_accepted_share": 0.33,
+        "mean_accepted_non_qa_share": 0.32,
+        "mean_repeat_objects_within_trial": 0.33,
+        "max_objects_from_one_source_in_one_search": 8,
+        "per_trial": {
+          "E037SCC-sonnet-B06-R1": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 68724,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.2083,
+            "accepted_non_qa_share": 0.2083,
+            "distinct_sources": 7,
+            "max_objects_from_one_source_in_one_search": 8,
+            "objects_by_kind": {
+              "binding": 3,
+              "knowledge": 7,
+              "ontology_term": 3,
+              "qa": 11
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B06-R2": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 61522,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 1,
+            "accepted_share": 0.4583,
+            "accepted_non_qa_share": 0.4167,
+            "distinct_sources": 10,
+            "max_objects_from_one_source_in_one_search": 7,
+            "objects_by_kind": {
+              "binding": 4,
+              "knowledge": 8,
+              "ontology_term": 4,
+              "qa": 7,
+              "visual_evidence": 1
+            },
+            "declared_knowledge_needs": 3
+          },
+          "E037SCC-sonnet-B06-R3": {
+            "retrieval_operations": 3,
+            "canon_search_calls": 3,
+            "canon_read_calls": 0,
+            "bytes_exposed": 69638,
+            "objects_returned": 24,
+            "repeat_objects_within_trial": 0,
+            "accepted_share": 0.3333,
+            "accepted_non_qa_share": 0.3333,
+            "distinct_sources": 7,
+            "max_objects_from_one_source_in_one_search": 8,
+            "objects_by_kind": {
+              "binding": 2,
+              "concept_system": 1,
+              "knowledge": 10,
+              "ontology_term": 4,
+              "qa": 7
+            },
+            "declared_knowledge_needs": 3
+          }
+        }
+      },
+      "canon_015_default": {
+        "retrieval_operations": 1,
+        "chars": 27721,
+        "estimated_tokens": 6930,
+        "items": 9,
+        "distinct_sources": 7,
+        "distinct_lineage_groups": 7,
+        "max_items_from_one_source": 2,
+        "items_by_kind": {
+          "knowledge": 4,
+          "binding": 1,
+          "concept_system": 2,
+          "ontology_term": 1,
+          "visual_evidence": 1
+        },
+        "source_stated_domains": {
+          "competitive_strategy": 1,
+          "film_editing": 1,
+          "graphic_design": 1,
+          "marketing": 1,
+          "photographic_lighting": 1,
+          "television_editing": 1,
+          "typography": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "composition_hierarchy",
+          "failure_prevention",
+          "lighting_material",
+          "product_legibility"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1043,
+        "items_delivered_complete_share": 1.0,
+        "second_read_would_be_needed_for": []
+      },
+      "canon_015_compact": {
+        "retrieval_operations": 1,
+        "chars": 14082,
+        "estimated_tokens": 3520,
+        "items": 4,
+        "distinct_sources": 4,
+        "distinct_lineage_groups": 4,
+        "max_items_from_one_source": 1,
+        "items_by_kind": {
+          "binding": 2,
+          "knowledge": 2
+        },
+        "source_stated_domains": {
+          "graphic_design": 1,
+          "photographic_lighting": 1,
+          "typography": 1
+        },
+        "accepted_share": 1.0,
+        "accepted_non_qa_share": 1.0,
+        "questions_planned": [
+          "composition_hierarchy",
+          "failure_prevention",
+          "lighting_material"
+        ],
+        "questions_with_no_item": [],
+        "question_coverage": 1.0,
+        "mean_pairwise_jaccard": 0.1315,
+        "items_delivered_complete_share": 0.5,
+        "second_read_would_be_needed_for": [
+          "sk_lsm_c003_0014",
+          "sk_sam_c003_0003"
+        ]
+      },
+      "declared_need_term_coverage": {
+        "declared_need_terms": 95,
+        "present_in_bundle": 28,
+        "share": 0.2947,
+        "caveat": "Lexical overlap only. It is not a relevance score and must not be reported as one."
+      },
+      "declared_needs_recorded": 9,
+      "replayed_eval_037": {
+        "mean_bytes_exposed": 66465,
+        "mean_objects_returned": 24,
+        "mean_accepted_share": 0.3333,
+        "mean_accepted_non_qa_share": 0.3194,
+        "mean_distinct_sources": 8,
+        "mean_pairwise_jaccard": 0.1422
+      }
+    }
+  }
+}

@@ -1,0 +1,753 @@
+{
+  "bundle_version": "canon-context-bundle-v0.1",
+  "contract": "canon/retrieval/RETRIEVAL-CONTRACT-v0.1.md",
+  "how_to_use": "This is the Canon knowledge selected for this request. It is durable creative and production knowledge — what makes work good and what commonly goes wrong. It says nothing about which image or video model to use, what a provider charges, or whether a model can execute something reliably. Read each item with its `epistemics`: a claim the source hedged is not a rule, a caveat marked extractor_observed is this project's doubt rather than the author's, and a binding marked proposed has not been reviewed by anyone. Items are delivered in full unless `delivered_complete` is false; `detail_ref` fetches the untruncated object in the rare case you need it.",
+  "status_legend": {
+    "ACCEPTED": "The source passed the project's Audit Gate: its extraction was checked against the exact bytes it was taken from. It does not mean the claim was independently tested.",
+    "claim_type.explicit_source_claim": "The source says this in words.",
+    "claim_type.source_interpretation": "This is our reading of the source, not its own words. `interpretation_basis` says what it was read from.",
+    "caveat_origin.source_stated": "The author limited their own claim this way.",
+    "caveat_origin.extractor_observed": "This project noticed a weakness in the support; the author did not state it.",
+    "binding_status.proposed": "Nobody has reviewed this suggested use. It is a proposal about how our system could apply the knowledge, not part of the source's claim.",
+    "evidence_basis.extractor_inference": "The step from the source's claim to this suggested use is our leap, not the source's."
+  },
+  "corpus": {
+    "surface": "accepted_only",
+    "production_default": true,
+    "diagnostic_reason": null,
+    "root": "canon/knowledge/current",
+    "accepted_sources_available": 24,
+    "items_available": 1623,
+    "corpus_fingerprint": {
+      "algorithm": "sha256-of-sorted-path-and-content",
+      "file_count": 120,
+      "combined_digest": "a9cee40fb433adc08ac98ba7c87e1ead790f60aa71d184327cc5e97f59ed7eb9"
+    }
+  },
+  "budgets": {
+    "max_items": 12,
+    "max_total_chars": 30000,
+    "max_chars_per_item": 4200,
+    "max_sources": 8,
+    "max_items_per_source": 3,
+    "max_items_per_lineage_group": 4,
+    "max_questions": 4,
+    "max_items_per_question": 5,
+    "max_candidates_per_question": 60
+  },
+  "plan": {
+    "detected_media": "video",
+    "question_count": 4,
+    "max_questions": 4,
+    "request_terms_used": [
+      "am",
+      "create",
+      "commercially",
+      "strong",
+      "vertical",
+      "video",
+      "ad",
+      "owners",
+      "who",
+      "run",
+      "india",
+      "managing"
+    ],
+    "declared_needs_supplied": 0,
+    "questions": [
+      {
+        "question_id": "shot_grammar",
+        "plain_english": "How should shots be chosen, ordered and cut so the scene reads correctly?",
+        "selected_by": "base_for_media",
+        "matched_request_cues": [
+          "duration",
+          "video"
+        ]
+      },
+      {
+        "question_id": "failure_prevention",
+        "plain_english": "What commonly goes wrong in work like this, and what does the source say to inspect?",
+        "selected_by": "base_for_media",
+        "matched_request_cues": [
+          "generic"
+        ]
+      },
+      {
+        "question_id": "brand_handling",
+        "plain_english": "How should the brand's own assets, colours and voice be handled?",
+        "selected_by": "request_cue_match",
+        "matched_request_cues": [
+          "brand",
+          "website"
+        ]
+      },
+      {
+        "question_id": "cultural_communication",
+        "plain_english": "What does this specific cultural audience context require, and what would ring false?",
+        "selected_by": "request_cue_match",
+        "matched_request_cues": [
+          "india",
+          "indian"
+        ]
+      }
+    ],
+    "boundary_note": "Production questions ask what must be understood to specify the work. They never ask which model or provider should make it; that is capability routing and is out of Canon's scope."
+  },
+  "items": [
+    {
+      "n": 1,
+      "answers_question": "shot_grammar",
+      "kind": "knowledge",
+      "item_id": "sk_gote_c003_0036",
+      "source": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+        "title": "grammar-of-the-edit-ch3-5 (Roy Thompson, Christopher J. Bowen)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "natural_wipe_uses_in_frame_movement_as_the_wiping_element",
+        "claim": "Where the outgoing shot contains strong vertical or horizontal movement, an object within the action can appear to push, pull or wipe across the screen, and the editor can use that movement as the transition itself. The source calls this a natural wipe and says it requires careful planning at the shooting stage.",
+        "source_words": [
+          "a clever filmmaker may have conceived of strong vertical or horizontal movements within the shot composition and the clever editor will turn these visual elements into what is called a natural wipe"
+        ],
+        "mechanism_stated_by_source": false,
+        "scope_domain": [
+          "film_editing",
+          "television_editing"
+        ],
+        "scope_conditions": "footage containing strong directional in-frame movement"
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "practitioner_assertion",
+          "mechanism_absent"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source says the resulting transition may be executed as either a cut or a wipe, so the natural wipe is a way of concealing a transition rather than a transition type",
+            "origin": "source_stated"
+          },
+          {
+            "text": "depends on production having conceived the movement in advance, which the source states, so it is not available to an editor from arbitrary coverage",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Chapter Four",
+        "section": "The Wipe, element 3",
+        "page_start": 84,
+        "page_end": 84,
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 42.120284,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "action",
+          "coverage",
+          "cut",
+          "editing",
+          "movement",
+          "of",
+          "screen",
+          "shot",
+          "strong",
+          "transition",
+          "vertical"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_gote_c003_0036"
+      }
+    },
+    {
+      "n": 2,
+      "answers_question": "failure_prevention",
+      "kind": "knowledge",
+      "item_id": "sk_sb_c003_0001",
+      "source": {
+        "source_dir": "miller-storybrand-sb7",
+        "source_id": "miller_storybrand_sb7_framework_ch1_3",
+        "title": "miller-storybrand-sb7 (Donald Miller)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "the_failure_is_in_the_message_not_the_product_or_the_design",
+        "claim": "When marketing does not work, the source's first move is to relocate the fault: not to the product, and not to the quality of the design, but to how the offer is described. Spending on design before the message is clear is presented as spending on amplification of noise.",
+        "source_words": [
+          "pretty websites don't sell things. Words sell things",
+          "nobody will listen to you if your message isn't clear, no matter how expensive your marketing material may be"
+        ],
+        "mechanism_text": "An unclear message is not listened to at any production value, so design spend applied before clarity buys reach for something the customer will not process.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "marketing",
+          "branding",
+          "websites",
+          "sales_copy"
+        ],
+        "scope_conditions": "any commercial message aimed at a customer who has not yet engaged",
+        "source_stated_problems": [
+          "we haven't clarified our message"
+        ],
+        "source_stated_remedies": [
+          "clarify the message before spending on design"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "practitioner_assertion",
+          "outcome_claimed",
+          "anecdotal",
+          "mechanism_given",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source sells message-clarification services, a certification programme and a software tool, so the diagnosis and the remedy are commercially linked",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the supporting evidence is the author's own company doubling revenue for four consecutive years and unspecified clients doubling to quadrupling theirs, with no control and no failed case",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "1 — The Key to Being Seen, Heard, and Understood",
+        "section": "opening",
+        "locator": "EPUB Chapter_1.xhtml, opening",
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 19.845497,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "commercially",
+          "failure",
+          "remedy",
+          "unclear",
+          "who"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "miller-storybrand-sb7",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_sb_c003_0001"
+      }
+    },
+    {
+      "n": 3,
+      "answers_question": "brand_handling",
+      "kind": "knowledge",
+      "item_id": "sk_vig_c003_0013",
+      "source": {
+        "source_dir": "vignelli-canon-intangibles",
+        "source_id": "vignelli_canon_part_one_intangibles",
+        "title": "vignelli-canon-intangibles (Massimo Vignelli)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "an_established_logo_holds_equity_that_should_be_protected",
+        "claim": "Requests to redesign a logo are often motivated by a desire for change merely for its own sake, which the source calls a very wrong motivation. A real corporate identity rests on an overall system rather than on a logo alone. A logo gradually becomes part of collective culture, and one in the public domain for more than fifty years becomes a classic and a landmark that should not be discarded for a new one however well designed. The source reports proposing a light retouch of the existing mark rather than a replacement when asked to design a new logo for Ford, and doing the same for Ciga Hotels, Cinzano and Lancia.",
+        "source_words": [
+          "A real Corporate Identity is based on an overall system approach, not just a logo.",
+          "When a logo has been in the public domain for more than fifty years it becomes a classic, a landmark, a respectable entity"
+        ],
+        "mechanism_text": "Long public exposure roots a mark in people's consciousness, so the accumulated recognition is itself the asset and replacing the mark discards it.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "graphic_design",
+          "corporate_identity"
+        ],
+        "scope_conditions": "established marks with long public exposure",
+        "source_stated_problems": [
+          "the desire of change merely for the sake of change"
+        ],
+        "source_stated_remedies": [
+          "propose a light retouch of an established mark rather than a replacement",
+          "treat corporate identity as an overall system rather than as a logo"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "anecdotal",
+          "practitioner_assertion",
+          "historical_claim",
+          "mechanism_given"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source grounds the position partly autobiographically, in having grown up where history and vernacular architecture were treated as protected culture",
+            "origin": "source_stated"
+          },
+          {
+            "text": "the fifty-year threshold is stated without derivation; the cases named are all ones where the source's own recommendation was retention",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Part One",
+        "section": "Equity",
+        "locator": "PDF spread 17",
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 25.706674,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "asset",
+          "identity",
+          "logo",
+          "recognition"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "vignelli-canon-intangibles",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_vig_c003_0013"
+      }
+    },
+    {
+      "n": 4,
+      "answers_question": "cultural_communication",
+      "kind": "knowledge",
+      "item_id": "sk_ppm_0030",
+      "source": {
+        "source_dir": "pandey-pandeymonium",
+        "source_id": "pandey_pandeymonium",
+        "title": "pandey-pandeymonium (Piyush Pandey)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "domestic_multiculturalism_a_shared_pool_plus_local_knowledge",
+        "claim": "Pandey argues that what applies to a global company operating across countries applies equally to a national company operating across locations within one country — which he calls domestic multiculturalism. The stated structure has two parts: a shared knowledge and resource pool that defines the culture and holds output quality up at any location, and a locally knowledgeable team that understands local nuance and client expectation. His cases are his agency's Madras office producing work that Bombay envied, including India's first brand music video.",
+        "source_words": [
+          "Successful national companies ensure that there is a knowledge and resource pool that defines the culture, ensuring a high level of output from any location. In addition, there is a locally knowledgeable team that understands local nuances and client expectations."
+        ],
+        "mechanism_stated_by_source": false,
+        "scope_domain": [
+          "agency_organisation",
+          "indian_advertising",
+          "regional_markets"
+        ],
+        "scope_conditions": "India, treated as internally multicultural to a degree comparable with operating across countries. The author's cases are his own agency's offices, 1970s-2010s.",
+        "source_stated_problems": [
+          "assuming a national market is culturally uniform"
+        ],
+        "source_stated_remedies": [
+          "hold a shared quality-defining pool centrally and a locally knowledgeable team locally"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "practitioner_assertion",
+          "anecdotal",
+          "culturally_bounded",
+          "mechanism_absent"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the two-part structure is asserted, not derived, and the cases illustrate rather than test it",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "this passage appears twice in this copy as a flattened pull-quote; the repetition is a conversion artefact",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the claim that India is internally multicultural to a degree comparable with cross-border operation is the interesting one, and the author asserts rather than argues it",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the chapter's most-developed material is about the durability of client relationships, not about the structure the chapter opens by stating",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Domestic Multiculturalism",
+        "section": "whole chapter",
+        "locator": "Ch. 25 'Domestic Multiculturalism' (spine 106-107)",
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 28.120797,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "culture",
+          "india",
+          "indian",
+          "local",
+          "market",
+          "video"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "pandey-pandeymonium",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_ppm_0030"
+      }
+    },
+    {
+      "n": 5,
+      "answers_question": "shot_grammar",
+      "kind": "concept_system",
+      "item_id": "scs_gote_c003_003",
+      "source": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+        "title": "grammar-of-the-edit-ch3-5 (Roy Thompson, Christopher J. Bowen)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "label": "the_four_continuities",
+        "system_type": "interacting_set",
+        "description": "Continuity is divided by the source into four kinds that must each be addressed separately: content, movement, position and sound. Each has its own failure and, for three of the four, its own remedy.",
+        "whole_system_claim": "The four are treated as one responsibility with four independent failure surfaces. A transition can satisfy any three and fail the fourth, and each failure looks different to the viewer — a mismatched object, a reversed direction of travel, a subject that jumps across the screen, sound that vanishes. Two of the four, movement and position, share a single underlying cause in the geometry of the action line, and the source treats them separately in Chapter Three before supplying the shared cause in Chapter Five.",
+        "member_count": 6,
+        "member_refs": [
+          "sk_gote_c003_0014",
+          "sk_gote_c003_0015",
+          "sk_gote_c003_0017",
+          "sk_gote_c003_0018",
+          "sk_gote_c003_0019",
+          "sk_gote_c003_0016"
+        ],
+        "source_warns_against_isolated_use": false
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "system_type_origin": "source_stated",
+        "whole_system_claim_origin": "extractor_synthesis",
+        "whole_system_claim_interpretation_basis": "The division into four and the requirement to address each is the source's own, stated at the head of the Continuity section and repeated in the chapter review. What is ours is the observation that movement and position both reduce to the action line, which the source supplies two chapters later without connecting it back, and the observation that the four are independently failable rather than aspects of one property.",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "controlled_comparison",
+          "practitioner_assertion",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "source_concedes_difficulty",
+        "extraction_uncertainty": "none",
+        "system_level_uncertainty": "Membership and ordering are the source's own. The grouping of the cut-away as a shared remedy serving two of the four is ours, though it rests on the source using the same action and the same stated mechanism in both places under two names."
+      },
+      "provenance": {
+        "chapter": "Chapter Three",
+        "section": "Continuity",
+        "page_start": 66,
+        "page_end": 70,
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 31.911511,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "action",
+          "continuity",
+          "cut",
+          "direction",
+          "line",
+          "movement",
+          "of",
+          "screen",
+          "shot",
+          "transition"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "artifact": "source-concept-systems.yaml",
+        "item_id": "scs_gote_c003_003"
+      }
+    },
+    {
+      "n": 6,
+      "answers_question": "failure_prevention",
+      "kind": "binding",
+      "item_id": "bnd_hea_mts_0002",
+      "source": {
+        "source_dir": "heath-made-to-stick-introduction",
+        "source_id": "heath_made_to_stick_introduction",
+        "title": "heath-made-to-stick-introduction (Chip Heath, Dan Heath)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "what_it_binds_to": {
+          "target_type": "creative_ir",
+          "target_path": "message.proposition",
+          "role": [
+            "constrains",
+            "diagnoses"
+          ]
+        },
+        "rationale": "Concreteness is a checkable property of a proposition: is it stated in human actions and sensory information, or in abstractions. The source names the failure class precisely — mission statements, synergies, strategies, visions — and supplies the strong version of the rule, that concreteness is the only way to ensure the proposition means the same thing to everyone who reads it. That is directly a constraint on a field whose whole job is to be interpreted identically by a generator and by a reviewer.",
+        "applicability_when": "a proposition is being written or reviewed",
+        "applicability_limits": "The \"only way\" claim is asserted rather than argued, and the memory mechanism behind it is cited generically. The constraint is well founded as a preference and overstated as an exclusivity.",
+        "derived_from_source_knowledge": [
+          "sk_hea_mts_0012",
+          "sk_hea_mts_0007"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "binding_status": "proposed",
+        "binding_status_reason": "not reviewed",
+        "evidence_basis": "derived_from_source",
+        "review_note": "This is a proposed use of the knowledge by this project. It is not part of the source's claim."
+      },
+      "provenance": {
+        "target_schema": "SPEC-01",
+        "target_schema_version": "v0.1"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 8.867573,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "failure",
+          "strong",
+          "who"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "heath-made-to-stick-introduction",
+        "artifact": "operational-bindings.yaml",
+        "item_id": "bnd_hea_mts_0002"
+      }
+    },
+    {
+      "n": 7,
+      "answers_question": "brand_handling",
+      "kind": "concept_system",
+      "item_id": "scs_dpci_001",
+      "source": {
+        "source_dir": "dwyer-patel-cinema-india",
+        "source_id": "dwyer_patel_cinema_india",
+        "title": "dwyer-patel-cinema-india (Rachel Dwyer, Divia Patel)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "label": "how_a_still_image_carries_a_narrative_to_a_viewer_who_holds_the_code",
+        "system_type": "causal_model",
+        "description": "Patel's chapter-4 account of poster meaning, assembled: the face opens attention before recognition; recognition of the star brings forward a persona that was built cumulatively by star, artist and public and is carried by a few fixed features; character types compress whole sets of relations into single figures so that the relations BETWEEN them are inferred rather than depicted; and because the code does the work, text can be minimised, which is what Indian posters in fact do.",
+        "whole_system_claim": "A poster can carry a narrative structure it never depicts, provided the viewer holds the code. Attention is won by the face without recognition; meaning is then supplied by the viewer out of an accumulated persona and a familiar typology, not out of the poster. The poster's job is therefore indexing, not describing — which is why minimal text suffices and why the same design fails outside the code.",
+        "member_count": 5,
+        "member_refs": [
+          "sk_dpci_0090",
+          "sk_dpci_0100",
+          "sk_dpci_0120",
+          "sk_dpci_0130",
+          "sk_dpci_0080"
+        ],
+        "tradeoffs": [
+          {
+            "between": [
+              "sk_dpci_0130",
+              "sk_dpci_0120"
+            ],
+            "nature": "Patel states the trade-off herself: designs that focus on one element are more universally understood but 'convey less information about the culture in which they are produced'. Reach and specificity are exchanged",
+            "origin": "source_stated"
+          }
+        ],
+        "source_warns_against_isolated_use": true
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "system_type_origin": "extractor_inferred",
+        "whole_system_claim_origin": "extractor_synthesis",
+        "whole_system_claim_interpretation_basis": "Patel connects the first three members explicitly through her \"hierarchy of responses\" and her worked reading of the Deewaar poster. She does not present them as a model, does not draw the consequence for text as following from the type code, and never cites Dwyer's chapter-1 account of personification as the precondition. Assembling them into a causal chain, and adding those two members, is the extractor's. What the grouping ADDS, and what must be attributed to CANON-014, is the observation that all four devices fail together at the same boundary - the viewer who does not hold the code - which is visible across the set and not within any member.",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "argued",
+          "mechanism_given",
+          "culturally_bounded",
+          "historical_claim"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "system_level_uncertainty": "Moderate. The members are all Patel's, all from one chapter, and she does connect the first three explicitly through the \"hierarchy of responses\". What is the EXTRACTOR'S and must be attributed to CANON-014 is the addition of sk_dpci_0130 (minimal text) as a consequence of the code rather than as a separate observation, and the addition of sk_dpci_0080 (personification) from Dwyer's chapter as the precondition — Patel never cites Dwyer's chapter for this. The causal ordering is likewise the extractor's. The system is recorded as a reading of Patel's argument, not as a structure she sets out."
+      },
+      "provenance": {
+        "chapter": "4, Advertising and the Communication of Meaning (with one member from Ch. 1)",
+        "section": "The Star Image; The Cultural Construction of Meaning; Character Types",
+        "page_start": 183,
+        "page_end": 204,
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 8.796788,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "recognition",
+          "who"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "dwyer-patel-cinema-india",
+        "artifact": "source-concept-systems.yaml",
+        "item_id": "scs_dpci_001"
+      }
+    },
+    {
+      "n": 8,
+      "answers_question": "cultural_communication",
+      "kind": "binding",
+      "item_id": "bnd_nnn_0008",
+      "source": {
+        "source_dir": "parameswaran-nawabs-nudes-noodles",
+        "source_id": "parameswaran_nawabs_nudes_noodles",
+        "title": "parameswaran-nawabs-nudes-noodles (Ambi Parameswaran)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "what_it_binds_to": {
+          "target_type": "production",
+          "role": [
+            "constrains"
+          ]
+        },
+        "rationale": "Clearance and contracting constraints that bind a real production before any asset exists: independent approval gates that can reject work a previous gate passed, animal-use clearance that may impose a supervisor on the shoot, and a contracted performer's bounded day plus entourage costs. These are properties of producing an advertisement, not of generating an image.",
+        "applicability_when": "planning a real advertising production under a regulatory regime",
+        "applicability_limits": "The regime described is substantially historical and specific to India. It records the SHAPE of the constraint — independent gates, third-party clearances, bounded performer availability — not a current compliance path for any market. Pass 2 required.",
+        "derived_from_source_knowledge": [
+          "sk_nnn_0013",
+          "sk_nnn_0010",
+          "sk_nnn_0051"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "binding_status": "production_candidate",
+        "binding_status_reason": "Production IR does not exist",
+        "evidence_basis": "derived_from_source",
+        "review_note": "This is a proposed use of the knowledge by this project. It is not part of the source's claim."
+      },
+      "provenance": {},
+      "relevance": {
+        "kind_rank": 1,
+        "score": 13.519717,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "india",
+          "market"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "parameswaran-nawabs-nudes-noodles",
+        "artifact": "operational-bindings.yaml",
+        "item_id": "bnd_nnn_0008"
+      }
+    }
+  ],
+  "coverage": {
+    "questions_planned": [
+      "shot_grammar",
+      "failure_prevention",
+      "brand_handling",
+      "cultural_communication"
+    ],
+    "questions_with_at_least_one_item": [
+      "brand_handling",
+      "cultural_communication",
+      "failure_prevention",
+      "shot_grammar"
+    ],
+    "questions_with_no_item": []
+  },
+  "spread": {
+    "items": 8,
+    "distinct_sources": 7,
+    "sources": [
+      "dwyer-patel-cinema-india",
+      "grammar-of-the-edit-ch3-5",
+      "heath-made-to-stick-introduction",
+      "miller-storybrand-sb7",
+      "pandey-pandeymonium",
+      "parameswaran-nawabs-nudes-noodles",
+      "vignelli-canon-intangibles"
+    ],
+    "distinct_lineage_groups": 7,
+    "max_items_from_one_source": 2,
+    "max_items_from_one_lineage_group": 2,
+    "items_by_kind": {
+      "knowledge": 4,
+      "concept_system": 2,
+      "binding": 2
+    },
+    "source_stated_domains": {
+      "agency_organisation": 1,
+      "branding": 1,
+      "corporate_identity": 1,
+      "film_editing": 1,
+      "graphic_design": 1,
+      "indian_advertising": 1,
+      "marketing": 1,
+      "regional_markets": 1,
+      "sales_copy": 1,
+      "television_editing": 1,
+      "websites": 1
+    },
+    "domains_note": "What the selected sources say THEY are about. Retrieval is lexical, so a source written about one medium can answer a question about another. Check this against the job."
+  },
+  "size": {
+    "total_chars": 28228,
+    "estimated_tokens": 7057,
+    "chars_per_token_estimate": 4,
+    "budget_chars": 30000,
+    "items_delivered_complete": 8,
+    "items_delivered_complete_share": 1.0,
+    "within_budget": true
+  }
+}
