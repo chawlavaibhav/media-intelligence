@@ -8242,3 +8242,66 @@ Use frozen brief B05 from the top of this file.
 Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
 
 ---
+
+# CONTEST V10 — B01
+
+Use frozen brief B01 from the top of this file.
+
+## PACKAGE A
+
+
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+
+
+## JUDGE V10
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
+
+# CONTEST V11 — B04
+
+Use frozen brief B04 from the top of this file.
+
+## PACKAGE A
+
+
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+
+
+## JUDGE V11
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
+
+# CONTEST V12 — B05
+
+Use frozen brief B05 from the top of this file.
+
+## PACKAGE A
+
+
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+
+
+## JUDGE V12
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
