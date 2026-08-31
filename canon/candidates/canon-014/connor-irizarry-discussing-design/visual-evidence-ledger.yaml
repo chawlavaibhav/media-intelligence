@@ -1,0 +1,93 @@
+# REP-07 — visual-evidence ledger for Connor & Irizarry, "Discussing Design" (O'Reilly, 2015).
+#
+# INSPECT pass executed 2026-09-01 per INSPECTION-RUNBOOK.md §13. All 25 cited figures were
+# opened fresh in this pass by rendering their PDF pages with pdftoppm; the 4 figures the
+# extraction rendered first-hand (2-1, 3-3, 3-5, 3-6; importable under ruling DN-03) were
+# therefore re-verified directly rather than imported.
+
+source_id: connor-irizarry-discussing-design
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+hash_on_arrival:
+  path: ~/Downloads/Books/Discussing Design.pdf
+  bytes: 17219889
+  sha256: b731d78811ce7d167c7ef61618d0069e7a1ed02eed0f6fea8c73b7caf2e5687b
+  recorded_original_hash: >
+    NONE recorded in PROVENANCE.md. The on-arrival hash matches the copy the prior REP-07
+    executor hashed on arrival (DN-01: same byte size 17,219,889, sha256 b731d788...), so the
+    5-locator verification sample below was mandatory before trusting figure refs.
+  pdf_pages: 206
+
+locator_verification_sample:
+  rule: >
+    printed = PDF - 18 (the copy-specific offset PROVENANCE records). Five cited locators
+    opened, spread across the range; printed folios read directly off the rendered pages.
+  outcome: PASS - 5 of 5
+  samples:
+    - {locator: "Figure 5-3, printed p.120", found: "PDF 138 carries folio 120 and 'FIGURE 5-3', the critique-session notification email - the runbook's named locator"}
+    - {locator: "Figure 5-4, printed p.123", found: "PDF 141 carries folio 123 and 'FIGURE 5-4', the improved-presentation pair - the runbook's second named locator"}
+    - {locator: "Figure 2-1, printed p.33", found: "PDF 51 carries folio 33 and the four-question critique framework"}
+    - {locator: "Figures 3-5/3-6, printed p.63", found: "PDF 81 carries folio 63 with both the DESIGN GOALS and DESIGN PRINCIPLES examples"}
+    - {locator: "Figure 6-3, printed p.155", found: "PDF 173 carries folio 155 and the balancing-discussion example"}
+
+figure_rows:
+  # evidence_time: rep07_pass on every row (all 25 opened fresh; none transcribed).
+  - {figure: 'Figure 1-1', printed_page: 3, finding: "The feedback loop: hand-drawn cycle (action -> system change -> interpretation). Matches sk_disc_0001's loop definition."}
+  - {figure: 'Figure 1-2', printed_page: 4, finding: "Ready For Zero debt-payoff UI pair showing sliders updating totals - the worked feedback-loop example. Matches."}
+  - {figure: 'Figure 1-3', printed_page: 6, finding: "Reactive-feedback creature ('An inebriated cockerspaniel could do better!') - gut-reaction feedback. Matches."}
+  - {figure: 'Figure 1-4', printed_page: 7, finding: "Directive-feedback creature ('You should have made all of those radio buttons a drop down, because...'). Matches."}
+  - {figure: 'Figure 1-5', printed_page: 9, finding: "Critique example creature stating objective, element and effectiveness reasoning - the three-element anatomy the adjacent prose deconstructs (and pg 10's bullet analysis re-quotes verbatim). Matches sk_disc_0005/0006."}
+  - {figure: 'Figure 2-1', printed_page: 33, finding: "The four-question framework (objective? related elements? effective? why or why not?). Matches sk_disc_0015."}
+  - {figure: 'Figure 2-2', printed_page: 41, finding: "Two-creature dialogue demonstrating clarification-seeking in critique. Matches sk_disc_0017."}
+  - {figure: 'Figure 3-1', printed_page: 51, finding: "Incremental design as a pocket knife assembled part by part under a stated objective. Matches sk_disc_0021."}
+  - {figure: 'Figure 3-2', printed_page: 52, finding: "Telephone evolution as iteration (candlestick to handset to brick). Matches sk_disc_0021."}
+  - {figure: 'Figure 3-3', printed_page: 59, finding: "'The Occasional Consumer' persona card (Fredrick Loren: behaviors, in-his-words). Matches sk_disc_0023."}
+  - {figure: 'Figure 3-4', printed_page: 60, finding: "Scenario text-figure ('Fred looks for something on responsive web design' + consider-the-following questions). Matches sk_disc_0023."}
+  - {figure: 'Figure 3-5', printed_page: 63, finding: "DESIGN GOALS example (three measurable goals incl. 'decrease time spent researching topics by 15%'). Matches sk_disc_0023."}
+  - {figure: 'Figure 3-6', printed_page: 63, finding: "DESIGN PRINCIPLES example ('Be where I am', 'Know me', 'Not everyone is equal'). Matches sk_disc_0024's discriminating-power test - each principle eliminates design ideas."}
+  - {figure: 'Figure 4-1', printed_page: 84, finding: "'The Life of a Design' bare timeline, spark to product. Matches sk_disc_0027."}
+  - {figure: 'Figure 4-2', printed_page: 85, finding: "Timeline + first point (enough clarity to communicate). Matches."}
+  - {figure: 'Figure 4-3', printed_page: 86, finding: "Timeline + second point (time to produce and move forward). Matches."}
+  - {figure: 'Figure 4-4', printed_page: 87, finding: "Timeline with the critique 'sweet-spot' brace between the two points; adjacent prose carries the 20%/80%-baked framing. Matches sk_disc_0027."}
+  - {figure: 'Figure 4-5', printed_page: 97, finding: "Divergent/convergent thinking blobs with critique as the transitional arrow. Matches sk_disc_0030."}
+  - {figure: 'Figure 5-1', printed_page: 110, finding: "The four-question framework restated for facilitation. Matches sk_disc_0033."}
+  - {figure: 'Figure 5-2', printed_page: 115, finding: "Two-creature demo of postponing idea exploration until after critique. Matches sk_disc_0035."}
+  - {figure: 'Figure 5-3', printed_page: 120, finding: "Sample critique-session notification email (Adam Connor, July 24 2014: scenario, goals, attachments). Matches sk_disc_0038."}
+  - {figure: 'Figure 5-4', printed_page: 123, finding: "'Instead of / Try something more like' presentation pair - walkthrough-by-layout vs interactions-and-experience. Matches sk_disc_0039."}
+  - {figure: 'Figure 6-1', printed_page: 152, finding: "'Instead of / Try something more like' question-framing pair - design not designer ('choices YOU made' vs 'elements and aspects'). Matches sk_disc_0050."}
+  - {figure: 'Figure 6-2', printed_page: 154, finding: "Bad feedback-sandwich creature dialogue. Matches sk_disc_0051."}
+  - {figure: 'Figure 6-3', printed_page: 155, finding: "Balancing strengths-and-weaknesses discussion anchored to the stated objective. Matches sk_disc_0051."}
+  - note: >
+      Every figure is an illustration of a proposition the adjacent prose states (hand-drawn
+      creature dialogues, annotated timelines, framework restatements, worked examples). No
+      figure carries a rule, number or constraint the text does not state; none contradicts a
+      frozen claim. sk_disc_0024's discriminating-power reading is visibly supported by Figure
+      3-6's principles.
+
+observed_loss_patterns:
+  - pattern: no_loss_detected
+    affects: "all 25 cited figures"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Native-digital PDF with authored pages; every cited figure renders completely and
+      legibly, correctly bound to its caption, at its recorded printed page under the PDF-18
+      offset. Nothing visual the extraction relies on is damaged, missing or unbound.
+  - pattern: in_figure_text_absent
+    affects: "caption text of 10 figures in the PDF text layer (1-2, 1-3, 1-5, 2-2, 3-1, 3-2, 3-4, 4-4, 4-5, 5-4 caption variants) and the balloon text of the creature dialogues"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      A text-layer search for caption-case 'FIGURE N-N' initially missed several figures whose
+      captions or internal balloon text do not extract cleanly; the content was recovered in
+      this copy by rendering the pages and reading the figures directly, which is how every
+      row above was verified. The loss affects the text layer only, not the printed page.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The figure pass confirms what the extraction assumed: this book's figures illustrate its
+  prose rather than carrying independent content, so the text-supported objects stand
+  unqualified. The copy-specific printed=PDF-18 offset is verified against five spread
+  locators, making the extraction's printed-page citations trustworthy in this copy.
