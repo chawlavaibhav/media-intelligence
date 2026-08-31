@@ -1,0 +1,118 @@
+# REP-07 — visual-evidence ledger for Berger, "Contagious: Why Things Catch On".
+#
+# The visual pass RAN and COMPLETED. The expected result was a pure null (the extraction recorded
+# no figure refs). The actual result is close to but not identical with that expectation, and the
+# difference is recorded honestly: the book contains five in-body images, two of them data charts
+# that the prose explicitly directs the reader to look at — and in every case the prose then states
+# the pattern the chart shows, so no extracted claim depends on any image. Recording what was
+# actually found, rather than forcing the null template, is the point of running the pass.
+
+source_id: berger-contagious
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+hash_on_arrival:
+  file: "/Users/vaibhavchawla/Downloads/Books/Contagious_ Why Things Catch On.epub"
+  bytes: 592807
+  md5_recomputed: 625aba06ceed728ba573dad60a52b3ed
+  md5_recorded: 625aba06ceed728ba573dad60a52b3ed
+  sha256_recomputed: 5aa800b9067b9a104dd2fdf0c5c212873d176457ad9811a87beb487d6be671cc
+  match: true
+  consequence: >
+    The on-arrival MD5 matches the hash recorded in PROVENANCE.md and named verbatim in the REP-07
+    brief's identity set, so this inspection provably looked at the same copy the extraction read.
+    Under the runbook's locator-verification rule a 5-locator sample is required only when the
+    hash does not match or none is recorded; neither condition holds here.
+
+inspection:
+  method: >
+    The EPUB was unpacked outside the repository and all 11 image assets enumerated and measured.
+    All 11 were opened and viewed, including the two under 2 KB. Every spine document was searched
+    for img/image tags and the surrounding prose of every in-body image was read. The prose of the
+    whole book was searched for figure-pointing language and caption markup.
+  images_in_archive: 11
+  figures: 5
+  figure_note: >
+    "figures" here counts in-body images placed inside chapter prose. None carries a figure number
+    or caption class; the book has no figure apparatus. The remaining 6 images are cover, title
+    page, colophon, author photo and one inline ornament.
+  images_opened: 11
+  image_inventory:
+    - {file: "images/00011.jpg", size: 25320, opened: true, identified_as: "line/area chart: daily YouTube searches for 'Rebecca Black', March-April 2011, weekly Friday spikes (Ch.2 span, index_split_007). The prose says 'Take a look at the number of daily searches… See if you notice a pattern' and then states the pattern itself (spikes every Friday, March 18, March 25, …)"}
+    - {file: "images/00007.jpg", size: 38504, opened: true, identified_as: "line chart: mentions of Cheerios on Twitter by hour, weekday vs weekend (index_split_007). Prose states the content: first references 5:00 a.m., peak 7:30-8:00 a.m., diminishing around 11:00 a.m."}
+    - {file: "images/00004.jpg", size: 8636, opened: true, identified_as: "still photograph from the NYC DOH 'Man Drinks Fat' video (index_split_007); the prose describes the video shot by shot"}
+    - {file: "images/00005.jpg", size: 49724, opened: true, identified_as: "reproduction of the California Department of Health Services 'Bob, I've got emphysema' Marlboro-spoof advertisement (index_split_007); its caption line is quoted verbatim in the prose"}
+    - {file: "images/00012.jpg", size: 14252, opened: true, identified_as: "sneeze/cough aerosol photograph from the 'Coughing and Aerosols' article discussed in the Emotion chapter (index_split_008); the prose describes it as 'a simple image… it was amazing'"}
+    - {file: "images/00002.jpg", size: 788, opened: true, identified_as: "tiny inline smiley-face emoticon in 'A Conversation with Jonah Berger' back matter (index_split_014)"}
+    - {file: "images/00003.jpg", size: 16436, opened: true, identified_as: "author photograph (© Deborah Feingold), About the Author (index_split_015)"}
+    - {file: "images/00001.jpg", size: 1256, opened: true, identified_as: "Simon & Schuster running-figure colophon on the copyright page (index_split_019)"}
+    - {file: "images/00010.jpg", size: 47824, opened: true, identified_as: "black-and-white title page (CONTAGIOUS / Why Things Catch On / Jonah Berger / Simon & Schuster), rendered via SVG in index_split_002"}
+    - {file: "images/00006.jpg", size: 107856, opened: true, identified_as: "colour cover art; present in the OPF manifest (id8) but referenced by no spine document - an orphaned duplicate of the cover"}
+    - {file: "cover.jpeg", size: 147826, opened: true, identified_as: "publisher cover, referenced from titlepage.xhtml; not evidence"}
+
+observed_loss_patterns:
+
+  # NOTE ON VOCABULARY: `illustrative_only` is an Audit Gate `visual_argument_role` value recorded
+  # at the head of this file, not a loss pattern. It replaces the `no_visual_argument` the runbook
+  # predicted, because the book does place images in its argument's path — it just never rests a
+  # claim on one.
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB, no page map, no folio in the text. Every locator in this extraction is
+      chapter plus named section per SCHEMA-CONTRACT-ADDENDUM-LOCATORS.md Case 3, with the spine
+      number as a secondary aid; page_start/page_end are null on every object and no page number
+      was invented. PROVENANCE.md also records that the endnotes are dense with page numbers that
+      are all ranges inside OTHER works, and none was used as a locator. Section headings are
+      unique within their chapters, so the locators are stable in this copy.
+
+  - pattern: in_figure_text_absent
+    affects: "axis labels, tick values and legends of the two data charts (00011, 00007)"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The charts are raster images; their axis text (e.g. '75/50/25', weekday letters, 'March 2011
+      / April 2011', 'Midnight…Noon', 'Weekday/Weekend') exists only inside the JPEGs and is
+      absent from the text layer. The chart title lines ('Searches for "Rebecca Black" on YouTube
+      March 2011', 'Mention of Cheerios on Twitter') ARE present as text, and the prose adjacent
+      to each chart states the pattern the chart shows. This pass opened both charts and confirms
+      the prose statements match the plotted data. No extracted object cites an in-figure value.
+
+  - pattern: no_loss_detected
+    affects: "the argument carried by the extraction"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All five in-body images restate or decorate propositions the prose states in full: the two
+      charts are immediately narrated ('Notice the spike once every week?'), the two campaign
+      images are described and quoted in the surrounding text, and the aerosol photograph is
+      described. The extraction's empty figure_refs on all 54 objects is therefore confirmed
+      correct AS A STATEMENT OF DEPENDENCE - no claim rests on an image - although the book is not
+      literally imageless, which is why the role recorded here is illustrative_only rather than
+      no_visual_argument. Nothing visual that the argument needs is missing from a text-only
+      representation.
+
+demonstrations: []
+visual_only_observations:
+  - >
+    Image 00006 (107,856 bytes, the colour cover art) sits in the OPF manifest but is referenced
+    by no spine document. It is packaging debris of this EPUB build, carries no content beyond the
+    cover, and is recorded so the enumeration count (11) is reproducible.
+
+extraction_constraint_applied: >
+  Checked programmatically against the frozen source-knowledge.yaml: no object carries
+  source_support: visual or text_and_visual (all 54 are source_support: text), and
+  provenance.inspected.figures is empty on every object. No claim anywhere in the frozen record
+  depends on an image, and this pass found no image it should have depended on.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The inspection changed no frozen claim. It corrected one expectation: the runbook predicted a
+  desai-style null ('extraction found no figure refs'), and the true state is five in-body images,
+  two of which the prose points at directly, all of which are fully restated in prose. The
+  distinction between 'no claim depends on an image' (true here) and 'there is nothing visual in
+  the book' (not true here) is exactly what the two-axis inspection_state / visual_argument_role
+  vocabulary exists to keep separate.
