@@ -6956,3 +6956,111 @@ Use frozen brief B06 from the top of this file.
 Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
 
 ---
+
+# IMAGE JOB I19 — B02
+
+Source key: E037-sonnet-no-canon-B02-R1
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I19
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I20 — B02
+
+Source key: E037-sonnet-no-canon-B02-R2
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I20
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I21 — B02
+
+Source key: E037-sonnet-no-canon-B02-R3
+Use frozen brief B02 from the top of this file.
+
+
+
+## GENERATE I21
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I22 — B03
+
+Source key: E037-sonnet-no-canon-B03-R1
+Use frozen brief B03 from the top of this file.
+
+
+
+## GENERATE I22
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I23 — B03
+
+Source key: E037-sonnet-no-canon-B03-R2
+Use frozen brief B03 from the top of this file.
+
+
+
+## GENERATE I23
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I24 — B03
+
+Source key: E037-sonnet-no-canon-B03-R3
+Use frozen brief B03 from the top of this file.
+
+
+
+## GENERATE I24
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I25 — B06
+
+Source key: E037-sonnet-no-canon-B06-R1
+Use frozen brief B06 from the top of this file.
+
+
+
+## GENERATE I25
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I26 — B06
+
+Source key: E037-sonnet-no-canon-B06-R2
+Use frozen brief B06 from the top of this file.
+
+
+
+## GENERATE I26
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
+
+# IMAGE JOB I27 — B06
+
+Source key: E037-sonnet-no-canon-B06-R3
+Use frozen brief B06 from the top of this file.
+
+
+
+## GENERATE I27
+Generate one first-pass image. Persist/checkpoint before continuing. Use the bounded-repair rule only for an objective hard failure.
+
+---
