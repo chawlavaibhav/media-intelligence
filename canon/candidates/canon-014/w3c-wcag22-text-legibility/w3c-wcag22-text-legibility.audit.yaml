@@ -1,0 +1,231 @@
+# REP-07 — Audit Gate v0.2 record for w3c-wcag22-text-legibility, authored IN THE CANDIDATE DIR.
+#
+# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
+# record there while under canon/candidates/). On admission this file moves unchanged to
+# canon/audit/records/w3c-wcag22-text-legibility.audit.yaml. Admission is a Controller decision;
+# nothing here performs it.
+
+audit_record_version: v0.2
+audit_id: aud_w3c_wcag22
+source_id: w3c-wcag22-text-legibility
+knowledge_dir: canon/candidates/canon-014/w3c-wcag22-text-legibility
+recorded_at_commit: 058e4f6f22e7c542a627b791f7bdff7fbb36265b
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 06b07175b601444ac3e6c2bf60e016c75e8922d9312ef97d97bd44fb87695b25
+    - path: operational-bindings.yaml
+      digest: a50fb7571710e9f26c05eb39fa221b0beb9c81824c5229df53e0aba478c764d9
+    - path: source-concept-systems.yaml
+      digest: 9d280e0418eaae709e66cb0c6be5ea90a14b9bb6f4eb09a4cfdbd05ba12fc148
+    - path: source-knowledge.yaml
+      digest: 7ebf0e6c021f48cdafd86f0473cd72eacb711353984484661bcd76f693143946
+    - path: visual-evidence-ledger.yaml
+      digest: 9bc926ed91a98a7c2a812cc37d081533acf75400c2c98877e09b8eb998164dda
+  combined_digest: a95e35b85c8322de7c7f1553a85ff935d46e86e66e7c034cd417fa4e19df1a1e
+
+evidence_basis_for_this_audit:
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/source-knowledge.yaml
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/source-concept-systems.yaml
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/operational-bindings.yaml
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/ontology-mappings.yaml
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/visual-evidence-ledger.yaml
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/PROVENANCE.md
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/snapshots/ (pinned TR + Understanding docs, figure images)
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: repository_text_extract
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Web-published standard with no pagination of any kind. Locators are SC number + title,
+    glossary term, or Understanding document + section heading; page_start/page_end are null on
+    every object and no page number was invented. All locators re-resolve on the byte-pinned
+    snapshots (per-document SHA-256 in visual-evidence-ledger.yaml).
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The format has no page; SC-number and section-heading locators are the stable citation
+        unit and all resolve on the pinned version.
+    - pattern: no_loss_detected
+      affects: "the visual dimension of the extracted span"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The REP-07 figure pass (ledger, inspection) enumerated all 53 figure elements across the
+        seven pinned Understanding documents, opened all 18 image-backed figures and rendered the
+        runbook-named HTML demos (SC 1.4.11 Figures 8-14) from the pinned markup. Every figure
+        illustrates content its caption or surrounding prose states exactly — hex values, ratios
+        and pass/fail verdicts are all in the text — so the text-only extraction lost nothing.
+        The three figure_not_inspected caveats (sk_wcag_0034, sk_wcag_0036, sk_wcag_0038) are
+        resolved with no change to any frozen claim.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The pinned version is the 12 December 2024 W3C Recommendation — the same republication the
+    extraction's identity table names. Verdict totals 39 match / 0 changed / 0 gone across
+    locators, quotations and numeric criteria. living_artifact_not_fingerprinted no longer
+    applies; the version-identity gap that made this candidate HOLD-blocked is closed.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    39 objects. A standards document: the dominant origin is the working group stating normative
+    requirements and definitions in its own corporate voice, with the Understanding notes
+    supplying non-normative rationale. The extraction tracks the normative/non-normative split
+    per object; this audit categorises origin, which is a different axis.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_wcag_0001, sk_wcag_0002, sk_wcag_0003, sk_wcag_0004, sk_wcag_0005,
+                sk_wcag_0006, sk_wcag_0007, sk_wcag_0008, sk_wcag_0009, sk_wcag_0010,
+                sk_wcag_0011, sk_wcag_0012, sk_wcag_0013, sk_wcag_0014, sk_wcag_0015,
+                sk_wcag_0016, sk_wcag_0017, sk_wcag_0018, sk_wcag_0019, sk_wcag_0020,
+                sk_wcag_0021, sk_wcag_0022, sk_wcag_0023, sk_wcag_0024, sk_wcag_0025,
+                sk_wcag_0026, sk_wcag_0027, sk_wcag_0028, sk_wcag_0029, sk_wcag_0030,
+                sk_wcag_0031, sk_wcag_0032, sk_wcag_0033, sk_wcag_0034, sk_wcag_0035,
+                sk_wcag_0036, sk_wcag_0037, sk_wcag_0038, sk_wcag_0039]
+      evidence: >
+        Every object is the Accessibility Guidelines Working Group speaking in its own voice —
+        normative criteria and glossary definitions (sk_wcag_0001-0029) or non-normative
+        Understanding rationale (sk_wcag_0030-0038, plus 0039). Where the rationale mentions
+        research bases (e.g. that the contrast ratios derive from ISO and ANSI standards and
+        low-vision measurement conventions, or that the 14/18-point thresholds come from
+        large-print conventions rather than a contrast experiment — sk_wcag_0024), the source
+        names conventions and standards, not a study with supplied results, so no object rises
+        to a measurement-reported category. No object carries empirical_within_source in the
+        frozen record, consistently.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: empirical_within_source appears on zero objects, and no
+    origin category here asserts a supplied measurement. sk_wcag_0024 carries historical_claim
+    (thresholds inherited from pre-existing large-print conventions), which this audit's
+    technology_contingency section classes accordingly.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The criteria evaluate rendered artifacts; they are not fields of an intermediate
+        representation. The extraction's central caution stands: applying conformance thresholds
+        to creative surfaces is extractor extrapolation, confined to bindings marked
+        evidence_basis: extractor_inference.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No physical production procedure is prescribed.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_wcag_001, bnd_wcag_002, bnd_wcag_003, bnd_wcag_004, bnd_wcag_005, bnd_wcag_006]
+      note: >
+        Six evaluation bindings over the computable criteria (contrast ratios, resize, spacing,
+        images-of-text) — numbers that replace judgement, the property that makes this source the
+        corpus's best weak-model doctrine; every binding's applicability.limits records the
+        web-content scope and the accessibility (not effectiveness) purpose.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_wcag_007, bnd_wcag_008]
+      note: >
+        bnd_wcag_007 (evidence_interpretation) governs the standard's own authority split
+        (normative vs Understanding); bnd_wcag_008 (rule_application) constrains application
+        outside web content rendered by a user agent.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_wcag_009, bnd_wcag_010]
+      note: Benchmark bindings over the mechanically checkable thresholds.
+    - consumer: deterministic_composition
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The contrast-ratio and spacing formulas are exactly computable (relative luminance is
+        defined to the formula) and could back a deterministic checker; no binding was made in
+        the extraction and none is manufactured here.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The source addresses artifacts, not working procedure.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_wcag_0036]
+      observation: >
+        The operational test for "required for understanding" is a reusable judgement procedure
+        (identify the meaning-carrying part, test that part's contrast) that generalises beyond
+        any single criterion and currently binds to nothing.
+  conclusion: >
+    Right-shaped fit for a conformance standard: evaluation, benchmark and governance bindings
+    exist; nothing pretends the thresholds are creative-effectiveness rules. The deliberate
+    non-claim — WCAG never says meeting 4.5:1 makes communication effective — is preserved
+    everywhere it matters.
+
+lineage:
+  authors: ["W3C Accessibility Guidelines Working Group (corporate authorship)"]
+  publisher: World Wide Web Consortium (W3C)
+  series: Web Content Accessibility Guidelines
+  first_published: 2023
+  copy_edition: >
+    WCAG 2.2, W3C Recommendation, republication of 12 December 2024 incorporating errata;
+    byte-pinned 2026-08-31T22:59:09Z (per-document SHA-256 in visual-evidence-ledger.yaml).
+    Understanding companions are non-normative W3C Working Group Notes pinned the same instant.
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    The corpus's only standards document and only standards-body author. No shared author,
+    series, publisher or primary informant with any live source or canon-014 candidate. The
+    Albers adjacency (colour as relational vs colour as computable contrast) is an adjacency of
+    topic answering different questions, recorded in PROVENANCE.md as explicitly not agreement
+    and not a lineage relation.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote book sources (the Light: Science & Magic specular
+      example and others); no SPEC quotes WCAG. WCAG-style contrast ratios appear in this
+      repository only downstream of this extraction.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The criteria are defined over web content rendered by user agents under user control — a
+    technology surface that changes — and several thresholds inherit from older print and
+    measurement conventions. The source itself versions and republishes, which is why the
+    REP-07 pass pinned the exact version.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_wcag_0002, sk_wcag_0009, sk_wcag_0030, sk_wcag_0031, sk_wcag_0036, sk_wcag_0038]
+      evidence: >
+        The relative-luminance contrast formula, the perceptual rationale for contrast serving
+        low-vision users, the hue-vs-lightness distinction and the required-for-understanding
+        test rest on properties of human vision, not of any device generation; the Understanding
+        rationale grounds them in vision measurement, and nothing about them expires with a
+        rendering technology.
+    - class: technology_contingent
+      sk_refs: [sk_wcag_0001, sk_wcag_0003, sk_wcag_0004, sk_wcag_0005, sk_wcag_0006,
+                sk_wcag_0007, sk_wcag_0008, sk_wcag_0010, sk_wcag_0011, sk_wcag_0012,
+                sk_wcag_0013, sk_wcag_0014, sk_wcag_0015, sk_wcag_0016, sk_wcag_0017,
+                sk_wcag_0018, sk_wcag_0019, sk_wcag_0020, sk_wcag_0021, sk_wcag_0022,
+                sk_wcag_0023, sk_wcag_0025, sk_wcag_0026, sk_wcag_0027, sk_wcag_0028,
+                sk_wcag_0029, sk_wcag_0032, sk_wcag_0033, sk_wcag_0034, sk_wcag_0035,
+                sk_wcag_0037, sk_wcag_0039]
+      evidence: >
+        Conformance requirements stated over web technologies as they stand at the pinned
+        version: user-agent behaviour, CSS-adjustable spacing, viewport resizing, the
+        user-interface-component vocabulary. Valid relative to WCAG 2.2 as republished
+        2024-12-12; a future version can tighten, relax or restructure them (2.2 itself changed
+        2.1's set), which is exactly why the pin exists.
+    - class: historical_convention
+      sk_refs: [sk_wcag_0024]
+      evidence: >
+        The 14/18-point large-text thresholds are inherited from pre-existing large-print
+        conventions, not derived from a contrast experiment — the source says so itself, and the
+        frozen object carries historical_claim.
+  existing_characteristics_relied_on: [historical_claim]
