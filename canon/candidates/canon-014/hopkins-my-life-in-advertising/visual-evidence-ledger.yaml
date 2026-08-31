@@ -1,0 +1,153 @@
+# REP-07 — visual-evidence ledger for Hopkins, My Life in Advertising (Harper & Brothers, 1927).
+#
+# Scan-page pass (INSPECTION-RUNBOOK.md §7), executed 2026-09-01. The extraction recorded no
+# figure refs anywhere in printed pp.1-206; this pass checks the scan pages themselves —
+# legibility, completeness, folio integrity — with a declared visual sample plus a mechanical
+# continuity check over the whole range. Desai null-result template + scan-page completeness rows.
+
+source_id: hopkins-my-life-in-advertising
+pass: attempted_and_completed
+inspection_state: inspected_page_level
+visual_argument_role: no_visual_argument
+
+file_identity:
+  path: /Users/vaibhavchawla/Downloads/Books/My Life in Advertising.pdf
+  bytes: 9199239
+  sha256: 7842a0944d315a37fcf8a054f6141a16935ee3322bbc062afbfba8d6fac53e5f
+  hash_on_arrival: >
+    Recomputed 2026-09-01 with shasum -a 256; matches the SHA-256 recorded in PROVENANCE.md §1
+    exactly, so this pass inspected the same copy the extraction read. Internet Archive scan
+    (Scribe 5.2) of the 1927 Harper & Brothers first edition, 232 PDF pages, 356.2 x 566.4 pt.
+
+inspection:
+  method: >
+    Two mechanisms, both recorded honestly. (1) VISUAL: 66 pages were rendered with pdftoppm at
+    70 dpi grayscale and every render was opened and read - all 19 chapter-opening pages, a
+    systematic 1-in-5 sample across the whole span (printed 5, 10, 15, ..., 205), the final page
+    206, and extraction-critical pages named in EXTRACTION-NOTES.md (92 Liquozone economics, 134
+    the OCR-damaged headline, 147, 154, 158, 183, 187, 197). (2) MECHANICAL, whole range:
+    pdftotext was run per page over PDF 15-220 (printed 1-206) and the expected printed folio
+    searched for as a digit run; all 19 chapter openers were additionally located mechanically
+    by their "Chapter <Number-word>" opening lines, and the book end and publisher tail were
+    located the same way. So the full 206-page range is mechanically covered even where visual
+    opening is sampled.
+  pages_in_span: 206
+  pages_rendered: 66
+  pages_opened_and_read: 66
+  sampling_rule: >
+    Visual: all 19 chapter-boundary pages + every 5th printed page (41 pages) + p.206 + the 8
+    extraction-critical pages listed above, union 66 distinct pages. Mechanical: all 206 pages.
+  figures_found: 0
+  illustrations_found: 0
+  tables_found: 0
+  reproduced_advertisements_found: 0
+
+scan_page_completeness:
+  folio_mapping: "printed page = PDF page - 14; confirmed on every one of the 66 opened renders"
+  mechanical_continuity: >
+    Direct digit-run folio match on 165 of 206 pages of the text layer. All 41 non-matching
+    pages were individually examined mechanically and each miss is an OCR distortion of the
+    folio or running head, not a missing or displaced page: chapter openers whose folio the OCR
+    dropped (printed 1, 27, 50, 151...), and body pages where the folio OCR'd as a lookalike
+    ("IO"=10, "I20"=120, "I42"=142, "II4"=114, "go"=90, "2OO"=200, "ZOD"=202, "TZ"=172). On
+    every missed page the OCR'd running head matches the chapter that printed page belongs to
+    per the PROVENANCE.md §3 table (e.g. AUTOMOBILE on 111-121, TIRE on 127, EARLY [History of
+    Palmolive] on 137/141, SOME [Mail-Order] on 159/161, REASONS on 171, SCIENTIFIC on 177).
+    No page was found out of order, duplicated or absent.
+  chapter_boundaries: >
+    All 19 chapter openers confirmed BOTH mechanically and visually at exactly the printed pages
+    the extraction recorded: 1, 15, 27, 37, 50, 63, 73, 86, 96, 109, 123, 131, 143, 151, 157,
+    167, 175, 189, 199. "THE END" confirmed visually on printed 206. Printed 207-210 confirmed
+    as Harper's own announcements of other business books ("The following pages contain
+    announcements...", "HARPER BUSINESS BOOKS") - publisher matter, correctly excluded.
+  legibility_verdict: >
+    Every opened page is a legible single-column letterpress page with running head and folio.
+    Body text is readable throughout at 70 dpi; period typography (small caps running heads,
+    italic "Chapter N" lines, drop caps at chapter openings) renders cleanly. Load-bearing
+    figures re-read on the page renders and matching the extraction: "Four times in five they
+    failed" (p.20); 18 cents per Liquozone inquiry, the fifty-cent free bottle and six-dollar
+    guaranty warrant (p.92); $175,000 total and the Van Camp coupon economics (p.105); the
+    Benton Harbor $700 cost and 1911 date with Hopkins's own memory hedge (p.135); 25c free
+    inquiries vs $1.25 when a dime is charged (p.147); 90 per cent voted Quick Quaker in the
+    few-towns test (p.150); results divided by four on the hygiene product, 52 countries, 17
+    languages (p.154); $1,000 first test city repaid before bills due (p.155); 85c / $2.50 /
+    $14.20 / 42c per reply (p.158); $10,000 cheque from Lasker for writing Scientific
+    Advertising (p.170); thirty-six years of traced advertising, thousands of pieces of copy
+    (p.175); $10 per word (p.180); 25 vs 50 per cent headline reach (p.187); $1.78 average sale
+    vs 50c / 35c / 10c (p.197).
+  ocr_damage_resolution: >
+    THE MATERIAL FINDING OF THIS PASS. The one load-bearing string the extraction could not
+    recover - the rejected headline on printed p.134, which pdftotext renders as garbage in both
+    the working text and a fresh pass - is FULLY LEGIBLE in the page image opened by this pass.
+    The page reads, verbatim: '"We Will Buy" is a much better headline than "10-Cent Cake
+    Free."' The extraction's reconstruction (ten-cent cake free) is confirmed correct, with the
+    printed form being the numeral "10-Cent Cake Free." So the damage is text-layer-only and
+    the string is recovered in this copy by page render; qa_mla_0065's disclosure can stand with
+    the reconstruction now confirmed against the page.
+
+observed_loss_patterns:
+
+  - pattern: no_loss_detected
+    affects: "the visual dimension - nothing visual was lost because nothing visual exists in the book"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Zero figures, plates, diagrams, tables or reproduced advertisements on any of the 66
+      opened pages, which include every chapter boundary and a systematic 1-in-5 sweep of the
+      whole book. The book argues its campaigns - Schlitz, Liquozone, Van Camp, Palmolive,
+      Pepsodent, Goodyear - entirely in prose and never reproduces an advertisement. The
+      extraction's record (every source_support text, every figure_refs empty) is confirmed.
+
+  - pattern: source_evidence_never_printed
+    affects: >
+      Every advertisement and campaign artifact the memoir argues from: the "We Will Buy"
+      introduction, the No-Rim-Cut and All-Weather campaigns, the Mitchell and Studebaker copy,
+      the Palmolive "ten-cent coupon" advertisements, the two mail-order advertisements whose
+      costs per reply differ 34-fold (p.158), the pie card, the Schlitz brewery copy.
+    detectability: named_by_text
+    recoverability: not_applicable
+    evidence: >
+      Not one is reproduced anywhere in the book, confirmed across the sampled sweep of all 19
+      chapters. A 1927 reader was in the same position. This is authorial, not digitisation,
+      loss; no better scan repairs it.
+
+  - pattern: display_type_ocr_damage
+    affects: >
+      The text layer only: chapter-opening display type, running heads, quoted headlines set in
+      display type (the p.134 case), and folios OCR'd as lookalikes on 41 of 206 pages.
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      Every instance checked in this pass resolves on the page image: the p.134 headline reads
+      cleanly ('"10-Cent Cake Free."'), the 41 garbled folios all read correctly in their
+      renders, and chapter-opening lines that OCR as scrambles ("CriaupE C. Hopkins") are clean
+      letterpress in the image. The scan images are the recovery path; nothing was found that
+      is illegible in the image itself.
+
+  - pattern: text_layer_order_damage
+    affects: "the text layer's interleaving of running heads into body paragraphs on nearly every page"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The OCR text layer drops the running head (often with its folio attached, e.g.
+      "AUTOMOBILE ADVERTISING 119g") into mid-paragraph positions, as EXTRACTION-NOTES.md
+      records. The page images show the running heads correctly positioned at the page head, so
+      reading order is intact in the artifact and the damage is a text-layer linearisation
+      artifact only. The extraction already handled it (locators parse only p./pp. markers).
+
+demonstrations: []
+visual_only_observations: []
+
+extraction_constraint_applied: >
+  No object carries source_support visual or text_and_visual; figure_refs and
+  provenance.inspected.figures are empty on all 70 objects, correctly - there are no figures.
+  No claim depends on an image, and nothing found in this pass contradicts any frozen object.
+  The one string flagged as a reconstruction (qa_mla_0065) is now confirmed against the page.
+
+claim_resolution_after_inspection: not_applicable
+consequence: >
+  The pass confirms a complete, ordered, legible copy of the authored span pp.1-206 with real
+  printed folios (false_page_affordance does not arise), bounds the publisher tail exactly where
+  the extraction bounded it, and upgrades the p.134 damaged-headline disclosure from
+  "reconstruction" to "confirmed against the page image". Nothing visual was available to
+  change any claim, and nothing did.
