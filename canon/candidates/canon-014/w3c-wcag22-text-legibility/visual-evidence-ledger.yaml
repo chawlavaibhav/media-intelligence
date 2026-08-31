@@ -1,0 +1,155 @@
+# REP-07 — visual-evidence ledger for W3C, Web Content Accessibility Guidelines (WCAG) 2.2.
+#
+# RE-FETCH-AND-PIN pass, executed 2026-08-31/09-01 under Controller ruling DN-02
+# (REP-07-DECISION-NOTES.md): the normative TR page and the seven cited Understanding documents
+# were re-fetched, byte-pinned with SHA-256, and the figure pass ran over the PINNED snapshots.
+# The extraction (lane 3) had recorded "a criterion is only as good as the version it came from"
+# (living_artifact_not_fingerprinted); this ledger closes that gap.
+
+source_id: w3c-wcag22-text-legibility
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+fetch_manifest:
+  ruling: DN-02 (Controller authorised both zero-cost re-fetches, 2026-09-01 IST)
+  retrieved_at_utc: "2026-08-31T22:59:09Z"
+  version_pinned: >
+    Web Content Accessibility Guidelines (WCAG) 2.2, W3C Recommendation 12 December 2024 — the
+    republication incorporating errata that PROVENANCE.md's identity table names. The version
+    line was read verbatim off the pinned TR page.
+  method: >
+    curl -sSL with a desktop User-Agent, bytes saved verbatim; figure images referenced by the
+    Understanding documents fetched separately into snapshots/images/ with per-file SHA-256 in
+    snapshots/images/MANIFEST.txt; full-page renders of the TR head and Understanding SC 1.4.11
+    captured with headless Chrome; the pure-HTML/CSS figure demos (Figures 8-14 of Understanding
+    SC 1.4.11) were re-rendered FROM THE PINNED MARKUP (file:// on the snapshot bytes), so the
+    rendered evidence is of the pinned version, not the live page.
+  documents:
+    - doc: WCAG 2.2 (normative TR)
+      url: "https://www.w3.org/TR/WCAG22/"
+      snapshot: snapshots/WCAG22-TR.html
+      bytes: 512457
+      sha256: 6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057
+      screenshot: snapshots/WCAG22-TR-top.png
+    - doc: Understanding SC 1.4.1 Use of Color
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+      snapshot: snapshots/Understanding-1.4.1-use-of-color.html
+      bytes: 43788
+      sha256: 1e963c78f47368c4b3e7da85dc4242ae0bfd5350b1790c68e1dd8a50f21683b3
+    - doc: Understanding SC 1.4.3 Contrast (Minimum)
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+      snapshot: snapshots/Understanding-1.4.3-contrast-minimum.html
+      bytes: 75599
+      sha256: d19b7752115ab1647d46b2958cd2c1f269e9d3d069f09130c13211c61f6af2ed
+    - doc: Understanding SC 1.4.4 Resize Text
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html"
+      snapshot: snapshots/Understanding-1.4.4-resize-text.html
+      bytes: 56400
+      sha256: 66028ea3e5b861e4133df678b879e68226af4250f45188bd229447c76f108535
+    - doc: Understanding SC 1.4.5 Images of Text
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/images-of-text.html"
+      snapshot: snapshots/Understanding-1.4.5-images-of-text.html
+      bytes: 48346
+      sha256: 948ba781308923d6e965ff7455ca30df524e51d5671e181b15b859797979603b
+    - doc: Understanding SC 1.4.8 Visual Presentation
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/visual-presentation.html"
+      snapshot: snapshots/Understanding-1.4.8-visual-presentation.html
+      bytes: 59630
+      sha256: 86c236e4798ea23e7e9f1cd2e8c53414557bcc62ff1cc0c15d07f1d49d82bd44
+    - doc: Understanding SC 1.4.11 Non-text Contrast
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html"
+      snapshot: snapshots/Understanding-1.4.11-non-text-contrast.html
+      bytes: 198322
+      sha256: 3ba20a1fd36561ad3b7f1ae9d2dd9e0f0d828ae4f14ecc46e4ae787aedea1943
+      screenshot: snapshots/U1.4.11-rendered.png
+    - doc: Understanding SC 1.4.12 Text Spacing
+      url: "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html"
+      snapshot: snapshots/Understanding-1.4.12-text-spacing.html
+      bytes: 55299
+      sha256: 01e89ec8a9ac83566070bb1029e040c6cabc0e89fac36a605445aaf589d6ee1e
+  original_processed_text: >
+    The extraction's processed dump (scratchpad/src/SRC-wcag22.txt, 3,055 lines) does not exist
+    in this environment; per DN-01 no extraction-side asset survives. The pinned snapshots above
+    are the identity mechanism from this pass forward.
+
+claims_diff:
+  scope: all 39 source_knowledge objects
+  method: >
+    For every object, mechanically verified against the text extracted from the pinned
+    snapshots: (1) every SC-number and glossary-term locator in provenance.section resolves;
+    (2) every double-quoted string of 6+ characters in the claim appears verbatim; (3) every
+    numeric criterion with a unit (ratios n:1, percentages, em, px) appears verbatim.
+  verdict_totals: {match: 39, changed: 0, gone: 0}
+  note: >
+    Zero objects with any unresolved locator, quotation or number. The extraction's numeric
+    criteria — 4.5:1, 3:1, 7:1, 200%, 1.5x line spacing, 0.12em letter spacing and the rest —
+    byte-match the pinned 12 December 2024 Recommendation, satisfying the REP-08 requirement
+    that numeric values in any later compiled typography pack can be checked against a pinned
+    version.
+
+inspection:
+  method: >
+    Every <figure> element across the seven pinned Understanding documents was enumerated: 53
+    total — 48 in SC 1.4.11 (matching the extraction's "48 numbered figures" count), 3 in SC
+    1.4.12, 1 in SC 1.4.3, 1 in SC 1.4.8, 0 elsewhere. Two kinds: (a) image-backed figures — all
+    18 referenced image files were downloaded, hashed and opened; (b) inline HTML/CSS demos
+    (styled example buttons/inputs) — the runbook-named Figures 8-14 were re-rendered from the
+    pinned markup and opened; the remainder were read as markup+caption (each caption states the
+    hex values and pass/fail verdict its demo shows).
+  figure_elements_enumerated: 53
+  image_files_opened: 18
+  html_demos_rendered: 7
+  rows:
+    - {figure: "U1.4.11 Fig 8-14", file: snapshots/U1.4.11-figures8-14.png, finding: "Focus-indicator pass/fail demos render exactly as captioned: internal yellow #FFFF00 on blue #4189B9 (pass), external yellow on white (fail), external green #008000 on white (pass), part-inside-part-outside (pass), blue-to-green border change (fail), inner dark-green border (fail), inner white border (pass). Captions state every hex value; figures illustrate them."}
+    - {figure: "U1.4.11 Fig 35 (phone)", file: snapshots/images/U1.4.11-contrast-phone.png, finding: "White phone glyph in orange #E3660E circle; shape readable exactly as prose describes."}
+    - {figure: "U1.4.11 Fig 36 (magnet)", file: snapshots/images/U1.4.11-contrast-magnet.png, finding: "Red U-shape with lighter tips; the caption's recognisability argument is visible."}
+    - {figure: "U1.4.11 Fig 37 (currency)", file: snapshots/images/U1.4.11-contrast-currency-down.png, finding: "Downward £ symbol; matches caption."}
+    - {figure: "U1.4.11 Fig 38 (line graph)", file: snapshots/images/U1.4.11-simple-line-graph.png, finding: "Multi-series line graph whose series must be discerned by line colour; matches caption."}
+    - {figure: "U1.4.11 Fig 39/44/45/46 (pie charts)", file: snapshots/images/U1.4.11-graphics-contrast_pie-chart_pass.png, finding: "Market Share pie in pass (sliced with contrasting borders), fail (adjacent low-contrast slices) and not-applicable (visible labels+values) variants; the operational test sk_wcag_0036 describes is exactly what the triplet demonstrates. Fail variant at images/U1.4.11-graphics-contrast_pie-chart_fail.png, n/a variant at images/U1.4.11-graphics-contrast_pie-chart_na.png."}
+    - {figure: "U1.4.11 Fig 40 (logos)", file: snapshots/images/U1.4.11-1.4.11-ntc-author-choice-logos.png, finding: "Company logos deliberately presented low-contrast grey — the author-choice/logo-exemption case sk_wcag_0034's Understanding text describes."}
+    - {figure: "U1.4.11 Fig 41 (gradient)", file: snapshots/images/U1.4.11-contrast-gradient.png, finding: "The runbook-named figure: an info icon shown with and without its insufficient-contrast gradient background; removing the background shows the meaning is carried by parts that fail contrast. Matches caption and the surrounding testing-principles prose."}
+    - {figure: "U1.4.11 Fig 42 (dynamic pie)", file: snapshots/images/U1.4.11-dynamic-pie-chart.png, finding: "Hover/focus-activated slice variant; illustrative."}
+    - {figure: "U1.4.11 Fig 47/48 (infographics)", file: snapshots/images/U1.4.11-infographic-pass.png, finding: "Social-network circles ranked by user count, fail (low-contrast circles) and pass (contrasting borders, dark icons) variants — sk_wcag_0036's network-infographic worked example. Fail variant at images/U1.4.11-infographic-fail.png."}
+    - {figure: "U1.4.12 Fig 1-3 (spacing failures)", file: snapshots/images/U1.4.12-spacing_overlap_fail.png, finding: "Vertical cut-off, horizontal cut-off and overlap failures under adjusted text spacing; each is the failure its caption names. Other two at images/U1.4.12-spacing_cutoff_fail_vertical.png, images/U1.4.12-spacing_cutoff_fail_horizontal.png."}
+    - {figure: "U1.4.8 Fig 1 (line spacing)", file: snapshots/images/U1.4.8-single-space.gif, finding: "Single / space-and-a-half / double spacing swatches (three gifs); illustrative of the 1.5 spacing provision."}
+  figure_not_inspected_resolution: >
+    The three objects carrying figure_not_inspected (sk_wcag_0034 logos exemption, sk_wcag_0036
+    required-for-understanding operational test, sk_wcag_0038 hue-vs-lightness boundary) were
+    checked against the now-opened figures. In every case the figure shows precisely what the
+    caption and prose state — the colours, ratios and pass/fail verdicts are all in the text —
+    so the extraction's decision to rest these objects on text support was correct and nothing
+    in any figure qualifies or contradicts the frozen claims.
+
+observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Web-published standard; no pagination of any kind exists. Locators are SC numbers, glossary
+      terms and Understanding section headings, all of which resolve on the pinned snapshots.
+  - pattern: no_loss_detected
+    affects: "the visual dimension of the extracted span"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      This source is the inverse of the usual visual-loss case: every figure is subordinate to
+      text that states its content exactly (hex values, ratios, pass/fail verdicts in captions).
+      The figure pass opened the image-backed figures and rendered the named HTML demos and found
+      no figure carrying content the text does not state. figure_semantic_binding_lost does not
+      apply.
+
+volatility_note: >
+  Living artifact. The pin above (W3C Recommendation 12 December 2024) is the reference version;
+  living_artifact_not_fingerprinted no longer applies. Understanding documents are non-normative
+  Working Group Notes and change more freely than the TR; their per-document hashes above date
+  this pass's evidence.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The pinned version is the same republication the extraction read (12 December 2024), every
+  numeric criterion byte-matches, and the figure pass confirms the source's figures illustrate
+  stated propositions rather than carrying unstated content. The extraction's normative /
+  non-normative split (sk_wcag_0001-0029 vs 0030-0038, with 0039) is unaffected by anything
+  found visually.
