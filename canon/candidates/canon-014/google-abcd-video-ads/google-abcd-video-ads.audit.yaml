@@ -1,0 +1,249 @@
+# REP-07 — Audit Gate v0.2 record for google-abcd-video-ads, authored IN THE CANDIDATE DIR.
+#
+# STATUS: PROPOSED — this file deliberately does NOT live in canon/audit/records/. Per REP-07's
+# acceptance rule a candidate dir must not gain a record there while it remains under
+# canon/candidates/; placing the record here records the completed gate work WITHOUT performing
+# admission, which is a Controller decision. On admission this file moves (unchanged) to
+# canon/audit/records/google-abcd-video-ads.audit.yaml.
+#
+# Pending Controller ruling (c): the admission boundary for platform-contingent guidance. This
+# record states the contingency facts (section technology_contingency) and asserts nothing about
+# admissibility.
+
+audit_record_version: v0.2
+audit_id: aud_google_abcd
+source_id: google-abcd-video-ads
+knowledge_dir: canon/candidates/canon-014/google-abcd-video-ads
+recorded_at_commit: bbdd70b9e236bb204cefb27788ac6ca5b9066aea
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: ec853d42aba9177c2dc1fc01767349f09ea489312293af4be845435568a6a3bc
+    - path: operational-bindings.yaml
+      digest: ebedd0b3c1bab0de9ac217f3a4cbc5a336acee1451702a1024cd763438eee325
+    - path: source-concept-systems.yaml
+      digest: d36e67c03e01ea30563a80622873e3d3688151f2cc770c00f435dfa263d99780
+    - path: source-knowledge.yaml
+      digest: 36bc44b18f60ba61d29bc5761deed7f2b06c78074322664013b8967190c9a054
+    - path: visual-evidence-ledger.yaml
+      digest: 169b348263060cd5a3ad3836a3b35d8e0b0e93e104de8ae6c7d64c7d47c678f2
+  combined_digest: 8d89dcbfea1bd057dfbfc0a866a7efd041b0337a0f21290f918d35013ac399b4
+
+evidence_basis_for_this_audit:
+  - canon/candidates/canon-014/google-abcd-video-ads/source-knowledge.yaml
+  - canon/candidates/canon-014/google-abcd-video-ads/source-concept-systems.yaml
+  - canon/candidates/canon-014/google-abcd-video-ads/operational-bindings.yaml
+  - canon/candidates/canon-014/google-abcd-video-ads/ontology-mappings.yaml
+  - canon/candidates/canon-014/google-abcd-video-ads/visual-evidence-ledger.yaml
+  - canon/candidates/canon-014/google-abcd-video-ads/PROVENANCE.md
+  - canon/candidates/canon-014/google-abcd-video-ads/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/google-abcd-video-ads/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/google-abcd-video-ads/snapshots/ (pinned pages, screenshots, images)
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: repository_text_extract
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Live web publication: no edition, no ISBN, no page anywhere. Locators are page name + section
+    heading (+ table row for the objective matrix); the REP-07 pass re-resolved every cited
+    heading against the byte-pinned snapshots (fetch manifest and per-page SHA-256 in
+    visual-evidence-ledger.yaml). No page number is invented anywhere in the extraction.
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The format has no page at all; section-heading locators are the stable citation unit and
+        all resolve on the pinned snapshots.
+    - pattern: text_layer_order_damage
+      affects: "P3's two HTML tables in the extraction's plain-text dump"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The dump linearised the objective matrix, destroying cell-to-column binding (two
+        Connection cells carry two bullets each, so reading order yields five instructions for
+        four columns with no uncertainty signal). The extraction repaired it by re-reading the
+        live table markup; the REP-07 pass independently re-parsed the PINNED P3 snapshot's
+        tables and confirms the recorded matrix cell-for-cell (ledger, claims_diff).
+    - pattern: no_loss_detected
+      affects: "the visual dimension of all three pages"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        All 25 content-bearing images on the three pinned pages were opened (ledger, inspection):
+        five ABCD framework illustrations and a storyboard built on an invented "Fishos" brand,
+        fourteen brand-vignette video stills matching their alt text and examples.positive
+        entries, and five promo/decorative items. Every one restates or decorates a stated
+        proposition; no cited claim depends on any image.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The re-fetch (Controller ruling DN-02) found every anchor string, table binding and image the
+    extraction relies on unchanged on the live pages; verdict totals 26 match / 0 changed /
+    0 gone. The living-artifact identity gap named by audit-assessment-HOLD.yaml
+    (living_artifact_not_fingerprinted) is closed: the source is now byte-pinned in-repo.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    26 objects; a thin source with one reported measurement, one third-party effectiveness claim,
+    and 24 guidance assertions. Categorised from the frozen source-knowledge.yaml and the pinned
+    pages.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_abcd_0003]
+      evidence: >
+        The 30%/17% lift figures are results of the publisher's own commissioned study ("The
+        Short & the Long of ABCDs Effectiveness", Google/Kantar, Global, April 2021, n=11,000 ads
+        stated on P1 only). Reported by an interested party, from a study named but not published
+        — no method, baseline, outcome definition or dispersion — and stated at three different
+        strengths on the publisher's own three pages (upper bound on P3, average on P2, bare
+        callouts on P1); all three phrasings re-verified verbatim on the pinned snapshots. The
+        frozen object carries empirical_within_source and five caveats saying exactly this.
+    - category: third_party_measurement_reported
+      sk_refs: [sk_abcd_0002]
+      evidence: >
+        P2 attributes to NCSolutions the proposition that creative is the No. 1 driver of
+        campaign effectiveness and ROI. No study name, date, sample or method is given. The
+        frozen object does not carry empirical_within_source, correctly.
+    - category: source_author_assertion
+      sk_refs: [sk_abcd_0001, sk_abcd_0004, sk_abcd_0005, sk_abcd_0006, sk_abcd_0007,
+                sk_abcd_0008, sk_abcd_0009, sk_abcd_0010, sk_abcd_0011, sk_abcd_0012,
+                sk_abcd_0013, sk_abcd_0014, sk_abcd_0015, sk_abcd_0016, sk_abcd_0017,
+                sk_abcd_0018, sk_abcd_0019, sk_abcd_0020, sk_abcd_0021, sk_abcd_0022,
+                sk_abcd_0023, sk_abcd_0024, sk_abcd_0025, sk_abcd_0026]
+      evidence: >
+        The framework, its guidelines and the objective matrix are stated in the publisher's
+        corporate voice, mostly without mechanism (sixteen objects carry mechanism_absent). The
+        derivation story (sk_abcd_0004) names Ipsos as research partner and Nielsen/Kantar as
+        independent reviewers, but the source never says what the reviewers reviewed or
+        concluded, so the guidance itself remains the publisher's assertion. sk_abcd_0012's
+        performance claim ("audio brand mentions enhance onscreen brand visuals' performance")
+        carries no figure and no named study; it is the author's assertion of an interaction, not
+        a supplied measurement.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: empirical_within_source appears exactly once
+    (sk_abcd_0003), inside source_own_measurement_reported; neither sk_abcd_0002 nor any object
+    in source_author_assertion carries it. The publisher-interest caveat sits on all 26 objects
+    in the frozen file, which is the extraction-layer counterpart of the origin facts recorded
+    here.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        Deliberate extraction decision, re-affirmed by this audit: the source describes evaluable
+        properties of finished ads, not fields of an intermediate representation. Nothing here
+        infers a generative-model capability.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The source prescribes no physical production procedure.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_abcd_001, bnd_abcd_002, bnd_abcd_003, bnd_abcd_004, bnd_abcd_005]
+      note: >
+        Five evaluation bindings over the checklist-shaped guidelines; each carries the
+        publisher-interest and platform-contingency limits in applicability.limits.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_abcd_008, bnd_abcd_009]
+      note: >
+        bnd_abcd_008 (evidence_interpretation) governs use of the unresolved three-way figure
+        discrepancy; bnd_abcd_009 (rule_application) constrains application outside YouTube video
+        advertising.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_abcd_006, bnd_abcd_007]
+      note: >
+        Both benchmark bindings state in their limits that no generative model is assumed able to
+        execute the guidelines; bnd_abcd_007 notes the source's own before/after pair is two
+        human-authored versions with no measurement attached.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No exactly-executable geometry or composition rule; the guidance is judgemental.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The ten remedy terms are executable_by human_edit (8) or physical_production (2), but no
+        workflow binding was made and none is manufactured here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_abcd_0022, sk_abcd_0023, sk_abcd_0024, sk_abcd_0025, sk_abcd_0026]
+      observation: >
+        The objective matrix is the corpus's only questions-with-defaults decision table for
+        video-ad emphasis by campaign objective — the shape the compiled-pack work (REP-05) wants
+        for G2/G5 — and it currently binds only to evaluation, not to any pack trigger.
+  conclusion: >
+    The bindings that exist are the right kinds for a thin, assertive, platform-scoped checklist
+    source: evaluation, benchmark and governance, each carrying both cautions. Nothing binds to
+    creative or production IR, deliberately.
+
+lineage:
+  authors: ["Google (corporate, no byline on P1/P3)", "Ariane Le Port (P2 byline, Global Creative Effectiveness Lead, Google)"]
+  publisher: Google
+  series: null
+  first_published: 2022
+  copy_edition: >
+    Live web pages, pinned 2026-08-31T22:51:56Z (per-page SHA-256 in
+    visual-evidence-ledger.yaml). Page-stated dates: P2 April 2022, P1 May 2023, P3 undated
+    (footer ©2026).
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher or primary informant with any live source or any other
+    canon-014 candidate. The live corpus's newest source is 2013 and its moving-image sources are
+    all about film; nothing addresses platform video ads. The structural resemblance to
+    binet-field-effectiveness-in-context-ch1 is a resemblance of hazard (declared commercial
+    interest of the publisher in the finding), not of content, authorship or informant; no
+    lineage relation exists between them.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other book sources; no
+      SPEC quotes any Google ABCD page. The extraction lane read the specs before reading the
+      dump, but the specs contain nothing from this source to be exposed to.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The entire source is guidance about one company's ad products, on one platform, under one set
+    of playback behaviours, at one time — the source itself dates its pages and its study, and
+    the extraction carries a platform-contingency caveat on every object. The Controller's
+    admission-boundary ruling (c) for exactly this class of material is pending; this section
+    records the facts that ruling needs.
+  assessed: true
+  classes:
+    - class: technology_contingent
+      sk_refs: [sk_abcd_0001, sk_abcd_0003, sk_abcd_0004, sk_abcd_0005, sk_abcd_0006,
+                sk_abcd_0007, sk_abcd_0008, sk_abcd_0009, sk_abcd_0010, sk_abcd_0011,
+                sk_abcd_0012, sk_abcd_0013, sk_abcd_0014, sk_abcd_0015, sk_abcd_0016,
+                sk_abcd_0017, sk_abcd_0018, sk_abcd_0019, sk_abcd_0020, sk_abcd_0021,
+                sk_abcd_0022, sk_abcd_0023, sk_abcd_0024, sk_abcd_0025, sk_abcd_0026]
+      evidence: >
+        Platform- and product-contingent guidance: valid relative to YouTube's ad formats,
+        playback behaviour and measurement products as they stood at the pages' dates. The
+        sharpest instance is sk_abcd_0014 ("YouTube is almost entirely a sound-on experience") —
+        a platform-behaviour claim made once, on one page, with no measurement, pointing the
+        opposite way from the sound-off default common on other feed surfaces; the frozen object
+        and its caveats refuse the generalisation. All 25 of these objects carry historical_claim
+        in the frozen record.
+    - class: uncertain
+      sk_refs: [sk_abcd_0002]
+      evidence: >
+        The NCSolutions claim (creative is the No. 1 driver of campaign effectiveness) is stated
+        as a general research finding, not a platform behaviour, but with no study detail its
+        durability cannot be classed; the frozen object is the one of 26 without
+        historical_claim.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
